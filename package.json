@@ -11,7 +11,7 @@
     "db:studio": "drizzle-kit studio",
     "dev": "next dev --experimental-https",
     "lint": "next lint",
-    "start": "next start"
+    "start": "bun run db:migrate && next start"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.1",
