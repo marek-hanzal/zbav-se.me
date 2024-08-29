@@ -1,10 +1,9 @@
 {
     "cSpell.words": [
-        "NEXTAUTH",
-        "nextjs",
-        "superjson",
+        "isbot",
+        "Pipeable",
         "tailwindcss",
-        "tanstack",
-        "TRPC"
+        "tseslint",
+        "typecheck"
     ]
 }
