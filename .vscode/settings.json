@@ -1,6 +1,9 @@
 {
     "cSpell.words": [
+        "camelcase",
         "isbot",
+        "languagedetector",
+        "Lngs",
         "Pipeable",
         "tailwindcss",
         "tseslint",

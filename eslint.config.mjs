@@ -6,6 +6,9 @@ export default tseslint.config(
   ...tseslint.configs.strict,
   ...tseslint.configs.stylistic,
   {
+    ignores: ["public/**", "build/**"],
+  },
+  {
     rules: {
       "@typescript-eslint/no-dynamic-delete": "off",
       "@typescript-eslint/no-empty-object-type": "off",
@@ -20,12 +23,14 @@ export default tseslint.config(
       "id-length": "off",
       "max-lines-per-function": "off",
       "max-lines": "off",
+      "max-params": "off",
       "max-statements": "off",
       "new-cap": "off",
       "no-console": "off",
       "no-continue": "off",
       "no-magic-numbers": "off",
       "no-nested-ternary": "off",
+      "no-param-reassign": "off",
       "no-return-assign": "off",
       "no-shadow": "off",
       "no-ternary": "off",
@@ -34,7 +39,6 @@ export default tseslint.config(
       "no-useless-assignment": "off",
       "no-warning-comments": "off",
       "one-var": "off",
-      "max-params": "off",
       "require-await": "off",
       "sort-imports": "off",
       "sort-keys": "off",

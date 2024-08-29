@@ -13,6 +13,7 @@ const config = {
   singleQuote: false,
   tabWidth: 4,
   trailingComma: "all",
+  printWidth: 320,
 };
 
 export default config;
