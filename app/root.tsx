@@ -30,8 +30,6 @@ export default function App() {
   const { i18n } = useTranslation();
   useChangeLanguage(locale);
 
-  console.log("locale www", locale);
-
   return (
     <html lang={locale} dir={i18n.dir()} data-pica="true">
       <head>
