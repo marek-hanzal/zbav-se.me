@@ -2,16 +2,13 @@ import type { MetaFunction } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 
 export const meta: MetaFunction = () => {
-  return [
-    { title: "New Remix App" },
-    { name: "description", content: "Welcome to Remix!" },
-  ];
+  return [{ title: "zbav-se.me" }];
 };
 
 export default function Index() {
   const { t } = useTranslation();
   return (
-    <div className="p-4 font-sans">
+    <div className="bg-slate-100 p-4 font-sans">
       <h1 className="text-3xl">Welcome to Remix {t("bello")}</h1>
       <ul className="mt-4 list-disc space-y-2 pl-6">
         <li>

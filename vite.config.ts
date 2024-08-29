@@ -13,4 +13,10 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  ssr: {
+    noExternal: ["remix-i18next"],
+  },
+  server: {
+    port: 3000,
+  },
 });

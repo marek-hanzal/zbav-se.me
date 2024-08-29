@@ -10,13 +10,13 @@ import {
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import { jsonHash } from "remix-utils/json-hash";
-import i18next from "~/i18next.server";
-import "~/tailwind.css";
+import i18next from "~/i18n/i18next.server";
+import "~/tailwind.css?inline";
 
-export const loader = async ({ request }: LoaderFunctionArgs) => {
+export const loader = async ({ request, params }: LoaderFunctionArgs) => {
   return jsonHash({
     async locale() {
-      return i18next.getLocale(request);
+      return params.locale ?? i18next.getLocale(request);
     },
   });
 };
@@ -25,13 +25,15 @@ export const handle = {
   i18n: ["common"],
 };
 
-export function Root({ children }: { children: React.ReactNode }) {
+export default function App() {
   const { locale } = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
   useChangeLanguage(locale);
 
+  console.log("locale www", locale);
+
   return (
-    <html lang={locale} dir={i18n.dir()}>
+    <html lang={locale} dir={i18n.dir()} data-pica="true">
       <head>
         <meta charSet={"utf-8"} />
         <meta
@@ -42,14 +44,10 @@ export function Root({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
+        <Outlet />
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
   );
-}
-
-export default function App() {
-  return <Outlet />;
 }
