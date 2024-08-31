@@ -5,12 +5,12 @@
 	"sideEffects": false,
 	"type": "module",
 	"scripts": {
-		"build": "remix vite:build",
+		"build": "tsc && remix vite:build",
 		"dev": "remix vite:dev",
 		"lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
 		"start": "bun ./db/upgrade.ts && remix-serve ./build/server/index.js",
 		"typecheck": "tsc",
-		"upgrade": "bun ./db/upgrade.ts"
+		"upgrade": "bun ./app/db/upgrade.ts"
 	},
 	"dependencies": {
 		"@paralleldrive/cuid2": "^2.2.2",
@@ -31,6 +31,8 @@
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
 		"react-i18next": "^15.0.1",
+		"remix-auth": "^3.7.0",
+		"remix-auth-github": "^2.0.0",
 		"remix-i18next": "^6.3.0",
 		"remix-utils": "^7.6.0",
 		"tailwind-variants": "^0.2.1",

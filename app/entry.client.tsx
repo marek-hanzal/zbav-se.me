@@ -9,34 +9,34 @@ import { getInitialNamespaces } from "remix-i18next/client";
 import i18n from "~/i18n/i18n";
 
 async function hydrate() {
-  await i18next
-    .use(initReactI18next)
-    .use(LanguageDetector)
-    .use(Backend)
-    .init({
-      ...i18n,
-      ns: getInitialNamespaces(),
-      backend: { loadPath: "/translation/{{lng}}/{{ns}}.json" },
-      detection: {
-        order: ["htmlTag"],
-        caches: [],
-      },
-    });
+	await i18next
+		.use(initReactI18next)
+		.use(LanguageDetector)
+		.use(Backend)
+		.init({
+			...i18n,
+			ns: getInitialNamespaces(),
+			backend: { loadPath: "/translation/{{lng}}/{{ns}}.json" },
+			detection: {
+				order: ["htmlTag"],
+				caches: [],
+			},
+		});
 
-  startTransition(() => {
-    hydrateRoot(
-      document,
-      <I18nextProvider i18n={i18next}>
-        <StrictMode>
-          <RemixBrowser />
-        </StrictMode>
-      </I18nextProvider>,
-    );
-  });
+	startTransition(() => {
+		hydrateRoot(
+			document,
+			<I18nextProvider i18n={i18next}>
+				<StrictMode>
+					<RemixBrowser />
+				</StrictMode>
+			</I18nextProvider>,
+		);
+	});
 }
 
 if (window.requestIdleCallback) {
-  window.requestIdleCallback(hydrate);
+	window.requestIdleCallback(hydrate);
 } else {
-  window.setTimeout(hydrate, 1);
+	window.setTimeout(hydrate, 1);
 }
