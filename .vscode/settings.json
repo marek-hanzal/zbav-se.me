@@ -1,12 +1,25 @@
 {
     "cSpell.words": [
         "camelcase",
+        "Insertable",
         "isbot",
         "languagedetector",
         "Lngs",
+        "paralleldrive",
         "Pipeable",
         "tailwindcss",
         "tseslint",
-        "typecheck"
+        "typecheck",
+        "Updateable"
+    ],
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "driver": "PostgreSQL",
+            "name": "zbav-se.me",
+            "group": "localhost",
+            "connectString": "postgresql://postgres:sqGMQx3rh0frcY2L@localhost:5432"
+        }
     ]
 }
