@@ -6,6 +6,8 @@ import { db } from "./db";
 const upgrade = async () => {
 	const migrator = new Migrator({
 		db,
+		migrationLockTableName: "migration_lock",
+		migrationTableName: "migration",
 		provider: new FileMigrationProvider({
 			fs,
 			path,
