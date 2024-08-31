@@ -6,6 +6,9 @@ const ServerSchema = z.object({
 	DATABASE_URL: z.string(),
 
 	COOKIE_SECRET: z.string(),
+
+	GITHUB_CLIENT_ID: z.string(),
+	GITHUB_CLIENT_SECRET: z.string(),
 });
 
 export const serverEnv = () => ServerSchema.parse(process.env);
