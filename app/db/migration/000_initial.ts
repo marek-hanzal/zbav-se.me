@@ -6,5 +6,6 @@ export const up = async (db: Kysely<any>): Promise<void> => {
 		.addColumn("id", "char(24)", (col) => col.primaryKey())
 		.addColumn("name", "varchar(128)", (col) => col.notNull())
 		.addColumn("email", "varchar(128)", (col) => col.notNull().unique())
+		.addColumn("password", "varchar(128)", (col) => col.notNull())
 		.execute();
 };
