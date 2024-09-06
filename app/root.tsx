@@ -4,7 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import { jsonHash } from "remix-utils/json-hash";
 import i18next from "~/i18n/i18next.server";
-import "~/tailwind.css?inline";
+import { tvaBackgroundGradient } from "~/lib/tva/tvaBackgroundGradient";
+import "~/tailwind.css";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	return jsonHash({
@@ -23,11 +24,12 @@ export default function App() {
 	const { i18n } = useTranslation();
 	useChangeLanguage(locale);
 
+	const tv = tvaBackgroundGradient({ class: ["min-h-screen", "p-4"] });
+
 	return (
 		<html
 			lang={locale}
-			dir={i18n.dir()}
-			data-pica="true">
+			dir={i18n.dir()}>
 			<head>
 				<meta charSet={"utf-8"} />
 				<meta
@@ -37,7 +39,7 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body>
+			<body className={tv}>
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />

@@ -9,7 +9,7 @@ export default function Index() {
 	const { t } = useTranslation();
 	return (
 		<div className="bg-slate-100 p-4 font-sans">
-			<h1 className="text-3xl">Welcome to Remix {t("bello")}</h1>
+			<h1 className="text-3xl">Welcome to Remix {t("o")}</h1>
 			<ul className="mt-4 list-disc space-y-2 pl-6">
 				<li>
 					<a

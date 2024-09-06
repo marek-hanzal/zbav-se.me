@@ -2,8 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { json, type ActionFunctionArgs } from "@remix-run/node";
 import { Form } from "@remix-run/react";
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { z } from "zod";
+import { tvaInput } from "~/lib/tva/tvaInput";
 
 const SignUpSchema = z
 	.object({
@@ -41,52 +43,87 @@ const SignUpForm: FC = () => {
 		mode: "onSubmit",
 		resolver,
 	});
+	const { t } = useTranslation();
+
+	const tv = tvaInput();
 
 	return (
 		<Form
 			onSubmit={handleSubmit}
-			method={"POST"}>
-			<label>
-				[Name:]
+			method={"POST"}
+			className={"flex-1"}>
+			<div className={tv.base()}>
+				<label
+					htmlFor={"name"}
+					className={tv.label()}>
+					{t("Name")}
+				</label>
 				<input
+					id={"name"}
 					type={"text"}
-					className={"border border-blue-400"}
+					className={tv.input()}
 					{...register("name")}
 				/>
 				{errors.name && <div>{errors.name.message}</div>}
-			</label>
-			<label>
-				[Email:]
+			</div>
+
+			<div className={tv.base()}>
+				<label
+					htmlFor={"email"}
+					className={tv.label()}>
+					{t("Email")}
+				</label>
 				<input
+					id={"email"}
 					type={"email"}
-					className={"border border-blue-400"}
+					className={tv.input()}
 					{...register("email")}
 				/>
 				{errors.email && <div>{errors.email.message}</div>}
-			</label>
-			<label>
-				[Password:]
+			</div>
+
+			<div className={tv.base()}>
+				<label
+					htmlFor={"password"}
+					className={tv.label()}>
+					{t("Password")}
+				</label>
 				<input
+					id={"password"}
 					type={"password"}
-					className={"border border-blue-400"}
+					className={tv.input()}
 					{...register("password")}
 				/>
 				{errors.password && <div>{errors.password.message}</div>}
-			</label>
-			<label>
-				[Confirm Password:]
+			</div>
+
+			<div className={tv.base()}>
+				<label
+					htmlFor={"confirm"}
+					className={tv.label()}>
+					{t("Confirm Password")}
+				</label>
 				<input
+					id={"confirm"}
 					type={"password"}
-					className={"border border-blue-400"}
+					className={tv.input()}
 					{...register("confirm")}
 				/>
 				{errors.confirm && <div>{errors.confirm.message}</div>}
-			</label>
-			<button type={"submit"}>Submit</button>
+			</div>
+
+			<div className={"flex items-center"}>
+				<button type={"submit"}>{t("Sign-up")}</button>
+			</div>
 		</Form>
 	);
 };
 
 export default function SignUp() {
-	return <SignUpForm />;
+	return (
+		<div>
+			<div className={"h-24 w-full bg-amber-400"}>[Logo here]</div>
+			<SignUpForm />
+		</div>
+	);
 }

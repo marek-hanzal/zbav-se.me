@@ -1,3 +1,7 @@
 {
-	"bello": "Ahoj"
+	"Name": "Celé jméno",
+	"Email": "Email",
+	"Password": "Heslo",
+	"Confirm Password": "Potvrzení hesla",
+	"Sign-up": "Zaregistrovat se"
 }
