@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import { jsonHash } from "remix-utils/json-hash";
 import i18next from "~/i18n/i18next.server";
-import { tvaBackgroundGradient } from "~/lib/tva/tvaBackgroundGradient";
 import "~/tailwind.css";
+import { tvaBackgroundGradient } from "~/theme/tvaBackgroundGradient";
 
 export const loader = async ({ request, params }: LoaderFunctionArgs) => {
 	return jsonHash({

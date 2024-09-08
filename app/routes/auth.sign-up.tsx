@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { z } from "zod";
-import { tvaInput } from "~/lib/tva/tvaInput";
+import { tvaInput } from "~/theme/tvaInput";
 
 const SignUpSchema = z
 	.object({

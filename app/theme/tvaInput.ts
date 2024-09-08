@@ -1,4 +1,4 @@
-import { tva } from "~/lib/tva";
+import { tva } from "~/theme/tva";
 
 export const tvaInput = tva({
 	slots: {
