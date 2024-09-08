@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { json, type ActionFunctionArgs } from "@remix-run/node";
-import { Form } from "@remix-run/react";
+import { Form, Link } from "@remix-run/react";
 import type { FC } from "react";
 import { useTranslation } from "react-i18next";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
@@ -110,6 +110,11 @@ const SignUpForm: FC = () => {
 					{...register("confirm")}
 				/>
 				{errors.confirm && <div>{errors.confirm.message}</div>}
+			</div>
+
+			<div className={"flex items-center justify-between"}>
+				<span className={"text-sm text-orange-600"}>{t("Already registered?")}</span>
+				<Link to={"/auth/sign-in"}>{t("Sign in")}</Link>
 			</div>
 
 			<div className={"flex items-center"}>
