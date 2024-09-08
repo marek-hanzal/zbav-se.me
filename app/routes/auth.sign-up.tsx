@@ -54,7 +54,7 @@ const SignUpForm: FC = () => {
 			onSubmit={handleSubmit}
 			method={"POST"}>
 			<div className={"flex items-center justify-between"}>
-				<span className={"text-sm text-orange-600"}>{t("Already registered?")}</span>
+				<span className={"text-md text-orange-600"}>{t("Already registered?")}</span>
 				<Link to={"/auth/sign-in"}>{t("Sign in here")}</Link>
 			</div>
 
@@ -128,7 +128,7 @@ const SignUpForm: FC = () => {
 				</Button>
 			</div>
 			<div className={"flex items-center justify-center gap-4"}>
-				<span className={"text-sm text-orange-600"}>{t("TOS agree hint")}</span>
+				<span className={"text-xl text-orange-600"}>{t("TOS agree hint")}</span>
 				<Link to={"/tos"}>{t("TOS agree link")}</Link>
 			</div>
 		</Form>

@@ -3,7 +3,7 @@ import { tva } from "~/theme/tva";
 export const tvaInput = tva({
 	slots: {
 		base: ["py-2"],
-		label: ["block", "text-sm", "font-medium", "text-slate-900"],
+		label: ["block", "text-xl", "text-orange-900"],
 		input: [
 			"w-full",
 			"border-2",
