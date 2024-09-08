@@ -15,7 +15,7 @@ export const ButtonTva = tva({
 	},
 	variants: {
 		variant: {
-			primary: "bg-orange-300 text-orange-800",
+			primary: "bg-orange-300 border border-orange-500 text-orange-800",
 		},
 		disabled: {
 			true: "opacity-50 cursor-not-allowed pointer-events-none",
