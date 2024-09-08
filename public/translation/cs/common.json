@@ -3,5 +3,10 @@
 	"Email": "Email",
 	"Password": "Heslo",
 	"Confirm Password": "Potvrzení hesla",
-	"Sign-up": "Zaregistrovat se"
+	"Sign in here": "Přihlašte se",
+	"Sign-up": "Zaregistrovat se",
+	"Already registered?": "Máte již účet?",
+	"TOS agree hint": "Registrací udělujete souhlas",
+	"TOS agree link": "s podmínkami užití",
+	"Sign-up - Welcome": "zbav-se.me"
 }

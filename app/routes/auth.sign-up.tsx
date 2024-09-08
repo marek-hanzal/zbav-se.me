@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { getValidatedFormData, useRemixForm } from "remix-hook-form";
 import { z } from "zod";
 import { tvaInput } from "~/theme/tvaInput";
+import { Button } from "~/ui/kit/Button";
+import { Divider } from "~/ui/kit/Divider";
 
 const SignUpSchema = z
 	.object({
@@ -50,8 +52,14 @@ const SignUpForm: FC = () => {
 	return (
 		<Form
 			onSubmit={handleSubmit}
-			method={"POST"}
-			className={"flex-1"}>
+			method={"POST"}>
+			<div className={"flex items-center justify-between"}>
+				<span className={"text-sm text-orange-600"}>{t("Already registered?")}</span>
+				<Link to={"/auth/sign-in"}>{t("Sign in here")}</Link>
+			</div>
+
+			<Divider css={{ base: ["w-1/2", "mx-auto", "my-4"] }} />
+
 			<div className={tv.base()}>
 				<label
 					htmlFor={"name"}
@@ -112,22 +120,29 @@ const SignUpForm: FC = () => {
 				{errors.confirm && <div>{errors.confirm.message}</div>}
 			</div>
 
-			<div className={"flex items-center justify-between"}>
-				<span className={"text-sm text-orange-600"}>{t("Already registered?")}</span>
-				<Link to={"/auth/sign-in"}>{t("Sign in")}</Link>
+			<div className={"flex flex-row justify-center p-4"}>
+				<Button
+					variant={{ size: "large" }}
+					type={"submit"}>
+					{t("Sign-up")}
+				</Button>
 			</div>
-
-			<div className={"flex items-center"}>
-				<button type={"submit"}>{t("Sign-up")}</button>
+			<div className={"flex items-center justify-center gap-4"}>
+				<span className={"text-sm text-orange-600"}>{t("TOS agree hint")}</span>
+				<Link to={"/tos"}>{t("TOS agree link")}</Link>
 			</div>
 		</Form>
 	);
 };
 
 export default function SignUp() {
+	const { t } = useTranslation();
 	return (
-		<div>
-			<div className={"h-24 w-full bg-amber-400"}>[Logo here]</div>
+		<div className={"flex flex-col gap-4"}>
+			<div>
+				<h1 className={"text-center text-xl font-bold text-orange-800"}>{t("Sign-up - Welcome")}</h1>
+			</div>
+			<Divider />
 			<SignUpForm />
 		</div>
 	);
