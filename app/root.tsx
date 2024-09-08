@@ -29,7 +29,8 @@ export default function App() {
 	return (
 		<html
 			lang={locale}
-			dir={i18n.dir()}>
+			dir={i18n.dir()}
+			className={tv}>
 			<head>
 				<meta charSet={"utf-8"} />
 				<meta
@@ -39,7 +40,7 @@ export default function App() {
 				<Meta />
 				<Links />
 			</head>
-			<body className={tv}>
+			<body>
 				<Outlet />
 				<ScrollRestoration />
 				<Scripts />
