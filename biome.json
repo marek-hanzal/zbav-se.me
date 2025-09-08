@@ -9,7 +9,7 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**/*",
-			"!**/_route.ts",
+			"!**/routeTree.gen.ts",
 			"!**/dist",
 			"!**/.tanstack"
 		]

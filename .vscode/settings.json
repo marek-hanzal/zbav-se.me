@@ -1,12 +1,12 @@
 {
 	"files.watcherExclude": {
-		"**/_route.ts": true
+		"**/routeTree.gen.ts": true
 	},
 	"search.exclude": {
-		"**/_route.ts": true
+		"**/routeTree.gen.ts": true
 	},
 	"files.readonlyInclude": {
-		"**/_route.ts": true
+		"**/routeTree.gen.ts": true
 	},
 	"cSpell.words": [
 		"adduser",
@@ -149,6 +149,7 @@
 		"postrotate",
 		"prerun",
 		"proicons",
+		"qrcode",
 		"rainforest",
 		"rainforests",
 		"rankdir",

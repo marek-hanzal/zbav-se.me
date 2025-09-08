@@ -1,19 +1,20 @@
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
 import tla from "vite-plugin-top-level-await";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
+import { qrcode } from "vite-plugin-qrcode";
+import webfontDownload from "vite-plugin-webfont-dl";
 
 export default defineConfig({
 	clearScreen: false,
 	plugins: [
-		tanstackRouter({
-			generatedRouteTree: "./src/_route.ts",
-			routesDirectory: "./src/@routes",
+		tanstackStart({
+			customViteReactPlugin: true,
 		}),
 		tla(),
 		paths(),
@@ -21,6 +22,8 @@ export default defineConfig({
 		ViteYaml(),
 		dynamicImport(),
 		wasm(),
+		qrcode(),
+		webfontDownload(),
 		tailwindcss(),
 	],
 	worker: {

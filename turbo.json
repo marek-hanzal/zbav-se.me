@@ -8,6 +8,10 @@
 			"cache": false,
 			"persistent": true
 		},
+		"preview": {
+			"cache": false,
+			"persistent": true
+		},
 		"typecheck": {
 			"inputs": [
 				"src/**",

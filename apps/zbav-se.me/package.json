@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"serve": "vite preview",
+		"preview": "PORT=4089 node .output/server/index.mjs",
 		"start": "vite",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit"
@@ -14,10 +14,12 @@
 		"@tanstack/react-form": "1.19.4",
 		"@tanstack/react-query": "5.87.1",
 		"@tanstack/react-router": "1.131.36",
-		"@use-pico/client": "5.0.47",
+		"@tanstack/react-start": "1.131.36",
+		"@tanstack/react-store": "0.7.4",
+		"@use-pico/client": "5.0.48",
 		"@use-pico/cls": "5.0.24",
-		"@use-pico/common": "5.0.28",
-		"@use-pico/server": "5.0.28",
+		"@use-pico/common": "5.0.29",
+		"@use-pico/server": "5.0.29",
 		"kysely": "0.28.5",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
@@ -29,6 +31,7 @@
 		"@iconify/tailwind": "1.2.0",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.13",
+		"@tanstack/react-router-ssr-query": "1.131.36",
 		"@tanstack/router-plugin": "1.131.36",
 		"@types/node": "^24.1.0",
 		"@types/react": "19.1.12",
@@ -38,8 +41,10 @@
 		"typescript": "^5.9.2",
 		"vite": "^7.0.6",
 		"vite-plugin-dynamic-import": "1.6.0",
+		"vite-plugin-qrcode": "0.3.0",
 		"vite-plugin-top-level-await": "1.6.0",
 		"vite-plugin-wasm": "3.5.0",
+		"vite-plugin-webfont-dl": "3.11.1",
 		"vite-tsconfig-paths": "^5.1.4"
 	},
 	"private": true
