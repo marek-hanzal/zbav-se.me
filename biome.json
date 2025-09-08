@@ -11,6 +11,8 @@
 			"**/*",
 			"!**/routeTree.gen.ts",
 			"!**/dist",
+			"!**/.output",
+			"!**/.nitro",
 			"!**/.tanstack"
 		]
 	},

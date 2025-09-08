@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"preview": "PORT=4089 node .output/server/index.mjs",
+		"preview": "PORT=4088 node .output/server/index.mjs",
 		"start": "vite",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit"
@@ -44,7 +44,6 @@
 		"vite-plugin-qrcode": "0.3.0",
 		"vite-plugin-top-level-await": "1.6.0",
 		"vite-plugin-wasm": "3.5.0",
-		"vite-plugin-webfont-dl": "3.11.1",
 		"vite-tsconfig-paths": "^5.1.4"
 	},
 	"private": true

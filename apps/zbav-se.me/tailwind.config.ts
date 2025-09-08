@@ -2,7 +2,7 @@ import { addDynamicIconSelectors } from "@iconify/tailwind";
 
 export default {
 	content: [
-        './src/**/*.{ts,tsx}',
+		"./src/**/*.{ts,tsx}",
 		"../../packages/**/*.{ts,tsx}",
 	],
 	important: true,

@@ -1,15 +1,14 @@
 import type { QueryClient } from "@tanstack/react-query";
 import {
-    createRootRouteWithContext,
-    HeadContent,
-    Outlet,
-    Scripts,
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	Scripts,
 } from "@tanstack/react-router";
-import { PicoCls, type PageCls } from "@use-pico/client";
+import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ThemeCls";
 import styles from "~/assets/style.css?url";
-// import "~/assets/style.css";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
@@ -28,7 +27,13 @@ export const Route = createRootRouteWithContext<{
 				title: "zbav-se.me",
 			},
 		],
-        links: [{ rel: "stylesheet", href: styles, type: "text/css" }],
+		links: [
+			{
+				rel: "stylesheet",
+				href: styles,
+				type: "text/css",
+			},
+		],
 	}),
 	component() {
 		return (

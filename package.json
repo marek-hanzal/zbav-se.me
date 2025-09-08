@@ -7,7 +7,7 @@
 		"preview": "turbo run preview --no-daemon",
 		"translations": "turbo run translations --no-daemon",
 		"format": "biome format --write .",
-		"lint": "biome check .",
+		"lint": "biome check --write .",
 		"typecheck": "turbo run typecheck --no-daemon",
 		"update": "bun update --linker=isolated",
 		"sp:fix": "bun x syncpack fix-mismatches",

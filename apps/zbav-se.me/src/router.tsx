@@ -1,5 +1,5 @@
-import { createRouter as coolCreateRouter } from "@tanstack/react-router";
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
+import { createRouter as coolCreateRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { LoadingOverlay, PageCls } from "@use-pico/client";
 import { routeTree } from "./routeTree.gen";

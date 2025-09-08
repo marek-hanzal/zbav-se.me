@@ -4,11 +4,10 @@ import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
+import { qrcode } from "vite-plugin-qrcode";
 import tla from "vite-plugin-top-level-await";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
-import { qrcode } from "vite-plugin-qrcode";
-import webfontDownload from "vite-plugin-webfont-dl";
 
 export default defineConfig({
 	clearScreen: false,
@@ -23,7 +22,6 @@ export default defineConfig({
 		dynamicImport(),
 		wasm(),
 		qrcode(),
-		webfontDownload(),
 		tailwindcss(),
 	],
 	worker: {
@@ -36,10 +34,6 @@ export default defineConfig({
 	server: {
 		strictPort: true,
 		port: 4088,
-		// headers: {
-		// 	"Cross-Origin-Opener-Policy": "same-origin",
-		// 	"Cross-Origin-Embedder-Policy": "require-corp",
-		// },
 	},
 	build: {
 		target: "esnext",

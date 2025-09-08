@@ -2,11 +2,10 @@ import { createFileRoute, useParams } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/$locale/")({
 	component() {
-        const { locale } = useParams({
+		const { locale } = useParams({
 			from: "/$locale",
 		});
 
-		return <div>bello</div>;
+		return <div className="font-limelight text-4xl">bello</div>;
 	},
 });
-72
