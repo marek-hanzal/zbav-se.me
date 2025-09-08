@@ -6,11 +6,17 @@
 	"tasks": {
 		"dev": {
 			"cache": false,
-			"persistent": true
+			"persistent": true,
+			"env": [
+				"DATABASE_URL"
+			]
 		},
 		"preview": {
 			"cache": false,
-			"persistent": true
+			"persistent": true,
+			"env": [
+				"DATABASE_URL"
+			]
 		},
 		"typecheck": {
 			"inputs": [
@@ -34,7 +40,10 @@
 				"dist/**",
 				"build/**"
 			],
-			"cache": false
+			"cache": false,
+			"env": [
+				"DATABASE_URL"
+			]
 		},
 		"translations": {
 			"inputs": [

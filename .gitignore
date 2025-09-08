@@ -1,11 +1,10 @@
 .DS_Store
+.env.local
+.million
 .turbo
+.vscode/chrome-debug-profile
 *.log
 lib
 node_modules
 temp
 tsconfig.tsbuildinfo
-.vscode/chrome-debug-profile
-
-# Million Lint
-.million
