@@ -2,8 +2,8 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"type": "npm",
-			"script": "dev",
+			"type": "shell",
+			"command": "bun run dev",
 			"problemMatcher": [],
 			"label": "dev",
 			"detail": "Starts a development server of the client.",
@@ -14,18 +14,17 @@
 				"echo": true,
 				"reveal": "always",
 				"focus": false,
-				"panel": "dedicated",
+				"panel": "shared",
 				"showReuseMessage": true,
 				"clear": true
 			}
 		},
 		{
-			"type": "npm",
-			"script": "build",
-			"group": "build",
+			"type": "shell",
+			"command": "bun run build",
 			"problemMatcher": [],
 			"label": "build",
-			"detail": "Builds a production output of the client.",
+			"detail": "Build the project.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -39,11 +38,11 @@
 			}
 		},
 		{
-			"type": "npm",
-			"script": "upgrade",
+			"type": "shell",
+			"command": "bun run workflow:check",
 			"problemMatcher": [],
-			"label": "app: upgrade",
-			"detail": "Run migrations of the app.",
+			"label": "check",
+			"detail": "Run lint and typecheck.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -58,9 +57,10 @@
 		},
 		{
 			"type": "shell",
-			"command": "bun update",
+			"command": "bun run workflow:update",
+			"problemMatcher": [],
 			"label": "update",
-			"detail": "Updates all dependencies in the client.",
+			"detail": "Update dependencies and format.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -68,17 +68,17 @@
 				"echo": true,
 				"reveal": "always",
 				"focus": false,
-				"panel": "dedicated",
+				"panel": "shared",
 				"showReuseMessage": true,
 				"clear": true
-			},
-			"problemMatcher": []
+			}
 		},
 		{
 			"type": "shell",
-			"command": "npm i -g bun",
-			"label": "bun-time",
-			"detail": "If you don't have bun installed, run this command to install it globally.",
+			"command": "bun run translations",
+			"problemMatcher": [],
+			"label": "translations",
+			"detail": "Generate translations.",
 			"runOptions": {
 				"instanceLimit": 1
 			},
@@ -86,11 +86,10 @@
 				"echo": true,
 				"reveal": "always",
 				"focus": false,
-				"panel": "dedicated",
+				"panel": "shared",
 				"showReuseMessage": true,
 				"clear": true
-			},
-			"problemMatcher": []
+			}
 		}
 	]
 }
