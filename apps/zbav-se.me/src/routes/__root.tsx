@@ -8,7 +8,8 @@ import {
 import { PicoCls, type PageCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ThemeCls";
-import "~/assets/style.css";
+import styles from "~/assets/style.css?url";
+// import "~/assets/style.css";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
@@ -27,6 +28,7 @@ export const Route = createRootRouteWithContext<{
 				title: "zbav-se.me",
 			},
 		],
+        links: [{ rel: "stylesheet", href: styles, type: "text/css" }],
 	}),
 	component() {
 		return (
@@ -34,7 +36,7 @@ export const Route = createRootRouteWithContext<{
 				<head>
 					<HeadContent />
 				</head>
-				<body className={'bg-blue-500'}>
+				<body>
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
 						<Outlet />
 					</ClsProvider>
