@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Button, Tx } from "@use-pico/client";
+import { Button, LinkTo, Tx } from "@use-pico/client";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useState } from "react";
 import { Logo } from "~/app/ui/Logo/Logo";
@@ -23,8 +23,8 @@ const contentVariants = {
 } as const satisfies Variants;
 
 export const Route = createFileRoute("/$locale/")({
-	ssr: false,
 	component() {
+		const { locale } = Route.useParams();
 		const [intro, setIntro] = useState(true);
 
 		return (
@@ -50,35 +50,49 @@ export const Route = createFileRoute("/$locale/")({
 							className="flex h-full w-full flex-col items-center justify-center"
 						>
 							<div className="flex flex-col w-full gap-4 p-4">
-								<Button
-									size="xl"
-									tone="primary"
-									theme="dark"
-									tweak={({ what }) => ({
-										slot: what.slot({
-											root: what.css([
-												"w-full",
-											]),
-										}),
-									})}
+								<LinkTo
+									to={"/$locale/order/supply/create"}
+									params={{
+										locale,
+									}}
 								>
-									<Tx label={"Nabídnout"} />
-								</Button>
+									<Button
+										size="xl"
+										tone="primary"
+										theme="dark"
+										tweak={({ what }) => ({
+											slot: what.slot({
+												root: what.css([
+													"w-full",
+												]),
+											}),
+										})}
+									>
+										<Tx label={"Nabídnout"} />
+									</Button>
+								</LinkTo>
 
-								<Button
-									size="xl"
-									tone="secondary"
-									theme="dark"
-									tweak={({ what }) => ({
-										slot: what.slot({
-											root: what.css([
-												"w-full",
-											]),
-										}),
-									})}
+								<LinkTo
+									to={"/$locale/order/demand/create"}
+									params={{
+										locale,
+									}}
 								>
-									<Tx label={"Poptat"} />
-								</Button>
+									<Button
+										size="xl"
+										tone="secondary"
+										theme="dark"
+										tweak={({ what }) => ({
+											slot: what.slot({
+												root: what.css([
+													"w-full",
+												]),
+											}),
+										})}
+									>
+										<Tx label={"Poptat"} />
+									</Button>
+								</LinkTo>
 							</div>
 						</motion.div>
 					)}

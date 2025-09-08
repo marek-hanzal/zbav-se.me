@@ -15,7 +15,10 @@
 		"@tanstack/react-query": "5.87.1",
 		"@tanstack/react-router": "1.131.36",
 		"@tanstack/react-start": "1.131.36",
-		"@tanstack/react-store": "0.7.4",
+		"@tanstack/react-store": "0.7.5",
+		"@trpc/client": "11.5.1",
+		"@trpc/react-query": "11.5.1",
+		"@trpc/server": "11.5.1",
 		"@use-pico/client": "5.0.48",
 		"@use-pico/cls": "5.0.24",
 		"@use-pico/common": "5.0.29",
@@ -25,6 +28,7 @@
 		"pg": "8.16.3",
 		"react": "^19.1.1",
 		"react-dom": "^19.1.1",
+		"superjson": "2.2.2",
 		"zod": "4.1.5"
 	},
 	"devDependencies": {

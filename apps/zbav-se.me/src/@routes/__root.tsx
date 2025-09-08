@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
+import { client, trpc } from "~/app/trpc/client/trpc";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
@@ -36,6 +37,8 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	component() {
+		const { queryClient } = Route.useRouteContext();
+
 		const slots = ThemeCls.create(({ what }) => ({
 			slot: what.slot({
 				default: what.token([
@@ -51,9 +54,14 @@ export const Route = createRootRouteWithContext<{
 				</head>
 				<body className="overscroll-none">
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
-						<div className={slots.default()}>
-							<Outlet />
-						</div>
+						<trpc.Provider
+							client={client}
+							queryClient={queryClient}
+						>
+							<div className={slots.default()}>
+								<Outlet />
+							</div>
+						</trpc.Provider>
 					</ClsProvider>
 					<Scripts />
 				</body>

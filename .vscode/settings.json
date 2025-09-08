@@ -1,12 +1,12 @@
 {
 	"files.watcherExclude": {
-		"**/routeTree.gen.ts": true
+		"**/_route.ts": true
 	},
 	"search.exclude": {
-		"**/routeTree.gen.ts": true
+		"**/_route.ts": true
 	},
 	"files.readonlyInclude": {
-		"**/routeTree.gen.ts": true
+		"**/_route.ts": true
 	},
 	"cSpell.words": [
 		"adduser",

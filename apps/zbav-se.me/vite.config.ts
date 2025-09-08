@@ -14,6 +14,10 @@ export default defineConfig({
 	plugins: [
 		tanstackStart({
 			customViteReactPlugin: true,
+			tsr: {
+				generatedRouteTree: "./src/_route.ts",
+				routesDirectory: "./src/@routes",
+			},
 		}),
 		tla(),
 		paths(),
@@ -40,7 +44,7 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		exclude: [
-			"sqlocal",
+			"pg",
 		],
 	},
 });
