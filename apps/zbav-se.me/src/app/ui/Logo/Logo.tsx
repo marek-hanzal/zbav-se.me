@@ -1,61 +1,95 @@
 import { Tx } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import { motion } from "motion/react";
+import { type MotionProps, motion, type Variants } from "motion/react";
 import type { FC } from "react";
 import { LogoCls } from "~/app/ui/Logo/LogoCls";
 
+const variants = {
+	root: {
+		hidden: {},
+		visible: {
+			transition: {
+				delayChildren: 1.25,
+				when: "afterChildren",
+			},
+		},
+		exit: {
+			opacity: 0,
+			scale: 0.9,
+			transition: {
+				duration: 0.25,
+			},
+		},
+	} as const satisfies Variants,
+
+	logo: {
+		hidden: {
+			opacity: 0,
+			scale: 0.5,
+		},
+		visible: {
+			opacity: 1,
+			scale: 1,
+			transition: {
+				duration: 0.6,
+				ease: "easeOut",
+				type: "spring",
+				stiffness: 100,
+			},
+		},
+	} as const satisfies Variants,
+
+	text: {
+		hidden: {
+			opacity: 0,
+			rotate: -8,
+			scale: 0.6,
+		},
+		visible: {
+			opacity: 1,
+			rotate: -3,
+			scale: 1,
+			y: -8,
+			transition: {
+				duration: 0.8,
+				delay: 0.3,
+				ease: "easeOut",
+				type: "spring",
+				stiffness: 80,
+			},
+		},
+	} as const satisfies Variants,
+} as const;
+
 export namespace Logo {
-	export interface Props extends LogoCls.Props {}
+	export interface Props extends LogoCls.Props<MotionProps> {}
 }
 
-export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak }) => {
+export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
 	const slots = useCls(cls, tweak);
 
 	return (
-		<div className={slots.root()}>
+		<motion.div
+			className={slots.root()}
+			variants={variants.root}
+			initial="hidden"
+			animate="visible"
+			exit="exit"
+			{...props}
+		>
 			<motion.div
 				className={slots.logo()}
-				initial={{
-					opacity: 0,
-					scale: 0.5,
-				}}
-				animate={{
-					opacity: 1,
-					scale: 1,
-				}}
-				transition={{
-					duration: 0.6,
-					ease: "easeOut",
-					type: "spring",
-					stiffness: 100,
-				}}
+				variants={variants.logo}
 			>
 				zbav-se.me
 			</motion.div>
 
 			<motion.div
 				className={slots.text()}
-				initial={{
-					opacity: 0,
-					rotate: -8,
-					scale: 0.6,
-				}}
-				animate={{
-					opacity: 1,
-					rotate: -3,
-					scale: 1,
-					y: -8,
-				}}
-				transition={{
-					duration: 0.8,
-					delay: 0.3,
-					ease: "easeOut",
-					type: "spring",
-					stiffness: 80,
-				}}
+				variants={variants.text}
 			>
-				<Tx label={"Pošli do světa co je již netřeba"} />
+				<Tx label="Pošli do světa co je již netřeba" />
 			</motion.div>
-		</div>
+		</motion.div>
 	);
 };
