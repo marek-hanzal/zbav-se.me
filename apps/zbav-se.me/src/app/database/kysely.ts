@@ -14,7 +14,5 @@ export const { kysely, bootstrap } = withDatabase<Database>({
 	async getMigrations() {
 		return migrations;
 	},
-	async bootstrap() {
-		console.log("Database bootstrapped");
-	},
+	async bootstrap() {},
 });
