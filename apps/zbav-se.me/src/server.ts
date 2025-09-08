@@ -9,10 +9,10 @@ import { createRouter } from "~/router";
 const withGlobalHeaders = <R extends AnyRouter>(
 	handler: HandlerCallback<R>,
 ): HandlerCallback<R> => {
-	return (ev) =>
-		Promise.resolve(handler(ev)).then((res) => {
-			res.headers.set("Cross-Origin-Opener-Policy", "same-origin");
-			res.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
+	return (props) =>
+		Promise.resolve(handler(props)).then((res) => {
+			// res.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+			// res.headers.set("Cross-Origin-Embedder-Policy", "require-corp");
 			return res;
 		});
 };

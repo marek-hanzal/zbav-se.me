@@ -25,6 +25,9 @@ export const createRouter = () => {
 		defaultPreload: "intent",
 		defaultPreloadStaleTime: 0,
 		defaultPendingMinMs: 200,
+		defaultNotFoundComponent() {
+			return <div>4😞4</div>;
+		},
 	});
 
 	setupRouterSsrQueryIntegration({
