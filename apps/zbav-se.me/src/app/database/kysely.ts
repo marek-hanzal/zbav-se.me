@@ -11,7 +11,7 @@ export const { kysely, bootstrap } = withDatabase<Database>({
 	async getMigrations() {
 		return migrations;
 	},
-	async bootstrap({kysely}) {
+	async bootstrap({ kysely }) {
 		await sql`PRAGMA foreign_keys = ON`.execute(kysely);
 		await sql`PRAGMA journal_mode = WAL`.execute(kysely);
 	},
