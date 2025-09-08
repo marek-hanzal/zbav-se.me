@@ -13,6 +13,8 @@ export namespace Button {
 		iconProps?: Omit<Icon.Props, "icon">;
 		loading?: boolean;
 		size?: Cls.VariantOf<ButtonCls, "size">;
+		tone?: Cls.VariantOf<ButtonCls, "tone">;
+		theme?: Cls.VariantOf<ButtonCls, "theme">;
 	}
 }
 
@@ -23,6 +25,8 @@ export const Button: FC<Button.Props> = ({
 	iconProps,
 	loading,
 	size,
+	tone,
+	theme,
 	cls = ButtonCls,
 	tweak,
 	children,
@@ -32,6 +36,8 @@ export const Button: FC<Button.Props> = ({
 		variant: what.variant({
 			disabled: props.disabled,
 			size,
+			tone,
+			theme,
 		}),
 	}));
 

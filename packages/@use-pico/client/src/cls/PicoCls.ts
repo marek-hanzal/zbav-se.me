@@ -1339,9 +1339,9 @@ export const PicoCls = cls(
 				"text-lg",
 			]),
 			"size.xl": what.css([
-				"h-16",
-				"px-8",
-				"text-xl",
+				"h-18",
+				"px-10",
+				"text-2xl",
 			]),
 			//
 			"padding.xs": what.css([
