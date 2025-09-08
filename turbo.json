@@ -1,0 +1,49 @@
+{
+	"$schema": "https://turborepo.org/schema.json",
+	"globalDependencies": [
+		"tsconfig.json"
+	],
+	"tasks": {
+		"dev": {
+			"cache": false,
+			"persistent": true
+		},
+		"preview": {
+			"cache": false,
+			"persistent": true
+		},
+		"typecheck": {
+			"inputs": [
+				"src/**",
+				"tsconfig.json"
+			],
+			"outputs": [],
+			"outputLogs": "new-only",
+			"cache": false
+		},
+		"build": {
+			"dependsOn": [
+				"^build"
+			],
+			"inputs": [
+				"src/**",
+				"package.json",
+				"rollup.config.*"
+			],
+			"outputs": [
+				"dist/**",
+				"build/**"
+			],
+			"cache": false
+		},
+		"translations": {
+			"inputs": [
+				"src/**"
+			],
+			"outputs": [
+				"src/translation/**"
+			],
+			"cache": false
+		}
+	}
+}

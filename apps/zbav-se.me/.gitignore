@@ -1,0 +1,23 @@
+# Local
+.DS_Store
+*.local
+*.log*
+
+.tanstack
+
+# Dist
+node_modules
+dist/
+.vinxi
+.output
+.vercel
+.netlify
+.wrangler
+.nitro
+
+# IDE
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+zbav-se.me.sqlite3*

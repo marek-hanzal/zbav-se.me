@@ -1,0 +1,53 @@
+{
+	"name": "zbav-se.me",
+	"version": "0.5.0",
+	"type": "module",
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite",
+		"preview": "PORT=4088 node .output/server/index.mjs",
+		"start": "vite",
+		"translations": "bun ./cli/translations.ts",
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@tanstack/react-form": "1.19.4",
+		"@tanstack/react-query": "5.87.1",
+		"@tanstack/react-router": "1.131.36",
+		"@tanstack/react-start": "1.131.36",
+		"@tanstack/react-store": "0.7.4",
+		"@use-pico/client": "5.0.48",
+		"@use-pico/cls": "5.0.24",
+		"@use-pico/common": "5.0.29",
+		"@use-pico/server": "5.0.29",
+		"better-sqlite3": "^12.2.0",
+		"kysely": "0.28.5",
+		"motion": "^12.23.12",
+		"react": "^19.1.1",
+		"react-dom": "^19.1.1",
+		"sqlocal": "0.14.2",
+		"zod": "4.1.5"
+	},
+	"devDependencies": {
+		"@iconify/json": "2.2.382",
+		"@iconify/tailwind": "1.2.0",
+		"@modyfi/vite-plugin-yaml": "1.1.1",
+		"@tailwindcss/vite": "4.1.13",
+		"@tanstack/react-router-ssr-query": "1.131.36",
+		"@tanstack/router-plugin": "1.131.36",
+		"@types/better-sqlite3": "^7.6.13",
+		"@types/node": "^24.1.0",
+		"@types/react": "19.1.12",
+		"@types/react-dom": "19.1.9",
+		"@vitejs/plugin-react": "^5.0.0",
+		"tailwindcss": "4.1.13",
+		"typescript": "^5.9.2",
+		"vite": "^7.0.6",
+		"vite-plugin-dynamic-import": "1.6.0",
+		"vite-plugin-qrcode": "0.3.0",
+		"vite-plugin-top-level-await": "1.6.0",
+		"vite-plugin-wasm": "3.5.0",
+		"vite-tsconfig-paths": "^5.1.4"
+	},
+	"private": true
+}

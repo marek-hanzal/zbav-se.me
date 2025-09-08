@@ -1,62 +1,35 @@
 {
-  "name": "zbav-se.me",
-  "version": "0.5.0",
-  "private": true,
-  "sideEffects": false,
-  "type": "module",
-  "scripts": {
-    "build": "remix vite:build",
-    "dev": "remix vite:dev",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "remix-serve ./build/server/index.js",
-    "no-start": "bun run db:migrate && remix-serve ./build/server/index.js",
-    "typecheck": "tsc",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate",
-    "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio"
-  },
-  "dependencies": {
-    "@remix-run/node": "^2.11.2",
-    "@remix-run/react": "^2.11.2",
-    "@remix-run/serve": "^2.11.2",
-    "crypto-js": "^4.2.0",
-    "drizzle-orm": "^0.33.0",
-    "i18next-browser-languagedetector": "^8.0.0",
-    "i18next-fs-backend": "^2.3.2",
-    "i18next-http-backend": "^2.6.1",
-    "i18next": "^23.14.0",
-    "intl-parse-accept-language": "^1.0.0",
-    "is-ip": "^5.0.1",
-    "isbot": "^5.1.17",
-    "postgres": "^3.4.4",
-    "react-dom": "^18.3.1",
-    "react-i18next": "^15.0.1",
-    "react": "^18.3.1",
-    "remix-i18next": "^6.3.0",
-    "remix-utils": "^7.6.0",
-    "tailwind-variants": "^0.2.1",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
-    "@remix-run/dev": "^2.11.2",
-    "@types/react-dom": "^18.3.0",
-    "@types/react": "^18.3.4",
-    "@typescript-eslint/eslint-plugin": "^8.3.0",
-    "@typescript-eslint/parser": "^8.3.0",
-    "autoprefixer": "^10.4.20",
-    "drizzle-kit": "^0.24.2",
-    "typescript-eslint": "^8.3.0",
-    "eslint": "^9.9.1",
-    "postcss": "^8.4.41",
-    "prettier-plugin-tailwindcss": "^0.6.6",
-    "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.10",
-    "typescript": "^5.5.4",
-    "vite-tsconfig-paths": "^4.3.2",
-    "vite": "^5.4.2"
-  },
-  "engines": {
-    "node": ">=20.0.0"
-  }
+	"name": "marek-hanzal/zbav-se.me",
+	"description": "Simple but clever c2c marketplace",
+	"scripts": {
+		"dev": "turbo run dev --parallel --no-daemon",
+		"build": "turbo run build --no-daemon",
+		"preview": "turbo run preview --no-daemon",
+		"translations": "turbo run translations --no-daemon",
+		"format": "biome format --write .",
+		"lint": "biome check --write .",
+		"typecheck": "turbo run typecheck --no-daemon",
+		"update": "bun update --linker=isolated",
+		"sp:fix": "bun x syncpack fix-mismatches",
+		"sp:format": "bun x syncpack format",
+		"sp:update": "bun x syncpack update",
+		"workflow:format": "run-s sp:format format",
+		"workflow:check": "run-s workflow:format lint typecheck",
+		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.2.3",
+		"npm-run-all2": "8.0.4",
+		"syncpack": "13.0.4",
+		"turbo": "2.5.6",
+		"typescript": "^5.9.2"
+	},
+	"license": "MIT",
+	"repository": "marek-hanzal/zbav-se.me.git",
+	"packageManager": "bun@1.2.4",
+	"private": true,
+	"workspaces": [
+		"apps/*",
+		"packages/**/*"
+	]
 }
