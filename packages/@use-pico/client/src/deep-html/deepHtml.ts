@@ -1,10 +1,6 @@
 /**
- * Create a deep clone of `liveRoot` and stamp runtime state
- * (form values, open, selected, canvas snapshot, etc.)
- * into the clone so its HTML reflects the current visual state.
- *
- * Intended for snapshotting a live DOM node into static HTML,
- * e.g. for ghost overlays with dangerouslySetInnerHTML.
+ * Deep-clone `liveRoot` and stamp runtime state into the clone
+ * so its HTML reflects the current visual state.
  */
 export function deepHtml(root: HTMLElement): HTMLElement {
 	const cloneRoot = root.cloneNode(true) as HTMLElement;
@@ -33,13 +29,25 @@ export function deepHtml(root: HTMLElement): HTMLElement {
 				}
 			}
 
-			// indeterminate (visual state of checkbox)
+			// indeterminate (checkbox visual state)
 			if (src.type === "checkbox") {
 				if ((src as any).indeterminate) {
 					dst.setAttribute("data-indeterminate", "true");
 				} else {
 					dst.removeAttribute("data-indeterminate");
 				}
+			}
+
+			// disabled / readonly (runtime toggles)
+			if (src.disabled) {
+				dst.setAttribute("disabled", "");
+			} else {
+				dst.removeAttribute("disabled");
+			}
+			if (src.readOnly) {
+				dst.setAttribute("readonly", "");
+			} else {
+				dst.removeAttribute("readonly");
 			}
 		});
 	}
@@ -55,6 +63,17 @@ export function deepHtml(root: HTMLElement): HTMLElement {
 				return;
 			}
 			dst.textContent = src.value ?? "";
+
+			if (src.disabled) {
+				dst.setAttribute("disabled", "");
+			} else {
+				dst.removeAttribute("disabled");
+			}
+			if (src.readOnly) {
+				dst.setAttribute("readonly", "");
+			} else {
+				dst.removeAttribute("readonly");
+			}
 		});
 	}
 
@@ -90,6 +109,12 @@ export function deepHtml(root: HTMLElement): HTMLElement {
 					}
 				}
 			});
+
+			if (src.disabled) {
+				dst.setAttribute("disabled", "");
+			} else {
+				dst.removeAttribute("disabled");
+			}
 		});
 	}
 
@@ -127,6 +152,73 @@ export function deepHtml(root: HTMLElement): HTMLElement {
 		});
 	}
 
+	// --- OUTPUT (mirror .value into text) ---
+	{
+		const live = root.querySelectorAll<HTMLOutputElement>("output");
+		const clone = cloneRoot.querySelectorAll<HTMLOutputElement>("output");
+		live.forEach((src, i) => {
+			const dst = clone[i];
+			if (!dst) {
+				return;
+			}
+			if (typeof (src as any).value === "string") {
+				dst.textContent = (src as any).value as string;
+			} else {
+				dst.textContent = src.textContent ?? "";
+			}
+		});
+	}
+
+	// --- PROGRESS / METER (value is a property) ---
+	{
+		const liveP = root.querySelectorAll<HTMLProgressElement>("progress");
+		const cloneP =
+			cloneRoot.querySelectorAll<HTMLProgressElement>("progress");
+		liveP.forEach((src, i) => {
+			const dst = cloneP[i];
+			if (!dst) {
+				return;
+			}
+			if (!Number.isNaN(src.value)) {
+				dst.setAttribute("value", String(src.value));
+			} else {
+				dst.removeAttribute("value");
+			}
+		});
+
+		const liveM = root.querySelectorAll<HTMLMeterElement>("meter");
+		const cloneM = cloneRoot.querySelectorAll<HTMLMeterElement>("meter");
+		liveM.forEach((src, i) => {
+			const dst = cloneM[i];
+			if (!dst) {
+				return;
+			}
+			if (!Number.isNaN(src.value)) {
+				dst.setAttribute("value", String(src.value));
+			} else {
+				dst.removeAttribute("value");
+			}
+		});
+	}
+
+	// --- IMG: freeze chosen resource (handles lazy/srcset) ---
+	{
+		const live = root.querySelectorAll<HTMLImageElement>("img");
+		const clone = cloneRoot.querySelectorAll<HTMLImageElement>("img");
+		live.forEach((src, i) => {
+			const dst = clone[i];
+			if (!dst) {
+				return;
+			}
+			if (src.currentSrc) {
+				dst.setAttribute("src", src.currentSrc);
+				dst.removeAttribute("srcset");
+				dst.removeAttribute("sizes");
+				dst.removeAttribute("loading");
+			}
+		});
+	}
+
 	// --- CANVAS → replace with IMG snapshot ---
 	{
 		const live = root.querySelectorAll<HTMLCanvasElement>("canvas");
@@ -144,7 +236,7 @@ export function deepHtml(root: HTMLElement): HTMLElement {
 				img.height = src.height;
 				dst.replaceWith(img);
 			} catch {
-				// Tainted canvas cannot be read, leave the canvas as is
+				// tainted canvas cannot be read; keep canvas
 			}
 		});
 	}

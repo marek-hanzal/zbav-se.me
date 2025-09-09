@@ -2,11 +2,11 @@ import { useRouterState } from "@tanstack/react-router";
 import { deepHtml } from "@use-pico/client";
 import { AnimatePresence, motion } from "motion/react";
 import {
-	type FC,
-	type PropsWithChildren,
-	useLayoutEffect,
-	useRef,
-	useState,
+    type FC,
+    type PropsWithChildren,
+    useLayoutEffect,
+    useRef,
+    useState,
 } from "react";
 
 export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
@@ -46,16 +46,19 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					key={`ghost:${pathname}`}
 					initial={{
 						opacity: 1,
+                        scale: 1,
 					}}
 					animate={{
 						opacity: 1,
+                        scale: 1,
 					}}
 					exit={{
 						opacity: 0,
-						scale: 0.75,
+						x: "-25%",
+						scale: 1,
 					}}
 					transition={{
-						duration: 0.25,
+						duration: 0.15,
 						ease: "easeInOut",
 					}}
 					onAnimationComplete={() => {
@@ -75,18 +78,17 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					key={`${status}-${pathname}`}
 					initial={{
 						opacity: 0,
-						scale: 0.75,
-						rotateZ: 30,
+						scale: 1,
+						x: "25%",
 					}}
 					animate={{
 						opacity: 1,
 						x: 0,
 						y: 0,
 						scale: 1,
-						rotateZ: 0,
 					}}
 					transition={{
-						duration: 0.25,
+						duration: 0.15,
 						ease: "easeInOut",
 					}}
 					className="w-full h-full"
