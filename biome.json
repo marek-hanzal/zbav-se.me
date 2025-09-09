@@ -43,6 +43,9 @@
 			"suspicious": {
 				"noExplicitAny": "off"
 			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off"
+			},
 			"complexity": {
 				"noBannedTypes": "off"
 			}

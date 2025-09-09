@@ -1,4 +1,4 @@
-import { useLocation } from "@tanstack/react-router";
+import { Outlet, useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import type { FC, PropsWithChildren } from "react";
 
@@ -36,7 +36,7 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 				}}
 				className="w-full h-full"
 			>
-				{children}
+				<Outlet/>
 			</motion.div>
 		</AnimatePresence>
 	);
