@@ -88,7 +88,7 @@ export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
 				className={slots.text()}
 				variants={variants.text}
 			>
-				<Tx label="Pošli do světa co je již netřeba" />
+				<Tx label="Prostě to pošli dál..." />
 			</motion.div>
 		</motion.div>
 	);
