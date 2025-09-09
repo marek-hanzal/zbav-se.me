@@ -26,6 +26,7 @@ export { Cursor } from "./cursor/Cursor";
 export { CursorCls } from "./cursor/CursorCls";
 export { Data } from "./data/Data";
 export { DateInline } from "./date-inline/DateInline";
+export { deepHtml } from "./deep-html/deepHtml";
 export { Detail } from "./detail/Detail";
 export { DetailCls } from "./detail/DetailCls";
 export { DownloadButton } from "./download-button/DownloadButton";

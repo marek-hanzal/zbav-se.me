@@ -1,4 +1,5 @@
 import { useRouterState } from "@tanstack/react-router";
+import { deepHtml } from "@use-pico/client";
 import { AnimatePresence, motion } from "motion/react";
 import {
 	type FC,
@@ -26,7 +27,9 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 			readyRef.current = true;
 		}
 		if (status === "pending" && readyRef.current) {
-			ghostRef.current = outletRef.current?.innerHTML;
+			if (outletRef.current) {
+				ghostRef.current = deepHtml(outletRef.current).innerHTML;
+			}
 			setTransition("ghost");
 		}
 	}, [
