@@ -1,11 +1,11 @@
 import { useRouterState } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import {
-    type FC,
-    type PropsWithChildren,
-    useLayoutEffect,
-    useRef,
-    useState,
+	type FC,
+	type PropsWithChildren,
+	useLayoutEffect,
+	useRef,
+	useState,
 } from "react";
 
 export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
@@ -30,7 +30,10 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 	]);
 
 	return (
-		<AnimatePresence mode="wait">
+		<AnimatePresence
+			mode="wait"
+			initial={false}
+		>
 			{transition === "ghost" ? (
 				<motion.div
 					key={`ghost:${pathname}`}
@@ -42,17 +45,17 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					}}
 					exit={{
 						opacity: 0,
+						scale: 0.75,
 					}}
 					transition={{
-						duration: 1.5,
+						duration: 0.25,
 						ease: "easeInOut",
 					}}
 					onAnimationComplete={() => {
-						console.log("animation complete");
 						setTransition("outlet");
 					}}
 					dangerouslySetInnerHTML={{
-						__html: ghostRef.current ?? "nobody here",
+						__html: ghostRef.current ?? "",
 					}}
 				/>
 			) : null}
@@ -77,7 +80,7 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 						rotateZ: 0,
 					}}
 					transition={{
-						duration: 1.5,
+						duration: 0.15,
 						ease: "easeInOut",
 					}}
 					className="w-full h-full"
