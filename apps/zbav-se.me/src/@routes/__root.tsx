@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
+import { MotionConfig } from "motion/react";
 import { client, trpc } from "~/app/trpc/client/trpc";
 import { PageTransition } from "~/app/ui/PageTransition";
 import { ThemeCls } from "~/app/ui/ThemeCls";
@@ -60,16 +61,18 @@ export const Route = createRootRouteWithContext<{
 					<HeadContent />
 				</head>
 				<body className="overscroll-none overflow-hidden">
-					<ClsProvider value={PicoCls.use(ThemeCls)}>
-						<trpc.Provider
-							client={client}
-							queryClient={queryClient}
-						>
-							<div className={slots.default()}>
-								<PageTransition />
-							</div>
-						</trpc.Provider>
-					</ClsProvider>
+					<MotionConfig reducedMotion="never">
+						<ClsProvider value={PicoCls.use(ThemeCls)}>
+							<trpc.Provider
+								client={client}
+								queryClient={queryClient}
+							>
+								<div className={slots.default()}>
+									<PageTransition />
+								</div>
+							</trpc.Provider>
+						</ClsProvider>
+					</MotionConfig>
 					<Scripts />
 				</body>
 			</html>

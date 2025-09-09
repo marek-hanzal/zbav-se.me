@@ -1,14 +1,8 @@
 import { Outlet, useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
-import { type FC, useEffect, useRef } from "react";
 
-export const PageTransition: FC = () => {
+export function PageTransition() {
 	const location = useLocation();
-
-	const mounted = useRef(false);
-	useEffect(() => {
-		mounted.current = true;
-	}, []);
 
 	return (
 		<AnimatePresence
@@ -16,29 +10,36 @@ export const PageTransition: FC = () => {
 			initial={false}
 		>
 			<motion.div
-				key={location.href}
-				initial={
-					mounted.current
-						? {
-								opacity: 0,
-								y: 10,
-							}
-						: false
-				}
+				key={location.pathname}
+				initial={{
+					opacity: 0,
+					x: "25%",
+					y: "25%",
+					rotateY: 20,
+					rotateX: 40,
+				}}
 				animate={{
 					opacity: 1,
+					x: 0,
 					y: 0,
+					rotateY: 0,
+					rotateX: 0,
 				}}
 				exit={{
 					opacity: 0,
-					y: -10,
+					x: "-25%",
+					y: "-25%",
+					transition: {
+						duration: 0.15,
+					},
 				}}
 				transition={{
-					duration: 0.25,
+					duration: 0.15,
+					ease: "easeInOut",
 				}}
 			>
 				<Outlet />
 			</motion.div>
 		</AnimatePresence>
 	);
-};
+}
