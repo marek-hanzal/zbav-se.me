@@ -69,7 +69,9 @@ export const Route = createRootRouteWithContext<{
 						>
 							<div className={slots.default()}>
 								<MotionConfig reducedMotion="never">
-									<PageTransition />
+									<PageTransition>
+										<Outlet />
+									</PageTransition>
 								</MotionConfig>
 							</div>
 						</trpc.Provider>
