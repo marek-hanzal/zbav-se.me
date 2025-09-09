@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { LinkTo, Tx } from "@use-pico/client";
+import { Button, LinkTo, Tx } from "@use-pico/client";
 
 export const Route = createFileRoute("/$locale/order/demand/create")({
 	component() {
@@ -18,7 +18,12 @@ export const Route = createFileRoute("/$locale/order/demand/create")({
 						locale: "en",
 					}}
 				>
-					bla
+					<Button
+						theme="dark"
+						tone="secondary"
+					>
+						Bla
+					</Button>
 				</LinkTo>
 
 				<LinkTo

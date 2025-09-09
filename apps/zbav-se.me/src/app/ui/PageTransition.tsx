@@ -1,22 +1,20 @@
-import { Outlet, useLocation } from "@tanstack/react-router";
+import { useLocation } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
+import type { FC, PropsWithChildren } from "react";
 
-export function PageTransition() {
-	const location = useLocation();
+export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
+	const { pathname } = useLocation();
 
 	return (
-		<AnimatePresence
-			mode="wait"
-			initial={false}
-		>
+		<AnimatePresence mode="wait">
 			<motion.div
-				key={location.pathname}
+				key={pathname}
 				initial={{
 					opacity: 0,
-					x: "25%",
-					y: "25%",
-					rotateY: 20,
-					rotateX: 40,
+					// x: "25%",
+					// y: "-25%",
+					// rotateY: 80,
+					rotateZ: 30,
 				}}
 				animate={{
 					opacity: 1,
@@ -24,22 +22,22 @@ export function PageTransition() {
 					y: 0,
 					rotateY: 0,
 					rotateX: 0,
+					rotateZ: 0,
 				}}
 				exit={{
 					opacity: 0,
-					x: "-25%",
-					y: "-25%",
-					transition: {
-						duration: 0.15,
-					},
+					// x: "-25%",
+					// y: "-25%",
+					rotateZ: 30,
 				}}
 				transition={{
-					duration: 0.15,
+					duration: 1.5,
 					ease: "easeInOut",
 				}}
+				className="w-full h-full"
 			>
-				<Outlet />
+				{children}
 			</motion.div>
 		</AnimatePresence>
 	);
-}
+};
