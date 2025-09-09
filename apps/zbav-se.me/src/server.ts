@@ -1,9 +1,10 @@
 import type { AnyRouter } from "@tanstack/react-router";
 import {
-	createStartHandler,
-	defaultStreamHandler,
-	type HandlerCallback,
+    createStartHandler,
+    defaultStreamHandler,
+    type HandlerCallback,
 } from "@tanstack/react-start/server";
+import { bootstrap } from "~/app/database/kysely";
 import { createRouter } from "~/router";
 
 const withGlobalHeaders = <R extends AnyRouter>(
@@ -18,5 +19,8 @@ const withGlobalHeaders = <R extends AnyRouter>(
 };
 
 export default createStartHandler({
-	createRouter,
+	createRouter: async () => {
+        await bootstrap();
+        return createRouter();
+    },
 })(withGlobalHeaders(defaultStreamHandler));
