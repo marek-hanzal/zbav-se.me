@@ -13,6 +13,9 @@ export default defineConfig({
 	clearScreen: false,
 	plugins: [
 		tanstackStart({
+			spa: {
+				enabled: true,
+			},
 			customViteReactPlugin: true,
 			tsr: {
 				generatedRouteTree: "./src/_route.ts",
