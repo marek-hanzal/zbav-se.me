@@ -2,11 +2,11 @@ import { useRouterState } from "@tanstack/react-router";
 import { deepHtml } from "@use-pico/client";
 import { AnimatePresence, motion } from "motion/react";
 import {
-    type FC,
-    type PropsWithChildren,
-    useLayoutEffect,
-    useRef,
-    useState,
+	type FC,
+	type PropsWithChildren,
+	useLayoutEffect,
+	useRef,
+	useState,
 } from "react";
 
 export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
@@ -46,11 +46,11 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					key={`ghost:${pathname}`}
 					initial={{
 						opacity: 1,
-                        scale: 1,
+						scale: 1,
 					}}
 					animate={{
 						opacity: 1,
-                        scale: 1,
+						scale: 1,
 					}}
 					exit={{
 						opacity: 0,

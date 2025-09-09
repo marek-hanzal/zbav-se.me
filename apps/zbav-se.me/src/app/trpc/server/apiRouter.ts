@@ -1,10 +1,10 @@
-import z from "zod";
-import { publicProcedure, router } from "./trpc";
+import { categoryRouter } from "~/app/category/trpc/router";
+import { categoryGroupRouter } from "~/app/category-group/trpc/router";
+import { router } from "./trpc";
 
 export const apiRouter = router({
-	hello: publicProcedure.input(z.string()).query(({ input }) => {
-		return `hello ${input}`;
-	}),
+	category: categoryRouter,
+	categoryGroup: categoryGroupRouter,
 });
 
 export type ApiRouter = typeof apiRouter;

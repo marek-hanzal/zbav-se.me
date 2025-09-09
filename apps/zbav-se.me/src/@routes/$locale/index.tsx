@@ -3,7 +3,6 @@ import { Button, LinkTo, Tx } from "@use-pico/client";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useState } from "react";
 import { Logo } from "~/app/ui/Logo/Logo";
-import { PageTransition } from "~/app/ui/PageTransition";
 
 const contentVariants = {
 	hidden: {

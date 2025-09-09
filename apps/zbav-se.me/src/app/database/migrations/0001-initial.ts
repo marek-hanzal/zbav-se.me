@@ -1,150 +1,321 @@
 import { genId } from "@use-pico/common";
 import type { Migration } from "kysely";
-import type { InventoryItemSchema } from "~/app/inventory/db/InventoryItemSchema";
 
-// Dictionary of words for generating random names and descriptions
-const words = [
-	"Ancient",
-	"Mystical",
-	"Enchanted",
-	"Radiant",
-	"Shadow",
-	"Crystal",
-	"Golden",
-	"Silver",
-	"Bronze",
-	"Iron",
-	"Steel",
-	"Obsidian",
-	"Emerald",
-	"Ruby",
-	"Sapphire",
-	"Diamond",
-	"Amethyst",
-	"Topaz",
-	"Pearl",
-	"Jade",
-	"Onyx",
-	"Garnet",
-	"Opal",
-	"Turquoise",
-	"Scroll",
-	"Potion",
-	"Elixir",
-	"Tome",
-	"Wand",
-	"Staff",
-	"Sword",
-	"Shield",
-	"Helmet",
-	"Armor",
-	"Boots",
-	"Gloves",
-	"Ring",
-	"Necklace",
-	"Crown",
-	"Scepter",
-	"Orb",
-	"Crystal",
-	"Gem",
-	"Stone",
-	"Metal",
-	"Wood",
-	"Cloth",
-	"Leather",
-	"Magic",
-	"Holy",
-	"Dark",
-	"Light",
-	"Fire",
-	"Ice",
-	"Thunder",
-	"Wind",
-	"Earth",
-	"Water",
-	"Nature",
-	"Arcane",
-	"Divine",
-	"Infernal",
-	"Celestial",
-	"Ethereal",
-];
-
-const generateRandomName = () => {
-	const wordCount = Math.floor(Math.random() * 3) + 2; // 2-4 words
-	const selectedWords = [];
-
-	for (let i = 0; i < wordCount; i++) {
-		const randomIndex = Math.floor(Math.random() * words.length);
-		selectedWords.push(words[randomIndex]);
-	}
-
-	return selectedWords.join(" ");
-};
-
-const generateRandomDescription = () => {
-	const wordCount = Math.floor(Math.random() * 3) + 2; // 2-4 words
-	const selectedWords = [];
-
-	for (let i = 0; i < wordCount; i++) {
-		const randomIndex = Math.floor(Math.random() * words.length);
-		selectedWords.push(words[randomIndex]);
-	}
-
-	return selectedWords.join(" ");
-};
-
-const generateSeedData = () => {
-	const items = [];
-	const kinds: InventoryItemSchema.Type["kind"][] = [
-		"WEAPON",
-		"ARMOR",
-		"CONSUMABLE",
-		"MAGICAL",
-	];
-	const types: InventoryItemSchema.Type["type"][] = [
-		"COMMON",
-		"RARE",
-		"EPIC",
-		"LEGENDARY",
+const generateCategoryGroupSeedData = () => {
+	const categoryGroupNames = [
+		"electronics",
+		"kitchen",
+		"garden",
+		"home",
+		"personal",
+		"hobbies",
+		"automotive",
+		"other",
 	];
 
-	for (let i = 0; i < 1024; i++) {
-		const name = generateRandomName();
-		const description =
-			Math.random() > 0.3 ? generateRandomDescription() : null; // 70% chance of having description
-		const amount = Math.floor(Math.random() * 1000) + 1; // 1-1000
-		const kind = kinds[Math.floor(Math.random() * kinds.length)];
-		const type = types[Math.floor(Math.random() * types.length)];
+	return categoryGroupNames.map((name, index) => ({
+		id: genId(),
+		name,
+		sort: index,
+	}));
+};
 
-		items.push({
+const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
+	const categories = [
+		// Electronics
+		{
+			name: "phone",
+			group: "electronics",
+		},
+		{
+			name: "tv",
+			group: "electronics",
+		},
+		{
+			name: "laptop",
+			group: "electronics",
+		},
+		{
+			name: "desktop",
+			group: "electronics",
+		},
+		{
+			name: "tablet",
+			group: "electronics",
+		},
+		{
+			name: "watch",
+			group: "electronics",
+		},
+
+		// Kitchen
+		{
+			name: "appliances",
+			group: "kitchen",
+		},
+		{
+			name: "cookware",
+			group: "kitchen",
+		},
+		{
+			name: "dishes",
+			group: "kitchen",
+		},
+		{
+			name: "cutlery",
+			group: "kitchen",
+		},
+		{
+			name: "bakeware",
+			group: "kitchen",
+		},
+		{
+			name: "storage",
+			group: "kitchen",
+		},
+		{
+			name: "small-appliances",
+			group: "kitchen",
+		},
+		{
+			name: "dining",
+			group: "kitchen",
+		},
+
+		// Garden
+		{
+			name: "plants",
+			group: "garden",
+		},
+		{
+			name: "seeds",
+			group: "garden",
+		},
+		{
+			name: "pots",
+			group: "garden",
+		},
+		{
+			name: "tools",
+			group: "garden",
+		},
+		{
+			name: "fertilizer",
+			group: "garden",
+		},
+		{
+			name: "decorations",
+			group: "garden",
+		},
+		{
+			name: "furniture",
+			group: "garden",
+		},
+		{
+			name: "lighting",
+			group: "garden",
+		},
+
+		// Home
+		{
+			name: "furniture",
+			group: "home",
+		},
+		{
+			name: "decor",
+			group: "home",
+		},
+		{
+			name: "storage",
+			group: "home",
+		},
+		{
+			name: "cleaning",
+			group: "home",
+		},
+		{
+			name: "bedding",
+			group: "home",
+		},
+		{
+			name: "bathroom",
+			group: "home",
+		},
+		{
+			name: "lighting",
+			group: "home",
+		},
+		{
+			name: "textiles",
+			group: "home",
+		},
+
+		// Personal
+		{
+			name: "clothing",
+			group: "personal",
+		},
+		{
+			name: "jewelry",
+			group: "personal",
+		},
+		{
+			name: "books",
+			group: "personal",
+		},
+		{
+			name: "toys",
+			group: "personal",
+		},
+		{
+			name: "accessories",
+			group: "personal",
+		},
+		{
+			name: "cosmetics",
+			group: "personal",
+		},
+		{
+			name: "bags",
+			group: "personal",
+		},
+		{
+			name: "shoes",
+			group: "personal",
+		},
+
+		// Hobbies
+		{
+			name: "art",
+			group: "hobbies",
+		},
+		{
+			name: "music",
+			group: "hobbies",
+		},
+		{
+			name: "sports",
+			group: "hobbies",
+		},
+		{
+			name: "crafts",
+			group: "hobbies",
+		},
+		{
+			name: "games",
+			group: "hobbies",
+		},
+		{
+			name: "collectibles",
+			group: "hobbies",
+		},
+		{
+			name: "instruments",
+			group: "hobbies",
+		},
+		{
+			name: "equipment",
+			group: "hobbies",
+		},
+
+		// Automotive
+		{
+			name: "parts",
+			group: "automotive",
+		},
+		{
+			name: "accessories",
+			group: "automotive",
+		},
+		{
+			name: "tools",
+			group: "automotive",
+		},
+		{
+			name: "maintenance",
+			group: "automotive",
+		},
+		{
+			name: "interior",
+			group: "automotive",
+		},
+		{
+			name: "exterior",
+			group: "automotive",
+		},
+		{
+			name: "electronics",
+			group: "automotive",
+		},
+		{
+			name: "wheels",
+			group: "automotive",
+		},
+		{
+			name: "wreck",
+			group: "automotive",
+		},
+
+		// Other
+		{
+			name: "other",
+			group: "other",
+		},
+	];
+
+	return categories.map((category, index) => {
+		const groupId =
+			categoryGroupMap.get(category.group) ||
+			categoryGroupMap.get("other");
+		if (!groupId) {
+			throw new Error(`Category group not found for: ${category.group}`);
+		}
+		return {
 			id: genId(),
-			name,
-			description,
-			amount,
-			kind,
-			type,
-		});
-	}
-
-	return items;
+			name: category.name,
+			sort: index,
+			categoryGroupId: groupId,
+		};
+	});
 };
 
 export const InitialMigration: Migration = {
 	async up(db) {
+		// Create CategoryGroup table
 		await db.schema
-			.createTable("InventoryItem")
+			.createTable("CategoryGroup")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
-			.addColumn("description", "text")
-			.addColumn("amount", "integer", (col) => col.notNull())
-			.addColumn("kind", "text", (col) => col.notNull())
-			.addColumn("type", "text", (col) => col.notNull())
+			.addColumn("sort", "integer", (col) => col.notNull())
 			.execute();
 
+		// Create Category table
+		await db.schema
+			.createTable("Category")
+			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			.addColumn("name", "text", (col) => col.notNull())
+			.addColumn("sort", "integer", (col) => col.notNull())
+			.addColumn("categoryGroupId", "text", (col) => col.notNull())
+			.execute();
+
+		// Insert CategoryGroup seed data and get the inserted rows
+		const categoryGroupData = generateCategoryGroupSeedData();
+		const insertedCategoryGroups = await db
+			.insertInto("CategoryGroup")
+			.values(categoryGroupData)
+			.returningAll()
+			.execute();
+
+		// Create a map of group names to IDs
+		const categoryGroupMap = new Map<string, string>();
+		insertedCategoryGroups.forEach((group) => {
+			categoryGroupMap.set(group.name, group.id);
+		});
+
+		// Insert Category seed data with proper group assignments
 		await db
-			.insertInto("InventoryItem")
-			.values(generateSeedData())
+			.insertInto("Category")
+			.values(generateCategorySeedData(categoryGroupMap))
 			.execute();
 	},
 };

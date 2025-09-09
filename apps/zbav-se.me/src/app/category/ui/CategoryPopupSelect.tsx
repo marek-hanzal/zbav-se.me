@@ -1,29 +1,27 @@
 import { Badge, More, PopupSelect, Tx } from "@use-pico/client";
 import type { FC } from "react";
-import type { InventoryItemQuerySchema } from "~/app/inventory/db/InventoryItemQuerySchema";
-import type { InventoryItemSchema } from "~/app/inventory/db/InventoryItemSchema";
-import { withInventoryItemListQuery } from "~/app/inventory/query/withInventoryItemListQuery";
-import { InventoryItemTable } from "~/app/inventory/ui/InventoryItemTable";
+import type { CategoryQuerySchema } from "~/app/category/db/CategoryQuerySchema";
+import type { CategorySchema } from "~/app/category/db/CategorySchema";
+import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
+import { CategoryTable } from "~/app/category/ui/CategoryTable";
 
-export namespace InventoryItemPopupSelect {
+export namespace CategoryPopupSelect {
 	export interface Props
 		extends PopupSelect.PropsEx<
-			InventoryItemQuerySchema.Type,
-			InventoryItemSchema.Type
+			CategoryQuerySchema.Type,
+			CategorySchema.Type
 		> {
 		//
 	}
 }
 
-export const InventoryItemPopupSelect: FC<InventoryItemPopupSelect.Props> = (
-	props,
-) => {
+export const CategoryPopupSelect: FC<CategoryPopupSelect.Props> = (props) => {
 	return (
 		<PopupSelect
-			withQuery={withInventoryItemListQuery()}
-			table={InventoryItemTable}
-			textTitle={<Tx label={"Select inventory item (title)"} />}
-			textSelect={<Tx label={"Select inventory item (select)"} />}
+			withQuery={withCategoryListQuery()}
+			table={CategoryTable}
+			textTitle={<Tx label={"Select category (title)"} />}
+			textSelect={<Tx label={"Select category (select)"} />}
 			renderMulti={({ entities }) => (
 				<More
 					// limit={1}

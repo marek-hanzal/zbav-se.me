@@ -8,7 +8,6 @@ import {
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
 import { MotionConfig } from "motion/react";
-import { client, trpc } from "~/app/trpc/client/trpc";
 import { PageTransition } from "~/app/ui/PageTransition";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
@@ -39,8 +38,6 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	shellComponent() {
-		const { queryClient } = Route.useRouteContext();
-
 		const slots = ThemeCls.create(({ what }) => ({
 			slot: what.slot({
 				default: what.both(
@@ -63,18 +60,13 @@ export const Route = createRootRouteWithContext<{
 				</head>
 				<body className="overscroll-none overflow-hidden">
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
-						<trpc.Provider
-							client={client}
-							queryClient={queryClient}
-						>
-							<div className={slots.default()}>
-								<MotionConfig reducedMotion="never">
-									<PageTransition>
-										<Outlet />
-									</PageTransition>
-								</MotionConfig>
-							</div>
-						</trpc.Provider>
+						<div className={slots.default()}>
+							<MotionConfig reducedMotion="never">
+								<PageTransition>
+									<Outlet />
+								</PageTransition>
+							</MotionConfig>
+						</div>
 					</ClsProvider>
 
 					<Scripts />
