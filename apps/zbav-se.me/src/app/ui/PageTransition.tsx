@@ -20,8 +20,12 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 	const outletRef = useRef<HTMLDivElement>(null);
 	const ghostRef = useRef<string | undefined>(undefined);
 
+	const readyRef = useRef(false);
 	useLayoutEffect(() => {
-		if (status === "pending") {
+		if (status === "idle") {
+			readyRef.current = true;
+		}
+		if (status === "pending" && readyRef.current) {
 			ghostRef.current = outletRef.current?.innerHTML;
 			setTransition("ghost");
 		}
@@ -53,10 +57,12 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					}}
 					onAnimationComplete={() => {
 						setTransition("outlet");
+						ghostRef.current = undefined;
 					}}
 					dangerouslySetInnerHTML={{
 						__html: ghostRef.current ?? "",
 					}}
+					className="w-full h-full"
 				/>
 			) : null}
 
@@ -66,9 +72,6 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					key={pathname}
 					initial={{
 						opacity: 0,
-						// x: "25%",
-						// y: "-25%",
-						// rotateY: 80,
 						rotateZ: 30,
 					}}
 					animate={{
