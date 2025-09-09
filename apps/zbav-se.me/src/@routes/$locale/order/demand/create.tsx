@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Button, LinkTo, Tx } from "@use-pico/client";
+import { Button, FormField, LinkTo, Tx } from "@use-pico/client";
 
 export const Route = createFileRoute("/$locale/order/demand/create")({
 	component() {
@@ -34,6 +34,10 @@ export const Route = createFileRoute("/$locale/order/demand/create")({
 				>
 					root
 				</LinkTo>
+
+				<form>
+					<FormField label={"label"} />
+				</form>
 			</>
 		);
 	},
