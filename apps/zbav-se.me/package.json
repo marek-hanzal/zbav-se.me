@@ -5,7 +5,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"preview": "PORT=4088 node .output/server/index.mjs",
+		"preview": "vite build && PORT=4088 node .output/server/index.mjs",
 		"start": "vite",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit"

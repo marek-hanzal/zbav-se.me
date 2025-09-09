@@ -15,6 +15,7 @@ export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 	cls: PageCls;
 }>()({
+	ssr: true,
 	head: () => ({
 		meta: [
 			{

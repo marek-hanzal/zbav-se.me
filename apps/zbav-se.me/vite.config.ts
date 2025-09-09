@@ -15,6 +15,9 @@ export default defineConfig({
 		tanstackStart({
 			spa: {
 				enabled: true,
+				prerender: {
+					enabled: false,
+				},
 			},
 			customViteReactPlugin: true,
 			tsr: {
