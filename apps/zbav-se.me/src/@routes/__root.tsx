@@ -2,12 +2,12 @@ import type { QueryClient } from "@tanstack/react-query";
 import {
 	createRootRouteWithContext,
 	HeadContent,
-	Outlet,
 	Scripts,
 } from "@tanstack/react-router";
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
 import { client, trpc } from "~/app/trpc/client/trpc";
+import { PageTransition } from "~/app/ui/PageTransition";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
@@ -15,7 +15,6 @@ export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 	cls: PageCls;
 }>()({
-	ssr: true,
 	head: () => ({
 		meta: [
 			{
@@ -37,14 +36,21 @@ export const Route = createRootRouteWithContext<{
 			},
 		],
 	}),
-	component() {
+	shellComponent() {
 		const { queryClient } = Route.useRouteContext();
 
 		const slots = ThemeCls.create(({ what }) => ({
 			slot: what.slot({
-				default: what.token([
-					"tone.primary.dark.bg",
-				]),
+				default: what.both(
+					[
+						"p-4",
+						"h-screen",
+						"min-h-screen",
+					],
+					[
+						"tone.primary.dark.bg",
+					],
+				),
 			}),
 		}));
 
@@ -60,7 +66,7 @@ export const Route = createRootRouteWithContext<{
 							queryClient={queryClient}
 						>
 							<div className={slots.default()}>
-								<Outlet />
+								<PageTransition />
 							</div>
 						</trpc.Provider>
 					</ClsProvider>

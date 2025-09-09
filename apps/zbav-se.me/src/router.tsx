@@ -27,7 +27,7 @@ export const createRouter = () => {
 		defaultNotFoundComponent() {
 			return <div>4😞4</div>;
 		},
-        defaultSsr: false,
+		defaultSsr: false,
 	});
 
 	setupRouterSsrQueryIntegration({
