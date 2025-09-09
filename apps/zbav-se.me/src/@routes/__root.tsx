@@ -52,7 +52,7 @@ export const Route = createRootRouteWithContext<{
 				<head>
 					<HeadContent />
 				</head>
-				<body className="overscroll-none">
+				<body className="overscroll-none overflow-hidden">
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
 						<trpc.Provider
 							client={client}
