@@ -19,8 +19,8 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 
 	const outletRef = useRef<HTMLDivElement>(null);
 	const ghostRef = useRef<string | undefined>(undefined);
-
 	const readyRef = useRef(false);
+
 	useLayoutEffect(() => {
 		if (status === "idle") {
 			readyRef.current = true;
@@ -69,21 +69,23 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 			{transition === "outlet" ? (
 				<motion.div
 					ref={outletRef}
-					key={pathname}
+					key={`${status}-${pathname}`}
 					initial={{
 						opacity: 0,
 						rotateZ: 30,
+						scale: 0.75,
 					}}
 					animate={{
 						opacity: 1,
 						x: 0,
 						y: 0,
+						scale: 1,
 						rotateY: 0,
 						rotateX: 0,
 						rotateZ: 0,
 					}}
 					transition={{
-						duration: 0.15,
+						duration: 0.25,
 						ease: "easeInOut",
 					}}
 					className="w-full h-full"
