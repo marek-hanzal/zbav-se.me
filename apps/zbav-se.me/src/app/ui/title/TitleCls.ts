@@ -17,9 +17,9 @@ export const TitleCls = ThemeCls.extend(
 					[
 						"flex",
 						"flex-row",
+                        'items-center',
 						"w-full",
 						"gap-2",
-						"items-center",
 					],
 					[
 						"square.lg",

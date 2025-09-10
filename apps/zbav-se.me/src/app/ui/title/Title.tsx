@@ -1,18 +1,20 @@
 import { Icon } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import type { FC, PropsWithChildren } from "react";
+import type { FC, PropsWithChildren, ReactNode } from "react";
 import { TitleCls } from "~/app/ui/title/TitleCls";
 
 export namespace Title {
 	export interface Props extends TitleCls.Props<PropsWithChildren> {
 		icon?: Icon.Type;
 		iconProps?: Icon.Props;
+		sub?: ReactNode;
 	}
 }
 
 export const Title: FC<Title.Props> = ({
 	icon,
 	iconProps,
+	sub,
 	cls = TitleCls,
 	tweak,
 	children,
@@ -21,11 +23,13 @@ export const Title: FC<Title.Props> = ({
 
 	return (
 		<div className={slots.root()}>
-			<Icon
-				icon={icon}
-				{...iconProps}
-			/>
+            <Icon
+					icon={icon}
+					{...iconProps}
+				/>
+                <div>
 			{children}
+            </div>
 		</div>
 	);
 };

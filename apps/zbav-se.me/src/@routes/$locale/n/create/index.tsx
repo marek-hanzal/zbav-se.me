@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/n/create/")({
 			<>
 				<Title icon={PostIcon}>
 					<Tx
-						label={"Sell - Category List (title)"}
+						label={"Sell - Category Group List (title)"}
 						size={"xl"}
 						font={"bold"}
 					/>
