@@ -62,26 +62,32 @@ export const Data = <
 	result,
 	renderSuccess,
 	renderLoading = () => (
-		<Icon
-			icon={SpinnerIcon}
-			size="xl"
-			tone={"secondary"}
-		/>
+		<div className="grid place-content-center">
+			<Icon
+				icon={SpinnerIcon}
+				size="xl"
+				tone={"secondary"}
+			/>
+		</div>
 	),
 	renderFetching = () => (
-		<Icon
-			icon={SpinnerIcon}
-			size="xl"
-			tone={"secondary"}
-		/>
+		<div className="grid place-content-center">
+			<Icon
+				icon={SpinnerIcon}
+				size="xl"
+				tone={"secondary"}
+			/>
+		</div>
 	),
 	renderError = () => (
-		<Status
-			icon={ErrorIcon}
-			tone={"danger"}
-			textTitle={<Tx label={"Invalid data provided (title)"} />}
-			textMessage={<Tx label={"Invalid data provided (message)"} />}
-		/>
+		<div className="grid place-content-center">
+			<Status
+				icon={ErrorIcon}
+				tone={"danger"}
+				textTitle={<Tx label={"Invalid data provided (title)"} />}
+				textMessage={<Tx label={"Invalid data provided (message)"} />}
+			/>
+		</div>
 	),
 	children = ({ content }) => content,
 }: Data.Props<TData, TResult>) => {
