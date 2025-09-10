@@ -1,20 +1,21 @@
 import { useCls } from "@use-pico/cls";
 import {
-    type FC,
-    type PropsWithChildren,
-    useEffect,
-    useLayoutEffect, useRef
+	type FC,
+	type PropsWithChildren,
+	useEffect,
+	useLayoutEffect,
+	useRef,
 } from "react";
 import { ContentCls } from "~/app/ui/content/ContentCls";
 
 export namespace Content {
 	export interface Props extends ContentCls.Props<PropsWithChildren> {
-		/** Délka přechodu (px) */
+		/** Délka fadu v px (přes kterou roste opacity 0→1). */
 		fadePx?: number; // default 24
-		/** Barva, do které fade mizí (musí sedět s pozadím obsahu) */
+		/** Barva, do níž fade mizí (MUSÍ = bg scroll plochy). */
 		fadeColor?: string; // např. "rgb(224 231 255)"
-		/** Délka plného pásu na začátku fadu (px) – proti sub-pixel lince */
-		fadeSolid?: number; // default 8
+		/** Délka plného pásu na začátku fadu (schová šev). */
+		fadeSolid?: number; // default 12
 	}
 }
 
@@ -22,9 +23,9 @@ export const Content: FC<Content.Props> = ({
 	children,
 	cls = ContentCls,
 	tweak,
-	fadePx = 32,
+	fadePx = 18,
 	fadeColor,
-	fadeSolid = 0,
+	fadeSolid = 8,
 }) => {
 	const slots = useCls(cls, tweak);
 
@@ -34,7 +35,7 @@ export const Content: FC<Content.Props> = ({
 	const topFadeRef = useRef<HTMLDivElement>(null);
 	const botFadeRef = useRef<HTMLDivElement>(null);
 
-	// výpočet opacity – plynule v rámci fadePx
+	// výpočet opacity – lineárně v rámci fadePx
 	const compute = () => {
 		const vp = vpRef.current;
 		const fT = topFadeRef.current;
@@ -43,7 +44,6 @@ export const Content: FC<Content.Props> = ({
 
 		const { scrollTop, scrollHeight, clientHeight } = vp;
 		const max = Math.max(0, scrollHeight - clientHeight);
-
 		if (max <= 0) {
 			fT.style.opacity = "0";
 			fB.style.opacity = "0";
@@ -51,14 +51,11 @@ export const Content: FC<Content.Props> = ({
 		}
 
 		const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
-		const topO = clamp01(scrollTop / fadePx);
-		const botO = clamp01((max - scrollTop) / fadePx);
-
-		fT.style.opacity = topO.toFixed(3);
-		fB.style.opacity = botO.toFixed(3);
+		fT.style.opacity = clamp01(scrollTop / fadePx).toFixed(3);
+		fB.style.opacity = clamp01((max - scrollTop) / fadePx).toFixed(3);
 	};
 
-	// Inicializace stylů ještě před prvním paintem
+	// Nastavení výšek, barev a první výpočet ještě před paintem
 	useLayoutEffect(() => {
 		const root = rootRef.current;
 		const vp = vpRef.current;
@@ -68,17 +65,21 @@ export const Content: FC<Content.Props> = ({
 
 		fT.style.height = `${fadePx}px`;
 		fB.style.height = `${fadePx}px`;
-		root.style.setProperty("--fade-solid", `${fadeSolid}px`);
-		if (fadeColor) root.style.setProperty("--fade-color", fadeColor);
 
-		// první měření (po layoutu, před paintem)
-		compute();
+		root.style.setProperty("--fade-solid", `${fadeSolid}px`);
+		if (fadeColor) {
+			root.style.setProperty("--fade-color", fadeColor);
+			(vp as HTMLElement).style.backgroundColor = fadeColor; // sjednocení odstínu
+		}
+
+		compute(); // hned, bez transition
 	}, [
 		fadePx,
 		fadeSolid,
 		fadeColor,
 	]);
 
+	// Reakce na scroll/resize + jistota po prvním layoutu
 	useEffect(() => {
 		const vp = vpRef.current;
 		const content = contentRef.current;
@@ -93,25 +94,10 @@ export const Content: FC<Content.Props> = ({
 				});
 		};
 
-		// dvojitý rAF → po layoutu i prvním paintu (řeší fonty/scrollbars)
-		const raf1 = requestAnimationFrame(() => {
-			compute();
-			requestAnimationFrame(compute);
-		});
+		compute();
+		const raf1 = requestAnimationFrame(compute);
 
-		// po načtení webfontů (když existují)
-		// @ts-expect-error
-		if (document.fonts?.ready)
-			(document.fonts as any).ready.then(() => {
-				// další frame po dosednutí fontů
-				requestAnimationFrame(compute);
-			});
-
-		// reaguj na změny velikosti viewportu i obsahu
-		const ro = new ResizeObserver(() => {
-			// další frame – po layoutu
-			requestAnimationFrame(compute);
-		});
+		const ro = new ResizeObserver(() => compute());
 		ro.observe(vp);
 		if (content) ro.observe(content);
 
@@ -134,15 +120,15 @@ export const Content: FC<Content.Props> = ({
 			ref={rootRef}
 			className={slots.root()}
 		>
-			{/* overlaye nad obsahem */}
+			{/* fade overlaye (žádné transition) */}
 			<div
 				ref={topFadeRef}
-				aria-hidden
+				aria-hidden={true}
 				className={slots.fadeTop()}
 			/>
 			<div
 				ref={botFadeRef}
-				aria-hidden
+				aria-hidden={true}
 				className={slots.fadeBottom()}
 			/>
 
