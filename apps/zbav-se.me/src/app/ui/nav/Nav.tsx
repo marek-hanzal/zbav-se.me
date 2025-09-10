@@ -21,7 +21,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 	const variants: Cls.VariantsOf<typeof Button.cls> = {
 		size: "lg",
-		tone: "secondary",
+		tone: "danger",
 		round: "xl",
 	};
 	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "subtle";
