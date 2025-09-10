@@ -40,7 +40,7 @@ export const CategoryList: FC<CategoryList.Props> = ({
 					})}
 				>
 					<Button
-						tone={"subtle"}
+						tone={"secondary"}
 						size={"xl"}
 						tweak={({ what }) => ({
 							slot: what.slot({

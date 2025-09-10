@@ -47,7 +47,7 @@ export const Route = createRootRouteWithContext<{
 					],
 					[
 						"square.lg",
-						"tone.danger.dark.bg",
+						"tone.primary.dark.bg",
 					],
 				),
 			}),

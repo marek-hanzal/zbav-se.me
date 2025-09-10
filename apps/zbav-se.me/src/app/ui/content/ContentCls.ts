@@ -24,7 +24,7 @@ export const ContentCls = ThemeCls.extend(
 						"min-h-0",
 						"h-full",
 						"overflow-hidden",
-						"[--fade-color:rgb(230_230_230)]",
+						"[--fade-color:var(--color-orange-200)]",
 						"[--fade-solid:12px]",
 					],
 					[
@@ -37,7 +37,6 @@ export const ContentCls = ThemeCls.extend(
 					"overflow-auto",
 					"overscroll-contain",
 					"z-0",
-					"bg-[rgb(224_231_255)]",
 				]),
 
 				content: what.css([

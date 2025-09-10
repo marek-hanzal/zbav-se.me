@@ -21,10 +21,10 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 	const variants: Cls.VariantsOf<typeof Button.cls> = {
 		size: "lg",
-		tone: "danger",
+		tone: "secondary",
 		round: "xl",
 	};
-	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "subtle";
+	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "primary";
 
 	return (
 		<div className={slots.root()}>
