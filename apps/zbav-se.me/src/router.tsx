@@ -4,7 +4,7 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { PageCls } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import { AnimatePresence } from "motion/react";
-import { LogoAnimated } from "~/app/ui/alogo/LogoAnimated";
+import { LogoAnimated } from "~/app/ui/logo/LogoAnimated";
 import { routeTree } from "./_route";
 
 export const createRouter = () => {

@@ -2,7 +2,7 @@ import { Tx } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import { type MotionProps, motion, type Variants } from "motion/react";
 import type { FC } from "react";
-import { LogoCls } from "~/app/ui/alogo/LogoCls";
+import { LogoCls } from "./LogoCls";
 
 const variants = {
 	root: {
