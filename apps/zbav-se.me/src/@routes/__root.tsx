@@ -1,9 +1,9 @@
 import type { QueryClient } from "@tanstack/react-query";
 import {
-    createRootRouteWithContext,
-    HeadContent,
-    Outlet,
-    Scripts,
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	Scripts,
 } from "@tanstack/react-router";
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
@@ -41,7 +41,7 @@ export const Route = createRootRouteWithContext<{
 			slot: what.slot({
 				default: what.both(
 					[
-                        "h-[100dvh]",
+						"h-[100dvh]",
 						"max-h-[100dvh]",
 						"overscroll-none",
 					],
