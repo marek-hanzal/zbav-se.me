@@ -178,3 +178,12 @@ fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
+Category group electronics:
+    static: true
+    value: Elektronika
+Category group kitchen:
+    static: true
+    value: Kuchyně
+Category group garden:
+    static: true
+    value: Zahrada

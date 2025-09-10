@@ -17,10 +17,11 @@ import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as LocaleNRouteImport } from './@routes/$locale/n'
 import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
-import { Route as LocaleNCreateRouteImport } from './@routes/$locale/n/create'
 import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
+import { Route as LocaleNCreateIndexRouteImport } from './@routes/$locale/n/create/index'
 import { Route as LocaleOrderSupplyCreateRouteImport } from './@routes/$locale/order/supply/create'
 import { Route as LocaleOrderDemandCreateRouteImport } from './@routes/$locale/order/demand/create'
+import { Route as LocaleNCreateCategoryGroupIdRouteImport } from './@routes/$locale/n/create/$categoryGroupId'
 import { ServerRoute as ApiTrpcServerRouteImport } from './@routes/api/trpc'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -55,14 +56,14 @@ const LocaleNFeedRoute = LocaleNFeedRouteImport.update({
   path: '/feed',
   getParentRoute: () => LocaleNRoute,
 } as any)
-const LocaleNCreateRoute = LocaleNCreateRouteImport.update({
-  id: '/create',
-  path: '/create',
-  getParentRoute: () => LocaleNRoute,
-} as any)
 const LocaleNBagRoute = LocaleNBagRouteImport.update({
   id: '/bag',
   path: '/bag',
+  getParentRoute: () => LocaleNRoute,
+} as any)
+const LocaleNCreateIndexRoute = LocaleNCreateIndexRouteImport.update({
+  id: '/create/',
+  path: '/create/',
   getParentRoute: () => LocaleNRoute,
 } as any)
 const LocaleOrderSupplyCreateRoute = LocaleOrderSupplyCreateRouteImport.update({
@@ -75,6 +76,12 @@ const LocaleOrderDemandCreateRoute = LocaleOrderDemandCreateRouteImport.update({
   path: '/order/demand/create',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleNCreateCategoryGroupIdRoute =
+  LocaleNCreateCategoryGroupIdRouteImport.update({
+    id: '/create/$categoryGroupId',
+    path: '/create/$categoryGroupId',
+    getParentRoute: () => LocaleNRoute,
+  } as any)
 const ApiTrpcServerRoute = ApiTrpcServerRouteImport.update({
   id: '/api/trpc',
   path: '/api/trpc',
@@ -87,22 +94,24 @@ export interface FileRoutesByFullPath {
   '/$locale/n': typeof LocaleNRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
-  '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
+  '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdRoute
   '/$locale/order/demand/create': typeof LocaleOrderDemandCreateRoute
   '/$locale/order/supply/create': typeof LocaleOrderSupplyCreateRoute
+  '/$locale/n/create': typeof LocaleNCreateIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
   '/$locale': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
-  '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
+  '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdRoute
   '/$locale/order/demand/create': typeof LocaleOrderDemandCreateRoute
   '/$locale/order/supply/create': typeof LocaleOrderSupplyCreateRoute
+  '/$locale/n/create': typeof LocaleNCreateIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -111,11 +120,12 @@ export interface FileRoutesById {
   '/$locale/n': typeof LocaleNRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
-  '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
+  '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdRoute
   '/$locale/order/demand/create': typeof LocaleOrderDemandCreateRoute
   '/$locale/order/supply/create': typeof LocaleOrderSupplyCreateRoute
+  '/$locale/n/create/': typeof LocaleNCreateIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -125,22 +135,24 @@ export interface FileRouteTypes {
     | '/$locale/n'
     | '/$locale/'
     | '/$locale/n/bag'
-    | '/$locale/n/create'
     | '/$locale/n/feed'
     | '/$locale/n/user'
+    | '/$locale/n/create/$categoryGroupId'
     | '/$locale/order/demand/create'
     | '/$locale/order/supply/create'
+    | '/$locale/n/create'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$locale/n'
     | '/$locale'
     | '/$locale/n/bag'
-    | '/$locale/n/create'
     | '/$locale/n/feed'
     | '/$locale/n/user'
+    | '/$locale/n/create/$categoryGroupId'
     | '/$locale/order/demand/create'
     | '/$locale/order/supply/create'
+    | '/$locale/n/create'
   id:
     | '__root__'
     | '/'
@@ -148,11 +160,12 @@ export interface FileRouteTypes {
     | '/$locale/n'
     | '/$locale/'
     | '/$locale/n/bag'
-    | '/$locale/n/create'
     | '/$locale/n/feed'
     | '/$locale/n/user'
+    | '/$locale/n/create/$categoryGroupId'
     | '/$locale/order/demand/create'
     | '/$locale/order/supply/create'
+    | '/$locale/n/create/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -225,18 +238,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleNFeedRouteImport
       parentRoute: typeof LocaleNRoute
     }
-    '/$locale/n/create': {
-      id: '/$locale/n/create'
-      path: '/create'
-      fullPath: '/$locale/n/create'
-      preLoaderRoute: typeof LocaleNCreateRouteImport
-      parentRoute: typeof LocaleNRoute
-    }
     '/$locale/n/bag': {
       id: '/$locale/n/bag'
       path: '/bag'
       fullPath: '/$locale/n/bag'
       preLoaderRoute: typeof LocaleNBagRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
+    '/$locale/n/create/': {
+      id: '/$locale/n/create/'
+      path: '/create'
+      fullPath: '/$locale/n/create'
+      preLoaderRoute: typeof LocaleNCreateIndexRouteImport
       parentRoute: typeof LocaleNRoute
     }
     '/$locale/order/supply/create': {
@@ -252,6 +265,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/order/demand/create'
       preLoaderRoute: typeof LocaleOrderDemandCreateRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/$locale/n/create/$categoryGroupId': {
+      id: '/$locale/n/create/$categoryGroupId'
+      path: '/create/$categoryGroupId'
+      fullPath: '/$locale/n/create/$categoryGroupId'
+      preLoaderRoute: typeof LocaleNCreateCategoryGroupIdRouteImport
+      parentRoute: typeof LocaleNRoute
     }
   }
 }
@@ -269,16 +289,18 @@ declare module '@tanstack/react-start/server' {
 
 interface LocaleNRouteChildren {
   LocaleNBagRoute: typeof LocaleNBagRoute
-  LocaleNCreateRoute: typeof LocaleNCreateRoute
   LocaleNFeedRoute: typeof LocaleNFeedRoute
   LocaleNUserRoute: typeof LocaleNUserRoute
+  LocaleNCreateCategoryGroupIdRoute: typeof LocaleNCreateCategoryGroupIdRoute
+  LocaleNCreateIndexRoute: typeof LocaleNCreateIndexRoute
 }
 
 const LocaleNRouteChildren: LocaleNRouteChildren = {
   LocaleNBagRoute: LocaleNBagRoute,
-  LocaleNCreateRoute: LocaleNCreateRoute,
   LocaleNFeedRoute: LocaleNFeedRoute,
   LocaleNUserRoute: LocaleNUserRoute,
+  LocaleNCreateCategoryGroupIdRoute: LocaleNCreateCategoryGroupIdRoute,
+  LocaleNCreateIndexRoute: LocaleNCreateIndexRoute,
 }
 
 const LocaleNRouteWithChildren =

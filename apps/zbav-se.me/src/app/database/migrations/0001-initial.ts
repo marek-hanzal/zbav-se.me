@@ -10,6 +10,8 @@ const generateCategoryGroupSeedData = () => {
 		"personal",
 		"hobbies",
 		"automotive",
+		"pets",
+		"reality",
 		"other",
 	];
 
@@ -254,6 +256,134 @@ const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
 		{
 			name: "wreck",
 			group: "automotive",
+		},
+
+		// Pets
+		{
+			name: "dog",
+			group: "pets",
+		},
+		{
+			name: "cat",
+			group: "pets",
+		},
+		{
+			name: "bird",
+			group: "pets",
+		},
+		{
+			name: "fish",
+			group: "pets",
+		},
+		{
+			name: "hamster",
+			group: "pets",
+		},
+		{
+			name: "rabbit",
+			group: "pets",
+		},
+		{
+			name: "reptile",
+			group: "pets",
+		},
+		{
+			name: "accessories",
+			group: "pets",
+		},
+		{
+			name: "food",
+			group: "pets",
+		},
+		{
+			name: "toys",
+			group: "pets",
+		},
+		{
+			name: "health",
+			group: "pets",
+		},
+		{
+			name: "grooming",
+			group: "pets",
+		},
+		{
+			name: "other",
+			group: "pets",
+		},
+
+		// Reality
+		{
+			name: "flat-rent",
+			group: "reality",
+		},
+		{
+			name: "flat-sell",
+			group: "reality",
+		},
+		{
+			name: "house-rent",
+			group: "reality",
+		},
+		{
+			name: "house-sell",
+			group: "reality",
+		},
+		{
+			name: "commercial-rent",
+			group: "reality",
+		},
+		{
+			name: "commercial-sell",
+			group: "reality",
+		},
+		{
+			name: "land-rent",
+			group: "reality",
+		},
+		{
+			name: "land-sell",
+			group: "reality",
+		},
+		{
+			name: "garage-rent",
+			group: "reality",
+		},
+		{
+			name: "garage-sell",
+			group: "reality",
+		},
+		{
+			name: "parking-rent",
+			group: "reality",
+		},
+		{
+			name: "parking-sell",
+			group: "reality",
+		},
+		{
+			name: "storage-rent",
+			group: "reality",
+		},
+		{
+			name: "storage-sell",
+			group: "reality",
+		},
+		{
+			name: "office-rent",
+			group: "reality",
+		},
+		{
+			name: "office-sell",
+			group: "reality",
+		},
+		{
+			name: "warehouse-rent",
+			group: "reality",
+		},
+		{
+			name: "warehouse-sell",
+			group: "reality",
 		},
 
 		// Other

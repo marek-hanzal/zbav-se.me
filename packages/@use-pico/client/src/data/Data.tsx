@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { match } from "ts-pattern";
 import { ErrorIcon } from "../icon/ErrorIcon";
 import { Icon } from "../icon/Icon";
-import { LoaderIcon } from "../icon/LoaderIcon";
+import { SpinnerIcon } from "../icon/SpinnerIcon";
 import { Status } from "../status/Status";
 import { Tx } from "../tx/Tx";
 
@@ -63,14 +63,16 @@ export const Data = <
 	renderSuccess,
 	renderLoading = () => (
 		<Icon
-			icon={LoaderIcon}
+			icon={SpinnerIcon}
 			size="xl"
+			tone={"secondary"}
 		/>
 	),
 	renderFetching = () => (
 		<Icon
-			icon={LoaderIcon}
+			icon={SpinnerIcon}
 			size="xl"
+			tone={"secondary"}
 		/>
 	),
 	renderError = () => (

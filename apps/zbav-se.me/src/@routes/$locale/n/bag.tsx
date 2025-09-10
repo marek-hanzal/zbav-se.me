@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Tx } from "@use-pico/client";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
+import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
 export const Route = createFileRoute("/$locale/n/bag")({
@@ -14,7 +15,10 @@ export const Route = createFileRoute("/$locale/n/bag")({
 						font={"bold"}
 					/>
 				</Title>
-				blabla
+
+				<div className="flex-1">content</div>
+
+				<Nav active="bag" />
 			</>
 		);
 	},

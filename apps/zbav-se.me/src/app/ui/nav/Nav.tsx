@@ -8,10 +8,12 @@ import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { NavCls } from "~/app/ui/nav/NavCls";
 
 export namespace Nav {
-	export interface Props extends NavCls.Props {}
+	export interface Props extends NavCls.Props {
+		active: "feed" | "create" | "bag" | "user";
+	}
 }
 
-export const Nav: FC<Nav.Props> = ({ cls = NavCls, tweak }) => {
+export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 	const slots = useCls(cls, tweak);
 	const { locale } = useParams({
 		from: "/$locale",
@@ -22,6 +24,7 @@ export const Nav: FC<Nav.Props> = ({ cls = NavCls, tweak }) => {
 		tone: "secondary",
 		round: "xl",
 	};
+	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "subtle";
 
 	return (
 		<div className={slots.root()}>
@@ -31,7 +34,10 @@ export const Nav: FC<Nav.Props> = ({ cls = NavCls, tweak }) => {
 					locale,
 				}}
 			>
-				<Button {...variants}>
+				<Button
+					{...variants}
+					tone={active === "feed" ? activeTone : variants.tone}
+				>
 					<Icon icon={FeedIcon} />
 				</Button>
 			</LinkTo>
@@ -42,7 +48,10 @@ export const Nav: FC<Nav.Props> = ({ cls = NavCls, tweak }) => {
 					locale,
 				}}
 			>
-				<Button {...variants}>
+				<Button
+					{...variants}
+					tone={active === "create" ? activeTone : variants.tone}
+				>
 					<Icon icon={PostIcon} />
 				</Button>
 			</LinkTo>
@@ -53,7 +62,10 @@ export const Nav: FC<Nav.Props> = ({ cls = NavCls, tweak }) => {
 					locale,
 				}}
 			>
-				<Button {...variants}>
+				<Button
+					{...variants}
+					tone={active === "bag" ? activeTone : variants.tone}
+				>
 					<Icon icon={BagIcon} />
 				</Button>
 			</LinkTo>
@@ -64,7 +76,10 @@ export const Nav: FC<Nav.Props> = ({ cls = NavCls, tweak }) => {
 					locale,
 				}}
 			>
-				<Button {...variants}>
+				<Button
+					{...variants}
+					tone={active === "user" ? activeTone : variants.tone}
+				>
 					<Icon icon={UserIcon} />
 				</Button>
 			</LinkTo>

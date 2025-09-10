@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Tx, UserIcon } from "@use-pico/client";
+import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
 export const Route = createFileRoute("/$locale/n/user")({
@@ -13,7 +14,10 @@ export const Route = createFileRoute("/$locale/n/user")({
 						font={"bold"}
 					/>
 				</Title>
-				dfgdfg
+
+				<div className="flex-1">content</div>
+
+				<Nav active="user" />
 			</>
 		);
 	},

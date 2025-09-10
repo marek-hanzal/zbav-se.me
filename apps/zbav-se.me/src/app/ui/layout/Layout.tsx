@@ -13,5 +13,9 @@ export const Layout: FC<Layout.Props> = ({
 }) => {
 	const slots = useCls(cls, tweak);
 
-	return <div className={slots.root()}>{children}</div>;
+	return (
+		<div className={slots.root()}>
+			<div className="flex-1 flex flex-col">{children}</div>
+		</div>
+	);
 };
