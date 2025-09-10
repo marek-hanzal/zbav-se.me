@@ -23,13 +23,11 @@ export const Title: FC<Title.Props> = ({
 
 	return (
 		<div className={slots.root()}>
-            <Icon
-					icon={icon}
-					{...iconProps}
-				/>
-                <div>
-			{children}
-            </div>
+			<Icon
+				icon={icon}
+				{...iconProps}
+			/>
+			<div>{children}</div>
 		</div>
 	);
 };

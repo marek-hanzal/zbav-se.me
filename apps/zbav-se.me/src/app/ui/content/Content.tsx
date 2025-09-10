@@ -131,13 +131,11 @@ export const Content: FC<Content.Props> = ({
 				ref={viewportElementRef}
 				className={slots.viewport()}
 			>
-				<div className="min-h-full grid place-content-center">
-					<div
-						ref={contentContainerRef}
-						className={slots.content()}
-					>
-						{children}
-					</div>
+				<div
+					ref={contentContainerRef}
+					className={slots.content()}
+				>
+					{children}
 				</div>
 			</div>
 		</div>

@@ -41,8 +41,9 @@ export const ContentCls = ThemeCls.extend(
 				]),
 
 				content: what.css([
-					"min-h-full",					
-					"px-0",
+					"min-h-full",
+					"grid",
+					"place-content-center",
 				]),
 
 				// horní fade (gradient → plynule do transparent)
