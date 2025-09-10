@@ -28,7 +28,9 @@ export const CategoryList: FC<CategoryList.Props> = ({
 			{list.map((item) => (
 				<LinkTo
 					key={item.id}
-					to={"/$locale/n/create/$categoryGroupId/$categoryId"}
+					to={
+						"/$locale/n/create/category-group/$categoryGroupId/category/$categoryId"
+					}
 					params={{
 						locale,
 						categoryGroupId,

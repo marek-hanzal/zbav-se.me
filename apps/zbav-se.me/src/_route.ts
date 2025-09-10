@@ -19,8 +19,8 @@ import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
 import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
 import { Route as LocaleNCreateIndexRouteImport } from './@routes/$locale/n/create/index'
-import { Route as LocaleNCreateCategoryGroupIdIndexRouteImport } from './@routes/$locale/n/create/$categoryGroupId/index'
-import { Route as LocaleNCreateCategoryGroupIdCategoryIdIndexRouteImport } from './@routes/$locale/n/create/$categoryGroupId/$categoryId/index'
+import { Route as LocaleNCreateCategoryGroupCategoryGroupIdIndexRouteImport } from './@routes/$locale/n/create/category-group/$categoryGroupId/index'
+import { Route as LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRouteImport } from './@routes/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/index'
 import { ServerRoute as ApiTrpcServerRouteImport } from './@routes/api/trpc'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -65,18 +65,20 @@ const LocaleNCreateIndexRoute = LocaleNCreateIndexRouteImport.update({
   path: '/create/',
   getParentRoute: () => LocaleNRoute,
 } as any)
-const LocaleNCreateCategoryGroupIdIndexRoute =
-  LocaleNCreateCategoryGroupIdIndexRouteImport.update({
-    id: '/create/$categoryGroupId/',
-    path: '/create/$categoryGroupId/',
+const LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute =
+  LocaleNCreateCategoryGroupCategoryGroupIdIndexRouteImport.update({
+    id: '/create/category-group/$categoryGroupId/',
+    path: '/create/category-group/$categoryGroupId/',
     getParentRoute: () => LocaleNRoute,
   } as any)
-const LocaleNCreateCategoryGroupIdCategoryIdIndexRoute =
-  LocaleNCreateCategoryGroupIdCategoryIdIndexRouteImport.update({
-    id: '/create/$categoryGroupId/$categoryId/',
-    path: '/create/$categoryGroupId/$categoryId/',
-    getParentRoute: () => LocaleNRoute,
-  } as any)
+const LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute =
+  LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRouteImport.update(
+    {
+      id: '/create/category-group/$categoryGroupId/category/$categoryId/',
+      path: '/create/category-group/$categoryGroupId/category/$categoryId/',
+      getParentRoute: () => LocaleNRoute,
+    } as any,
+  )
 const ApiTrpcServerRoute = ApiTrpcServerRouteImport.update({
   id: '/api/trpc',
   path: '/api/trpc',
@@ -92,8 +94,8 @@ export interface FileRoutesByFullPath {
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
   '/$locale/n/create': typeof LocaleNCreateIndexRoute
-  '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdIndexRoute
-  '/$locale/n/create/$categoryGroupId/$categoryId': typeof LocaleNCreateCategoryGroupIdCategoryIdIndexRoute
+  '/$locale/n/create/category-group/$categoryGroupId': typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
+  '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId': typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -103,8 +105,8 @@ export interface FileRoutesByTo {
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
   '/$locale/n/create': typeof LocaleNCreateIndexRoute
-  '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdIndexRoute
-  '/$locale/n/create/$categoryGroupId/$categoryId': typeof LocaleNCreateCategoryGroupIdCategoryIdIndexRoute
+  '/$locale/n/create/category-group/$categoryGroupId': typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
+  '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId': typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,8 +118,8 @@ export interface FileRoutesById {
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
   '/$locale/n/create/': typeof LocaleNCreateIndexRoute
-  '/$locale/n/create/$categoryGroupId/': typeof LocaleNCreateCategoryGroupIdIndexRoute
-  '/$locale/n/create/$categoryGroupId/$categoryId/': typeof LocaleNCreateCategoryGroupIdCategoryIdIndexRoute
+  '/$locale/n/create/category-group/$categoryGroupId/': typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
+  '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/': typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -130,8 +132,8 @@ export interface FileRouteTypes {
     | '/$locale/n/feed'
     | '/$locale/n/user'
     | '/$locale/n/create'
-    | '/$locale/n/create/$categoryGroupId'
-    | '/$locale/n/create/$categoryGroupId/$categoryId'
+    | '/$locale/n/create/category-group/$categoryGroupId'
+    | '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -141,8 +143,8 @@ export interface FileRouteTypes {
     | '/$locale/n/feed'
     | '/$locale/n/user'
     | '/$locale/n/create'
-    | '/$locale/n/create/$categoryGroupId'
-    | '/$locale/n/create/$categoryGroupId/$categoryId'
+    | '/$locale/n/create/category-group/$categoryGroupId'
+    | '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId'
   id:
     | '__root__'
     | '/'
@@ -153,8 +155,8 @@ export interface FileRouteTypes {
     | '/$locale/n/feed'
     | '/$locale/n/user'
     | '/$locale/n/create/'
-    | '/$locale/n/create/$categoryGroupId/'
-    | '/$locale/n/create/$categoryGroupId/$categoryId/'
+    | '/$locale/n/create/category-group/$categoryGroupId/'
+    | '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -241,18 +243,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleNCreateIndexRouteImport
       parentRoute: typeof LocaleNRoute
     }
-    '/$locale/n/create/$categoryGroupId/': {
-      id: '/$locale/n/create/$categoryGroupId/'
-      path: '/create/$categoryGroupId'
-      fullPath: '/$locale/n/create/$categoryGroupId'
-      preLoaderRoute: typeof LocaleNCreateCategoryGroupIdIndexRouteImport
+    '/$locale/n/create/category-group/$categoryGroupId/': {
+      id: '/$locale/n/create/category-group/$categoryGroupId/'
+      path: '/create/category-group/$categoryGroupId'
+      fullPath: '/$locale/n/create/category-group/$categoryGroupId'
+      preLoaderRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRouteImport
       parentRoute: typeof LocaleNRoute
     }
-    '/$locale/n/create/$categoryGroupId/$categoryId/': {
-      id: '/$locale/n/create/$categoryGroupId/$categoryId/'
-      path: '/create/$categoryGroupId/$categoryId'
-      fullPath: '/$locale/n/create/$categoryGroupId/$categoryId'
-      preLoaderRoute: typeof LocaleNCreateCategoryGroupIdCategoryIdIndexRouteImport
+    '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/': {
+      id: '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/'
+      path: '/create/category-group/$categoryGroupId/category/$categoryId'
+      fullPath: '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId'
+      preLoaderRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRouteImport
       parentRoute: typeof LocaleNRoute
     }
   }
@@ -274,8 +276,8 @@ interface LocaleNRouteChildren {
   LocaleNFeedRoute: typeof LocaleNFeedRoute
   LocaleNUserRoute: typeof LocaleNUserRoute
   LocaleNCreateIndexRoute: typeof LocaleNCreateIndexRoute
-  LocaleNCreateCategoryGroupIdIndexRoute: typeof LocaleNCreateCategoryGroupIdIndexRoute
-  LocaleNCreateCategoryGroupIdCategoryIdIndexRoute: typeof LocaleNCreateCategoryGroupIdCategoryIdIndexRoute
+  LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
+  LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 
 const LocaleNRouteChildren: LocaleNRouteChildren = {
@@ -283,10 +285,10 @@ const LocaleNRouteChildren: LocaleNRouteChildren = {
   LocaleNFeedRoute: LocaleNFeedRoute,
   LocaleNUserRoute: LocaleNUserRoute,
   LocaleNCreateIndexRoute: LocaleNCreateIndexRoute,
-  LocaleNCreateCategoryGroupIdIndexRoute:
-    LocaleNCreateCategoryGroupIdIndexRoute,
-  LocaleNCreateCategoryGroupIdCategoryIdIndexRoute:
-    LocaleNCreateCategoryGroupIdCategoryIdIndexRoute,
+  LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute:
+    LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute,
+  LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute:
+    LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute,
 }
 
 const LocaleNRouteWithChildren =

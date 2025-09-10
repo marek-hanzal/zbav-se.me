@@ -1,9 +1,9 @@
 import type { QueryClient } from "@tanstack/react-query";
 import {
-    createRootRouteWithContext,
-    HeadContent,
-    Outlet,
-    Scripts,
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	Scripts,
 } from "@tanstack/react-router";
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";

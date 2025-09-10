@@ -8,7 +8,9 @@ import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
-export const Route = createFileRoute("/$locale/n/create/$categoryGroupId/")({
+export const Route = createFileRoute(
+	"/$locale/n/create/category-group/$categoryGroupId/",
+)({
 	component() {
 		const { categoryGroupId } = Route.useParams();
 		const categoryGroupQuery = withCategoryGroupFetchQuery().useQuery({

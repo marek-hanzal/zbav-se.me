@@ -1,4 +1,4 @@
-import { withCount, withList } from "@use-pico/client";
+import { withCount, withFetch, withList } from "@use-pico/client";
 import { CategoryQuerySchema } from "~/app/category/db/CategoryQuerySchema";
 import { CategorySchema } from "~/app/category/db/CategorySchema";
 import {
@@ -39,6 +39,23 @@ export const categoryRouter = router({
 						select,
 						where,
 						sort: input.sort,
+					});
+				},
+			});
+		}),
+
+	fetch: publicProcedure
+		.input(CategoryQuerySchema)
+		.query(async ({ input }) => {
+			return withFetch({
+				select: kysely.selectFrom("Category").selectAll(),
+				output: CategorySchema,
+				filter: input.filter,
+				where: input.where,
+				query({ select, where }) {
+					return withCategoryQueryBuilder({
+						select,
+						where,
 					});
 				},
 			});

@@ -15,7 +15,7 @@ export const ThemeCls = PicoCls.extend(
 			 * Color Switching Overrides:
 			 * danger -> primary, warning -> secondary, primary -> danger, secondary -> warning
 			 */
-			
+
 			// Primary tone now uses danger colors (rose/red)
 			"tone.primary.light.text": what.css([
 				"text-rose-700",
