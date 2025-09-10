@@ -15,9 +15,18 @@ export const ContentCls = ThemeCls.extend(
 		rules: [
 			def.root({
 				root: what.css([
-					"grid",
-					"place-items-center",
+					"min-h-0",
+					"overflow-auto",
+					"overscroll-contain",
 				]),
+				inner: what.both([
+					"min-h-full",
+					"grid",
+					"place-content-center",
+                    'px-0',
+				],[
+                    'square.lg',
+                ]),
 			}),
 		],
 		defaults: def.defaults({}),

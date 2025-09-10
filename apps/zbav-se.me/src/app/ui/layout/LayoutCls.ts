@@ -15,7 +15,7 @@ export const LayoutCls = ThemeCls.extend(
 			def.root({
 				root: what.both(
 					[
-                        'h-full',
+						"h-full",
 						"grid",
 						"grid-rows-[min-content_minmax(0,1fr)_min-content]",
 					],

@@ -12,5 +12,9 @@ export const Content: FC<Content.Props> = ({
 	tweak,
 }) => {
 	const slots = useCls(cls, tweak);
-	return <div className={slots.root()}>{children}</div>;
+	return (
+		<div className={slots.root()}>
+			<div className={slots.inner()}>{children}</div>
+		</div>
+	);
 };

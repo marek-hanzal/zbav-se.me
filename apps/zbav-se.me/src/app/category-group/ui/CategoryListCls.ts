@@ -15,7 +15,11 @@ export const CategoryListCls = ThemeCls.extend(
 		token: def.token({}),
 		rules: [
 			def.root({
-				root: what.both([], []),
+				root: what.css([
+					"flex",
+					"flex-col",
+					"gap-2",
+				]),
 			}),
 		],
 		defaults: def.defaults({}),
