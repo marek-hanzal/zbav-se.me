@@ -3,7 +3,7 @@ import { useCls } from "@use-pico/cls";
 import { type MotionProps, motion, type Variants } from "motion/react";
 import type { FC } from "react";
 import { useState } from "react";
-import { LogoCls } from "~/app/ui/logo/LogoCls";
+import { LogoCls } from "~/app/ui/LogoCls";
 
 const variants = {
 	root: {
