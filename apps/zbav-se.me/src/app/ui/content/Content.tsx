@@ -25,91 +25,102 @@ export const Content: FC<Content.Props> = ({
 	tweak,
 	fadePx = 18,
 	fadeColor,
-	fadeSolid = 8,
+	fadeSolid = 4,
 }) => {
 	const slots = useCls(cls, tweak);
 
-	const rootRef = useRef<HTMLDivElement>(null);
-	const vpRef = useRef<HTMLDivElement>(null);
-	const contentRef = useRef<HTMLDivElement>(null);
-	const topFadeRef = useRef<HTMLDivElement>(null);
-	const botFadeRef = useRef<HTMLDivElement>(null);
+	const rootElementRef = useRef<HTMLDivElement>(null);
+	const viewportElementRef = useRef<HTMLDivElement>(null);
+	const contentContainerRef = useRef<HTMLDivElement>(null);
+	const topFadeElementRef = useRef<HTMLDivElement>(null);
+	const bottomFadeElementRef = useRef<HTMLDivElement>(null);
+
+	// pomocná funkce: oříznout hodnotu do intervalu <0,1>
+	const clampToUnitInterval = (value: number) =>
+		value < 0 ? 0 : value > 1 ? 1 : value;
 
 	// výpočet opacity – lineárně v rámci fadePx
-	const compute = () => {
-		const vp = vpRef.current;
-		const fT = topFadeRef.current;
-		const fB = botFadeRef.current;
-		if (!vp || !fT || !fB) return;
+	const updateFadeOpacity = () => {
+		const viewportEl = viewportElementRef.current;
+		const topFadeEl = topFadeElementRef.current;
+		const bottomFadeEl = bottomFadeElementRef.current;
+		if (!viewportEl || !topFadeEl || !bottomFadeEl) return;
 
-		const { scrollTop, scrollHeight, clientHeight } = vp;
-		const max = Math.max(0, scrollHeight - clientHeight);
-		if (max <= 0) {
-			fT.style.opacity = "0";
-			fB.style.opacity = "0";
+		const { scrollTop, scrollHeight, clientHeight } = viewportEl;
+		const maxScrollable = Math.max(0, scrollHeight - clientHeight);
+
+		if (maxScrollable <= 0) {
+			topFadeEl.style.opacity = "0";
+			bottomFadeEl.style.opacity = "0";
 			return;
 		}
 
-		const clamp01 = (x: number) => (x < 0 ? 0 : x > 1 ? 1 : x);
-		fT.style.opacity = clamp01(scrollTop / fadePx).toFixed(3);
-		fB.style.opacity = clamp01((max - scrollTop) / fadePx).toFixed(3);
+		const topOpacity = clampToUnitInterval(scrollTop / fadePx);
+		const bottomOpacity = clampToUnitInterval(
+			(maxScrollable - scrollTop) / fadePx,
+		);
+
+		topFadeEl.style.opacity = topOpacity.toFixed(3);
+		bottomFadeEl.style.opacity = bottomOpacity.toFixed(3);
 	};
 
 	// Nastavení výšek, barev a první výpočet ještě před paintem
 	useLayoutEffect(() => {
-		const root = rootRef.current;
-		const vp = vpRef.current;
-		const fT = topFadeRef.current;
-		const fB = botFadeRef.current;
-		if (!root || !vp || !fT || !fB) return;
+		const rootEl = rootElementRef.current;
+		const viewportEl = viewportElementRef.current;
+		const topFadeEl = topFadeElementRef.current;
+		const bottomFadeEl = bottomFadeElementRef.current;
+		if (!rootEl || !viewportEl || !topFadeEl || !bottomFadeEl) return;
 
-		fT.style.height = `${fadePx}px`;
-		fB.style.height = `${fadePx}px`;
+		topFadeEl.style.height = `${fadePx}px`;
+		bottomFadeEl.style.height = `${fadePx}px`;
 
-		root.style.setProperty("--fade-solid", `${fadeSolid}px`);
+		rootEl.style.setProperty("--fade-solid", `${fadeSolid}px`);
 		if (fadeColor) {
-			root.style.setProperty("--fade-color", fadeColor);
-			(vp as HTMLElement).style.backgroundColor = fadeColor; // sjednocení odstínu
+			rootEl.style.setProperty("--fade-color", fadeColor);
+			(viewportEl as HTMLElement).style.backgroundColor = fadeColor; // sjednocení odstínu
 		}
 
-		compute(); // hned, bez transition
+		updateFadeOpacity(); // hned, bez transition
 	}, [
 		fadePx,
 		fadeSolid,
 		fadeColor,
 	]);
 
-	// Reakce na scroll/resize + jistota po prvním layoutu
 	useEffect(() => {
-		const vp = vpRef.current;
-		const content = contentRef.current;
-		if (!vp) return;
+		const viewportEl = viewportElementRef.current;
+		const contentEl = contentContainerRef.current;
+		if (!viewportEl) {
+			return;
+		}
 
-		let raf = 0;
+		let rafId = 0;
 		const onScroll = () => {
-			if (!raf)
-				raf = requestAnimationFrame(() => {
-					raf = 0;
-					compute();
+			if (!rafId) {
+				rafId = requestAnimationFrame(() => {
+					rafId = 0;
+					updateFadeOpacity();
 				});
+			}
 		};
 
-		compute();
-		const raf1 = requestAnimationFrame(compute);
+		updateFadeOpacity();
+		const firstFrameId = requestAnimationFrame(updateFadeOpacity);
 
-		const ro = new ResizeObserver(() => compute());
-		ro.observe(vp);
-		if (content) ro.observe(content);
+		const resizeObserver = new ResizeObserver(() => updateFadeOpacity());
+		resizeObserver.observe(viewportEl);
+		if (contentEl) resizeObserver.observe(contentEl);
 
-		vp.addEventListener("scroll", onScroll, {
+		viewportEl.addEventListener("scroll", onScroll, {
 			passive: true,
 		});
 
 		return () => {
-			vp.removeEventListener("scroll", onScroll);
-			ro.disconnect();
-			cancelAnimationFrame(raf1);
-			if (raf) cancelAnimationFrame(raf);
+			viewportEl.removeEventListener("scroll", onScroll);
+			resizeObserver.disconnect();
+			cancelAnimationFrame(firstFrameId);
+			if (rafId) cancelAnimationFrame(rafId);
 		};
 	}, [
 		fadePx,
@@ -117,31 +128,31 @@ export const Content: FC<Content.Props> = ({
 
 	return (
 		<div
-			ref={rootRef}
+			ref={rootElementRef}
 			className={slots.root()}
 		>
-			{/* fade overlaye (žádné transition) */}
 			<div
-				ref={topFadeRef}
+				ref={topFadeElementRef}
 				aria-hidden={true}
 				className={slots.fadeTop()}
 			/>
 			<div
-				ref={botFadeRef}
+				ref={bottomFadeElementRef}
 				aria-hidden={true}
 				className={slots.fadeBottom()}
 			/>
 
-			{/* scrollport */}
 			<div
-				ref={vpRef}
+				ref={viewportElementRef}
 				className={slots.viewport()}
 			>
-				<div
-					ref={contentRef}
-					className={slots.content()}
-				>
-					{children}
+				<div className="min-h-full grid place-content-center">
+					<div
+						ref={contentContainerRef}
+						className={slots.content()}
+					>
+						{children}
+					</div>
 				</div>
 			</div>
 		</div>
