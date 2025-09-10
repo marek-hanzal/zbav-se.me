@@ -3,7 +3,7 @@ import { createRouter as coolCreateRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { PageCls } from "@use-pico/client";
 import { routeTree } from "./_route";
-import { LogoAnimated } from "~/app/ui/Logo/LogoAnimated";
+import { LogoAnimated } from "~/app/ui/logo/LogoAnimated";
 import { AnimatePresence } from "motion/react";
 import { tvc } from "@use-pico/cls";
 
@@ -34,18 +34,21 @@ export const createRouter = () => {
 		defaultPendingComponent() {
 			return (
 				<AnimatePresence mode={"wait"}>
-					<div className={tvc([
+					<div
+						className={tvc([
 							"fixed",
 							"inset-0",
 							"flex",
 							"items-center",
 							"justify-center",
-						])}>
+						])}
+					>
 						<LogoAnimated />
 					</div>
 				</AnimatePresence>
 			);
 		},
+		defaultPendingMs: 500,
 	});
 
 	setupRouterSsrQueryIntegration({

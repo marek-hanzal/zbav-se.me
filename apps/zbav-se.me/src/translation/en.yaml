@@ -1,3 +1,9 @@
+01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
+  ref: Feed (title)
+  value: Feed (title)
+0610e8750e88cfe22b187a8aa8a045935486a498edc10c694bf6fb35:
+  ref: Create Demand
+  value: Create Demand
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
   ref: Missing required token(s). (title)
   value: Missing required token(s). (title)
@@ -22,9 +28,6 @@
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
   ref: Something went wrong.
   value: Something went wrong.
-2dc007e932619d69a3764f194224cb28fcd5e9ffb60d3cf82a144ca7:
-  ref: Amount
-  value: Amount
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
   ref: Edit
   value: Edit
@@ -43,12 +46,12 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
-485ab310fd78cc3e853f204ac0fb336e3cbe3663f909f9ea2d7957b5:
-  ref: Kind
-  value: Kind
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
   ref: Missing any token(s). (message)
   value: Missing any token(s). (message)
+54a66a2994aec43664f34abadc5c82c7fc857fcd27bc007727790162:
+  ref: Nab\u00EDdnout
+  value: Nab\u00EDdnout
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
   ref: Invalid on/off value
   value: Invalid on/off value
@@ -58,21 +61,24 @@
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
-6957ea2312ad681dc8baf8c2e83b694253b3caf51c1054a91ad1cbbf:
-  ref: Select inventory item (select)
-  value: Select inventory item (select)
+61a6f144c84ce8d83fccdd988e63aa0b40d951edf07fcc5eec215664:
+  ref: Select category (select)
+  value: Select category (select)
+66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
+  ref: Prost\u011B to po\u0161li d\u00E1l...
+  value: Prost\u011B to po\u0161li d\u00E1l...
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
   ref: Clear files
   value: Clear files
+73aa5d5ab6900befa8e3b519a4fa3107408f3de843d34f0a236e05d5:
+  ref: Sell (title)
+  value: Sell (title)
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
   ref: There is nothing to see right now.
   value: There is nothing to see right now.
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
   ref: Close (label)
   value: Close (label)
-851db0190e11976a9a9be952123a2360166bf8ca526afdadf1e5f2cd:
-  ref: Description
-  value: Description
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
@@ -85,6 +91,9 @@
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
   ref: Nothing here
   value: Nothing here
+9a440cc22211e7cc3ea6fbeb02fcaa0db4526a2048378a3d7e8ec32c:
+  ref: Poptat
+  value: Poptat
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
@@ -124,6 +133,9 @@ b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
   ref: Downloading file...
   value: Downloading file...
+bc0a3ee3f106313c5f0c17046789933b738fa3caa2193476dcef4212:
+  ref: Select category (title)
+  value: Select category (title)
 bcb2263af0ec3c192d55f37db91b702dfb64cd249372992287291fe9:
   ref: Export (button)
   value: Export (button)
@@ -141,18 +153,18 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
   ref: Cannot download the file...
   value: Cannot download the file...
-d8a6607430df99b28a6dca7351ca0f50dacd5c3cf1a54ab9d7f25940:
-  ref: Select inventory item (title)
-  value: Select inventory item (title)
+cfd723900e585cac02d1a0a6f8a1a8c3279d9892131c9eeac774b38d:
+  ref: Create Supply
+  value: Create Supply
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
   ref: Select item (label)
   value: Select item (label)
-ea583aab64a25b17dc8dc51bc00ec75128bb16d6cac0d7ca9fba4294:
-  ref: Type
-  value: Type
+ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
+  ref: Sort
+  value: Sort
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
   ref: Error
   value: Error

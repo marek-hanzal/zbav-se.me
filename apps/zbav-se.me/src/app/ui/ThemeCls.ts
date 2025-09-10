@@ -6,8 +6,12 @@ export const ThemeCls = PicoCls.extend(
 		slot: [],
 		variant: {},
 	},
-	({ def }) => ({
-		token: def.token({}),
+	({ what, def }) => ({
+		token: def.token({
+			"round.xl": what.css([
+				"rounded-4xl",
+			]),
+		}),
 		rules: [],
 		defaults: def.defaults({}),
 	}),

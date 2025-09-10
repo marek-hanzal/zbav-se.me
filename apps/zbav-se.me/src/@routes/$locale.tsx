@@ -7,8 +7,8 @@ export const Route = createFileRoute("/$locale")({
 			translator.push(
 				(await import(`../translation/${locale}.yaml`)).default,
 			);
-		} catch (_) {
-			// console.error(e);
+		} catch (e) {
+			console.error(e);
 		}
 	},
 });

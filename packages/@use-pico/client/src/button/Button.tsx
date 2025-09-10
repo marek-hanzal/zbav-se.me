@@ -1,4 +1,4 @@
-import { type Cls, useCls } from "@use-pico/cls";
+import { type Cls, useCls, withCls } from "@use-pico/cls";
 import type { ButtonHTMLAttributes, FC } from "react";
 import { Icon } from "../icon/Icon";
 import { SpinnerIcon } from "../icon/SpinnerIcon";
@@ -15,10 +15,11 @@ export namespace Button {
 		size?: Cls.VariantOf<ButtonCls, "size">;
 		tone?: Cls.VariantOf<ButtonCls, "tone">;
 		theme?: Cls.VariantOf<ButtonCls, "theme">;
+		round?: Cls.VariantOf<ButtonCls, "round">;
 	}
 }
 
-export const Button: FC<Button.Props> = ({
+export const BaseButton: FC<Button.Props> = ({
 	iconEnabled,
 	iconDisabled,
 	iconLoading = SpinnerIcon,
@@ -27,6 +28,7 @@ export const Button: FC<Button.Props> = ({
 	size,
 	tone,
 	theme,
+	round,
 	cls = ButtonCls,
 	tweak,
 	children,
@@ -38,6 +40,7 @@ export const Button: FC<Button.Props> = ({
 			size,
 			tone,
 			theme,
+			round,
 		}),
 	}));
 
@@ -66,3 +69,5 @@ export const Button: FC<Button.Props> = ({
 		</div>
 	);
 };
+
+export const Button = withCls(BaseButton, ButtonCls);

@@ -1,8 +1,8 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Button, LinkTo, Tx } from "@use-pico/client";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import { useState } from "react";
-import { Logo } from "~/app/ui/Logo/Logo";
+import { Logo } from "~/app/ui/logo/Logo";
 
 const contentVariants = {
 	hidden: {
@@ -23,6 +23,15 @@ const contentVariants = {
 } as const satisfies Variants;
 
 export const Route = createFileRoute("/$locale/")({
+	loader({ params: { locale } }) {
+		throw redirect({
+			to: "/$locale/n/feed",
+			params: {
+				locale,
+			},
+		});
+	},
+
 	component() {
 		const { locale } = Route.useParams();
 		const [intro, setIntro] = useState(true);

@@ -1,18 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Button, FormField, LinkTo, Tx } from "@use-pico/client";
+import {
+	Badge,
+	Button,
+	Data,
+	FormField,
+	LinkTo,
+	More,
+	Tx,
+} from "@use-pico/client";
+import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
-import { LogoAnimated } from "~/app/ui/Logo/LogoAnimated";
 
 export const Route = createFileRoute("/$locale/order/demand/create")({
-	loader() {
-		return new Promise((resolve) => {
-			setTimeout(() => {
-				resolve(true);
-			}, 1500);
-		});
-	},
 	component() {
-		const { data: list } = withCategoryGroupListQuery().useSuspenseQuery({
+		const categoryGroupListQuery = withCategoryGroupListQuery().useQuery({
 			sort: [
 				{
 					value: "sort",
@@ -23,14 +24,31 @@ export const Route = createFileRoute("/$locale/order/demand/create")({
 
 		return (
 			<>
-				<LogoAnimated />
-
-				{list.map((item) => (
-					<Tx
-						key={item.id}
-						label={item.name}
-					/>
-				))}
+				<Data<CategoryGroupSchema.Type[], typeof categoryGroupListQuery>
+					result={categoryGroupListQuery}
+					renderSuccess={({ data }) => (
+						<More
+							limit={10}
+							items={data}
+							renderItem={({ entity }) => (
+								<Badge
+									size={"lg"}
+									key={entity.id}
+								>
+									{entity.name}
+								</Badge>
+							)}
+							renderInline={({ entity }) => (
+								<Badge
+									size={"lg"}
+									key={entity.id}
+								>
+									{entity.name}
+								</Badge>
+							)}
+						/>
+					)}
+				/>
 
 				<Tx
 					label={"Create Demand"}
