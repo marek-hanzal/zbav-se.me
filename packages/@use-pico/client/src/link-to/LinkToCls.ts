@@ -20,8 +20,6 @@ export const LinkToCls = PicoCls.extend(
 						"gap-2",
 						"items-center",
 						"justify-between",
-						"px-2",
-						"py-0.5",
 						"focus:outline-hidden",
 						"w-fit",
 						"truncate",

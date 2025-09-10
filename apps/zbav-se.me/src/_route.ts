@@ -19,8 +19,6 @@ import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
 import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
 import { Route as LocaleNCreateIndexRouteImport } from './@routes/$locale/n/create/index'
-import { Route as LocaleOrderSupplyCreateRouteImport } from './@routes/$locale/order/supply/create'
-import { Route as LocaleOrderDemandCreateRouteImport } from './@routes/$locale/order/demand/create'
 import { Route as LocaleNCreateCategoryGroupIdRouteImport } from './@routes/$locale/n/create/$categoryGroupId'
 import { ServerRoute as ApiTrpcServerRouteImport } from './@routes/api/trpc'
 
@@ -66,16 +64,6 @@ const LocaleNCreateIndexRoute = LocaleNCreateIndexRouteImport.update({
   path: '/create/',
   getParentRoute: () => LocaleNRoute,
 } as any)
-const LocaleOrderSupplyCreateRoute = LocaleOrderSupplyCreateRouteImport.update({
-  id: '/order/supply/create',
-  path: '/order/supply/create',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleOrderDemandCreateRoute = LocaleOrderDemandCreateRouteImport.update({
-  id: '/order/demand/create',
-  path: '/order/demand/create',
-  getParentRoute: () => LocaleRoute,
-} as any)
 const LocaleNCreateCategoryGroupIdRoute =
   LocaleNCreateCategoryGroupIdRouteImport.update({
     id: '/create/$categoryGroupId',
@@ -97,8 +85,6 @@ export interface FileRoutesByFullPath {
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
   '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdRoute
-  '/$locale/order/demand/create': typeof LocaleOrderDemandCreateRoute
-  '/$locale/order/supply/create': typeof LocaleOrderSupplyCreateRoute
   '/$locale/n/create': typeof LocaleNCreateIndexRoute
 }
 export interface FileRoutesByTo {
@@ -109,8 +95,6 @@ export interface FileRoutesByTo {
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
   '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdRoute
-  '/$locale/order/demand/create': typeof LocaleOrderDemandCreateRoute
-  '/$locale/order/supply/create': typeof LocaleOrderSupplyCreateRoute
   '/$locale/n/create': typeof LocaleNCreateIndexRoute
 }
 export interface FileRoutesById {
@@ -123,8 +107,6 @@ export interface FileRoutesById {
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
   '/$locale/n/create/$categoryGroupId': typeof LocaleNCreateCategoryGroupIdRoute
-  '/$locale/order/demand/create': typeof LocaleOrderDemandCreateRoute
-  '/$locale/order/supply/create': typeof LocaleOrderSupplyCreateRoute
   '/$locale/n/create/': typeof LocaleNCreateIndexRoute
 }
 export interface FileRouteTypes {
@@ -138,8 +120,6 @@ export interface FileRouteTypes {
     | '/$locale/n/feed'
     | '/$locale/n/user'
     | '/$locale/n/create/$categoryGroupId'
-    | '/$locale/order/demand/create'
-    | '/$locale/order/supply/create'
     | '/$locale/n/create'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -150,8 +130,6 @@ export interface FileRouteTypes {
     | '/$locale/n/feed'
     | '/$locale/n/user'
     | '/$locale/n/create/$categoryGroupId'
-    | '/$locale/order/demand/create'
-    | '/$locale/order/supply/create'
     | '/$locale/n/create'
   id:
     | '__root__'
@@ -163,8 +141,6 @@ export interface FileRouteTypes {
     | '/$locale/n/feed'
     | '/$locale/n/user'
     | '/$locale/n/create/$categoryGroupId'
-    | '/$locale/order/demand/create'
-    | '/$locale/order/supply/create'
     | '/$locale/n/create/'
   fileRoutesById: FileRoutesById
 }
@@ -252,20 +228,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleNCreateIndexRouteImport
       parentRoute: typeof LocaleNRoute
     }
-    '/$locale/order/supply/create': {
-      id: '/$locale/order/supply/create'
-      path: '/order/supply/create'
-      fullPath: '/$locale/order/supply/create'
-      preLoaderRoute: typeof LocaleOrderSupplyCreateRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/order/demand/create': {
-      id: '/$locale/order/demand/create'
-      path: '/order/demand/create'
-      fullPath: '/$locale/order/demand/create'
-      preLoaderRoute: typeof LocaleOrderDemandCreateRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/n/create/$categoryGroupId': {
       id: '/$locale/n/create/$categoryGroupId'
       path: '/create/$categoryGroupId'
@@ -309,15 +271,11 @@ const LocaleNRouteWithChildren =
 interface LocaleRouteChildren {
   LocaleNRoute: typeof LocaleNRouteWithChildren
   LocaleIndexRoute: typeof LocaleIndexRoute
-  LocaleOrderDemandCreateRoute: typeof LocaleOrderDemandCreateRoute
-  LocaleOrderSupplyCreateRoute: typeof LocaleOrderSupplyCreateRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleNRoute: LocaleNRouteWithChildren,
   LocaleIndexRoute: LocaleIndexRoute,
-  LocaleOrderDemandCreateRoute: LocaleOrderDemandCreateRoute,
-  LocaleOrderSupplyCreateRoute: LocaleOrderSupplyCreateRoute,
 }
 
 const LocaleRouteWithChildren =

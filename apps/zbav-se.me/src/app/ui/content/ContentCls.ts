@@ -1,11 +1,12 @@
 import type { Cls } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
-export const NavCls = ThemeCls.extend(
+export const ContentCls = ThemeCls.extend(
 	{
 		tokens: [],
 		slot: [
 			"root",
+			"inner",
 		],
 		variant: {},
 	},
@@ -15,8 +16,7 @@ export const NavCls = ThemeCls.extend(
 			def.root({
 				root: what.css([
 					"grid",
-					"grid-cols-4",
-					"gap-2",
+					"place-items-center",
 				]),
 			}),
 		],
@@ -24,8 +24,8 @@ export const NavCls = ThemeCls.extend(
 	}),
 );
 
-export type NavCls = typeof NavCls;
+export type ContentCls = typeof ContentCls;
 
-export namespace NavCls {
-	export type Props<P = unknown> = Cls.Props<NavCls, P>;
+export namespace ContentCls {
+	export type Props<P = unknown> = Cls.Props<ContentCls, P>;
 }

@@ -15,10 +15,9 @@ export const LayoutCls = ThemeCls.extend(
 			def.root({
 				root: what.both(
 					[
-						"flex",
-						"flex-col",
-						"min-h-full",
-						"min-w-full",
+                        'h-full',
+						"grid",
+						"grid-rows-[min-content_minmax(0,1fr)_min-content]",
 					],
 					[
 						"round.xl",

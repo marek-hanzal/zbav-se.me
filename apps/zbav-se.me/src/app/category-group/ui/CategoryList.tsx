@@ -54,7 +54,7 @@ export const CategoryList: FC<CategoryList.Props> = ({
 						})}
 						round={"xl"}
 					>
-						<Tx label={`Category group ${item.name}`}/>
+						<Tx label={`Category group ${item.name}`} />
 					</Button>
 				</LinkTo>
 			))}

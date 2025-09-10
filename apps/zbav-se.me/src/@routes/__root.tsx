@@ -8,7 +8,6 @@ import {
 import { type PageCls, PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
 import { MotionConfig } from "motion/react";
-import { PageTransition } from "~/app/ui/PageTransition";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
@@ -42,11 +41,12 @@ export const Route = createRootRouteWithContext<{
 			slot: what.slot({
 				default: what.both(
 					[
-						"p-4",
 						"h-screen",
-						"min-h-screen",
+						"max-h-screen",
+						"overscroll-none",
 					],
 					[
+						"square.lg",
 						"tone.primary.dark.bg",
 					],
 				),
@@ -58,15 +58,11 @@ export const Route = createRootRouteWithContext<{
 				<head>
 					<HeadContent />
 				</head>
-				<body className="overscroll-none overflow-hidden">
+				<body className={slots.default()}>
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
-						<div className={slots.default()}>
-							<MotionConfig reducedMotion="never">
-								<PageTransition>
-									<Outlet />
-								</PageTransition>
-							</MotionConfig>
-						</div>
+						<MotionConfig reducedMotion="never">
+							<Outlet />
+						</MotionConfig>
 					</ClsProvider>
 
 					<Scripts />

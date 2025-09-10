@@ -54,7 +54,7 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					}}
 					exit={{
 						opacity: 0,
-						x: "-25%",
+						// x: "-25%",
 						scale: 1,
 					}}
 					transition={{
@@ -68,7 +68,7 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					dangerouslySetInnerHTML={{
 						__html: ghostRef.current ?? "",
 					}}
-					className="w-full h-full"
+					className="w-full h-full max-w-full max-h-full"
 				/>
 			) : null}
 
@@ -79,7 +79,7 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 					initial={{
 						opacity: 0.25,
 						scale: 1,
-						x: "25%",
+						// x: "25%",
 					}}
 					animate={{
 						opacity: 1,
@@ -91,7 +91,7 @@ export const PageTransition: FC<PropsWithChildren> = ({ children }) => {
 						duration: 0.1,
 						ease: "easeInOut",
 					}}
-					className="w-full h-full"
+					className="w-full h-full max-w-full max-h-full"
 				>
 					{children}
 				</motion.div>

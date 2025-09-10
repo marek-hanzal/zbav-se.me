@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Tx } from "@use-pico/client";
 import { CategoryListWrapper } from "~/app/category-group/ui/CategoryListWrapper";
+import { Content } from "~/app/ui/content/Content";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -17,9 +18,9 @@ export const Route = createFileRoute("/$locale/n/create/")({
 					/>
 				</Title>
 
-				<div className="flex-1 flex flex-col gap-2 items-center justify-center">
+				<Content>
 					<CategoryListWrapper />
-				</div>
+				</Content>
 
 				<Nav active="create" />
 			</>
