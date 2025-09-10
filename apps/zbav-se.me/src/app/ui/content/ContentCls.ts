@@ -23,7 +23,6 @@ export const ContentCls = ThemeCls.extend(
 						"isolate",
 						"min-h-0",
 						"h-full",
-                        'w-full',
 						"overflow-hidden",
 						"[--fade-color:rgb(230_230_230)]",
 						"[--fade-solid:12px]",
@@ -42,10 +41,7 @@ export const ContentCls = ThemeCls.extend(
 				]),
 
 				content: what.css([
-					"min-h-full",
-					"grid",
-					"content-start",
-					"justify-center",
+					"min-h-full",					
 					"px-0",
 				]),
 

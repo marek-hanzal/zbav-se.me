@@ -19,24 +19,19 @@ export const Route = createFileRoute("/$locale/n/create/$categoryGroupId/")({
 
 		return (
 			<>
-				<Title
-					icon={PostIcon}
-				>
+				<Title icon={PostIcon}>
 					<Tx
 						label={"Sell - Category List (title)"}
 						size={"xl"}
 						font={"bold"}
 					/>
-                    <Data<
-							CategoryGroupSchema.Type,
-							typeof categoryGroupQuery
-						>
-							result={categoryGroupQuery}
-							renderLoading={() => null}
-							renderSuccess={({ data }) => (
-								<Tx label={`Category ${data.name}`} />
-							)}
-						/>
+					<Data<CategoryGroupSchema.Type, typeof categoryGroupQuery>
+						result={categoryGroupQuery}
+						renderLoading={() => "-"}
+						renderSuccess={({ data }) => (
+							<Tx label={`Category group ${data.name}`} />
+						)}
+					/>
 				</Title>
 
 				<Content>
