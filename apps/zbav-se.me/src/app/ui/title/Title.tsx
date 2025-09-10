@@ -1,5 +1,5 @@
 import { Icon } from "@use-pico/client";
-import { useCls } from "node_modules/@use-pico/cls/src/react";
+import { useCls } from "@use-pico/cls";
 import type { FC, PropsWithChildren } from "react";
 import { TitleCls } from "~/app/ui/title/TitleCls";
 
