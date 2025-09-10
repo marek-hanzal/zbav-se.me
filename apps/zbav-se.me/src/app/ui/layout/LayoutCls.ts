@@ -18,7 +18,7 @@ export const LayoutCls = ThemeCls.extend(
 						"h-full",
 						"grid",
 						"grid-rows-[min-content_minmax(0,1fr)_min-content]",
-                        'gap-3',
+						"gap-3",
 					],
 					[
 						"round.xl",

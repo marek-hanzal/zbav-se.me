@@ -2,32 +2,29 @@ import { useCls } from "@use-pico/cls";
 import {
 	type FC,
 	type PropsWithChildren,
+	useCallback,
 	useEffect,
 	useLayoutEffect,
 	useRef,
 } from "react";
 import { ContentCls } from "~/app/ui/content/ContentCls";
 
+const clampToUnitInterval = (value: number) =>
+	value < 0 ? 0 : value > 1 ? 1 : value;
+
 export namespace Content {
-	export interface Props extends ContentCls.Props<PropsWithChildren> {
-		/** Délka fadu v px (přes kterou roste opacity 0→1). */
-		fadePx?: number; // default 24
-		/** Barva, do níž fade mizí (MUSÍ = bg scroll plochy). */
-		fadeColor?: string; // např. "rgb(224 231 255)"
-		/** Délka plného pásu na začátku fadu (schová šev). */
-		fadeSolid?: number; // default 12
-	}
+	export interface Props extends ContentCls.Props<PropsWithChildren> {}
 }
 
 export const Content: FC<Content.Props> = ({
 	children,
 	cls = ContentCls,
 	tweak,
-	fadePx = 18,
-	fadeColor,
-	fadeSolid = 4,
 }) => {
 	const slots = useCls(cls, tweak);
+
+	const fadePx = 32;
+	const fadeSolid = 1;
 
 	const rootElementRef = useRef<HTMLDivElement>(null);
 	const viewportElementRef = useRef<HTMLDivElement>(null);
@@ -35,12 +32,7 @@ export const Content: FC<Content.Props> = ({
 	const topFadeElementRef = useRef<HTMLDivElement>(null);
 	const bottomFadeElementRef = useRef<HTMLDivElement>(null);
 
-	// pomocná funkce: oříznout hodnotu do intervalu <0,1>
-	const clampToUnitInterval = (value: number) =>
-		value < 0 ? 0 : value > 1 ? 1 : value;
-
-	// výpočet opacity – lineárně v rámci fadePx
-	const updateFadeOpacity = () => {
+	const updateFadeOpacity = useCallback(() => {
 		const viewportEl = viewportElementRef.current;
 		const topFadeEl = topFadeElementRef.current;
 		const bottomFadeEl = bottomFadeElementRef.current;
@@ -62,9 +54,8 @@ export const Content: FC<Content.Props> = ({
 
 		topFadeEl.style.opacity = topOpacity.toFixed(3);
 		bottomFadeEl.style.opacity = bottomOpacity.toFixed(3);
-	};
+	}, []);
 
-	// Nastavení výšek, barev a první výpočet ještě před paintem
 	useLayoutEffect(() => {
 		const rootEl = rootElementRef.current;
 		const viewportEl = viewportElementRef.current;
@@ -76,16 +67,10 @@ export const Content: FC<Content.Props> = ({
 		bottomFadeEl.style.height = `${fadePx}px`;
 
 		rootEl.style.setProperty("--fade-solid", `${fadeSolid}px`);
-		if (fadeColor) {
-			rootEl.style.setProperty("--fade-color", fadeColor);
-			(viewportEl as HTMLElement).style.backgroundColor = fadeColor; // sjednocení odstínu
-		}
 
 		updateFadeOpacity(); // hned, bez transition
 	}, [
-		fadePx,
-		fadeSolid,
-		fadeColor,
+		updateFadeOpacity,
 	]);
 
 	useEffect(() => {
@@ -123,7 +108,7 @@ export const Content: FC<Content.Props> = ({
 			if (rafId) cancelAnimationFrame(rafId);
 		};
 	}, [
-		fadePx,
+		updateFadeOpacity,
 	]);
 
 	return (

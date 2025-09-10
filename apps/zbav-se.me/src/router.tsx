@@ -2,10 +2,10 @@ import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter as coolCreateRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { PageCls } from "@use-pico/client";
-import { routeTree } from "./_route";
-import { LogoAnimated } from "~/app/ui/logo/LogoAnimated";
-import { AnimatePresence } from "motion/react";
 import { tvc } from "@use-pico/cls";
+import { AnimatePresence } from "motion/react";
+import { LogoAnimated } from "~/app/ui/logo/LogoAnimated";
+import { routeTree } from "./_route";
 
 export const createRouter = () => {
 	const queryClient = new QueryClient({
