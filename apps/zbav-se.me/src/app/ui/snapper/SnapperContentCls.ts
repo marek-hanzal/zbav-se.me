@@ -27,6 +27,7 @@ export const SnapperContentCls = ThemeCls.extend(
 					"[-webkit-overflow-scrolling:touch]",
 					"snap-mandatory",
 					"h-full",
+					"touch-auto",
 				]),
 				content: what.css([
 					"grid",
@@ -43,7 +44,6 @@ export const SnapperContentCls = ThemeCls.extend(
 					root: what.css([
 						"overflow-y-auto",
 						"snap-y",
-						"touch-pan-y",
 						"overscroll-y-contain",
 					]),
 					content: what.css([
@@ -60,7 +60,6 @@ export const SnapperContentCls = ThemeCls.extend(
 					root: what.css([
 						"overflow-x-auto",
 						"snap-x",
-						"touch-pan-x",
 						"overflow-y-hidden",
 						"overscroll-x-contain",
 					]),
