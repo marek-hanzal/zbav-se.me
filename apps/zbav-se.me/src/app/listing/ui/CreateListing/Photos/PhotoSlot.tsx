@@ -115,7 +115,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						label={"Upload (placeholder)"}
 						font="bold"
 						size={"xl"}
-						tone={"primary"}
+						tone={slot === 0 ? "primary" : "link"}
 						theme={"light"}
 					/>
 				)}
