@@ -24,6 +24,7 @@ export const SnapperItemCls = ThemeCls.extend(
 					"snap-start",
 					"flex",
 					"flex-col",
+					"[scroll-snap-stop:always]",
 				]),
 			}),
 			def.rule(
