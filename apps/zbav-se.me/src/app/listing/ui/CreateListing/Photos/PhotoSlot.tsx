@@ -89,7 +89,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					ref={inputRef}
 					type="file"
 					accept="image/*"
-					capture="environment"
+					// capture="environment"
 					className="sr-only"
 					onChange={onChangeInput}
 				/>
