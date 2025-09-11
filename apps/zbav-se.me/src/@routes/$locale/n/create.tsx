@@ -55,15 +55,16 @@ export const Route = createFileRoute("/$locale/n/create")({
 
 					<SnapperContent>
 						<SnapperItem>
-							<Title
-								icon={PhotoIcon}
-								{...subtitleVariant}
-							>
-								<Tx label={"Photos (title)"} />
-							</Title>
+							<div className="grid h-full min-h-0 grid-rows-[min-content,1fr]">
+								<Title
+									icon={PhotoIcon}
+									{...subtitleVariant}
+								>
+									<Tx label={"Photos (title)"} />
+								</Title>
 
-							<Snapper orientation="horizontal">
-								{/* <SnapperNav
+								<Snapper orientation="horizontal">
+									{/* <SnapperNav
 										pages={[
 											{
 												id: "p-1",
@@ -76,11 +77,12 @@ export const Route = createFileRoute("/$locale/n/create")({
 										]}
 									/> */}
 
-								<SnapperContent>
-									<SnapperItem>hovno</SnapperItem>
-									<SnapperItem>druhe hovno</SnapperItem>
-								</SnapperContent>
-							</Snapper>
+									<SnapperContent>
+										<SnapperItem>hovno</SnapperItem>
+										<SnapperItem>druhe hovno</SnapperItem>
+									</SnapperContent>
+								</Snapper>
+							</div>
 						</SnapperItem>
 
 						<SnapperItem>

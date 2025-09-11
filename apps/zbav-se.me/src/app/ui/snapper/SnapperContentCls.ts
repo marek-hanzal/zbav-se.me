@@ -24,7 +24,6 @@ export const SnapperContentCls = ThemeCls.extend(
 					"min-h-0",
 					"min-w-0",
 					"scroll-smooth",
-					"overscroll-contain",
 					"[-webkit-overflow-scrolling:touch]",
 					"snap-mandatory",
 					"h-full",
@@ -32,7 +31,8 @@ export const SnapperContentCls = ThemeCls.extend(
 				content: what.css([
 					"grid",
 					"gap-2",
-					"min-h-full",
+					// "min-h-full",
+					"h-full",
 					"min-w-full",
 				]),
 			}),
@@ -44,6 +44,8 @@ export const SnapperContentCls = ThemeCls.extend(
 					root: what.css([
 						"overflow-y-auto",
 						"snap-y",
+						"touch-pan-y",
+						"overscroll-x-contain",
 					]),
 					content: what.css([
 						"grid-flow-row",
@@ -59,6 +61,9 @@ export const SnapperContentCls = ThemeCls.extend(
 					root: what.css([
 						"overflow-x-auto",
 						"snap-x",
+						"touch-pan-x",
+						"overflow-y-hidden",
+						"overscroll-y-contain",
 					]),
 					content: what.css([
 						"grid-flow-col",

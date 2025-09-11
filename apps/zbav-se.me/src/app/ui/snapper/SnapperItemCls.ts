@@ -43,6 +43,7 @@ export const SnapperItemCls = ThemeCls.extend(
 				{
 					root: what.css([
 						"min-w-full",
+						"h-full",
 					]),
 				},
 			),
