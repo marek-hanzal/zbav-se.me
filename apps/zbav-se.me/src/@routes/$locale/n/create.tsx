@@ -55,7 +55,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 
 					<SnapperContent>
 						<SnapperItem>
-							<div className="grid h-full min-h-0 grid-rows-[min-content,1fr]">
+							<div className="flex flex-col h-full">
 								<Title
 									icon={PhotoIcon}
 									{...subtitleVariant}
@@ -63,7 +63,16 @@ export const Route = createFileRoute("/$locale/n/create")({
 									<Tx label={"Photos (title)"} />
 								</Title>
 
-								<Snapper orientation="horizontal">
+								<Snapper
+									orientation="horizontal"
+									tweak={({ what }) => ({
+										slot: what.slot({
+											root: what.css([
+												"flex-1",
+											]),
+										}),
+									})}
+								>
 									{/* <SnapperNav
 										pages={[
 											{
@@ -77,7 +86,15 @@ export const Route = createFileRoute("/$locale/n/create")({
 										]}
 									/> */}
 
-									<SnapperContent>
+									<SnapperContent
+										tweak={({ what }) => ({
+											slot: what.slot({
+												root: what.css([
+													"h-full",
+												]),
+											}),
+										})}
+									>
 										<SnapperItem>hovno</SnapperItem>
 										<SnapperItem>druhe hovno</SnapperItem>
 									</SnapperContent>
