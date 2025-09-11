@@ -19,11 +19,10 @@ export const SnapperItemCls = ThemeCls.extend(
 		rules: [
 			def.root({
 				root: what.css([
-					"w-full",
-					"h-full",
+					"relative",
 					"snap-start",
-					"flex",
-					"flex-col",
+					"min-h-0",
+					"min-w-0",
 					"[scroll-snap-stop:always]",
 				]),
 			}),
@@ -43,8 +42,7 @@ export const SnapperItemCls = ThemeCls.extend(
 				}),
 				{
 					root: what.css([
-						"shrink-0",
-						"basis-full",
+						"min-w-full",
 					]),
 				},
 			),

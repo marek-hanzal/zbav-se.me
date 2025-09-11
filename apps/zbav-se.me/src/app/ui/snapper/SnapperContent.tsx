@@ -12,7 +12,7 @@ export const SnapperContent: FC<SnapperContent.Props> = ({
 	tweak,
 	children,
 }) => {
-	const { viewportRef, orientation } = useSnapper();
+	const { containerRef, orientation } = useSnapper();
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
 			orientation,
@@ -21,8 +21,8 @@ export const SnapperContent: FC<SnapperContent.Props> = ({
 
 	return (
 		<div
-			ref={viewportRef}
-			className={slots.viewport()}
+			ref={containerRef}
+			className={slots.root()}
 		>
 			<div className={slots.content()}>{children}</div>
 		</div>

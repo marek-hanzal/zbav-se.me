@@ -7,12 +7,7 @@ export const SnapperCls = ThemeCls.extend(
 		slot: [
 			"root",
 		],
-		variant: {
-			orientation: [
-				"vertical",
-				"horizontal",
-			],
-		},
+		variant: {},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
@@ -20,17 +15,12 @@ export const SnapperCls = ThemeCls.extend(
 			def.root({
 				root: what.css([
 					"relative",
-					"isolate",
 					"min-h-0",
 					"min-w-0",
-					"h-full",
-					"overflow-hidden",
 				]),
 			}),
 		],
-		defaults: def.defaults({
-			orientation: "vertical",
-		}),
+		defaults: def.defaults({}),
 	}),
 );
 

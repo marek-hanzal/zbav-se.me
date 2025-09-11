@@ -1,8 +1,10 @@
 import { createContext, type RefObject } from "react";
 
-type Ctx = {
-	viewportRef: RefObject<HTMLDivElement | null>;
-	orientation: "vertical" | "horizontal";
-};
+export type Orientation = "vertical" | "horizontal";
+
+export interface Ctx {
+	orientation: Orientation;
+	containerRef: RefObject<HTMLDivElement | null>;
+}
 
 export const SnapperCtx = createContext<Ctx | null>(null);

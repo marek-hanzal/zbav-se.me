@@ -5,7 +5,7 @@ export const SnapperContentCls = ThemeCls.extend(
 	{
 		tokens: [],
 		slot: [
-			"viewport",
+			"root",
 			"content",
 		],
 		variant: {
@@ -19,20 +19,20 @@ export const SnapperContentCls = ThemeCls.extend(
 		token: def.token({}),
 		rules: [
 			def.root({
-				viewport: what.css([
-					"h-full",
-					"overflow-auto",
-					"overscroll-contain",
-					"z-0",
+				root: what.css([
+					"relative",
+					"min-h-0",
+					"min-w-0",
 					"scroll-smooth",
+					"overscroll-contain",
 					"[-webkit-overflow-scrolling:touch]",
 					"snap-mandatory",
+					"h-full",
 				]),
 				content: what.css([
-					"h-full",
+					"grid",
 					"min-h-full",
-					"items-stretch",
-					"gap-0",
+					"min-w-full",
 				]),
 			}),
 			def.rule(
@@ -40,16 +40,13 @@ export const SnapperContentCls = ThemeCls.extend(
 					orientation: "vertical",
 				}),
 				{
-					viewport: what.css([
+					root: what.css([
+						"overflow-y-auto",
 						"snap-y",
-						"touch-pan-x",
 					]),
 					content: what.css([
-						"flex",
-						"flex-col",
-						//     "grid",
-						// "grid-flow-row",
-						// "auto-rows-[100%]",
+						"grid-flow-row",
+						"auto-rows-[100%]",
 					]),
 				},
 			),
@@ -58,12 +55,13 @@ export const SnapperContentCls = ThemeCls.extend(
 					orientation: "horizontal",
 				}),
 				{
-					viewport: what.css([
+					root: what.css([
+						"overflow-x-auto",
 						"snap-x",
-						"touch-pan-y",
 					]),
 					content: what.css([
-						"inline-flex",
+						"grid-flow-col",
+						"auto-cols-[100%]",
 					]),
 				},
 			),

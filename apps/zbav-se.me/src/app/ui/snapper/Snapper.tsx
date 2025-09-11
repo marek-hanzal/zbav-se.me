@@ -16,17 +16,13 @@ export const Snapper: FC<Snapper.Props> = ({
 	tweak,
 	children,
 }) => {
-	const slots = useCls(cls, tweak, ({ what }) => ({
-		variant: what.variant({
-			orientation,
-		}),
-	}));
-	const viewportRef = useRef<HTMLDivElement | null>(null);
+	const slots = useCls(cls, tweak);
+	const containerRef = useRef<HTMLDivElement | null>(null);
 
 	return (
 		<SnapperCtx
 			value={{
-				viewportRef,
+				containerRef,
 				orientation,
 			}}
 		>

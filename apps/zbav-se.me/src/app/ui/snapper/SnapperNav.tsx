@@ -21,7 +21,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	tweak,
 	pages,
 }) => {
-	const { viewportRef, orientation } = useSnapper();
+	const { containerRef, orientation } = useSnapper();
 	const [index, setIndex] = useState(0);
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
@@ -30,7 +30,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	}));
 
 	useEffect(() => {
-		const viewport = viewportRef.current;
+		const viewport = containerRef.current;
 		if (!viewport || pages.length <= 1) {
 			return;
 		}
@@ -58,12 +58,12 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 			window.removeEventListener("resize", update);
 		};
 	}, [
-		viewportRef,
+		containerRef,
 		pages,
 	]);
 
 	const goTo = (i: number) => {
-		const viewport = viewportRef.current;
+		const viewport = containerRef.current;
 		if (!viewport) {
 			return;
 		}
