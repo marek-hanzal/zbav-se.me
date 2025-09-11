@@ -21,15 +21,10 @@ export const SnapperNavCls = ThemeCls.extend(
 			def.root({
 				root: what.css([
 					"absolute",
-					"right-2",
-					"top-1/2",
-					"-translate-y-1/2",
 					"z-20",
 					"pointer-events-none",
 				]),
 				items: what.css([
-					"flex",
-					"flex-col",
 					"gap-4",
 					"opacity-50",
 				]),
@@ -39,7 +34,15 @@ export const SnapperNavCls = ThemeCls.extend(
 					orientation: "vertical",
 				}),
 				{
-					root: what.css([]),
+					root: what.css([
+						"right-2",
+						"top-1/2",
+						"-translate-y-1/2",
+					]),
+					items: what.css([
+						"flex",
+						"flex-col",
+					]),
 				},
 			),
 			def.rule(
@@ -47,7 +50,15 @@ export const SnapperNavCls = ThemeCls.extend(
 					orientation: "horizontal",
 				}),
 				{
-					root: what.css([]),
+					root: what.css([
+						"bottom-2",
+						"left-1/2",
+						"-translate-x-1/2",
+					]),
+					items: what.css([
+						"flex",
+						"flex-row",
+					]),
 				},
 			),
 		],

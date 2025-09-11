@@ -73,7 +73,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 										}),
 									})}
 								>
-									{/* <SnapperNav
+									<SnapperNav
 										pages={[
 											{
 												id: "p-1",
@@ -84,7 +84,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 												icon: PhotoIcon,
 											},
 										]}
-									/> */}
+									/>
 
 									<SnapperContent
 										tweak={({ what }) => ({
