@@ -8,7 +8,7 @@ export namespace SnapperNav {
 	export interface Page {
 		id: string;
 		icon: Icon.Type;
-		iconProps?: Icon.Props;
+		iconProps?: Icon.PropsEx;
 	}
 
 	export interface Props extends SnapperNavCls.Props {

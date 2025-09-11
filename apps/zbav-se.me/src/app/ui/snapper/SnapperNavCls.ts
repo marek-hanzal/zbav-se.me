@@ -26,7 +26,7 @@ export const SnapperNavCls = ThemeCls.extend(
 				]),
 				items: what.css([
 					"gap-4",
-					"opacity-50",
+					"opacity-35",
 				]),
 			}),
 			def.rule(
@@ -51,7 +51,7 @@ export const SnapperNavCls = ThemeCls.extend(
 				}),
 				{
 					root: what.css([
-						"bottom-2",
+						"bottom-4",
 						"left-1/2",
 						"-translate-x-1/2",
 					]),
