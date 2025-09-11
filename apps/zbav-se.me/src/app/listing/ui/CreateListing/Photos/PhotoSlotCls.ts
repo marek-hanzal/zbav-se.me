@@ -7,6 +7,7 @@ export const PhotoSlotCls = ThemeCls.extend(
 		slot: [
 			"root",
 			"slot",
+			"img",
 		],
 		variant: {
 			default: [
@@ -41,6 +42,9 @@ export const PhotoSlotCls = ThemeCls.extend(
 						"tone.link.light.bg",
 					],
 				),
+				img: what.token([
+					"round.xl",
+				]),
 			}),
 			def.rule(
 				what.variant({
