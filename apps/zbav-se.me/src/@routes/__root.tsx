@@ -42,7 +42,7 @@ export const Route = createRootRouteWithContext<{}>()({
 						"overscroll-none",
 					],
 					[
-						"square.lg",
+						"square.sm",
 						"tone.primary.dark.bg",
 					],
 				),
