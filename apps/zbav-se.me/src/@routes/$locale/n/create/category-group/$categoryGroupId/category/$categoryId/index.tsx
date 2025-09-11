@@ -61,7 +61,10 @@ export const Route = createFileRoute(
 					</div>
 				</Title>
 
-				<Content>hovno</Content>
+				<Content>
+					PhotoCollection component pro spravu fotek - vystup se
+					zmensi/uploaduje
+				</Content>
 
 				<Nav active="create" />
 			</>
