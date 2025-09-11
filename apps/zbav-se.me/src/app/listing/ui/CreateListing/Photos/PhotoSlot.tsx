@@ -1,4 +1,4 @@
-import { Action, TrashIcon } from "@use-pico/client";
+import { Action, TrashIcon, Tx } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import {
 	type ChangeEvent,
@@ -111,7 +111,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						draggable={false}
 					/>
 				) : (
-					<span>placeholder</span>
+					<Tx
+						label={"Upload (placeholder)"}
+						font="bold"
+						size={"xl"}
+						tone={"primary"}
+						theme={"light"}
+					/>
 				)}
 
 				<input

@@ -1,6 +1,9 @@
 01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
   ref: Feed (title)
   value: Feed (title)
+0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
+  ref: Upload (placeholder)
+  value: Upload (placeholder)
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
   ref: Missing required token(s). (title)
   value: Missing required token(s). (title)
@@ -19,9 +22,6 @@
 282447aea716ad0adce959ef2fa721688cf8614506ecdfd8c1dcf052:
   ref: No tags (label)
   value: No tags (label)
-2856b6e6e2afb51ba8b14f71b2295cfaaad908e9f9686e18c7ce5bac:
-  ref: Submit listing (title)
-  value: Submit listing (title)
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
   ref: Please wait...
   value: Please wait...
@@ -162,9 +162,6 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
   ref: Cannot download the file...
   value: Cannot download the file...
-da644f195bb315ac2ca7b1c3adfceddc7da2a354879888d516008c14:
-  ref: Submit listing - status (message)
-  value: Submit listing - status (message)
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
