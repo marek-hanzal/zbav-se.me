@@ -21,7 +21,11 @@ export const Route = createFileRoute("/$locale/n/create")({
 
 				<Snapper>
 					<SnapperItem>
-						<Title icon={PhotoIcon}>
+						<Title
+							icon={PhotoIcon}
+							tone="secondary"
+							size={"md"}
+						>
 							<Tx label={"Fotky (title)"} />
 						</Title>
 					</SnapperItem>
