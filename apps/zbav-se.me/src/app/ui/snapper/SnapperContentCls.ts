@@ -28,7 +28,7 @@ export const SnapperContentCls = ThemeCls.extend(
 					"min-h-full",
 					"grid",
 					"grid-flow-row",
-					"auto-rows-[minmax(100%,1fr)]",
+					"auto-rows-[100%]",
 				]),
 			}),
 		],

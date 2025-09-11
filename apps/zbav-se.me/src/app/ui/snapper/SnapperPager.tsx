@@ -70,7 +70,7 @@ export const SnapperPager: FC<SnapperPager.Props> = ({ pages }) => {
 
 	return (
 		<div className="absolute right-2 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
-			<div className="flex flex-col gap-4">
+			<div className="flex flex-col gap-4 opacity-50">
 				{pages.map(({ id, icon, iconProps }, i) => {
 					const active = i === index;
 					return (
@@ -78,7 +78,7 @@ export const SnapperPager: FC<SnapperPager.Props> = ({ pages }) => {
 							key={id}
 							onClick={() => goTo(i)}
 							icon={icon}
-							tone={"primary"}
+							tone={"secondary"}
 							size="md"
 							tweak={({ what }) => ({
 								slot: what.slot({

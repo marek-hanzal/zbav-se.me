@@ -86,25 +86,32 @@ export const Route = createFileRoute("/$locale/n/create")({
 								icon={SendPackageIcon}
 								{...subtitleVariant}
 							>
-								<Tx label={"Submit (title)"} />
+								<Tx label={"Submit listing (title)"} />
 							</Title>
 
-							<Status
-								icon={SendPackageIcon}
-								textTitle={
-									<Tx label={"Submit listing (title)"} />
-								}
-								textMessage={
-									<Tx label={"Submit listing (button)"} />
-								}
-							>
-								<Button
+							<div className="grid grid-cols-1 content-center justify-items-center flex-1">
+								<Status
+									icon={SendPackageIcon}
+									textTitle={
+										<Tx
+											label={
+												"Submit listing - status (title)"
+											}
+										/>
+									}
 									tone={"primary"}
-									size={"xl"}
 								>
-									<Tx label={"Submit listing (button)"} />
-								</Button>
-							</Status>
+									<Button
+										iconEnabled={
+											"icon-[ph--check-fat-thin]"
+										}
+										tone={"primary"}
+										size={"xl"}
+									>
+										<Tx label={"Submit listing (button)"} />
+									</Button>
+								</Status>
+							</div>
 						</SnapperItem>
 					</SnapperContent>
 				</Snapper>

@@ -19,6 +19,9 @@
 282447aea716ad0adce959ef2fa721688cf8614506ecdfd8c1dcf052:
     ref: No tags (label)
     value: No tags (label)
+2856b6e6e2afb51ba8b14f71b2295cfaaad908e9f9686e18c7ce5bac:
+    ref: Submit listing (title)
+    value: Odeslat inzerát
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
     ref: Please wait...
     value: Please wait...
@@ -67,6 +70,9 @@
 66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
     ref: Prost\u011B to po\u0161li d\u00E1l...
     value: Prost\u011B to po\u0161li d\u00E1l...
+6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
+    ref: Submit listing - status (title)
+    value: Vše připraveno!
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
     ref: Clear files
     value: Clear files
@@ -208,6 +214,9 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
+da644f195bb315ac2ca7b1c3adfceddc7da2a354879888d516008c14:
+    ref: Submit listing - status (message)
+    value: Váš inzerát je připravený k odeslání, stačí už jen odklepnout!
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
@@ -220,6 +229,9 @@ e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort
+f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
+    ref: Submit listing (button)
+    value: Odeslat
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
     ref: Error
     value: Error
