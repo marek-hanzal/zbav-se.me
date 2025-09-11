@@ -1,1 +1,1 @@
-export const PhotoIcon = "icon-[fluent-mdl2--photo-2]";
+export const PhotoIcon = "icon-[mynaui--image]";
