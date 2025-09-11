@@ -1,7 +1,7 @@
 import { useCls } from "@use-pico/cls";
 import type { FC, PropsWithChildren } from "react";
-import { useSnapper } from "./Snapper";
 import { SnapperContentCls } from "./SnapperContentCls";
+import { useSnapper } from "./useSnapper";
 
 export namespace SnapperContent {
 	export interface Props extends SnapperContentCls.Props<PropsWithChildren> {}
@@ -12,8 +12,12 @@ export const SnapperContent: FC<SnapperContent.Props> = ({
 	tweak,
 	children,
 }) => {
-	const slots = useCls(cls, tweak);
-	const { viewportRef } = useSnapper();
+	const { viewportRef, orientation } = useSnapper();
+	const slots = useCls(cls, tweak, ({ what }) => ({
+		variant: what.variant({
+			orientation,
+		}),
+	}));
 
 	return (
 		<div

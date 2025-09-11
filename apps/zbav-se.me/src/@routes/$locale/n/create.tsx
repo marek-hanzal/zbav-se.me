@@ -31,7 +31,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 					/>
 				</Title>
 
-				<Snapper>
+				<Snapper orientation="vertical">
 					<SnapperPager
 						pages={[
 							{
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 							</Title>
 
 							<div className="p-4 grid grid-cols-1 flex-1 h-full">
-								<Snapper>
+								<Snapper orientation="horizontal">
 									<SnapperPager
 										pages={[
 											{

@@ -1,6 +1,6 @@
 import { Icon } from "@use-pico/client";
 import { type FC, useEffect, useState } from "react";
-import { useSnapper } from "./Snapper";
+import { useSnapper } from "./useSnapper";
 
 export namespace SnapperPager {
 	export interface Page {

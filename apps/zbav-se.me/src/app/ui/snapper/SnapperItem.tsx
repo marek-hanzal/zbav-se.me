@@ -1,5 +1,6 @@
 import { useCls } from "@use-pico/cls";
 import type { FC, PropsWithChildren } from "react";
+import { useSnapper } from "~/app/ui/snapper/useSnapper";
 import { SnapperItemCls } from "./SnapperItemCls";
 
 export namespace SnapperItem {
@@ -11,7 +12,12 @@ export const SnapperItem: FC<SnapperItem.Props> = ({
 	tweak,
 	children,
 }) => {
-	const slots = useCls(cls, tweak);
+	const { orientation } = useSnapper();
+	const slots = useCls(cls, tweak, ({ what }) => ({
+		variant: what.variant({
+			orientation,
+		}),
+	}));
 
 	return <div className={slots.root()}>{children}</div>;
 };

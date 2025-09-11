@@ -7,7 +7,12 @@ export const SnapperCls = ThemeCls.extend(
 		slot: [
 			"root",
 		],
-		variant: {},
+		variant: {
+			orientation: [
+				"vertical",
+				"horizontal",
+			],
+		},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
@@ -22,7 +27,9 @@ export const SnapperCls = ThemeCls.extend(
 				]),
 			}),
 		],
-		defaults: def.defaults({}),
+		defaults: def.defaults({
+			orientation: "vertical",
+		}),
 	}),
 );
 

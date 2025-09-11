@@ -8,7 +8,12 @@ export const SnapperContentCls = ThemeCls.extend(
 			"viewport",
 			"content",
 		],
-		variant: {},
+		variant: {
+			orientation: [
+				"vertical",
+				"horizontal",
+			],
+		},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
@@ -32,7 +37,9 @@ export const SnapperContentCls = ThemeCls.extend(
 				]),
 			}),
 		],
-		defaults: def.defaults({}),
+		defaults: def.defaults({
+			orientation: "vertical",
+		}),
 	}),
 );
 
