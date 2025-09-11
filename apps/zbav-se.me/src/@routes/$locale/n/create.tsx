@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Tx } from "@use-pico/client";
+import { Button, Status, Tx } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
+import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { TagIcon } from "~/app/ui/icon/TagIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Snapper } from "~/app/ui/snapper/Snapper";
@@ -17,7 +18,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 	component() {
 		const subtitleVariant: Cls.VariantsOf<TitleCls> = {
 			tone: "secondary",
-			size: "md",
+			size: "lg",
 		};
 
 		return (
@@ -45,6 +46,10 @@ export const Route = createFileRoute("/$locale/n/create")({
 								id: "price",
 								icon: PriceIcon,
 							},
+							{
+								id: "submit",
+								icon: SendPackageIcon,
+							},
 						]}
 					/>
 
@@ -54,7 +59,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 								icon={PhotoIcon}
 								{...subtitleVariant}
 							>
-								<Tx label={"Fotky (title)"} />
+								<Tx label={"Photos (title)"} />
 							</Title>
 						</SnapperItem>
 
@@ -74,6 +79,32 @@ export const Route = createFileRoute("/$locale/n/create")({
 							>
 								<Tx label={"Price (title)"} />
 							</Title>
+						</SnapperItem>
+
+						<SnapperItem>
+							<Title
+								icon={SendPackageIcon}
+								{...subtitleVariant}
+							>
+								<Tx label={"Submit (title)"} />
+							</Title>
+
+							<Status
+								icon={SendPackageIcon}
+								textTitle={
+									<Tx label={"Submit listing (title)"} />
+								}
+								textMessage={
+									<Tx label={"Submit listing (button)"} />
+								}
+							>
+								<Button
+									tone={"primary"}
+									size={"xl"}
+								>
+									<Tx label={"Submit listing (button)"} />
+								</Button>
+							</Status>
 						</SnapperItem>
 					</SnapperContent>
 				</Snapper>
