@@ -31,6 +31,7 @@ export const SnapperContentCls = ThemeCls.extend(
 				]),
 				content: what.css([
 					"grid",
+					"gap-2",
 					"min-h-full",
 					"min-w-full",
 				]),
