@@ -23,6 +23,7 @@ export const PhotoSlotCls = ThemeCls.extend(
 					[
 						"h-full",
 						"px-0",
+						"pb-0",
 					],
 					[
 						"square.md",
