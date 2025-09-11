@@ -1,11 +1,19 @@
+import { Action, TrashIcon } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import { type FC, useCallback, useRef, useState } from "react";
+import {
+	type ChangeEvent,
+	type FC,
+	type KeyboardEvent,
+	useCallback,
+	useRef,
+	useState,
+} from "react";
 import { PhotoSlotCls } from "./PhotoSlotCls";
 
 export namespace PhotoSlot {
 	export interface Props extends PhotoSlotCls.Props {
 		slot: number;
-		onPick?: (file: File, slot: number) => void;
+		onPick?: (file: File | null, slot: number) => void;
 	}
 }
 
@@ -24,34 +32,45 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [src, setSrc] = useState<string | null>(null);
 
-	const openPicker = useCallback(() => inputRef.current?.click(), []);
+	const openPicker = useCallback(() => {
+		inputRef.current?.click();
+	}, []);
 
 	const onChangeInput = useCallback(
-		(e: React.ChangeEvent<HTMLInputElement>) => {
+		(e: ChangeEvent<HTMLInputElement>) => {
 			const file = e.target.files?.[0];
 			if (!file) {
 				return;
 			}
-
 			if (src) {
 				URL.revokeObjectURL(src);
 			}
-
 			const url = URL.createObjectURL(file);
 			setSrc(url);
 			onPick?.(file, slot);
-
 			e.currentTarget.value = "";
 		},
 		[
+			src,
 			onPick,
 			slot,
-			src,
 		],
 	);
 
+	const clear = useCallback(() => {
+		if (src) {
+			URL.revokeObjectURL(src);
+		}
+		setSrc(null);
+		onPick?.(null, slot);
+	}, [
+		src,
+		onPick,
+		slot,
+	]);
+
 	const onKeyDown = useCallback(
-		(e: React.KeyboardEvent) => {
+		(e: KeyboardEvent) => {
 			if (e.key === "Enter" || e.key === " ") {
 				e.preventDefault();
 				openPicker();
@@ -62,18 +81,26 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		],
 	);
 
+	const stop = useCallback((e: any) => {
+		e.preventDefault();
+		e.stopPropagation();
+		if (typeof e.stopImmediatePropagation === "function") {
+			e.stopImmediatePropagation();
+		}
+	}, []);
+
 	return (
-		<div
-			className={slots.root()}
-			onClick={openPicker}
-			onKeyDown={onKeyDown}
-		>
-			<div className={slots.slot()}>
+		<div className={slots.root()}>
+			<div
+				className={slots.slot()}
+				onClick={openPicker}
+				onKeyDown={onKeyDown}
+			>
 				{src ? (
 					<img
 						src={src}
-						className={slots.img()}
 						alt={`Foto ${slot + 1}`}
+						className={slots.img?.()}
 						style={{
 							width: "100%",
 							height: "100%",
@@ -89,10 +116,31 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					ref={inputRef}
 					type="file"
 					accept="image/*"
-					// capture="environment"
+					capture="environment"
 					className="sr-only"
 					onChange={onChangeInput}
 				/>
+
+				{src && (
+					<div className="absolute top-8 right-1/2">
+						<Action
+							iconEnabled={TrashIcon}
+							onMouseDown={stop}
+							onTouchStart={stop}
+							onClick={(e) => {
+								stop(e);
+								clear();
+							}}
+							onKeyDown={(e) => {
+								if (e.key === "Enter" || e.key === " ") {
+									stop(e);
+									clear();
+								}
+							}}
+							size={"md"}
+						/>
+					</div>
+				)}
 			</div>
 		</div>
 	);
