@@ -13,14 +13,16 @@ import { PhotoSlotCls } from "./PhotoSlotCls";
 export namespace PhotoSlot {
 	export interface Props extends PhotoSlotCls.Props {
 		slot: number;
+		camera?: boolean;
 		onPick?: (file: File | null, slot: number) => void;
 	}
 }
 
 export const PhotoSlot: FC<PhotoSlot.Props> = ({
+	slot,
+	camera = false,
 	cls = PhotoSlotCls,
 	tweak,
-	slot,
 	onPick,
 }) => {
 	const slots = useCls(cls, tweak, ({ what }) => ({
@@ -116,7 +118,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					ref={inputRef}
 					type="file"
 					accept="image/*"
-					capture="environment"
+					capture={camera ? "environment" : undefined}
 					className="sr-only"
 					onChange={onChangeInput}
 				/>
