@@ -10,7 +10,7 @@ import { Nav } from "~/app/ui/nav/Nav";
 import { Snapper } from "~/app/ui/snapper/Snapper";
 import { SnapperContent } from "~/app/ui/snapper/SnapperContent";
 import { SnapperItem } from "~/app/ui/snapper/SnapperItem";
-import { SnapperPager } from "~/app/ui/snapper/SnapperPager";
+import { SnapperNav } from "~/app/ui/snapper/SnapperNav";
 import { Title } from "~/app/ui/title/Title";
 import type { TitleCls } from "~/app/ui/title/TitleCls";
 
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 				</Title>
 
 				<Snapper orientation="vertical">
-					<SnapperPager
+					<SnapperNav
 						pages={[
 							{
 								id: "photos",
@@ -64,7 +64,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 
 							<div className="p-4 grid grid-cols-1 flex-1 h-full">
 								<Snapper orientation="horizontal">
-									<SnapperPager
+									<SnapperNav
 										pages={[
 											{
 												id: "p-1",

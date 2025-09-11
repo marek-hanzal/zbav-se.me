@@ -1,11 +1,12 @@
 import type { Cls } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
-export const SnapperItemCls = ThemeCls.extend(
+export const SnapperNavCls = ThemeCls.extend(
 	{
 		tokens: [],
 		slot: [
 			"root",
+			"items",
 		],
 		variant: {
 			orientation: [
@@ -19,11 +20,18 @@ export const SnapperItemCls = ThemeCls.extend(
 		rules: [
 			def.root({
 				root: what.css([
-					"w-full",
-					"h-full",
-					"snap-start",
+					"absolute",
+					"right-2",
+					"top-1/2",
+					"-translate-y-1/2",
+					"z-20",
+					"pointer-events-none",
+				]),
+				items: what.css([
 					"flex",
 					"flex-col",
+					"gap-4",
+					"opacity-50",
 				]),
 			}),
 			def.rule(
@@ -31,9 +39,7 @@ export const SnapperItemCls = ThemeCls.extend(
 					orientation: "vertical",
 				}),
 				{
-					root: what.css([
-						"min-h-full",
-					]),
+					root: what.css([]),
 				},
 			),
 			def.rule(
@@ -41,10 +47,7 @@ export const SnapperItemCls = ThemeCls.extend(
 					orientation: "horizontal",
 				}),
 				{
-					root: what.css([
-						"shrink-0",
-						"basis-full",
-					]),
+					root: what.css([]),
 				},
 			),
 		],
@@ -54,8 +57,8 @@ export const SnapperItemCls = ThemeCls.extend(
 	}),
 );
 
-export type SnapperItemCls = typeof SnapperItemCls;
+export type SnapperNavCls = typeof SnapperNavCls;
 
-export namespace SnapperItemCls {
-	export type Props<P = unknown> = Cls.Props<SnapperItemCls, P>;
+export namespace SnapperNavCls {
+	export type Props<P = unknown> = Cls.Props<SnapperNavCls, P>;
 }

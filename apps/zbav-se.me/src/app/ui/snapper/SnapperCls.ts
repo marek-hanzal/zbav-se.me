@@ -22,6 +22,7 @@ export const SnapperCls = ThemeCls.extend(
 					"relative",
 					"isolate",
 					"min-h-0",
+					"min-w-0",
 					"h-full",
 					"overflow-hidden",
 				]),

@@ -26,16 +26,47 @@ export const SnapperContentCls = ThemeCls.extend(
 					"z-0",
 					"scroll-smooth",
 					"[-webkit-overflow-scrolling:touch]",
-					"snap-y",
 					"snap-mandatory",
 				]),
 				content: what.css([
+					"h-full",
 					"min-h-full",
-					"grid",
-					"grid-flow-row",
-					"auto-rows-[100%]",
+					"items-stretch",
+					"gap-0",
 				]),
 			}),
+			def.rule(
+				what.variant({
+					orientation: "vertical",
+				}),
+				{
+					viewport: what.css([
+						"snap-y",
+						"touch-pan-x",
+					]),
+					content: what.css([
+						"flex",
+						"flex-col",
+						//     "grid",
+						// "grid-flow-row",
+						// "auto-rows-[100%]",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					orientation: "horizontal",
+				}),
+				{
+					viewport: what.css([
+						"snap-x",
+						"touch-pan-y",
+					]),
+					content: what.css([
+						"inline-flex",
+					]),
+				},
+			),
 		],
 		defaults: def.defaults({
 			orientation: "vertical",

@@ -1,22 +1,33 @@
 import { Icon } from "@use-pico/client";
+import { useCls } from "@use-pico/cls";
 import { type FC, useEffect, useState } from "react";
+import { SnapperNavCls } from "~/app/ui/snapper/SnapperNavCls";
 import { useSnapper } from "./useSnapper";
 
-export namespace SnapperPager {
+export namespace SnapperNav {
 	export interface Page {
 		id: string;
 		icon: Icon.Type;
 		iconProps?: Icon.PropsEx;
 	}
 
-	export interface Props {
+	export interface Props extends SnapperNavCls.Props {
 		pages: Page[];
 	}
 }
 
-export const SnapperPager: FC<SnapperPager.Props> = ({ pages }) => {
-	const { viewportRef } = useSnapper();
+export const SnapperNav: FC<SnapperNav.Props> = ({
+	cls = SnapperNavCls,
+	tweak,
+	pages,
+}) => {
+	const { viewportRef, orientation } = useSnapper();
 	const [index, setIndex] = useState(0);
+	const slots = useCls(cls, tweak, ({ what }) => ({
+		variant: what.variant({
+			orientation,
+		}),
+	}));
 
 	useEffect(() => {
 		const viewport = viewportRef.current;
@@ -69,8 +80,8 @@ export const SnapperPager: FC<SnapperPager.Props> = ({ pages }) => {
 	}
 
 	return (
-		<div className="absolute right-2 top-1/2 -translate-y-1/2 z-20 pointer-events-none">
-			<div className="flex flex-col gap-4 opacity-50">
+		<div className={slots.root()}>
+			<div className={slots.items()}>
 				{pages.map(({ id, icon, iconProps }, i) => {
 					const active = i === index;
 					return (
