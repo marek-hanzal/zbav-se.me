@@ -17,6 +17,8 @@ export const NavCls = ThemeCls.extend(
 					"grid",
 					"grid-cols-4",
 					"gap-2",
+					"items-center",
+					"justify-items-center",
 				]),
 			}),
 		],
