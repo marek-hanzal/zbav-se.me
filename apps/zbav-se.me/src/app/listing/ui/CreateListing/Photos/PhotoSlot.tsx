@@ -1,5 +1,5 @@
 import { useCls } from "@use-pico/cls";
-import { type FC, useRef, useState } from "react";
+import { type FC, useCallback, useRef, useState } from "react";
 import { PhotoSlotCls } from "./PhotoSlotCls";
 
 export namespace PhotoSlot {
@@ -24,28 +24,43 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [src, setSrc] = useState<string | null>(null);
 
-	const openPicker = () => inputRef.current?.click();
+	const openPicker = useCallback(() => inputRef.current?.click(), []);
 
-	const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-		const f = e.target.files?.[0];
-		if (!f) return;
+	const onChangeInput = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const file = e.target.files?.[0];
+			if (!file) {
+				return;
+			}
 
-		// zahoď předchozí blob, pokud byl
-		if (src) URL.revokeObjectURL(src);
+			if (src) {
+				URL.revokeObjectURL(src);
+			}
 
-		const url = URL.createObjectURL(f);
-		setSrc(url);
-		onPick?.(f, slot);
+			const url = URL.createObjectURL(file);
+			setSrc(url);
+			onPick?.(file, slot);
 
-		e.currentTarget.value = ""; // dovolí znovu nahrát stejný soubor
-	};
+			e.currentTarget.value = "";
+		},
+		[
+			onPick,
+			slot,
+			src,
+		],
+	);
 
-	const onKeyDown = (e: React.KeyboardEvent) => {
-		if (e.key === "Enter" || e.key === " ") {
-			e.preventDefault();
-			openPicker();
-		}
-	};
+	const onKeyDown = useCallback(
+		(e: React.KeyboardEvent) => {
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				openPicker();
+			}
+		},
+		[
+			openPicker,
+		],
+	);
 
 	return (
 		<div
