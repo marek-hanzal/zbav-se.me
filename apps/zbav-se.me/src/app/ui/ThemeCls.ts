@@ -14,7 +14,7 @@ export const ThemeCls = PicoCls.extend(
 			/**
 			 * Color Palette Overrides:
 			 * Primary: Pink-based palette (soft pink shades)
-			 * Secondary: Orange-based palette (warm complementary)
+			 * Secondary: Purple-based palette (complementary to pink)
 			 */
 
 			// Primary tone - Pink-based palette
@@ -148,55 +148,55 @@ export const ThemeCls = PicoCls.extend(
 				"tone.primary.dark.shadow:focus",
 			]),
 
-			// Secondary tone - Coral/salmon palette (warm complementary)
+			// Secondary tone - Purple-based palette (complementary to pink)
 			"tone.secondary.light.text": what.css([
-				"text-orange-700",
+				"text-purple-700",
 			]),
 			"tone.secondary.light.text:hover": what.css([
-				"hover:text-orange-800",
+				"hover:text-purple-800",
 			]),
 			"tone.secondary.light.text:focus": what.css([
-				"focus:text-orange-800",
+				"focus:text-purple-800",
 			]),
 			"tone.secondary.light.bg": what.css([
-				"bg-orange-100",
+				"bg-purple-100",
 			]),
 			"tone.secondary.light.bg:hover": what.css([
-				"hover:bg-orange-200",
+				"hover:bg-purple-200",
 			]),
 			"tone.secondary.light.bg:focus": what.css([
-				"focus:bg-orange-200",
+				"focus:bg-purple-200",
 			]),
 			"tone.secondary.light.bg:even": what.css([
-				"even:bg-orange-100",
+				"even:bg-purple-100",
 			]),
 			"tone.secondary.light.bg:odd": what.css([
-				"odd:bg-orange-50",
+				"odd:bg-purple-50",
 			]),
 			"tone.secondary.light.border": what.css([
-				"border-orange-200/60",
-				"border-b-orange-200",
+				"border-purple-200/60",
+				"border-b-purple-200",
 			]),
 			"tone.secondary.light.border:hover": what.css([
-				"hover:border-orange-300/60",
-				"hover:border-b-orange-300",
+				"hover:border-purple-300/60",
+				"hover:border-b-purple-300",
 			]),
 			"tone.secondary.light.border:focus": what.css([
-				"focus:border-orange-300/60",
-				"focus:border-b-orange-300",
+				"focus:border-purple-300/60",
+				"focus:border-b-purple-300",
 			]),
 			"tone.secondary.light.border:group-hover": what.css([
-				"group-hover:border-orange-300/60",
-				"group-hover:border-b-orange-300",
+				"group-hover:border-purple-300/60",
+				"group-hover:border-b-purple-300",
 			]),
 			"tone.secondary.light.shadow": what.css([
-				"shadow-orange-200/50",
+				"shadow-purple-200/50",
 			]),
 			"tone.secondary.light.shadow:hover": what.css([
-				"hover:shadow-orange-300/60",
+				"hover:shadow-purple-300/60",
 			]),
 			"tone.secondary.light.shadow:focus": what.css([
-				"focus:shadow-orange-300/60",
+				"focus:shadow-purple-300/60",
 			]),
 			"tone.secondary.light.set": what.token([
 				"tone.secondary.light.text",
@@ -215,53 +215,53 @@ export const ThemeCls = PicoCls.extend(
 			]),
 			//
 			"tone.secondary.dark.text": what.css([
-				"text-orange-100",
+				"text-purple-100",
 			]),
 			"tone.secondary.dark.text:hover": what.css([
-				"hover:text-orange-50",
+				"hover:text-purple-50",
 			]),
 			"tone.secondary.dark.text:focus": what.css([
-				"focus:text-orange-50",
+				"focus:text-purple-50",
 			]),
 			"tone.secondary.dark.bg": what.css([
-				"bg-orange-900/90",
+				"bg-purple-900/90",
 			]),
 			"tone.secondary.dark.bg:hover": what.css([
-				"hover:bg-orange-800/90",
+				"hover:bg-purple-800/90",
 			]),
 			"tone.secondary.dark.bg:focus": what.css([
-				"focus:bg-orange-800/90",
+				"focus:bg-purple-800/90",
 			]),
 			"tone.secondary.dark.bg:even": what.css([
-				"even:bg-orange-800/80",
+				"even:bg-purple-800/80",
 			]),
 			"tone.secondary.dark.bg:odd": what.css([
-				"odd:bg-orange-950/90",
+				"odd:bg-purple-950/90",
 			]),
 			"tone.secondary.dark.border": what.css([
-				"border-orange-500/60",
-				"border-b-orange-500/80",
+				"border-purple-500/60",
+				"border-b-purple-500/80",
 			]),
 			"tone.secondary.dark.border:hover": what.css([
-				"hover:border-orange-400/70",
-				"hover:border-b-orange-400/90",
+				"hover:border-purple-400/70",
+				"hover:border-b-purple-400/90",
 			]),
 			"tone.secondary.dark.border:focus": what.css([
-				"focus:border-orange-400/70",
-				"focus:border-b-orange-400/90",
+				"focus:border-purple-400/70",
+				"focus:border-b-purple-400/90",
 			]),
 			"tone.secondary.dark.border:group-hover": what.css([
-				"group-hover:border-orange-400/70",
-				"group-hover:border-b-orange-400/90",
+				"group-hover:border-purple-400/70",
+				"group-hover:border-b-purple-400/90",
 			]),
 			"tone.secondary.dark.shadow": what.css([
-				"shadow-orange-900/40",
+				"shadow-purple-900/40",
 			]),
 			"tone.secondary.dark.shadow:hover": what.css([
-				"hover:shadow-orange-800/50",
+				"hover:shadow-purple-800/50",
 			]),
 			"tone.secondary.dark.shadow:focus": what.css([
-				"focus:shadow-orange-800/50",
+				"focus:shadow-purple-800/50",
 			]),
 			"tone.secondary.dark.set": what.token([
 				"tone.secondary.dark.text",
