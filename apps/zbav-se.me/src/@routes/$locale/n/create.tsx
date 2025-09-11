@@ -61,6 +61,12 @@ export const Route = createFileRoute("/$locale/n/create")({
 							>
 								<Tx label={"Photos (title)"} />
 							</Title>
+
+							<div className="p-4 grid grid-cols-1 flex-1 h-full">
+								<div className="p-2 rounded-xl border border-blue-500 w-full h-full">
+									hovno
+								</div>
+							</div>
 						</SnapperItem>
 
 						<SnapperItem>
