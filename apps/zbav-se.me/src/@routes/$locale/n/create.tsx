@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Button, Status, Tx } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
+import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
@@ -77,11 +78,11 @@ export const Route = createFileRoute("/$locale/n/create")({
 										pages={[
 											{
 												id: "p-1",
-												icon: PhotoIcon,
+												icon: DotIcon,
 											},
 											{
 												id: "p-2",
-												icon: PhotoIcon,
+												icon: DotIcon,
 											},
 										]}
 									/>

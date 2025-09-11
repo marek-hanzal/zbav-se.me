@@ -79,7 +79,11 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							key={id}
 							onClick={() => scrollToIndex(i)}
 							icon={icon}
-							tone={"secondary"}
+							tone={
+								orientation === "vertical"
+									? "secondary"
+									: "subtle"
+							}
 							size="md"
 							tweak={({ what }) => ({
 								slot: what.slot({

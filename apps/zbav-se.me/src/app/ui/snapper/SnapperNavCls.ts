@@ -58,6 +58,7 @@ export const SnapperNavCls = ThemeCls.extend(
 					items: what.css([
 						"flex",
 						"flex-row",
+						"gap-0",
 					]),
 				},
 			),
