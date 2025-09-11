@@ -17,10 +17,8 @@ import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as LocaleNRouteImport } from './@routes/$locale/n'
 import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
+import { Route as LocaleNCreateRouteImport } from './@routes/$locale/n/create'
 import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
-import { Route as LocaleNCreateIndexRouteImport } from './@routes/$locale/n/create/index'
-import { Route as LocaleNCreateCategoryGroupCategoryGroupIdIndexRouteImport } from './@routes/$locale/n/create/category-group/$categoryGroupId/index'
-import { Route as LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRouteImport } from './@routes/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/index'
 import { ServerRoute as ApiTrpcServerRouteImport } from './@routes/api/trpc'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -55,30 +53,16 @@ const LocaleNFeedRoute = LocaleNFeedRouteImport.update({
   path: '/feed',
   getParentRoute: () => LocaleNRoute,
 } as any)
+const LocaleNCreateRoute = LocaleNCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => LocaleNRoute,
+} as any)
 const LocaleNBagRoute = LocaleNBagRouteImport.update({
   id: '/bag',
   path: '/bag',
   getParentRoute: () => LocaleNRoute,
 } as any)
-const LocaleNCreateIndexRoute = LocaleNCreateIndexRouteImport.update({
-  id: '/create/',
-  path: '/create/',
-  getParentRoute: () => LocaleNRoute,
-} as any)
-const LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute =
-  LocaleNCreateCategoryGroupCategoryGroupIdIndexRouteImport.update({
-    id: '/create/category-group/$categoryGroupId/',
-    path: '/create/category-group/$categoryGroupId/',
-    getParentRoute: () => LocaleNRoute,
-  } as any)
-const LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute =
-  LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRouteImport.update(
-    {
-      id: '/create/category-group/$categoryGroupId/category/$categoryId/',
-      path: '/create/category-group/$categoryGroupId/category/$categoryId/',
-      getParentRoute: () => LocaleNRoute,
-    } as any,
-  )
 const ApiTrpcServerRoute = ApiTrpcServerRouteImport.update({
   id: '/api/trpc',
   path: '/api/trpc',
@@ -91,22 +75,18 @@ export interface FileRoutesByFullPath {
   '/$locale/n': typeof LocaleNRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
+  '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
-  '/$locale/n/create': typeof LocaleNCreateIndexRoute
-  '/$locale/n/create/category-group/$categoryGroupId': typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
-  '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId': typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
   '/$locale': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
+  '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
-  '/$locale/n/create': typeof LocaleNCreateIndexRoute
-  '/$locale/n/create/category-group/$categoryGroupId': typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
-  '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId': typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -115,11 +95,9 @@ export interface FileRoutesById {
   '/$locale/n': typeof LocaleNRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
+  '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
   '/$locale/n/user': typeof LocaleNUserRoute
-  '/$locale/n/create/': typeof LocaleNCreateIndexRoute
-  '/$locale/n/create/category-group/$categoryGroupId/': typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
-  '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/': typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -129,22 +107,18 @@ export interface FileRouteTypes {
     | '/$locale/n'
     | '/$locale/'
     | '/$locale/n/bag'
+    | '/$locale/n/create'
     | '/$locale/n/feed'
     | '/$locale/n/user'
-    | '/$locale/n/create'
-    | '/$locale/n/create/category-group/$categoryGroupId'
-    | '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$locale/n'
     | '/$locale'
     | '/$locale/n/bag'
+    | '/$locale/n/create'
     | '/$locale/n/feed'
     | '/$locale/n/user'
-    | '/$locale/n/create'
-    | '/$locale/n/create/category-group/$categoryGroupId'
-    | '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId'
   id:
     | '__root__'
     | '/'
@@ -152,11 +126,9 @@ export interface FileRouteTypes {
     | '/$locale/n'
     | '/$locale/'
     | '/$locale/n/bag'
+    | '/$locale/n/create'
     | '/$locale/n/feed'
     | '/$locale/n/user'
-    | '/$locale/n/create/'
-    | '/$locale/n/create/category-group/$categoryGroupId/'
-    | '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -229,32 +201,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleNFeedRouteImport
       parentRoute: typeof LocaleNRoute
     }
+    '/$locale/n/create': {
+      id: '/$locale/n/create'
+      path: '/create'
+      fullPath: '/$locale/n/create'
+      preLoaderRoute: typeof LocaleNCreateRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
     '/$locale/n/bag': {
       id: '/$locale/n/bag'
       path: '/bag'
       fullPath: '/$locale/n/bag'
       preLoaderRoute: typeof LocaleNBagRouteImport
-      parentRoute: typeof LocaleNRoute
-    }
-    '/$locale/n/create/': {
-      id: '/$locale/n/create/'
-      path: '/create'
-      fullPath: '/$locale/n/create'
-      preLoaderRoute: typeof LocaleNCreateIndexRouteImport
-      parentRoute: typeof LocaleNRoute
-    }
-    '/$locale/n/create/category-group/$categoryGroupId/': {
-      id: '/$locale/n/create/category-group/$categoryGroupId/'
-      path: '/create/category-group/$categoryGroupId'
-      fullPath: '/$locale/n/create/category-group/$categoryGroupId'
-      preLoaderRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRouteImport
-      parentRoute: typeof LocaleNRoute
-    }
-    '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/': {
-      id: '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId/'
-      path: '/create/category-group/$categoryGroupId/category/$categoryId'
-      fullPath: '/$locale/n/create/category-group/$categoryGroupId/category/$categoryId'
-      preLoaderRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRouteImport
       parentRoute: typeof LocaleNRoute
     }
   }
@@ -273,22 +231,16 @@ declare module '@tanstack/react-start/server' {
 
 interface LocaleNRouteChildren {
   LocaleNBagRoute: typeof LocaleNBagRoute
+  LocaleNCreateRoute: typeof LocaleNCreateRoute
   LocaleNFeedRoute: typeof LocaleNFeedRoute
   LocaleNUserRoute: typeof LocaleNUserRoute
-  LocaleNCreateIndexRoute: typeof LocaleNCreateIndexRoute
-  LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute
-  LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute: typeof LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute
 }
 
 const LocaleNRouteChildren: LocaleNRouteChildren = {
   LocaleNBagRoute: LocaleNBagRoute,
+  LocaleNCreateRoute: LocaleNCreateRoute,
   LocaleNFeedRoute: LocaleNFeedRoute,
   LocaleNUserRoute: LocaleNUserRoute,
-  LocaleNCreateIndexRoute: LocaleNCreateIndexRoute,
-  LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute:
-    LocaleNCreateCategoryGroupCategoryGroupIdIndexRoute,
-  LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute:
-    LocaleNCreateCategoryGroupCategoryGroupIdCategoryCategoryIdIndexRoute,
 }
 
 const LocaleNRouteWithChildren =
