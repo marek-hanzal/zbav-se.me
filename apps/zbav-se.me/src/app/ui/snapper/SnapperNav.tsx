@@ -1,93 +1,83 @@
 import { Icon } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import { type FC, useEffect, useState } from "react";
-import { SnapperNavCls } from "~/app/ui/snapper/SnapperNavCls";
+import { SnapperNavCls } from "./SnapperNavCls";
 import { useSnapper } from "./useSnapper";
 
 export namespace SnapperNav {
 	export interface Page {
 		id: string;
 		icon: Icon.Type;
-		iconProps?: Icon.PropsEx;
+		iconProps?: Icon.Props;
 	}
 
 	export interface Props extends SnapperNavCls.Props {
 		pages: Page[];
+		initialIndex?: number;
 	}
 }
 
 export const SnapperNav: FC<SnapperNav.Props> = ({
+	pages,
+	initialIndex = 0,
 	cls = SnapperNavCls,
 	tweak,
-	pages,
 }) => {
-	const { containerRef, orientation } = useSnapper();
-	const [index, setIndex] = useState(0);
+	const { orientation, containerRef, scrollToIndex } = useSnapper();
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
 			orientation,
 		}),
 	}));
+	const [active, setActive] = useState(() =>
+		Math.min(initialIndex, Math.max(0, pages.length - 1)),
+	);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Intentional - one shot execution
+	useEffect(() => {
+		scrollToIndex(active, "auto");
+	}, []);
 
 	useEffect(() => {
-		const viewport = containerRef.current;
-		if (!viewport || pages.length <= 1) {
+		const el = containerRef.current;
+		if (!el) {
 			return;
 		}
 
-		const update = () => {
-			const height = viewport.clientHeight || 1;
-			const index = Math.round(viewport.scrollTop / height);
-			const max = Math.max(0, pages.length - 1);
-			setIndex(Math.min(Math.max(index, 0), max));
+		const onScroll = () => {
+			const size =
+				orientation === "vertical" ? el.clientHeight : el.clientWidth;
+			const pos =
+				orientation === "vertical" ? el.scrollTop : el.scrollLeft;
+			const idx = Math.max(
+				0,
+				Math.min(pages.length - 1, Math.round(pos / Math.max(1, size))),
+			);
+			if (idx !== active) {
+				setActive(idx);
+			}
 		};
 
-		update();
-		viewport.addEventListener("scroll", update, {
+		el.addEventListener("scroll", onScroll, {
 			passive: true,
 		});
-
-		const resizeObserver = new ResizeObserver(update);
-		resizeObserver.observe(viewport);
-
-		window.addEventListener("resize", update);
-
-		return () => {
-			viewport.removeEventListener("scroll", update);
-			resizeObserver.disconnect();
-			window.removeEventListener("resize", update);
-		};
+		return () => el.removeEventListener("scroll", onScroll);
 	}, [
 		containerRef,
+		orientation,
 		pages,
+		active,
 	]);
-
-	const goTo = (i: number) => {
-		const viewport = containerRef.current;
-		if (!viewport) {
-			return;
-		}
-		const max = Math.max(0, pages.length - 1);
-		const target = Math.min(Math.max(i, 0), max);
-		viewport.scrollTo({
-			top: target * (viewport.clientHeight || 1),
-			behavior: "smooth",
-		});
-	};
-
-	if (pages.length <= 1) {
-		return null;
-	}
 
 	return (
 		<div className={slots.root()}>
 			<div className={slots.items()}>
 				{pages.map(({ id, icon, iconProps }, i) => {
-					const active = i === index;
+					const isActive = i === active;
 					return (
 						<Icon
 							key={id}
-							onClick={() => goTo(i)}
+							onClick={() => scrollToIndex(i)}
 							icon={icon}
 							tone={"secondary"}
 							size="md"
@@ -95,7 +85,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 								slot: what.slot({
 									root: what.css([
 										"pointer-events-auto select-none transition",
-										active
+										isActive
 											? "scale-125 opacity-100"
 											: "opacity-60 hover:opacity-90",
 									]),
