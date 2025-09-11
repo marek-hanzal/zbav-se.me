@@ -17,6 +17,8 @@ export const SnapperCls = ThemeCls.extend(
 					"relative",
 					"min-h-0",
 					"min-w-0",
+					"w-full",
+					"h-full",
 				]),
 			}),
 		],

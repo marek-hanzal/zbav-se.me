@@ -61,6 +61,26 @@ export const Route = createFileRoute("/$locale/n/create")({
 							>
 								<Tx label={"Photos (title)"} />
 							</Title>
+
+							<Snapper orientation="horizontal">
+								{/* <SnapperNav
+										pages={[
+											{
+												id: "p-1",
+												icon: PhotoIcon,
+											},
+											{
+												id: "p-2",
+												icon: PhotoIcon,
+											},
+										]}
+									/> */}
+
+								<SnapperContent>
+									<SnapperItem>hovno</SnapperItem>
+									<SnapperItem>druhe hovno</SnapperItem>
+								</SnapperContent>
+							</Snapper>
 						</SnapperItem>
 
 						<SnapperItem>
