@@ -26,7 +26,7 @@ export const PhotoSlotCls = ThemeCls.extend(
 						"pb-0",
 					],
 					[
-						"square.md",
+						"square.sm",
 					],
 				),
 				slot: what.both(
