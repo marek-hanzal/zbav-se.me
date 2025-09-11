@@ -1,7 +1,7 @@
 import { useCls } from "@use-pico/cls";
 import type { FC, PropsWithChildren, RefObject } from "react";
 import { createContext, useContext, useRef } from "react";
-import { SnapperCls } from "~/app/ui/snapper/SnapperCls";
+import { SnapperCls } from "./SnapperCls";
 
 type Ctx = {
 	viewportRef: RefObject<HTMLDivElement | null>;

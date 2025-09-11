@@ -1,6 +1,6 @@
 import { useCls } from "@use-pico/cls";
 import type { FC, PropsWithChildren } from "react";
-import { SnapperItemCls } from "~/app/ui/snapper/SnapperItemCls";
+import { SnapperItemCls } from "./SnapperItemCls";
 
 export namespace SnapperItem {
 	export interface Props extends SnapperItemCls.Props<PropsWithChildren> {}
