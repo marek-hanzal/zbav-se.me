@@ -43,6 +43,7 @@ export const CategoryList: FC<CategoryList.Props> = ({
 							]),
 						}),
 					})}
+					tone={"inherit"}
 				>
 					<Button
 						tone={"secondary"}

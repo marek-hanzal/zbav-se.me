@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Tx } from "@use-pico/client";
-import { Content } from "~/app/ui/content/Content";
+import { Scrollable, Tx } from "@use-pico/client";
 import { FeedIcon } from "~/app/ui/icon/FeedIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -17,7 +16,7 @@ export const Route = createFileRoute("/$locale/n/feed")({
 					/>
 				</Title>
 
-				<Content>content</Content>
+				<Scrollable>content</Scrollable>
 
 				<Nav active="feed" />
 			</>

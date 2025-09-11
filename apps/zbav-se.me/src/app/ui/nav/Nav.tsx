@@ -33,6 +33,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 				params={{
 					locale,
 				}}
+				tone={"inherit"}
 			>
 				<Button
 					{...variants}
@@ -47,6 +48,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 				params={{
 					locale,
 				}}
+				tone={"inherit"}
 			>
 				<Button
 					{...variants}
@@ -61,6 +63,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 				params={{
 					locale,
 				}}
+				tone={"inherit"}
 			>
 				<Button
 					{...variants}
@@ -75,6 +78,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 				params={{
 					locale,
 				}}
+				tone={"inherit"}
 			>
 				<Button
 					{...variants}

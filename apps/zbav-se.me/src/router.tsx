@@ -1,7 +1,6 @@
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter as coolCreateRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { PageCls } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import { AnimatePresence } from "motion/react";
 import { LogoAnimated } from "~/app/ui/LogoAnimated";
@@ -19,10 +18,7 @@ export const createRouter = () => {
 
 	const router = coolCreateRouter({
 		routeTree,
-		context: {
-			queryClient,
-			cls: PageCls,
-		},
+		context: {},
 		scrollRestoration: true,
 		defaultPreload: "intent",
 		defaultPreloadStaleTime: 0,

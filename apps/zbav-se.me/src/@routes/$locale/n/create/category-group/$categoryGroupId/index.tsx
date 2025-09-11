@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Data, Tx } from "@use-pico/client";
+import { Data, Scrollable, Tx } from "@use-pico/client";
 import { CategoryListWrapper } from "~/app/category/ui/CategoryListWrapper";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupFetchQuery } from "~/app/category-group/query/withCategoryGroupFetchQuery";
-import { Content } from "~/app/ui/content/Content";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -36,9 +35,9 @@ export const Route = createFileRoute(
 					/>
 				</Title>
 
-				<Content>
+				<Scrollable>
 					<CategoryListWrapper categoryGroupId={categoryGroupId} />
-				</Content>
+				</Scrollable>
 
 				<Nav active="create" />
 			</>

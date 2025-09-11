@@ -2,8 +2,9 @@ import { addDynamicIconSelectors } from "@iconify/tailwind";
 
 export default {
 	content: [
-		"./src/**/*.{ts,tsx}",
 		"../../packages/**/*.{ts,tsx}",
+		"./node_modules/@use-pico/client/**/*.{ts,tsx}",
+		"./src/**/*.{ts,tsx}",
 	],
 	plugins: [
 		addDynamicIconSelectors(),

@@ -31,6 +31,9 @@
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
     ref: Edit
     value: Edit
+34dea5ceaa3d7eed7dfb7e799c8a05da3db4070419613bb5e4c855a8:
+    ref: Sell - Photos (title)
+    value: Prodej - Fotky
 38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
     ref: Missing any token(s). (title)
     value: Missing any token(s). (title)
@@ -97,15 +100,57 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Fulltext (placeholder)
+Category bags:
+    static: true
+    value: Baťůžky/tašky
+Category books:
+    static: true
+    value: Knihy
+Category clothing:
+    static: true
+    value: Oblečení
+Category cosmetics:
+    static: true
+    value: Kosmetika
+Category group automotive:
+    static: true
+    value: Auto/moto
 Category group electronics:
     static: true
     value: Elektronika
 Category group garden:
     static: true
     value: Zahrada
+Category group hobbies:
+    static: true
+    value: Zábava
+Category group home:
+    static: true
+    value: Domácnost
 Category group kitchen:
     static: true
     value: Kuchyně
+Category group other:
+    static: true
+    value: Ostatní
+Category group personal:
+    static: true
+    value: Osobní věci
+Category group pets:
+    static: true
+    value: Zvířata
+Category group reality:
+    static: true
+    value: Reality
+Category jewelry:
+    static: true
+    value: Šperky
+Category other:
+    static: true
+    value: Ostatní
+Category shoes:
+    static: true
+    value: Boty
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
@@ -184,45 +229,3 @@ fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
-Category group home:
-    static: true
-    value: Domácnost
-Category group hobbies:
-    static: true
-    value: Zábava
-Category group automotive:
-    static: true
-    value: Auto/moto
-Category group pets:
-    static: true
-    value: Zvířata
-Category group personal:
-    static: true
-    value: Osobní věci
-Category clothing:
-    static: true
-    value: Oblečení
-Category jewelry:
-    static: true
-    value: Šperky
-Category books:
-    static: true
-    value: Knihy
-Category cosmetics:
-    static: true
-    value: Kosmetika
-Category shoes:
-    static: true
-    value: Boty
-Category bags:
-    static: true
-    value: Baťůžky/tašky
-Category group reality:
-    static: true
-    value: Reality
-Category group other:
-    static: true
-    value: Ostatní
-Category other:
-    static: true
-    value: Ostatní
