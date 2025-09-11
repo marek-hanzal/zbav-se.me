@@ -14,10 +14,13 @@ export const useSnapper = () => {
 };
 
 export namespace Snapper {
-	export interface Props extends SnapperCls.Props<PropsWithChildren> {}
+	export interface Props extends SnapperCls.Props<PropsWithChildren> {
+		orientation: "vertical" | "horizontal";
+	}
 }
 
 export const Snapper: FC<Snapper.Props> = ({
+	orientation,
 	cls = SnapperCls,
 	tweak,
 	children,
