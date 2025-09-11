@@ -14,17 +14,11 @@ export const SnapperCls = ThemeCls.extend(
 		rules: [
 			def.root({
 				root: what.css([
+					"relative",
+					"isolate",
+					"min-h-0",
 					"h-full",
-					"overflow-auto",
-					"overscroll-contain",
-					"z-0",
-					"scroll-smooth",
-					"[-webkit-overflow-scrolling:touch]",
-					"snap-y",
-					"snap-mandatory",
-					"grid",
-					"grid-flow-row",
-					"auto-rows-[minmax(100%,1fr)]",
+					"overflow-hidden",
 				]),
 			}),
 		],
@@ -33,7 +27,6 @@ export const SnapperCls = ThemeCls.extend(
 );
 
 export type SnapperCls = typeof SnapperCls;
-
 export namespace SnapperCls {
 	export type Props<P = unknown> = Cls.Props<SnapperCls, P>;
 }

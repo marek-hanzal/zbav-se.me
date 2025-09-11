@@ -33,7 +33,6 @@ export const CategoryListWrapper: FC<CategoryListWrapper.Props> = ({
 				<CategoryList
 					{...props}
 					list={data}
-					categoryGroupId={categoryGroupId}
 				/>
 			)}
 		/>

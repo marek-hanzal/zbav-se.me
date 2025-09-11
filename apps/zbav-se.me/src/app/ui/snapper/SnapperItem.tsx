@@ -13,5 +13,12 @@ export const SnapperItem: FC<SnapperItem.Props> = ({
 }) => {
 	const slots = useCls(cls, tweak);
 
-	return <div className={slots.root()}>{children}</div>;
+	return (
+		<div
+			className={slots.root()}
+			data-snapper-page=""
+		>
+			{children}
+		</div>
+	);
 };
