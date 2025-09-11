@@ -42,9 +42,20 @@ export const PhotoSlotCls = ThemeCls.extend(
 						"tone.link.light.bg",
 					],
 				),
-				img: what.token([
-					"round.xl",
-				]),
+				img: what.both(
+					[
+						"w-full",
+						"h-full",
+						"object-cover",
+						"object-center",
+						"block",
+						"select-none",
+						"aspect-[4/5]",
+					],
+					[
+						"round.xl",
+					],
+				),
 			}),
 			def.rule(
 				what.variant({
