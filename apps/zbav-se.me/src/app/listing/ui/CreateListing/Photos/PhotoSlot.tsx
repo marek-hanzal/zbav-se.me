@@ -138,6 +138,8 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								}
 							}}
 							size={"md"}
+							tone={"neutral"}
+							border={false}
 						/>
 					</div>
 				)}
