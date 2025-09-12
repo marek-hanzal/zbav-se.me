@@ -1,6 +1,9 @@
 01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
     ref: Feed (title)
     value: Nabídky
+0c2c6fd06e1335dedaa48d6303abc9f94b640a90a1943e7e9a71c40a:
+    ref: Bag (tour)
+    value: Seznam zajímavých věcí
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
     ref: Upload (placeholder)
     value: Vložit fotku
@@ -16,6 +19,9 @@
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
+2043bc9d826ae1ff1562c2b9f76265d4b1dfb8cebf3b3bea5e04fac2:
+    ref: User (tour)
+    value: Tvůj účet, nastavení a další
 2727e5a04d8acc225b3320799348e34eff9ac515e1130101baab751a:
     ref: .
     value: .
@@ -76,21 +82,24 @@
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
     ref: Clear files
     value: Clear files
-73aa5d5ab6900befa8e3b519a4fa3107408f3de843d34f0a236e05d5:
-    ref: Sell (title)
-    value: Prodej
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
     ref: There is nothing to see right now.
     value: There is nothing to see right now.
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
     ref: Close (label)
     value: Close (label)
+863f50a904f6405a6670efae0ea76aa5695b4c5de22c3d122ad185be:
+    ref: Bag (description)
+    value: Věci, které nasbíráš z ostatních inzerátů se zobrazí zde, tuto sekci můžeš vnímat jako nákupní tašku plnou věcí, které tě zajímají.
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
     ref: Missing required token(s). (message)
     value: Missing required token(s). (message)
+8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
+    ref: Previous (tour)
+    value: Předchozí
 8d2db329f49aa5263c8c4fc3a556823963ec674600f55d4da704caa1:
     ref: Name
     value: Name
@@ -202,30 +211,51 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 bf51836b1a1bd58bf9634c0bf838bd0185311a8599218f0227d210ce:
     ref: Tags (title)
     value: Štítky
+c020c21b20e280ed434b8031727bfaa5d83374554a640b3b44790d95:
+    ref: Feed (tour)
+    value: Inzeráty
+c22082dd195a34622fb027456c009fb592cf0a7db126bea3e41a6c6c:
+    ref: Listing (tour)
+    value: Nový inzerát
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Cena
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!
+c7a7a6bee8ef2d38b15e879d0a1820f1cbd99e420dee37d2f546bffe:
+    ref: User (description)
+    value: Tady uvidíš všechna nastavení tvého účtu, osobní údaje a další.
 c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
     ref: Remove sorting
     value: Remove sorting
+c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
+    ref: Feed (description)
+    value: Tady se odehrává hlavní akce - je to takový Instagram inzerátů, kde si můžeš projít, co tě zajímá, nebo jen tak si listovat, co je nového kolem.
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
+cdbce1d0b79bc0726eb0b705eeea4af5d52cb87fe290373ead18925a:
+    ref: Done (tour)
+    value: A to je vše 🙂!
 d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
     ref: Submit listing - status - cannot submit (title)
     value: Ještě něco málo musíš vyplnit 🙂!
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
-e4750c09f2eb0f58325036d24f18a6cafcef57aec005fc751ff747ab:
-    ref: Photos (title)
-    value: Fotky
+de82c74f91a19ba4149f1deaf3b304a285c9ec45929bf4eb72b4bb49:
+    ref: Listing (description)
+    value: Založení inzerátu - prostě nafoť, čeho se chceš zbavit a pošli to do světa. Snadné a rychlé!
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
     ref: Select item (label)
     value: Select item (label)
+eb02bfe761dc867c57d3ac522f65655e53f50f65ca7b42b6547b1176:
+    ref: Progress (tour)
+    value: "{{current}} z {{total}}"
+eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
+    ref: Next (tour)
+    value: Další
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort
