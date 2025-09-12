@@ -5,6 +5,7 @@ import {
 	shift as floatingShift,
 	size as floatingSize,
 	limitShift,
+	type Placement,
 	useFloating,
 } from "@floating-ui/react";
 import type React from "react";
@@ -165,27 +166,13 @@ function FloatingTooltip({
 	referenceElement,
 	placement = "bottom",
 	tooltipClassName = "rounded-2xl bg-white text-neutral-900 shadow-2xl p-4",
-	maxWidthPx = 420,
 	margin = 16,
 	classNameExtra = "",
 	children,
 }: {
 	referenceElement: HTMLElement | null;
-	placement?:
-		| "top"
-		| "bottom"
-		| "left"
-		| "right"
-		| "top-start"
-		| "top-end"
-		| "bottom-start"
-		| "bottom-end"
-		| "left-start"
-		| "left-end"
-		| "right-start"
-		| "right-end";
+	placement?: Placement;
 	tooltipClassName?: string;
-	maxWidthPx?: number;
 	margin?: number;
 	classNameExtra?: string;
 	children: React.ReactNode;
@@ -215,18 +202,13 @@ function FloatingTooltip({
 	});
 
 	useEffect(() => {
-		if (referenceElement) refs.setReference(referenceElement);
+		if (referenceElement) {
+			refs.setReference(referenceElement);
+		}
 	}, [
 		referenceElement,
 		refs,
 	]);
-
-	// Enable transitions only after the first layout to avoid initial jump
-	const [animateReady, setAnimateReady] = useState(false);
-	useEffect(() => {
-		const id = requestAnimationFrame(() => setAnimateReady(true));
-		return () => cancelAnimationFrame(id);
-	}, []);
 
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
@@ -236,22 +218,18 @@ function FloatingTooltip({
 			ref={refs.setFloating}
 			className={[
 				tooltipClassName,
-				// internal scroll + safety caps
 				"overflow-auto",
 				"max-w-[calc(100dvw-32px)]",
 				"max-h-[calc(100dvh-32px)]",
 				classNameExtra,
 			].join(" ")}
 			style={{
-				position: strategy, // fixed
+				position: strategy,
 				top: 0,
 				left: 0,
 				transform: `translate3d(${tx}px, ${ty}px, 0)`,
 				zIndex: 10000,
 				willChange: "transform",
-				transition: animateReady
-					? "transform 300ms cubic-bezier(.22,1,.36,1), max-width 300ms cubic-bezier(.22,1,.36,1), max-height 300ms cubic-bezier(.22,1,.36,1)"
-					: "none",
 			}}
 		>
 			{children}
