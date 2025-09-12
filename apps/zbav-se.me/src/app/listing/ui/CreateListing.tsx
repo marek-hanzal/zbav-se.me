@@ -117,6 +117,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Photos (description)",
 						),
+						side: "left",
+						align: "center",
 					},
 				},
 				{
@@ -126,6 +128,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Tags (description)",
 						),
+						side: "left",
+						align: "center",
 					},
 				},
 				{
@@ -135,6 +139,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Price (description)",
 						),
+						side: "left",
+						align: "center",
 					},
 				},
 				{
@@ -144,6 +150,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Submit (description)",
 						),
+						side: "left",
+						align: "center",
 					},
 				},
 			],
