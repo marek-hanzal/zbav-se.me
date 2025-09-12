@@ -13,6 +13,31 @@ import { motion } from "motion/react";
 import type React from "react";
 import { type FC, useEffect, useRef, useState } from "react";
 
+const MOVE_DURATION_S = 0.35;
+const FADE_DURATION_S = 0.25;
+const EASE_MOVE: [
+	number,
+	number,
+	number,
+	number,
+] = [
+	0.22,
+	1,
+	0.36,
+	1,
+];
+const EASE_FADE: [
+	number,
+	number,
+	number,
+	number,
+] = [
+	0.4,
+	0,
+	0.2,
+	1,
+];
+
 export namespace Content {
 	export interface Props {
 		referenceElement: HTMLElement | null;
@@ -20,12 +45,11 @@ export namespace Content {
 		tooltipClassName?: string;
 		maxWidthPx?: number;
 		margin?: number;
-		contentKey: string | number; // fade-out -> swap -> fade-in
+		contentKey: string | number;
 		children: React.ReactNode;
 	}
 }
 
-/** Move (x/y) + single-surface fade; během fade pozici krátce stabilizujeme (skip update). */
 export const Content: FC<Content.Props> = ({
 	referenceElement,
 	placement = "bottom",
@@ -35,18 +59,15 @@ export const Content: FC<Content.Props> = ({
 	contentKey,
 	children,
 }) => {
+	// Skip FloatingUI updates while fading to avoid micro re-centering.
 	const isFadingRef = useRef(false);
 
 	const { x, y, strategy, refs, update } = useFloating({
 		placement,
 		whileElementsMounted(reference, floating, internalUpdate) {
-			const cleanup = floatingAutoUpdate(reference, floating, () => {
-				if (isFadingRef.current) {
-					return;
-				}
-				internalUpdate();
+			return floatingAutoUpdate(reference, floating, () => {
+				if (!isFadingRef.current) internalUpdate();
 			});
-			return cleanup;
 		},
 		middleware: [
 			floatingOffset(12),
@@ -59,11 +80,11 @@ export const Content: FC<Content.Props> = ({
 				padding: margin,
 				apply({ availableWidth, availableHeight, elements }) {
 					const node = elements.floating as HTMLElement;
-					const width = Math.min(availableWidth, maxWidthPx);
-					const height = Math.max(0, availableHeight);
+					const w = Math.min(availableWidth, maxWidthPx);
+					const h = Math.max(0, availableHeight);
 					Object.assign(node.style, {
-						maxWidth: `${width}px`,
-						maxHeight: `${height}px`,
+						maxWidth: `${w}px`,
+						maxHeight: `${h}px`,
 						overflow: "auto",
 						boxSizing: "border-box",
 					});
@@ -73,9 +94,7 @@ export const Content: FC<Content.Props> = ({
 	});
 
 	useEffect(() => {
-		if (referenceElement) {
-			refs.setReference(referenceElement);
-		}
+		if (referenceElement) refs.setReference(referenceElement);
 	}, [
 		referenceElement,
 		refs,
@@ -84,18 +103,19 @@ export const Content: FC<Content.Props> = ({
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
-	const [stagedKey, setStagedKey] = useState<string | number>(contentKey);
-	const [stagedChildren, setStagedChildren] =
+	// Single-surface fade orchestrator.
+	const [activeKey, setActiveKey] = useState<string | number>(contentKey);
+	const [activeChildren, setActiveChildren] =
 		useState<React.ReactNode>(children);
 	const pendingKeyRef = useRef<string | number>(contentKey);
 	const pendingChildrenRef = useRef<React.ReactNode>(children);
-	const [opacityTarget, setOpacityTarget] = useState<number>(1);
+	const [opacityTarget, setOpacityTarget] = useState(1);
 	const fadingOutRef = useRef(false);
 
 	useEffect(() => {
 		pendingKeyRef.current = contentKey;
 		pendingChildrenRef.current = children;
-		if (contentKey !== stagedKey) {
+		if (contentKey !== activeKey) {
 			isFadingRef.current = true;
 			fadingOutRef.current = true;
 			setOpacityTarget(0);
@@ -103,7 +123,7 @@ export const Content: FC<Content.Props> = ({
 	}, [
 		contentKey,
 		children,
-		stagedKey,
+		activeKey,
 	]);
 
 	return (
@@ -123,46 +143,37 @@ export const Content: FC<Content.Props> = ({
 					y: ty,
 				}}
 				transition={{
-					duration: 0.35,
-					ease: [
-						0.22,
-						1,
-						0.36,
-						1,
-					],
+					duration: MOVE_DURATION_S,
+					ease: EASE_MOVE,
 				}}
 				initial={false}
 			>
 				<motion.div
-					className={[
-						tooltipClassName,
-						"overflow-auto",
-					].join(" ")}
+					className={`${tooltipClassName} overflow-auto`}
 					animate={{
 						opacity: opacityTarget,
 					}}
 					transition={{
-						duration: 0.25,
-						ease: [
-							0.4,
-							0,
-							0.2,
-							1,
-						],
+						duration: FADE_DURATION_S,
+						ease: EASE_FADE,
 					}}
-					onAnimationComplete={async () => {
+					onAnimationComplete={() => {
 						if (fadingOutRef.current && opacityTarget === 0) {
-							setStagedKey(pendingKeyRef.current);
-							setStagedChildren(pendingChildrenRef.current);
+							setActiveKey(pendingKeyRef.current);
+							setActiveChildren(pendingChildrenRef.current);
 							fadingOutRef.current = false;
 							isFadingRef.current = false;
-							await Promise.resolve();
-							update?.();
-							requestAnimationFrame(() => setOpacityTarget(1));
+							// Ensure position recompute before fading back in.
+							queueMicrotask(() => {
+								update?.();
+								requestAnimationFrame(() =>
+									setOpacityTarget(1),
+								);
+							});
 						}
 					}}
 				>
-					{stagedChildren}
+					{activeChildren}
 				</motion.div>
 			</motion.div>
 		</FloatingPortal>
