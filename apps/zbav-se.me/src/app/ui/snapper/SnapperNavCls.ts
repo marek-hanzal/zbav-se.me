@@ -13,6 +13,10 @@ export const SnapperNavCls = ThemeCls.extend(
 				"vertical",
 				"horizontal",
 			],
+			align: [
+				"left",
+				"right",
+			],
 		},
 	},
 	({ what, def }) => ({
@@ -32,7 +36,6 @@ export const SnapperNavCls = ThemeCls.extend(
 				),
 				items: what.css([
 					"gap-4",
-					// "opacity-80",
 				]),
 			}),
 			def.rule(
@@ -40,16 +43,9 @@ export const SnapperNavCls = ThemeCls.extend(
 					orientation: "vertical",
 				}),
 				{
-					root: what.both(
-						[
-							"right-0",
-							"top-1/2",
-							"-translate-y-1/2",
-						],
-						[
-							"round.lg",
-						],
-					),
+					root: what.token([
+						"round.lg",
+					]),
 					items: what.css([
 						"flex",
 						"flex-col",
@@ -78,9 +74,36 @@ export const SnapperNavCls = ThemeCls.extend(
 					]),
 				},
 			),
+			def.rule(
+				what.variant({
+					orientation: "vertical",
+					align: "left",
+				}),
+				{
+					root: what.css([
+						"left-1",
+						"top-1/2",
+						"-translate-y-1/2",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					orientation: "vertical",
+					align: "right",
+				}),
+				{
+					root: what.css([
+						"right-1",
+						"top-1/2",
+						"-translate-y-1/2",
+					]),
+				},
+			),
 		],
 		defaults: def.defaults({
 			orientation: "vertical",
+			align: "right",
 		}),
 	}),
 );

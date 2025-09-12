@@ -1,5 +1,5 @@
 import { Icon } from "@use-pico/client";
-import { useCls } from "@use-pico/cls";
+import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, useEffect, useState } from "react";
 import { SnapperNavCls } from "./SnapperNavCls";
 import { useSnapper } from "./useSnapper";
@@ -14,11 +14,13 @@ export namespace SnapperNav {
 	export interface Props extends SnapperNavCls.Props {
 		pages: Page[];
 		initialIndex?: number;
+		align?: Cls.VariantOf<SnapperNavCls, "align">;
 	}
 }
 
 export const SnapperNav: FC<SnapperNav.Props> = ({
 	pages,
+	align,
 	initialIndex = 0,
 	cls = SnapperNavCls,
 	tweak,
@@ -27,6 +29,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
 			orientation,
+			align,
 		}),
 	}));
 	const [active, setActive] = useState(() =>
