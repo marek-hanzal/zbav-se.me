@@ -9,24 +9,24 @@ import {
 	type Placement,
 	useFloating,
 } from "@floating-ui/react";
-import { AnimatePresence, motion } from "motion/react";
+import { motion } from "motion/react";
 import type React from "react";
-import { type FC, useEffect } from "react";
+import { type FC, useEffect, useRef, useState } from "react";
 
 export namespace Content {
 	export interface Props {
 		referenceElement: HTMLElement | null;
 		placement?: Placement;
-		tooltipClassName?: string;
+		tooltipClassName?: string; // applied to the visible surface (the one that fades)
 		maxWidthPx?: number;
 		margin?: number;
-		/** klíč pro přepnutí obsahu (spustí crossfade) */
+		/** Key that triggers fade-out → swap → fade-in on the single surface */
 		contentKey: string | number;
 		children: React.ReactNode;
 	}
 }
 
-/** Floating s plynulým posunem (x/y) a čistým crossfade obsahem; bez animace rozměrů. */
+/** Move (x/y) and opacity fade on a single surface; no overlap, no position freeze, no size animation. */
 export const Content: FC<Content.Props> = ({
 	referenceElement,
 	placement = "bottom",
@@ -46,7 +46,7 @@ export const Content: FC<Content.Props> = ({
 				limiter: limitShift(),
 			}),
 			floatingFlip(),
-			// jen nasadí limity – žádná animace rozměrů
+			// Only apply caps; do not animate width/height
 			floatingSize({
 				padding: margin,
 				apply({ availableWidth, availableHeight, elements }) {
@@ -74,23 +74,46 @@ export const Content: FC<Content.Props> = ({
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
+	/* ——— Single-surface fade orchestrator ———
+	   We fade the existing surface to 0, then swap to the latest pending content,
+	   then fade back to 1. Position keeps animating independently on the wrapper. */
+
+	const [stagedKey, setStagedKey] = useState<string | number>(contentKey);
+	const [stagedChildren, setStagedChildren] =
+		useState<React.ReactNode>(children);
+	const pendingKeyRef = useRef<string | number>(contentKey);
+	const pendingChildrenRef = useRef<React.ReactNode>(children);
+	const [opacityTarget, setOpacityTarget] = useState<number>(1);
+	const fadingOutRef = useRef<boolean>(false);
+
+	// Keep pending payload in refs
+	useEffect(() => {
+		pendingKeyRef.current = contentKey;
+		pendingChildrenRef.current = children;
+		// Trigger fade-out only when the key changes
+		if (contentKey !== stagedKey) {
+			fadingOutRef.current = true;
+			setOpacityTarget(0);
+		}
+	}, [
+		contentKey,
+		children,
+		stagedKey,
+	]);
+
 	return (
 		<FloatingPortal>
+			{/* Wrapper: only position animates (no key, no freeze) */}
 			<motion.div
 				ref={refs.setFloating}
-				className={[
-					tooltipClassName,
-					"overflow-auto",
-					"max-w-[calc(100dvw-32px)]",
-					"max-h-[calc(100dvh-32px)]",
-				].join(" ")}
 				style={{
 					position: strategy, // fixed
 					top: 0,
 					left: 0,
 					zIndex: 10000,
+					maxWidth: "calc(100dvw - 32px)",
+					maxHeight: "calc(100dvh - 32px)",
 				}}
-				// plynulý posun; žádné animace width/height
 				animate={{
 					x: tx,
 					y: ty,
@@ -106,25 +129,37 @@ export const Content: FC<Content.Props> = ({
 				}}
 				initial={false}
 			>
-				<AnimatePresence mode="wait">
-					<motion.div
-						key={contentKey}
-						initial={{
-							opacity: 0,
-						}}
-						animate={{
-							opacity: 1,
-						}}
-						exit={{
-							opacity: 0,
-						}}
-						transition={{
-							duration: 0.25,
-						}}
-					>
-						{children}
-					</motion.div>
-				</AnimatePresence>
+				{/* Single surface fading in/out; swap happens exactly at fade-out end */}
+				<motion.div
+					className={[
+						tooltipClassName,
+						"overflow-auto",
+					].join(" ")}
+					animate={{
+						opacity: opacityTarget,
+					}}
+					transition={{
+						duration: 0.25,
+						ease: [
+							0.4,
+							0,
+							0.2,
+							1,
+						],
+					}}
+					onAnimationComplete={() => {
+						// If we just finished fading out, swap to the latest pending and fade in
+						if (fadingOutRef.current && opacityTarget === 0) {
+							setStagedKey(pendingKeyRef.current);
+							setStagedChildren(pendingChildrenRef.current);
+							fadingOutRef.current = false;
+							// next tick to ensure DOM swap applied before fade-in
+							requestAnimationFrame(() => setOpacityTarget(1));
+						}
+					}}
+				>
+					{stagedChildren}
+				</motion.div>
 			</motion.div>
 		</FloatingPortal>
 	);
