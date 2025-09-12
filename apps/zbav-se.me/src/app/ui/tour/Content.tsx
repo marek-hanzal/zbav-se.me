@@ -9,8 +9,9 @@ import {
 	type Placement,
 	useFloating,
 } from "@floating-ui/react";
+import { AnimatePresence, motion } from "motion/react";
 import type React from "react";
-import { type FC, useEffect, useMemo, useRef, useState } from "react";
+import { type FC, useEffect } from "react";
 
 export namespace Content {
 	export interface Props {
@@ -19,12 +20,13 @@ export namespace Content {
 		tooltipClassName?: string;
 		maxWidthPx?: number;
 		margin?: number;
+		/** klíč pro přepnutí obsahu (spustí crossfade) */
 		contentKey: string | number;
-		fadeDurationMs?: number;
 		children: React.ReactNode;
 	}
 }
 
+/** Floating s plynulým posunem (x/y) a čistým crossfade obsahem; bez animace rozměrů. */
 export const Content: FC<Content.Props> = ({
 	referenceElement,
 	placement = "bottom",
@@ -32,7 +34,6 @@ export const Content: FC<Content.Props> = ({
 	maxWidthPx = 420,
 	margin = 16,
 	contentKey,
-	fadeDurationMs = 250,
 	children,
 }) => {
 	const { x, y, strategy, refs } = useFloating({
@@ -45,6 +46,7 @@ export const Content: FC<Content.Props> = ({
 				limiter: limitShift(),
 			}),
 			floatingFlip(),
+			// jen nasadí limity – žádná animace rozměrů
 			floatingSize({
 				padding: margin,
 				apply({ availableWidth, availableHeight, elements }) {
@@ -72,61 +74,10 @@ export const Content: FC<Content.Props> = ({
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
-	/* ————————— Fade orchestrator ————————— */
-	const [opacity, setOpacity] = useState(1);
-	const [stagedKey, setStagedKey] = useState(contentKey);
-	const [stagedChildren, setStagedChildren] = useState(children);
-	const outerRef = useRef<HTMLDivElement | null>(null);
-
-	useEffect(() => {
-		if (contentKey === stagedKey) {
-			// same key → just update children without animation
-			setStagedChildren(children);
-			return;
-		}
-		// start fade-out
-		setOpacity(0);
-
-		const node = outerRef.current;
-		if (!node) return;
-
-		const handleEnd = (e: TransitionEvent) => {
-			if (e.propertyName !== "opacity") return;
-			// swap to new content
-			setStagedKey(contentKey);
-			setStagedChildren(children);
-			// fade back in on next frame
-			requestAnimationFrame(() => setOpacity(1));
-		};
-		node.addEventListener("transitionend", handleEnd);
-
-		return () => {
-			node.removeEventListener("transitionend", handleEnd);
-		};
-	}, [
-		contentKey,
-		children,
-		stagedKey,
-	]);
-
-	const crossFadeStyle: React.CSSProperties = useMemo(
-		() => ({
-			opacity,
-			transition: `opacity ${fadeDurationMs}ms ease`,
-		}),
-		[
-			opacity,
-			fadeDurationMs,
-		],
-	);
-
 	return (
 		<FloatingPortal>
-			<div
-				ref={(el) => {
-					outerRef.current = el;
-					refs.setFloating(el);
-				}}
+			<motion.div
+				ref={refs.setFloating}
 				className={[
 					tooltipClassName,
 					"overflow-auto",
@@ -134,17 +85,47 @@ export const Content: FC<Content.Props> = ({
 					"max-h-[calc(100dvh-32px)]",
 				].join(" ")}
 				style={{
-					position: strategy,
+					position: strategy, // fixed
 					top: 0,
 					left: 0,
-					transform: `translate3d(${tx}px, ${ty}px, 0)`,
 					zIndex: 10000,
-					willChange: "transform,opacity",
-					...crossFadeStyle,
 				}}
+				// plynulý posun; žádné animace width/height
+				animate={{
+					x: tx,
+					y: ty,
+				}}
+				transition={{
+					duration: 0.35,
+					ease: [
+						0.22,
+						1,
+						0.36,
+						1,
+					],
+				}}
+				initial={false}
 			>
-				{stagedChildren}
-			</div>
+				<AnimatePresence mode="wait">
+					<motion.div
+						key={contentKey}
+						initial={{
+							opacity: 0,
+						}}
+						animate={{
+							opacity: 1,
+						}}
+						exit={{
+							opacity: 0,
+						}}
+						transition={{
+							duration: 0.25,
+						}}
+					>
+						{children}
+					</motion.div>
+				</AnimatePresence>
+			</motion.div>
 		</FloatingPortal>
 	);
 };
