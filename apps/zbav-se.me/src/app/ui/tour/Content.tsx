@@ -19,15 +19,12 @@ export namespace Content {
 		tooltipClassName?: string;
 		maxWidthPx?: number;
 		margin?: number;
-		/** Changes to this value trigger fade-out → swap → fade-in */
 		contentKey: string | number;
-		/** Milliseconds for fade-out and fade-in (same duration for both) */
 		fadeDurationMs?: number;
 		children: React.ReactNode;
 	}
 }
 
-/** Floating UI tooltip with content cross-fade on key change. */
 export const Content: FC<Content.Props> = ({
 	referenceElement,
 	placement = "bottom",
@@ -65,7 +62,6 @@ export const Content: FC<Content.Props> = ({
 		],
 	});
 
-	// Wire reference node
 	useEffect(() => {
 		if (referenceElement) refs.setReference(referenceElement);
 	}, [
@@ -73,59 +69,50 @@ export const Content: FC<Content.Props> = ({
 		refs,
 	]);
 
-	// Pixel snap to avoid shimmering
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
-	/* ————————— Content cross-fade ————————— */
+	/* ————————— Fade orchestrator ————————— */
+	const [opacity, setOpacity] = useState(1);
+	const [stagedKey, setStagedKey] = useState(contentKey);
+	const [stagedChildren, setStagedChildren] = useState(children);
+	const outerRef = useRef<HTMLDivElement | null>(null);
 
-	/** The currently staged React node (what is actually rendered). */
-	const [stagedChildren, setStagedChildren] =
-		useState<React.ReactNode>(children);
-	/** Which key is currently staged (to prevent double fades). */
-	const [stagedKey, setStagedKey] = useState<string | number>(contentKey);
-	/** Opacity phase: 1 = visible, 0 = hidden. */
-	const [opacity, setOpacity] = useState<number>(1);
-	const timeoutRef = useRef<number | null>(null);
-
-	// On key change: fade out → swap → fade in
 	useEffect(() => {
-		// If contentKey did not change, just update children (no fade)
 		if (contentKey === stagedKey) {
+			// same key → just update children without animation
 			setStagedChildren(children);
 			return;
 		}
-
-		// Start fade-out
+		// start fade-out
 		setOpacity(0);
 
-		// After fade-out, swap children and key, then fade-in
-		if (timeoutRef.current != null) window.clearTimeout(timeoutRef.current);
-		timeoutRef.current = window.setTimeout(() => {
-			setStagedChildren(children);
+		const node = outerRef.current;
+		if (!node) return;
+
+		const handleEnd = (e: TransitionEvent) => {
+			if (e.propertyName !== "opacity") return;
+			// swap to new content
 			setStagedKey(contentKey);
-			// Next frame to ensure DOM has swapped before fade-in
+			setStagedChildren(children);
+			// fade back in on next frame
 			requestAnimationFrame(() => setOpacity(1));
-		}, fadeDurationMs);
+		};
+		node.addEventListener("transitionend", handleEnd);
 
 		return () => {
-			if (timeoutRef.current != null)
-				window.clearTimeout(timeoutRef.current);
+			node.removeEventListener("transitionend", handleEnd);
 		};
 	}, [
-		children,
 		contentKey,
+		children,
 		stagedKey,
-		fadeDurationMs,
 	]);
 
-	// Shared inline transition (robust without Tailwind JIT reliance)
 	const crossFadeStyle: React.CSSProperties = useMemo(
 		() => ({
 			opacity,
 			transition: `opacity ${fadeDurationMs}ms ease`,
-			// Avoid pointer surprises during fade-out (optional)
-			pointerEvents: opacity === 0 ? "none" : "auto",
 		}),
 		[
 			opacity,
@@ -136,7 +123,10 @@ export const Content: FC<Content.Props> = ({
 	return (
 		<FloatingPortal>
 			<div
-				ref={refs.setFloating}
+				ref={(el) => {
+					outerRef.current = el;
+					refs.setFloating(el);
+				}}
 				className={[
 					tooltipClassName,
 					"overflow-auto",
@@ -149,11 +139,10 @@ export const Content: FC<Content.Props> = ({
 					left: 0,
 					transform: `translate3d(${tx}px, ${ty}px, 0)`,
 					zIndex: 10000,
-					willChange: "transform",
+					willChange: "transform,opacity",
 					...crossFadeStyle,
 				}}
 			>
-				{/* Only the inner content fades; position and sizing stay stable */}
 				{stagedChildren}
 			</div>
 		</FloatingPortal>
