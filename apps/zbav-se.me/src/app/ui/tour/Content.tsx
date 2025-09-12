@@ -17,16 +17,15 @@ export namespace Content {
 	export interface Props {
 		referenceElement: HTMLElement | null;
 		placement?: Placement;
-		tooltipClassName?: string; // applied to the visible surface (the one that fades)
+		tooltipClassName?: string;
 		maxWidthPx?: number;
 		margin?: number;
-		/** Key that triggers fade-out → swap → fade-in on the single surface */
-		contentKey: string | number;
+		contentKey: string | number; // fade-out -> swap -> fade-in
 		children: React.ReactNode;
 	}
 }
 
-/** Move (x/y) and opacity fade on a single surface; no overlap, no position freeze, no size animation. */
+/** Move (x/y) + single-surface fade; během fade pozici krátce stabilizujeme (skip update). */
 export const Content: FC<Content.Props> = ({
 	referenceElement,
 	placement = "bottom",
@@ -36,9 +35,19 @@ export const Content: FC<Content.Props> = ({
 	contentKey,
 	children,
 }) => {
-	const { x, y, strategy, refs } = useFloating({
+	const isFadingRef = useRef(false);
+
+	const { x, y, strategy, refs, update } = useFloating({
 		placement,
-		whileElementsMounted: floatingAutoUpdate,
+		whileElementsMounted(reference, floating, internalUpdate) {
+			const cleanup = floatingAutoUpdate(reference, floating, () => {
+				if (isFadingRef.current) {
+					return;
+				}
+				internalUpdate();
+			});
+			return cleanup;
+		},
 		middleware: [
 			floatingOffset(12),
 			floatingShift({
@@ -46,7 +55,6 @@ export const Content: FC<Content.Props> = ({
 				limiter: limitShift(),
 			}),
 			floatingFlip(),
-			// Only apply caps; do not animate width/height
 			floatingSize({
 				padding: margin,
 				apply({ availableWidth, availableHeight, elements }) {
@@ -65,7 +73,9 @@ export const Content: FC<Content.Props> = ({
 	});
 
 	useEffect(() => {
-		if (referenceElement) refs.setReference(referenceElement);
+		if (referenceElement) {
+			refs.setReference(referenceElement);
+		}
 	}, [
 		referenceElement,
 		refs,
@@ -74,24 +84,19 @@ export const Content: FC<Content.Props> = ({
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
-	/* ——— Single-surface fade orchestrator ———
-	   We fade the existing surface to 0, then swap to the latest pending content,
-	   then fade back to 1. Position keeps animating independently on the wrapper. */
-
 	const [stagedKey, setStagedKey] = useState<string | number>(contentKey);
 	const [stagedChildren, setStagedChildren] =
 		useState<React.ReactNode>(children);
 	const pendingKeyRef = useRef<string | number>(contentKey);
 	const pendingChildrenRef = useRef<React.ReactNode>(children);
 	const [opacityTarget, setOpacityTarget] = useState<number>(1);
-	const fadingOutRef = useRef<boolean>(false);
+	const fadingOutRef = useRef(false);
 
-	// Keep pending payload in refs
 	useEffect(() => {
 		pendingKeyRef.current = contentKey;
 		pendingChildrenRef.current = children;
-		// Trigger fade-out only when the key changes
 		if (contentKey !== stagedKey) {
+			isFadingRef.current = true;
 			fadingOutRef.current = true;
 			setOpacityTarget(0);
 		}
@@ -103,11 +108,10 @@ export const Content: FC<Content.Props> = ({
 
 	return (
 		<FloatingPortal>
-			{/* Wrapper: only position animates (no key, no freeze) */}
 			<motion.div
 				ref={refs.setFloating}
 				style={{
-					position: strategy, // fixed
+					position: strategy,
 					top: 0,
 					left: 0,
 					zIndex: 10000,
@@ -129,7 +133,6 @@ export const Content: FC<Content.Props> = ({
 				}}
 				initial={false}
 			>
-				{/* Single surface fading in/out; swap happens exactly at fade-out end */}
 				<motion.div
 					className={[
 						tooltipClassName,
@@ -147,13 +150,14 @@ export const Content: FC<Content.Props> = ({
 							1,
 						],
 					}}
-					onAnimationComplete={() => {
-						// If we just finished fading out, swap to the latest pending and fade in
+					onAnimationComplete={async () => {
 						if (fadingOutRef.current && opacityTarget === 0) {
 							setStagedKey(pendingKeyRef.current);
 							setStagedChildren(pendingChildrenRef.current);
 							fadingOutRef.current = false;
-							// next tick to ensure DOM swap applied before fade-in
+							isFadingRef.current = false;
+							await Promise.resolve();
+							update?.();
 							requestAnimationFrame(() => setOpacityTarget(1));
 						}
 					}}
