@@ -79,6 +79,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					const isActive = i === active;
 					return (
 						<Icon
+							id={id}
 							key={id}
 							onClick={() => scrollToIndex(i)}
 							icon={icon}

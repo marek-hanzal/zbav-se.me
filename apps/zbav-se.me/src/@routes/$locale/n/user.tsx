@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Scrollable, Tx, UserIcon } from "@use-pico/client";
+import { Button, ls, Scrollable, Tx, UserIcon } from "@use-pico/client";
 import { Layout } from "~/app/ui/layout/Layout";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -16,7 +16,16 @@ export const Route = createFileRoute("/$locale/n/user")({
 					/>
 				</Title>
 
-				<Scrollable>content</Scrollable>
+				<Scrollable>
+					<Button
+						onClick={() => {
+							ls.remove("intro");
+							ls.remove("intro.listing");
+						}}
+					>
+						<Tx label={"Reset tours (button)"} />
+					</Button>
+				</Scrollable>
 
 				<Nav active="user" />
 			</Layout>

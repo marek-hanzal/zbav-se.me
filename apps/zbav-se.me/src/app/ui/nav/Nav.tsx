@@ -26,7 +26,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 		const intro = ls.get("intro");
 
 		if (intro) {
-			// return;
+			return;
 		}
 
 		const drv = driver({
