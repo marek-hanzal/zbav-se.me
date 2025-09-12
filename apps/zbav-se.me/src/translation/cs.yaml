@@ -107,8 +107,9 @@
     value: Close (label)
 863f50a904f6405a6670efae0ea76aa5695b4c5de22c3d122ad185be:
     ref: Bag (description)
-    value: Věci, které nasbíráš z ostatních inzerátů se zobrazí zde, tuto sekci
-        můžeš vnímat jako nákupní tašku plnou věcí, které tě zajímají.
+    value:
+        Taška obsahuje věci, které se ti líbí - ať už z hlavního seznamu inzerátů, nebo
+        nastavených filtrů. Jejím účelem je ti dát nástroj k prozkoumání a porovnání věcí mezi sebou.
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
@@ -264,8 +265,8 @@ c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
     ref: Feed (description)
     value:
         Tady se odehrává hlavní akce - je to takový Instagram inzerátů, kde si
-        můžeš projít, co tě zajímá, nebo si jen tak listovat, co je nového kolem. Mimo jiné už tady máš možnost sbírat
-        věci, které se ti líbí a později se ti zobrazí v tašce.
+        můžeš projít, co tě zajímá, nebo si jen tak listovat, co je nového kolem. Mimo jiné tady máš možnost sbírat
+        věci, které se ti líbí do tašky - o ní později.
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
