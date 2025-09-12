@@ -1,12 +1,3 @@
-import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { Layout } from "~/app/ui/layout/Layout";
+import { createFileRoute } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/$locale/n")({
-	component() {
-		return (
-			<Layout>
-				<Outlet />
-			</Layout>
-		);
-	},
-});
+export const Route = createFileRoute("/$locale/n")({});

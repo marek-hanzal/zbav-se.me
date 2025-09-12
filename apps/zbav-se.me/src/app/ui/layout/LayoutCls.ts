@@ -7,7 +7,12 @@ export const LayoutCls = ThemeCls.extend(
 		slot: [
 			"root",
 		],
-		variant: {},
+		variant: {
+			layout: [
+				"header-content-footer",
+				"content-footer",
+			],
+		},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
@@ -17,7 +22,6 @@ export const LayoutCls = ThemeCls.extend(
 					[
 						"h-full",
 						"grid",
-						"grid-rows-[min-content_minmax(0,1fr)_min-content]",
 						"gap-1",
 					],
 					[
@@ -32,8 +36,30 @@ export const LayoutCls = ThemeCls.extend(
 					],
 				),
 			}),
+			def.rule(
+				what.variant({
+					layout: "header-content-footer",
+				}),
+				{
+					root: what.css([
+						"grid-rows-[min-content_minmax(0,1fr)_min-content]",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					layout: "content-footer",
+				}),
+				{
+					root: what.css([
+						"grid-rows-[minmax(0,1fr)_min-content]",
+					]),
+				},
+			),
 		],
-		defaults: def.defaults({}),
+		defaults: def.defaults({
+			layout: "header-content-footer",
+		}),
 	}),
 );
 

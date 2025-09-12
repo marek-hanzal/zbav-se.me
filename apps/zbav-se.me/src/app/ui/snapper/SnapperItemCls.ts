@@ -12,19 +12,27 @@ export const SnapperItemCls = ThemeCls.extend(
 				"vertical",
 				"horizontal",
 			],
+			disabled: [
+				"bool",
+			],
 		},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
 		rules: [
 			def.root({
-				root: what.css([
-					"relative",
-					"snap-start",
-					"min-h-0",
-					"min-w-0",
-					"[scroll-snap-stop:always]",
-				]),
+				root: what.both(
+					[
+						"relative",
+						"snap-start",
+						"min-h-0",
+						"min-w-0",
+						"[scroll-snap-stop:always]",
+					],
+					[
+						"round.xl",
+					],
+				),
 			}),
 			def.rule(
 				what.variant({
@@ -47,9 +55,21 @@ export const SnapperItemCls = ThemeCls.extend(
 					]),
 				},
 			),
+			def.rule(
+				what.variant({
+					disabled: true,
+				}),
+				{
+					root: what.css([
+						"opacity-25",
+						"pointer-events-none",
+					]),
+				},
+			),
 		],
 		defaults: def.defaults({
 			orientation: "vertical",
+			disabled: false,
 		}),
 	}),
 );

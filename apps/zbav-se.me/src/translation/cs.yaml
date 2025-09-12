@@ -78,7 +78,7 @@
     value: Clear files
 73aa5d5ab6900befa8e3b519a4fa3107408f3de843d34f0a236e05d5:
     ref: Sell (title)
-    value: Prodej mě
+    value: Prodej
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
     ref: There is nothing to see right now.
     value: There is nothing to see right now.
@@ -214,6 +214,9 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
+d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
+    ref: Submit listing - status - cannot submit (title)
+    value: Ještě něco málo musíš vyplnit 🙂!
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)

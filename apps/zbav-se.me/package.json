@@ -18,7 +18,7 @@
 		"@tanstack/react-store": "0.7.5",
 		"@trpc/client": "11.5.1",
 		"@trpc/server": "11.5.1",
-		"@use-pico/client": "5.0.53",
+		"@use-pico/client": "5.0.54",
 		"@use-pico/cls": "5.0.27",
 		"@use-pico/common": "5.0.32",
 		"@use-pico/server": "5.0.32",

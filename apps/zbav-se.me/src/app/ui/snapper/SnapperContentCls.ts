@@ -19,16 +19,21 @@ export const SnapperContentCls = ThemeCls.extend(
 		token: def.token({}),
 		rules: [
 			def.root({
-				root: what.css([
-					"relative",
-					"min-h-0",
-					"min-w-0",
-					"scroll-smooth",
-					"[-webkit-overflow-scrolling:touch]",
-					"snap-mandatory",
-					"h-full",
-					"touch-auto",
-				]),
+				root: what.both(
+					[
+						"relative",
+						"min-h-0",
+						"min-w-0",
+						"scroll-smooth",
+						"[-webkit-overflow-scrolling:touch]",
+						"snap-mandatory",
+						"h-full",
+						"touch-auto",
+					],
+					[
+						"round.xl",
+					],
+				),
 				content: what.css([
 					"grid",
 					"gap-2",

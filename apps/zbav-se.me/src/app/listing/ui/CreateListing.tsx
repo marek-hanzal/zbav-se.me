@@ -1,6 +1,7 @@
 import type { Cls } from "@use-pico/cls";
-import { type FC, useCallback, useState } from "react";
+import { type FC, useCallback, useMemo, useState } from "react";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
+import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
@@ -14,25 +15,6 @@ import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
 import { TagsWrapper } from "./CreateListing/Tags/TagsWrapper";
-
-const pages: SnapperNav.Page[] = [
-	{
-		id: "photos",
-		icon: PhotoIcon,
-	},
-	{
-		id: "tags",
-		icon: TagIcon,
-	},
-	{
-		id: "price",
-		icon: PriceIcon,
-	},
-	{
-		id: "submit",
-		icon: SendPackageIcon,
-	},
-];
 
 const subtitleVariant: Cls.VariantsOf<TitleCls> = {
 	tone: "secondary",
@@ -54,6 +36,22 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 			() => null,
 		),
 	);
+
+	const hasPhotos = useMemo(() => {
+		return photos.some((p) => p !== null);
+	}, [
+		photos,
+	]);
+
+	const canSubmit = useMemo(() => {
+		if (!hasPhotos) {
+			return false;
+		}
+
+		return true;
+	}, [
+		hasPhotos,
+	]);
 
 	const onChangePhotos: PhotoSlot.OnChangeFn = useCallback(
 		(file, slot) => {
@@ -81,13 +79,36 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 
 	return (
 		<Snapper orientation="vertical">
-			<SnapperNav pages={pages} />
+			<SnapperNav
+				pages={[
+					{
+						id: "photos",
+						icon: hasPhotos ? CheckIcon : PhotoIcon,
+						iconProps: hasPhotos
+							? {
+									tone: "primary",
+								}
+							: undefined,
+					},
+					{
+						id: "tags",
+						icon: TagIcon,
+					},
+					{
+						id: "price",
+						icon: PriceIcon,
+					},
+					{
+						id: "submit",
+						icon: SendPackageIcon,
+					},
+				]}
+			/>
 
 			<SnapperContent>
 				<SnapperItem>
 					<PhotosWrapper
 						count={photoCountLimit}
-						subtitleVariant={subtitleVariant}
 						value={photos}
 						onChange={onChangePhotos}
 					/>
@@ -102,7 +123,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 				</SnapperItem>
 
 				<SnapperItem>
-					<SubmitWrapper />
+					<SubmitWrapper canSubmit={canSubmit} />
 				</SnapperItem>
 			</SnapperContent>
 		</Snapper>

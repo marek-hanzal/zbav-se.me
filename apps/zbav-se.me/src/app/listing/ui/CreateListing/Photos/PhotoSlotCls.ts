@@ -22,16 +22,9 @@ export const PhotoSlotCls = ThemeCls.extend(
 		token: def.token({}),
 		rules: [
 			def.root({
-				root: what.both(
-					[
-						"h-full",
-						"px-0",
-						"pb-0",
-					],
-					[
-						"square.sm",
-					],
-				),
+				root: what.css([
+					"h-full",
+				]),
 				slot: what.both(
 					[
 						"h-full",
@@ -40,7 +33,7 @@ export const PhotoSlotCls = ThemeCls.extend(
 						"justify-center",
 					],
 					[
-						"border.md",
+						"border.default",
 						"round.xl",
 						"tone.link.light.border",
 						"tone.link.light.bg",

@@ -1,4 +1,4 @@
-import { Action, TrashIcon, Tx } from "@use-pico/client";
+import { Action, Status, TrashIcon, Tx } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import {
 	type ChangeEvent,
@@ -10,6 +10,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PhotoSlotCls } from "./PhotoSlotCls";
 
 function useObjectUrl(file: File | null) {
@@ -66,7 +67,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 }) => {
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
-			default: slot === 0,
+			default: false,
 			disabled,
 		}),
 	}));
@@ -130,12 +131,18 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						draggable={false}
 					/>
 				) : (
-					<Tx
-						label={"Upload (placeholder)"}
-						font="bold"
-						size={"xl"}
-						tone={slot === 0 ? "primary" : "link"}
-						theme={"light"}
+					<Status
+						icon={PhotoIcon}
+						textTitle={
+							<Tx
+								label={"Upload (placeholder)"}
+								font="bold"
+								size={"xl"}
+								tone={"link"}
+								theme={"light"}
+							/>
+						}
+						tone={"link"}
 					/>
 				)}
 
@@ -149,7 +156,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				/>
 
 				{src && (
-					<div className="absolute top-8 right-1/2">
+					<div className="absolute top-8 right-1/2 translate-x-1/2">
 						<Action
 							iconEnabled={TrashIcon}
 							onClick={(e) => {
@@ -163,7 +170,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								}
 							}}
 							size={"md"}
-							tone={"neutral"}
+							tone={"danger"}
 							border={false}
 						/>
 					</div>
