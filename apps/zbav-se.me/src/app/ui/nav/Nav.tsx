@@ -45,8 +45,6 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					popover: {
 						title: translator.text("Feed (tour)"),
 						description: translator.text("Feed (description)"),
-						side: "top",
-						align: "start",
 					},
 				},
 				{
@@ -54,8 +52,6 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					popover: {
 						title: translator.text("Listing (tour)"),
 						description: translator.text("Listing (description)"),
-						side: "top",
-						align: "start",
 					},
 				},
 				{
@@ -63,8 +59,6 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					popover: {
 						title: translator.text("Bag (tour)"),
 						description: translator.text("Bag (description)"),
-						side: "top",
-						align: "start",
 					},
 				},
 				{
@@ -72,8 +66,6 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					popover: {
 						title: translator.text("User (tour)"),
 						description: translator.text("User (description)"),
-						side: "top",
-						align: "start",
 					},
 				},
 			],
