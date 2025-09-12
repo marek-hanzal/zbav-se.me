@@ -148,6 +148,7 @@ export const Tour: FC<Tour.Props> = ({
 			)}
 
 			<Content
+				contentKey={currentStepIndex}
 				referenceElement={targetElement}
 				placement={currentStep?.placement ?? placement}
 				tooltipClassName={
