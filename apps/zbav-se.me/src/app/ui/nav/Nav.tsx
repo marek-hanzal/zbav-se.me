@@ -36,7 +36,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 	return (
 		<>
 			<Tour
-				identifier={"intro"}
+				isOpen={false}
 				steps={[
 					{
 						selector: `#${feedId}`,

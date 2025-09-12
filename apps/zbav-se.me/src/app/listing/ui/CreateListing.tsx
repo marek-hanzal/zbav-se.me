@@ -1,5 +1,14 @@
+import { ls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import { type FC, useCallback, useId, useMemo, useState } from "react";
+import { translator } from "@use-pico/common";
+import {
+	type FC,
+	useCallback,
+	useEffect,
+	useId,
+	useMemo,
+	useState,
+} from "react";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
@@ -11,6 +20,7 @@ import { SnapperContent } from "~/app/ui/snapper/SnapperContent";
 import { SnapperItem } from "~/app/ui/snapper/SnapperItem";
 import { SnapperNav } from "~/app/ui/snapper/SnapperNav";
 import type { TitleCls } from "~/app/ui/title/TitleCls";
+import { Tour } from "~/app/ui/tour/Tour";
 import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
@@ -41,6 +51,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 			() => null,
 		),
 	);
+
+	const [isTourOpen, setIsTourOpen] = useState(false);
 
 	const hasPhotos = useMemo(() => {
 		return photos.some((p) => p !== null);
@@ -82,135 +94,111 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		],
 	);
 
-	// useEffect(() => {
-	// 	const intro = ls.get("intro.listing");
+	useEffect(() => {
+		const intro = ls.get("intro.listing");
 
-	// 	if (intro) {
-	// 		return;
-	// 	}
+		if (intro) {
+			// return;
+		}
 
-	// 	const drv = driver({
-	// 		showProgress: true,
-	// 		animate: true,
-	// 		overlayClickBehavior: "nextStep",
-	// 		stageRadius: 10,
-	// 		disableActiveInteraction: true,
-	// 		nextBtnText: translator.text("Next (tour)"),
-	// 		prevBtnText: translator.text("Previous (tour)"),
-	// 		doneBtnText: translator.text("Done (tour)"),
-	// 		progressText: translator.text("Progress (tour)"),
-	// 		steps: [
-	// 			{
-	// 				element: `#${photosId}`,
-	// 				popover: {
-	// 					title: translator.text("Listing - Photos (tour)"),
-	// 					description: translator.text(
-	// 						"Listing - Photos (description)",
-	// 					),
-	// 					side: "left",
-	// 					align: "center",
-	// 				},
-	// 			},
-	// 			{
-	// 				element: `#${tagsId}`,
-	// 				popover: {
-	// 					title: translator.text("Listing - Tags (tour)"),
-	// 					description: translator.text(
-	// 						"Listing - Tags (description)",
-	// 					),
-	// 					side: "left",
-	// 					align: "center",
-	// 				},
-	// 			},
-	// 			{
-	// 				element: `#${priceId}`,
-	// 				popover: {
-	// 					title: translator.text("Listing - Price (tour)"),
-	// 					description: translator.text(
-	// 						"Listing - Price (description)",
-	// 					),
-	// 					side: "left",
-	// 					align: "center",
-	// 				},
-	// 			},
-	// 			{
-	// 				element: `#${submitId}`,
-	// 				popover: {
-	// 					title: translator.text("Listing - Submit (tour)"),
-	// 					description: translator.text(
-	// 						"Listing - Submit (description)",
-	// 					),
-	// 					side: "left",
-	// 					align: "center",
-	// 				},
-	// 			},
-	// 		],
-	// 		onDestroyed() {
-	// 			ls.set("intro.listing", true);
-	// 		},
-	// 	});
+		setIsTourOpen(true);
+	}, []);
 
-	// 	drv.drive();
-
-	// 	return () => {
-	// 		drv.destroy();
-	// 	};
-	// }, [
-	// 	photosId,
-	// 	tagsId,
-	// 	priceId,
-	// 	submitId,
-	// ]);
+	const handleTourClose = useCallback(() => {
+		setIsTourOpen(false);
+		ls.set("intro.listing", true);
+	}, []);
 
 	return (
-		<Snapper orientation="vertical">
-			<SnapperNav
-				pages={[
+		<>
+			<Tour
+				isOpen={isTourOpen}
+				onClose={handleTourClose}
+				steps={[
 					{
-						id: photosId,
-						icon: hasPhotos ? CheckIcon : PhotoIcon,
-						iconProps: hasPhotos
-							? {
-									tone: "primary",
-								}
-							: undefined,
+						selector: `#${photosId}`,
+						title: translator.text("Listing - Photos (tour)"),
+						description: translator.text(
+							"Listing - Photos (description)",
+						),
+						placement: "left",
 					},
 					{
-						id: tagsId,
-						icon: TagIcon,
+						selector: `#${tagsId}`,
+						title: translator.text("Listing - Tags (tour)"),
+						description: translator.text(
+							"Listing - Tags (description)",
+						),
+						placement: "left",
 					},
 					{
-						id: priceId,
-						icon: PriceIcon,
+						selector: `#${priceId}`,
+						title: translator.text("Listing - Price (tour)"),
+						description: translator.text(
+							"Listing - Price (description)",
+						),
+						placement: "left",
 					},
 					{
-						id: submitId,
-						icon: SendPackageIcon,
+						selector: `#${submitId}`,
+						title: translator.text("Listing - Submit (tour)"),
+						description: translator.text(
+							"Listing - Submit (description)",
+						),
+						placement: "left",
 					},
 				]}
 			/>
 
-			<SnapperContent>
-				<SnapperItem>
-					<PhotosWrapper
-						count={photoCountLimit}
-						value={photos}
-						onChange={onChangePhotos}
-					/>
-				</SnapperItem>
+			<Snapper orientation="vertical">
+				<SnapperNav
+					pages={[
+						{
+							id: photosId,
+							icon: hasPhotos ? CheckIcon : PhotoIcon,
+							iconProps: hasPhotos
+								? {
+										tone: "primary",
+									}
+								: undefined,
+						},
+						{
+							id: tagsId,
+							icon: TagIcon,
+						},
+						{
+							id: priceId,
+							icon: PriceIcon,
+						},
+						{
+							id: submitId,
+							icon: SendPackageIcon,
+						},
+					]}
+				/>
 
-				<SnapperItem>
-					<TagsWrapper subtitleVariant={subtitleVariant} />
-				</SnapperItem>
+				<SnapperContent>
+					<SnapperItem>
+						<PhotosWrapper
+							count={photoCountLimit}
+							value={photos}
+							onChange={onChangePhotos}
+						/>
+					</SnapperItem>
 
-				<SnapperItem>
-					<PriceWrapper subtitleVariant={subtitleVariant} />
-				</SnapperItem>
+					<SnapperItem>
+						<TagsWrapper subtitleVariant={subtitleVariant} />
+					</SnapperItem>
 
-				<SnapperItem>
-					<SubmitWrapper canSubmit={canSubmit} />
-				</SnapperItem>
-			</SnapperContent>
-		</Snapper>
+					<SnapperItem>
+						<PriceWrapper subtitleVariant={subtitleVariant} />
+					</SnapperItem>
+
+					<SnapperItem>
+						<SubmitWrapper canSubmit={canSubmit} />
+					</SnapperItem>
+				</SnapperContent>
+			</Snapper>
+		</>
 	);
 };
