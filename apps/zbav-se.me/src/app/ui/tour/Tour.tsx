@@ -19,60 +19,41 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { Highlight } from "~/app/ui/highlight/highlight";
+import { useInViewport } from "~/app/ui/hook/useInViewport";
 
-/* ================================
+/* =========================================
      Types
-     ================================ */
+     ========================================= */
 
 export type TourStep = {
 	selector: string;
 	title: string;
 	description?: string;
 	padding?: number;
-	placement?:
-		| "top"
-		| "bottom"
-		| "left"
-		| "right"
-		| "top-start"
-		| "top-end"
-		| "bottom-start"
-		| "bottom-end"
-		| "left-start"
-		| "left-end"
-		| "right-start"
-		| "right-end";
+	placement?: Placement; // directly from Floating UI
 };
 
 export type TourProperties = {
 	steps: TourStep[];
-
-	/** Controlled flag. When undefined, Tour manages open state internally. */
-	isOpen?: boolean;
-
-	/** Initial step index when Tour opens first time. */
+	/** Controlled: parent fully manages visibility. */
+	isOpen: boolean;
+	/** Index to start on when opening. */
 	initialStepIndex?: number;
-
-	/** Called after fade-out completes when Tour was closed via button/Escape. */
+	/** Called on user-requested close (button/Escape/backdrop). */
 	onClose?: () => void;
 
-	/** Tailwind class names for theming */
-	holeClassName?: string; // visuals for the hole (rounded, ring, shadow, blur…)
+	/** Tailwind theming hooks */
+	holeClassName?: string; // visuals for the hole (rounded, ring, blur…)
 	tooltipClassName?: string; // tooltip surface
 	containerClassName?: string; // overlay container (z-index, print)
-	backdropOpacity?: number; // 0..1 darkness (default 0.6)
+	backdropOpacity?: number; // 0..1 (default 0.6)
 };
 
-/* ================================
-     Constants (fade timing)
-     ================================ */
+/* =========================================
+     Utilities: viewport rect tracker + in-viewport observer
+     ========================================= */
 
-const FADE_MS = 750; // hard-coded fade duration (both in and out)
-
-/* ================================
-     Rectangle tracker (batched by rAF)
-     ================================ */
-
+/** Tracks an element's viewport rectangle; batches updates with rAF. */
 function useHighlightRectangle(selector: string | null) {
 	const [targetElement, setTargetElement] = useState<HTMLElement | null>(
 		null,
@@ -81,6 +62,7 @@ function useHighlightRectangle(selector: string | null) {
 		null,
 	);
 
+	// Resolve element and take an initial snapshot synchronously.
 	useLayoutEffect(() => {
 		if (!selector) {
 			setTargetElement(null);
@@ -94,6 +76,7 @@ function useHighlightRectangle(selector: string | null) {
 		selector,
 	]);
 
+	// Batch frequent events into a single measurement per frame.
 	const rafIdRef = useRef<number | null>(null);
 	const schedule = useCallback((fn: () => void) => {
 		if (rafIdRef.current != null) return;
@@ -129,10 +112,10 @@ function useHighlightRectangle(selector: string | null) {
 			passive: true,
 		});
 
-		const vv = window.visualViewport;
-		if (vv) {
-			vv.addEventListener("resize", scheduleUpdate);
-			vv.addEventListener("scroll", scheduleUpdate);
+		const visualViewport = window.visualViewport;
+		if (visualViewport) {
+			visualViewport.addEventListener("resize", scheduleUpdate);
+			visualViewport.addEventListener("scroll", scheduleUpdate);
 		}
 
 		return () => {
@@ -142,9 +125,9 @@ function useHighlightRectangle(selector: string | null) {
 			mutationObserver.disconnect();
 			window.removeEventListener("resize", scheduleUpdate);
 			window.removeEventListener("scroll", scheduleUpdate);
-			if (vv) {
-				vv.removeEventListener("resize", scheduleUpdate);
-				vv.removeEventListener("scroll", scheduleUpdate);
+			if (visualViewport) {
+				visualViewport.removeEventListener("resize", scheduleUpdate);
+				visualViewport.removeEventListener("scroll", scheduleUpdate);
 			}
 		};
 	}, [
@@ -158,21 +141,23 @@ function useHighlightRectangle(selector: string | null) {
 	};
 }
 
-/* ================================
-     Tooltip (Floating UI) with size guard
-     ================================ */
+/* =========================================
+     Tooltip (Floating UI) – stable, no size/pos animations
+     ========================================= */
 
 function FloatingTooltip({
 	referenceElement,
 	placement = "bottom",
 	tooltipClassName = "rounded-2xl bg-white text-neutral-900 shadow-2xl p-4",
+	maxWidthPx = 420,
 	margin = 16,
-	classNameExtra = "",
+	classNameExtra = "", // e.g., fade classes from Tour
 	children,
 }: {
 	referenceElement: HTMLElement | null;
 	placement?: Placement;
 	tooltipClassName?: string;
+	maxWidthPx?: number;
 	margin?: number;
 	classNameExtra?: string;
 	children: React.ReactNode;
@@ -182,19 +167,24 @@ function FloatingTooltip({
 		whileElementsMounted: floatingAutoUpdate,
 		middleware: [
 			floatingOffset(12),
-			floatingFlip(),
+			// prefer staying on the same side; only flip when truly necessary
 			floatingShift({
 				padding: margin,
 				limiter: limitShift(),
 			}),
+			floatingFlip(),
+			// keep tooltip within viewport bounds (no animations here)
 			floatingSize({
 				padding: margin,
 				apply({ availableWidth, availableHeight, elements }) {
+					const node = elements.floating as HTMLElement;
 					const width = Math.min(availableWidth, maxWidthPx);
 					const height = Math.max(0, availableHeight);
-					Object.assign(elements.floating.style, {
+					Object.assign(node.style, {
 						maxWidth: `${width}px`,
 						maxHeight: `${height}px`,
+						overflow: "auto",
+						boxSizing: "border-box",
 					});
 				},
 			}),
@@ -202,14 +192,13 @@ function FloatingTooltip({
 	});
 
 	useEffect(() => {
-		if (referenceElement) {
-			refs.setReference(referenceElement);
-		}
+		if (referenceElement) refs.setReference(referenceElement);
 	}, [
 		referenceElement,
 		refs,
 	]);
 
+	// Snap to whole pixels to avoid shimmer on fractional transforms.
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
@@ -224,11 +213,12 @@ function FloatingTooltip({
 				classNameExtra,
 			].join(" ")}
 			style={{
-				position: strategy,
+				position: strategy, // usually 'fixed'
 				top: 0,
 				left: 0,
 				transform: `translate3d(${tx}px, ${ty}px, 0)`,
 				zIndex: 10000,
+				transition: "none", // stability over flair
 				willChange: "transform",
 			}}
 		>
@@ -238,9 +228,9 @@ function FloatingTooltip({
 	);
 }
 
-/* ================================
-     Tour
-     ================================ */
+/* =========================================
+     Tour (controlled)
+     ========================================= */
 
 export function Tour({
 	steps,
@@ -252,68 +242,32 @@ export function Tour({
 	containerClassName = "print:hidden",
 	backdropOpacity = 0.6,
 }: TourProperties) {
-	// Controlled vs uncontrolled
-	const isControlled = isOpen !== undefined;
-	const [internalOpen, setInternalOpen] = useState<boolean>(true);
-	const desiredOpen = isControlled ? (isOpen as boolean) : internalOpen;
-
-	// Mounted/visible states to support fade-out before unmount
-	const [mounted, setMounted] = useState(false); // whether Tour should render at all
-	const [visible, setVisible] = useState(false); // drives opacity 0 ↔ 1
-
-	// Mount/unmount + fade logic reacts to desiredOpen
+	// Reset step when opening for predictable starts.
+	const [currentStepIndex, setCurrentStepIndex] = useState(initialStepIndex);
 	useEffect(() => {
-		if (desiredOpen) {
-			// mount and fade-in
-			setMounted(true);
-			const id = requestAnimationFrame(() => setVisible(true));
-			return () => cancelAnimationFrame(id);
-		} else {
-			// fade-out, then unmount
-			setVisible(false);
-			const t = setTimeout(() => setMounted(false), FADE_MS);
-			return () => clearTimeout(t);
-		}
+		if (isOpen) setCurrentStepIndex(initialStepIndex);
 	}, [
-		desiredOpen,
+		isOpen,
+		initialStepIndex,
 	]);
 
-	// Step index
-	const [currentStepIndex, setCurrentStepIndex] = useState(initialStepIndex);
 	const currentStep = steps[currentStepIndex];
 
-	// Resolve element + rect for the current step
+	// Track target and its rectangle
 	const { targetElement, boundingRectangle } = useHighlightRectangle(
-		mounted && currentStep ? currentStep.selector : null,
+		isOpen && currentStep ? currentStep.selector : null,
 	);
 
-	// Helper to request close with fade-out, then notify parent
-	const requestClose = useCallback(() => {
-		// start fade-out immediately
-		setVisible(false);
-		// after fade completes, close for real
-		window.setTimeout(() => {
-			if (!isControlled) setInternalOpen(false);
-			setMounted(false);
-			onClose?.();
-		}, FADE_MS);
-	}, [
-		isControlled,
-		onClose,
-	]);
+	// Check if the target is fully in view (threshold = 1).
+	const targetInView = useInViewport(targetElement, {
+		threshold: 1,
+		rootMargin: "0px",
+	});
 
-	// Scroll target into view if needed
+	// Scroll into view when necessary
 	useEffect(() => {
-		if (!mounted || !targetElement || !boundingRectangle) return;
-		const vw = window.innerWidth;
-		const vh = window.innerHeight;
-		const inView =
-			boundingRectangle.left >= 0 &&
-			boundingRectangle.top >= 0 &&
-			boundingRectangle.right <= vw &&
-			boundingRectangle.bottom <= vh;
-
-		if (!inView) {
+		if (!isOpen || !targetElement) return;
+		if (!targetInView) {
 			targetElement.scrollIntoView({
 				behavior: "smooth",
 				block: "center",
@@ -321,12 +275,18 @@ export function Tour({
 			});
 		}
 	}, [
-		mounted,
+		isOpen,
 		targetElement,
-		boundingRectangle,
+		targetInView,
 	]);
 
 	// Navigation
+	const requestClose = useCallback(
+		() => onClose?.(),
+		[
+			onClose,
+		],
+	);
 	const goToNext = useCallback(() => {
 		if (currentStepIndex < steps.length - 1)
 			setCurrentStepIndex((i) => i + 1);
@@ -336,14 +296,13 @@ export function Tour({
 		steps.length,
 		requestClose,
 	]);
-
 	const goToPrevious = useCallback(() => {
 		setCurrentStepIndex((i) => Math.max(0, i - 1));
 	}, []);
 
-	// Keyboard navigation
+	// Keyboard shortcuts while open
 	useEffect(() => {
-		if (!mounted) return;
+		if (!isOpen) return;
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") requestClose();
 			if (e.key === "ArrowRight") goToNext();
@@ -352,7 +311,7 @@ export function Tour({
 		window.addEventListener("keydown", onKeyDown as any);
 		return () => window.removeEventListener("keydown", onKeyDown as any);
 	}, [
-		mounted,
+		isOpen,
 		goToNext,
 		goToPrevious,
 		requestClose,
@@ -372,12 +331,14 @@ export function Tour({
 	]);
 
 	const padding = currentStep?.padding ?? 8;
-	const placement = currentStep?.placement ?? "bottom";
+	const placement: Placement = currentStep?.placement ?? "bottom";
 
-	// Fade classes (static; Tailwind compiles arbitrary value literals)
-	const fadeClass = `transition-opacity duration-[750ms] ease-out ${visible ? "opacity-100" : "opacity-0"}`;
+	// Simple fade-in while open. (Parent may handle fade-out timing if desired.)
+	const fadeClass = isOpen
+		? "transition-opacity duration-[750ms] ease-out opacity-100"
+		: "opacity-0";
 
-	if (!mounted || !currentStep) return null;
+	if (!isOpen || !currentStep) return null;
 
 	return (
 		<>

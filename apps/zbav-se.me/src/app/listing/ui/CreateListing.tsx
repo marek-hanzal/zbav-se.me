@@ -98,7 +98,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		const intro = ls.get("intro.listing");
 
 		if (intro) {
-			// return;
+			return;
 		}
 
 		setIsTourOpen(true);
