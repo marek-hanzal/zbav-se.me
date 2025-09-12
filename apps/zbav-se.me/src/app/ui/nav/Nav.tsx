@@ -4,6 +4,7 @@ import { type Cls, useCls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
 import { driver } from "driver.js";
 import { type FC, useEffect, useId } from "react";
+import { DriverCls } from "~/app/ui/driver/DriverCls";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { FeedIcon } from "~/app/ui/icon/FeedIcon";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
@@ -22,11 +23,13 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 	const bagId = useId();
 	const userId = useId();
 
+	const driverSlots = useCls(DriverCls);
+
 	useEffect(() => {
 		const intro = ls.get("intro");
 
 		if (intro) {
-			return;
+			// return;
 		}
 
 		const drv = driver({
@@ -39,6 +42,12 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 			prevBtnText: translator.text("Previous (tour)"),
 			doneBtnText: translator.text("Done (tour)"),
 			progressText: translator.text("Progress (tour)"),
+			popoverClass: driverSlots.popover(),
+			onPopoverRender(popover) {
+				popover.wrapper.classList = driverSlots.popover();
+				popover.progress.classList = driverSlots.progress();
+				popover.arrow.remove();
+			},
 			steps: [
 				{
 					element: `#${feedId}`,
@@ -80,6 +89,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 			drv.destroy();
 		};
 	}, [
+		driverSlots,
 		feedId,
 		listingId,
 		bagId,
