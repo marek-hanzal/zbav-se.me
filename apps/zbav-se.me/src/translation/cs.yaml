@@ -4,9 +4,9 @@
 0275899b719a7087887d05949414bb44c3048b8ebb50fac38f0e44b5:
     ref: Listing - Photos (description)
     value:
-        Každý inzerát potřebuje mít fotku - ovládání je jednoduché, stačí tažením do stran obsadit jednotlivé karty a je vyřešeno.
-        Je potřeba mít alespoň jednu fotku. Pokud chceš fotku nahradit, stačí znovu klepnout a prostě ji změnit, ikonka koše fotku
-        odstraní a upraví pořadí v seznamu.
+        Každý inzerát potřebuje mít fotku - ovládání je jednoduché, tažením do stran a klepnutím fotíš/vybíráš fotky na jednotlivé karty, opětovným
+        klepnutím fotku vyměníš. Košem fotku zahodíš - tím se zároveň upraví pořadí v seznamu, nelekni se. A jako poslední - každý inzerát musí mít
+        nejméně jednu fotku.
 0c2c6fd06e1335dedaa48d6303abc9f94b640a90a1943e7e9a71c40a:
     ref: Bag (tour)
     value: Seznam zajímavých věcí
@@ -28,8 +28,8 @@
 1a648ea8c6ce8ff475d3f0ce68fe69efade01da2ad911fa8dc2af51d:
     ref: Listing - Submit (description)
     value:
-        Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš prohlédnout, zda je všechno v pořádku a později budeš mít možnost sledovat, jako
-        si tvůj inzerát stojí mezi ostatními.
+        Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš prohlédnout, zda je všechno v pořádku a později budeš mít
+        možnost sledovat, jak si tvůj inzerát stojí mezi ostatními.
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
@@ -247,7 +247,7 @@ c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
     ref: Listing - Tags (description)
     value:
         Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na správné nastavení štítků, které pak
-        inzerát pomohou doručit ostatním. Proto tady prosím dávej extra pozor na správné nastavení.
+        inzerát pomohou doručit ostatním - proto tady prosím dávej extra pozor na správné nastavení.
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Cena
@@ -264,7 +264,8 @@ c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
     ref: Feed (description)
     value:
         Tady se odehrává hlavní akce - je to takový Instagram inzerátů, kde si
-        můžeš projít, co tě zajímá, nebo jen tak si listovat, co je nového kolem.
+        můžeš projít, co tě zajímá, nebo jen tak si listovat, co je nového kolem. Mimo jiné už tady máš možnost sbírat
+        věci, které se ti líbí a později se ti zobrazí v tašce.
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
@@ -283,7 +284,7 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 de82c74f91a19ba4149f1deaf3b304a285c9ec45929bf4eb72b4bb49:
     ref: Listing (description)
     value: Založení inzerátu - prostě nafoť, čeho se chceš zbavit a pošli to do
-        světa. Snadné a rychlé!
+        světa. Snadné a ultra rychlé!
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
     ref: Select item (label)
     value: Select item (label)
