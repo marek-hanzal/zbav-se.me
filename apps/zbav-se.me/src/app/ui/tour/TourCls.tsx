@@ -14,16 +14,22 @@ export const TourCls = ThemeCls.extend(
 		token: def.token({}),
 		rules: [
 			def.root({
-				root: what.token([
-					"square.md",
-					"shadow.default",
-					"round.lg",
-					"border.default",
-					"tone.secondary.light.bg",
-					"tone.secondary.light.text",
-					"tone.secondary.light.border",
-					"tone.secondary.light.shadow",
-				]),
+				root: what.both(
+					[
+						"min-w-[215px]",
+						"max-w-[285px]",
+					],
+					[
+						"square.md",
+						"shadow.default",
+						"round.lg",
+						"border.default",
+						"tone.secondary.light.bg",
+						"tone.secondary.light.text",
+						"tone.secondary.light.border",
+						"tone.secondary.light.shadow",
+					],
+				),
 				nav: what.css([
 					"inline-flex",
 					"flex-row",

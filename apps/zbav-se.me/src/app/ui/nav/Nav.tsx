@@ -34,26 +34,33 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "primary";
 
 	return (
-		<Tour
-			steps={[
-				{
-					selector: `#${feedId}`,
-					content: () => translator.rich("Feed (tour)"),
-				},
-				{
-					selector: `#${listingId}`,
-					content: () => translator.rich("Listing (tour)"),
-				},
-				{
-					selector: `#${bagId}`,
-					content: () => translator.rich("Bag (tour)"),
-				},
-				{
-					selector: `#${userId}`,
-					content: () => translator.rich("User (tour)"),
-				},
-			]}
-		>
+		<>
+			<Tour
+				identifier={"intro"}
+				steps={[
+					{
+						selector: `#${feedId}`,
+						title: translator.text("Feed (tour)"),
+						description: translator.text("Feed (description)"),
+					},
+					{
+						selector: `#${listingId}`,
+						title: translator.text("Listing (tour)"),
+						description: translator.text("Listing (description)"),
+					},
+					{
+						selector: `#${bagId}`,
+						title: translator.text("Bag (tour)"),
+						description: translator.text("Bag (description)"),
+					},
+					{
+						selector: `#${userId}`,
+						title: translator.text("User (tour)"),
+						description: translator.text("User (description)"),
+					},
+				]}
+			/>
+
 			<div className={slots.root()}>
 				<LinkTo
 					id={feedId}
@@ -119,6 +126,6 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					</Button>
 				</LinkTo>
 			</div>
-		</Tour>
+		</>
 	);
 };
