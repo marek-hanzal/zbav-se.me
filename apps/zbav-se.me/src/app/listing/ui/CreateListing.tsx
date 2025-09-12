@@ -1,15 +1,5 @@
-import { ls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import { translator } from "@use-pico/common";
-import { driver } from "driver.js";
-import {
-	type FC,
-	useCallback,
-	useEffect,
-	useId,
-	useMemo,
-	useState,
-} from "react";
+import { type FC, useCallback, useId, useMemo, useState } from "react";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
@@ -92,85 +82,85 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		],
 	);
 
-	useEffect(() => {
-		const intro = ls.get("intro.listing");
+	// useEffect(() => {
+	// 	const intro = ls.get("intro.listing");
 
-		if (intro) {
-			return;
-		}
+	// 	if (intro) {
+	// 		return;
+	// 	}
 
-		const drv = driver({
-			showProgress: true,
-			animate: true,
-			overlayClickBehavior: "nextStep",
-			stageRadius: 10,
-			disableActiveInteraction: true,
-			nextBtnText: translator.text("Next (tour)"),
-			prevBtnText: translator.text("Previous (tour)"),
-			doneBtnText: translator.text("Done (tour)"),
-			progressText: translator.text("Progress (tour)"),
-			steps: [
-				{
-					element: `#${photosId}`,
-					popover: {
-						title: translator.text("Listing - Photos (tour)"),
-						description: translator.text(
-							"Listing - Photos (description)",
-						),
-						side: "left",
-						align: "center",
-					},
-				},
-				{
-					element: `#${tagsId}`,
-					popover: {
-						title: translator.text("Listing - Tags (tour)"),
-						description: translator.text(
-							"Listing - Tags (description)",
-						),
-						side: "left",
-						align: "center",
-					},
-				},
-				{
-					element: `#${priceId}`,
-					popover: {
-						title: translator.text("Listing - Price (tour)"),
-						description: translator.text(
-							"Listing - Price (description)",
-						),
-						side: "left",
-						align: "center",
-					},
-				},
-				{
-					element: `#${submitId}`,
-					popover: {
-						title: translator.text("Listing - Submit (tour)"),
-						description: translator.text(
-							"Listing - Submit (description)",
-						),
-						side: "left",
-						align: "center",
-					},
-				},
-			],
-			onDestroyed() {
-				ls.set("intro.listing", true);
-			},
-		});
+	// 	const drv = driver({
+	// 		showProgress: true,
+	// 		animate: true,
+	// 		overlayClickBehavior: "nextStep",
+	// 		stageRadius: 10,
+	// 		disableActiveInteraction: true,
+	// 		nextBtnText: translator.text("Next (tour)"),
+	// 		prevBtnText: translator.text("Previous (tour)"),
+	// 		doneBtnText: translator.text("Done (tour)"),
+	// 		progressText: translator.text("Progress (tour)"),
+	// 		steps: [
+	// 			{
+	// 				element: `#${photosId}`,
+	// 				popover: {
+	// 					title: translator.text("Listing - Photos (tour)"),
+	// 					description: translator.text(
+	// 						"Listing - Photos (description)",
+	// 					),
+	// 					side: "left",
+	// 					align: "center",
+	// 				},
+	// 			},
+	// 			{
+	// 				element: `#${tagsId}`,
+	// 				popover: {
+	// 					title: translator.text("Listing - Tags (tour)"),
+	// 					description: translator.text(
+	// 						"Listing - Tags (description)",
+	// 					),
+	// 					side: "left",
+	// 					align: "center",
+	// 				},
+	// 			},
+	// 			{
+	// 				element: `#${priceId}`,
+	// 				popover: {
+	// 					title: translator.text("Listing - Price (tour)"),
+	// 					description: translator.text(
+	// 						"Listing - Price (description)",
+	// 					),
+	// 					side: "left",
+	// 					align: "center",
+	// 				},
+	// 			},
+	// 			{
+	// 				element: `#${submitId}`,
+	// 				popover: {
+	// 					title: translator.text("Listing - Submit (tour)"),
+	// 					description: translator.text(
+	// 						"Listing - Submit (description)",
+	// 					),
+	// 					side: "left",
+	// 					align: "center",
+	// 				},
+	// 			},
+	// 		],
+	// 		onDestroyed() {
+	// 			ls.set("intro.listing", true);
+	// 		},
+	// 	});
 
-		drv.drive();
+	// 	drv.drive();
 
-		return () => {
-			drv.destroy();
-		};
-	}, [
-		photosId,
-		tagsId,
-		priceId,
-		submitId,
-	]);
+	// 	return () => {
+	// 		drv.destroy();
+	// 	};
+	// }, [
+	// 	photosId,
+	// 	tagsId,
+	// 	priceId,
+	// 	submitId,
+	// ]);
 
 	return (
 		<Snapper orientation="vertical">
