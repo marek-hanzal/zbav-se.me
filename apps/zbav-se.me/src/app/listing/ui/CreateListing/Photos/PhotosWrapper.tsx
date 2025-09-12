@@ -1,6 +1,6 @@
 import { Tx } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import type { FC } from "react";
+import { type FC, useMemo } from "react";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
@@ -15,24 +15,43 @@ export namespace PhotosWrapper {
 	export interface Props {
 		count: number;
 		subtitleVariant: Cls.VariantsOf<TitleCls>;
+		/**
+		 * Array of photos - should be exactly count long.
+		 *
+		 * "null" represents an empty slot, but values should be ordered by "filled" first,
+		 * this component is only wrapper rendering what's on input.
+		 */
+		value: PhotoSlot.Value[];
+		/**
+		 * Reports back changed slots.
+		 */
+		onChange: PhotoSlot.OnChangeFn;
 	}
 }
 
 export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 	count,
 	subtitleVariant,
+	value,
+	onChange,
 }) => {
-	const pages: SnapperNav.Page[] = Array.from(
-		{
-			length: count,
-		},
-		(_, index) => ({
-			id: `p-${index + 1}`,
-			icon: DotIcon,
-			iconProps: {
-				size: "sm",
-			},
-		}),
+	const pages: SnapperNav.Page[] = useMemo(
+		() =>
+			Array.from(
+				{
+					length: count,
+				},
+				(_, index) => ({
+					id: `p-${index + 1}`,
+					icon: DotIcon,
+					iconProps: {
+						size: "sm",
+					},
+				}),
+			),
+		[
+			count,
+		],
 	);
 
 	return (
@@ -67,7 +86,11 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				>
 					{pages.map((_, slot) => (
 						<SnapperItem key={`photo-${slot + 1}`}>
-							<PhotoSlot slot={slot} />
+							<PhotoSlot
+								slot={slot}
+								value={value[slot] ?? null}
+								onChange={onChange}
+							/>
 						</SnapperItem>
 					))}
 				</SnapperContent>

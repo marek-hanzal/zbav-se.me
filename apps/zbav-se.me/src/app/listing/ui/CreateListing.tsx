@@ -1,5 +1,6 @@
 import type { Cls } from "@use-pico/cls";
-import type { FC } from "react";
+import { type FC, useCallback, useState } from "react";
+import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
@@ -14,6 +15,30 @@ import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
 import { TagsWrapper } from "./CreateListing/Tags/TagsWrapper";
 
+const pages: SnapperNav.Page[] = [
+	{
+		id: "photos",
+		icon: PhotoIcon,
+	},
+	{
+		id: "tags",
+		icon: TagIcon,
+	},
+	{
+		id: "price",
+		icon: PriceIcon,
+	},
+	{
+		id: "submit",
+		icon: SendPackageIcon,
+	},
+];
+
+const subtitleVariant: Cls.VariantsOf<TitleCls> = {
+	tone: "secondary",
+	size: "lg",
+};
+
 export namespace CreateListing {
 	export interface Props {
 		photoCountLimit: number;
@@ -21,29 +46,38 @@ export namespace CreateListing {
 }
 
 export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
-	const subtitleVariant: Cls.VariantsOf<TitleCls> = {
-		tone: "secondary",
-		size: "lg",
-	};
+	const [photos, setPhotos] = useState<PhotoSlot.Value[]>(
+		Array.from(
+			{
+				length: photoCountLimit,
+			},
+			() => null,
+		),
+	);
 
-	const pages: SnapperNav.Page[] = [
-		{
-			id: "photos",
-			icon: PhotoIcon,
+	const onChangePhotos: PhotoSlot.OnChangeFn = useCallback(
+		(file, slot) => {
+			setPhotos((prev) => {
+				const next = [
+					...prev,
+				];
+				next[slot] = file;
+
+				const compact: PhotoSlot.Value[] = next.filter(
+					(f): f is File => f !== null,
+				);
+
+				while (compact.length < photoCountLimit) {
+					compact.push(null);
+				}
+
+				return compact;
+			});
 		},
-		{
-			id: "tags",
-			icon: TagIcon,
-		},
-		{
-			id: "price",
-			icon: PriceIcon,
-		},
-		{
-			id: "submit",
-			icon: SendPackageIcon,
-		},
-	];
+		[
+			photoCountLimit,
+		],
+	);
 
 	return (
 		<Snapper orientation="vertical">
@@ -54,6 +88,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					<PhotosWrapper
 						count={photoCountLimit}
 						subtitleVariant={subtitleVariant}
+						value={photos}
+						onChange={onChangePhotos}
 					/>
 				</SnapperItem>
 

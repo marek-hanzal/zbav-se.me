@@ -4,17 +4,53 @@ import {
 	type ChangeEvent,
 	type FC,
 	type KeyboardEvent,
+	type SyntheticEvent,
 	useCallback,
+	useEffect,
 	useRef,
 	useState,
 } from "react";
 import { PhotoSlotCls } from "./PhotoSlotCls";
 
+function useObjectUrl(file: File | null) {
+	const [url, setUrl] = useState<string | null>(null);
+
+	useEffect(() => {
+		setUrl((prev) => {
+			if (prev) {
+				URL.revokeObjectURL(prev);
+			}
+			if (!file) {
+				return null;
+			}
+			return URL.createObjectURL(file);
+		});
+	}, [
+		file,
+	]);
+
+	useEffect(() => {
+		return () => {
+			if (url) {
+				URL.revokeObjectURL(url);
+			}
+		};
+	}, [
+		url,
+	]);
+
+	return url;
+}
+
 export namespace PhotoSlot {
+	export type Value = File | null;
+	export type OnChangeFn = (file: Value, slot: number) => void;
+
 	export interface Props extends PhotoSlotCls.Props {
 		slot: number;
 		camera?: boolean;
-		onPick?: (file: File | null, slot: number) => void;
+		value: Value;
+		onChange: OnChangeFn;
 	}
 }
 
@@ -23,7 +59,8 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	camera = false,
 	cls = PhotoSlotCls,
 	tweak,
-	onPick,
+	value,
+	onChange,
 }) => {
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
@@ -32,9 +69,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	}));
 
 	const inputRef = useRef<HTMLInputElement>(null);
-	const [src, setSrc] = useState<string | null>(null);
+	const src = useObjectUrl(value);
 
-	const openPicker = useCallback(() => {
+	console.log("src", {
+		src,
+	});
+
+	const pick = useCallback(() => {
 		inputRef.current?.click();
 	}, []);
 
@@ -44,58 +85,37 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 			if (!file) {
 				return;
 			}
-			if (src) {
-				URL.revokeObjectURL(src);
-			}
-			const url = URL.createObjectURL(file);
-			setSrc(url);
-			onPick?.(file, slot);
+			onChange(file, slot);
 			e.currentTarget.value = "";
 		},
 		[
-			src,
-			onPick,
+			onChange,
 			slot,
 		],
 	);
-
-	const clear = useCallback(() => {
-		if (src) {
-			URL.revokeObjectURL(src);
-		}
-		setSrc(null);
-		onPick?.(null, slot);
-	}, [
-		src,
-		onPick,
-		slot,
-	]);
 
 	const onKeyDown = useCallback(
 		(e: KeyboardEvent) => {
 			if (e.key === "Enter" || e.key === " ") {
 				e.preventDefault();
-				openPicker();
+				pick();
 			}
 		},
 		[
-			openPicker,
+			pick,
 		],
 	);
 
-	const stop = useCallback((e: any) => {
-		e.preventDefault();
-		e.stopPropagation();
-		if (typeof e.stopImmediatePropagation === "function") {
-			e.stopImmediatePropagation();
-		}
+	const stop = useCallback((event: SyntheticEvent) => {
+		event.preventDefault();
+		event.stopPropagation();
 	}, []);
 
 	return (
 		<div className={slots.root()}>
 			<div
 				className={slots.slot()}
-				onClick={openPicker}
+				onClick={pick}
 				onKeyDown={onKeyDown}
 			>
 				{src ? (
@@ -137,12 +157,12 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 							onTouchStart={stop}
 							onClick={(e) => {
 								stop(e);
-								clear();
+								onChange(null, slot);
 							}}
 							onKeyDown={(e) => {
 								if (e.key === "Enter" || e.key === " ") {
 									stop(e);
-									clear();
+									onChange(null, slot);
 								}
 							}}
 							size={"md"}
