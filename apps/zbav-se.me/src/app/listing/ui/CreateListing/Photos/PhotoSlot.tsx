@@ -48,6 +48,7 @@ export namespace PhotoSlot {
 
 	export interface Props extends PhotoSlotCls.Props {
 		slot: number;
+		disabled?: boolean;
 		camera?: boolean;
 		value: Value;
 		onChange: OnChangeFn;
@@ -56,6 +57,7 @@ export namespace PhotoSlot {
 
 export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	slot,
+	disabled,
 	camera = false,
 	cls = PhotoSlotCls,
 	tweak,
@@ -65,15 +67,12 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
 			default: slot === 0,
+			disabled,
 		}),
 	}));
 
 	const inputRef = useRef<HTMLInputElement>(null);
 	const src = useObjectUrl(value);
-
-	console.log("src", {
-		src,
-	});
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
@@ -153,8 +152,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					<div className="absolute top-8 right-1/2">
 						<Action
 							iconEnabled={TrashIcon}
-							onMouseDown={stop}
-							onTouchStart={stop}
 							onClick={(e) => {
 								stop(e);
 								onChange(null, slot);

@@ -13,6 +13,9 @@ export const PhotoSlotCls = ThemeCls.extend(
 			default: [
 				"bool",
 			],
+			disabled: [
+				"bool",
+			],
 		},
 	},
 	({ what, def }) => ({
@@ -69,9 +72,24 @@ export const PhotoSlotCls = ThemeCls.extend(
 					]),
 				},
 			),
+			def.rule(
+				what.variant({
+					disabled: true,
+				}),
+				{
+					slot: what.both(
+						[
+							"opacity-25",
+							"pointer-events-none",
+						],
+						[],
+					),
+				},
+			),
 		],
 		defaults: def.defaults({
 			default: false,
+			disabled: false,
 		}),
 	}),
 );

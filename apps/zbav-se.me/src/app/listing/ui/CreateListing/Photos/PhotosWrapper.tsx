@@ -84,15 +84,20 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 						}),
 					})}
 				>
-					{pages.map((_, slot) => (
-						<SnapperItem key={`photo-${slot + 1}`}>
-							<PhotoSlot
-								slot={slot}
-								value={value[slot] ?? null}
-								onChange={onChange}
-							/>
-						</SnapperItem>
-					))}
+					{pages.map((_, slot) => {
+						const disabled = slot > 0 && value[slot - 1] === null;
+
+						return (
+							<SnapperItem key={`photo-${slot + 1}`}>
+								<PhotoSlot
+									slot={slot}
+									disabled={disabled}
+									value={value[slot] ?? null}
+									onChange={onChange}
+								/>
+							</SnapperItem>
+						);
+					})}
 				</SnapperContent>
 			</Snapper>
 		</div>
