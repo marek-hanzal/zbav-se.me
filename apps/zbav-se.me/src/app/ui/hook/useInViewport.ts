@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react";
 
-/** Observe whether an element is in the (visual) viewport. */
-export function useInViewport(
-	element: HTMLElement | null,
-	{
-		threshold = 1, // 1 = fully visible; 0 = partially visible
-		rootMargin = "0px", // e.g. "50px 0px 50px 0px" for early detection
-	}: {
+export namespace useInViewport {
+	export interface Props {
 		threshold?: number;
 		rootMargin?: string;
-	} = {},
+	}
+}
+
+/** Reports whether the element is in viewport using IntersectionObserver. */
+export function useInViewport(
+	element: HTMLElement | null,
+	{ threshold = 1, rootMargin = "0px" }: useInViewport.Props = {},
 ) {
 	const [inView, setInView] = useState(false);
 
@@ -18,14 +19,11 @@ export function useInViewport(
 			setInView(false);
 			return;
 		}
-
-		// Prefer visualViewport bounds if available (mobile URL bar shenanigans)
-		const root: Element | null = null;
-		const observer = new IntersectionObserver(
+		const intersectionObserver = new IntersectionObserver(
 			(entries) => {
-				// if multiple entries, pick the one for our element
 				const entry =
 					entries.find((e) => e.target === element) ?? entries[0];
+
 				setInView(
 					Boolean(
 						entry?.isIntersecting &&
@@ -34,15 +32,14 @@ export function useInViewport(
 				);
 			},
 			{
-				root,
+				root: null,
 				rootMargin,
 				threshold,
-			}, // threshold can be number or array; here number is fine
+			},
 		);
-
-		observer.observe(element);
+		intersectionObserver.observe(element);
 		return () => {
-			observer.disconnect();
+			intersectionObserver.disconnect();
 		};
 	}, [
 		element,

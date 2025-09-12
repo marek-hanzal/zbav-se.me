@@ -1,13 +1,11 @@
 import { useParams } from "@tanstack/react-router";
 import { Button, Icon, LinkTo, UserIcon } from "@use-pico/client";
 import { type Cls, useCls } from "@use-pico/cls";
-import { translator } from "@use-pico/common";
 import { type FC, useId } from "react";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { FeedIcon } from "~/app/ui/icon/FeedIcon";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { NavCls } from "~/app/ui/nav/NavCls";
-import { Tour } from "~/app/ui/tour/Tour";
 
 export namespace Nav {
 	export interface Props extends NavCls.Props {
@@ -35,31 +33,40 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 	return (
 		<>
-			<Tour
-				isOpen={false}
+			{/* <Tour
 				steps={[
 					{
-						selector: `#${feedId}`,
-						title: translator.text("Feed (tour)"),
-						description: translator.text("Feed (description)"),
+						element: `#${feedId}`,
+						popover: {
+							title: translator.text("Feed (tour)"),
+							description: translator.text("Feed (description)"),
+						},
 					},
 					{
-						selector: `#${listingId}`,
-						title: translator.text("Listing (tour)"),
-						description: translator.text("Listing (description)"),
+						element: `#${listingId}`,
+						popover: {
+							title: translator.text("Listing (tour)"),
+							description: translator.text(
+								"Listing (description)",
+							),
+						},
 					},
 					{
-						selector: `#${bagId}`,
-						title: translator.text("Bag (tour)"),
-						description: translator.text("Bag (description)"),
+						element: `#${bagId}`,
+						popover: {
+							title: translator.text("Bag (tour)"),
+							description: translator.text("Bag (description)"),
+						},
 					},
 					{
-						selector: `#${userId}`,
-						title: translator.text("User (tour)"),
-						description: translator.text("User (description)"),
+						element: `#${userId}`,
+						popover: {
+							title: translator.text("User (tour)"),
+							description: translator.text("User (description)"),
+						},
 					},
 				]}
-			/>
+			/> */}
 
 			<div className={slots.root()}>
 				<LinkTo

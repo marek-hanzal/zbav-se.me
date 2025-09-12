@@ -98,7 +98,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		const intro = ls.get("intro.listing");
 
 		if (intro) {
-			return;
+			// return;
 		}
 
 		setIsTourOpen(true);
@@ -114,14 +114,20 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 			<Tour
 				isOpen={isTourOpen}
 				onClose={handleTourClose}
+				placement="left"
 				steps={[
+					// {
+					// 	title: translator.text("Listing - Intro (tour)"),
+					// 		description: translator.text(
+					// 			"Listing - Intro (description)",
+					// 		),
+					// },
 					{
 						selector: `#${photosId}`,
 						title: translator.text("Listing - Photos (tour)"),
 						description: translator.text(
 							"Listing - Photos (description)",
 						),
-						placement: "left",
 					},
 					{
 						selector: `#${tagsId}`,
@@ -129,7 +135,6 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Tags (description)",
 						),
-						placement: "left",
 					},
 					{
 						selector: `#${priceId}`,
@@ -137,7 +142,6 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Price (description)",
 						),
-						placement: "left",
 					},
 					{
 						selector: `#${submitId}`,
@@ -145,7 +149,6 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						description: translator.text(
 							"Listing - Submit (description)",
 						),
-						placement: "left",
 					},
 				]}
 			/>
