@@ -32,12 +32,15 @@ export const BaseTitle: FC<Title.Props> = ({
 	}));
 
 	return (
-		<div className={slots.root()}>
+		<div
+			data-ui="Title-root"
+			className={slots.root()}
+		>
 			<Icon
 				icon={icon}
 				{...iconProps}
 			/>
-			<div>{children}</div>
+			<div data-ui="Title-content">{children}</div>
 		</div>
 	);
 };
