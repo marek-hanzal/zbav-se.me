@@ -1,20 +1,31 @@
 import type { Placement } from "@floating-ui/react";
+import {
+	Action,
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	Button,
+	CloseIcon,
+	Tx,
+	Typo,
+} from "@use-pico/client";
+import { useCls } from "@use-pico/cls";
 import { type FC, useCallback, useEffect, useMemo, useState } from "react";
 import { Highlighter } from "~/app/ui/highlighter/Highlighter";
 import { useHighlightRectangle } from "~/app/ui/hook/useHighlightRectangle";
 import { useInViewport } from "~/app/ui/hook/useInViewport";
 import { Content } from "~/app/ui/tour/Content";
+import { TourCls } from "~/app/ui/tour/TourCls";
 
 export namespace Tour {
-	export type Step = {
+	export interface Step {
 		selector: string;
 		title: string;
 		description?: string;
 		padding?: number;
 		placement?: Placement;
-	};
+	}
 
-	export interface Props {
+	export interface Props extends TourCls.Props {
 		steps: Step[];
 		isOpen: boolean;
 		initialStepIndex?: number;
@@ -22,7 +33,6 @@ export namespace Tour {
 		onClose?: () => void;
 
 		holeClassName?: string;
-		tooltipClassName?: string;
 		backdropOpacity?: number;
 	}
 }
@@ -33,10 +43,11 @@ export const Tour: FC<Tour.Props> = ({
 	initialStepIndex = 0,
 	placement = "bottom",
 	onClose,
-	holeClassName = "rounded-2xl ring-2 ring-white/90 shadow-[0_20px_60px_rgba(0,0,0,0.45)]",
-	tooltipClassName,
 	backdropOpacity = 0.6,
+	cls = TourCls,
+	tweak,
 }) => {
+	const slots = useCls(cls, tweak);
 	const [currentStepIndex, setCurrentStepIndex] = useState(initialStepIndex);
 
 	useEffect(() => {
@@ -140,7 +151,7 @@ export const Tour: FC<Tour.Props> = ({
 				<Highlighter
 					rect={highlightRect}
 					padding={padding}
-					holeClassName={holeClassName}
+					holeClassName={slots.hole()}
 					containerClassName="print:hidden transition-opacity duration-[750ms] ease-out opacity-100"
 					backdropOpacity={backdropOpacity}
 					onBackdropClick={onClose}
@@ -151,48 +162,51 @@ export const Tour: FC<Tour.Props> = ({
 				contentKey={currentStepIndex}
 				referenceElement={targetElement}
 				placement={currentStep?.placement ?? placement}
-				tooltipClassName={
-					tooltipClassName ??
-					"rounded-2xl bg-white text-neutral-900 shadow-2xl p-4"
-				}
 			>
 				<div className="grid gap-2">
-					<strong className="text-base">{currentStep.title}</strong>
-					{currentStep.description && (
-						<div className="text-sm text-neutral-600">
-							{currentStep.description}
-						</div>
-					)}
-
-					<div className="mt-2 flex gap-2">
-						<button
-							type="button"
-							className="px-3 py-1 rounded-lg bg-neutral-100 hover:bg-neutral-200 disabled:opacity-50"
-							onClick={goToPrevious}
-							disabled={currentStepIndex === 0}
-						>
-							Zpět
-						</button>
-
-						<button
-							type="button"
-							className="px-3 py-1 rounded-lg bg-black text-white hover:bg-neutral-800"
-							onClick={goToNext}
-						>
-							{currentStepIndex === steps.length - 1
-								? "Dokončit"
-								: "Další"}
-						</button>
-
-						<button
-							type="button"
-							className="ml-auto px-3 py-1 rounded-lg border border-neutral-300 hover:bg-neutral-50"
+					<div className="inline-flex items-center justify-between">
+						<div>{currentStep.title}</div>
+						<Action
+							iconEnabled={CloseIcon}
+							iconDisabled={CloseIcon}
 							onClick={onClose}
-						>
-							Zavřít
-						</button>
+							size="sm"
+							tone={"neutral"}
+							theme={"light"}
+						/>
 					</div>
 
+					<Typo
+						label={currentStep.description}
+						size="sm"
+						tone={"secondary"}
+						theme={"light"}
+					/>
+
+					<div className={slots.nav()}>
+						<Button
+							iconEnabled={ArrowLeftIcon}
+							iconDisabled={ArrowLeftIcon}
+							onClick={goToPrevious}
+							disabled={currentStepIndex === 0}
+							size="sm"
+						>
+							<Tx label={"Previous (tour)"} />
+						</Button>
+
+						<Button
+							iconEnabled={ArrowRightIcon}
+							iconDisabled={ArrowRightIcon}
+							onClick={goToNext}
+							size="sm"
+						>
+							{currentStepIndex === steps.length - 1 ? (
+								<Tx label={"Finish (tour)"} />
+							) : (
+								<Tx label={"Next (tour)"} />
+							)}
+						</Button>
+					</div>
 					<div className="text-xs text-neutral-500">
 						Krok {currentStepIndex + 1} / {steps.length}
 					</div>

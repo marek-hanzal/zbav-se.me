@@ -9,9 +9,17 @@ import {
 	type Placement,
 	useFloating,
 } from "@floating-ui/react";
+import { useCls } from "@use-pico/cls";
 import { motion } from "motion/react";
 import type React from "react";
-import { type FC, useEffect, useRef, useState } from "react";
+import {
+	type FC,
+	type PropsWithChildren,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
+import { ContentCls } from "~/app/ui/tour/ContentCls";
 
 const MOVE_DURATION_S = 0.35;
 const FADE_DURATION_S = 0.25;
@@ -39,27 +47,27 @@ const EASE_FADE: [
 ];
 
 export namespace Content {
-	export interface Props {
+	export interface Props extends ContentCls.Props<PropsWithChildren> {
 		referenceElement: HTMLElement | null;
 		placement?: Placement;
-		tooltipClassName?: string;
 		maxWidthPx?: number;
 		margin?: number;
 		contentKey: string | number;
-		children: React.ReactNode;
 	}
 }
 
 export const Content: FC<Content.Props> = ({
 	referenceElement,
 	placement = "bottom",
-	tooltipClassName = "rounded-2xl bg-white text-neutral-900 shadow-2xl p-4",
 	maxWidthPx = 420,
 	margin = 16,
 	contentKey,
 	children,
+	cls = ContentCls,
+	tweak,
 }) => {
 	const isFadingRef = useRef(false);
+	const slots = useCls(cls, tweak);
 
 	const { x, y, strategy, refs, update } = useFloating({
 		placement,
@@ -149,7 +157,7 @@ export const Content: FC<Content.Props> = ({
 				initial={false}
 			>
 				<motion.div
-					className={`${tooltipClassName} overflow-auto`}
+					className={slots.tooltip()}
 					animate={{
 						opacity: opacityTarget,
 					}}

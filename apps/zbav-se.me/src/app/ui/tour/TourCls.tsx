@@ -7,6 +7,7 @@ export const TourCls = ThemeCls.extend(
 		slot: [
 			"root",
 			"nav",
+			"hole",
 		],
 		variant: {},
 	},
@@ -34,6 +35,12 @@ export const TourCls = ThemeCls.extend(
 					"inline-flex",
 					"flex-row",
 					"gap-2",
+				]),
+				hole: what.css([
+					"rounded-2xl",
+					"ring-2",
+					"ring-white/90",
+					"shadow-[0_20px_60px_rgba(0,0,0,0.45)]",
 				]),
 			}),
 		],
