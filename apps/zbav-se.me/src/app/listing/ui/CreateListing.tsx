@@ -1,4 +1,10 @@
-import { ls } from "@use-pico/client";
+import {
+	ls,
+	Snapper,
+	SnapperContent,
+	SnapperItem,
+	SnapperNav,
+} from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
 import {
@@ -15,10 +21,6 @@ import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { TagIcon } from "~/app/ui/icon/TagIcon";
-import { Snapper } from "~/app/ui/snapper/Snapper";
-import { SnapperContent } from "~/app/ui/snapper/SnapperContent";
-import { SnapperItem } from "~/app/ui/snapper/SnapperItem";
-import { SnapperNav } from "~/app/ui/snapper/SnapperNav";
 import type { TitleCls } from "~/app/ui/title/TitleCls";
 import { Tour } from "~/app/ui/tour/Tour";
 import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";

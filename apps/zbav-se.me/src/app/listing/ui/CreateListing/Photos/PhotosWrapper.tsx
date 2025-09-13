@@ -1,10 +1,12 @@
+import {
+	Snapper,
+	SnapperContent,
+	SnapperItem,
+	SnapperNav,
+} from "@use-pico/client";
 import { type FC, useMemo } from "react";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
-import { Snapper } from "~/app/ui/snapper/Snapper";
-import { SnapperContent } from "~/app/ui/snapper/SnapperContent";
-import { SnapperItem } from "~/app/ui/snapper/SnapperItem";
-import { SnapperNav } from "~/app/ui/snapper/SnapperNav";
 
 export namespace PhotosWrapper {
 	export interface Props {
