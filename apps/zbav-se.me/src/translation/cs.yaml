@@ -4,12 +4,11 @@
 0275899b719a7087887d05949414bb44c3048b8ebb50fac38f0e44b5:
     ref: Listing - Photos (description)
     value:
-        Každý inzerát potřebuje mít fotku - ovládání je jednoduché, tažením do stran a klepnutím fotíš/vybíráš fotky na jednotlivé karty, opětovným
-        klepnutím fotku vyměníš. Košem fotku zahodíš - tím se zároveň upraví pořadí v seznamu, nelekni se. A jako poslední - každý inzerát musí mít
-        nejméně jednu fotku.
-0c2c6fd06e1335dedaa48d6303abc9f94b640a90a1943e7e9a71c40a:
-    ref: Bag (tour)
-    value: Seznam zajímavých věcí
+        Každý inzerát potřebuje mít fotku - ovládání je jednoduché, tažením do
+        stran a klepnutím fotíš/vybíráš fotky na jednotlivé karty, opětovným
+        klepnutím fotku vyměníš. Košem fotku zahodíš - tím se zároveň upraví pořadí
+        v seznamu, nelekni se. A jako poslední - každý inzerát musí mít nejméně
+        jednu fotku.
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
     ref: Upload (placeholder)
     value: Vložit fotku
@@ -27,15 +26,15 @@
     value: Loading...
 1a648ea8c6ce8ff475d3f0ce68fe69efade01da2ad911fa8dc2af51d:
     ref: Listing - Submit (description)
-    value:
-        Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš prohlédnout, zda je všechno v pořádku a později budeš mít
-        možnost sledovat, jak si tvůj inzerát stojí mezi ostatními.
+    value: Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš
+        prohlédnout, zda je všechno v pořádku a později budeš mít možnost sledovat,
+        jak si tvůj inzerát stojí mezi ostatními.
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
-2043bc9d826ae1ff1562c2b9f76265d4b1dfb8cebf3b3bea5e04fac2:
-    ref: User (tour)
-    value: Tvůj účet, nastavení a další
+235e66d76c19716012f86e9a0dd6e73e42751473bf69c210f87bfa66:
+    ref: Reset tours (button)
+    value: Reset tours (button)
 2727e5a04d8acc225b3320799348e34eff9ac515e1130101baab751a:
     ref: .
     value: .
@@ -105,11 +104,6 @@
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
     ref: Close (label)
     value: Close (label)
-863f50a904f6405a6670efae0ea76aa5695b4c5de22c3d122ad185be:
-    ref: Bag (description)
-    value:
-        Taška obsahuje věci, které se ti líbí - ať už z hlavního seznamu inzerátů, nebo
-        nastavených filtrů. Jejím účelem je ti dát nástroj k prozkoumání a porovnání věcí mezi sebou.
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
@@ -128,14 +122,17 @@
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
     ref: Nothing here
     value: Nothing here
+981cc164d88c502839617bc66786dd1986fbb81419eaa16b78e92c17:
+    ref: Finish (tour)
+    value: Hotovo 🙂!
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Fulltext (placeholder)
 9fc51ae02fdcca13681cdb55a8c7a03f9ffc599da9501cbb966aec98:
     ref: Listing - Price (description)
     value:
-        Tohle je prosté - nastav cenu a vlastnosti pro prodej (např. jestli chceš aukci)
-        a je vyřešeno.
+        Tohle je prosté - nastav cenu a vlastnosti pro prodej (např. jestli chceš
+        aukci) a je vyřešeno.
 Category bags:
     static: true
     value: Baťůžky/tašky
@@ -238,41 +235,24 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 bf51836b1a1bd58bf9634c0bf838bd0185311a8599218f0227d210ce:
     ref: Tags (title)
     value: Štítky
-c020c21b20e280ed434b8031727bfaa5d83374554a640b3b44790d95:
-    ref: Feed (tour)
-    value: Inzeráty
-c22082dd195a34622fb027456c009fb592cf0a7db126bea3e41a6c6c:
-    ref: Listing (tour)
-    value: Nový inzerát
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
     ref: Listing - Tags (description)
     value:
-        Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na správné nastavení štítků, které pak
-        inzerát pomohou doručit ostatním - proto tady prosím dávej extra pozor na správné nastavení.
+        Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na
+        správné nastavení štítků, které pak inzerát pomohou doručit ostatním - proto
+        tady prosím dávej extra pozor na správné nastavení.
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Cena
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!
-c7a7a6bee8ef2d38b15e879d0a1820f1cbd99e420dee37d2f546bffe:
-    ref: User (description)
-    value: Tady uvidíš všechna nastavení tvého účtu, osobní údaje a další.
 c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
     ref: Remove sorting
     value: Remove sorting
-c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
-    ref: Feed (description)
-    value:
-        Tady se odehrává hlavní akce - je to takový Instagram inzerátů, kde si
-        můžeš projít, co tě zajímá, nebo si jen tak listovat, co je nového kolem. Mimo jiné tady máš možnost sbírat
-        věci, které se ti líbí do tašky - o ní později.
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
-cdbce1d0b79bc0726eb0b705eeea4af5d52cb87fe290373ead18925a:
-    ref: Done (tour)
-    value: A to je vše 🙂!
 d04269ee27fb690931596a5274381589c9cb5d74901cab9a442cdc93:
     ref: Listing - Tags (tour)
     value: Štítky
@@ -282,16 +262,9 @@ d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
-de82c74f91a19ba4149f1deaf3b304a285c9ec45929bf4eb72b4bb49:
-    ref: Listing (description)
-    value: Založení inzerátu - prostě nafoť, čeho se chceš zbavit a pošli to do
-        světa. Snadné a ultra rychlé!
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
     ref: Select item (label)
     value: Select item (label)
-eb02bfe761dc867c57d3ac522f65655e53f50f65ca7b42b6547b1176:
-    ref: Progress (tour)
-    value: "{{current}} z {{total}}"
 eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
     ref: Next (tour)
     value: Další

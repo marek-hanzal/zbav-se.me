@@ -7,24 +7,24 @@ import {
 } from "react";
 
 /** Tracks an element and returns its viewport rect; updates are batched with rAF. */
-export function useHighlightRectangle(selector: string | null) {
+export function useHighlightRectangle(selector: string | undefined) {
 	const [targetElement, setTargetElement] = useState<HTMLElement | null>(
 		null,
 	);
-	const [boundingRectangle, setBoundingRectangle] = useState<DOMRect | null>(
-		null,
-	);
+	const [boundingRectangle, setBoundingRectangle] = useState<
+		DOMRect | undefined
+	>();
 
 	useLayoutEffect(() => {
 		if (!selector) {
 			setTargetElement(null);
-			setBoundingRectangle(null);
+			setBoundingRectangle(undefined);
 			return;
 		}
 
 		const el = document.querySelector(selector) as HTMLElement | null;
 		setTargetElement(el);
-		setBoundingRectangle(el?.getBoundingClientRect() ?? null);
+		setBoundingRectangle(el?.getBoundingClientRect());
 	}, [
 		selector,
 	]);

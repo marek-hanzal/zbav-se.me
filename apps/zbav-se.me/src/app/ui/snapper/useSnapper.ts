@@ -16,7 +16,6 @@ export const useSnapper = () => {
 				return;
 			}
 
-			// vezmi n-th child (track je první <div> uvnitř SnapperContent rootu)
 			const track = el.firstElementChild as HTMLElement | null;
 			if (!track) {
 				return;

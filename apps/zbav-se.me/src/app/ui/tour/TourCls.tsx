@@ -34,6 +34,8 @@ export const TourCls = ThemeCls.extend(
 				nav: what.css([
 					"inline-flex",
 					"flex-row",
+					"items-center",
+					"justify-end",
 					"gap-2",
 				]),
 				hole: what.css([
