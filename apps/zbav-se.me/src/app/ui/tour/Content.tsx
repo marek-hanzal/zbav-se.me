@@ -59,14 +59,15 @@ export const Content: FC<Content.Props> = ({
 	contentKey,
 	children,
 }) => {
-	// Skip FloatingUI updates while fading to avoid micro re-centering.
 	const isFadingRef = useRef(false);
 
 	const { x, y, strategy, refs, update } = useFloating({
 		placement,
 		whileElementsMounted(reference, floating, internalUpdate) {
 			return floatingAutoUpdate(reference, floating, () => {
-				if (!isFadingRef.current) internalUpdate();
+				if (!isFadingRef.current) {
+					internalUpdate();
+				}
 			});
 		},
 		middleware: [
@@ -103,7 +104,6 @@ export const Content: FC<Content.Props> = ({
 	const tx = Math.round(x ?? 0);
 	const ty = Math.round(y ?? 0);
 
-	// Single-surface fade orchestrator.
 	const [activeKey, setActiveKey] = useState<string | number>(contentKey);
 	const [activeChildren, setActiveChildren] =
 		useState<React.ReactNode>(children);
@@ -163,12 +163,11 @@ export const Content: FC<Content.Props> = ({
 							setActiveChildren(pendingChildrenRef.current);
 							fadingOutRef.current = false;
 							isFadingRef.current = false;
-							// Ensure position recompute before fading back in.
 							queueMicrotask(() => {
 								update?.();
-								requestAnimationFrame(() =>
-									setOpacityTarget(1),
-								);
+								requestAnimationFrame(() => {
+									setOpacityTarget(1);
+								});
 							});
 						}
 					}}
