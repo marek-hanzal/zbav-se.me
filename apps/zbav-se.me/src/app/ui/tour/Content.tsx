@@ -69,15 +69,22 @@ export const Content: FC<Content.Props> = ({
 		],
 	);
 
-	const middleware = referenceElement
-		? [
-				floatingOffset(12),
-				floatingFlip(),
-				...common,
-			]
-		: [
-				...common,
-			];
+	const middleware = useMemo(
+		() =>
+			referenceElement
+				? [
+						floatingOffset(12),
+						floatingFlip(),
+						...common,
+					]
+				: [
+						...common,
+					],
+		[
+			referenceElement,
+			common,
+		],
+	);
 
 	const { x, y, strategy, refs, update } = useFloating({
 		placement: referenceElement ? placement : "top",
