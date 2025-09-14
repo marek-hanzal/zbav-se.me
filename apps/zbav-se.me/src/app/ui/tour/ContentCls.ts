@@ -8,11 +8,7 @@ export const ContentCls = ThemeCls.extend(
 			"root",
 			"tooltip",
 		],
-		variant: {
-			center: [
-				"bool",
-			],
-		},
+		variant: {},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
@@ -24,11 +20,10 @@ export const ContentCls = ThemeCls.extend(
 					"max-w-[100dvw]",
 					"max-h-[100dvh]",
 					"z-[10000]",
-					"overflow-hidden",
 				]),
 				tooltip: what.both(
 					[
-						"overflow-hidden",
+						"overflow-auto",
 					],
 					[
 						"round.lg",
@@ -42,18 +37,8 @@ export const ContentCls = ThemeCls.extend(
 					],
 				),
 			}),
-			def.rule(
-				what.variant({
-					center: true,
-				}),
-				{
-					root: what.css([]),
-				},
-			),
 		],
-		defaults: def.defaults({
-			center: false,
-		}),
+		defaults: def.defaults({}),
 	}),
 );
 

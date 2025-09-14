@@ -42,11 +42,7 @@ export const Content: FC<Content.Props> = ({
 }) => {
 	const centerRef = useRef<HTMLDivElement>(null);
 
-	const slots = useCls(cls, tweak, ({ what }) => ({
-		variant: what.variant({
-			center: !referenceElement,
-		}),
-	}));
+	const slots = useCls(cls, tweak);
 
 	const common = useMemo(
 		() => [
