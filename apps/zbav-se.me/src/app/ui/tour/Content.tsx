@@ -86,24 +86,21 @@ export const Content: FC<Content.Props> = ({
 		],
 	);
 
-	const { x, y, strategy, refs, update } = useFloating({
+	const { x, y, strategy, refs } = useFloating({
 		placement: referenceElement ? placement : "top",
-		whileElementsMounted(reference, floating, internalUpdate) {
-			return floatingAutoUpdate(reference, floating, internalUpdate);
-		},
+		whileElementsMounted: floatingAutoUpdate,
 		middleware,
 	});
 
 	useEffect(() => {
 		const el = referenceElement ?? centerRef.current;
-		if (!el) return;
+		if (!el) {
+			return;
+		}
 		refs.setReference(el);
-		const raf = requestAnimationFrame(() => update());
-		return () => cancelAnimationFrame(raf);
 	}, [
 		referenceElement,
 		refs,
-		update,
 	]);
 
 	return (
