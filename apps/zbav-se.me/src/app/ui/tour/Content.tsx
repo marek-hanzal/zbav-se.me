@@ -67,10 +67,42 @@ export const Content: FC<Content.Props> = ({
 	tweak,
 }) => {
 	const isFadingRef = useRef(false);
-	const slots = useCls(cls, tweak);
+	const centerRef = useRef<HTMLDivElement>(null);
+	const slots = useCls(cls, tweak, ({ what }) => ({
+		variant: what.variant({
+			center: !referenceElement,
+		}),
+	}));
+
+	const common = [
+		floatingSize({
+			padding: margin,
+			apply({ availableWidth, availableHeight, elements }) {
+				const node = elements.floating as HTMLElement;
+				node.style.maxWidth = `${Math.min(availableWidth, maxWidthPx)}px`;
+				node.style.maxHeight = `${Math.max(0, availableHeight)}px`;
+				node.style.overflow = "auto";
+				node.style.boxSizing = "border-box";
+			},
+		}),
+		floatingShift({
+			padding: margin,
+			limiter: limitShift(),
+		}),
+	];
+	const middleware = referenceElement
+		? [
+				floatingOffset(12),
+				floatingFlip(),
+				...common,
+			]
+		: [
+				...common,
+			];
 
 	const { x, y, strategy, refs, update } = useFloating({
-		placement,
+		placement: referenceElement ? placement : "top",
+		// strategy: "fixed",
 		whileElementsMounted(reference, floating, internalUpdate) {
 			return floatingAutoUpdate(reference, floating, () => {
 				if (!isFadingRef.current) {
@@ -78,35 +110,23 @@ export const Content: FC<Content.Props> = ({
 				}
 			});
 		},
-		middleware: [
-			floatingOffset(12),
-			floatingShift({
-				padding: margin,
-				limiter: limitShift(),
-			}),
-			floatingFlip(),
-			floatingSize({
-				padding: margin,
-				apply({ availableWidth, availableHeight, elements }) {
-					const node = elements.floating as HTMLElement;
-					const w = Math.min(availableWidth, maxWidthPx);
-					const h = Math.max(0, availableHeight);
-					Object.assign(node.style, {
-						maxWidth: `${w}px`,
-						maxHeight: `${h}px`,
-						overflow: "auto",
-						boxSizing: "border-box",
-					});
-				},
-			}),
-		],
+		middleware,
 	});
 
 	useEffect(() => {
-		if (referenceElement) refs.setReference(referenceElement);
+		const el = referenceElement ?? centerRef.current;
+		if (!el) {
+			return;
+		}
+		refs.setReference(el);
+		const raf = requestAnimationFrame(() => update());
+		return () => {
+			cancelAnimationFrame(raf);
+		};
 	}, [
 		referenceElement,
 		refs,
+		update,
 	]);
 
 	const tx = Math.round(x ?? 0);
@@ -135,54 +155,58 @@ export const Content: FC<Content.Props> = ({
 	]);
 
 	return (
-		<FloatingPortal>
-			<motion.div
-				ref={refs.setFloating}
-				style={{
-					position: strategy,
-					top: 0,
-					left: 0,
-					zIndex: 10000,
-					maxWidth: "calc(100dvw - 32px)",
-					maxHeight: "calc(100dvh - 32px)",
-				}}
-				animate={{
-					x: tx,
-					y: ty,
-				}}
-				transition={{
-					duration: MOVE_DURATION_S,
-					ease: EASE_MOVE,
-				}}
-				initial={false}
-			>
+		<>
+			<div
+				ref={centerRef}
+				aria-hidden
+				className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-0 h-0 pointer-events-none"
+			/>
+
+			<FloatingPortal>
 				<motion.div
-					className={slots.tooltip()}
+					ref={refs.setFloating}
+					style={{
+						position: strategy,
+					}}
 					animate={{
-						opacity: opacityTarget,
+						x: tx,
+						y: ty,
 					}}
 					transition={{
-						duration: FADE_DURATION_S,
-						ease: EASE_FADE,
+						duration: MOVE_DURATION_S,
+						ease: EASE_MOVE,
 					}}
-					onAnimationComplete={() => {
-						if (fadingOutRef.current && opacityTarget === 0) {
-							setActiveKey(pendingKeyRef.current);
-							setActiveChildren(pendingChildrenRef.current);
-							fadingOutRef.current = false;
-							isFadingRef.current = false;
-							queueMicrotask(() => {
-								update?.();
-								requestAnimationFrame(() => {
-									setOpacityTarget(1);
-								});
-							});
-						}
-					}}
+					initial={false}
+					className={slots.root()}
 				>
-					{activeChildren}
+					<motion.div
+						className={slots.tooltip()}
+						animate={{
+							opacity: opacityTarget,
+						}}
+						transition={{
+							duration: FADE_DURATION_S,
+							ease: EASE_FADE,
+						}}
+						onAnimationComplete={() => {
+							if (fadingOutRef.current && opacityTarget === 0) {
+								setActiveKey(pendingKeyRef.current);
+								setActiveChildren(pendingChildrenRef.current);
+								fadingOutRef.current = false;
+								isFadingRef.current = false;
+								queueMicrotask(() => {
+									update();
+									requestAnimationFrame(() => {
+										setOpacityTarget(1);
+									});
+								});
+							}
+						}}
+					>
+						{activeChildren}
+					</motion.div>
 				</motion.div>
-			</motion.div>
-		</FloatingPortal>
+			</FloatingPortal>
+		</>
 	);
 };

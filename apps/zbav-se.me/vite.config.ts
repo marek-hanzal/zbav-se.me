@@ -42,7 +42,7 @@ export default defineConfig({
 		],
 	},
 	server: {
-        host: true,
+		host: true,
 		strictPort: true,
 		port: 4088,
 	},

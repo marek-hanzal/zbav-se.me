@@ -5,12 +5,12 @@ import {
 	ArrowRightIcon,
 	Button,
 	CloseIcon,
-	Highlighter,
 	Tx,
 	Typo,
 } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import { type FC, useCallback, useEffect, useState } from "react";
+import { Highlighter } from "~/app/ui/highlighter/Highlighter";
 import { useHighlightRectangle } from "~/app/ui/hook/useHighlightRectangle";
 import { useInViewport } from "~/app/ui/hook/useInViewport";
 import { Content } from "~/app/ui/tour/Content";

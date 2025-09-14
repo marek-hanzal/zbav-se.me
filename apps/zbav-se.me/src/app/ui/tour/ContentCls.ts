@@ -5,14 +5,26 @@ export const ContentCls = ThemeCls.extend(
 	{
 		tokens: [],
 		slot: [
+			"root",
 			"tooltip",
 		],
-		variant: {},
+		variant: {
+			center: [
+				"bool",
+			],
+		},
 	},
 	({ what, def }) => ({
 		token: def.token({}),
 		rules: [
 			def.root({
+				root: what.css([
+					"top-0",
+					"left-0",
+					"max-w-[100dvw]",
+					"max-h-[100dvh]",
+					"z-[10000]",
+				]),
 				tooltip: what.both(
 					[
 						"overflow-auto",
@@ -29,8 +41,20 @@ export const ContentCls = ThemeCls.extend(
 					],
 				),
 			}),
+			def.rule(
+				what.variant({
+					center: true,
+				}),
+				{
+					root: what.css([
+						// "translate-y-1/2",
+					]),
+				},
+			),
 		],
-		defaults: def.defaults({}),
+		defaults: def.defaults({
+			center: false,
+		}),
 	}),
 );
 
