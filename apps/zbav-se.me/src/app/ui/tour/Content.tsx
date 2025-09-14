@@ -116,6 +116,7 @@ export const Content: FC<Content.Props> = ({
 
 			<FloatingPortal>
 				<motion.div
+					data-ui="Tour-Content-root"
 					ref={refs.setFloating}
 					style={{
 						position: strategy,
@@ -133,6 +134,7 @@ export const Content: FC<Content.Props> = ({
 				>
 					<AnimatePresence mode="wait">
 						<motion.div
+							data-ui="Tour-Content-tooltip"
 							className={slots.tooltip()}
 							key={contentKey}
 							initial={{
