@@ -15,6 +15,9 @@
 0c70501e9876b221ab39409a9343a1c4c803402a8bbbcc3e204f6118:
     ref: Listing - Photos (tour)
     value: Fotky
+0d1b6810ac7b2a06873ae50bd923188cdcf9d2c91027618df0f69004:
+    ref: Listing - Intro (description)
+    value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z několik rychlých kroků.
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
     ref: Missing required token(s). (title)
     value: Missing required token(s). (title)
@@ -32,6 +35,9 @@
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
+21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
+    ref: Listing - Intro (tour)
+    value: Nový inzerát
 235e66d76c19716012f86e9a0dd6e73e42751473bf69c210f87bfa66:
     ref: Reset tours (button)
     value: Reset tours (button)

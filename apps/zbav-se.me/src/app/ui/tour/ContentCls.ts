@@ -47,7 +47,7 @@ export const ContentCls = ThemeCls.extend(
 				}),
 				{
 					root: what.css([
-						// "translate-y-1/2",
+						"translate-y-1/2",
 					]),
 				},
 			),
