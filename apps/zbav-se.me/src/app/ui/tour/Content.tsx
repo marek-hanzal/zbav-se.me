@@ -78,6 +78,12 @@ export const Content: FC<Content.Props> = ({
 						...common,
 					]
 				: [
+						floatingOffset(({ rects }) => {
+							return (
+								-rects.reference.height / 2 -
+								rects.floating.height / 2
+							);
+						}),
 						...common,
 					],
 		[
@@ -88,6 +94,7 @@ export const Content: FC<Content.Props> = ({
 
 	const { x, y, strategy, refs } = useFloating({
 		placement: referenceElement ? placement : "top",
+		strategy: "fixed",
 		whileElementsMounted: floatingAutoUpdate,
 		middleware,
 	});
