@@ -1,5 +1,4 @@
 import {
-	ls,
 	Snapper,
 	SnapperContent,
 	SnapperItem,
@@ -7,14 +6,7 @@ import {
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
-import {
-	type FC,
-	useCallback,
-	useEffect,
-	useId,
-	useMemo,
-	useState,
-} from "react";
+import { type FC, useCallback, useId, useMemo, useState } from "react";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
@@ -23,6 +15,7 @@ import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { TagIcon } from "~/app/ui/icon/TagIcon";
 import type { TitleCls } from "~/app/ui/title/TitleCls";
 import { Tour } from "~/app/ui/tour/Tour";
+import { TourButton } from "~/app/ui/tour/TourButton";
 import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
@@ -96,34 +89,29 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		],
 	);
 
-	useEffect(() => {
-		const intro = ls.get("intro.listing");
-
-		if (intro) {
-			// return;
-		}
-
-		setIsTourOpen(true);
-	}, []);
-
 	const handleTourClose = useCallback(() => {
 		setIsTourOpen(false);
-		ls.set("intro.listing", true);
 	}, []);
 
 	return (
 		<>
+			<TourButton
+				isOpen={isTourOpen}
+				open={() => setIsTourOpen(true)}
+			/>
+
 			<Tour
 				isOpen={isTourOpen}
 				onClose={handleTourClose}
 				placement="left"
 				steps={[
-					// {
-					// 	title: translator.text("Listing - Intro (tour)"),
-					// 		description: translator.text(
-					// 			"Listing - Intro (description)",
-					// 		),
-					// },
+					{
+						selector: undefined,
+						title: translator.text("Listing - Intro (tour)"),
+						description: translator.text(
+							"Listing - Intro (description)",
+						),
+					},
 					{
 						selector: `#${photosId}`,
 						title: translator.text("Listing - Photos (tour)"),

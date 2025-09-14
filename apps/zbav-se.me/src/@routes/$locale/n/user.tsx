@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$locale/n/user")({
 					/>
 				</Title>
 
-				<Scrollable>
+				<Scrollable layout="grid">
 					<Button
 						onClick={() => {
 							ls.remove("intro");
@@ -38,4 +38,3 @@ export const Route = createFileRoute("/$locale/n/user")({
 		);
 	},
 });
-

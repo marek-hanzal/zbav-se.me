@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/n/feed")({
 					/>
 				</Title>
 
-				<Scrollable>content</Scrollable>
+				<Scrollable layout="grid">content</Scrollable>
 
 				<Nav active="feed" />
 			</ColumnLayout>

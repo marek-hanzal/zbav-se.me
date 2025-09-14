@@ -18,7 +18,7 @@ import { TourCls } from "~/app/ui/tour/TourCls";
 
 export namespace Tour {
 	export interface Step {
-		selector: string;
+		selector: string | undefined;
 		title: string;
 		description?: string;
 		padding?: number;
@@ -56,6 +56,14 @@ export const Tour: FC<Tour.Props> = ({
 		threshold: 1,
 	});
 
+	const handleClose = useCallback(() => {
+		setCurrentStepIndex(initialStepIndex);
+		onClose?.();
+	}, [
+		initialStepIndex,
+		onClose,
+	]);
+
 	// Keep the target centered if not fully in view
 	useEffect(() => {
 		if (!isOpen || !targetElement) {
@@ -78,12 +86,12 @@ export const Tour: FC<Tour.Props> = ({
 		if (currentStepIndex < steps.length - 1)
 			setCurrentStepIndex((i) => i + 1);
 		else {
-			onClose?.();
+			handleClose();
 		}
 	}, [
+		handleClose,
 		currentStepIndex,
 		steps.length,
-		onClose,
 	]);
 
 	const goToPrevious = useCallback(() => {
@@ -96,7 +104,7 @@ export const Tour: FC<Tour.Props> = ({
 		}
 		const onKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") {
-				onClose?.();
+				handleClose();
 			}
 			if (e.key === "ArrowRight") {
 				goToNext();
@@ -113,7 +121,7 @@ export const Tour: FC<Tour.Props> = ({
 		isOpen,
 		goToNext,
 		goToPrevious,
-		onClose,
+		handleClose,
 	]);
 
 	const padding = currentStep?.padding ?? 8;
@@ -125,7 +133,7 @@ export const Tour: FC<Tour.Props> = ({
 				visible={isOpen}
 				rect={boundingRectangle}
 				padding={padding}
-				onBackdropClick={onClose}
+				onBackdropClick={handleClose}
 			/>
 
 			{isOpen && currentStep ? (
@@ -150,7 +158,7 @@ export const Tour: FC<Tour.Props> = ({
 								<Action
 									iconEnabled={CloseIcon}
 									iconDisabled={CloseIcon}
-									onClick={onClose}
+									onClick={handleClose}
 									size="sm"
 									tone={"neutral"}
 									theme={"light"}
