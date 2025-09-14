@@ -69,7 +69,6 @@ export const Content: FC<Content.Props> = ({
 
 	const { x, y, strategy, refs, update } = useFloating({
 		placement: referenceElement ? placement : "top",
-		strategy: "fixed",
 		whileElementsMounted(reference, floating, internalUpdate) {
 			return floatingAutoUpdate(reference, floating, internalUpdate);
 		},
@@ -108,7 +107,7 @@ export const Content: FC<Content.Props> = ({
 						y,
 					}}
 					transition={{
-						duration: 0.125,
+						duration: 0.1,
 						ease: "linear",
 					}}
 					className={slots.root()}
@@ -123,14 +122,14 @@ export const Content: FC<Content.Props> = ({
 							animate={{
 								opacity: 1,
 								transition: {
-									duration: 0.125,
+									duration: 0.1,
 									ease: "easeInOut",
 								},
 							}}
 							exit={{
 								opacity: 0,
 								transition: {
-									duration: 0.125,
+									duration: 0.1,
 									ease: "easeInOut",
 								},
 							}}

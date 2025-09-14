@@ -174,20 +174,22 @@ export const Tour: FC<Tour.Props> = ({
 						/>
 
 						<div className={slots.nav()}>
-							<Button
-								iconEnabled={ArrowLeftIcon}
-								iconDisabled={ArrowLeftIcon}
-								onClick={goToPrevious}
-								disabled={currentStepIndex === 0}
-								size="sm"
-							>
-								<Tx label={"Previous (tour)"} />
-							</Button>
+							{currentStepIndex > 0 ? (
+								<Button
+									iconEnabled={ArrowLeftIcon}
+									iconDisabled={ArrowLeftIcon}
+									onClick={goToPrevious}
+									size="sm"
+								>
+									<Tx label={"Previous (tour)"} />
+								</Button>
+							) : null}
 
 							{isLast ? (
 								<Button
 									onClick={goToNext}
 									size="sm"
+									tone="warning"
 								>
 									<Tx label={"Finish (tour)"} />
 								</Button>
