@@ -129,9 +129,6 @@ export const Content: FC<Content.Props> = ({
 		update,
 	]);
 
-	const tx = Math.round(x ?? 0);
-	const ty = Math.round(y ?? 0);
-
 	const [activeKey, setActiveKey] = useState<string | number>(contentKey);
 	const [activeChildren, setActiveChildren] =
 		useState<React.ReactNode>(children);
@@ -169,8 +166,8 @@ export const Content: FC<Content.Props> = ({
 						position: strategy,
 					}}
 					animate={{
-						x: tx,
-						y: ty,
+						x,
+						y,
 					}}
 					transition={{
 						duration: MOVE_DURATION_S,
