@@ -24,10 +24,11 @@ export const ContentCls = ThemeCls.extend(
 					"max-w-[100dvw]",
 					"max-h-[100dvh]",
 					"z-[10000]",
+					"overflow-hidden",
 				]),
 				tooltip: what.both(
 					[
-						"overflow-auto",
+						"overflow-hidden",
 					],
 					[
 						"round.lg",
@@ -47,7 +48,7 @@ export const ContentCls = ThemeCls.extend(
 				}),
 				{
 					root: what.css([
-						"translate-y-1/2",
+						// "translate-y-1/2",
 					]),
 				},
 			),

@@ -10,41 +10,9 @@ import {
 	useFloating,
 } from "@floating-ui/react";
 import { useCls } from "@use-pico/cls";
-import { motion } from "motion/react";
-import type React from "react";
-import {
-	type FC,
-	type PropsWithChildren,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { AnimatePresence, motion } from "motion/react";
+import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
 import { ContentCls } from "~/app/ui/tour/ContentCls";
-
-const MOVE_DURATION_S = 0.35;
-const FADE_DURATION_S = 0.25;
-const EASE_MOVE: [
-	number,
-	number,
-	number,
-	number,
-] = [
-	0.22,
-	1,
-	0.36,
-	1,
-];
-const EASE_FADE: [
-	number,
-	number,
-	number,
-	number,
-] = [
-	0.4,
-	0,
-	0.2,
-	1,
-];
 
 export namespace Content {
 	export interface Props extends ContentCls.Props<PropsWithChildren> {
@@ -66,8 +34,8 @@ export const Content: FC<Content.Props> = ({
 	cls = ContentCls,
 	tweak,
 }) => {
-	const isFadingRef = useRef(false);
 	const centerRef = useRef<HTMLDivElement>(null);
+
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
 			center: !referenceElement,
@@ -81,8 +49,6 @@ export const Content: FC<Content.Props> = ({
 				const node = elements.floating as HTMLElement;
 				node.style.maxWidth = `${Math.min(availableWidth, maxWidthPx)}px`;
 				node.style.maxHeight = `${Math.max(0, availableHeight)}px`;
-				node.style.overflow = "auto";
-				node.style.boxSizing = "border-box";
 			},
 		}),
 		floatingShift({
@@ -90,6 +56,7 @@ export const Content: FC<Content.Props> = ({
 			limiter: limitShift(),
 		}),
 	];
+
 	const middleware = referenceElement
 		? [
 				floatingOffset(12),
@@ -102,53 +69,23 @@ export const Content: FC<Content.Props> = ({
 
 	const { x, y, strategy, refs, update } = useFloating({
 		placement: referenceElement ? placement : "top",
-		// strategy: "fixed",
+		strategy: "fixed",
 		whileElementsMounted(reference, floating, internalUpdate) {
-			return floatingAutoUpdate(reference, floating, () => {
-				if (!isFadingRef.current) {
-					internalUpdate();
-				}
-			});
+			return floatingAutoUpdate(reference, floating, internalUpdate);
 		},
 		middleware,
 	});
 
 	useEffect(() => {
 		const el = referenceElement ?? centerRef.current;
-		if (!el) {
-			return;
-		}
+		if (!el) return;
 		refs.setReference(el);
 		const raf = requestAnimationFrame(() => update());
-		return () => {
-			cancelAnimationFrame(raf);
-		};
+		return () => cancelAnimationFrame(raf);
 	}, [
 		referenceElement,
 		refs,
 		update,
-	]);
-
-	const [activeKey, setActiveKey] = useState<string | number>(contentKey);
-	const [activeChildren, setActiveChildren] =
-		useState<React.ReactNode>(children);
-	const pendingKeyRef = useRef<string | number>(contentKey);
-	const pendingChildrenRef = useRef<React.ReactNode>(children);
-	const [opacityTarget, setOpacityTarget] = useState(1);
-	const fadingOutRef = useRef(false);
-
-	useEffect(() => {
-		pendingKeyRef.current = contentKey;
-		pendingChildrenRef.current = children;
-		if (contentKey !== activeKey) {
-			isFadingRef.current = true;
-			fadingOutRef.current = true;
-			setOpacityTarget(0);
-		}
-	}, [
-		contentKey,
-		children,
-		activeKey,
 	]);
 
 	return (
@@ -164,44 +101,43 @@ export const Content: FC<Content.Props> = ({
 					ref={refs.setFloating}
 					style={{
 						position: strategy,
+						willChange: "transform",
 					}}
 					animate={{
 						x,
 						y,
 					}}
 					transition={{
-						duration: MOVE_DURATION_S,
-						ease: EASE_MOVE,
+						duration: 0.125,
+						ease: "linear",
 					}}
-					initial={false}
 					className={slots.root()}
 				>
-					<motion.div
-						className={slots.tooltip()}
-						animate={{
-							opacity: opacityTarget,
-						}}
-						transition={{
-							duration: FADE_DURATION_S,
-							ease: EASE_FADE,
-						}}
-						onAnimationComplete={() => {
-							if (fadingOutRef.current && opacityTarget === 0) {
-								setActiveKey(pendingKeyRef.current);
-								setActiveChildren(pendingChildrenRef.current);
-								fadingOutRef.current = false;
-								isFadingRef.current = false;
-								queueMicrotask(() => {
-									update();
-									requestAnimationFrame(() => {
-										setOpacityTarget(1);
-									});
-								});
-							}
-						}}
-					>
-						{activeChildren}
-					</motion.div>
+					<AnimatePresence mode="wait">
+						<motion.div
+							className={slots.tooltip()}
+							key={contentKey}
+							initial={{
+								opacity: 0,
+							}}
+							animate={{
+								opacity: 1,
+								transition: {
+									duration: 0.125,
+									ease: "easeInOut",
+								},
+							}}
+							exit={{
+								opacity: 0,
+								transition: {
+									duration: 0.125,
+									ease: "easeInOut",
+								},
+							}}
+						>
+							{children}
+						</motion.div>
+					</AnimatePresence>
 				</motion.div>
 			</FloatingPortal>
 		</>
