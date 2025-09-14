@@ -11,7 +11,13 @@ import {
 } from "@floating-ui/react";
 import { useCls } from "@use-pico/cls";
 import { AnimatePresence, motion } from "motion/react";
-import { type FC, type PropsWithChildren, useEffect, useRef } from "react";
+import {
+	type FC,
+	type PropsWithChildren,
+	useEffect,
+	useMemo,
+	useRef,
+} from "react";
 import { ContentCls } from "~/app/ui/tour/ContentCls";
 
 export namespace Content {
@@ -42,20 +48,26 @@ export const Content: FC<Content.Props> = ({
 		}),
 	}));
 
-	const common = [
-		floatingSize({
-			padding: margin,
-			apply({ availableWidth, availableHeight, elements }) {
-				const node = elements.floating as HTMLElement;
-				node.style.maxWidth = `${Math.min(availableWidth, maxWidthPx)}px`;
-				node.style.maxHeight = `${Math.max(0, availableHeight)}px`;
-			},
-		}),
-		floatingShift({
-			padding: margin,
-			limiter: limitShift(),
-		}),
-	];
+	const common = useMemo(
+		() => [
+			floatingSize({
+				padding: margin,
+				apply({ availableWidth, availableHeight, elements }) {
+					const node = elements.floating as HTMLElement;
+					node.style.maxWidth = `${Math.min(availableWidth, maxWidthPx)}px`;
+					node.style.maxHeight = `${Math.max(0, availableHeight)}px`;
+				},
+			}),
+			floatingShift({
+				padding: margin,
+				limiter: limitShift(),
+			}),
+		],
+		[
+			maxWidthPx,
+			margin,
+		],
+	);
 
 	const middleware = referenceElement
 		? [
