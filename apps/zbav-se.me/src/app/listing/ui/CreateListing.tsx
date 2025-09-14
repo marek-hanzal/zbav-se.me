@@ -3,6 +3,8 @@ import {
 	SnapperContent,
 	SnapperItem,
 	SnapperNav,
+	Tour,
+	TourButton,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
@@ -14,8 +16,6 @@ import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { TagIcon } from "~/app/ui/icon/TagIcon";
 import type { TitleCls } from "~/app/ui/title/TitleCls";
-import { Tour } from "~/app/ui/tour/Tour";
-import { TourButton } from "~/app/ui/tour/TourButton";
 import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
