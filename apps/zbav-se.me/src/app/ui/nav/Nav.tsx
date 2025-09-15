@@ -26,10 +26,11 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 	const variants: Cls.VariantsOf<typeof Button.cls> = {
 		size: "lg",
-		tone: "secondary",
+		tone: "primary",
+		theme: "dark",
 		round: "xl",
 	};
-	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "primary";
+	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "secondary";
 
 	return (
 		<>
@@ -68,7 +69,10 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 				]}
 			/> */}
 
-			<div className={slots.root()}>
+			<div
+				data-ui="Nav-root"
+				className={slots.root()}
+			>
 				<LinkTo
 					id={feedId}
 					to={"/$locale/n/feed"}

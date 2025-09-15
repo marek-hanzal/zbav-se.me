@@ -49,6 +49,10 @@ const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
 			name: "watch",
 			group: "electronics",
 		},
+		{
+			name: "pc-components",
+			group: "electronics",
+		},
 
 		// Kitchen
 		{

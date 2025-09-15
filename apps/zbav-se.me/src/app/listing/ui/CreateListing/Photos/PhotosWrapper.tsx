@@ -39,9 +39,6 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				(_, index) => ({
 					id: `p-${index + 1}`,
 					icon: DotIcon,
-					iconProps: {
-						size: "sm",
-					},
 				}),
 			),
 		[
@@ -52,7 +49,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 	return (
 		<div className="flex flex-col h-full">
 			<Snapper
-				orientation="horizontal"
+				orientation="vertical"
 				tweak={({ what }) => ({
 					slot: what.slot({
 						root: what.css([
@@ -63,9 +60,13 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			>
 				<SnapperNav
 					pages={pages}
-					limit={{
-						limit: 6,
-					}}
+					iconProps={({ index }) => ({
+						size: "xs",
+						tone:
+							index !== undefined && value[index]
+								? "primary"
+								: "secondary",
+					})}
 				/>
 
 				<SnapperContent>

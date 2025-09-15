@@ -1,10 +1,12 @@
 import { Icon } from "@use-pico/client";
 import { type Cls, useCls, withCls } from "@use-pico/cls";
-import type { FC, PropsWithChildren } from "react";
+import type { FC, HTMLAttributes, Ref } from "react";
 import { TitleCls } from "~/app/ui/title/TitleCls";
 
 export namespace Title {
-	export interface Props extends TitleCls.Props<PropsWithChildren> {
+	export interface Props
+		extends TitleCls.Props<HTMLAttributes<HTMLDivElement>> {
+		ref?: Ref<HTMLDivElement>;
 		icon?: Icon.Type;
 		iconProps?: Icon.Props;
 		tone?: Cls.VariantOf<TitleCls, "tone">;
@@ -14,6 +16,7 @@ export namespace Title {
 }
 
 export const BaseTitle: FC<Title.Props> = ({
+	ref,
 	icon,
 	iconProps,
 	tone,
@@ -22,6 +25,7 @@ export const BaseTitle: FC<Title.Props> = ({
 	cls = TitleCls,
 	tweak,
 	children,
+	...props
 }) => {
 	const slots = useCls(cls, tweak, ({ what }) => ({
 		variant: what.variant({
@@ -34,7 +38,9 @@ export const BaseTitle: FC<Title.Props> = ({
 	return (
 		<div
 			data-ui="Title-root"
+			ref={ref}
 			className={slots.root()}
+			{...props}
 		>
 			<Icon
 				icon={icon}

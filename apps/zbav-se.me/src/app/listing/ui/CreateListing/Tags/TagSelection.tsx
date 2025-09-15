@@ -1,5 +1,6 @@
-import { Data, Scrollable, Tx } from "@use-pico/client";
+import { Data, Icon, Sheet, SpinnerIcon, Status, Tx } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
+import { AnimatePresence, motion } from "motion/react";
 import type { FC } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
@@ -27,40 +28,91 @@ export const TagSelection: FC<TagSelection.Props> = ({ categoryGroup }) => {
 	});
 
 	return (
-		<>
-			<Title icon={TagIcon}>
-				<Tx label={categoryGroup.name} />
-			</Title>
-
+		<AnimatePresence mode={"wait"}>
 			<Data<CategorySchema.Type[], typeof categoryQuery>
 				result={categoryQuery}
-				renderSuccess={({ data }) => {
+				renderLoading={() => {
 					return (
-						<Scrollable layout={"flex"}>
-							<div
-								className={tvc([
-									"flex",
-									"flex-col",
-									"gap-4",
-								])}
-							>
-								{data.map((item) => (
-									<div
-										key={item.id}
-										className={tvc([
-											"p-4",
-											"bg-gray-100",
-											"rounded-xl",
-										])}
-									>
-										<Tx label={item.name} />
-									</div>
-								))}
-							</div>
-						</Scrollable>
+						<motion.div
+							key={`tags-wrapper-loading-${categoryGroup.id}`}
+							className="flex justify-center items-center h-full"
+							initial={{
+								opacity: 0,
+							}}
+							animate={{
+								opacity: 1,
+							}}
+							exit={{
+								opacity: 0,
+							}}
+						>
+							<Icon
+								icon={SpinnerIcon}
+								theme={"dark"}
+								tone={"secondary"}
+								size={"xl"}
+							/>
+						</motion.div>
 					);
 				}}
-			/>
-		</>
+				renderSuccess={({ data }) => {
+					return (
+						<motion.div
+							key={`tags-wrapper-success-${categoryGroup.id}`}
+							initial={{
+								opacity: 0,
+							}}
+							animate={{
+								opacity: 1,
+							}}
+							exit={{
+								opacity: 0,
+							}}
+							className={tvc([
+								"h-full",
+								"flex",
+								"flex-col",
+								"gap-2",
+							])}
+						>
+							{data.map((item) => (
+								<Title
+									key={item.id}
+									tone={"secondary"}
+									size={"sm"}
+								>
+									<Tx label={`Category ${item.name}`} />
+								</Title>
+							))}
+						</motion.div>
+					);
+				}}
+			>
+				{({ content }) => {
+					return (
+						<Sheet
+							tone={"primary"}
+							theme={"light"}
+						>
+							<Status
+								icon={TagIcon}
+								tone={"primary"}
+								theme={"light"}
+								textTitle={
+									<Tx
+										label={`Category group ${categoryGroup.name}`}
+										tone={"primary"}
+										theme={"light"}
+										font={"bold"}
+									/>
+								}
+							/>
+
+							{/* {open && content} */}
+						</Sheet>
+					);
+				}}
+			</Data>
+		</AnimatePresence>
 	);
 };

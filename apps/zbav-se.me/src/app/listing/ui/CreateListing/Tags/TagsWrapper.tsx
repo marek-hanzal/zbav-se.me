@@ -7,27 +7,14 @@ import {
 	SnapperNav,
 	SpinnerIcon,
 } from "@use-pico/client";
-import type { Cls } from "@use-pico/cls";
 import { AnimatePresence, motion } from "motion/react";
 import type { FC } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { TagSelection } from "~/app/listing/ui/CreateListing/Tags/TagSelection";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
-import type { TitleCls } from "~/app/ui/title/TitleCls";
 
-export namespace TagsWrapper {
-	export interface Props {
-		subtitleVariant?: Cls.VariantsOf<TitleCls>;
-	}
-}
-
-export const TagsWrapper: FC<TagsWrapper.Props> = ({
-	subtitleVariant = {
-		tone: "secondary",
-		size: "lg",
-	},
-}) => {
+export const TagsWrapper: FC = () => {
 	const categoryGroupQuery = withCategoryGroupListQuery().useQuery({
 		sort: [
 			{
@@ -78,20 +65,18 @@ export const TagsWrapper: FC<TagsWrapper.Props> = ({
 							exit={{
 								opacity: 0,
 							}}
-							className="flex justify-center items-center h-full"
+							className="h-full"
 						>
-							<Snapper orientation={"horizontal"}>
+							<Snapper orientation={"vertical"}>
 								<SnapperNav
 									pages={data.map((item) => ({
 										id: item.id,
 										icon: DotIcon,
-										iconProps: {
-											size: "sm",
-										},
 									}))}
-									limit={{
-										limit: 6,
-									}}
+									iconProps={() => ({
+										size: "xs",
+										tone: "secondary",
+									})}
 								/>
 
 								<SnapperContent>

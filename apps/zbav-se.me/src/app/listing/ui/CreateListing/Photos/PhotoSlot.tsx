@@ -1,5 +1,4 @@
-import { Action, Status, TrashIcon, Tx } from "@use-pico/client";
-import { useCls } from "@use-pico/cls";
+import { Action, Sheet, Status, TrashIcon, Tx } from "@use-pico/client";
 import {
 	type ChangeEvent,
 	type FC,
@@ -11,7 +10,6 @@ import {
 	useState,
 } from "react";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
-import { PhotoSlotCls } from "./PhotoSlotCls";
 
 function useObjectUrl(file: File | null) {
 	const [url, setUrl] = useState<string | null>(null);
@@ -47,9 +45,8 @@ export namespace PhotoSlot {
 	export type Value = File | null;
 	export type OnChangeFn = (file: Value, slot: number) => void;
 
-	export interface Props extends PhotoSlotCls.Props {
+	export interface Props extends Omit<Sheet.Props, "slot" | "onChange"> {
 		slot: number;
-		disabled?: boolean;
 		camera?: boolean;
 		value: Value;
 		onChange: OnChangeFn;
@@ -58,20 +55,11 @@ export namespace PhotoSlot {
 
 export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	slot,
-	disabled,
 	camera = false,
-	cls = PhotoSlotCls,
-	tweak,
 	value,
 	onChange,
+	...props
 }) => {
-	const slots = useCls(cls, tweak, ({ what }) => ({
-		variant: what.variant({
-			default: false,
-			disabled,
-		}),
-	}));
-
 	const inputRef = useRef<HTMLInputElement>(null);
 	const src = useObjectUrl(value);
 
@@ -112,25 +100,61 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	}, []);
 
 	return (
-		<div className={slots.root()}>
-			<div
-				className={slots.slot()}
+		<div
+			data-ui="PhotoSlot-root"
+			className={"w-full h-full"}
+		>
+			<input
+				data-ui="PhotoSlot-input"
+				ref={inputRef}
+				type="file"
+				accept="image/*"
+				capture={camera ? "environment" : undefined}
+				className="sr-only"
+				onChange={onChangeInput}
+			/>
+
+			{src && (
+				<Action
+					iconEnabled={TrashIcon}
+					onClick={(e) => {
+						stop(e);
+						onChange(null, slot);
+					}}
+					onKeyDown={(e) => {
+						if (e.key === "Enter" || e.key === " ") {
+							stop(e);
+							onChange(null, slot);
+						}
+					}}
+					size={"md"}
+					tone={"danger"}
+					border={false}
+					tweak={({ what }) => ({
+						slot: what.slot({
+							root: what.css([
+								"absolute",
+								"top-8",
+								"right-1/2",
+								"translate-x-1/2",
+							]),
+						}),
+					})}
+				/>
+			)}
+
+			<Sheet
 				onClick={pick}
 				onKeyDown={onKeyDown}
+				style={{
+					backgroundImage: `url(${src})`,
+					backgroundSize: "cover",
+					backgroundPosition: "center",
+					backgroundRepeat: "no-repeat",
+				}}
+				{...props}
 			>
-				{src ? (
-					<img
-						src={src}
-						alt={`Foto ${slot + 1}`}
-						className={slots.img?.()}
-						style={{
-							width: "100%",
-							height: "100%",
-							objectFit: "cover",
-						}}
-						draggable={false}
-					/>
-				) : (
+				{src ? null : (
 					<Status
 						icon={PhotoIcon}
 						textTitle={
@@ -138,44 +162,14 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								label={"Upload (placeholder)"}
 								font="bold"
 								size={"xl"}
-								tone={"link"}
+								tone={"primary"}
 								theme={"light"}
 							/>
 						}
-						tone={"link"}
+						tone={"primary"}
 					/>
 				)}
-
-				<input
-					ref={inputRef}
-					type="file"
-					accept="image/*"
-					capture={camera ? "environment" : undefined}
-					className="sr-only"
-					onChange={onChangeInput}
-				/>
-
-				{src && (
-					<div className="absolute top-8 right-1/2 translate-x-1/2">
-						<Action
-							iconEnabled={TrashIcon}
-							onClick={(e) => {
-								stop(e);
-								onChange(null, slot);
-							}}
-							onKeyDown={(e) => {
-								if (e.key === "Enter" || e.key === " ") {
-									stop(e);
-									onChange(null, slot);
-								}
-							}}
-							size={"md"}
-							tone={"danger"}
-							border={false}
-						/>
-					</div>
-				)}
-			</div>
+			</Sheet>
 		</div>
 	);
 };

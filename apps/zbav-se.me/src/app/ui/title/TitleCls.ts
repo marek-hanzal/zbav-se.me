@@ -57,7 +57,7 @@ export const TitleCls = ThemeCls.extend(
 				}),
 				{
 					root: what.token([
-						"size.xs",
+						"padding.xs",
 					]),
 				},
 			),
@@ -67,7 +67,7 @@ export const TitleCls = ThemeCls.extend(
 				}),
 				{
 					root: what.token([
-						"size.sm",
+						"padding.sm",
 					]),
 				},
 			),
@@ -77,7 +77,7 @@ export const TitleCls = ThemeCls.extend(
 				}),
 				{
 					root: what.token([
-						"size.md",
+						"padding.md",
 					]),
 				},
 			),
@@ -87,7 +87,7 @@ export const TitleCls = ThemeCls.extend(
 				}),
 				{
 					root: what.token([
-						"size.lg",
+						"padding.lg",
 					]),
 				},
 			),
@@ -97,7 +97,7 @@ export const TitleCls = ThemeCls.extend(
 				}),
 				{
 					root: what.token([
-						"size.xl",
+						"padding.xl",
 					]),
 				},
 			),

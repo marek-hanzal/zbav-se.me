@@ -105,7 +105,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 			<Tour
 				isOpen={isTourOpen}
 				onClose={handleTourClose}
-				placement="left"
+				placement={"top"}
 				renderPrevButton={({ prev, disabled }) => (
 					<Action
 						iconEnabled={ArrowLeftIcon}
@@ -152,17 +152,15 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 				]}
 			/>
 
-			<Snapper orientation="vertical">
+			<Snapper orientation="horizontal">
 				<SnapperNav
 					pages={[
 						{
 							id: photosId,
 							icon: hasPhotos ? CheckIcon : PhotoIcon,
-							iconProps: hasPhotos
-								? {
-										tone: "primary",
-									}
-								: undefined,
+							iconProps: () => ({
+								tone: hasPhotos ? "primary" : "secondary",
+							}),
 						},
 						{
 							id: tagsId,
@@ -177,6 +175,10 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 							icon: SendPackageIcon,
 						},
 					]}
+					iconProps={() => ({
+						tone: "secondary",
+						size: "md",
+					})}
 				/>
 
 				<SnapperContent>
@@ -189,11 +191,11 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					</SnapperItem>
 
 					<SnapperItem>
-						<TagsWrapper subtitleVariant={subtitleVariant} />
+						<PriceWrapper subtitleVariant={subtitleVariant} />
 					</SnapperItem>
 
 					<SnapperItem>
-						<PriceWrapper subtitleVariant={subtitleVariant} />
+						<TagsWrapper />
 					</SnapperItem>
 
 					<SnapperItem>

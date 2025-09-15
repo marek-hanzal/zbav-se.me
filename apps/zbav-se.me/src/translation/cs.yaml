@@ -292,3 +292,24 @@ fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
+Category phone:
+    static: true
+    value: Telefony
+Category tv:
+    static: true
+    value: Televize
+Category laptop:
+    static: true
+    value: Notebooky
+Category desktop:
+    static: true
+    value: Stolní počítače
+Category tablet:
+    static: true
+    value: Tablety
+Category watch:
+    static: true
+    value: Hodinky
+Category pc-components:
+    static: true
+    value: PC komponenty
