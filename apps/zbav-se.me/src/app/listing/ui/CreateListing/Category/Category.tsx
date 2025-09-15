@@ -183,9 +183,6 @@ export const Category: FC<Category.Props> = ({
 																				}
 																			/>
 																		}
-																		textMessage={
-																			"Sem prijdou chipsy posledne nabidnutych inzeratu"
-																		}
 																	/>
 																</Sheet>
 															</motion.div>
