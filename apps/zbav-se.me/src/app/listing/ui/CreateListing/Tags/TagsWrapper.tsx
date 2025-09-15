@@ -6,16 +6,14 @@ import {
 	SnapperItem,
 	SnapperNav,
 	SpinnerIcon,
-	Tx,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { AnimatePresence, motion } from "motion/react";
 import type { FC } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
+import { TagSelection } from "~/app/listing/ui/CreateListing/Tags/TagSelection";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
-import { TagIcon } from "~/app/ui/icon/TagIcon";
-import { Title } from "~/app/ui/title/Title";
 import type { TitleCls } from "~/app/ui/title/TitleCls";
 
 export namespace TagsWrapper {
@@ -101,12 +99,9 @@ export const TagsWrapper: FC<TagsWrapper.Props> = ({
 										<SnapperItem
 											key={`snapper-item-${item.id}`}
 										>
-											<Title
-												icon={TagIcon}
-												{...subtitleVariant}
-											>
-												<Tx label={item.name} />
-											</Title>
+											<TagSelection
+												categoryGroup={item}
+											/>
 										</SnapperItem>
 									))}
 								</SnapperContent>
