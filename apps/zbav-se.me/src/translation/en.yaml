@@ -67,6 +67,9 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
+51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
+  ref: Please select a category group first to see available categories
+  value: Please select a category group first to see available categories
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
   ref: Missing any token(s). (message)
   value: Missing any token(s). (message)
@@ -177,9 +180,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
-bf51836b1a1bd58bf9634c0bf838bd0185311a8599218f0227d210ce:
-  ref: Tags (title)
-  value: Tags (title)
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
   ref: Listing - Tags (description)
   value: Listing - Tags (description)
@@ -213,6 +213,9 @@ eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
   ref: Sort
   value: Sort
+ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
+  ref: No category selected
+  value: No category selected
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
   ref: Submit listing (button)
   value: Submit listing (button)

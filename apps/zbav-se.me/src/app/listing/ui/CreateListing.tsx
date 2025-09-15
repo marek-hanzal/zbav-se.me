@@ -12,7 +12,9 @@ import {
 import type { Cls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useMemo, useState } from "react";
+import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
+import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/Category/CategoryGroup";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
@@ -38,7 +40,8 @@ export namespace CreateListing {
 
 export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 	const photosId = useId();
-	const tagsId = useId();
+	const categoryGroupId = useId();
+	const categoryId = useId();
 	const priceId = useId();
 	const submitId = useId();
 
@@ -53,6 +56,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 	const categoryGroupSelection = useSelection<CategoryGroupSchema.Type>({
 		mode: "multi",
 	});
+	const categorySelection = useSelection<CategorySchema.Type>({
+		mode: "multi",
+	});
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
 
@@ -62,14 +68,27 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		photos,
 	]);
 
+	const hasCategoryGroup = categoryGroupSelection.hasAny;
+	const hasCategory = categorySelection.hasAny;
+
 	const canSubmit = useMemo(() => {
 		if (!hasPhotos) {
+			return false;
+		}
+
+		if (!hasCategoryGroup) {
+			return false;
+		}
+
+		if (!hasCategory) {
 			return false;
 		}
 
 		return true;
 	}, [
 		hasPhotos,
+		hasCategoryGroup,
+		hasCategory,
 	]);
 
 	const onChangePhotos: PhotoSlot.OnChangeFn = useCallback(
@@ -134,7 +153,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						),
 					},
 					{
-						selector: `#${tagsId}`,
+						selector: `#${categoryGroupId}`,
 						title: translator.text("Listing - Tags (tour)"),
 						description: translator.text(
 							"Listing - Tags (description)",
@@ -168,12 +187,24 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 							}),
 						},
 						{
-							id: tagsId,
-							icon: TagIcon,
-						},
-						{
 							id: priceId,
 							icon: PriceIcon,
+						},
+						{
+							id: categoryGroupId,
+							icon: hasCategoryGroup ? CheckIcon : TagIcon,
+							iconProps: () => ({
+								tone: hasCategoryGroup
+									? "primary"
+									: "secondary",
+							}),
+						},
+						{
+							id: categoryId,
+							icon: hasCategory ? CheckIcon : "icon-[typcn--tag]",
+							iconProps: () => ({
+								tone: hasCategory ? "primary" : "secondary",
+							}),
 						},
 						{
 							id: submitId,
@@ -204,11 +235,17 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					</SnapperItem>
 
 					<SnapperItem>
-						All categories, filter idIn of category group
+						<Category
+							categoryGroupSelection={categoryGroupSelection}
+							categorySelection={categorySelection}
+						/>
 					</SnapperItem>
 
 					<SnapperItem>
-						<SubmitWrapper canSubmit={canSubmit} />
+						<SubmitWrapper
+							canSubmit={canSubmit}
+							categorySelection={categorySelection}
+						/>
 					</SnapperItem>
 				</SnapperContent>
 			</Snapper>

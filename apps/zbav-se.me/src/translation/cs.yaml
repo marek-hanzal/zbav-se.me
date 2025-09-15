@@ -17,7 +17,8 @@
     value: Fotky
 0d1b6810ac7b2a06873ae50bd923188cdcf9d2c91027618df0f69004:
     ref: Listing - Intro (description)
-    value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z několik rychlých kroků.
+    value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z
+        několik rychlých kroků.
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
     ref: Missing required token(s). (title)
     value: Missing required token(s). (title)
@@ -74,6 +75,9 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
     ref: Cancel (button)
     value: Cancel (button)
+51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
+    ref: Please select a category group first to see available categories
+    value: ...aby bylo možné inzerát patřičně doručit zájemcům, je potřeba vybrat kategorii, kam vlastně tvůj inzerát patří.
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
     ref: Missing any token(s). (message)
     value: Missing any token(s). (message)
@@ -151,6 +155,9 @@ Category clothing:
 Category cosmetics:
     static: true
     value: Kosmetika
+Category desktop:
+    static: true
+    value: Stolní počítače
 Category group automotive:
     static: true
     value: Auto/moto
@@ -184,12 +191,30 @@ Category group reality:
 Category jewelry:
     static: true
     value: Šperky
+Category laptop:
+    static: true
+    value: Notebooky
 Category other:
     static: true
     value: Ostatní
+Category pc-components:
+    static: true
+    value: PC komponenty
+Category phone:
+    static: true
+    value: Telefony
 Category shoes:
     static: true
     value: Boty
+Category tablet:
+    static: true
+    value: Tablety
+Category tv:
+    static: true
+    value: Televize
+Category watch:
+    static: true
+    value: Hodinky
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
@@ -238,9 +263,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
-bf51836b1a1bd58bf9634c0bf838bd0185311a8599218f0227d210ce:
-    ref: Tags (title)
-    value: Štítky
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
     ref: Listing - Tags (description)
     value:
@@ -277,6 +299,9 @@ eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort
+ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
+    ref: No category selected
+    value: Kategorie je potřeba...
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat
@@ -292,24 +317,3 @@ fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
-Category phone:
-    static: true
-    value: Telefony
-Category tv:
-    static: true
-    value: Televize
-Category laptop:
-    static: true
-    value: Notebooky
-Category desktop:
-    static: true
-    value: Stolní počítače
-Category tablet:
-    static: true
-    value: Tablety
-Category watch:
-    static: true
-    value: Hodinky
-Category pc-components:
-    static: true
-    value: PC komponenty

@@ -50,6 +50,10 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 		query = query.where("categoryGroupId", "=", where.categoryGroupId);
 	}
 
+	if (where?.categoryGroupIdIn && where.categoryGroupIdIn.length > 0) {
+		query = query.where("categoryGroupId", "in", where.categoryGroupIdIn);
+	}
+
 	return query;
 };
 

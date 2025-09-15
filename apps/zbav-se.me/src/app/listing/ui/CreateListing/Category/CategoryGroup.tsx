@@ -42,7 +42,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 				renderLoading={() => {
 					return (
 						<motion.div
-							key={`tags-wrapper-loading`}
+							key={`category-group-wrapper-loading`}
 							className="flex justify-center items-center h-full"
 							initial={{
 								opacity: 0,
@@ -66,7 +66,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 				renderSuccess={({ data }) => {
 					return (
 						<motion.div
-							key={`tags-wrapper-success`}
+							key={`category-group-wrapper-success`}
 							initial={{
 								opacity: 0,
 							}}
@@ -83,6 +83,11 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 									pages={data.map((item) => ({
 										id: item.id,
 										icon: DotIcon,
+										iconProps: () => ({
+											tone: selection.isSelected(item.id)
+												? "primary"
+												: "secondary",
+										}),
 									}))}
 									iconProps={() => ({
 										size: "xs",

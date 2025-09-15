@@ -6,6 +6,7 @@ export const CategoryQuerySchema = withQuerySchema({
 		...FilterSchema.shape,
 		name: z.string().nullish(),
 		categoryGroupId: z.string().nullish(),
+		categoryGroupIdIn: z.array(z.string()).nullish(),
 	}),
 	sort: [
 		"name",
