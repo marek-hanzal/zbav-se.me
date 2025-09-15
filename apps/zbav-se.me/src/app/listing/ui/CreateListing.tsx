@@ -7,10 +7,13 @@ import {
 	SnapperNav,
 	Tour,
 	TourButton,
+	useSelection,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useMemo, useState } from "react";
+import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
+import { CategoryGroup } from "~/app/listing/ui/CreateListing/Category/CategoryGroup";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
@@ -21,7 +24,6 @@ import type { TitleCls } from "~/app/ui/title/TitleCls";
 import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
-import { TagsWrapper } from "./CreateListing/Tags/TagsWrapper";
 
 const subtitleVariant: Cls.VariantsOf<TitleCls> = {
 	tone: "secondary",
@@ -48,6 +50,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 			() => null,
 		),
 	);
+	const categoryGroupSelection = useSelection<CategoryGroupSchema.Type>({
+		mode: "multi",
+	});
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
 
@@ -195,7 +200,11 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					</SnapperItem>
 
 					<SnapperItem>
-						<TagsWrapper />
+						<CategoryGroup selection={categoryGroupSelection} />
+					</SnapperItem>
+
+					<SnapperItem>
+						All categories, filter idIn of category group
 					</SnapperItem>
 
 					<SnapperItem>

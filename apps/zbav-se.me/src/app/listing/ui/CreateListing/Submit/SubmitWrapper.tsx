@@ -1,4 +1,4 @@
-import { Button, Status, Tx } from "@use-pico/client";
+import { Button, Sheet, Status, Tx } from "@use-pico/client";
 import type { FC } from "react";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
@@ -11,16 +11,17 @@ export namespace SubmitWrapper {
 
 export const SubmitWrapper: FC<SubmitWrapper.Props> = ({ canSubmit }) => {
 	return (
-		<div className="grid grid-cols-1 content-center justify-items-center h-full w-2/3 mx-auto">
+		<Sheet tone={canSubmit ? "secondary" : "warning"}>
 			{canSubmit ? (
 				<Status
 					icon={SendPackageIcon}
 					textTitle={<Tx label={"Submit listing - status (title)"} />}
-					tone={"primary"}
+					tone={"secondary"}
 				>
 					<Button
 						iconEnabled={CheckIcon}
-						tone={"primary"}
+						tone={"secondary"}
+						theme={"dark"}
 						size={"xl"}
 					>
 						<Tx label={"Submit listing (button)"} />
@@ -41,6 +42,6 @@ export const SubmitWrapper: FC<SubmitWrapper.Props> = ({ canSubmit }) => {
 					tone={"warning"}
 				/>
 			)}
-		</div>
+		</Sheet>
 	);
 };

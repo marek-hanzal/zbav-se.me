@@ -1,4 +1,4 @@
-import { Tx } from "@use-pico/client";
+import { Sheet, Tx } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import type { FC } from "react";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
@@ -18,11 +18,15 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({
 	},
 }) => {
 	return (
-		<Title
-			icon={PriceIcon}
-			{...subtitleVariant}
-		>
-			<Tx label={"Price (title)"} />
-		</Title>
+		<Sheet>
+			<Title
+				icon={PriceIcon}
+				tone={"secondary"}
+				theme={"dark"}
+				{...subtitleVariant}
+			>
+				<Tx label={"Price (title)"} />
+			</Title>
+		</Sheet>
 	);
 };
