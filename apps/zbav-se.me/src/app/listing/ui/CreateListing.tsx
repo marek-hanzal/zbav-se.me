@@ -1,4 +1,6 @@
 import {
+	Action,
+	ArrowLeftIcon,
 	Snapper,
 	SnapperContent,
 	SnapperItem,
@@ -104,6 +106,13 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 				isOpen={isTourOpen}
 				onClose={handleTourClose}
 				placement="left"
+				renderPrevButton={({ prev, disabled }) => (
+					<Action
+						iconEnabled={ArrowLeftIcon}
+						onClick={prev}
+						disabled={disabled}
+					/>
+				)}
 				steps={[
 					{
 						selector: undefined,

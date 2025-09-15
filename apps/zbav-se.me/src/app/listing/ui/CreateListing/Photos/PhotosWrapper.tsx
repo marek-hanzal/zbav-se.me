@@ -61,17 +61,14 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 					}),
 				})}
 			>
-				<SnapperNav pages={pages} />
+				<SnapperNav
+					pages={pages}
+					limit={{
+						limit: 6,
+					}}
+				/>
 
-				<SnapperContent
-					tweak={({ what }) => ({
-						slot: what.slot({
-							root: what.css([
-								"h-full",
-							]),
-						}),
-					})}
-				>
+				<SnapperContent>
 					{pages.map((_, slot) => {
 						const disabled = slot > 0 && value[slot - 1] === null;
 
