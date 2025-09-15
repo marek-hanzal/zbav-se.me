@@ -15,6 +15,7 @@ import { AnimatePresence, motion } from "motion/react";
 import type { FC } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
+import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { TagIcon } from "~/app/ui/icon/TagIcon";
 
@@ -121,7 +122,9 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 															className="h-full"
 														>
 															<Sheet
-																tone={"primary"}
+																tone={
+																	"secondary"
+																}
 																theme={"light"}
 																onClick={() => {
 																	selection.toggle(
@@ -131,10 +134,10 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 															>
 																<Status
 																	icon={
-																		TagIcon
+																		CheckIcon
 																	}
 																	tone={
-																		"primary"
+																		"secondary"
 																	}
 																	theme={
 																		"light"
@@ -143,7 +146,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 																		<Tx
 																			label={`Category group ${item.name}`}
 																			tone={
-																				"primary"
+																				"secondary"
 																			}
 																			theme={
 																				"light"
@@ -181,7 +184,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 														>
 															<Sheet
 																tone={"primary"}
-																theme={"dark"}
+																theme={"light"}
 																onClick={() => {
 																	selection.toggle(
 																		item,
@@ -196,7 +199,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 																		"primary"
 																	}
 																	theme={
-																		"dark"
+																		"light"
 																	}
 																	textTitle={
 																		<Tx
@@ -205,7 +208,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 																				"primary"
 																			}
 																			theme={
-																				"dark"
+																				"light"
 																			}
 																			font={
 																				"bold"
