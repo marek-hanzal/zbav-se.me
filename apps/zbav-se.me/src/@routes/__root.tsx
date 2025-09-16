@@ -1,3 +1,4 @@
+import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
 	createRootRouteWithContext,
 	HeadContent,
@@ -6,11 +7,12 @@ import {
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
-import { MotionConfig } from "motion/react";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
-export const Route = createRootRouteWithContext<{}>()({
+export const Route = createRootRouteWithContext<{
+	queryClient: QueryClient;
+}>()({
 	head: () => ({
 		meta: [
 			{
@@ -33,6 +35,7 @@ export const Route = createRootRouteWithContext<{}>()({
 		],
 	}),
 	shellComponent() {
+		const { queryClient } = Route.useRouteContext();
 		const slots = ThemeCls.create(({ what }) => ({
 			slot: what.slot({
 				default: what.both(
@@ -55,9 +58,9 @@ export const Route = createRootRouteWithContext<{}>()({
 				</head>
 				<body className={slots.default()}>
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
-						<MotionConfig reducedMotion="never">
+						<QueryClientProvider client={queryClient}>
 							<Outlet />
-						</MotionConfig>
+						</QueryClientProvider>
 					</ClsProvider>
 
 					<Scripts />
