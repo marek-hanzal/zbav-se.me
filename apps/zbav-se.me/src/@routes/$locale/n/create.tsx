@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ColumnLayout } from "@use-pico/client";
 import { useCallback, useState } from "react";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
+import { Container } from "~/app/ui/container/Container";
 import { Nav } from "~/app/ui/nav/Nav";
 
 export const Route = createFileRoute("/$locale/n/create")({
@@ -42,7 +42,11 @@ export const Route = createFileRoute("/$locale/n/create")({
 		);
 
 		return (
-			<ColumnLayout layout="content-footer">
+			<Container
+				orientation={"vertical"}
+				square={"xs"}
+				gap={"xs"}
+			>
 				{/* <CreateListing photoCountLimit={10} /> */}
 
 				<PhotosWrapper
@@ -52,7 +56,7 @@ export const Route = createFileRoute("/$locale/n/create")({
 				/>
 
 				<Nav active="create" />
-			</ColumnLayout>
+			</Container>
 		);
 	},
 });

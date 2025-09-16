@@ -12,6 +12,9 @@ export namespace Container {
 		overflow?: Cls.VariantOf<ContainerCls, "overflow">;
 		snap?: Cls.VariantOf<ContainerCls, "snap">;
 		item?: Cls.VariantOf<ContainerCls, "item">;
+		square?: Cls.VariantOf<ContainerCls, "square">;
+		gap?: Cls.VariantOf<ContainerCls, "gap">;
+		position?: Cls.VariantOf<ContainerCls, "position">;
 	}
 }
 
@@ -24,6 +27,9 @@ export const Container: FC<Container.Props> = ({
 	overflow,
 	snap,
 	item,
+	square,
+	gap,
+	position,
 	//
 	cls = ContainerCls,
 	tweak,
@@ -38,6 +44,9 @@ export const Container: FC<Container.Props> = ({
 			overflow,
 			snap,
 			item,
+			square,
+			gap,
+			position,
 		}),
 	}));
 

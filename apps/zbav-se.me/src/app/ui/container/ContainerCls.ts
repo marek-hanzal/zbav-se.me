@@ -12,28 +12,26 @@ export const ContainerCls = PicoCls.extend(
 				"full",
 				"dvh",
 				"auto",
-				"fit",
 			],
 			width: [
 				"full",
 				"dvw",
 				"auto",
-				"fit",
 			],
 			orientation: [
+				"unset",
 				"vertical",
 				"vertical-full",
 				"horizontal",
 				"horizontal-full",
-				"none",
 			],
 			overflow: [
-				"none",
+				"unset",
 				"horizontal",
 				"vertical",
 			],
 			snap: [
-				"none",
+				"unset",
 				"horizontal-start",
 				"horizontal-center",
 				"horizontal-end",
@@ -42,10 +40,31 @@ export const ContainerCls = PicoCls.extend(
 				"vertical-end",
 			],
 			item: [
+				"unset",
 				"col",
 				"row",
 				"full",
-				"none",
+			],
+			square: [
+				"unset",
+				"xs",
+				"sm",
+				"md",
+				"lg",
+				"xl",
+			],
+			gap: [
+				"unset",
+				"xs",
+				"sm",
+				"md",
+				"lg",
+				"xl",
+			],
+			position: [
+				"unset",
+				"absolute",
+				"relative",
 			],
 		},
 	},
@@ -380,14 +399,179 @@ export const ContainerCls = PicoCls.extend(
 					]),
 				},
 			),
+
+			/**
+			 * Square - paddings
+			 */
+			def.rule(
+				what.variant({
+					square: "xs",
+				}),
+				{
+					root: what.both(
+						[
+							"Container-root-square[xs]",
+						],
+						[
+							"square.xs",
+						],
+					),
+				},
+			),
+			def.rule(
+				what.variant({
+					square: "sm",
+				}),
+				{
+					root: what.both(
+						[
+							"Container-root-square[sm]",
+						],
+						[
+							"square.sm",
+						],
+					),
+				},
+			),
+			def.rule(
+				what.variant({
+					square: "md",
+				}),
+				{
+					root: what.both(
+						[
+							"Container-root-square[md]",
+						],
+						[
+							"square.md",
+						],
+					),
+				},
+			),
+			def.rule(
+				what.variant({
+					square: "lg",
+				}),
+				{
+					root: what.both(
+						[
+							"Container-root-square[lg]",
+						],
+						[
+							"square.lg",
+						],
+					),
+				},
+			),
+			def.rule(
+				what.variant({
+					square: "xl",
+				}),
+				{
+					root: what.both(
+						[
+							"Container-root-square[xl]",
+						],
+						[
+							"square.xl",
+						],
+					),
+				},
+			),
+			/**
+			 * Gaps
+			 */
+			def.rule(
+				what.variant({
+					gap: "xs",
+				}),
+				{
+					root: what.css([
+						"Container-root-gap[xs]",
+						"gap-1",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					gap: "sm",
+				}),
+				{
+					root: what.css([
+						"Container-root-gap[sm]",
+						"gap-2",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					gap: "md",
+				}),
+				{
+					root: what.css([
+						"Container-root-gap[md]",
+						"gap-3",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					gap: "lg",
+				}),
+				{
+					root: what.css([
+						"Container-root-gap[lg]",
+						"gap-4",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					gap: "xl",
+				}),
+				{
+					root: what.css([
+						"Container-root-gap[xl]",
+						"gap-5",
+					]),
+				},
+			),
+			/**
+			 * Position
+			 */
+			def.rule(
+				what.variant({
+					position: "absolute",
+				}),
+				{
+					root: what.css([
+						"Container-root-position[absolute]",
+						"absolute",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					position: "relative",
+				}),
+				{
+					root: what.css([
+						"Container-root-position[relative]",
+						"relative",
+					]),
+				},
+			),
 		],
 		defaults: def.defaults({
-			height: "fit",
-			width: "fit",
-			orientation: "none",
-			overflow: "none",
-			snap: "none",
-			item: "none",
+			height: "full",
+			width: "full",
+			orientation: "unset",
+			overflow: "unset",
+			snap: "unset",
+			item: "unset",
+			square: "unset",
+			gap: "unset",
+			position: "unset",
 		}),
 	}),
 );

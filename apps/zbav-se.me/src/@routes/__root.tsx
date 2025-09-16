@@ -1,9 +1,9 @@
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-	createRootRouteWithContext,
-	HeadContent,
-	Outlet,
-	Scripts,
+    createRootRouteWithContext,
+    HeadContent,
+    Outlet,
+    Scripts,
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
@@ -37,20 +37,6 @@ export const Route = createRootRouteWithContext<{
 	}),
 	shellComponent() {
 		const { queryClient } = Route.useRouteContext();
-		// const slots = ThemeCls.create(({ what }) => ({
-		// 	slot: what.slot({
-		// 		default: what.both(
-		// 			[
-		// 				"h-[100dvh]",
-		// 				"max-h-[100dvh]",
-		// 				"overscroll-none",
-		// 			],
-		// 			[
-		// 				"tone.primary.dark.bg",
-		// 			],
-		// 		),
-		// 	}),
-		// }));
 
 		return (
 			<html>
@@ -63,6 +49,13 @@ export const Route = createRootRouteWithContext<{
 							<Container
 								height="dvh"
 								width="dvw"
+								tweak={({ what }) => ({
+									slot: what.slot({
+										root: what.token([
+											"tone.primary.dark.bg",
+										]),
+									}),
+								})}
 							>
 								<Outlet />
 							</Container>

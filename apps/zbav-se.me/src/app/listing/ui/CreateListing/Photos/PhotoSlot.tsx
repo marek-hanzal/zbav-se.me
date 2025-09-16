@@ -9,7 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { anim, useAnim } from "~/app/ui/gsap";
+import { Container } from "~/app/ui/container/Container";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 
 function useObjectUrl(file: File | null) {
@@ -102,34 +102,30 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 
 	const rootRef = useRef<HTMLDivElement>(null);
 
-	useAnim(
-		() => {
-			anim.from(rootRef.current, {
-				scrollTrigger: {
-					trigger: rootRef.current,
-					start: "top bottom",
-					end: "bottom top",
-					toggleActions: "restart pause restart pause",
-					scrub: true,
-					markers: true,
-				},
-				x: 64,
-				rotation: 90,
-				opacity: 0,
-				duration: 0.5,
-			});
-		},
-		{
-			scope: rootRef,
-		},
-	);
+	// useAnim(
+	// 	() => {
+	// 		anim.from(rootRef.current, {
+	// 			scrollTrigger: {
+	// 				trigger: rootRef.current,
+	// 				start: "top bottom",
+	// 				end: "bottom top",
+	// 				toggleActions: "restart pause restart pause",
+	// 				scrub: true,
+	// 				markers: true,
+	// 			},
+	// 			x: 64,
+	// 			rotation: 90,
+	// 			opacity: 0,
+	// 			duration: 0.5,
+	// 		});
+	// 	},
+	// 	{
+	// 		scope: rootRef,
+	// 	},
+	// );
 
 	return (
-		<div
-			data-ui="PhotoSlot-root"
-			className={"PhotoSlot-root h-full"}
-			ref={rootRef}
-		>
+		<Container position="relative">
 			<input
 				data-ui="PhotoSlot-input"
 				ref={inputRef}
@@ -196,6 +192,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					/>
 				)}
 			</Sheet>
-		</div>
+		</Container>
 	);
 };

@@ -1,6 +1,7 @@
 import type { SnapperNav } from "@use-pico/client";
 import { type FC, useMemo } from "react";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
+import { Container } from "~/app/ui/container/Container";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
 
 export namespace PhotosWrapper {
@@ -42,23 +43,24 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 	);
 
 	return (
-		<div
-			data-ui="PhotosWrapper-root"
-			className="grid h-full auto-rows-[100%]"
+		<Container
+			orientation="vertical-full"
+			snap="vertical-start"
+			gap={"xs"}
 		>
 			{pages.map((_, slot) => {
 				const disabled = slot > 0 && value[slot - 1] === null;
 
-				<PhotoSlot
-					key={`photo-${slot + 1}`}
-					slot={slot}
-					disabled={disabled}
-					value={value[slot] ?? null}
-					onChange={onChange}
-				/>;
-
-				return <div key={`photo-${slot + 1}`}>jebka</div>;
+				return (
+					<PhotoSlot
+						key={`photo-${slot + 1}`}
+						slot={slot}
+						disabled={disabled}
+						value={value[slot] ?? null}
+						onChange={onChange}
+					/>
+				);
 			})}
-		</div>
+		</Container>
 	);
 };
