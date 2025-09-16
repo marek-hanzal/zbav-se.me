@@ -36,10 +36,14 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				(_, index) => ({
 					id: `p-${index + 1}`,
 					icon: DotIcon,
+					iconProps: () => ({
+						tone: value[index] ? "primary" : "secondary",
+					}),
 				}),
 			),
 		[
 			count,
+			value,
 		],
 	);
 	const rootRef = useRef<HTMLDivElement>(null);
