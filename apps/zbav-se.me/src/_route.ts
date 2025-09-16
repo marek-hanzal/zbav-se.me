@@ -16,6 +16,7 @@ import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as LocaleNRouteImport } from './@routes/$locale/n'
 import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
+import { Route as LocaleNTestRouteImport } from './@routes/$locale/n/test'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
 import { Route as LocaleNCreateRouteImport } from './@routes/$locale/n/create'
 import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
@@ -48,6 +49,11 @@ const LocaleNUserRoute = LocaleNUserRouteImport.update({
   path: '/user',
   getParentRoute: () => LocaleNRoute,
 } as any)
+const LocaleNTestRoute = LocaleNTestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => LocaleNRoute,
+} as any)
 const LocaleNFeedRoute = LocaleNFeedRouteImport.update({
   id: '/feed',
   path: '/feed',
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
+  '/$locale/n/test': typeof LocaleNTestRoute
   '/$locale/n/user': typeof LocaleNUserRoute
 }
 export interface FileRoutesByTo {
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
+  '/$locale/n/test': typeof LocaleNTestRoute
   '/$locale/n/user': typeof LocaleNUserRoute
 }
 export interface FileRoutesById {
@@ -97,6 +105,7 @@ export interface FileRoutesById {
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
   '/$locale/n/feed': typeof LocaleNFeedRoute
+  '/$locale/n/test': typeof LocaleNTestRoute
   '/$locale/n/user': typeof LocaleNUserRoute
 }
 export interface FileRouteTypes {
@@ -109,6 +118,7 @@ export interface FileRouteTypes {
     | '/$locale/n/bag'
     | '/$locale/n/create'
     | '/$locale/n/feed'
+    | '/$locale/n/test'
     | '/$locale/n/user'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/$locale/n/bag'
     | '/$locale/n/create'
     | '/$locale/n/feed'
+    | '/$locale/n/test'
     | '/$locale/n/user'
   id:
     | '__root__'
@@ -128,6 +139,7 @@ export interface FileRouteTypes {
     | '/$locale/n/bag'
     | '/$locale/n/create'
     | '/$locale/n/feed'
+    | '/$locale/n/test'
     | '/$locale/n/user'
   fileRoutesById: FileRoutesById
 }
@@ -194,6 +206,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleNUserRouteImport
       parentRoute: typeof LocaleNRoute
     }
+    '/$locale/n/test': {
+      id: '/$locale/n/test'
+      path: '/test'
+      fullPath: '/$locale/n/test'
+      preLoaderRoute: typeof LocaleNTestRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
     '/$locale/n/feed': {
       id: '/$locale/n/feed'
       path: '/feed'
@@ -233,6 +252,7 @@ interface LocaleNRouteChildren {
   LocaleNBagRoute: typeof LocaleNBagRoute
   LocaleNCreateRoute: typeof LocaleNCreateRoute
   LocaleNFeedRoute: typeof LocaleNFeedRoute
+  LocaleNTestRoute: typeof LocaleNTestRoute
   LocaleNUserRoute: typeof LocaleNUserRoute
 }
 
@@ -240,6 +260,7 @@ const LocaleNRouteChildren: LocaleNRouteChildren = {
   LocaleNBagRoute: LocaleNBagRoute,
   LocaleNCreateRoute: LocaleNCreateRoute,
   LocaleNFeedRoute: LocaleNFeedRoute,
+  LocaleNTestRoute: LocaleNTestRoute,
   LocaleNUserRoute: LocaleNUserRoute,
 }
 

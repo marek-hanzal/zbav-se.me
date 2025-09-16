@@ -1,9 +1,4 @@
-import {
-	Snapper,
-	SnapperContent,
-	SnapperItem,
-	SnapperNav,
-} from "@use-pico/client";
+import type { SnapperNav } from "@use-pico/client";
 import { type FC, useMemo } from "react";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
@@ -47,45 +42,23 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 	);
 
 	return (
-		<div className="flex flex-col h-full">
-			<Snapper
-				orientation="vertical"
-				tweak={({ what }) => ({
-					slot: what.slot({
-						root: what.css([
-							"flex-1",
-						]),
-					}),
-				})}
-			>
-				<SnapperNav
-					pages={pages}
-					iconProps={({ index }) => ({
-						size: "xs",
-						tone:
-							index !== undefined && value[index]
-								? "primary"
-								: "secondary",
-					})}
-				/>
+		<div
+			data-ui="PhotosWrapper-root"
+			className="grid h-full auto-rows-[100%]"
+		>
+			{pages.map((_, slot) => {
+				const disabled = slot > 0 && value[slot - 1] === null;
 
-				<SnapperContent>
-					{pages.map((_, slot) => {
-						const disabled = slot > 0 && value[slot - 1] === null;
+				<PhotoSlot
+					key={`photo-${slot + 1}`}
+					slot={slot}
+					disabled={disabled}
+					value={value[slot] ?? null}
+					onChange={onChange}
+				/>;
 
-						return (
-							<SnapperItem key={`photo-${slot + 1}`}>
-								<PhotoSlot
-									slot={slot}
-									disabled={disabled}
-									value={value[slot] ?? null}
-									onChange={onChange}
-								/>
-							</SnapperItem>
-						);
-					})}
-				</SnapperContent>
-			</Snapper>
+				return <div key={`photo-${slot + 1}`}>jebka</div>;
+			})}
 		</div>
 	);
 };

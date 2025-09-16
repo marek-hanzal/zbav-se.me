@@ -7,6 +7,7 @@ import {
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client";
 import { ClsProvider } from "@use-pico/cls";
+import { Container } from "~/app/ui/container/Container";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
@@ -36,30 +37,35 @@ export const Route = createRootRouteWithContext<{
 	}),
 	shellComponent() {
 		const { queryClient } = Route.useRouteContext();
-		const slots = ThemeCls.create(({ what }) => ({
-			slot: what.slot({
-				default: what.both(
-					[
-						"h-[100dvh]",
-						"max-h-[100dvh]",
-						"overscroll-none",
-					],
-					[
-						"tone.primary.dark.bg",
-					],
-				),
-			}),
-		}));
+		// const slots = ThemeCls.create(({ what }) => ({
+		// 	slot: what.slot({
+		// 		default: what.both(
+		// 			[
+		// 				"h-[100dvh]",
+		// 				"max-h-[100dvh]",
+		// 				"overscroll-none",
+		// 			],
+		// 			[
+		// 				"tone.primary.dark.bg",
+		// 			],
+		// 		),
+		// 	}),
+		// }));
 
 		return (
 			<html>
 				<head>
 					<HeadContent />
 				</head>
-				<body className={slots.default()}>
+				<body>
 					<ClsProvider value={PicoCls.use(ThemeCls)}>
 						<QueryClientProvider client={queryClient}>
-							<Outlet />
+							<Container
+								height="dvh"
+								width="dvw"
+							>
+								<Outlet />
+							</Container>
 						</QueryClientProvider>
 					</ClsProvider>
 

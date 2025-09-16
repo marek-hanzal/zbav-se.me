@@ -9,6 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { anim, useAnim } from "~/app/ui/gsap";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 
 function useObjectUrl(file: File | null) {
@@ -99,10 +100,35 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		event.stopPropagation();
 	}, []);
 
+	const rootRef = useRef<HTMLDivElement>(null);
+
+	useAnim(
+		() => {
+			anim.from(rootRef.current, {
+				scrollTrigger: {
+					trigger: rootRef.current,
+					start: "top bottom",
+					end: "bottom top",
+					toggleActions: "restart pause restart pause",
+					scrub: true,
+					markers: true,
+				},
+				x: 64,
+				rotation: 90,
+				opacity: 0,
+				duration: 0.5,
+			});
+		},
+		{
+			scope: rootRef,
+		},
+	);
+
 	return (
 		<div
 			data-ui="PhotoSlot-root"
-			className={"w-full h-full"}
+			className={"PhotoSlot-root h-full"}
+			ref={rootRef}
 		>
 			<input
 				data-ui="PhotoSlot-input"

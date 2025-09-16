@@ -26,4 +26,4 @@ coolGsap.registerPlugin(
 	TextPlugin,
 );
 
-export { useGSAP, coolGsap as anim };
+export { useGSAP as useAnim, coolGsap as anim };
