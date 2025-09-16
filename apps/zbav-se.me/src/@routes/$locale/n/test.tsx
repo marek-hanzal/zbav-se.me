@@ -4,10 +4,10 @@ import { Container } from "~/app/ui/container/Container";
 export const Route = createFileRoute("/$locale/n/test")({
 	component() {
 		return (
-			<Container orientation="vertical">
-				<Container item="row">Jebka 1</Container>
-				<Container item="row">Jebka 2</Container>
-				<Container item="row">Jebka 3</Container>
+			<Container orientation="horizontal-full">
+				<Container item="full">Jebka 1</Container>
+				<Container item="full">Jebka 2</Container>
+				<Container item="full">Jebka 3</Container>
 			</Container>
 		);
 	},

@@ -22,12 +22,15 @@ export const ContainerCls = PicoCls.extend(
 			],
 			orientation: [
 				"vertical",
+				"vertical-full",
 				"horizontal",
+				"horizontal-full",
 				"none",
 			],
 			item: [
 				"col",
 				"row",
+				"full",
 				"none",
 			],
 		},
@@ -136,6 +139,23 @@ export const ContainerCls = PicoCls.extend(
 			),
 			def.rule(
 				what.variant({
+					orientation: "horizontal-full",
+				}),
+				{
+					root: what.css([
+						"Container-root-orientation[horizontal-full]",
+						"grid",
+						"grid-flow-col",
+						"auto-cols-fr",
+						"w-full",
+						"h-full",
+						"min-w-0",
+						"min-h-0",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
 					item: "col",
 				}),
 				{
@@ -163,6 +183,23 @@ export const ContainerCls = PicoCls.extend(
 			),
 			def.rule(
 				what.variant({
+					orientation: "vertical-full",
+				}),
+				{
+					root: what.css([
+						"Container-root-orientation[vertical-full]",
+						"grid",
+						"grid-flow-row",
+						"auto-rows-fr",
+						"w-full",
+						"h-full",
+						"min-w-0",
+						"min-h-0",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
 					item: "row",
 				}),
 				{
@@ -175,10 +212,24 @@ export const ContainerCls = PicoCls.extend(
 					]),
 				},
 			),
+			def.rule(
+				what.variant({
+					item: "full",
+				}),
+				{
+					root: what.css([
+						"Container-root-item[full]",
+						"w-full",
+						"h-full",
+						"min-w-0",
+						"min-h-0",
+					]),
+				},
+			),
 		],
 		defaults: def.defaults({
-			height: "auto",
-			width: "auto",
+			height: "fit",
+			width: "fit",
 			orientation: "none",
 			item: "none",
 		}),
