@@ -80,16 +80,15 @@ export const BaseSnapperNav: FC<SnapperNav.Props> = ({
 		(index: number, behavior: ScrollBehavior = "smooth") => {
 			const container = containerRef.current;
 			if (!container) {
+				console.warn("SnapperNav: Container not found");
 				return;
 			}
 
-			const track = container.firstElementChild as HTMLElement | null;
-			if (!track) {
-				return;
-			}
-
-			const item = track.children[index] as HTMLElement | null;
+			const item = container.children[index] as HTMLElement | null;
 			if (!item) {
+				console.warn(
+					"SnapperNav: Item at index not found - does the container contain only the tracked children?",
+				);
 				return;
 			}
 
