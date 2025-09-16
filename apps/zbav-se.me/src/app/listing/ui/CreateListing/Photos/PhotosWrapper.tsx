@@ -1,6 +1,7 @@
 import { type FC, useMemo, useRef } from "react";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { Container } from "~/app/ui/container/Container";
+import { useAnim } from "~/app/ui/gsap";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { SnapperNav } from "~/app/ui/scroll/Snapper";
 
@@ -41,10 +42,23 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			count,
 		],
 	);
+	const rootRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 
+	useAnim(
+		() => {
+			// anim.to()
+		},
+		{
+			scope: rootRef,
+		},
+	);
+
 	return (
-		<Container position={"relative"}>
+		<Container
+			position={"relative"}
+			ref={rootRef}
+		>
 			<SnapperNav
 				containerRef={containerRef}
 				pages={pages}
