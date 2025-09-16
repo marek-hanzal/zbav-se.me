@@ -68,7 +68,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			items.forEach((el) => {
 				anim.timeline({
 					defaults: {
-						ease: "power1.inOut",
+						ease: "power4.inOut",
 						duration: 0.05,
 					},
 					scrollTrigger: {
