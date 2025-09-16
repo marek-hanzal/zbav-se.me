@@ -28,9 +28,18 @@ export const ContainerCls = PicoCls.extend(
 				"none",
 			],
 			overflow: [
-				"scroll",
-				"snap",
 				"none",
+				"horizontal",
+				"vertical",
+			],
+			snap: [
+				"none",
+				"horizontal-start",
+				"horizontal-center",
+				"horizontal-end",
+				"vertical-start",
+				"vertical-center",
+				"vertical-end",
 			],
 			item: [
 				"col",
@@ -44,7 +53,7 @@ export const ContainerCls = PicoCls.extend(
 		token: def.token({}),
 		rules: [
 			/**
-			 * Height rules
+			 * Height
 			 */
 			def.rule(
 				what.variant({
@@ -86,7 +95,7 @@ export const ContainerCls = PicoCls.extend(
 				},
 			),
 			/**
-			 * Width rules
+			 * Width
 			 */
 			def.rule(
 				what.variant({
@@ -126,8 +135,9 @@ export const ContainerCls = PicoCls.extend(
 					]),
 				},
 			),
+
 			/**
-			 * Orientation rules
+			 * Orientation
 			 */
 			def.rule(
 				what.variant({
@@ -151,27 +161,10 @@ export const ContainerCls = PicoCls.extend(
 						"Container-root-orientation[horizontal-full]",
 						"grid",
 						"grid-flow-col",
-						"auto-cols-[100%]",
 						"grid-rows-1",
+						"auto-cols-[100%]",
 						"w-full",
 						"h-full",
-						"min-w-0",
-						"min-h-0",
-
-						"overflow-x-auto",
-						"overflow-y-clip",
-					]),
-				},
-			),
-			def.rule(
-				what.variant({
-					item: "col",
-				}),
-				{
-					root: what.css([
-						"Container-root-item[col]",
-						"h-full",
-						"w-auto",
 						"min-w-0",
 						"min-h-0",
 					]),
@@ -199,15 +192,153 @@ export const ContainerCls = PicoCls.extend(
 						"Container-root-orientation[vertical-full]",
 						"grid",
 						"grid-flow-row",
-						"auto-rows-[100%]",
 						"grid-cols-1",
+						"auto-rows-[100%]",
 						"w-full",
 						"h-full",
 						"min-w-0",
 						"min-h-0",
+					]),
+				},
+			),
 
+			/**
+			 * Overflow (simplified)
+			 */
+			def.rule(
+				what.variant({
+					overflow: "horizontal",
+				}),
+				{
+					root: what.css([
+						"Container-root-overflow[horizontal]",
+						"overflow-x-auto",
+						"overflow-y-clip",
+						"[scrollbar-gutter:stable_both-edges]",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					overflow: "vertical",
+				}),
+				{
+					root: what.css([
+						"Container-root-overflow[vertical]",
 						"overflow-y-auto",
 						"overflow-x-clip",
+						"[scrollbar-gutter:stable_both-edges]",
+					]),
+				},
+			),
+
+			// X axis
+			def.rule(
+				what.variant({
+					snap: "horizontal-start",
+				}),
+				{
+					root: what.css([
+						"Container-root-snap[horizontal-start]",
+						"overflow-x-auto",
+						"overflow-y-clip",
+						"snap-x",
+						"snap-mandatory",
+						"[&>*]:snap-start",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					snap: "horizontal-center",
+				}),
+				{
+					root: what.css([
+						"Container-root-snap[horizontal-center]",
+						"overflow-x-auto",
+						"overflow-y-clip",
+						"snap-x",
+						"snap-mandatory",
+						"[&>*]:snap-center",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					snap: "horizontal-end",
+				}),
+				{
+					root: what.css([
+						"Container-root-snap[horizontal-end]",
+						"overflow-x-auto",
+						"overflow-y-clip",
+						"snap-x",
+						"snap-mandatory",
+						"[&>*]:snap-end",
+					]),
+				},
+			),
+			// Y axis
+			def.rule(
+				what.variant({
+					snap: "vertical-start",
+				}),
+				{
+					root: what.css([
+						"Container-root-snap[vertical-start]",
+						"overflow-y-auto",
+						"overflow-x-clip",
+						"snap-y",
+						"snap-mandatory",
+						"[&>*]:snap-start",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					snap: "vertical-center",
+				}),
+				{
+					root: what.css([
+						"Container-root-snap[vertical-center]",
+						"overflow-y-auto",
+						"overflow-x-clip",
+						"snap-y",
+						"snap-mandatory",
+						"[&>*]:snap-center",
+					]),
+				},
+			),
+			def.rule(
+				what.variant({
+					snap: "vertical-end",
+				}),
+				{
+					root: what.css([
+						"Container-root-snap[vertical-end]",
+						"overflow-y-auto",
+						"overflow-x-clip",
+						"snap-y",
+						"snap-mandatory",
+						"[&>*]:snap-end",
+					]),
+				},
+			),
+
+			/**
+			 * Items (helper presety)
+			 */
+			def.rule(
+				what.variant({
+					item: "col",
+				}),
+				{
+					root: what.css([
+						"Container-root-item[col]",
+						"h-full",
+						"w-auto",
+						"min-w-0",
+						"min-h-0",
 					]),
 				},
 			),
@@ -244,6 +375,8 @@ export const ContainerCls = PicoCls.extend(
 			height: "fit",
 			width: "fit",
 			orientation: "none",
+			overflow: "none",
+			snap: "none",
 			item: "none",
 		}),
 	}),

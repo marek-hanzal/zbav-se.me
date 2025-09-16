@@ -9,16 +9,22 @@ export namespace Container {
 		height?: Cls.VariantOf<ContainerCls, "height">;
 		width?: Cls.VariantOf<ContainerCls, "width">;
 		orientation?: Cls.VariantOf<ContainerCls, "orientation">;
+		overflow?: Cls.VariantOf<ContainerCls, "overflow">;
+		snap?: Cls.VariantOf<ContainerCls, "snap">;
 		item?: Cls.VariantOf<ContainerCls, "item">;
 	}
 }
 
 export const Container: FC<Container.Props> = ({
 	ref,
+	//
 	height,
 	width,
 	orientation,
+	overflow,
+	snap,
 	item,
+	//
 	cls = ContainerCls,
 	tweak,
 	children,
@@ -29,6 +35,8 @@ export const Container: FC<Container.Props> = ({
 			height,
 			width,
 			orientation,
+			overflow,
+			snap,
 			item,
 		}),
 	}));
