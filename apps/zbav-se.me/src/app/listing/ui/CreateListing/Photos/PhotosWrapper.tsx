@@ -49,78 +49,65 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 
 	useAnim(
 		() => {
-			const scroller = containerRef.current;
-			if (!scroller) {
-				return;
-			}
-
-			// vybereme všechny PhotoSloty uvnitř scope (rootRef)
 			const items = anim.utils.toArray<HTMLElement>(
 				"[data-ui='PhotoSlot-root']",
 			);
 
-			// inicializace (aby nic neblikalo při mountu)
-			items.forEach((el) => {
-				anim.set(el, {
-					opacity: 0,
-					scale: 0.96,
-					transformOrigin: "50% 50%",
-					willChange: "transform, opacity",
-				});
-
-				// pro každý slot vytvoříme vlastní ScrollTrigger s callbacks
-				ScrollTrigger.create({
-					trigger: el,
-					scroller,
-					start: "top center",
-					end: "bottom center",
-					// markers: true, // odkomentuj pro ladění
-					onEnter: () => {
-						anim.to(el, {
-							opacity: 1,
-							scale: 1,
-							duration: 0.28,
-							ease: "power2.out",
-							overwrite: "auto",
-						});
-					},
-					onLeave: () => {
-						anim.to(el, {
-							opacity: 0,
-							scale: 0.94,
-							duration: 0.22,
-							ease: "power2.in",
-							overwrite: "auto",
-						});
-					},
-					onEnterBack: () => {
-						anim.to(el, {
-							opacity: 1,
-							scale: 1,
-							duration: 0.28,
-							ease: "power2.out",
-							overwrite: "auto",
-						});
-					},
-					onLeaveBack: () => {
-						anim.to(el, {
-							opacity: 0,
-							scale: 0.94,
-							duration: 0.22,
-							ease: "power2.in",
-							overwrite: "auto",
-						});
-					},
-				});
+			ScrollTrigger.create({
+				scroller: containerRef.current,
+				snap: {
+					snapTo: 1 / (count - 1),
+					delay: 0.05,
+					duration: 1.25,
+					ease: "power4.inOut",
+					directional: false,
+					inertia: true,
+				},
 			});
 
-			// po vytvoření triggerů refresh, ať si sednou se snapem
+			items.forEach((el) => {
+				anim.timeline({
+					defaults: {
+						ease: "power1.inOut",
+						duration: 0.5,
+					},
+					scrollTrigger: {
+						trigger: el,
+						scroller: containerRef.current,
+						start: "top bottom",
+						end: "bottom top",
+						scrub: 0.75,
+					},
+				})
+					.fromTo(
+						el,
+						{
+							opacity: 0.15,
+							scale: 0.85,
+							rotateZ: 4,
+							// x: -32,
+						},
+						{
+							opacity: 1,
+							scale: 1,
+							rotateZ: 0,
+							x: 0,
+						},
+					)
+					.to(el, {
+						opacity: 0.15,
+						scale: 0.85,
+						rotateZ: -4,
+						// x: 32,
+					});
+			});
+
 			ScrollTrigger.refresh();
 		},
 		{
 			scope: rootRef,
-			// když se změní počet stránek/slotů, re-init
 			dependencies: [
+				count,
 				pages.length,
 			],
 		},
@@ -143,8 +130,9 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			<Container
 				ref={containerRef}
 				orientation="vertical-full"
-				snap="vertical-start"
-				gap="xs"
+				// snap="vertical-start"
+				overflow={"vertical"}
+				// gap="xs"
 			>
 				{pages.map((_, slot) => {
 					const disabled = slot > 0 && value[slot - 1] === null;
@@ -156,7 +144,6 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 							disabled={disabled}
 							value={value[slot] ?? null}
 							onChange={onChange}
-							// dbej na to, aby root PhotoSlotu měl className="PhotoSlot-root"
 						/>
 					);
 				})}
