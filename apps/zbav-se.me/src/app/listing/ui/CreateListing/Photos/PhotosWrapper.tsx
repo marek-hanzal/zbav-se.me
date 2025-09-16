@@ -57,11 +57,11 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				scroller: containerRef.current,
 				snap: {
 					snapTo: 1 / (count - 1),
-					delay: 0.05,
-					duration: 1.25,
-					ease: "power4.inOut",
+					delay: 0,
+					duration: 0.25,
+					ease: "power2.inOut",
 					directional: false,
-					inertia: true,
+					inertia: false,
 				},
 			});
 
@@ -69,14 +69,14 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				anim.timeline({
 					defaults: {
 						ease: "power1.inOut",
-						duration: 0.5,
+						duration: 0.05,
 					},
 					scrollTrigger: {
 						trigger: el,
 						scroller: containerRef.current,
 						start: "top bottom",
 						end: "bottom top",
-						scrub: 0.75,
+						scrub: 0.1,
 					},
 				})
 					.fromTo(
