@@ -68,8 +68,8 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			items.forEach((el) => {
 				anim.timeline({
 					defaults: {
-						ease: "power4.inOut",
-						duration: 0.05,
+						ease: "power2.inOut",
+						duration: 0.15,
 					},
 					scrollTrigger: {
 						trigger: el,
@@ -82,23 +82,23 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 					.fromTo(
 						el,
 						{
-							opacity: 0.15,
+							opacity: 0.25,
 							scale: 0.85,
 							rotateZ: 4,
-							// x: -32,
+							y: -64,
 						},
 						{
 							opacity: 1,
 							scale: 1,
 							rotateZ: 0,
-							x: 0,
+							y: 0,
 						},
 					)
 					.to(el, {
-						opacity: 0.15,
+						opacity: 0.25,
 						scale: 0.85,
 						rotateZ: -4,
-						// x: 32,
+						y: 64,
 					});
 			});
 
