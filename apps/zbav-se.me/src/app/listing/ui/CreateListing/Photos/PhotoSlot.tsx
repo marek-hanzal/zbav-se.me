@@ -125,7 +125,10 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	// );
 
 	return (
-		<Container position="relative">
+		<Container
+			data-ui="PhotoSlot-root"
+			position="relative"
+		>
 			<input
 				data-ui="PhotoSlot-input"
 				ref={inputRef}
