@@ -149,6 +149,7 @@ export const ContainerCls = PicoCls.extend(
 						"grid",
 						"grid-flow-col",
 						"auto-cols-auto",
+						"grid-rows-1",
 					]),
 				},
 			),
@@ -180,6 +181,7 @@ export const ContainerCls = PicoCls.extend(
 						"grid",
 						"grid-flow-row",
 						"auto-rows-auto",
+						"grid-cols-1",
 					]),
 				},
 			),
@@ -212,6 +214,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-overflow[horizontal]",
+						"isolate",
 						"overflow-x-auto",
 						"overflow-y-clip",
 						"[scrollbar-gutter:stable_both-edges]",
@@ -225,6 +228,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-overflow[vertical]",
+						"isolate",
 						"overflow-y-auto",
 						"overflow-x-clip",
 						"[scrollbar-gutter:stable_both-edges]",
@@ -240,6 +244,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-snap[horizontal-start]",
+						"isolate",
 						"overflow-x-auto",
 						"overflow-y-clip",
 						"snap-x",
@@ -255,6 +260,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-snap[horizontal-center]",
+						"isolate",
 						"overflow-x-auto",
 						"overflow-y-clip",
 						"snap-x",
@@ -270,6 +276,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-snap[horizontal-end]",
+						"isolate",
 						"overflow-x-auto",
 						"overflow-y-clip",
 						"snap-x",
@@ -286,6 +293,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-snap[vertical-start]",
+						"isolate",
 						"overflow-y-auto",
 						"overflow-x-clip",
 						"snap-y",
@@ -301,6 +309,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-snap[vertical-center]",
+						"isolate",
 						"overflow-y-auto",
 						"overflow-x-clip",
 						"snap-y",
@@ -316,6 +325,7 @@ export const ContainerCls = PicoCls.extend(
 				{
 					root: what.css([
 						"Container-root-snap[vertical-end]",
+						"isolate",
 						"overflow-y-auto",
 						"overflow-x-clip",
 						"snap-y",
