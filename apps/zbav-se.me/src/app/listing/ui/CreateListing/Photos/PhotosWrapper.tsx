@@ -76,29 +76,26 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 						scroller: containerRef.current,
 						start: "top bottom",
 						end: "bottom top",
-						scrub: 0.1,
+						scrub: true,
 					},
 				})
 					.fromTo(
 						el,
 						{
-							opacity: 0.25,
-							scale: 0.85,
-							rotateZ: 4,
-							y: -64,
+							opacity: 0.9,
+							scale: 0.95,
+							x: 16,
 						},
 						{
 							opacity: 1,
 							scale: 1,
-							rotateZ: 0,
-							y: 0,
+							x: 0,
 						},
 					)
 					.to(el, {
-						opacity: 0.25,
-						scale: 0.85,
-						rotateZ: -4,
-						y: 64,
+						opacity: 0.9,
+						scale: 0.95,
+						x: 16,
 					});
 			});
 
@@ -130,9 +127,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			<Container
 				ref={containerRef}
 				orientation="vertical-full"
-				// snap="vertical-start"
 				overflow={"vertical"}
-				// gap="xs"
 			>
 				{pages.map((_, slot) => {
 					const disabled = slot > 0 && value[slot - 1] === null;
