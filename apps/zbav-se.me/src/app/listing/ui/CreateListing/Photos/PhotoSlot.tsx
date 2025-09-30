@@ -10,6 +10,7 @@ import {
 	useState,
 } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
+import { anim, useAnim } from "~/app/ui/gsap";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 
 function useObjectUrl(file: File | undefined) {
@@ -62,6 +63,9 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	...props
 }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
+	const containerRef = useRef<HTMLDivElement>(null);
+	const sheetRef = useRef<HTMLDivElement>(null);
+	const trashRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(value);
 
 	const pick = useCallback(() => {
@@ -100,8 +104,47 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		event.stopPropagation();
 	}, []);
 
+	/**
+	 * Animate trash out.
+	 */
+	useAnim(() => {
+		if (value) {
+			return;
+		}
+
+		anim.to(trashRef.current, {
+			autoAlpha: 0,
+			scale: 0.75,
+			y: -10,
+			duration: 0.15,
+		});
+	}, [
+		value,
+		slot,
+	]);
+
+	/**
+	 * Animate trash in.
+	 */
+	useAnim(() => {
+		if (!value) {
+			return;
+		}
+
+		anim.to(trashRef.current, {
+			autoAlpha: 1,
+			scale: 1,
+			y: 0,
+			duration: 0.15,
+		});
+	}, [
+		value,
+		slot,
+	]);
+
 	return (
 		<Container
+			ref={containerRef}
 			data-ui="PhotoSlot-root"
 			position="relative"
 			tweak={{
@@ -109,6 +152,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					root: {
 						class: [
 							"PhotoSlot-root",
+							value ? "PhotoSlot-has-value" : "PhotoSlot-empty",
 						],
 					},
 				},
@@ -124,38 +168,41 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				onChange={onChangeInput}
 			/>
 
-			{src && (
-				<Action
-					iconEnabled={TrashIcon}
-					onClick={(e) => {
+			<Action
+				ref={trashRef}
+				iconEnabled={TrashIcon}
+				onClick={(e) => {
+					stop(e);
+					onChange(undefined, slot);
+				}}
+				onKeyDown={(e) => {
+					if (e.key === "Enter" || e.key === " ") {
 						stop(e);
 						onChange(undefined, slot);
-					}}
-					onKeyDown={(e) => {
-						if (e.key === "Enter" || e.key === " ") {
-							stop(e);
-							onChange(undefined, slot);
-						}
-					}}
-					size={"md"}
-					tone={"danger"}
-					border={false}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"absolute",
-									"top-8",
-									"right-1/2",
-									"translate-x-1/2",
-								],
-							},
+					}
+				}}
+				size={"md"}
+				tone={"danger"}
+				border={false}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"absolute",
+								"top-8",
+								"right-1/2",
+								"translate-x-1/2",
+								"transition-none",
+								"z-10",
+								value ? "opacity-100" : "opacity-0",
+							],
 						},
-					}}
-				/>
-			)}
+					},
+				}}
+			/>
 
 			<Sheet
+				ref={sheetRef}
 				onClick={pick}
 				onKeyDown={onKeyDown}
 				style={{
