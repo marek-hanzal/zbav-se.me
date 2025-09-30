@@ -1,19 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	Button,
-	ColumnLayout,
-	ls,
-	Scrollable,
-	Tx,
-	UserIcon,
-} from "@use-pico/client";
+import { Button, Container, ls, Tx, UserIcon } from "@use-pico/client";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
 export const Route = createFileRoute("/$locale/n/user")({
 	component() {
 		return (
-			<ColumnLayout>
+			<Container layout={"vertical"}>
 				<Title icon={UserIcon}>
 					<Tx
 						label={"User (title)"}
@@ -22,7 +15,7 @@ export const Route = createFileRoute("/$locale/n/user")({
 					/>
 				</Title>
 
-				<Scrollable layout="grid">
+				<Container height={"full"}>
 					<Button
 						onClick={() => {
 							ls.remove("intro");
@@ -31,10 +24,10 @@ export const Route = createFileRoute("/$locale/n/user")({
 					>
 						<Tx label={"Reset tours (button)"} />
 					</Button>
-				</Scrollable>
+				</Container>
 
 				<Nav active="user" />
-			</ColumnLayout>
+			</Container>
 		);
 	},
 });

@@ -1,19 +1,19 @@
 import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
-    createRootRouteWithContext,
-    HeadContent,
-    Outlet,
-    Scripts,
+	createRootRouteWithContext,
+	HeadContent,
+	Outlet,
+	Scripts,
 } from "@tanstack/react-router";
-import { PicoCls } from "@use-pico/client";
-import { ClsProvider } from "@use-pico/cls";
-import { Container } from "~/app/ui/container/Container";
+import { Container, PicoCls } from "@use-pico/client";
+import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 }>()({
+	ssr: false,
 	head: () => ({
 		meta: [
 			{
@@ -43,24 +43,27 @@ export const Route = createRootRouteWithContext<{
 				<head>
 					<HeadContent />
 				</head>
+
 				<body>
-					<ClsProvider value={PicoCls.use(ThemeCls)}>
+					<TokenProvider cls={PicoCls.use(ThemeCls)}>
 						<QueryClientProvider client={queryClient}>
 							<Container
 								height="dvh"
 								width="dvw"
-								tweak={({ what }) => ({
-									slot: what.slot({
-										root: what.token([
-											"tone.primary.dark.bg",
-										]),
-									}),
-								})}
+								tweak={{
+									slot: {
+										root: {
+											token: [
+												"tone.primary.dark.bg",
+											],
+										},
+									},
+								}}
 							>
 								<Outlet />
 							</Container>
 						</QueryClientProvider>
-					</ClsProvider>
+					</TokenProvider>
 
 					<Scripts />
 				</body>

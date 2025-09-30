@@ -1,6 +1,5 @@
 import { Data } from "@use-pico/client";
 import type { FC } from "react";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { CategoryList } from "~/app/category-group/ui/CategoryList";
 
@@ -19,7 +18,7 @@ export const CategoryListWrapper: FC<CategoryListWrapper.Props> = () => {
 	});
 
 	return (
-		<Data<CategoryGroupSchema.Type[], typeof categoryListQuery>
+		<Data
 			result={categoryListQuery}
 			renderSuccess={({ data }) => <CategoryList list={data} />}
 		/>

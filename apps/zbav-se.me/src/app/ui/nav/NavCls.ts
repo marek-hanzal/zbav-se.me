@@ -1,30 +1,27 @@
-import type { Cls } from "@use-pico/cls";
+import { type Cls, contract } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
-export const NavCls = ThemeCls.extend(
-	{
-		tokens: [],
-		slot: [
-			"root",
-		],
-		variant: {},
-	},
-	({ what, def }) => ({
-		token: def.token({}),
-		rules: [
-			def.root({
-				root: what.css([
-					"grid",
-					"grid-cols-4",
-					"gap-2",
-					"items-center",
-					"justify-items-center",
-				]),
-			}),
-		],
-		defaults: def.defaults({}),
-	}),
-);
+export const NavCls = contract(ThemeCls.contract)
+	.slots([
+		"root",
+	])
+	.def()
+	.root({
+		root: {
+			class: [
+				"grid",
+				"grid-cols-4",
+				"gap-2",
+				"items-center",
+				"justify-items-center",
+			],
+		},
+	})
+	.defaults({
+		tone: "primary",
+		theme: "light",
+	})
+	.cls();
 
 export type NavCls = typeof NavCls;
 

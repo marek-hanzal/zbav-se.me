@@ -14,7 +14,7 @@ export namespace Nav {
 }
 
 export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
-	const slots = useCls(cls, tweak);
+	const { slots } = useCls(cls, tweak);
 	const feedId = useId();
 	const listingId = useId();
 	const bagId = useId();
@@ -79,7 +79,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					params={{
 						locale,
 					}}
-					tone={"inherit"}
+					tone={"unset"}
 				>
 					<Button
 						{...variants}
@@ -95,7 +95,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					params={{
 						locale,
 					}}
-					tone={"inherit"}
+					tone={"unset"}
 				>
 					<Button
 						{...variants}
@@ -111,7 +111,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					params={{
 						locale,
 					}}
-					tone={"inherit"}
+					tone={"unset"}
 				>
 					<Button
 						{...variants}
@@ -127,7 +127,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 					params={{
 						locale,
 					}}
-					tone={"inherit"}
+					tone={"unset"}
 				>
 					<Button
 						{...variants}

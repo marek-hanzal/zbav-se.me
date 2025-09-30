@@ -1,36 +1,25 @@
 import {
 	Action,
 	ArrowLeftIcon,
-	Snapper,
-	SnapperContent,
-	SnapperItem,
+	CheckIcon,
+	Container,
 	SnapperNav,
+	TagIcon,
 	Tour,
 	TourButton,
 	useSelection,
 } from "@use-pico/client";
-import type { Cls } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
-import { type FC, useCallback, useId, useMemo, useState } from "react";
+import { type FC, useCallback, useId, useMemo, useRef, useState } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
-import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/Category/CategoryGroup";
 import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
+import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
+import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
-import { TagIcon } from "~/app/ui/icon/TagIcon";
-import type { TitleCls } from "~/app/ui/title/TitleCls";
-import { PhotosWrapper } from "./CreateListing/Photos/PhotosWrapper";
-import { PriceWrapper } from "./CreateListing/Price/PriceWrapper";
-import { SubmitWrapper } from "./CreateListing/Submit/SubmitWrapper";
-
-const subtitleVariant: Cls.VariantsOf<TitleCls> = {
-	tone: "secondary",
-	size: "lg",
-};
 
 export namespace CreateListing {
 	export interface Props {
@@ -119,6 +108,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 		setIsTourOpen(false);
 	}, []);
 
+	const snapperRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<>
 			<TourButton
@@ -176,7 +167,10 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 				]}
 			/>
 
-			<Snapper orientation="horizontal">
+			<Container
+				layout="horizontal"
+				position={"relative"}
+			>
 				<SnapperNav
 					pages={[
 						{
@@ -215,18 +209,29 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						tone: "secondary",
 						size: "md",
 					})}
+					containerRef={snapperRef}
+					orientation={"horizontal"}
 				/>
 
-				<SnapperContent>
-					<SnapperItem>
-						<PhotosWrapper
-							count={photoCountLimit}
-							value={photos}
-							onChange={onChangePhotos}
-						/>
-					</SnapperItem>
+				<Container
+					ref={snapperRef}
+					layout={"horizontal-full"}
+					snap={"horizontal-start"}
+					gap={"md"}
+					round={"xl"}
+				>
+					<PhotosWrapper
+						count={photoCountLimit}
+						value={photos}
+						onChange={onChangePhotos}
+					/>
 
-					<SnapperItem>
+					<PriceWrapper />
+
+					<CategoryGroup selection={categoryGroupSelection} />
+				</Container>
+
+				{/* <SnapperItem>
 						<PriceWrapper subtitleVariant={subtitleVariant} />
 					</SnapperItem>
 
@@ -246,9 +251,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 							canSubmit={canSubmit}
 							categorySelection={categorySelection}
 						/>
-					</SnapperItem>
-				</SnapperContent>
-			</Snapper>
+					</SnapperItem> */}
+			</Container>
 		</>
 	);
 };

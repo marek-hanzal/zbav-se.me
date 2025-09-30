@@ -1,10 +1,9 @@
+import { Container, SnapperNav } from "@use-pico/client";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type FC, useMemo, useRef } from "react";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
-import { Container } from "~/app/ui/container/Container";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
-import { SnapperNav } from "~/app/ui/scroll/Snapper";
 
 export namespace PhotosWrapper {
 	export interface Props {
@@ -34,13 +33,24 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				{
 					length: count,
 				},
-				(_, index) => ({
-					id: `p-${index + 1}`,
-					icon: DotIcon,
-				}),
+				(_, index) =>
+					({
+						id: `p-${index + 1}`,
+						icon: DotIcon,
+						iconProps() {
+							return value[index]
+								? {
+										tone: "secondary",
+									}
+								: {
+										tone: "primary",
+									};
+						},
+					}) satisfies SnapperNav.Page,
 			),
 		[
 			count,
+			value,
 		],
 	);
 
@@ -49,9 +59,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 
 	useAnim(
 		() => {
-			const items = anim.utils.toArray<HTMLElement>(
-				"[data-ui='PhotoSlot-root']",
-			);
+			const items = anim.utils.toArray<HTMLElement>(".PhotoSlot-root");
 
 			ScrollTrigger.create({
 				scroller: containerRef.current,
@@ -111,10 +119,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 	);
 
 	return (
-		<Container
-			position="relative"
-			ref={rootRef}
-		>
+		<Container ref={rootRef}>
 			<SnapperNav
 				containerRef={containerRef}
 				pages={pages}
@@ -126,8 +131,9 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 
 			<Container
 				ref={containerRef}
-				orientation="vertical-full"
+				layout="vertical-full"
 				overflow={"vertical"}
+				gap={"md"}
 			>
 				{pages.map((_, slot) => {
 					const disabled = slot > 0 && value[slot - 1] === null;

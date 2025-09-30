@@ -2,10 +2,6 @@ import {
 	Data,
 	Icon,
 	Sheet,
-	Snapper,
-	SnapperContent,
-	SnapperItem,
-	SnapperNav,
 	SpinnerIcon,
 	Status,
 	Tx,
@@ -16,10 +12,7 @@ import type { FC } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
-import { TagIcon } from "~/app/ui/icon/TagIcon";
 
 export namespace Category {
 	export interface Props {
@@ -52,7 +45,7 @@ export const Category: FC<Category.Props> = ({
 	return (
 		<AnimatePresence mode={"wait"}>
 			{categoryGroupSelection.hasAny ? (
-				<Data<CategorySchema.Type[], typeof categoryQuery>
+				<Data
 					result={categoryQuery}
 					renderLoading={() => {
 						return (
@@ -93,8 +86,9 @@ export const Category: FC<Category.Props> = ({
 								}}
 								className="h-full"
 							>
-								<Snapper orientation={"vertical"}>
+								{/* <Container layout={"vertical-full"}>
 									<SnapperNav
+										orientation={"vertical"}
 										pages={data.map((item) => ({
 											id: item.id,
 											icon: DotIcon,
@@ -252,7 +246,7 @@ export const Category: FC<Category.Props> = ({
 											);
 										})}
 									</SnapperContent>
-								</Snapper>
+								</Container> */}
 							</motion.div>
 						);
 					}}

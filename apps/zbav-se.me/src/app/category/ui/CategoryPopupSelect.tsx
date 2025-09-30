@@ -32,12 +32,12 @@ export const CategoryPopupSelect: FC<CategoryPopupSelect.Props> = (props) => {
 					renderInline={({ entity }) => (
 						<Badge
 							key={`${entity.id}-inline`}
-							tweak={({ what }) => ({
-								variant: what.variant({
+							tweak={{
+								variant: {
 									size: "xs",
 									border: false,
-								}),
-							})}
+								},
+							}}
 						>
 							{entity.label}
 						</Badge>
@@ -45,11 +45,11 @@ export const CategoryPopupSelect: FC<CategoryPopupSelect.Props> = (props) => {
 					renderItem={({ entity }) => (
 						<Badge
 							key={`${entity.id}-item`}
-							tweak={({ what }) => ({
-								variant: what.variant({
+							tweak={{
+								variant: {
 									size: "xs",
-								}),
-							})}
+								},
+							}}
 						>
 							{entity.label}
 						</Badge>

@@ -5,7 +5,7 @@ import { AnimatePresence } from "motion/react";
 import { LogoAnimated } from "~/app/ui/LogoAnimated";
 import { routeTree } from "./_route";
 
-export const createRouter = () => {
+export const getRouter = () => {
 	const router = coolCreateRouter({
 		routeTree,
 		context: {
@@ -25,7 +25,6 @@ export const createRouter = () => {
 		defaultNotFoundComponent() {
 			return <div>4😞4</div>;
 		},
-		defaultSsr: false,
 		defaultPendingComponent() {
 			return (
 				<AnimatePresence mode={"wait"}>
@@ -51,6 +50,6 @@ export const createRouter = () => {
 
 declare module "@tanstack/react-router" {
 	interface Register {
-		router: ReturnType<typeof createRouter>;
+		router: ReturnType<typeof getRouter>;
 	}
 }

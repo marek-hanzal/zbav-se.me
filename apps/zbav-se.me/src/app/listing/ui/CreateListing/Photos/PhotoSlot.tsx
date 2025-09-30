@@ -1,4 +1,4 @@
-import { Action, Sheet, Status, TrashIcon, Tx } from "@use-pico/client";
+import { Action, Container, Status, TrashIcon, Tx } from "@use-pico/client";
 import {
 	type ChangeEvent,
 	type FC,
@@ -9,7 +9,7 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { Container } from "~/app/ui/container/Container";
+import { Sheet } from "~/app/sheet/Sheet";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 
 function useObjectUrl(file: File | null) {
@@ -100,34 +100,19 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		event.stopPropagation();
 	}, []);
 
-	const rootRef = useRef<HTMLDivElement>(null);
-
-	// useAnim(
-	// 	() => {
-	// 		anim.from(rootRef.current, {
-	// 			scrollTrigger: {
-	// 				trigger: rootRef.current,
-	// 				start: "top bottom",
-	// 				end: "bottom top",
-	// 				toggleActions: "restart pause restart pause",
-	// 				scrub: true,
-	// 				markers: true,
-	// 			},
-	// 			x: 64,
-	// 			rotation: 90,
-	// 			opacity: 0,
-	// 			duration: 0.5,
-	// 		});
-	// 	},
-	// 	{
-	// 		scope: rootRef,
-	// 	},
-	// );
-
 	return (
 		<Container
 			data-ui="PhotoSlot-root"
 			position="relative"
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"PhotoSlot-root",
+						],
+					},
+				},
+			}}
 		>
 			<input
 				data-ui="PhotoSlot-input"
@@ -155,16 +140,18 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					size={"md"}
 					tone={"danger"}
 					border={false}
-					tweak={({ what }) => ({
-						slot: what.slot({
-							root: what.css([
-								"absolute",
-								"top-8",
-								"right-1/2",
-								"translate-x-1/2",
-							]),
-						}),
-					})}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"absolute",
+									"top-8",
+									"right-1/2",
+									"translate-x-1/2",
+								],
+							},
+						},
+					}}
 				/>
 			)}
 

@@ -8,20 +8,16 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { createServerRootRoute } from '@tanstack/react-start/server'
-
 import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as ApiTrpcRouteImport } from './@routes/api/trpc'
 import { Route as LocaleNRouteImport } from './@routes/$locale/n'
 import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
 import { Route as LocaleNCreateRouteImport } from './@routes/$locale/n/create'
 import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
-import { ServerRoute as ApiTrpcServerRouteImport } from './@routes/api/trpc'
-
-const rootServerRouteImport = createServerRootRoute()
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -37,6 +33,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleRoute,
+} as any)
+const ApiTrpcRoute = ApiTrpcRouteImport.update({
+  id: '/api/trpc',
+  path: '/api/trpc',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleNRoute = LocaleNRouteImport.update({
   id: '/n',
@@ -63,16 +64,12 @@ const LocaleNBagRoute = LocaleNBagRouteImport.update({
   path: '/bag',
   getParentRoute: () => LocaleNRoute,
 } as any)
-const ApiTrpcServerRoute = ApiTrpcServerRouteImport.update({
-  id: '/api/trpc',
-  path: '/api/trpc',
-  getParentRoute: () => rootServerRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/n': typeof LocaleNRouteWithChildren
+  '/api/trpc': typeof ApiTrpcRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
@@ -82,6 +79,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
+  '/api/trpc': typeof ApiTrpcRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
@@ -93,6 +91,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/n': typeof LocaleNRouteWithChildren
+  '/api/trpc': typeof ApiTrpcRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
@@ -105,6 +104,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/n'
+    | '/api/trpc'
     | '/$locale/'
     | '/$locale/n/bag'
     | '/$locale/n/create'
@@ -114,6 +114,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$locale/n'
+    | '/api/trpc'
     | '/$locale'
     | '/$locale/n/bag'
     | '/$locale/n/create'
@@ -124,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/n'
+    | '/api/trpc'
     | '/$locale/'
     | '/$locale/n/bag'
     | '/$locale/n/create'
@@ -134,27 +136,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
-}
-export interface FileServerRoutesByFullPath {
-  '/api/trpc': typeof ApiTrpcServerRoute
-}
-export interface FileServerRoutesByTo {
-  '/api/trpc': typeof ApiTrpcServerRoute
-}
-export interface FileServerRoutesById {
-  __root__: typeof rootServerRouteImport
-  '/api/trpc': typeof ApiTrpcServerRoute
-}
-export interface FileServerRouteTypes {
-  fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/trpc'
-  fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/trpc'
-  id: '__root__' | '/api/trpc'
-  fileServerRoutesById: FileServerRoutesById
-}
-export interface RootServerRouteChildren {
-  ApiTrpcServerRoute: typeof ApiTrpcServerRoute
+  ApiTrpcRoute: typeof ApiTrpcRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -179,6 +161,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/api/trpc': {
+      id: '/api/trpc'
+      path: '/api/trpc'
+      fullPath: '/api/trpc'
+      preLoaderRoute: typeof ApiTrpcRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/$locale/n': {
       id: '/$locale/n'
@@ -217,17 +206,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-declare module '@tanstack/react-start/server' {
-  interface ServerFileRoutesByPath {
-    '/api/trpc': {
-      id: '/api/trpc'
-      path: '/api/trpc'
-      fullPath: '/api/trpc'
-      preLoaderRoute: typeof ApiTrpcServerRouteImport
-      parentRoute: typeof rootServerRouteImport
-    }
-  }
-}
 
 interface LocaleNRouteChildren {
   LocaleNBagRoute: typeof LocaleNBagRoute
@@ -262,13 +240,17 @@ const LocaleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
+  ApiTrpcRoute: ApiTrpcRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-const rootServerRouteChildren: RootServerRouteChildren = {
-  ApiTrpcServerRoute: ApiTrpcServerRoute,
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
 }
-export const serverRouteTree = rootServerRouteImport
-  ._addFileChildren(rootServerRouteChildren)
-  ._addFileTypes<FileServerRouteTypes>()

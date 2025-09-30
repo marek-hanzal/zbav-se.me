@@ -1,21 +1,22 @@
-import { Scrollable as CoolScrollable } from "@use-pico/client";
-import type { FC } from "react";
+import { Container, Fade } from "@use-pico/client";
+import { type FC, useRef } from "react";
 
 export namespace Scrollable {
-	export interface Props extends CoolScrollable.Props {}
+	export interface Props extends Container.Props {}
 }
 
 export const Scrollable: FC<Scrollable.Props> = (props) => {
+	const ref = useRef<HTMLDivElement>(null);
+
 	return (
-		<CoolScrollable
-			tweak={({ what }) => ({
-				token: {
-					"scrollable.fade.color": what.css([
-						"[--fade-color:var(--color-pink-900)]",
-					]),
-				},
-			})}
-			{...props}
-		/>
+		<Container ref={ref}>
+			<Fade scrollableRef={ref} />
+
+			<Container
+				layout={"vertical"}
+				overflow={"vertical"}
+				{...props}
+			/>
+		</Container>
 	);
 };

@@ -66,7 +66,7 @@ export namespace Logo {
 }
 
 export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
-	const slots = useCls(cls, tweak);
+	const { slots } = useCls(cls, tweak);
 
 	return (
 		<motion.div

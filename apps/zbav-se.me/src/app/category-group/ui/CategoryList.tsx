@@ -15,7 +15,7 @@ export const CategoryList: FC<CategoryList.Props> = ({
 	tweak,
 	list,
 }) => {
-	const slots = useCls(cls, tweak);
+	const { slots } = useCls(cls, tweak);
 
 	return (
 		<div className={slots.root()}>
@@ -24,16 +24,20 @@ export const CategoryList: FC<CategoryList.Props> = ({
 					key={item.id}
 					tone={"secondary"}
 					size={"xl"}
-					tweak={({ what }) => ({
-						slot: what.slot({
-							wrapper: what.css([
-								"w-full",
-							]),
-							root: what.css([
-								"w-full",
-							]),
-						}),
-					})}
+					tweak={{
+						slot: {
+							wrapper: {
+								class: [
+									"w-full",
+								],
+							},
+							root: {
+								class: [
+									"w-full",
+								],
+							},
+						},
+					}}
 					round={"xl"}
 				>
 					<Tx label={`Category group ${item.name}`} />

@@ -27,13 +27,17 @@ export const BaseTitle: FC<Title.Props> = ({
 	children,
 	...props
 }) => {
-	const slots = useCls(cls, tweak, ({ what }) => ({
-		variant: what.variant({
-			tone,
-			theme,
-			size,
-		}),
-	}));
+	const { slots } = useCls(
+		cls,
+		{
+			variant: {
+				tone,
+				theme,
+				size,
+			},
+		},
+		tweak,
+	);
 
 	return (
 		<div

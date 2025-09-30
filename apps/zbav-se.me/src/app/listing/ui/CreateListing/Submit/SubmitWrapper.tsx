@@ -40,7 +40,7 @@ export const SubmitWrapper: FC<SubmitWrapper.Props> = ({
 
 	return canSubmit ? (
 		<AnimatePresence mode={"wait"}>
-			<Data<CategorySchema.Type[], typeof categoryQuery>
+			<Data
 				result={categoryQuery}
 				renderLoading={() => {
 					return (

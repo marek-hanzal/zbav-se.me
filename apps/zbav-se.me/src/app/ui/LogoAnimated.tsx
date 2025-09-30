@@ -133,7 +133,7 @@ export const LogoAnimated: FC<LogoAnimated.Props> = ({
 	loop = true,
 	...props
 }) => {
-	const slots = useCls(cls, tweak);
+	const { slots } = useCls(cls, tweak);
 	const [animationState, setAnimationState] = useState<"visible" | "looped">(
 		loop ? "looped" : "visible",
 	);

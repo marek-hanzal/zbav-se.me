@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ColumnLayout, Scrollable, Tx } from "@use-pico/client";
+import { Container, Tx } from "@use-pico/client";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -7,7 +7,7 @@ import { Title } from "~/app/ui/title/Title";
 export const Route = createFileRoute("/$locale/n/bag")({
 	component() {
 		return (
-			<ColumnLayout>
+			<Container>
 				<Title icon={BagIcon}>
 					<Tx
 						label={"My Bag (title)"}
@@ -15,7 +15,10 @@ export const Route = createFileRoute("/$locale/n/bag")({
 						font={"bold"}
 					/>
 				</Title>
-				<Scrollable layout="grid">
+				<Container
+					layout={"vertical"}
+					overflow={"vertical"}
+				>
 					<h1>Et modi error aut dicta quibusdam. </h1>
 					<p>
 						Lorem ipsum dolor sit amet. Ut voluptas delectus et
@@ -242,9 +245,9 @@ export const Route = createFileRoute("/$locale/n/bag")({
 						saepeEst quisquam 33 veniam cumque 33 voluptatem
 						architecto qui doloremque incidunt et voluptatem quas.{" "}
 					</p>
-				</Scrollable>
+				</Container>
 				<Nav active="bag" />
-			</ColumnLayout>
+			</Container>
 		);
 	},
 });

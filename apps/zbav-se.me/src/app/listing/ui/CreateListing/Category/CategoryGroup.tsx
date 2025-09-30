@@ -1,23 +1,8 @@
-import {
-	Data,
-	Icon,
-	Sheet,
-	Snapper,
-	SnapperContent,
-	SnapperItem,
-	SnapperNav,
-	SpinnerIcon,
-	Status,
-	Tx,
-	type useSelection,
-} from "@use-pico/client";
+import { Data, Icon, SpinnerIcon, type useSelection } from "@use-pico/client";
 import { AnimatePresence, motion } from "motion/react";
 import type { FC } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { DotIcon } from "~/app/ui/icon/DotIcon";
-import { TagIcon } from "~/app/ui/icon/TagIcon";
 
 export namespace CategoryGroup {
 	export interface Props {
@@ -37,7 +22,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 
 	return (
 		<AnimatePresence mode={"wait"}>
-			<Data<CategoryGroupSchema.Type[], typeof categoryGroupQuery>
+			<Data
 				result={categoryGroupQuery}
 				renderLoading={() => {
 					return (
@@ -78,7 +63,7 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 							}}
 							className="h-full"
 						>
-							<Snapper orientation={"vertical"}>
+							{/* <Container layout={"vertical"}>
 								<SnapperNav
 									pages={data.map((item) => ({
 										id: item.id,
@@ -93,9 +78,13 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 										size: "xs",
 										tone: "secondary",
 									})}
+									orientation={"vertical"}
 								/>
 
-								<SnapperContent>
+								<Container
+									layout={"vertical-full"}
+									overflow={"vertical"}
+								>
 									{data.map((item) => {
 										const isSelected = selection.isSelected(
 											item.id,
@@ -231,8 +220,8 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 											</SnapperItem>
 										);
 									})}
-								</SnapperContent>
-							</Snapper>
+								</Container>
+							</Container> */}
 						</motion.div>
 					);
 				}}

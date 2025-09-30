@@ -1,6 +1,7 @@
-import { Sheet, Tx } from "@use-pico/client";
+import { Tx } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import type { FC } from "react";
+import { Sheet } from "~/app/sheet/Sheet";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { Title } from "~/app/ui/title/Title";
 import type { TitleCls } from "~/app/ui/title/TitleCls";

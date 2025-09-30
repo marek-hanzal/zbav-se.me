@@ -1,44 +1,41 @@
-import type { Cls } from "@use-pico/cls";
+import { type Cls, contract } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
-export const LogoCls = ThemeCls.extend(
-	{
-		tokens: [],
-		slot: [
-			"root",
-			"logo",
-			"text",
-		],
-		variant: {},
-	},
-	({ what, def }) => ({
-		token: def.token({}),
-		rules: [
-			def.root({
-				root: what.css([]),
-				logo: what.both(
-					[
-						"font-limelight",
-						"text-4xl",
-					],
-					[
-						"tone.primary.dark.text",
-					],
-				),
-				text: what.both(
-					[
-						"text-xl",
-						"font-bold",
-					],
-					[
-						"tone.link.dark.text",
-					],
-				),
-			}),
-		],
-		defaults: def.defaults({}),
-	}),
-);
+export const LogoCls = contract(ThemeCls.contract)
+	.slots([
+		"root",
+		"logo",
+		"text",
+	])
+	.def()
+	.root({
+		root: {
+			class: [],
+		},
+		logo: {
+			class: [
+				"font-limelight",
+				"text-4xl",
+			],
+			token: [
+				"tone.primary.dark.text",
+			],
+		},
+		text: {
+			class: [
+				"text-xl",
+				"font-bold",
+			],
+			token: [
+				"tone.link.dark.text",
+			],
+		},
+	})
+	.defaults({
+		tone: "primary",
+		theme: "light",
+	})
+	.cls();
 
 export type LogoCls = typeof LogoCls;
 

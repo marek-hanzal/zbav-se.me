@@ -1,30 +1,26 @@
-import type { Cls } from "@use-pico/cls";
+import { type Cls, contract } from "@use-pico/cls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
-export const CategoryListCls = ThemeCls.extend(
-	{
-		tokens: [],
-		slot: [
-			"root",
-			"item",
-		],
-
-		variant: {},
-	},
-	({ what, def }) => ({
-		token: def.token({}),
-		rules: [
-			def.root({
-				root: what.css([
-					"flex",
-					"flex-col",
-					"gap-2",
-				]),
-			}),
-		],
-		defaults: def.defaults({}),
-	}),
-);
+export const CategoryListCls = contract(ThemeCls.contract)
+	.slots([
+		"root",
+		"item",
+	])
+	.def()
+	.root({
+		root: {
+			class: [
+				"flex",
+				"flex-col",
+				"gap-2",
+			],
+		},
+	})
+	.defaults({
+		tone: "primary",
+		theme: "light",
+	})
+	.cls();
 
 export type CategoryListCls = typeof CategoryListCls;
 

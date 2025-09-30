@@ -19,10 +19,9 @@ export default defineConfig({
 					enabled: false,
 				},
 			},
-			customViteReactPlugin: true,
-			tsr: {
-				generatedRouteTree: "./src/_route.ts",
-				routesDirectory: "./src/@routes",
+			router: {
+				generatedRouteTree: "./_route.ts",
+				routesDirectory: "./@routes",
 			},
 		}),
 		tla(),

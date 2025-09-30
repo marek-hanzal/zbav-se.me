@@ -81,11 +81,11 @@ export const CategoryTable: FC<CategoryTable.Props> = (props) => {
 
 						<ActionClick
 							icon={TrashIcon}
-							tweak={({ what }) => ({
-								variant: what.variant({
+							tweak={{
+								variant: {
 									tone: "danger",
-								}),
-							})}
+								},
+							}}
 						>
 							<Tx label={"Remove all"} />
 						</ActionClick>
