@@ -62,11 +62,14 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	onChange,
 	...props
 }) => {
+	const valueRef = useRef(value);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const sheetRef = useRef<HTMLDivElement>(null);
 	const trashRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(value);
+
+	const [transition, setTransition] = useState<"in" | "out" | "none">("none");
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
@@ -105,42 +108,93 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	}, []);
 
 	/**
-	 * Animate trash out.
+	 * Determine the transition to use.
 	 */
-	useAnim(() => {
-		if (value) {
-			return;
+	useEffect(() => {
+		if (valueRef.current === value) {
+			setTransition("none");
+		} else if (valueRef.current && !value) {
+			setTransition("out");
+		} else if (!valueRef.current && value) {
+			setTransition("in");
 		}
 
-		anim.to(trashRef.current, {
-			autoAlpha: 0,
-			scale: 0.75,
-			y: -10,
-			duration: 0.15,
-		});
+		valueRef.current = value;
 	}, [
 		value,
-		slot,
 	]);
+
+	useAnim(
+		() => {
+			if (transition === "none") {
+				anim.set(trashRef.current, {
+					autoAlpha: 0,
+					scale: 0.75,
+				});
+			}
+		},
+		{
+			dependencies: [
+				transition,
+			],
+		},
+	);
+
+	/**
+	 * Animate trash out.
+	 */
+	useAnim(
+		() => {
+			if (transition === "out") {
+				anim.to(trashRef.current, {
+					autoAlpha: 0,
+					scale: 0.75,
+					y: -128,
+					duration: 0.25,
+				});
+
+				anim.timeline({
+					defaults: {
+						duration: 1.25,
+					},
+				})
+					.to(sheetRef.current, {
+						scale: 0.95,
+						opacity: 0,
+					})
+					.to(sheetRef.current, {
+						scale: 1,
+						opacity: 1,
+					});
+			}
+		},
+		{
+			dependencies: [
+				transition,
+			],
+		},
+	);
 
 	/**
 	 * Animate trash in.
 	 */
-	useAnim(() => {
-		if (!value) {
-			return;
-		}
-
-		anim.to(trashRef.current, {
-			autoAlpha: 1,
-			scale: 1,
-			y: 0,
-			duration: 0.15,
-		});
-	}, [
-		value,
-		slot,
-	]);
+	useAnim(
+		() => {
+			if (transition === "in") {
+				anim.to(trashRef.current, {
+					autoAlpha: 1,
+					scale: 1,
+					y: 0,
+					duration: 0.25,
+				});
+			}
+		},
+		{
+			dependencies: [
+				transition,
+			],
+		},
+	);
 
 	return (
 		<Container
@@ -194,7 +248,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								"translate-x-1/2",
 								"transition-none",
 								"z-10",
-								value ? "opacity-100" : "opacity-0",
 							],
 						},
 					},
