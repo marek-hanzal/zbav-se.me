@@ -143,7 +143,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 							key={`photo-${slot + 1}`}
 							slot={slot}
 							disabled={disabled}
-							value={value[slot] ?? null}
+							value={value[slot]}
 							onChange={onChange}
 						/>
 					);

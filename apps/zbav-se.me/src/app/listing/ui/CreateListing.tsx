@@ -39,7 +39,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 			{
 				length: photoCountLimit,
 			},
-			() => null,
+			() => undefined,
 		),
 	);
 	const categoryGroupSelection = useSelection<CategoryGroupSchema.Type>({
@@ -93,7 +93,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 				);
 
 				while (compact.length < photoCountLimit) {
-					compact.push(null);
+					compact.push(undefined);
 				}
 
 				return compact;

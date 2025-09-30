@@ -12,7 +12,7 @@ import {
 import { Sheet } from "~/app/sheet/Sheet";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 
-function useObjectUrl(file: File | null) {
+function useObjectUrl(file: File | undefined) {
 	const [url, setUrl] = useState<string | null>(null);
 
 	useEffect(() => {
@@ -43,7 +43,7 @@ function useObjectUrl(file: File | null) {
 }
 
 export namespace PhotoSlot {
-	export type Value = File | null;
+	export type Value = File | undefined;
 	export type OnChangeFn = (file: Value, slot: number) => void;
 
 	export interface Props extends Omit<Sheet.Props, "slot" | "onChange"> {
@@ -129,12 +129,12 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					iconEnabled={TrashIcon}
 					onClick={(e) => {
 						stop(e);
-						onChange(null, slot);
+						onChange(undefined, slot);
 					}}
 					onKeyDown={(e) => {
 						if (e.key === "Enter" || e.key === " ") {
 							stop(e);
-							onChange(null, slot);
+							onChange(undefined, slot);
 						}
 					}}
 					size={"md"}
