@@ -69,6 +69,8 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const trashRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(img);
 
+	const sheetDuration = 0.15;
+
 	const [transition, setTransition] = useState<
 		"in" | "out" | "none" | "update"
 	>("none");
@@ -120,7 +122,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		} else if (!img && value) {
 			setTransition("in");
 		} else if (img && value && img !== value) {
-			console.log("update");
 			setTransition("update");
 		}
 	}, [
@@ -131,10 +132,18 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	useAnim(
 		() => {
 			if (transition === "none") {
-				anim.set(trashRef.current, {
-					autoAlpha: 0,
-					scale: 0.75,
-				});
+				anim.set(
+					trashRef.current,
+					img
+						? {
+								autoAlpha: 1,
+								scale: 1,
+							}
+						: {
+								autoAlpha: 0,
+								scale: 0.75,
+							},
+				);
 			}
 		},
 		{
@@ -158,13 +167,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 
 				anim.timeline({
 					defaults: {
-						duration: 0.15,
+						duration: sheetDuration,
 					},
 				})
 					.to(sheetRef.current, {
-						scale: 0.95,
+						scale: 0.98,
 						opacity: 0,
-						x: "-25%",
+						x: "-5%",
 						onComplete() {
 							setImg(undefined);
 						},
@@ -197,13 +206,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 
 				anim.timeline({
 					defaults: {
-						duration: 0.15,
+						duration: sheetDuration,
 					},
 				})
 					.to(sheetRef.current, {
-						scale: 0.95,
+						scale: 0.98,
 						opacity: 0,
-						x: "25%",
+						x: "5%",
 						onComplete() {
 							setImg(value);
 						},
@@ -228,7 +237,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 			if (transition === "update") {
 				anim.timeline({
 					defaults: {
-						duration: 0.15,
+						duration: sheetDuration,
 					},
 				})
 					.to(sheetRef.current, {
