@@ -69,7 +69,9 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const trashRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(img);
 
-	const [transition, setTransition] = useState<"in" | "out" | "none">("none");
+	const [transition, setTransition] = useState<
+		"in" | "out" | "none" | "update"
+	>("none");
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
@@ -117,6 +119,9 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 			setTransition("out");
 		} else if (!img && value) {
 			setTransition("in");
+		} else if (img && value && img !== value) {
+			console.log("update");
+			setTransition("update");
 		}
 	}, [
 		value,
@@ -218,6 +223,37 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		},
 	);
 
+	useAnim(
+		() => {
+			if (transition === "update") {
+				anim.timeline({
+					defaults: {
+						duration: 0.15,
+					},
+				})
+					.to(sheetRef.current, {
+						scale: 0.95,
+						opacity: 0,
+						x: "25%",
+						onComplete() {
+							setImg(value);
+						},
+					})
+					.to(sheetRef.current, {
+						scale: 1,
+						opacity: 1,
+						x: 0,
+					});
+			}
+		},
+		{
+			dependencies: [
+				transition,
+				value,
+			],
+		},
+	);
+
 	return (
 		<Container
 			ref={containerRef}
@@ -228,7 +264,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					root: {
 						class: [
 							"PhotoSlot-root",
-							value ? "PhotoSlot-has-value" : "PhotoSlot-empty",
 						],
 					},
 				},

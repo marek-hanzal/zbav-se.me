@@ -52,7 +52,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 	const [isTourOpen, setIsTourOpen] = useState(false);
 
 	const hasPhotos = useMemo(() => {
-		return photos.some((p) => p !== null);
+		return photos.some((p) => !!p);
 	}, [
 		photos,
 	]);
