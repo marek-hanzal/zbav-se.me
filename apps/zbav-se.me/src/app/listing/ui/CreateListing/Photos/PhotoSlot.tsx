@@ -62,12 +62,12 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	onChange,
 	...props
 }) => {
-	const valueRef = useRef(value);
+	const [img, setImg] = useState(value);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const sheetRef = useRef<HTMLDivElement>(null);
 	const trashRef = useRef<HTMLDivElement>(null);
-	const src = useObjectUrl(value);
+	const src = useObjectUrl(img);
 
 	const [transition, setTransition] = useState<"in" | "out" | "none">("none");
 
@@ -111,17 +111,16 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	 * Determine the transition to use.
 	 */
 	useEffect(() => {
-		if (valueRef.current === value) {
+		if (img === value) {
 			setTransition("none");
-		} else if (valueRef.current && !value) {
+		} else if (img && !value) {
 			setTransition("out");
-		} else if (!valueRef.current && value) {
+		} else if (!img && value) {
 			setTransition("in");
 		}
-
-		valueRef.current = value;
 	}, [
 		value,
+		img,
 	]);
 
 	useAnim(
@@ -141,7 +140,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	);
 
 	/**
-	 * Animate trash out.
+	 * Animate out.
 	 */
 	useAnim(
 		() => {
@@ -149,22 +148,26 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				anim.to(trashRef.current, {
 					autoAlpha: 0,
 					scale: 0.75,
-					y: -128,
 					duration: 0.25,
 				});
 
 				anim.timeline({
 					defaults: {
-						duration: 1.25,
+						duration: 0.15,
 					},
 				})
 					.to(sheetRef.current, {
 						scale: 0.95,
 						opacity: 0,
+						x: "-25%",
+						onComplete() {
+							setImg(undefined);
+						},
 					})
 					.to(sheetRef.current, {
 						scale: 1,
 						opacity: 1,
+						x: 0,
 					});
 			}
 		},
@@ -176,7 +179,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	);
 
 	/**
-	 * Animate trash in.
+	 * Animate in.
 	 */
 	useAnim(
 		() => {
@@ -184,14 +187,33 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				anim.to(trashRef.current, {
 					autoAlpha: 1,
 					scale: 1,
-					y: 0,
 					duration: 0.25,
 				});
+
+				anim.timeline({
+					defaults: {
+						duration: 0.15,
+					},
+				})
+					.to(sheetRef.current, {
+						scale: 0.95,
+						opacity: 0,
+						x: "25%",
+						onComplete() {
+							setImg(value);
+						},
+					})
+					.to(sheetRef.current, {
+						scale: 1,
+						opacity: 1,
+						x: 0,
+					});
 			}
 		},
 		{
 			dependencies: [
 				transition,
+				value,
 			],
 		},
 	);
@@ -248,6 +270,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								"translate-x-1/2",
 								"transition-none",
 								"z-10",
+								img ? "opacity-0" : "opacity-100",
 							],
 						},
 					},

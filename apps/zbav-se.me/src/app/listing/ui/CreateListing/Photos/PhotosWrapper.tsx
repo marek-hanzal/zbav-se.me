@@ -136,7 +136,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				gap={"md"}
 			>
 				{pages.map((_, slot) => {
-					const disabled = slot > 0 && value[slot - 1] === null;
+					const disabled = slot > 0 && !value[slot - 1];
 
 					return (
 						<PhotoSlot
