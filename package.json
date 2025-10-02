@@ -18,12 +18,12 @@
 		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.4",
+		"@biomejs/biome": "2.2.5",
 		"dotenv-cli": "10.0.0",
 		"npm-run-all2": "8.0.4",
 		"syncpack": "13.0.4",
 		"turbo": "2.5.8",
-		"typescript": "^5.9.2"
+		"typescript": "^5.9.3"
 	},
 	"license": "MIT",
 	"repository": "marek-hanzal/zbav-se.me.git",

@@ -1,4 +1,11 @@
-import { Action, Container, Status, TrashIcon, Tx } from "@use-pico/client";
+import {
+	Action,
+	Container,
+	Status,
+	TrashIcon,
+	Tx,
+	useSetUnset,
+} from "@use-pico/client";
 import {
 	type ChangeEvent,
 	type FC,
@@ -69,11 +76,11 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const trashRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(img);
 
-	const sheetDuration = 0.15;
+	const sheetDuration = 0.2;
 
-	const [transition, setTransition] = useState<
-		"in" | "out" | "none" | "update"
-	>("none");
+	const [, transition] = useSetUnset({
+		value,
+	});
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
@@ -111,27 +118,9 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		event.stopPropagation();
 	}, []);
 
-	/**
-	 * Determine the transition to use.
-	 */
-	useEffect(() => {
-		if (img === value) {
-			setTransition("none");
-		} else if (img && !value) {
-			setTransition("out");
-		} else if (!img && value) {
-			setTransition("in");
-		} else if (img && value && img !== value) {
-			setTransition("update");
-		}
-	}, [
-		value,
-		img,
-	]);
-
 	useAnim(
 		() => {
-			if (transition === "none") {
+			if (transition === "mount") {
 				anim.set(
 					trashRef.current,
 					img
@@ -158,7 +147,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	 */
 	useAnim(
 		() => {
-			if (transition === "out") {
+			if (transition === "unset") {
 				anim.to(trashRef.current, {
 					autoAlpha: 0,
 					scale: 0.75,
@@ -197,7 +186,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	 */
 	useAnim(
 		() => {
-			if (transition === "in") {
+			if (transition === "set") {
 				anim.to(trashRef.current, {
 					autoAlpha: 1,
 					scale: 1,
@@ -234,7 +223,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 
 	useAnim(
 		() => {
-			if (transition === "update") {
+			if (transition === "change") {
 				anim.timeline({
 					defaults: {
 						duration: sheetDuration,
