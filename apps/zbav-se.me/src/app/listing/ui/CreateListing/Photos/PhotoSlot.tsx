@@ -322,6 +322,8 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				}}
 				{...props}
 			>
+				{props.disabled ? "disabled" : "enabled"}
+
 				{src ? null : (
 					<Status
 						icon={PhotoIcon}

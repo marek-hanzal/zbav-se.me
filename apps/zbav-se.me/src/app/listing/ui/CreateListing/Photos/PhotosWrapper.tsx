@@ -54,6 +54,10 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 		],
 	);
 
+	console.log("PhotosWrapper re-render", {
+		value,
+	});
+
 	const rootRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 

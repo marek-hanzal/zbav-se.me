@@ -89,7 +89,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 				next[slot] = file;
 
 				const compact: PhotoSlot.Value[] = next.filter(
-					(f): f is File => f !== null,
+					(f): f is File => !!f,
 				);
 
 				while (compact.length < photoCountLimit) {
@@ -226,9 +226,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						onChange={onChangePhotos}
 					/>
 
-					<PriceWrapper />
-
 					<CategoryGroup selection={categoryGroupSelection} />
+
+					<PriceWrapper />
 				</Container>
 
 				{/* <SnapperItem>
