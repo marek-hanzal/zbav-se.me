@@ -76,7 +76,8 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const trashRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(img);
 
-	const sheetDuration = 0.2;
+	const sheetDuration = 0.25;
+	const sheetX = "50%";
 	const sheetOpacity = props.disabled ? 0.5 : 1;
 
 	const [, transition] = useSetUnset({
@@ -180,10 +181,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					.to(sheetRef.current, {
 						scale: 0.98,
 						opacity: 0,
-						x: "-5%",
+						x: `-${sheetX}`,
 						onComplete() {
 							setImg(undefined);
 						},
+					})
+					.set(sheetRef.current, {
+						x: sheetX,
 					})
 					.to(sheetRef.current, {
 						scale: 1,
@@ -219,10 +223,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					.to(sheetRef.current, {
 						scale: 0.98,
 						opacity: 0,
-						x: "5%",
+						x: sheetX,
 						onComplete() {
 							setImg(value);
 						},
+					})
+					.set(sheetRef.current, {
+						x: `-${sheetX}`,
 					})
 					.to(sheetRef.current, {
 						scale: 1,
@@ -250,10 +257,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					.to(sheetRef.current, {
 						scale: 0.95,
 						opacity: 0,
-						x: "25%",
+						x: `-${sheetX}`,
 						onComplete() {
 							setImg(value);
 						},
+					})
+					.set(sheetRef.current, {
+						x: sheetX,
 					})
 					.to(sheetRef.current, {
 						scale: 1,
