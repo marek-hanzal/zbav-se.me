@@ -77,6 +77,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const src = useObjectUrl(img);
 
 	const sheetDuration = 0.2;
+	const sheetOpacity = props.disabled ? 0.5 : 1;
 
 	const [, transition] = useSetUnset({
 		value,
@@ -133,11 +134,28 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								scale: 0.75,
 							},
 				);
+
+				anim.set(sheetRef.current, {
+					opacity: sheetOpacity,
+				});
 			}
 		},
 		{
 			dependencies: [
 				transition,
+			],
+		},
+	);
+
+	useAnim(
+		() => {
+			anim.to(sheetRef.current, {
+				opacity: sheetOpacity,
+			});
+		},
+		{
+			dependencies: [
+				sheetOpacity,
 			],
 		},
 	);
@@ -169,7 +187,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					})
 					.to(sheetRef.current, {
 						scale: 1,
-						opacity: 1,
+						opacity: sheetOpacity,
 						x: 0,
 					});
 			}
@@ -208,7 +226,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					})
 					.to(sheetRef.current, {
 						scale: 1,
-						opacity: 1,
+						opacity: sheetOpacity,
 						x: 0,
 					});
 			}
@@ -239,7 +257,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					})
 					.to(sheetRef.current, {
 						scale: 1,
-						opacity: 1,
+						opacity: sheetOpacity,
 						x: 0,
 					});
 			}
@@ -322,8 +340,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				}}
 				{...props}
 			>
-				{props.disabled ? "disabled" : "enabled"}
-
 				{src ? null : (
 					<Status
 						icon={PhotoIcon}
