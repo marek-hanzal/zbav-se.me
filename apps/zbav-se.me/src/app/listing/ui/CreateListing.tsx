@@ -228,6 +228,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 
 					<CategoryGroup selection={categoryGroupSelection} />
 
+					{/* <Category categoryGroupSelection={categoryGroupSelection} categorySelection={caSe}/> */}
+
 					<PriceWrapper />
 				</Container>
 
