@@ -16,6 +16,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Sheet } from "~/app/sheet/Sheet";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
@@ -52,23 +53,23 @@ function useObjectUrl(file: File | undefined) {
 
 export namespace PhotoSlot {
 	export type Value = File | undefined;
-	export type OnChangeFn = (file: Value, slot: number) => void;
+	export type OnChangeFn = (slot: number, file: Value) => void;
 
 	export interface Props extends Omit<Sheet.Props, "slot" | "onChange"> {
 		slot: number;
 		camera?: boolean;
-		value: Value;
-		onChange: OnChangeFn;
 	}
 }
 
 export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	slot,
 	camera = false,
-	value,
-	onChange,
 	...props
 }) => {
+	const useCreateListingStore = useCreateListingContext();
+	const setPhoto = useCreateListingStore((store) => store.setPhoto);
+	const value = useCreateListingStore((store) => store.photos)[slot];
+
 	const [img, setImg] = useState(value);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -94,11 +95,11 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 			if (!file) {
 				return;
 			}
-			onChange(file, slot);
+			setPhoto(slot, file);
 			e.currentTarget.value = "";
 		},
 		[
-			onChange,
+			setPhoto,
 			slot,
 		],
 	);
@@ -310,12 +311,12 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				iconEnabled={TrashIcon}
 				onClick={(e) => {
 					stop(e);
-					onChange(undefined, slot);
+					setPhoto(slot, undefined);
 				}}
 				onKeyDown={(e) => {
 					if (e.key === "Enter" || e.key === " ") {
 						stop(e);
-						onChange(undefined, slot);
+						setPhoto(slot, undefined);
 					}
 				}}
 				size={"md"}

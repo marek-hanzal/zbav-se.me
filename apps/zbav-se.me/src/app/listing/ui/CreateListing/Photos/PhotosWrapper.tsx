@@ -1,44 +1,30 @@
 import { Container, SnapperNav } from "@use-pico/client";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type FC, useMemo, useRef } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
 
-export namespace PhotosWrapper {
-	export interface Props {
-		count: number;
-		/**
-		 * Array of photos - should be exactly count long.
-		 *
-		 * "null" represents an empty slot, but values should be ordered by "filled" first,
-		 * this component is only wrapper rendering what's on input.
-		 */
-		value: PhotoSlot.Value[];
-		/**
-		 * Reports back changed slots.
-		 */
-		onChange: PhotoSlot.OnChangeFn;
-	}
-}
+export const PhotosWrapper: FC = () => {
+	const useCreateListingStore = useCreateListingContext();
+	const photoCountLimit = useCreateListingStore(
+		(store) => store.photoCountLimit,
+	);
+	const photos = useCreateListingStore((store) => store.photos);
 
-export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
-	count,
-	value,
-	onChange,
-}) => {
 	const pages: SnapperNav.Page[] = useMemo(
 		() =>
 			Array.from(
 				{
-					length: count,
+					length: photoCountLimit,
 				},
 				(_, index) =>
 					({
 						id: `p-${index + 1}`,
 						icon: DotIcon,
 						iconProps() {
-							return value[index]
+							return photos[index]
 								? {
 										tone: "secondary",
 									}
@@ -49,14 +35,10 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 					}) satisfies SnapperNav.Page,
 			),
 		[
-			count,
-			value,
+			photoCountLimit,
+			photos,
 		],
 	);
-
-	console.log("PhotosWrapper re-render", {
-		value,
-	});
 
 	const rootRef = useRef<HTMLDivElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -68,7 +50,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 			ScrollTrigger.create({
 				scroller: containerRef.current,
 				snap: {
-					snapTo: 1 / (count - 1),
+					snapTo: 1 / (photoCountLimit - 1),
 					delay: 0,
 					duration: 0.25,
 					ease: "power2.inOut",
@@ -116,7 +98,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 		{
 			scope: rootRef,
 			dependencies: [
-				count,
+				photoCountLimit,
 				pages.length,
 			],
 		},
@@ -140,15 +122,13 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({
 				gap={"md"}
 			>
 				{pages.map((_, slot) => {
-					const disabled = slot > 0 && !value[slot - 1];
+					const disabled = slot > 0 && !photos[slot - 1];
 
 					return (
 						<PhotoSlot
 							key={`photo-${slot + 1}`}
 							slot={slot}
 							disabled={disabled}
-							value={value[slot]}
-							onChange={onChange}
 						/>
 					);
 				})}

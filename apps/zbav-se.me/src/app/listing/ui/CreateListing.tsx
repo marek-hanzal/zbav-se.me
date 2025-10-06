@@ -13,96 +13,59 @@ import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useMemo, useRef, useState } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/Category/CategoryGroup";
-import type { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
+import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 
-export namespace CreateListing {
-	export interface Props {
-		photoCountLimit: number;
-	}
-}
-
-export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
+export const CreateListing: FC = () => {
 	const photosId = useId();
 	const categoryGroupId = useId();
 	const categoryId = useId();
 	const priceId = useId();
 	const submitId = useId();
 
-	const [photos, setPhotos] = useState<PhotoSlot.Value[]>(
-		Array.from(
-			{
-				length: photoCountLimit,
-			},
-			() => undefined,
-		),
+	const useCreateListingStore = useCreateListingContext();
+	const setCategoryGroup = useCreateListingStore(
+		(store) => store.setCategoryGroup,
 	);
+	const setCategory = useCreateListingStore((store) => store.setCategory);
+
 	const categoryGroupSelection = useSelection<CategoryGroupSchema.Type>({
 		mode: "multi",
+		onMulti: setCategoryGroup,
 	});
 	const categorySelection = useSelection<CategorySchema.Type>({
 		mode: "multi",
+		onMulti: setCategory,
 	});
+	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
-
-	const hasPhotos = useMemo(() => {
-		return photos.some((p) => !!p);
-	}, [
-		photos,
-	]);
-
-	const hasCategoryGroup = categoryGroupSelection.hasAny;
-	const hasCategory = categorySelection.hasAny;
 
 	const canSubmit = useMemo(() => {
 		if (!hasPhotos) {
 			return false;
 		}
 
-		if (!hasCategoryGroup) {
+		if (!categoryGroupSelection.hasAny) {
 			return false;
 		}
 
-		if (!hasCategory) {
+		if (!categorySelection.hasAny) {
 			return false;
 		}
 
 		return true;
 	}, [
 		hasPhotos,
-		hasCategoryGroup,
-		hasCategory,
+		categoryGroupSelection.hasAny,
+		categorySelection.hasAny,
 	]);
-
-	const onChangePhotos: PhotoSlot.OnChangeFn = useCallback(
-		(file, slot) => {
-			setPhotos((prev) => {
-				const next = [
-					...prev,
-				];
-				next[slot] = file;
-
-				const compact: PhotoSlot.Value[] = next.filter(
-					(f): f is File => !!f,
-				);
-
-				while (compact.length < photoCountLimit) {
-					compact.push(undefined);
-				}
-
-				return compact;
-			});
-		},
-		[
-			photoCountLimit,
-		],
-	);
 
 	const handleTourClose = useCallback(() => {
 		setIsTourOpen(false);
@@ -175,9 +138,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					pages={[
 						{
 							id: photosId,
-							icon: hasPhotos ? CheckIcon : PhotoIcon,
+							icon: hasPhotos() ? CheckIcon : PhotoIcon,
 							iconProps: () => ({
-								tone: hasPhotos ? "primary" : "secondary",
+								tone: hasPhotos() ? "primary" : "secondary",
 							}),
 						},
 						{
@@ -186,18 +149,24 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 						},
 						{
 							id: categoryGroupId,
-							icon: hasCategoryGroup ? CheckIcon : TagIcon,
+							icon: categoryGroupSelection.hasAny
+								? CheckIcon
+								: TagIcon,
 							iconProps: () => ({
-								tone: hasCategoryGroup
+								tone: categoryGroupSelection.hasAny
 									? "primary"
 									: "secondary",
 							}),
 						},
 						{
 							id: categoryId,
-							icon: hasCategory ? CheckIcon : "icon-[typcn--tag]",
+							icon: categorySelection.hasAny
+								? CheckIcon
+								: "icon-[typcn--tag]",
 							iconProps: () => ({
-								tone: hasCategory ? "primary" : "secondary",
+								tone: categorySelection.hasAny
+									? "primary"
+									: "secondary",
 							}),
 						},
 						{
@@ -220,17 +189,15 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					gap={"md"}
 					round={"xl"}
 				>
-					<PhotosWrapper
-						count={photoCountLimit}
-						value={photos}
-						onChange={onChangePhotos}
-					/>
+					<PhotosWrapper />
 
 					<CategoryGroup selection={categoryGroupSelection} />
 
 					{/* <Category categoryGroupSelection={categoryGroupSelection} categorySelection={caSe}/> */}
 
 					<PriceWrapper />
+
+					<SubmitWrapper canSubmit={canSubmit} />
 				</Container>
 
 				{/* <SnapperItem>
@@ -249,10 +216,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ photoCountLimit }) => {
 					</SnapperItem>
 
 					<SnapperItem>
-						<SubmitWrapper
-							canSubmit={canSubmit}
-							categorySelection={categorySelection}
-						/>
+						
 					</SnapperItem> */}
 			</Container>
 		</>
