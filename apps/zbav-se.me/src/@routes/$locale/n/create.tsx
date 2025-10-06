@@ -9,7 +9,6 @@ export const Route = createFileRoute("/$locale/n/create")({
 		return (
 			<Container
 				layout={"vertical-content-footer"}
-				square={"xs"}
 				gap={"xs"}
 			>
 				<CreateListingProvider photoCountLimit={10}>

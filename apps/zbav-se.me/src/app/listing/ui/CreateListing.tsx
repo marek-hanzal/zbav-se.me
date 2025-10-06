@@ -10,7 +10,7 @@ import {
 	useSelection,
 } from "@use-pico/client";
 import { translator } from "@use-pico/common";
-import { type FC, useCallback, useId, useMemo, useRef, useState } from "react";
+import { type FC, useCallback, useId, useRef, useState } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
@@ -46,26 +46,6 @@ export const CreateListing: FC = () => {
 	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
-
-	const canSubmit = useMemo(() => {
-		if (!hasPhotos) {
-			return false;
-		}
-
-		if (!categoryGroupSelection.hasAny) {
-			return false;
-		}
-
-		if (!categorySelection.hasAny) {
-			return false;
-		}
-
-		return true;
-	}, [
-		hasPhotos,
-		categoryGroupSelection.hasAny,
-		categorySelection.hasAny,
-	]);
 
 	const handleTourClose = useCallback(() => {
 		setIsTourOpen(false);
@@ -197,7 +177,7 @@ export const CreateListing: FC = () => {
 
 					<PriceWrapper />
 
-					<SubmitWrapper canSubmit={canSubmit} />
+					<SubmitWrapper />
 				</Container>
 
 				{/* <SnapperItem>

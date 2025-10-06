@@ -1,15 +1,13 @@
-import { Button, Sheet, Status, Tx } from "@use-pico/client";
+import { Badge, Button, Sheet, Status, Tx } from "@use-pico/client";
 import type { FC } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 
-export namespace SubmitWrapper {
-	export interface Props {
-		canSubmit: boolean;
-	}
-}
+export const SubmitWrapper: FC = () => {
+	const useCreateListingStore = useCreateListingContext();
+	const missing = useCreateListingStore((store) => store.missing);
 
-export const SubmitWrapper: FC<SubmitWrapper.Props> = ({ canSubmit }) => {
 	// const categoryQuery = withCategoryListQuery().useQuery(
 	// 	{
 	// 		filter: {
@@ -21,7 +19,7 @@ export const SubmitWrapper: FC<SubmitWrapper.Props> = ({ canSubmit }) => {
 	// 	},
 	// );
 
-	if (!canSubmit) {
+	if (missing().length > 0) {
 		return (
 			<Sheet
 				tone={"warning"}
@@ -37,6 +35,18 @@ export const SubmitWrapper: FC<SubmitWrapper.Props> = ({ canSubmit }) => {
 							tone={"warning"}
 							theme={"light"}
 						/>
+					}
+					textMessage={
+						<div className="inline-flex flex-row gap-2">
+							{missing().map((item) => (
+								<Badge
+									key={item}
+									tone="secondary"
+								>
+									{item}
+								</Badge>
+							))}
+						</div>
 					}
 					tone={"warning"}
 				/>

@@ -1,7 +1,6 @@
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter as coolCreateRouter } from "@tanstack/react-router";
 import { tvc } from "@use-pico/cls";
-import { AnimatePresence } from "motion/react";
 import { LogoAnimated } from "~/app/ui/LogoAnimated";
 import { routeTree } from "./_route";
 
@@ -27,19 +26,17 @@ export const getRouter = () => {
 		},
 		defaultPendingComponent() {
 			return (
-				<AnimatePresence mode={"wait"}>
-					<div
-						className={tvc([
-							"fixed",
-							"inset-0",
-							"flex",
-							"items-center",
-							"justify-center",
-						])}
-					>
-						<LogoAnimated />
-					</div>
-				</AnimatePresence>
+				<div
+					className={tvc([
+						"fixed",
+						"inset-0",
+						"flex",
+						"items-center",
+						"justify-center",
+					])}
+				>
+					<LogoAnimated />
+				</div>
 			);
 		},
 		defaultPendingMs: 500,

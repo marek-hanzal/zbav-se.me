@@ -7,6 +7,8 @@ export namespace createListingStore {
 		photoCountLimit: number;
 	}
 
+	export type Missing = "photos" | "categoryGroup" | "category";
+
 	export interface Store {
 		photoCountLimit: number;
 		photos: (File | undefined)[];
@@ -18,6 +20,9 @@ export namespace createListingStore {
 		//
 		category: CategorySchema.Type[];
 		setCategory(category: CategorySchema.Type[]): void;
+		//
+		missing(): Missing[];
+		isValid(): boolean;
 	}
 }
 
@@ -68,5 +73,26 @@ export const createListingStore = ({
 			set({
 				category,
 			});
+		},
+		//
+		missing() {
+			const missing: createListingStore.Missing[] = [];
+
+			if (!get().hasPhotos()) {
+				missing.push("photos");
+			}
+
+			if (get().categoryGroup.length === 0) {
+				missing.push("categoryGroup");
+			}
+
+			if (get().category.length === 0) {
+				missing.push("category");
+			}
+
+			return missing;
+		},
+		isValid() {
+			return get().missing().length === 0;
 		},
 	}));

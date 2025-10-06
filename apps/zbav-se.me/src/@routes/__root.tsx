@@ -49,7 +49,7 @@ export const Route = createRootRouteWithContext<{
 						<QueryClientProvider client={queryClient}>
 							<Container
 								height="dvh"
-								width="dvw"
+								width="full"
 								tweak={{
 									slot: {
 										root: {
@@ -59,6 +59,7 @@ export const Route = createRootRouteWithContext<{
 										},
 									},
 								}}
+								square={"sm"}
 							>
 								<Outlet />
 							</Container>

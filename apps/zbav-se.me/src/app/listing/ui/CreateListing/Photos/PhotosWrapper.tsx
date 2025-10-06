@@ -105,7 +105,10 @@ export const PhotosWrapper: FC = () => {
 	);
 
 	return (
-		<Container ref={rootRef}>
+		<Container
+			ref={rootRef}
+			position={"relative"}
+		>
 			<SnapperNav
 				containerRef={containerRef}
 				pages={pages}
