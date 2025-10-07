@@ -14,7 +14,6 @@ import {
 	type KeyboardEvent,
 	type SyntheticEvent,
 	useCallback,
-	useEffect,
 	useRef,
 	useState,
 } from "react";
@@ -23,39 +22,10 @@ import { Sheet } from "~/app/sheet/Sheet";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { useChangeAnim } from "./useChangeAnim";
 import { useInitAnim } from "./useInitAnim";
+import { useObjectUrl } from "./useObjectUrl";
 import { useOpacityAnim } from "./useOpacityAnim";
 import { useSetAnim } from "./useSetAnim";
 import { useUnsetAnim } from "./useUnsetAnim";
-
-function useObjectUrl(file: File | undefined) {
-	const [url, setUrl] = useState<string | null>(null);
-
-	useEffect(() => {
-		setUrl((prev) => {
-			if (prev) {
-				URL.revokeObjectURL(prev);
-			}
-			if (!file) {
-				return null;
-			}
-			return URL.createObjectURL(file);
-		});
-	}, [
-		file,
-	]);
-
-	useEffect(() => {
-		return () => {
-			if (url) {
-				URL.revokeObjectURL(url);
-			}
-		};
-	}, [
-		url,
-	]);
-
-	return url;
-}
 
 export namespace PhotoSlot {
 	export type Value = File | undefined;
