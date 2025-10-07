@@ -35,7 +35,6 @@ export const useUnsetAnim = ({
 						spinnerRef.current,
 						{
 							autoAlpha: 1,
-							duration: 0.2,
 						},
 						0,
 					)
@@ -91,7 +90,6 @@ export const useUnsetAnim = ({
 						spinnerRef.current,
 						{
 							autoAlpha: 0,
-							duration: 0.2,
 						},
 						"finish",
 					);

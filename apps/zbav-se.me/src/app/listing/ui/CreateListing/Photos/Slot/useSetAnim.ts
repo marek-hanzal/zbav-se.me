@@ -37,7 +37,6 @@ export const useSetAnim = ({
 						spinnerRef.current,
 						{
 							autoAlpha: 1,
-							duration: 0.25,
 						},
 						0,
 					)
@@ -81,7 +80,6 @@ export const useSetAnim = ({
 						{
 							autoAlpha: 1,
 							scale: 1,
-							duration: 0.2,
 						},
 						"finish",
 					)
@@ -91,7 +89,6 @@ export const useSetAnim = ({
 						spinnerRef.current,
 						{
 							autoAlpha: 0,
-							duration: 0.2,
 						},
 						"finish",
 					);
