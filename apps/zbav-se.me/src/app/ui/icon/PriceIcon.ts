@@ -1,1 +1,1 @@
-export const PriceIcon = "icon-[solar--tag-price-outline]";
+export const PriceIcon = "icon-[material-symbols--money-bag-outline-rounded]";

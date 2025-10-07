@@ -4,7 +4,6 @@ import {
 	CheckIcon,
 	Container,
 	SnapperNav,
-	TagIcon,
 	Tour,
 	TourButton,
 } from "@use-pico/client";
@@ -16,6 +15,8 @@ import { CategoryGroup } from "~/app/listing/ui/CreateListing/CategoryGroup/Cate
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
+import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
+import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
@@ -28,11 +29,10 @@ export const CreateListing: FC = () => {
 	const submitId = useId();
 
 	const useCreateListingStore = useCreateListingContext();
-	const categoryGroupSelection = useCreateListingStore(
-		(store) => store.categoryGroup,
+	const hasCategoryGroup = useCreateListingStore(
+		(store) => store.hasCategoryGroup,
 	);
-	const categorySelection = useCreateListingStore((store) => store.category);
-
+	const hasCategory = useCreateListingStore((store) => store.hasCategory);
 	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
@@ -108,40 +108,32 @@ export const CreateListing: FC = () => {
 					pages={[
 						{
 							id: photosId,
-							icon: hasPhotos() ? CheckIcon : PhotoIcon,
+							icon: hasPhotos ? CheckIcon : PhotoIcon,
 							iconProps: () => ({
-								tone: hasPhotos() ? "primary" : "secondary",
+								tone: hasPhotos ? "primary" : "secondary",
+							}),
+						},
+						{
+							id: categoryGroupId,
+							icon: hasCategoryGroup
+								? CheckIcon
+								: CategoryGroupIcon,
+							iconProps: () => ({
+								tone: hasCategoryGroup
+									? "primary"
+									: "secondary",
+							}),
+						},
+						{
+							id: categoryId,
+							icon: hasCategory ? CheckIcon : CategoryIcon,
+							iconProps: () => ({
+								tone: hasCategory ? "primary" : "secondary",
 							}),
 						},
 						{
 							id: priceId,
 							icon: PriceIcon,
-						},
-						{
-							id: categoryGroupId,
-							icon:
-								categoryGroupSelection.length > 0
-									? CheckIcon
-									: TagIcon,
-							iconProps: () => ({
-								tone:
-									categoryGroupSelection.length > 0
-										? "primary"
-										: "secondary",
-							}),
-						},
-						{
-							id: categoryId,
-							icon:
-								categorySelection.length > 0
-									? CheckIcon
-									: "icon-[typcn--tag]",
-							iconProps: () => ({
-								tone:
-									categorySelection.length > 0
-										? "primary"
-										: "secondary",
-							}),
 						},
 						{
 							id: submitId,

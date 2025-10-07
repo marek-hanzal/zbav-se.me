@@ -1,3 +1,4 @@
+import { dedupe } from "@use-pico/common";
 import { create } from "zustand";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
@@ -13,23 +14,25 @@ export namespace createListingStore {
 		photoCountLimit: number;
 		photos: (File | undefined)[];
 		setPhoto(slot: number, photo: File | undefined): void;
-		hasPhotos(): boolean;
+		hasPhotos: boolean;
 		//
 		categoryGroup: CategoryGroupSchema.Type[];
 		setCategoryGroup(categoryGroup: CategoryGroupSchema.Type[]): void;
+		hasCategoryGroup: boolean;
 		//
 		category: CategorySchema.Type[];
 		setCategory(category: CategorySchema.Type[]): void;
+		hasCategory: boolean;
 		//
-		missing(): Missing[];
-		isValid(): boolean;
+		missing: Missing[];
+		isValid: boolean;
 	}
 }
 
 export const createListingStore = ({
 	photoCountLimit,
 }: createListingStore.Props) =>
-	create<createListingStore.Store>((set, get) => ({
+	create<createListingStore.Store>((set) => ({
 		photoCountLimit,
 		photos: Array.from(
 			{
@@ -38,7 +41,7 @@ export const createListingStore = ({
 			() => undefined,
 		),
 		setPhoto(slot, photo) {
-			set(({ photos: prev }) => {
+			set(({ photos: prev, missing }) => {
 				const next = [
 					...prev,
 				];
@@ -52,47 +55,70 @@ export const createListingStore = ({
 					compact.push(undefined);
 				}
 
+				const hasPhotos = compact.some((photo) => !!photo);
+				const $missing = dedupe<createListingStore.Missing[]>(
+					hasPhotos
+						? missing.filter((m) => m !== "photos")
+						: [
+								...missing,
+								"photos",
+							],
+				);
+
 				return {
 					photos: compact,
+					hasPhotos,
+					missing: $missing,
+					isValid: $missing.length === 0,
 				};
 			});
 		},
-		hasPhotos() {
-			return get().photos.some((photo) => !!photo);
-		},
+		hasPhotos: false,
 		//
 		categoryGroup: [],
 		setCategoryGroup(categoryGroup) {
-			set({
-				categoryGroup,
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					categoryGroup.length === 0
+						? [
+								...missing,
+								"categoryGroup",
+							]
+						: missing.filter((m) => m !== "categoryGroup"),
+				);
+
+				return {
+					categoryGroup,
+					hasCategoryGroup: categoryGroup.length > 0,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
 			});
 		},
+		hasCategoryGroup: false,
 		//
 		category: [],
 		setCategory(category) {
-			set({
-				category,
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					category.length === 0
+						? [
+								...missing,
+								"category",
+							]
+						: missing.filter((m) => m !== "category"),
+				);
+
+				return {
+					category,
+					hasCategory: category.length > 0,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
 			});
 		},
+		hasCategory: false,
 		//
-		missing() {
-			const missing: createListingStore.Missing[] = [];
-
-			if (!get().hasPhotos()) {
-				missing.push("photos");
-			}
-
-			if (get().categoryGroup.length === 0) {
-				missing.push("categoryGroup");
-			}
-
-			if (get().category.length === 0) {
-				missing.push("category");
-			}
-
-			return missing;
-		},
-		isValid() {
-			return get().missing().length === 0;
-		},
+		missing: [],
+		isValid: false,
 	}));

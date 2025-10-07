@@ -53,13 +53,13 @@ export const useSetAnim = ({
 					//
 					.to(sheetRef.current, {
 						opacity: 0,
-						x: sheetX,
+						x: `-${sheetX}`,
 						onComplete() {
 							setImg(value);
 						},
 					})
 					.set(sheetRef.current, {
-						x: `-${sheetX}`,
+						x: sheetX,
 					})
 					//
 					.to(sheetRef.current, {

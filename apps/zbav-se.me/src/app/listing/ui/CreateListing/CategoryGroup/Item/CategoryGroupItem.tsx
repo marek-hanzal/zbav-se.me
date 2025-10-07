@@ -45,7 +45,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 		<div className="relative">
 			<Sheet
 				ref={selectedRef}
-				tone={"primary"}
+				tone={"secondary"}
 				theme={"light"}
 				onClick={() => {
 					selection.toggle(item);

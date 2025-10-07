@@ -19,7 +19,7 @@ export const SubmitWrapper: FC = () => {
 	// 	},
 	// );
 
-	if (missing().length > 0) {
+	if (missing.length > 0) {
 		return (
 			<Sheet
 				tone={"warning"}
@@ -38,7 +38,7 @@ export const SubmitWrapper: FC = () => {
 					}
 					textMessage={
 						<div className="inline-flex flex-row gap-2">
-							{missing().map((item) => (
+							{missing.map((item) => (
 								<Badge
 									key={item}
 									tone="secondary"

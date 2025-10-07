@@ -37,7 +37,6 @@ export const useChangeAnim = ({
 						spinnerRef.current,
 						{
 							autoAlpha: 1,
-							duration: 0.2,
 						},
 						0,
 					)
@@ -76,16 +75,12 @@ export const useChangeAnim = ({
 					.set(sheetRef.current, {
 						x: sheetX,
 					})
+					.to(sheetRef.current, {
+						opacity: sheetTransitionOpacity,
+						x: 0,
+					})
 					.addLabel("finish")
 					//
-					.to(
-						sheetRef.current,
-						{
-							opacity: sheetTransitionOpacity,
-							x: 0,
-						},
-						"finish",
-					)
 					.to(
 						sheetRef.current,
 						{
@@ -107,7 +102,6 @@ export const useChangeAnim = ({
 						spinnerRef.current,
 						{
 							autoAlpha: 0,
-							duration: 0.2,
 						},
 						"finish",
 					)
