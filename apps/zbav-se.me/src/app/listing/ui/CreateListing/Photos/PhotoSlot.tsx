@@ -1,6 +1,8 @@
 import {
 	Action,
 	Container,
+	Icon,
+	SpinnerIcon,
 	Status,
 	TrashIcon,
 	Tx,
@@ -75,10 +77,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const sheetRef = useRef<HTMLDivElement>(null);
 	const trashRef = useRef<HTMLDivElement>(null);
+	const spinnerRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(img);
 
-	const sheetDuration = 0.25;
-	const sheetX = "50%";
+	const sheetDuration = 0.225;
+	const sheetX = "125%";
+	const sheetTransitionOpacity = 0.5;
+	const sheetTransitionScale = 0.95;
 	const sheetOpacity = props.disabled ? 0.5 : 1;
 
 	const [, transition] = useSetUnset({
@@ -140,6 +145,10 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				anim.set(sheetRef.current, {
 					opacity: sheetOpacity,
 				});
+
+				anim.set(spinnerRef.current, {
+					autoAlpha: 0,
+				});
 			}
 		},
 		{
@@ -179,8 +188,26 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						duration: sheetDuration,
 					},
 				})
+					.to(
+						spinnerRef.current,
+						{
+							autoAlpha: 1,
+							duration: 0.2,
+						},
+						0,
+					)
+					//
+					//
+					.to(
+						sheetRef.current,
+						{
+							scale: sheetTransitionScale,
+							opacity: sheetTransitionOpacity,
+						},
+						0,
+					)
+					//
 					.to(sheetRef.current, {
-						scale: 0.98,
 						opacity: 0,
 						x: `-${sheetX}`,
 						onComplete() {
@@ -190,11 +217,33 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					.set(sheetRef.current, {
 						x: sheetX,
 					})
-					.to(sheetRef.current, {
-						scale: 1,
-						opacity: sheetOpacity,
-						x: 0,
-					});
+					//
+					.addLabel("finish")
+					.to(
+						sheetRef.current,
+						{
+							opacity: sheetTransitionOpacity,
+							x: 0,
+						},
+						"finish",
+					)
+					.to(
+						sheetRef.current,
+						{
+							scale: 1,
+							opacity: sheetOpacity,
+						},
+						"finish",
+					)
+					//
+					.to(
+						spinnerRef.current,
+						{
+							autoAlpha: 0,
+							duration: 0.2,
+						},
+						"finish",
+					);
 			}
 		},
 		{
@@ -210,19 +259,31 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	useAnim(
 		() => {
 			if (transition === "set") {
-				anim.to(trashRef.current, {
-					autoAlpha: 1,
-					scale: 1,
-					duration: 0.25,
-				});
-
 				anim.timeline({
 					defaults: {
 						duration: sheetDuration,
 					},
 				})
+					.to(
+						spinnerRef.current,
+						{
+							autoAlpha: 1,
+							duration: 0.25,
+						},
+						0,
+					)
+					//
+					//
+					.to(
+						sheetRef.current,
+						{
+							scale: sheetTransitionScale,
+							opacity: sheetTransitionOpacity,
+						},
+						0,
+					)
+					//
 					.to(sheetRef.current, {
-						scale: 0.98,
 						opacity: 0,
 						x: sheetX,
 						onComplete() {
@@ -232,17 +293,44 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					.set(sheetRef.current, {
 						x: `-${sheetX}`,
 					})
+					//
 					.to(sheetRef.current, {
-						scale: 1,
-						opacity: sheetOpacity,
+						opacity: sheetTransitionOpacity,
 						x: 0,
-					});
+					})
+					.addLabel("finish")
+					.to(
+						sheetRef.current,
+						{
+							opacity: sheetOpacity,
+							scale: 1,
+						},
+						"finish",
+					)
+					.to(
+						trashRef.current,
+						{
+							autoAlpha: 1,
+							scale: 1,
+							duration: 0.2,
+						},
+						"finish",
+					)
+					//
+					//
+					.to(
+						spinnerRef.current,
+						{
+							autoAlpha: 0,
+							duration: 0.2,
+						},
+						"finish",
+					);
 			}
 		},
 		{
 			dependencies: [
 				transition,
-				value,
 			],
 		},
 	);
@@ -255,8 +343,33 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						duration: sheetDuration,
 					},
 				})
+					.to(
+						spinnerRef.current,
+						{
+							autoAlpha: 1,
+							duration: 0.2,
+						},
+						0,
+					)
+					.to(
+						trashRef.current,
+						{
+							opacity: 0.25,
+						},
+						0,
+					)
+					//
+					//
+					.to(
+						sheetRef.current,
+						{
+							scale: sheetTransitionScale,
+							opacity: sheetTransitionOpacity,
+						},
+						0,
+					)
+					//
 					.to(sheetRef.current, {
-						scale: 0.95,
 						opacity: 0,
 						x: `-${sheetX}`,
 						onComplete() {
@@ -266,17 +379,46 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					.set(sheetRef.current, {
 						x: sheetX,
 					})
-					.to(sheetRef.current, {
-						scale: 1,
-						opacity: sheetOpacity,
-						x: 0,
-					});
+					.addLabel("finish")
+					//
+					.to(
+						sheetRef.current,
+						{
+							opacity: sheetTransitionOpacity,
+							x: 0,
+						},
+						"finish",
+					)
+					.to(
+						sheetRef.current,
+						{
+							scale: 1,
+							opacity: sheetOpacity,
+						},
+						"finish",
+					)
+					.to(
+						trashRef.current,
+						{
+							opacity: 1,
+						},
+						"finish",
+					)
+					//
+					//
+					.to(
+						spinnerRef.current,
+						{
+							autoAlpha: 0,
+							duration: 0.2,
+						},
+						"finish",
+					);
 			}
 		},
 		{
 			dependencies: [
 				transition,
-				value,
 			],
 		},
 	);
@@ -333,6 +475,27 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								"transition-none",
 								"z-10",
 								img ? "opacity-0" : "opacity-100",
+							],
+						},
+					},
+				}}
+			/>
+
+			<Icon
+				ref={spinnerRef}
+				icon={SpinnerIcon}
+				size={"xl"}
+				tone={"primary"}
+				theme={"dark"}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"absolute",
+								"top-1/2",
+								"left-1/2",
+								"-translate-x-1/2",
+								"-translate-y-1/2",
 							],
 						},
 					},
