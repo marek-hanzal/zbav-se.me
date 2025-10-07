@@ -1,7 +1,6 @@
 import {
 	Action,
 	ArrowLeftIcon,
-	CheckIcon,
 	Container,
 	SnapperNav,
 	Tour,
@@ -112,16 +111,14 @@ export const CreateListing: FC = () => {
 					pages={[
 						{
 							id: photosId,
-							icon: hasPhotos ? CheckIcon : PhotoIcon,
+							icon: PhotoIcon,
 							iconProps: () => ({
 								tone: hasPhotos ? "primary" : "secondary",
 							}),
 						},
 						{
 							id: categoryGroupId,
-							icon: hasCategoryGroup
-								? CheckIcon
-								: CategoryGroupIcon,
+							icon: CategoryGroupIcon,
 							iconProps: () => ({
 								tone: hasCategoryGroup
 									? "primary"
@@ -130,7 +127,7 @@ export const CreateListing: FC = () => {
 						},
 						{
 							id: categoryId,
-							icon: hasCategory ? CheckIcon : CategoryIcon,
+							icon: CategoryIcon,
 							iconProps: () => ({
 								tone: hasCategory ? "primary" : "secondary",
 							}),
