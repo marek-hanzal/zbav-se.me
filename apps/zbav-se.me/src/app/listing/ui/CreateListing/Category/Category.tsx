@@ -1,4 +1,5 @@
 import {
+	Container,
 	Data,
 	Icon,
 	Sheet,
@@ -11,6 +12,7 @@ import type { FC } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
 
 export const Category: FC = () => {
@@ -23,6 +25,9 @@ export const Category: FC = () => {
 		mode: "multi",
 		onMulti: setCategory,
 	});
+	const hasCategoryGroup = useCreateListingStore(
+		(store) => store.hasCategoryGroup,
+	);
 
 	const categoryQuery = withCategoryListQuery().useQuery(
 		{
@@ -43,7 +48,45 @@ export const Category: FC = () => {
 		},
 	);
 
-	return categoryGroupSelection.length > 0 ? (
+	if (!hasCategoryGroup) {
+		return (
+			<div
+				key={`category-wrapper-empty`}
+				className="h-full"
+			>
+				<Sheet
+					tone={"warning"}
+					theme={"light"}
+					disabled
+				>
+					<Status
+						icon={QuestionIcon}
+						tone={"warning"}
+						theme={"light"}
+						textTitle={
+							<Tx
+								label="No category selected"
+								tone={"warning"}
+								theme={"light"}
+								font={"bold"}
+							/>
+						}
+						textMessage={
+							<Tx
+								label={
+									"Please select a category group first to see available categories"
+								}
+								tone={"warning"}
+								theme={"light"}
+							/>
+						}
+					/>
+				</Sheet>
+			</div>
+		);
+	}
+
+	return (
 		<Data
 			result={categoryQuery}
 			renderLoading={() => {
@@ -63,208 +106,23 @@ export const Category: FC = () => {
 			}}
 			renderSuccess={({ data }) => {
 				return (
-					<div
-						key={`category-wrapper-success`}
-						className="h-full"
+					<Container
+						layout={"vertical-full"}
+						overflow={"vertical"}
+						snap={"vertical-start"}
+						gap={"md"}
 					>
-						{/* <Container layout={"vertical-full"}>
-                            <SnapperNav
-                                orientation={"vertical"}
-                                pages={data.map((item) => ({
-                                    id: item.id,
-                                    icon: DotIcon,
-                                    iconProps: () => ({
-                                        tone: categorySelection.isSelected(
-                                            item.id,
-                                        )
-                                            ? "primary"
-                                            : "secondary",
-                                    }),
-                                }))}
-                                iconProps={() => ({
-                                    size: "xs",
-                                    tone: "secondary",
-                                })}
-                            />
-
-                            <SnapperContent>
-                                {data.map((item) => {
-                                    const isSelected =
-                                        categorySelection.isSelected(
-                                            item.id,
-                                        );
-
-                                    return (
-                                        <SnapperItem
-                                            key={`snapper-item-${item.id}`}
-                                        >
-                                            <AnimatePresence
-                                                mode={"wait"}
-                                            >
-                                                {isSelected ? (
-                                                    <motion.div
-                                                        key={`sheet-${item.id}-selected`}
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: 20,
-                                                        }}
-                                                        animate={{
-                                                            opacity: 1,
-                                                            x: 0,
-                                                        }}
-                                                        exit={{
-                                                            opacity: 0,
-                                                            x: -20,
-                                                        }}
-                                                        transition={{
-                                                            duration: 0.15,
-                                                        }}
-                                                        className="h-full"
-                                                    >
-                                                        <Sheet
-                                                            tone={
-                                                                "secondary"
-                                                            }
-                                                            theme={
-                                                                "light"
-                                                            }
-                                                            onClick={() => {
-                                                                categorySelection.toggle(
-                                                                    item,
-                                                                );
-                                                            }}
-                                                        >
-                                                            <Status
-                                                                icon={
-                                                                    CheckIcon
-                                                                }
-                                                                tone={
-                                                                    "secondary"
-                                                                }
-                                                                theme={
-                                                                    "light"
-                                                                }
-                                                                textTitle={
-                                                                    <Tx
-                                                                        label={`Category ${item.name}`}
-                                                                        tone={
-                                                                            "secondary"
-                                                                        }
-                                                                        theme={
-                                                                            "light"
-                                                                        }
-                                                                        font={
-                                                                            "bold"
-                                                                        }
-                                                                    />
-                                                                }
-                                                            />
-                                                        </Sheet>
-                                                    </motion.div>
-                                                ) : (
-                                                    <motion.div
-                                                        key={`sheet-${item.id}-unselected`}
-                                                        initial={{
-                                                            opacity: 0,
-                                                            x: -20,
-                                                        }}
-                                                        animate={{
-                                                            opacity: 1,
-                                                            x: 0,
-                                                        }}
-                                                        exit={{
-                                                            opacity: 0,
-                                                            x: 20,
-                                                        }}
-                                                        transition={{
-                                                            duration: 0.15,
-                                                        }}
-                                                        className="h-full"
-                                                    >
-                                                        <Sheet
-                                                            tone={
-                                                                "primary"
-                                                            }
-                                                            theme={
-                                                                "light"
-                                                            }
-                                                            onClick={() => {
-                                                                categorySelection.toggle(
-                                                                    item,
-                                                                );
-                                                            }}
-                                                        >
-                                                            <Status
-                                                                icon={
-                                                                    TagIcon
-                                                                }
-                                                                tone={
-                                                                    "primary"
-                                                                }
-                                                                theme={
-                                                                    "light"
-                                                                }
-                                                                textTitle={
-                                                                    <Tx
-                                                                        label={`Category ${item.name}`}
-                                                                        tone={
-                                                                            "primary"
-                                                                        }
-                                                                        theme={
-                                                                            "light"
-                                                                        }
-                                                                        font={
-                                                                            "bold"
-                                                                        }
-                                                                    />
-                                                                }
-                                                            />
-                                                        </Sheet>
-                                                    </motion.div>
-                                                )}
-                                            </AnimatePresence>
-                                        </SnapperItem>
-                                    );
-                                })}
-                            </SnapperContent>
-                        </Container> */}
-					</div>
+						{data.map((item) => {
+							return (
+								<CategoryItem
+									key={item.id}
+									item={item}
+								/>
+							);
+						})}
+					</Container>
 				);
 			}}
 		/>
-	) : (
-		<div
-			key={`category-wrapper-empty`}
-			className="h-full"
-		>
-			<Sheet
-				tone={"warning"}
-				theme={"light"}
-				disabled
-			>
-				<Status
-					icon={QuestionIcon}
-					tone={"warning"}
-					theme={"light"}
-					textTitle={
-						<Tx
-							label="No category selected"
-							tone={"warning"}
-							theme={"light"}
-							font={"bold"}
-						/>
-					}
-					textMessage={
-						<Tx
-							label={
-								"Please select a category group first to see available categories"
-							}
-							tone={"warning"}
-							theme={"light"}
-						/>
-					}
-				/>
-			</Sheet>
-		</div>
 	);
 };
