@@ -191,6 +191,21 @@ Category group reality:
 Category jewelry:
     static: true
     value: Šperky
+Category furniture:
+    static: true
+    value: Nábytek
+Category decor:
+    static: true
+    value: Dekorace
+Category dishes:
+    static: true
+    value: Nádobí
+Category plants:
+    static: true
+    value: Rostliny
+Category seeds:
+    static: true
+    value: Semínka
 Category laptop:
     static: true
     value: Notebooky

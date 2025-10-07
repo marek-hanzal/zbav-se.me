@@ -123,6 +123,10 @@ export const createListingStore = ({
 		},
 		hasCategory: false,
 		//
-		missing: [],
+		missing: [
+			"category",
+			"categoryGroup",
+			"photos",
+		],
 		isValid: false,
 	}));
