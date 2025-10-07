@@ -177,12 +177,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	useAnim(
 		() => {
 			if (transition === "unset") {
-				anim.to(trashRef.current, {
-					autoAlpha: 0,
-					scale: 0.75,
-					duration: 0.25,
-				});
-
 				anim.timeline({
 					defaults: {
 						duration: sheetDuration,
@@ -193,6 +187,14 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						{
 							autoAlpha: 1,
 							duration: 0.2,
+						},
+						0,
+					)
+					.to(
+						trashRef.current,
+						{
+							autoAlpha: 0,
+							scale: 0.75,
 						},
 						0,
 					)
@@ -351,6 +353,13 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						},
 						0,
 					)
+					.set(
+						trashRef.current,
+						{
+							pointerEvents: "none",
+						},
+						0,
+					)
 					.to(
 						trashRef.current,
 						{
@@ -413,7 +422,10 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 							duration: 0.2,
 						},
 						"finish",
-					);
+					)
+					.set(trashRef.current, {
+						pointerEvents: "auto",
+					});
 			}
 		},
 		{
