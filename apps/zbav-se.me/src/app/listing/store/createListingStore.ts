@@ -90,6 +90,10 @@ export const createListingStore = ({
 				return {
 					categoryGroup,
 					hasCategoryGroup: categoryGroup.length > 0,
+					// Reset category - idea is that when user changes category group, he also probably changes category
+					category: [],
+					hasCategory: false,
+					//
 					missing: $missing,
 					isValid: $missing.length === 0,
 				};

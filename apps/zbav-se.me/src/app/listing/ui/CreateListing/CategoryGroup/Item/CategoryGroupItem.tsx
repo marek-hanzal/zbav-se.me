@@ -5,8 +5,8 @@ import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupS
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
 import { Sheet } from "~/app/sheet/Sheet";
+import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { TagIcon } from "~/app/ui/icon/TagIcon";
 
 export namespace CategoryGroupItem {
 	export interface Props {
@@ -98,7 +98,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 				}}
 			>
 				<Status
-					icon={TagIcon}
+					icon={CategoryGroupIcon}
 					tone={"primary"}
 					theme={"light"}
 					textTitle={

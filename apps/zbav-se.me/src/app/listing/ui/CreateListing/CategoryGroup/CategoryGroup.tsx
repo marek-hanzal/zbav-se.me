@@ -17,7 +17,7 @@ export const CategoryGroup: FC = () => {
 		(store) => store.setCategoryGroup,
 	);
 	const selection = useSelection<CategoryGroupSchema.Type>({
-		mode: "multi",
+		mode: "single",
 		onMulti: setCategoryGroup,
 	});
 

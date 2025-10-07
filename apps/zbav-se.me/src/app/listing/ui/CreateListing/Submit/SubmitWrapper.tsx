@@ -1,6 +1,7 @@
-import { Badge, Button, Sheet, Status, Tx } from "@use-pico/client";
+import { Badge, Button, Status, Tx } from "@use-pico/client";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 

@@ -12,11 +12,13 @@ import { type FC, useCallback, useId, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroup";
+import { ConditionWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
 import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
+import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
@@ -26,6 +28,7 @@ export const CreateListing: FC = () => {
 	const categoryGroupId = useId();
 	const categoryId = useId();
 	const priceId = useId();
+	const conditionId = useId();
 	const submitId = useId();
 
 	const useCreateListingStore = useCreateListingContext();
@@ -105,6 +108,7 @@ export const CreateListing: FC = () => {
 				position={"relative"}
 			>
 				<SnapperNav
+					limit={5}
 					pages={[
 						{
 							id: photosId,
@@ -130,6 +134,10 @@ export const CreateListing: FC = () => {
 							iconProps: () => ({
 								tone: hasCategory ? "primary" : "secondary",
 							}),
+						},
+						{
+							id: conditionId,
+							icon: ConditionIcon,
 						},
 						{
 							id: priceId,
@@ -160,6 +168,8 @@ export const CreateListing: FC = () => {
 					<CategoryGroup />
 
 					<Category />
+
+					<ConditionWrapper />
 
 					<PriceWrapper />
 
