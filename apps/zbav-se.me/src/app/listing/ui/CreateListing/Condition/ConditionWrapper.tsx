@@ -1,33 +1,19 @@
-import { Tx } from "@use-pico/client";
-import type { Cls } from "@use-pico/cls";
+import { Container } from "@use-pico/client";
 import type { FC } from "react";
-import { Sheet } from "~/app/sheet/Sheet";
-import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
-import { Title } from "~/app/ui/title/Title";
-import type { TitleCls } from "~/app/ui/title/TitleCls";
+import { ConditionAge } from "~/app/listing/ui/CreateListing/Condition/ConditionAge";
+import { ConditionOverall } from "~/app/listing/ui/CreateListing/Condition/ConditionOverall";
 
-export namespace ConditionWrapper {
-	export interface Props {
-		subtitleVariant?: Cls.VariantsOf<TitleCls>;
-	}
-}
-
-export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
-	subtitleVariant = {
-		tone: "secondary",
-		size: "lg",
-	},
-}) => {
+export const ConditionWrapper: FC = () => {
 	return (
-		<Sheet>
-			<Title
-				icon={ConditionIcon}
-				tone={"secondary"}
-				theme={"dark"}
-				{...subtitleVariant}
-			>
-				<Tx label={"Condition (title)"} />
-			</Title>
-		</Sheet>
+		<Container
+			layout={"vertical-full"}
+			snap={"vertical-start"}
+			overflow={"vertical"}
+			gap={"md"}
+		>
+			<ConditionOverall />
+
+			<ConditionAge />
+		</Container>
 	);
 };

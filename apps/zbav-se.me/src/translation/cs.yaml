@@ -51,6 +51,9 @@
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
     ref: Please wait...
     value: Please wait...
+294149e2faba8e8642efaed4ec43c45114f9b2836f4faea02af8c45a:
+    ref: Condition - Age (description)
+    value: Odhadněte relativní věk předmětu nabídky.
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
     ref: Something went wrong.
     value: Something went wrong.
@@ -75,9 +78,15 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
     ref: Cancel (button)
     value: Cancel (button)
+4828bbabbdbf2669e0c1edcdd49403b97fb30161b8798304b3eb726d:
+    ref: Condition - Age (hint)
+    value: Jedna hvězda pro téměř konec životnosti (např. polorozpadlé zrezivělé
+        auto), pět hvězd pro zcela nový nebo téměř zánovní předmět.
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
     ref: Please select a category group first to see available categories
-    value: ...aby bylo možné inzerát patřičně doručit zájemcům, je potřeba vybrat kategorii, kam vlastně tvůj inzerát patří.
+    value:
+        ...aby bylo možné inzerát patřičně doručit zájemcům, je potřeba vybrat
+        kategorii, kam vlastně tvůj inzerát patří.
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
     ref: Missing any token(s). (message)
     value: Missing any token(s). (message)
@@ -90,6 +99,9 @@
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
     ref: Field errors (title)
     value: Field errors (title)
+5aa13a488df37a89ce3c123a4d113ff14df85c789b0eb3a4a079ca6c:
+    ref: Condition - Overall (description)
+    value: Odhadněte celkové stav předmětu nabídky.
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
     ref: Listing - Price (tour)
     value: Nastavení ceny
@@ -102,6 +114,9 @@
 66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
     ref: Prost\u011B to po\u0161li d\u00E1l...
     value: Prost\u011B to po\u0161li d\u00E1l...
+6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
+    ref: Condition - Overall (title)
+    value: Celkový stav
 6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
     ref: Submit listing - status (title)
     value: Vše připraveno!
@@ -155,9 +170,18 @@ Category clothing:
 Category cosmetics:
     static: true
     value: Kosmetika
+Category decor:
+    static: true
+    value: Dekorace
 Category desktop:
     static: true
     value: Stolní počítače
+Category dishes:
+    static: true
+    value: Nádobí
+Category furniture:
+    static: true
+    value: Nábytek
 Category group automotive:
     static: true
     value: Auto/moto
@@ -191,27 +215,12 @@ Category group reality:
 Category jewelry:
     static: true
     value: Šperky
-Category furniture:
-    static: true
-    value: Nábytek
-Category decor:
-    static: true
-    value: Dekorace
-Category dishes:
-    static: true
-    value: Nádobí
-Category plants:
-    static: true
-    value: Rostliny
-Category lighting:
-    static: true
-    value: Osvětlení
-Category seeds:
-    static: true
-    value: Semínka
 Category laptop:
     static: true
     value: Notebooky
+Category lighting:
+    static: true
+    value: Osvětlení
 Category other:
     static: true
     value: Ostatní
@@ -221,6 +230,12 @@ Category pc-components:
 Category phone:
     static: true
     value: Telefony
+Category plants:
+    static: true
+    value: Rostliny
+Category seeds:
+    static: true
+    value: Semínka
 Category shoes:
     static: true
     value: Boty
@@ -266,6 +281,9 @@ b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
 b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
     ref: Select items (label)
     value: Select items (label)
+b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
+    ref: Condition - Age (title)
+    value: Věk
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
     ref: Downloading file...
     value: Downloading file...
@@ -335,3 +353,44 @@ fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
+Condition - Overall [0] (hint):
+    static: true
+    value: Celkový stav by bylo fajn vyplnit, jinak hrozí, že váš inzerát zapadne mezi ostatními.
+Condition - Overall [1] (hint):
+    static: true
+    value:
+        Předmět nabídky již neplní svou funkci, nicméně je možné jej použít buď na náhradní díly nebo jiným dílem opět uvést do provozu.
+        Obecně vyžaduje zručnost na straně kupujícího.
+Condition - Overall [2] (hint):
+    static: true
+    value: Předmět nabídky plní svou funkci, nicméně je poškozen a obecně může vyžadovat opravdu nebo zručnost na straně kupujícího.
+Condition - Overall [3] (hint):
+    static: true
+    value:
+        Průměrné opotřebení relativní k věku předmětu. Obecně tak lze označit věci, které by bez větší údržby ještě nějakou dobu
+        měly sloužit.
+Condition - Overall [4] (hint):
+    static: true
+    value: Obecně perfektní stav s malým opotřebením. Známky použití mohou být znát, ale minimálně. Např. půl roku starý telefon bez rozmláceného displaye.
+Condition - Overall [5] (hint):
+    static: true
+    value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité příslušenství a originální obal.
+##
+Condition - Age [0] (hint):
+    static: true
+    value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
+Condition - Age [1] (hint):
+    static: true
+    value: Věci, které už to mají téměř za sebou nebo budou vyžadovat extrémní péči na zotavení.
+Condition - Age [2] (hint):
+    static: true
+    value: Dvě hvězdy dejte věcem, které už něco zažily a spíš dříve, než později mohou vyžadovat servis nebo zručné ruce.
+Condition - Age [3] (hint):
+    static: true
+    value: Průměrný věk, to jest např. rok dva starý běžný telefon.
+Condition - Age [4] (hint):
+    static: true
+    value: Čtyři hvězdy pro věci, které se moc dlouho neohřály mimo krabici, např. dva - tři měsíce starý (nerozstřískaný) telefon.
+Condition - Age [5] (hint):
+    static: true
+    value: Zcela nová věc, jako by právě vypadla z fabriky. Krabička, příslušenství, originální obal - vše na svém místě.

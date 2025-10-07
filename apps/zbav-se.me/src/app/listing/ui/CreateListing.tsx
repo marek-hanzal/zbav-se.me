@@ -2,25 +2,18 @@ import {
 	Action,
 	ArrowLeftIcon,
 	Container,
-	SnapperNav,
 	Tour,
 	TourButton,
 } from "@use-pico/client";
 import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useRef, useState } from "react";
-import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroup";
 import { ConditionWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
-import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
-import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
-import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
-import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
-import { PriceIcon } from "~/app/ui/icon/PriceIcon";
-import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
+import { SnapperPages } from "~/app/listing/ui/SnapperPages";
 
 export const CreateListing: FC = () => {
 	const photosId = useId();
@@ -29,13 +22,6 @@ export const CreateListing: FC = () => {
 	const priceId = useId();
 	const conditionId = useId();
 	const submitId = useId();
-
-	const useCreateListingStore = useCreateListingContext();
-	const hasCategoryGroup = useCreateListingStore(
-		(store) => store.hasCategoryGroup,
-	);
-	const hasCategory = useCreateListingStore((store) => store.hasCategory);
-	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
 
@@ -106,51 +92,14 @@ export const CreateListing: FC = () => {
 				layout="horizontal"
 				position={"relative"}
 			>
-				<SnapperNav
-					limit={5}
-					pages={[
-						{
-							id: photosId,
-							icon: PhotoIcon,
-							iconProps: () => ({
-								tone: hasPhotos ? "primary" : "secondary",
-							}),
-						},
-						{
-							id: categoryGroupId,
-							icon: CategoryGroupIcon,
-							iconProps: () => ({
-								tone: hasCategoryGroup
-									? "primary"
-									: "secondary",
-							}),
-						},
-						{
-							id: categoryId,
-							icon: CategoryIcon,
-							iconProps: () => ({
-								tone: hasCategory ? "primary" : "secondary",
-							}),
-						},
-						{
-							id: conditionId,
-							icon: ConditionIcon,
-						},
-						{
-							id: priceId,
-							icon: PriceIcon,
-						},
-						{
-							id: submitId,
-							icon: SendPackageIcon,
-						},
-					]}
-					iconProps={() => ({
-						tone: "secondary",
-						size: "md",
-					})}
-					containerRef={snapperRef}
-					orientation={"horizontal"}
+				<SnapperPages
+					snapperRef={snapperRef}
+					photosId={photosId}
+					categoryGroupId={categoryGroupId}
+					categoryId={categoryId}
+					conditionId={conditionId}
+					priceId={priceId}
+					submitId={submitId}
 				/>
 
 				<Container

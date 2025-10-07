@@ -8,7 +8,12 @@ export namespace createListingStore {
 		photoCountLimit: number;
 	}
 
-	export type Missing = "photos" | "categoryGroup" | "category";
+	export type Missing =
+		| "photos"
+		| "categoryGroup"
+		| "category"
+		| "condition"
+		| "age";
 
 	export interface Store {
 		photoCountLimit: number;
@@ -23,6 +28,14 @@ export namespace createListingStore {
 		category: CategorySchema.Type[];
 		setCategory(category: CategorySchema.Type[]): void;
 		hasCategory: boolean;
+		//
+		condition: number;
+		setCondition(condition: number): void;
+		hasCondition: boolean;
+		//
+		age: number;
+		setAge(age: number): void;
+		hasAge: boolean;
 		//
 		missing: Missing[];
 		isValid: boolean;
@@ -123,10 +136,55 @@ export const createListingStore = ({
 		},
 		hasCategory: false,
 		//
+		condition: 0,
+		setCondition(condition) {
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					condition === 0
+						? [
+								...missing,
+								"condition",
+							]
+						: missing.filter((m) => m !== "condition"),
+				);
+
+				return {
+					condition,
+					hasCondition: condition > 0,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
+			});
+		},
+		hasCondition: false,
+		//
+		age: 0,
+		setAge(age) {
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					age === 0
+						? [
+								...missing,
+								"age",
+							]
+						: missing.filter((m) => m !== "age"),
+				);
+				return {
+					age,
+					hasAge: age > 0,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
+			});
+		},
+		hasAge: false,
+		//
 		missing: [
 			"category",
 			"categoryGroup",
 			"photos",
+			"condition",
+			"age",
 		],
 		isValid: false,
 	}));

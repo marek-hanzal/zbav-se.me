@@ -43,6 +43,9 @@
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
   ref: Please wait...
   value: Please wait...
+294149e2faba8e8642efaed4ec43c45114f9b2836f4faea02af8c45a:
+  ref: Condition - Age (description)
+  value: Condition - Age (description)
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
   ref: Something went wrong.
   value: Something went wrong.
@@ -67,6 +70,9 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
+4828bbabbdbf2669e0c1edcdd49403b97fb30161b8798304b3eb726d:
+  ref: Condition - Age (hint)
+  value: Condition - Age (hint)
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
   ref: Please select a category group first to see available categories
   value: Please select a category group first to see available categories
@@ -82,6 +88,9 @@
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
+5aa13a488df37a89ce3c123a4d113ff14df85c789b0eb3a4a079ca6c:
+  ref: Condition - Overall (description)
+  value: Condition - Overall (description)
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
   ref: Listing - Price (tour)
   value: Listing - Price (tour)
@@ -94,6 +103,9 @@
 66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
   ref: Prost\u011B to po\u0161li d\u00E1l...
   value: Prost\u011B to po\u0161li d\u00E1l...
+6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
+  ref: Condition - Overall (title)
+  value: Condition - Overall (title)
 6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
   ref: Submit listing - status (title)
   value: Submit listing - status (title)
@@ -166,6 +178,9 @@ b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
 b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
   ref: Select items (label)
   value: Select items (label)
+b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
+  ref: Condition - Age (title)
+  value: Condition - Age (title)
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
   ref: Downloading file...
   value: Downloading file...
