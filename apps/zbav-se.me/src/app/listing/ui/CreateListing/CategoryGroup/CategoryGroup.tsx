@@ -9,7 +9,7 @@ import type { FC } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/Category/CategoryGroupItem";
+import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 
 export const CategoryGroup: FC = () => {
 	const useCreateListingStore = useCreateListingContext();

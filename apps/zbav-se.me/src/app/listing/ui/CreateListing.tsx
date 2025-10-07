@@ -12,7 +12,7 @@ import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
-import { CategoryGroup } from "~/app/listing/ui/CreateListing/Category/CategoryGroup";
+import { CategoryGroup } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroup";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";

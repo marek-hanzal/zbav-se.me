@@ -26,4 +26,9 @@ coolGsap.registerPlugin(
 	TextPlugin,
 );
 
+coolGsap.defaults({
+	duration: 0.5,
+	ease: "power4.inOut",
+});
+
 export { useGSAP as useAnim, coolGsap as anim };

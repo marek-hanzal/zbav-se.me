@@ -2,7 +2,7 @@ import { Container, SnapperNav } from "@use-pico/client";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { type FC, useMemo, useRef } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/PhotoSlot";
+import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { DotIcon } from "~/app/ui/icon/DotIcon";
 

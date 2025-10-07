@@ -2,8 +2,9 @@ import { Tx, type useSelection } from "@use-pico/client";
 import { Status } from "node_modules/@use-pico/client/src/status/Status";
 import { type FC, useRef } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
+import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
+import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
 import { Sheet } from "~/app/sheet/Sheet";
-import { anim, useAnim } from "~/app/ui/gsap";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { TagIcon } from "~/app/ui/icon/TagIcon";
 
@@ -22,92 +23,23 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 	const unselectedRef = useRef<HTMLDivElement>(null);
 	const isSelected = selection.isSelected(item.id);
 
-	const offset = "0%";
+	const offset = "70%";
 	const scale = 0.975;
 
-	useAnim(
-		() => {
-			if (isSelected) {
-				anim.set(selectedRef.current, {
-					opacity: 1,
-					x: 0,
-				});
-				anim.set(unselectedRef.current, {
-					opacity: 0,
-					x: offset,
-				});
-			}
-			if (!isSelected) {
-				anim.set(selectedRef.current, {
-					opacity: 1,
-					x: offset,
-				});
-				anim.set(unselectedRef.current, {
-					opacity: 1,
-					x: 0,
-				});
-			}
-		},
-		{
-			dependencies: [],
-		},
-	);
+	useInitAnim({
+		isSelected,
+		offset,
+		selectedRef,
+		unselectedRef,
+	});
 
-	useAnim(
-		() => {
-			const tl = anim.timeline({
-				defaults: {
-					duration: 0.25,
-				},
-			});
-
-			if (isSelected) {
-				tl.to(
-					unselectedRef.current,
-					{
-						opacity: 0,
-						x: `-${offset}`,
-						scale: scale,
-					},
-					0,
-				).to(
-					selectedRef.current,
-					{
-						opacity: 1,
-						x: 0,
-						scale: 1,
-					},
-					0,
-				);
-			}
-
-			if (!isSelected) {
-				tl.to(
-					selectedRef.current,
-					{
-						opacity: 0,
-						x: offset,
-						scale: scale,
-					},
-					0,
-				);
-				tl.to(
-					unselectedRef.current,
-					{
-						opacity: 1,
-						x: 0,
-						scale: 1,
-					},
-					0,
-				);
-			}
-		},
-		{
-			dependencies: [
-				isSelected,
-			],
-		},
-	);
+	useAnimation({
+		isSelected,
+		offset,
+		scale,
+		selectedRef,
+		unselectedRef,
+	});
 
 	return (
 		<div className="relative">
