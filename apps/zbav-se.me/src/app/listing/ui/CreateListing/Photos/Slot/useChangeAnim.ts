@@ -119,6 +119,7 @@ export const useChangeAnim = ({
 		{
 			dependencies: [
 				transition,
+				value,
 			],
 		},
 	);
