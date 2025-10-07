@@ -13,7 +13,16 @@ export default defineConfig({
 	clearScreen: false,
 	plugins: [
 		tanstackStart({
-			customViteReactPlugin: true,
+			spa: {
+				enabled: true,
+				prerender: {
+					enabled: false,
+				},
+			},
+			router: {
+				generatedRouteTree: "./_route.ts",
+				routesDirectory: "./@routes",
+			},
 		}),
 		tla(),
 		paths(),
@@ -32,6 +41,7 @@ export default defineConfig({
 		],
 	},
 	server: {
+		host: true,
 		strictPort: true,
 		port: 4088,
 	},
@@ -40,7 +50,7 @@ export default defineConfig({
 	},
 	optimizeDeps: {
 		exclude: [
-			"sqlocal",
+			"pg",
 		],
 	},
 });

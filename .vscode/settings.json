@@ -1,20 +1,22 @@
 {
 	"files.watcherExclude": {
-		"**/routeTree.gen.ts": true
+		"**/_route.ts": true
 	},
 	"search.exclude": {
-		"**/routeTree.gen.ts": true
+		"**/_route.ts": true
 	},
 	"files.readonlyInclude": {
-		"**/routeTree.gen.ts": true
+		"**/_route.ts": true
 	},
 	"cSpell.words": [
 		"adduser",
+		"akar",
 		"alasql",
 		"aminnairi",
 		"arcticons",
 		"autoremove",
 		"autorestart",
+		"bakeware",
 		"bbbbr",
 		"bbbs",
 		"bbpr",
@@ -63,6 +65,7 @@
 		"graphlib",
 		"grayscale",
 		"gridicons",
+		"gsap",
 		"GSSAPI",
 		"heightmap",
 		"highp",
@@ -155,6 +158,7 @@
 		"rankdir",
 		"ranksep",
 		"raycaster",
+		"reactour",
 		"Rhosts",
 		"rootfs",
 		"rpcinterface",
@@ -191,6 +195,7 @@
 		"vaadin",
 		"Vecs",
 		"Voronoi",
+		"walktour",
 		"webfonts",
 		"webp",
 		"workerpool",

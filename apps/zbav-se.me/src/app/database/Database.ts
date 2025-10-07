@@ -1,5 +1,7 @@
-import type { InventoryItemSchema } from "../inventory/db/InventoryItemSchema";
+import type { CategorySchema } from "../category/db/CategorySchema";
+import type { CategoryGroupSchema } from "../category-group/db/CategoryGroupSchema";
 
 export interface Database {
-	InventoryItem: InventoryItemSchema.Type;
+	Category: CategorySchema.Type;
+	CategoryGroup: CategoryGroupSchema.Type;
 }

@@ -1,3 +1,18 @@
+01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
+  ref: Feed (title)
+  value: Feed (title)
+0275899b719a7087887d05949414bb44c3048b8ebb50fac38f0e44b5:
+  ref: Listing - Photos (description)
+  value: Listing - Photos (description)
+0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
+  ref: Upload (placeholder)
+  value: Upload (placeholder)
+0c70501e9876b221ab39409a9343a1c4c803402a8bbbcc3e204f6118:
+  ref: Listing - Photos (tour)
+  value: Listing - Photos (tour)
+0d1b6810ac7b2a06873ae50bd923188cdcf9d2c91027618df0f69004:
+  ref: Listing - Intro (description)
+  value: Listing - Intro (description)
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
   ref: Missing required token(s). (title)
   value: Missing required token(s). (title)
@@ -7,9 +22,18 @@
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
   ref: Loading...
   value: Loading...
+1a648ea8c6ce8ff475d3f0ce68fe69efade01da2ad911fa8dc2af51d:
+  ref: Listing - Submit (description)
+  value: Listing - Submit (description)
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
   ref: File downloaded...
   value: File downloaded...
+21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
+  ref: Listing - Intro (tour)
+  value: Listing - Intro (tour)
+235e66d76c19716012f86e9a0dd6e73e42751473bf69c210f87bfa66:
+  ref: Reset tours (button)
+  value: Reset tours (button)
 2727e5a04d8acc225b3320799348e34eff9ac515e1130101baab751a:
   ref: .
   value: .
@@ -22,9 +46,6 @@
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
   ref: Something went wrong.
   value: Something went wrong.
-2dc007e932619d69a3764f194224cb28fcd5e9ffb60d3cf82a144ca7:
-  ref: Amount
-  value: Amount
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
   ref: Edit
   value: Edit
@@ -37,30 +58,45 @@
 3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
   ref: Error (toast)
   value: Error (toast)
+3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
+  ref: My Bag (title)
+  value: My Bag (title)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
-485ab310fd78cc3e853f204ac0fb336e3cbe3663f909f9ea2d7957b5:
-  ref: Kind
-  value: Kind
+51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
+  ref: Please select a category group first to see available categories
+  value: Please select a category group first to see available categories
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
   ref: Missing any token(s). (message)
   value: Missing any token(s). (message)
+52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
+  ref: User (title)
+  value: User (title)
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
   ref: Invalid on/off value
   value: Invalid on/off value
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
+5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
+  ref: Listing - Price (tour)
+  value: Listing - Price (tour)
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
-6957ea2312ad681dc8baf8c2e83b694253b3caf51c1054a91ad1cbbf:
-  ref: Select inventory item (select)
-  value: Select inventory item (select)
+61a6f144c84ce8d83fccdd988e63aa0b40d951edf07fcc5eec215664:
+  ref: Select category (select)
+  value: Select category (select)
+66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
+  ref: Prost\u011B to po\u0161li d\u00E1l...
+  value: Prost\u011B to po\u0161li d\u00E1l...
+6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
+  ref: Submit listing - status (title)
+  value: Submit listing - status (title)
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
   ref: Clear files
   value: Clear files
@@ -70,24 +106,33 @@
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
   ref: Close (label)
   value: Close (label)
-851db0190e11976a9a9be952123a2360166bf8ca526afdadf1e5f2cd:
-  ref: Description
-  value: Description
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
   ref: Missing required token(s). (message)
   value: Missing required token(s). (message)
+8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
+  ref: Previous (tour)
+  value: Previous (tour)
+8c37a53eea55dfb3ce41362b17bab308fcd81d7d0311114bcaf64d56:
+  ref: Listing - Submit (tour)
+  value: Listing - Submit (tour)
 8d2db329f49aa5263c8c4fc3a556823963ec674600f55d4da704caa1:
   ref: Name
   value: Name
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
   ref: Nothing here
   value: Nothing here
+981cc164d88c502839617bc66786dd1986fbb81419eaa16b78e92c17:
+  ref: Finish (tour)
+  value: Finish (tour)
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
+9fc51ae02fdcca13681cdb55a8c7a03f9ffc599da9501cbb966aec98:
+  ref: Listing - Price (description)
+  value: Listing - Price (description)
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
   ref: Invalid data provided (message)
   value: Invalid data provided (message)
@@ -124,6 +169,9 @@ b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
   ref: Downloading file...
   value: Downloading file...
+bc0a3ee3f106313c5f0c17046789933b738fa3caa2193476dcef4212:
+  ref: Select category (title)
+  value: Select category (title)
 bcb2263af0ec3c192d55f37db91b702dfb64cd249372992287291fe9:
   ref: Export (button)
   value: Export (button)
@@ -132,6 +180,12 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
+  ref: Listing - Tags (description)
+  value: Listing - Tags (description)
+c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
+  ref: Price (title)
+  value: Price (title)
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
   ref: Input is not Luxon DateTime!
   value: Input is not Luxon DateTime!
@@ -141,18 +195,30 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
   ref: Cannot download the file...
   value: Cannot download the file...
-d8a6607430df99b28a6dca7351ca0f50dacd5c3cf1a54ab9d7f25940:
-  ref: Select inventory item (title)
-  value: Select inventory item (title)
+d04269ee27fb690931596a5274381589c9cb5d74901cab9a442cdc93:
+  ref: Listing - Tags (tour)
+  value: Listing - Tags (tour)
+d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
+  ref: Submit listing - status - cannot submit (title)
+  value: Submit listing - status - cannot submit (title)
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
   ref: Select item (label)
   value: Select item (label)
-ea583aab64a25b17dc8dc51bc00ec75128bb16d6cac0d7ca9fba4294:
-  ref: Type
-  value: Type
+eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
+  ref: Next (tour)
+  value: Next (tour)
+ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
+  ref: Sort
+  value: Sort
+ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
+  ref: No category selected
+  value: No category selected
+f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
+  ref: Submit listing (button)
+  value: Submit listing (button)
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
   ref: Error
   value: Error

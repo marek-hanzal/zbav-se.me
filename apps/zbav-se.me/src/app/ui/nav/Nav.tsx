@@ -1,0 +1,142 @@
+import { useParams } from "@tanstack/react-router";
+import { Button, Icon, LinkTo, UserIcon } from "@use-pico/client";
+import { type Cls, useCls } from "@use-pico/cls";
+import { type FC, useId } from "react";
+import { BagIcon } from "~/app/ui/icon/BagIcon";
+import { FeedIcon } from "~/app/ui/icon/FeedIcon";
+import { PostIcon } from "~/app/ui/icon/PostIcon";
+import { NavCls } from "~/app/ui/nav/NavCls";
+
+export namespace Nav {
+	export interface Props extends NavCls.Props {
+		active: "feed" | "create" | "bag" | "user";
+	}
+}
+
+export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
+	const { slots } = useCls(cls, tweak);
+	const feedId = useId();
+	const listingId = useId();
+	const bagId = useId();
+	const userId = useId();
+
+	const { locale } = useParams({
+		from: "/$locale",
+	});
+
+	const variants: Cls.VariantsOf<typeof Button.cls> = {
+		size: "lg",
+		tone: "primary",
+		theme: "dark",
+		round: "xl",
+	};
+	const activeTone: Cls.VariantOf<typeof Button.cls, "tone"> = "secondary";
+
+	return (
+		<>
+			{/* <Tour
+				steps={[
+					{
+						element: `#${feedId}`,
+						popover: {
+							title: translator.text("Feed (tour)"),
+							description: translator.text("Feed (description)"),
+						},
+					},
+					{
+						element: `#${listingId}`,
+						popover: {
+							title: translator.text("Listing (tour)"),
+							description: translator.text(
+								"Listing (description)",
+							),
+						},
+					},
+					{
+						element: `#${bagId}`,
+						popover: {
+							title: translator.text("Bag (tour)"),
+							description: translator.text("Bag (description)"),
+						},
+					},
+					{
+						element: `#${userId}`,
+						popover: {
+							title: translator.text("User (tour)"),
+							description: translator.text("User (description)"),
+						},
+					},
+				]}
+			/> */}
+
+			<div
+				data-ui="Nav-root"
+				className={slots.root()}
+			>
+				<LinkTo
+					id={feedId}
+					to={"/$locale/n/feed"}
+					params={{
+						locale,
+					}}
+					tone={"unset"}
+				>
+					<Button
+						{...variants}
+						tone={active === "feed" ? activeTone : variants.tone}
+					>
+						<Icon icon={FeedIcon} />
+					</Button>
+				</LinkTo>
+
+				<LinkTo
+					id={listingId}
+					to={"/$locale/n/create"}
+					params={{
+						locale,
+					}}
+					tone={"unset"}
+				>
+					<Button
+						{...variants}
+						tone={active === "create" ? activeTone : variants.tone}
+					>
+						<Icon icon={PostIcon} />
+					</Button>
+				</LinkTo>
+
+				<LinkTo
+					id={bagId}
+					to={"/$locale/n/bag"}
+					params={{
+						locale,
+					}}
+					tone={"unset"}
+				>
+					<Button
+						{...variants}
+						tone={active === "bag" ? activeTone : variants.tone}
+					>
+						<Icon icon={BagIcon} />
+					</Button>
+				</LinkTo>
+
+				<LinkTo
+					id={userId}
+					to={"/$locale/n/user"}
+					params={{
+						locale,
+					}}
+					tone={"unset"}
+				>
+					<Button
+						{...variants}
+						tone={active === "user" ? activeTone : variants.tone}
+					>
+						<Icon icon={UserIcon} />
+					</Button>
+				</LinkTo>
+			</div>
+		</>
+	);
+};
