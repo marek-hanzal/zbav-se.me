@@ -22,54 +22,60 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 	const unselectedRef = useRef<HTMLDivElement>(null);
 	const isSelected = selection.isSelected(item.id);
 
-	const offset = "85%";
+	const offset = "0%";
+	const scale = 0.975;
 
-	useAnim(() => {
-		if (isSelected) {
-			anim.set(selectedRef.current, {
-				opacity: 1,
-				x: 0,
-			});
-			anim.set(unselectedRef.current, {
-				opacity: 0,
-				x: offset,
-			});
-		}
-		if (!isSelected) {
-			anim.set(selectedRef.current, {
-				opacity: 1,
-				x: offset,
-			});
-			anim.set(unselectedRef.current, {
-				opacity: 1,
-				x: 0,
-			});
-		}
-	});
+	useAnim(
+		() => {
+			if (isSelected) {
+				anim.set(selectedRef.current, {
+					opacity: 1,
+					x: 0,
+				});
+				anim.set(unselectedRef.current, {
+					opacity: 0,
+					x: offset,
+				});
+			}
+			if (!isSelected) {
+				anim.set(selectedRef.current, {
+					opacity: 1,
+					x: offset,
+				});
+				anim.set(unselectedRef.current, {
+					opacity: 1,
+					x: 0,
+				});
+			}
+		},
+		{
+			dependencies: [],
+		},
+	);
 
 	useAnim(
 		() => {
 			const tl = anim.timeline({
 				defaults: {
-					duration: 0.275,
+					duration: 0.25,
 				},
 			});
 
 			if (isSelected) {
 				tl.to(
+					unselectedRef.current,
+					{
+						opacity: 0,
+						x: `-${offset}`,
+						scale: scale,
+					},
+					0,
+				).to(
 					selectedRef.current,
 					{
 						opacity: 1,
 						x: 0,
 						scale: 1,
-					},
-					0,
-				).to(
-					unselectedRef.current,
-					{
-						opacity: 0,
-						x: `-${offset}`,
-						scale: 0.95,
 					},
 					0,
 				);
@@ -81,7 +87,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					{
 						opacity: 0,
 						x: offset,
-						scale: 0.95,
+						scale: scale,
 					},
 					0,
 				);
@@ -107,7 +113,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 		<div className="relative">
 			<Sheet
 				ref={selectedRef}
-				tone={"secondary"}
+				tone={"primary"}
 				theme={"light"}
 				onClick={() => {
 					selection.toggle(item);

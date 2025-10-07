@@ -80,8 +80,8 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 	const spinnerRef = useRef<HTMLDivElement>(null);
 	const src = useObjectUrl(img);
 
-	const sheetDuration = 0.225;
-	const sheetX = "125%";
+	const sheetDuration = 0.25;
+	const sheetX = "150%";
 	const sheetTransitionOpacity = 0.5;
 	const sheetTransitionScale = 0.95;
 	const sheetOpacity = props.disabled ? 0.5 : 1;
