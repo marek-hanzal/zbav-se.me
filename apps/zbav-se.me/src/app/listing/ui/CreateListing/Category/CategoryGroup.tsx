@@ -1,15 +1,26 @@
-import { Data, Icon, SpinnerIcon, type useSelection } from "@use-pico/client";
+import {
+	Container,
+	Data,
+	Icon,
+	SpinnerIcon,
+	useSelection,
+} from "@use-pico/client";
 import type { FC } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/Category/CategoryGroupItem";
 
-export namespace CategoryGroup {
-	export interface Props {
-		selection: useSelection.Selection<CategoryGroupSchema.Type>;
-	}
-}
+export const CategoryGroup: FC = () => {
+	const useCreateListingStore = useCreateListingContext();
+	const setCategoryGroup = useCreateListingStore(
+		(store) => store.setCategoryGroup,
+	);
+	const selection = useSelection<CategoryGroupSchema.Type>({
+		mode: "multi",
+		onMulti: setCategoryGroup,
+	});
 
-export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 	const categoryGroupQuery = withCategoryGroupListQuery().useQuery({
 		sort: [
 			{
@@ -39,170 +50,22 @@ export const CategoryGroup: FC<CategoryGroup.Props> = ({ selection }) => {
 			}}
 			renderSuccess={({ data }) => {
 				return (
-					<div
-						key={`category-group-wrapper-success`}
-						className="h-full"
+					<Container
+						layout={"vertical-full"}
+						overflow={"vertical"}
+						snap={"vertical-start"}
+						gap={"md"}
 					>
-						{/* <Container layout={"vertical"}>
-                    <SnapperNav
-                        pages={data.map((item) => ({
-                            id: item.id,
-                            icon: DotIcon,
-                            iconProps: () => ({
-                                tone: selection.isSelected(item.id)
-                                    ? "primary"
-                                    : "secondary",
-                            }),
-                        }))}
-                        iconProps={() => ({
-                            size: "xs",
-                            tone: "secondary",
-                        })}
-                        orientation={"vertical"}
-                    />
-
-                    <Container
-                        layout={"vertical-full"}
-                        overflow={"vertical"}
-                    >
-                        {data.map((item) => {
-                            const isSelected = selection.isSelected(
-                                item.id,
-                            );
-
-                            return (
-                                <SnapperItem
-                                    key={`snapper-item-${item.id}`}
-                                >
-                                    <AnimatePresence mode={"wait"}>
-                                        {isSelected ? (
-                                            <motion.div
-                                                key={`sheet-${item.id}-selected`}
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: 20,
-                                                }}
-                                                animate={{
-                                                    opacity: 1,
-                                                    x: 0,
-                                                }}
-                                                exit={{
-                                                    opacity: 0,
-                                                    x: -20,
-                                                }}
-                                                transition={{
-                                                    duration: 0.15,
-                                                }}
-                                                className="h-full"
-                                            >
-                                                <Sheet
-                                                    tone={
-                                                        "secondary"
-                                                    }
-                                                    theme={"light"}
-                                                    onClick={() => {
-                                                        selection.toggle(
-                                                            item,
-                                                        );
-                                                    }}
-                                                >
-                                                    <Status
-                                                        icon={
-                                                            CheckIcon
-                                                        }
-                                                        tone={
-                                                            "secondary"
-                                                        }
-                                                        theme={
-                                                            "light"
-                                                        }
-                                                        textTitle={
-                                                            <Tx
-                                                                label={`Category group ${item.name}`}
-                                                                tone={
-                                                                    "secondary"
-                                                                }
-                                                                theme={
-                                                                    "light"
-                                                                }
-                                                                font={
-                                                                    "bold"
-                                                                }
-                                                            />
-                                                        }
-                                                        textMessage={
-                                                            "Sem prijdou chipsy posledne nabidnutych inzeratu"
-                                                        }
-                                                    />
-                                                </Sheet>
-                                            </motion.div>
-                                        ) : (
-                                            <motion.div
-                                                key={`sheet-${item.id}-unselected`}
-                                                initial={{
-                                                    opacity: 0,
-                                                    x: -20,
-                                                }}
-                                                animate={{
-                                                    opacity: 1,
-                                                    x: 0,
-                                                }}
-                                                exit={{
-                                                    opacity: 0,
-                                                    x: 20,
-                                                }}
-                                                transition={{
-                                                    duration: 0.15,
-                                                }}
-                                                className="h-full"
-                                            >
-                                                <Sheet
-                                                    tone={"primary"}
-                                                    theme={"light"}
-                                                    onClick={() => {
-                                                        selection.toggle(
-                                                            item,
-                                                        );
-                                                    }}
-                                                >
-                                                    <Status
-                                                        icon={
-                                                            TagIcon
-                                                        }
-                                                        tone={
-                                                            "primary"
-                                                        }
-                                                        theme={
-                                                            "light"
-                                                        }
-                                                        textTitle={
-                                                            <Tx
-                                                                label={`Category group ${item.name}`}
-                                                                tone={
-                                                                    "primary"
-                                                                }
-                                                                theme={
-                                                                    "light"
-                                                                }
-                                                                font={
-                                                                    "bold"
-                                                                }
-                                                            />
-                                                        }
-                                                        textMessage={
-                                                            "Sem prijdou chipsy posledne nabidnutych inzeratu"
-                                                        }
-                                                    />
-                                                </Sheet>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </SnapperItem>
-                            );
-                        })}
-                    </Container>
-                </Container> */}
-					</div>
+						{data.map((item) => {
+							return (
+								<CategoryGroupItem
+									key={item.id}
+									selection={selection}
+									item={item}
+								/>
+							);
+						})}
+					</Container>
 				);
 			}}
 		/>

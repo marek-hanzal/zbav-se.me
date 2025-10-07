@@ -5,29 +5,31 @@ import {
 	SpinnerIcon,
 	Status,
 	Tx,
-	type useSelection,
+	useSelection,
 } from "@use-pico/client";
 import type { FC } from "react";
 import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
 
-export namespace Category {
-	export interface Props {
-		categoryGroupSelection: useSelection.Selection<CategoryGroupSchema.Type>;
-		categorySelection: useSelection.Selection<CategorySchema.Type>;
-	}
-}
+export const Category: FC = () => {
+	const useCreateListingStore = useCreateListingContext();
+	const setCategory = useCreateListingStore((store) => store.setCategory);
+	const categoryGroupSelection = useCreateListingStore(
+		(store) => store.categoryGroup,
+	);
+	const categorySelection = useSelection<CategorySchema.Type>({
+		mode: "multi",
+		onMulti: setCategory,
+	});
 
-export const Category: FC<Category.Props> = ({
-	categoryGroupSelection,
-	categorySelection,
-}) => {
 	const categoryQuery = withCategoryListQuery().useQuery(
 		{
 			filter: {
-				categoryGroupIdIn: categoryGroupSelection.optional.multiId(),
+				categoryGroupIdIn: categoryGroupSelection.map(
+					(item) => item.id,
+				),
 			},
 			sort: [
 				{
@@ -37,11 +39,11 @@ export const Category: FC<Category.Props> = ({
 			],
 		},
 		{
-			enabled: categoryGroupSelection.hasAny,
+			enabled: categoryGroupSelection.length > 0,
 		},
 	);
 
-	return categoryGroupSelection.hasAny ? (
+	return categoryGroupSelection.length > 0 ? (
 		<Data
 			result={categoryQuery}
 			renderLoading={() => {

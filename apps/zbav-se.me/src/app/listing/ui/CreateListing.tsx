@@ -7,13 +7,11 @@ import {
 	TagIcon,
 	Tour,
 	TourButton,
-	useSelection,
 } from "@use-pico/client";
 import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useRef, useState } from "react";
-import type { CategorySchema } from "~/app/category/db/CategorySchema";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/Category/CategoryGroup";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
@@ -30,19 +28,11 @@ export const CreateListing: FC = () => {
 	const submitId = useId();
 
 	const useCreateListingStore = useCreateListingContext();
-	const setCategoryGroup = useCreateListingStore(
-		(store) => store.setCategoryGroup,
+	const categoryGroupSelection = useCreateListingStore(
+		(store) => store.categoryGroup,
 	);
-	const setCategory = useCreateListingStore((store) => store.setCategory);
+	const categorySelection = useCreateListingStore((store) => store.category);
 
-	const categoryGroupSelection = useSelection<CategoryGroupSchema.Type>({
-		mode: "multi",
-		onMulti: setCategoryGroup,
-	});
-	const categorySelection = useSelection<CategorySchema.Type>({
-		mode: "multi",
-		onMulti: setCategory,
-	});
 	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
@@ -129,24 +119,28 @@ export const CreateListing: FC = () => {
 						},
 						{
 							id: categoryGroupId,
-							icon: categoryGroupSelection.hasAny
-								? CheckIcon
-								: TagIcon,
+							icon:
+								categoryGroupSelection.length > 0
+									? CheckIcon
+									: TagIcon,
 							iconProps: () => ({
-								tone: categoryGroupSelection.hasAny
-									? "primary"
-									: "secondary",
+								tone:
+									categoryGroupSelection.length > 0
+										? "primary"
+										: "secondary",
 							}),
 						},
 						{
 							id: categoryId,
-							icon: categorySelection.hasAny
-								? CheckIcon
-								: "icon-[typcn--tag]",
+							icon:
+								categorySelection.length > 0
+									? CheckIcon
+									: "icon-[typcn--tag]",
 							iconProps: () => ({
-								tone: categorySelection.hasAny
-									? "primary"
-									: "secondary",
+								tone:
+									categorySelection.length > 0
+										? "primary"
+										: "secondary",
 							}),
 						},
 						{
@@ -171,9 +165,9 @@ export const CreateListing: FC = () => {
 				>
 					<PhotosWrapper />
 
-					<CategoryGroup selection={categoryGroupSelection} />
+					<CategoryGroup />
 
-					{/* <Category categoryGroupSelection={categoryGroupSelection} categorySelection={caSe}/> */}
+					<Category />
 
 					<PriceWrapper />
 
