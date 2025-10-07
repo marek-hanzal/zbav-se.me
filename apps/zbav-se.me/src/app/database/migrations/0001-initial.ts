@@ -3,15 +3,16 @@ import type { Migration } from "kysely";
 
 const generateCategoryGroupSeedData = () => {
 	const categoryGroupNames = [
+		"clothes",
 		"electronics",
 		"kitchen",
-		"garden",
 		"home",
+		"automotive",
+		"reality",
 		"personal",
 		"hobbies",
-		"automotive",
+		"garden",
 		"pets",
-		"reality",
 		"other",
 	];
 
@@ -394,6 +395,52 @@ const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
 		{
 			name: "other",
 			group: "other",
+		},
+
+		// Clothes
+		{
+			name: "baby",
+			group: "clothes",
+		},
+		{
+			name: "tops",
+			group: "clothes",
+		},
+		{
+			name: "bottoms",
+			group: "clothes",
+		},
+		{
+			name: "outerwear",
+			group: "clothes",
+		},
+		{
+			name: "dresses",
+			group: "clothes",
+		},
+		{
+			name: "underwear",
+			group: "clothes",
+		},
+		{
+			name: "sportswear",
+			group: "clothes",
+		},
+		{
+			name: "sleepwear",
+			group: "clothes",
+		},
+		{
+			name: "swimwear",
+			group: "clothes",
+		},
+		{
+			name: "shoes",
+			group: "clothes",
+		},
+		{
+			name: "accessories",
+			group: "clothes",
 		},
 	];
 

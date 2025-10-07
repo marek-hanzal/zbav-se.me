@@ -203,6 +203,9 @@ Category dishes:
 Category plants:
     static: true
     value: Rostliny
+Category lighting:
+    static: true
+    value: Osvětlení
 Category seeds:
     static: true
     value: Semínka
