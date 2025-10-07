@@ -1,5 +1,4 @@
-import { Tx, type useSelection } from "@use-pico/client";
-import { Status } from "node_modules/@use-pico/client/src/status/Status";
+import { Status, Tx, type useSelection } from "@use-pico/client";
 import { type FC, useRef } from "react";
 import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
