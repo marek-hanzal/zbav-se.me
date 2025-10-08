@@ -66,6 +66,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
     ref: Select item
     value: Select item
+3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
+    ref: Price (placeholder)
+    value: Cena
 3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
     ref: Error (toast)
     value: Error (toast)
@@ -78,10 +81,6 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
     ref: Cancel (button)
     value: Cancel (button)
-4828bbabbdbf2669e0c1edcdd49403b97fb30161b8798304b3eb726d:
-    ref: Condition - Age (hint)
-    value: Jedna hvězda pro téměř konec životnosti (např. polorozpadlé zrezivělé
-        auto), pět hvězd pro zcela nový nebo téměř zánovní předmět.
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
     ref: Please select a category group first to see available categories
     value:
@@ -248,6 +247,60 @@ Category tv:
 Category watch:
     static: true
     value: Hodinky
+Condition - Age [0] (hint):
+    static: true
+    value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
+Condition - Age [1] (hint):
+    static: true
+    value:
+        Věci, které už to mají téměř za sebou nebo budou vyžadovat extrémní péči
+        na zotavení.
+Condition - Age [2] (hint):
+    static: true
+    value:
+        Dvě hvězdy dejte věcem, které už něco zažily a spíš dříve, než později
+        mohou vyžadovat servis nebo zručné ruce.
+Condition - Age [3] (hint):
+    static: true
+    value: Průměrný věk, to jest např. rok dva starý běžný telefon.
+Condition - Age [4] (hint):
+    static: true
+    value:
+        Čtyři hvězdy pro věci, které se moc dlouho neohřály mimo krabici, např.
+        dva - tři měsíce starý (nerozstřískaný) telefon.
+Condition - Age [5] (hint):
+    static: true
+    value:
+        Zcela nová věc, jako by právě vypadla z fabriky. Krabička, příslušenství,
+        originální obal - vše na svém místě.
+Condition - Overall [0] (hint):
+    static: true
+    value:
+        Celkový stav by bylo fajn vyplnit, jinak hrozí, že váš inzerát zapadne
+        mezi ostatními.
+Condition - Overall [1] (hint):
+    static: true
+    value:
+        Předmět nabídky již neplní svou funkci, nicméně je možné jej použít buď
+        na náhradní díly nebo jiným dílem opět uvést do provozu. Obecně vyžaduje
+        zručnost na straně kupujícího.
+Condition - Overall [2] (hint):
+    static: true
+    value: Předmět nabídky plní svou funkci, nicméně je poškozen a obecně může
+        vyžadovat opravdu nebo zručnost na straně kupujícího.
+Condition - Overall [3] (hint):
+    static: true
+    value: Průměrné opotřebení relativní k věku předmětu. Obecně tak lze označit
+        věci, které by bez větší údržby ještě nějakou dobu měly sloužit.
+Condition - Overall [4] (hint):
+    static: true
+    value:
+        Obecně perfektní stav s malým opotřebením. Známky použití mohou být znát,
+        ale minimálně. Např. půl roku starý telefon bez rozmláceného displaye.
+Condition - Overall [5] (hint):
+    static: true
+    value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité
+        příslušenství a originální obal.
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
@@ -305,9 +358,6 @@ c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
         Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na
         správné nastavení štítků, které pak inzerát pomohou doručit ostatním - proto
         tady prosím dávej extra pozor na správné nastavení.
-c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
-    ref: Price (title)
-    value: Cena
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!
@@ -353,44 +403,3 @@ fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
-Condition - Overall [0] (hint):
-    static: true
-    value: Celkový stav by bylo fajn vyplnit, jinak hrozí, že váš inzerát zapadne mezi ostatními.
-Condition - Overall [1] (hint):
-    static: true
-    value:
-        Předmět nabídky již neplní svou funkci, nicméně je možné jej použít buď na náhradní díly nebo jiným dílem opět uvést do provozu.
-        Obecně vyžaduje zručnost na straně kupujícího.
-Condition - Overall [2] (hint):
-    static: true
-    value: Předmět nabídky plní svou funkci, nicméně je poškozen a obecně může vyžadovat opravdu nebo zručnost na straně kupujícího.
-Condition - Overall [3] (hint):
-    static: true
-    value:
-        Průměrné opotřebení relativní k věku předmětu. Obecně tak lze označit věci, které by bez větší údržby ještě nějakou dobu
-        měly sloužit.
-Condition - Overall [4] (hint):
-    static: true
-    value: Obecně perfektní stav s malým opotřebením. Známky použití mohou být znát, ale minimálně. Např. půl roku starý telefon bez rozmláceného displaye.
-Condition - Overall [5] (hint):
-    static: true
-    value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité příslušenství a originální obal.
-##
-Condition - Age [0] (hint):
-    static: true
-    value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
-Condition - Age [1] (hint):
-    static: true
-    value: Věci, které už to mají téměř za sebou nebo budou vyžadovat extrémní péči na zotavení.
-Condition - Age [2] (hint):
-    static: true
-    value: Dvě hvězdy dejte věcem, které už něco zažily a spíš dříve, než později mohou vyžadovat servis nebo zručné ruce.
-Condition - Age [3] (hint):
-    static: true
-    value: Průměrný věk, to jest např. rok dva starý běžný telefon.
-Condition - Age [4] (hint):
-    static: true
-    value: Čtyři hvězdy pro věci, které se moc dlouho neohřály mimo krabici, např. dva - tři měsíce starý (nerozstřískaný) telefon.
-Condition - Age [5] (hint):
-    static: true
-    value: Zcela nová věc, jako by právě vypadla z fabriky. Krabička, příslušenství, originální obal - vše na svém místě.

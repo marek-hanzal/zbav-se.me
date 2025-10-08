@@ -58,6 +58,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
   ref: Select item
   value: Select item
+3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
+  ref: Price (placeholder)
+  value: Price (placeholder)
 3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
   ref: Error (toast)
   value: Error (toast)
@@ -70,9 +73,6 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
-4828bbabbdbf2669e0c1edcdd49403b97fb30161b8798304b3eb726d:
-  ref: Condition - Age (hint)
-  value: Condition - Age (hint)
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
   ref: Please select a category group first to see available categories
   value: Please select a category group first to see available categories
@@ -198,9 +198,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
   ref: Listing - Tags (description)
   value: Listing - Tags (description)
-c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
-  ref: Price (title)
-  value: Price (title)
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
   ref: Input is not Luxon DateTime!
   value: Input is not Luxon DateTime!

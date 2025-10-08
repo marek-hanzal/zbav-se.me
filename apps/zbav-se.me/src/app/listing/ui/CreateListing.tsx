@@ -1,10 +1,4 @@
-import {
-	Action,
-	ArrowLeftIcon,
-	Container,
-	Tour,
-	TourButton,
-} from "@use-pico/client";
+import { Action, ArrowLeftIcon, Container, Tour } from "@use-pico/client";
 import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useRef, useState } from "react";
 import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
@@ -33,10 +27,10 @@ export const CreateListing: FC = () => {
 
 	return (
 		<>
-			<TourButton
+			{/* <TourButton
 				isOpen={isTourOpen}
 				open={() => setIsTourOpen(true)}
-			/>
+			/> */}
 
 			<Tour
 				isOpen={isTourOpen}

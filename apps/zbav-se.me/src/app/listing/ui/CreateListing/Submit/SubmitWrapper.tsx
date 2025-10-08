@@ -1,4 +1,4 @@
-import { Badge, Button, Status, Tx } from "@use-pico/client";
+import { Button, Status, Tx } from "@use-pico/client";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Sheet } from "~/app/sheet/Sheet";
@@ -37,18 +37,18 @@ export const SubmitWrapper: FC = () => {
 							theme={"light"}
 						/>
 					}
-					textMessage={
-						<div className="inline-flex flex-row gap-2">
-							{missing.map((item) => (
-								<Badge
-									key={item}
-									tone="secondary"
-								>
-									{item}
-								</Badge>
-							))}
-						</div>
-					}
+					// textMessage={
+					// 	<div className="inline-flex flex-row gap-2">
+					// 		{missing.map((item) => (
+					// 			<Badge
+					// 				key={item}
+					// 				tone="secondary"
+					// 			>
+					// 				{item}
+					// 			</Badge>
+					// 		))}
+					// 	</div>
+					// }
 					tone={"warning"}
 				/>
 			</Sheet>

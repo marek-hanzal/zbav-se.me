@@ -1,7 +1,7 @@
-import { Container, Status, Tx } from "@use-pico/client";
+import { Tx } from "@use-pico/client";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { Rating } from "~/app/ui/rating/Rating";
+import { Condition } from "./Condition";
 
 export const ConditionAge: FC = () => {
 	const useCreateListingStore = useCreateListingContext();
@@ -9,33 +9,14 @@ export const ConditionAge: FC = () => {
 	const setAge = useCreateListingStore((state) => state.setAge);
 
 	return (
-		<Container
-			tone={"primary"}
-			theme={"light"}
-			round={"xl"}
-			border={"sm"}
-			square={"md"}
-		>
-			<Status
-				icon={"icon-[hugeicons--package-process]"}
-				textTitle={<Tx label={"Condition - Age (title)"} />}
-				textMessage={<Tx label={"Condition - Age (description)"} />}
-			>
-				<Rating
-					value={age}
-					limit={5}
-					onChange={setAge}
-				/>
-			</Status>
-
-			<div className={"p-4 text-center"}>
-				<Tx
-					label={`Condition - Age [${age}] (hint)`}
-					italic
-					tone={"secondary"}
-					theme={"light"}
-				/>
-			</div>
-		</Container>
+		<Condition
+			icon={"icon-[hugeicons--package-process]"}
+			textTitle={<Tx label={"Condition - Age (title)"} />}
+			textDescription={<Tx label={"Condition - Age (description)"} />}
+			textHint={<Tx label={`Condition - Age [${age}] (hint)`} />}
+			value={age}
+			onChange={setAge}
+			limit={5}
+		/>
 	);
 };

@@ -20,10 +20,10 @@
 		"@tanstack/react-store": "0.7.7",
 		"@trpc/client": "11.6.0",
 		"@trpc/server": "11.6.0",
-		"@use-pico/client": "5.0.137",
-		"@use-pico/cls": "5.0.54",
-		"@use-pico/common": "5.0.60",
-		"@use-pico/server": "5.0.60",
+		"@use-pico/client": "5.0.138",
+		"@use-pico/cls": "5.0.55",
+		"@use-pico/common": "5.0.61",
+		"@use-pico/server": "5.0.61",
 		"gsap": "3.13.0",
 		"kysely": "0.28.7",
 		"pg": "8.16.3",
@@ -34,7 +34,7 @@
 		"zustand": "5.0.8"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.392",
+		"@iconify/json": "2.2.393",
 		"@iconify/tailwind": "1.2.0",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.14",
