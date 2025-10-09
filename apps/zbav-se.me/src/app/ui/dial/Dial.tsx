@@ -2,9 +2,9 @@ import { Icon, type IconCls, Tx, Typo, UnCheckIcon } from "@use-pico/client";
 import { type Cls, tvc, useCls } from "@use-pico/cls";
 import { type FC, useRef, useState } from "react";
 import { DialCls } from "~/app/ui/dial/DialCls";
+import { Item } from "~/app/ui/dial/Item";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	current = current === "NaN" ? "" : current;
@@ -58,6 +58,7 @@ export const Dial: FC<Dial.Props> = ({
 
 	const onConfirm = contextSafe((number: number) => {
 		onChange(number);
+		setPrice("");
 		anim.timeline()
 			.to(displayRef.current, {
 				scale: 0.8,
@@ -78,7 +79,7 @@ export const Dial: FC<Dial.Props> = ({
 				scale: 0.8,
 				onComplete() {
 					setPrice("");
-					onChange(0);
+					onChange(NaN);
 				},
 			})
 			.to(displayRef.current, {
@@ -96,12 +97,6 @@ export const Dial: FC<Dial.Props> = ({
 				ref={displayRef}
 				className={slots.display()}
 			>
-				<Icon
-					icon={PriceIcon}
-					tone="primary"
-					theme="dark"
-				/>
-
 				{Number.isNaN(number) ? (
 					<Tx
 						label={"Price (placeholder)"}
@@ -136,34 +131,23 @@ export const Dial: FC<Dial.Props> = ({
 				{Array.from({
 					length: 9,
 				}).map((_, index) => (
-					<div
+					<Item
 						key={`price-${index + 1}`}
-						className={slots.number()}
+						icon={icons[(index + 1) as keyof typeof icons]}
 						onClick={() =>
 							setPrice((prev) => digit(prev, index + 1))
 						}
-					>
-						<Icon
-							icon={icons[(index + 1) as keyof typeof icons]}
-							{...iconVariant}
-						/>
-					</div>
+						disabled={false}
+						slots={slots}
+					/>
 				))}
 
-				<div
-					className={slots.number({
-						variant: {
-							disabled:
-								Number.isNaN(number) || price.includes("."),
-						},
-					})}
+				<Item
+					icon={"icon-[fluent--comma-20-filled]"}
+					disabled={Number.isNaN(number) || price.includes(".")}
 					onClick={() => setPrice((prev) => digit(prev, "."))}
-				>
-					<Icon
-						icon={"icon-[fluent--comma-20-filled]"}
-						{...iconVariant}
-					/>
-				</div>
+					slots={slots}
+				/>
 
 				<div
 					className={slots.number()}
@@ -175,21 +159,12 @@ export const Dial: FC<Dial.Props> = ({
 					/>
 				</div>
 
-				<div
-					className={slots.number({
-						variant: {
-							disabled: Number.isNaN(number),
-						},
-					})}
-					onClick={() => {
-						onConfirm(number);
-					}}
-				>
-					<Icon
-						icon={CheckIcon}
-						{...iconVariant}
-					/>
-				</div>
+				<Item
+					icon={CheckIcon}
+					disabled={Number.isNaN(number)}
+					onClick={() => onConfirm(number)}
+					slots={slots}
+				/>
 			</div>
 		</div>
 	);

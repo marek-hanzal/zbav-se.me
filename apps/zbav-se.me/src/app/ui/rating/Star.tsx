@@ -25,7 +25,6 @@ export const Star: FC<Star.Props> = ({ selected, onClick }) => {
 				},
 			})
 				.to(iconRef.current, {
-					rotateZ: 45,
 					opacity: 0,
 					scale: 0.75,
 					onComplete() {
@@ -36,12 +35,10 @@ export const Star: FC<Star.Props> = ({ selected, onClick }) => {
 					iconRef.current,
 					selected
 						? {
-								rotateZ: 0,
 								opacity: 1,
 								scale: 1,
 							}
 						: {
-								rotateZ: 0,
 								opacity: 0.75,
 								scale: 0.75,
 							},

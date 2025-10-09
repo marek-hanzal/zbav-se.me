@@ -13,7 +13,8 @@ export namespace createListingStore {
 		| "categoryGroup"
 		| "category"
 		| "condition"
-		| "age";
+		| "age"
+		| "price";
 
 	export interface Store {
 		photoCountLimit: number;
@@ -36,6 +37,10 @@ export namespace createListingStore {
 		age: number;
 		setAge(age: number): void;
 		hasAge: boolean;
+		//
+		price: number;
+		setPrice(price: number): void;
+		hasPrice: boolean;
 		//
 		missing: Missing[];
 		isValid: boolean;
@@ -179,12 +184,35 @@ export const createListingStore = ({
 		},
 		hasAge: false,
 		//
+		price: NaN,
+		setPrice(price) {
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					Number.isNaN(price)
+						? [
+								...missing,
+								"price",
+							]
+						: missing.filter((m) => m !== "price"),
+				);
+
+				return {
+					price,
+					hasPrice: !Number.isNaN(price),
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
+			});
+		},
+		hasPrice: false,
+		//
 		missing: [
 			"category",
 			"categoryGroup",
 			"photos",
 			"condition",
 			"age",
+			"price",
 		],
 		isValid: false,
 	}));

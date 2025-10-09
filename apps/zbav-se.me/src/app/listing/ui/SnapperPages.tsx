@@ -37,6 +37,7 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 	const hasCondition = useCreateListingStore((store) => store.hasCondition);
 	const hasAge = useCreateListingStore((store) => store.hasAge);
+	const hasPrice = useCreateListingStore((store) => store.hasPrice);
 
 	return (
 		<SnapperNav
@@ -73,6 +74,9 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 				{
 					id: priceId,
 					icon: PriceIcon,
+					iconProps: () => ({
+						tone: hasPrice ? "primary" : "secondary",
+					}),
 				},
 				{
 					id: submitId,

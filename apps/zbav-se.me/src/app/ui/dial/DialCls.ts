@@ -16,10 +16,9 @@ export const DialCls = contract(ThemeCls.contract)
 				"flex-col",
 				"items-center",
 				"justify-center",
-				"gap-4",
-			],
-			token: [
-				"square.md",
+				"gap-2",
+				"w-2/3",
+				"mx-auto",
 			],
 		},
 		display: {
@@ -27,13 +26,12 @@ export const DialCls = contract(ThemeCls.contract)
 				"inline-flex",
 				"items-center",
 				"justify-between",
-				"w-2/3",
-				"mx-auto",
+				"w-full",
 			],
 			token: [
-				"square.md",
+				"padding.sm",
 				"round.full",
-				"border.md",
+				"border.sm",
 				"shadow.default",
 				"tone.primary.dark.bg",
 				"tone.primary.dark.text",
@@ -61,7 +59,6 @@ export const DialCls = contract(ThemeCls.contract)
 		number: {
 			class: [
 				"pointer-events-none",
-				"opacity-50",
 			],
 		},
 	})
@@ -76,4 +73,6 @@ export type DialCls = typeof DialCls;
 
 export namespace DialCls {
 	export type Props<P = unknown> = Cls.Props<DialCls, P>;
+
+	export type Slots = Cls.SlotsOf<DialCls>;
 }
