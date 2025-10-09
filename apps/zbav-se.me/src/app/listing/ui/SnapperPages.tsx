@@ -16,6 +16,7 @@ export namespace SnapperPages {
 		categoryId: string;
 		conditionId: string;
 		priceId: string;
+		locationId: string;
 		submitId: string;
 	}
 }
@@ -27,6 +28,7 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 	categoryId,
 	conditionId,
 	priceId,
+	locationId,
 	submitId,
 }) => {
 	const useCreateListingStore = useCreateListingContext();
@@ -77,6 +79,10 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 					iconProps: () => ({
 						tone: hasPrice ? "primary" : "secondary",
 					}),
+				},
+				{
+					id: locationId,
+					icon: "icon-[bx--map-pin]",
 				},
 				{
 					id: submitId,

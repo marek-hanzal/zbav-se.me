@@ -4,6 +4,7 @@ import { type FC, useCallback, useId, useRef, useState } from "react";
 import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
 import { CategoryGroup } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroup";
 import { ConditionWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionWrapper";
+import { LocationWrapper } from "~/app/listing/ui/CreateListing/Location/LocationWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
@@ -16,6 +17,7 @@ export const CreateListing: FC = () => {
 	const priceId = useId();
 	const conditionId = useId();
 	const submitId = useId();
+	const locationId = useId();
 
 	const [isTourOpen, setIsTourOpen] = useState(false);
 
@@ -93,6 +95,7 @@ export const CreateListing: FC = () => {
 					categoryId={categoryId}
 					conditionId={conditionId}
 					priceId={priceId}
+					locationId={locationId}
 					submitId={submitId}
 				/>
 
@@ -112,6 +115,8 @@ export const CreateListing: FC = () => {
 					<ConditionWrapper />
 
 					<PriceWrapper />
+
+					<LocationWrapper />
 
 					<SubmitWrapper />
 				</Container>
