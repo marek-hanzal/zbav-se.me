@@ -1,6 +1,6 @@
-import { Icon, type IconCls, Tx, Typo, UnCheckIcon } from "@use-pico/client";
-import { type Cls, tvc, useCls } from "@use-pico/cls";
-import { type FC, useRef, useState } from "react";
+import { Icon, Tx, Typo, UnCheckIcon } from "@use-pico/client";
+import { tvc, useCls } from "@use-pico/cls";
+import { type FC, type RefObject, useRef, useState } from "react";
 import { DialCls } from "~/app/ui/dial/DialCls";
 import { Item } from "~/app/ui/dial/Item";
 import { anim, useAnim } from "~/app/ui/gsap";
@@ -30,12 +30,14 @@ const icons = {
 
 export namespace Dial {
 	export interface Props extends DialCls.Props {
+		ref?: RefObject<HTMLDivElement | null>;
 		value: number;
 		onChange: (value: number) => void;
 	}
 }
 
 export const Dial: FC<Dial.Props> = ({
+	ref,
 	value,
 	onChange,
 	cls = DialCls,
@@ -43,17 +45,11 @@ export const Dial: FC<Dial.Props> = ({
 }) => {
 	const { slots } = useCls(cls, tweak);
 	const [price, setPrice] = useState(value.toString());
-	const rootRef = useRef<HTMLDivElement>(null);
 	const displayRef = useRef<HTMLDivElement>(null);
 	const number = parseFloat(price);
 
-	const iconVariant: Cls.VariantsOf<IconCls> = {
-		tone: "secondary",
-		theme: "dark",
-	};
-
 	const { contextSafe } = useAnim({
-		scope: rootRef,
+		scope: ref,
 	});
 
 	const onConfirm = contextSafe((number: number) => {
@@ -90,7 +86,7 @@ export const Dial: FC<Dial.Props> = ({
 
 	return (
 		<div
-			ref={rootRef}
+			ref={ref}
 			className={slots.root()}
 		>
 			<div
@@ -149,15 +145,12 @@ export const Dial: FC<Dial.Props> = ({
 					slots={slots}
 				/>
 
-				<div
-					className={slots.number()}
+				<Item
+					icon={icons[0]}
+					disabled={false}
 					onClick={() => setPrice((prev) => digit(prev, 0))}
-				>
-					<Icon
-						icon={icons[0]}
-						{...iconVariant}
-					/>
-				</div>
+					slots={slots}
+				/>
 
 				<Item
 					icon={CheckIcon}

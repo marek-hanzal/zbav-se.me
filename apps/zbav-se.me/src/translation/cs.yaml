@@ -352,6 +352,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+be9f96eada3e82c6d87372d6688938da35e43a7c2e4a365636413a22:
+    ref: Price (label)
+    value: Nastavená cena
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
     ref: Listing - Tags (description)
     value:
