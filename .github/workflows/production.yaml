@@ -85,7 +85,7 @@ jobs:
                   user = ${BUNNY_USER}
                   port = 21
                   pass = $(rclone obscure "${BUNNY_TOKEN}")
-                  tls = true
+                  explicit_tls = true
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
