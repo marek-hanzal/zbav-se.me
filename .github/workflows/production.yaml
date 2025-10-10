@@ -229,6 +229,9 @@ jobs:
                   restore-keys: |
                       bunx-cache-${{ runner.os }}-
 
+            - name: Install dependencies (root)
+              run: bun install --frozen-lockfile
+
             - name: Deploy to Vercel
               working-directory: apps/server
               run: |
