@@ -133,7 +133,13 @@ jobs:
 
             - name: Deploy FE (production) via bunx
               run: |
-                  bun x -y vercel@latest pull --yes --environment=production --token "$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID"
+                  bun x -y vercel@latest pull \
+                    --yes \
+                    --environment=production \
+                    --token "$VERCEL_TOKEN" \
+                    --scope "$VERCEL_ORG_ID" \
+                    --project "$VERCEL_CLIENT_PROJECT_ID"
+
                   bun x -y vercel@latest deploy dist \
                     --prod --yes \
                     --token "$VERCEL_TOKEN" \
