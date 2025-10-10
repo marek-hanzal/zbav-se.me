@@ -46,7 +46,7 @@ jobs:
                   echo "VERCEL_TOKEN length: ${#VERCEL_TOKEN}"
 
     upload-assets:
-        name: Build FE & Upload assets to Bunny (rclone FTPS)
+        name: Build FE & Upload assets to Bunny (rclone SFTP)
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -71,36 +71,32 @@ jobs:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
-            # --- rclone via official Docker image (Explicit FTPS on port 21) ---
+            # --- rclone via official Docker image (SFTP on port 22, no temp rename) ---
 
-            - name: Write rclone config (Explicit FTPS -> Bunny)
+            - name: Write rclone config (SFTP -> Bunny)
               run: |
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
-                  # Obscure password using rclone inside the container (no local install)
                   OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
                   cat > "$CONF" <<EOF
                   [bunny]
                   type = sftp
                   host = ${BUNNY_HOST}
                   user = ${BUNNY_USER}
+                  port = 22
                   pass = ${OBF}
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            # - name: Ensure target directory exists (/assets)
-            #   uses: docker://rclone/rclone:1.66
-            #   with:
-            #       args: >
-            #           mkdir bunny:/assets --config /github/workspace/rclone.conf
-
-            - name: Sync assets to Bunny via rclone (skip unchanged)
+            - name: Sync assets to Bunny via rclone (SFTP, skip unchanged, in-place)
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
                       copy /github/workspace/apps/client/dist/assets bunny:/assets
                       --config /github/workspace/rclone.conf
                       --ignore-existing
-                      --transfers=2
+                      --inplace
+                      --sftp-set-modtime=false
+                      --transfers=4
                       --checkers=8
                       --no-traverse
                       --timeout=2m

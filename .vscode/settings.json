@@ -83,6 +83,7 @@
 		"imklog",
 		"imuxsock",
 		"INDEXEDDB",
+		"inplace",
 		"Interp",
 		"interpolant",
 		"Introspector",
