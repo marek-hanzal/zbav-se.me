@@ -37,13 +37,6 @@ jobs:
                   : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
                   echo "OK: required variables present."
-                  echo "VITE_ASSET_BASE length: ${#VITE_ASSET_BASE}"
-                  echo "BUNNY_HOST: ${BUNNY_HOST}"
-                  echo "BUNNY_USER: ${BUNNY_USER}"
-                  echo "BUNNY_TOKEN length: ${#BUNNY_TOKEN}"
-                  echo "VERCEL_ORG_ID: ${VERCEL_ORG_ID}"
-                  echo "VERCEL_CLIENT_PROJECT_ID: ${VERCEL_CLIENT_PROJECT_ID}"
-                  echo "VERCEL_TOKEN length: ${#VERCEL_TOKEN}"
 
     upload-assets:
         name: Build FE & Upload assets to Bunny (rclone SFTP)
@@ -71,7 +64,24 @@ jobs:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
-            # rclone via official Docker image (SFTP on port 22, in-place writes)
+            # --- Prepare Vercel Build Output v3 (prebuilt) ---
+            - name: Prepare Vercel prebuilt output (SPA)
+              working-directory: apps/client
+              run: |
+                  rm -rf .vercel/output
+                  mkdir -p .vercel/output/static
+                  cp -R dist/* .vercel/output/static/
+                  cat > .vercel/output/config.json <<'JSON'
+                  {
+                    "version": 3,
+                    "routes": [
+                      { "handle": "filesystem" },
+                      { "src": "/(.*)", "dest": "/index.html" }
+                    ]
+                  }
+                  JSON
+
+            # --- Upload only hashed assets to Bunny (SFTP; no temp rename) ---
             - name: Write rclone config (SFTP -> Bunny)
               run: |
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
@@ -103,15 +113,15 @@ jobs:
                       --low-level-retries=10
                       --verbose
 
-            - name: Strip assets before FE deploy (optional)
+            - name: Strip assets from local build (optional)
               working-directory: apps/client
-              run: rm -rf dist/assets
+              run: rm -rf .vercel/output/static/assets || true
 
-            - name: Save FE dist for next job
+            - name: Save prebuilt output for next job
               uses: actions/upload-artifact@v4
               with:
-                  name: fe-dist
-                  path: apps/client/dist
+                  name: fe-prebuilt
+                  path: apps/client/.vercel/output
 
     deploy-fe:
         name: Deploy FE (Vercel, production)
@@ -121,19 +131,20 @@ jobs:
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }} # poskytneme přes ENV
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: fe-dist
-                  path: dist
+                  name: fe-prebuilt
+                  path: .vercel/output
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Deploy FE (production, prebuilt artifact)
+            - name: Deploy FE (prebuilt, production)
               run: |
-                  bun x -y vercel@latest deploy "$GITHUB_WORKSPACE/dist" \
+                  bunx -y vercel@latest deploy "$GITHUB_WORKSPACE/.vercel/output" \
                     --prebuilt \
                     --prod --yes \
-                    --token "$VERCEL_TOKEN"
+                    --token "$VERCEL_TOKEN" \
+                    --scope "$VERCEL_ORG_ID"
