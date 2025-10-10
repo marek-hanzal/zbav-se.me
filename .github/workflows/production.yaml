@@ -60,7 +60,7 @@ jobs:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
-            - name: Prepare Vercel output (prebuilt SPA)
+            - name: Prepare Vercel output
               working-directory: apps/client
               run: |
                   rm -rf .vercel/output
@@ -111,7 +111,7 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Upload assets to Bunny (SFTP, skip unchanged, in-place)
+            - name: Update CDN
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
@@ -146,11 +146,11 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Strip assets before deploy (keep only index.html etc.)
+            - name: Strip assets
               working-directory: apps/client
               run: rm -rf .vercel/output/static/assets || true
 
-            - name: Deploy FE (prebuilt, production)
+            - name: Deploy to Vercel
               working-directory: apps/client
               run: |
                   bunx -y vercel@latest deploy \
