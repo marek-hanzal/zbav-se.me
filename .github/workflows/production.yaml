@@ -1,12 +1,11 @@
-# .github/workflows/deploy-prod-monorepo.yml
-name: Prod Deploy (SERVER -> CDN assets -> FE)
+name: Production Deploy
 
 on:
     push:
         branches: ["main"]
 
 concurrency:
-    group: deploy-prod
+    group: production-deploy
     cancel-in-progress: false
 
 permissions:
@@ -38,8 +37,8 @@ jobs:
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
                   echo "OK: required variables present."
 
-    upload-assets:
-        name: Build FE & Upload assets to Bunny (rclone SFTP)
+    client-build-and-cdn:
+        name: Build client & update CDN
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -54,18 +53,17 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Install deps (FE)
+            - name: Install dependencies
               working-directory: apps/client
               run: bun install --linker=isolated
 
-            - name: Build FE (Vite) with CDN base
+            - name: Build client
               working-directory: apps/client
               env:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
-            # --- Prepare Vercel Build Output v3 (prebuilt) ---
-            - name: Prepare Vercel prebuilt output (SPA)
+            - name: Prepare Vercel output
               working-directory: apps/client
               run: |
                   rm -rf .vercel/output
@@ -81,8 +79,7 @@ jobs:
                   }
                   JSON
 
-            # --- Upload only hashed assets to Bunny (SFTP; no temp rename) ---
-            - name: Write rclone config (SFTP -> Bunny)
+            - name: Prepare rclone config
               run: |
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
                   OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
@@ -96,7 +93,7 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Sync assets to Bunny via rclone (SFTP, skip unchanged, in-place)
+            - name: Update CDN
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
@@ -113,21 +110,21 @@ jobs:
                       --low-level-retries=10
                       --verbose
 
-            - name: Strip assets from local build (optional)
+            - name: Strip assets
               working-directory: apps/client
               run: rm -rf .vercel/output/static/assets || true
 
-            - name: Save prebuilt output for next job
+            - name: Upload artifact
               uses: actions/upload-artifact@v4
               with:
-                  name: fe-prebuilt
+                  name: client
                   path: apps/client/.vercel/output
 
-    deploy-fe:
-        name: Deploy FE (Vercel, production)
+    vercel-client:
+        name: Deploy client to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [upload-assets]
+        needs: [build-and-cdn]
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
