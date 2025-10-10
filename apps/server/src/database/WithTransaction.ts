@@ -1,4 +1,4 @@
 import type { Transaction } from "kysely";
-import type { Database } from "~/app/database/Database";
+import type { Database } from "./Database";
 
 export type WithTransaction = Transaction<Database>;

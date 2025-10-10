@@ -1,7 +1,6 @@
 import { withQuery } from "@use-pico/client";
 import type { CountSchema } from "@use-pico/common";
-import type { CategoryGroupQuerySchema } from "~/app/category-group/db/CategoryGroupQuerySchema";
-import { client } from "~/app/trpc/client/trpc";
+import type { CategoryGroupQuerySchema } from "@zbav-se.me/common";
 
 export const withCategoryGroupCountQuery = () => {
 	return withQuery<CategoryGroupQuerySchema.Type, CountSchema.Type>({
@@ -13,7 +12,7 @@ export const withCategoryGroupCountQuery = () => {
 			];
 		},
 		async queryFn(data) {
-			return client.categoryGroup.count.query(data);
+			throw new Error("Not implemented");
 		},
 	});
 };

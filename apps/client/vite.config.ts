@@ -1,6 +1,6 @@
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
-import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
@@ -12,17 +12,10 @@ import paths from "vite-tsconfig-paths";
 export default defineConfig({
 	clearScreen: false,
 	plugins: [
-		tanstackStart({
-			spa: {
-				enabled: true,
-				prerender: {
-					enabled: false,
-				},
-			},
-			router: {
-				generatedRouteTree: "./_route.ts",
-				routesDirectory: "./@routes",
-			},
+		tanstackRouter({
+			target: "react",
+			routesDirectory: "./src/@routes",
+			generatedRouteTree: "./src/_route.ts",
 		}),
 		tla(),
 		paths(),
@@ -44,13 +37,14 @@ export default defineConfig({
 		host: true,
 		strictPort: true,
 		port: 4088,
+		proxy: {
+			"/api": {
+				target: "http://localhost:4089",
+				changeOrigin: true,
+			},
+		},
 	},
 	build: {
 		target: "esnext",
-	},
-	optimizeDeps: {
-		exclude: [
-			"pg",
-		],
 	},
 });

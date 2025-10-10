@@ -5,8 +5,8 @@ import {
 	SpinnerIcon,
 	useSelection,
 } from "@use-pico/client";
+import type { CategoryGroupSchema } from "@zbav-se.me/common";
 import type { FC } from "react";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";

@@ -1,0 +1,21 @@
+{
+	"name": "@zbav-se.me/server",
+	"version": "0.5.0",
+	"scripts": {
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@use-pico/common": "5.0.65",
+		"@use-pico/server": "5.0.65",
+		"@zbav-se.me/common": "0.5.0",
+		"kysely": "0.28.8"
+	},
+	"devDependencies": {
+		"@types/bun": "1.2.23",
+		"@types/node": "24.7.1",
+		"@use-pico/tsconfig": "5.0.0",
+		"typescript": "^5.9.3"
+	},
+	"main": "src/index.ts",
+	"types": "src/index.ts"
+}

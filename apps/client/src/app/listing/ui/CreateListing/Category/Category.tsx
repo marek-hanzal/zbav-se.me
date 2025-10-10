@@ -8,12 +8,12 @@ import {
 	useSelection,
 } from "@use-pico/client";
 import { type FC, useEffect, useRef } from "react";
-import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
+import type { CategorySchema } from "../../../../../../../../packages/@zbav-se.me/common/src/category/CategorySchema";
 
 export const Category: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);

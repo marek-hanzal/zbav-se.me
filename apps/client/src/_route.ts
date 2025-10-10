@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as ApiTrpcRouteImport } from './@routes/api/trpc'
 import { Route as LocaleNRouteImport } from './@routes/$locale/n'
 import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
 import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
@@ -33,11 +32,6 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LocaleRoute,
-} as any)
-const ApiTrpcRoute = ApiTrpcRouteImport.update({
-  id: '/api/trpc',
-  path: '/api/trpc',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleNRoute = LocaleNRouteImport.update({
   id: '/n',
@@ -69,7 +63,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/n': typeof LocaleNRouteWithChildren
-  '/api/trpc': typeof ApiTrpcRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
@@ -79,7 +72,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
-  '/api/trpc': typeof ApiTrpcRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
@@ -91,7 +83,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/n': typeof LocaleNRouteWithChildren
-  '/api/trpc': typeof ApiTrpcRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/n/bag': typeof LocaleNBagRoute
   '/$locale/n/create': typeof LocaleNCreateRoute
@@ -104,7 +95,6 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/n'
-    | '/api/trpc'
     | '/$locale/'
     | '/$locale/n/bag'
     | '/$locale/n/create'
@@ -114,7 +104,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$locale/n'
-    | '/api/trpc'
     | '/$locale'
     | '/$locale/n/bag'
     | '/$locale/n/create'
@@ -125,7 +114,6 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/n'
-    | '/api/trpc'
     | '/$locale/'
     | '/$locale/n/bag'
     | '/$locale/n/create'
@@ -136,7 +124,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
-  ApiTrpcRoute: typeof ApiTrpcRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -161,13 +148,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
-    }
-    '/api/trpc': {
-      id: '/api/trpc'
-      path: '/api/trpc'
-      fullPath: '/api/trpc'
-      preLoaderRoute: typeof ApiTrpcRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/$locale/n': {
       id: '/$locale/n'
@@ -240,17 +220,7 @@ const LocaleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
-  ApiTrpcRoute: ApiTrpcRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

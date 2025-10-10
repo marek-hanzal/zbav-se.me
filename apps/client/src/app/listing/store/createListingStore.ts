@@ -1,7 +1,6 @@
 import { dedupe } from "@use-pico/common";
+import type { CategoryGroupSchema, CategorySchema } from "@zbav-se.me/common";
 import { create } from "zustand";
-import type { CategorySchema } from "~/app/category/db/CategorySchema";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 
 export namespace createListingStore {
 	export interface Props {

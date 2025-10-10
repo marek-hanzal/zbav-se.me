@@ -40,7 +40,11 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.cjs",
-		"**/*.js"
+		"**/*.js",
+		"../../packages/@zbav-se.me/common/src/category/CategoryQuerySchema.ts",
+		"../../packages/@zbav-se.me/common/src/category/CategorySchema.ts",
+		"../../packages/@zbav-se.me/common/src/category-group/CategoryGroupQuerySchema.ts",
+		"../../packages/@zbav-se.me/common/src/category-group/CategoryGroupSchema.ts"
 	],
 	"exclude": [
 		"node_modules",

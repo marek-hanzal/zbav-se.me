@@ -8,10 +8,10 @@ import {
 	withColumn,
 } from "@use-pico/client";
 import type { FC } from "react";
-import type { CategoryQuerySchema } from "~/app/category/db/CategoryQuerySchema";
-import type { CategorySchema } from "~/app/category/db/CategorySchema";
-import { withCategoryCountQuery } from "~/app/category/query/withCategoryCountQuery";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
+import type { CategoryQuerySchema } from "../../../../../../packages/@zbav-se.me/common/src/category/CategoryQuerySchema";
+import type { CategorySchema } from "../../../../../../packages/@zbav-se.me/common/src/category/CategorySchema";
+import { withCategoryCountQuery } from "../query/withCategoryCountQuery";
 
 const { create, filter } = withColumn<
 	CategoryQuerySchema.Type,

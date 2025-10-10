@@ -1,7 +1,7 @@
 import { Button, Tx } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
+import type { CategoryGroupSchema } from "@zbav-se.me/common";
 import type { FC } from "react";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { CategoryListCls } from "~/app/category-group/ui/CategoryListCls";
 
 export namespace CategoryList {

@@ -1,6 +1,6 @@
 import { Status, Tx, type useSelection } from "@use-pico/client";
+import type { CategoryGroupSchema } from "@zbav-se.me/common";
 import { type FC, useRef } from "react";
-import type { CategoryGroupSchema } from "~/app/category-group/db/CategoryGroupSchema";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
 import { Sheet } from "~/app/sheet/Sheet";

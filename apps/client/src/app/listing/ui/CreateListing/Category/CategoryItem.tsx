@@ -1,11 +1,11 @@
 import { Status, Tx, type useSelection } from "@use-pico/client";
 import { type FC, useRef } from "react";
-import type { CategorySchema } from "~/app/category/db/CategorySchema";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
+import type { CategorySchema } from "../../../../../../../../packages/@zbav-se.me/common/src/category/CategorySchema";
 
 export namespace CategoryItem {
 	export interface Props {
