@@ -37,16 +37,13 @@ jobs:
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
                   echo "OK: required variables present."
 
-    client-build-and-cdn:
+    client-build:
         name: Build client & update CDN
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
         env:
             VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
-            BUNNY_HOST: ${{ vars.BUNNY_HOST }}
-            BUNNY_USER: ${{ vars.BUNNY_USER }}
-            BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
         steps:
             - uses: actions/checkout@v4
 
@@ -63,7 +60,7 @@ jobs:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
-            - name: Prepare Vercel output
+            - name: Prepare Vercel output (prebuilt SPA)
               working-directory: apps/client
               run: |
                   rm -rf .vercel/output
@@ -79,6 +76,27 @@ jobs:
                   }
                   JSON
 
+            - name: Upload artifact (client prebuilt)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: client
+                  path: apps/client/.vercel/output
+
+    bunny-cdn:
+        name: Update CDN (Bunny)
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [client-build]
+        env:
+            BUNNY_HOST: ${{ vars.BUNNY_HOST }}
+            BUNNY_USER: ${{ vars.BUNNY_USER }}
+            BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: client
+                  path: apps/client/.vercel/output
+
             - name: Prepare rclone config
               run: |
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
@@ -93,11 +111,11 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Update CDN
+            - name: Upload assets to Bunny (SFTP, skip unchanged, in-place)
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      copy /github/workspace/apps/client/dist/assets bunny:/assets
+                      copy /github/workspace/apps/client/.vercel/output/static/assets bunny:/assets
                       --config /github/workspace/rclone.conf
                       --ignore-existing
                       --inplace
@@ -110,21 +128,11 @@ jobs:
                       --low-level-retries=10
                       --verbose
 
-            - name: Strip assets
-              working-directory: apps/client
-              run: rm -rf .vercel/output/static/assets || true
-
-            - name: Upload artifact
-              uses: actions/upload-artifact@v4
-              with:
-                  name: client
-                  path: apps/client/.vercel/output
-
     vercel-client:
         name: Deploy client to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [build-and-cdn]
+        needs: [client-build]
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
@@ -132,16 +140,20 @@ jobs:
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: fe-prebuilt
+                  name: client
                   path: apps/client/.vercel/output
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
+            - name: Strip assets before deploy (keep only index.html etc.)
+              working-directory: apps/client
+              run: rm -rf .vercel/output/static/assets || true
+
             - name: Deploy FE (prebuilt, production)
               working-directory: apps/client
               run: |
                   bunx -y vercel@latest deploy \
-                  --prebuilt \
-                  --prod --yes \
-                  --token "$VERCEL_TOKEN"
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
