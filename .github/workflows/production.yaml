@@ -146,5 +146,4 @@ jobs:
                   bunx -y vercel@latest deploy "$GITHUB_WORKSPACE/.vercel/output" \
                     --prebuilt \
                     --prod --yes \
-                    --token "$VERCEL_TOKEN" \
-                    --scope "$VERCEL_ORG_ID"
+                    --token "$VERCEL_TOKEN"
