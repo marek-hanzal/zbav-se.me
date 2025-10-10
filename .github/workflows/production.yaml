@@ -121,7 +121,7 @@ jobs:
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }} # poskytneme přes ENV
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -131,14 +131,9 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Vercel link (non-interactive)
+            - name: Deploy FE (production, prebuilt artifact)
               run: |
-                  bunx -y vercel@latest link \
-                    --yes \
-                    --token "$VERCEL_TOKEN"
-
-            - name: Deploy FE (production)
-              run: |
-                  bunx -y vercel@latest deploy dist \
+                  bun x -y vercel@latest deploy "$GITHUB_WORKSPACE/dist" \
+                    --prebuilt \
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
