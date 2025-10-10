@@ -89,17 +89,11 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Test FTP auth (list root)
-              uses: docker://rclone/rclone:1.66
-              with:
-                  args: >
-                      lsd bunny:/ --config /github/workspace/rclone.conf
-
-            - name: Ensure target directory exists (/assets)
-              uses: docker://rclone/rclone:1.66
-              with:
-                  args: >
-                      mkdir bunny:/assets --config /github/workspace/rclone.conf
+            # - name: Ensure target directory exists (/assets)
+            #   uses: docker://rclone/rclone:1.66
+            #   with:
+            #       args: >
+            #           mkdir bunny:/assets --config /github/workspace/rclone.conf
 
             - name: Sync assets to Bunny via rclone (skip unchanged)
               uses: docker://rclone/rclone:1.66
