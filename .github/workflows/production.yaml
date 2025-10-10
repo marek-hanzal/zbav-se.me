@@ -237,12 +237,36 @@ jobs:
                   restore-keys: |
                       server-nm-${{ runner.os }}-bun-
 
-            - name: Install dependencies (root)
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
+
+            - name: Install dependencies (root, workspace)
               run: bun install
 
-            - name: Deploy to Vercel
+            - name: Install dependencies (server, isolated)
+              working-directory: apps/server
+              run: bun install --linker=isolated
+
+            - name: Vercel pull (prod env + project)
+              working-directory: apps/server
+              run: |
+                  bunx -y vercel@latest pull \
+                  --yes --environment=production \
+                  --token "$VERCEL_TOKEN"
+
+            - name: Vercel build (local Build Output v3)
+              working-directory: apps/server
+              run: bunx -y vercel@latest build
+
+            - name: Deploy prebuilt to Vercel
               working-directory: apps/server
               run: |
                   bunx -y vercel@latest deploy \
-                    --prod --yes \
-                    --token "$VERCEL_TOKEN"
+                  --prebuilt \
+                  --prod --yes \
+                  --token "$VERCEL_TOKEN"
