@@ -38,7 +38,7 @@ jobs:
                   echo "OK: required variables present."
 
     client-build:
-        name: Build client & update CDN
+        name: Build client
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -83,7 +83,7 @@ jobs:
                   path: apps/client/.vercel/output
 
     bunny-cdn:
-        name: Update CDN (Bunny)
+        name: Update CDN
         runs-on: ubuntu-latest
         environment: production
         needs: [client-build]
