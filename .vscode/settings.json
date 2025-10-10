@@ -155,6 +155,7 @@
 		"Phong",
 		"phpenmod",
 		"PHPSTORM",
+		"pipefail",
 		"postrotate",
 		"prerun",
 		"proicons",
