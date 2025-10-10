@@ -20,6 +20,7 @@ jobs:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
+            VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
             VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
@@ -31,6 +32,7 @@ jobs:
                   : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
                   : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
                   : "${VERCEL_CLIENT_PROJECT_ID:?VERCEL_CLIENT_PROJECT_ID missing}"
+                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
                   : "${VITE_ASSET_BASE:?VITE_ASSET_BASE missing}"
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
                   : "${BUNNY_USER:?BUNNY_USER missing}"
@@ -201,5 +203,35 @@ jobs:
               run: |
                   bunx -y vercel@latest deploy \
                     --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
+
+    vercel-server:
+        name: Deploy server to Vercel
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [validate-env]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
+
+            - name: Deploy to Vercel
+              working-directory: apps/server
+              run: |
+                  bunx -y vercel@latest deploy \
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
