@@ -151,6 +151,7 @@ jobs:
                   args: >
                       --config /github/workspace/rclone.conf
                       copy /github/workspace/apps/client/.vercel/output/static bunny:/
+                      --inplace
                       --include "/favicon*.ico"
                       --include "/favicon*.png"
                       --include "/favicon*.svg"
