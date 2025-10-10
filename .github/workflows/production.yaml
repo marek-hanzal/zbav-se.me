@@ -80,12 +80,10 @@ jobs:
                   OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
                   cat > "$CONF" <<EOF
                   [bunny]
-                  type = ftp
+                  type = sftp
                   host = ${BUNNY_HOST}
                   user = ${BUNNY_USER}
                   pass = ${OBF}
-                  port = 21
-                  explicit_tls = true
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
@@ -102,7 +100,7 @@ jobs:
                       copy /github/workspace/apps/client/dist/assets bunny:/assets
                       --config /github/workspace/rclone.conf
                       --ignore-existing
-                      --transfers=8
+                      --transfers=2
                       --checkers=8
                       --no-traverse
                       --timeout=2m
