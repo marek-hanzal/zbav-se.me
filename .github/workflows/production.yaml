@@ -87,6 +87,7 @@ jobs:
                   host = ${BUNNY_HOST}
                   user = ${BUNNY_USER}
                   pass = $(rclone obscure "${BUNNY_TOKEN}")
+                  port = 22
                   EOF
 
             - name: Sync assets to Bunny via rclone (skip unchanged)
