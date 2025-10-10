@@ -221,13 +221,21 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache bunx packages (~/.bun)
+            - name: Cache node_modules (root)
               uses: actions/cache@v4
               with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
+                  path: node_modules
+                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
                   restore-keys: |
-                      bunx-cache-${{ runner.os }}-
+                      root-nm-${{ runner.os }}-bun-
+
+            - name: Cache node_modules (server, isolated)
+              uses: actions/cache@v4
+              with:
+                  path: apps/server/node_modules
+                  key: server-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      server-nm-${{ runner.os }}-bun-
 
             - name: Install dependencies (root)
               run: bun install
