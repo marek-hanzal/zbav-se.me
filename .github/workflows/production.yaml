@@ -50,9 +50,16 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
+            - name: Cache client "node_modules"
+              uses: actions/cache@v4
+              with:
+                  path: apps/client/node_modules
+                  key: client-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      client-nm-${{ runner.os }}-bun-
+
             - name: Install dependencies
-              working-directory: apps/client
-              run: bun install --linker=isolated
+              run: bun install --linker=isolated --frozen-lockfile
 
             - name: Build client
               working-directory: apps/client
@@ -145,6 +152,14 @@ jobs:
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
+
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
 
             - name: Strip assets
               working-directory: apps/client
