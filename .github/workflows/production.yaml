@@ -37,7 +37,7 @@ jobs:
                   : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
                   echo "OK: required variables present."
-                  echo "VITE_ASSET_BASE length: ${#VITE_ASSET_BASE}"
+                  echo "VITE_ASSET_BASE length: ${VITE_ASSET_BASE}"
                   echo "BUNNY_HOST: ${BUNNY_HOST}"
                   echo "BUNNY_USER: ${BUNNY_USER}"
                   echo "BUNNY_TOKEN length: ${#BUNNY_TOKEN}"
@@ -80,11 +80,13 @@ jobs:
                   mkdir -p "$(dirname "$CONF")"
                   cat > "$CONF" <<EOF
                   [bunny]
-                  type = sftp
+                  type = ftp
                   host = ${BUNNY_HOST}
                   user = ${BUNNY_USER}
-                  port = 22
+                  port = 21
                   pass = $(rclone obscure "${BUNNY_TOKEN}")
+                  explicit_tls = true
+                  tls = true
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
@@ -98,8 +100,8 @@ jobs:
                     --ignore-existing \
                     --transfers=16 \
                     --checkers=16 \
-                    --sftp-set-modtime=false \
                     --fast-list \
+                    --no-traverse \
                     --verbose
 
             - name: Strip assets before FE deploy (optional)
