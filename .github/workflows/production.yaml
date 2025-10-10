@@ -69,7 +69,7 @@ jobs:
                       client-nm-${{ runner.os }}-bun-
 
             - name: Install dependencies (root)
-              run: bun install --frozen-lockfile
+              run: bun install
 
             - name: Build client
               working-directory: apps/client
@@ -230,7 +230,7 @@ jobs:
                       bunx-cache-${{ runner.os }}-
 
             - name: Install dependencies (root)
-              run: bun install --frozen-lockfile
+              run: bun install
 
             - name: Deploy to Vercel
               working-directory: apps/server
