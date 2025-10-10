@@ -126,17 +126,24 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Update CDN
+            - name: Drop remote /assets (delete everything)
+              uses: docker://rclone/rclone:1.66
+              continue-on-error: true
+              with:
+                  args: >
+                      purge bunny:/assets
+                      --config /github/workspace/rclone.conf
+                      --verbose
+
+            - name: Upload new /assets (fresh copy)
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
                       copy /github/workspace/apps/client/.vercel/output/static/assets bunny:/assets
                       --config /github/workspace/rclone.conf
-                      --ignore-existing
-                      --inplace
                       --sftp-set-modtime=false
-                      --transfers=4
-                      --checkers=8
+                      --transfers=8
+                      --checkers=16
                       --no-traverse
                       --timeout=2m
                       --retries=5

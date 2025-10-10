@@ -2,6 +2,7 @@ import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
+import { ThemeCls } from "~/app/ui/ThemeCls";
 import "~/assets/style.css";
 
 export const Route = createRootRouteWithContext<{
@@ -11,7 +12,7 @@ export const Route = createRootRouteWithContext<{
 		const { queryClient } = Route.useRouteContext();
 
 		return (
-			<TokenProvider cls={PicoCls}>
+			<TokenProvider cls={PicoCls.use(ThemeCls)}>
 				<QueryClientProvider client={queryClient}>
 					<Container
 						height="dvh"
