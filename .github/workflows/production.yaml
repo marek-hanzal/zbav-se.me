@@ -131,17 +131,18 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Deploy FE (production) via bunx
+            - name: Vercel link (non-interactive)
               run: |
-                  bun x -y vercel@latest pull \
+                  bunx -y vercel@latest link \
                     --yes \
-                    --environment=production \
-                    --token "$VERCEL_TOKEN" \
                     --scope "$VERCEL_ORG_ID" \
-                    --project "$VERCEL_CLIENT_PROJECT_ID"
+                    --project "$VERCEL_CLIENT_PROJECT_ID" \
+                    --token "$VERCEL_TOKEN"
 
-                  bun x -y vercel@latest deploy dist \
+            - name: Deploy FE (production)
+              run: |
+                  bunx -y vercel@latest deploy dist \
                     --prod --yes \
-                    --token "$VERCEL_TOKEN" \
                     --scope "$VERCEL_ORG_ID" \
-                    --project "$VERCEL_CLIENT_PROJECT_ID"
+                    --project "$VERCEL_CLIENT_PROJECT_ID" \
+                    --token "$VERCEL_TOKEN"
