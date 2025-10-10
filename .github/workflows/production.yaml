@@ -126,16 +126,7 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Drop remote /assets (delete everything)
-              uses: docker://rclone/rclone:1.66
-              continue-on-error: true
-              with:
-                  args: >
-                      --config /github/workspace/rclone.conf
-                      purge bunny:/assets
-                      --verbose
-
-            - name: Upload new /assets (fresh copy)
+            - name: Sync CDN
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
