@@ -140,13 +140,14 @@ jobs:
               with:
                   args: >
                       --config /github/workspace/rclone.conf
-                      copy /github/workspace/apps/client/.vercel/output/static/assets bunny:/assets
+                      sync /github/workspace/apps/client/.vercel/output/static/assets bunny:/assets
+                      --inplace
                       --sftp-set-modtime=false
+                      --size-only
                       --transfers=8
                       --checkers=16
-                      --no-traverse
+                      --fast-list
                       --timeout=2m
-                      --inplace
                       --retries=5
                       --low-level-retries=10
                       --verbose
