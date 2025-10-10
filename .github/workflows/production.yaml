@@ -50,7 +50,15 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache client "node_modules"
+            - name: Cache node_modules (root)
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      root-nm-${{ runner.os }}-bun-
+
+            - name: Cache node_modules (client, isolated)
               uses: actions/cache@v4
               with:
                   path: apps/client/node_modules
@@ -58,8 +66,8 @@ jobs:
                   restore-keys: |
                       client-nm-${{ runner.os }}-bun-
 
-            - name: Install dependencies
-              run: bun install --linker=isolated --frozen-lockfile
+            - name: Install dependencies (root)
+              run: bun install --frozen-lockfile
 
             - name: Build client
               working-directory: apps/client
