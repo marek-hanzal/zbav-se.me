@@ -50,21 +50,21 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache node_modules (root)
-              uses: actions/cache@v4
-              with:
-                  path: node_modules
-                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-                  restore-keys: |
-                      root-nm-${{ runner.os }}-bun-
+            # - name: Cache node_modules (root)
+            #   uses: actions/cache@v4
+            #   with:
+            #       path: node_modules
+            #       key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+            #       restore-keys: |
+            #           root-nm-${{ runner.os }}-bun-
 
-            - name: Cache node_modules (client, isolated)
-              uses: actions/cache@v4
-              with:
-                  path: apps/client/node_modules
-                  key: client-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-                  restore-keys: |
-                      client-nm-${{ runner.os }}-bun-
+            # - name: Cache node_modules (client, isolated)
+            #   uses: actions/cache@v4
+            #   with:
+            #       path: apps/client/node_modules
+            #       key: client-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+            #       restore-keys: |
+            #           client-nm-${{ runner.os }}-bun-
 
             - name: Install dependencies (root)
               run: bun install --frozen-lockfile
@@ -161,13 +161,13 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache bunx packages (~/.bun)
-              uses: actions/cache@v4
-              with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
-                  restore-keys: |
-                      bunx-cache-${{ runner.os }}-
+            # - name: Cache bunx packages (~/.bun)
+            #   uses: actions/cache@v4
+            #   with:
+            #       path: ~/.bun
+            #       key: bunx-cache-${{ runner.os }}-v1
+            #       restore-keys: |
+            #           bunx-cache-${{ runner.os }}-
 
             - name: Strip assets
               working-directory: apps/client
