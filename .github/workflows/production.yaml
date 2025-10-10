@@ -126,7 +126,8 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Sync CDN
+            # Sync hashed assets → /assets (skip unchanged, delete extras)
+            - name: Sync CDN assets (/assets)
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
@@ -138,6 +139,27 @@ jobs:
                       --transfers=8
                       --checkers=16
                       --fast-list
+                      --timeout=2m
+                      --retries=5
+                      --low-level-retries=10
+                      --verbose
+
+            # Copy only favicon & manifest to CDN root (no deletes)
+            - name: Copy root favicon/manifest to CDN /
+              uses: docker://rclone/rclone:1.66
+              with:
+                  args: >
+                      --config /github/workspace/rclone.conf
+                      copy /github/workspace/apps/client/.vercel/output/static bunny:/
+                      --include "/favicon*.ico"
+                      --include "/favicon*.png"
+                      --include "/favicon*.svg"
+                      --include "/apple-touch-icon*.png"
+                      --include "/site.webmanifest"
+                      --exclude "*"
+                      --sftp-set-modtime=false
+                      --transfers=4
+                      --checkers=8
                       --timeout=2m
                       --retries=5
                       --low-level-retries=10
