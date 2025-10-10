@@ -11,6 +11,7 @@ import paths from "vite-tsconfig-paths";
 
 export default defineConfig({
 	clearScreen: false,
+	base: process.env.VITE_ASSET_BASE,
 	plugins: [
 		tanstackRouter({
 			target: "react",
@@ -46,5 +47,8 @@ export default defineConfig({
 	},
 	build: {
 		target: "esnext",
+		assetsDir: "assets", // keep a clean /assets namespace for CDN
+		sourcemap: true, // helpful in prod debugging; optional
+		manifest: true, // allows tooling to inspect built files; optional
 	},
 });

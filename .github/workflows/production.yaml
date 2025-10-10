@@ -1,0 +1,141 @@
+# .github/workflows/deploy-prod-monorepo.yml
+name: Prod Deploy (SERVER -> CDN assets -> FE)
+
+on:
+    push:
+        branches: ["main"]
+
+concurrency:
+    group: deploy-prod
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+
+jobs:
+    # deploy-server:
+    #     name: Deploy SERVER (Hono -> Vercel)
+    #     runs-on: ubuntu-latest
+    #     env:
+    #         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    #         VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+    #         VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+    #     steps:
+    #         - uses: actions/checkout@v4
+
+    #         - name: Use Node 22 (for Vercel CLI)
+    #           uses: actions/setup-node@v4
+    #           with:
+    #               node-version: 22
+    #               cache: npm
+
+    #         - name: Setup Bun
+    #           uses: oven-sh/setup-bun@v2
+
+    #         - name: Install deps (SERVER)
+    #           working-directory: apps/server
+    #           run: bun install --linker=isolated
+
+    #         - name: Build SERVER
+    #           working-directory: apps/server
+    #           run: bun run build
+
+    #         - name: Deploy SERVER (production)
+    #           working-directory: apps/server
+    #           run: |
+    #               npm i -g vercel@latest
+    #               vercel pull --yes --environment=production --token "$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID"
+    #               vercel deploy \
+    #                 --prod --yes \
+    #                 --token "$VERCEL_TOKEN" \
+    #                 --scope "$VERCEL_ORG_ID" \
+    #                 --project "$VERCEL_SERVER_PROJECT_ID"
+
+    upload-assets:
+        name: Build FE & Upload assets to Bunny (rclone SFTP)
+        runs-on: ubuntu-latest
+        # needs: [deploy-server]
+        env:
+            VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }} # e.g. https://cdn.zbav-se.me/
+            BUNNY_HOST: ${{ vars.BUNNY_HOST }} # e.g. storage.bunnycdn.com
+            BUNNY_USER: ${{ vars.BUNNY_USER }} # Bunny Storage username (zone name)
+            BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }} # Storage Access Key
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Install deps (FE)
+              working-directory: apps/client
+              run: bun install --linker=isolated
+
+            - name: Build FE (Vite) with CDN base
+              working-directory: apps/client
+              env:
+                  VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
+              run: bun run build
+
+            - name: Install rclone
+              run: curl -fsSL https://rclone.org/install.sh | sudo bash
+
+            - name: Configure rclone remote (SFTP -> Bunny Storage)
+              run: |
+                  cat > rclone.conf <<EOF
+                  [bunny]
+                  type = sftp
+                  host = ${BUNNY_HOST}
+                  user = ${BUNNY_USER}
+                  pass = $(rclone obscure "${BUNNY_TOKEN}")
+                  EOF
+
+            - name: Sync assets to Bunny via rclone (skip unchanged)
+              working-directory: apps/client
+              run: |
+                  rclone --config ../rclone.conf copy "dist/assets" bunny:/assets \
+                    --ignore-existing \
+                    --transfers=16 \
+                    --checkers=16 \
+                    --sftp-set-modtime=false \
+                    --fast-list \
+                    --verbose
+
+            - name: Strip assets before FE deploy (optional)
+              working-directory: apps/client
+              run: rm -rf dist/assets
+
+            - name: Save FE dist for next job
+              uses: actions/upload-artifact@v4
+              with:
+                  name: fe-dist
+                  path: apps/client/dist
+
+    deploy-fe:
+        name: Deploy FE (Vercel, production)
+        runs-on: ubuntu-latest
+        needs: [upload-assets]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: fe-dist
+                  path: dist
+
+            - name: Use Node 22 (for Vercel CLI)
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: npm
+
+            - name: Deploy FE (production)
+              run: |
+                  npm i -g vercel@latest
+                  vercel pull --yes --environment=production --token "$VERCEL_TOKEN" --scope "$VERCEL_ORG_ID"
+                  vercel deploy dist \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN" \
+                    --scope "$VERCEL_ORG_ID" \
+                    --project "$VERCEL_CLIENT_PROJECT_ID"
