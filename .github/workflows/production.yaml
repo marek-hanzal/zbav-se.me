@@ -261,7 +261,7 @@ jobs:
 
             - name: Vercel build (local Build Output v3)
               working-directory: apps/server
-              run: bunx -y vercel@latest build
+              run: bunx -y vercel@latest build --prod
 
             - name: Deploy prebuilt to Vercel
               working-directory: apps/server
