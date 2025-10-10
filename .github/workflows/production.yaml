@@ -141,15 +141,7 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Sanity check prebuilt
-              working-directory: apps/client
-              run: |
-                  test -f ".vercel/output/config.json" || { echo "config.json missing"; exit 1; }
-                  test -d ".vercel/output/static" || { echo "static/ missing"; exit 1; }
-                  ls -la .vercel/output | sed -n '1,100p'
-
             - name: Deploy FE (prebuilt, production)
-              working-directory: apps/client
               run: |
                   bunx -y vercel@latest deploy \
                   --prebuilt \
