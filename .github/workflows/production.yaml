@@ -142,6 +142,7 @@ jobs:
               uses: oven-sh/setup-bun@v2
 
             - name: Deploy FE (prebuilt, production)
+              working-directory: apps/client
               run: |
                   bunx -y vercel@latest deploy \
                   --prebuilt \
