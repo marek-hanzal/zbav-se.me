@@ -76,24 +76,44 @@ jobs:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
+            # ... tvůj workflow beze změn až do rclone části
+
             - name: Install rclone
               run: curl -fsSL https://rclone.org/install.sh | sudo bash
 
             - name: Configure rclone remote (SFTP -> Bunny Storage)
               run: |
-                  cat > rclone.conf <<EOF
+                  CONF="$RUNNER_TEMP/rclone.conf"
+                  mkdir -p "$(dirname "$CONF")"
+                  cat > "$CONF" <<EOF
                   [bunny]
                   type = sftp
                   host = ${BUNNY_HOST}
                   user = ${BUNNY_USER}
-                  pass = $(rclone obscure "${BUNNY_TOKEN}")
                   port = 22
+                  pass = $(rclone obscure "${BUNNY_TOKEN}")
                   EOF
+                  echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
+
+            - name: Sanity check (do not leak secrets)
+              run: |
+                  echo "Host: $BUNNY_HOST"
+                  echo "User: $BUNNY_USER"
+                  echo "Token length: ${#BUNNY_TOKEN}"
+                  # port reachability
+                  nc -vz "$BUNNY_HOST" 22 || true
+                  # show rclone config with obscured password
+                  rclone config show --config "$RCLONE_CONFIG" | sed -E 's/(pass = ).+/\1<obscured>/'
+
+            - name: Test SFTP auth (dry list)
+              run: |
+                  # -vv for verbose SSH handshake logs (still safe, pass remains obscured)
+                  rclone -vv lsd bunny:/ || exit 1
 
             - name: Sync assets to Bunny via rclone (skip unchanged)
               working-directory: apps/client
               run: |
-                  rclone --config ../../rclone.conf copy "dist/assets" bunny:/assets \
+                  rclone --config "$RCLONE_CONFIG" copy "dist/assets" bunny:/assets \
                     --ignore-existing \
                     --transfers=16 \
                     --checkers=16 \
