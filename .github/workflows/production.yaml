@@ -92,7 +92,7 @@ jobs:
             - name: Sync assets to Bunny via rclone (skip unchanged)
               working-directory: apps/client
               run: |
-                  rclone --config ../rclone.conf copy "dist/assets" bunny:/assets \
+                  rclone --config ../../rclone.conf copy "dist/assets" bunny:/assets \
                     --ignore-existing \
                     --transfers=16 \
                     --checkers=16 \
