@@ -121,7 +121,7 @@ jobs:
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-            VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -135,14 +135,10 @@ jobs:
               run: |
                   bunx -y vercel@latest link \
                     --yes \
-                    --scope "$VERCEL_ORG_ID" \
-                    --project "$VERCEL_CLIENT_PROJECT_ID" \
                     --token "$VERCEL_TOKEN"
 
             - name: Deploy FE (production)
               run: |
                   bunx -y vercel@latest deploy dist \
                     --prod --yes \
-                    --scope "$VERCEL_ORG_ID" \
-                    --project "$VERCEL_CLIENT_PROJECT_ID" \
                     --token "$VERCEL_TOKEN"
