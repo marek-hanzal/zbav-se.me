@@ -1,12 +1,9 @@
 {
 	"extends": "@use-pico/tsconfig/common.json",
 	"compilerOptions": {
-		"rootDir": "src"
+		"jsxImportSource": "hono/jsx",
+		"outDir": "./dist"
 	},
-	"include": [
-		"src/**/*",
-		"src/**/*.json"
-	],
 	"exclude": [
 		"node_modules"
 	]
