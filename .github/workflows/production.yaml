@@ -98,6 +98,7 @@ jobs:
               with:
                   name: client
                   path: apps/client/.vercel/output
+                  include-hidden-files: true
 
     server-build:
         name: Build server
@@ -142,6 +143,7 @@ jobs:
               with:
                   name: server
                   path: apps/server/.vercel/output
+                  include-hidden-files: true
 
     bunny-cdn:
         name: Update CDN
