@@ -4,7 +4,7 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import { Button, Container, ls, Tx, UserIcon } from "@use-pico/client";
-import { authClient } from "~/app/auth/authClient";
+import { usePasskeyMutation } from "~/app/auth/usePasskeyMutation";
 import { useSignOutMutation } from "~/app/auth/useSignOutMutation";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -24,6 +24,12 @@ export const Route = createFileRoute("/$locale/n/user")({
 						locale,
 					},
 				});
+			},
+		});
+
+		const passkeyMutation = usePasskeyMutation.useMutation({
+			onError(error) {
+				console.error(error);
 			},
 		});
 
@@ -52,11 +58,8 @@ export const Route = createFileRoute("/$locale/n/user")({
 					</Button>
 
 					<Button
-						onClick={async () => {
-							await authClient.passkey.addPasskey({
-								name: "example-passkey-name",
-								authenticatorAttachment: "cross-platform",
-							});
+						onClick={() => {
+							passkeyMutation.mutate("zbav-se.me");
 						}}
 					>
 						<Tx label={"Add passkey"} />

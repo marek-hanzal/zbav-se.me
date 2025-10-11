@@ -7,7 +7,7 @@ export const auth = betterAuth({
 	database: dialect,
 	plugins: [
 		passkey({
-			rpID: "zbav-se.me",
+			rpID: new URL(__ORIGIN__).hostname,
 			rpName: "zbav-se.me",
 		}),
 	],
