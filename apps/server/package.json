@@ -4,8 +4,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "PORT=4089 bun run --watch src/dev.ts",
-		"typecheck": "tsc --noEmit",
-		"build": "tsc --noEmit"
+		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
 		"@use-pico/common": "5.0.65",
