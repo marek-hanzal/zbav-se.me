@@ -19,5 +19,6 @@ export default defineNitroConfig({
 	srcDir: "src",
 	replace: {
 		__ORIGIN__: JSON.stringify(process.env.ORIGIN),
+		__DATABASE_URL__: JSON.stringify(process.env.DATABASE_URL),
 	},
 });

@@ -1,8 +1,28 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { database } from "../database/kysely";
 
 const MigrationSchema = z
 	.object({
-		status: z.boolean(),
+		migrationName: z.string().openapi({
+			description: "Migration name run",
+		}),
+		direction: z
+			.enum([
+				"Up",
+				"Down",
+			])
+			.openapi({
+				description: "Migration direction",
+			}),
+		status: z
+			.enum([
+				"Success",
+				"Error",
+				"NotExecuted",
+			])
+			.openapi({
+				description: "Migration status",
+			}),
 	})
 	.openapi("Migration");
 
@@ -17,16 +37,14 @@ migrationRoot.openapi(
 			200: {
 				content: {
 					"application/json": {
-						schema: MigrationSchema,
+						schema: z.array(MigrationSchema).optional(),
 					},
 				},
 				description: "Executes app migrations",
 			},
 		},
 	}),
-	(c) => {
-		return c.json({
-			status: true,
-		});
+	async (c) => {
+		return c.json(await database.migrate());
 	},
 );

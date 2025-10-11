@@ -10,6 +10,7 @@
 		"zod": "4.1.12"
 	},
 	"devDependencies": {
+		"@types/node": "24.7.2",
 		"@use-pico/tsconfig": "5.0.0",
 		"orval": "7.13.2",
 		"typescript": "^5.9.3"

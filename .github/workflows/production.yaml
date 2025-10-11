@@ -27,6 +27,7 @@ jobs:
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
             BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
         steps:
             - name: Check required vars (fail fast)
               run: |
@@ -41,6 +42,7 @@ jobs:
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
                   : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
+                  : "${DATABASE_URL:?DATABASE_URL missing}"
                   echo "OK: required variables present."
 
     client-build:
@@ -115,6 +117,7 @@ jobs:
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
             ORIGIN: ${{ vars.ORIGIN }}
+            DATABASE_URL: ${{ secrets.DATABASE_URL }}
         steps:
             - uses: actions/checkout@v4
 
