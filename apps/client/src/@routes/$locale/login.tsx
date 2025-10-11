@@ -9,32 +9,30 @@ import { Button, Container, FormField, Tx } from "@use-pico/client";
 import { authClient } from "~/app/auth/authClient";
 import { Sheet } from "~/app/sheet/Sheet";
 
-interface RegisterFormData {
+interface LoginFormData {
 	email: string;
 	password: string;
-	name: string;
 }
 
-export const Route = createFileRoute("/$locale/register")({
+export const Route = createFileRoute("/$locale/login")({
 	component() {
 		const { locale } = useParams({
 			from: "/$locale",
 		});
 		const navigate = useNavigate();
 
-		const registerMutation = useMutation({
-			mutationFn: async (data: RegisterFormData) => {
-				const result = await authClient.signUp.email(data);
+		const loginMutation = useMutation({
+			mutationFn: async (data: LoginFormData) => {
+				const result = await authClient.signIn.email(data);
 
 				if (result.error) {
-					throw new Error(
-						result.error.message || "Registration failed",
-					);
+					throw new Error(result.error.message || "Login failed");
 				}
 
 				return result.data;
 			},
 			onSuccess: () => {
+				// Redirect to home page on success
 				navigate({
 					to: "/$locale/n/feed",
 					params: {
@@ -48,14 +46,11 @@ export const Route = createFileRoute("/$locale/register")({
 			defaultValues: {
 				email: "",
 				password: "",
-				confirmPassword: "",
-				name: "",
 			},
 			onSubmit: async ({ value }) => {
-				registerMutation.mutate({
+				loginMutation.mutate({
 					email: value.email,
 					password: value.password,
-					name: value.name,
 				});
 			},
 		});
@@ -64,7 +59,7 @@ export const Route = createFileRoute("/$locale/register")({
 			<Sheet>
 				<Container square={"xl"}>
 					<Tx
-						label={"Register"}
+						label={"Login"}
 						size={"xl"}
 					/>
 
@@ -76,48 +71,6 @@ export const Route = createFileRoute("/$locale/register")({
 						}}
 						className={"space-y-4"}
 					>
-						<form.Field
-							name={"name"}
-							validators={{
-								onChange: ({ value }) => {
-									if (!value || value.length < 2) {
-										return {
-											message:
-												"Name must be at least 2 characters",
-										};
-									}
-									return undefined;
-								},
-							}}
-						>
-							{(field) => (
-								<FormField
-									label={<Tx label={"Name"} />}
-									meta={field.state.meta}
-								>
-									{() => (
-										<input
-											type={"text"}
-											value={field.state.value}
-											onChange={(e) =>
-												field.handleChange(
-													e.target.value,
-												)
-											}
-											onBlur={field.handleBlur}
-											placeholder={"Enter your name"}
-											className={
-												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											}
-											disabled={
-												registerMutation.isPending
-											}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.Field>
-
 						<form.Field
 							name={"email"}
 							validators={{
@@ -159,9 +112,7 @@ export const Route = createFileRoute("/$locale/register")({
 											className={
 												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 											}
-											disabled={
-												registerMutation.isPending
-											}
+											disabled={loginMutation.isPending}
 										/>
 									)}
 								</FormField>
@@ -172,10 +123,9 @@ export const Route = createFileRoute("/$locale/register")({
 							name={"password"}
 							validators={{
 								onChange: ({ value }) => {
-									if (!value || value.length < 8) {
+									if (!value) {
 										return {
-											message:
-												"Password must be at least 8 characters",
+											message: "Password is required",
 										};
 									}
 									return undefined;
@@ -201,87 +151,35 @@ export const Route = createFileRoute("/$locale/register")({
 											className={
 												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
 											}
-											disabled={
-												registerMutation.isPending
-											}
+											disabled={loginMutation.isPending}
 										/>
 									)}
 								</FormField>
 							)}
 						</form.Field>
 
-						<form.Field
-							name={"confirmPassword"}
-							validators={{
-								onChangeListenTo: [
-									"password",
-								],
-								onChange: ({ value, fieldApi }) => {
-									const password =
-										fieldApi.form.getFieldValue("password");
-									if (value !== password) {
-										return {
-											message: "Passwords do not match",
-										};
-									}
-									return undefined;
-								},
-							}}
-						>
-							{(field) => (
-								<FormField
-									label={<Tx label={"Confirm Password"} />}
-									meta={field.state.meta}
-								>
-									{() => (
-										<input
-											type={"password"}
-											value={field.state.value}
-											onChange={(e) =>
-												field.handleChange(
-													e.target.value,
-												)
-											}
-											onBlur={field.handleBlur}
-											placeholder={
-												"Confirm your password"
-											}
-											className={
-												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											}
-											disabled={
-												registerMutation.isPending
-											}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.Field>
-
-						{registerMutation.isError && (
+						{loginMutation.isError && (
 							<div
 								className={
 									"rounded-md bg-red-50 p-3 text-red-700"
 								}
 							>
-								{registerMutation.error instanceof Error ? (
-									registerMutation.error.message
+								{loginMutation.error instanceof Error ? (
+									loginMutation.error.message
 								) : (
-									<Tx label={"Registration failed"} />
+									<Tx label={"Login failed"} />
 								)}
 							</div>
 						)}
 
-						{registerMutation.isSuccess && (
+						{loginMutation.isSuccess && (
 							<div
 								className={
 									"rounded-md bg-green-50 p-3 text-green-700"
 								}
 							>
 								<Tx
-									label={
-										"Registration successful! Redirecting..."
-									}
+									label={"Login successful! Redirecting..."}
 								/>
 							</div>
 						)}
@@ -293,14 +191,14 @@ export const Route = createFileRoute("/$locale/register")({
 						>
 							<Button
 								type={"submit"}
-								disabled={registerMutation.isPending}
+								disabled={loginMutation.isPending}
 								tone={"secondary"}
 								theme={"dark"}
 							>
-								{registerMutation.isPending ? (
+								{loginMutation.isPending ? (
 									<Tx label={"Please wait..."} />
 								) : (
-									<Tx label={"Register"} />
+									<Tx label={"Login"} />
 								)}
 							</Button>
 						</div>
