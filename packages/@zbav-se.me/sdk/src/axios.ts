@@ -276,13 +276,53 @@ export interface CategoryQuery {
 	sort?: CategorySort[] | null;
 }
 
+/**
+ * Migration direction
+ */
+export type MigrationDirection =
+	(typeof MigrationDirection)[keyof typeof MigrationDirection];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const MigrationDirection = {
+	Up: "Up",
+	Down: "Down",
+} as const;
+
+/**
+ * Migration status
+ */
+export type MigrationStatus =
+	(typeof MigrationStatus)[keyof typeof MigrationStatus];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const MigrationStatus = {
+	Success: "Success",
+	Error: "Error",
+	NotExecuted: "NotExecuted",
+} as const;
+
 export interface Migration {
-	status: boolean;
+	/** Migration name run */
+	migrationName: string;
+	/** Migration direction */
+	direction: MigrationDirection;
+	/** Migration status */
+	status: MigrationStatus;
 }
 
 export interface Health {
 	status: boolean;
 }
+
+/**
+ * Return a category group based on the provided query
+ */
+export const postCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
+	categoryGroupQuery: CategoryGroupQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/category-group/fetch`, categoryGroupQuery, options);
+};
 
 /**
  * Returns category groups based on provided parameters
@@ -343,7 +383,7 @@ export const postCategoryCount = <TData = AxiosResponse<Count>>(
 /**
  * This route directly executes the migrations
  */
-export const getMigrationRun = <TData = AxiosResponse<Migration>>(
+export const getMigrationRun = <TData = AxiosResponse<Migration[]>>(
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
 	return axios.get(`/migration/run`, options);
@@ -358,10 +398,11 @@ export const getHealth = <TData = AxiosResponse<Health>>(
 	return axios.get(`/health`, options);
 };
 
+export type PostCategoryGroupFetchResult = AxiosResponse<CategoryGroup>;
 export type PostCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
 export type PostCategoryGroupCountResult = AxiosResponse<Count>;
 export type PostCategoryFetchResult = AxiosResponse<Category>;
 export type PostCategoryCollectionResult = AxiosResponse<Category[]>;
 export type PostCategoryCountResult = AxiosResponse<Count>;
-export type GetMigrationRunResult = AxiosResponse<Migration>;
+export type GetMigrationRunResult = AxiosResponse<Migration[]>;
 export type GetHealthResult = AxiosResponse<Health>;

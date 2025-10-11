@@ -1,7 +1,13 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { withCount, withFetch, withList } from "@use-pico/common";
+import { database } from "../database/kysely";
 import { CountSchema } from "../schema/CountSchema";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
+import {
+	withCategoryQueryBuilder,
+	withCategoryQueryBuilderWithSort,
+} from "./withCategoryQueryBuilder";
 
 export const categoryRoot = new OpenAPIHono();
 
@@ -31,13 +37,24 @@ categoryRoot.openapi(
 			},
 		},
 	}),
-	(c) => {
-		return c.json({
-			id: "1",
-			name: "Category 1",
-			sort: 1,
-			categoryGroupId: "1",
-		});
+	async ({ json, req }) => {
+		const { filter, where, sort } = req.valid("json");
+
+		return json(
+			await withFetch({
+				select: database.kysely.selectFrom("Category").selectAll(),
+				output: CategorySchema,
+				filter,
+				where,
+				query({ select, where }) {
+					return withCategoryQueryBuilderWithSort({
+						select,
+						where,
+						sort,
+					});
+				},
+			}),
+		);
 	},
 );
 
@@ -67,8 +84,24 @@ categoryRoot.openapi(
 			},
 		},
 	}),
-	(c) => {
-		return c.json([]);
+	async ({ json, req }) => {
+		const { cursor, filter, where, sort } = req.valid("json");
+		return json(
+			await withList({
+				select: database.kysely.selectFrom("Category").selectAll(),
+				output: CategorySchema,
+				cursor,
+				filter,
+				where,
+				query({ select, where }) {
+					return withCategoryQueryBuilderWithSort({
+						select,
+						where,
+						sort,
+					});
+				},
+			}),
+		);
 	},
 );
 
@@ -97,11 +130,20 @@ categoryRoot.openapi(
 			},
 		},
 	}),
-	(c) => {
-		return c.json({
-			where: 0,
-			filter: 0,
-			total: 0,
-		});
+	async ({ json, req }) => {
+		const { filter, where } = req.valid("json");
+		return json(
+			await withCount({
+				select: database.kysely.selectFrom("Category").selectAll(),
+				filter,
+				where,
+				query({ select, where }) {
+					return withCategoryQueryBuilder({
+						select,
+						where,
+					});
+				},
+			}),
+		);
 	},
 );

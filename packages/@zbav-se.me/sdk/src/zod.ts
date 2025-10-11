@@ -7,6 +7,105 @@
 import zod from "zod";
 
 /**
+ * Return a category group based on the provided query
+ */
+export const postCategoryGroupFetchBodyCursorPageMin = 0;
+export const postCategoryGroupFetchBodyCursorSizeMax = 1000;
+
+export const postCategoryGroupFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(postCategoryGroupFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(postCategoryGroupFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category group",
+					),
+			})
+			.nullish()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category group",
+					),
+			})
+			.nullish()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"name",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category group collection"),
+			)
+			.nullish(),
+	})
+	.describe("Query object for category group collection");
+
+export const postCategoryGroupFetchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the category group"),
+		name: zod.string().describe("Name of the category group"),
+		sort: zod
+			.number()
+			.describe("Sort order (position) of the category group"),
+	})
+	.describe("Represents a group of categories a listing can be assigned to");
+
+/**
  * Returns category groups based on provided parameters
  */
 export const postCategoryGroupCollectionBodyCursorPageMin = 0;
@@ -592,9 +691,23 @@ export const postCategoryCountResponse = zod
 /**
  * This route directly executes the migrations
  */
-export const getMigrationRunResponse = zod.object({
-	status: zod.boolean(),
+export const getMigrationRunResponseItem = zod.object({
+	migrationName: zod.string().describe("Migration name run"),
+	direction: zod
+		.enum([
+			"Up",
+			"Down",
+		])
+		.describe("Migration direction"),
+	status: zod
+		.enum([
+			"Success",
+			"Error",
+			"NotExecuted",
+		])
+		.describe("Migration status"),
 });
+export const getMigrationRunResponse = zod.array(getMigrationRunResponseItem);
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
