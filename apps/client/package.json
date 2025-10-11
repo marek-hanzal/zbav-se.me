@@ -31,7 +31,7 @@
 	},
 	"devDependencies": {
 		"@iconify/json": "2.2.394",
-		"@iconify/tailwind": "1.2.0",
+		"@iconify/tailwind4": "1.0.6",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.14",
 		"@tanstack/router-plugin": "1.132.51",

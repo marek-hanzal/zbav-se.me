@@ -25,6 +25,9 @@
 149d82732fc8b67a04bb3fb42d09856cd8bf53dfbdd93100e929e091:
     ref: ID
     value: ID
+18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
+    ref: Login with passkey (title)
+    value: Přihlášení klíčem
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
     ref: Loading...
     value: Loading...
@@ -66,6 +69,9 @@
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
     ref: Edit
     value: Edit
+36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
+    ref: Login with passkey (message)
+    value: Pokud jste si přidali klíč, můžete se jím nyní snadno přihlásit.
 380bf8e0e53e1b516f997baf741bafc03e788774c3f54ae2434286eb:
     ref: Add passkey
     value: Přidat klíč
@@ -81,6 +87,9 @@
 3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
     ref: Error (toast)
     value: Error (toast)
+3bff91cf3466a36353f54c389623d992c1ff32b26665795f7c022d58:
+    ref: Login with social (message)
+    value: Na tomto ještě pracujeme, ale všechno bude!
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
     ref: My Bag (title)
     value: Můj seznam
@@ -164,6 +173,9 @@
 981cc164d88c502839617bc66786dd1986fbb81419eaa16b78e92c17:
     ref: Finish (tour)
     value: Hotovo 🙂!
+9c209af07f71915afcf31beb364f559a8fbbde0bd9d4f199ae9a4999:
+    ref: Login with social (title)
+    value: Přihlášení přes sociální sítě
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Fulltext (placeholder)
@@ -435,7 +447,8 @@ eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
     value: Další
 ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
     ref: Invalid email address
-    value: Emailová adresa nevypadá úplně jako emailová adresa - zkontrolujte ji prosím...
+    value: Emailová adresa nevypadá úplně jako emailová adresa - zkontrolujte ji
+        prosím...
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort

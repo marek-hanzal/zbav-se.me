@@ -1,5 +1,7 @@
 @import "./font.css";
 @import "tailwindcss";
+/* biome-ignore lint/suspicious/noUnknownAtRules: This is ok, really */
+@plugin "@iconify/tailwind4";
 
 /* biome-ignore lint/suspicious/noUnknownAtRules: Da Tailwind */
 @config "../../tailwind.config.ts";
