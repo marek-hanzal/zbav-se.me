@@ -1,10 +1,31 @@
-import { createFileRoute } from "@tanstack/react-router";
+import {
+	createFileRoute,
+	useNavigate,
+	useParams,
+} from "@tanstack/react-router";
 import { Button, Container, ls, Tx, UserIcon } from "@use-pico/client";
+import { useSignOutMutation } from "~/app/auth/useSignOutMutation";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
 export const Route = createFileRoute("/$locale/n/user")({
 	component() {
+		const navigate = useNavigate();
+		const { locale } = useParams({
+			from: "/$locale",
+		});
+
+		const signOutMutation = useSignOutMutation.useMutation({
+			onSuccess() {
+				navigate({
+					to: "/$locale/login",
+					params: {
+						locale,
+					},
+				});
+			},
+		});
+
 		return (
 			<Container layout={"vertical"}>
 				<Title icon={UserIcon}>
@@ -23,6 +44,10 @@ export const Route = createFileRoute("/$locale/n/user")({
 						}}
 					>
 						<Tx label={"Reset tours (button)"} />
+					</Button>
+
+					<Button onClick={() => signOutMutation.mutate({})}>
+						<Tx label={"Sign out"} />
 					</Button>
 				</Container>
 
