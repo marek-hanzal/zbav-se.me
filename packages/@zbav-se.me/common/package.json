@@ -9,7 +9,7 @@
 		"zod": "4.1.12"
 	},
 	"devDependencies": {
-		"@types/bun": "1.2.23",
+		"@types/bun": "1.3.0",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "^5.9.3"
 	},

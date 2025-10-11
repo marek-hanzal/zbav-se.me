@@ -99,6 +99,57 @@ jobs:
                   name: client
                   path: apps/client/.vercel/output
 
+    server-build:
+        name: Build server
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [validate-env]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache node_modules (root)
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      root-nm-${{ runner.os }}-bun-
+
+            - name: Cache node_modules (server, isolated)
+              uses: actions/cache@v4
+              with:
+                  path: apps/server/node_modules
+                  key: server-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      server-nm-${{ runner.os }}-bun-
+
+            - name: Install dependencies (root, workspace)
+              run: bun install
+
+            - name: Vercel pull (prod env + project)
+              working-directory: apps/server
+              run: |
+                  bunx -y vercel@latest pull \
+                    --yes --environment=production \
+                    --token "$VERCEL_TOKEN"
+
+            - name: Build server
+              working-directory: apps/server
+              run: bunx -y vercel@latest build --prod
+
+            - name: Upload artifact (server prebuilt)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: server
+                  path: apps/server/.vercel/output
+
     bunny-cdn:
         name: Update CDN
         runs-on: ubuntu-latest
@@ -128,13 +179,12 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            # Sync hashed assets → /assets (skip unchanged, delete extras)
-            - name: Sync CDN assets (/assets)
+            - name: Sync CDN
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      --config /github/workspace/rclone.conf
                       sync /github/workspace/apps/client/.vercel/output/static/assets bunny:/assets
+                      --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
                       --size-only
@@ -146,13 +196,12 @@ jobs:
                       --low-level-retries=10
                       --verbose
 
-            # Copy only favicon & manifest to CDN root (no deletes)
             - name: Copy root favicon/manifest to CDN /
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      --config /github/workspace/rclone.conf
                       copy /github/workspace/apps/client/.vercel/output/static bunny:/
+                      --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"
                       --include "/favicon*.png"
@@ -210,32 +259,19 @@ jobs:
         name: Deploy server to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [validate-env]
+        needs: [server-build]
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
         steps:
-            - uses: actions/checkout@v4
+            - uses: actions/download-artifact@v4
+              with:
+                  name: server
+                  path: apps/server/.vercel/output
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
-
-            - name: Cache node_modules (root)
-              uses: actions/cache@v4
-              with:
-                  path: node_modules
-                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-                  restore-keys: |
-                      root-nm-${{ runner.os }}-bun-
-
-            - name: Cache node_modules (server, isolated)
-              uses: actions/cache@v4
-              with:
-                  path: apps/server/node_modules
-                  key: server-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-                  restore-keys: |
-                      server-nm-${{ runner.os }}-bun-
 
             - name: Cache bunx packages (~/.bun)
               uses: actions/cache@v4
@@ -245,28 +281,10 @@ jobs:
                   restore-keys: |
                       bunx-cache-${{ runner.os }}-
 
-            - name: Install dependencies (root, workspace)
-              run: bun install
-
-            - name: Install dependencies (server, isolated)
-              working-directory: apps/server
-              run: bun install --linker=isolated
-
-            - name: Vercel pull (prod env + project)
-              working-directory: apps/server
-              run: |
-                  bunx -y vercel@latest pull \
-                  --yes --environment=production \
-                  --token "$VERCEL_TOKEN"
-
-            - name: Vercel build (local Build Output v3)
-              working-directory: apps/server
-              run: bunx -y vercel@latest build --prod
-
-            - name: Deploy prebuilt to Vercel
+            - name: Deploy to Vercel
               working-directory: apps/server
               run: |
                   bunx -y vercel@latest deploy \
-                  --prebuilt \
-                  --prod --yes \
-                  --token "$VERCEL_TOKEN"
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
