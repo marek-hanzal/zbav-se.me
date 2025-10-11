@@ -1,8 +1,8 @@
 import { withQuery } from "@use-pico/client";
 import {
+	apiCategoryCollection,
 	type Category,
 	type CategoryQuery,
-	postCategoryCollection,
 } from "@zbav-se.me/sdk";
 
 export const withCategoryListQuery = () => {
@@ -15,7 +15,7 @@ export const withCategoryListQuery = () => {
 			];
 		},
 		async queryFn(data) {
-			return postCategoryCollection(data).then((res) => res.data);
+			return apiCategoryCollection(data).then((res) => res.data);
 		},
 	});
 };

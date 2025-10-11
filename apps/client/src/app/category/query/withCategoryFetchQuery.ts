@@ -1,8 +1,8 @@
 import { withQuery } from "@use-pico/client";
 import {
+	apiCategoryFetch,
 	type Category,
 	type CategoryQuery,
-	postCategoryFetch,
 } from "@zbav-se.me/sdk";
 
 export const withCategoryFetchQuery = () => {
@@ -15,7 +15,7 @@ export const withCategoryFetchQuery = () => {
 			];
 		},
 		async queryFn(data) {
-			return postCategoryFetch(data).then((res) => res.data);
+			return apiCategoryFetch(data).then((res) => res.data);
 		},
 	});
 };

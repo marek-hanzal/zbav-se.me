@@ -16,6 +16,7 @@ categoryRoot.openapi(
 		method: "post",
 		path: "/category/fetch",
 		description: "Return a category based on the provided query",
+		operationId: "apiCategoryFetch",
 		request: {
 			body: {
 				content: {
@@ -63,6 +64,7 @@ categoryRoot.openapi(
 		method: "post",
 		path: "/category/collection",
 		description: "Returns categories based on provided parameters",
+		operationId: "apiCategoryCollection",
 		request: {
 			body: {
 				content: {
@@ -110,6 +112,7 @@ categoryRoot.openapi(
 		method: "post",
 		path: "/category/count",
 		description: "Returns count of categories based on provided query",
+		operationId: "apiCategoryCount",
 		request: {
 			body: {
 				content: {

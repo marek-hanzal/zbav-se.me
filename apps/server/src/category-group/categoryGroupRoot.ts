@@ -16,6 +16,7 @@ categoryGroupRoot.openapi(
 		method: "post",
 		path: "/category-group/fetch",
 		description: "Return a category group based on the provided query",
+		operationId: "apiCategoryGroupFetch",
 		request: {
 			body: {
 				content: {
@@ -63,6 +64,7 @@ categoryGroupRoot.openapi(
 		method: "post",
 		path: "/category-group/collection",
 		description: "Returns category groups based on provided parameters",
+		operationId: "apiCategoryGroupCollection",
 		request: {
 			body: {
 				content: {
@@ -110,6 +112,7 @@ categoryGroupRoot.openapi(
 		method: "post",
 		path: "/category-group/count",
 		description: "Returns count of category groups based on provided query",
+		operationId: "apiCategoryGroupCount",
 		request: {
 			body: {
 				content: {

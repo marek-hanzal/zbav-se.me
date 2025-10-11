@@ -13,9 +13,6 @@ import { withOpenApi } from "./open-api/withOpenApi";
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
  */
-declare const __ORIGIN__: string;
-declare const __COOKIE__: string;
-
 const app = withOpenApi(new OpenAPIHono());
 
 //
@@ -58,13 +55,15 @@ app.on(
 		"POST",
 		"GET",
 	],
-	"/auth/*",
+	"/api/auth/*",
 	(c) => auth.handler(c.req.raw),
 );
-app.route("/", categoryGroupRoot);
-app.route("/", categoryRoot);
-app.route("/", migrationRoot);
-app.route("/", healthRoot);
+//
+app.route("/api", categoryGroupRoot);
+app.route("/api", categoryRoot);
+app.route("/api", migrationRoot);
+app.route("/api", healthRoot);
+//
 app.get("/origin", (c) =>
 	c.json({
 		origin: __ORIGIN__,

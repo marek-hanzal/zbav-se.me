@@ -9,21 +9,21 @@ import zod from "zod";
 /**
  * Return a category group based on the provided query
  */
-export const postCategoryGroupFetchBodyCursorPageMin = 0;
-export const postCategoryGroupFetchBodyCursorSizeMax = 1000;
+export const apiCategoryGroupFetchBodyCursorPageMin = 0;
+export const apiCategoryGroupFetchBodyCursorSizeMax = 1000;
 
-export const postCategoryGroupFetchBody = zod
+export const apiCategoryGroupFetchBody = zod
 	.object({
 		cursor: zod
 			.object({
 				page: zod
 					.number()
-					.min(postCategoryGroupFetchBodyCursorPageMin)
+					.min(apiCategoryGroupFetchBodyCursorPageMin)
 					.describe("Page number (0-indexed)"),
 				size: zod
 					.number()
 					.min(1)
-					.max(postCategoryGroupFetchBodyCursorSizeMax)
+					.max(apiCategoryGroupFetchBodyCursorSizeMax)
 					.describe("Page size"),
 			})
 			.nullish()
@@ -95,7 +95,7 @@ export const postCategoryGroupFetchBody = zod
 	})
 	.describe("Query object for category group collection");
 
-export const postCategoryGroupFetchResponse = zod
+export const apiCategoryGroupFetchResponse = zod
 	.object({
 		id: zod.string().describe("ID of the category group"),
 		name: zod.string().describe("Name of the category group"),
@@ -108,21 +108,21 @@ export const postCategoryGroupFetchResponse = zod
 /**
  * Returns category groups based on provided parameters
  */
-export const postCategoryGroupCollectionBodyCursorPageMin = 0;
-export const postCategoryGroupCollectionBodyCursorSizeMax = 1000;
+export const apiCategoryGroupCollectionBodyCursorPageMin = 0;
+export const apiCategoryGroupCollectionBodyCursorSizeMax = 1000;
 
-export const postCategoryGroupCollectionBody = zod
+export const apiCategoryGroupCollectionBody = zod
 	.object({
 		cursor: zod
 			.object({
 				page: zod
 					.number()
-					.min(postCategoryGroupCollectionBodyCursorPageMin)
+					.min(apiCategoryGroupCollectionBodyCursorPageMin)
 					.describe("Page number (0-indexed)"),
 				size: zod
 					.number()
 					.min(1)
-					.max(postCategoryGroupCollectionBodyCursorSizeMax)
+					.max(apiCategoryGroupCollectionBodyCursorSizeMax)
 					.describe("Page size"),
 			})
 			.nullish()
@@ -194,7 +194,7 @@ export const postCategoryGroupCollectionBody = zod
 	})
 	.describe("Query object for category group collection");
 
-export const postCategoryGroupCollectionResponseItem = zod
+export const apiCategoryGroupCollectionResponseItem = zod
 	.object({
 		id: zod.string().describe("ID of the category group"),
 		name: zod.string().describe("Name of the category group"),
@@ -203,28 +203,28 @@ export const postCategoryGroupCollectionResponseItem = zod
 			.describe("Sort order (position) of the category group"),
 	})
 	.describe("Represents a group of categories a listing can be assigned to");
-export const postCategoryGroupCollectionResponse = zod.array(
-	postCategoryGroupCollectionResponseItem,
+export const apiCategoryGroupCollectionResponse = zod.array(
+	apiCategoryGroupCollectionResponseItem,
 );
 
 /**
  * Returns count of category groups based on provided query
  */
-export const postCategoryGroupCountBodyCursorPageMin = 0;
-export const postCategoryGroupCountBodyCursorSizeMax = 1000;
+export const apiCategoryGroupCountBodyCursorPageMin = 0;
+export const apiCategoryGroupCountBodyCursorSizeMax = 1000;
 
-export const postCategoryGroupCountBody = zod
+export const apiCategoryGroupCountBody = zod
 	.object({
 		cursor: zod
 			.object({
 				page: zod
 					.number()
-					.min(postCategoryGroupCountBodyCursorPageMin)
+					.min(apiCategoryGroupCountBodyCursorPageMin)
 					.describe("Page number (0-indexed)"),
 				size: zod
 					.number()
 					.min(1)
-					.max(postCategoryGroupCountBodyCursorSizeMax)
+					.max(apiCategoryGroupCountBodyCursorSizeMax)
 					.describe("Page size"),
 			})
 			.nullish()
@@ -296,7 +296,7 @@ export const postCategoryGroupCountBody = zod
 	})
 	.describe("Query object for category group collection");
 
-export const postCategoryGroupCountResponse = zod
+export const apiCategoryGroupCountResponse = zod
 	.object({
 		where: zod
 			.number()
@@ -313,21 +313,21 @@ export const postCategoryGroupCountResponse = zod
 /**
  * Return a category based on the provided query
  */
-export const postCategoryFetchBodyCursorPageMin = 0;
-export const postCategoryFetchBodyCursorSizeMax = 1000;
+export const apiCategoryFetchBodyCursorPageMin = 0;
+export const apiCategoryFetchBodyCursorSizeMax = 1000;
 
-export const postCategoryFetchBody = zod
+export const apiCategoryFetchBody = zod
 	.object({
 		cursor: zod
 			.object({
 				page: zod
 					.number()
-					.min(postCategoryFetchBodyCursorPageMin)
+					.min(apiCategoryFetchBodyCursorPageMin)
 					.describe("Page number (0-indexed)"),
 				size: zod
 					.number()
 					.min(1)
-					.max(postCategoryFetchBodyCursorSizeMax)
+					.max(apiCategoryFetchBodyCursorSizeMax)
 					.describe("Page size"),
 			})
 			.nullish()
@@ -423,7 +423,7 @@ export const postCategoryFetchBody = zod
 	})
 	.describe("Query object for category collection");
 
-export const postCategoryFetchResponse = zod
+export const apiCategoryFetchResponse = zod
 	.object({
 		id: zod.string().describe("ID of the category"),
 		name: zod.string().describe("Name of the category"),
@@ -437,21 +437,21 @@ export const postCategoryFetchResponse = zod
 /**
  * Returns categories based on provided parameters
  */
-export const postCategoryCollectionBodyCursorPageMin = 0;
-export const postCategoryCollectionBodyCursorSizeMax = 1000;
+export const apiCategoryCollectionBodyCursorPageMin = 0;
+export const apiCategoryCollectionBodyCursorSizeMax = 1000;
 
-export const postCategoryCollectionBody = zod
+export const apiCategoryCollectionBody = zod
 	.object({
 		cursor: zod
 			.object({
 				page: zod
 					.number()
-					.min(postCategoryCollectionBodyCursorPageMin)
+					.min(apiCategoryCollectionBodyCursorPageMin)
 					.describe("Page number (0-indexed)"),
 				size: zod
 					.number()
 					.min(1)
-					.max(postCategoryCollectionBodyCursorSizeMax)
+					.max(apiCategoryCollectionBodyCursorSizeMax)
 					.describe("Page size"),
 			})
 			.nullish()
@@ -547,7 +547,7 @@ export const postCategoryCollectionBody = zod
 	})
 	.describe("Query object for category collection");
 
-export const postCategoryCollectionResponseItem = zod
+export const apiCategoryCollectionResponseItem = zod
 	.object({
 		id: zod.string().describe("ID of the category"),
 		name: zod.string().describe("Name of the category"),
@@ -557,28 +557,28 @@ export const postCategoryCollectionResponseItem = zod
 			.describe("ID of the category group the category belongs to"),
 	})
 	.describe("Represents a category a listing can be assigned to");
-export const postCategoryCollectionResponse = zod.array(
-	postCategoryCollectionResponseItem,
+export const apiCategoryCollectionResponse = zod.array(
+	apiCategoryCollectionResponseItem,
 );
 
 /**
  * Returns count of categories based on provided query
  */
-export const postCategoryCountBodyCursorPageMin = 0;
-export const postCategoryCountBodyCursorSizeMax = 1000;
+export const apiCategoryCountBodyCursorPageMin = 0;
+export const apiCategoryCountBodyCursorSizeMax = 1000;
 
-export const postCategoryCountBody = zod
+export const apiCategoryCountBody = zod
 	.object({
 		cursor: zod
 			.object({
 				page: zod
 					.number()
-					.min(postCategoryCountBodyCursorPageMin)
+					.min(apiCategoryCountBodyCursorPageMin)
 					.describe("Page number (0-indexed)"),
 				size: zod
 					.number()
 					.min(1)
-					.max(postCategoryCountBodyCursorSizeMax)
+					.max(apiCategoryCountBodyCursorSizeMax)
 					.describe("Page size"),
 			})
 			.nullish()
@@ -674,7 +674,7 @@ export const postCategoryCountBody = zod
 	})
 	.describe("Query object for category collection");
 
-export const postCategoryCountResponse = zod
+export const apiCategoryCountResponse = zod
 	.object({
 		where: zod
 			.number()
@@ -691,7 +691,7 @@ export const postCategoryCountResponse = zod
 /**
  * This route directly executes the migrations
  */
-export const getMigrationRunResponseItem = zod.object({
+export const getApiMigrationRunResponseItem = zod.object({
 	migrationName: zod.string().describe("Migration name run"),
 	direction: zod
 		.enum([
@@ -707,11 +707,13 @@ export const getMigrationRunResponseItem = zod.object({
 		])
 		.describe("Migration status"),
 });
-export const getMigrationRunResponse = zod.array(getMigrationRunResponseItem);
+export const getApiMigrationRunResponse = zod.array(
+	getApiMigrationRunResponseItem,
+);
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
-export const getHealthResponse = zod.object({
+export const getApiHealthResponse = zod.object({
 	status: zod.boolean(),
 });

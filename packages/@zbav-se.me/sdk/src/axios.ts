@@ -317,24 +317,24 @@ export interface Health {
 /**
  * Return a category group based on the provided query
  */
-export const postCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
+export const apiCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
 	categoryGroupQuery: CategoryGroupQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.post(`/category-group/fetch`, categoryGroupQuery, options);
+	return axios.post(`/api/category-group/fetch`, categoryGroupQuery, options);
 };
 
 /**
  * Returns category groups based on provided parameters
  */
-export const postCategoryGroupCollection = <
+export const apiCategoryGroupCollection = <
 	TData = AxiosResponse<CategoryGroup[]>,
 >(
 	categoryGroupQuery: CategoryGroupQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
 	return axios.post(
-		`/category-group/collection`,
+		`/api/category-group/collection`,
 		categoryGroupQuery,
 		options,
 	);
@@ -343,66 +343,66 @@ export const postCategoryGroupCollection = <
 /**
  * Returns count of category groups based on provided query
  */
-export const postCategoryGroupCount = <TData = AxiosResponse<Count>>(
+export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
 	categoryGroupQuery: CategoryGroupQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.post(`/category-group/count`, categoryGroupQuery, options);
+	return axios.post(`/api/category-group/count`, categoryGroupQuery, options);
 };
 
 /**
  * Return a category based on the provided query
  */
-export const postCategoryFetch = <TData = AxiosResponse<Category>>(
+export const apiCategoryFetch = <TData = AxiosResponse<Category>>(
 	categoryQuery: CategoryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.post(`/category/fetch`, categoryQuery, options);
+	return axios.post(`/api/category/fetch`, categoryQuery, options);
 };
 
 /**
  * Returns categories based on provided parameters
  */
-export const postCategoryCollection = <TData = AxiosResponse<Category[]>>(
+export const apiCategoryCollection = <TData = AxiosResponse<Category[]>>(
 	categoryQuery: CategoryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.post(`/category/collection`, categoryQuery, options);
+	return axios.post(`/api/category/collection`, categoryQuery, options);
 };
 
 /**
  * Returns count of categories based on provided query
  */
-export const postCategoryCount = <TData = AxiosResponse<Count>>(
+export const apiCategoryCount = <TData = AxiosResponse<Count>>(
 	categoryQuery: CategoryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.post(`/category/count`, categoryQuery, options);
+	return axios.post(`/api/category/count`, categoryQuery, options);
 };
 
 /**
  * This route directly executes the migrations
  */
-export const getMigrationRun = <TData = AxiosResponse<Migration[]>>(
+export const getApiMigrationRun = <TData = AxiosResponse<Migration[]>>(
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.get(`/migration/run`, options);
+	return axios.get(`/api/migration/run`, options);
 };
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
-export const getHealth = <TData = AxiosResponse<Health>>(
+export const getApiHealth = <TData = AxiosResponse<Health>>(
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
-	return axios.get(`/health`, options);
+	return axios.get(`/api/health`, options);
 };
 
-export type PostCategoryGroupFetchResult = AxiosResponse<CategoryGroup>;
-export type PostCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
-export type PostCategoryGroupCountResult = AxiosResponse<Count>;
-export type PostCategoryFetchResult = AxiosResponse<Category>;
-export type PostCategoryCollectionResult = AxiosResponse<Category[]>;
-export type PostCategoryCountResult = AxiosResponse<Count>;
-export type GetMigrationRunResult = AxiosResponse<Migration[]>;
-export type GetHealthResult = AxiosResponse<Health>;
+export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>;
+export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
+export type ApiCategoryGroupCountResult = AxiosResponse<Count>;
+export type ApiCategoryFetchResult = AxiosResponse<Category>;
+export type ApiCategoryCollectionResult = AxiosResponse<Category[]>;
+export type ApiCategoryCountResult = AxiosResponse<Count>;
+export type GetApiMigrationRunResult = AxiosResponse<Migration[]>;
+export type GetApiHealthResult = AxiosResponse<Health>;
