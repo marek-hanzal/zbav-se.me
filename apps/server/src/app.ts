@@ -16,7 +16,7 @@ app.use(requestId());
 app.use(secureHeaders());
 app.use(
 	cors({
-		origin: "*",
+		origin: "zbav-se.me",
 		allowHeaders: [
 			"Content-Type",
 			"Authorization",
@@ -34,7 +34,7 @@ app.use(
 			"X-Request-Id",
 		],
 		maxAge: 600,
-		credentials: false,
+		credentials: true,
 	}),
 );
 app.use(
