@@ -447,8 +447,7 @@ eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
     value: Další
 ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
     ref: Invalid email address
-    value: Emailová adresa nevypadá úplně jako emailová adresa - zkontrolujte ji
-        prosím...
+    value: Špatně vyplněná emailová adresa...
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort

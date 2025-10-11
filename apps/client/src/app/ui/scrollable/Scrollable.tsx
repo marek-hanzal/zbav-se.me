@@ -1,5 +1,6 @@
-import { Container, Fade } from "@use-pico/client";
+import { Container } from "@use-pico/client";
 import { type FC, useRef } from "react";
+import { Fade } from "~/app/ui/fade/Fade";
 
 export namespace Scrollable {
 	export interface Props extends Container.Props {}

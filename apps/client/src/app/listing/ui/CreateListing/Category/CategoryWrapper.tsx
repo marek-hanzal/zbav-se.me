@@ -13,6 +13,7 @@ import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuer
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
+import { Fade } from "~/app/ui/fade/Fade";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
 
 export const CategoryWrapper: FC = () => {
@@ -112,23 +113,27 @@ export const CategoryWrapper: FC = () => {
 			}}
 			renderSuccess={({ data }) => {
 				return (
-					<Container
-						ref={containerRef}
-						layout={"vertical-full"}
-						overflow={"vertical"}
-						snap={"vertical-start"}
-						gap={"md"}
-					>
-						{data.map((item) => {
-							return (
-								<CategoryItem
-									key={item.id}
-									selection={categorySelection}
-									item={item}
-								/>
-							);
-						})}
-					</Container>
+					<div className="relative">
+						<Fade scrollableRef={containerRef} />
+
+						<Container
+							ref={containerRef}
+							layout={"vertical-full"}
+							overflow={"vertical"}
+							snap={"vertical-start"}
+							gap={"md"}
+						>
+							{data.map((item) => {
+								return (
+									<CategoryItem
+										key={item.id}
+										selection={categorySelection}
+										item={item}
+									/>
+								);
+							})}
+						</Container>
+					</div>
 				);
 			}}
 		/>

@@ -21,6 +21,7 @@ import { authClient } from "~/app/auth/authClient";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
+import { Fade } from "~/app/ui/fade/Fade";
 import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
 import { SocialIcon } from "~/app/ui/icon/SocialIcon";
 import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
@@ -77,40 +78,30 @@ export const Route = createFileRoute("/$locale/login")({
 		const socialNavId = useId();
 
 		return (
-			<Container>
+			<Container position={"relative"}>
 				<SnapperNav
 					containerRef={rootRef}
+					iconProps={() => ({
+						size: "sm",
+					})}
 					pages={[
 						{
 							id: emailNavId,
 							icon: "icon-[line-md--email]",
-							iconProps() {
-								return {
-									size: "sm",
-								};
-							},
 						},
 						{
 							id: passKeyNavId,
 							icon: PassKeyIcon,
-							iconProps() {
-								return {
-									size: "sm",
-								};
-							},
 						},
 						{
 							id: socialNavId,
 							icon: SocialIcon,
-							iconProps() {
-								return {
-									size: "sm",
-								};
-							},
 						},
 					]}
 					orientation={"vertical"}
 				/>
+
+				<Fade scrollableRef={rootRef} />
 
 				<Container
 					ref={rootRef}
@@ -159,7 +150,7 @@ export const Route = createFileRoute("/$locale/login")({
 									<form.AppField
 										name={"email"}
 										validators={{
-											onChange: ({ value }) => {
+											onBlur({ value }) {
 												if (!value) {
 													return {
 														message:
