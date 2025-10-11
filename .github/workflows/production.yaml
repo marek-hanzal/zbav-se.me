@@ -21,13 +21,18 @@ jobs:
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
             VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+            #
             VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
             VITE_API: ${{ vars.VITE_API }}
+            #
             ORIGIN: ${{ vars.ORIGIN }}
+            #
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
             BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
+            #
+            NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+            NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
         steps:
             - name: Check required vars (fail fast)
               run: |
@@ -42,7 +47,8 @@ jobs:
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
                   : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
-                  : "${DATABASE_URL:?DATABASE_URL missing}"
+                  : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+                  : "${NEON_API_KEY:?NEON_API_KEY missing}"
                   echo "OK: required variables present."
 
     client-build:
@@ -117,9 +123,21 @@ jobs:
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
             ORIGIN: ${{ vars.ORIGIN }}
-            DATABASE_URL: ${{ secrets.DATABASE_URL }}
         steps:
             - uses: actions/checkout@v4
+
+            - name: Resolve prod DB URL via Neon
+              id: neon
+              uses: neondatabase/create-branch-action@v6
+              with:
+                  project_id: ${{ vars.NEON_PROJECT_ID }}
+                  branch_name: production
+                  database: neondb
+                  role: neondb_owner
+                  api_key: ${{ secrets.NEON_API_KEY }}
+
+            - name: Export DATABASE_URL for subsequent steps
+              run: echo "DATABASE_URL=${{ steps.neon.outputs.db_url_pooled }}" >> $GITHUB_ENV
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
