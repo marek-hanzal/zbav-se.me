@@ -317,3 +317,21 @@ jobs:
                     --prebuilt \
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
+
+    run-migrations:
+        name: Run migrations (single-shot)
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [vercel-server]
+        steps:
+            - name: Trigger migrations endpoint
+              env:
+                  MIGRATION_URL: https://api.zbav-se.me/migration/run
+              run: |
+                  set -euo pipefail
+                  code=$(curl -sS -o /dev/null -w "%{http_code}" "$MIGRATION_URL")
+                  echo "HTTP $code from $MIGRATION_URL"
+                  if [ "$code" != "200" ] && [ "$code" != "204" ]; then
+                    echo "Migration trigger failed (expected 200/204)."
+                    exit 1
+                  fi
