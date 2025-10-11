@@ -34,6 +34,8 @@ jobs:
             #
             NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
             NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+            #
+            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
         steps:
             - name: Check required vars (fail fast)
               run: |
@@ -51,6 +53,7 @@ jobs:
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
                   : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
                   : "${NEON_API_KEY:?NEON_API_KEY missing}"
+                  : "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET missing}"
                   echo "OK: required variables present."
 
     client-build:
@@ -289,6 +292,7 @@ jobs:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
         steps:
             - uses: actions/download-artifact@v4
               with:

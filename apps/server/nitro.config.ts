@@ -21,5 +21,6 @@ export default defineNitroConfig({
 		__ORIGIN__: JSON.stringify(process.env.ORIGIN),
 		__DATABASE_URL__: JSON.stringify(process.env.DATABASE_URL),
 		__COOKIE__: JSON.stringify(process.env.COOKIE),
+		__BETTER_AUTH_SECRET__: JSON.stringify(process.env.BETTER_AUTH_SECRET),
 	},
 });
