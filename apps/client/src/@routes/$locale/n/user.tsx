@@ -27,6 +27,7 @@ export const Route = createFileRoute("/$locale/n/user")({
 			},
 		});
 
+		// TODO Trigger passkey on first login?
 		const passkeyMutation = usePasskeyMutation.useMutation({
 			onError(error) {
 				console.error(error);

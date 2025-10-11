@@ -36,6 +36,9 @@
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
+205c738caf1aaefaeea8ffbcfbcf3c2f124324663c8bd340732c7ecd:
+    ref: Registration failed
+    value: Omlouváme se, registrace se nezdařila.
 21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
     ref: Listing - Intro (tour)
     value: Nový inzerát
@@ -57,9 +60,15 @@
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
     ref: Something went wrong.
     value: Something went wrong.
+323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
+    ref: Enter your email
+    value: Zadej svůj email
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
     ref: Edit
     value: Edit
+380bf8e0e53e1b516f997baf741bafc03e788774c3f54ae2434286eb:
+    ref: Add passkey
+    value: Přidat klíč
 38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
     ref: Missing any token(s). (title)
     value: Missing any token(s). (title)
@@ -92,6 +101,9 @@
 52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
     ref: User (title)
     value: Můj účet
+54c4e7b4b5a3122ed9a673a0ac2b0df248bef02857032624aec47948:
+    ref: Register
+    value: Registrace
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
     ref: Invalid on/off value
     value: Invalid on/off value
@@ -143,6 +155,9 @@
 8d2db329f49aa5263c8c4fc3a556823963ec674600f55d4da704caa1:
     ref: Name
     value: Name
+91f3a6e4bee345872696ff6ef6b88f3aac5a451a2c531c92ddf20865:
+    ref: Login with passkey
+    value: Přihlásit se klíčem
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
     ref: Nothing here
     value: Nothing here
@@ -301,6 +316,9 @@ Condition - Overall [5] (hint):
     static: true
     value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité
         příslušenství a originální obal.
+a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
+    ref: Password
+    value: Heslo
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
@@ -328,6 +346,9 @@ af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
     ref: Invalid data provided (title)
     value: Invalid data provided (title)
+b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
+    ref: Sign out
+    value: Odhlásit se
 b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
     ref: No more items (label)
     value: No more items (label)
@@ -337,6 +358,12 @@ b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
 b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
     ref: Condition - Age (title)
     value: Věk
+b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
+    ref: Password is required
+    value: Heslo je povinné, bez něj to nepůjde...
+b77335831f6d96b4d8c89f1777bcf377ba370c854837151caaebf6b5:
+    ref: Sign in
+    value: Přihlásit se
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
     ref: Downloading file...
     value: Downloading file...
@@ -361,6 +388,9 @@ c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
         Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na
         správné nastavení štítků, které pak inzerát pomohou doručit ostatním - proto
         tady prosím dávej extra pozor na správné nastavení.
+c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
+    ref: Email
+    value: Email
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!
@@ -373,18 +403,39 @@ c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
 d04269ee27fb690931596a5274381589c9cb5d74901cab9a442cdc93:
     ref: Listing - Tags (tour)
     value: Štítky
+d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
+    ref: Enter your password
+    value: Zadej své heslo
 d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
     ref: Submit listing - status - cannot submit (title)
     value: Ještě něco málo musíš vyplnit 🙂!
+d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
+    ref: Login failed
+    value: Přihlášení se nezdařilo
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
+e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
+    ref: Email is required
+    value: Email je povinný, vyplň ho prosím...
+e4842122d706ad5b5366ce7219d5b7e0736642a370ad898f08efb8fd:
+    ref: Registration successful! Redirecting...
+    value: Registrace byla úspěšná! Momentík...
+e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
+    ref: Confirm Password
+    value: Potvrdit heslo
+e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
+    ref: Register (link)
+    value: Jste tu noví? Přidejte se!
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
     ref: Select item (label)
     value: Select item (label)
 eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
     ref: Next (tour)
     value: Další
+ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
+    ref: Invalid email address
+    value: Emailová adresa nevypadá úplně jako emailová adresa - zkontrolujte ji prosím...
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort
@@ -397,6 +448,9 @@ f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
     ref: Error
     value: Error
+f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
+    ref: Sign in (button)
+    value: Přihlásit se
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
     ref: Confirm selection (label)
     value: Confirm selection (label)
