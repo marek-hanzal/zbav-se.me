@@ -42,6 +42,20 @@ export const Route = createFileRoute("/$locale/login")({
 			},
 		});
 
+		const passkeyMutation = useMutation({
+			mutationFn: async () => {
+				return authClient.signIn.passkey();
+			},
+			onSuccess() {
+				navigate({
+					to: "/$locale/n/feed",
+					params: {
+						locale,
+					},
+				});
+			},
+		});
+
 		const form = useForm({
 			defaultValues: {
 				email: "",
@@ -200,6 +214,14 @@ export const Route = createFileRoute("/$locale/login")({
 								) : (
 									<Tx label={"Login"} />
 								)}
+							</Button>
+
+							<Button
+								onClick={() => {
+									passkeyMutation.mutate();
+								}}
+							>
+								<Tx label={"Login with passkey"} />
 							</Button>
 
 							<LinkTo
