@@ -326,7 +326,7 @@ jobs:
         steps:
             - name: Trigger migrations endpoint
               env:
-                  MIGRATION_URL: https://api.zbav-se.me/migration/run
+                  MIGRATION_URL: https://api.zbav-se.me/api/migration/run
               run: |
                   set -euo pipefail
                   code=$(curl -sS -o /dev/null -w "%{http_code}" "$MIGRATION_URL")
