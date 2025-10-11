@@ -8,14 +8,16 @@
 			"cache": false,
 			"persistent": true,
 			"env": [
-				"DATABASE_URL"
+				"DATABASE_URL",
+				"ORIGIN"
 			]
 		},
 		"preview": {
 			"cache": false,
 			"persistent": true,
 			"env": [
-				"DATABASE_URL"
+				"DATABASE_URL",
+				"ORIGIN"
 			]
 		},
 		"typecheck": {

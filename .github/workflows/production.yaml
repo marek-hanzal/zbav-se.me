@@ -23,6 +23,7 @@ jobs:
             VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
             VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
             VITE_API: ${{ vars.VITE_API }}
+            ORIGIN: ${{ vars.ORIGIN }}
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
             BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
@@ -34,6 +35,7 @@ jobs:
                   : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
                   : "${VERCEL_CLIENT_PROJECT_ID:?VERCEL_CLIENT_PROJECT_ID missing}"
                   : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
+                  : "${ORIGIN:?ORIGIN missing}"
                   : "${VITE_ASSET_BASE:?VITE_ASSET_BASE missing}"
                   : "${VITE_API:?VITE_API missing}"
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
@@ -112,6 +114,7 @@ jobs:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+            ORIGIN: ${{ vars.ORIGIN }}
         steps:
             - uses: actions/checkout@v4
 

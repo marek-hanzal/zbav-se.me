@@ -9,6 +9,8 @@ import { healthRoot } from "./health/healthRoute";
 import { migrationRoot } from "./migration/migrationRoute";
 import { withOpenApi } from "./open-api/withOpenApi";
 
+declare const __ORIGIN__: string;
+
 const app = withOpenApi(new OpenAPIHono());
 
 //
@@ -16,7 +18,7 @@ app.use(requestId());
 app.use(secureHeaders());
 app.use(
 	cors({
-		origin: "zbav-se.me",
+		origin: __ORIGIN__,
 		allowHeaders: [
 			"Content-Type",
 			"Authorization",
@@ -50,6 +52,11 @@ app.route("/", categoryGroupRoot);
 app.route("/", categoryRoot);
 app.route("/", migrationRoot);
 app.route("/", healthRoot);
+app.get("/origin", (c) =>
+	c.json({
+		origin: __ORIGIN__,
+	}),
+);
 //
 
 export default app;

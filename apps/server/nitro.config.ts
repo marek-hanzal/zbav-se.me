@@ -2,11 +2,6 @@ import { defineNitroConfig } from "nitropack/config";
 import esbuild from "rollup-plugin-esbuild";
 
 export default defineNitroConfig({
-	externals: {
-		inline: [
-			// "@use-pico/common",
-		],
-	},
 	rollupConfig: {
 		plugins: [
 			esbuild({
@@ -22,4 +17,7 @@ export default defineNitroConfig({
 	compatibilityDate: "latest",
 	preset: "vercel",
 	srcDir: "src",
+	replace: {
+		__ORIGIN__: JSON.stringify(process.env.ORIGIN),
+	},
 });
