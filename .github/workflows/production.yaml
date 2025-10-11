@@ -142,7 +142,7 @@ jobs:
 
             - name: Build server
               working-directory: apps/server
-              run: bunx -y vercel@latest build --prod
+              run: bun run build
 
             - name: Upload artifact (server prebuilt)
               uses: actions/upload-artifact@v4
