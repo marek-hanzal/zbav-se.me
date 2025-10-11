@@ -9,6 +9,9 @@ import { healthRoot } from "./health/healthRoute";
 import { migrationRoot } from "./migration/migrationRoute";
 import { withOpenApi } from "./open-api/withOpenApi";
 
+/**
+ * Origin for CORS; uses replace hack from nitro.config.ts
+ */
 declare const __ORIGIN__: string;
 
 const app = withOpenApi(new OpenAPIHono());
