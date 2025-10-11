@@ -4,6 +4,9 @@ import { dialect } from "./database/dialect";
 
 export const auth = betterAuth({
 	database: dialect,
+	trustedOrigins: [
+		__ORIGIN__,
+	],
 	emailAndPassword: {
 		enabled: true,
 	},
