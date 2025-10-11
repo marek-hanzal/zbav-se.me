@@ -1,5 +1,6 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
 import { bodyLimit } from "hono/body-limit";
+import { setCookie } from "hono/cookie";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
@@ -55,6 +56,21 @@ app.route("/", categoryGroupRoot);
 app.route("/", categoryRoot);
 app.route("/", migrationRoot);
 app.route("/", healthRoot);
+app.get("/cookie", (c) => {
+	setCookie(c, "test", "1", {
+		httpOnly: true,
+		secure: true,
+		sameSite: "None",
+		path: "/",
+		domain: ".zbav-se.me",
+		maxAge: 60 * 60,
+	});
+	c.header("Cache-Control", "no-store");
+
+	return c.json({
+		message: "yep",
+	});
+});
 app.get("/origin", (c) =>
 	c.json({
 		origin: __ORIGIN__,
