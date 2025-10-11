@@ -11,6 +11,7 @@ export const Route = createRootRouteWithContext<{
 }>()({
 	async beforeLoad() {
 		axios.defaults.baseURL = import.meta.env.VITE_API;
+		axios.defaults.withCredentials = true;
 	},
 	component() {
 		const { queryClient } = Route.useRouteContext();
