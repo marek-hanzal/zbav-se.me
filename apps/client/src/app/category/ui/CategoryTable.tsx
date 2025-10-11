@@ -7,16 +7,12 @@ import {
 	Tx,
 	withColumn,
 } from "@use-pico/client";
+import type { Category, CategoryQuery } from "@zbav-se.me/sdk";
 import type { FC } from "react";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
-import type { CategoryQuerySchema } from "../../../../../../packages/@zbav-se.me/common/src/category/CategoryQuerySchema";
-import type { CategorySchema } from "../../../../../../packages/@zbav-se.me/common/src/category/CategorySchema";
 import { withCategoryCountQuery } from "../query/withCategoryCountQuery";
 
-const { create, filter } = withColumn<
-	CategoryQuerySchema.Type,
-	CategorySchema.Type
->();
+const { create, filter } = withColumn<CategoryQuery, Category>();
 
 const columns = [
 	create({
@@ -50,8 +46,7 @@ const columns = [
 ];
 
 export namespace CategoryTable {
-	export interface Props
-		extends Table.PropsEx<CategoryQuerySchema.Type, CategorySchema.Type> {
+	export interface Props extends Table.PropsEx<CategoryQuery, Category> {
 		//
 	}
 }

@@ -1,9 +1,12 @@
 import { withQuery } from "@use-pico/client";
-import type { CountSchema } from "@use-pico/common";
-import type { CategoryQuerySchema } from "@zbav-se.me/common";
+import {
+	type CategoryQuery,
+	type Count,
+	postCategoryCount,
+} from "@zbav-se.me/sdk";
 
 export const withCategoryCountQuery = () => {
-	return withQuery<CategoryQuerySchema.Type, CountSchema.Type>({
+	return withQuery<CategoryQuery, Count>({
 		keys(data) {
 			return [
 				"category",
@@ -12,7 +15,7 @@ export const withCategoryCountQuery = () => {
 			];
 		},
 		async queryFn(data) {
-			throw new Error("Not implemented");
+			return postCategoryCount(data).then((res) => res.data);
 		},
 	});
 };

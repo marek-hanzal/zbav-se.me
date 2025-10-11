@@ -1,8 +1,8 @@
 import { Action, ArrowLeftIcon, Container, Tour } from "@use-pico/client";
 import { translator } from "@use-pico/common";
 import { type FC, useCallback, useId, useRef, useState } from "react";
-import { Category } from "~/app/listing/ui/CreateListing/Category/Category";
-import { CategoryGroup } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroup";
+import { CategoryWrapper } from "~/app/listing/ui/CreateListing/Category/CategoryWrapper";
+import { CategoryGroupWrapper } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroupWrapper";
 import { ConditionWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionWrapper";
 import { LocationWrapper } from "~/app/listing/ui/CreateListing/Location/LocationWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
@@ -108,9 +108,9 @@ export const CreateListing: FC = () => {
 				>
 					<PhotosWrapper />
 
-					<CategoryGroup />
+					<CategoryGroupWrapper />
 
-					<Category />
+					<CategoryWrapper />
 
 					<ConditionWrapper />
 

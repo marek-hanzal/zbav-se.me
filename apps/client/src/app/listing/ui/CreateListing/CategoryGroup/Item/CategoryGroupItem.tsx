@@ -1,5 +1,5 @@
 import { Status, Tx, type useSelection } from "@use-pico/client";
-import type { CategoryGroupSchema } from "@zbav-se.me/common";
+import type { CategoryGroup } from "@zbav-se.me/sdk";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
@@ -9,8 +9,8 @@ import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 
 export namespace CategoryGroupItem {
 	export interface Props {
-		selection: useSelection.Selection<CategoryGroupSchema.Type>;
-		item: CategoryGroupSchema.Type;
+		selection: useSelection.Selection<CategoryGroup>;
+		item: CategoryGroup;
 	}
 }
 

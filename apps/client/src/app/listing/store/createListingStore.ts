@@ -1,5 +1,5 @@
 import { dedupe } from "@use-pico/common";
-import type { CategoryGroupSchema, CategorySchema } from "@zbav-se.me/common";
+import type { Category, CategoryGroup } from "@zbav-se.me/sdk";
 import { create } from "zustand";
 
 export namespace createListingStore {
@@ -21,12 +21,12 @@ export namespace createListingStore {
 		setPhoto(slot: number, photo: File | undefined): void;
 		hasPhotos: boolean;
 		//
-		categoryGroup: CategoryGroupSchema.Type[];
-		setCategoryGroup(categoryGroup: CategoryGroupSchema.Type[]): void;
+		categoryGroup: CategoryGroup[];
+		setCategoryGroup(categoryGroup: CategoryGroup[]): void;
 		hasCategoryGroup: boolean;
 		//
-		category: CategorySchema.Type[];
-		setCategory(category: CategorySchema.Type[]): void;
+		category: Category[];
+		setCategory(category: Category[]): void;
 		hasCategory: boolean;
 		//
 		condition: number;

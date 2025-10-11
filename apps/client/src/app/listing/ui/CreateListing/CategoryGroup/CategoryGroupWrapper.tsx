@@ -5,18 +5,18 @@ import {
 	SpinnerIcon,
 	useSelection,
 } from "@use-pico/client";
-import type { CategoryGroupSchema } from "@zbav-se.me/common";
+import type { CategoryGroup } from "@zbav-se.me/sdk";
 import type { FC } from "react";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 
-export const CategoryGroup: FC = () => {
+export const CategoryGroupWrapper: FC = () => {
 	const useCreateListingStore = useCreateListingContext();
 	const setCategoryGroup = useCreateListingStore(
 		(store) => store.setCategoryGroup,
 	);
-	const selection = useSelection<CategoryGroupSchema.Type>({
+	const selection = useSelection<CategoryGroup>({
 		mode: "single",
 		onMulti: setCategoryGroup,
 	});

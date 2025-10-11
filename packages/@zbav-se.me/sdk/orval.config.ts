@@ -1,7 +1,7 @@
 import { defineConfig } from "orval";
 
 export default defineConfig({
-	"axios": {
+	axios: {
 		output: {
 			mode: "single",
 			target: "src/axios.ts",
@@ -11,7 +11,7 @@ export default defineConfig({
 		},
 		input: `${process.env.VITE_API}/v3/api-docs`,
 	},
-	"zod": {
+	zod: {
 		output: {
 			mode: "single",
 			target: "src/zod.ts",

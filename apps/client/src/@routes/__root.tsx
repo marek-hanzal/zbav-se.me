@@ -2,12 +2,16 @@ import { type QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createRootRouteWithContext, Outlet } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
+import axios from "axios";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import "~/assets/style.css";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
 }>()({
+	async beforeLoad() {
+		axios.defaults.baseURL = import.meta.env.VITE_API;
+	},
 	component() {
 		const { queryClient } = Route.useRouteContext();
 

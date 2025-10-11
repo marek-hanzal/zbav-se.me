@@ -1,12 +1,12 @@
 import { Button, Tx } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import type { CategoryGroupSchema } from "@zbav-se.me/common";
+import type { CategoryGroup } from "@zbav-se.me/sdk";
 import type { FC } from "react";
 import { CategoryListCls } from "~/app/category-group/ui/CategoryListCls";
 
 export namespace CategoryList {
 	export interface Props extends CategoryListCls.Props {
-		list: CategoryGroupSchema.Type[];
+		list: CategoryGroup[];
 	}
 }
 

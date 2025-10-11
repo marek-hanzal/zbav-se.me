@@ -2,9 +2,7 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 
 const HealthSchema = z
 	.object({
-		status: z.boolean().openapi({
-			example: true,
-		}),
+		status: z.boolean(),
 	})
 	.openapi("Health");
 

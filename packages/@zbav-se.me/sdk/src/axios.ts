@@ -4,41 +4,364 @@
  * zbav.se.me API
  * OpenAPI spec version: 0.5.0
  */
-import axios from 'axios';
-import type {
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios';
 
-export interface Health {
-  status: boolean;
-}
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 
-export interface Migration {
-  status: boolean;
+/**
+ * Represents a group of categories a listing can be assigned to
+ */
+export interface CategoryGroup {
+	/** ID of the category group */
+	id: string;
+	/** Name of the category group */
+	name: string;
+	/** Sort order (position) of the category group */
+	sort: number;
 }
 
 /**
- * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
+ * Cursor for pagination
+ * @nullable
  */
-export const getHealth = <TData = AxiosResponse<Health>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/health`,options
-    );
-  }
+export type Cursor = {
+	/**
+	 * Page number (0-indexed)
+	 * @minimum 0
+	 */
+	page: number;
+	/**
+	 * Page size
+	 * @minimum 1
+	 * @maximum 1000
+	 */
+	size: number;
+} | null;
+
+/**
+ * User-land filters
+ * @nullable
+ */
+export type CategoryGroupFilter = {
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category group
+	 * @nullable
+	 */
+	name?: string | null;
+} | null;
+
+/**
+ * App-based filters
+ * @nullable
+ */
+export type CategoryGroupWhere = {
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category group
+	 * @nullable
+	 */
+	name?: string | null;
+} | null;
+
+export type CategoryGroupSortValue =
+	(typeof CategoryGroupSortValue)[keyof typeof CategoryGroupSortValue];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CategoryGroupSortValue = {
+	name: "name",
+	sort: "sort",
+} as const;
+
+/**
+ * @nullable
+ */
+export type CategoryGroupSortSort =
+	| (typeof CategoryGroupSortSort)[keyof typeof CategoryGroupSortSort]
+	| null;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CategoryGroupSortSort = {
+	asc: "asc",
+	desc: "desc",
+} as const;
+
+/**
+ * Sort object for category group collection
+ */
+export interface CategoryGroupSort {
+	value: CategoryGroupSortValue;
+	/** @nullable */
+	sort?: CategoryGroupSortSort;
+}
+
+/**
+ * Query object for category group collection
+ */
+export interface CategoryGroupQuery {
+	cursor?: Cursor;
+	filter?: CategoryGroupFilter;
+	where?: CategoryGroupWhere;
+	/** @nullable */
+	sort?: CategoryGroupSort[] | null;
+}
+
+/**
+ * Complex count of items based on provided query.
+ */
+export interface Count {
+	/** Count of items based on provided where query. */
+	where: number;
+	/** Count of items based on provided filter query. */
+	filter: number;
+	/** Total count of items (no filters applied). */
+	total: number;
+}
+
+/**
+ * Represents a category a listing can be assigned to
+ */
+export interface Category {
+	/** ID of the category */
+	id: string;
+	/** Name of the category */
+	name: string;
+	/** Sort order (position) of the category */
+	sort: number;
+	/** ID of the category group the category belongs to */
+	categoryGroupId: string;
+}
+
+/**
+ * User-land filters
+ * @nullable
+ */
+export type CategoryFilter = {
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category
+	 * @nullable
+	 */
+	name?: string | null;
+	/**
+	 * This filter matches the exact id of the category group the category belongs to
+	 * @nullable
+	 */
+	categoryGroupId?: string | null;
+	/**
+	 * This filter matches the ids of the category groups the category belongs to
+	 * @nullable
+	 */
+	categoryGroupIdIn?: string[] | null;
+} | null;
+
+/**
+ * App-based filters
+ * @nullable
+ */
+export type CategoryWhere = {
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category
+	 * @nullable
+	 */
+	name?: string | null;
+	/**
+	 * This filter matches the exact id of the category group the category belongs to
+	 * @nullable
+	 */
+	categoryGroupId?: string | null;
+	/**
+	 * This filter matches the ids of the category groups the category belongs to
+	 * @nullable
+	 */
+	categoryGroupIdIn?: string[] | null;
+} | null;
+
+export type CategorySortValue =
+	(typeof CategorySortValue)[keyof typeof CategorySortValue];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CategorySortValue = {
+	name: "name",
+	sort: "sort",
+} as const;
+
+/**
+ * @nullable
+ */
+export type CategorySortSort =
+	| (typeof CategorySortSort)[keyof typeof CategorySortSort]
+	| null;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CategorySortSort = {
+	asc: "asc",
+	desc: "desc",
+} as const;
+
+/**
+ * Sort object for category collection
+ */
+export interface CategorySort {
+	value: CategorySortValue;
+	/** @nullable */
+	sort?: CategorySortSort;
+}
+
+/**
+ * Query object for category collection
+ */
+export interface CategoryQuery {
+	cursor?: Cursor;
+	filter?: CategoryFilter;
+	where?: CategoryWhere;
+	/** @nullable */
+	sort?: CategorySort[] | null;
+}
+
+export interface Migration {
+	status: boolean;
+}
+
+export interface Health {
+	status: boolean;
+}
+
+/**
+ * Returns category groups based on provided parameters
+ */
+export const postCategoryGroupCollection = <
+	TData = AxiosResponse<CategoryGroup[]>,
+>(
+	categoryGroupQuery: CategoryGroupQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(
+		`/category-group/collection`,
+		categoryGroupQuery,
+		options,
+	);
+};
+
+/**
+ * Returns count of category groups based on provided query
+ */
+export const postCategoryGroupCount = <TData = AxiosResponse<Count>>(
+	categoryGroupQuery: CategoryGroupQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/category-group/count`, categoryGroupQuery, options);
+};
+
+/**
+ * Return a category based on the provided query
+ */
+export const postCategoryFetch = <TData = AxiosResponse<Category>>(
+	categoryQuery: CategoryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/category/fetch`, categoryQuery, options);
+};
+
+/**
+ * Returns categories based on provided parameters
+ */
+export const postCategoryCollection = <TData = AxiosResponse<Category[]>>(
+	categoryQuery: CategoryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/category/collection`, categoryQuery, options);
+};
+
+/**
+ * Returns count of categories based on provided query
+ */
+export const postCategoryCount = <TData = AxiosResponse<Count>>(
+	categoryQuery: CategoryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/category/count`, categoryQuery, options);
+};
 
 /**
  * This route directly executes the migrations
  */
 export const getMigrationRun = <TData = AxiosResponse<Migration>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/migration/run`,options
-    );
-  }
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.get(`/migration/run`, options);
+};
 
-export type GetHealthResult = AxiosResponse<Health>
-export type GetMigrationRunResult = AxiosResponse<Migration>
+/**
+ * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
+ */
+export const getHealth = <TData = AxiosResponse<Health>>(
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.get(`/health`, options);
+};
+
+export type PostCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
+export type PostCategoryGroupCountResult = AxiosResponse<Count>;
+export type PostCategoryFetchResult = AxiosResponse<Category>;
+export type PostCategoryCollectionResult = AxiosResponse<Category[]>;
+export type PostCategoryCountResult = AxiosResponse<Count>;
+export type GetMigrationRunResult = AxiosResponse<Migration>;
+export type GetHealthResult = AxiosResponse<Health>;

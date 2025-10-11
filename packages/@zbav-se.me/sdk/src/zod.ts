@@ -4,19 +4,601 @@
  * zbav.se.me API
  * OpenAPI spec version: 0.5.0
  */
-import zod from 'zod';
+import zod from "zod";
 
 /**
- * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
+ * Returns category groups based on provided parameters
  */
-export const getHealthResponse = zod.object({
-  "status": zod.boolean()
-})
+export const postCategoryGroupCollectionBodyCursorPageMin = 0;
+export const postCategoryGroupCollectionBodyCursorSizeMax = 1000;
 
+export const postCategoryGroupCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(postCategoryGroupCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(postCategoryGroupCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category group",
+					),
+			})
+			.nullish()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category group",
+					),
+			})
+			.nullish()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"name",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category group collection"),
+			)
+			.nullish(),
+	})
+	.describe("Query object for category group collection");
+
+export const postCategoryGroupCollectionResponseItem = zod
+	.object({
+		id: zod.string().describe("ID of the category group"),
+		name: zod.string().describe("Name of the category group"),
+		sort: zod
+			.number()
+			.describe("Sort order (position) of the category group"),
+	})
+	.describe("Represents a group of categories a listing can be assigned to");
+export const postCategoryGroupCollectionResponse = zod.array(
+	postCategoryGroupCollectionResponseItem,
+);
+
+/**
+ * Returns count of category groups based on provided query
+ */
+export const postCategoryGroupCountBodyCursorPageMin = 0;
+export const postCategoryGroupCountBodyCursorSizeMax = 1000;
+
+export const postCategoryGroupCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(postCategoryGroupCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(postCategoryGroupCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category group",
+					),
+			})
+			.nullish()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category group",
+					),
+			})
+			.nullish()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"name",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category group collection"),
+			)
+			.nullish(),
+	})
+	.describe("Query object for category group collection");
+
+export const postCategoryGroupCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
+
+/**
+ * Return a category based on the provided query
+ */
+export const postCategoryFetchBodyCursorPageMin = 0;
+export const postCategoryFetchBodyCursorSizeMax = 1000;
+
+export const postCategoryFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(postCategoryFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(postCategoryFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category",
+					),
+				categoryGroupId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact id of the category group the category belongs to",
+					),
+				categoryGroupIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches the ids of the category groups the category belongs to",
+					),
+			})
+			.nullish()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category",
+					),
+				categoryGroupId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact id of the category group the category belongs to",
+					),
+				categoryGroupIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches the ids of the category groups the category belongs to",
+					),
+			})
+			.nullish()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"name",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category collection"),
+			)
+			.nullish(),
+	})
+	.describe("Query object for category collection");
+
+export const postCategoryFetchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the category"),
+		name: zod.string().describe("Name of the category"),
+		sort: zod.number().describe("Sort order (position) of the category"),
+		categoryGroupId: zod
+			.string()
+			.describe("ID of the category group the category belongs to"),
+	})
+	.describe("Represents a category a listing can be assigned to");
+
+/**
+ * Returns categories based on provided parameters
+ */
+export const postCategoryCollectionBodyCursorPageMin = 0;
+export const postCategoryCollectionBodyCursorSizeMax = 1000;
+
+export const postCategoryCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(postCategoryCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(postCategoryCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category",
+					),
+				categoryGroupId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact id of the category group the category belongs to",
+					),
+				categoryGroupIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches the ids of the category groups the category belongs to",
+					),
+			})
+			.nullish()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category",
+					),
+				categoryGroupId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact id of the category group the category belongs to",
+					),
+				categoryGroupIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches the ids of the category groups the category belongs to",
+					),
+			})
+			.nullish()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"name",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category collection"),
+			)
+			.nullish(),
+	})
+	.describe("Query object for category collection");
+
+export const postCategoryCollectionResponseItem = zod
+	.object({
+		id: zod.string().describe("ID of the category"),
+		name: zod.string().describe("Name of the category"),
+		sort: zod.number().describe("Sort order (position) of the category"),
+		categoryGroupId: zod
+			.string()
+			.describe("ID of the category group the category belongs to"),
+	})
+	.describe("Represents a category a listing can be assigned to");
+export const postCategoryCollectionResponse = zod.array(
+	postCategoryCollectionResponseItem,
+);
+
+/**
+ * Returns count of categories based on provided query
+ */
+export const postCategoryCountBodyCursorPageMin = 0;
+export const postCategoryCountBodyCursorSizeMax = 1000;
+
+export const postCategoryCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(postCategoryCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(postCategoryCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category",
+					),
+				categoryGroupId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact id of the category group the category belongs to",
+					),
+				categoryGroupIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches the ids of the category groups the category belongs to",
+					),
+			})
+			.nullish()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				name: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact name of the category",
+					),
+				categoryGroupId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact id of the category group the category belongs to",
+					),
+				categoryGroupIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches the ids of the category groups the category belongs to",
+					),
+			})
+			.nullish()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"name",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category collection"),
+			)
+			.nullish(),
+	})
+	.describe("Query object for category collection");
+
+export const postCategoryCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
 
 /**
  * This route directly executes the migrations
  */
 export const getMigrationRunResponse = zod.object({
-  "status": zod.boolean()
-})
+	status: zod.boolean(),
+});
+
+/**
+ * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
+ */
+export const getHealthResponse = zod.object({
+	status: zod.boolean(),
+});

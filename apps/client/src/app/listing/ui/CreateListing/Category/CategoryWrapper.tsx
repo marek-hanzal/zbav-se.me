@@ -7,22 +7,22 @@ import {
 	Tx,
 	useSelection,
 } from "@use-pico/client";
+import type { Category } from "@zbav-se.me/sdk";
 import { type FC, useEffect, useRef } from "react";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
-import type { CategorySchema } from "../../../../../../../../packages/@zbav-se.me/common/src/category/CategorySchema";
 
-export const Category: FC = () => {
+export const CategoryWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const useCreateListingStore = useCreateListingContext();
 	const setCategory = useCreateListingStore((store) => store.setCategory);
 	const categoryGroupSelection = useCreateListingStore(
 		(store) => store.categoryGroup,
 	);
-	const categorySelection = useSelection<CategorySchema.Type>({
+	const categorySelection = useSelection<Category>({
 		mode: "single",
 		onMulti: setCategory,
 	});

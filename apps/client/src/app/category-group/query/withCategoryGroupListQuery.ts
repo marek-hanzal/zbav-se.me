@@ -1,22 +1,21 @@
 import { withQuery } from "@use-pico/client";
-import type {
-	CategoryGroupQuerySchema,
-	CategoryGroupSchema,
-} from "@zbav-se.me/common";
+import {
+	type CategoryGroup,
+	type CategoryGroupQuery,
+	postCategoryGroupCollection,
+} from "@zbav-se.me/sdk";
 
 export const withCategoryGroupListQuery = () => {
-	return withQuery<CategoryGroupQuerySchema.Type, CategoryGroupSchema.Type[]>(
-		{
-			keys(data) {
-				return [
-					"category-group",
-					"list",
-					data,
-				];
-			},
-			async queryFn(data) {
-				throw new Error("Not implemented");
-			},
+	return withQuery<CategoryGroupQuery, CategoryGroup[]>({
+		keys(data) {
+			return [
+				"category-group",
+				"list",
+				data,
+			];
 		},
-	);
+		async queryFn(data) {
+			return postCategoryGroupCollection(data).then((res) => res.data);
+		},
+	});
 };

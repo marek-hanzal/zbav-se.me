@@ -1,6 +1,6 @@
-import type { CategoryQuerySchema } from "@zbav-se.me/common";
 import type { SelectQueryBuilder } from "kysely";
 import type { Database } from "../database/Database";
+import type { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 
 export namespace withCategoryQueryBuilder {
 	export interface Props {

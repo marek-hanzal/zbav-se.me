@@ -12,7 +12,6 @@
 		"@scalar/hono-api-reference": "0.9.21",
 		"@use-pico/common": "5.0.65",
 		"@use-pico/server": "5.0.65",
-		"@zbav-se.me/common": "0.5.0",
 		"hono": "4.9.11",
 		"kysely": "0.28.8",
 		"pg": "8.16.3"
@@ -23,6 +22,7 @@
 		"@types/pg": "8.15.5",
 		"h3": "1.15.4",
 		"nitropack": "2.12.7",
+		"rollup-plugin-esbuild": "6.2.1",
 		"typescript": "^5.9.3"
 	}
 }

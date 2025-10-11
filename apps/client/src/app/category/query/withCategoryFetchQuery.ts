@@ -1,8 +1,12 @@
 import { withQuery } from "@use-pico/client";
-import type { CategoryQuerySchema, CategorySchema } from "@zbav-se.me/common";
+import {
+	type Category,
+	type CategoryQuery,
+	postCategoryFetch,
+} from "@zbav-se.me/sdk";
 
 export const withCategoryFetchQuery = () => {
-	return withQuery<CategoryQuerySchema.Type, CategorySchema.Type>({
+	return withQuery<CategoryQuery, Category>({
 		keys(data) {
 			return [
 				"category",
@@ -11,7 +15,7 @@ export const withCategoryFetchQuery = () => {
 			];
 		},
 		async queryFn(data) {
-			throw new Error("Not implemented");
+			return postCategoryFetch(data).then((res) => res.data);
 		},
 	});
 };

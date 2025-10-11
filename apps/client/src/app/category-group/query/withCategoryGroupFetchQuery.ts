@@ -1,11 +1,8 @@
 import { withQuery } from "@use-pico/client";
-import type {
-	CategoryGroupQuerySchema,
-	CategoryGroupSchema,
-} from "@zbav-se.me/common";
+import type { CategoryGroup, CategoryGroupQuery } from "@zbav-se.me/sdk";
 
 export const withCategoryGroupFetchQuery = () => {
-	return withQuery<CategoryGroupQuerySchema.Type, CategoryGroupSchema.Type>({
+	return withQuery<CategoryGroupQuery, CategoryGroup>({
 		keys(data) {
 			return [
 				"category-group",
