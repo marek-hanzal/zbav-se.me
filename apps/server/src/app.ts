@@ -14,6 +14,7 @@ import { withOpenApi } from "./open-api/withOpenApi";
  * Origin for CORS; uses replace hack from nitro.config.ts
  */
 declare const __ORIGIN__: string;
+declare const __COOKIE__: string;
 
 const app = withOpenApi(new OpenAPIHono());
 
@@ -57,12 +58,12 @@ app.route("/", categoryRoot);
 app.route("/", migrationRoot);
 app.route("/", healthRoot);
 app.get("/cookie", (c) => {
-	setCookie(c, "test", "1", {
+	setCookie(c, "zbav-se.me", "1", {
 		httpOnly: true,
 		secure: true,
-		sameSite: "None",
+		sameSite: "Lax",
 		path: "/",
-		domain: ".zbav-se.me",
+		domain: __COOKIE__,
 		maxAge: 60 * 60,
 	});
 	c.header("Cache-Control", "no-store");

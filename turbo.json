@@ -9,7 +9,8 @@
 			"persistent": true,
 			"env": [
 				"DATABASE_URL",
-				"ORIGIN"
+				"ORIGIN",
+				"COOKIE"
 			]
 		},
 		"preview": {
@@ -17,7 +18,8 @@
 			"persistent": true,
 			"env": [
 				"DATABASE_URL",
-				"ORIGIN"
+				"ORIGIN",
+				"COOKIE"
 			]
 		},
 		"typecheck": {
@@ -44,7 +46,9 @@
 			],
 			"cache": false,
 			"env": [
-				"DATABASE_URL"
+				"DATABASE_URL",
+				"ORIGIN",
+				"COOKIE"
 			]
 		},
 		"translations": {
