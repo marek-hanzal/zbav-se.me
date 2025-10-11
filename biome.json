@@ -13,6 +13,7 @@
 			"!**/dist",
 			"!**/.output",
 			"!**/.nitro",
+			"!**/.vercel",
 			"!**/.tanstack"
 		]
 	},
