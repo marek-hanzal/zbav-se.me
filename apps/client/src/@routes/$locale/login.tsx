@@ -5,7 +5,7 @@ import {
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import { Button, Container, FormField, Tx } from "@use-pico/client";
+import { Button, Container, FormField, LinkTo, Tx } from "@use-pico/client";
 import { authClient } from "~/app/auth/authClient";
 import { Sheet } from "~/app/sheet/Sheet";
 
@@ -186,7 +186,7 @@ export const Route = createFileRoute("/$locale/login")({
 
 						<div
 							className={
-								"inline-flex items-center justify-center w-full"
+								"inline-flex items-center justify-center gap-4 w-full"
 							}
 						>
 							<Button
@@ -201,6 +201,15 @@ export const Route = createFileRoute("/$locale/login")({
 									<Tx label={"Login"} />
 								)}
 							</Button>
+
+							<LinkTo
+								to={"/$locale/register"}
+								params={{
+									locale,
+								}}
+							>
+								<Tx label={"Register"} />
+							</LinkTo>
 						</div>
 					</form>
 				</Container>
