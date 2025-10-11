@@ -5,6 +5,7 @@
 		"dev": "dotenv -c development -- turbo run dev --parallel --no-daemon",
 		"build": "dotenv -c development -- turbo run build --no-daemon",
 		"preview": "dotenv -c development -- turbo run preview --no-daemon",
+		"sdk": "dotenv -c development -- bun x turbo run sdk --no-daemon",
 		"translations": "turbo run translations --no-daemon",
 		"format": "biome format --write .",
 		"lint": "biome check --write .",
@@ -15,7 +16,7 @@
 		"sp:update": "bun x syncpack update",
 		"workflow:format": "run-s sp:format format",
 		"workflow:check": "run-s workflow:format lint typecheck",
-		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
+		"workflow:update": "run-s sp:fix sp:update workflow:format update sdk workflow:check"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.5",

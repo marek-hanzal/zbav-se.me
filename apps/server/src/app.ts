@@ -1,28 +1,13 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import { Scalar } from "@scalar/hono-api-reference";
-import { healthRoute } from "./route/healthRoute";
+import { healthRoot } from "./health/healthRoute";
+import { migrationRoot } from "./migration/migrationRoute";
+import { withOpenApi } from "./open-api/withOpenApi";
 
-const app = new OpenAPIHono();
-app.openapi(healthRoute, (c) => {
-	return c.json({
-		status: true,
-	});
-});
-app.get(
-	"/docs",
-	Scalar({
-		url: "/openapi.json",
-	}),
-);
+const app = withOpenApi(new OpenAPIHono());
 
-app.doc("/openapi.json", {
-	openapi: "3.0.0",
-	info: {
-		version: "0.5.0",
-		title: "zbav.se.me API",
-	},
-});
-
-app.all("*", (c) => c.text("Ahoj pyčo!"));
+//
+app.route("/", healthRoot);
+app.route("/", migrationRoot);
+//
 
 export default app;

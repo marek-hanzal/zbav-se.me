@@ -53,6 +53,12 @@
 				"src/translation/**"
 			],
 			"cache": false
+		},
+		"sdk": {
+			"cache": false,
+			"env": [
+				"VITE_API"
+			]
 		}
 	}
 }
