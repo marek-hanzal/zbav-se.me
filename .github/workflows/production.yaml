@@ -133,13 +133,6 @@ jobs:
             - name: Install dependencies (root, workspace)
               run: bun install
 
-            - name: Vercel pull (prod env + project)
-              working-directory: apps/server
-              run: |
-                  bunx -y vercel@latest pull \
-                    --yes --environment=production \
-                    --token "$VERCEL_TOKEN"
-
             - name: Build server
               working-directory: apps/server
               run: bun run build
