@@ -5,7 +5,7 @@ const docsUrl = "/v3/api-docs";
 
 export const withOpenApi = <TApi extends OpenAPIHono>(api: TApi) => {
 	api.get(
-		"/docs",
+		"/",
 		Scalar({
 			url: docsUrl,
 		}),
