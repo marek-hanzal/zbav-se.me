@@ -31,7 +31,6 @@ export const Route = createRootRouteWithContext<{
 								},
 							},
 						}}
-						square={"sm"}
 					>
 						<Outlet />
 					</Container>
