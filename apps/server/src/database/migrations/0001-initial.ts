@@ -516,6 +516,8 @@ export const InitialMigration: Migration = {
 			//
 			.addColumn("confidence", "numeric", (col) => col.notNull())
 			//
+			.addColumn("hash", "varchar(64)", (col) => col.unique().notNull())
+			//
 			.addColumn("lat", "decimal(9, 6)", (col) => col.notNull())
 			.addColumn("lon", "decimal(10, 6)", (col) => col.notNull())
 			//

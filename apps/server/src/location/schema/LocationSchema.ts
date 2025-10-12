@@ -30,6 +30,9 @@ export const LocationSchema = z
 		confidence: z.number().openapi({
 			description: "Confidence score of the location (based on query)",
 		}),
+		hash: z.string().openapi({
+			description: "Used to uniquely identify this location entry",
+		}),
 		lat: z.number().openapi({
 			description: "Latitude of the location",
 		}),

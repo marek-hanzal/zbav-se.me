@@ -18,6 +18,7 @@ interface Feature {
 		lon: number;
 		municipality: string;
 		state: string;
+		place_id: string;
 		rank: {
 			confidence: number;
 		};
@@ -95,11 +96,17 @@ locationRoot.openapi(
 			//
 			confidence: properties.rank.confidence,
 			//
+			hash: properties.place_id,
+			//
 			lat: properties.lat,
 			lon: properties.lon,
 		})) satisfies LocationSchema.Type[];
 
-		database.kysely.insertInto("Location").values(results).execute();
+		await database.kysely
+			.insertInto("Location")
+			.values(results)
+			.onConflict((oc) => oc.column("hash").doNothing())
+			.execute();
 
 		c.header("Cache-Control", "public, max-age=31536000, immutable");
 		c.header("X-Location-Cache", "false");
