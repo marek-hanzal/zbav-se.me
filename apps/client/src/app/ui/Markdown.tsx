@@ -58,6 +58,24 @@ export const Markdown: FC<Markdown.Props> = ({ children }) => {
 						/>
 					);
 				},
+				a(props) {
+					return (
+						<a
+							className={slots.default({
+								slot: {
+									default: {
+										token: [
+											"tone.link.light.text",
+										],
+									},
+								},
+							})}
+							{...props}
+							target="_blank"
+							rel="noopener noreferrer"
+						/>
+					);
+				},
 				p({ children }) {
 					return (
 						<p
@@ -100,6 +118,7 @@ export const Markdown: FC<Markdown.Props> = ({ children }) => {
 											"border.default",
 											"round.lg",
 											"shadow.default",
+											"square.md",
 											"tone.primary.dark.text",
 											"tone.primary.dark.border",
 											"tone.primary.dark.bg",
