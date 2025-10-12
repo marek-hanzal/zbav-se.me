@@ -14,6 +14,7 @@ import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
+import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleNRouteImport } from './@routes/$locale/n'
 import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
 import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
@@ -44,6 +45,11 @@ const LocaleTosRoute = LocaleTosRouteImport.update({
 const LocaleRegisterRoute = LocaleRegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleNRoute = LocaleNRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/login': typeof LocaleLoginRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
+  '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/login': typeof LocaleLoginRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
+  '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/$locale': typeof LocaleIndexRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/login': typeof LocaleLoginRoute
   '/$locale/n': typeof LocaleNRouteWithChildren
+  '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
   '/$locale/': typeof LocaleIndexRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/$locale'
     | '/$locale/login'
     | '/$locale/n'
+    | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
     | '/$locale/'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale/login'
     | '/$locale/n'
+    | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
     | '/$locale'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/$locale'
     | '/$locale/login'
     | '/$locale/n'
+    | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
     | '/$locale/'
@@ -197,6 +209,13 @@ declare module '@tanstack/react-router' {
       path: '/register'
       fullPath: '/$locale/register'
       preLoaderRoute: typeof LocaleRegisterRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/privacy': {
+      id: '/$locale/privacy'
+      path: '/privacy'
+      fullPath: '/$locale/privacy'
+      preLoaderRoute: typeof LocalePrivacyRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/n': {
@@ -264,6 +283,7 @@ const LocaleNRouteWithChildren =
 interface LocaleRouteChildren {
   LocaleLoginRoute: typeof LocaleLoginRoute
   LocaleNRoute: typeof LocaleNRouteWithChildren
+  LocalePrivacyRoute: typeof LocalePrivacyRoute
   LocaleRegisterRoute: typeof LocaleRegisterRoute
   LocaleTosRoute: typeof LocaleTosRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
@@ -272,6 +292,7 @@ interface LocaleRouteChildren {
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleLoginRoute: LocaleLoginRoute,
   LocaleNRoute: LocaleNRouteWithChildren,
+  LocalePrivacyRoute: LocalePrivacyRoute,
   LocaleRegisterRoute: LocaleRegisterRoute,
   LocaleTosRoute: LocaleTosRoute,
   LocaleIndexRoute: LocaleIndexRoute,

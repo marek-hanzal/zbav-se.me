@@ -257,27 +257,59 @@ export const Route = createFileRoute("/$locale/register")({
 								</form.SubmitButton>
 							</div>
 
-							<LinkTo
-								icon={CheckIcon}
-								to={"/$locale/tos"}
-								params={{
-									locale,
-								}}
-							>
+							<div className={"flex flex-col gap-2 w-full"}>
 								<Tx
-									label={"ToS agreement (label)"}
-									tone={"link"}
-									tweak={{
-										slot: {
-											root: {
-												class: [
-													"text-wrap",
-												],
-											},
-										},
-									}}
+									label={"Agreement with (label)"}
+									size={"sm"}
+									font={"bold"}
 								/>
-							</LinkTo>
+
+								<LinkTo
+									icon={CheckIcon}
+									to={"/$locale/tos"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx
+										label={"ToS agreement (label)"}
+										tone={"link"}
+										tweak={{
+											slot: {
+												root: {
+													class: [
+														"text-wrap",
+													],
+												},
+											},
+										}}
+										size={"lg"}
+									/>
+								</LinkTo>
+
+								<LinkTo
+									icon={CheckIcon}
+									to={"/$locale/privacy"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx
+										label={"Privacy policy (label)"}
+										tone={"link"}
+										tweak={{
+											slot: {
+												root: {
+													class: [
+														"text-wrap",
+													],
+												},
+											},
+										}}
+										size={"lg"}
+									/>
+								</LinkTo>
+							</div>
 						</form>
 					</VariantProvider>
 				</Container>

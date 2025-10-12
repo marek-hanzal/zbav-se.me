@@ -44,6 +44,9 @@
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
+1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
+    ref: Agreement with (label)
+    value: "Registrací souhlasíte jak s podmínkami služby, tak s zpracováním osobních údajů:"
 21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
     ref: Listing - Intro (tour)
     value: Nový inzerát
@@ -157,6 +160,9 @@
 7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
     ref: Passwords do not match
     value: Hesla nesedí, zkontrolujte si je.
+7f590474fc7aa21590e42c47aa3f3b5d5f1f5b6e56c2aae5da611958:
+    ref: Privacy policy (label)
+    value: Zpracování osobních údajů
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
     ref: Close (label)
     value: Close (label)
@@ -365,7 +371,7 @@ abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
     value: Success (toast)
 ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
     ref: ToS agreement (label)
-    value: Registrací souhlasíte s podmínkami služeb, nejsou nijak drastické, ale můžete se podívat, o co se jedná.
+    value: Podmínky použití služby
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
