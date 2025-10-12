@@ -23,6 +23,7 @@ import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
 import { Fade } from "~/app/ui/fade/Fade";
+import { EmailIcon } from "~/app/ui/icon/EmailIcon";
 import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
 import { SocialIcon } from "~/app/ui/icon/SocialIcon";
 import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
@@ -106,7 +107,7 @@ export const Route = createFileRoute("/$locale/login")({
 					pages={[
 						{
 							id: emailNavId,
-							icon: "icon-[line-md--email]",
+							icon: EmailIcon,
 						},
 						{
 							id: passKeyNavId,
