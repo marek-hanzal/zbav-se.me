@@ -146,7 +146,7 @@ Tyto podmínky se řídí právem **České republiky**. Spory se budeme snažit
 
 ---
 
-### Rychlé shrnutí (neprávně závazné)
+### Rychlé shrnutí (právně nezávazné)
 - **E‑maily:** jen transakční, bez marketingu
 - **Platby:** [Stripe](https://stripe.com/).
 - **Alfa**: věci se mohou měnit a mizet.  
