@@ -148,7 +148,13 @@ export const Route = createFileRoute("/$locale/login")({
 									<form.AppField
 										name={"email"}
 										validators={{
-											onBlur({ value }) {
+											onBlur({ value, fieldApi }) {
+												if (
+													!fieldApi.state.meta.isDirty
+												) {
+													return undefined;
+												}
+
 												if (!value) {
 													return {
 														message:

@@ -94,7 +94,11 @@ export const Route = createFileRoute("/$locale/register")({
 							<form.AppField
 								name={"email"}
 								validators={{
-									onBlur({ value }) {
+									onBlur({ value, fieldApi }) {
+										if (!fieldApi.state.meta.isDirty) {
+											return undefined;
+										}
+
 										if (!value) {
 											return {
 												message:
@@ -148,7 +152,11 @@ export const Route = createFileRoute("/$locale/register")({
 							<form.AppField
 								name={"password"}
 								validators={{
-									onBlur({ value }) {
+									onBlur({ value, fieldApi }) {
+										if (!fieldApi.state.meta.isDirty) {
+											return undefined;
+										}
+
 										if (!value || value.length < 8) {
 											return {
 												message: translator.text(
