@@ -133,6 +133,7 @@ jobs:
             ORIGIN: ${{ vars.ORIGIN }}
             COOKIE: ${{ vars.COOKIE }}
             GEOAPIFY: ${{ vars.GEOAPIFY }}
+            BETTER_AUTH_SECRET: ${{ vars.BETTER_AUTH_SECRET }}
         steps:
             - uses: actions/checkout@v4
 
