@@ -53,7 +53,11 @@ export const Route = createFileRoute("/$locale/register")({
 
 		return (
 			<Sheet>
-				<Container square={"xl"}>
+				<Container
+					square={"xl"}
+					layout={"vertical"}
+					overflow={"vertical"}
+				>
 					<VariantProvider
 						cls={ThemeCls}
 						variant={{
@@ -119,7 +123,6 @@ export const Route = createFileRoute("/$locale/register")({
 										id={field.name}
 										name={field.name}
 										label={<Tx label={"Email"} />}
-										hint={<Tx label={"Email (hint)"} />}
 										meta={field.state.meta}
 									>
 										{(props) => (

@@ -18,7 +18,7 @@ export const LogoCls = contract(ThemeCls.contract)
 				"text-4xl",
 			],
 			token: [
-				"tone.primary.dark.text",
+				"tone.primary.light.text",
 			],
 		},
 		text: {
@@ -27,7 +27,7 @@ export const LogoCls = contract(ThemeCls.contract)
 				"font-bold",
 			],
 			token: [
-				"tone.link.dark.text",
+				"tone.link.light.text",
 			],
 		},
 	})

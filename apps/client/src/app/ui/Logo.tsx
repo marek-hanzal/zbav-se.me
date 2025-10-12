@@ -18,7 +18,10 @@ export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
 			<div className={slots.logo()}>zbav-se.me</div>
 
 			<div className={slots.text()}>
-				<Tx label="Prostě to pošli dál..." />
+				<Tx
+					label="Prostě to pošli dál..."
+					tone="link"
+				/>
 			</div>
 		</div>
 	);

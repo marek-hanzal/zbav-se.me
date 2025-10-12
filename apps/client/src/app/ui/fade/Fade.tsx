@@ -17,7 +17,7 @@ export const Fade: FC<Fade.Props> = (props) => {
 					},
 					"fade.from": {
 						class: [
-							"to-white",
+							"to-pink-900/20",
 						],
 					},
 				},
