@@ -48,7 +48,6 @@ export const Condition: FC<Condition.Props> = ({
 		<Container
 			tone={"primary"}
 			theme={"light"}
-			round={"xl"}
 			border={"sm"}
 			square={"md"}
 		>

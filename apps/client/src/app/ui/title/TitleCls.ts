@@ -35,9 +35,6 @@ export const TitleCls = contract(ThemeCls.contract)
 				"w-full",
 				"gap-2",
 			],
-			token: [
-				"round.xl",
-			],
 		},
 	})
 	.match("size", "xs", {

@@ -7,7 +7,7 @@ import { Title } from "~/app/ui/title/Title";
 export const Route = createFileRoute("/$locale/n/bag")({
 	component() {
 		return (
-			<Container>
+			<Container layout={"vertical"}>
 				<Title icon={BagIcon}>
 					<Tx
 						label={"My Bag (title)"}
@@ -15,10 +15,7 @@ export const Route = createFileRoute("/$locale/n/bag")({
 						font={"bold"}
 					/>
 				</Title>
-				<Container
-					layout={"vertical"}
-					overflow={"vertical"}
-				>
+				<Container overflow={"vertical"}>
 					<h1>Et modi error aut dicta quibusdam. </h1>
 					<p>
 						Lorem ipsum dolor sit amet. Ut voluptas delectus et

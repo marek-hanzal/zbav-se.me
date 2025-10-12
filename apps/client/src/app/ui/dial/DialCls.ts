@@ -30,7 +30,6 @@ export const DialCls = contract(ThemeCls.contract)
 			],
 			token: [
 				"padding.sm",
-				"round.full",
 				"border.sm",
 				"shadow.default",
 				"tone.primary.dark.bg",
@@ -47,7 +46,7 @@ export const DialCls = contract(ThemeCls.contract)
 				"justify-center",
 			],
 			token: [
-				"round.full",
+				"round.md",
 				"border.md",
 				"square.lg",
 				"tone.secondary.dark.bg",

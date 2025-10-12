@@ -17,7 +17,6 @@ export const PriceCls = contract(ThemeCls.contract)
 			],
 			token: [
 				"shadow.default",
-				"round.full",
 				"border.default",
 				"tone.primary.dark.bg",
 				"tone.primary.dark.border",

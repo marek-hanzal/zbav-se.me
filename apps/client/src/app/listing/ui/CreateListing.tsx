@@ -104,7 +104,6 @@ export const CreateListing: FC = () => {
 					layout={"horizontal-full"}
 					snap={"horizontal-start"}
 					gap={"md"}
-					round={"xl"}
 				>
 					<PhotosWrapper />
 

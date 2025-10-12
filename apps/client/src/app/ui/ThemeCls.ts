@@ -4,11 +4,6 @@ import { contract } from "@use-pico/cls";
 export const ThemeCls = contract(PicoCls.contract)
 	.def()
 	.token({
-		"round.xl": {
-			class: [
-				"rounded-4xl",
-			],
-		},
 		/**
 		 * Color Palette Overrides:
 		 * Primary: Pink-based palette (soft pink shades)
