@@ -133,7 +133,7 @@ jobs:
             ORIGIN: ${{ vars.ORIGIN }}
             COOKIE: ${{ vars.COOKIE }}
             GEOAPIFY: ${{ vars.GEOAPIFY }}
-            BETTER_AUTH_SECRET: ${{ vars.BETTER_AUTH_SECRET }}
+            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
         steps:
             - uses: actions/checkout@v4
 
@@ -297,7 +297,6 @@ jobs:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
             VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
-            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
         steps:
             - uses: actions/download-artifact@v4
               with:

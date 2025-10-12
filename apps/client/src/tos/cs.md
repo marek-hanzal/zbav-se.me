@@ -66,7 +66,7 @@ Buď slušný člověk a jednej v souladu se zákonem. Konkrétně:
 
 **Poznámka**
 > Jelikož cílem služby je Evropa, celá infrastruktura (ideálně) nachází ve Frankfurtu v Německu. Tam jsou umístěná veškerá data, jinde po světě není důvod je obecně posílat, nicméně i to se může stát, pokud se některá z částí infrastruktury tak rozhodne a nedá nám na výběr (občas vynutí např. Ameriku).
-> Ve zkratce: data jinde než v Evropě nebo přinejhorším v Americe nebudou
+> Ve zkratce: data jinde než v Evropě nebo přinejhorším v Americe nebudou.
 
 ---
 
