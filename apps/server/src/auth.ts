@@ -3,11 +3,13 @@ import { betterAuth } from "better-auth";
 import { anonymous } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
 import { dialect } from "./database/dialect";
+import { AppEnv } from "./env";
 
-const origin = new URL(__ORIGIN__).hostname;
+const origin = new URL(AppEnv.ORIGIN).hostname;
 
 export const auth = betterAuth({
 	database: dialect,
+	secret: AppEnv.BETTER_AUTH_SECRET,
 	plugins: [
 		passkey({
 			rpID: origin,
@@ -22,7 +24,7 @@ export const auth = betterAuth({
 		}),
 	],
 	trustedOrigins: [
-		__ORIGIN__,
+		AppEnv.ORIGIN,
 	],
 	rateLimit: {
 		window: 10,

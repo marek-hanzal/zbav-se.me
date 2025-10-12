@@ -1,11 +1,10 @@
 import { PostgresDialect } from "kysely";
 import { Pool } from "pg";
-
-declare const __DATABASE_URL__: string;
+import { AppEnv } from "../env";
 
 export const dialect = new PostgresDialect({
 	pool: new Pool({
-		connectionString: __DATABASE_URL__,
+		connectionString: AppEnv.DATABASE_URL,
 		/**
 		 * Keep low, we're serverless so we won't spam the upstream database
 		 */

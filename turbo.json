@@ -10,7 +10,9 @@
 			"env": [
 				"DATABASE_URL",
 				"ORIGIN",
-				"COOKIE"
+				"COOKIE",
+				"GEOAPIFY",
+				"BETTER_AUTH_SECRET"
 			]
 		},
 		"preview": {
@@ -19,7 +21,9 @@
 			"env": [
 				"DATABASE_URL",
 				"ORIGIN",
-				"COOKIE"
+				"COOKIE",
+				"GEOAPIFY",
+				"BETTER_AUTH_SECRET"
 			]
 		},
 		"typecheck": {
@@ -48,7 +52,9 @@
 			"env": [
 				"DATABASE_URL",
 				"ORIGIN",
-				"COOKIE"
+				"COOKIE",
+				"GEOAPIFY",
+				"BETTER_AUTH_SECRET"
 			]
 		},
 		"translations": {
