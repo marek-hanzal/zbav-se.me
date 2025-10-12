@@ -15,28 +15,28 @@ export const LocationSchema = z
 		code: z.string().openapi({
 			description: "Country code",
 		}),
-		county: z.string().openapi({
+		county: z.string().nullish().openapi({
 			description: "The county that the location is in",
 		}),
-		municipality: z.string().openapi({
+		municipality: z.string().nullish().openapi({
 			description: "The municipality that the location is in",
 		}),
-		state: z.string().openapi({
+		state: z.string().nullish().openapi({
 			description: "The state that the location is in",
 		}),
 		address: z.string().openapi({
 			description: "Full address preview of a location",
 		}),
-		confidence: z.number().openapi({
+		confidence: z.coerce.number().openapi({
 			description: "Confidence score of the location (based on query)",
 		}),
 		hash: z.string().openapi({
 			description: "Used to uniquely identify this location entry",
 		}),
-		lat: z.number().openapi({
+		lat: z.coerce.number().openapi({
 			description: "Latitude of the location",
 		}),
-		lon: z.number().openapi({
+		lon: z.coerce.number().openapi({
 			description: "Longitude of the location",
 		}),
 	})

@@ -508,15 +508,15 @@ export const InitialMigration: Migration = {
 			//
 			.addColumn("country", "varchar(72)", (col) => col.notNull())
 			.addColumn("code", "varchar(8)", (col) => col.notNull())
-			.addColumn("county", "varchar(128)", (col) => col.notNull())
-			.addColumn("municipality", "varchar(128)", (col) => col.notNull())
-			.addColumn("state", "varchar(128)", (col) => col.notNull())
+			.addColumn("county", "varchar(128)")
+			.addColumn("municipality", "varchar(128)")
+			.addColumn("state", "varchar(128)")
 			//
 			.addColumn("address", "varchar(255)", (col) => col.notNull())
 			//
 			.addColumn("confidence", "numeric", (col) => col.notNull())
 			//
-			.addColumn("hash", "varchar(64)", (col) => col.unique().notNull())
+			.addColumn("hash", "varchar(255)", (col) => col.notNull())
 			//
 			.addColumn("lat", "decimal(9, 6)", (col) => col.notNull())
 			.addColumn("lon", "decimal(10, 6)", (col) => col.notNull())
@@ -531,6 +531,16 @@ export const InitialMigration: Migration = {
 				"query",
 				"lang",
 			])
+			.execute();
+
+		await db.schema
+			.createIndex("Location_[lang-hash")
+			.on("Location")
+			.columns([
+				"lang",
+				"hash",
+			])
+			.unique()
 			.execute();
 	},
 };

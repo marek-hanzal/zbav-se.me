@@ -154,13 +154,20 @@ locationRoot.openapi(
 				await trx
 					.insertInto("Location")
 					.values(locations)
-					.onConflict((oc) => oc.column("hash").doNothing())
+					.onConflict((oc) =>
+						oc
+							.columns([
+								"lang",
+								"hash",
+							])
+							.doNothing(),
+					)
 					.execute();
 
-				c.header(
-					"Cache-Control",
-					"public, max-age=31536000, immutable",
-				);
+				/**
+				 * No cache headers, so it won't reply all the times with cache-miss
+				 */
+
 				c.header("X-Location-Cache", "miss");
 
 				return locations;
