@@ -1,7 +1,8 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Container, Typo } from "@use-pico/client";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { Container } from "@use-pico/client";
+import { useRef } from "react";
+import { Fade } from "~/app/ui/fade/Fade";
+import { Markdown } from "~/app/ui/Markdown";
 
 const tos = import.meta.glob("/src/tos/*.md", {
 	as: "raw",
@@ -24,37 +25,25 @@ export const Route = createFileRoute("/$locale/tos")({
 		throw notFound();
 	},
 	component() {
+		const rootRef = useRef<HTMLDivElement>(null);
 		const markdown = Route.useLoaderData();
 
 		return (
-			<Container
-				layout={"vertical"}
-				overflow={"vertical"}
-				tone={"primary"}
-				theme={"light"}
-				round={"xl"}
-				square={"lg"}
-			>
-				<ReactMarkdown
-					remarkPlugins={[
-						remarkGfm,
-					]}
-					components={{
-						h1({ children }) {
-							return (
-								<Typo
-									label={children}
-									size={"xl"}
-									font={"bold"}
-									tone={"primary"}
-								/>
-							);
-						},
-					}}
+			<div className={"relative w-full h-full"}>
+				<Fade scrollableRef={rootRef} />
+
+				<Container
+					ref={rootRef}
+					layout={"vertical"}
+					overflow={"vertical"}
+					tone={"primary"}
+					theme={"light"}
+					round={"xl"}
+					square={"lg"}
 				>
-					{markdown}
-				</ReactMarkdown>
-			</Container>
+					<Markdown>{markdown}</Markdown>
+				</Container>
+			</div>
 		);
 	},
 });
