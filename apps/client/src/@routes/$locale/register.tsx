@@ -16,6 +16,7 @@ import { translator } from "@use-pico/common";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
+import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/register")({
@@ -41,13 +42,11 @@ export const Route = createFileRoute("/$locale/register")({
 				email: "",
 				password: "",
 				confirmPassword: "",
-				name: "",
 			},
 			async onSubmit({ value }) {
 				return registerMutation.mutateAsync({
 					email: value.email,
 					password: value.password,
-					name: value.name,
 				});
 			},
 		});
@@ -89,47 +88,6 @@ export const Route = createFileRoute("/$locale/register")({
 							className={"space-y-2"}
 						>
 							<form.AppField
-								name={"name"}
-								validators={{
-									onChange: ({ value }) => {
-										if (!value || value.length < 2) {
-											return {
-												message:
-													"Name must be at least 2 characters",
-											};
-										}
-										return undefined;
-									},
-								}}
-							>
-								{(field) => (
-									<FormField
-										id={field.name}
-										name={field.name}
-										label={<Tx label={"Name"} />}
-										meta={field.state.meta}
-									>
-										{(props) => (
-											<field.TextInput
-												type={"text"}
-												value={field.state.value}
-												onChange={(e) =>
-													field.handleChange(
-														e.target.value,
-													)
-												}
-												onBlur={field.handleBlur}
-												placeholder={translator.text(
-													"Enter your name",
-												)}
-												{...props}
-											/>
-										)}
-									</FormField>
-								)}
-							</form.AppField>
-
-							<form.AppField
 								name={"email"}
 								validators={{
 									onBlur({ value }) {
@@ -161,6 +119,7 @@ export const Route = createFileRoute("/$locale/register")({
 										id={field.name}
 										name={field.name}
 										label={<Tx label={"Email"} />}
+										hint={<Tx label={"Email (hint)"} />}
 										meta={field.state.meta}
 									>
 										{(props) => (
@@ -278,7 +237,7 @@ export const Route = createFileRoute("/$locale/register")({
 
 							<div
 								className={
-									"inline-flex items-center justify-center w-full"
+									"inline-flex items-center justify-center w-full p-4"
 								}
 							>
 								<form.SubmitButton
@@ -297,6 +256,28 @@ export const Route = createFileRoute("/$locale/register")({
 									)}
 								</form.SubmitButton>
 							</div>
+
+							<LinkTo
+								icon={CheckIcon}
+								to={"/$locale/tos"}
+								params={{
+									locale,
+								}}
+							>
+								<Tx
+									label={"ToS agreement (label)"}
+									tone={"link"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"text-wrap",
+												],
+											},
+										},
+									}}
+								/>
+							</LinkTo>
 						</form>
 					</VariantProvider>
 				</Container>

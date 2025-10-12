@@ -78,7 +78,10 @@ export const Route = createFileRoute("/$locale/login")({
 		const socialNavId = useId();
 
 		return (
-			<Container position={"relative"}>
+			<Container
+				position={"relative"}
+				round={"xl"}
+			>
 				<SnapperNav
 					containerRef={rootRef}
 					iconProps={() => ({
@@ -109,6 +112,7 @@ export const Route = createFileRoute("/$locale/login")({
 					overflow={"vertical"}
 					snap={"vertical-start"}
 					gap={"md"}
+					round={"xl"}
 				>
 					<Sheet>
 						<Container square={"xl"}>

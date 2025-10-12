@@ -19,6 +19,11 @@
     ref: Listing - Intro (description)
     value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z
         několik rychlých kroků.
+12fbf2a565fde7d7f81d19733e8409028a8e3a945ca7cc3f84480f7e:
+    ref: Email (hint)
+    value:
+        Email slouží pouze pro přihlášení, nikde se nebude zobrazovat ani se k
+        němu nikdo nedostane.
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
     ref: Missing required token(s). (title)
     value: Missing required token(s). (title)
@@ -39,9 +44,6 @@
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
-205c738caf1aaefaeea8ffbcfbcf3c2f124324663c8bd340732c7ecd:
-    ref: Registration failed
-    value: Omlouváme se, registrace se nezdařila.
 21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
     ref: Listing - Intro (tour)
     value: Nový inzerát
@@ -69,6 +71,9 @@
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
     ref: Edit
     value: Edit
+36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
+    ref: Register (title)
+    value: Přidejte se k nám! ❤️
 36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
     ref: Login with passkey (message)
     value: Pokud jste si přidali klíč, můžete se jím nyní snadno přihlásit.
@@ -131,6 +136,9 @@
 61a6f144c84ce8d83fccdd988e63aa0b40d951edf07fcc5eec215664:
     ref: Select category (select)
     value: Select category (select)
+6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
+    ref: Login (link)
+    value: Máte účet? Přihlaste se!
 66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
     ref: Prost\u011B to po\u0161li d\u00E1l...
     value: Prost\u011B to po\u0161li d\u00E1l...
@@ -146,6 +154,9 @@
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
     ref: There is nothing to see right now.
     value: There is nothing to see right now.
+7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
+    ref: Passwords do not match
+    value: Hesla nesedí, zkontrolujte si je.
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
     ref: Close (label)
     value: Close (label)
@@ -167,6 +178,9 @@
 91f3a6e4bee345872696ff6ef6b88f3aac5a451a2c531c92ddf20865:
     ref: Login with passkey
     value: Přihlásit se klíčem
+94268a800874338c42540c7f350a713b3b5afceb7b26a4297491aa5c:
+    ref: Confirm your password
+    value: Potvrďte své heslo
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
     ref: Nothing here
     value: Nothing here
@@ -349,6 +363,9 @@ aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
     ref: Success (toast)
     value: Success (toast)
+ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
+    ref: ToS agreement (label)
+    value: Registrací souhlasíte s podmínkami služeb, nejsou nijak drastické, ale můžete se podívat, o co se jedná.
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
@@ -430,12 +447,12 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
     ref: Email is required
     value: Email je povinný, vyplň ho prosím...
-e4842122d706ad5b5366ce7219d5b7e0736642a370ad898f08efb8fd:
-    ref: Registration successful! Redirecting...
-    value: Registrace byla úspěšná! Momentík...
 e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
     ref: Confirm Password
     value: Potvrdit heslo
+e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
+    ref: Password must be at least 8 characters
+    value: Heslo by mělo mít alespoň 8 znaků.
 e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
     ref: Register (link)
     value: Jste tu noví? Přidejte se!
