@@ -17,6 +17,7 @@ import {
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
 import { useId, useRef } from "react";
+import { z } from "zod";
 import { authClient } from "~/app/auth/authClient";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
@@ -26,6 +27,21 @@ import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
 import { SocialIcon } from "~/app/ui/icon/SocialIcon";
 import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
 import { ThemeCls } from "~/app/ui/ThemeCls";
+
+const LoginSchema = z.object({
+	email: z.email({
+		error() {
+			return translator.text("Invalid email address");
+		},
+	}),
+	password: z.string().min(1, {
+		error() {
+			return translator.text("Password is required");
+		},
+	}),
+});
+
+type LoginSchema = typeof LoginSchema;
 
 export const Route = createFileRoute("/$locale/login")({
 	component() {
@@ -63,6 +79,9 @@ export const Route = createFileRoute("/$locale/login")({
 			defaultValues: {
 				email: "",
 				password: "",
+			} satisfies z.infer<LoginSchema>,
+			validators: {
+				onSubmit: LoginSchema,
 			},
 			async onSubmit({ value }) {
 				return signInMutation.mutateAsync({
@@ -145,40 +164,7 @@ export const Route = createFileRoute("/$locale/login")({
 									}}
 									className={"space-y-2"}
 								>
-									<form.AppField
-										name={"email"}
-										validators={{
-											onBlur({ value, fieldApi }) {
-												if (
-													!fieldApi.state.meta.isDirty
-												) {
-													return undefined;
-												}
-
-												if (!value) {
-													return {
-														message:
-															translator.text(
-																"Email is required",
-															),
-													};
-												}
-												if (
-													!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-														value,
-													)
-												) {
-													return {
-														message:
-															translator.text(
-																"Invalid email address",
-															),
-													};
-												}
-												return undefined;
-											},
-										}}
-									>
+									<form.AppField name={"email"}>
 										{(field) => (
 											<FormField
 												id={field.name}
@@ -214,22 +200,7 @@ export const Route = createFileRoute("/$locale/login")({
 										)}
 									</form.AppField>
 
-									<form.AppField
-										name={"password"}
-										validators={{
-											onChange: ({ value }) => {
-												if (!value) {
-													return {
-														message:
-															translator.text(
-																"Password is required",
-															),
-													};
-												}
-												return undefined;
-											},
-										}}
-									>
+									<form.AppField name={"password"}>
 										{(field) => (
 											<FormField
 												id={field.name}
