@@ -1,0 +1,1 @@
+# Podminky, pyco!
