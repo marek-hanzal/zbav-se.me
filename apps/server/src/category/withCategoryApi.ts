@@ -2,53 +2,53 @@ import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
 import { withCount, withFetch, withList } from "@use-pico/common";
 import { database } from "../database/kysely";
 import { CountSchema } from "../schema/CountSchema";
-import { CategoryGroupQuerySchema } from "./schema/CategoryGroupQuerySchema";
-import { CategoryGroupSchema } from "./schema/CategoryGroupSchema";
+import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
+import { CategorySchema } from "./schema/CategorySchema";
 import {
-	withCategoryGroupQueryBuilder,
-	withCategoryGroupQueryBuilderWithSort,
-} from "./withCategoryGroupQueryBuilder";
+	withCategoryQueryBuilder,
+	withCategoryQueryBuilderWithSort,
+} from "./withCategoryQueryBuilder";
 
-export const categoryGroupRoot = new OpenAPIHono();
+export const withCategoryApi = new OpenAPIHono();
 
-categoryGroupRoot.openapi(
+withCategoryApi.openapi(
 	createRoute({
 		method: "post",
-		path: "/category-group/fetch",
-		description: "Return a category group based on the provided query",
-		operationId: "apiCategoryGroupFetch",
+		path: "/category/fetch",
+		description: "Return a category based on the provided query",
+		operationId: "apiCategoryFetch",
 		request: {
 			body: {
 				content: {
 					"application/json": {
-						schema: CategoryGroupQuerySchema,
+						schema: CategoryQuerySchema,
 					},
 				},
-				description: "Query object for category group fetch",
+				description: "Query object for category fetch",
 			},
 		},
 		responses: {
 			200: {
 				content: {
 					"application/json": {
-						schema: CategoryGroupSchema,
+						schema: CategorySchema,
 					},
 				},
-				description:
-					"Return a category group based on the provided query",
+				description: "Return a category based on the provided query",
 			},
 		},
 	}),
 	async ({ json, req }) => {
 		const { filter, where, sort } = req.valid("json");
+
 		return json(
 			await withFetch({
-				select: database.kysely.selectFrom("CategoryGroup").selectAll(),
-				output: CategoryGroupSchema,
+				select: database.kysely.selectFrom("Category").selectAll(),
+				output: CategorySchema,
 				filter,
 				where,
 				query({ select, where }) {
-					return withCategoryGroupQueryBuilderWithSort({
+					return withCategoryQueryBuilderWithSort({
 						select,
 						where,
 						sort,
@@ -59,17 +59,17 @@ categoryGroupRoot.openapi(
 	},
 );
 
-categoryGroupRoot.openapi(
+withCategoryApi.openapi(
 	createRoute({
 		method: "post",
-		path: "/category-group/collection",
-		description: "Returns category groups based on provided parameters",
-		operationId: "apiCategoryGroupCollection",
+		path: "/category/collection",
+		description: "Returns categories based on provided parameters",
+		operationId: "apiCategoryCollection",
 		request: {
 			body: {
 				content: {
 					"application/json": {
-						schema: CategoryGroupQuerySchema,
+						schema: CategoryQuerySchema,
 					},
 				},
 			},
@@ -78,11 +78,11 @@ categoryGroupRoot.openapi(
 			200: {
 				content: {
 					"application/json": {
-						schema: z.array(CategoryGroupSchema),
+						schema: z.array(CategorySchema),
 					},
 				},
 				description:
-					"Access collection of category groups based on provided query",
+					"Access collection of categories based on provided query",
 			},
 		},
 	}),
@@ -90,13 +90,13 @@ categoryGroupRoot.openapi(
 		const { cursor, filter, where, sort } = req.valid("json");
 		return json(
 			await withList({
-				select: database.kysely.selectFrom("CategoryGroup").selectAll(),
-				output: CategoryGroupSchema,
+				select: database.kysely.selectFrom("Category").selectAll(),
+				output: CategorySchema,
 				cursor,
 				filter,
 				where,
 				query({ select, where }) {
-					return withCategoryGroupQueryBuilderWithSort({
+					return withCategoryQueryBuilderWithSort({
 						select,
 						where,
 						sort,
@@ -107,17 +107,17 @@ categoryGroupRoot.openapi(
 	},
 );
 
-categoryGroupRoot.openapi(
+withCategoryApi.openapi(
 	createRoute({
 		method: "post",
-		path: "/category-group/count",
-		description: "Returns count of category groups based on provided query",
-		operationId: "apiCategoryGroupCount",
+		path: "/category/count",
+		description: "Returns count of categories based on provided query",
+		operationId: "apiCategoryCount",
 		request: {
 			body: {
 				content: {
 					"application/json": {
-						schema: CategoryGroupQuerySchema,
+						schema: CategoryQuerySchema,
 					},
 				},
 			},
@@ -137,11 +137,11 @@ categoryGroupRoot.openapi(
 		const { filter, where } = req.valid("json");
 		return json(
 			await withCount({
-				select: database.kysely.selectFrom("CategoryGroup").selectAll(),
+				select: database.kysely.selectFrom("Category").selectAll(),
 				filter,
 				where,
 				query({ select, where }) {
-					return withCategoryGroupQueryBuilder({
+					return withCategoryQueryBuilder({
 						select,
 						where,
 					});

@@ -277,6 +277,55 @@ export interface CategoryQuery {
 }
 
 /**
+ * A location cache table
+ */
+export interface Location {
+	id: string;
+	/** The query that was used to get the location */
+	query: string;
+	/** The language that was used to get the location */
+	lang: string;
+	/** The country that the location is in */
+	country: string;
+	/** Country code */
+	code: string;
+	/**
+	 * The county that the location is in
+	 * @nullable
+	 */
+	county?: string | null;
+	/**
+	 * The municipality that the location is in
+	 * @nullable
+	 */
+	municipality?: string | null;
+	/**
+	 * The state that the location is in
+	 * @nullable
+	 */
+	state?: string | null;
+	/** Full address preview of a location */
+	address: string;
+	/**
+	 * Confidence score of the location (based on query)
+	 * @nullable
+	 */
+	confidence: number | null;
+	/** Used to uniquely identify this location entry */
+	hash: string;
+	/**
+	 * Latitude of the location
+	 * @nullable
+	 */
+	lat: number | null;
+	/**
+	 * Longitude of the location
+	 * @nullable
+	 */
+	lon: number | null;
+}
+
+/**
  * Migration direction
  */
 export type MigrationDirection =
@@ -313,6 +362,18 @@ export interface Migration {
 export interface Health {
 	status: boolean;
 }
+
+export type ApiLocationAutocompleteParams = {
+	/**
+	 * @minLength 3
+	 */
+	text: string;
+	/**
+	 * @minLength 2
+	 * @maxLength 8
+	 */
+	lang: string;
+};
 
 /**
  * Return a category group based on the provided query
@@ -381,9 +442,25 @@ export const apiCategoryCount = <TData = AxiosResponse<Count>>(
 };
 
 /**
+ * Return a location autocomplete
+ */
+export const apiLocationAutocomplete = <TData = AxiosResponse<Location[]>>(
+	params: ApiLocationAutocompleteParams,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.get(`/api/location/autocomplete`, {
+		...options,
+		params: {
+			...params,
+			...options?.params,
+		},
+	});
+};
+
+/**
  * This route directly executes the migrations
  */
-export const getApiMigrationRun = <TData = AxiosResponse<Migration[]>>(
+export const apiMigrationRun = <TData = AxiosResponse<Migration[]>>(
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
 	return axios.get(`/api/migration/run`, options);
@@ -392,7 +469,7 @@ export const getApiMigrationRun = <TData = AxiosResponse<Migration[]>>(
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
-export const getApiHealth = <TData = AxiosResponse<Health>>(
+export const apiHealth = <TData = AxiosResponse<Health>>(
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
 	return axios.get(`/api/health`, options);
@@ -404,5 +481,6 @@ export type ApiCategoryGroupCountResult = AxiosResponse<Count>;
 export type ApiCategoryFetchResult = AxiosResponse<Category>;
 export type ApiCategoryCollectionResult = AxiosResponse<Category[]>;
 export type ApiCategoryCountResult = AxiosResponse<Count>;
-export type GetApiMigrationRunResult = AxiosResponse<Migration[]>;
-export type GetApiHealthResult = AxiosResponse<Health>;
+export type ApiLocationAutocompleteResult = AxiosResponse<Location[]>;
+export type ApiMigrationRunResult = AxiosResponse<Migration[]>;
+export type ApiHealthResult = AxiosResponse<Health>;

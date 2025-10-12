@@ -4,8 +4,8 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import { Button, Container, ls, Tx, UserIcon } from "@use-pico/client";
-import { usePasskeyMutation } from "~/app/auth/usePasskeyMutation";
-import { useSignOutMutation } from "~/app/auth/useSignOutMutation";
+import { withPasskeyMutation } from "~/app/auth/withPasskeyMutation";
+import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/n/user")({
 			from: "/$locale",
 		});
 
-		const signOutMutation = useSignOutMutation.useMutation({
+		const signOutMutation = withSignOutMutation.useMutation({
 			onSuccess() {
 				navigate({
 					to: "/$locale/login",
@@ -27,8 +27,7 @@ export const Route = createFileRoute("/$locale/n/user")({
 			},
 		});
 
-		// TODO Trigger passkey on first login?
-		const passkeyMutation = usePasskeyMutation.useMutation({
+		const passkeyMutation = withPasskeyMutation.useMutation({
 			onError(error) {
 				console.error(error);
 			},
@@ -44,7 +43,9 @@ export const Route = createFileRoute("/$locale/n/user")({
 					/>
 				</Title>
 
-				<Container height={"full"}>
+				<div
+					className={"inline-flex flex-row gap-4 items-center w-full"}
+				>
 					<Button
 						onClick={() => {
 							ls.remove("intro");
@@ -65,7 +66,7 @@ export const Route = createFileRoute("/$locale/n/user")({
 					>
 						<Tx label={"Add passkey"} />
 					</Button>
-				</Container>
+				</div>
 
 				<Nav active="user" />
 			</Container>

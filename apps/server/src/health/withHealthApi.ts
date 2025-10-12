@@ -6,14 +6,15 @@ const HealthSchema = z
 	})
 	.openapi("Health");
 
-export const healthRoot = new OpenAPIHono();
+export const withHealthApi = new OpenAPIHono();
 
-healthRoot.openapi(
+withHealthApi.openapi(
 	createRoute({
 		method: "get",
 		path: "/health",
 		description:
 			"Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.",
+		operationId: "apiHealth",
 		responses: {
 			200: {
 				content: {

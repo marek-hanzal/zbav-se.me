@@ -49,8 +49,8 @@ export const Route = createFileRoute("/$locale/login")({
 			mutationFn: async () => {
 				return authClient.signIn.passkey();
 			},
-			onSuccess() {
-				navigate({
+			async onSuccess() {
+				await navigate({
 					to: "/$locale/n/feed",
 					params: {
 						locale,
@@ -65,7 +65,7 @@ export const Route = createFileRoute("/$locale/login")({
 				password: "",
 			},
 			async onSubmit({ value }) {
-				signInMutation.mutate({
+				return signInMutation.mutateAsync({
 					email: value.email,
 					password: value.password,
 				});
@@ -112,26 +112,6 @@ export const Route = createFileRoute("/$locale/login")({
 				>
 					<Sheet>
 						<Container square={"xl"}>
-							<Status
-								icon={UserIcon}
-								textTitle={<Tx label={"Sign in"} />}
-								textMessage={
-									<LinkTo
-										to={"/$locale/register"}
-										params={{
-											locale,
-										}}
-									>
-										<Tx
-											label={"Register (link)"}
-											tone={"link"}
-										/>
-									</LinkTo>
-								}
-								tone={"secondary"}
-								theme={"light"}
-							/>
-
 							<VariantProvider
 								cls={ThemeCls}
 								variant={{
@@ -139,13 +119,31 @@ export const Route = createFileRoute("/$locale/login")({
 									theme: "light",
 								}}
 							>
+								<Status
+									icon={UserIcon}
+									textTitle={<Tx label={"Sign in"} />}
+									textMessage={
+										<LinkTo
+											to={"/$locale/register"}
+											params={{
+												locale,
+											}}
+										>
+											<Tx
+												label={"Register (link)"}
+												tone={"link"}
+											/>
+										</LinkTo>
+									}
+								/>
+
 								<form
 									onSubmit={(e) => {
 										e.preventDefault();
 										e.stopPropagation();
 										form.handleSubmit();
 									}}
-									className={"space-y-4"}
+									className={"space-y-2"}
 								>
 									<form.AppField
 										name={"email"}

@@ -41,13 +41,14 @@ const getLockId = (text: string, lang: string): number => {
 	return Math.abs(hash);
 };
 
-export const locationRoot = new OpenAPIHono();
+export const withLocationApi = new OpenAPIHono();
 
-locationRoot.openapi(
+withLocationApi.openapi(
 	createRoute({
 		method: "get",
 		path: "/location/autocomplete",
 		description: "Return a location autocomplete",
+		operationId: "apiLocationAutocomplete",
 		request: {
 			query: z.object({
 				text: z.string().min(3),

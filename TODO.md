@@ -2,6 +2,7 @@
 
 - Create Listing -> fullscreen, reserve bottom for progress, so it won't block page
 - Experiment with classic scroll for categories, items 1/3 or 1/4 of height
+- Prompt user to use passkey?
 - Allow anonymous user + test it's flow (check if there is isAnonym flag)
 - User registration - for now, we'll use email + password, da old-school (find auth lib, GPT knows)
 - When listing is saved, recompute user's "favourite" category list

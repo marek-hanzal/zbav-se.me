@@ -689,9 +689,63 @@ export const apiCategoryCountResponse = zod
 	.describe("Complex count of items based on provided query.");
 
 /**
+ * Return a location autocomplete
+ */
+export const apiLocationAutocompleteQueryTextMin = 3;
+export const apiLocationAutocompleteQueryLangMin = 2;
+export const apiLocationAutocompleteQueryLangMax = 8;
+
+export const apiLocationAutocompleteQueryParams = zod.object({
+	text: zod.string().min(apiLocationAutocompleteQueryTextMin),
+	lang: zod
+		.string()
+		.min(apiLocationAutocompleteQueryLangMin)
+		.max(apiLocationAutocompleteQueryLangMax),
+});
+
+export const apiLocationAutocompleteResponseItem = zod
+	.object({
+		id: zod.string(),
+		query: zod
+			.string()
+			.describe("The query that was used to get the location"),
+		lang: zod
+			.string()
+			.describe("The language that was used to get the location"),
+		country: zod.string().describe("The country that the location is in"),
+		code: zod.string().describe("Country code"),
+		county: zod
+			.string()
+			.nullish()
+			.describe("The county that the location is in"),
+		municipality: zod
+			.string()
+			.nullish()
+			.describe("The municipality that the location is in"),
+		state: zod
+			.string()
+			.nullish()
+			.describe("The state that the location is in"),
+		address: zod.string().describe("Full address preview of a location"),
+		confidence: zod
+			.number()
+			.nullable()
+			.describe("Confidence score of the location (based on query)"),
+		hash: zod
+			.string()
+			.describe("Used to uniquely identify this location entry"),
+		lat: zod.number().nullable().describe("Latitude of the location"),
+		lon: zod.number().nullable().describe("Longitude of the location"),
+	})
+	.describe("A location cache table");
+export const apiLocationAutocompleteResponse = zod.array(
+	apiLocationAutocompleteResponseItem,
+);
+
+/**
  * This route directly executes the migrations
  */
-export const getApiMigrationRunResponseItem = zod.object({
+export const apiMigrationRunResponseItem = zod.object({
 	migrationName: zod.string().describe("Migration name run"),
 	direction: zod
 		.enum([
@@ -707,13 +761,11 @@ export const getApiMigrationRunResponseItem = zod.object({
 		])
 		.describe("Migration status"),
 });
-export const getApiMigrationRunResponse = zod.array(
-	getApiMigrationRunResponseItem,
-);
+export const apiMigrationRunResponse = zod.array(apiMigrationRunResponseItem);
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
-export const getApiHealthResponse = zod.object({
+export const apiHealthResponse = zod.object({
 	status: zod.boolean(),
 });

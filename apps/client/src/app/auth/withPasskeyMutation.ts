@@ -1,7 +1,7 @@
 import { withMutation } from "@use-pico/client";
 import { authClient } from "~/app/auth/authClient";
 
-export const usePasskeyMutation = withMutation<string, boolean>({
+export const withPasskeyMutation = withMutation<string, boolean>({
 	keys(variables) {
 		return [
 			"passkey",

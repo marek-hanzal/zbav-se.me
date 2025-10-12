@@ -1,19 +1,22 @@
-import { useForm } from "@tanstack/react-form";
-import { useMutation } from "@tanstack/react-query";
 import {
 	createFileRoute,
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import { Button, Container, FormField, Tx } from "@use-pico/client";
-import { authClient } from "~/app/auth/authClient";
+import {
+	Container,
+	FormField,
+	LinkTo,
+	Status,
+	Tx,
+	UserIcon,
+} from "@use-pico/client";
+import { VariantProvider } from "@use-pico/cls";
+import { translator } from "@use-pico/common";
+import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
+import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
-
-interface RegisterFormData {
-	email: string;
-	password: string;
-	name: string;
-}
+import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/register")({
 	component() {
@@ -22,20 +25,9 @@ export const Route = createFileRoute("/$locale/register")({
 		});
 		const navigate = useNavigate();
 
-		const registerMutation = useMutation({
-			mutationFn: async (data: RegisterFormData) => {
-				const result = await authClient.signUp.email(data);
-
-				if (result.error) {
-					throw new Error(
-						result.error.message || "Registration failed",
-					);
-				}
-
-				return result.data;
-			},
-			onSuccess: () => {
-				navigate({
+		const registerMutation = withRegisterMutation.useMutation({
+			async onSuccess() {
+				await navigate({
 					to: "/$locale/n/feed",
 					params: {
 						locale,
@@ -44,15 +36,15 @@ export const Route = createFileRoute("/$locale/register")({
 			},
 		});
 
-		const form = useForm({
+		const form = useAppForm({
 			defaultValues: {
 				email: "",
 				password: "",
 				confirmPassword: "",
 				name: "",
 			},
-			onSubmit: async ({ value }) => {
-				registerMutation.mutate({
+			async onSubmit({ value }) {
+				return registerMutation.mutateAsync({
 					email: value.email,
 					password: value.password,
 					name: value.name,
@@ -63,248 +55,250 @@ export const Route = createFileRoute("/$locale/register")({
 		return (
 			<Sheet>
 				<Container square={"xl"}>
-					<Tx
-						label={"Register"}
-						size={"xl"}
-					/>
-
-					<form
-						onSubmit={(e) => {
-							e.preventDefault();
-							e.stopPropagation();
-							form.handleSubmit();
+					<VariantProvider
+						cls={ThemeCls}
+						variant={{
+							tone: "secondary",
+							theme: "light",
 						}}
-						className={"space-y-4"}
 					>
-						<form.Field
-							name={"name"}
-							validators={{
-								onChange: ({ value }) => {
-									if (!value || value.length < 2) {
-										return {
-											message:
-												"Name must be at least 2 characters",
-										};
-									}
-									return undefined;
-								},
-							}}
-						>
-							{(field) => (
-								<FormField
-									label={<Tx label={"Name"} />}
-									meta={field.state.meta}
+						<Status
+							icon={UserIcon}
+							textTitle={<Tx label={"Register (title)"} />}
+							textMessage={
+								<LinkTo
+									to={"/$locale/login"}
+									params={{
+										locale,
+									}}
 								>
-									{() => (
-										<input
-											type={"text"}
-											value={field.state.value}
-											onChange={(e) =>
-												field.handleChange(
-													e.target.value,
-												)
-											}
-											onBlur={field.handleBlur}
-											placeholder={"Enter your name"}
-											className={
-												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											}
-											disabled={
-												registerMutation.isPending
-											}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.Field>
-
-						<form.Field
-							name={"email"}
-							validators={{
-								onChange: ({ value }) => {
-									if (!value) {
-										return {
-											message: "Email is required",
-										};
-									}
-									if (
-										!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-											value,
-										)
-									) {
-										return {
-											message: "Invalid email address",
-										};
-									}
-									return undefined;
-								},
-							}}
-						>
-							{(field) => (
-								<FormField
-									label={<Tx label={"Email"} />}
-									meta={field.state.meta}
-								>
-									{() => (
-										<input
-											type={"email"}
-											value={field.state.value}
-											onChange={(e) =>
-												field.handleChange(
-													e.target.value,
-												)
-											}
-											onBlur={field.handleBlur}
-											placeholder={"Enter your email"}
-											className={
-												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											}
-											disabled={
-												registerMutation.isPending
-											}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.Field>
-
-						<form.Field
-							name={"password"}
-							validators={{
-								onChange: ({ value }) => {
-									if (!value || value.length < 8) {
-										return {
-											message:
-												"Password must be at least 8 characters",
-										};
-									}
-									return undefined;
-								},
-							}}
-						>
-							{(field) => (
-								<FormField
-									label={<Tx label={"Password"} />}
-									meta={field.state.meta}
-								>
-									{() => (
-										<input
-											type={"password"}
-											value={field.state.value}
-											onChange={(e) =>
-												field.handleChange(
-													e.target.value,
-												)
-											}
-											onBlur={field.handleBlur}
-											placeholder={"Enter your password"}
-											className={
-												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											}
-											disabled={
-												registerMutation.isPending
-											}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.Field>
-
-						<form.Field
-							name={"confirmPassword"}
-							validators={{
-								onChangeListenTo: [
-									"password",
-								],
-								onChange: ({ value, fieldApi }) => {
-									const password =
-										fieldApi.form.getFieldValue("password");
-									if (value !== password) {
-										return {
-											message: "Passwords do not match",
-										};
-									}
-									return undefined;
-								},
-							}}
-						>
-							{(field) => (
-								<FormField
-									label={<Tx label={"Confirm Password"} />}
-									meta={field.state.meta}
-								>
-									{() => (
-										<input
-											type={"password"}
-											value={field.state.value}
-											onChange={(e) =>
-												field.handleChange(
-													e.target.value,
-												)
-											}
-											onBlur={field.handleBlur}
-											placeholder={
-												"Confirm your password"
-											}
-											className={
-												"w-full rounded-md border px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-											}
-											disabled={
-												registerMutation.isPending
-											}
-										/>
-									)}
-								</FormField>
-							)}
-						</form.Field>
-
-						{registerMutation.isError && (
-							<div
-								className={
-									"rounded-md bg-red-50 p-3 text-red-700"
-								}
-							>
-								{registerMutation.error instanceof Error ? (
-									registerMutation.error.message
-								) : (
-									<Tx label={"Registration failed"} />
-								)}
-							</div>
-						)}
-
-						{registerMutation.isSuccess && (
-							<div
-								className={
-									"rounded-md bg-green-50 p-3 text-green-700"
-								}
-							>
-								<Tx
-									label={
-										"Registration successful! Redirecting..."
-									}
-								/>
-							</div>
-						)}
-
-						<div
-							className={
-								"inline-flex items-center justify-center w-full"
+									<Tx
+										label={"Login (link)"}
+										tone={"link"}
+									/>
+								</LinkTo>
 							}
+						/>
+
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								form.handleSubmit();
+							}}
+							className={"space-y-2"}
 						>
-							<Button
-								type={"submit"}
-								disabled={registerMutation.isPending}
-								tone={"secondary"}
-								theme={"dark"}
+							<form.AppField
+								name={"name"}
+								validators={{
+									onChange: ({ value }) => {
+										if (!value || value.length < 2) {
+											return {
+												message:
+													"Name must be at least 2 characters",
+											};
+										}
+										return undefined;
+									},
+								}}
 							>
-								{registerMutation.isPending ? (
-									<Tx label={"Please wait..."} />
-								) : (
-									<Tx label={"Register"} />
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										label={<Tx label={"Name"} />}
+										meta={field.state.meta}
+									>
+										{(props) => (
+											<field.TextInput
+												type={"text"}
+												value={field.state.value}
+												onChange={(e) =>
+													field.handleChange(
+														e.target.value,
+													)
+												}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													"Enter your name",
+												)}
+												{...props}
+											/>
+										)}
+									</FormField>
 								)}
-							</Button>
-						</div>
-					</form>
+							</form.AppField>
+
+							<form.AppField
+								name={"email"}
+								validators={{
+									onBlur({ value }) {
+										if (!value) {
+											return {
+												message:
+													translator.text(
+														"Email is required",
+													),
+											};
+										}
+										if (
+											!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+												value,
+											)
+										) {
+											return {
+												message: translator.text(
+													"Invalid email address",
+												),
+											};
+										}
+										return undefined;
+									},
+								}}
+							>
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										label={<Tx label={"Email"} />}
+										meta={field.state.meta}
+									>
+										{(props) => (
+											<field.TextInput
+												type={"email"}
+												value={field.state.value}
+												onChange={(e) =>
+													field.handleChange(
+														e.target.value,
+													)
+												}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													"Enter your email",
+												)}
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+
+							<form.AppField
+								name={"password"}
+								validators={{
+									onBlur({ value }) {
+										if (!value || value.length < 8) {
+											return {
+												message: translator.text(
+													"Password must be at least 8 characters",
+												),
+											};
+										}
+										return undefined;
+									},
+								}}
+							>
+								{(field) => (
+									<FormField
+										label={<Tx label={"Password"} />}
+										meta={field.state.meta}
+									>
+										{(props) => (
+											<field.TextInput
+												type={"password"}
+												value={field.state.value}
+												onChange={(e) =>
+													field.handleChange(
+														e.target.value,
+													)
+												}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													"Enter your password",
+												)}
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+
+							<form.AppField
+								name={"confirmPassword"}
+								validators={{
+									onChangeListenTo: [
+										"password",
+									],
+									onBlur({ value, fieldApi }) {
+										const password =
+											fieldApi.form.getFieldValue(
+												"password",
+											);
+
+										if (value !== password) {
+											return {
+												message: translator.text(
+													"Passwords do not match",
+												),
+											};
+										}
+
+										return undefined;
+									},
+								}}
+							>
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										label={
+											<Tx label={"Confirm Password"} />
+										}
+										meta={field.state.meta}
+									>
+										{(props) => (
+											<field.TextInput
+												type={"password"}
+												value={field.state.value}
+												onChange={(e) =>
+													field.handleChange(
+														e.target.value,
+													)
+												}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													"Confirm your password",
+												)}
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+
+							<div
+								className={
+									"inline-flex items-center justify-center w-full"
+								}
+							>
+								<form.SubmitButton
+									iconEnabled={
+										"icon-[eos-icons--system-re-registered]"
+									}
+									disabled={registerMutation.isPending}
+									tone={"secondary"}
+									theme={"dark"}
+									size={"lg"}
+								>
+									{registerMutation.isPending ? (
+										<Tx label={"Please wait..."} />
+									) : (
+										<Tx label={"Register"} />
+									)}
+								</form.SubmitButton>
+							</div>
+						</form>
+					</VariantProvider>
 				</Container>
 			</Sheet>
 		);

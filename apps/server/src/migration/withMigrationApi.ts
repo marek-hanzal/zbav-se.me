@@ -26,13 +26,14 @@ const MigrationSchema = z
 	})
 	.openapi("Migration");
 
-export const migrationRoot = new OpenAPIHono();
+export const withMigrationApi = new OpenAPIHono();
 
-migrationRoot.openapi(
+withMigrationApi.openapi(
 	createRoute({
 		method: "get",
 		path: "/migration/run",
 		description: "This route directly executes the migrations",
+		operationId: "apiMigrationRun",
 		responses: {
 			200: {
 				content: {
