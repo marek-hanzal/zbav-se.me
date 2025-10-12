@@ -498,5 +498,37 @@ export const InitialMigration: Migration = {
 			.insertInto("Category")
 			.values(generateCategorySeedData(categoryGroupMap))
 			.execute();
+
+		await db.schema
+			.createTable("Location")
+			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			//
+			.addColumn("query", "varchar(128)", (col) => col.notNull())
+			.addColumn("lang", "varchar(8)", (col) => col.notNull())
+			//
+			.addColumn("country", "varchar(72)", (col) => col.notNull())
+			.addColumn("code", "varchar(8)", (col) => col.notNull())
+			.addColumn("county", "varchar(128)", (col) => col.notNull())
+			.addColumn("municipality", "varchar(128)", (col) => col.notNull())
+			.addColumn("state", "varchar(128)", (col) => col.notNull())
+			//
+			.addColumn("address", "varchar(255)", (col) => col.notNull())
+			//
+			.addColumn("confidence", "numeric", (col) => col.notNull())
+			//
+			.addColumn("lat", "decimal(9, 6)", (col) => col.notNull())
+			.addColumn("lon", "decimal(10, 6)", (col) => col.notNull())
+			//
+			.execute();
+
+		// Create composite index for fast exact match lookups
+		await db.schema
+			.createIndex("Location_[query-lang]_idx")
+			.on("Location")
+			.columns([
+				"query",
+				"lang",
+			])
+			.execute();
 	},
 };
