@@ -13,7 +13,7 @@ export const ThemeCls = contract(PicoCls.contract)
 		// Primary tone - Pink-based palette
 		"tone.primary.light.text": {
 			class: [
-				"text-pink-700",
+				"text-pink-800/70",
 			],
 		},
 		"tone.primary.light.text:hover": {
@@ -28,7 +28,7 @@ export const ThemeCls = contract(PicoCls.contract)
 		},
 		"tone.primary.light.bg": {
 			class: [
-				"bg-pink-100",
+				"bg-pink-50",
 			],
 		},
 		"tone.primary.light.bg:hover": {
@@ -110,12 +110,12 @@ export const ThemeCls = contract(PicoCls.contract)
 		//
 		"tone.primary.dark.text": {
 			class: [
-				"text-pink-100",
+				"text-pink-50",
 			],
 		},
 		"tone.primary.dark.text:hover": {
 			class: [
-				"hover:text-pink-50",
+				"hover:text-pink-50/80",
 			],
 		},
 		"tone.primary.dark.text:focus": {

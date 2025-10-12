@@ -61,7 +61,7 @@ export const Route = createFileRoute("/$locale/register")({
 					<VariantProvider
 						cls={ThemeCls}
 						variant={{
-							tone: "secondary",
+							tone: "primary",
 							theme: "light",
 						}}
 					>
@@ -256,7 +256,7 @@ export const Route = createFileRoute("/$locale/register")({
 										"icon-[eos-icons--system-re-registered]"
 									}
 									disabled={registerMutation.isPending}
-									tone={"secondary"}
+									tone={"primary"}
 									theme={"dark"}
 									size={"lg"}
 								>

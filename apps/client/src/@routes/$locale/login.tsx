@@ -117,16 +117,16 @@ export const Route = createFileRoute("/$locale/login")({
 							icon: SocialIcon,
 						},
 					]}
-					orientation={"vertical"}
+					orientation={"horizontal"}
 				/>
 
 				<Fade scrollableRef={rootRef} />
 
 				<Container
 					ref={rootRef}
-					layout={"vertical-full"}
-					overflow={"vertical"}
-					snap={"vertical-start"}
+					layout={"horizontal-full"}
+					overflow={"horizontal"}
+					snap={"horizontal-start"}
 					gap={"md"}
 				>
 					<Sheet>
@@ -134,7 +134,7 @@ export const Route = createFileRoute("/$locale/login")({
 							<VariantProvider
 								cls={ThemeCls}
 								variant={{
-									tone: "secondary",
+									tone: "primary",
 									theme: "light",
 								}}
 							>
@@ -262,7 +262,7 @@ export const Route = createFileRoute("/$locale/login")({
 											iconEnabled={UnlockIcon}
 											iconDisabled={UnlockIcon}
 											disabled={signInMutation.isPending}
-											tone={"secondary"}
+											tone={"primary"}
 											theme={"dark"}
 											size={"lg"}
 										>
@@ -289,8 +289,6 @@ export const Route = createFileRoute("/$locale/login")({
 							textMessage={
 								<Tx label={"Login with passkey (message)"} />
 							}
-							tone={"secondary"}
-							theme={"light"}
 						>
 							<Button
 								iconEnabled={UnlockIcon}
@@ -300,7 +298,7 @@ export const Route = createFileRoute("/$locale/login")({
 								}}
 								disabled={passkeyMutation.isPending}
 								size={"lg"}
-								tone={"secondary"}
+								tone={"primary"}
 								theme={"dark"}
 							>
 								<Tx label={"Login with passkey"} />
@@ -317,7 +315,7 @@ export const Route = createFileRoute("/$locale/login")({
 							textMessage={
 								<Tx label={"Login with social (message)"} />
 							}
-							tone={"secondary"}
+							tone={"primary"}
 							theme={"light"}
 						/>
 					</Sheet>
