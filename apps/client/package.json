@@ -15,10 +15,10 @@
 		"@tanstack/react-form": "1.23.7",
 		"@tanstack/react-query": "5.90.2",
 		"@tanstack/react-router": "1.132.47",
-		"@use-pico/client": "5.0.154",
-		"@use-pico/cls": "5.0.57",
-		"@use-pico/common": "5.0.72",
-		"@use-pico/server": "5.0.72",
+		"@use-pico/client": "5.0.155",
+		"@use-pico/cls": "5.0.58",
+		"@use-pico/common": "5.0.73",
+		"@use-pico/server": "5.0.73",
 		"@zbav-se.me/sdk": "0.5.0",
 		"axios": "1.12.2",
 		"better-auth": "1.3.27",
@@ -40,15 +40,15 @@
 		"@types/bun": "1.3.0",
 		"@types/react": "19.2.2",
 		"@types/react-dom": "19.2.1",
-		"@vitejs/plugin-react": "^5.0.0",
+		"@vitejs/plugin-react": "5.0.4",
 		"tailwindcss": "4.1.14",
 		"typescript": "^5.9.3",
-		"vite": "^7.0.6",
+		"vite": "7.1.9",
 		"vite-plugin-dynamic-import": "1.6.0",
 		"vite-plugin-qrcode": "0.3.0",
 		"vite-plugin-top-level-await": "1.6.0",
 		"vite-plugin-wasm": "3.5.0",
-		"vite-tsconfig-paths": "^5.1.4"
+		"vite-tsconfig-paths": "5.1.4"
 	},
 	"private": true
 }
