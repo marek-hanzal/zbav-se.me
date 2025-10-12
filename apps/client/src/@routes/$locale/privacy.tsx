@@ -31,7 +31,6 @@ export const Route = createFileRoute("/$locale/privacy")({
 				overflow={"vertical"}
 				tone={"primary"}
 				theme={"light"}
-				round={"xl"}
 				square={"lg"}
 			>
 				<Markdown>{markdown}</Markdown>
