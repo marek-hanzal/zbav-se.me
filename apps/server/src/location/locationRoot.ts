@@ -1,11 +1,12 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { genId, linkTo } from "@use-pico/common";
+import { genId, linkTo, withList } from "@use-pico/common";
 import { database } from "../database/kysely";
 import { AppEnv } from "../env";
 import { LocationSchema } from "./schema/LocationSchema";
 
-export const geoapifyRoot = new OpenAPIHono();
-
+/**
+ * Soft schema from Geoapify (we believe in them - a mistake?)
+ */
 interface Feature {
 	properties: {
 		city: string;
@@ -23,7 +24,9 @@ interface Feature {
 	};
 }
 
-geoapifyRoot.openapi(
+export const locationRoot = new OpenAPIHono();
+
+locationRoot.openapi(
 	createRoute({
 		method: "get",
 		path: "/location/autocomplete",
@@ -45,8 +48,23 @@ geoapifyRoot.openapi(
 			},
 		},
 	}),
-	async ({ json, req }) => {
-		const { text, lang } = req.valid("query");
+	async (c) => {
+		const { text, lang } = c.req.valid("query");
+
+		const cache = await withList({
+			select: database.kysely
+				.selectFrom("Location")
+				.where("query", "=", text)
+				.where("lang", "=", lang)
+				.selectAll(),
+			output: LocationSchema,
+		});
+
+		if (cache.length > 0) {
+			c.header("Cache-Control", "public, max-age=31536000, immutable");
+			c.header("X-Location-Cache", "true");
+			return c.json(cache);
+		}
 
 		const link = linkTo({
 			base: "https://api.geoapify.com",
@@ -79,10 +97,13 @@ geoapifyRoot.openapi(
 			//
 			lat: properties.lat,
 			lon: properties.lon,
-		}));
+		})) satisfies LocationSchema.Type[];
 
 		database.kysely.insertInto("Location").values(results).execute();
 
-		return json([]);
+		c.header("Cache-Control", "public, max-age=31536000, immutable");
+		c.header("X-Location-Cache", "false");
+
+		return c.json(results);
 	},
 );
