@@ -1,7 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Container, Typo } from "@use-pico/client";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { Container } from "@use-pico/client";
+import { Markdown } from "~/app/ui/Markdown";
 
 const privacy = import.meta.glob("/src/privacy/*.md", {
 	as: "raw",
@@ -35,25 +34,7 @@ export const Route = createFileRoute("/$locale/privacy")({
 				round={"xl"}
 				square={"lg"}
 			>
-				<ReactMarkdown
-					remarkPlugins={[
-						remarkGfm,
-					]}
-					components={{
-						h1({ children }) {
-							return (
-								<Typo
-									label={children}
-									size={"xl"}
-									font={"bold"}
-									tone={"primary"}
-								/>
-							);
-						},
-					}}
-				>
-					{markdown}
-				</ReactMarkdown>
+				<Markdown>{markdown}</Markdown>
 			</Container>
 		);
 	},
