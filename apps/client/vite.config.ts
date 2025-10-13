@@ -1,6 +1,6 @@
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
-import { tanstackRouter } from "@tanstack/router-plugin/vite";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
@@ -13,10 +13,11 @@ export default defineConfig({
 	clearScreen: false,
 	base: process.env.VITE_ASSET_BASE,
 	plugins: [
-		tanstackRouter({
-			target: "react",
-			routesDirectory: "./src/@routes",
-			generatedRouteTree: "./src/_route.ts",
+		tanstackStart({
+			router: {
+				routesDirectory: "./@routes",
+				generatedRouteTree: "./_route.ts",
+			},
 		}),
 		tla(),
 		paths(),

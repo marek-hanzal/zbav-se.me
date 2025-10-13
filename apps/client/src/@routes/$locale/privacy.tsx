@@ -2,9 +2,7 @@ import { createFileRoute, notFound } from "@tanstack/react-router";
 import { Container } from "@use-pico/client";
 import { Markdown } from "~/app/ui/Markdown";
 
-const privacy = import.meta.glob("/src/privacy/*.md", {
-	as: "raw",
-});
+const privacy = import.meta.glob("/src/privacy/*.md?raw");
 
 export const Route = createFileRoute("/$locale/privacy")({
 	async loader({ params: { locale } }) {
@@ -16,7 +14,7 @@ export const Route = createFileRoute("/$locale/privacy")({
 		for (const key of list) {
 			const loader = privacy[key];
 			if (loader) {
-				return await loader();
+				return (await loader()) as string;
 			}
 		}
 

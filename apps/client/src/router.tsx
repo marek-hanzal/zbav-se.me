@@ -1,28 +1,29 @@
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
-import { createRouter as coolCreateRouter } from "@tanstack/react-router";
+import { createRouter } from "@tanstack/react-router";
+import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { tvc } from "@use-pico/cls";
+import { routeTree } from "~/_route";
+import { Sheet } from "~/app/sheet/Sheet";
 import { LogoAnimated } from "~/app/ui/LogoAnimated";
-import { routeTree } from "./_route";
 
-export const getRouter = () => {
-	const router = coolCreateRouter({
+export function getRouter() {
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				placeholderData: keepPreviousData,
+				staleTime: 5 * 1000,
+			},
+		},
+	});
+
+	const router = createRouter({
 		routeTree,
 		context: {
-			queryClient: new QueryClient({
-				defaultOptions: {
-					queries: {
-						placeholderData: keepPreviousData,
-						staleTime: 5 * 1000,
-					},
-				},
-			}),
+			queryClient,
 		},
 		scrollRestoration: true,
-		defaultPreload: "intent",
-		defaultPreloadStaleTime: 0,
-		defaultPendingMinMs: 200,
 		defaultNotFoundComponent() {
-			return <div>4😞4</div>;
+			return <Sheet>4😞4</Sheet>;
 		},
 		defaultPendingComponent() {
 			return (
@@ -42,8 +43,14 @@ export const getRouter = () => {
 		defaultPendingMs: 500,
 	});
 
+	setupRouterSsrQueryIntegration({
+		router,
+		queryClient,
+		wrapQueryClient: true,
+	});
+
 	return router;
-};
+}
 
 declare module "@tanstack/react-router" {
 	interface Register {

@@ -78,7 +78,7 @@ export const Markdown: FC<Markdown.Props> = ({ children }) => {
 				},
 				p({ children }) {
 					return (
-						<p
+						<div
 							className={slots.default({
 								slot: {
 									default: {
@@ -90,7 +90,7 @@ export const Markdown: FC<Markdown.Props> = ({ children }) => {
 							})}
 						>
 							{children}
-						</p>
+						</div>
 					);
 				},
 				strong({ children }) {

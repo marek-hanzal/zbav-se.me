@@ -9,7 +9,7 @@
 		"ignoreUnknown": false,
 		"includes": [
 			"**/*",
-			"!**/routeTree.gen.ts",
+			"!**/_route.ts",
 			"!**/dist",
 			"!**/.output",
 			"!**/.nitro",

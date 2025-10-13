@@ -8,303 +8,312 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./@routes/__root";
-import { Route as LocaleRouteImport } from "./@routes/$locale";
-import { Route as LocaleIndexRouteImport } from "./@routes/$locale/index";
-import { Route as LocaleLoginRouteImport } from "./@routes/$locale/login";
-import { Route as LocaleNRouteImport } from "./@routes/$locale/n";
-import { Route as LocaleNBagRouteImport } from "./@routes/$locale/n/bag";
-import { Route as LocaleNCreateRouteImport } from "./@routes/$locale/n/create";
-import { Route as LocaleNFeedRouteImport } from "./@routes/$locale/n/feed";
-import { Route as LocaleNUserRouteImport } from "./@routes/$locale/n/user";
-import { Route as LocalePrivacyRouteImport } from "./@routes/$locale/privacy";
-import { Route as LocaleRegisterRouteImport } from "./@routes/$locale/register";
-import { Route as LocaleTosRouteImport } from "./@routes/$locale/tos";
-import { Route as IndexRouteImport } from "./@routes/index";
+import { Route as rootRouteImport } from './@routes/__root'
+import { Route as LocaleRouteImport } from './@routes/$locale'
+import { Route as IndexRouteImport } from './@routes/index'
+import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
+import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
+import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
+import { Route as LocaleNRouteImport } from './@routes/$locale/n'
+import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
+import { Route as LocaleNUserRouteImport } from './@routes/$locale/n/user'
+import { Route as LocaleNFeedRouteImport } from './@routes/$locale/n/feed'
+import { Route as LocaleNCreateRouteImport } from './@routes/$locale/n/create'
+import { Route as LocaleNBagRouteImport } from './@routes/$locale/n/bag'
 
 const LocaleRoute = LocaleRouteImport.update({
-	id: "/$locale",
-	path: "/$locale",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/$locale',
+  path: '/$locale',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LocaleIndexRoute = LocaleIndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => LocaleRoute,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleTosRoute = LocaleTosRouteImport.update({
-	id: "/tos",
-	path: "/tos",
-	getParentRoute: () => LocaleRoute,
-} as any);
+  id: '/tos',
+  path: '/tos',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleRegisterRoute = LocaleRegisterRouteImport.update({
-	id: "/register",
-	path: "/register",
-	getParentRoute: () => LocaleRoute,
-} as any);
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
-	id: "/privacy",
-	path: "/privacy",
-	getParentRoute: () => LocaleRoute,
-} as any);
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleNRoute = LocaleNRouteImport.update({
-	id: "/n",
-	path: "/n",
-	getParentRoute: () => LocaleRoute,
-} as any);
+  id: '/n',
+  path: '/n',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleLoginRoute = LocaleLoginRouteImport.update({
-	id: "/login",
-	path: "/login",
-	getParentRoute: () => LocaleRoute,
-} as any);
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleNUserRoute = LocaleNUserRouteImport.update({
-	id: "/user",
-	path: "/user",
-	getParentRoute: () => LocaleNRoute,
-} as any);
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => LocaleNRoute,
+} as any)
 const LocaleNFeedRoute = LocaleNFeedRouteImport.update({
-	id: "/feed",
-	path: "/feed",
-	getParentRoute: () => LocaleNRoute,
-} as any);
+  id: '/feed',
+  path: '/feed',
+  getParentRoute: () => LocaleNRoute,
+} as any)
 const LocaleNCreateRoute = LocaleNCreateRouteImport.update({
-	id: "/create",
-	path: "/create",
-	getParentRoute: () => LocaleNRoute,
-} as any);
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => LocaleNRoute,
+} as any)
 const LocaleNBagRoute = LocaleNBagRouteImport.update({
-	id: "/bag",
-	path: "/bag",
-	getParentRoute: () => LocaleNRoute,
-} as any);
+  id: '/bag',
+  path: '/bag',
+  getParentRoute: () => LocaleNRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/$locale": typeof LocaleRouteWithChildren;
-	"/$locale/login": typeof LocaleLoginRoute;
-	"/$locale/n": typeof LocaleNRouteWithChildren;
-	"/$locale/privacy": typeof LocalePrivacyRoute;
-	"/$locale/register": typeof LocaleRegisterRoute;
-	"/$locale/tos": typeof LocaleTosRoute;
-	"/$locale/": typeof LocaleIndexRoute;
-	"/$locale/n/bag": typeof LocaleNBagRoute;
-	"/$locale/n/create": typeof LocaleNCreateRoute;
-	"/$locale/n/feed": typeof LocaleNFeedRoute;
-	"/$locale/n/user": typeof LocaleNUserRoute;
+  '/': typeof IndexRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/login': typeof LocaleLoginRoute
+  '/$locale/n': typeof LocaleNRouteWithChildren
+  '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/register': typeof LocaleRegisterRoute
+  '/$locale/tos': typeof LocaleTosRoute
+  '/$locale/': typeof LocaleIndexRoute
+  '/$locale/n/bag': typeof LocaleNBagRoute
+  '/$locale/n/create': typeof LocaleNCreateRoute
+  '/$locale/n/feed': typeof LocaleNFeedRoute
+  '/$locale/n/user': typeof LocaleNUserRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/$locale/login": typeof LocaleLoginRoute;
-	"/$locale/n": typeof LocaleNRouteWithChildren;
-	"/$locale/privacy": typeof LocalePrivacyRoute;
-	"/$locale/register": typeof LocaleRegisterRoute;
-	"/$locale/tos": typeof LocaleTosRoute;
-	"/$locale": typeof LocaleIndexRoute;
-	"/$locale/n/bag": typeof LocaleNBagRoute;
-	"/$locale/n/create": typeof LocaleNCreateRoute;
-	"/$locale/n/feed": typeof LocaleNFeedRoute;
-	"/$locale/n/user": typeof LocaleNUserRoute;
+  '/': typeof IndexRoute
+  '/$locale/login': typeof LocaleLoginRoute
+  '/$locale/n': typeof LocaleNRouteWithChildren
+  '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/register': typeof LocaleRegisterRoute
+  '/$locale/tos': typeof LocaleTosRoute
+  '/$locale': typeof LocaleIndexRoute
+  '/$locale/n/bag': typeof LocaleNBagRoute
+  '/$locale/n/create': typeof LocaleNCreateRoute
+  '/$locale/n/feed': typeof LocaleNFeedRoute
+  '/$locale/n/user': typeof LocaleNUserRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/$locale": typeof LocaleRouteWithChildren;
-	"/$locale/login": typeof LocaleLoginRoute;
-	"/$locale/n": typeof LocaleNRouteWithChildren;
-	"/$locale/privacy": typeof LocalePrivacyRoute;
-	"/$locale/register": typeof LocaleRegisterRoute;
-	"/$locale/tos": typeof LocaleTosRoute;
-	"/$locale/": typeof LocaleIndexRoute;
-	"/$locale/n/bag": typeof LocaleNBagRoute;
-	"/$locale/n/create": typeof LocaleNCreateRoute;
-	"/$locale/n/feed": typeof LocaleNFeedRoute;
-	"/$locale/n/user": typeof LocaleNUserRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/login': typeof LocaleLoginRoute
+  '/$locale/n': typeof LocaleNRouteWithChildren
+  '/$locale/privacy': typeof LocalePrivacyRoute
+  '/$locale/register': typeof LocaleRegisterRoute
+  '/$locale/tos': typeof LocaleTosRoute
+  '/$locale/': typeof LocaleIndexRoute
+  '/$locale/n/bag': typeof LocaleNBagRoute
+  '/$locale/n/create': typeof LocaleNCreateRoute
+  '/$locale/n/feed': typeof LocaleNFeedRoute
+  '/$locale/n/user': typeof LocaleNUserRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths:
-		| "/"
-		| "/$locale"
-		| "/$locale/login"
-		| "/$locale/n"
-		| "/$locale/privacy"
-		| "/$locale/register"
-		| "/$locale/tos"
-		| "/$locale/"
-		| "/$locale/n/bag"
-		| "/$locale/n/create"
-		| "/$locale/n/feed"
-		| "/$locale/n/user";
-	fileRoutesByTo: FileRoutesByTo;
-	to:
-		| "/"
-		| "/$locale/login"
-		| "/$locale/n"
-		| "/$locale/privacy"
-		| "/$locale/register"
-		| "/$locale/tos"
-		| "/$locale"
-		| "/$locale/n/bag"
-		| "/$locale/n/create"
-		| "/$locale/n/feed"
-		| "/$locale/n/user";
-	id:
-		| "__root__"
-		| "/"
-		| "/$locale"
-		| "/$locale/login"
-		| "/$locale/n"
-		| "/$locale/privacy"
-		| "/$locale/register"
-		| "/$locale/tos"
-		| "/$locale/"
-		| "/$locale/n/bag"
-		| "/$locale/n/create"
-		| "/$locale/n/feed"
-		| "/$locale/n/user";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/$locale'
+    | '/$locale/login'
+    | '/$locale/n'
+    | '/$locale/privacy'
+    | '/$locale/register'
+    | '/$locale/tos'
+    | '/$locale/'
+    | '/$locale/n/bag'
+    | '/$locale/n/create'
+    | '/$locale/n/feed'
+    | '/$locale/n/user'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/$locale/login'
+    | '/$locale/n'
+    | '/$locale/privacy'
+    | '/$locale/register'
+    | '/$locale/tos'
+    | '/$locale'
+    | '/$locale/n/bag'
+    | '/$locale/n/create'
+    | '/$locale/n/feed'
+    | '/$locale/n/user'
+  id:
+    | '__root__'
+    | '/'
+    | '/$locale'
+    | '/$locale/login'
+    | '/$locale/n'
+    | '/$locale/privacy'
+    | '/$locale/register'
+    | '/$locale/tos'
+    | '/$locale/'
+    | '/$locale/n/bag'
+    | '/$locale/n/create'
+    | '/$locale/n/feed'
+    | '/$locale/n/user'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	LocaleRoute: typeof LocaleRouteWithChildren;
+  IndexRoute: typeof IndexRoute
+  LocaleRoute: typeof LocaleRouteWithChildren
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/$locale": {
-			id: "/$locale";
-			path: "/$locale";
-			fullPath: "/$locale";
-			preLoaderRoute: typeof LocaleRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/$locale/": {
-			id: "/$locale/";
-			path: "/";
-			fullPath: "/$locale/";
-			preLoaderRoute: typeof LocaleIndexRouteImport;
-			parentRoute: typeof LocaleRoute;
-		};
-		"/$locale/tos": {
-			id: "/$locale/tos";
-			path: "/tos";
-			fullPath: "/$locale/tos";
-			preLoaderRoute: typeof LocaleTosRouteImport;
-			parentRoute: typeof LocaleRoute;
-		};
-		"/$locale/register": {
-			id: "/$locale/register";
-			path: "/register";
-			fullPath: "/$locale/register";
-			preLoaderRoute: typeof LocaleRegisterRouteImport;
-			parentRoute: typeof LocaleRoute;
-		};
-		"/$locale/privacy": {
-			id: "/$locale/privacy";
-			path: "/privacy";
-			fullPath: "/$locale/privacy";
-			preLoaderRoute: typeof LocalePrivacyRouteImport;
-			parentRoute: typeof LocaleRoute;
-		};
-		"/$locale/n": {
-			id: "/$locale/n";
-			path: "/n";
-			fullPath: "/$locale/n";
-			preLoaderRoute: typeof LocaleNRouteImport;
-			parentRoute: typeof LocaleRoute;
-		};
-		"/$locale/login": {
-			id: "/$locale/login";
-			path: "/login";
-			fullPath: "/$locale/login";
-			preLoaderRoute: typeof LocaleLoginRouteImport;
-			parentRoute: typeof LocaleRoute;
-		};
-		"/$locale/n/user": {
-			id: "/$locale/n/user";
-			path: "/user";
-			fullPath: "/$locale/n/user";
-			preLoaderRoute: typeof LocaleNUserRouteImport;
-			parentRoute: typeof LocaleNRoute;
-		};
-		"/$locale/n/feed": {
-			id: "/$locale/n/feed";
-			path: "/feed";
-			fullPath: "/$locale/n/feed";
-			preLoaderRoute: typeof LocaleNFeedRouteImport;
-			parentRoute: typeof LocaleNRoute;
-		};
-		"/$locale/n/create": {
-			id: "/$locale/n/create";
-			path: "/create";
-			fullPath: "/$locale/n/create";
-			preLoaderRoute: typeof LocaleNCreateRouteImport;
-			parentRoute: typeof LocaleNRoute;
-		};
-		"/$locale/n/bag": {
-			id: "/$locale/n/bag";
-			path: "/bag";
-			fullPath: "/$locale/n/bag";
-			preLoaderRoute: typeof LocaleNBagRouteImport;
-			parentRoute: typeof LocaleNRoute;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/$locale': {
+      id: '/$locale'
+      path: '/$locale'
+      fullPath: '/$locale'
+      preLoaderRoute: typeof LocaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/$locale/': {
+      id: '/$locale/'
+      path: '/'
+      fullPath: '/$locale/'
+      preLoaderRoute: typeof LocaleIndexRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/tos': {
+      id: '/$locale/tos'
+      path: '/tos'
+      fullPath: '/$locale/tos'
+      preLoaderRoute: typeof LocaleTosRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/register': {
+      id: '/$locale/register'
+      path: '/register'
+      fullPath: '/$locale/register'
+      preLoaderRoute: typeof LocaleRegisterRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/privacy': {
+      id: '/$locale/privacy'
+      path: '/privacy'
+      fullPath: '/$locale/privacy'
+      preLoaderRoute: typeof LocalePrivacyRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/n': {
+      id: '/$locale/n'
+      path: '/n'
+      fullPath: '/$locale/n'
+      preLoaderRoute: typeof LocaleNRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/login': {
+      id: '/$locale/login'
+      path: '/login'
+      fullPath: '/$locale/login'
+      preLoaderRoute: typeof LocaleLoginRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/n/user': {
+      id: '/$locale/n/user'
+      path: '/user'
+      fullPath: '/$locale/n/user'
+      preLoaderRoute: typeof LocaleNUserRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
+    '/$locale/n/feed': {
+      id: '/$locale/n/feed'
+      path: '/feed'
+      fullPath: '/$locale/n/feed'
+      preLoaderRoute: typeof LocaleNFeedRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
+    '/$locale/n/create': {
+      id: '/$locale/n/create'
+      path: '/create'
+      fullPath: '/$locale/n/create'
+      preLoaderRoute: typeof LocaleNCreateRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
+    '/$locale/n/bag': {
+      id: '/$locale/n/bag'
+      path: '/bag'
+      fullPath: '/$locale/n/bag'
+      preLoaderRoute: typeof LocaleNBagRouteImport
+      parentRoute: typeof LocaleNRoute
+    }
+  }
 }
 
 interface LocaleNRouteChildren {
-	LocaleNBagRoute: typeof LocaleNBagRoute;
-	LocaleNCreateRoute: typeof LocaleNCreateRoute;
-	LocaleNFeedRoute: typeof LocaleNFeedRoute;
-	LocaleNUserRoute: typeof LocaleNUserRoute;
+  LocaleNBagRoute: typeof LocaleNBagRoute
+  LocaleNCreateRoute: typeof LocaleNCreateRoute
+  LocaleNFeedRoute: typeof LocaleNFeedRoute
+  LocaleNUserRoute: typeof LocaleNUserRoute
 }
 
 const LocaleNRouteChildren: LocaleNRouteChildren = {
-	LocaleNBagRoute: LocaleNBagRoute,
-	LocaleNCreateRoute: LocaleNCreateRoute,
-	LocaleNFeedRoute: LocaleNFeedRoute,
-	LocaleNUserRoute: LocaleNUserRoute,
-};
+  LocaleNBagRoute: LocaleNBagRoute,
+  LocaleNCreateRoute: LocaleNCreateRoute,
+  LocaleNFeedRoute: LocaleNFeedRoute,
+  LocaleNUserRoute: LocaleNUserRoute,
+}
 
 const LocaleNRouteWithChildren =
-	LocaleNRoute._addFileChildren(LocaleNRouteChildren);
+  LocaleNRoute._addFileChildren(LocaleNRouteChildren)
 
 interface LocaleRouteChildren {
-	LocaleLoginRoute: typeof LocaleLoginRoute;
-	LocaleNRoute: typeof LocaleNRouteWithChildren;
-	LocalePrivacyRoute: typeof LocalePrivacyRoute;
-	LocaleRegisterRoute: typeof LocaleRegisterRoute;
-	LocaleTosRoute: typeof LocaleTosRoute;
-	LocaleIndexRoute: typeof LocaleIndexRoute;
+  LocaleLoginRoute: typeof LocaleLoginRoute
+  LocaleNRoute: typeof LocaleNRouteWithChildren
+  LocalePrivacyRoute: typeof LocalePrivacyRoute
+  LocaleRegisterRoute: typeof LocaleRegisterRoute
+  LocaleTosRoute: typeof LocaleTosRoute
+  LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
-	LocaleLoginRoute: LocaleLoginRoute,
-	LocaleNRoute: LocaleNRouteWithChildren,
-	LocalePrivacyRoute: LocalePrivacyRoute,
-	LocaleRegisterRoute: LocaleRegisterRoute,
-	LocaleTosRoute: LocaleTosRoute,
-	LocaleIndexRoute: LocaleIndexRoute,
-};
+  LocaleLoginRoute: LocaleLoginRoute,
+  LocaleNRoute: LocaleNRouteWithChildren,
+  LocalePrivacyRoute: LocalePrivacyRoute,
+  LocaleRegisterRoute: LocaleRegisterRoute,
+  LocaleTosRoute: LocaleTosRoute,
+  LocaleIndexRoute: LocaleIndexRoute,
+}
 
 const LocaleRouteWithChildren =
-	LocaleRoute._addFileChildren(LocaleRouteChildren);
+  LocaleRoute._addFileChildren(LocaleRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	LocaleRoute: LocaleRouteWithChildren,
-};
+  IndexRoute: IndexRoute,
+  LocaleRoute: LocaleRouteWithChildren,
+}
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}
