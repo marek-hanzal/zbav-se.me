@@ -6,7 +6,6 @@ import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
 import { qrcode } from "vite-plugin-qrcode";
-import tla from "vite-plugin-top-level-await";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
 import { locales } from "./src/locales";
@@ -44,7 +43,6 @@ export default defineConfig({
 				host: process.env.ORIGIN,
 			},
 		}),
-		tla(),
 		paths(),
 		react({}),
 		ViteYaml(),
