@@ -3,7 +3,7 @@ import { localeOf } from "@use-pico/common";
 import { defaultLocale, locales } from "~/locales";
 
 export const Route = createFileRoute("/")({
-	beforeLoad() {
+	loader() {
 		throw redirect({
 			to: "/$locale",
 			params: {
