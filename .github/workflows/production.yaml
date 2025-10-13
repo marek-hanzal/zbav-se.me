@@ -67,6 +67,7 @@ jobs:
         env:
             VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
             VITE_API: ${{ vars.VITE_API }}
+            ORIGIN: ${{ vars.ORIGIN }}
         steps:
             - uses: actions/checkout@v4
 
