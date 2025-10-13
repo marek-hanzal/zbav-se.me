@@ -1,38 +1,33 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
-import { Container } from "@use-pico/client";
+import { createFileRoute } from "@tanstack/react-router";
+import { Container, Fade } from "@use-pico/client";
+import { useRef } from "react";
 import { Markdown } from "~/app/ui/Markdown";
-
-const privacy = import.meta.glob("/src/privacy/*.md?raw");
 
 export const Route = createFileRoute("/$locale/privacy")({
 	async loader({ params: { locale } }) {
-		const list = [
-			`/src/privacy/${locale}.md`,
-			"/src/privacy/cs.md",
-		];
-
-		for (const key of list) {
-			const loader = privacy[key];
-			if (loader) {
-				return (await loader()) as string;
-			}
-		}
-
-		throw notFound();
+		return import(`../../privacy/${locale}.md?raw`).then(
+			(res) => res.default,
+		);
 	},
 	component() {
+		const rootRef = useRef<HTMLDivElement>(null);
 		const markdown = Route.useLoaderData();
 
 		return (
-			<Container
-				layout={"vertical"}
-				overflow={"vertical"}
-				tone={"primary"}
-				theme={"light"}
-				square={"lg"}
-			>
-				<Markdown>{markdown}</Markdown>
-			</Container>
+			<div className={"relative w-full h-full"}>
+				<Fade scrollableRef={rootRef} />
+
+				<Container
+					ref={rootRef}
+					layout={"vertical"}
+					overflow={"vertical"}
+					tone={"primary"}
+					theme={"light"}
+					square={"lg"}
+				>
+					<Markdown>{markdown}</Markdown>
+				</Container>
+			</div>
 		);
 	},
 });

@@ -2,12 +2,21 @@ import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
+import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
 import { qrcode } from "vite-plugin-qrcode";
 import tla from "vite-plugin-top-level-await";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
+import { locales } from "./src/locales";
+
+const prerender = [
+	"/:locale/login",
+	"/:locale/register",
+	"/:locale/tos",
+	"/:locale/privacy",
+];
 
 export default defineConfig({
 	clearScreen: false,
@@ -17,7 +26,16 @@ export default defineConfig({
 			prerender: {
 				enabled: true,
 				concurrency: 8,
+				crawlLinks: false,
 			},
+			pages: locales.flatMap((locale) =>
+				prerender.map((path) => ({
+					path: path.replace(":locale", locale),
+					prerender: {
+						crawlLinks: false,
+					},
+				})),
+			),
 			router: {
 				routesDirectory: "./@routes",
 				generatedRouteTree: "./_route.ts",
@@ -34,6 +52,11 @@ export default defineConfig({
 		wasm(),
 		qrcode(),
 		tailwindcss(),
+		nitro({
+			config: {
+				preset: "vercel",
+			},
+		}),
 	],
 	worker: {
 		format: "es",
@@ -55,8 +78,8 @@ export default defineConfig({
 	},
 	build: {
 		target: "esnext",
-		assetsDir: "assets", // keep a clean /assets namespace for CDN
-		sourcemap: true, // helpful in prod debugging; optional
-		manifest: true, // allows tooling to inspect built files; optional
+		assetsDir: "assets",
+		sourcemap: true,
+		manifest: true,
 	},
 });
