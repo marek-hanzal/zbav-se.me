@@ -14,9 +14,16 @@ export default defineConfig({
 	base: process.env.VITE_ASSET_BASE,
 	plugins: [
 		tanstackStart({
+			prerender: {
+				enabled: true,
+				concurrency: 8,
+			},
 			router: {
 				routesDirectory: "./@routes",
 				generatedRouteTree: "./_route.ts",
+			},
+			sitemap: {
+				host: process.env.ORIGIN,
 			},
 		}),
 		tla(),
