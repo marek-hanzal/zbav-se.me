@@ -98,22 +98,6 @@ jobs:
                   VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
-            - name: Prepare Vercel output
-              working-directory: apps/client
-              run: |
-                  rm -rf .vercel/output
-                  mkdir -p .vercel/output/static
-                  cp -R dist/* .vercel/output/static/
-                  cat > .vercel/output/config.json <<'JSON'
-                  {
-                    "version": 3,
-                    "routes": [
-                      { "handle": "filesystem" },
-                      { "src": "/(.*)", "dest": "/index.html" }
-                    ]
-                  }
-                  JSON
-
             - name: Upload artifact (client prebuilt)
               uses: actions/upload-artifact@v4
               with:
