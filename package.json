@@ -19,7 +19,7 @@
 		"workflow:update": "run-s sp:fix sp:update workflow:format update workflow:check"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "2.2.5",
+		"@biomejs/biome": "2.2.6",
 		"dotenv-cli": "10.0.0",
 		"npm-run-all2": "8.0.4",
 		"syncpack": "13.0.4",
