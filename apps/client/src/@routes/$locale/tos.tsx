@@ -6,7 +6,9 @@ import { Markdown } from "~/app/ui/Markdown";
 
 export const Route = createFileRoute("/$locale/tos")({
 	async loader({ params: { locale } }) {
-		return import(`../../tos/${locale}.md?raw`).then((res) => res.default);
+		return import(`../../@md/tos/${locale}.md?raw`).then(
+			(res) => res.default,
+		);
 	},
 	component() {
 		const rootRef = useRef<HTMLDivElement>(null);

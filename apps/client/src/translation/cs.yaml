@@ -27,7 +27,9 @@
     value: ID
 1504acbd53c0d2fc447c2f85423f4ab4fd21fd1a8a3335b2c9b66650:
     ref: Landing - Feature 5 (title) - hint
-    value: Konkurenční ceny, počet zobrazení a dalších interakcí. Snadno zjistíš, jak si tvůj inzerát stojí mezi ostatními.
+    value:
+        Konkurenční ceny, počet zobrazení a dalších interakcí. Snadno zjistíš,
+        jak si tvůj inzerát stojí mezi ostatními.
 18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
     ref: Login with passkey (title)
     value: Přihlášení klíčem
@@ -50,7 +52,9 @@
     value: ⚡ Rychle k nalezení — v appce i zvenku
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
     ref: Landing - Feature 1 (title) - hint
-    value: "Provede tě rychlý průvodce: cvakneš fotky a pak už jen pár kliků — kategorie, stav, místo a cena. Psaní držíme na minimu, většinu věcí prostě naklikáš. Odeslat a hotovo."
+    value: "Provede tě rychlý průvodce: cvakneš fotky a pak už jen pár kliků —
+        kategorie, stav, místo a cena. Psaní držíme na minimu, většinu věcí prostě
+        naklikáš. Odeslat a hotovo."
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
     ref: Agreement with (label)
     value: "Registrací souhlasíte s:"
@@ -127,7 +131,7 @@
     value: Můj seznam
 3f99523df88ec5cd5a35a06a20d24d609a3b6185c456b2184176dff5:
     ref: Landing - About (text)
-    value: Landing - About (text)
+    value: Náhled do naší motivace a co nás sem přivedlo
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -140,6 +144,12 @@
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
     ref: Register (hero)
     value: Přidat se!
+43c47f7f42d7fa090ee4133fcd48813d16e2e4108ac589ac87fd30c8:
+    ref: Motivation (text)
+    value: |
+        Appky, které jsme používali k prodeji byly těžkopádné a složité k použití. Nebo vyžadovaly velké množství kroků.
+        Nebo prostě nebyly pořádně srozumitelné. Rozhodli jsme se proto to vzít od podlahy a vytvořit moderní appku, která
+        je silně optimalizovaná pro extrémně rychlé nabízení inzerátů, včetně jejich efektivního doručení zájemcům.
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
     ref: What - buyers (title)
     value: Chceš něco koupit?
@@ -174,13 +184,13 @@
     value: Nastavení ceny
 5cbc30691239af58ad3c11e3630eb3da632bac0cf2703390609b09c2:
     ref: Landing - About (title)
-    value: Landing - About (title)
+    value: O nás
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
     ref: Delete (button)
     value: Delete (button)
 5e5b22386d6916d54d543deb3fa2ae94dc60928062b03b80fa4f4292:
     ref: Landing - Feature 2 (title) - hint
-    value: Procházení ve svižném „swipe“ rytmu a chytré filtry podle místa, ceny a kategorie. Každý inzerát má i vlastní veřejný odkaz přívětivý k vyhledávačům, takže se dá snadno sdílet a dohledat. Po skončení už nikde nestraší.
+    value: Hledání v appce i na netu - je šance, že tvůj inzerát najdeš na Googlu.
 61a6f144c84ce8d83fccdd988e63aa0b40d951edf07fcc5eec215664:
     ref: Select category (select)
     value: Select category (select)

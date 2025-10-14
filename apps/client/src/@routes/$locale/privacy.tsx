@@ -6,7 +6,7 @@ import { Markdown } from "~/app/ui/Markdown";
 
 export const Route = createFileRoute("/$locale/privacy")({
 	async loader({ params: { locale } }) {
-		return import(`../../privacy/${locale}.md?raw`).then(
+		return import(`../../@md/privacy-policy/${locale}.md?raw`).then(
 			(res) => res.default,
 		);
 	},

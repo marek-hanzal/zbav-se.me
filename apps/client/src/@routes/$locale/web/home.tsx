@@ -15,7 +15,15 @@ import { SecondaryOverlay } from "~/app/ui/overlay/SecondaryOverlay";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/web/home")({
+	async loader({ params: { locale } }) {
+		return {
+			about: await import(`../../../@md/about/${locale}.md?raw`).then(
+				(m) => m.default,
+			),
+		};
+	},
 	component() {
+		const { about } = Route.useLoaderData();
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
 		const heroId = useId();
@@ -93,7 +101,7 @@ export const Route = createFileRoute("/$locale/web/home")({
 							tone: "secondary",
 						}}
 					>
-						<AboutSheet />
+						<AboutSheet markdown={about} />
 					</VariantProvider>
 
 					<CtaSheet />
