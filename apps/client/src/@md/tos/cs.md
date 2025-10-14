@@ -1,5 +1,5 @@
 # Podmínky používání služby
-## **zbav-se.me**
+## [**zbav-se.me**](/)
 
 *Účinné od: **12. 10. 2025***
 

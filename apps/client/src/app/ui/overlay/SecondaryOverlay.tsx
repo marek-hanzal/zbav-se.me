@@ -9,9 +9,17 @@ export const SecondaryOverlay: FC<SecondaryOverlay.Props> = ({ ...props }) => {
 	return (
 		<Overlay
 			type="bg-2"
-			opacity={"50"}
-			accentFrom="warning.dark"
+			accentFrom="primary.dark"
 			accentTo="secondary.dark"
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"opacity-30",
+						],
+					},
+				},
+			}}
 			{...props}
 		/>
 	);

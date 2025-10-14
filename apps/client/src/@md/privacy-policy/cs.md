@@ -1,5 +1,5 @@
 # Zásady ochrany osobních údajů
-## **zbav-se.me**
+## [**zbav-se.me**](/)
 
 *Účinné od: **12. 10. 2025***  
 *Verze: **1.0‑alfa***  
