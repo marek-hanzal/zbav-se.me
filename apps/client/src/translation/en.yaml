@@ -115,9 +115,6 @@
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
   ref: My Bag (title)
   value: My Bag (title)
-3f99523df88ec5cd5a35a06a20d24d609a3b6185c456b2184176dff5:
-  ref: Landing - About (text)
-  value: Landing - About (text)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
@@ -130,9 +127,6 @@
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
   ref: Register (hero)
   value: Register (hero)
-43c47f7f42d7fa090ee4133fcd48813d16e2e4108ac589ac87fd30c8:
-  ref: Motivation (text)
-  value: Motivation (text)
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
   ref: What - buyers (title)
   value: What - buyers (title)
@@ -145,6 +139,9 @@
 52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
   ref: User (title)
   value: User (title)
+53285c44368f8f4d2c9df2f9614f265d12112e00bcaa0e7f24adb2d0:
+  ref: Landing - Contact (title)
+  value: Landing - Contact (title)
 53d86a69426c63d5831e3229c44315d6966ef21ffc5a71e488dd2861:
   ref: What - sellers (title)
   value: What - sellers (title)
@@ -163,9 +160,6 @@
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
   ref: Listing - Price (tour)
   value: Listing - Price (tour)
-5cbc30691239af58ad3c11e3630eb3da632bac0cf2703390609b09c2:
-  ref: Landing - About (title)
-  value: Landing - About (title)
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
@@ -354,6 +348,9 @@ d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
 d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
   ref: Submit listing - status - cannot submit (title)
   value: Submit listing - status - cannot submit (title)
+d710bfd0568645758fb1e8d34e64295ff720d1d298cdf773b578d404:
+  ref: Landing - Contact (text)
+  value: Landing - Contact (text)
 d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
   ref: Login failed
   value: Login failed
@@ -393,6 +390,9 @@ ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
 ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
   ref: No category selected
   value: No category selected
+efe14afd72b9ad35995731dbd02f045d6d2496d1db1e1e9161bf4899:
+  ref: Register (cta)
+  value: Register (cta)
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
   ref: Submit listing (button)
   value: Submit listing (button)

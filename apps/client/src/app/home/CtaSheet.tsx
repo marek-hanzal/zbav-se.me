@@ -13,6 +13,7 @@ export const CtaSheet: FC = () => {
 		<Sheet>
 			<div className={"reveal"}>
 				<Status
+					icon={"icon-[mingcute--celebrate-line]"}
 					textTitle={<Tx label={"Landing - CTA (title)"} />}
 					textMessage={<Tx label={"Landing - CTA (text)"} />}
 				>
@@ -41,7 +42,7 @@ export const CtaSheet: FC = () => {
 									locale,
 								}}
 							>
-								<Tx label={"Register"} />
+								<Tx label={"Register (cta)"} />
 							</LinkTo>
 						</Button>
 					</div>

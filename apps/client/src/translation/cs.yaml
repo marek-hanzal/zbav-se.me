@@ -129,9 +129,6 @@
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
     ref: My Bag (title)
     value: Můj seznam
-3f99523df88ec5cd5a35a06a20d24d609a3b6185c456b2184176dff5:
-    ref: Landing - About (text)
-    value: Náhled do naší motivace a co nás sem přivedlo
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -144,12 +141,6 @@
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
     ref: Register (hero)
     value: Přidat se!
-43c47f7f42d7fa090ee4133fcd48813d16e2e4108ac589ac87fd30c8:
-    ref: Motivation (text)
-    value: |
-        Appky, které jsme používali k prodeji byly těžkopádné a složité k použití. Nebo vyžadovaly velké množství kroků.
-        Nebo prostě nebyly pořádně srozumitelné. Rozhodli jsme se proto to vzít od podlahy a vytvořit moderní appku, která
-        je silně optimalizovaná pro extrémně rychlé nabízení inzerátů, včetně jejich efektivního doručení zájemcům.
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
     ref: What - buyers (title)
     value: Chceš něco koupit?
@@ -164,6 +155,9 @@
 52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
     ref: User (title)
     value: Můj účet
+53285c44368f8f4d2c9df2f9614f265d12112e00bcaa0e7f24adb2d0:
+    ref: Landing - Contact (title)
+    value: Jsme tu pro vás!
 53d86a69426c63d5831e3229c44315d6966ef21ffc5a71e488dd2861:
     ref: What - sellers (title)
     value: Chceš něco prodat?
@@ -182,9 +176,6 @@
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
     ref: Listing - Price (tour)
     value: Nastavení ceny
-5cbc30691239af58ad3c11e3630eb3da632bac0cf2703390609b09c2:
-    ref: Landing - About (title)
-    value: O nás
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
     ref: Delete (button)
     value: Delete (button)
@@ -202,7 +193,7 @@
     value: Snadné hledání
 6320f9c73b6ea7e2af2f8e6c95f343b20ad6e47cdcff91dbcf5bebc4:
     ref: Landing - CTA (text)
-    value: Landing - CTA (text)
+    value: ...teď už se stačí jen registrovat - stojí to za to!
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
     ref: Landing - Hero (title)
     value: Nakupuješ nebo prodáváš?
@@ -525,6 +516,9 @@ d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
 d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
     ref: Submit listing - status - cannot submit (title)
     value: Ještě něco málo musíš vyplnit 🙂!
+d710bfd0568645758fb1e8d34e64295ff720d1d298cdf773b578d404:
+    ref: Landing - Contact (text)
+    value: Pokud máte jakýkoli dotaz, přání, připomínku, stačí nás kontaktovat emailem.
 d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
     ref: Login failed
     value: Přihlášení se nezdařilo
@@ -564,6 +558,9 @@ ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
 ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
     ref: No category selected
     value: Kategorie je potřeba...
+efe14afd72b9ad35995731dbd02f045d6d2496d1db1e1e9161bf4899:
+    ref: Register (cta)
+    value: Jdu do toho!
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat
@@ -575,7 +572,7 @@ f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
     value: Přihlásit se
 f8912e9aba53f677912f1740e070c8ef32fe90ebf98d214ba03f6962:
     ref: Landing - CTA (title)
-    value: Landing - CTA (title)
+    value: A to je téměř vše...
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
     ref: Confirm selection (label)
     value: Confirm selection (label)
