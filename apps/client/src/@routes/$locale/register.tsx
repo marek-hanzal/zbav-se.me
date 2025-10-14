@@ -258,6 +258,9 @@ export const Route = createFileRoute("/$locale/register")({
 									iconEnabled={
 										"icon-[eos-icons--system-re-registered]"
 									}
+									iconProps={{
+										size: "sm",
+									}}
 									disabled={registerMutation.isPending}
 									tone={"primary"}
 									theme={"dark"}

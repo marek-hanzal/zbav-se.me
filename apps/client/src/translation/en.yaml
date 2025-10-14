@@ -121,6 +121,9 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
+42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
+  ref: Register (hero)
+  value: Register (hero)
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
   ref: What - buyers (title)
   value: What - buyers (title)
@@ -178,6 +181,9 @@
 6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
   ref: Submit listing - status (title)
   value: Submit listing - status (title)
+6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
+  ref: Login (hero)
+  value: Login (hero)
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
   ref: Clear files
   value: Clear files

@@ -25,8 +25,9 @@ export const LogoCls = contract(ThemeCls.contract)
 		},
 		text: {
 			class: [
-				"text-xl",
+                "text-xl",
 				"font-bold",
+				"relative",
 				"transform-[rotateZ(-4deg)]",
 				"translate-y-[-25%]",
 			],

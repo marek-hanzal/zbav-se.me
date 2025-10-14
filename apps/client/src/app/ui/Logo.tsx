@@ -52,6 +52,15 @@ export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
 				<Tx
 					label="Logo motto (label)"
 					tone="secondary"
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"z-5",
+								],
+							},
+						},
+					}}
 				/>
 			</div>
 		</div>
