@@ -51,6 +51,21 @@ export const ThemeCls = contract(PicoCls.contract)
 				"odd:bg-pink-50",
 			],
 		},
+		"tone.primary.light.accent": {
+			class: [
+				"bg-pink-100/50",
+			],
+		},
+		"tone.primary.light.from": {
+			class: [
+				"from-pink-100/50",
+			],
+		},
+		"tone.primary.light.to": {
+			class: [
+				"to-pink-100/50",
+			],
+		},
 		"tone.primary.light.border": {
 			class: [
 				"border-pink-200/60",
@@ -146,6 +161,21 @@ export const ThemeCls = contract(PicoCls.contract)
 		"tone.primary.dark.bg:odd": {
 			class: [
 				"odd:bg-pink-950/90",
+			],
+		},
+		"tone.primary.dark.accent": {
+			class: [
+				"bg-pink-900/50",
+			],
+		},
+		"tone.primary.dark.from": {
+			class: [
+				"from-pink-900/50",
+			],
+		},
+		"tone.primary.dark.to": {
+			class: [
+				"to-pink-900/50",
 			],
 		},
 		"tone.primary.dark.border": {
@@ -246,6 +276,21 @@ export const ThemeCls = contract(PicoCls.contract)
 				"odd:bg-purple-50",
 			],
 		},
+		"tone.secondary.light.accent": {
+			class: [
+				"bg-purple-100/50",
+			],
+		},
+		"tone.secondary.light.from": {
+			class: [
+				"from-purple-100/50",
+			],
+		},
+		"tone.secondary.light.to": {
+			class: [
+				"to-purple-100/50",
+			],
+		},
 		"tone.secondary.light.border": {
 			class: [
 				"border-purple-200/60",
@@ -341,6 +386,21 @@ export const ThemeCls = contract(PicoCls.contract)
 		"tone.secondary.dark.bg:odd": {
 			class: [
 				"odd:bg-purple-950/90",
+			],
+		},
+		"tone.secondary.dark.accent": {
+			class: [
+				"bg-purple-900/50",
+			],
+		},
+		"tone.secondary.dark.from": {
+			class: [
+				"from-purple-900/50",
+			],
+		},
+		"tone.secondary.dark.to": {
+			class: [
+				"to-purple-900/50",
 			],
 		},
 		"tone.secondary.dark.border": {

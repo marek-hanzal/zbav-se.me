@@ -17,6 +17,7 @@ import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
+import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/register")({
@@ -53,6 +54,8 @@ export const Route = createFileRoute("/$locale/register")({
 
 		return (
 			<Sheet>
+				<PrimaryOverlay />
+
 				<Container
 					square={"xl"}
 					layout={"vertical"}

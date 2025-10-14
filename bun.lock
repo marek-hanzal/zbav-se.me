@@ -24,7 +24,7 @@
         "@tanstack/react-router": "1.132.47",
         "@tanstack/react-router-ssr-query": "1.132.47",
         "@tanstack/react-start": "1.132.56",
-        "@use-pico/client": "5.0.159",
+        "@use-pico/client": "5.0.161",
         "@use-pico/cls": "5.0.59",
         "@use-pico/common": "5.0.74",
         "@use-pico/server": "5.0.74",
@@ -53,7 +53,7 @@
         "nitro": "3.0.1-alpha.0",
         "tailwindcss": "4.1.14",
         "typescript": "^5.9.3",
-        "vite": "7.1.9",
+        "vite": "7.1.10",
         "vite-plugin-dynamic-import": "1.6.0",
         "vite-plugin-qrcode": "0.3.0",
         "vite-plugin-wasm": "3.5.0",
@@ -740,7 +740,7 @@
 
     "@ungap/structured-clone": ["@ungap/structured-clone@1.3.0", "", {}, "sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g=="],
 
-    "@use-pico/client": ["@use-pico/client@5.0.159", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.37.0", "@lexical/react": "0.37.0", "@lexical/utils": "0.37.0", "@tanstack/react-query": "5.90.3", "@tanstack/react-router": "1.132.47", "@types/luxon": "3.7.1", "@use-pico/cls": "5.0.59", "@use-pico/common": "5.0.74", "axios": "1.12.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.37.0", "localstorage-slim": "2.7.1", "luxon": "3.7.2", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.8.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-aM7SwPRWiKlirOj6s0wtuH/EUj38r6CTQSEq96dKqJzKRnuL6bkKUIxBOUDlrN2Q+W5Fk5cc1dD3eRuD2CTrDQ=="],
+    "@use-pico/client": ["@use-pico/client@5.0.161", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.37.0", "@lexical/react": "0.37.0", "@lexical/utils": "0.37.0", "@tanstack/react-query": "5.90.3", "@tanstack/react-router": "1.132.47", "@types/luxon": "3.7.1", "@use-pico/cls": "5.0.59", "@use-pico/common": "5.0.74", "axios": "1.12.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.37.0", "localstorage-slim": "2.7.1", "luxon": "3.7.2", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.8.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-AUWbQ6iFUQNfrv21FlmwIV3J0388NawFooavI5d9vbmPvh+fzYSLZiK3eB4+PNVtX4aPh/wpz2aA+3zvvJUFQw=="],
 
     "@use-pico/cls": ["@use-pico/cls@5.0.59", "", { "dependencies": { "react": "19.2.0", "tailwind-merge": "3.3.1" } }, "sha512-IlPrWMSFP/L6najQc4kp00Cwgz5vgo6hq1BDoFiDrY2RYFtsxJHyLdhIYN5ydqf9N177wcFiDCKySpVLPg/9uA=="],
 
@@ -2286,7 +2286,7 @@
 
     "vfile-message": ["vfile-message@4.0.3", "", { "dependencies": { "@types/unist": "^3.0.0", "unist-util-stringify-position": "^4.0.0" } }, "sha512-QTHzsGd1EhbZs4AsQ20JX1rC3cOlt/IWJruk893DfLRr57lcnOeMaWG4K0JrRta4mIJZKth2Au3mM3u03/JWKw=="],
 
-    "vite": ["vite@7.1.9", "", { "dependencies": { "esbuild": "^0.25.0", "fdir": "^6.5.0", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rollup": "^4.43.0", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "jiti": ">=1.21.0", "less": "^4.0.0", "lightningcss": "^1.21.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "jiti", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-4nVGliEpxmhCL8DslSAUdxlB6+SMrhB0a1v5ijlh1xB1nEPuy1mxaHxysVucLHuWryAxLWg6a5ei+U4TLn/rFg=="],
+    "vite": ["vite@7.1.10", "", { "dependencies": { "esbuild": "^0.25.0", "fdir": "^6.5.0", "picomatch": "^4.0.3", "postcss": "^8.5.6", "rollup": "^4.43.0", "tinyglobby": "^0.2.15" }, "optionalDependencies": { "fsevents": "~2.3.3" }, "peerDependencies": { "@types/node": "^20.19.0 || >=22.12.0", "jiti": ">=1.21.0", "less": "^4.0.0", "lightningcss": "^1.21.0", "sass": "^1.70.0", "sass-embedded": "^1.70.0", "stylus": ">=0.54.8", "sugarss": "^5.0.0", "terser": "^5.16.0", "tsx": "^4.8.1", "yaml": "^2.4.2" }, "optionalPeers": ["@types/node", "jiti", "less", "lightningcss", "sass", "sass-embedded", "stylus", "sugarss", "terser", "tsx", "yaml"], "bin": { "vite": "bin/vite.js" } }, "sha512-CmuvUBzVJ/e3HGxhg6cYk88NGgTnBoOo7ogtfJJ0fefUWAxN/WDSUa50o+oVBxuIhO8FoEZW0j2eW7sfjs5EtA=="],
 
     "vite-plugin-dynamic-import": ["vite-plugin-dynamic-import@1.6.0", "", { "dependencies": { "acorn": "^8.12.1", "es-module-lexer": "^1.5.4", "fast-glob": "^3.3.2", "magic-string": "^0.30.11" } }, "sha512-TM0sz70wfzTIo9YCxVFwS8OA9lNREsh+0vMHGSkWDTZ7bgd1Yjs5RV8EgB634l/91IsXJReg0xtmuQqP0mf+rg=="],
 

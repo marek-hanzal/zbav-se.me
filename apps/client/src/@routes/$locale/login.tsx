@@ -22,11 +22,11 @@ import { authClient } from "~/app/auth/authClient";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
-import { Background } from "~/app/ui/background/Background";
 import { EmailIcon } from "~/app/ui/icon/EmailIcon";
 import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
 import { SocialIcon } from "~/app/ui/icon/SocialIcon";
 import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
+import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
 const LoginSchema = z.object({
@@ -121,6 +121,8 @@ export const Route = createFileRoute("/$locale/login")({
 					orientation={"horizontal"}
 				/>
 
+				<PrimaryOverlay />
+
 				<Container
 					ref={rootRef}
 					layout={"horizontal-full"}
@@ -129,8 +131,6 @@ export const Route = createFileRoute("/$locale/login")({
 					gap={"md"}
 				>
 					<Sheet>
-						<Background />
-
 						<Container square={"xl"}>
 							<VariantProvider
 								cls={ThemeCls}
