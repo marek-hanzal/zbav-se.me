@@ -85,7 +85,7 @@ export const CreateListing: FC = () => {
 			/>
 
 			<Container
-				layout="horizontal"
+				layout="vertical"
 				position={"relative"}
 			>
 				<SnapperPages
@@ -101,8 +101,8 @@ export const CreateListing: FC = () => {
 
 				<Container
 					ref={snapperRef}
-					layout={"horizontal-full"}
-					snap={"horizontal-start"}
+					layout={"vertical-full"}
+					snap={"vertical-start"}
 					gap={"md"}
 				>
 					<PhotosWrapper />

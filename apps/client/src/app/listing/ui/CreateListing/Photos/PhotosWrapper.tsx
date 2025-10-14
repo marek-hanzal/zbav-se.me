@@ -16,17 +16,26 @@ export const PhotosWrapper: FC = () => {
 			<SnapperNav
 				containerRef={containerRef}
 				pages={pages}
-				orientation="vertical"
+				orientation="horizontal"
 				iconProps={() => ({
 					size: "xs",
 				})}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"bg-white/0",
+							],
+						},
+					},
+				}}
 			/>
 
 			<Container
 				ref={containerRef}
-				layout="vertical-full"
-				overflow={"vertical"}
-				snap={"vertical-start"}
+				layout="horizontal-full"
+				overflow={"horizontal"}
+				snap={"horizontal-start"}
 				gap={"md"}
 			>
 				{pages.map((_, slot) => {

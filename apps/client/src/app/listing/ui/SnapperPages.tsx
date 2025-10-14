@@ -43,7 +43,7 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 
 	return (
 		<SnapperNav
-			limit={5}
+			limit={7}
 			pages={[
 				{
 					id: photosId,
@@ -94,7 +94,26 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 				size: "md",
 			})}
 			containerRef={snapperRef}
-			orientation={"horizontal"}
+			orientation={"vertical"}
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"bg-white/0",
+						],
+					},
+					first: {
+						class: [
+							"hidden",
+						],
+					},
+					last: {
+						class: [
+							"hidden",
+						],
+					},
+				},
+			}}
 		/>
 	);
 };
