@@ -9,7 +9,7 @@ export const SecondaryOverlay: FC<SecondaryOverlay.Props> = ({ ...props }) => {
 	return (
 		<Overlay
 			type="bg-2"
-			opacity={"high"}
+			opacity={"medium"}
 			accentFrom="warning.dark"
 			accentTo="secondary.dark"
 			{...props}
