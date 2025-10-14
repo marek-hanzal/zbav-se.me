@@ -101,10 +101,10 @@ export const Route = createFileRoute("/$locale/web/home")({
 							tone: "secondary",
 						}}
 					>
-						<AboutSheet markdown={about} />
+						<CtaSheet />
 					</VariantProvider>
 
-					<CtaSheet />
+					<ContactSheet />
 
 					<VariantProvider
 						cls={ThemeCls}
@@ -112,7 +112,7 @@ export const Route = createFileRoute("/$locale/web/home")({
 							tone: "secondary",
 						}}
 					>
-						<ContactSheet />
+						<AboutSheet markdown={about} />
 					</VariantProvider>
 				</Container>
 			</Container>

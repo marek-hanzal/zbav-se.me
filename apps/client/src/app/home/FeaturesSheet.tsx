@@ -10,7 +10,6 @@ export const FeaturesSheet: FC = () => {
 	return (
 		<Sheet>
 			<Status
-				icon={"icon-[mingcute--celebrate-line]"}
 				textTitle={<Tx label={"Landing - Feature overview (title)"} />}
 				tone="secondary"
 				tweak={{

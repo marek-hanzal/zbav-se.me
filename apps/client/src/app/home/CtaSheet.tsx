@@ -27,7 +27,7 @@ export const CtaSheet: FC = () => {
 						])}
 					>
 						<Button
-							tone={"secondary"}
+							tone={"primary"}
 							theme={"dark"}
 							iconEnabled={UserIcon}
 							iconProps={{
