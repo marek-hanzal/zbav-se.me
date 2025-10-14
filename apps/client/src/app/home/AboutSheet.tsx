@@ -1,4 +1,4 @@
-import { Status, Tx } from "@use-pico/client";
+import { Container } from "@use-pico/client";
 import type { FC } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
 import { Markdown } from "~/app/ui/Markdown";
@@ -16,21 +16,23 @@ export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
 				slot: {
 					root: {
 						class: [
-							"p-8",
+							"p-4",
+							"pb-12",
 						],
 					},
 				},
 			}}
 		>
-			<div className={"reveal"}>
-				<Status
-					icon={"icon-[mdi--sparkles-outline]"}
-					textTitle={<Tx label={"Landing - About (title)"} />}
-					textMessage={<Tx label={"Landing - About (text)"} />}
-				/>
-
-				<Markdown>{markdown}</Markdown>
-			</div>
+			<Container
+				layout={"vertical-full"}
+				overflow={"vertical"}
+				tone={"unset"}
+				theme={"unset"}
+			>
+				<div className={"reveal"}>
+					<Markdown>{markdown}</Markdown>
+				</div>
+			</Container>
 		</Sheet>
 	);
 };
