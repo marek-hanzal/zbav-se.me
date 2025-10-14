@@ -168,11 +168,83 @@ jobs:
                   path: apps/server/.vercel/output
                   include-hidden-files: true
 
+    vercel-client:
+        name: Deploy client to Vercel
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [client-build, server-build]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: client
+                  path: apps/client/.vercel/output
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
+
+            - name: Strip assets
+              working-directory: apps/client
+              run: rm -rf .vercel/output/static/assets || true
+
+            - name: Deploy to Vercel
+              working-directory: apps/client
+              run: |
+                  bunx -y vercel@latest deploy \
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
+
+    vercel-server:
+        name: Deploy server to Vercel
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [client-build, server-build]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: server
+                  path: apps/server/.vercel/output
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
+
+            - name: Deploy to Vercel
+              working-directory: apps/server
+              run: |
+                  bunx -y vercel@latest deploy \
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
+
     bunny-cdn:
         name: Update CDN
         runs-on: ubuntu-latest
         environment: production
-        needs: [client-build]
+        needs: [vercel-client, vercel-server]
         env:
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
@@ -235,83 +307,11 @@ jobs:
                       --low-level-retries=10
                       --verbose
 
-    vercel-client:
-        name: Deploy client to Vercel
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [client-build]
-        env:
-            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
-        steps:
-            - uses: actions/download-artifact@v4
-              with:
-                  name: client
-                  path: apps/client/.vercel/output
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
-
-            - name: Cache bunx packages (~/.bun)
-              uses: actions/cache@v4
-              with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
-                  restore-keys: |
-                      bunx-cache-${{ runner.os }}-
-
-            - name: Strip assets
-              working-directory: apps/client
-              run: rm -rf .vercel/output/static/assets || true
-
-            - name: Deploy to Vercel
-              working-directory: apps/client
-              run: |
-                  bunx -y vercel@latest deploy \
-                    --prebuilt \
-                    --prod --yes \
-                    --token "$VERCEL_TOKEN"
-
-    vercel-server:
-        name: Deploy server to Vercel
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [server-build]
-        env:
-            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-            VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
-        steps:
-            - uses: actions/download-artifact@v4
-              with:
-                  name: server
-                  path: apps/server/.vercel/output
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
-
-            - name: Cache bunx packages (~/.bun)
-              uses: actions/cache@v4
-              with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
-                  restore-keys: |
-                      bunx-cache-${{ runner.os }}-
-
-            - name: Deploy to Vercel
-              working-directory: apps/server
-              run: |
-                  bunx -y vercel@latest deploy \
-                    --prebuilt \
-                    --prod --yes \
-                    --token "$VERCEL_TOKEN"
-
     run-migrations:
-        name: Run migrations (single-shot)
+        name: Run migrations
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-server]
+        needs: [bunny-cdn]
         steps:
             - name: Trigger migrations endpoint
               env:
