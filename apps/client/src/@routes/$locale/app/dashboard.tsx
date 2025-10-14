@@ -36,7 +36,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 				theme="light"
 				square={"md"}
 			>
-				<PrimaryOverlay opacity={"75"} />
+				<PrimaryOverlay opacity={"50"} />
 
 				<div className="grid grid-cols-2 gap-2 h-full w-full">
 					<LinkTo
