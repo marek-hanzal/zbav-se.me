@@ -8,16 +8,17 @@ export namespace Fade {
 export const Fade: FC<Fade.Props> = (props) => {
 	return (
 		<CoolFade
+			height={16}
 			tweak={{
 				token: {
 					"fade.to": {
 						class: [
-							"from-white/50",
+							"from-pink-900/85",
 						],
 					},
 					"fade.from": {
 						class: [
-							"to-pink-800/80",
+							"to-pink-900",
 						],
 					},
 				},
