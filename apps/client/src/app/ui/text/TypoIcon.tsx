@@ -10,12 +10,12 @@ export namespace TypoIcon {
 
 export const TypoIcon: FC<TypoIcon.Props> = ({ icon, iconProps, children }) => {
 	return (
-		<div className="inline-flex flex-row gap-2 items-center">
+		<div className="inline-flex flex-row gap-2 items-start">
 			<Icon
 				icon={icon}
 				{...iconProps}
 			/>
-			{children}
+			<div className="flex flex-col gap-1 items-start">{children}</div>
 		</div>
 	);
 };

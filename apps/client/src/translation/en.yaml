@@ -4,6 +4,9 @@
 0275899b719a7087887d05949414bb44c3048b8ebb50fac38f0e44b5:
   ref: Listing - Photos (description)
   value: Listing - Photos (description)
+0797242ea9ef00a0b6a9e07ff613c17beda9e42f2a27f83dfb7c6052:
+  ref: Landing - Feature 6 (title) - hint
+  value: Landing - Feature 6 (title) - hint
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
   ref: Upload (placeholder)
   value: Upload (placeholder)
@@ -19,6 +22,9 @@
 149d82732fc8b67a04bb3fb42d09856cd8bf53dfbdd93100e929e091:
   ref: ID
   value: ID
+1504acbd53c0d2fc447c2f85423f4ab4fd21fd1a8a3335b2c9b66650:
+  ref: Landing - Feature 5 (title) - hint
+  value: Landing - Feature 5 (title) - hint
 18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
   ref: Login with passkey (title)
   value: Login with passkey (title)
@@ -37,6 +43,9 @@
 1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
   ref: Landing - Feature 2 (title)
   value: Landing - Feature 2 (title)
+1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
+  ref: Landing - Feature 1 (title) - hint
+  value: Landing - Feature 1 (title) - hint
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
   ref: Agreement with (label)
   value: Agreement with (label)
@@ -55,9 +64,6 @@
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
   ref: Please wait...
   value: Please wait...
-2904d968d0a0a7cc6a2e36f0a499b6d940738406abc2cb10d5f9bf1a:
-  ref: Login
-  value: Login
 294149e2faba8e8642efaed4ec43c45114f9b2836f4faea02af8c45a:
   ref: Condition - Age (description)
   value: Condition - Age (description)
@@ -67,6 +73,9 @@
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
   ref: Something went wrong.
   value: Something went wrong.
+307f210b27e011b04da6a59e7bce3cf5057188e1b3c6da0207b022eb:
+  ref: Landing - Feature 4 (title) - hint
+  value: Landing - Feature 4 (title) - hint
 31dfa815961f7a02da863fc7ee61c2b2d69da6dfa8259e422a89c831:
   ref: What - sellers (badge 1)
   value: What - sellers (badge 1)
@@ -160,6 +169,9 @@
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
+5e5b22386d6916d54d543deb3fa2ae94dc60928062b03b80fa4f4292:
+  ref: Landing - Feature 2 (title) - hint
+  value: Landing - Feature 2 (title) - hint
 61a6f144c84ce8d83fccdd988e63aa0b40d951edf07fcc5eec215664:
   ref: Select category (select)
   value: Select category (select)
@@ -324,6 +336,9 @@ c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
   ref: Input is not Luxon DateTime!
   value: Input is not Luxon DateTime!
+c77449169b9a8eafaf07d7add0c418b0a46c45d9d91a87edf48a0d0e:
+  ref: Landing - Feature 3 (title) - hint
+  value: Landing - Feature 3 (title) - hint
 c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
   ref: Remove sorting
   value: Remove sorting

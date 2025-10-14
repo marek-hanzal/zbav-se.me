@@ -13,6 +13,16 @@ export const FeaturesSheet: FC = () => {
 				icon={"icon-[mingcute--celebrate-line]"}
 				textTitle={<Tx label={"Landing - Feature overview (title)"} />}
 				tone="secondary"
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"px-4",
+								"py-8",
+							],
+						},
+					},
+				}}
 			>
 				<VariantProvider
 					cls={ThemeCls}
@@ -26,36 +36,72 @@ export const FeaturesSheet: FC = () => {
 							<Tx
 								label={"Landing - Feature 1 (title)"}
 								display={"block"}
+								font={"bold"}
+							/>
+							<Tx
+								label={"Landing - Feature 1 (title) - hint"}
+								display={"block"}
+								size={"sm"}
 							/>
 						</TypoIcon>
 						<TypoIcon icon={CheckIcon}>
 							<Tx
 								label={"Landing - Feature 2 (title)"}
 								display={"block"}
+								font={"bold"}
+							/>
+							<Tx
+								label={"Landing - Feature 2 (title) - hint"}
+								display={"block"}
+								size={"sm"}
 							/>
 						</TypoIcon>
 						<TypoIcon icon={CheckIcon}>
 							<Tx
 								label={"Landing - Feature 3 (title)"}
 								display={"block"}
+								font={"bold"}
+							/>
+							<Tx
+								label={"Landing - Feature 3 (title) - hint"}
+								display={"block"}
+								size={"sm"}
 							/>
 						</TypoIcon>
 						<TypoIcon icon={CheckIcon}>
 							<Tx
 								label={"Landing - Feature 4 (title)"}
 								display={"block"}
+								font={"bold"}
+							/>
+							<Tx
+								label={"Landing - Feature 4 (title) - hint"}
+								display={"block"}
+								size={"sm"}
 							/>
 						</TypoIcon>
 						<TypoIcon icon={CheckIcon}>
 							<Tx
 								label={"Landing - Feature 5 (title)"}
 								display={"block"}
+								font={"bold"}
+							/>
+							<Tx
+								label={"Landing - Feature 5 (title) - hint"}
+								display={"block"}
+								size={"sm"}
 							/>
 						</TypoIcon>
 						<TypoIcon icon={CheckIcon}>
 							<Tx
 								label={"Landing - Feature 6 (title)"}
 								display={"block"}
+								font={"bold"}
+							/>
+							<Tx
+								label={"Landing - Feature 6 (title) - hint"}
+								display={"block"}
+								size={"sm"}
 							/>
 						</TypoIcon>
 					</div>
