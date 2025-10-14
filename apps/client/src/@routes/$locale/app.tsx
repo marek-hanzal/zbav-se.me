@@ -13,7 +13,7 @@ export const getSession = createServerFn({
 	});
 });
 
-export const Route = createFileRoute("/$locale/n")({
+export const Route = createFileRoute("/$locale/app")({
 	async loader({ params: { locale } }) {
 		const data = await getSession();
 

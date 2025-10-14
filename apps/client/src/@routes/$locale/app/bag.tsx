@@ -4,7 +4,7 @@ import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
-export const Route = createFileRoute("/$locale/n/bag")({
+export const Route = createFileRoute("/$locale/app/bag")({
 	component() {
 		return (
 			<Container layout={"vertical"}>

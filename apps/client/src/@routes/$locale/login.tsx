@@ -54,7 +54,7 @@ export const Route = createFileRoute("/$locale/login")({
 		const signInMutation = withEmailSignInMutation.useMutation({
 			onSuccess: () => {
 				navigate({
-					to: "/$locale/n/feed",
+					to: "/$locale/app/dashboard",
 					params: {
 						locale,
 					},
@@ -68,7 +68,7 @@ export const Route = createFileRoute("/$locale/login")({
 			},
 			async onSuccess() {
 				await navigate({
-					to: "/$locale/n/feed",
+					to: "/$locale/app/dashboard",
 					params: {
 						locale,
 					},

@@ -9,7 +9,7 @@ import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
 
-export const Route = createFileRoute("/$locale/n/user")({
+export const Route = createFileRoute("/$locale/app/user")({
 	component() {
 		const navigate = useNavigate();
 		const { locale } = useParams({

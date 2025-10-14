@@ -75,7 +75,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 			>
 				<LinkTo
 					id={feedId}
-					to={"/$locale/n/feed"}
+					to={"/$locale/app/feed"}
 					params={{
 						locale,
 					}}
@@ -91,7 +91,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 				<LinkTo
 					id={listingId}
-					to={"/$locale/n/create"}
+					to={"/$locale/app/listing/create"}
 					params={{
 						locale,
 					}}
@@ -107,7 +107,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 				<LinkTo
 					id={bagId}
-					to={"/$locale/n/bag"}
+					to={"/$locale/app/bag"}
 					params={{
 						locale,
 					}}
@@ -123,7 +123,7 @@ export const Nav: FC<Nav.Props> = ({ active, cls = NavCls, tweak }) => {
 
 				<LinkTo
 					id={userId}
-					to={"/$locale/n/user"}
+					to={"/$locale/app/user"}
 					params={{
 						locale,
 					}}

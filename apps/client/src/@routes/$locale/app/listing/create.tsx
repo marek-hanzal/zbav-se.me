@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client";
 import { CreateListingProvider } from "~/app/listing/context/CreateListingProvider";
 import { CreateListing } from "~/app/listing/ui/CreateListing";
 
-export const Route = createFileRoute("/$locale/n/create")({
+export const Route = createFileRoute("/$locale/app/listing/create")({
 	component() {
 		return (
 			<Container layout={"vertical-content-footer"}>

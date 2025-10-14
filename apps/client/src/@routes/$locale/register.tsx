@@ -29,7 +29,7 @@ export const Route = createFileRoute("/$locale/register")({
 		const registerMutation = withRegisterMutation.useMutation({
 			async onSuccess() {
 				await navigate({
-					to: "/$locale/n/feed",
+					to: "/$locale/app/dashboard",
 					params: {
 						locale,
 					},
