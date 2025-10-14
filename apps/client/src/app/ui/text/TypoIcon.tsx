@@ -13,9 +13,10 @@ export const TypoIcon: FC<TypoIcon.Props> = ({ icon, iconProps, children }) => {
 		<div className="inline-flex flex-row gap-2 items-start">
 			<Icon
 				icon={icon}
+				size={"sm"}
 				{...iconProps}
 			/>
-			<div className="flex flex-col gap-1 items-start">{children}</div>
+			<div className="flex flex-col items-start">{children}</div>
 		</div>
 	);
 };

@@ -1,582 +1,568 @@
 01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
-    ref: Feed (title)
-    value: Nabídky
+  ref: Feed (title)
+  value: Nabídky
 0275899b719a7087887d05949414bb44c3048b8ebb50fac38f0e44b5:
-    ref: Listing - Photos (description)
-    value:
-        Každý inzerát potřebuje mít fotku - ovládání je jednoduché, tažením do
-        stran a klepnutím fotíš/vybíráš fotky na jednotlivé karty, opětovným
-        klepnutím fotku vyměníš. Košem fotku zahodíš - tím se zároveň upraví pořadí
-        v seznamu, nelekni se. A jako poslední - každý inzerát musí mít nejméně
-        jednu fotku.
-0797242ea9ef00a0b6a9e07ff613c17beda9e42f2a27f83dfb7c6052:
-    ref: Landing - Feature 6 (title) - hint
-    value: Nešpehujeme, neprodáváme údaje. Pravidla jsou srozumitelná, profily přehledné a na nepoctivosti máme rychlou stopku.
+  ref: Listing - Photos (description)
+  value: Každý inzerát potřebuje mít fotku - ovládání je jednoduché, tažením do
+    stran a klepnutím fotíš/vybíráš fotky na jednotlivé karty, opětovným
+    klepnutím fotku vyměníš. Košem fotku zahodíš - tím se zároveň upraví pořadí
+    v seznamu, nelekni se. A jako poslední - každý inzerát musí mít nejméně
+    jednu fotku.
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
-    ref: Upload (placeholder)
-    value: Vložit fotku
+  ref: Upload (placeholder)
+  value: Vložit fotku
 0c70501e9876b221ab39409a9343a1c4c803402a8bbbcc3e204f6118:
-    ref: Listing - Photos (tour)
-    value: Fotky
+  ref: Listing - Photos (tour)
+  value: Fotky
 0d1b6810ac7b2a06873ae50bd923188cdcf9d2c91027618df0f69004:
-    ref: Listing - Intro (description)
-    value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z
-        několik rychlých kroků.
+  ref: Listing - Intro (description)
+  value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z
+    několik rychlých kroků.
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
-    ref: Missing required token(s). (title)
-    value: Missing required token(s). (title)
+  ref: Missing required token(s). (title)
+  value: Missing required token(s). (title)
 149d82732fc8b67a04bb3fb42d09856cd8bf53dfbdd93100e929e091:
-    ref: ID
-    value: ID
+  ref: ID
+  value: ID
 1504acbd53c0d2fc447c2f85423f4ab4fd21fd1a8a3335b2c9b66650:
-    ref: Landing - Feature 5 (title) - hint
-    value: Ukážeme obvyklé ceny v kategorii i kraji, počet zobrazení a kolik lidí si nabídku uložilo. Rozhoduješ se s jasnými daty.
+  ref: Landing - Feature 5 (title) - hint
+  value: Ukážeme obvyklé ceny v kategorii i kraji, počet zobrazení a kolik lidí si
+    nabídku uložilo. Rozhoduješ se s jasnými daty.
 18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
-    ref: Login with passkey (title)
-    value: Přihlášení klíčem
+  ref: Login with passkey (title)
+  value: Přihlášení klíčem
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
-    ref: Loading...
-    value: Loading...
+  ref: Loading...
+  value: Loading...
 1a648ea8c6ce8ff475d3f0ce68fe69efade01da2ad911fa8dc2af51d:
-    ref: Listing - Submit (description)
-    value: Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš
-        prohlédnout, zda je všechno v pořádku a později budeš mít možnost sledovat,
-        jak si tvůj inzerát stojí mezi ostatními.
+  ref: Listing - Submit (description)
+  value: Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš
+    prohlédnout, zda je všechno v pořádku a později budeš mít možnost sledovat,
+    jak si tvůj inzerát stojí mezi ostatními.
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
-    ref: File downloaded...
-    value: File downloaded...
+  ref: File downloaded...
+  value: File downloaded...
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
-    ref: Logo motto (label)
-    value: Prostě to pošli dál
+  ref: Logo motto (label)
+  value: Prostě to pošli dál
 1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
-    ref: Landing - Feature 2 (title)
-    value: Soukromí v klidu
+  ref: Landing - Feature 2 (title)
+  value: Soukromí v klidu
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
-    ref: Landing - Feature 1 (title) - hint
-    value: Vyfotíš, přidáš cenu, pár slov… hotovo. Minimum psaní, žádné formulářové peklo.
+  ref: Landing - Feature 1 (title) - hint
+  value: Vyfotíš, přidáš cenu, ...minimum psaní, maximum klikání.
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
-    ref: Agreement with (label)
-    value: "Registrací souhlasíte s:"
+  ref: Agreement with (label)
+  value: "Registrací souhlasíte s:"
 21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
-    ref: Listing - Intro (tour)
-    value: Nový inzerát
+  ref: Listing - Intro (tour)
+  value: Nový inzerát
 235e66d76c19716012f86e9a0dd6e73e42751473bf69c210f87bfa66:
-    ref: Reset tours (button)
-    value: Reset tours (button)
+  ref: Reset tours (button)
+  value: Reset tours (button)
 2727e5a04d8acc225b3320799348e34eff9ac515e1130101baab751a:
-    ref: .
-    value: .
+  ref: .
+  value: .
 282447aea716ad0adce959ef2fa721688cf8614506ecdfd8c1dcf052:
-    ref: No tags (label)
-    value: No tags (label)
+  ref: No tags (label)
+  value: No tags (label)
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
-    ref: Please wait...
-    value: Momentík...
+  ref: Please wait...
+  value: Momentík...
 294149e2faba8e8642efaed4ec43c45114f9b2836f4faea02af8c45a:
-    ref: Condition - Age (description)
-    value: Odhadněte relativní věk předmětu nabídky.
+  ref: Condition - Age (description)
+  value: Odhadněte relativní věk předmětu nabídky.
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
-    ref: zbav-se.me
-    value: zbav-se.me
+  ref: zbav-se.me
+  value: zbav-se.me
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
-    ref: Something went wrong.
-    value: Something went wrong.
+  ref: Something went wrong.
+  value: Something went wrong.
 307f210b27e011b04da6a59e7bce3cf5057188e1b3c6da0207b022eb:
-    ref: Landing - Feature 4 (title) - hint
-    value: Inzeráty se automaticky vypnou po zvoleném čase. Když prodáno, jedním ťuknutím uzavřeš. Bez mrtvých inzerátů a bez spamu.
+  ref: Landing - Feature 4 (title) - hint
+  value: Inzeráty se automaticky vypínají. Když prodáno, jedním ťuknutím uzavřeš -
+    maximum živých inzerátů.
 31dfa815961f7a02da863fc7ee61c2b2d69da6dfa8259e422a89c831:
-    ref: What - sellers (badge 1)
-    value: Ultra-rychlé vytvoření inzerátu
+  ref: What - sellers (badge 1)
+  value: Ultra-rychlé vytvoření inzerátu
 323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
-    ref: Enter your email
-    value: Zadej svůj email
+  ref: Enter your email
+  value: Zadej svůj email
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
-    ref: Edit
-    value: Edit
+  ref: Edit
+  value: Edit
 3502b6c107b0c5ebe42a84b6c3822e308ed5a099dcbb11ff3b7b5ae3:
-    ref: What - buyers (badge 2)
-    value: Rychlé ukládání zajímavých inzerátů
+  ref: What - buyers (badge 2)
+  value: Rychlé ukládání zajímavých inzerátů
 36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
-    ref: Register (title)
-    value: Přidejte se k nám! ❤️
+  ref: Register (title)
+  value: Přidejte se k nám! ❤️
 36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
-    ref: Login with passkey (message)
-    value: Pokud jste si přidali klíč, můžete se jím nyní snadno přihlásit.
+  ref: Login with passkey (message)
+  value: Pokud jste si přidali klíč, můžete se jím nyní snadno přihlásit.
 380bf8e0e53e1b516f997baf741bafc03e788774c3f54ae2434286eb:
-    ref: Add passkey
-    value: Přidat klíč
+  ref: Add passkey
+  value: Přidat klíč
 38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
-    ref: Missing any token(s). (title)
-    value: Missing any token(s). (title)
+  ref: Missing any token(s). (title)
+  value: Missing any token(s). (title)
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
-    ref: Select item
-    value: Select item
+  ref: Select item
+  value: Select item
 3a39726e6ef577773a0794eb6243a905052eb0e9228592b9200e29aa:
-    ref: Landing - Feature overview (title)
-    value: Co umíme skvěle
+  ref: Landing - Feature overview (title)
+  value: Co umíme skvěle
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
-    ref: Price (placeholder)
-    value: Cena
+  ref: Price (placeholder)
+  value: Cena
 3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
-    ref: Error (toast)
-    value: Error (toast)
+  ref: Error (toast)
+  value: Error (toast)
 3bff91cf3466a36353f54c389623d992c1ff32b26665795f7c022d58:
-    ref: Login with social (message)
-    value: Na tomto ještě pracujeme, ale všechno bude!
+  ref: Login with social (message)
+  value: Na tomto ještě pracujeme, ale všechno bude!
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
-    ref: My Bag (title)
-    value: Můj seznam
+  ref: My Bag (title)
+  value: Můj seznam
 3f99523df88ec5cd5a35a06a20d24d609a3b6185c456b2184176dff5:
-    ref: Landing - About (text)
-    value: Landing - About (text)
+  ref: Landing - About (text)
+  value: Landing - About (text)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
-    ref: Without VAT
-    value: Without VAT
+  ref: Without VAT
+  value: Without VAT
 4008c697866cbc3070dc96fdbc319d7e9d9e725c95cdae1c28196cd4:
-    ref: What - sellers (badge 3)
-    value: Chytrá distribuce inzerátů
+  ref: What - sellers (badge 3)
+  value: Chytrá distribuce inzerátů
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
-    ref: Cancel (button)
-    value: Cancel (button)
+  ref: Cancel (button)
+  value: Cancel (button)
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
-    ref: Register (hero)
-    value: Přidat se!
+  ref: Register (hero)
+  value: Přidat se!
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
-    ref: What - buyers (title)
-    value: Chceš něco koupit?
+  ref: What - buyers (title)
+  value: Chceš něco koupit?
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
-    ref: Please select a category group first to see available categories
-    value:
-        ...aby bylo možné inzerát patřičně doručit zájemcům, je potřeba vybrat
-        kategorii, kam vlastně tvůj inzerát patří.
+  ref: Please select a category group first to see available categories
+  value: ...aby bylo možné inzerát patřičně doručit zájemcům, je potřeba vybrat
+    kategorii, kam vlastně tvůj inzerát patří.
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
-    ref: Missing any token(s). (message)
-    value: Missing any token(s). (message)
+  ref: Missing any token(s). (message)
+  value: Missing any token(s). (message)
 52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
-    ref: User (title)
-    value: Můj účet
+  ref: User (title)
+  value: Můj účet
 53d86a69426c63d5831e3229c44315d6966ef21ffc5a71e488dd2861:
-    ref: What - sellers (title)
-    value: Chceš něco prodat?
+  ref: What - sellers (title)
+  value: Chceš něco prodat?
 54c4e7b4b5a3122ed9a673a0ac2b0df248bef02857032624aec47948:
-    ref: Register
-    value: Registrace
+  ref: Register
+  value: Registrace
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
-    ref: Invalid on/off value
-    value: Invalid on/off value
+  ref: Invalid on/off value
+  value: Invalid on/off value
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
-    ref: Field errors (title)
-    value: Field errors (title)
+  ref: Field errors (title)
+  value: Field errors (title)
 5aa13a488df37a89ce3c123a4d113ff14df85c789b0eb3a4a079ca6c:
-    ref: Condition - Overall (description)
-    value: Odhadněte celkové stav předmětu nabídky.
+  ref: Condition - Overall (description)
+  value: Odhadněte celkové stav předmětu nabídky.
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
-    ref: Listing - Price (tour)
-    value: Nastavení ceny
+  ref: Listing - Price (tour)
+  value: Nastavení ceny
 5cbc30691239af58ad3c11e3630eb3da632bac0cf2703390609b09c2:
-    ref: Landing - About (title)
-    value: Landing - About (title)
+  ref: Landing - About (title)
+  value: Landing - About (title)
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
-    ref: Delete (button)
-    value: Delete (button)
+  ref: Delete (button)
+  value: Delete (button)
 5e5b22386d6916d54d543deb3fa2ae94dc60928062b03b80fa4f4292:
-    ref: Landing - Feature 2 (title) - hint
-    value: Domluva probíhá přímo v aplikaci. E-mail ani telefon nikomu nedáváš, sdílíš jen to, co chceš.
+  ref: Landing - Feature 2 (title) - hint
+  value: Domluva probíhá přímo v aplikaci. E-mail ani telefon nikomu nedáváš,
+    sdílíš jen to, co chceš.
 61a6f144c84ce8d83fccdd988e63aa0b40d951edf07fcc5eec215664:
-    ref: Select category (select)
-    value: Select category (select)
+  ref: Select category (select)
+  value: Select category (select)
 6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
-    ref: Login (link)
-    value: Máte účet? Přihlaste se!
+  ref: Login (link)
+  value: Máte účet? Přihlaste se!
 62a86716bebd110774fa3fdafe1bf5bb11834816ac9e01dfc209ff95:
-    ref: What - buyers (badge 1)
-    value: Snadné hledání
+  ref: What - buyers (badge 1)
+  value: Snadné hledání
 6320f9c73b6ea7e2af2f8e6c95f343b20ad6e47cdcff91dbcf5bebc4:
-    ref: Landing - CTA (text)
-    value: Landing - CTA (text)
+  ref: Landing - CTA (text)
+  value: Landing - CTA (text)
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
-    ref: Landing - Hero (title)
-    value: Nakupuješ nebo prodáváš?
+  ref: Landing - Hero (title)
+  value: Nakupuješ nebo prodáváš?
 6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
-    ref: Condition - Overall (title)
-    value: Celkový stav
+  ref: Condition - Overall (title)
+  value: Celkový stav
 6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
-    ref: Submit listing - status (title)
-    value: Vše připraveno!
+  ref: Submit listing - status (title)
+  value: Vše připraveno!
 6facc75794554d433accb2f240799b65ee08b763fef727c9bf711dc7:
-    ref: Login (hero)
-    value: Už se známe
+  ref: Login (hero)
+  value: Už se známe
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
-    ref: Clear files
-    value: Clear files
+  ref: Clear files
+  value: Clear files
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
-    ref: There is nothing to see right now.
-    value: There is nothing to see right now.
+  ref: There is nothing to see right now.
+  value: There is nothing to see right now.
 77faad8fd529ab2eae943aa28570e829a88797ad14c2a1506fad6a10:
-    ref: Landing - Hero (subtitle)
-    value: Přidej se k nám a prodej, o co nemáš zájem nebo najdi, co nabízí ostatní!
+  ref: Landing - Hero (subtitle)
+  value: Přidej se k nám a prodej, o co nemáš zájem nebo najdi, co nabízí ostatní!
 7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
-    ref: Passwords do not match
-    value: Hesla nesedí, zkontrolujte si je.
+  ref: Passwords do not match
+  value: Hesla nesedí, zkontrolujte si je.
 7f590474fc7aa21590e42c47aa3f3b5d5f1f5b6e56c2aae5da611958:
-    ref: Privacy policy (label)
-    value: Zpracování osobních údajů
+  ref: Privacy policy (label)
+  value: Zpracování osobních údajů
 7f90897e701a64cc5eeedc3ffa925deaac0eaa4bc564cd8fa2a2a1ea:
-    ref: What - sellers (badge 2)
-    value: Přístup k analytickým nástrojům
+  ref: What - sellers (badge 2)
+  value: Přístup k analytickým nástrojům
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
-    ref: Close (label)
-    value: Close (label)
+  ref: Close (label)
+  value: Close (label)
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
-    ref: With VAT
-    value: With VAT
+  ref: With VAT
+  value: With VAT
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
-    ref: Missing required token(s). (message)
-    value: Missing required token(s). (message)
+  ref: Missing required token(s). (message)
+  value: Missing required token(s). (message)
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
-    ref: Previous (tour)
-    value: Předchozí
+  ref: Previous (tour)
+  value: Předchozí
 8c37a53eea55dfb3ce41362b17bab308fcd81d7d0311114bcaf64d56:
-    ref: Listing - Submit (tour)
-    value: Kontrola a odeslání
+  ref: Listing - Submit (tour)
+  value: Kontrola a odeslání
 8d2db329f49aa5263c8c4fc3a556823963ec674600f55d4da704caa1:
-    ref: Name
-    value: Name
+  ref: Name
+  value: Name
 91f3a6e4bee345872696ff6ef6b88f3aac5a451a2c531c92ddf20865:
-    ref: Login with passkey
-    value: Přihlásit se klíčem
+  ref: Login with passkey
+  value: Přihlásit se klíčem
 94268a800874338c42540c7f350a713b3b5afceb7b26a4297491aa5c:
-    ref: Confirm your password
-    value: Potvrďte své heslo
+  ref: Confirm your password
+  value: Potvrďte své heslo
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
-    ref: Nothing here
-    value: Nothing here
+  ref: Nothing here
+  value: Nothing here
 981cc164d88c502839617bc66786dd1986fbb81419eaa16b78e92c17:
-    ref: Finish (tour)
-    value: Hotovo 🙂!
+  ref: Finish (tour)
+  value: Hotovo 🙂!
 9c209af07f71915afcf31beb364f559a8fbbde0bd9d4f199ae9a4999:
-    ref: Login with social (title)
-    value: Přihlášení přes sociální sítě
+  ref: Login with social (title)
+  value: Přihlášení přes sociální sítě
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
-    ref: Fulltext (placeholder)
-    value: Fulltext (placeholder)
+  ref: Fulltext (placeholder)
+  value: Fulltext (placeholder)
 9fc51ae02fdcca13681cdb55a8c7a03f9ffc599da9501cbb966aec98:
-    ref: Listing - Price (description)
-    value:
-        Tohle je prosté - nastav cenu a vlastnosti pro prodej (např. jestli chceš
-        aukci) a je vyřešeno.
+  ref: Listing - Price (description)
+  value: Tohle je prosté - nastav cenu a vlastnosti pro prodej (např. jestli chceš
+    aukci) a je vyřešeno.
 Category bags:
-    static: true
-    value: Baťůžky/tašky
+  static: true
+  value: Baťůžky/tašky
 Category books:
-    static: true
-    value: Knihy
+  static: true
+  value: Knihy
 Category clothing:
-    static: true
-    value: Oblečení
+  static: true
+  value: Oblečení
 Category cosmetics:
-    static: true
-    value: Kosmetika
+  static: true
+  value: Kosmetika
 Category decor:
-    static: true
-    value: Dekorace
+  static: true
+  value: Dekorace
 Category desktop:
-    static: true
-    value: Stolní počítače
+  static: true
+  value: Stolní počítače
 Category dishes:
-    static: true
-    value: Nádobí
+  static: true
+  value: Nádobí
 Category furniture:
-    static: true
-    value: Nábytek
+  static: true
+  value: Nábytek
 Category group automotive:
-    static: true
-    value: Auto/moto
+  static: true
+  value: Auto/moto
 Category group electronics:
-    static: true
-    value: Elektronika
+  static: true
+  value: Elektronika
 Category group garden:
-    static: true
-    value: Zahrada
+  static: true
+  value: Zahrada
 Category group hobbies:
-    static: true
-    value: Zábava
+  static: true
+  value: Zábava
 Category group home:
-    static: true
-    value: Domácnost
+  static: true
+  value: Domácnost
 Category group kitchen:
-    static: true
-    value: Kuchyně
+  static: true
+  value: Kuchyně
 Category group other:
-    static: true
-    value: Ostatní
+  static: true
+  value: Ostatní
 Category group personal:
-    static: true
-    value: Osobní věci
+  static: true
+  value: Osobní věci
 Category group pets:
-    static: true
-    value: Zvířata
+  static: true
+  value: Zvířata
 Category group reality:
-    static: true
-    value: Reality
+  static: true
+  value: Reality
 Category jewelry:
-    static: true
-    value: Šperky
+  static: true
+  value: Šperky
 Category laptop:
-    static: true
-    value: Notebooky
+  static: true
+  value: Notebooky
 Category lighting:
-    static: true
-    value: Osvětlení
+  static: true
+  value: Osvětlení
 Category other:
-    static: true
-    value: Ostatní
+  static: true
+  value: Ostatní
 Category pc-components:
-    static: true
-    value: PC komponenty
+  static: true
+  value: PC komponenty
 Category phone:
-    static: true
-    value: Telefony
+  static: true
+  value: Telefony
 Category plants:
-    static: true
-    value: Rostliny
+  static: true
+  value: Rostliny
 Category seeds:
-    static: true
-    value: Semínka
+  static: true
+  value: Semínka
 Category shoes:
-    static: true
-    value: Boty
+  static: true
+  value: Boty
 Category tablet:
-    static: true
-    value: Tablety
+  static: true
+  value: Tablety
 Category tv:
-    static: true
-    value: Televize
+  static: true
+  value: Televize
 Category watch:
-    static: true
-    value: Hodinky
+  static: true
+  value: Hodinky
 Condition - Age [0] (hint):
-    static: true
-    value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
+  static: true
+  value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
 Condition - Age [1] (hint):
-    static: true
-    value:
-        Věci, které už to mají téměř za sebou nebo budou vyžadovat extrémní péči
-        na zotavení.
+  static: true
+  value: Věci, které už to mají téměř za sebou nebo budou vyžadovat extrémní péči
+    na zotavení.
 Condition - Age [2] (hint):
-    static: true
-    value:
-        Dvě hvězdy dejte věcem, které už něco zažily a spíš dříve, než později
-        mohou vyžadovat servis nebo zručné ruce.
+  static: true
+  value: Dvě hvězdy dejte věcem, které už něco zažily a spíš dříve, než později
+    mohou vyžadovat servis nebo zručné ruce.
 Condition - Age [3] (hint):
-    static: true
-    value: Průměrný věk, to jest např. rok dva starý běžný telefon.
+  static: true
+  value: Průměrný věk, to jest např. rok dva starý běžný telefon.
 Condition - Age [4] (hint):
-    static: true
-    value:
-        Čtyři hvězdy pro věci, které se moc dlouho neohřály mimo krabici, např.
-        dva - tři měsíce starý (nerozstřískaný) telefon.
+  static: true
+  value: Čtyři hvězdy pro věci, které se moc dlouho neohřály mimo krabici, např.
+    dva - tři měsíce starý (nerozstřískaný) telefon.
 Condition - Age [5] (hint):
-    static: true
-    value:
-        Zcela nová věc, jako by právě vypadla z fabriky. Krabička, příslušenství,
-        originální obal - vše na svém místě.
+  static: true
+  value: Zcela nová věc, jako by právě vypadla z fabriky. Krabička, příslušenství,
+    originální obal - vše na svém místě.
 Condition - Overall [0] (hint):
-    static: true
-    value:
-        Celkový stav by bylo fajn vyplnit, jinak hrozí, že váš inzerát zapadne
-        mezi ostatními.
+  static: true
+  value: Celkový stav by bylo fajn vyplnit, jinak hrozí, že váš inzerát zapadne
+    mezi ostatními.
 Condition - Overall [1] (hint):
-    static: true
-    value:
-        Předmět nabídky již neplní svou funkci, nicméně je možné jej použít buď
-        na náhradní díly nebo jiným dílem opět uvést do provozu. Obecně vyžaduje
-        zručnost na straně kupujícího.
+  static: true
+  value: Předmět nabídky již neplní svou funkci, nicméně je možné jej použít buď
+    na náhradní díly nebo jiným dílem opět uvést do provozu. Obecně vyžaduje
+    zručnost na straně kupujícího.
 Condition - Overall [2] (hint):
-    static: true
-    value: Předmět nabídky plní svou funkci, nicméně je poškozen a obecně může
-        vyžadovat opravdu nebo zručnost na straně kupujícího.
+  static: true
+  value: Předmět nabídky plní svou funkci, nicméně je poškozen a obecně může
+    vyžadovat opravdu nebo zručnost na straně kupujícího.
 Condition - Overall [3] (hint):
-    static: true
-    value: Průměrné opotřebení relativní k věku předmětu. Obecně tak lze označit
-        věci, které by bez větší údržby ještě nějakou dobu měly sloužit.
+  static: true
+  value: Průměrné opotřebení relativní k věku předmětu. Obecně tak lze označit
+    věci, které by bez větší údržby ještě nějakou dobu měly sloužit.
 Condition - Overall [4] (hint):
-    static: true
-    value:
-        Obecně perfektní stav s malým opotřebením. Známky použití mohou být znát,
-        ale minimálně. Např. půl roku starý telefon bez rozmláceného displaye.
+  static: true
+  value: Obecně perfektní stav s malým opotřebením. Známky použití mohou být znát,
+    ale minimálně. Např. půl roku starý telefon bez rozmláceného displaye.
 Condition - Overall [5] (hint):
-    static: true
-    value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité
-        příslušenství a originální obal.
+  static: true
+  value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité
+    příslušenství a originální obal.
 a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
-    ref: Password
-    value: Heslo
+  ref: Password
+  value: Heslo
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
-    ref: Invalid data provided (message)
-    value: Invalid data provided (message)
+  ref: Invalid data provided (message)
+  value: Invalid data provided (message)
 a26e2f454b3953f2d2b295fcdae89f2bd7b4a6a145918f37d91e31c8:
-    ref: Unsorted, sort by asc
-    value: Unsorted, sort by asc
+  ref: Unsorted, sort by asc
+  value: Unsorted, sort by asc
 a421acdb6005685abf3ab655b39bd5a6fd36b74ffb42026ddc48fc6b:
-    ref: Cannot resolve iso date time
-    value: Cannot resolve iso date time
+  ref: Cannot resolve iso date time
+  value: Cannot resolve iso date time
 a5eb219baee2d44fbeb2efb0fefefa8cca868c985927a2010eca1bd0:
-    ref: Sorted by asc, sort by desc; keeps column sorted in selected order
-    value: Sorted by asc, sort by desc; keeps column sorted in selected order
+  ref: Sorted by asc, sort by desc; keeps column sorted in selected order
+  value: Sorted by asc, sort by desc; keeps column sorted in selected order
 aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
-    ref: Sorted by desc, sort by asc; keeps column sorted in selected order
-    value: Sorted by desc, sort by asc; keeps column sorted in selected order
+  ref: Sorted by desc, sort by asc; keeps column sorted in selected order
+  value: Sorted by desc, sort by asc; keeps column sorted in selected order
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
-    ref: Success (toast)
-    value: Success (toast)
+  ref: Success (toast)
+  value: Success (toast)
 ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
-    ref: ToS agreement (label)
-    value: Podmínky použití služby
+  ref: ToS agreement (label)
+  value: Podmínky použití služby
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
-    ref: Export settings (title)
-    value: Export settings (title)
+  ref: Export settings (title)
+  value: Export settings (title)
 af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
-    ref: Drag 'n' drop a file here
-    value: Drag 'n' drop a file here
+  ref: Drag 'n' drop a file here
+  value: Drag 'n' drop a file here
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
-    ref: Invalid data provided (title)
-    value: Invalid data provided (title)
+  ref: Invalid data provided (title)
+  value: Invalid data provided (title)
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
-    ref: Sign out
-    value: Odhlásit se
+  ref: Sign out
+  value: Odhlásit se
 b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
-    ref: No more items (label)
-    value: No more items (label)
+  ref: No more items (label)
+  value: No more items (label)
 b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
-    ref: Select items (label)
-    value: Select items (label)
+  ref: Select items (label)
+  value: Select items (label)
 b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
-    ref: Condition - Age (title)
-    value: Věk
+  ref: Condition - Age (title)
+  value: Věk
 b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
-    ref: Password is required
-    value: Heslo je povinné, bez něj to nepůjde...
+  ref: Password is required
+  value: Heslo je povinné, bez něj to nepůjde...
 b77335831f6d96b4d8c89f1777bcf377ba370c854837151caaebf6b5:
-    ref: Sign in
-    value: Přihlásit se
+  ref: Sign in
+  value: Přihlásit se
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
-    ref: Downloading file...
-    value: Downloading file...
+  ref: Downloading file...
+  value: Downloading file...
 bc0a3ee3f106313c5f0c17046789933b738fa3caa2193476dcef4212:
-    ref: Select category (title)
-    value: Select category (title)
+  ref: Select category (title)
+  value: Select category (title)
 bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
-    ref: Landing - Feature 4 (title)
-    value: Chytré nabídky
+  ref: Landing - Feature 4 (title)
+  value: Chytré nabídky
 bcb2263af0ec3c192d55f37db91b702dfb64cd249372992287291fe9:
-    ref: Export (button)
-    value: Export (button)
+  ref: Export (button)
+  value: Export (button)
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
-    ref:
-        Missing identity for an Entity (id). I'm sorry, but I cannot provide better
-        message than this :(
-    value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
-        better message than this :(
+  ref: Missing identity for an Entity (id). I'm sorry, but I cannot provide better
+    message than this :(
+  value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
+    better message than this :(
 be9f96eada3e82c6d87372d6688938da35e43a7c2e4a365636413a22:
-    ref: Price (label)
-    value: Nastavená cena
+  ref: Price (label)
+  value: Nastavená cena
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
-    ref: Listing - Tags (description)
-    value:
-        Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na
-        správné nastavení štítků, které pak inzerát pomohou doručit ostatním - proto
-        tady prosím dávej extra pozor na správné nastavení.
+  ref: Listing - Tags (description)
+  value: Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na
+    správné nastavení štítků, které pak inzerát pomohou doručit ostatním - proto
+    tady prosím dávej extra pozor na správné nastavení.
 c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
-    ref: What - buyers (badge 3)
-    value: Ověření prodejců
+  ref: What - buyers (badge 3)
+  value: Ověření prodejců
 c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
-    ref: Email
-    value: Email
+  ref: Email
+  value: Email
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
-    ref: Input is not Luxon DateTime!
-    value: Input is not Luxon DateTime!
+  ref: Input is not Luxon DateTime!
+  value: Input is not Luxon DateTime!
 c77449169b9a8eafaf07d7add0c418b0a46c45d9d91a87edf48a0d0e:
-    ref: Landing - Feature 3 (title) - hint
-    value: Procházení ve stylu svižného „swipe“. Rychlé filtry podle vzdálenosti, ceny a kategorie — a hned vidíš, co dává smysl.
+  ref: Landing - Feature 3 (title) - hint
+  value: Přirozené procházení inzerátů, rychlé ukládání, skoro jako na seznamce.
+    Jen s věcmi 😊
 c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
-    ref: Remove sorting
-    value: Remove sorting
+  ref: Remove sorting
+  value: Remove sorting
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
-    ref: Cannot download the file...
-    value: Cannot download the file...
+  ref: Cannot download the file...
+  value: Cannot download the file...
 d04269ee27fb690931596a5274381589c9cb5d74901cab9a442cdc93:
-    ref: Listing - Tags (tour)
-    value: Štítky
+  ref: Listing - Tags (tour)
+  value: Štítky
 d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
-    ref: Enter your password
-    value: Zadej své heslo
+  ref: Enter your password
+  value: Zadej své heslo
 d68daa07404fc2d123465dde590010fe2125d0a601840a7e483e2813:
-    ref: Submit listing - status - cannot submit (title)
-    value: Ještě něco málo musíš vyplnit 🙂!
+  ref: Submit listing - status - cannot submit (title)
+  value: Ještě něco málo musíš vyplnit 🙂!
 d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
-    ref: Login failed
-    value: Přihlášení se nezdařilo
+  ref: Login failed
+  value: Přihlášení se nezdařilo
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
-    ref: Loading... (toast)
-    value: Loading... (toast)
+  ref: Loading... (toast)
+  value: Loading... (toast)
 e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
-    ref: Email is required
-    value: Email je povinný, vyplň ho prosím...
+  ref: Email is required
+  value: Email je povinný, vyplň ho prosím...
 e33454b8ba8b19bc556b036dd958ecb47ba9a97d3f75f0e73846f79b:
-    ref: Landing - Feature 3 (title)
-    value: Hledání, které tě nezdržuje
+  ref: Landing - Feature 3 (title)
+  value: Hledání, které tě nezdržuje
 e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
-    ref: Confirm Password
-    value: Potvrdit heslo
+  ref: Confirm Password
+  value: Potvrdit heslo
 e80b66cf15045f7c59a218025f54cc745b90425449b622562f7b66f1:
-    ref: Landing - Feature 1 (title)
-    value: Inzerát za minutu
+  ref: Landing - Feature 1 (title)
+  value: Inzerát za minutu
 e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
-    ref: Password must be at least 8 characters
-    value: Heslo by mělo mít alespoň 8 znaků.
+  ref: Password must be at least 8 characters
+  value: Heslo by mělo mít alespoň 8 znaků.
 e9774c347a82dce48b5bee9adf2b79476ec38d3a3ed0b65d50c3391e:
-    ref: Register (link)
-    value: Jste tu noví? Přidejte se!
+  ref: Register (link)
+  value: Jste tu noví? Přidejte se!
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
-    ref: Select item (label)
-    value: Select item (label)
+  ref: Select item (label)
+  value: Select item (label)
 eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
-    ref: Next (tour)
-    value: Další
+  ref: Next (tour)
+  value: Další
 ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
-    ref: Invalid email address
-    value: Špatně vyplněná emailová adresa...
+  ref: Invalid email address
+  value: Špatně vyplněná emailová adresa...
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
-    ref: Sort
-    value: Sort
+  ref: Sort
+  value: Sort
 ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
-    ref: No category selected
-    value: Kategorie je potřeba...
+  ref: No category selected
+  value: Kategorie je potřeba...
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
-    ref: Submit listing (button)
-    value: Odeslat
+  ref: Submit listing (button)
+  value: Odeslat
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
-    ref: Error
-    value: Error
+  ref: Error
+  value: Error
 f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
-    ref: Sign in (button)
-    value: Přihlásit se
-f6544b5160a57f8965b376f0e378a77a2457da4bfa2a4772ec565974:
-    ref: Landing - Feature 6 (title)
-    value: Férovost na prvním místě
+  ref: Sign in (button)
+  value: Přihlásit se
 f8912e9aba53f677912f1740e070c8ef32fe90ebf98d214ba03f6962:
-    ref: Landing - CTA (title)
-    value: Landing - CTA (title)
+  ref: Landing - CTA (title)
+  value: Landing - CTA (title)
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
-    ref: Confirm selection (label)
-    value: Confirm selection (label)
+  ref: Confirm selection (label)
+  value: Confirm selection (label)
 f944508d3e1d2f448327a1aff7ba61631986230963411e68afa6dc21:
-    ref: Landing - Feature 5 (title)
-    value: Přehled v číslech, co pomáhají
+  ref: Landing - Feature 5 (title)
+  value: Přehled v číslech, co pomáhají
 fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
-    ref: Remove all
-    value: Remove all
+  ref: Remove all
+  value: Remove all
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
-    ref: Add
-    value: Add
+  ref: Add
+  value: Add
