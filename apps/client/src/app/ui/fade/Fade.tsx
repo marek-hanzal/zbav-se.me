@@ -9,15 +9,27 @@ export const Fade: FC<Fade.Props> = (props) => {
 	return (
 		<CoolFade
 			tweak={{
+				slot: {
+					top: {
+						class: [
+							"blur-2xl",
+						],
+					},
+					bottom: {
+						class: [
+							"blur-2xl",
+						],
+					},
+				},
 				token: {
 					"fade.to": {
 						class: [
-							"from-white/0",
+							"from-pink-600/50",
 						],
 					},
 					"fade.from": {
 						class: [
-							"to-pink-900/30",
+							"to-pink-900",
 						],
 					},
 				},
