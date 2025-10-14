@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@use-pico/client";
+import { VariantProvider } from "@use-pico/cls";
 import { useRef } from "react";
 import { AboutSheet } from "~/app/home/AboutSheet";
 import { ContactSheet } from "~/app/home/ContactSheet";
@@ -8,6 +9,7 @@ import { FeaturesSheet } from "~/app/home/FeaturesSheet";
 import { HeroSheet } from "~/app/home/HeroSheet";
 import { useEnterAnim } from "~/app/home/useEnterAnim";
 import { WhatSheet } from "~/app/home/WhatSheet";
+import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/web/home")({
 	component() {
@@ -25,15 +27,36 @@ export const Route = createFileRoute("/$locale/web/home")({
 			>
 				<HeroSheet />
 
-				<WhatSheet />
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "secondary",
+					}}
+				>
+					<WhatSheet />
+				</VariantProvider>
 
 				<FeaturesSheet />
 
-				<AboutSheet />
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "secondary",
+					}}
+				>
+					<AboutSheet />
+				</VariantProvider>
 
 				<CtaSheet />
 
-				<ContactSheet />
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "secondary",
+					}}
+				>
+					<ContactSheet />
+				</VariantProvider>
 			</Container>
 		);
 	},
