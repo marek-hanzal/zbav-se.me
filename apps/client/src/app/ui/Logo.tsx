@@ -40,7 +40,7 @@ export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
 									"scale-105",
 									"top-0",
 									"left-0",
-									"opacity-25",
+									"opacity-15",
 								],
 							},
 						},
