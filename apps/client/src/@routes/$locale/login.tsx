@@ -54,7 +54,6 @@ export const Route = createFileRoute("/$locale/login")({
 
 		const signInMutation = withEmailSignInMutation.useMutation({
 			async onSuccess() {
-				console.log("signInMutation.onSuccess - wanna redirect");
 				return navigate({
 					to: "/$locale/app/dashboard",
 					params: {
