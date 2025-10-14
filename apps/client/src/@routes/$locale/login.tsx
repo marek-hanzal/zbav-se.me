@@ -52,7 +52,7 @@ export const Route = createFileRoute("/$locale/login")({
 		const navigate = useNavigate();
 
 		const signInMutation = withEmailSignInMutation.useMutation({
-			onSuccess: () => {
+			onSuccess() {
 				navigate({
 					to: "/$locale/app/dashboard",
 					params: {

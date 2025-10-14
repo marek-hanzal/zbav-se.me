@@ -8,22 +8,26 @@
 			"cache": false,
 			"persistent": true,
 			"env": [
-				"DATABASE_URL",
-				"ORIGIN",
+				"BETTER_AUTH_SECRET",
 				"COOKIE",
+				"DATABASE_URL",
 				"GEOAPIFY",
-				"BETTER_AUTH_SECRET"
+				"ORIGIN",
+				"VITE_API",
+				"VITE_ASSET_BASE"
 			]
 		},
 		"preview": {
 			"cache": false,
 			"persistent": true,
 			"env": [
-				"DATABASE_URL",
-				"ORIGIN",
+				"BETTER_AUTH_SECRET",
 				"COOKIE",
+				"DATABASE_URL",
 				"GEOAPIFY",
-				"BETTER_AUTH_SECRET"
+				"ORIGIN",
+				"VITE_API",
+				"VITE_ASSET_BASE"
 			]
 		},
 		"typecheck": {
@@ -50,11 +54,13 @@
 			],
 			"cache": false,
 			"env": [
-				"DATABASE_URL",
-				"ORIGIN",
+				"BETTER_AUTH_SECRET",
 				"COOKIE",
+				"DATABASE_URL",
 				"GEOAPIFY",
-				"BETTER_AUTH_SECRET"
+				"ORIGIN",
+				"VITE_API",
+				"VITE_ASSET_BASE"
 			]
 		},
 		"translations": {
