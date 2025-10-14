@@ -128,6 +128,16 @@ export const Route = createFileRoute("/$locale/login")({
 									"bg-white/0",
 								],
 							},
+							first: {
+								class: [
+									"hidden",
+								],
+							},
+							last: {
+								class: [
+									"hidden",
+								],
+							},
 						},
 					}}
 				/>
