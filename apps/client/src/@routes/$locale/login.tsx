@@ -52,8 +52,8 @@ export const Route = createFileRoute("/$locale/login")({
 		const navigate = useNavigate();
 
 		const signInMutation = withEmailSignInMutation.useMutation({
-			onSuccess() {
-				navigate({
+			async onSuccess() {
+				return navigate({
 					to: "/$locale/app/dashboard",
 					params: {
 						locale,
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		const passkeyMutation = useMutation({
-			mutationFn: async () => {
+			async mutationFn() {
 				return authClient.signIn.passkey();
 			},
 			async onSuccess() {
