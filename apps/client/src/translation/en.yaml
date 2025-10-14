@@ -34,6 +34,12 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
+1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
+  ref: Landing - Feature 2 (title)
+  value: Landing - Feature 2 (title)
+1bfa8db71326f766d2a855d7ae59eafdacd374a46bd872cd3317cf82:
+  ref: Landing - Feature 2 (text)
+  value: Landing - Feature 2 (text)
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
   ref: Agreement with (label)
   value: Agreement with (label)
@@ -52,6 +58,9 @@
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
   ref: Please wait...
   value: Please wait...
+2904d968d0a0a7cc6a2e36f0a499b6d940738406abc2cb10d5f9bf1a:
+  ref: Login
+  value: Login
 294149e2faba8e8642efaed4ec43c45114f9b2836f4faea02af8c45a:
   ref: Condition - Age (description)
   value: Condition - Age (description)
@@ -94,12 +103,21 @@
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
   ref: My Bag (title)
   value: My Bag (title)
+3f85caba7fa553d7bb7368808b0015c98f05c722dfa324b06de90143:
+  ref: Landing - Feature 1 (text)
+  value: Landing - Feature 1 (text)
+3f99523df88ec5cd5a35a06a20d24d609a3b6185c456b2184176dff5:
+  ref: Landing - About (text)
+  value: Landing - About (text)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
+4963256806ac7836a38d40085c478cf1e68a5726f105898bf931f1f2:
+  ref: Landing - Feature 3 (text)
+  value: Landing - Feature 3 (text)
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
   ref: Please select a category group first to see available categories
   value: Please select a category group first to see available categories
@@ -124,6 +142,12 @@
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
   ref: Listing - Price (tour)
   value: Listing - Price (tour)
+5bc645ece2aaa8c51e66a591b9800d0291f158b6dc105f047e6bd98c:
+  ref: Landing - What (title)
+  value: Landing - What (title)
+5cbc30691239af58ad3c11e3630eb3da632bac0cf2703390609b09c2:
+  ref: Landing - About (title)
+  value: Landing - About (title)
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
@@ -133,9 +157,12 @@
 6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
   ref: Login (link)
   value: Login (link)
-66a25e1913833cec97836a37acc59c3caa072a5524369cd106ed9894:
-  ref: Prost\u011B to po\u0161li d\u00E1l...
-  value: Prost\u011B to po\u0161li d\u00E1l...
+6320f9c73b6ea7e2af2f8e6c95f343b20ad6e47cdcff91dbcf5bebc4:
+  ref: Landing - CTA (text)
+  value: Landing - CTA (text)
+64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
+  ref: Landing - Hero (title)
+  value: Landing - Hero (title)
 6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
   ref: Condition - Overall (title)
   value: Condition - Overall (title)
@@ -148,6 +175,9 @@
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
   ref: There is nothing to see right now.
   value: There is nothing to see right now.
+77faad8fd529ab2eae943aa28570e829a88797ad14c2a1506fad6a10:
+  ref: Landing - Hero (subtitle)
+  value: Landing - Hero (subtitle)
 7e0689b27022e61a1b7df254ca32c6b73914488dcf5ab0dad249b407:
   ref: Passwords do not match
   value: Passwords do not match
@@ -294,9 +324,18 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
   ref: Email is required
   value: Email is required
+e33454b8ba8b19bc556b036dd958ecb47ba9a97d3f75f0e73846f79b:
+  ref: Landing - Feature 3 (title)
+  value: Landing - Feature 3 (title)
 e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
   ref: Confirm Password
   value: Confirm Password
+e80b66cf15045f7c59a218025f54cc745b90425449b622562f7b66f1:
+  ref: Landing - Feature 1 (title)
+  value: Landing - Feature 1 (title)
+e8849bff490002af5cf8e4f7cab0bf599933ed5769887ed49c64adc0:
+  ref: Landing - What (text)
+  value: Landing - What (text)
 e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
   ref: Password must be at least 8 characters
   value: Password must be at least 8 characters
@@ -327,6 +366,9 @@ f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
 f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
   ref: Sign in (button)
   value: Sign in (button)
+f8912e9aba53f677912f1740e070c8ef32fe90ebf98d214ba03f6962:
+  ref: Landing - CTA (title)
+  value: Landing - CTA (title)
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
   ref: Confirm selection (label)
   value: Confirm selection (label)

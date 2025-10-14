@@ -4,7 +4,7 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { tvc } from "@use-pico/cls";
 import { routeTree } from "~/_route";
 import { Sheet } from "~/app/sheet/Sheet";
-import { LogoAnimated } from "~/app/ui/LogoAnimated";
+import { Logo } from "~/app/ui/Logo";
 
 export function getRouter() {
 	const queryClient = new QueryClient({
@@ -36,7 +36,7 @@ export function getRouter() {
 						"justify-center",
 					])}
 				>
-					<LogoAnimated />
+					<Logo />
 				</div>
 			);
 		},

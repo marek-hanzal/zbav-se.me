@@ -92,6 +92,15 @@ export const HeroSheet: FC = () => {
 						<Button
 							tone={"secondary"}
 							theme={"dark"}
+							tweak={{
+								slot: {
+									wrapper: {
+										class: [
+											"reveal",
+										],
+									},
+								},
+							}}
 						>
 							<LinkTo
 								to={"/$locale/login"}
@@ -102,9 +111,19 @@ export const HeroSheet: FC = () => {
 								<Tx label={"Login"} />
 							</LinkTo>
 						</Button>
+
 						<Button
 							tone={"primary"}
 							theme={"dark"}
+							tweak={{
+								slot: {
+									wrapper: {
+										class: [
+											"reveal",
+										],
+									},
+								},
+							}}
 						>
 							<LinkTo
 								to={"/$locale/register"}

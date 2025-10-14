@@ -16,8 +16,7 @@ export const LogoCls = contract(ThemeCls.contract)
 			class: [
 				"font-limelight",
 				"text-4xl",
-				"opacity-0",
-				"transform-[rotateZ(-5deg)]",
+				"transform-[rotateZ(-3deg)]",
 			],
 			token: [
 				"tone.primary.light.text",
@@ -27,8 +26,8 @@ export const LogoCls = contract(ThemeCls.contract)
 			class: [
 				"text-xl",
 				"font-bold",
-				"opacity-0",
-				"transform-[rotateZ(-2deg)]",
+				"transform-[rotateZ(-4deg)]",
+				"translate-y-[-25%]",
 			],
 			token: [
 				"tone.link.light.text",
