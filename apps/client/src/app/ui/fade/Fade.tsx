@@ -13,7 +13,7 @@ export const Fade: FC<Fade.Props> = (props) => {
 				token: {
 					"fade.to": {
 						class: [
-							"from-pink-900/85",
+							"from-pink-900",
 						],
 					},
 					"fade.from": {
