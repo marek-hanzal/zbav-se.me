@@ -70,12 +70,18 @@
 2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
   ref: Something went wrong.
   value: Something went wrong.
+31dfa815961f7a02da863fc7ee61c2b2d69da6dfa8259e422a89c831:
+  ref: What - sellers (badge 1)
+  value: What - sellers (badge 1)
 323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
   ref: Enter your email
   value: Enter your email
 32ae866da465e1a2e09f3dde89caefa5b67cc3ac6f8529d48209322d:
   ref: Edit
   value: Edit
+3502b6c107b0c5ebe42a84b6c3822e308ed5a099dcbb11ff3b7b5ae3:
+  ref: What - buyers (badge 2)
+  value: What - buyers (badge 2)
 36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
   ref: Register (title)
   value: Register (title)
@@ -112,12 +118,18 @@
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
+4008c697866cbc3070dc96fdbc319d7e9d9e725c95cdae1c28196cd4:
+  ref: What - sellers (badge 3)
+  value: What - sellers (badge 3)
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
 4963256806ac7836a38d40085c478cf1e68a5726f105898bf931f1f2:
   ref: Landing - Feature 3 (text)
   value: Landing - Feature 3 (text)
+4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
+  ref: What - buyers (title)
+  value: What - buyers (title)
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
   ref: Please select a category group first to see available categories
   value: Please select a category group first to see available categories
@@ -127,6 +139,9 @@
 52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
   ref: User (title)
   value: User (title)
+53d86a69426c63d5831e3229c44315d6966ef21ffc5a71e488dd2861:
+  ref: What - sellers (title)
+  value: What - sellers (title)
 54c4e7b4b5a3122ed9a673a0ac2b0df248bef02857032624aec47948:
   ref: Register
   value: Register
@@ -142,9 +157,6 @@
 5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
   ref: Listing - Price (tour)
   value: Listing - Price (tour)
-5bc645ece2aaa8c51e66a591b9800d0291f158b6dc105f047e6bd98c:
-  ref: Landing - What (title)
-  value: Landing - What (title)
 5cbc30691239af58ad3c11e3630eb3da632bac0cf2703390609b09c2:
   ref: Landing - About (title)
   value: Landing - About (title)
@@ -157,6 +169,9 @@
 6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
   ref: Login (link)
   value: Login (link)
+62a86716bebd110774fa3fdafe1bf5bb11834816ac9e01dfc209ff95:
+  ref: What - buyers (badge 1)
+  value: What - buyers (badge 1)
 6320f9c73b6ea7e2af2f8e6c95f343b20ad6e47cdcff91dbcf5bebc4:
   ref: Landing - CTA (text)
   value: Landing - CTA (text)
@@ -184,6 +199,9 @@
 7f590474fc7aa21590e42c47aa3f3b5d5f1f5b6e56c2aae5da611958:
   ref: Privacy policy (label)
   value: Privacy policy (label)
+7f90897e701a64cc5eeedc3ffa925deaac0eaa4bc564cd8fa2a2a1ea:
+  ref: What - sellers (badge 2)
+  value: What - sellers (badge 2)
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
   ref: Close (label)
   value: Close (label)
@@ -294,6 +312,9 @@ be9f96eada3e82c6d87372d6688938da35e43a7c2e4a365636413a22:
 c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
   ref: Listing - Tags (description)
   value: Listing - Tags (description)
+c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
+  ref: What - buyers (badge 3)
+  value: What - buyers (badge 3)
 c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
   ref: Email
   value: Email
@@ -333,9 +354,6 @@ e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
 e80b66cf15045f7c59a218025f54cc745b90425449b622562f7b66f1:
   ref: Landing - Feature 1 (title)
   value: Landing - Feature 1 (title)
-e8849bff490002af5cf8e4f7cab0bf599933ed5769887ed49c64adc0:
-  ref: Landing - What (text)
-  value: Landing - What (text)
 e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
   ref: Password must be at least 8 characters
   value: Password must be at least 8 characters

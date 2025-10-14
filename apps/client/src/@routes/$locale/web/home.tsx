@@ -62,14 +62,14 @@ export const Route = createFileRoute("/$locale/web/home")({
 							icon: DotIcon,
 						},
 					]}
-					orientation={"vertical"}
+					orientation={"horizontal"}
 				/>
 
 				<Container
 					ref={scrollerRef}
-					layout={"vertical-full"}
-					overflow={"vertical"}
-					snap={"vertical-start"}
+					layout={"horizontal-full"}
+					overflow={"horizontal"}
+					snap={"horizontal-start"}
 					gap={"md"}
 				>
 					<SecondaryOverlay />
