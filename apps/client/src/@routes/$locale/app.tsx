@@ -3,6 +3,8 @@ import { getSessionFn } from "~/app/auth/getSessionFn";
 
 export const Route = createFileRoute("/$locale/app")({
 	async loader({ params: { locale } }) {
+		console.log("app.loader", import.meta.env.VITE_API);
+
 		const { data } = await getSessionFn();
 
 		if (!data) {
@@ -10,9 +12,6 @@ export const Route = createFileRoute("/$locale/app")({
 				to: "/$locale/login",
 				params: {
 					locale,
-				},
-				headers: {
-					"X-App-Route": "Nope",
 				},
 			});
 		}
