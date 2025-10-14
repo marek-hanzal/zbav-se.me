@@ -70,7 +70,7 @@ Jak na to: napiš na **marek.hanzal@icloud.com**. Odpovíme standardně do **1 m
 ---
 
 ## 7) Bezpečnost
-Šifrované přenosy (**HTTPS**), hesla **neukládáme v čitelné podobě**, přístupy máme omezené jen na osoby, které je nezbytně potřebují. Data držíme **co nejméně**, a když je nepotřebujeme, nemažeme oklikou, ale **mazáme**.
+Šifrované přenosy (**HTTPS**), hesla **neukládáme v čitelné podobě**, přístupy máme omezené jen na osoby, které je nezbytně potřebují. Data držíme **co nejméně**, a když je nepotřebujeme, **prostě je smažeme**.
 
 ---
 
