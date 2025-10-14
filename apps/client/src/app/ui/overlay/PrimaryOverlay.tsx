@@ -10,8 +10,8 @@ export const PrimaryOverlay: FC<PrimaryOverlay.Props> = ({ ...props }) => {
 		<Overlay
 			type="bg-2"
 			opacity={"high"}
-			accentFrom="primary.dark"
-			accentTo="secondary.dark"
+			accentFrom="secondary.dark"
+			accentTo="primary.dark"
 			{...props}
 		/>
 	);
