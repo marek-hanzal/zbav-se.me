@@ -16,7 +16,36 @@ export const Logo: FC<Logo.Props> = ({ cls = LogoCls, tweak, ...props }) => {
 			{...props}
 		>
 			<div className={slots.logo()}>
-				<Tx label={"zbav-se.me"} />
+				<Tx
+					label={"zbav-se.me"}
+					tone={"primary"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"z-5",
+								],
+							},
+						},
+					}}
+				/>
+				<Tx
+					label={"zbav-se.me"}
+					tone={"secondary"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"absolute",
+									"scale-105",
+									"top-0",
+									"left-0",
+									"opacity-25",
+								],
+							},
+						},
+					}}
+				/>
 			</div>
 
 			<div className={slots.text()}>
