@@ -43,6 +43,10 @@ export const Route = createFileRoute("/$locale/landing")({
 					containerRef={scrollerRef}
 					iconProps={() => ({
 						size: "xs",
+						itemProps: () => ({
+							tone: "secondary",
+							theme: "light",
+						}),
 					})}
 					pages={[
 						{

@@ -104,6 +104,10 @@ export const Route = createFileRoute("/$locale/login")({
 					containerRef={rootRef}
 					iconProps={() => ({
 						size: "sm",
+						itemProps: () => ({
+							tone: "secondary",
+							theme: "light",
+						}),
 					})}
 					pages={[
 						{
