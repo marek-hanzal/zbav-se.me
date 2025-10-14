@@ -7,6 +7,8 @@ import { AppEnv } from "./env";
 
 const origin = new URL(AppEnv.ORIGIN).hostname;
 
+console.log("auth - Origin", origin, AppEnv);
+
 export const auth = betterAuth({
 	database: dialect,
 	secret: AppEnv.BETTER_AUTH_SECRET,
