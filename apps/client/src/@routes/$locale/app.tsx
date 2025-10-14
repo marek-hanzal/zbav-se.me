@@ -11,6 +11,9 @@ export const Route = createFileRoute("/$locale/app")({
 				params: {
 					locale,
 				},
+				headers: {
+					"X-App-Route": "Nope",
+				},
 			});
 		}
 	},

@@ -1,7 +1,7 @@
 export const prerender = [
 	//
-	"/:locale/login",
-	"/:locale/register",
+	// "/:locale/login",
+	// "/:locale/register",
 	// Legal stuff
 	"/:locale/tos",
 	"/:locale/privacy",
