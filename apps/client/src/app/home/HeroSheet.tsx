@@ -19,6 +19,7 @@ export const HeroSheet: FC = () => {
 					"items-center",
 					"justify-center",
 					"relative",
+					"opacity-0",
 				])}
 			>
 				<div
