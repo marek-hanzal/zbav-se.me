@@ -6,5 +6,5 @@ export const prerender = [
 	"/:locale/tos",
 	"/:locale/privacy",
 	// web
-	"/:locale/web/home",
+	"/:locale/landing",
 ];

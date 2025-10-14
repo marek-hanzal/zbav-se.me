@@ -17,7 +17,7 @@ export const Route = createFileRoute("/")({
 		}
 
 		throw redirect({
-			to: "/$locale/web/home",
+			to: "/$locale/landing",
 			params: {
 				locale,
 			},

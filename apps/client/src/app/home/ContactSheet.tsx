@@ -19,23 +19,32 @@ export const ContactSheet: FC = () => {
 				icon={"icon-[line-md--email-twotone]"}
 				textTitle={<Tx label={"Landing - Contact (title)"} />}
 				textMessage={<Tx label={"Landing - Contact (text)"} />}
-			/>
-
-			<Typo
-				label={"info@zbav-se.me"}
-				font={"bold"}
-				size={"xl"}
-				display={"block"}
 				tweak={{
 					slot: {
 						root: {
 							class: [
-								"mx-auto",
+								"reveal",
 							],
 						},
 					},
 				}}
-			/>
+			>
+				<Typo
+					label={"info@zbav-se.me"}
+					font={"bold"}
+					size={"xl"}
+					display={"block"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"mx-auto",
+								],
+							},
+						},
+					}}
+				/>
+			</Status>
 		</Sheet>
 	);
 };

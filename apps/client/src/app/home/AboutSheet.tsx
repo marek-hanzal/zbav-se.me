@@ -1,6 +1,7 @@
 import { Container } from "@use-pico/client";
-import type { FC } from "react";
+import { type FC, useRef } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
+import { Fade } from "~/app/ui/fade/Fade";
 import { Markdown } from "~/app/ui/Markdown";
 
 export namespace AboutSheet {
@@ -10,6 +11,8 @@ export namespace AboutSheet {
 }
 
 export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
+	const scrollerRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<Sheet
 			tweak={{
@@ -17,13 +20,15 @@ export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
 					root: {
 						class: [
 							"p-4",
-							"pb-12",
 						],
 					},
 				},
 			}}
 		>
+			<Fade scrollableRef={scrollerRef} />
+
 			<Container
+				ref={scrollerRef}
 				layout={"vertical-full"}
 				overflow={"vertical"}
 				tone={"unset"}

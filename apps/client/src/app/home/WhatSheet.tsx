@@ -11,7 +11,7 @@ import { TypoIcon } from "~/app/ui/text/TypoIcon";
 export const WhatSheet: FC = () => {
 	return (
 		<Sheet tone="secondary">
-			<div className="flex flex-col justify-evenly h-[100dvh] py-16">
+			<div className="reveal flex flex-col justify-evenly h-[100dvh] py-16">
 				<Status
 					icon={SellerIcon}
 					tone={"primary"}

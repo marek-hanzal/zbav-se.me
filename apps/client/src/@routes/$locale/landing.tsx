@@ -14,10 +14,10 @@ import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { SecondaryOverlay } from "~/app/ui/overlay/SecondaryOverlay";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
-export const Route = createFileRoute("/$locale/web/home")({
+export const Route = createFileRoute("/$locale/landing")({
 	async loader({ params: { locale } }) {
 		return {
-			about: await import(`../../../@md/about/${locale}.md?raw`).then(
+			about: await import(`../../@md/about/${locale}.md?raw`).then(
 				(m) => m.default,
 			),
 		};
@@ -70,14 +70,33 @@ export const Route = createFileRoute("/$locale/web/home")({
 							icon: DotIcon,
 						},
 					]}
-					orientation={"horizontal"}
+					tweak={{
+						slot: {
+							first: {
+								class: [
+									"hidden",
+								],
+							},
+							last: {
+								class: [
+									"hidden",
+								],
+							},
+							root: {
+								class: [
+									"bg-white/0",
+								],
+							},
+						},
+					}}
+					orientation={"vertical"}
 				/>
 
 				<Container
 					ref={scrollerRef}
-					layout={"horizontal-full"}
-					overflow={"horizontal"}
-					snap={"horizontal-start"}
+					layout={"vertical-full"}
+					overflow={"vertical"}
+					snap={"vertical-start"}
 					gap={"md"}
 				>
 					<SecondaryOverlay />

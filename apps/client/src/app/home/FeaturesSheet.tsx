@@ -14,6 +14,11 @@ export const FeaturesSheet: FC = () => {
 				tone="secondary"
 				tweak={{
 					slot: {
+						root: {
+							class: [
+								"reveal",
+							],
+						},
 						body: {
 							class: [
 								"flex",

@@ -12,13 +12,12 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as LocaleWebRouteImport } from './@routes/$locale/web'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
 import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
+import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
-import { Route as LocaleWebHomeRouteImport } from './@routes/$locale/web/home'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppFeedRouteImport } from './@routes/$locale/app/feed'
 import { Route as LocaleAppDashboardRouteImport } from './@routes/$locale/app/dashboard'
@@ -38,11 +37,6 @@ const IndexRoute = IndexRouteImport.update({
 const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleWebRoute = LocaleWebRouteImport.update({
-  id: '/web',
-  path: '/web',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleTosRoute = LocaleTosRouteImport.update({
@@ -65,15 +59,15 @@ const LocaleLoginRoute = LocaleLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleLandingRoute = LocaleLandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleAppRoute = LocaleAppRouteImport.update({
   id: '/app',
   path: '/app',
   getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleWebHomeRoute = LocaleWebHomeRouteImport.update({
-  id: '/home',
-  path: '/home',
-  getParentRoute: () => LocaleWebRoute,
 } as any)
 const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
   id: '/user',
@@ -105,33 +99,31 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/login': typeof LocaleLoginRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/$locale/web': typeof LocaleWebRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
-  '/$locale/web/home': typeof LocaleWebHomeRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/login': typeof LocaleLoginRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/$locale/web': typeof LocaleWebRouteWithChildren
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
-  '/$locale/web/home': typeof LocaleWebHomeRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
 }
 export interface FileRoutesById {
@@ -139,17 +131,16 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/landing': typeof LocaleLandingRoute
   '/$locale/login': typeof LocaleLoginRoute
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
-  '/$locale/web': typeof LocaleWebRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
-  '/$locale/web/home': typeof LocaleWebHomeRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
 }
 export interface FileRouteTypes {
@@ -158,50 +149,47 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/app'
+    | '/$locale/landing'
     | '/$locale/login'
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
-    | '/$locale/web'
     | '/$locale/'
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
     | '/$locale/app/feed'
     | '/$locale/app/user'
-    | '/$locale/web/home'
     | '/$locale/app/listing/create'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/$locale/app'
+    | '/$locale/landing'
     | '/$locale/login'
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
-    | '/$locale/web'
     | '/$locale'
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
     | '/$locale/app/feed'
     | '/$locale/app/user'
-    | '/$locale/web/home'
     | '/$locale/app/listing/create'
   id:
     | '__root__'
     | '/'
     | '/$locale'
     | '/$locale/app'
+    | '/$locale/landing'
     | '/$locale/login'
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
-    | '/$locale/web'
     | '/$locale/'
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
     | '/$locale/app/feed'
     | '/$locale/app/user'
-    | '/$locale/web/home'
     | '/$locale/app/listing/create'
   fileRoutesById: FileRoutesById
 }
@@ -233,13 +221,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/web': {
-      id: '/$locale/web'
-      path: '/web'
-      fullPath: '/$locale/web'
-      preLoaderRoute: typeof LocaleWebRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/tos': {
       id: '/$locale/tos'
       path: '/tos'
@@ -268,19 +249,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleLoginRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/landing': {
+      id: '/$locale/landing'
+      path: '/landing'
+      fullPath: '/$locale/landing'
+      preLoaderRoute: typeof LocaleLandingRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/app': {
       id: '/$locale/app'
       path: '/app'
       fullPath: '/$locale/app'
       preLoaderRoute: typeof LocaleAppRouteImport
       parentRoute: typeof LocaleRoute
-    }
-    '/$locale/web/home': {
-      id: '/$locale/web/home'
-      path: '/home'
-      fullPath: '/$locale/web/home'
-      preLoaderRoute: typeof LocaleWebHomeRouteImport
-      parentRoute: typeof LocaleWebRoute
     }
     '/$locale/app/user': {
       id: '/$locale/app/user'
@@ -340,35 +321,23 @@ const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(
   LocaleAppRouteChildren,
 )
 
-interface LocaleWebRouteChildren {
-  LocaleWebHomeRoute: typeof LocaleWebHomeRoute
-}
-
-const LocaleWebRouteChildren: LocaleWebRouteChildren = {
-  LocaleWebHomeRoute: LocaleWebHomeRoute,
-}
-
-const LocaleWebRouteWithChildren = LocaleWebRoute._addFileChildren(
-  LocaleWebRouteChildren,
-)
-
 interface LocaleRouteChildren {
   LocaleAppRoute: typeof LocaleAppRouteWithChildren
+  LocaleLandingRoute: typeof LocaleLandingRoute
   LocaleLoginRoute: typeof LocaleLoginRoute
   LocalePrivacyRoute: typeof LocalePrivacyRoute
   LocaleRegisterRoute: typeof LocaleRegisterRoute
   LocaleTosRoute: typeof LocaleTosRoute
-  LocaleWebRoute: typeof LocaleWebRouteWithChildren
   LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleAppRoute: LocaleAppRouteWithChildren,
+  LocaleLandingRoute: LocaleLandingRoute,
   LocaleLoginRoute: LocaleLoginRoute,
   LocalePrivacyRoute: LocalePrivacyRoute,
   LocaleRegisterRoute: LocaleRegisterRoute,
   LocaleTosRoute: LocaleTosRoute,
-  LocaleWebRoute: LocaleWebRouteWithChildren,
   LocaleIndexRoute: LocaleIndexRoute,
 }
 
