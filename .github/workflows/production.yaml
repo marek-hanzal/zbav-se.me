@@ -311,7 +311,7 @@ jobs:
         name: Run migrations
         runs-on: ubuntu-latest
         environment: production
-        needs: [bunny-cdn]
+        needs: [vercel-client, vercel-server]
         steps:
             - name: Trigger migrations endpoint
               env:
