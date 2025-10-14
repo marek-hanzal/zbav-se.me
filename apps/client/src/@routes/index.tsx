@@ -1,24 +1,25 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { createServerFn } from "@tanstack/react-start";
-import { getRequestHeader } from "@tanstack/react-start/server";
-import { defaultLocale, locales } from "~/locales";
-
-const serverFn = createServerFn().handler(async () => {
-	const { pick } = await import("@escapace/accept-language-parser");
-
-	const [locale] = pick(getRequestHeader("accept-language") ?? "", locales, {
-		type: "lookup",
-	});
-
-	return locale ?? defaultLocale;
-});
+import { getSessionFn } from "~/app/auth/getSessionFn";
+import { getLocaleFn } from "~/app/locale/getLocaleFn";
 
 export const Route = createFileRoute("/")({
 	async loader() {
+		const { data: session } = await getSessionFn();
+		const locale = await getLocaleFn();
+
+		if (session) {
+			throw redirect({
+				to: "/$locale/app/dashboard",
+				params: {
+					locale,
+				},
+			});
+		}
+
 		throw redirect({
-			to: "/$locale",
+			to: "/$locale/web/home",
 			params: {
-				locale: await serverFn(),
+				locale,
 			},
 		});
 	},

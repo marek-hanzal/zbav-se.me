@@ -9,13 +9,7 @@ import { qrcode } from "vite-plugin-qrcode";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
 import { locales } from "./src/locales";
-
-const prerender = [
-	"/:locale/login",
-	"/:locale/register",
-	"/:locale/tos",
-	"/:locale/privacy",
-];
+import { prerender } from "./src/prerender";
 
 export default defineConfig({
 	clearScreen: false,
