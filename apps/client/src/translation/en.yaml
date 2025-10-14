@@ -37,9 +37,6 @@
 1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
   ref: Landing - Feature 2 (title)
   value: Landing - Feature 2 (title)
-1bfa8db71326f766d2a855d7ae59eafdacd374a46bd872cd3317cf82:
-  ref: Landing - Feature 2 (text)
-  value: Landing - Feature 2 (text)
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
   ref: Agreement with (label)
   value: Agreement with (label)
@@ -97,6 +94,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
   ref: Select item
   value: Select item
+3a39726e6ef577773a0794eb6243a905052eb0e9228592b9200e29aa:
+  ref: Landing - Feature overview (title)
+  value: Landing - Feature overview (title)
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
@@ -109,9 +109,6 @@
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
   ref: My Bag (title)
   value: My Bag (title)
-3f85caba7fa553d7bb7368808b0015c98f05c722dfa324b06de90143:
-  ref: Landing - Feature 1 (text)
-  value: Landing - Feature 1 (text)
 3f99523df88ec5cd5a35a06a20d24d609a3b6185c456b2184176dff5:
   ref: Landing - About (text)
   value: Landing - About (text)
@@ -124,9 +121,6 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
-4963256806ac7836a38d40085c478cf1e68a5726f105898bf931f1f2:
-  ref: Landing - Feature 3 (text)
-  value: Landing - Feature 3 (text)
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
   ref: What - buyers (title)
   value: What - buyers (title)
@@ -298,6 +292,9 @@ b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
 bc0a3ee3f106313c5f0c17046789933b738fa3caa2193476dcef4212:
   ref: Select category (title)
   value: Select category (title)
+bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
+  ref: Landing - Feature 4 (title)
+  value: Landing - Feature 4 (title)
 bcb2263af0ec3c192d55f37db91b702dfb64cd249372992287291fe9:
   ref: Export (button)
   value: Export (button)
@@ -384,12 +381,18 @@ f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
 f4c78f5c9d5da03c2e4748bc079587f65e1597259a75c1d8390a8ce3:
   ref: Sign in (button)
   value: Sign in (button)
+f6544b5160a57f8965b376f0e378a77a2457da4bfa2a4772ec565974:
+  ref: Landing - Feature 6 (title)
+  value: Landing - Feature 6 (title)
 f8912e9aba53f677912f1740e070c8ef32fe90ebf98d214ba03f6962:
   ref: Landing - CTA (title)
   value: Landing - CTA (title)
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
   ref: Confirm selection (label)
   value: Confirm selection (label)
+f944508d3e1d2f448327a1aff7ba61631986230963411e68afa6dc21:
+  ref: Landing - Feature 5 (title)
+  value: Landing - Feature 5 (title)
 fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
   ref: Remove all
   value: Remove all
