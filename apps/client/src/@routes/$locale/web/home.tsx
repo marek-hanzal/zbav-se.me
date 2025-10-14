@@ -9,6 +9,7 @@ import { FeaturesSheet } from "~/app/home/FeaturesSheet";
 import { HeroSheet } from "~/app/home/HeroSheet";
 import { useEnterAnim } from "~/app/home/useEnterAnim";
 import { WhatSheet } from "~/app/home/WhatSheet";
+import { Background } from "~/app/ui/background/Background";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/web/home")({
@@ -25,6 +26,8 @@ export const Route = createFileRoute("/$locale/web/home")({
 				snap={"vertical-start"}
 				gap={"md"}
 			>
+				<Background />
+
 				<HeroSheet />
 
 				<VariantProvider

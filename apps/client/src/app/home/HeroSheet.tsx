@@ -18,48 +18,9 @@ export const HeroSheet: FC = () => {
 					"flex",
 					"items-center",
 					"justify-center",
-					"relative",
 					"opacity-0",
 				])}
 			>
-				<div
-					className={tvc([
-						"pointer-events-none",
-						"absolute",
-						"inset-0",
-						"-z-10",
-					])}
-				>
-					<div
-						className={tvc([
-							"absolute",
-							"-top-24",
-							"right-[-10%]",
-							"h-[36rem]",
-							"w-[36rem]",
-							"rounded-full",
-							"bg-gradient-to-br",
-							"from-indigo-500/20",
-							"to-cyan-500/10",
-							"blur-2xl",
-						])}
-					/>
-					<div
-						className={tvc([
-							"absolute",
-							"-bottom-16",
-							"left-[-10%]",
-							"h-[28rem]",
-							"w-[28rem]",
-							"rounded-full",
-							"bg-gradient-to-tr",
-							"from-fuchsia-500/10",
-							"to-purple-500/10",
-							"blur-2xl",
-						])}
-					/>
-				</div>
-
 				<Status
 					icon={<Logo />}
 					textTitle={<Tx label={"Landing - Hero (title)"} />}
@@ -92,15 +53,6 @@ export const HeroSheet: FC = () => {
 						<Button
 							tone={"secondary"}
 							theme={"dark"}
-							tweak={{
-								slot: {
-									wrapper: {
-										class: [
-											"reveal",
-										],
-									},
-								},
-							}}
 						>
 							<LinkTo
 								to={"/$locale/login"}
@@ -115,15 +67,6 @@ export const HeroSheet: FC = () => {
 						<Button
 							tone={"primary"}
 							theme={"dark"}
-							tweak={{
-								slot: {
-									wrapper: {
-										class: [
-											"reveal",
-										],
-									},
-								},
-							}}
 						>
 							<LinkTo
 								to={"/$locale/register"}
