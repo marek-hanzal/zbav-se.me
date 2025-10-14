@@ -2,52 +2,26 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button, Container, LinkTo, Status, Tx } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import { useRef } from "react";
+import { useEnterAnim } from "~/app/home/useEnterAnim";
 import { Sheet } from "~/app/sheet/Sheet";
-import { anim, useAnim } from "~/app/ui/gsap";
 import { Logo } from "~/app/ui/Logo";
 
 export const Route = createFileRoute("/$locale/web/home")({
 	component() {
 		const { locale } = Route.useParams();
 
-		const pageRef = useRef<HTMLDivElement>(null);
+		const scrollerRef = useRef<HTMLDivElement>(null);
 
-		useAnim(
-			() => {
-				const elements = anim.utils.toArray<HTMLElement>(
-					pageRef.current?.querySelectorAll?.(".reveal") ?? [],
-				);
-				elements.forEach((el, index) => {
-					anim.from(el, {
-						opacity: 0,
-						y: 48,
-						duration: 0.6,
-						delay: Math.min(index * 0.05, 0.3),
-						scrollTrigger: {
-							trigger: el,
-							scroller: pageRef.current ?? undefined,
-							start: "top 85%",
-							end: "bottom 30%",
-							toggleActions: "play none none none",
-							once: true,
-						},
-					});
-				});
-			},
-			{
-				dependencies: [],
-			},
-		);
+		useEnterAnim(scrollerRef);
 
 		return (
 			<Container
-				ref={pageRef}
+				ref={scrollerRef}
 				layout={"vertical-full"}
 				overflow={"vertical"}
 				snap={"vertical-start"}
 				gap={"md"}
 			>
-				{/* Hero */}
 				<Sheet>
 					<div className={"reveal"}>
 						<Status
@@ -107,7 +81,6 @@ export const Route = createFileRoute("/$locale/web/home")({
 					</div>
 				</Sheet>
 
-				{/* What we do */}
 				<Sheet>
 					<div className={"reveal"}>
 						<Status
@@ -117,7 +90,6 @@ export const Route = createFileRoute("/$locale/web/home")({
 					</div>
 				</Sheet>
 
-				{/* Features */}
 				<Sheet>
 					<div
 						className={tvc([
@@ -159,7 +131,6 @@ export const Route = createFileRoute("/$locale/web/home")({
 					</div>
 				</Sheet>
 
-				{/* About us */}
 				<Sheet>
 					<div className={"reveal"}>
 						<Status
@@ -171,7 +142,6 @@ export const Route = createFileRoute("/$locale/web/home")({
 					</div>
 				</Sheet>
 
-				{/* Final CTA snap */}
 				<Sheet>
 					<div className={"reveal"}>
 						<Status
