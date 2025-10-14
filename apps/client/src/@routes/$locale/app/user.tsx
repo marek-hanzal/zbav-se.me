@@ -1,16 +1,28 @@
 import {
 	createFileRoute,
+	useLoaderData,
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import { Button, Container, ls, Tx, UserIcon } from "@use-pico/client";
-import { withPasskeyMutation } from "~/app/auth/withPasskeyMutation";
+import {
+	Button,
+	Container,
+	LinkTo,
+	Status,
+	Tx,
+	UserIcon,
+} from "@use-pico/client";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
-import { Nav } from "~/app/ui/nav/Nav";
-import { Title } from "~/app/ui/title/Title";
+import { Sheet } from "~/app/sheet/Sheet";
+import { DashboardIcon } from "~/app/ui/icon/DashboardIcon";
+import { LockIcon } from "~/app/ui/icon/LockIcon";
+import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 
 export const Route = createFileRoute("/$locale/app/user")({
 	component() {
+		const { user } = useLoaderData({
+			from: "/$locale/app",
+		});
 		const navigate = useNavigate();
 		const { locale } = useParams({
 			from: "/$locale",
@@ -27,48 +39,65 @@ export const Route = createFileRoute("/$locale/app/user")({
 			},
 		});
 
-		const passkeyMutation = withPasskeyMutation.useMutation({
-			onError(error) {
-				console.error(error);
-			},
-		});
+		// const passkeyMutation = withPasskeyMutation.useMutation({
+		// 	onError(error) {
+		// 		console.error(error);
+		// 	},
+		// });
 
 		return (
-			<Container layout={"vertical"}>
-				<Title icon={UserIcon}>
-					<Tx
-						label={"User (title)"}
-						size={"xl"}
-						font={"bold"}
-					/>
-				</Title>
+			<Container
+				layout={"vertical-full"}
+				overflow={"vertical"}
+				snap={"vertical-start"}
+				// tone={"primary"}
+				// theme={"light"}
+				gap={"md"}
+			>
+				<PrimaryOverlay />
 
-				<div
-					className={"inline-flex flex-row gap-4 items-center w-full"}
-				>
-					<Button
-						onClick={() => {
-							ls.remove("intro");
-							ls.remove("intro.listing");
-						}}
+				<Sheet>
+					<div className="flex flex-col gap-4 items-center justify-evenly h-full">
+						<Status
+							icon={UserIcon}
+							textTitle={user.email}
+							textMessage={user.name}
+						>
+							<LinkTo
+								to={"/$locale/app/dashboard"}
+								params={{
+									locale,
+								}}
+								tone="unset"
+								theme="unset"
+							>
+								<Button
+									iconEnabled={DashboardIcon}
+									tone="secondary"
+									theme="light"
+								>
+									<Tx label={"Back to Dashboard (label)"} />
+								</Button>
+							</LinkTo>
+						</Status>
+					</div>
+				</Sheet>
+
+				<Sheet>
+					<Status
+						icon={LockIcon}
+						textTitle={<Tx label={"Logout (title)"} />}
+						textMessage={<Tx label={"Logout (description)"} />}
 					>
-						<Tx label={"Reset tours (button)"} />
-					</Button>
-
-					<Button onClick={() => signOutMutation.mutate({})}>
-						<Tx label={"Sign out"} />
-					</Button>
-
-					<Button
-						onClick={() => {
-							passkeyMutation.mutate("zbav-se.me");
-						}}
-					>
-						<Tx label={"Add passkey"} />
-					</Button>
-				</div>
-
-				<Nav active="user" />
+						<Button
+							onClick={() => signOutMutation.mutate({})}
+							tone="danger"
+							theme={"light"}
+						>
+							<Tx label={"Sign out"} />
+						</Button>
+					</Status>
+				</Sheet>
 			</Container>
 		);
 	},

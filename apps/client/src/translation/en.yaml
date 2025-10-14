@@ -43,6 +43,9 @@
 1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
   ref: Landing - Feature 2 (title)
   value: Landing - Feature 2 (title)
+1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
+  ref: Logout (title)
+  value: Logout (title)
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
   ref: Landing - Feature 1 (title) - hint
   value: Landing - Feature 1 (title) - hint
@@ -52,9 +55,9 @@
 21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
   ref: Listing - Intro (tour)
   value: Listing - Intro (tour)
-235e66d76c19716012f86e9a0dd6e73e42751473bf69c210f87bfa66:
-  ref: Reset tours (button)
-  value: Reset tours (button)
+24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
+  ref: Back to Dashboard (label)
+  value: Back to Dashboard (label)
 2727e5a04d8acc225b3320799348e34eff9ac515e1130101baab751a:
   ref: .
   value: .
@@ -142,9 +145,6 @@
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
   ref: Missing any token(s). (message)
   value: Missing any token(s). (message)
-52f8849cf558f74b21d6186d57bcdeb317a06f2b269d9073584ab3fe:
-  ref: User (title)
-  value: User (title)
 53285c44368f8f4d2c9df2f9614f265d12112e00bcaa0e7f24adb2d0:
   ref: Landing - Contact (title)
   value: Landing - Contact (title)
@@ -157,6 +157,9 @@
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
   ref: Invalid on/off value
   value: Invalid on/off value
+591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
+  ref: Logout (description)
+  value: Logout (description)
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)

@@ -13,5 +13,9 @@ export const Route = createFileRoute("/$locale/app")({
 				},
 			});
 		}
+
+		return {
+			user: data.user,
+		};
 	},
 });
