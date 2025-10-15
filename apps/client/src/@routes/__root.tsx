@@ -35,11 +35,17 @@ export const Route = createRootRouteWithContext<{
 			},
 		],
 	}),
-	async beforeLoad() {
+	component() {
+		/**
+		 * Should be isomorphic
+		 *
+		 * Don't have better way, where to put this to make it work.
+		 *
+		 * Maybe it's OK, I'll see...
+		 */
 		axios.defaults.baseURL = import.meta.env.VITE_API;
 		axios.defaults.withCredentials = true;
-	},
-	component() {
+
 		return (
 			<html>
 				<head>
