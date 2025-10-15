@@ -111,6 +111,15 @@ export const CategoryWrapper: FC = () => {
 							theme={"light"}
 						/>
 					}
+					tweak={{
+						slot: {
+							title: {
+								class: [
+									"px-8",
+								],
+							},
+						},
+					}}
 				/>
 			</Sheet>
 		);
