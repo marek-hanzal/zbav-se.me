@@ -28,6 +28,7 @@ export const CategoryGroupWrapper: FC = () => {
 	const setCategoryGroup = useCreateListingStore(
 		(store) => store.setCategoryGroup,
 	);
+	const setCategory = useCreateListingStore((store) => store.setCategory);
 	const selection = useSelection<CategoryGroup>({
 		mode: "single",
 		onMulti: setCategoryGroup,
@@ -66,6 +67,8 @@ export const CategoryGroupWrapper: FC = () => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching data
 	useEffect(() => {
+		setCategoryGroup([]);
+		setCategory([]);
 		search && snapperNav.snapTo(1);
 	}, [
 		categoryGroupQuery.data,
