@@ -60,9 +60,9 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 					renderSuccess={({ data }) => {
 						return (
 							<Badge
-								size={"lg"}
-								tone={"primary"}
-								theme={"dark"}
+								size={"xl"}
+								tone={"secondary"}
+								theme={"light"}
 								tweak={{
 									slot: {
 										root: {

@@ -5,6 +5,7 @@ import {
 	type Fulltext,
 	SnapperNav,
 	Tx,
+	Typo,
 	useSnapperNav,
 } from "@use-pico/client";
 import { translator } from "@use-pico/common";
@@ -78,24 +79,29 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 					textPlaceholder={translator.text(
 						"Location search (placeholder)",
 					)}
-					textNotFound={<Tx label={"Location not found (badge)"} />}
+					textNotFound={
+						<Tx
+							label={"Location not found (badge)"}
+							size={"md"}
+						/>
+					}
 				/>
 
-				<Sheet
-					tweak={{
-						slot: {
-							root: {
-								token: [
-									"square.lg",
-								],
-							},
-						},
-					}}
-				>
-					<Data
-						result={locationQuery}
-						renderSuccess={({ data }) => {
-							return (
+				<Data
+					result={locationQuery}
+					renderSuccess={({ data }) => {
+						return (
+							<Sheet
+								tweak={{
+									slot: {
+										root: {
+											token: [
+												"square.lg",
+											],
+										},
+									},
+								}}
+							>
 								<div className="flex flex-col gap-2">
 									{data.map((item) => {
 										return (
@@ -113,15 +119,18 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 												tone={"secondary"}
 												theme={"light"}
 											>
-												{item.address}
+												<Typo
+													label={item.address}
+													size={"md"}
+												/>
 											</Badge>
 										);
 									})}
 								</div>
-							);
-						}}
-					/>
-				</Sheet>
+							</Sheet>
+						);
+					}}
+				/>
 			</Container>
 		</Container>
 	);
