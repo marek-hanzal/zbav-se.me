@@ -1,4 +1,4 @@
-import { Container, type Icon, Status } from "@use-pico/client";
+import { type Icon, Sheet, Status } from "@use-pico/client";
 import type { FC, ReactNode } from "react";
 import { Rating } from "~/app/ui/rating/Rating";
 
@@ -45,25 +45,33 @@ export const Condition: FC<Condition.Props> = ({
 	limit,
 }) => {
 	return (
-		<Container
-			tone={"primary"}
-			theme={"light"}
-			border={"sm"}
-			square={"md"}
-		>
+		<Sheet>
 			<Status
 				icon={icon}
 				textTitle={textTitle}
 				textMessage={textDescription}
+				tweak={{
+					slot: {
+						body: {
+							class: [
+								"flex",
+								"flex-col",
+								"gap-4",
+								"items-center",
+								"px-8",
+							],
+						},
+					},
+				}}
 			>
 				<Rating
 					value={value}
 					limit={limit}
 					onChange={onChange}
 				/>
-			</Status>
 
-			<div className={"p-4 text-justify"}>{textHint}</div>
-		</Container>
+				<div className={"text-justify min-h-48 h-48"}>{textHint}</div>
+			</Status>
+		</Sheet>
 	);
 };
