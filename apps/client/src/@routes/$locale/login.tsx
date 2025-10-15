@@ -107,16 +107,7 @@ export const Route = createFileRoute("/$locale/login")({
 						count: 3,
 					}}
 					orientation={"vertical"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"bg-white/0",
-									"opacity-25",
-								],
-							},
-						},
-					}}
+					subtle
 				/>
 
 				<PrimaryOverlay />

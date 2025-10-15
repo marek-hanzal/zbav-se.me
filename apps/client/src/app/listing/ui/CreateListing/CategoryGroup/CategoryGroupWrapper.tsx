@@ -1,20 +1,29 @@
 import {
+	Badge,
 	Container,
 	Data,
+	DotIcon,
+	Fulltext,
 	Icon,
+	Sheet,
 	SnapperNav,
 	SpinnerIcon,
+	Status,
+	Tx,
 	useSelection,
+	useSnapperNav,
 } from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
-import { type FC, useId, useRef } from "react";
+import { type FC, useEffect, useId, useRef, useState } from "react";
 import { withCategoryGroupCountQuery } from "~/app/category-group/query/withCategoryGroupCountQuery";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
+import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 
 export const CategoryGroupWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
+	const [search, setSearch] = useState<Fulltext.Value>(undefined);
 	const useCreateListingStore = useCreateListingContext();
 	const setCategoryGroup = useCreateListingStore(
 		(store) => store.setCategoryGroup,
@@ -25,6 +34,9 @@ export const CategoryGroupWrapper: FC = () => {
 	});
 
 	const categoryGroupQuery = withCategoryGroupListQuery().useQuery({
+		filter: {
+			fulltext: search,
+		},
 		sort: [
 			{
 				value: "sort",
@@ -32,9 +44,32 @@ export const CategoryGroupWrapper: FC = () => {
 			},
 		],
 	});
-	const categoryGroupCountQuery = withCategoryGroupCountQuery().useQuery({});
+	const categoryGroupCountQuery = withCategoryGroupCountQuery().useQuery({
+		filter: {
+			fulltext: search,
+		},
+	});
 	const groupId = useId();
+	/**
+	 * If you change this, don't forget to update also styles for grid!
+	 */
 	const grid = 3 * 2;
+
+	const snapperNav = useSnapperNav({
+		containerRef,
+		orientation: "horizontal",
+		/**
+		 * Hack
+		 */
+		count: 2,
+	});
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching data
+	useEffect(() => {
+		search && snapperNav.snapTo(1);
+	}, [
+		categoryGroupQuery.data,
+	]);
 
 	return (
 		<Data
@@ -65,19 +100,28 @@ export const CategoryGroupWrapper: FC = () => {
 									iconProps={() => ({
 										size: "xs",
 									})}
-									pages={{
-										count: Math.ceil(filter / grid),
-									}}
-									orientation={"horizontal"}
-									tweak={{
-										slot: {
-											root: {
-												class: [
-													"bg-white/0",
-												],
+									pages={[
+										{
+											id: `${groupId}-page-search`,
+											icon: SearchIcon,
+										} as SnapperNav.Page,
+									].concat(
+										Array.from(
+											{
+												length: Math.ceil(
+													filter / grid,
+												),
 											},
-										},
-									}}
+											(_, i) =>
+												({
+													id: `${groupId}-page-${i}`,
+													icon: DotIcon,
+												}) as SnapperNav.Page,
+										),
+									)}
+									orientation={"horizontal"}
+									defaultIndex={1}
+									subtle
 								/>
 							)}
 						/>
@@ -91,6 +135,68 @@ export const CategoryGroupWrapper: FC = () => {
 							theme={"light"}
 							gap={"md"}
 						>
+							<Sheet>
+								<Status
+									icon={SearchIcon}
+									textTitle={<Tx label={"Search (title)"} />}
+									tweak={{
+										slot: {
+											body: {
+												class: [
+													"flex",
+													"flex-col",
+													"gap-2",
+													"items-center",
+													"w-full",
+													"px-8",
+												],
+											},
+										},
+									}}
+								>
+									<Fulltext
+										state={{
+											value: search,
+											set: setSearch,
+										}}
+									/>
+
+									<Data
+										result={categoryGroupQuery}
+										renderSuccess={({ data }) => {
+											return (
+												<Badge
+													size={"lg"}
+													tone={"primary"}
+													theme={"dark"}
+													tweak={{
+														slot: {
+															root: {
+																class: [
+																	"transition-opacity",
+																	data.length >
+																	0
+																		? [
+																				"opacity-0",
+																			]
+																		: undefined,
+																],
+															},
+														},
+													}}
+												>
+													<Tx
+														label={
+															"Nothing found (badge)"
+														}
+													/>
+												</Badge>
+											);
+										}}
+									/>
+								</Status>
+							</Sheet>
+
 							{Array.from(
 								{
 									length: Math.ceil(data.length / grid),

@@ -44,15 +44,7 @@ export const Route = createFileRoute("/$locale/landing")({
 					pages={{
 						count: 6,
 					}}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"bg-white/0",
-								],
-							},
-						},
-					}}
+					subtle
 					orientation={"vertical"}
 				/>
 

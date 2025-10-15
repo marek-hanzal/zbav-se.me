@@ -1,24 +1,9 @@
 01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
     ref: Feed (title)
     value: Nabídky
-0275899b719a7087887d05949414bb44c3048b8ebb50fac38f0e44b5:
-    ref: Listing - Photos (description)
-    value:
-        Každý inzerát potřebuje mít fotku - ovládání je jednoduché, tažením do
-        stran a klepnutím fotíš/vybíráš fotky na jednotlivé karty, opětovným
-        klepnutím fotku vyměníš. Košem fotku zahodíš - tím se zároveň upraví pořadí
-        v seznamu, nelekni se. A jako poslední - každý inzerát musí mít nejméně
-        jednu fotku.
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
     ref: Upload (placeholder)
     value: Vložit fotku
-0c70501e9876b221ab39409a9343a1c4c803402a8bbbcc3e204f6118:
-    ref: Listing - Photos (tour)
-    value: Fotky
-0d1b6810ac7b2a06873ae50bd923188cdcf9d2c91027618df0f69004:
-    ref: Listing - Intro (description)
-    value: Vyfoť - naceň - prodej. Založení inzerátu je jednoduché a skládá se z
-        několik rychlých kroků.
 12b361624b83def8b006029f7c829101e7fa11f7c209da351137ca8a:
     ref: User profile (description)
     value: Soukromé záležitosti, správa profilu, odhlášení apod.
@@ -39,11 +24,6 @@
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
     ref: Loading...
     value: Loading...
-1a648ea8c6ce8ff475d3f0ce68fe69efade01da2ad911fa8dc2af51d:
-    ref: Listing - Submit (description)
-    value: Odesláním inzerátu to teprve začíná - v tomto okamžiku si ještě můžeš
-        prohlédnout, zda je všechno v pořádku a později budeš mít možnost sledovat,
-        jak si tvůj inzerát stojí mezi ostatními.
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
@@ -64,9 +44,6 @@
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
     ref: Agreement with (label)
     value: "Registrací souhlasíte s:"
-21be5846c612268d761cba6cf16b1392e3aae752c1d73eca0cacc8ff:
-    ref: Listing - Intro (tour)
-    value: Nový inzerát
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
     ref: Back to Dashboard (label)
     value: Zpět domů
@@ -111,9 +88,6 @@
 36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
     ref: Login with passkey (message)
     value: Pokud jste si přidali klíč, můžete se jím nyní snadno přihlásit.
-380bf8e0e53e1b516f997baf741bafc03e788774c3f54ae2434286eb:
-    ref: Add passkey
-    value: Přidat klíč
 38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
     ref: Missing any token(s). (title)
     value: Missing any token(s). (title)
@@ -182,9 +156,6 @@
 5aa13a488df37a89ce3c123a4d113ff14df85c789b0eb3a4a079ca6c:
     ref: Condition - Overall (description)
     value: Odhadněte celkové stav předmětu nabídky.
-5bbcdc291463247e5284a277adff234b5262ccfed4e0c62f011a1993:
-    ref: Listing - Price (tour)
-    value: Nastavení ceny
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
     ref: Delete (button)
     value: Delete (button)
@@ -251,9 +222,6 @@
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
     ref: Previous (tour)
     value: Předchozí
-8c37a53eea55dfb3ce41362b17bab308fcd81d7d0311114bcaf64d56:
-    ref: Listing - Submit (tour)
-    value: Kontrola a odeslání
 8d2db329f49aa5263c8c4fc3a556823963ec674600f55d4da704caa1:
     ref: Name
     value: Name
@@ -280,15 +248,19 @@
     value: Přihlášení přes sociální sítě
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
-    value: Fulltext (placeholder)
-9fc51ae02fdcca13681cdb55a8c7a03f9ffc599da9501cbb966aec98:
-    ref: Listing - Price (description)
-    value:
-        Tohle je prosté - nastav cenu a vlastnosti pro prodej (např. jestli chceš
-        aukci) a je vyřešeno.
+    value: Co hledáme?
+Category accessories:
+    static: true
+    value: Příslušenství
 Category bags:
     static: true
     value: Baťůžky/tašky
+Category bathroom:
+    static: true
+    value: Koupelna
+Category bedding:
+    static: true
+    value: Ložniny
 Category books:
     static: true
     value: Knihy
@@ -313,6 +285,9 @@ Category furniture:
 Category group automotive:
     static: true
     value: Auto/moto
+Category group clothes:
+    static: true
+    value: Oblečení
 Category group electronics:
     static: true
     value: Elektronika
@@ -352,6 +327,9 @@ Category lighting:
 Category other:
     static: true
     value: Ostatní
+Category parts:
+    static: true
+    value: Díly
 Category pc-components:
     static: true
     value: PC komponenty
@@ -454,6 +432,9 @@ abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
 ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
     ref: ToS agreement (label)
     value: Podmínky použití služby
+ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
+    ref: Search (title)
+    value: Hledat
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
@@ -502,12 +483,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 be9f96eada3e82c6d87372d6688938da35e43a7c2e4a365636413a22:
     ref: Price (label)
     value: Nastavená cena
-c2922be9d6e47f94afba36962647dd982779fba55c10551018d16ff0:
-    ref: Listing - Tags (description)
-    value:
-        Inzeráty nemají textové popisky, místo toho je potřeba důrazně dbát na
-        správné nastavení štítků, které pak inzerát pomohou doručit ostatním - proto
-        tady prosím dávej extra pozor na správné nastavení.
 c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
     ref: What - buyers (badge 3)
     value: Ověření prodejců
@@ -531,9 +506,6 @@ c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
-d04269ee27fb690931596a5274381589c9cb5d74901cab9a442cdc93:
-    ref: Listing - Tags (tour)
-    value: Štítky
 d5fb36eeef11375839f9b27cd328ac9d4705d04c04417cc2d3b4d093:
     ref: Enter your password
     value: Zadej své heslo
@@ -612,18 +584,3 @@ fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
-Category group clothes:
-    static: true
-    value: Oblečení
-Category parts:
-    static: true
-    value: Díly
-Category accessories:
-    static: true
-    value: Příslušenství
-Category bedding:
-    static: true
-    value: Ložniny
-Category bathroom:
-    static: true
-    value: Koupelna

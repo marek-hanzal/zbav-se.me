@@ -21,15 +21,7 @@ export const PhotosWrapper: FC = () => {
 					size: "xs",
 				})}
 				limit={5}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"bg-white/0",
-							],
-						},
-					},
-				}}
+				subtle
 			/>
 
 			<Container

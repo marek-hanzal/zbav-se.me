@@ -95,16 +95,7 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 			})}
 			containerRef={snapperRef}
 			orientation={"vertical"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"bg-white/0",
-							"opacity-25",
-						],
-					},
-				},
-			}}
+			subtle
 		/>
 	);
 };
