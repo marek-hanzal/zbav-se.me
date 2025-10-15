@@ -37,6 +37,8 @@ export const Route = createFileRoute("/$locale/landing")({
 
 		return (
 			<Container>
+				<SecondaryOverlay />
+
 				<Fade scrollableRef={scrollerRef} />
 
 				<SnapperNav
@@ -46,6 +48,7 @@ export const Route = createFileRoute("/$locale/landing")({
 						tone: "secondary",
 						theme: "light",
 					})}
+					limit={7}
 					pages={[
 						{
 							id: heroId,
@@ -91,8 +94,6 @@ export const Route = createFileRoute("/$locale/landing")({
 					snap={"vertical-start"}
 					gap={"md"}
 				>
-					<SecondaryOverlay />
-
 					<HeroSheet />
 
 					<VariantProvider
