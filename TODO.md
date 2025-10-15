@@ -1,6 +1,6 @@
 # TODO
 
-- Resolve jumping trash icon (init animation) in PhotoWrapper
+- Localized category (group)? - enable localized search + use ilike (how?)
 - Edit snapper - value & edit
 - Show snapper with selected item (by finding an element -> scroll to it?)
 - Resolve /null get calls from TSR/TSS

@@ -1,24 +1,30 @@
 import {
 	Container,
 	Data,
+	DotIcon,
+	type Fulltext,
 	Icon,
 	SnapperNav,
 	SpinnerIcon,
 	Status,
 	Tx,
 	useSelection,
+	useSnapperNav,
 } from "@use-pico/client";
 import type { Category } from "@zbav-se.me/sdk";
-import { type FC, useEffect, useId, useRef } from "react";
+import { type FC, useEffect, useId, useRef, useState } from "react";
 import { withCategoryCountQuery } from "~/app/category/query/withCategoryCountQuery";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
+import { SearchIcon } from "~/app/ui/icon/SearchIcon";
+import { SearchSheet } from "~/app/ui/search/SearchSheet";
 
 export const CategoryWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
+	const [search, setSearch] = useState<Fulltext.Value>(undefined);
 	const useCreateListingStore = useCreateListingContext();
 	const setCategory = useCreateListingStore((store) => store.setCategory);
 	const categoryGroupSelection = useCreateListingStore(
@@ -37,6 +43,7 @@ export const CategoryWrapper: FC = () => {
 		{
 			filter: {
 				categoryGroupIdIn: categoryGroupIds,
+				fulltext: search,
 			},
 			sort: [
 				{
@@ -52,18 +59,27 @@ export const CategoryWrapper: FC = () => {
 	const categoryCountQuery = withCategoryCountQuery().useQuery({
 		filter: {
 			categoryGroupIdIn: categoryGroupIds,
+			fulltext: search,
 		},
 	});
 	const groupId = useId();
 	const grid = 3 * 2;
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: Scroll-to-top on category change
+	const snapperNav = useSnapperNav({
+		containerRef,
+		orientation: "horizontal",
+		/**
+		 * Hack
+		 */
+		count: 2,
+	});
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching data
 	useEffect(() => {
-		containerRef.current?.scrollTo({
-			top: 0,
-			behavior: "instant",
-		});
+		categorySelection.clear();
+		search && snapperNav.snapTo(1);
 	}, [
+		categoryGroupSelection,
 		categoryQuery.data,
 	]);
 
@@ -126,15 +142,30 @@ export const CategoryWrapper: FC = () => {
 							renderSuccess={({ data: { filter } }) => (
 								<SnapperNav
 									containerRef={containerRef}
-									pages={{
-										count: Math.ceil(filter / grid),
-									}}
-									orientation={"horizontal"}
 									iconProps={() => ({
 										size: "xs",
-										tone: "secondary",
-										theme: "light",
 									})}
+									pages={[
+										{
+											id: `${groupId}-page-search`,
+											icon: SearchIcon,
+										} as SnapperNav.Page,
+									].concat(
+										Array.from(
+											{
+												length: Math.ceil(
+													filter / grid,
+												),
+											},
+											(_, i) =>
+												({
+													id: `${groupId}-page-${i}`,
+													icon: DotIcon,
+												}) as SnapperNav.Page,
+										),
+									)}
+									orientation={"horizontal"}
+									defaultIndex={1}
 									subtle
 								/>
 							)}
@@ -149,6 +180,14 @@ export const CategoryWrapper: FC = () => {
 							theme={"light"}
 							gap={"md"}
 						>
+							<SearchSheet
+								state={{
+									value: search,
+									set: setSearch,
+								}}
+								query={categoryQuery}
+							/>
+
 							{Array.from(
 								{
 									length: Math.ceil(data.length / grid),

@@ -1,15 +1,11 @@
 import {
-	Badge,
 	Container,
 	Data,
 	DotIcon,
-	Fulltext,
+	type Fulltext,
 	Icon,
-	Sheet,
 	SnapperNav,
 	SpinnerIcon,
-	Status,
-	Tx,
 	useSelection,
 	useSnapperNav,
 } from "@use-pico/client";
@@ -20,6 +16,7 @@ import { withCategoryGroupListQuery } from "~/app/category-group/query/withCateg
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
+import { SearchSheet } from "~/app/ui/search/SearchSheet";
 
 export const CategoryGroupWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -67,7 +64,7 @@ export const CategoryGroupWrapper: FC = () => {
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching data
 	useEffect(() => {
-		setCategoryGroup([]);
+		selection.clear();
 		setCategory([]);
 		search && snapperNav.snapTo(1);
 	}, [
@@ -138,67 +135,13 @@ export const CategoryGroupWrapper: FC = () => {
 							theme={"light"}
 							gap={"md"}
 						>
-							<Sheet>
-								<Status
-									icon={SearchIcon}
-									textTitle={<Tx label={"Search (title)"} />}
-									tweak={{
-										slot: {
-											body: {
-												class: [
-													"flex",
-													"flex-col",
-													"gap-2",
-													"items-center",
-													"w-full",
-													"px-8",
-												],
-											},
-										},
-									}}
-								>
-									<Fulltext
-										state={{
-											value: search,
-											set: setSearch,
-										}}
-									/>
-
-									<Data
-										result={categoryGroupQuery}
-										renderSuccess={({ data }) => {
-											return (
-												<Badge
-													size={"lg"}
-													tone={"primary"}
-													theme={"dark"}
-													tweak={{
-														slot: {
-															root: {
-																class: [
-																	"transition-opacity",
-																	data.length >
-																	0
-																		? [
-																				"opacity-0",
-																			]
-																		: undefined,
-																],
-															},
-														},
-													}}
-												>
-													<Tx
-														label={
-															"Nothing found (badge)"
-														}
-													/>
-												</Badge>
-											);
-										}}
-									/>
-								</Status>
-							</Sheet>
+							<SearchSheet
+								state={{
+									value: search,
+									set: setSearch,
+								}}
+								query={categoryGroupQuery}
+							/>
 
 							{Array.from(
 								{
