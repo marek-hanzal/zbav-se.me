@@ -37,8 +37,8 @@ export namespace createListingStore {
 		setAge(age: number): void;
 		hasAge: boolean;
 		//
-		price: number;
-		setPrice(price: number): void;
+		price: number | undefined;
+		setPrice(price: number | undefined): void;
 		hasPrice: boolean;
 		//
 		missing: Missing[];
@@ -183,11 +183,11 @@ export const createListingStore = ({
 		},
 		hasAge: false,
 		//
-		price: NaN,
+		price: undefined,
 		setPrice(price) {
 			set(({ missing }) => {
 				const $missing = dedupe<createListingStore.Missing[]>(
-					Number.isNaN(price)
+					price === undefined
 						? [
 								...missing,
 								"price",
@@ -197,7 +197,7 @@ export const createListingStore = ({
 
 				return {
 					price,
-					hasPrice: !Number.isNaN(price),
+					hasPrice: price !== undefined,
 					missing: $missing,
 					isValid: $missing.length === 0,
 				};

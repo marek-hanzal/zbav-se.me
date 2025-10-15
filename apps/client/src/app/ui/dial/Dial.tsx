@@ -7,7 +7,6 @@ import { anim, useAnim } from "~/app/ui/gsap";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
-	current = current === "NaN" ? "" : current;
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
 	if (value[0] === ".") {
 		value = value.slice(1);
@@ -31,8 +30,8 @@ const icons = {
 export namespace Dial {
 	export interface Props extends DialCls.Props {
 		ref?: RefObject<HTMLDivElement | null>;
-		value: number;
-		onChange: (value: number) => void;
+		value: number | undefined;
+		onChange: (value: number | undefined) => void;
 	}
 }
 
@@ -44,7 +43,7 @@ export const Dial: FC<Dial.Props> = ({
 	tweak,
 }) => {
 	const { slots } = useCls(cls, tweak);
-	const [price, setPrice] = useState(value.toString());
+	const [price, setPrice] = useState(value?.toString() ?? "");
 	const displayRef = useRef<HTMLDivElement>(null);
 	const number = parseFloat(price);
 
@@ -52,7 +51,7 @@ export const Dial: FC<Dial.Props> = ({
 		scope: ref,
 	});
 
-	const onConfirm = contextSafe((number: number) => {
+	const onConfirm = contextSafe((number: number | undefined) => {
 		onChange(number);
 		setPrice("");
 		anim.timeline()
@@ -75,7 +74,7 @@ export const Dial: FC<Dial.Props> = ({
 				scale: 0.8,
 				onComplete() {
 					setPrice("");
-					onChange(NaN);
+					onChange(undefined);
 				},
 			})
 			.to(displayRef.current, {
@@ -93,15 +92,15 @@ export const Dial: FC<Dial.Props> = ({
 				ref={displayRef}
 				className={slots.display()}
 			>
-				{Number.isNaN(number) ? (
-					<Tx
-						label={"Price (placeholder)"}
+				{price ? (
+					<Typo
+						label={price}
 						size={"xl"}
 						font={"bold"}
 					/>
 				) : (
-					<Typo
-						label={price}
+					<Tx
+						label={"Price (placeholder)"}
 						size={"xl"}
 						font={"bold"}
 					/>
@@ -111,7 +110,7 @@ export const Dial: FC<Dial.Props> = ({
 					icon={UnCheckIcon}
 					tone="primary"
 					theme="dark"
-					disabled={Number.isNaN(number)}
+					disabled={!price}
 					onClick={onClear}
 				/>
 			</div>
@@ -140,7 +139,7 @@ export const Dial: FC<Dial.Props> = ({
 
 				<Item
 					icon={"icon-[fluent--comma-20-filled]"}
-					disabled={Number.isNaN(number) || price.includes(".")}
+					disabled={!price || price.includes(".")}
 					onClick={() => setPrice((prev) => digit(prev, "."))}
 					slots={slots}
 				/>
@@ -154,7 +153,7 @@ export const Dial: FC<Dial.Props> = ({
 
 				<Item
 					icon={CheckIcon}
-					disabled={Number.isNaN(number)}
+					disabled={!price}
 					onClick={() => onConfirm(number)}
 					slots={slots}
 				/>

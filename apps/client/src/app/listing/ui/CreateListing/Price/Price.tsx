@@ -5,12 +5,14 @@ import { PriceCls } from "~/app/listing/ui/CreateListing/Price/PriceCls";
 
 export namespace Price {
 	export interface Props extends PriceCls.Props {
+		locale: string;
 		price: number;
 		onClear(): void;
 	}
 }
 
 export const Price: FC<Price.Props> = ({
+	locale,
 	price,
 	onClear,
 	cls = PriceCls,
@@ -19,10 +21,15 @@ export const Price: FC<Price.Props> = ({
 	const { slots } = useCls(cls, tweak);
 
 	return (
-		<Badge>
+		<Badge
+			tone="secondary"
+			theme="light"
+			size={"lg"}
+		>
 			<Typo
 				label={
 					<PriceInline
+						locale={locale}
 						value={{
 							price,
 							withVat: undefined,
@@ -33,13 +40,13 @@ export const Price: FC<Price.Props> = ({
 				}
 				font={"bold"}
 				size={"lg"}
-				tone="primary"
+				tone="secondary"
 				theme="light"
 			/>
 
 			<Icon
 				icon={UnCheckIcon}
-				tone="primary"
+				tone="secondary"
 				theme="light"
 				size={"md"}
 				onClick={onClear}

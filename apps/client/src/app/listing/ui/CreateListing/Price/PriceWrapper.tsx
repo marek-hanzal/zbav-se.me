@@ -14,7 +14,13 @@ import { Dial } from "~/app/ui/dial/Dial";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 
-export const PriceWrapper: FC = () => {
+export namespace PriceWrapper {
+	export interface Props {
+		locale: string;
+	}
+}
+
+export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 	const useCreateListingStore = useCreateListingContext();
 	const price = useCreateListingStore((store) => store.price);
 	const setPrice = useCreateListingStore((store) => store.setPrice);
@@ -30,17 +36,17 @@ export const PriceWrapper: FC = () => {
 		count: 2,
 	});
 
-	const onPrice = (price: number) => {
+	const onPrice = (price: number | undefined) => {
 		setPrice(price);
 	};
 
 	const onClear = () => {
-		setPrice(NaN);
+		setPrice(undefined);
 	};
 
 	useAnim(
 		() => {
-			snapperNav.snapTo(Number.isNaN(price) ? 1 : 0);
+			snapperNav.snapTo(price === undefined ? 1 : 0);
 
 			anim.timeline()
 				.to(priceRef.current, {
@@ -90,9 +96,8 @@ export const PriceWrapper: FC = () => {
 					<Status
 						ref={priceRef}
 						icon={PriceIcon}
-						textTitle={<Tx label={"Price (label)"} />}
-						textMessage={
-							Number.isNaN(cost) ? (
+						textTitle={
+							cost === undefined ? (
 								<Button
 									onClick={() => snapperNav.next()}
 									size={"lg"}
@@ -102,7 +107,13 @@ export const PriceWrapper: FC = () => {
 									<Tx label={"Price not set (button)"} />
 								</Button>
 							) : (
+								<Tx label={"Price (label)"} />
+							)
+						}
+						textMessage={
+							cost === undefined ? null : (
 								<Price
+									locale={locale}
 									price={cost}
 									onClear={onClear}
 								/>
