@@ -1,5 +1,4 @@
 import { useCls } from "@use-pico/cls";
-import type React from "react";
 import {
 	type FC,
 	type Ref,
@@ -35,15 +34,6 @@ export const Rating: FC<Rating.Props> = ({
 	const { slots } = useCls(cls, tweak);
 
 	const innerRef = useRef<HTMLDivElement>(null);
-	useEffect(() => {
-		if (!ref) return;
-		if (typeof ref === "function") ref(innerRef.current);
-		else
-			(ref as React.MutableRefObject<HTMLDivElement | null>).current =
-				innerRef.current;
-	}, [
-		ref,
-	]);
 
 	// Visual value lags the real value and flips at mid-animation
 	const [visualValue, setVisualValue] = useState<number>(value);
@@ -120,27 +110,29 @@ export const Rating: FC<Rating.Props> = ({
 
 	return (
 		<div
-			ref={innerRef}
+			ref={ref}
 			className={slots.root()}
 		>
-			{Array.from({
-				length: limit,
-			}).map((_, index) => {
-				const idx = index + 1;
-				return (
-					<Star
-						key={`rating-${starId}-${idx}`}
-						selected={idx <= visualValue}
-						onClick={() => {
-							if (allowClear && idx === clampedValue) {
-								onChange(0);
-							} else {
-								onChange(idx);
-							}
-						}}
-					/>
-				);
-			})}
+			<div ref={innerRef}>
+				{Array.from({
+					length: limit,
+				}).map((_, index) => {
+					const idx = index + 1;
+					return (
+						<Star
+							key={`rating-${starId}-${idx}`}
+							selected={idx <= visualValue}
+							onClick={() => {
+								if (allowClear && idx === clampedValue) {
+									onChange(0);
+								} else {
+									onChange(idx);
+								}
+							}}
+						/>
+					);
+				})}
+			</div>
 		</div>
 	);
 };
