@@ -5,4 +5,7 @@ export default {
 		"../../node_modules/@use-pico/client/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
+	safeList: [
+		// "icon-[mingcute--random-line]",
+	],
 };
