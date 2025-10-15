@@ -153,7 +153,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 			}}
 			renderSuccess={({ data }) => {
 				return (
-					<div className="relative">
+					<div className="CategoryWrapper-root relative">
 						<Data
 							result={categoryCountQuery}
 							renderSuccess={({ data: { filter } }) => (

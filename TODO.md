@@ -1,15 +1,12 @@
 # TODO
 
-- Localized category (group)? - enable localized search + use ilike (how?)
+- Chrome on Android fucks up the page when scrolling down - try to solve it by svh or somehow locking the page?
 - Edit snapper - value & edit
 - Show snapper with selected item (by finding an element -> scroll to it?)
 - Resolve /null get calls from TSR/TSS
 
-- Create Listing -> fullscreen, reserve bottom for progress, so it won't block page
-- Experiment with classic scroll for categories, items 1/3 or 1/4 of height
 - Prompt user to use passkey?
 - Allow anonymous user + test it's flow (check if there is isAnonym flag)
-- User registration - for now, we'll use email + password, da old-school (find auth lib, GPT knows)
 - When listing is saved, recompute user's "favourite" category list
 - Use Fuse.js for category search: feed will be combo of category group - category, already translated (this will probably need useQuery)
 - Fix "Submit" page of create listing - Maybe use Snapper with overview what a user has selected (this looks like quite a good idea)
