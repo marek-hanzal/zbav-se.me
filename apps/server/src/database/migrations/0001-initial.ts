@@ -1,462 +1,53 @@
 import { genId } from "@use-pico/common";
 import type { Migration } from "kysely";
+import categoriesCsData from "./0001-initial/categories.cs.json";
+import categoryGroupsCsData from "./0001-initial/category-groups.cs.json";
+
+// Types for JSON imports
+type CategoryGroupSeed = {
+	name: string;
+	locale: string;
+};
+
+type CategorySeed = {
+	name: string;
+	group: string;
+	locale: string;
+};
 
 const generateCategoryGroupSeedData = () => {
-	const categoryGroupNames = [
-		"clothes",
-		"electronics",
-		"kitchen",
-		"home",
-		"automotive",
-		"reality",
-		"personal",
-		"hobbies",
-		"garden",
-		"pets",
-		"other",
+	const allGroups = [
+		...categoryGroupsCsData,
 	];
-
-	return categoryGroupNames.map((name, index) => ({
-		id: genId(),
-		name,
-		sort: index,
-	}));
+	return allGroups.map(
+		(group: CategoryGroupSeed, index: number) =>
+			({
+				id: genId(),
+				name: group.name,
+				sort: index,
+				locale: group.locale,
+			}) as const,
+	);
 };
 
 const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
-	const categories = [
-		// Electronics
-		{
-			name: "phone",
-			group: "electronics",
-		},
-		{
-			name: "tv",
-			group: "electronics",
-		},
-		{
-			name: "laptop",
-			group: "electronics",
-		},
-		{
-			name: "desktop",
-			group: "electronics",
-		},
-		{
-			name: "tablet",
-			group: "electronics",
-		},
-		{
-			name: "watch",
-			group: "electronics",
-		},
-		{
-			name: "pc-components",
-			group: "electronics",
-		},
-
-		// Kitchen
-		{
-			name: "appliances",
-			group: "kitchen",
-		},
-		{
-			name: "cookware",
-			group: "kitchen",
-		},
-		{
-			name: "dishes",
-			group: "kitchen",
-		},
-		{
-			name: "cutlery",
-			group: "kitchen",
-		},
-		{
-			name: "bakeware",
-			group: "kitchen",
-		},
-		{
-			name: "storage",
-			group: "kitchen",
-		},
-		{
-			name: "small-appliances",
-			group: "kitchen",
-		},
-		{
-			name: "dining",
-			group: "kitchen",
-		},
-
-		// Garden
-		{
-			name: "plants",
-			group: "garden",
-		},
-		{
-			name: "seeds",
-			group: "garden",
-		},
-		{
-			name: "pots",
-			group: "garden",
-		},
-		{
-			name: "tools",
-			group: "garden",
-		},
-		{
-			name: "fertilizer",
-			group: "garden",
-		},
-		{
-			name: "decorations",
-			group: "garden",
-		},
-		{
-			name: "furniture",
-			group: "garden",
-		},
-		{
-			name: "lighting",
-			group: "garden",
-		},
-
-		// Home
-		{
-			name: "furniture",
-			group: "home",
-		},
-		{
-			name: "decor",
-			group: "home",
-		},
-		{
-			name: "storage",
-			group: "home",
-		},
-		{
-			name: "cleaning",
-			group: "home",
-		},
-		{
-			name: "bedding",
-			group: "home",
-		},
-		{
-			name: "bathroom",
-			group: "home",
-		},
-		{
-			name: "lighting",
-			group: "home",
-		},
-		{
-			name: "textiles",
-			group: "home",
-		},
-
-		// Personal
-		{
-			name: "clothing",
-			group: "personal",
-		},
-		{
-			name: "jewelry",
-			group: "personal",
-		},
-		{
-			name: "books",
-			group: "personal",
-		},
-		{
-			name: "toys",
-			group: "personal",
-		},
-		{
-			name: "accessories",
-			group: "personal",
-		},
-		{
-			name: "cosmetics",
-			group: "personal",
-		},
-		{
-			name: "bags",
-			group: "personal",
-		},
-		{
-			name: "shoes",
-			group: "personal",
-		},
-
-		// Hobbies
-		{
-			name: "art",
-			group: "hobbies",
-		},
-		{
-			name: "music",
-			group: "hobbies",
-		},
-		{
-			name: "sports",
-			group: "hobbies",
-		},
-		{
-			name: "crafts",
-			group: "hobbies",
-		},
-		{
-			name: "games",
-			group: "hobbies",
-		},
-		{
-			name: "collectibles",
-			group: "hobbies",
-		},
-		{
-			name: "instruments",
-			group: "hobbies",
-		},
-		{
-			name: "equipment",
-			group: "hobbies",
-		},
-
-		// Automotive
-		{
-			name: "parts",
-			group: "automotive",
-		},
-		{
-			name: "accessories",
-			group: "automotive",
-		},
-		{
-			name: "tools",
-			group: "automotive",
-		},
-		{
-			name: "maintenance",
-			group: "automotive",
-		},
-		{
-			name: "interior",
-			group: "automotive",
-		},
-		{
-			name: "exterior",
-			group: "automotive",
-		},
-		{
-			name: "electronics",
-			group: "automotive",
-		},
-		{
-			name: "wheels",
-			group: "automotive",
-		},
-		{
-			name: "wreck",
-			group: "automotive",
-		},
-
-		// Pets
-		{
-			name: "dog",
-			group: "pets",
-		},
-		{
-			name: "cat",
-			group: "pets",
-		},
-		{
-			name: "bird",
-			group: "pets",
-		},
-		{
-			name: "fish",
-			group: "pets",
-		},
-		{
-			name: "hamster",
-			group: "pets",
-		},
-		{
-			name: "rabbit",
-			group: "pets",
-		},
-		{
-			name: "reptile",
-			group: "pets",
-		},
-		{
-			name: "accessories",
-			group: "pets",
-		},
-		{
-			name: "food",
-			group: "pets",
-		},
-		{
-			name: "toys",
-			group: "pets",
-		},
-		{
-			name: "health",
-			group: "pets",
-		},
-		{
-			name: "grooming",
-			group: "pets",
-		},
-		{
-			name: "other",
-			group: "pets",
-		},
-
-		// Reality
-		{
-			name: "flat-rent",
-			group: "reality",
-		},
-		{
-			name: "flat-sell",
-			group: "reality",
-		},
-		{
-			name: "house-rent",
-			group: "reality",
-		},
-		{
-			name: "house-sell",
-			group: "reality",
-		},
-		{
-			name: "commercial-rent",
-			group: "reality",
-		},
-		{
-			name: "commercial-sell",
-			group: "reality",
-		},
-		{
-			name: "land-rent",
-			group: "reality",
-		},
-		{
-			name: "land-sell",
-			group: "reality",
-		},
-		{
-			name: "garage-rent",
-			group: "reality",
-		},
-		{
-			name: "garage-sell",
-			group: "reality",
-		},
-		{
-			name: "parking-rent",
-			group: "reality",
-		},
-		{
-			name: "parking-sell",
-			group: "reality",
-		},
-		{
-			name: "storage-rent",
-			group: "reality",
-		},
-		{
-			name: "storage-sell",
-			group: "reality",
-		},
-		{
-			name: "office-rent",
-			group: "reality",
-		},
-		{
-			name: "office-sell",
-			group: "reality",
-		},
-		{
-			name: "warehouse-rent",
-			group: "reality",
-		},
-		{
-			name: "warehouse-sell",
-			group: "reality",
-		},
-
-		// Other
-		{
-			name: "other",
-			group: "other",
-		},
-
-		// Clothes
-		{
-			name: "baby",
-			group: "clothes",
-		},
-		{
-			name: "tops",
-			group: "clothes",
-		},
-		{
-			name: "bottoms",
-			group: "clothes",
-		},
-		{
-			name: "outerwear",
-			group: "clothes",
-		},
-		{
-			name: "dresses",
-			group: "clothes",
-		},
-		{
-			name: "underwear",
-			group: "clothes",
-		},
-		{
-			name: "sportswear",
-			group: "clothes",
-		},
-		{
-			name: "sleepwear",
-			group: "clothes",
-		},
-		{
-			name: "swimwear",
-			group: "clothes",
-		},
-		{
-			name: "shoes",
-			group: "clothes",
-		},
-		{
-			name: "accessories",
-			group: "clothes",
-		},
+	const allCategories = [
+		...categoriesCsData,
 	];
+	return allCategories.map((category: CategorySeed, index: number) => {
+		const groupId = categoryGroupMap.get(category.group);
 
-	return categories.map((category, index) => {
-		const groupId =
-			categoryGroupMap.get(category.group) ||
-			categoryGroupMap.get("other");
 		if (!groupId) {
 			throw new Error(`Category group not found for: ${category.group}`);
 		}
+
 		return {
 			id: genId(),
 			name: category.name,
 			sort: index,
 			categoryGroupId: groupId,
-		};
+			locale: category.locale,
+		} as const;
 	});
 };
 
@@ -468,6 +59,18 @@ export const InitialMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
+			.addColumn("locale", "text", (col) => col.notNull())
+			.execute();
+
+		// Create unique index for CategoryGroup [name, locale]
+		await db.schema
+			.createIndex("CategoryGroup_[name-locale]_unique_idx")
+			.on("CategoryGroup")
+			.columns([
+				"name",
+				"locale",
+			])
+			.unique()
 			.execute();
 
 		// Create Category table
@@ -477,6 +80,19 @@ export const InitialMigration: Migration = {
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("categoryGroupId", "text", (col) => col.notNull())
+			.addColumn("locale", "text", (col) => col.notNull())
+			.execute();
+
+		// Create unique index for Category [name, locale, categoryGroupId]
+		await db.schema
+			.createIndex("Category_[name-locale-categoryGroupId]_unique_idx")
+			.on("Category")
+			.columns([
+				"name",
+				"locale",
+				"categoryGroupId",
+			])
+			.unique()
 			.execute();
 
 		// Insert CategoryGroup seed data and get the inserted rows
