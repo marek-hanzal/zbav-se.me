@@ -34,7 +34,7 @@ export const withCategoryGroupQueryBuilder: withCategoryGroupQueryBuilder.Callba
 		if (where?.fulltext) {
 			query = query.where((eb) =>
 				eb.or([
-					eb("name", "like", `%${where.fulltext}%`),
+					eb("name", "ilike", `%${where.fulltext}%`),
 				]),
 			);
 		}
