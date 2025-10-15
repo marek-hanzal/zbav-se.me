@@ -2,6 +2,7 @@
 
 - Edit snapper - value & edit
 - Render categories as tiles
+- Resolve /null get calls from TSR/TSS
 
 - Create Listing -> fullscreen, reserve bottom for progress, so it won't block page
 - Experiment with classic scroll for categories, items 1/3 or 1/4 of height

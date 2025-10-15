@@ -2,15 +2,17 @@ import {
 	Container,
 	Data,
 	Icon,
+	SnapperNav,
 	SpinnerIcon,
 	useSelection,
 } from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
 import { type FC, useRef } from "react";
+import { withCategoryGroupCountQuery } from "~/app/category-group/query/withCategoryGroupCountQuery";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
-import { Fade } from "~/app/ui/fade/Fade";
+import { DotIcon } from "~/app/ui/icon/DotIcon";
 
 export const CategoryGroupWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -31,6 +33,7 @@ export const CategoryGroupWrapper: FC = () => {
 			},
 		],
 	});
+	const categoryGroupCountQuery = withCategoryGroupCountQuery().useQuery({});
 
 	return (
 		<Data
@@ -53,13 +56,42 @@ export const CategoryGroupWrapper: FC = () => {
 			renderSuccess={({ data }) => {
 				return (
 					<div className="relative">
-						<Fade scrollableRef={containerRef} />
+						<Data
+							result={categoryGroupCountQuery}
+							renderSuccess={({ data: { where } }) => (
+								<SnapperNav
+									containerRef={containerRef}
+									iconProps={() => ({
+										size: "xs",
+									})}
+									pages={Array.from(
+										{
+											length: where,
+										},
+										(_, index) => ({
+											id: `category-group-${index}`,
+											icon: DotIcon,
+										}),
+									)}
+									orientation={"horizontal"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"bg-white/0",
+												],
+											},
+										},
+									}}
+								/>
+							)}
+						/>
 
 						<Container
 							ref={containerRef}
-							layout={"vertical-full"}
-							overflow={"vertical"}
-							snap={"vertical-start"}
+							layout={"horizontal-full"}
+							overflow={"horizontal"}
+							snap={"horizontal-start"}
 							gap={"md"}
 						>
 							{data.map((item) => {
