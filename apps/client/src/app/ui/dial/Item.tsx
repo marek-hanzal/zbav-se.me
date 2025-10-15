@@ -19,24 +19,24 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, slots }) => {
 		() => {
 			const tl = anim.timeline({
 				defaults: {
-					duration: 0.25,
+					duration: 0.15,
 				},
 			});
 
 			if (disabled) {
 				tl.to(rootRef.current, {
-					opacity: 0.25,
-					scale: 0.75,
+					opacity: 0.45,
+					scale: 0.9,
 				}).to(rootRef.current, {
-					opacity: 0.75,
-					scale: 1,
+					opacity: 0.85,
+					scale: 0.95,
 				});
 				return;
 			}
 
 			tl.to(rootRef.current, {
-				opacity: 0.75,
-				scale: 1.25,
+				opacity: 0.85,
+				scale: 1.05,
 			}).to(rootRef.current, {
 				opacity: 1,
 				scale: 1,
@@ -54,12 +54,12 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, slots }) => {
 
 		anim.timeline({
 			defaults: {
-				duration: 0.15,
+				duration: 0.1,
 			},
 		})
 			.to(rootRef.current, {
-				opacity: 0.5,
-				scale: 0.85,
+				opacity: 0.75,
+				scale: 0.95,
 			})
 			.to(rootRef.current, {
 				opacity: 1,
