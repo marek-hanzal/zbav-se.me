@@ -14,6 +14,9 @@ export const CategorySchema = z
 		categoryGroupId: z.string().openapi({
 			description: "ID of the category group the category belongs to",
 		}),
+		locale: z.string().openapi({
+			description: "Locale/language of the category",
+		}),
 	})
 	.openapi("Category", {
 		description: "Represents a category a listing can be assigned to",

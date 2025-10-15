@@ -54,6 +54,14 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 		query = query.where("categoryGroupId", "in", where.categoryGroupIdIn);
 	}
 
+	if (where?.locale) {
+		query = query.where("locale", "=", where.locale);
+	}
+
+	if (where?.localeIn && where.localeIn.length > 0) {
+		query = query.where("locale", "in", where.localeIn);
+	}
+
 	return query;
 };
 

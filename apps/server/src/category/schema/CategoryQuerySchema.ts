@@ -17,6 +17,13 @@ const FilterSchema = z
 			description:
 				"This filter matches the ids of the category groups the category belongs to",
 		}),
+		locale: z.string().nullish().openapi({
+			description: "This filter matches the exact locale of the category",
+		}),
+		localeIn: z.array(z.string()).nullish().openapi({
+			description:
+				"This filter matches categories with locales in the provided array",
+		}),
 	})
 	.openapi("CategoryFilter", {
 		description: "User-land filters",

@@ -44,6 +44,14 @@ export const withCategoryGroupQueryBuilder: withCategoryGroupQueryBuilder.Callba
 			query = query.where("name", "like", `%${where.name}%`);
 		}
 
+		if (where?.locale) {
+			query = query.where("locale", "=", where.locale);
+		}
+
+		if (where?.localeIn && where.localeIn.length > 0) {
+			query = query.where("locale", "in", where.localeIn);
+		}
+
 		return query;
 	};
 

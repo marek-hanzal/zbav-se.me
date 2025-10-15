@@ -11,6 +11,9 @@ export const CategoryGroupSchema = z
 		sort: z.number().openapi({
 			description: "Sort order (position) of the category group",
 		}),
+		locale: z.string().openapi({
+			description: "Locale/language of the category group",
+		}),
 	})
 	.openapi("CategoryGroup", {
 		description:
