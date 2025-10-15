@@ -1,4 +1,4 @@
-import { Status, Tx, type useSelection } from "@use-pico/client";
+import { Status, type useSelection } from "@use-pico/client";
 import { type Cls, tvc } from "@use-pico/cls";
 import type { Category } from "@zbav-se.me/sdk";
 import type { SheetCls } from "node_modules/@use-pico/client/src/sheet/SheetCls";
@@ -37,6 +37,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 				class: [
 					"absolute",
 					"inset-0",
+					"px-2",
 				],
 			},
 		},
@@ -63,14 +64,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 					icon={CheckIcon}
 					tone={"primary"}
 					theme={"dark"}
-					textTitle={
-						<Tx
-							label={`Category ${item.name}`}
-							tone={"primary"}
-							theme={"dark"}
-							font={"bold"}
-						/>
-					}
+					textTitle={item.name}
 				/>
 			</Sheet>
 
@@ -88,14 +82,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 					icon={CategoryIcon}
 					tone={"primary"}
 					theme={"light"}
-					textTitle={
-						<Tx
-							label={`Category ${item.name}`}
-							tone={"primary"}
-							theme={"light"}
-							font={"bold"}
-						/>
-					}
+					textTitle={item.name}
 				/>
 			</Sheet>
 		</div>
