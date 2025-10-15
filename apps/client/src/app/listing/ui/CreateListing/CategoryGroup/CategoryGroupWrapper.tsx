@@ -12,7 +12,6 @@ import { withCategoryGroupCountQuery } from "~/app/category-group/query/withCate
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
-import { DotIcon } from "~/app/ui/icon/DotIcon";
 
 export const CategoryGroupWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -64,15 +63,9 @@ export const CategoryGroupWrapper: FC = () => {
 									iconProps={() => ({
 										size: "xs",
 									})}
-									pages={Array.from(
-										{
-											length: where,
-										},
-										(_, index) => ({
-											id: `category-group-${index}`,
-											icon: DotIcon,
-										}),
-									)}
+									pages={{
+										count: where,
+									}}
 									orientation={"horizontal"}
 									tweak={{
 										slot: {

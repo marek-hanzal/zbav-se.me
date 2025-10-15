@@ -16,14 +16,13 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
-import { useId, useRef } from "react";
+import { useRef } from "react";
 import { z } from "zod";
 import { authClient } from "~/app/auth/authClient";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
 import { Fade } from "~/app/ui/fade/Fade";
-import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
 import { SocialIcon } from "~/app/ui/icon/SocialIcon";
 import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
@@ -94,9 +93,6 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		const rootRef = useRef<HTMLDivElement>(null);
-		const emailNavId = useId();
-		const passKeyNavId = useId();
-		const socialNavId = useId();
 
 		return (
 			<Container position={"relative"}>
@@ -107,20 +103,9 @@ export const Route = createFileRoute("/$locale/login")({
 						tone: "secondary",
 						theme: "light",
 					})}
-					pages={[
-						{
-							id: emailNavId,
-							icon: DotIcon,
-						},
-						{
-							id: passKeyNavId,
-							icon: DotIcon,
-						},
-						{
-							id: socialNavId,
-							icon: DotIcon,
-						},
-					]}
+					pages={{
+						count: 3,
+					}}
 					orientation={"vertical"}
 					tweak={{
 						slot: {
