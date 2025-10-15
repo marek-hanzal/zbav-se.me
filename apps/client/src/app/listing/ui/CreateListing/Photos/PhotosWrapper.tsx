@@ -20,6 +20,7 @@ export const PhotosWrapper: FC = () => {
 				iconProps={() => ({
 					size: "xs",
 				})}
+				limit={5}
 				tweak={{
 					slot: {
 						root: {

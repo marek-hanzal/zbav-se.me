@@ -24,7 +24,7 @@
         "@tanstack/react-router": "1.132.47",
         "@tanstack/react-router-ssr-query": "1.132.47",
         "@tanstack/react-start": "1.133.2",
-        "@use-pico/client": "5.0.168",
+        "@use-pico/client": "5.0.170",
         "@use-pico/cls": "5.0.60",
         "@use-pico/common": "5.0.75",
         "@use-pico/server": "5.0.75",
@@ -740,7 +740,7 @@
 
     "@ungap/structured-clone": ["@ungap/structured-clone@1.3.0", "", {}, "sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g=="],
 
-    "@use-pico/client": ["@use-pico/client@5.0.168", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.37.0", "@lexical/react": "0.37.0", "@lexical/utils": "0.37.0", "@tanstack/react-query": "5.90.3", "@tanstack/react-router": "1.132.47", "@types/luxon": "3.7.1", "@use-pico/cls": "5.0.60", "@use-pico/common": "5.0.75", "axios": "1.12.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.37.0", "localstorage-slim": "2.7.1", "luxon": "3.7.2", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.8.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-DaG71oDSZVquYHmBN9vnkxrEh0p6zj0/BqbhnOp3AhMEOaIreiVTgdwAbMdb7ZGCog0GL9v//cD5+pZhrXoTtw=="],
+    "@use-pico/client": ["@use-pico/client@5.0.170", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.37.0", "@lexical/react": "0.37.0", "@lexical/utils": "0.37.0", "@tanstack/react-query": "5.90.3", "@tanstack/react-router": "1.132.47", "@types/luxon": "3.7.1", "@use-pico/cls": "5.0.60", "@use-pico/common": "5.0.75", "axios": "1.12.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.37.0", "localstorage-slim": "2.7.1", "luxon": "3.7.2", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.8.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-PJpiw9AmraLI+cdcYQ9DeNIUrYX2UMXRLJW5pQNsRoRrJkGGvqI55kEp7BtSogRMg462YjwOtfag/Nw4DQxWQg=="],
 
     "@use-pico/cls": ["@use-pico/cls@5.0.60", "", { "dependencies": { "react": "19.2.0", "tailwind-merge": "3.3.1" } }, "sha512-wUxmqPF+jGZu+J+xKt/p9jdXJauetez3mJe/zoWhhcxWgBVfhYfC4AEQJABapYGwJy52M7/sgDRhWJwMK48PUw=="],
 

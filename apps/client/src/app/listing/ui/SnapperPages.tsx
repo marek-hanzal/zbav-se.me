@@ -102,16 +102,6 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 							"bg-white/0",
 						],
 					},
-					first: {
-						class: [
-							"hidden",
-						],
-					},
-					last: {
-						class: [
-							"hidden",
-						],
-					},
 				},
 			}}
 		/>

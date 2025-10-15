@@ -74,16 +74,6 @@ export const Route = createFileRoute("/$locale/landing")({
 					]}
 					tweak={{
 						slot: {
-							first: {
-								class: [
-									"hidden",
-								],
-							},
-							last: {
-								class: [
-									"hidden",
-								],
-							},
 							root: {
 								class: [
 									"bg-white/0",

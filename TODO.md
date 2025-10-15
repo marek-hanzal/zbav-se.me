@@ -1,7 +1,6 @@
 # TODO
 
 - Edit snapper - value & edit
-- Add all iconfify icons, so they can be used e.g. in categories
 - Render categories as tiles
 
 - Create Listing -> fullscreen, reserve bottom for progress, so it won't block page
