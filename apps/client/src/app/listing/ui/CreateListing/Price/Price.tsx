@@ -1,4 +1,4 @@
-import { Icon, PriceInline, Typo, UnCheckIcon } from "@use-pico/client";
+import { Badge, Icon, PriceInline, Typo, UnCheckIcon } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import type { FC } from "react";
 import { PriceCls } from "~/app/listing/ui/CreateListing/Price/PriceCls";
@@ -19,7 +19,7 @@ export const Price: FC<Price.Props> = ({
 	const { slots } = useCls(cls, tweak);
 
 	return (
-		<div className={slots.root()}>
+		<Badge>
 			<Typo
 				label={
 					<PriceInline
@@ -34,16 +34,16 @@ export const Price: FC<Price.Props> = ({
 				font={"bold"}
 				size={"lg"}
 				tone="primary"
-				theme="dark"
+				theme="light"
 			/>
 
 			<Icon
 				icon={UnCheckIcon}
 				tone="primary"
-				theme="dark"
+				theme="light"
 				size={"md"}
 				onClick={onClear}
 			/>
-		</div>
+		</Badge>
 	);
 };

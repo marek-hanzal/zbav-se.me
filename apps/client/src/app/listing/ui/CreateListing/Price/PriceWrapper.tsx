@@ -1,15 +1,17 @@
 import {
+	Button,
 	Container,
 	SnapperNav,
 	Status,
 	Tx,
 	useSnapperNav,
 } from "@use-pico/client";
-import { type FC, useRef } from "react";
+import { type FC, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Price } from "~/app/listing/ui/CreateListing/Price/Price";
 import { Sheet } from "~/app/sheet/Sheet";
 import { Dial } from "~/app/ui/dial/Dial";
+import { anim, useAnim } from "~/app/ui/gsap";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 
 export const PriceWrapper: FC = () => {
@@ -18,6 +20,8 @@ export const PriceWrapper: FC = () => {
 	const setPrice = useCreateListingStore((store) => store.setPrice);
 	const hasPrice = useCreateListingStore((store) => store.hasPrice);
 	const rootRef = useRef<HTMLDivElement>(null);
+	const priceRef = useRef<HTMLDivElement>(null);
+	const [cost, setCost] = useState(price);
 
 	const snapperNav = useSnapperNav({
 		containerRef: rootRef,
@@ -27,14 +31,39 @@ export const PriceWrapper: FC = () => {
 	});
 
 	const onPrice = (price: number) => {
-		snapperNav.snapTo(Number.isNaN(price) ? 1 : 0);
 		setPrice(price);
 	};
 
 	const onClear = () => {
-		snapperNav.snapTo(1);
 		setPrice(NaN);
 	};
+
+	useAnim(
+		() => {
+			snapperNav.snapTo(Number.isNaN(price) ? 1 : 0);
+
+			anim.timeline()
+				.to(priceRef.current, {
+					opacity: 0,
+					scale: 1.25,
+					y: "-50%",
+					onComplete() {
+						setCost(price);
+					},
+				})
+				.to(priceRef.current, {
+					opacity: 1,
+					scale: 1,
+					y: 0,
+				});
+		},
+		{
+			scope: rootRef,
+			dependencies: [
+				price,
+			],
+		},
+	);
 
 	return (
 		<Container position={"relative"}>
@@ -59,13 +88,25 @@ export const PriceWrapper: FC = () => {
 			>
 				<Sheet>
 					<Status
+						ref={priceRef}
 						icon={PriceIcon}
 						textTitle={<Tx label={"Price (label)"} />}
 						textMessage={
-							<Price
-								price={price}
-								onClear={onClear}
-							/>
+							Number.isNaN(cost) ? (
+								<Button
+									onClick={() => snapperNav.next()}
+									size={"lg"}
+									tone={"primary"}
+									theme={"dark"}
+								>
+									<Tx label={"Price not set (button)"} />
+								</Button>
+							) : (
+								<Price
+									price={cost}
+									onClear={onClear}
+								/>
+							)
 						}
 					/>
 				</Sheet>
