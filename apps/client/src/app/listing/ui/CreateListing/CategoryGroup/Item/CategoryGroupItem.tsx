@@ -4,7 +4,6 @@ import type { CategoryGroup } from "@zbav-se.me/sdk";
 import type { SheetCls } from "node_modules/@use-pico/client/src/sheet/SheetCls";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
-import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
@@ -26,13 +25,6 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 
 	const offset = "70%";
 	const scale = 0.975;
-
-	useInitAnim({
-		isSelected,
-		offset,
-		selectedRef,
-		unselectedRef,
-	});
 
 	useAnimation({
 		isSelected,
