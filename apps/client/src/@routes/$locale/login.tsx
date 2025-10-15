@@ -23,7 +23,7 @@ import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
 import { Fade } from "~/app/ui/fade/Fade";
-import { EmailIcon } from "~/app/ui/icon/EmailIcon";
+import { DotIcon } from "~/app/ui/icon/DotIcon";
 import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
 import { SocialIcon } from "~/app/ui/icon/SocialIcon";
 import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
@@ -103,22 +103,22 @@ export const Route = createFileRoute("/$locale/login")({
 				<SnapperNav
 					containerRef={rootRef}
 					iconProps={() => ({
-						size: "sm",
+						size: "xs",
 						tone: "secondary",
 						theme: "light",
 					})}
 					pages={[
 						{
 							id: emailNavId,
-							icon: EmailIcon,
+							icon: DotIcon,
 						},
 						{
 							id: passKeyNavId,
-							icon: PassKeyIcon,
+							icon: DotIcon,
 						},
 						{
 							id: socialNavId,
-							icon: SocialIcon,
+							icon: DotIcon,
 						},
 					]}
 					orientation={"vertical"}
@@ -127,16 +127,7 @@ export const Route = createFileRoute("/$locale/login")({
 							root: {
 								class: [
 									"bg-white/0",
-								],
-							},
-							first: {
-								class: [
-									"hidden",
-								],
-							},
-							last: {
-								class: [
-									"hidden",
+									"opacity-25",
 								],
 							},
 						},
