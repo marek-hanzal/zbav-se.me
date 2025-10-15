@@ -5,7 +5,7 @@ import {
 	type Location,
 } from "@zbav-se.me/sdk";
 
-export const useLocationQuery = withQuery<
+export const withLocationQuery = withQuery<
 	ApiLocationAutocompleteParams,
 	Location[]
 >({

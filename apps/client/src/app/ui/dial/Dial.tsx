@@ -130,6 +130,7 @@ export const Dial: FC<Dial.Props> = ({
 						/>
 						<Typo
 							label={toHumanNumber({
+								locale,
 								number: parseFloat(price),
 							})}
 							size={"sm"}

@@ -35,7 +35,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 
 				<PriceWrapper locale={locale} />
 
-				<LocationWrapper />
+				<LocationWrapper locale={locale} />
 
 				<SubmitWrapper />
 			</Container>

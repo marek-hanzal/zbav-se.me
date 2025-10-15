@@ -9,6 +9,7 @@ export namespace SearchSheet {
 		query: UseQueryResult<any[], Error>;
 		textTitle?: ReactNode;
 		textNotFound?: ReactNode;
+		textPlaceholder?: string;
 	}
 }
 
@@ -17,6 +18,7 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 	query,
 	textTitle = <Tx label={"Search (title)"} />,
 	textNotFound = <Tx label={"Nothing found (badge)"} />,
+	textPlaceholder,
 }) => {
 	const fulltextRef = useRef<HTMLInputElement>(null);
 
@@ -50,6 +52,7 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 				<Fulltext
 					ref={fulltextRef}
 					state={state}
+					textPlaceholder={textPlaceholder}
 				/>
 
 				<Data
