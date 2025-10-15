@@ -33,7 +33,7 @@ export function getRouter() {
 				</Sheet>
 			);
 		},
-		defaultPendingMs: 250,
+		defaultPendingMs: 500,
 	});
 
 	setupRouterSsrQueryIntegration({
