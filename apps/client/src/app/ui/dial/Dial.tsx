@@ -1,4 +1,4 @@
-import { Icon, Tx, Typo } from "@use-pico/client";
+import { Badge, Icon, Tx, Typo } from "@use-pico/client";
 import { tvc, useCls } from "@use-pico/cls";
 import { type FC, type RefObject, useRef, useState } from "react";
 import { DialCls } from "~/app/ui/dial/DialCls";
@@ -89,32 +89,48 @@ export const Dial: FC<Dial.Props> = ({
 			ref={ref}
 			className={slots.root()}
 		>
-			<div
-				ref={displayRef}
-				className={slots.display()}
+			<Badge
+				tone={"secondary"}
+				theme={"light"}
+				size={"xl"}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"inline-flex",
+								"flex-row",
+								"items-center",
+								"justify-between",
+								"w-full",
+							],
+						},
+					},
+				}}
 			>
 				{price ? (
 					<Typo
 						label={price}
 						size={"xl"}
 						font={"bold"}
+						display={"block"}
 					/>
 				) : (
 					<Tx
 						label={"Price (placeholder)"}
 						size={"xl"}
 						font={"bold"}
+						display={"block"}
 					/>
 				)}
 
 				<Icon
 					icon={ClearIcon}
-					tone="primary"
-					theme="dark"
+					tone="secondary"
+					theme="light"
 					disabled={!price}
 					onClick={onClear}
 				/>
-			</div>
+			</Badge>
 
 			<div
 				className={tvc([

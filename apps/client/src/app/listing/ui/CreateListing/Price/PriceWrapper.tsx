@@ -110,16 +110,30 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 								<Tx label={"Price (label)"} />
 							)
 						}
-						textMessage={
-							cost === undefined ? null : (
-								<Price
-									locale={locale}
-									price={cost}
-									onClear={onClear}
-								/>
-							)
-						}
-					/>
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"w-full",
+									],
+								},
+								body: {
+									class: [
+										"w-full",
+										"px-8",
+									],
+								},
+							},
+						}}
+					>
+						{cost === undefined ? null : (
+							<Price
+								locale={locale}
+								price={cost}
+								onClear={onClear}
+							/>
+						)}
+					</Status>
 				</Sheet>
 
 				<Sheet>

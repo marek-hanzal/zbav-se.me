@@ -26,6 +26,19 @@ export const Price: FC<Price.Props> = ({
 			tone="secondary"
 			theme="light"
 			size={"lg"}
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"inline-flex",
+							"flex-row",
+							"items-center",
+							"justify-between",
+							"w-full",
+						],
+					},
+				},
+			}}
 		>
 			<Typo
 				label={
