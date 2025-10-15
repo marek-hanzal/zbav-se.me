@@ -57,14 +57,14 @@ export const CategoryGroupWrapper: FC = () => {
 					<div className="relative">
 						<Data
 							result={categoryGroupCountQuery}
-							renderSuccess={({ data: { where } }) => (
+							renderSuccess={({ data: { filter } }) => (
 								<SnapperNav
 									containerRef={containerRef}
 									iconProps={() => ({
 										size: "xs",
 									})}
 									pages={{
-										count: where,
+										count: filter,
 									}}
 									orientation={"horizontal"}
 									tweak={{

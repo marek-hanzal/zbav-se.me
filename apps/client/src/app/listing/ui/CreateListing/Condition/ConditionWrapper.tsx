@@ -1,21 +1,32 @@
-import { Container } from "@use-pico/client";
+import { Container, SnapperNav } from "@use-pico/client";
 import { type FC, useRef } from "react";
 import { ConditionAge } from "~/app/listing/ui/CreateListing/Condition/ConditionAge";
 import { ConditionOverall } from "~/app/listing/ui/CreateListing/Condition/ConditionOverall";
-import { Fade } from "~/app/ui/fade/Fade";
 
 export const ConditionWrapper: FC = () => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<div className="relative">
-			<Fade scrollableRef={containerRef} />
+			<SnapperNav
+				containerRef={containerRef}
+				pages={{
+					count: 2,
+				}}
+				orientation={"horizontal"}
+				iconProps={() => ({
+					size: "xs",
+					tone: "secondary",
+					theme: "light",
+				})}
+				subtle
+			/>
 
 			<Container
 				ref={containerRef}
-				layout={"vertical-full"}
-				snap={"vertical-start"}
-				overflow={"vertical"}
+				layout={"horizontal-full"}
+				snap={"horizontal-start"}
+				overflow={"horizontal"}
 				gap={"md"}
 			>
 				<ConditionOverall />

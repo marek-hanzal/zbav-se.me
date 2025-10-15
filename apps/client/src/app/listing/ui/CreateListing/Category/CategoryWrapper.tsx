@@ -2,6 +2,7 @@ import {
 	Container,
 	Data,
 	Icon,
+	SnapperNav,
 	SpinnerIcon,
 	Status,
 	Tx,
@@ -9,11 +10,11 @@ import {
 } from "@use-pico/client";
 import type { Category } from "@zbav-se.me/sdk";
 import { type FC, useEffect, useRef } from "react";
+import { withCategoryCountQuery } from "~/app/category/query/withCategoryCountQuery";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
-import { Fade } from "~/app/ui/fade/Fade";
 import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
 
 export const CategoryWrapper: FC = () => {
@@ -31,12 +32,11 @@ export const CategoryWrapper: FC = () => {
 		(store) => store.hasCategoryGroup,
 	);
 
+	const categoryGroupIds = categoryGroupSelection.map((item) => item.id);
 	const categoryQuery = withCategoryListQuery().useQuery(
 		{
 			filter: {
-				categoryGroupIdIn: categoryGroupSelection.map(
-					(item) => item.id,
-				),
+				categoryGroupIdIn: categoryGroupIds,
 			},
 			sort: [
 				{
@@ -49,6 +49,11 @@ export const CategoryWrapper: FC = () => {
 			enabled: categoryGroupSelection.length > 0,
 		},
 	);
+	const categoryCountQuery = withCategoryCountQuery().useQuery({
+		filter: {
+			categoryGroupIdIn: categoryGroupIds,
+		},
+	});
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Scroll-to-top on category change
 	useEffect(() => {
@@ -114,13 +119,30 @@ export const CategoryWrapper: FC = () => {
 			renderSuccess={({ data }) => {
 				return (
 					<div className="relative">
-						<Fade scrollableRef={containerRef} />
+						<Data
+							result={categoryCountQuery}
+							renderSuccess={({ data: { filter } }) => (
+								<SnapperNav
+									containerRef={containerRef}
+									pages={{
+										count: filter,
+									}}
+									orientation={"horizontal"}
+									iconProps={() => ({
+										size: "xs",
+										tone: "secondary",
+										theme: "light",
+									})}
+									subtle
+								/>
+							)}
+						/>
 
 						<Container
 							ref={containerRef}
-							layout={"vertical-full"}
-							overflow={"vertical"}
-							snap={"vertical-start"}
+							layout={"horizontal-full"}
+							overflow={"horizontal"}
+							snap={"horizontal-start"}
 							gap={"md"}
 						>
 							{data.map((item) => {
