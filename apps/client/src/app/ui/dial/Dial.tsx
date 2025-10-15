@@ -1,10 +1,11 @@
-import { Icon, Tx, Typo, UnCheckIcon } from "@use-pico/client";
+import { Icon, Tx, Typo } from "@use-pico/client";
 import { tvc, useCls } from "@use-pico/cls";
 import { type FC, type RefObject, useRef, useState } from "react";
 import { DialCls } from "~/app/ui/dial/DialCls";
 import { Item } from "~/app/ui/dial/Item";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
+import { ClearIcon } from "~/app/ui/icon/ClearIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
@@ -107,7 +108,7 @@ export const Dial: FC<Dial.Props> = ({
 				)}
 
 				<Icon
-					icon={UnCheckIcon}
+					icon={ClearIcon}
 					tone="primary"
 					theme="dark"
 					disabled={!price}

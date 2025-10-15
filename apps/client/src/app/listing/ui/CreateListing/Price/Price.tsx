@@ -1,7 +1,8 @@
-import { Badge, Icon, PriceInline, Typo, UnCheckIcon } from "@use-pico/client";
+import { Badge, Icon, PriceInline, Typo } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import type { FC } from "react";
 import { PriceCls } from "~/app/listing/ui/CreateListing/Price/PriceCls";
+import { ClearIcon } from "~/app/ui/icon/ClearIcon";
 
 export namespace Price {
 	export interface Props extends PriceCls.Props {
@@ -39,16 +40,16 @@ export const Price: FC<Price.Props> = ({
 					/>
 				}
 				font={"bold"}
-				size={"lg"}
+				size={"xl"}
 				tone="secondary"
 				theme="light"
 			/>
 
 			<Icon
-				icon={UnCheckIcon}
+				icon={ClearIcon}
 				tone="secondary"
 				theme="light"
-				size={"md"}
+				size={"sm"}
 				onClick={onClear}
 			/>
 		</Badge>
