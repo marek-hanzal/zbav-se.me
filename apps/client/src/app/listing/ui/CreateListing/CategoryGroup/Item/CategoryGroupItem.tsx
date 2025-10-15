@@ -57,6 +57,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 		<div
 			className={tvc([
 				"relative",
+				`CategoryGroup-item-${item.id}`,
 			])}
 		>
 			<Sheet

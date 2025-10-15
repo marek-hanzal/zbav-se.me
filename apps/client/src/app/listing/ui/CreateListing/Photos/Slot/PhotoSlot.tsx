@@ -21,7 +21,6 @@ import { useCreateListingContext } from "~/app/listing/context/useCreateListingC
 import { Sheet } from "~/app/sheet/Sheet";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { useChangeAnim } from "./useChangeAnim";
-import { useInitAnim } from "./useInitAnim";
 import { useObjectUrl } from "./useObjectUrl";
 import { useOpacityAnim } from "./useOpacityAnim";
 import { useSetAnim } from "./useSetAnim";
@@ -98,17 +97,6 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		event.preventDefault();
 		event.stopPropagation();
 	}, []);
-
-	/**
-	 * TODO Fucks with SSR - move to styles
-	 */
-	useInitAnim({
-		sheetRef,
-		trashRef,
-		spinnerRef,
-		img,
-		sheetOpacity,
-	});
 
 	useOpacityAnim({
 		sheetRef,

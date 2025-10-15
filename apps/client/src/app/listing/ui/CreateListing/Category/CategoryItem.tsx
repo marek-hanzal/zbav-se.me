@@ -1,5 +1,5 @@
 import { Status, Tx, type useSelection } from "@use-pico/client";
-import type { Cls } from "@use-pico/cls";
+import { type Cls, tvc } from "@use-pico/cls";
 import type { Category } from "@zbav-se.me/sdk";
 import type { SheetCls } from "node_modules/@use-pico/client/src/sheet/SheetCls";
 import { type FC, useRef } from "react";
@@ -51,7 +51,12 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 	};
 
 	return (
-		<div className="relative">
+		<div
+			className={tvc([
+				"relative",
+				`Category-item-${item.id}`,
+			])}
+		>
 			<Sheet
 				ref={selectedRef}
 				tone={"primary"}

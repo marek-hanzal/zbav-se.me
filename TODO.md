@@ -1,7 +1,8 @@
 # TODO
 
+- Resolve jumping trash icon (init animation) in PhotoWrapper
 - Edit snapper - value & edit
-- Render categories as tiles
+- Show snapper with selected item (by finding an element -> scroll to it?)
 - Resolve /null get calls from TSR/TSS
 
 - Create Listing -> fullscreen, reserve bottom for progress, so it won't block page
