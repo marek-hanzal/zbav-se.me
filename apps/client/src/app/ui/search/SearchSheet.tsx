@@ -1,6 +1,6 @@
 import type { UseQueryResult } from "@tanstack/react-query";
 import { Badge, Data, Fulltext, Sheet, Status, Tx } from "@use-pico/client";
-import type { FC, ReactNode } from "react";
+import { type FC, type ReactNode, useEffect, useRef } from "react";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 
 export namespace SearchSheet {
@@ -18,6 +18,15 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 	textTitle = <Tx label={"Search (title)"} />,
 	textNotFound = <Tx label={"Nothing found (badge)"} />,
 }) => {
+	const fulltextRef = useRef<HTMLInputElement>(null);
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: Listening for value changes
+	useEffect(() => {
+		fulltextRef.current?.blur();
+	}, [
+		state.value,
+	]);
+
 	return (
 		<Sheet>
 			<Status
@@ -38,7 +47,10 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 					},
 				}}
 			>
-				<Fulltext state={state} />
+				<Fulltext
+					ref={fulltextRef}
+					state={state}
+				/>
 
 				<Data
 					result={query}
