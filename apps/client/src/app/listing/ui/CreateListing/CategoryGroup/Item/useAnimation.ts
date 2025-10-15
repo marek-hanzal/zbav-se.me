@@ -22,6 +22,18 @@ export const useAnimation = ({
 		() => {
 			const tl = anim.timeline();
 
+			const onComplete = () => {
+				tl.set(
+					[
+						selectedRef.current,
+						unselectedRef.current,
+					],
+					{
+						pointerEvents: "auto",
+					},
+				);
+			};
+
 			if (isSelected) {
 				tl.to(
 					unselectedRef.current,
@@ -29,6 +41,8 @@ export const useAnimation = ({
 						opacity: 0,
 						x: `-${offset}`,
 						scale: scale,
+						pointerEvents: "none",
+						onComplete,
 					},
 					0,
 				).to(
@@ -37,6 +51,8 @@ export const useAnimation = ({
 						opacity: 1,
 						x: 0,
 						scale: 1,
+						pointerEvents: "none",
+						onComplete,
 					},
 					0,
 				);
@@ -49,6 +65,7 @@ export const useAnimation = ({
 						opacity: 0,
 						x: offset,
 						scale: scale,
+						onComplete,
 					},
 					0,
 				);
@@ -58,6 +75,7 @@ export const useAnimation = ({
 						opacity: 1,
 						x: 0,
 						scale: 1,
+						onComplete,
 					},
 					0,
 				);

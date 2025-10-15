@@ -612,3 +612,12 @@ fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
 ff2100f1a5838931f4f74c868d661215d95dc23f2c792a7b8f7860ed:
     ref: Add
     value: Add
+Category group clothes:
+    static: true
+    value: Oblečení
+Category parts:
+    static: true
+    value: Díly
+Category accessories:
+    static: true
+    value: Příslušenství
