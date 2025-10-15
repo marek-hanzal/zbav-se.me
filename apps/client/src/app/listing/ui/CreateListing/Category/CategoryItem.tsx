@@ -1,5 +1,7 @@
 import { Status, Tx, type useSelection } from "@use-pico/client";
+import type { Cls } from "@use-pico/cls";
 import type { Category } from "@zbav-se.me/sdk";
+import type { SheetCls } from "node_modules/@use-pico/client/src/sheet/SheetCls";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
@@ -37,6 +39,17 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 		unselectedRef,
 	});
 
+	const sheetTweak: Cls.TweaksOf<SheetCls> = {
+		slot: {
+			root: {
+				class: [
+					"absolute",
+					"inset-0",
+				],
+			},
+		},
+	};
+
 	return (
 		<div className="relative">
 			<Sheet
@@ -46,16 +59,8 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 				onClick={() => {
 					selection.toggle(item);
 				}}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"absolute",
-								"inset-0",
-							],
-						},
-					},
-				}}
+				tweak={sheetTweak}
+				round={"md"}
 			>
 				<Status
 					icon={CheckIcon}
@@ -79,16 +84,8 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 				onClick={() => {
 					selection.toggle(item);
 				}}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"absolute",
-								"inset-0",
-							],
-						},
-					},
-				}}
+				tweak={sheetTweak}
+				round={"md"}
 			>
 				<Status
 					icon={CategoryIcon}

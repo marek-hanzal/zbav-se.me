@@ -621,3 +621,9 @@ Category parts:
 Category accessories:
     static: true
     value: Příslušenství
+Category bedding:
+    static: true
+    value: Ložniny
+Category bathroom:
+    static: true
+    value: Koupelna

@@ -1,10 +1,10 @@
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { tvc } from "@use-pico/cls";
 import { routeTree } from "~/_route";
 import { Sheet } from "~/app/sheet/Sheet";
 import { Logo } from "~/app/ui/Logo";
+import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 
 export function getRouter() {
 	const queryClient = new QueryClient({
@@ -26,20 +26,14 @@ export function getRouter() {
 		},
 		defaultPendingComponent() {
 			return (
-				<div
-					className={tvc([
-						"fixed",
-						"inset-0",
-						"flex",
-						"items-center",
-						"justify-center",
-					])}
-				>
+				<Sheet>
+					<PrimaryOverlay />
+
 					<Logo />
-				</div>
+				</Sheet>
 			);
 		},
-		defaultPendingMs: 500,
+		defaultPendingMs: 250,
 	});
 
 	setupRouterSsrQueryIntegration({

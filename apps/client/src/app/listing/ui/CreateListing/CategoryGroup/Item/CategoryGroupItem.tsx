@@ -67,6 +67,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					selection.toggle(item);
 				}}
 				tweak={sheetTweak}
+				round={"md"}
 			>
 				<Status
 					icon={CheckIcon}
@@ -91,6 +92,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					selection.toggle(item);
 				}}
 				tweak={sheetTweak}
+				round={"md"}
 			>
 				<Status
 					icon={CategoryGroupIcon}

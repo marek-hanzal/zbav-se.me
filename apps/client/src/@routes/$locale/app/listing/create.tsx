@@ -13,8 +13,6 @@ export const Route = createFileRoute("/$locale/app/listing/create")({
 				<CreateListingProvider photoCountLimit={10}>
 					<CreateListing />
 				</CreateListingProvider>
-
-				{/* <Nav active="create" /> */}
 			</Container>
 		);
 	},
