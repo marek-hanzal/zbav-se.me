@@ -1,11 +1,12 @@
-import { Badge, Icon, PriceInline, Tx, Typo } from "@use-pico/client";
+import { Badge, Icon, Tx, Typo, useDoubleTap } from "@use-pico/client";
 import { tvc, useCls } from "@use-pico/cls";
+import { toHumanNumber } from "@use-pico/common";
 import { type FC, type RefObject, useRef, useState } from "react";
 import { DialCls } from "~/app/ui/dial/DialCls";
 import { Item } from "~/app/ui/dial/Item";
 import { anim, useAnim } from "~/app/ui/gsap";
+import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { ClearIcon } from "~/app/ui/icon/ClearIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
@@ -88,6 +89,13 @@ export const Dial: FC<Dial.Props> = ({
 			});
 	});
 
+	const { onTouchStart } = useDoubleTap({
+		onDoubleTap() {
+			onClear();
+		},
+		delay: 250,
+	});
+
 	return (
 		<div
 			ref={ref}
@@ -113,19 +121,30 @@ export const Dial: FC<Dial.Props> = ({
 				}}
 			>
 				{price ? (
-					<Typo
-						label={
-							<PriceInline
-								locale={locale}
-								value={{
-									price: parseFloat(price),
-								}}
-							/>
-						}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
-					/>
+					<div className={"flex flex-col items-start"}>
+						<Typo
+							label={price}
+							size={"xl"}
+							font={"bold"}
+							display={"block"}
+						/>
+						<Typo
+							label={toHumanNumber({
+								number: parseFloat(price),
+							})}
+							size={"sm"}
+							display={"block"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"opacity-50",
+										],
+									},
+								},
+							}}
+						/>
+					</div>
 				) : (
 					<Tx
 						label={"Price (placeholder)"}
@@ -136,11 +155,14 @@ export const Dial: FC<Dial.Props> = ({
 				)}
 
 				<Icon
-					icon={ClearIcon}
+					icon={BackspaceIcon}
 					tone="secondary"
 					theme="light"
 					disabled={!price}
-					onClick={onClear}
+					onClick={() => {
+						setPrice((prev) => prev.slice(0, -1));
+					}}
+					onTouchStart={onTouchStart}
 				/>
 			</Badge>
 
