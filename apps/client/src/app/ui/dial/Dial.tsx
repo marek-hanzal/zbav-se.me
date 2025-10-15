@@ -1,4 +1,4 @@
-import { Badge, Icon, Tx, Typo } from "@use-pico/client";
+import { Badge, Icon, PriceInline, Tx, Typo } from "@use-pico/client";
 import { tvc, useCls } from "@use-pico/cls";
 import { type FC, type RefObject, useRef, useState } from "react";
 import { DialCls } from "~/app/ui/dial/DialCls";
@@ -31,6 +31,7 @@ const icons = {
 export namespace Dial {
 	export interface Props extends DialCls.Props {
 		ref?: RefObject<HTMLDivElement | null>;
+		locale: string;
 		value: number | undefined;
 		onChange: (value: number | undefined) => void;
 	}
@@ -38,6 +39,7 @@ export namespace Dial {
 
 export const Dial: FC<Dial.Props> = ({
 	ref,
+	locale,
 	value,
 	onChange,
 	cls = DialCls,
@@ -54,10 +56,12 @@ export const Dial: FC<Dial.Props> = ({
 
 	const onConfirm = contextSafe((number: number | undefined) => {
 		onChange(number);
-		setPrice("");
 		anim.timeline()
 			.to(displayRef.current, {
 				scale: 0.8,
+				onComplete() {
+					setPrice("");
+				},
 			})
 			.to(displayRef.current, {
 				scale: 1,
@@ -67,7 +71,7 @@ export const Dial: FC<Dial.Props> = ({
 	const onClear = contextSafe(() => {
 		anim.timeline({
 			defaults: {
-				duration: 0.2,
+				duration: 0.15,
 			},
 		})
 			.to(displayRef.current, {
@@ -90,6 +94,7 @@ export const Dial: FC<Dial.Props> = ({
 			className={slots.root()}
 		>
 			<Badge
+				ref={displayRef}
 				tone={"secondary"}
 				theme={"light"}
 				size={"xl"}
@@ -109,7 +114,14 @@ export const Dial: FC<Dial.Props> = ({
 			>
 				{price ? (
 					<Typo
-						label={price}
+						label={
+							<PriceInline
+								locale={locale}
+								value={{
+									price: parseFloat(price),
+								}}
+							/>
+						}
 						size={"xl"}
 						font={"bold"}
 						display={"block"}

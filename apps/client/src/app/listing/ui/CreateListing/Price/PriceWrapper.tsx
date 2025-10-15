@@ -100,8 +100,8 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 							cost === undefined ? (
 								<Button
 									onClick={() => snapperNav.next()}
-									size={"lg"}
-									tone={"primary"}
+									size={"xl"}
+									tone={"secondary"}
 									theme={"dark"}
 								>
 									<Tx label={"Price not set (button)"} />
@@ -112,11 +112,6 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 						}
 						tweak={{
 							slot: {
-								root: {
-									class: [
-										"w-full",
-									],
-								},
 								body: {
 									class: [
 										"w-full",
@@ -138,6 +133,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 
 				<Sheet>
 					<Dial
+						locale={locale}
 						value={price}
 						onChange={onPrice}
 					/>
