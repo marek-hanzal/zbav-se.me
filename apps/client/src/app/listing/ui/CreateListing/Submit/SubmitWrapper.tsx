@@ -13,12 +13,12 @@ export const SubmitWrapper: FC = () => {
 		return (
 			<Sheet
 				tone={"secondary"}
-				theme={"dark"}
+				theme={"light"}
 			>
 				<Status
 					icon={SendPackageIcon}
 					tone={"secondary"}
-					theme={"dark"}
+					theme={"light"}
 					textTitle={
 						<Tx
 							label={

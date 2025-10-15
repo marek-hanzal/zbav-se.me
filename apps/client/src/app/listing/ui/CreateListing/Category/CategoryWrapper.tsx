@@ -95,12 +95,12 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 		return (
 			<Sheet
 				tone={"secondary"}
-				theme={"dark"}
+				theme={"light"}
 			>
 				<Status
 					icon={CategoryGroupIcon}
 					tone={"secondary"}
-					theme={"dark"}
+					theme={"light"}
 					textTitle={<Tx label="No category selected" />}
 					textMessage={
 						<Tx

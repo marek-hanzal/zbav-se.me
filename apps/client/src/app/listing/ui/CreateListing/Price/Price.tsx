@@ -48,8 +48,6 @@ export const Price: FC<Price.Props> = ({
 							price,
 							withVat: undefined,
 						}}
-						minimumFractionDigits={2}
-						maximumFractionDigits={2}
 					/>
 				}
 				font={"bold"}
