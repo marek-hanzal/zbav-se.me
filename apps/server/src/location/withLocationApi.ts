@@ -152,18 +152,19 @@ withLocationApi.openapi(
 					lon: properties.lon,
 				})) satisfies LocationSchema.Type[];
 
-				await trx
-					.insertInto("Location")
-					.values(locations)
-					.onConflict((oc) =>
-						oc
-							.columns([
-								"lang",
-								"hash",
-							])
-							.doNothing(),
-					)
-					.execute();
+				locations.length > 0 &&
+					(await trx
+						.insertInto("Location")
+						.values(locations)
+						.onConflict((oc) =>
+							oc
+								.columns([
+									"lang",
+									"hash",
+								])
+								.doNothing(),
+						)
+						.execute());
 
 				/**
 				 * No cache headers, so it won't reply all the times with cache-miss
