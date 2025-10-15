@@ -9,47 +9,23 @@ export const SubmitWrapper: FC = () => {
 	const useCreateListingStore = useCreateListingContext();
 	const missing = useCreateListingStore((store) => store.missing);
 
-	// const categoryQuery = withCategoryListQuery().useQuery(
-	// 	{
-	// 		filter: {
-	// 			idIn: categorySelection.optional.multiId(),
-	// 		},
-	// 	},
-	// 	{
-	// 		enabled: canSubmit,
-	// 	},
-	// );
-
 	if (missing.length > 0) {
 		return (
 			<Sheet
-				tone={"warning"}
-				disabled
+				tone={"secondary"}
+				theme={"dark"}
 			>
 				<Status
 					icon={SendPackageIcon}
+					tone={"secondary"}
+					theme={"dark"}
 					textTitle={
 						<Tx
 							label={
 								"Submit listing - status - cannot submit (title)"
 							}
-							tone={"warning"}
-							theme={"light"}
 						/>
 					}
-					// textMessage={
-					// 	<div className="inline-flex flex-row gap-2">
-					// 		{missing.map((item) => (
-					// 			<Badge
-					// 				key={item}
-					// 				tone="secondary"
-					// 			>
-					// 				{item}
-					// 			</Badge>
-					// 		))}
-					// 	</div>
-					// }
-					tone={"warning"}
 				/>
 			</Sheet>
 		);

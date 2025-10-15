@@ -18,7 +18,7 @@ import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuer
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
-import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
+import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 import { SearchSheet } from "~/app/ui/search/SearchSheet";
 
@@ -94,29 +94,19 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 	if (!hasCategoryGroup) {
 		return (
 			<Sheet
-				tone={"warning"}
-				theme={"light"}
-				disabled
+				tone={"secondary"}
+				theme={"dark"}
 			>
 				<Status
-					icon={QuestionIcon}
-					tone={"warning"}
-					theme={"light"}
-					textTitle={
-						<Tx
-							label="No category selected"
-							tone={"warning"}
-							theme={"light"}
-							font={"bold"}
-						/>
-					}
+					icon={CategoryGroupIcon}
+					tone={"secondary"}
+					theme={"dark"}
+					textTitle={<Tx label="No category selected" />}
 					textMessage={
 						<Tx
 							label={
 								"Please select a category group first to see available categories"
 							}
-							tone={"warning"}
-							theme={"light"}
 						/>
 					}
 					tweak={{
@@ -193,8 +183,6 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 							layout={"horizontal-full"}
 							overflow={"horizontal"}
 							snap={"horizontal-start"}
-							tone={"secondary"}
-							theme={"light"}
 							gap={"md"}
 						>
 							<SearchSheet
@@ -217,9 +205,25 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 									);
 
 									return (
-										<div
+										<Sheet
 											key={`${groupId}-${chunkIndex}-${startIndex}`}
-											className="grid grid-rows-3 grid-cols-2 gap-2 h-full w-full p-4"
+											tone={"secondary"}
+											theme={"light"}
+											tweak={{
+												slot: {
+													root: {
+														class: [
+															"grid",
+															"grid-rows-3",
+															"grid-cols-2",
+															"gap-2",
+															"h-full",
+															"w-full",
+															"p-4",
+														],
+													},
+												},
+											}}
 										>
 											{chunk.map((item) => {
 												return (
@@ -232,7 +236,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 													/>
 												);
 											})}
-										</div>
+										</Sheet>
 									);
 								},
 							)}

@@ -15,6 +15,7 @@ import { withCategoryGroupCountQuery } from "~/app/category-group/query/withCate
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
+import { Sheet } from "~/app/sheet/Sheet";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 import { SearchSheet } from "~/app/ui/search/SearchSheet";
 
@@ -141,8 +142,8 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 							layout={"horizontal-full"}
 							overflow={"horizontal"}
 							snap={"horizontal-start"}
-							tone={"secondary"}
-							theme={"light"}
+							// tone={"secondary"}
+							// theme={"light"}
 							gap={"md"}
 						>
 							<SearchSheet
@@ -165,9 +166,25 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 									);
 
 									return (
-										<div
+										<Sheet
 											key={`${groupId}-${chunkIndex}-${startIndex}`}
-											className="grid grid-rows-3 grid-cols-2 gap-2 h-full w-full p-4"
+											tone={"secondary"}
+											theme={"light"}
+											tweak={{
+												slot: {
+													root: {
+														class: [
+															"grid",
+															"grid-rows-3",
+															"grid-cols-2",
+															"gap-2",
+															"h-full",
+															"w-full",
+															"p-4",
+														],
+													},
+												},
+											}}
 										>
 											{chunk.map((item) => {
 												return (
@@ -178,7 +195,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 													/>
 												);
 											})}
-										</div>
+										</Sheet>
 									);
 								},
 							)}
