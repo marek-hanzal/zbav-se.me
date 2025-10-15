@@ -9,7 +9,7 @@ import {
 	useSelection,
 } from "@use-pico/client";
 import type { Category } from "@zbav-se.me/sdk";
-import { type FC, useEffect, useRef } from "react";
+import { type FC, useEffect, useId, useRef } from "react";
 import { withCategoryCountQuery } from "~/app/category/query/withCategoryCountQuery";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
@@ -54,6 +54,8 @@ export const CategoryWrapper: FC = () => {
 			categoryGroupIdIn: categoryGroupIds,
 		},
 	});
+	const groupId = useId();
+	const grid = 3 * 2;
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Scroll-to-top on category change
 	useEffect(() => {
@@ -125,7 +127,7 @@ export const CategoryWrapper: FC = () => {
 								<SnapperNav
 									containerRef={containerRef}
 									pages={{
-										count: filter,
+										count: Math.ceil(filter / grid),
 									}}
 									orientation={"horizontal"}
 									iconProps={() => ({
@@ -143,17 +145,41 @@ export const CategoryWrapper: FC = () => {
 							layout={"horizontal-full"}
 							overflow={"horizontal"}
 							snap={"horizontal-start"}
+							tone={"secondary"}
+							theme={"light"}
 							gap={"md"}
 						>
-							{data.map((item) => {
-								return (
-									<CategoryItem
-										key={item.id}
-										selection={categorySelection}
-										item={item}
-									/>
-								);
-							})}
+							{Array.from(
+								{
+									length: Math.ceil(data.length / grid),
+								},
+								(_, chunkIndex) => {
+									const startIndex = chunkIndex * grid;
+									const chunk = data.slice(
+										startIndex,
+										startIndex + grid,
+									);
+
+									return (
+										<div
+											key={`${groupId}-${chunkIndex}-${startIndex}`}
+											className="grid grid-rows-3 grid-cols-2 gap-2 h-full w-full p-4"
+										>
+											{chunk.map((item) => {
+												return (
+													<CategoryItem
+														key={item.id}
+														selection={
+															categorySelection
+														}
+														item={item}
+													/>
+												);
+											})}
+										</div>
+									);
+								},
+							)}
 						</Container>
 					</div>
 				);

@@ -1,5 +1,7 @@
 import { Status, Tx, type useSelection } from "@use-pico/client";
+import { type Cls, tvc } from "@use-pico/cls";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
+import type { SheetCls } from "node_modules/@use-pico/client/src/sheet/SheetCls";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { useInitAnim } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useInitAnim";
@@ -40,40 +42,43 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 		unselectedRef,
 	});
 
+	const sheetTweak: Cls.TweaksOf<SheetCls> = {
+		slot: {
+			root: {
+				class: [
+					"absolute",
+					"inset-0",
+				],
+			},
+		},
+	};
+
 	return (
-		<div className="relative">
+		<div
+			className={tvc([
+				"relative",
+			])}
+		>
 			<Sheet
 				ref={selectedRef}
-				tone={"secondary"}
-				theme={"light"}
+				tone={"primary"}
+				theme={"dark"}
 				onClick={() => {
 					selection.toggle(item);
 				}}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"absolute",
-								"inset-0",
-							],
-						},
-					},
-				}}
+				tweak={sheetTweak}
 			>
 				<Status
 					icon={CheckIcon}
-					tone={"secondary"}
-					theme={"light"}
+					tone={"primary"}
+					theme={"dark"}
 					textTitle={
 						<Tx
 							label={`Category group ${item.name}`}
-							tone={"secondary"}
-							theme={"light"}
+							tone={"primary"}
+							theme={"dark"}
 							font={"bold"}
 						/>
-					}
-					textMessage={
-						"Sem prijdou chipsy posledne nabidnutych inzeratu"
 					}
 				/>
 			</Sheet>
@@ -85,16 +90,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 				onClick={() => {
 					selection.toggle(item);
 				}}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"absolute",
-								"inset-0",
-							],
-						},
-					},
-				}}
+				tweak={sheetTweak}
 			>
 				<Status
 					icon={CategoryGroupIcon}
@@ -107,9 +103,6 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 							theme={"light"}
 							font={"bold"}
 						/>
-					}
-					textMessage={
-						"Sem prijdou chipsy posledne nabidnutych inzeratu"
 					}
 				/>
 			</Sheet>

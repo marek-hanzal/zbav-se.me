@@ -21,7 +21,6 @@ export function getRouter() {
 		context: {
 			queryClient,
 		},
-		scrollRestoration: true,
 		defaultNotFoundComponent() {
 			return <Sheet>4😞4</Sheet>;
 		},

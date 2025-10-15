@@ -41,8 +41,8 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 		<div className="relative">
 			<Sheet
 				ref={selectedRef}
-				tone={"secondary"}
-				theme={"light"}
+				tone={"primary"}
+				theme={"dark"}
 				onClick={() => {
 					selection.toggle(item);
 				}}
@@ -59,18 +59,15 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 			>
 				<Status
 					icon={CheckIcon}
-					tone={"secondary"}
-					theme={"light"}
+					tone={"primary"}
+					theme={"dark"}
 					textTitle={
 						<Tx
 							label={`Category ${item.name}`}
-							tone={"secondary"}
-							theme={"light"}
+							tone={"primary"}
+							theme={"dark"}
 							font={"bold"}
 						/>
-					}
-					textMessage={
-						"Sem prijdou chipsy posledne nabidnutych inzeratu"
 					}
 				/>
 			</Sheet>
@@ -104,9 +101,6 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 							theme={"light"}
 							font={"bold"}
 						/>
-					}
-					textMessage={
-						"Sem prijdou chipsy posledne nabidnutych inzeratu"
 					}
 				/>
 			</Sheet>

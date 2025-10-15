@@ -7,7 +7,7 @@ import {
 	useSelection,
 } from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
-import { type FC, useRef } from "react";
+import { type FC, useId, useRef } from "react";
 import { withCategoryGroupCountQuery } from "~/app/category-group/query/withCategoryGroupCountQuery";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
@@ -33,6 +33,8 @@ export const CategoryGroupWrapper: FC = () => {
 		],
 	});
 	const categoryGroupCountQuery = withCategoryGroupCountQuery().useQuery({});
+	const groupId = useId();
+	const grid = 3 * 2;
 
 	return (
 		<Data
@@ -64,7 +66,7 @@ export const CategoryGroupWrapper: FC = () => {
 										size: "xs",
 									})}
 									pages={{
-										count: filter,
+										count: Math.ceil(filter / grid),
 									}}
 									orientation={"horizontal"}
 									tweak={{
@@ -85,17 +87,39 @@ export const CategoryGroupWrapper: FC = () => {
 							layout={"horizontal-full"}
 							overflow={"horizontal"}
 							snap={"horizontal-start"}
+							tone={"secondary"}
+							theme={"light"}
 							gap={"md"}
 						>
-							{data.map((item) => {
-								return (
-									<CategoryGroupItem
-										key={item.id}
-										selection={selection}
-										item={item}
-									/>
-								);
-							})}
+							{Array.from(
+								{
+									length: Math.ceil(data.length / grid),
+								},
+								(_, chunkIndex) => {
+									const startIndex = chunkIndex * grid;
+									const chunk = data.slice(
+										startIndex,
+										startIndex + grid,
+									);
+
+									return (
+										<div
+											key={`${groupId}-${chunkIndex}-${startIndex}`}
+											className="grid grid-rows-3 grid-cols-2 gap-2 h-full w-full p-4"
+										>
+											{chunk.map((item) => {
+												return (
+													<CategoryGroupItem
+														key={item.id}
+														selection={selection}
+														item={item}
+													/>
+												);
+											})}
+										</div>
+									);
+								},
+							)}
 						</Container>
 					</div>
 				);
