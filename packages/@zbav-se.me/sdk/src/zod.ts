@@ -48,6 +48,18 @@ export const apiCategoryGroupFetchBody = zod
 					.describe(
 						"This filter matches the exact name of the category group",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category group",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches category groups with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -70,6 +82,18 @@ export const apiCategoryGroupFetchBody = zod
 					.nullish()
 					.describe(
 						"This filter matches the exact name of the category group",
+					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category group",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches category groups with locales in the provided array",
 					),
 			})
 			.nullish()
@@ -102,6 +126,7 @@ export const apiCategoryGroupFetchResponse = zod
 		sort: zod
 			.number()
 			.describe("Sort order (position) of the category group"),
+		locale: zod.string().describe("Locale/language of the category group"),
 	})
 	.describe("Represents a group of categories a listing can be assigned to");
 
@@ -147,6 +172,18 @@ export const apiCategoryGroupCollectionBody = zod
 					.describe(
 						"This filter matches the exact name of the category group",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category group",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches category groups with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -169,6 +206,18 @@ export const apiCategoryGroupCollectionBody = zod
 					.nullish()
 					.describe(
 						"This filter matches the exact name of the category group",
+					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category group",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches category groups with locales in the provided array",
 					),
 			})
 			.nullish()
@@ -201,6 +250,7 @@ export const apiCategoryGroupCollectionResponseItem = zod
 		sort: zod
 			.number()
 			.describe("Sort order (position) of the category group"),
+		locale: zod.string().describe("Locale/language of the category group"),
 	})
 	.describe("Represents a group of categories a listing can be assigned to");
 export const apiCategoryGroupCollectionResponse = zod.array(
@@ -249,6 +299,18 @@ export const apiCategoryGroupCountBody = zod
 					.describe(
 						"This filter matches the exact name of the category group",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category group",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches category groups with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -271,6 +333,18 @@ export const apiCategoryGroupCountBody = zod
 					.nullish()
 					.describe(
 						"This filter matches the exact name of the category group",
+					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category group",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches category groups with locales in the provided array",
 					),
 			})
 			.nullish()
@@ -364,6 +438,18 @@ export const apiCategoryFetchBody = zod
 					.describe(
 						"This filter matches the ids of the category groups the category belongs to",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -399,6 +485,18 @@ export const apiCategoryFetchBody = zod
 					.describe(
 						"This filter matches the ids of the category groups the category belongs to",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
@@ -431,6 +529,7 @@ export const apiCategoryFetchResponse = zod
 		categoryGroupId: zod
 			.string()
 			.describe("ID of the category group the category belongs to"),
+		locale: zod.string().describe("Locale/language of the category"),
 	})
 	.describe("Represents a category a listing can be assigned to");
 
@@ -488,6 +587,18 @@ export const apiCategoryCollectionBody = zod
 					.describe(
 						"This filter matches the ids of the category groups the category belongs to",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -523,6 +634,18 @@ export const apiCategoryCollectionBody = zod
 					.describe(
 						"This filter matches the ids of the category groups the category belongs to",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
@@ -555,6 +678,7 @@ export const apiCategoryCollectionResponseItem = zod
 		categoryGroupId: zod
 			.string()
 			.describe("ID of the category group the category belongs to"),
+		locale: zod.string().describe("Locale/language of the category"),
 	})
 	.describe("Represents a category a listing can be assigned to");
 export const apiCategoryCollectionResponse = zod.array(
@@ -615,6 +739,18 @@ export const apiCategoryCountBody = zod
 					.describe(
 						"This filter matches the ids of the category groups the category belongs to",
 					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -649,6 +785,18 @@ export const apiCategoryCountBody = zod
 					.nullish()
 					.describe(
 						"This filter matches the ids of the category groups the category belongs to",
+					),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
 					),
 			})
 			.nullish()

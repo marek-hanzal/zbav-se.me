@@ -8,7 +8,13 @@ import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapp
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
 
-export const CreateListing: FC = () => {
+export namespace CreateListing {
+	export interface Props {
+		locale: string;
+	}
+}
+
+export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 	return (
 		<Container
 			layout="vertical"
@@ -21,9 +27,9 @@ export const CreateListing: FC = () => {
 			>
 				<PhotosWrapper />
 
-				<CategoryGroupWrapper />
+				<CategoryGroupWrapper locale={locale} />
 
-				<CategoryWrapper />
+				<CategoryWrapper locale={locale} />
 
 				<ConditionWrapper />
 

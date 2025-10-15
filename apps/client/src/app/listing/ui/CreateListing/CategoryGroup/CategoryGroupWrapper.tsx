@@ -18,7 +18,15 @@ import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 import { SearchSheet } from "~/app/ui/search/SearchSheet";
 
-export const CategoryGroupWrapper: FC = () => {
+export namespace CategoryGroupWrapper {
+	export interface Props {
+		locale: string;
+	}
+}
+
+export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
+	locale,
+}) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [search, setSearch] = useState<Fulltext.Value>(undefined);
 	const useCreateListingStore = useCreateListingContext();
@@ -33,6 +41,7 @@ export const CategoryGroupWrapper: FC = () => {
 
 	const categoryGroupQuery = withCategoryGroupListQuery().useQuery({
 		filter: {
+			locale,
 			fulltext: search,
 		},
 		sort: [
@@ -44,6 +53,7 @@ export const CategoryGroupWrapper: FC = () => {
 	});
 	const categoryGroupCountQuery = withCategoryGroupCountQuery().useQuery({
 		filter: {
+			locale,
 			fulltext: search,
 		},
 	});

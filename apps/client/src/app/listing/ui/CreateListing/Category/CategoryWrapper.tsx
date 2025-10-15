@@ -22,7 +22,13 @@ import { QuestionIcon } from "~/app/ui/icon/QuestionIcon";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 import { SearchSheet } from "~/app/ui/search/SearchSheet";
 
-export const CategoryWrapper: FC = () => {
+export namespace CategoryWrapper {
+	export interface Props {
+		locale: string;
+	}
+}
+
+export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [search, setSearch] = useState<Fulltext.Value>(undefined);
 	const useCreateListingStore = useCreateListingContext();
@@ -43,6 +49,7 @@ export const CategoryWrapper: FC = () => {
 		{
 			filter: {
 				categoryGroupIdIn: categoryGroupIds,
+				locale,
 				fulltext: search,
 			},
 			sort: [
@@ -59,6 +66,7 @@ export const CategoryWrapper: FC = () => {
 	const categoryCountQuery = withCategoryCountQuery().useQuery({
 		filter: {
 			categoryGroupIdIn: categoryGroupIds,
+			locale,
 			fulltext: search,
 		},
 	});

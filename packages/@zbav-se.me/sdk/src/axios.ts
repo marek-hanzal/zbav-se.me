@@ -18,6 +18,8 @@ export interface CategoryGroup {
 	name: string;
 	/** Sort order (position) of the category group */
 	sort: number;
+	/** Locale/language of the category group */
+	locale: string;
 }
 
 /**
@@ -63,6 +65,16 @@ export type CategoryGroupFilter = {
 	 * @nullable
 	 */
 	name?: string | null;
+	/**
+	 * This filter matches the exact locale of the category group
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches category groups with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
 /**
@@ -90,6 +102,16 @@ export type CategoryGroupWhere = {
 	 * @nullable
 	 */
 	name?: string | null;
+	/**
+	 * This filter matches the exact locale of the category group
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches category groups with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
 export type CategoryGroupSortValue =
@@ -158,6 +180,8 @@ export interface Category {
 	sort: number;
 	/** ID of the category group the category belongs to */
 	categoryGroupId: string;
+	/** Locale/language of the category */
+	locale: string;
 }
 
 /**
@@ -195,6 +219,16 @@ export type CategoryFilter = {
 	 * @nullable
 	 */
 	categoryGroupIdIn?: string[] | null;
+	/**
+	 * This filter matches the exact locale of the category
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches categories with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
 /**
@@ -232,6 +266,16 @@ export type CategoryWhere = {
 	 * @nullable
 	 */
 	categoryGroupIdIn?: string[] | null;
+	/**
+	 * This filter matches the exact locale of the category
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches categories with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
 export type CategorySortValue =
