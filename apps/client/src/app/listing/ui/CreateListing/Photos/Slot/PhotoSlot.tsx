@@ -99,6 +99,9 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 		event.stopPropagation();
 	}, []);
 
+	/**
+	 * TODO Fucks with SSR - move to styles
+	 */
 	useInitAnim({
 		sheetRef,
 		trashRef,

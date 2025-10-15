@@ -8,7 +8,6 @@ import { LocationWrapper } from "~/app/listing/ui/CreateListing/Location/Locatio
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
 import { SubmitWrapper } from "~/app/listing/ui/CreateListing/Submit/SubmitWrapper";
-import { SnapperPages } from "~/app/listing/ui/SnapperPages";
 
 export const CreateListing: FC = () => {
 	const photosId = useId();
@@ -88,7 +87,7 @@ export const CreateListing: FC = () => {
 				layout="vertical"
 				position={"relative"}
 			>
-				<SnapperPages
+				{/* <SnapperPages
 					snapperRef={snapperRef}
 					photosId={photosId}
 					categoryGroupId={categoryGroupId}
@@ -97,7 +96,7 @@ export const CreateListing: FC = () => {
 					priceId={priceId}
 					locationId={locationId}
 					submitId={submitId}
-				/>
+				/> */}
 
 				<Container
 					ref={snapperRef}

@@ -100,6 +100,7 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 					root: {
 						class: [
 							"bg-white/0",
+							"opacity-25",
 						],
 					},
 				},
