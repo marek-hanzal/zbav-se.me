@@ -1,5 +1,15 @@
 import { useCls } from "@use-pico/cls";
-import type { FC, Ref } from "react";
+import type React from "react";
+import {
+	type FC,
+	type Ref,
+	useEffect,
+	useId,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
+import { anim, useAnim } from "~/app/ui/gsap";
 import { RatingCls } from "~/app/ui/rating/RatingCls";
 import { Star } from "~/app/ui/rating/Star";
 
@@ -24,25 +34,109 @@ export const Rating: FC<Rating.Props> = ({
 }) => {
 	const { slots } = useCls(cls, tweak);
 
+	const innerRef = useRef<HTMLDivElement>(null);
+	useEffect(() => {
+		if (!ref) return;
+		if (typeof ref === "function") ref(innerRef.current);
+		else
+			(ref as React.MutableRefObject<HTMLDivElement | null>).current =
+				innerRef.current;
+	}, [
+		ref,
+	]);
+
+	// Visual value lags the real value and flips at mid-animation
+	const [visualValue, setVisualValue] = useState<number>(value);
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're good
+	useEffect(() => {
+		// keep in sync on mount/external programmatic changes
+		setVisualValue((v) => (v !== value ? v : value));
+	}, []); // only on mount
+
+	const prevValueRef = useRef<number>(value);
+	const clampedValue = useMemo(
+		() => Math.max(0, Math.min(limit, value)),
+		[
+			value,
+			limit,
+		],
+	);
+
+	useAnim(
+		() => {
+			const prev = prevValueRef.current;
+			const next = clampedValue;
+			if (prev === next) {
+				return;
+			}
+
+			const stars = anim.utils.toArray(".Star-root");
+			const low = Math.min(prev, next);
+			const high = Math.max(prev, next);
+			const affected = stars.slice(low, high);
+			const items = prev < next ? affected : affected.slice().reverse();
+
+			const tl = anim.timeline({
+				defaults: {
+					duration: 0.15,
+					ease: "power2.out",
+				},
+			});
+
+			// Phase 1: nudge & pop (before selected flips)
+			tl.to(items, {
+				scale: prev < next ? 1.25 : 0.75,
+				opacity: 0,
+				stagger: 0.035,
+			});
+
+			// MIDPOINT: now flip which stars are "selected"
+			tl.call(() => {
+				setVisualValue(next);
+			});
+
+			// Phase 2: settle
+			tl.to(items, {
+				opacity: 1,
+				scale: 1,
+				stagger: 0.035,
+			});
+
+			// Store next for direction on future runs
+			tl.call(() => {
+				prevValueRef.current = next;
+			});
+		},
+		{
+			scope: innerRef,
+			dependencies: [
+				clampedValue,
+				limit,
+			],
+		},
+	);
+
+	const starId = useId();
+
 	return (
 		<div
-			ref={ref}
+			ref={innerRef}
 			className={slots.root()}
 		>
 			{Array.from({
 				length: limit,
 			}).map((_, index) => {
+				const idx = index + 1;
 				return (
 					<Star
-						key={`rating-${index + 1}`}
-						selected={index + 1 <= value}
+						key={`rating-${starId}-${idx}`}
+						selected={idx <= visualValue}
 						onClick={() => {
-							if (allowClear && index + 1 === value) {
+							if (allowClear && idx === clampedValue) {
 								onChange(0);
-								return;
+							} else {
+								onChange(idx);
 							}
-
-							onChange(index + 1);
 						}}
 					/>
 				);

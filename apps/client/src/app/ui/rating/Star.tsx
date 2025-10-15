@@ -1,6 +1,5 @@
 import { Icon } from "@use-pico/client";
-import { type FC, useRef, useState } from "react";
-import { anim, useAnim } from "~/app/ui/gsap";
+import type { FC } from "react";
 import { StarEmptyIcon } from "~/app/ui/icon/StarEmptyIcon";
 import { StarIcon } from "~/app/ui/icon/StarIcon";
 
@@ -12,53 +11,22 @@ export namespace Star {
 }
 
 export const Star: FC<Star.Props> = ({ selected, onClick }) => {
-	const iconRef = useRef<HTMLDivElement>(null);
-	const [icon, setIcon] = useState<string>(
-		selected ? StarIcon : StarEmptyIcon,
-	);
-
-	useAnim(
-		() => {
-			anim.timeline({
-				defaults: {
-					duration: 0.2,
-				},
-			})
-				.to(iconRef.current, {
-					opacity: 0,
-					scale: 0.75,
-					onComplete() {
-						setIcon(selected ? StarIcon : StarEmptyIcon);
-					},
-				})
-				.to(
-					iconRef.current,
-					selected
-						? {
-								opacity: 1,
-								scale: 1,
-							}
-						: {
-								opacity: 0.75,
-								scale: 0.75,
-							},
-				);
-		},
-		{
-			dependencies: [
-				selected,
-			],
-		},
-	);
-
 	return (
 		<Icon
-			ref={iconRef}
-			icon={icon}
+			icon={selected ? StarIcon : StarEmptyIcon}
 			onClick={onClick}
 			tone={"secondary"}
 			theme={"light"}
 			size={"xl"}
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"Star-root",
+						],
+					},
+				},
+			}}
 		/>
 	);
 };
