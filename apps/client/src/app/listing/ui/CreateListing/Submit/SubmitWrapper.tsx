@@ -109,7 +109,7 @@ export const SubmitWrapper: FC = () => {
 			>
 				{files.map((photo) => {
 					const progress = photoProgress[photo.name] || 0;
-					if (progress >= 100) {
+					if (progress <= 0 || progress >= 100) {
 						return null;
 					}
 
