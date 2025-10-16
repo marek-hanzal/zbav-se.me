@@ -13,6 +13,7 @@ export namespace createListingStore {
 		| "category"
 		| "condition"
 		| "age"
+		| "location"
 		| "price";
 
 	export interface Store {
@@ -40,6 +41,10 @@ export namespace createListingStore {
 		price: number | undefined;
 		setPrice(price: number | undefined): void;
 		hasPrice: boolean;
+		//
+		location: string | undefined;
+		setLocation(location: string | undefined): void;
+		hasLocation: boolean;
 		//
 		missing: Missing[];
 		isValid: boolean;
@@ -205,12 +210,34 @@ export const createListingStore = ({
 		},
 		hasPrice: false,
 		//
+		location: undefined,
+		setLocation(location) {
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					location === undefined
+						? [
+								...missing,
+								"location",
+							]
+						: missing.filter((m) => m !== "location"),
+				);
+				return {
+					location,
+					hasLocation: location !== undefined,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
+			});
+		},
+		hasLocation: false,
+		//
 		missing: [
 			"category",
 			"categoryGroup",
 			"photos",
 			"condition",
 			"age",
+			"location",
 			"price",
 		],
 		isValid: false,

@@ -8,6 +8,7 @@ import {
 	Typo,
 } from "@use-pico/client";
 import { type FC, useState } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 
@@ -18,6 +19,9 @@ export namespace LocationWrapper {
 }
 
 export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
+	const useCreateListingStore = useCreateListingContext();
+	const location = useCreateListingStore((state) => state.location);
+	const setLocation = useCreateListingStore((state) => state.setLocation);
 	const [search, setSearch] = useState<Fulltext.Value>();
 	const locationQuery = withLocationQuery.useQuery(
 		{
@@ -51,7 +55,10 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 								<Fulltext
 									state={{
 										value: search,
-										set: setSearch,
+										set(value) {
+											setSearch(value);
+											setLocation(undefined);
+										},
 									}}
 									textPlaceholder={
 										"Location search (placeholder)"
@@ -89,7 +96,14 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 												},
 											}}
 											tone={"secondary"}
-											theme={"light"}
+											theme={
+												location === item.id
+													? "dark"
+													: "light"
+											}
+											onClick={() => {
+												setLocation(item.id);
+											}}
 										>
 											<Typo
 												label={item.address}
