@@ -38,6 +38,9 @@ withCategoryGroupApi.openapi(
 					"Return a category group based on the provided query",
 			},
 		},
+		tags: [
+			"category-group",
+		],
 	}),
 	async ({ json, req }) => {
 		const { filter, where, sort } = req.valid("json");
@@ -85,6 +88,9 @@ withCategoryGroupApi.openapi(
 					"Access collection of category groups based on provided query",
 			},
 		},
+		tags: [
+			"category-group",
+		],
 	}),
 	async ({ json, req }) => {
 		const { cursor, filter, where, sort } = req.valid("json");
@@ -132,6 +138,9 @@ withCategoryGroupApi.openapi(
 				description: "Return counts based on provided query",
 			},
 		},
+		tags: [
+			"category-group",
+		],
 	}),
 	async ({ json, req }) => {
 		const { filter, where } = req.valid("json");

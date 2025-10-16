@@ -65,6 +65,9 @@ withLocationApi.openapi(
 				description: "Return a location autocomplete",
 			},
 		},
+		tags: [
+			"location",
+		],
 	}),
 	async (c) => {
 		const { text, lang } = c.req.valid("query");

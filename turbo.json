@@ -13,6 +13,7 @@
 				"DATABASE_URL",
 				"GEOAPIFY",
 				"ORIGIN",
+				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
 			]
@@ -26,6 +27,7 @@
 				"DATABASE_URL",
 				"GEOAPIFY",
 				"ORIGIN",
+				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
 			]
@@ -59,6 +61,7 @@
 				"DATABASE_URL",
 				"GEOAPIFY",
 				"ORIGIN",
+				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
 			]

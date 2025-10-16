@@ -44,6 +44,9 @@ withMigrationApi.openapi(
 				description: "Executes app migrations",
 			},
 		},
+		tags: [
+			"misc",
+		],
 	}),
 	async (c) => {
 		return c.json(await database.migrate());

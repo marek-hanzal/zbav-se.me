@@ -5,6 +5,7 @@ declare const __COOKIE__: string | undefined;
 declare const __DATABASE_URL__: string | undefined;
 declare const __BETTER_AUTH_SECRET__: string | undefined;
 declare const __GEOAPIFY__: string | undefined;
+declare const __VERCEL_BLOB__: string | undefined;
 
 const AppEnvSchema = z.object({
 	DATABASE_URL: z.string().min(1, "Database URL is required"),
@@ -13,6 +14,7 @@ const AppEnvSchema = z.object({
 		.min(1, "Domain ORIGIN is required (used for CORS and auth)"),
 	COOKIE: z.string().min(1, "Cookie domain is required"),
 	BETTER_AUTH_SECRET: z.string().min(1, "Better Auth secret is required"),
+	VERCEL_BLOB: z.string().min(1, "Vercel blob is required"),
 	GEOAPIFY: z.string().min(1, "Geoapify API key is required"),
 });
 
@@ -27,6 +29,10 @@ export const AppEnv = AppEnvSchema.parse({
 		typeof __BETTER_AUTH_SECRET__ !== "undefined"
 			? __BETTER_AUTH_SECRET__
 			: process.env.BETTER_AUTH_SECRET,
+	VERCEL_BLOB:
+		typeof __VERCEL_BLOB__ !== "undefined"
+			? __VERCEL_BLOB__
+			: process.env.VERCEL_BLOB,
 	GEOAPIFY:
 		typeof __GEOAPIFY__ !== "undefined"
 			? __GEOAPIFY__

@@ -37,6 +37,9 @@ withCategoryApi.openapi(
 				description: "Return a category based on the provided query",
 			},
 		},
+		tags: [
+			"category",
+		],
 	}),
 	async ({ json, req }) => {
 		const { filter, where, sort } = req.valid("json");
@@ -85,6 +88,9 @@ withCategoryApi.openapi(
 					"Access collection of categories based on provided query",
 			},
 		},
+		tags: [
+			"category",
+		],
 	}),
 	async ({ json, req }) => {
 		const { cursor, filter, where, sort } = req.valid("json");
@@ -132,6 +138,9 @@ withCategoryApi.openapi(
 				description: "Return counts based on provided query",
 			},
 		},
+		tags: [
+			"category",
+		],
 	}),
 	async ({ json, req }) => {
 		const { filter, where } = req.valid("json");

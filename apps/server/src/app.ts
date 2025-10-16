@@ -6,6 +6,7 @@ import { secureHeaders } from "hono/secure-headers";
 import { auth } from "./auth";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
+import { withContentApi } from "./content/withContentApi";
 import { AppEnv } from "./env";
 import { withHealthApi } from "./health/withHealthApi";
 import { withLocationApi } from "./location/withLocationApi";
@@ -61,6 +62,7 @@ app.on(
 	(c) => auth.handler(c.req.raw),
 );
 //
+app.route("/api", withContentApi);
 app.route("/api", withCategoryGroupApi);
 app.route("/api", withCategoryApi);
 app.route("/api", withLocationApi);

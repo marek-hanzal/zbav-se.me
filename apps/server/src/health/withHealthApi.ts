@@ -25,6 +25,9 @@ withHealthApi.openapi(
 				description: "Just health check",
 			},
 		},
+		tags: [
+			"misc",
+		],
 	}),
 	(c) => {
 		return c.json({
