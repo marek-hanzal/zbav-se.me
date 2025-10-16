@@ -11,7 +11,7 @@ export function getRouter() {
 		defaultOptions: {
 			queries: {
 				placeholderData: keepPreviousData,
-				staleTime: 5 * 1000,
+				staleTime: 1000 * 60,
 			},
 		},
 	});
