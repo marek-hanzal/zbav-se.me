@@ -1,21 +1,15 @@
-01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
-    ref: Feed (title)
-    value: Nabídky
+086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
+    ref: Upload (title)
+    value: Vyber fotku
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
     ref: Upload (placeholder)
-    value: Vložit fotku
-0ef8e3349b91f51d6e11abf6652cfd85f7dfb2b5866e60f3399f72e6:
-    ref: xl
-    value: xl
-0f56fe6178af631591699c9b110f3bcecac4468dee2e40840ae64e31:
-    ref: block
-    value: block
-100ad85d9bf6453eafc226d6ec0b938ef153f4f78babd22de6992ed0:
-    ref: /$locale/register
-    value: /$locale/register
+    value: Můžeš fotit nebo vybrat něco z galerie
 12b361624b83def8b006029f7c829101e7fa11f7c209da351137ca8a:
     ref: User profile (description)
     value: Soukromé záležitosti, správa profilu, odhlášení apod.
+1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
+    ref: Missing required token(s). (title)
+    value: Missing required token(s). (title)
 149d82732fc8b67a04bb3fb42d09856cd8bf53dfbdd93100e929e091:
     ref: ID
     value: ID
@@ -24,6 +18,9 @@
     value:
         Konkurenční ceny, počet zobrazení a dalších interakcí. Snadno zjistíš,
         jak si tvůj inzerát stojí mezi ostatními.
+18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
+    ref: Login with passkey (title)
+    value: Login with passkey (title)
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
     ref: Loading...
     value: Loading...
@@ -36,6 +33,9 @@
 1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
     ref: Landing - Feature 2 (title)
     value: ⚡ Rychle k nalezení — v appce i zvenku
+1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
+    ref: Logout (title)
+    value: Logout (title)
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
     ref: Landing - Feature 1 (title) - hint
     value: "Provede tě rychlý průvodce: cvakneš fotky a pak už jen pár kliků —
@@ -50,9 +50,6 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
-2727e5a04d8acc225b3320799348e34eff9ac515e1130101baab751a:
-    ref: .
-    value: .
 282447aea716ad0adce959ef2fa721688cf8614506ecdfd8c1dcf052:
     ref: No tags (label)
     value: No tags (label)
@@ -88,6 +85,12 @@
 36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
     ref: Register (title)
     value: Přidejte se k nám! ❤️
+36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
+    ref: Login with passkey (message)
+    value: Login with passkey (message)
+38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
+    ref: Missing any token(s). (title)
+    value: Missing any token(s). (title)
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
     ref: Select item
     value: Select item
@@ -106,12 +109,6 @@
 3bff91cf3466a36353f54c389623d992c1ff32b26665795f7c022d58:
     ref: Login with social (message)
     value: Na tomto ještě pracujeme, ale všechno bude!
-3cb7081538aad3702b165e3593b4dc734ff36a39aebe3917a31c5814:
-    ref: flex flex-col gap-1
-    value: flex flex-col gap-1
-3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
-    ref: My Bag (title)
-    value: Můj seznam
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -127,9 +124,6 @@
 43da3b2f0c171b22d86d7ec47f018c7ef162dcbaad6247d90fa47331:
     ref: Create listing (description)
     value: Máš chuť prodávat? Stačí projít průvodce a odeslat nabídku!
-4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
-    ref: light
-    value: light
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
     ref: What - buyers (title)
     value: Chceš něco koupit?
@@ -138,6 +132,9 @@
     value:
         ...aby bylo možné inzerát patřičně doručit zájemcům, je potřeba vybrat
         kategorii, kam vlastně tvůj inzerát patří.
+52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
+    ref: Missing any token(s). (message)
+    value: Missing any token(s). (message)
 53285c44368f8f4d2c9df2f9614f265d12112e00bcaa0e7f24adb2d0:
     ref: Landing - Contact (title)
     value: Jsme tu pro vás!
@@ -150,6 +147,9 @@
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
     ref: Invalid on/off value
     value: Invalid on/off value
+591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
+    ref: Logout (description)
+    value: Logout (description)
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
     ref: Field errors (title)
     value: Field errors (title)
@@ -180,9 +180,6 @@
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
     ref: Landing - Hero (title)
     value: Nakupuješ nebo prodáváš?
-6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
-    ref: secondary
-    value: secondary
 6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
     ref: Condition - Overall (title)
     value: Celkový stav
@@ -222,6 +219,9 @@
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
+891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
+    ref: Missing required token(s). (message)
+    value: Missing required token(s). (message)
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
     ref: Previous (tour)
     value: Předchozí
@@ -231,6 +231,9 @@
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
     value: Nabídky
+904e1dfdd115698ca60d626134dd92d5f3362df3cd4bcf8fde0501de:
+    ref: any
+    value: any
 91f3a6e4bee345872696ff6ef6b88f3aac5a451a2c531c92ddf20865:
     ref: Login with passkey
     value: Přihlásit se klíčem
@@ -252,111 +255,6 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Co hledáme?
-Category accessories:
-    static: true
-    value: Příslušenství
-Category bags:
-    static: true
-    value: Baťůžky/tašky
-Category bathroom:
-    static: true
-    value: Koupelna
-Category bedding:
-    static: true
-    value: Ložniny
-Category books:
-    static: true
-    value: Knihy
-Category clothing:
-    static: true
-    value: Oblečení
-Category cosmetics:
-    static: true
-    value: Kosmetika
-Category decor:
-    static: true
-    value: Dekorace
-Category desktop:
-    static: true
-    value: Stolní počítače
-Category dishes:
-    static: true
-    value: Nádobí
-Category furniture:
-    static: true
-    value: Nábytek
-Category group automotive:
-    static: true
-    value: Auto/moto
-Category group clothes:
-    static: true
-    value: Oblečení
-Category group electronics:
-    static: true
-    value: Elektronika
-Category group garden:
-    static: true
-    value: Zahrada
-Category group hobbies:
-    static: true
-    value: Zábava
-Category group home:
-    static: true
-    value: Domácnost
-Category group kitchen:
-    static: true
-    value: Kuchyně
-Category group other:
-    static: true
-    value: Ostatní
-Category group personal:
-    static: true
-    value: Osobní věci
-Category group pets:
-    static: true
-    value: Zvířata
-Category group reality:
-    static: true
-    value: Reality
-Category jewelry:
-    static: true
-    value: Šperky
-Category laptop:
-    static: true
-    value: Notebooky
-Category lighting:
-    static: true
-    value: Osvětlení
-Category other:
-    static: true
-    value: Ostatní
-Category parts:
-    static: true
-    value: Díly
-Category pc-components:
-    static: true
-    value: PC komponenty
-Category phone:
-    static: true
-    value: Telefony
-Category plants:
-    static: true
-    value: Rostliny
-Category seeds:
-    static: true
-    value: Semínka
-Category shoes:
-    static: true
-    value: Boty
-Category tablet:
-    static: true
-    value: Tablety
-Category tv:
-    static: true
-    value: Televize
-Category watch:
-    static: true
-    value: Hodinky
 Condition - Age [0] (hint):
     static: true
     value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
@@ -444,9 +342,6 @@ ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
 af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
     ref: Drag 'n' drop a file here
     value: Drag 'n' drop a file here
-b05cd8a2bc5f452fc0201f70ed86b8371612b5423f562bb8bf7e1a66:
-    ref: /$locale/login
-    value: /$locale/login
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
     ref: Invalid data provided (title)
     value: Invalid data provided (title)
@@ -518,6 +413,9 @@ c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
+ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
+    ref: Upload - disabled (placeholder)
+    value: Musíš vybrat předchozí fotku pro odemčení této.
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
     ref: Location not found (badge)
     value: Adres známe hodně, ale tuhle ne
@@ -533,15 +431,12 @@ d710bfd0568645758fb1e8d34e64295ff720d1d298cdf773b578d404:
 d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
     ref: Login failed
     value: Přihlášení se nezdařilo
-d9edf4d0a5869aa151810c0e2dd02abf4783b347885370f1c921550c:
-    ref: bold
-    value: bold
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
-df728cc2507e936719ccb385e613cc1b289f32ee7e3d41a54f2cad90:
-    ref: link
-    value: link
+dd8ddfd7304520a53abf36011a40a37e9cc33e52eadf58d169a4a4b0:
+    ref: fetching
+    value: fetching
 e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
     ref: Email is required
     value: Email je povinný, vyplň ho prosím...
@@ -572,6 +467,9 @@ ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
 ecb1f1ebbb5275fd65cd2f798e5aebbabe7da4c59ea7b0a8e06ceb24:
     ref: Sort
     value: Sort
+ecc602947a2a601b6c9f099ca41d26c7f3910eff377fac630e5e43d2:
+    ref: danger
+    value: danger
 ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
     ref: No category selected
     value: Kategorie je potřeba...
@@ -596,6 +494,9 @@ f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
 f944508d3e1d2f448327a1aff7ba61631986230963411e68afa6dc21:
     ref: Landing - Feature 5 (title)
     value: 💯 Přehled v číslech, co pomáhají
+faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
+    ref: loading
+    value: loading
 fc760639d5d21b56954f100ce9ec8b936af75365d8b8a91d07203e1b:
     ref: Remove all
     value: Remove all

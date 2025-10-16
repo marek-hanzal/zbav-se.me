@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, Tx } from "@use-pico/client";
+import { Container } from "@use-pico/client";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { Nav } from "~/app/ui/nav/Nav";
 import { Title } from "~/app/ui/title/Title";
@@ -8,13 +8,10 @@ export const Route = createFileRoute("/$locale/app/bag")({
 	component() {
 		return (
 			<Container layout={"vertical"}>
-				<Title icon={BagIcon}>
-					<Tx
-						label={"My Bag (title)"}
-						size={"xl"}
-						font={"bold"}
-					/>
-				</Title>
+				<Title
+					icon={BagIcon}
+					title={"My Bag (title)"}
+				/>
 				<Container overflow={"vertical"}>
 					<h1>Et modi error aut dicta quibusdam. </h1>
 					<p>

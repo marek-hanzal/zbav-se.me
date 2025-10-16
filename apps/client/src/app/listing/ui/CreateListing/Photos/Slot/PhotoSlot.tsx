@@ -236,7 +236,12 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				{src ? null : (
 					<Status
 						icon={PhotoIcon}
-						textTitle={"Upload(placeholder)"}
+						textTitle={"Upload (title)"}
+						textMessage={
+							props.disabled
+								? "Upload - disabled (placeholder)"
+								: "Upload (placeholder)"
+						}
 						tone={"primary"}
 					/>
 				)}
