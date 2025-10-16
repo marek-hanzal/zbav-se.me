@@ -1,5 +1,5 @@
 import { useParams } from "@tanstack/react-router";
-import { Button, LinkTo, Status, Tx, UserIcon } from "@use-pico/client";
+import { Button, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
@@ -59,71 +59,69 @@ export const HeroSheet: FC = () => {
 						"px-12",
 					])}
 				>
-					<Button
-						iconEnabled={UnlockIcon}
-						iconProps={{
-							size: "sm",
+					<LinkTo
+						to={"/$locale/login"}
+						params={{
+							locale,
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"w-full",
-									],
-								},
-								root: {
-									class: [
-										"w-full",
-									],
-								},
-							},
-						}}
-						size={"xl"}
 					>
-						<LinkTo
-							to={"/$locale/login"}
-							params={{
-								locale,
+						<Button
+							iconEnabled={UnlockIcon}
+							iconProps={{
+								size: "sm",
 							}}
-						>
-							<Tx label={"Login (hero)"} />
-						</LinkTo>
-					</Button>
+							tone={"secondary"}
+							theme={"dark"}
+							tweak={{
+								slot: {
+									wrapper: {
+										class: [
+											"w-full",
+										],
+									},
+									root: {
+										class: [
+											"w-full",
+										],
+									},
+								},
+							}}
+							size={"xl"}
+							label={"Login (hero)"}
+						/>
+					</LinkTo>
 
-					<Button
-						iconEnabled={UserIcon}
-						iconProps={{
-							size: "sm",
+					<LinkTo
+						to={"/$locale/register"}
+						params={{
+							locale,
 						}}
-						tone={"primary"}
-						theme={"dark"}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"w-full",
-									],
-								},
-								root: {
-									class: [
-										"w-full",
-									],
-								},
-							},
-						}}
-						size={"xl"}
 					>
-						<LinkTo
-							to={"/$locale/register"}
-							params={{
-								locale,
+						<Button
+							iconEnabled={UserIcon}
+							iconProps={{
+								size: "sm",
 							}}
-						>
-							<Tx label={"Register (hero)"} />
-						</LinkTo>
-					</Button>
+							tone={"primary"}
+							theme={"dark"}
+							tweak={{
+								slot: {
+									wrapper: {
+										class: [
+											"w-full",
+										],
+									},
+									root: {
+										class: [
+											"w-full",
+										],
+									},
+								},
+							}}
+							size={"xl"}
+							label={"Register (hero)"}
+						/>
+					</LinkTo>
 				</div>
 			</div>
 		</Sheet>

@@ -4,14 +4,7 @@ import {
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import {
-	Button,
-	Container,
-	LinkTo,
-	Status,
-	Tx,
-	UserIcon,
-} from "@use-pico/client";
+import { Button, Container, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 import { Sheet } from "~/app/sheet/Sheet";
 import { DashboardIcon } from "~/app/ui/icon/DashboardIcon";
@@ -50,8 +43,6 @@ export const Route = createFileRoute("/$locale/app/user")({
 				layout={"vertical-full"}
 				overflow={"vertical"}
 				snap={"vertical-start"}
-				// tone={"primary"}
-				// theme={"light"}
 				gap={"md"}
 			>
 				<PrimaryOverlay />
@@ -62,24 +53,24 @@ export const Route = createFileRoute("/$locale/app/user")({
 							icon={UserIcon}
 							textTitle={user.email}
 							textMessage={user.name}
-						>
-							<LinkTo
-								to={"/$locale/app/dashboard"}
-								params={{
-									locale,
-								}}
-								tone="unset"
-								theme="unset"
-							>
-								<Button
-									iconEnabled={DashboardIcon}
-									tone="secondary"
-									theme="light"
+							action={
+								<LinkTo
+									to={"/$locale/app/dashboard"}
+									params={{
+										locale,
+									}}
+									tone="unset"
+									theme="unset"
 								>
-									<Tx label={"Back to Dashboard (label)"} />
-								</Button>
-							</LinkTo>
-						</Status>
+									<Button
+										iconEnabled={DashboardIcon}
+										tone="secondary"
+										theme="light"
+										label={"Back to Dashboard (label)"}
+									/>
+								</LinkTo>
+							}
+						/>
 					</div>
 				</Sheet>
 
@@ -88,15 +79,15 @@ export const Route = createFileRoute("/$locale/app/user")({
 						icon={LockIcon}
 						textTitle={"Logout (title)"}
 						textMessage={"Logout (description)"}
-					>
-						<Button
-							onClick={() => signOutMutation.mutate({})}
-							tone="danger"
-							theme={"light"}
-						>
-							<Tx label={"Sign out"} />
-						</Button>
-					</Status>
+						action={
+							<Button
+								onClick={() => signOutMutation.mutate({})}
+								tone="danger"
+								theme={"light"}
+								label={"Sign out"}
+							/>
+						}
+					/>
 				</Sheet>
 			</Container>
 		);

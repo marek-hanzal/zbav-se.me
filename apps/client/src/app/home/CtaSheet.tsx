@@ -1,5 +1,5 @@
 import { useParams } from "@tanstack/react-router";
-import { Button, LinkTo, Status, Tx, UserIcon } from "@use-pico/client";
+import { Button, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
@@ -27,24 +27,23 @@ export const CtaSheet: FC = () => {
 							"w-full",
 						])}
 					>
-						<Button
-							tone={"primary"}
-							theme={"dark"}
-							iconEnabled={UserIcon}
-							iconProps={{
-								size: "md",
+						<LinkTo
+							to={"/$locale/register"}
+							params={{
+								locale,
 							}}
-							size={"xl"}
 						>
-							<LinkTo
-								to={"/$locale/register"}
-								params={{
-									locale,
+							<Button
+								tone={"primary"}
+								theme={"dark"}
+								iconEnabled={UserIcon}
+								iconProps={{
+									size: "md",
 								}}
-							>
-								<Tx label={"Register (cta)"} />
-							</LinkTo>
-						</Button>
+								size={"xl"}
+								label={"Register (cta)"}
+							/>
+						</LinkTo>
 					</div>
 				</Status>
 			</div>

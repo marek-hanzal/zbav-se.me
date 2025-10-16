@@ -1,4 +1,4 @@
-import { Button, Status, Tx } from "@use-pico/client";
+import { Button, Status } from "@use-pico/client";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Sheet } from "~/app/sheet/Sheet";
@@ -37,9 +37,8 @@ export const SubmitWrapper: FC = () => {
 					tone={"secondary"}
 					theme={"dark"}
 					size={"xl"}
-				>
-					<Tx label={"Submit listing (button)"} />
-				</Button>
+					label={"Submit listing (button)"}
+				/>
 			</Status>
 		</Sheet>
 	);

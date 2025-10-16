@@ -9,7 +9,7 @@ export const TileCls = contract(ThemeCls.contract)
 	.root({
 		root: {
 			class: [
-				"p-4",
+				"Tile-root",
 				"flex",
 				"flex-col",
 				"items-center",

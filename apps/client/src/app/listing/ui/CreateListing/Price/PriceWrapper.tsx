@@ -3,7 +3,6 @@ import {
 	Container,
 	SnapperNav,
 	Status,
-	Tx,
 	useSnapperNav,
 } from "@use-pico/client";
 import { type FC, useRef, useState } from "react";
@@ -114,9 +113,8 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 								size={"xl"}
 								tone={"secondary"}
 								theme={"dark"}
-							>
-								<Tx label={"Price not set (button)"} />
-							</Button>
+								label={"Price not set (button)"}
+							/>
 						) : (
 							<Price
 								locale={locale}

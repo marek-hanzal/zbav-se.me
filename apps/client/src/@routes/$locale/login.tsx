@@ -294,9 +294,8 @@ export const Route = createFileRoute("/$locale/login")({
 								size={"lg"}
 								tone={"primary"}
 								theme={"dark"}
-							>
-								<Tx label={"Login with passkey"} />
-							</Button>
+								label={"Login with passkey"}
+							/>
 						</Status>
 					</Sheet>
 
