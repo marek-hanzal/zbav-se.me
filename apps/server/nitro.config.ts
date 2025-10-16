@@ -22,6 +22,8 @@ export default defineNitroConfig({
 		__DATABASE_URL__: JSON.stringify(process.env.DATABASE_URL),
 		__COOKIE__: JSON.stringify(process.env.COOKIE),
 		__BETTER_AUTH_SECRET__: JSON.stringify(process.env.BETTER_AUTH_SECRET),
+		__VERCEL_BLOB__: JSON.stringify(process.env.VERCEL_BLOB),
 		__GEOAPIFY__: JSON.stringify(process.env.GEOAPIFY),
+		__VITE_API__: JSON.stringify(process.env.VITE_API),
 	},
 });
