@@ -132,145 +132,158 @@ export const Route = createFileRoute("/$locale/login")({
 							>
 								<Status
 									icon={UserIcon}
-									textTitle={"Sign in"}
-									textMessage={"Register (link)"}
+									textTitle={"Sign in (title)"}
 								>
-									<LinkTo
-										to={"/$locale/register"}
-										params={{
-											locale,
+									<form
+										onSubmit={(e) => {
+											e.preventDefault();
+											e.stopPropagation();
+											form.handleSubmit();
 										}}
+										className={"space-y-2"}
 									>
-										<Tx
-											label={"Register (link)"}
-											tone={"link"}
-										/>
-									</LinkTo>
-								</Status>
+										<form.AppField name={"email"}>
+											{(field) => (
+												<FormField
+													id={field.name}
+													name={field.name}
+													label={
+														<Tx label={"Email"} />
+													}
+													meta={field.state.meta}
+												>
+													{(props) => (
+														<field.TextInput
+															type={"email"}
+															autoComplete={
+																"email webauthn"
+															}
+															placeholder={translator.text(
+																"Enter your email",
+															)}
+															value={
+																field.state
+																	.value ?? ""
+															}
+															onBlur={
+																field.handleBlur
+															}
+															onChange={(e) =>
+																field.handleChange(
+																	e.target
+																		.value,
+																)
+															}
+															{...props}
+														/>
+													)}
+												</FormField>
+											)}
+										</form.AppField>
 
-								<form
-									onSubmit={(e) => {
-										e.preventDefault();
-										e.stopPropagation();
-										form.handleSubmit();
-									}}
-									className={"space-y-2"}
-								>
-									<form.AppField name={"email"}>
-										{(field) => (
-											<FormField
-												id={field.name}
-												name={field.name}
-												label={<Tx label={"Email"} />}
-												meta={field.state.meta}
-											>
-												{(props) => (
-													<field.TextInput
-														type={"email"}
-														autoComplete={
-															"email webauthn"
-														}
-														placeholder={translator.text(
-															"Enter your email",
-														)}
-														value={
-															field.state.value ??
-															""
-														}
-														onBlur={
-															field.handleBlur
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
-														{...props}
-													/>
-												)}
-											</FormField>
-										)}
-									</form.AppField>
+										<form.AppField name={"password"}>
+											{(field) => (
+												<FormField
+													id={field.name}
+													name={field.name}
+													label={
+														<Tx
+															label={"Password"}
+														/>
+													}
+													meta={field.state.meta}
+												>
+													{(props) => (
+														<field.TextInput
+															type={"password"}
+															autoComplete={
+																"current-password webauthn"
+															}
+															value={
+																field.state
+																	.value ?? ""
+															}
+															onChange={(e) =>
+																field.handleChange(
+																	e.target
+																		.value,
+																)
+															}
+															onBlur={
+																field.handleBlur
+															}
+															placeholder={translator.text(
+																"Enter your password",
+															)}
+															{...props}
+														/>
+													)}
+												</FormField>
+											)}
+										</form.AppField>
 
-									<form.AppField name={"password"}>
-										{(field) => (
-											<FormField
-												id={field.name}
-												name={field.name}
-												label={
-													<Tx label={"Password"} />
+										{signInMutation.isError && (
+											<div
+												className={
+													"rounded-md bg-red-50 p-3 text-red-700"
 												}
-												meta={field.state.meta}
 											>
-												{(props) => (
-													<field.TextInput
-														type={"password"}
-														autoComplete={
-															"current-password webauthn"
-														}
-														value={
-															field.state.value ??
-															""
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
-														onBlur={
-															field.handleBlur
-														}
-														placeholder={translator.text(
-															"Enter your password",
-														)}
-														{...props}
+												{signInMutation.error instanceof
+												Error ? (
+													signInMutation.error.message
+												) : (
+													<Tx
+														label={"Login failed"}
 													/>
 												)}
-											</FormField>
+											</div>
 										)}
-									</form.AppField>
 
-									{signInMutation.isError && (
 										<div
 											className={
-												"rounded-md bg-red-50 p-3 text-red-700"
+												"flex flex-col items-center justify-center gap-2 w-full"
 											}
 										>
-											{signInMutation.error instanceof
-											Error ? (
-												signInMutation.error.message
-											) : (
-												<Tx label={"Login failed"} />
-											)}
-										</div>
-									)}
+											<form.SubmitButton
+												iconEnabled={UnlockIcon}
+												iconDisabled={UnlockIcon}
+												iconProps={{
+													size: "sm",
+												}}
+												disabled={
+													signInMutation.isPending
+												}
+												tone={"primary"}
+												theme={"dark"}
+												size={"lg"}
+											>
+												{signInMutation.isPending ? (
+													<Tx
+														label={"Please wait..."}
+													/>
+												) : (
+													<Tx
+														label={
+															"Sign in (button)"
+														}
+													/>
+												)}
+											</form.SubmitButton>
 
-									<div
-										className={
-											"inline-flex items-center justify-center gap-4 w-full"
-										}
-									>
-										<form.SubmitButton
-											iconEnabled={UnlockIcon}
-											iconDisabled={UnlockIcon}
-											iconProps={{
-												size: "sm",
-											}}
-											disabled={signInMutation.isPending}
-											tone={"primary"}
-											theme={"dark"}
-											size={"lg"}
-										>
-											{signInMutation.isPending ? (
-												<Tx label={"Please wait..."} />
-											) : (
+											<LinkTo
+												to={"/$locale/register"}
+												params={{
+													locale,
+												}}
+											>
 												<Tx
-													label={"Sign in (button)"}
+													label={"Register (link)"}
+													tone={"link"}
 												/>
-											)}
-										</form.SubmitButton>
-									</div>
-								</form>
+											</LinkTo>
+										</div>
+									</form>
+								</Status>
 							</VariantProvider>
 						</Container>
 					</Sheet>
@@ -280,23 +293,24 @@ export const Route = createFileRoute("/$locale/login")({
 							icon={PassKeyIcon}
 							textTitle={"Login with passkey (title)"}
 							textMessage={"Login with passkey (message)"}
-						>
-							<Button
-								iconEnabled={UnlockIcon}
-								iconDisabled={UnlockIcon}
-								iconProps={{
-									size: "sm",
-								}}
-								onClick={() => {
-									passkeyMutation.mutate();
-								}}
-								disabled={passkeyMutation.isPending}
-								size={"lg"}
-								tone={"primary"}
-								theme={"dark"}
-								label={"Login with passkey"}
-							/>
-						</Status>
+							action={
+								<Button
+									iconEnabled={UnlockIcon}
+									iconDisabled={UnlockIcon}
+									iconProps={{
+										size: "sm",
+									}}
+									onClick={() => {
+										passkeyMutation.mutate();
+									}}
+									disabled={passkeyMutation.isPending}
+									size={"lg"}
+									tone={"primary"}
+									theme={"dark"}
+									label={"Login with passkey"}
+								/>
+							}
+						/>
 					</Sheet>
 
 					<Sheet>
