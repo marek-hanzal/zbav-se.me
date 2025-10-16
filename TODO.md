@@ -1,6 +1,7 @@
 # TODO
 
-- Submit searches (fulltext) by a button; timeout is not usable on mobile
+- Simplify price -> Just dial with price and done
+
 - Extract "local" states (search and co.) into store so it could be controlled between pages (e.g. by removing
     selection and search when category group changes )
 - Chrome on Android fucks up the page when scrolling down - try to solve it by svh or somehow locking the page?

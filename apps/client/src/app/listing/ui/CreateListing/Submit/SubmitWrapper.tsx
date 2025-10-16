@@ -31,15 +31,16 @@ export const SubmitWrapper: FC = () => {
 				icon={SendPackageIcon}
 				textTitle={"Submit listing - status (title)"}
 				tone={"secondary"}
-			>
-				<Button
-					iconEnabled={CheckIcon}
-					tone={"secondary"}
-					theme={"dark"}
-					size={"xl"}
-					label={"Submit listing (button)"}
-				/>
-			</Status>
+				action={
+					<Button
+						iconEnabled={CheckIcon}
+						tone={"secondary"}
+						theme={"dark"}
+						size={"xl"}
+						label={"Submit listing (button)"}
+					/>
+				}
+			/>
 		</Sheet>
 	);
 };
