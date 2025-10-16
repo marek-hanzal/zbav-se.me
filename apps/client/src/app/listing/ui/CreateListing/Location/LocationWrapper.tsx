@@ -56,6 +56,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 									textPlaceholder={
 										"Location search (placeholder)"
 									}
+									withSubmit
 								/>
 								{search ? null : (
 									<Tx

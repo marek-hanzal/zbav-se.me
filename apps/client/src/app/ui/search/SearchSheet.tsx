@@ -33,7 +33,48 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 
 	return (
 		<Sheet>
-			
+			<Status
+				icon={SearchIcon}
+				textTitle={textTitle}
+				textMessage={textMessage}
+				action={
+					<Fulltext
+						ref={fulltextRef}
+						state={state}
+						textPlaceholder={textPlaceholder}
+						withSubmit
+					/>
+				}
+			>
+				<Data
+					result={query}
+					renderSuccess={({ data }) => {
+						return (
+							<Badge
+								size={"xl"}
+								tone={"secondary"}
+								theme={"light"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"transition-opacity",
+												data.length > 0
+													? [
+															"opacity-0",
+														]
+													: undefined,
+											],
+										},
+									},
+								}}
+							>
+								{textNotFound}
+							</Badge>
+						);
+					}}
+				/>
+			</Status>
 		</Sheet>
 	);
 };
