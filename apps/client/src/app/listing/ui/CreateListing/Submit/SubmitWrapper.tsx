@@ -1,9 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Status } from "@use-pico/client";
+import { Button, Progress, Status } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
 import { upload } from "@vercel/blob/client";
 import PQueue from "p-queue";
 import type { FC } from "react";
+import { useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
@@ -14,44 +15,50 @@ export const SubmitWrapper: FC = () => {
 	const missing = useCreateListingStore((store) => store.missing);
 	const photos = useCreateListingStore((store) => store.photos);
 
-	const uploadContentMutation = useMutation<any, Error, (File | undefined)[]>(
-		{
-			mutationKey: [
-				"content",
-				"upload",
-			],
-			async mutationFn(photos) {
-				const queue = new PQueue({
-					concurrency: 3,
-				});
+	const files = photos.filter((photo) => !!photo);
 
-				photos
-					.filter((photo) => !!photo)
-					.map(async (photo) => {
-						queue.add(() =>
-							upload(photo.name, photo, {
-								access: "public",
-								contentType: photo.type,
-								handleUploadUrl: linkTo({
-									base: import.meta.env.VITE_API,
-									href: "/api/content/upload",
-								}),
-								// clientPayload: null,
-								onUploadProgress({ percentage }) {
-									console.log(percentage);
-								},
-								multipart: true,
-								// onProgress?.(
-								// 	total
-								// 		? Math.round((sent / total) * 100)
-								// 		: 0,
-								// ),
-							}),
-						);
-					});
-			},
-		},
+	// Track progress for each photo individually
+	const [photoProgress, setPhotoProgress] = useState<Record<string, number>>(
+		{},
 	);
+
+	const uploadContentMutation = useMutation<any, Error, File[]>({
+		mutationKey: [
+			"content",
+			"upload",
+		],
+		async mutationFn(photos) {
+			// Reset progress state
+			setPhotoProgress({});
+
+			const queue = new PQueue({
+				concurrency: 3,
+			});
+
+			const uploadPromises = photos.map(async (photo) => {
+				return queue.add(() =>
+					upload(photo.name, photo, {
+						access: "public",
+						contentType: photo.type,
+						handleUploadUrl: linkTo({
+							base: import.meta.env.VITE_API,
+							href: "/api/content/upload",
+						}),
+						onUploadProgress({ percentage }) {
+							setPhotoProgress((prev) => ({
+								...prev,
+								[photo.name]: percentage,
+							}));
+						},
+						multipart: true,
+					}),
+				);
+			});
+
+			// Wait for all uploads to complete
+			return Promise.all(uploadPromises);
+		},
+	});
 
 	if (missing.length > 0) {
 		return (
@@ -84,11 +91,43 @@ export const SubmitWrapper: FC = () => {
 						label={"Submit listing (button)"}
 						disabled={uploadContentMutation.isPending}
 						onClick={() => {
-							uploadContentMutation.mutate(photos);
+							uploadContentMutation.mutate(files);
 						}}
 					/>
 				}
-			/>
+				tweak={{
+					slot: {
+						body: {
+							class: [
+								"flex",
+								"flex-col",
+								"gap-2",
+							],
+						},
+					},
+				}}
+			>
+				{files.map((photo) => {
+					const progress = photoProgress[photo.name] || 0;
+					if (progress >= 100) {
+						return null;
+					}
+
+					return (
+						<Progress
+							key={photo?.name}
+							value={progress}
+							size={"lg"}
+							tweak={{
+								variant: {
+									tone: "primary",
+									theme: "dark",
+								},
+							}}
+						/>
+					);
+				})}
+			</Status>
 		</Sheet>
 	);
 };
