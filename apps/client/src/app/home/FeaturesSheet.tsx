@@ -10,7 +10,7 @@ export const FeaturesSheet: FC = () => {
 	return (
 		<Sheet>
 			<Status
-				textTitle={<Tx label={"Landing - Feature overview (title)"} />}
+				textTitle={"Landing - Feature overview (title)"}
 				tone="secondary"
 				tweak={{
 					slot: {

@@ -30,8 +30,8 @@ export const HeroSheet: FC = () => {
 				</div>
 
 				<Status
-					textTitle={<Tx label={"Landing - Hero (title)"} />}
-					textMessage={<Tx label={"Landing - Hero (subtitle)"} />}
+					textTitle={"Landing - Hero (title)"}
+					textMessage={"Landing - Hero (subtitle)"}
 					tweak={{
 						slot: {
 							body: {

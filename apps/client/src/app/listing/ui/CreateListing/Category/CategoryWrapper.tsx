@@ -7,7 +7,6 @@ import {
 	SnapperNav,
 	SpinnerIcon,
 	Status,
-	Tx,
 	useSelection,
 	useSnapperNav,
 } from "@use-pico/client";
@@ -101,14 +100,8 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 					icon={CategoryGroupIcon}
 					tone={"secondary"}
 					theme={"light"}
-					textTitle={<Tx label="No category selected" />}
-					textMessage={
-						<Tx
-							label={
-								"Please select a category group first to see available categories"
-							}
-						/>
-					}
+					textTitle="No category selected"
+					textMessage="Please select a category group first to see available categories"
 					tweak={{
 						slot: {
 							title: {

@@ -132,21 +132,21 @@ export const Route = createFileRoute("/$locale/login")({
 							>
 								<Status
 									icon={UserIcon}
-									textTitle={<Tx label={"Sign in"} />}
-									textMessage={
-										<LinkTo
-											to={"/$locale/register"}
-											params={{
-												locale,
-											}}
-										>
-											<Tx
-												label={"Register (link)"}
-												tone={"link"}
-											/>
-										</LinkTo>
-									}
-								/>
+									textTitle={"Sign in"}
+									textMessage={"Register (link)"}
+								>
+									<LinkTo
+										to={"/$locale/register"}
+										params={{
+											locale,
+										}}
+									>
+										<Tx
+											label={"Register (link)"}
+											tone={"link"}
+										/>
+									</LinkTo>
+								</Status>
 
 								<form
 									onSubmit={(e) => {
@@ -278,12 +278,8 @@ export const Route = createFileRoute("/$locale/login")({
 					<Sheet>
 						<Status
 							icon={PassKeyIcon}
-							textTitle={
-								<Tx label={"Login with passkey (title)"} />
-							}
-							textMessage={
-								<Tx label={"Login with passkey (message)"} />
-							}
+							textTitle={"Login with passkey (title)"}
+							textMessage={"Login with passkey (message)"}
 						>
 							<Button
 								iconEnabled={UnlockIcon}
@@ -307,12 +303,8 @@ export const Route = createFileRoute("/$locale/login")({
 					<Sheet>
 						<Status
 							icon={SocialIcon}
-							textTitle={
-								<Tx label={"Login with social (title)"} />
-							}
-							textMessage={
-								<Tx label={"Login with social (message)"} />
-							}
+							textTitle={"Login with social (title)"}
+							textMessage={"Login with social (message)"}
 							tone={"primary"}
 							theme={"light"}
 						/>

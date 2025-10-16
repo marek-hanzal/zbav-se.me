@@ -11,8 +11,8 @@ export const ConditionAge: FC = () => {
 	return (
 		<Condition
 			icon={"icon-[hugeicons--package-process]"}
-			textTitle={<Tx label={"Condition - Age (title)"} />}
-			textDescription={<Tx label={"Condition - Age (description)"} />}
+			textTitle={"Condition - Age (title)"}
+			textDescription={"Condition - Age (description)"}
 			textHint={<Tx label={`Condition - Age [${age}] (hint)`} />}
 			value={age}
 			onChange={setAge}

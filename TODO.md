@@ -1,5 +1,8 @@
 # TODO
 
+- Submit searches (fulltext) by a button; timeout is not usable on mobile
+- Extract "local" states (search and co.) into store so it could be controlled between pages (e.g. by removing
+    selection and search when category group changes )
 - Chrome on Android fucks up the page when scrolling down - try to solve it by svh or somehow locking the page?
 - Edit snapper - value & edit
 - Show snapper with selected item (by finding an element -> scroll to it?)

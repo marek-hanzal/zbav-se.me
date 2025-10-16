@@ -77,21 +77,20 @@ export const Route = createFileRoute("/$locale/register")({
 					>
 						<Status
 							icon={UserIcon}
-							textTitle={<Tx label={"Register (title)"} />}
-							textMessage={
-								<LinkTo
-									to={"/$locale/login"}
-									params={{
-										locale,
-									}}
-								>
-									<Tx
-										label={"Login (link)"}
-										tone={"link"}
-									/>
-								</LinkTo>
-							}
-						/>
+							textTitle={"Register (title)"}
+						>
+							<LinkTo
+								to={"/$locale/login"}
+								params={{
+									locale,
+								}}
+							>
+								<Tx
+									label={"Login (link)"}
+									tone={"link"}
+								/>
+							</LinkTo>
+						</Status>
 
 						<form
 							onSubmit={(e) => {

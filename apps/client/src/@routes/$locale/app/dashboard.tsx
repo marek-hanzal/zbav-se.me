@@ -1,11 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	Container,
-	LinkTo,
-	type LinkToCls,
-	Tx,
-	UserIcon,
-} from "@use-pico/client";
+import { Container, LinkTo, type LinkToCls, UserIcon } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
@@ -48,10 +42,8 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 					>
 						<Tile
 							icon={PostIcon}
-							textTitle={<Tx label={"Create listing (label)"} />}
-							textMessage={
-								<Tx label={"Create listing (description)"} />
-							}
+							textTitle={"Create listing (label)"}
+							textMessage={"Create listing (description)"}
 						/>
 					</LinkTo>
 
@@ -64,8 +56,8 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 					>
 						<Tile
 							icon={FeedIcon}
-							textTitle={<Tx label={"Feed (label)"} />}
-							textMessage={<Tx label={"Feed (description)"} />}
+							textTitle={"Feed (label)"}
+							textMessage={"Feed (description)"}
 						/>
 					</LinkTo>
 
@@ -78,8 +70,8 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 					>
 						<Tile
 							icon={BagIcon}
-							textTitle={<Tx label={"Bag (label)"} />}
-							textMessage={<Tx label={"Bag (description)"} />}
+							textTitle={"Bag (label)"}
+							textMessage={"Bag (description)"}
 						/>
 					</LinkTo>
 
@@ -92,10 +84,8 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 					>
 						<Tile
 							icon={UserIcon}
-							textTitle={<Tx label={"User profile (label)"} />}
-							textMessage={
-								<Tx label={"User profile (description)"} />
-							}
+							textTitle={"User profile (label)"}
+							textMessage={"User profile (description)"}
 						/>
 					</LinkTo>
 				</div>

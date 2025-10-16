@@ -11,11 +11,11 @@ export namespace Condition {
 		/**
 		 * Translation label for the title
 		 */
-		textTitle: ReactNode;
+		textTitle: string;
 		/**
 		 * Translation label for the description
 		 */
-		textDescription: ReactNode;
+		textDescription: string;
 		/**
 		 * Translation label for the hint (should include value placeholder)
 		 */

@@ -7,7 +7,7 @@ export namespace SearchSheet {
 	export interface Props {
 		state: Fulltext.State;
 		query: UseQueryResult<any[], Error>;
-		textTitle?: ReactNode;
+		textTitle?: string;
 		textNotFound?: ReactNode;
 		textPlaceholder?: string;
 	}
@@ -16,7 +16,7 @@ export namespace SearchSheet {
 export const SearchSheet: FC<SearchSheet.Props> = ({
 	state,
 	query,
-	textTitle = <Tx label={"Search (title)"} />,
+	textTitle = "Search (title)",
 	textNotFound = <Tx label={"Nothing found (badge)"} />,
 	textPlaceholder,
 }) => {

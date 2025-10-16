@@ -12,8 +12,8 @@ export const ConditionOverall: FC = () => {
 	return (
 		<Condition
 			icon={ConditionIcon}
-			textTitle={<Tx label={"Condition - Overall (title)"} />}
-			textDescription={<Tx label={"Condition - Overall (description)"} />}
+			textTitle={"Condition - Overall (title)"}
+			textDescription={"Condition - Overall (description)"}
 			textHint={
 				<Tx label={`Condition - Overall [${condition}] (hint)`} />
 			}

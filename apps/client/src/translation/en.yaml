@@ -4,21 +4,24 @@
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
   ref: Upload (placeholder)
   value: Upload (placeholder)
+0ef8e3349b91f51d6e11abf6652cfd85f7dfb2b5866e60f3399f72e6:
+  ref: xl
+  value: xl
+0f56fe6178af631591699c9b110f3bcecac4468dee2e40840ae64e31:
+  ref: block
+  value: block
+100ad85d9bf6453eafc226d6ec0b938ef153f4f78babd22de6992ed0:
+  ref: /$locale/register
+  value: /$locale/register
 12b361624b83def8b006029f7c829101e7fa11f7c209da351137ca8a:
   ref: User profile (description)
   value: User profile (description)
-1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
-  ref: Missing required token(s). (title)
-  value: Missing required token(s). (title)
 149d82732fc8b67a04bb3fb42d09856cd8bf53dfbdd93100e929e091:
   ref: ID
   value: ID
 1504acbd53c0d2fc447c2f85423f4ab4fd21fd1a8a3335b2c9b66650:
   ref: Landing - Feature 5 (title) - hint
   value: Landing - Feature 5 (title) - hint
-18719022c3a2f44b4dbf4ca0e7b65141e8845daa2e9de55179f6dafc:
-  ref: Login with passkey (title)
-  value: Login with passkey (title)
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
   ref: Loading...
   value: Loading...
@@ -31,9 +34,6 @@
 1bdc006a9107bec539b60a1d026f0479b1f8924b037f954842907fef:
   ref: Landing - Feature 2 (title)
   value: Landing - Feature 2 (title)
-1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
-  ref: Logout (title)
-  value: Logout (title)
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
   ref: Landing - Feature 1 (title) - hint
   value: Landing - Feature 1 (title) - hint
@@ -82,12 +82,6 @@
 36867b0182ba4840c97c772c1168bf1584a52897b6a292d58dc53dc9:
   ref: Register (title)
   value: Register (title)
-36f23b35ec600d0a8092ca4dcb3ef776925a00acf1fe6b7627293907:
-  ref: Login with passkey (message)
-  value: Login with passkey (message)
-38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
-  ref: Missing any token(s). (title)
-  value: Missing any token(s). (title)
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
   ref: Select item
   value: Select item
@@ -106,6 +100,9 @@
 3bff91cf3466a36353f54c389623d992c1ff32b26665795f7c022d58:
   ref: Login with social (message)
   value: Login with social (message)
+3cb7081538aad3702b165e3593b4dc734ff36a39aebe3917a31c5814:
+  ref: flex flex-col gap-1
+  value: flex flex-col gap-1
 3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
   ref: My Bag (title)
   value: My Bag (title)
@@ -124,15 +121,15 @@
 43da3b2f0c171b22d86d7ec47f018c7ef162dcbaad6247d90fa47331:
   ref: Create listing (description)
   value: Create listing (description)
+4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
+  ref: light
+  value: light
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
   ref: What - buyers (title)
   value: What - buyers (title)
 51727f992e2ef77b034daa6fbc6cc438fbb4bdf72914f8db69324d1b:
   ref: Please select a category group first to see available categories
   value: Please select a category group first to see available categories
-52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
-  ref: Missing any token(s). (message)
-  value: Missing any token(s). (message)
 53285c44368f8f4d2c9df2f9614f265d12112e00bcaa0e7f24adb2d0:
   ref: Landing - Contact (title)
   value: Landing - Contact (title)
@@ -145,9 +142,6 @@
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
   ref: Invalid on/off value
   value: Invalid on/off value
-591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
-  ref: Logout (description)
-  value: Logout (description)
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
@@ -157,6 +151,9 @@
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
+5d6bb45eb861bb2a56b96924c18424e8a1c7fd31df44492a6d6f9da3:
+  ref: primary
+  value: primary
 5e5b22386d6916d54d543deb3fa2ae94dc60928062b03b80fa4f4292:
   ref: Landing - Feature 2 (title) - hint
   value: Landing - Feature 2 (title) - hint
@@ -175,6 +172,9 @@
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
   ref: Landing - Hero (title)
   value: Landing - Hero (title)
+6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
+  ref: secondary
+  value: secondary
 6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
   ref: Condition - Overall (title)
   value: Condition - Overall (title)
@@ -214,9 +214,6 @@
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
-891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
-  ref: Missing required token(s). (message)
-  value: Missing required token(s). (message)
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
   ref: Previous (tour)
   value: Previous (tour)
@@ -280,6 +277,9 @@ ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
 af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
   ref: Drag 'n' drop a file here
   value: Drag 'n' drop a file here
+b05cd8a2bc5f452fc0201f70ed86b8371612b5423f562bb8bf7e1a66:
+  ref: /$locale/login
+  value: /$locale/login
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
   ref: Invalid data provided (title)
   value: Invalid data provided (title)
@@ -363,9 +363,15 @@ d710bfd0568645758fb1e8d34e64295ff720d1d298cdf773b578d404:
 d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
   ref: Login failed
   value: Login failed
+d9edf4d0a5869aa151810c0e2dd02abf4783b347885370f1c921550c:
+  ref: bold
+  value: bold
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
+df728cc2507e936719ccb385e613cc1b289f32ee7e3d41a54f2cad90:
+  ref: link
+  value: link
 e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
   ref: Email is required
   value: Email is required

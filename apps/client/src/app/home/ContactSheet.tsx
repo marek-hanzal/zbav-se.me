@@ -1,4 +1,4 @@
-import { Status, Tx, Typo } from "@use-pico/client";
+import { Status, Typo } from "@use-pico/client";
 import type { FC } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
 
@@ -17,8 +17,8 @@ export const ContactSheet: FC = () => {
 		>
 			<Status
 				icon={"icon-[line-md--email-twotone]"}
-				textTitle={<Tx label={"Landing - Contact (title)"} />}
-				textMessage={<Tx label={"Landing - Contact (text)"} />}
+				textTitle={"Landing - Contact (title)"}
+				textMessage={"Landing - Contact (text)"}
 				tweak={{
 					slot: {
 						root: {

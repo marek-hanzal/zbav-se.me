@@ -75,7 +75,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 						set: setSearch,
 					}}
 					query={locationQuery}
-					textTitle={<Tx label={"Location (title)"} />}
+					textTitle={"Location (title)"}
 					textPlaceholder={translator.text(
 						"Location search (placeholder)",
 					)}

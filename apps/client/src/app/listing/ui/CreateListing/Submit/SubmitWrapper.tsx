@@ -19,13 +19,7 @@ export const SubmitWrapper: FC = () => {
 					icon={SendPackageIcon}
 					tone={"secondary"}
 					theme={"light"}
-					textTitle={
-						<Tx
-							label={
-								"Submit listing - status - cannot submit (title)"
-							}
-						/>
-					}
+					textTitle="Submit listing - status - cannot submit (title)"
 				/>
 			</Sheet>
 		);
@@ -35,7 +29,7 @@ export const SubmitWrapper: FC = () => {
 		<Sheet tone={"secondary"}>
 			<Status
 				icon={SendPackageIcon}
-				textTitle={<Tx label={"Submit listing - status (title)"} />}
+				textTitle={"Submit listing - status (title)"}
 				tone={"secondary"}
 			>
 				<Button

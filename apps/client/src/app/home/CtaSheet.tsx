@@ -14,8 +14,8 @@ export const CtaSheet: FC = () => {
 			<div className={"reveal"}>
 				<Status
 					icon={"icon-[mingcute--celebrate-line]"}
-					textTitle={<Tx label={"Landing - CTA (title)"} />}
-					textMessage={<Tx label={"Landing - CTA (text)"} />}
+					textTitle={"Landing - CTA (title)"}
+					textMessage={"Landing - CTA (text)"}
 				>
 					<div
 						className={tvc([

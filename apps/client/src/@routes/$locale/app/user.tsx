@@ -86,8 +86,8 @@ export const Route = createFileRoute("/$locale/app/user")({
 				<Sheet>
 					<Status
 						icon={LockIcon}
-						textTitle={<Tx label={"Logout (title)"} />}
-						textMessage={<Tx label={"Logout (description)"} />}
+						textTitle={"Logout (title)"}
+						textMessage={"Logout (description)"}
 					>
 						<Button
 							onClick={() => signOutMutation.mutate({})}

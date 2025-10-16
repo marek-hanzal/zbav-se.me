@@ -15,85 +15,83 @@ export const WhatSheet: FC = () => {
 				<Status
 					icon={SellerIcon}
 					tone={"primary"}
-					textTitle={<Tx label={"What - sellers (title)"} />}
-					textMessage={
-						<VariantProvider
-							cls={ThemeCls}
-							variant={{
-								tone: "primary",
-								theme: "light",
-							}}
-						>
-							<div className="flex flex-col gap-1">
-								<TypoIcon icon={CheckIcon}>
-									<Tx
-										label={"What - sellers (badge 1)"}
-										display={"block"}
-										font={"bold"}
-									/>
-								</TypoIcon>
+					textTitle={"What - sellers (title)"}
+				>
+					<VariantProvider
+						cls={ThemeCls}
+						variant={{
+							tone: "primary",
+							theme: "light",
+						}}
+					>
+						<div className="flex flex-col gap-1">
+							<TypoIcon icon={CheckIcon}>
+								<Tx
+									label={"What - sellers (badge 1)"}
+									display={"block"}
+									font={"bold"}
+								/>
+							</TypoIcon>
 
-								<TypoIcon icon={CheckIcon}>
-									<Tx
-										label={"What - sellers (badge 2)"}
-										display={"block"}
-										font={"bold"}
-									/>
-								</TypoIcon>
+							<TypoIcon icon={CheckIcon}>
+								<Tx
+									label={"What - sellers (badge 2)"}
+									display={"block"}
+									font={"bold"}
+								/>
+							</TypoIcon>
 
-								<TypoIcon icon={CheckIcon}>
-									<Tx
-										label={"What - sellers (badge 3)"}
-										display={"block"}
-										font={"bold"}
-									/>
-								</TypoIcon>
-							</div>
-						</VariantProvider>
-					}
-				/>
+							<TypoIcon icon={CheckIcon}>
+								<Tx
+									label={"What - sellers (badge 3)"}
+									display={"block"}
+									font={"bold"}
+								/>
+							</TypoIcon>
+						</div>
+					</VariantProvider>
+				</Status>
 
 				<Status
 					icon={BuyerIcon}
 					tone={"secondary"}
 					theme={"light"}
-					textTitle={<Tx label={"What - buyers (title)"} />}
-					textMessage={
-						<VariantProvider
-							cls={ThemeCls}
-							variant={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						>
-							<div className="flex flex-col gap-1">
-								<TypoIcon icon={CheckIcon}>
-									<Tx
-										label={"What - buyers (badge 1)"}
-										display={"block"}
-										font={"bold"}
-									/>
-								</TypoIcon>
+					textTitle={"What - buyers (title)"}
+				>
+					<VariantProvider
+						cls={ThemeCls}
+						variant={{
+							tone: "secondary",
+							theme: "light",
+						}}
+					>
+						<div className="flex flex-col gap-1">
+							<TypoIcon icon={CheckIcon}>
+								<Tx
+									label={"What - buyers (badge 1)"}
+									display={"block"}
+									font={"bold"}
+								/>
+							</TypoIcon>
 
-								<TypoIcon icon={CheckIcon}>
-									<Tx
-										label={"What - buyers (badge 2)"}
-										display={"block"}
-										font={"bold"}
-									/>
-								</TypoIcon>
+							<TypoIcon icon={CheckIcon}>
+								<Tx
+									label={"What - buyers (badge 2)"}
+									display={"block"}
+									font={"bold"}
+								/>
+							</TypoIcon>
 
-								<TypoIcon icon={CheckIcon}>
-									<Tx
-										label={"What - buyers (badge 3)"}
-										display={"block"}
-										font={"bold"}
-									/>
-								</TypoIcon>
-							</div>
-						</VariantProvider>
-					}
-				/>
+							<TypoIcon icon={CheckIcon}>
+								<Tx
+									label={"What - buyers (badge 3)"}
+									display={"block"}
+									font={"bold"}
+								/>
+							</TypoIcon>
+						</div>
+					</VariantProvider>
+				</Status>
 			</div>
 		</Sheet>
 	);

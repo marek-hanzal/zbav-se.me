@@ -5,7 +5,6 @@ import {
 	SpinnerIcon,
 	Status,
 	TrashIcon,
-	Tx,
 	useSetUnset,
 } from "@use-pico/client";
 import {
@@ -237,15 +236,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				{src ? null : (
 					<Status
 						icon={PhotoIcon}
-						textTitle={
-							<Tx
-								label={"Upload (placeholder)"}
-								font="bold"
-								size={"xl"}
-								tone={"primary"}
-								theme={"light"}
-							/>
-						}
+						textTitle={"Upload(placeholder)"}
 						tone={"primary"}
 					/>
 				)}
