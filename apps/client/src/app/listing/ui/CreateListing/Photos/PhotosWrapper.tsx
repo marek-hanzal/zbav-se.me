@@ -1,47 +1,57 @@
-import { Container, SnapperNav } from "@use-pico/client";
-import { type FC, useRef } from "react";
+import { Container } from "@use-pico/client";
+import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
+import { Title } from "~/app/ui/title/Title";
 
 export const PhotosWrapper: FC = () => {
 	const useCreateListingStore = useCreateListingContext();
 	const photos = useCreateListingStore((store) => store.photos);
 	const pages = useSnapperPage();
 
-	const containerRef = useRef<HTMLDivElement>(null);
-
 	return (
-		<Container position={"relative"}>
-			<SnapperNav
-				containerRef={containerRef}
-				pages={pages}
-				orientation="horizontal"
-				iconProps={() => ({
-					size: "xs",
-				})}
-				limit={5}
-				subtle
-			/>
-
+		<Container
+			position={"relative"}
+			square={"md"}
+			round={"lg"}
+		>
 			<Container
-				ref={containerRef}
-				layout="horizontal-full"
-				overflow={"horizontal"}
-				snap={"horizontal-start"}
-				gap={"md"}
+				layout={"vertical-header-content-footer"}
+				gap={"sm"}
 			>
-				{pages.map((_, slot) => {
-					const disabled = slot > 0 && !photos[slot - 1];
+				<Container>
+					<Title title={"Listing photos (title)"} />
+				</Container>
 
-					return (
-						<PhotoSlot
-							key={`photo-${slot + 1}`}
-							slot={slot}
-							disabled={disabled}
-						/>
-					);
-				})}
+				<Container
+					layout="horizontal-full"
+					overflow={"horizontal"}
+					snap={"horizontal-start"}
+					gap={"md"}
+					round={"lg"}
+				>
+					{pages.map((_, slot) => {
+						const disabled = slot > 0 && !photos[slot - 1];
+
+						return (
+							<PhotoSlot
+								key={`photo-${slot + 1}`}
+								slot={slot}
+								disabled={disabled}
+							/>
+						);
+					})}
+				</Container>
+
+				<Container
+					tone={"primary"}
+					theme={"light"}
+					round={"lg"}
+					square={"md"}
+				>
+					hovno
+				</Container>
 			</Container>
 		</Container>
 	);

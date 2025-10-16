@@ -5,15 +5,6 @@ export const TitleCls = contract(ThemeCls.contract)
 	.slots([
 		"root",
 	])
-	.variant("tone", [
-		"primary",
-		"secondary",
-		"danger",
-		"warning",
-		"subtle",
-		"neutral",
-		"link",
-	])
 	.variant("theme", [
 		"light",
 		"dark",
@@ -34,6 +25,9 @@ export const TitleCls = contract(ThemeCls.contract)
 				"items-center",
 				"w-full",
 				"gap-2",
+			],
+			token: [
+				"round.lg",
 			],
 		},
 	})
