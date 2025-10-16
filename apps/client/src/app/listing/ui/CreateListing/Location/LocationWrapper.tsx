@@ -64,6 +64,18 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 										"Location search (placeholder)"
 									}
 									withSubmit
+									tweak={{
+										slot: {
+											input: {
+												class: [
+													"px-8",
+												],
+												token: [
+													"size.lg",
+												],
+											},
+										},
+									}}
 								/>
 								{search ? null : (
 									<Tx
@@ -90,7 +102,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 													root: {
 														class: [
 															"w-full",
-															"min-h-16",
+															"min-h-18",
 														],
 													},
 												},
