@@ -103,6 +103,9 @@ withLocationApi.openapi(
 						.selectFrom("Location")
 						.where("query", "=", text)
 						.where("lang", "=", lang)
+						.orderBy("confidence", "desc")
+						.offset(0)
+						.limit(3)
 						.selectAll(),
 					output: LocationSchema,
 				});
@@ -124,6 +127,7 @@ withLocationApi.openapi(
 						text,
 						apiKey: AppEnv.GEOAPIFY,
 						lang,
+						limit: 3,
 					},
 				});
 

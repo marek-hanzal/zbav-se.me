@@ -156,8 +156,11 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 														class: [
 															"Location-item",
 															"w-full",
-															"min-h-18",
+															"h-fit",
 															"opacity-0",
+														],
+														token: [
+															"padding.lg",
 														],
 													},
 												},
@@ -211,9 +214,14 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 					>
 						{({ content }) => {
 							return (
-								<div className="grid grid-row auto-rows-max gap-2 p-4">
-									{content}
-								</div>
+								<Container
+									overflow={"vertical"}
+									height={"full"}
+								>
+									<div className="grid grid-row auto-rows-max gap-2 p-4">
+										{content}
+									</div>
+								</Container>
 							);
 						}}
 					</Data>
