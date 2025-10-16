@@ -32,32 +32,6 @@ export const HeroSheet: FC = () => {
 				<Status
 					textTitle={"Landing - Hero (title)"}
 					textMessage={"Landing - Hero (subtitle)"}
-					tweak={{
-						slot: {
-							body: {
-								class: [
-									"w-full",
-									"max-w-screen-md",
-									"text-center",
-									"mx-auto",
-									"px-4",
-								],
-							},
-						},
-					}}
-				/>
-
-				<div
-					className={tvc([
-						"flex",
-						"flex-col",
-						"gap-2",
-						"items-center",
-						"justify-center",
-						"w-full",
-						"mt-2",
-						"px-12",
-					])}
 				>
 					<LinkTo
 						to={"/$locale/login"}
@@ -122,7 +96,7 @@ export const HeroSheet: FC = () => {
 							label={"Register (hero)"}
 						/>
 					</LinkTo>
-				</div>
+				</Status>
 			</div>
 		</Sheet>
 	);

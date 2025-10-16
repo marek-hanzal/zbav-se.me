@@ -96,33 +96,24 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 						ref={priceRef}
 						icon={PriceIcon}
 						textTitle={"Price (label)"}
-						tweak={{
-							slot: {
-								body: {
-									class: [
-										"w-full",
-										"px-8",
-									],
-								},
-							},
-						}}
-					>
-						{cost === undefined ? (
-							<Button
-								onClick={() => snapperNav.next()}
-								size={"xl"}
-								tone={"secondary"}
-								theme={"dark"}
-								label={"Price not set (button)"}
-							/>
-						) : (
-							<Price
-								locale={locale}
-								price={cost}
-								onClear={onClear}
-							/>
-						)}
-					</Status>
+						action={
+							cost === undefined ? (
+								<Button
+									onClick={() => snapperNav.next()}
+									size={"xl"}
+									tone={"secondary"}
+									theme={"dark"}
+									label={"Price not set (button)"}
+								/>
+							) : (
+								<Price
+									locale={locale}
+									price={cost}
+									onClear={onClear}
+								/>
+							)
+						}
+					/>
 				</Sheet>
 
 				<Sheet>

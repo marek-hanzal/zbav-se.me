@@ -50,26 +50,14 @@ export const Condition: FC<Condition.Props> = ({
 				icon={icon}
 				textTitle={textTitle}
 				textMessage={textDescription}
-				tweak={{
-					slot: {
-						body: {
-							class: [
-								"flex",
-								"flex-col",
-								"gap-4",
-								"items-center",
-								"px-8",
-							],
-						},
-					},
-				}}
+				action={
+					<Rating
+						value={value}
+						limit={limit}
+						onChange={onChange}
+					/>
+				}
 			>
-				<Rating
-					value={value}
-					limit={limit}
-					onChange={onChange}
-				/>
-
 				<div className={"text-justify min-h-48 h-48"}>{textHint}</div>
 			</Status>
 		</Sheet>

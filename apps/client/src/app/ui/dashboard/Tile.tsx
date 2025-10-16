@@ -23,27 +23,9 @@ export const Tile: FC<Tile.Props> = ({ cls = TileCls, tweak, ...props }) => {
 				<Status
 					titleProps={{
 						size: "xl",
-						tweak: {
-							slot: {
-								root: {
-									class: [
-										"text-wrap",
-									],
-								},
-							},
-						},
 					}}
 					messageProps={{
 						size: "sm",
-						tweak: {
-							slot: {
-								root: {
-									class: [
-										"text-wrap",
-									],
-								},
-							},
-						},
 					}}
 					{...props}
 				/>

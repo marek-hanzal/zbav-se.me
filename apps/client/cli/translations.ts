@@ -34,6 +34,10 @@ tx({
 				name: "SearchSheet",
 				attr: "textTitle",
 			},
+			{
+				name: "SearchSheet",
+				attr: "textMessage",
+			},
 		],
 	},
 });

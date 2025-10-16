@@ -19,14 +19,6 @@ export const FeaturesSheet: FC = () => {
 								"reveal",
 							],
 						},
-						body: {
-							class: [
-								"flex",
-								"flex-col",
-								"gap-1",
-								"px-4",
-							],
-						},
 					},
 				}}
 			>

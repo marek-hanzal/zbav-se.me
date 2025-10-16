@@ -102,15 +102,6 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 					theme={"light"}
 					textTitle="No category selected"
 					textMessage="Please select a category group first to see available categories"
-					tweak={{
-						slot: {
-							title: {
-								class: [
-									"px-8",
-								],
-							},
-						},
-					}}
 				/>
 			</Sheet>
 		);

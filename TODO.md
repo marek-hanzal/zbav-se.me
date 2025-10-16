@@ -8,6 +8,9 @@
 - Show snapper with selected item (by finding an element -> scroll to it?)
 - Resolve /null get calls from TSR/TSS
 
+- When I know user's favourite groups/categories, I can fetch them _before_ the other ones (+ e.g. button "show all" to
+    display/fetch remaining)
+
 - Prompt user to use passkey?
 - Allow anonymous user + test it's flow (check if there is isAnonym flag)
 - When listing is saved, recompute user's "favourite" category list
@@ -27,3 +30,10 @@
 - Create Spotlight in database which will index language versions of different items, so we'll be able to search server-side through DB (e.g. localized search
     for something in category list instead of using fuse); it would be also possible to eventually return localized strings directly from server instead of
     pure keys
+
+## Interesting stuff
+
+> This one _must_ be implemented!
+> https://github.com/rhinobase/hono-rate-limiter
+
+https://github.com/ktkongtong/hono-geo-middleware/tree/main/packages/middleware

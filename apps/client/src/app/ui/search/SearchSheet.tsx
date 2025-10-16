@@ -8,6 +8,7 @@ export namespace SearchSheet {
 		state: Fulltext.State;
 		query: UseQueryResult<any[], Error>;
 		textTitle?: string;
+		textMessage?: string;
 		textNotFound?: ReactNode;
 		textPlaceholder?: string;
 	}
@@ -17,6 +18,7 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 	state,
 	query,
 	textTitle = "Search (title)",
+	textMessage,
 	textNotFound = <Tx label={"Nothing found (badge)"} />,
 	textPlaceholder,
 }) => {
@@ -31,59 +33,7 @@ export const SearchSheet: FC<SearchSheet.Props> = ({
 
 	return (
 		<Sheet>
-			<Status
-				icon={SearchIcon}
-				textTitle={textTitle}
-				tweak={{
-					slot: {
-						body: {
-							class: [
-								"flex",
-								"flex-col",
-								"gap-2",
-								"items-center",
-								"w-full",
-								"px-8",
-							],
-						},
-					},
-				}}
-			>
-				<Fulltext
-					ref={fulltextRef}
-					state={state}
-					textPlaceholder={textPlaceholder}
-				/>
-
-				<Data
-					result={query}
-					renderSuccess={({ data }) => {
-						return (
-							<Badge
-								size={"xl"}
-								tone={"secondary"}
-								theme={"light"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"transition-opacity",
-												data.length > 0
-													? [
-															"opacity-0",
-														]
-													: undefined,
-											],
-										},
-									},
-								}}
-							>
-								{textNotFound}
-							</Badge>
-						);
-					}}
-				/>
-			</Status>
+			
 		</Sheet>
 	);
 };

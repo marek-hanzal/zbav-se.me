@@ -20,7 +20,11 @@ export const useAnimation = ({
 }: useAnimation.Props) => {
 	useAnim(
 		() => {
-			const tl = anim.timeline();
+			const tl = anim.timeline({
+				defaults: {
+					duration: 0.25,
+				},
+			});
 
 			if (isSelected) {
 				tl.to(

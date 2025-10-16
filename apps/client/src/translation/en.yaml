@@ -4,6 +4,9 @@
 0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
   ref: Upload (placeholder)
   value: Upload (placeholder)
+0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
+  ref: Location security (hint)
+  value: Location security (hint)
 12b361624b83def8b006029f7c829101e7fa11f7c209da351137ca8a:
   ref: User profile (description)
   value: User profile (description)
@@ -82,6 +85,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
   ref: Select item
   value: Select item
+3990d65ca1fd5b3162d9950befaaf90d62dd64383520857bcd5a67cb:
+  ref: Location (message)
+  value: Location (message)
 3a39726e6ef577773a0794eb6243a905052eb0e9228592b9200e29aa:
   ref: Landing - Feature overview (title)
   value: Landing - Feature overview (title)
@@ -292,9 +298,6 @@ b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
 b8d17ee8f1ec9dc2af3128c5f0485d77b06c236ce0945fc1251c2167:
   ref: Price not set (button)
   value: Price not set (button)
-babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
-  ref: Location search (placeholder)
-  value: Location search (placeholder)
 bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
   ref: Landing - Feature 4 (title)
   value: Landing - Feature 4 (title)

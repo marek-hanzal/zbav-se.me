@@ -2,17 +2,14 @@ import {
 	Badge,
 	Container,
 	Data,
-	type Fulltext,
-	SnapperNav,
+	Fulltext,
+	Status,
 	Tx,
 	Typo,
-	useSnapperNav,
 } from "@use-pico/client";
-import { translator } from "@use-pico/common";
-import { type FC, useEffect, useRef, useState } from "react";
+import { type FC, useState } from "react";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
-import { Sheet } from "~/app/sheet/Sheet";
-import { SearchSheet } from "~/app/ui/search/SearchSheet";
+import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 
 export namespace LocationWrapper {
 	export interface Props {
@@ -21,7 +18,6 @@ export namespace LocationWrapper {
 }
 
 export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
-	const containerRef = useRef<HTMLDivElement>(null);
 	const [search, setSearch] = useState<Fulltext.Value>();
 	const locationQuery = withLocationQuery.useQuery(
 		{
@@ -33,76 +29,51 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 		},
 	);
 
-	const snapperNav = useSnapperNav({
-		containerRef,
-		count: 2,
-		orientation: "horizontal",
-	});
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
-	useEffect(() => {
-		if ((locationQuery.data?.length || 0) > 0) {
-			snapperNav.snapTo(1);
-		}
-	}, [
-		locationQuery.data,
-	]);
-
 	return (
-		<Container position={"relative"}>
-			<SnapperNav
-				containerRef={containerRef}
-				pages={{
-					count: 2,
-				}}
-				orientation={"horizontal"}
-				subtle
-				iconProps={() => ({
-					size: "xs",
-				})}
-			/>
-
+		<Container>
 			<Container
-				ref={containerRef}
 				layout={"horizontal-full"}
 				overflow={"horizontal"}
 				snap={"horizontal-start"}
 				gap={"md"}
 			>
-				<SearchSheet
-					state={{
-						value: search,
-						set: setSearch,
-					}}
-					query={locationQuery}
-					textTitle={"Location (title)"}
-					textPlaceholder={translator.text(
-						"Location search (placeholder)",
-					)}
-					textNotFound={
-						<Tx
-							label={"Location not found (badge)"}
-							size={"md"}
-						/>
-					}
-				/>
+				<Container
+					layout={"vertical-header-content"}
+					tone={"primary"}
+					theme={"light"}
+				>
+					<Status
+						icon={SearchIcon}
+						textTitle={"Location (title)"}
+						textMessage={"Location (message)"}
+						action={
+							<div className="flex flex-col gap-2 items-center w-full">
+								<Fulltext
+									state={{
+										value: search,
+										set: setSearch,
+									}}
+									textPlaceholder={
+										"Location search (placeholder)"
+									}
+								/>
+								{search ? null : (
+									<Tx
+										label={"Location security (hint)"}
+										font={"bold"}
+										size={"md"}
+										italic
+									/>
+								)}
+							</div>
+						}
+					/>
 
-				<Data
-					result={locationQuery}
-					renderSuccess={({ data }) => {
-						return (
-							<Sheet
-								tweak={{
-									slot: {
-										root: {
-											token: [
-												"square.lg",
-											],
-										},
-									},
-								}}
-							>
-								<div className="flex flex-col gap-2">
+					<Data
+						result={locationQuery}
+						renderSuccess={({ data }) => {
+							return search && data.length > 0 ? (
+								<div className="flex flex-col gap-2 p-4">
 									{data.map((item) => {
 										return (
 											<Badge
@@ -127,10 +98,32 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 										);
 									})}
 								</div>
-							</Sheet>
-						);
-					}}
-				/>
+							) : (
+								<Badge
+									size={"xl"}
+									tone={"secondary"}
+									theme={"light"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"transition-opacity",
+													data.length > 0
+														? [
+																"opacity-0",
+															]
+														: undefined,
+												],
+											},
+										},
+									}}
+								>
+									<Tx label={"Location not found (badge)"} />
+								</Badge>
+							);
+						}}
+					/>
+				</Container>
 			</Container>
 		</Container>
 	);
