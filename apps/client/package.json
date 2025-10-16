@@ -18,7 +18,7 @@
 		"@tanstack/react-router": "1.133.3",
 		"@tanstack/react-router-ssr-query": "1.133.3",
 		"@tanstack/react-start": "1.133.3",
-		"@use-pico/client": "5.0.183",
+		"@use-pico/client": "5.0.184",
 		"@use-pico/cls": "5.0.63",
 		"@use-pico/common": "5.0.80",
 		"@use-pico/server": "5.0.81",
