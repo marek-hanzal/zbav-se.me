@@ -1,4 +1,5 @@
 import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { linkTo } from "@use-pico/common";
 import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
 import { z } from "zod";
 import { AppEnv } from "../env";
@@ -115,6 +116,10 @@ withContentApi.openapi(
 						allowOverwrite: false,
 						cacheControlMaxAge: 60 * 60 * 24 * 30,
 						maximumSizeInBytes: 16 * 1024 * 1024,
+						callbackUrl: linkTo({
+							base: AppEnv.VITE_API,
+							href: "/api/content/upload",
+						}),
 						// tokenPayload: JSON.stringify(payload),
 						tokenPayload: null,
 					};

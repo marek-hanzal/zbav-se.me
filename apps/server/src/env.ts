@@ -6,6 +6,7 @@ declare const __DATABASE_URL__: string | undefined;
 declare const __BETTER_AUTH_SECRET__: string | undefined;
 declare const __GEOAPIFY__: string | undefined;
 declare const __VERCEL_BLOB__: string | undefined;
+declare const __VITE_API__: string | undefined;
 
 const AppEnvSchema = z.object({
 	DATABASE_URL: z.string().min(1, "Database URL is required"),
@@ -16,6 +17,7 @@ const AppEnvSchema = z.object({
 	BETTER_AUTH_SECRET: z.string().min(1, "Better Auth secret is required"),
 	VERCEL_BLOB: z.string().min(1, "Vercel blob is required"),
 	GEOAPIFY: z.string().min(1, "Geoapify API key is required"),
+	VITE_API: z.string().min(1, "Vite API is required"),
 });
 
 export const AppEnv = AppEnvSchema.parse({
@@ -37,4 +39,8 @@ export const AppEnv = AppEnvSchema.parse({
 		typeof __GEOAPIFY__ !== "undefined"
 			? __GEOAPIFY__
 			: process.env.GEOAPIFY,
+	VITE_API:
+		typeof __VITE_API__ !== "undefined"
+			? __VITE_API__
+			: process.env.VITE_API,
 });

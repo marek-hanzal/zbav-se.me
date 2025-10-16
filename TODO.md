@@ -1,6 +1,8 @@
 # TODO
 
 - Simplify price -> Just dial with price and done
+- Simplify listing process - less swipes, more controls on screen
+    - Preview next page in Container -> Snapper (little card down?)
 
 - Extract "local" states (search and co.) into store so it could be controlled between pages (e.g. by removing
     selection and search when category group changes )

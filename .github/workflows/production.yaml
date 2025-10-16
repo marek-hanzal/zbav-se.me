@@ -122,6 +122,7 @@ jobs:
             COOKIE: ${{ vars.COOKIE }}
             GEOAPIFY: ${{ secrets.GEOAPIFY }}
             BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+            VITE_API: ${{ vars.VITE_API }}
         steps:
             - uses: actions/checkout@v4
 
