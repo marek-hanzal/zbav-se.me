@@ -1,5 +1,7 @@
 # TODO
 
+- Add endpoint to purge old files from storages
+
 - Simplify price -> Just dial with price and done
 - Simplify listing process - less swipes, more controls on screen
     - Preview next page in Container -> Snapper (little card down?)
