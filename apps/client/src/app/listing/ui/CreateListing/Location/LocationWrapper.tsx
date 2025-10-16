@@ -161,6 +161,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 														],
 														token: [
 															"padding.lg",
+															"round.lg",
 														],
 													},
 												},
@@ -202,6 +203,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 												],
 												token: [
 													"square.xl",
+													"round.lg",
 												],
 											},
 										},
