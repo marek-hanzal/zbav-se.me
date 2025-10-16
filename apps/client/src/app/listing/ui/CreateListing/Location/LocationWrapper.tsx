@@ -25,7 +25,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 			text: search ?? "",
 		},
 		{
-			enabled: !!search,
+			enabled: Boolean(search && search.length >= 3),
 		},
 	);
 
@@ -74,31 +74,30 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 						result={locationQuery}
 						renderSuccess={({ data }) => {
 							return search && data.length > 0 ? (
-								<div className="flex flex-col gap-2 p-4">
-									{data.map((item) => {
-										return (
-											<Badge
-												key={item.id}
-												tweak={{
-													slot: {
-														root: {
-															class: [
-																"w-full",
-															],
-														},
+								data.map((item) => {
+									return (
+										<Badge
+											key={item.id}
+											tweak={{
+												slot: {
+													root: {
+														class: [
+															"w-full",
+															"min-h-16",
+														],
 													},
-												}}
-												tone={"secondary"}
-												theme={"light"}
-											>
-												<Typo
-													label={item.address}
-													size={"md"}
-												/>
-											</Badge>
-										);
-									})}
-								</div>
+												},
+											}}
+											tone={"secondary"}
+											theme={"light"}
+										>
+											<Typo
+												label={item.address}
+												size={"md"}
+											/>
+										</Badge>
+									);
+								})
 							) : (
 								<Badge
 									size={"xl"}
@@ -108,12 +107,16 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 										slot: {
 											root: {
 												class: [
+													"text-center",
 													"transition-opacity",
 													data.length > 0
 														? [
 																"opacity-0",
 															]
 														: undefined,
+												],
+												token: [
+													"square.xl",
 												],
 											},
 										},
@@ -123,7 +126,15 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 								</Badge>
 							);
 						}}
-					/>
+					>
+						{({ content }) => {
+							return (
+								<div className="grid grid-row auto-rows-max gap-2 p-4">
+									{content}
+								</div>
+							);
+						}}
+					</Data>
 				</Container>
 			</Container>
 		</Container>
