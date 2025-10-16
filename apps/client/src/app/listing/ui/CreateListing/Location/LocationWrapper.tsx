@@ -7,9 +7,10 @@ import {
 	Tx,
 	Typo,
 } from "@use-pico/client";
-import { type FC, useState } from "react";
+import { type FC, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
+import { anim, useAnim } from "~/app/ui/gsap";
 import { SearchIcon } from "~/app/ui/icon/SearchIcon";
 
 export namespace LocationWrapper {
@@ -23,6 +24,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 	const location = useCreateListingStore((state) => state.location);
 	const setLocation = useCreateListingStore((state) => state.setLocation);
 	const [search, setSearch] = useState<Fulltext.Value>();
+	const containerRef = useRef<HTMLDivElement>(null);
 	const locationQuery = withLocationQuery.useQuery(
 		{
 			lang: locale,
@@ -33,8 +35,55 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 		},
 	);
 
+	useAnim(
+		() => {
+			anim.timeline()
+				.set(".Data-spinner", {
+					opacity: 0,
+					scale: 0.75,
+				})
+				.to(".Data-spinner", {
+					opacity: 1,
+					scale: 1,
+				});
+		},
+		{
+			scope: containerRef,
+			dependencies: [
+				locationQuery.isFetching,
+			],
+		},
+	);
+
+	useAnim(
+		() => {
+			anim.timeline({
+				defaults: {
+					duration: 0.25,
+				},
+			})
+				.set(".Location-item", {
+					opacity: 0,
+					scale: 0.75,
+					y: "-50%",
+				})
+				.to(".Location-item", {
+					opacity: 1,
+					scale: 1,
+					y: 0,
+					stagger: 0.05,
+				});
+		},
+		{
+			scope: containerRef,
+			dependencies: [
+				locationQuery.data,
+			],
+		},
+	);
+
 	return (
-		<Container>
+		<Container ref={containerRef}>
 			<Container
 				layout={"horizontal-full"}
 				overflow={"horizontal"}
@@ -105,8 +154,10 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 												slot: {
 													root: {
 														class: [
+															"Location-item",
 															"w-full",
 															"min-h-18",
+															"opacity-0",
 														],
 													},
 												},
