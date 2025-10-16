@@ -92,7 +92,11 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 					<Data
 						result={locationQuery}
 						renderSuccess={({ data }) => {
-							return search && data.length > 0 ? (
+							if (!search) {
+								return null;
+							}
+
+							return data.length > 0 ? (
 								data.map((item) => {
 									return (
 										<Badge
@@ -135,6 +139,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 												class: [
 													"text-center",
 													"transition-opacity",
+													"mx-auto",
 													data.length > 0
 														? [
 																"opacity-0",
