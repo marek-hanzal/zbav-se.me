@@ -265,7 +265,7 @@
     value: Co hledáme?
 9fcf609e1aa87339701add40d4ed0b04427891c73fd33dcdccc3cff6:
     ref: Listing - intro (description)
-    value: Nastavte v několika krocích vlastnosti inzerátu a pošlete jej do světa!
+    value: Stačí pár rychlých kroků a inzerát je venku!
 Condition - Age [0] (hint):
     static: true
     value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
