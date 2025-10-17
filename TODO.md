@@ -1,5 +1,6 @@
 # TODO
 
+- Resolve why fuckin' webglob is not forwarding mails
 - Add endpoint to purge old files from storages
 - Use GSAP snapping instead of native one - better for events
 - Post process photos - remove metadata -> or use Bunny optimizer (which can do this on delivery)
