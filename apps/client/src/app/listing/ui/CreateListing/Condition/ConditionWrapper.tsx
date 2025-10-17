@@ -3,9 +3,9 @@ import {
 	ArrowRightIcon,
 	Button,
 	Container,
-	type useSnapperNav,
+	useSnapperNav,
 } from "@use-pico/client";
-import type { FC } from "react";
+import { type FC, useRef } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ConditionAge } from "~/app/listing/ui/CreateListing/Condition/ConditionAge";
 import { ConditionOverall } from "~/app/listing/ui/CreateListing/Condition/ConditionOverall";
@@ -26,11 +26,19 @@ export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
 	const hasCondition = useCreateListingStore((store) => store.hasCondition);
 	const hasAge = useCreateListingStore((store) => store.hasAge);
 
+	const conditionSnapperRef = useRef<HTMLDivElement>(null);
+	const conditionSnapperNav = useSnapperNav({
+		containerRef: conditionSnapperRef,
+		orientation: "horizontal",
+		count: 2,
+	});
+
 	return (
 		<FlowContainer>
 			<Title textTitle={"Condition (title)"} />
 
 			<Container
+				ref={conditionSnapperRef}
 				layout={"horizontal-full"}
 				snap={"horizontal-start"}
 				overflow={"horizontal"}
@@ -47,16 +55,31 @@ export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
 					iconPosition={"left"}
 					tone={"secondary"}
 					theme={"light"}
-					onClick={() => listingNav.prev()}
+					onClick={() => {
+						if (conditionSnapperNav.current === 1) {
+							conditionSnapperNav.prev();
+							return;
+						}
+						listingNav.prev();
+					}}
 				/>
 
 				<Button
 					iconEnabled={ArrowRightIcon}
 					iconPosition={"right"}
-					disabled={!hasCondition || !hasAge}
+					disabled={
+						(!hasCondition && conditionSnapperNav.current === 0) ||
+						(!hasAge && conditionSnapperNav.current === 1)
+					}
 					tone={"secondary"}
 					theme={"dark"}
-					onClick={() => listingNav.next()}
+					onClick={() => {
+						if (hasCondition && hasAge) {
+							listingNav.next();
+						} else if (hasCondition) {
+							conditionSnapperNav.next();
+						}
+					}}
 				/>
 			</BottomContainer>
 		</FlowContainer>
