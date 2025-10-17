@@ -1,5 +1,5 @@
-import { SnapperNav } from "@use-pico/client";
-import type { FC, RefObject } from "react";
+import { SnapperNav, type useSnapperNav } from "@use-pico/client";
+import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
@@ -10,7 +10,7 @@ import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 
 export namespace SnapperPages {
 	export interface Props {
-		snapperRef: RefObject<HTMLDivElement | null>;
+		snapperNav: useSnapperNav.Result;
 		photosId: string;
 		categoryGroupId: string;
 		categoryId: string;
@@ -22,7 +22,7 @@ export namespace SnapperPages {
 }
 
 export const SnapperPages: FC<SnapperPages.Props> = ({
-	snapperRef,
+	snapperNav,
 	photosId,
 	categoryGroupId,
 	categoryId,
@@ -93,9 +93,9 @@ export const SnapperPages: FC<SnapperPages.Props> = ({
 				tone: "secondary",
 				size: "md",
 			})}
-			containerRef={snapperRef}
 			orientation={"vertical"}
 			subtle
+			snapperNav={snapperNav}
 		/>
 	);
 };

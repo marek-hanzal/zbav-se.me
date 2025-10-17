@@ -13,6 +13,7 @@ import {
 	Status,
 	Tx,
 	UserIcon,
+	useSnapperNav,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common";
@@ -93,19 +94,21 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		const rootRef = useRef<HTMLDivElement>(null);
+		const snapperNav = useSnapperNav({
+			containerRef: rootRef,
+			orientation: "vertical",
+			count: 3,
+		});
 
 		return (
 			<Container position={"relative"}>
 				<SnapperNav
-					containerRef={rootRef}
+					snapperNav={snapperNav}
 					iconProps={() => ({
 						size: "xs",
 						tone: "secondary",
 						theme: "light",
 					})}
-					pages={{
-						count: 3,
-					}}
 					orientation={"vertical"}
 					subtle
 				/>

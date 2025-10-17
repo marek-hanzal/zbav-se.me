@@ -8,7 +8,7 @@ import {
 	type useSnapperNav,
 } from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
-import { type FC, useEffect, useId } from "react";
+import { type FC, useEffect, useId, useRef } from "react";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
@@ -50,6 +50,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 			},
 		],
 	});
+	const snapperRef = useRef<HTMLDivElement>(null);
 	const groupId = useId();
 	/**
 	 * If you change this, don't forget to update also styles for grid!
@@ -71,6 +72,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 					selection.optional.single()?.name ??
 					"Listing category groups (title)"
 				}
+				right={<>number of pages/current page?</>}
 			/>
 
 			<Data
@@ -82,6 +84,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 					return (
 						<div className="relative">
 							<Container
+								ref={snapperRef}
 								layout={"horizontal-full"}
 								overflow={"horizontal"}
 								snap={"horizontal-start"}

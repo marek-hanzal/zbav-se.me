@@ -73,10 +73,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 	return (
 		<Container position={"relative"}>
 			<SnapperNav
-				containerRef={rootRef}
-				pages={{
-					count: 2,
-				}}
+				snapperNav={snapperNav}
 				orientation={"horizontal"}
 				iconProps={() => ({
 					size: "xs",

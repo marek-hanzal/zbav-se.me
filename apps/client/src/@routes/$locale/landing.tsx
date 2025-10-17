@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, SnapperNav } from "@use-pico/client";
+import { Container, SnapperNav, useSnapperNav } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { useRef } from "react";
 import { AboutSheet } from "~/app/home/AboutSheet";
@@ -27,6 +27,12 @@ export const Route = createFileRoute("/$locale/landing")({
 
 		useEnterAnim(scrollerRef);
 
+		const snapperNav = useSnapperNav({
+			containerRef: scrollerRef,
+			orientation: "vertical",
+			count: 6,
+		});
+
 		return (
 			<Container>
 				<SecondaryOverlay />
@@ -34,7 +40,7 @@ export const Route = createFileRoute("/$locale/landing")({
 				<Fade scrollableRef={scrollerRef} />
 
 				<SnapperNav
-					containerRef={scrollerRef}
+					snapperNav={snapperNav}
 					iconProps={() => ({
 						size: "xs",
 						tone: "secondary",

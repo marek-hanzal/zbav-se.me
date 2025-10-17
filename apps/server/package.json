@@ -8,7 +8,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@hono/zod-openapi": "1.1.3",
+		"@hono/zod-openapi": "1.1.4",
 		"@scalar/hono-api-reference": "0.9.22",
 		"@use-pico/common": "5.0.81",
 		"@vercel/blob": "2.0.0",

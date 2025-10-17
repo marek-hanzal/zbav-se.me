@@ -20,7 +20,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 	const listingNav = useSnapperNav({
 		containerRef: listingRef,
 		orientation: "vertical",
-		count: 7,
+		count: 8,
 	});
 
 	return (
