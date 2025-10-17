@@ -1,1 +1,1 @@
-export const CategoryGroupIcon = "icon-[heroicons--rectangle-group-solid]";
+export const CategoryGroupIcon = "icon-[solar--folder-2-bold-duotone]";

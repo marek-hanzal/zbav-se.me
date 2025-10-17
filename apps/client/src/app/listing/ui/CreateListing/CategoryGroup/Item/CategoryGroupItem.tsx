@@ -61,13 +61,15 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					selection.toggle(item);
 				}}
 				tweak={sheetTweak}
-				round={"md"}
 			>
 				<Status
 					icon={CheckIcon}
-					tone={"primary"}
+					tone={"secondary"}
 					theme={"dark"}
 					textTitle={item.name}
+					titleProps={{
+						size: "lg",
+					}}
 				/>
 			</Sheet>
 
@@ -79,13 +81,15 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					selection.toggle(item);
 				}}
 				tweak={sheetTweak}
-				round={"md"}
 			>
 				<Status
 					icon={CategoryGroupIcon}
-					tone={"primary"}
+					tone={"secondary"}
 					theme={"light"}
 					textTitle={item.name}
+					titleProps={{
+						size: "lg",
+					}}
 				/>
 			</Sheet>
 		</div>

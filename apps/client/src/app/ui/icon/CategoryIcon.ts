@@ -1,1 +1,1 @@
-export const CategoryIcon = "icon-[tabler--category-plus]";
+export const CategoryIcon = "icon-[hugeicons--folder-03]";

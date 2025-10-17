@@ -1,25 +1,15 @@
-import {
-	Container,
-	Data,
-	DotIcon,
-	type Fulltext,
-	Icon,
-	SnapperNav,
-	SpinnerIcon,
-	Status,
-	useSelection,
-	useSnapperNav,
-} from "@use-pico/client";
+import { Container, Data, Status, useSelection } from "@use-pico/client";
 import type { Category } from "@zbav-se.me/sdk";
-import { type FC, useEffect, useId, useRef, useState } from "react";
-import { withCategoryCountQuery } from "~/app/category/query/withCategoryCountQuery";
+import { type FC, useEffect, useId, useRef } from "react";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { Sheet } from "~/app/sheet/Sheet";
+import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
-import { SearchIcon } from "~/app/ui/icon/SearchIcon";
-import { SearchSheet } from "~/app/ui/search/SearchSheet";
+import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
+import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryWrapper {
 	export interface Props {
@@ -29,13 +19,12 @@ export namespace CategoryWrapper {
 
 export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
-	const [search, setSearch] = useState<Fulltext.Value>(undefined);
 	const useCreateListingStore = useCreateListingContext();
 	const setCategory = useCreateListingStore((store) => store.setCategory);
 	const categoryGroupSelection = useCreateListingStore(
 		(store) => store.categoryGroup,
 	);
-	const categorySelection = useSelection<Category>({
+	const selection = useSelection<Category>({
 		mode: "single",
 		onMulti: setCategory,
 	});
@@ -49,7 +38,6 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 			filter: {
 				categoryGroupIdIn: categoryGroupIds,
 				locale,
-				fulltext: search,
 			},
 			sort: [
 				{
@@ -62,29 +50,12 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 			enabled: categoryGroupSelection.length > 0,
 		},
 	);
-	const categoryCountQuery = withCategoryCountQuery().useQuery({
-		filter: {
-			categoryGroupIdIn: categoryGroupIds,
-			locale,
-			fulltext: search,
-		},
-	});
 	const groupId = useId();
 	const grid = 3 * 2;
 
-	const snapperNav = useSnapperNav({
-		containerRef,
-		orientation: "horizontal",
-		/**
-		 * Hack
-		 */
-		count: 2,
-	});
-
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching data
 	useEffect(() => {
-		categorySelection.clear();
-		search && snapperNav.snapTo(1);
+		selection.clear();
 	}, [
 		categoryGroupSelection,
 		categoryQuery.data,
@@ -108,60 +79,22 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 	}
 
 	return (
-		<Data
-			result={categoryQuery}
-			renderLoading={() => {
-				return (
-					<div
-						key={`category-wrapper-loading`}
-						className="flex justify-center items-center h-full"
-					>
-						<Icon
-							icon={SpinnerIcon}
-							theme={"dark"}
-							tone={"secondary"}
-							size={"xl"}
-						/>
-					</div>
-				);
-			}}
-			renderSuccess={({ data }) => {
-				return (
-					<div className="CategoryWrapper-root relative">
-						<Data
-							result={categoryCountQuery}
-							renderSuccess={({ data: { filter } }) => (
-								<SnapperNav
-									containerRef={containerRef}
-									iconProps={() => ({
-										size: "xs",
-									})}
-									pages={[
-										{
-											id: `${groupId}-page-search`,
-											icon: SearchIcon,
-										} as SnapperNav.Page,
-									].concat(
-										Array.from(
-											{
-												length: Math.ceil(
-													filter / grid,
-												),
-											},
-											(_, i) =>
-												({
-													id: `${groupId}-page-${i}`,
-													icon: DotIcon,
-												}) as SnapperNav.Page,
-										),
-									)}
-									orientation={"horizontal"}
-									defaultIndex={1}
-									subtle
-								/>
-							)}
-						/>
+		<FlowContainer>
+			<Title
+				title={"Listing category (title)"}
+				// title={
+				// 	selection.optional.single()?.name ??
+				// 	"Listing category (title)"
+				// }
+			/>
 
+			<Data
+				result={categoryQuery}
+				renderLoading={() => {
+					return <SpinnerSheet />;
+				}}
+				renderSuccess={({ data }) => {
+					return (
 						<Container
 							ref={containerRef}
 							layout={"horizontal-full"}
@@ -169,14 +102,6 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 							snap={"horizontal-start"}
 							gap={"md"}
 						>
-							<SearchSheet
-								state={{
-									value: search,
-									set: setSearch,
-								}}
-								query={categoryQuery}
-							/>
-
 							{Array.from(
 								{
 									length: Math.ceil(data.length / grid),
@@ -191,7 +116,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 									return (
 										<Sheet
 											key={`${groupId}-${chunkIndex}-${startIndex}`}
-											tone={"secondary"}
+											tone={"primary"}
 											theme={"light"}
 											tweak={{
 												slot: {
@@ -213,9 +138,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 												return (
 													<CategoryItem
 														key={item.id}
-														selection={
-															categorySelection
-														}
+														selection={selection}
 														item={item}
 													/>
 												);
@@ -225,9 +148,11 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 								},
 							)}
 						</Container>
-					</div>
-				);
-			}}
-		/>
+					);
+				}}
+			/>
+
+			<BottomContainer>hovno</BottomContainer>
+		</FlowContainer>
 	);
 };

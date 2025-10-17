@@ -1,10 +1,4 @@
-import {
-	Container,
-	Data,
-	Icon,
-	SpinnerIcon,
-	useSelection,
-} from "@use-pico/client";
+import { Container, Data, useSelection } from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
 import { type FC, useEffect, useId } from "react";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
@@ -13,6 +7,7 @@ import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryGroupWrapper {
@@ -71,16 +66,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 			<Data
 				result={categoryGroupQuery}
 				renderLoading={() => {
-					return (
-						<Sheet>
-							<Icon
-								icon={SpinnerIcon}
-								theme={"light"}
-								tone={"secondary"}
-								size={"2xl"}
-							/>
-						</Sheet>
-					);
+					return <SpinnerSheet />;
 				}}
 				renderSuccess={({ data }) => {
 					return (
