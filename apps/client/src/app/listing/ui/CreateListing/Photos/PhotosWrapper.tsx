@@ -3,6 +3,8 @@ import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
+import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Title } from "~/app/ui/title/Title";
 
 export const PhotosWrapper: FC = () => {
@@ -13,13 +15,7 @@ export const PhotosWrapper: FC = () => {
 	const pages = useSnapperPage();
 
 	return (
-		<Container
-			layout={"vertical-header-content-footer"}
-			tone={"secondary"}
-			theme={"light"}
-			square={"md"}
-			gap={"xs"}
-		>
+		<FlowContainer>
 			<Title
 				title={"Listing photos (title)"}
 				right={
@@ -61,15 +57,7 @@ export const PhotosWrapper: FC = () => {
 				})}
 			</Container>
 
-			<Container
-				tone={"primary"}
-				theme={"light"}
-				round={"lg"}
-				square={"md"}
-				border={"default"}
-			>
-				hovno
-			</Container>
-		</Container>
+			<BottomContainer>hovno</BottomContainer>
+		</FlowContainer>
 	);
 };

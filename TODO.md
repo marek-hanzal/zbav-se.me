@@ -4,6 +4,7 @@
 - Elipsis in header?
 - Animate location searh result
 - Remove search from Categories
+- Test capacitor + native app build
 
 - Resolve why fuckin' webglob is not forwarding mails
 - Add endpoint to purge old files from storages

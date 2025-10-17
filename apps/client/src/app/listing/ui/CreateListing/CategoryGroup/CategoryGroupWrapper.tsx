@@ -11,6 +11,8 @@ import { withCategoryGroupListQuery } from "~/app/category-group/query/withCateg
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 import { Sheet } from "~/app/sheet/Sheet";
+import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryGroupWrapper {
@@ -58,13 +60,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 	]);
 
 	return (
-		<Container
-			layout={"vertical-header-content-footer"}
-			tone={"secondary"}
-			theme={"light"}
-			square={"md"}
-			gap={"xs"}
-		>
+		<FlowContainer>
 			<Title
 				title={
 					selection.optional.single()?.name ??
@@ -148,15 +144,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 				}}
 			/>
 
-			<Container
-				tone={"primary"}
-				theme={"light"}
-				round={"lg"}
-				square={"md"}
-				border={"default"}
-			>
-				hovno
-			</Container>
-		</Container>
+			<BottomContainer>hovno</BottomContainer>
+		</FlowContainer>
 	);
 };
