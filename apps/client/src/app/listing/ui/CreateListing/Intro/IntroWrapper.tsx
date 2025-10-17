@@ -29,80 +29,77 @@ export const IntroWrapper: FC<IntroWrapper.Props> = ({ listingRef }) => {
 	});
 
 	return (
-		<Container>
-			<Container
-				layout={"vertical-content-footer"}
-				tone={"secondary"}
-				theme={"light"}
-				round={"lg"}
-				square={"md"}
-				border={"default"}
-				shadow={"default"}
-			>
-				<Sheet>
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "secondary",
-							theme: "light",
+		<Container
+			layout={"vertical-content-footer"}
+			tone={"secondary"}
+			theme={"light"}
+			square={"md"}
+			border={"default"}
+			shadow={"default"}
+		>
+			<Sheet>
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "secondary",
+						theme: "light",
+					}}
+				>
+					<Status
+						icon={PostIcon}
+						textTitle={"Listing - intro (title)"}
+						textMessage={"Listing - intro (description)"}
+						action={
+							<Button
+								iconEnabled={PhotoIcon}
+								iconProps={{
+									size: "md",
+								}}
+								label={"Add photo (cta)"}
+								tone={"secondary"}
+								theme={"dark"}
+								size={"xl"}
+								onClick={() => snapperNav.next()}
+							/>
+						}
+						tweak={{
+							slot: {
+								body: {
+									class: [
+										"flex",
+										"flex-col",
+										"gap-2",
+									],
+								},
+							},
 						}}
 					>
-						<Status
-							icon={PostIcon}
-							textTitle={"Listing - intro (title)"}
-							textMessage={"Listing - intro (description)"}
-							action={
-								<Button
-									iconEnabled={PhotoIcon}
-									iconProps={{
-										size: "md",
-									}}
-									label={"Add photo (cta)"}
-									tone={"secondary"}
-									theme={"dark"}
-									size={"xl"}
-									onClick={() => snapperNav.next()}
-								/>
-							}
-							tweak={{
-								slot: {
-									body: {
-										class: [
-											"flex",
-											"flex-col",
-											"gap-2",
-										],
-									},
-								},
-							}}
-						>
-							<TypoIcon icon={PhotoIcon}>
-								<Tx label={"Add photos (hint)"} />
-							</TypoIcon>
+						<TypoIcon icon={PhotoIcon}>
+							<Tx label={"Add photos (hint)"} />
+						</TypoIcon>
 
-							<TypoIcon icon={CategoryGroupIcon}>
-								<Tx label={"Select category group (hint)"} />
-							</TypoIcon>
+						<TypoIcon icon={CategoryGroupIcon}>
+							<Tx label={"Select category group (hint)"} />
+						</TypoIcon>
 
-							<TypoIcon icon={CategoryIcon}>
-								<Tx label={"Select category (hint)"} />
-							</TypoIcon>
+						<TypoIcon icon={CategoryIcon}>
+							<Tx label={"Select category (hint)"} />
+						</TypoIcon>
 
-							<TypoIcon icon={ConditionIcon}>
-								<Tx label={"Set condition (hint)"} />
-							</TypoIcon>
+						<TypoIcon icon={ConditionIcon}>
+							<Tx label={"Set condition (hint)"} />
+						</TypoIcon>
 
-							<TypoIcon icon={PriceIcon}>
-								<Tx label={"Set price (hint)"} />
-							</TypoIcon>
+						<TypoIcon icon={PriceIcon}>
+							<Tx label={"Set price (hint)"} />
+						</TypoIcon>
 
-							<TypoIcon icon={LocationIcon}>
-								<Tx label={"Set location (hint)"} />
-							</TypoIcon>
-						</Status>
-					</VariantProvider>
-				</Sheet>
-			</Container>
+						<TypoIcon icon={LocationIcon}>
+							<Tx label={"Set location (hint)"} />
+						</TypoIcon>
+					</Status>
+				</VariantProvider>
+			</Sheet>
 		</Container>
 	);
 };
