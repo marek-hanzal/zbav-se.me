@@ -10,7 +10,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 			<Container layout={"vertical-header-content-footer"}>
 				<Title
 					icon={FeedIcon}
-					title={"Feed (title)"}
+					textTitle={"Feed (title)"}
 				/>
 
 				<Container height={"full"}>content</Container>

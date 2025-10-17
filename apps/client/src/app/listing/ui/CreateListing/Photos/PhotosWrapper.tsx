@@ -17,7 +17,7 @@ export const PhotosWrapper: FC = () => {
 	return (
 		<FlowContainer>
 			<Title
-				title={"Listing photos (title)"}
+				textTitle={"Listing photos (title)"}
 				right={
 					<>
 						<Typo

@@ -57,7 +57,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 	return (
 		<FlowContainer>
 			<Title
-				title={
+				textTitle={
 					selection.optional.single()?.name ??
 					"Listing category groups (title)"
 				}

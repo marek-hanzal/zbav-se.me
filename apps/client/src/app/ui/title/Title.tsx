@@ -4,7 +4,7 @@ import type { FC, ReactNode, Ref } from "react";
 export namespace Title {
 	export interface Props extends Container.Props {
 		ref?: Ref<HTMLDivElement>;
-		title: string;
+		textTitle: string;
 		right?: ReactNode;
 		icon?: Icon.Type;
 		iconProps?: Icon.Props;
@@ -13,7 +13,7 @@ export namespace Title {
 
 export const Title: FC<Title.Props> = ({
 	ref,
-	title,
+	textTitle,
 	right,
 	icon,
 	iconProps,
@@ -42,7 +42,7 @@ export const Title: FC<Title.Props> = ({
 			{...props}
 		>
 			<Tx
-				label={title}
+				label={textTitle}
 				font={"bold"}
 				size={"md"}
 			/>

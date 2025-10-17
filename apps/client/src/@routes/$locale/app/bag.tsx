@@ -10,7 +10,7 @@ export const Route = createFileRoute("/$locale/app/bag")({
 			<Container layout={"vertical"}>
 				<Title
 					icon={BagIcon}
-					title={"My Bag (title)"}
+					textTitle={"My Bag (title)"}
 				/>
 				<Container overflow={"vertical"}>
 					<h1>Et modi error aut dicta quibusdam. </h1>

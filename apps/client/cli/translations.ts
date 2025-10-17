@@ -14,7 +14,11 @@ tx({
 			...TranslationSources.jsx,
 			{
 				name: "Tile",
-				attr: "title",
+				attr: "textTitle",
+			},
+			{
+				name: "Title",
+				attr: "textTitle",
 			},
 			//
 			{

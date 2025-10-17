@@ -81,11 +81,10 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 	return (
 		<FlowContainer>
 			<Title
-				title={"Listing category (title)"}
-				// title={
-				// 	selection.optional.single()?.name ??
-				// 	"Listing category (title)"
-				// }
+				textTitle={
+					selection.optional.single()?.name ??
+					"Listing category (title)"
+				}
 			/>
 
 			<Data
