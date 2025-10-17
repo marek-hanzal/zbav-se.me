@@ -1,5 +1,7 @@
 # TODO
 
+- Display progress bar on top of filled items in listing creation
+
 - Smaller title in Category tiles
 - Elipsis in header?
 - Animate location searh result

@@ -1,3 +1,9 @@
+01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
+  ref: Feed (title)
+  value: Feed (title)
+0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
+  ref: Listing category (title)
+  value: Listing category (title)
 06b287f89d953410f1b6757665730e61f9d838cebf755e371408a2d9:
   ref: Listing category groups (title)
   value: Listing category groups (title)
@@ -7,12 +13,12 @@
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
-12b361624b83def8b006029f7c829101e7fa11f7c209da351137ca8a:
-  ref: User profile (description)
-  value: User profile (description)
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
   ref: Missing required token(s). (title)
   value: Missing required token(s). (title)
+14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
+  ref: Condition (title)
+  value: Condition (title)
 1504acbd53c0d2fc447c2f85423f4ab4fd21fd1a8a3335b2c9b66650:
   ref: Landing - Feature 5 (title) - hint
   value: Landing - Feature 5 (title) - hint
@@ -106,6 +112,9 @@
 3c7beaab98fdcc21ddd8b68f5ba83ed77ceaee47f2c0b821f519c9e5:
   ref: Select category (hint)
   value: Select category (hint)
+3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
+  ref: My Bag (title)
+  value: My Bag (title)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
@@ -118,9 +127,6 @@
 42888fcc58a5c859961d7ce1f9843868fd000cd931e43e080d44b369:
   ref: Register (hero)
   value: Register (hero)
-43da3b2f0c171b22d86d7ec47f018c7ef162dcbaad6247d90fa47331:
-  ref: Create listing (description)
-  value: Create listing (description)
 4eee78f4cf9a4ce50ec6055443862b3b8f595a5aae8913e28ffaf679:
   ref: What - buyers (title)
   value: What - buyers (title)
@@ -211,9 +217,6 @@
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
   ref: Close (label)
   value: Close (label)
-863f50a904f6405a6670efae0ea76aa5695b4c5de22c3d122ad185be:
-  ref: Bag (description)
-  value: Bag (description)
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
@@ -322,6 +325,9 @@ b8d17ee8f1ec9dc2af3128c5f0485d77b06c236ce0945fc1251c2167:
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
+bae79c13a807e07db7c6ec9c9f8267b3daac71e12dfa32bbeda77124:
+  ref: Next - Category group (button)
+  value: Next - Category group (button)
 bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
   ref: Landing - Feature 4 (title)
   value: Landing - Feature 4 (title)
@@ -357,9 +363,6 @@ c77449169b9a8eafaf07d7add0c418b0a46c45d9d91a87edf48a0d0e:
 c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
   ref: Remove sorting
   value: Remove sorting
-c9878523ff6755926fe5de0f50fc4a5bf123dbd71d0a31bd302bbaf2:
-  ref: Feed (description)
-  value: Feed (description)
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
   ref: Cannot download the file...
   value: Cannot download the file...

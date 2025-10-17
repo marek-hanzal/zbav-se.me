@@ -1,6 +1,12 @@
-import { Button, Container, Status, Tx, useSnapperNav } from "@use-pico/client";
+import {
+	Button,
+	Container,
+	Status,
+	Tx,
+	type useSnapperNav,
+} from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import type { FC, RefObject } from "react";
+import type { FC } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
@@ -14,20 +20,11 @@ import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
 export namespace IntroWrapper {
 	export interface Props {
-		listingRef: RefObject<HTMLDivElement | null>;
+		listingNav: useSnapperNav.Result;
 	}
 }
 
-export const IntroWrapper: FC<IntroWrapper.Props> = ({ listingRef }) => {
-	const snapperNav = useSnapperNav({
-		containerRef: listingRef,
-		orientation: "vertical",
-		/**
-		 * Just a hack to enable move to the next page (intro is the first)
-		 */
-		count: 2,
-	});
-
+export const IntroWrapper: FC<IntroWrapper.Props> = ({ listingNav }) => {
 	return (
 		<Container
 			layout={"vertical-content-footer"}
@@ -59,7 +56,7 @@ export const IntroWrapper: FC<IntroWrapper.Props> = ({ listingRef }) => {
 								tone={"secondary"}
 								theme={"dark"}
 								size={"xl"}
-								onClick={() => snapperNav.next()}
+								onClick={() => listingNav.next()}
 							/>
 						}
 						tweak={{

@@ -13,6 +13,18 @@ export const BottomContainer: FC<BottomContainer.Props> = (props) => {
 			round={"lg"}
 			square={"md"}
 			border={"default"}
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"flex",
+							"flex-row",
+							"justify-between",
+							"items-center",
+						],
+					},
+				},
+			}}
 			{...props}
 		/>
 	);

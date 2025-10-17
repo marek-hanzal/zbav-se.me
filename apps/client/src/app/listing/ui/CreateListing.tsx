@@ -1,4 +1,4 @@
-import { Container } from "@use-pico/client";
+import { Container, useSnapperNav } from "@use-pico/client";
 import { type FC, useRef } from "react";
 import { CategoryWrapper } from "~/app/listing/ui/CreateListing/Category/CategoryWrapper";
 import { CategoryGroupWrapper } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroupWrapper";
@@ -17,6 +17,11 @@ export namespace CreateListing {
 
 export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 	const listingRef = useRef<HTMLDivElement>(null);
+	const listingNav = useSnapperNav({
+		containerRef: listingRef,
+		orientation: "vertical",
+		count: 7,
+	});
 
 	return (
 		<Container
@@ -25,9 +30,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 			snap={"vertical-start"}
 			gap={"md"}
 		>
-			<IntroWrapper listingRef={listingRef} />
+			<IntroWrapper listingNav={listingNav} />
 
-			<PhotosWrapper />
+			<PhotosWrapper listingNav={listingNav} />
 
 			<CategoryGroupWrapper locale={locale} />
 

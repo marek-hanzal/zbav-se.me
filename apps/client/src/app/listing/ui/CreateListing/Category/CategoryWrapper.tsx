@@ -66,6 +66,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({ locale }) => {
 			<Sheet
 				tone={"secondary"}
 				theme={"light"}
+				round={"unset"}
 			>
 				<Status
 					icon={CategoryGroupIcon}

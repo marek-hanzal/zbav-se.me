@@ -1,29 +1,17 @@
-import { Container, SnapperNav } from "@use-pico/client";
-import { type FC, useRef } from "react";
+import { Container } from "@use-pico/client";
+import type { FC } from "react";
 import { ConditionAge } from "~/app/listing/ui/CreateListing/Condition/ConditionAge";
 import { ConditionOverall } from "~/app/listing/ui/CreateListing/Condition/ConditionOverall";
+import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import { Title } from "~/app/ui/title/Title";
 
 export const ConditionWrapper: FC = () => {
-	const containerRef = useRef<HTMLDivElement>(null);
-
 	return (
-		<div className="relative">
-			<SnapperNav
-				containerRef={containerRef}
-				pages={{
-					count: 2,
-				}}
-				orientation={"horizontal"}
-				iconProps={() => ({
-					size: "xs",
-					tone: "secondary",
-					theme: "light",
-				})}
-				subtle
-			/>
+		<FlowContainer>
+			<Title textTitle={"Condition (title)"} />
 
 			<Container
-				ref={containerRef}
 				layout={"horizontal-full"}
 				snap={"horizontal-start"}
 				overflow={"horizontal"}
@@ -33,6 +21,8 @@ export const ConditionWrapper: FC = () => {
 
 				<ConditionAge />
 			</Container>
-		</div>
+
+			<BottomContainer>hovno</BottomContainer>
+		</FlowContainer>
 	);
 };
