@@ -16,6 +16,9 @@
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
   ref: Missing required token(s). (title)
   value: Missing required token(s). (title)
+147ac8ecb29c507ef0d78e6fd8c642e21b228314ca795fac2b0243bb:
+  ref: Previous - Category group (button)
+  value: Previous - Category group (button)
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
   ref: Condition (title)
   value: Condition (title)
@@ -46,6 +49,9 @@
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
   ref: Agreement with (label)
   value: Agreement with (label)
+21876e2ad5cc2b110e02dbc8dcdf92c576c1af4b069abcb61692f582:
+  ref: Next - Category (button)
+  value: Next - Category (button)
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
   ref: Back to Dashboard (label)
   value: Back to Dashboard (label)

@@ -1,11 +1,16 @@
-import { Button, Container, Typo, type useSnapperNav } from "@use-pico/client";
+import {
+	ArrowRightIcon,
+	Button,
+	Container,
+	Typo,
+	type useSnapperNav,
+} from "@use-pico/client";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
-import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace PhotosWrapper {
@@ -18,6 +23,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({ listingNav }) => {
 	const useCreateListingStore = useCreateListingContext();
 	const photos = useCreateListingStore((store) => store.photos);
 	const total = useCreateListingStore((store) => store.photoCountLimit);
+	const hasPhotos = useCreateListingStore((store) => store.hasPhotos);
 	const selectedCount = photos.filter((photo) => !!photo).length;
 	const pages = useSnapperPage();
 
@@ -67,16 +73,14 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({ listingNav }) => {
 			<BottomContainer>
 				<div>left</div>
 
-				<div>
-					<Button
-						iconEnabled={CategoryGroupIcon}
-						iconPosition={"right"}
-						label={"Next - Category group (button)"}
-						tone={"secondary"}
-						theme={"light"}
-						onClick={() => listingNav.next()}
-					/>
-				</div>
+				<Button
+					iconEnabled={ArrowRightIcon}
+					iconPosition={"right"}
+					disabled={!hasPhotos}
+					tone={"secondary"}
+					theme={"dark"}
+					onClick={() => listingNav.next()}
+				/>
 			</BottomContainer>
 		</FlowContainer>
 	);

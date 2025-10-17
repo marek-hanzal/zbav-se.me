@@ -1,4 +1,12 @@
-import { Container, Data, useSelection } from "@use-pico/client";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	Button,
+	Container,
+	Data,
+	useSelection,
+	type useSnapperNav,
+} from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
 import { type FC, useEffect, useId } from "react";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
@@ -12,11 +20,13 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryGroupWrapper {
 	export interface Props {
+		listingNav: useSnapperNav.Result;
 		locale: string;
 	}
 }
 
 export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
+	listingNav,
 	locale,
 }) => {
 	const useCreateListingStore = useCreateListingContext();
@@ -130,7 +140,24 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 				}}
 			/>
 
-			<BottomContainer>hovno</BottomContainer>
+			<BottomContainer>
+				<Button
+					iconEnabled={ArrowLeftIcon}
+					iconPosition={"left"}
+					tone={"secondary"}
+					theme={"light"}
+					onClick={() => listingNav.prev()}
+				/>
+
+				<Button
+					iconEnabled={ArrowRightIcon}
+					iconPosition={"right"}
+					disabled={!selection.hasAny}
+					tone={"secondary"}
+					theme={"dark"}
+					onClick={() => listingNav.next()}
+				/>
+			</BottomContainer>
 		</FlowContainer>
 	);
 };

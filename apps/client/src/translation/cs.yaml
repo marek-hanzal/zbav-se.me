@@ -18,6 +18,9 @@
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
     ref: Missing required token(s). (title)
     value: Missing required token(s). (title)
+147ac8ecb29c507ef0d78e6fd8c642e21b228314ca795fac2b0243bb:
+    ref: Previous - Category group (button)
+    value: Výběr kategorie
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Condition (title)
@@ -52,6 +55,9 @@
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
     ref: Agreement with (label)
     value: "Registrací souhlasíš s:"
+21876e2ad5cc2b110e02dbc8dcdf92c576c1af4b069abcb61692f582:
+    ref: Next - Category (button)
+    value: Kategorie
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
     ref: Back to Dashboard (label)
     value: Zpět domů
@@ -391,7 +397,7 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     value: Kam inzerát umístíme?
 bae79c13a807e07db7c6ec9c9f8267b3daac71e12dfa32bbeda77124:
     ref: Next - Category group (button)
-    value: Další - Výběr kategorie
+    value: Výběr kategorie
 bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
     ref: Landing - Feature 4 (title)
     value: 💡 Chytré nabídky

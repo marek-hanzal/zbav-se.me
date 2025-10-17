@@ -1,6 +1,7 @@
 # TODO
 
 - Display progress bar on top of filled items in listing creation
+- Next button may go horizontally, when needed
 
 - Smaller title in Category tiles
 - Elipsis in header?

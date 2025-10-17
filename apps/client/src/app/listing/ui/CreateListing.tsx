@@ -34,11 +34,17 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 
 			<PhotosWrapper listingNav={listingNav} />
 
-			<CategoryGroupWrapper locale={locale} />
+			<CategoryGroupWrapper
+				listingNav={listingNav}
+				locale={locale}
+			/>
 
-			<CategoryWrapper locale={locale} />
+			<CategoryWrapper
+				listingNav={listingNav}
+				locale={locale}
+			/>
 
-			<ConditionWrapper />
+			<ConditionWrapper listingNav={listingNav} />
 
 			<PriceWrapper locale={locale} />
 
