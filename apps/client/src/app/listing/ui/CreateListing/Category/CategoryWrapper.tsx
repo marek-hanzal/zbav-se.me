@@ -16,7 +16,7 @@ import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryIt
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
-import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
+import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
 import { Title } from "~/app/ui/title/Title";
 
@@ -82,7 +82,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = ({
 				round={"unset"}
 			>
 				<Status
-					icon={CategoryGroupIcon}
+					icon={CategoryIcon}
 					tone={"secondary"}
 					theme={"light"}
 					textTitle="No category selected"

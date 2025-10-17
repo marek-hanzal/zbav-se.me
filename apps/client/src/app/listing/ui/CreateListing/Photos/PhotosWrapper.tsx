@@ -71,7 +71,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = ({ listingNav }) => {
 			</Container>
 
 			<BottomContainer>
-				<div>left</div>
+				<div />
 
 				<Button
 					iconEnabled={ArrowRightIcon}
