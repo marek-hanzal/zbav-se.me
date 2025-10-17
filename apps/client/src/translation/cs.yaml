@@ -1,9 +1,6 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
     ref: Upload (title)
     value: Vyber fotku
-0c45e886134e88e32d6c1a85869711816ef3fbd2867c8273958dbc6d:
-    ref: Upload (placeholder)
-    value: Můžeš fotit nebo vybrat něco z galerie
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
     value:
@@ -111,6 +108,9 @@
 3bff91cf3466a36353f54c389623d992c1ff32b26665795f7c022d58:
     ref: Login with social (message)
     value: Na tomto ještě pracujeme, ale všechno bude!
+3c7beaab98fdcc21ddd8b68f5ba83ed77ceaee47f2c0b821f519c9e5:
+    ref: Select category (hint)
+    value: Upřesnit kategorii pro snažší doručení
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -149,6 +149,9 @@
 568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
     ref: Invalid on/off value
     value: Invalid on/off value
+5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
+    ref: Listing photos (title)
+    value: Fotky
 591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
     ref: Logout (description)
     value: Logout (description)
@@ -179,6 +182,9 @@
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
     ref: Landing - Hero (title)
     value: Nakupuješ nebo prodáváš?
+68df66fbac9de67547d703604ad74542f4cf229da6a7cc3e35d1a986:
+    ref: Set location (hint)
+    value: ...a vybrat, kam inzerát patří
 6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
     ref: Condition - Overall (title)
     value: Celkový stav
@@ -221,6 +227,9 @@
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
     ref: Missing required token(s). (message)
     value: Missing required token(s). (message)
+89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
+    ref: Listing - upload photo (placeholder)
+    value: Ťuknutím vyfoť nebo vyber z galerie
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
     ref: Previous (tour)
     value: Předchozí
@@ -236,6 +245,9 @@
 94268a800874338c42540c7f350a713b3b5afceb7b26a4297491aa5c:
     ref: Confirm your password
     value: Potvrďte své heslo
+95364d50edbc5532834a1af5c47d2efd5ad9be3b2f4e8e221f83ec64:
+    ref: Set price (hint)
+    value: Nastavit cenu
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
     ref: Nothing here
     value: Nothing here
@@ -251,6 +263,9 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Co hledáme?
+9fcf609e1aa87339701add40d4ed0b04427891c73fd33dcdccc3cff6:
+    ref: Listing - intro (description)
+    value: Nastavte v několika krocích vlastnosti inzerátu a pošlete jej do světa!
 Condition - Age [0] (hint):
     static: true
     value: Běz vyplněného věku hrozí, že váš inzerát nepůjde mezi ostatními vidět.
@@ -317,6 +332,9 @@ a26e2f454b3953f2d2b295fcdae89f2bd7b4a6a145918f37d91e31c8:
 a421acdb6005685abf3ab655b39bd5a6fd36b74ffb42026ddc48fc6b:
     ref: Cannot resolve iso date time
     value: Cannot resolve iso date time
+a5c71021d2872bc887174a81c131319a602af35d8307c82e8432557d:
+    ref: Add photo (cta)
+    value: Začít s fotkami
 a5eb219baee2d44fbeb2efb0fefefa8cca868c985927a2010eca1bd0:
     ref: Sorted by asc, sort by desc; keeps column sorted in selected order
     value: Sorted by asc, sort by desc; keeps column sorted in selected order
@@ -332,6 +350,9 @@ ac1247f9e2a8fcba4db03d65dbefe4199b1c6a62d16df9e7738793fb:
 ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
     ref: Search (title)
     value: Hledat
+acea499d6211c6dc2f60bfe3be1eab46f28bba7e865bc9b1ac9644a9:
+    ref: Listing selected photos (label)
+    value: Listing selected photos (label)
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
@@ -371,6 +392,9 @@ bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
 bcb2263af0ec3c192d55f37db91b702dfb64cd249372992287291fe9:
     ref: Export (button)
     value: Export (button)
+bd7798e38b9a2d26c4b509438ca8fe023dc6662becf4966e9cf9166b:
+    ref: Select category group (hint)
+    value: Vybrat, do jaké kategorie inzerát patří
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     ref:
         Missing identity for an Entity (id). I'm sorry, but I cannot provide better
@@ -424,6 +448,9 @@ d710bfd0568645758fb1e8d34e64295ff720d1d298cdf773b578d404:
 d9b33cbea0db22bdc23b80834ef175837c4db97d6e48eb1405ab9917:
     ref: Login failed
     value: Přihlášení se nezdařilo
+dbcca93a186df18b22eaca3db981500fa71cb0a4326c9ee54d1914a6:
+    ref: Add photos (hint)
+    value: Stačí vybrat pár fotek
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
@@ -433,6 +460,9 @@ dd8ddfd7304520a53abf36011a40a37e9cc33e52eadf58d169a4a4b0:
 e012c772258a91d7b01d1881c44018150f4c3e41bb7f2b3f09a850c7:
     ref: Email is required
     value: Email je povinný, vyplň ho prosím...
+e0c438f0ed140ecacf0537eff294f313596b37822648b2fa5c79ec42:
+    ref: Listing - intro (title)
+    value: Nový inzerát
 e33454b8ba8b19bc556b036dd958ecb47ba9a97d3f75f0e73846f79b:
     ref: Landing - Feature 3 (title)
     value: 🏝️ Bez starostí po zveřejnění
@@ -442,6 +472,9 @@ e63e9e8221ecbf42ba535801b2bc3cb544011e6f3552ac2ee5886a5e:
 e80b66cf15045f7c59a218025f54cc745b90425449b622562f7b66f1:
     ref: Landing - Feature 1 (title)
     value: ⏱️ Inzerát za "minutku"
+e860d8c3797c35dbd392bbfcad1cd38c7b0f9efaad739f241097b41b:
+    ref: Set condition (hint)
+    value: Naklikat stav
 e8a19177576d520c7d0b09d78bf7abc632de0b6f07d3a579f3822693:
     ref: Password must be at least 8 characters
     value: Heslo by mělo mít alespoň 8 znaků.

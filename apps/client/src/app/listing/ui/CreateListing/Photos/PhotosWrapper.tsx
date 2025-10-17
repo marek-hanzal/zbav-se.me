@@ -1,27 +1,56 @@
-import { Container } from "@use-pico/client";
+import { Container, Tx } from "@use-pico/client";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
-import { Title } from "~/app/ui/title/Title";
 
 export const PhotosWrapper: FC = () => {
 	const useCreateListingStore = useCreateListingContext();
 	const photos = useCreateListingStore((store) => store.photos);
+	const total = useCreateListingStore((store) => store.photoCountLimit);
+	const selectedCount = photos.filter((photo) => !!photo).length;
 	const pages = useSnapperPage();
 
 	return (
 		<Container
 			position={"relative"}
-			square={"md"}
 			round={"lg"}
 		>
 			<Container
 				layout={"vertical-header-content-footer"}
-				gap={"sm"}
+				tone={"secondary"}
+				theme={"light"}
+				square={"md"}
+				round={"lg"}
+				gap={"xs"}
 			>
-				<Container>
-					<Title title={"Listing photos (title)"} />
+				<Container
+					tone={"primary"}
+					theme={"light"}
+					round={"lg"}
+					square={"md"}
+					border={"default"}
+					shadow={"default"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"inline-flex",
+									"items-center",
+									"justify-between",
+									"gap-xs",
+								],
+							},
+						},
+					}}
+				>
+					<Tx
+						label={"Listing photos (title)"}
+						font={"bold"}
+						size={"md"}
+					/>
+
+					<Tx label={"Listing selected photos (label)"} />
 				</Container>
 
 				<Container

@@ -97,6 +97,9 @@
 			"problemMatcher": [],
 			"label": "translations",
 			"detail": "Generate translations.",
+			"options": {
+				"cwd": "${workspaceFolder}/apps/client"
+			},
 			"runOptions": {
 				"instanceLimit": 1
 			},

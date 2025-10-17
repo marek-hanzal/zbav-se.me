@@ -204,7 +204,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				icon={SpinnerIcon}
 				size={"xl"}
 				tone={"primary"}
-				theme={"dark"}
+				theme={"light"}
 				tweak={{
 					slot: {
 						root: {
@@ -246,7 +246,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 						textMessage={
 							props.disabled
 								? "Upload - disabled (placeholder)"
-								: "Upload (placeholder)"
+								: "Listing - upload photo (placeholder)"
 						}
 						messageProps={{
 							size: "2xl",

@@ -1,8 +1,9 @@
 import { Container } from "@use-pico/client";
-import type { FC } from "react";
+import { type FC, useRef } from "react";
 import { CategoryWrapper } from "~/app/listing/ui/CreateListing/Category/CategoryWrapper";
 import { CategoryGroupWrapper } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroupWrapper";
 import { ConditionWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionWrapper";
+import { IntroWrapper } from "~/app/listing/ui/CreateListing/Intro/IntroWrapper";
 import { LocationWrapper } from "~/app/listing/ui/CreateListing/Location/LocationWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
 import { PriceWrapper } from "~/app/listing/ui/CreateListing/Price/PriceWrapper";
@@ -15,30 +16,30 @@ export namespace CreateListing {
 }
 
 export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
+	const listingRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<Container
-			layout="vertical"
-			position={"relative"}
+			ref={listingRef}
+			layout={"vertical-full"}
+			snap={"vertical-start"}
+			gap={"md"}
 		>
-			<Container
-				layout={"vertical-full"}
-				snap={"vertical-start"}
-				gap={"md"}
-			>
-				<PhotosWrapper />
+			<IntroWrapper listingRef={listingRef} />
 
-				<CategoryGroupWrapper locale={locale} />
+			<PhotosWrapper />
 
-				<CategoryWrapper locale={locale} />
+			<CategoryGroupWrapper locale={locale} />
 
-				<ConditionWrapper />
+			<CategoryWrapper locale={locale} />
 
-				<PriceWrapper locale={locale} />
+			<ConditionWrapper />
 
-				<LocationWrapper locale={locale} />
+			<PriceWrapper locale={locale} />
 
-				<SubmitWrapper />
-			</Container>
+			<LocationWrapper locale={locale} />
+
+			<SubmitWrapper />
 		</Container>
 	);
 };

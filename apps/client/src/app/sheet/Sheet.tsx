@@ -6,5 +6,10 @@ export namespace Sheet {
 }
 
 export const Sheet: FC<Sheet.Props> = (props) => {
-	return <CoolSheet {...props} />;
+	return (
+		<CoolSheet
+			round={"lg"}
+			{...props}
+		/>
+	);
 };

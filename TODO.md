@@ -1,6 +1,7 @@
 # TODO
 
 - Add endpoint to purge old files from storages
+- Use GSAP snapping instead of native one - better for events
 
 - Simplify price -> Just dial with price and done
 - Simplify listing process - less swipes, more controls on screen
