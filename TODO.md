@@ -1,5 +1,10 @@
 # TODO
 
+- Smaller title in Category tiles
+- Elipsis in header?
+- Animate location searh result
+- Remove search from Categories
+
 - Resolve why fuckin' webglob is not forwarding mails
 - Add endpoint to purge old files from storages
 - Use GSAP snapping instead of native one - better for events

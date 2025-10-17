@@ -1,68 +1,57 @@
-import { Icon, Tx } from "@use-pico/client";
-import { type Cls, useCls, withCls } from "@use-pico/cls";
-import type { FC, HTMLAttributes, Ref } from "react";
-import { TitleCls } from "~/app/ui/title/TitleCls";
+import { Container, type Icon, Tx } from "@use-pico/client";
+import type { FC, ReactNode, Ref } from "react";
 
 export namespace Title {
-	export interface Props
-		extends TitleCls.Props<
-			Omit<HTMLAttributes<HTMLDivElement>, "children">
-		> {
+	export interface Props extends Container.Props {
 		ref?: Ref<HTMLDivElement>;
 		title: string;
+		right?: ReactNode;
 		icon?: Icon.Type;
 		iconProps?: Icon.Props;
-		tone?: Cls.VariantOf<TitleCls, "tone">;
-		theme?: Cls.VariantOf<TitleCls, "theme">;
-		size?: Cls.VariantOf<TitleCls, "size">;
 	}
 }
 
-export const BaseTitle: FC<Title.Props> = ({
+export const Title: FC<Title.Props> = ({
 	ref,
 	title,
+	right,
 	icon,
 	iconProps,
-	tone,
-	theme,
-	size,
-	cls = TitleCls,
-	tweak,
 	...props
 }) => {
-	const { slots } = useCls(
-		cls,
-		{
-			variant: {
-				tone,
-				theme,
-				size,
-			},
-		},
-		tweak,
-	);
-
 	return (
-		<div
-			data-ui="Title-root"
-			ref={ref}
-			className={slots.root()}
+		<Container
+			tone={"primary"}
+			theme={"light"}
+			round={"lg"}
+			square={"md"}
+			border={"default"}
+			shadow={"default"}
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"inline-flex",
+							"items-center",
+							"justify-between",
+							"gap-xs",
+						],
+					},
+				},
+			}}
 			{...props}
 		>
-			<Icon
-				icon={icon}
-				{...iconProps}
+			<Tx
+				label={title}
+				font={"bold"}
+				size={"md"}
 			/>
 
-			<div data-ui="Title-content">
-				<Tx
-					label={title}
-					size={"lg"}
-					font="bold"
-				/>
-			</div>
-		</div>
+			{right ? (
+				<div className="inline-flex flex-row gap-1 items-end justify-center max-w-[50%]">
+					{right}
+				</div>
+			) : null}
+		</Container>
 	);
 };
-
-export const Title = withCls(BaseTitle, TitleCls);

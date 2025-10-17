@@ -3,7 +3,6 @@ import {
 	Data,
 	Icon,
 	SpinnerIcon,
-	Tx,
 	useSelection,
 } from "@use-pico/client";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
@@ -12,6 +11,7 @@ import { withCategoryGroupListQuery } from "~/app/category-group/query/withCateg
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 import { Sheet } from "~/app/sheet/Sheet";
+import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryGroupWrapper {
 	export interface Props {
@@ -65,36 +65,12 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = ({
 			square={"md"}
 			gap={"xs"}
 		>
-			<Container
-				tone={"primary"}
-				theme={"light"}
-				round={"lg"}
-				square={"md"}
-				border={"default"}
-				shadow={"default"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"inline-flex",
-								"items-center",
-								"justify-between",
-								"gap-xs",
-							],
-						},
-					},
-				}}
-			>
-				<Tx
-					label={"Listing category groups (title)"}
-					font={"bold"}
-					size={"md"}
-				/>
-
-				<div className="inline-flex flex-row gap-1 items-center">
-					{selection.optional.single()?.name}
-				</div>
-			</Container>
+			<Title
+				title={
+					selection.optional.single()?.name ??
+					"Listing category groups (title)"
+				}
+			/>
 
 			<Data
 				result={categoryGroupQuery}
