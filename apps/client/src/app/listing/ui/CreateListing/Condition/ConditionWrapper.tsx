@@ -6,6 +6,7 @@ import {
 	type useSnapperNav,
 } from "@use-pico/client";
 import type { FC } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ConditionAge } from "~/app/listing/ui/CreateListing/Condition/ConditionAge";
 import { ConditionOverall } from "~/app/listing/ui/CreateListing/Condition/ConditionOverall";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -21,6 +22,10 @@ export namespace ConditionWrapper {
 export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
 	listingNav,
 }) => {
+	const useCreateListingStore = useCreateListingContext();
+	const hasCondition = useCreateListingStore((store) => store.hasCondition);
+	const hasAge = useCreateListingStore((store) => store.hasAge);
+
 	return (
 		<FlowContainer>
 			<Title textTitle={"Condition (title)"} />
@@ -48,6 +53,7 @@ export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
 				<Button
 					iconEnabled={ArrowRightIcon}
 					iconPosition={"right"}
+					disabled={!hasCondition || !hasAge}
 					tone={"secondary"}
 					theme={"dark"}
 					onClick={() => listingNav.next()}
