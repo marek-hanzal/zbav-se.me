@@ -48,16 +48,33 @@ export namespace useSnapperNav {
 	 */
 	export type SnapTarget = number | string;
 
-	export interface Result {
+	/**
+	 * Read-only state the consumers can subscribe to.
+	 */
+	export interface State {
 		current: number;
 		count: number;
 		isFirst: boolean;
 		isLast: boolean;
+	}
+
+	/**
+	 * Stable action API used to drive navigation.
+	 */
+	export interface Api {
 		start: () => void;
 		end: () => void;
 		next: () => void;
 		prev: () => void;
 		snapTo: (target: SnapTarget, behavior?: ScrollBehavior) => void;
+	}
+
+	/**
+	 * Hook result: split into { state, api } to minimize re-renders in consumers.
+	 */
+	export interface Result {
+		state: State;
+		api: Api;
 	}
 }
 
@@ -374,25 +391,42 @@ export function useSnapperNav({
 		emitSnapDebounced,
 	]);
 
-	return useMemo(() => {
+	/**
+	 * Compose { state, api }.
+	 * - `api` is memoized so action identity is stable across renders.
+	 * - `state` changes when data changes (as intended).
+	 */
+	const state = useMemo<useSnapperNav.State>(() => {
 		return {
 			current,
 			count: $count,
 			isFirst: current === 0,
 			isLast: current === Math.max(0, $count - 1),
+		};
+	}, [
+		current,
+		$count,
+	]);
+
+	const api = useMemo<useSnapperNav.Api>(
+		() => ({
 			start,
 			end,
 			next,
 			prev,
 			snapTo,
-		};
-	}, [
-		current,
-		$count,
-		start,
-		end,
-		next,
-		prev,
-		snapTo,
-	]);
+		}),
+		[
+			start,
+			end,
+			next,
+			prev,
+			snapTo,
+		],
+	);
+
+	return {
+		state,
+		api,
+	};
 }

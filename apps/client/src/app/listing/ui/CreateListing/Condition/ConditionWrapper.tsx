@@ -15,12 +15,12 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace ConditionWrapper {
 	export interface Props {
-		listingNav: useSnapperNav.Result;
+		listingNavApi: useSnapperNav.Api;
 	}
 }
 
 export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
-	listingNav,
+	listingNavApi,
 }) => {
 	const useCreateListingStore = useCreateListingContext();
 	const hasCondition = useCreateListingStore((store) => store.hasCondition);
@@ -56,11 +56,11 @@ export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
 					tone={"secondary"}
 					theme={"light"}
 					onClick={() => {
-						if (conditionSnapperNav.current === 1) {
-							conditionSnapperNav.prev();
+						if (conditionSnapperNav.state.current === 1) {
+							conditionSnapperNav.api.prev();
 							return;
 						}
-						listingNav.prev();
+						listingNavApi.prev();
 					}}
 				/>
 
@@ -68,16 +68,17 @@ export const ConditionWrapper: FC<ConditionWrapper.Props> = ({
 					iconEnabled={ArrowRightIcon}
 					iconPosition={"right"}
 					disabled={
-						(!hasCondition && conditionSnapperNav.current === 0) ||
-						(!hasAge && conditionSnapperNav.current === 1)
+						(!hasCondition &&
+							conditionSnapperNav.state.current === 0) ||
+						(!hasAge && conditionSnapperNav.state.current === 1)
 					}
 					tone={"secondary"}
 					theme={"dark"}
 					onClick={() => {
 						if (hasCondition && hasAge) {
-							listingNav.next();
+							listingNavApi.next();
 						} else if (hasCondition) {
-							conditionSnapperNav.next();
+							conditionSnapperNav.api.next();
 						}
 					}}
 				/>

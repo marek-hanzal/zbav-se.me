@@ -33,21 +33,21 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 			snap={"vertical-start"}
 			gap={"md"}
 		>
-			<IntroWrapper listingNav={listingNav} />
+			<IntroWrapper listingNavApi={listingNav.api} />
 
-			<PhotosWrapper listingNav={listingNav} />
+			<PhotosWrapper listingNavApi={listingNav.api} />
 
 			<CategoryGroupWrapper
-				listingNav={listingNav}
+				listingNavApi={listingNav.api}
 				locale={locale}
 			/>
 
 			<CategoryWrapper
-				listingNav={listingNav}
+				listingNavApi={listingNav.api}
 				locale={locale}
 			/>
 
-			<ConditionWrapper listingNav={listingNav} />
+			<ConditionWrapper listingNavApi={listingNav.api} />
 
 			<PriceWrapper locale={locale} />
 

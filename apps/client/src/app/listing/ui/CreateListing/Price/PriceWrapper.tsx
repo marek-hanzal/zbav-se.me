@@ -45,7 +45,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 
 	useAnim(
 		() => {
-			snapperNav.snapTo(price === undefined ? 1 : 0);
+			snapperNav.api.snapTo(price === undefined ? 1 : 0);
 
 			anim.timeline()
 				.to(priceRef.current, {
@@ -96,7 +96,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 						action={
 							cost === undefined ? (
 								<Button
-									onClick={() => snapperNav.next()}
+									onClick={snapperNav.api.next}
 									size={"xl"}
 									tone={"secondary"}
 									theme={"dark"}
