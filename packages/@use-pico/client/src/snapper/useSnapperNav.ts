@@ -8,6 +8,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { useDebouncedCallback } from "use-debounce";
 
 export namespace useSnapperNav {
 	export interface Props {
@@ -32,7 +33,7 @@ export namespace useSnapperNav {
 		 */
 		threshold?: number;
 		/**
-		 * Called when a new page index is derived.
+		 * Called when a new page index is derived (debounced).
 		 */
 		onSnap?: (index: number) => void;
 	}
@@ -71,6 +72,9 @@ export function useSnapperNav({
 	const isVertical = orientation === "vertical";
 	const $threshold = clamp(threshold, 0, 1);
 
+	/**
+	 * Local state + live ref so handlers always see the latest index.
+	 */
 	const [current, setCurrent] = useState(() => {
 		const last = $count - 1;
 		return clamp(defaultIndex, 0, last);
@@ -79,11 +83,35 @@ export function useSnapperNav({
 	currentRef.current = current;
 
 	/**
-	 * Emit wrapper that always sees the latest `onSnap`.
-	 * Emission is centralized in effects (no emit from `snapTo`).
+	 * Always-latest emitter for onSnap (reads newest props/state).
+	 * We call this ONLY from the debounced wrapper below.
 	 */
-	const emitSnap = useEffectEvent((idx: number) => onSnap?.(idx));
+	const emitSnap = useEffectEvent((idx: number) => {
+		onSnap?.(idx);
+	});
 
+	/**
+	 * Debounced onSnap. Adjust delay as needed.
+	 * Used from the scroll listener and from count-clamp effect.
+	 */
+	const emitSnapDebounced = useDebouncedCallback((idx: number) => {
+		emitSnap(idx);
+	}, 150);
+
+	/**
+	 * Cancel any pending debounced emits on unmount.
+	 */
+	useEffect(() => {
+		return () => {
+			emitSnapDebounced.cancel();
+		};
+	}, [
+		emitSnapDebounced,
+	]);
+
+	/**
+	 * Read container metrics (page size, current scroll position, content size).
+	 */
 	const metrics = useCallback(() => {
 		const host = containerRef.current;
 
@@ -109,17 +137,22 @@ export function useSnapperNav({
 		isVertical,
 	]);
 
-	const quantizeToPageIndex = useCallback(
-		(position: number, pageSize: number, pageCount: number) => {
-			const raw = (position + pageSize * $threshold) / pageSize;
-			const last = Math.max(0, pageCount - 1);
-			return clamp(Math.floor(raw), 0, last);
+	/**
+	 * Convert pixel position to page index using threshold.
+	 */
+	const toIndex = useCallback(
+		(position: number, size: number, count: number) => {
+			const raw = (position + size * $threshold) / size;
+			return clamp(Math.floor(raw), 0, Math.max(0, count - 1));
 		},
 		[
 			$threshold,
 		],
 	);
 
+	/**
+	 * Lift any descendant node to the nearest direct child of the container.
+	 */
 	const toDirectChild = useCallback(
 		(node: Element | null): HTMLElement | null => {
 			const host = containerRef.current;
@@ -147,7 +180,7 @@ export function useSnapperNav({
 
 	/**
 	 * Programmatic scroll to page (by index or selector).
-	 * Does not emit; scroll listener derives and emits.
+	 * Does NOT emit onSnap; the scroll listener derives index and emits (debounced).
 	 */
 	const snapTo = useCallback(
 		(
@@ -233,60 +266,72 @@ export function useSnapperNav({
 	]);
 
 	/**
-	 * Initial mount / host swap:
-	 * - Snap to a safe initial page (auto)
-	 * - Derive `current` from actual metrics (and emit if changed)
+	 * Initial mount: set initial scroll position (no emits, no listener yet).
+	 * Also derives `current` from metrics as a backup in case no scroll event fires.
 	 */
 	useLayoutEffect(() => {
-		const el = containerRef.current;
+		const host = containerRef.current;
 
-		if (!el) {
+		if (!host) {
 			return;
 		}
 
 		const initial = clamp(defaultIndex, 0, $count - 1);
+		const pageSize = isVertical ? host.clientHeight : host.clientWidth;
+		const totalSize = isVertical ? host.scrollHeight : host.scrollWidth;
+		const maxScroll = Math.max(0, totalSize - pageSize);
+		const targetPx = clamp(initial * pageSize, 0, maxScroll);
 
-		if (initial !== currentRef.current) {
-			snapTo(initial, "auto");
+		if (isVertical) {
+			host.scrollTo({
+				top: targetPx,
+				behavior: "auto",
+			});
+		} else {
+			host.scrollTo({
+				left: targetPx,
+				behavior: "auto",
+			});
 		}
 
-		const { pageSize, position } = metrics();
-		const idx = quantizeToPageIndex(position, pageSize, $count);
+		currentRef.current = initial;
+		setCurrent(initial);
 
-		if (idx !== currentRef.current) {
+		const { position } = metrics();
+		const idx = toIndex(position, pageSize, $count);
+
+		if (idx !== initial) {
 			currentRef.current = idx;
 			setCurrent(idx);
+			// onSnap is debounced and only called from the scroll listener
 		}
 	}, [
 		containerRef,
 		defaultIndex,
 		$count,
-		snapTo,
+		isVertical,
 		metrics,
-		quantizeToPageIndex,
+		toIndex,
 	]);
 
 	/**
-	 * Scroll listener:
-	 * - Derives page index and emits only on change.
+	 * Scroll listener: sole source of truth for `current` and debounced onSnap.
 	 */
 	useEffect(() => {
-		const el = containerRef.current;
+		const host = containerRef.current;
 
-		if (!el) {
+		if (!host) {
 			return;
 		}
 
-		const host = el;
-
 		function onScroll() {
 			const { pageSize, position } = metrics();
-			const idx = quantizeToPageIndex(position, pageSize, $count);
+			const idx = toIndex(position, pageSize, $count);
 
 			if (idx !== currentRef.current) {
 				currentRef.current = idx;
 				setCurrent(idx);
-				emitSnap?.(idx);
+				emitSnapDebounced(idx);
 			}
 		}
 
@@ -301,28 +346,26 @@ export function useSnapperNav({
 		containerRef,
 		$count,
 		metrics,
-		quantizeToPageIndex,
-		emitSnap,
+		toIndex,
+		emitSnapDebounced,
 	]);
 
 	/**
-	 * Count changes:
-	 * - Clamp current to the new range and snap if needed (auto).
+	 * Count changes: clamp current to the new range.
+	 * If it changed, notify via debounced onSnap.
+	 * No automatic scroll here; keep UI steady unless caller decides otherwise.
 	 */
 	useEffect(() => {
-		const last = Math.max(0, $count - 1);
-		const clamped = clamp(currentRef.current, 0, last);
+		const clamped = clamp(currentRef.current, 0, $count - 1);
 
 		if (clamped !== currentRef.current) {
 			currentRef.current = clamped;
 			setCurrent(clamped);
-			snapTo(clamped, "auto");
-			emitSnap?.(clamped);
+			emitSnapDebounced(clamped);
 		}
 	}, [
 		$count,
-		snapTo,
-		emitSnap,
+		emitSnapDebounced,
 	]);
 
 	const isFirst = current === 0;
