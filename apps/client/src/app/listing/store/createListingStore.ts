@@ -17,6 +17,7 @@ export namespace createListingStore {
 		| "price";
 
 	export interface Store {
+		//
 		photoCountLimit: number;
 		photos: (File | undefined)[];
 		setPhoto(slot: number, photo: File | undefined): void;
@@ -46,10 +47,21 @@ export namespace createListingStore {
 		setLocation(location: string | undefined): void;
 		hasLocation: boolean;
 		//
+		requiredCount: number;
 		missing: Missing[];
 		isValid: boolean;
 	}
 }
+
+const defaultMissing: createListingStore.Missing[] = [
+	"category",
+	"categoryGroup",
+	"photos",
+	"condition",
+	"age",
+	"location",
+	"price",
+];
 
 export const createListingStore = ({
 	photoCountLimit,
@@ -231,14 +243,9 @@ export const createListingStore = ({
 		},
 		hasLocation: false,
 		//
+		requiredCount: defaultMissing.length,
 		missing: [
-			"category",
-			"categoryGroup",
-			"photos",
-			"condition",
-			"age",
-			"location",
-			"price",
+			...defaultMissing,
 		],
 		isValid: false,
 	}));
