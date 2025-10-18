@@ -68,7 +68,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					theme={"dark"}
 					textTitle={item.name}
 					titleProps={{
-						size: "lg",
+						size: "md",
 					}}
 				/>
 			</Sheet>
@@ -88,7 +88,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 					theme={"light"}
 					textTitle={item.name}
 					titleProps={{
-						size: "lg",
+						size: "md",
 					}}
 				/>
 			</Sheet>

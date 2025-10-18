@@ -82,6 +82,7 @@ export const ConditionWrapper: FC<ConditionWrapper.Props> = memo(
 								conditionSnapperNav.api.next();
 							}
 						}}
+						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

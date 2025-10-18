@@ -81,6 +81,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(
 						tone={"secondary"}
 						theme={"dark"}
 						onClick={listingNavApi.next}
+						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

@@ -65,6 +65,9 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 					tone={"secondary"}
 					theme={"dark"}
 					textTitle={item.name}
+					titleProps={{
+						size: "md",
+					}}
 				/>
 			</Sheet>
 
@@ -83,6 +86,9 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 					tone={"secondary"}
 					theme={"light"}
 					textTitle={item.name}
+					titleProps={{
+						size: "md",
+					}}
 				/>
 			</Sheet>
 		</div>

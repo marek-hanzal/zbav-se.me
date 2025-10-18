@@ -70,7 +70,6 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 						selection.optional.single()?.name ??
 						"Listing category groups (title)"
 					}
-					right={<>number of pages/current page?</>}
 				/>
 
 				<Data
@@ -160,6 +159,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 						tone={"secondary"}
 						theme={"dark"}
 						onClick={listingNavApi.next}
+						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

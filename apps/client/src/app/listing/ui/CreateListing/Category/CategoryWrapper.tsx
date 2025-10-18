@@ -181,6 +181,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 						tone={"secondary"}
 						theme={"dark"}
 						onClick={listingNavApi.next}
+						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>
