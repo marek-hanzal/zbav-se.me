@@ -18,9 +18,9 @@ export namespace Button {
 		 * any complex content, thus the "label" only.
 		 */
 		label?: string;
-		iconEnabled?: string;
-		iconDisabled?: string;
-		iconLoading?: string;
+		iconEnabled?: Icon.Type;
+		iconDisabled?: Icon.Type;
+		iconLoading?: Icon.Type;
 		iconProps?: Omit<Icon.Props, "icon">;
 		iconPosition?: "left" | "right";
 		loading?: boolean;

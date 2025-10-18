@@ -17,8 +17,6 @@ export const DialCls = contract(ThemeCls.contract)
 				"items-center",
 				"justify-center",
 				"gap-2",
-				"w-2/3",
-				"mx-auto",
 			],
 		},
 		display: {

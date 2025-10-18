@@ -116,6 +116,9 @@ export const Dial: FC<Dial.Props> = ({
 								"justify-between",
 								"w-full",
 							],
+							token: [
+								"round.lg",
+							],
 						},
 					},
 				}}
