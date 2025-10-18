@@ -8,6 +8,7 @@ import {
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
+import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Title } from "~/app/ui/title/Title";
@@ -27,11 +28,24 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 
 		return (
 			<FlowContainer>
+				<ListingProgress />
+
 				<Title
 					textTitle={
 						hasAge
 							? `Condition - Age [${age}] (label)`
 							: "Condition - Age (title)"
+					}
+					right={
+						<Button
+							iconEnabled={ArrowLeftIcon}
+							iconPosition={"left"}
+							tone={"secondary"}
+							theme={"light"}
+							onClick={() => {
+								listingNavApi.prev();
+							}}
+						/>
 					}
 				/>
 
@@ -46,16 +60,6 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 				/>
 
 				<BottomContainer>
-					<Button
-						iconEnabled={ArrowLeftIcon}
-						iconPosition={"left"}
-						tone={"secondary"}
-						theme={"light"}
-						onClick={() => {
-							listingNavApi.prev();
-						}}
-					/>
-
 					<Button
 						iconEnabled={ArrowRightIcon}
 						iconPosition={"right"}

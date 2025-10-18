@@ -7,6 +7,7 @@ import {
 } from "@use-pico/client";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -30,6 +31,8 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(
 
 		return (
 			<FlowContainer>
+				<ListingProgress />
+
 				<Title
 					textTitle={"Listing photos (title)"}
 					right={

@@ -13,6 +13,7 @@ export const FlowContainer: FC<FlowContainer.Props> = (props) => {
 			theme={"light"}
 			square={"md"}
 			gap={"xs"}
+			position={"relative"}
 			{...props}
 		/>
 	);

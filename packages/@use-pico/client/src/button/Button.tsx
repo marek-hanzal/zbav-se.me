@@ -24,6 +24,8 @@ export namespace Button {
 		iconProps?: Omit<Icon.Props, "icon">;
 		iconPosition?: "left" | "right";
 		loading?: boolean;
+		border?: boolean;
+		background?: boolean;
 		size?: Cls.VariantOf<ButtonCls, "size">;
 		tone?: Cls.VariantOf<ButtonCls, "tone">;
 		theme?: Cls.VariantOf<ButtonCls, "theme">;
@@ -56,6 +58,8 @@ const BaseButton: FC<Button.Props> = ({
 	tone,
 	theme,
 	round,
+	border,
+	background,
 	//
 	cls = ButtonCls,
 	tweak,
@@ -80,6 +84,8 @@ const BaseButton: FC<Button.Props> = ({
 				tone,
 				size,
 				round,
+				border,
+				background,
 			},
 		},
 	);

@@ -8,6 +8,7 @@ import {
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
+import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
@@ -32,6 +33,8 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 
 		return (
 			<FlowContainer>
+				<ListingProgress />
+
 				<Title
 					textTitle={
 						hasCondition

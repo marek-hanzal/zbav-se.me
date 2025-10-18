@@ -12,6 +12,7 @@ import { type FC, memo, useEffect, useId, useRef } from "react";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
+import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
@@ -65,10 +66,24 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 
 		return (
 			<FlowContainer>
+				<ListingProgress />
+
 				<Title
 					textTitle={
 						selection.optional.single()?.name ??
 						"Listing category groups (title)"
+					}
+					left={
+						<Button
+							iconEnabled={ArrowLeftIcon}
+							iconPosition={"left"}
+							tone={"secondary"}
+							theme={"light"}
+							onClick={listingNavApi.prev}
+							background={false}
+							border={false}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -148,13 +163,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 				/>
 
 				<BottomContainer>
-					<Button
-						iconEnabled={ArrowLeftIcon}
-						iconPosition={"left"}
-						tone={"secondary"}
-						theme={"light"}
-						onClick={listingNavApi.prev}
-					/>
+					<div />
 
 					<Button
 						iconEnabled={ArrowRightIcon}

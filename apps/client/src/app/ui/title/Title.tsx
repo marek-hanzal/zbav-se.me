@@ -1,4 +1,4 @@
-import { Container, type Icon, Tx } from "@use-pico/client";
+import { Container, Tx } from "@use-pico/client";
 import type { FC, ReactNode, Ref } from "react";
 
 export namespace Title {
@@ -6,8 +6,7 @@ export namespace Title {
 		ref?: Ref<HTMLDivElement>;
 		textTitle: string;
 		right?: ReactNode;
-		icon?: Icon.Type;
-		iconProps?: Icon.Props;
+		left?: ReactNode;
 	}
 }
 
@@ -15,8 +14,7 @@ export const Title: FC<Title.Props> = ({
 	ref,
 	textTitle,
 	right,
-	icon,
-	iconProps,
+	left,
 	...props
 }) => {
 	return (
@@ -41,11 +39,14 @@ export const Title: FC<Title.Props> = ({
 			}}
 			{...props}
 		>
-			<Tx
-				label={textTitle}
-				font={"bold"}
-				size={"xl"}
-			/>
+			<div className="inline-flex flex-row gap-1 items-center justify-start">
+				{left}
+				<Tx
+					label={textTitle}
+					font={"bold"}
+					size={"xl"}
+				/>
+			</div>
 
 			{right ? (
 				<div className="inline-flex flex-row gap-1 items-end justify-center max-w-[50%]">
