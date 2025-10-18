@@ -56,7 +56,7 @@ export namespace useSnapperNav {
 }
 
 /**
- * Page snap navigator driven by a fixed `count`.
+ * Minimal page snap navigator (count-driven, SSR-friendly).
  * A "page" equals the container viewport (clientWidth/Height).
  */
 export function useSnapperNav({
@@ -71,27 +71,19 @@ export function useSnapperNav({
 	const isVertical = orientation === "vertical";
 	const $threshold = clamp(threshold, 0, 1);
 
-	/**
-	 * Current page (state) + live ref for handlers to avoid stale closures.
-	 */
 	const [current, setCurrent] = useState(() => {
-		const last = Math.max(0, $count - 1);
+		const last = $count - 1;
 		return clamp(defaultIndex, 0, last);
 	});
 	const currentRef = useRef(current);
 	currentRef.current = current;
 
 	/**
-	 * Stable "effect event" for `onSnap`.
-	 * Always observes latest props/state without retriggering subscriptions.
+	 * Emit wrapper that always sees the latest `onSnap`.
+	 * Emission is centralized in effects (no emit from `snapTo`).
 	 */
-	const emitSnap = useEffectEvent((idx: number) => {
-		onSnap?.(idx);
-	});
+	const emitSnap = useEffectEvent((idx: number) => onSnap?.(idx));
 
-	/**
-	 * Read container metrics (page size, scroll position, total content size).
-	 */
 	const metrics = useCallback(() => {
 		const host = containerRef.current;
 
@@ -117,24 +109,17 @@ export function useSnapperNav({
 		isVertical,
 	]);
 
-	/**
-	 * Quantize scroll position to a page index using threshold.
-	 */
 	const quantizeToPageIndex = useCallback(
 		(position: number, pageSize: number, pageCount: number) => {
 			const raw = (position + pageSize * $threshold) / pageSize;
-			const floor = Math.floor(raw);
-			const last = pageCount - 1;
-			return clamp(floor, 0, last);
+			const last = Math.max(0, pageCount - 1);
+			return clamp(Math.floor(raw), 0, last);
 		},
 		[
 			$threshold,
 		],
 	);
 
-	/**
-	 * Lift any descendant to the nearest direct child of the container.
-	 */
 	const toDirectChild = useCallback(
 		(node: Element | null): HTMLElement | null => {
 			const host = containerRef.current;
@@ -162,6 +147,7 @@ export function useSnapperNav({
 
 	/**
 	 * Programmatic scroll to page (by index or selector).
+	 * Does not emit; scroll listener derives and emits.
 	 */
 	const snapTo = useCallback(
 		(
@@ -174,7 +160,7 @@ export function useSnapperNav({
 				return;
 			}
 
-			let pageIndex: number | null = null;
+			let pageIndex: number;
 
 			if (typeof target === "number") {
 				pageIndex = clamp(Math.floor(target), 0, $count - 1);
@@ -183,9 +169,6 @@ export function useSnapperNav({
 				const child = toDirectChild(found);
 
 				if (!child) {
-					console.warn(
-						`useSnapperNav: selector not found or not inside container: "${String(target)}"`,
-					);
 					return;
 				}
 
@@ -194,27 +177,26 @@ export function useSnapperNav({
 				pageIndex = clamp(Math.floor(offset / pageSize), 0, $count - 1);
 			}
 
-			const { pageSize, totalSize } = metrics();
+			const { pageSize, totalSize, position } = metrics();
 			const maxScroll = Math.max(0, totalSize - pageSize);
-			const targetPosition = clamp(
-				(pageIndex ?? 0) * pageSize,
-				0,
-				maxScroll,
-			);
+			const targetPx = clamp(pageIndex * pageSize, 0, maxScroll);
+
+			const EPS = 1;
+			if (Math.abs(position - targetPx) <= EPS) {
+				return;
+			}
 
 			if (isVertical) {
 				host.scrollTo({
-					top: targetPosition,
+					top: targetPx,
 					behavior,
 				});
 			} else {
 				host.scrollTo({
-					left: targetPosition,
+					left: targetPx,
 					behavior,
 				});
 			}
-
-			emitSnap(pageIndex ?? 0);
 		},
 		[
 			containerRef,
@@ -222,7 +204,6 @@ export function useSnapperNav({
 			$count,
 			metrics,
 			toDirectChild,
-			emitSnap,
 		],
 	);
 
@@ -252,17 +233,9 @@ export function useSnapperNav({
 	]);
 
 	/**
-	 * Mount/host-swap synchronizer.
-	 *
-	 * Responsibilities:
-	 *  - Compute a safe initial page (clamped by `$count`) and snap without animation
-	 *    so the scroll position matches the intended `defaultIndex`.
-	 *  - Immediately re-derive `current` from actual DOM metrics to guard against
-	 *    off-by-one/layout races (e.g., fonts/scrollbar geometry).
-	 *
-	 * Invariants:
-	 *  - Never reads `containerRef.current` in deps; uses it synchronously.
-	 *  - Keeps `snapTo` stable and animationless ("auto") for the initial jump.
+	 * Initial mount / host swap:
+	 * - Snap to a safe initial page (auto)
+	 * - Derive `current` from actual metrics (and emit if changed)
 	 */
 	useLayoutEffect(() => {
 		const el = containerRef.current;
@@ -271,8 +244,7 @@ export function useSnapperNav({
 			return;
 		}
 
-		const last = Math.max(0, $count - 1);
-		const initial = clamp(defaultIndex, 0, last);
+		const initial = clamp(defaultIndex, 0, $count - 1);
 
 		if (initial !== currentRef.current) {
 			snapTo(initial, "auto");
@@ -295,18 +267,8 @@ export function useSnapperNav({
 	]);
 
 	/**
-	 * Scroll subscription.
-	 *
-	 * Responsibilities:
-	 *  - Attach a passive `scroll` listener to the host.
-	 *  - On every scroll, derive the page index from live metrics and update
-	 *    `current` only on change (prevents render storms).
-	 *  - Emit `onSnap` via `emitSnap` so consumers see latest props/state without
-	 *    resubscribing the listener when `onSnap` identity changes.
-	 *
-	 * Performance:
-	 *  - Listener is stable; avoids re-binding on prop churn.
-	 *  - Uses integer quantization with threshold to minimize flicker near edges.
+	 * Scroll listener:
+	 * - Derives page index and emits only on change.
 	 */
 	useEffect(() => {
 		const el = containerRef.current;
@@ -315,7 +277,7 @@ export function useSnapperNav({
 			return;
 		}
 
-		const host: HTMLElement = el;
+		const host = el;
 
 		function onScroll() {
 			const { pageSize, position } = metrics();
@@ -324,7 +286,7 @@ export function useSnapperNav({
 			if (idx !== currentRef.current) {
 				currentRef.current = idx;
 				setCurrent(idx);
-				emitSnap(idx);
+				emitSnap?.(idx);
 			}
 		}
 
@@ -344,69 +306,23 @@ export function useSnapperNav({
 	]);
 
 	/**
-	 * ResizeObserver subscription.
-	 *
-	 * Responsibilities:
-	 *  - Re-derive `current` when the host's layout changes (mobile address bars,
-	 *    orientation changes, virtual keyboard).
-	 *  - If shrinking invalidates the current index (now > last), snap back
-	 *    instantly without animation.
-	 */
-	useEffect(() => {
-		const el = containerRef.current;
-
-		if (!el) {
-			return;
-		}
-
-		const host: HTMLElement = el;
-
-		const resizeObserver = new ResizeObserver(() => {
-			const { pageSize, position } = metrics();
-			const idx = quantizeToPageIndex(position, pageSize, $count);
-
-			if (idx !== currentRef.current) {
-				currentRef.current = idx;
-				setCurrent(idx);
-			}
-
-			const last = Math.max(0, $count - 1);
-
-			if (currentRef.current > last) {
-				snapTo(last, "auto");
-			}
-		});
-
-		resizeObserver.observe(host);
-
-		return () => {
-			resizeObserver.disconnect();
-		};
-	}, [
-		containerRef,
-		$count,
-		metrics,
-		quantizeToPageIndex,
-		snapTo,
-	]);
-
-	/**
-	 * Runtime `count` changes.
-	 *
-	 * Responsibility:
-	 *  - Clamp `current` to the new `[0, $count-1]` range and snap if needed.
+	 * Count changes:
+	 * - Clamp current to the new range and snap if needed (auto).
 	 */
 	useEffect(() => {
 		const last = Math.max(0, $count - 1);
+		const clamped = clamp(currentRef.current, 0, last);
 
-		if (currentRef.current > last) {
-			currentRef.current = last;
-			setCurrent(last);
-			snapTo(last, "auto");
+		if (clamped !== currentRef.current) {
+			currentRef.current = clamped;
+			setCurrent(clamped);
+			snapTo(clamped, "auto");
+			emitSnap?.(clamped);
 		}
 	}, [
 		$count,
 		snapTo,
+		emitSnap,
 	]);
 
 	const isFirst = current === 0;
