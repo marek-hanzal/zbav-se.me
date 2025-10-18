@@ -40,9 +40,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 							class: [
 								"absolute",
 								"top-1",
-								"left-2",
-								"right-2",
-								"h-1",
+								"bottom-1",
+								"left-0.5",
+								"opacity-50",
 								"z-[50]",
 							],
 							token: [
@@ -57,8 +57,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 						slot: {
 							default: {
 								class: [
-									"h-1",
-									"w-full",
+									"w-1",
 									"transition-all",
 								],
 								token: [
@@ -69,11 +68,11 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 						},
 					})}
 					style={{
-						opacity: Math.max(
-							0.1,
-							missing.length / (requiredCount - 1),
-						),
-						width: `${Math.min(100, 100 - (missing.length / requiredCount) * 100)}%`,
+						// opacity: Math.max(
+						// 	0.1,
+						// 	missing.length / (requiredCount - 1),
+						// ),
+						height: `${Math.min(100, 100 - (missing.length / requiredCount) * 100)}%`,
 					}}
 				/>
 			</div>
