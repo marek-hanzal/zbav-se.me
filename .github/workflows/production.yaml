@@ -176,7 +176,7 @@ jobs:
         name: Deploy client to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [client-build, server-build]
+        needs: [client-build]
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
@@ -214,7 +214,7 @@ jobs:
         name: Deploy server to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [client-build, server-build]
+        needs: [server-build]
         env:
             VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
             VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
@@ -248,7 +248,7 @@ jobs:
         name: Update CDN
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-client, vercel-server]
+        needs: [vercel-client]
         env:
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
@@ -315,7 +315,7 @@ jobs:
         name: Run migrations
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-client, vercel-server]
+        needs: [vercel-server]
         steps:
             - name: Trigger migrations endpoint
               env:
