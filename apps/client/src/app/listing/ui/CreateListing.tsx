@@ -2,7 +2,8 @@ import { Container, useSnapperNav } from "@use-pico/client";
 import { type FC, useRef } from "react";
 import { CategoryWrapper } from "~/app/listing/ui/CreateListing/Category/CategoryWrapper";
 import { CategoryGroupWrapper } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroupWrapper";
-import { ConditionWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionWrapper";
+import { ConditionAgeWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionAgeWrapper";
+import { ConditionOverallWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionOverallWrapper";
 import { IntroWrapper } from "~/app/listing/ui/CreateListing/Intro/IntroWrapper";
 import { LocationWrapper } from "~/app/listing/ui/CreateListing/Location/LocationWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
@@ -20,7 +21,7 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 	const listingNav = useSnapperNav({
 		containerRef: listingRef,
 		orientation: "vertical",
-		count: 8,
+		count: 9,
 	});
 
 	return (
@@ -44,7 +45,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 				locale={locale}
 			/>
 
-			<ConditionWrapper listingNavApi={listingNav.api} />
+			<ConditionOverallWrapper listingNavApi={listingNav.api} />
+
+			<ConditionAgeWrapper listingNavApi={listingNav.api} />
 
 			<PriceWrapper locale={locale} />
 

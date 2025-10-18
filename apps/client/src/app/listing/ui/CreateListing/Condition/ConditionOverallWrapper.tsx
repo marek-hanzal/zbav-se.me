@@ -1,0 +1,83 @@
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	Button,
+	Tx,
+	type useSnapperNav,
+} from "@use-pico/client";
+import { type FC, memo } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
+import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
+import { Title } from "~/app/ui/title/Title";
+
+export namespace ConditionOverallWrapper {
+	export interface Props {
+		listingNavApi: useSnapperNav.Api;
+	}
+}
+
+export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
+	({ listingNavApi }) => {
+		const useCreateListingStore = useCreateListingContext();
+		const hasCondition = useCreateListingStore(
+			(store) => store.hasCondition,
+		);
+		const condition = useCreateListingStore((state) => state.condition);
+		const setCondition = useCreateListingStore(
+			(state) => state.setCondition,
+		);
+
+		return (
+			<FlowContainer>
+				<Title
+					textTitle={
+						hasCondition
+							? `Condition - Overall [${condition}] (label)`
+							: "Condition - Overall (title)"
+					}
+				/>
+
+				<Condition
+					icon={ConditionIcon}
+					textTitle={"Condition - Overall (title)"}
+					textDescription={"Condition - Overall (description)"}
+					textHint={
+						<Tx
+							label={`Condition - Overall [${condition}] (hint)`}
+						/>
+					}
+					value={condition}
+					onChange={setCondition}
+					limit={5}
+				/>
+
+				<BottomContainer>
+					<Button
+						iconEnabled={ArrowLeftIcon}
+						iconPosition={"left"}
+						tone={"secondary"}
+						theme={"light"}
+						onClick={() => {
+							listingNavApi.prev();
+						}}
+					/>
+
+					<Button
+						iconEnabled={ArrowRightIcon}
+						iconPosition={"right"}
+						disabled={!hasCondition}
+						tone={"secondary"}
+						theme={"dark"}
+						onClick={() => {
+							listingNavApi.next();
+						}}
+						size={"lg"}
+					/>
+				</BottomContainer>
+			</FlowContainer>
+		);
+	},
+);

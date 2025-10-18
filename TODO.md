@@ -2,7 +2,11 @@
 
 - Display progress bar on top of filled items in listing creation
 
-- Smaller title in Category tiles
+- Auto-advance on item selection
+- Split Condition -> keep the vertical flow
+- Overlay background does not match with underlaying element height/width (on Android)
+
+- Bigger header in create listings
 - Elipsis in header?
 - Animate location searh result
 - Remove search from Categories
