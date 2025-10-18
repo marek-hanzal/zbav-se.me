@@ -1,5 +1,4 @@
 import {
-	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
 	Container,
@@ -13,6 +12,7 @@ import { type FC, memo, useEffect, useId, useRef } from "react";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
+import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -78,21 +78,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 				<FlowContainer>
 					<ListingProgress />
 
-					<Title
-						textTitle={"Missing category group (title)"}
-						left={
-							<Button
-								iconEnabled={ArrowLeftIcon}
-								iconPosition={"left"}
-								tone={"secondary"}
-								theme={"light"}
-								onClick={listingNavApi.prev}
-								background={false}
-								border={false}
-								size={"sm"}
-							/>
-						}
-					/>
+					<div />
 
 					<Sheet
 						tone={"primary"}
@@ -104,28 +90,20 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 							theme={"light"}
 							textTitle="No category selected"
 							textMessage="Please select a category group first to see available categories"
+							action={
+								<LeftButton
+									border
+									background
+									size={"lg"}
+									onClick={listingNavApi.prev}
+									label={"Select category group (button)"}
+									iconProps={{
+										size: "sm",
+									}}
+								/>
+							}
 						/>
 					</Sheet>
-
-					<BottomContainer>
-						<Button
-							iconEnabled={ArrowLeftIcon}
-							iconPosition={"left"}
-							tone={"secondary"}
-							theme={"light"}
-							onClick={listingNavApi.prev}
-						/>
-
-						<Button
-							iconEnabled={ArrowRightIcon}
-							iconPosition={"right"}
-							disabled={!selection.hasAny}
-							tone={"secondary"}
-							theme={"dark"}
-							onClick={listingNavApi.next}
-							size={"lg"}
-						/>
-					</BottomContainer>
 				</FlowContainer>
 			);
 		}
@@ -139,18 +117,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 						selection.optional.single()?.name ??
 						"Listing category (title)"
 					}
-					left={
-						<Button
-							iconEnabled={ArrowLeftIcon}
-							iconPosition={"left"}
-							tone={"secondary"}
-							theme={"light"}
-							onClick={listingNavApi.prev}
-							background={false}
-							border={false}
-							size={"sm"}
-						/>
-					}
+					left={<LeftButton onClick={listingNavApi.prev} />}
 				/>
 
 				<Data

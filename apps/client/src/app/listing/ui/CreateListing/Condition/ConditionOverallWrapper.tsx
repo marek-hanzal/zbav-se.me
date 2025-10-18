@@ -1,5 +1,4 @@
 import {
-	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
 	Tx,
@@ -8,6 +7,7 @@ import {
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
+import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
@@ -41,6 +41,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 							? `Condition - Overall [${condition}] (label)`
 							: "Condition - Overall (title)"
 					}
+					left={<LeftButton onClick={listingNavApi.prev} />}
 				/>
 
 				<Condition
@@ -58,15 +59,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 				/>
 
 				<BottomContainer>
-					<Button
-						iconEnabled={ArrowLeftIcon}
-						iconPosition={"left"}
-						tone={"secondary"}
-						theme={"light"}
-						onClick={() => {
-							listingNavApi.prev();
-						}}
-					/>
+					<div />
 
 					<Button
 						iconEnabled={ArrowRightIcon}

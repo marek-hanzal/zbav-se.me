@@ -1,5 +1,4 @@
 import {
-	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
 	Container,
@@ -12,6 +11,7 @@ import { type FC, memo, useEffect, useId, useRef } from "react";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
+import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -73,18 +73,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 						selection.optional.single()?.name ??
 						"Listing category groups (title)"
 					}
-					left={
-						<Button
-							iconEnabled={ArrowLeftIcon}
-							iconPosition={"left"}
-							tone={"secondary"}
-							theme={"light"}
-							onClick={listingNavApi.prev}
-							background={false}
-							border={false}
-							size={"sm"}
-						/>
-					}
+					left={<LeftButton onClick={listingNavApi.prev} />}
 				/>
 
 				<Data

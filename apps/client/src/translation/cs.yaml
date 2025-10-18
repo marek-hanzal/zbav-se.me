@@ -1,6 +1,3 @@
-01c960005d0ac8e099560be6958b2d0039a2047b2b33510151dad1de:
-    ref: Feed (title)
-    value: Feed (title)
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
     value: Ještě zařadíme do kategorie
@@ -49,6 +46,9 @@
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
     ref: Agreement with (label)
     value: "Registrací souhlasíš s:"
+249accb1a47c3bdb2902f39fc8c80456bad09625a35572efda058c0c:
+    ref: Submit - one more thing (title)
+    value: Submit - one more thing (title)
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
     ref: Back to Dashboard (label)
     value: Zpět domů
@@ -117,9 +117,6 @@
 3c7beaab98fdcc21ddd8b68f5ba83ed77ceaee47f2c0b821f519c9e5:
     ref: Select category (hint)
     value: Upřesnit kategorii pro snažší doručení
-3f3fad27da70ab84841a5b232013117e27d985c5e4e0c7afb09963bc:
-    ref: My Bag (title)
-    value: My Bag (title)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -371,6 +368,9 @@ b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
 b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
     ref: Select items (label)
     value: Select items (label)
+b5f3aa3b478a12f209ef7b402d573288eb36e5644cf5fb97bad9500d:
+    ref: Select category group (button)
+    value: Vyberte skupinu
 b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
     ref: Condition - Age (title)
     value: Věk
@@ -413,9 +413,9 @@ c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
 c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
     ref: Email
     value: Email
-c65e013a9ba95b9f3e6b5055e630455fdc42c9c3770e2d6a6ff3648e:
-    ref: Missing category group (title)
-    value: ""
+c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
+    ref: Price (title)
+    value: Price (title)
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!

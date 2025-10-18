@@ -49,11 +49,17 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 
 			<ConditionAgeWrapper listingNavApi={listingNav.api} />
 
-			<PriceWrapper locale={locale} />
+			<PriceWrapper
+				listingNavApi={listingNav.api}
+				locale={locale}
+			/>
 
-			<LocationWrapper locale={locale} />
+			<LocationWrapper
+				listingNavApi={listingNav.api}
+				locale={locale}
+			/>
 
-			<SubmitWrapper />
+			<SubmitWrapper listingNavApi={listingNav.api} />
 		</Container>
 	);
 };

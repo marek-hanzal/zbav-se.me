@@ -15,7 +15,7 @@ export const Star: FC<Star.Props> = ({ selected, onClick }) => {
 		<Icon
 			icon={selected ? StarIcon : StarEmptyIcon}
 			onClick={onClick}
-			tone={"secondary"}
+			tone={"primary"}
 			theme={"light"}
 			size={"xl"}
 			tweak={{

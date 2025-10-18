@@ -22,6 +22,11 @@ tx({
 			},
 			//
 			{
+				name: "LeftButton",
+				attr: "label",
+			},
+			//
+			{
 				name: "Condition",
 				attr: "textTitle",
 			},
