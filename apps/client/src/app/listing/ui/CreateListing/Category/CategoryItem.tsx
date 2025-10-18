@@ -47,6 +47,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 		<div
 			className={tvc([
 				"relative",
+				"overflow-hidden",
 				`Category-item-${item.id}`,
 			])}
 		>

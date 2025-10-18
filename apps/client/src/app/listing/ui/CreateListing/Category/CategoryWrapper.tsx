@@ -112,6 +112,15 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 								overflow={"horizontal"}
 								snap={"horizontal-start"}
 								gap={"md"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"CategoryWrapper-Data-Container[success]",
+											],
+										},
+									},
+								}}
 							>
 								{Array.from(
 									{
@@ -133,6 +142,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 													slot: {
 														root: {
 															class: [
+																"CategoryWrapper-Item-Sheet",
 																"border-none",
 																"shadow-none",
 																"grid",

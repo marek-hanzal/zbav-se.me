@@ -50,6 +50,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 		<div
 			className={tvc([
 				"relative",
+				"overflow-hidden",
 				`CategoryGroup-item-${item.id}`,
 			])}
 		>
