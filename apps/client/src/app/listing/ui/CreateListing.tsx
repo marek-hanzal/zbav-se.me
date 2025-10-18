@@ -21,6 +21,9 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 		containerRef: listingRef,
 		orientation: "vertical",
 		count: 8,
+		onSnap(index) {
+			console.log("onSnap: listing", index);
+		},
 	});
 
 	return (

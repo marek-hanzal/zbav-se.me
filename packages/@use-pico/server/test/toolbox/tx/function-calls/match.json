@@ -1,0 +1,22 @@
+{
+	"1b5ca13a4cf431018a0dd34d24c416cf67042287489325650a595e93": {
+		"ref": "Nested in ternary",
+		"value": "Nested in ternary"
+	},
+	"30c7be4bbdde86375e27ec012e7ba54756cecd602811bc3fa3653c9f": {
+		"ref": "Template literal",
+		"value": "Template literal"
+	},
+	"904e1dfdd115698ca60d626134dd92d5f3362df3cd4bcf8fde0501de": {
+		"ref": "any",
+		"value": "any"
+	},
+	"d542432cc695f1108fb40bc962c3a8c58364bc9e6af0d4c23c104142": {
+		"ref": "Simple function call",
+		"value": "Simple function call"
+	},
+	"fc5c2b1574a7fbd8ad81c6cf7a2f84862cde77c282e06eaae583dda1": {
+		"ref": "Alternative branch",
+		"value": "Alternative branch"
+	}
+}
