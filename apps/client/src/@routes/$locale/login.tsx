@@ -101,7 +101,11 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		return (
-			<Container position={"relative"}>
+			<Container
+				position={"relative"}
+				tone={"secondary"}
+				theme={"light"}
+			>
 				<SnapperNav
 					snapperNav={snapperNav}
 					iconProps={() => ({
@@ -121,174 +125,160 @@ export const Route = createFileRoute("/$locale/login")({
 					ref={rootRef}
 					layout={"vertical-full"}
 					overflow={"vertical"}
-					snap={"vertical-start"}
+					snap={"vertical-center"}
 					gap={"md"}
+					square={"md"}
+					round={"lg"}
 				>
 					<Sheet>
-						<Container square={"xl"}>
-							<VariantProvider
-								cls={ThemeCls}
-								variant={{
-									tone: "primary",
-									theme: "light",
-								}}
+						<VariantProvider
+							cls={ThemeCls}
+							variant={{
+								tone: "primary",
+								theme: "light",
+							}}
+						>
+							<Status
+								icon={UserIcon}
+								textTitle={"Sign in (title)"}
 							>
-								<Status
-									icon={UserIcon}
-									textTitle={"Sign in (title)"}
+								<form
+									onSubmit={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+										form.handleSubmit();
+									}}
+									className={"space-y-2"}
 								>
-									<form
-										onSubmit={(e) => {
-											e.preventDefault();
-											e.stopPropagation();
-											form.handleSubmit();
-										}}
-										className={"space-y-2"}
-									>
-										<form.AppField name={"email"}>
-											{(field) => (
-												<FormField
-													id={field.name}
-													name={field.name}
-													label={
-														<Tx label={"Email"} />
-													}
-													meta={field.state.meta}
-												>
-													{(props) => (
-														<field.TextInput
-															type={"email"}
-															autoComplete={
-																"email webauthn"
-															}
-															placeholder={translator.text(
-																"Enter your email",
-															)}
-															value={
-																field.state
-																	.value ?? ""
-															}
-															onBlur={
-																field.handleBlur
-															}
-															onChange={(e) =>
-																field.handleChange(
-																	e.target
-																		.value,
-																)
-															}
-															{...props}
-														/>
-													)}
-												</FormField>
-											)}
-										</form.AppField>
-
-										<form.AppField name={"password"}>
-											{(field) => (
-												<FormField
-													id={field.name}
-													name={field.name}
-													label={
-														<Tx
-															label={"Password"}
-														/>
-													}
-													meta={field.state.meta}
-												>
-													{(props) => (
-														<field.TextInput
-															type={"password"}
-															autoComplete={
-																"current-password webauthn"
-															}
-															value={
-																field.state
-																	.value ?? ""
-															}
-															onChange={(e) =>
-																field.handleChange(
-																	e.target
-																		.value,
-																)
-															}
-															onBlur={
-																field.handleBlur
-															}
-															placeholder={translator.text(
-																"Enter your password",
-															)}
-															{...props}
-														/>
-													)}
-												</FormField>
-											)}
-										</form.AppField>
-
-										{signInMutation.isError && (
-											<div
-												className={
-													"rounded-md bg-red-50 p-3 text-red-700"
-												}
+									<form.AppField name={"email"}>
+										{(field) => (
+											<FormField
+												id={field.name}
+												name={field.name}
+												label={<Tx label={"Email"} />}
+												meta={field.state.meta}
 											>
-												{signInMutation.error instanceof
-												Error ? (
-													signInMutation.error.message
-												) : (
-													<Tx
-														label={"Login failed"}
+												{(props) => (
+													<field.TextInput
+														type={"email"}
+														autoComplete={
+															"email webauthn"
+														}
+														placeholder={translator.text(
+															"Enter your email",
+														)}
+														value={
+															field.state.value ??
+															""
+														}
+														onBlur={
+															field.handleBlur
+														}
+														onChange={(e) =>
+															field.handleChange(
+																e.target.value,
+															)
+														}
+														{...props}
 													/>
 												)}
-											</div>
+											</FormField>
 										)}
+									</form.AppField>
 
+									<form.AppField name={"password"}>
+										{(field) => (
+											<FormField
+												id={field.name}
+												name={field.name}
+												label={
+													<Tx label={"Password"} />
+												}
+												meta={field.state.meta}
+											>
+												{(props) => (
+													<field.TextInput
+														type={"password"}
+														autoComplete={
+															"current-password webauthn"
+														}
+														value={
+															field.state.value ??
+															""
+														}
+														onChange={(e) =>
+															field.handleChange(
+																e.target.value,
+															)
+														}
+														onBlur={
+															field.handleBlur
+														}
+														placeholder={translator.text(
+															"Enter your password",
+														)}
+														{...props}
+													/>
+												)}
+											</FormField>
+										)}
+									</form.AppField>
+
+									{signInMutation.isError && (
 										<div
 											className={
-												"flex flex-col items-center justify-center gap-2 w-full"
+												"rounded-md bg-red-50 p-3 text-red-700"
 											}
 										>
-											<form.SubmitButton
-												iconEnabled={UnlockIcon}
-												iconDisabled={UnlockIcon}
-												iconProps={{
-													size: "sm",
-												}}
-												disabled={
-													signInMutation.isPending
-												}
-												tone={"primary"}
-												theme={"dark"}
-												size={"lg"}
-											>
-												{signInMutation.isPending ? (
-													<Tx
-														label={"Please wait..."}
-													/>
-												) : (
-													<Tx
-														label={
-															"Sign in (button)"
-														}
-													/>
-												)}
-											</form.SubmitButton>
-
-											<LinkTo
-												to={"/$locale/register"}
-												params={{
-													locale,
-												}}
-											>
-												<Tx
-													label={"Register (link)"}
-													tone={"link"}
-												/>
-											</LinkTo>
+											{signInMutation.error instanceof
+											Error ? (
+												signInMutation.error.message
+											) : (
+												<Tx label={"Login failed"} />
+											)}
 										</div>
-									</form>
-								</Status>
-							</VariantProvider>
-						</Container>
+									)}
+
+									<div
+										className={
+											"flex flex-col items-center justify-center gap-2 w-full"
+										}
+									>
+										<form.SubmitButton
+											iconEnabled={UnlockIcon}
+											iconDisabled={UnlockIcon}
+											iconProps={{
+												size: "sm",
+											}}
+											disabled={signInMutation.isPending}
+											tone={"primary"}
+											theme={"dark"}
+											size={"lg"}
+										>
+											{signInMutation.isPending ? (
+												<Tx label={"Please wait..."} />
+											) : (
+												<Tx
+													label={"Sign in (button)"}
+												/>
+											)}
+										</form.SubmitButton>
+
+										<LinkTo
+											to={"/$locale/register"}
+											params={{
+												locale,
+											}}
+										>
+											<Tx
+												label={"Register (link)"}
+												tone={"link"}
+											/>
+										</LinkTo>
+									</div>
+								</form>
+							</Status>
+						</VariantProvider>
 					</Sheet>
 
 					<Sheet>

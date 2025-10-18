@@ -57,270 +57,305 @@ export const Route = createFileRoute("/$locale/register")({
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
 		return (
-			<Sheet>
+			<Container
+				tone={"secondary"}
+				theme={"light"}
+			>
 				<PrimaryOverlay />
 
 				<Fade scrollableRef={scrollerRef} />
 
 				<Container
 					ref={scrollerRef}
-					square={"xl"}
+					square={"md"}
 					layout={"vertical"}
 					overflow={"vertical"}
 				>
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "primary",
-							theme: "light",
-						}}
-					>
-						<Status
-							icon={UserIcon}
-							textTitle={"Register (title)"}
+					<Sheet>
+						<VariantProvider
+							cls={ThemeCls}
+							variant={{
+								tone: "primary",
+								theme: "light",
+							}}
 						>
-							<form
-								onSubmit={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
-									form.handleSubmit();
-								}}
-								className={"space-y-2"}
+							<Status
+								icon={UserIcon}
+								textTitle={"Register (title)"}
 							>
-								<form.AppField
-									name={"email"}
-									validators={{
-										onBlur({ value, fieldApi }) {
-											if (!fieldApi.state.meta.isDirty) {
+								<form
+									onSubmit={(e) => {
+										e.preventDefault();
+										e.stopPropagation();
+										form.handleSubmit();
+									}}
+									className={"space-y-2"}
+								>
+									<form.AppField
+										name={"email"}
+										validators={{
+											onBlur({ value, fieldApi }) {
+												if (
+													!fieldApi.state.meta.isDirty
+												) {
+													return undefined;
+												}
+
+												if (!value) {
+													return {
+														message:
+															translator.text(
+																"Email is required",
+															),
+													};
+												}
+												if (
+													!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+														value,
+													)
+												) {
+													return {
+														message:
+															translator.text(
+																"Invalid email address",
+															),
+													};
+												}
 												return undefined;
-											}
-
-											if (!value) {
-												return {
-													message:
-														translator.text(
-															"Email is required",
-														),
-												};
-											}
-											if (
-												!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-													value,
-												)
-											) {
-												return {
-													message: translator.text(
-														"Invalid email address",
-													),
-												};
-											}
-											return undefined;
-										},
-									}}
-								>
-									{(field) => (
-										<FormField
-											id={field.name}
-											name={field.name}
-											label={<Tx label={"Email"} />}
-											meta={field.state.meta}
-										>
-											{(props) => (
-												<field.TextInput
-													type={"email"}
-													value={field.state.value}
-													onChange={(e) =>
-														field.handleChange(
-															e.target.value,
-														)
-													}
-													onBlur={field.handleBlur}
-													placeholder={translator.text(
-														"Enter your email",
-													)}
-													{...props}
-												/>
-											)}
-										</FormField>
-									)}
-								</form.AppField>
-
-								<form.AppField
-									name={"password"}
-									validators={{
-										onBlur({ value, fieldApi }) {
-											if (!fieldApi.state.meta.isDirty) {
-												return undefined;
-											}
-
-											if (!value || value.length < 8) {
-												return {
-													message: translator.text(
-														"Password must be at least 8 characters",
-													),
-												};
-											}
-											return undefined;
-										},
-									}}
-								>
-									{(field) => (
-										<FormField
-											label={<Tx label={"Password"} />}
-											meta={field.state.meta}
-										>
-											{(props) => (
-												<field.TextInput
-													type={"password"}
-													value={field.state.value}
-													onChange={(e) =>
-														field.handleChange(
-															e.target.value,
-														)
-													}
-													onBlur={field.handleBlur}
-													placeholder={translator.text(
-														"Enter your password",
-													)}
-													{...props}
-												/>
-											)}
-										</FormField>
-									)}
-								</form.AppField>
-
-								<form.AppField
-									name={"confirmPassword"}
-									validators={{
-										onChangeListenTo: [
-											"password",
-										],
-										onBlur({ value, fieldApi }) {
-											const password =
-												fieldApi.form.getFieldValue(
-													"password",
-												);
-
-											if (value !== password) {
-												return {
-													message: translator.text(
-														"Passwords do not match",
-													),
-												};
-											}
-
-											return undefined;
-										},
-									}}
-								>
-									{(field) => (
-										<FormField
-											id={field.name}
-											name={field.name}
-											label={
-												<Tx
-													label={"Confirm Password"}
-												/>
-											}
-											meta={field.state.meta}
-										>
-											{(props) => (
-												<field.TextInput
-													type={"password"}
-													value={field.state.value}
-													onChange={(e) =>
-														field.handleChange(
-															e.target.value,
-														)
-													}
-													onBlur={field.handleBlur}
-													placeholder={translator.text(
-														"Confirm your password",
-													)}
-													{...props}
-												/>
-											)}
-										</FormField>
-									)}
-								</form.AppField>
-
-								<div
-									className={
-										"flex flex-col items-center justify-center gap-2 w-full"
-									}
-								>
-									<form.SubmitButton
-										iconEnabled={
-											"icon-[eos-icons--system-re-registered]"
-										}
-										iconProps={{
-											size: "sm",
+											},
 										}}
-										disabled={registerMutation.isPending}
-										tone={"primary"}
-										theme={"dark"}
-										size={"lg"}
 									>
-										{registerMutation.isPending ? (
-											<Tx label={"Please wait..."} />
-										) : (
-											<Tx label={"Register"} />
+										{(field) => (
+											<FormField
+												id={field.name}
+												name={field.name}
+												label={<Tx label={"Email"} />}
+												meta={field.state.meta}
+											>
+												{(props) => (
+													<field.TextInput
+														type={"email"}
+														value={
+															field.state.value
+														}
+														onChange={(e) =>
+															field.handleChange(
+																e.target.value,
+															)
+														}
+														onBlur={
+															field.handleBlur
+														}
+														placeholder={translator.text(
+															"Enter your email",
+														)}
+														{...props}
+													/>
+												)}
+											</FormField>
 										)}
-									</form.SubmitButton>
+									</form.AppField>
 
-									<LinkTo
-										to={"/$locale/login"}
-										params={{
-											locale,
+									<form.AppField
+										name={"password"}
+										validators={{
+											onBlur({ value, fieldApi }) {
+												if (
+													!fieldApi.state.meta.isDirty
+												) {
+													return undefined;
+												}
+
+												if (
+													!value ||
+													value.length < 8
+												) {
+													return {
+														message:
+															translator.text(
+																"Password must be at least 8 characters",
+															),
+													};
+												}
+												return undefined;
+											},
 										}}
 									>
-										<Tx
-											label={"Login (link)"}
-											tone={"link"}
-										/>
-									</LinkTo>
-								</div>
+										{(field) => (
+											<FormField
+												label={
+													<Tx label={"Password"} />
+												}
+												meta={field.state.meta}
+											>
+												{(props) => (
+													<field.TextInput
+														type={"password"}
+														value={
+															field.state.value
+														}
+														onChange={(e) =>
+															field.handleChange(
+																e.target.value,
+															)
+														}
+														onBlur={
+															field.handleBlur
+														}
+														placeholder={translator.text(
+															"Enter your password",
+														)}
+														{...props}
+													/>
+												)}
+											</FormField>
+										)}
+									</form.AppField>
 
-								<div className={"flex flex-col gap-2 w-full"}>
-									<Tx
-										label={"Agreement with (label)"}
-										size={"sm"}
-										font={"bold"}
-									/>
+									<form.AppField
+										name={"confirmPassword"}
+										validators={{
+											onChangeListenTo: [
+												"password",
+											],
+											onBlur({ value, fieldApi }) {
+												const password =
+													fieldApi.form.getFieldValue(
+														"password",
+													);
 
-									<LinkTo
-										icon={CheckIcon}
-										to={"/$locale/tos"}
-										params={{
-											locale,
+												if (value !== password) {
+													return {
+														message:
+															translator.text(
+																"Passwords do not match",
+															),
+													};
+												}
+
+												return undefined;
+											},
 										}}
 									>
-										<Tx
-											label={"ToS agreement (label)"}
-											tone={"link"}
+										{(field) => (
+											<FormField
+												id={field.name}
+												name={field.name}
+												label={
+													<Tx
+														label={
+															"Confirm Password"
+														}
+													/>
+												}
+												meta={field.state.meta}
+											>
+												{(props) => (
+													<field.TextInput
+														type={"password"}
+														value={
+															field.state.value
+														}
+														onChange={(e) =>
+															field.handleChange(
+																e.target.value,
+															)
+														}
+														onBlur={
+															field.handleBlur
+														}
+														placeholder={translator.text(
+															"Confirm your password",
+														)}
+														{...props}
+													/>
+												)}
+											</FormField>
+										)}
+									</form.AppField>
+
+									<div
+										className={
+											"flex flex-col items-center justify-center gap-2 w-full"
+										}
+									>
+										<form.SubmitButton
+											iconEnabled={
+												"icon-[eos-icons--system-re-registered]"
+											}
+											iconProps={{
+												size: "sm",
+											}}
+											disabled={
+												registerMutation.isPending
+											}
+											tone={"primary"}
+											theme={"dark"}
 											size={"lg"}
-										/>
-									</LinkTo>
+										>
+											{registerMutation.isPending ? (
+												<Tx label={"Please wait..."} />
+											) : (
+												<Tx label={"Register"} />
+											)}
+										</form.SubmitButton>
 
-									<LinkTo
-										icon={CheckIcon}
-										to={"/$locale/privacy"}
-										params={{
-											locale,
-										}}
+										<LinkTo
+											to={"/$locale/login"}
+											params={{
+												locale,
+											}}
+										>
+											<Tx
+												label={"Login (link)"}
+												tone={"link"}
+											/>
+										</LinkTo>
+									</div>
+
+									<div
+										className={"flex flex-col gap-2 w-full"}
 									>
 										<Tx
-											label={"Privacy policy (label)"}
-											tone={"link"}
-											size={"lg"}
+											label={"Agreement with (label)"}
+											size={"sm"}
+											font={"bold"}
 										/>
-									</LinkTo>
-								</div>
-							</form>
-						</Status>
-					</VariantProvider>
+
+										<LinkTo
+											icon={CheckIcon}
+											to={"/$locale/tos"}
+											params={{
+												locale,
+											}}
+										>
+											<Tx
+												label={"ToS agreement (label)"}
+												tone={"link"}
+												size={"lg"}
+											/>
+										</LinkTo>
+
+										<LinkTo
+											icon={CheckIcon}
+											to={"/$locale/privacy"}
+											params={{
+												locale,
+											}}
+										>
+											<Tx
+												label={"Privacy policy (label)"}
+												tone={"link"}
+												size={"lg"}
+											/>
+										</LinkTo>
+									</div>
+								</form>
+							</Status>
+						</VariantProvider>
+					</Sheet>
 				</Container>
-			</Sheet>
+			</Container>
 		);
 	},
 });
