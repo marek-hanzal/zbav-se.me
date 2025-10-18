@@ -5,6 +5,7 @@ import {
 	useEffect,
 	useEffectEvent,
 	useLayoutEffect,
+	useMemo,
 	useRef,
 	useState,
 } from "react";
@@ -32,6 +33,10 @@ export namespace useSnapperNav {
 		 * Quantization threshold 0..1; default 0.5.
 		 */
 		threshold?: number;
+		/**
+		 * Debounce delay in milliseconds for onSnap callback.
+		 */
+		onSnapDebounce?: number;
 		/**
 		 * Called when a new page index is derived (debounced).
 		 */
@@ -66,6 +71,7 @@ export function useSnapperNav({
 	count,
 	defaultIndex = 0,
 	threshold = 0.5,
+	onSnapDebounce = 150,
 	onSnap,
 }: useSnapperNav.Props): useSnapperNav.Result {
 	const $count = Math.max(1, Math.floor(count));
@@ -96,7 +102,7 @@ export function useSnapperNav({
 	 */
 	const emitSnapDebounced = useDebouncedCallback((idx: number) => {
 		emitSnap(idx);
-	}, 150);
+	}, onSnapDebounce);
 
 	/**
 	 * Cancel any pending debounced emits on unmount.
@@ -368,18 +374,25 @@ export function useSnapperNav({
 		emitSnapDebounced,
 	]);
 
-	const isFirst = current === 0;
-	const isLast = current === Math.max(0, $count - 1);
-
-	return {
+	return useMemo(() => {
+		return {
+			current,
+			count: $count,
+			isFirst: current === 0,
+			isLast: current === Math.max(0, $count - 1),
+			start,
+			end,
+			next,
+			prev,
+			snapTo,
+		};
+	}, [
 		current,
-		count: $count,
-		isFirst,
-		isLast,
+		$count,
 		start,
 		end,
 		next,
 		prev,
 		snapTo,
-	};
+	]);
 }
