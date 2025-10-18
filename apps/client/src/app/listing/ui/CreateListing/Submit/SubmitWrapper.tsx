@@ -4,13 +4,13 @@ import { linkTo } from "@use-pico/common";
 import { upload } from "@vercel/blob/client";
 import PQueue from "p-queue";
 import type { FC } from "react";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 
-export const SubmitWrapper: FC = () => {
+export const SubmitWrapper: FC = memo(() => {
 	const useCreateListingStore = useCreateListingContext();
 	const missing = useCreateListingStore((store) => store.missing);
 	const photos = useCreateListingStore((store) => store.photos);
@@ -130,4 +130,4 @@ export const SubmitWrapper: FC = () => {
 			</Status>
 		</Sheet>
 	);
-};
+});

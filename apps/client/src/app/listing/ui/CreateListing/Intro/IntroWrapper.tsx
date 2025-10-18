@@ -26,8 +26,6 @@ export namespace IntroWrapper {
 
 export const IntroWrapper: FC<IntroWrapper.Props> = memo(
 	({ listingNavApi }) => {
-		console.log("IntroWrapper - render");
-
 		return (
 			<Container
 				layout={"vertical-content-footer"}

@@ -7,7 +7,7 @@ import {
 	Tx,
 	Typo,
 } from "@use-pico/client";
-import { type FC, useRef, useState } from "react";
+import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { anim, useAnim } from "~/app/ui/gsap";
@@ -19,7 +19,7 @@ export namespace LocationWrapper {
 	}
 }
 
-export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
+export const LocationWrapper: FC<LocationWrapper.Props> = memo(({ locale }) => {
 	const useCreateListingStore = useCreateListingContext();
 	const location = useCreateListingStore((state) => state.location);
 	const setLocation = useCreateListingStore((state) => state.setLocation);
@@ -231,4 +231,4 @@ export const LocationWrapper: FC<LocationWrapper.Props> = ({ locale }) => {
 			</Container>
 		</Container>
 	);
-};
+});

@@ -5,7 +5,7 @@ import {
 	Status,
 	useSnapperNav,
 } from "@use-pico/client";
-import { type FC, useRef, useState } from "react";
+import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Price } from "~/app/listing/ui/CreateListing/Price/Price";
 import { Sheet } from "~/app/sheet/Sheet";
@@ -19,7 +19,7 @@ export namespace PriceWrapper {
 	}
 }
 
-export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
+export const PriceWrapper: FC<PriceWrapper.Props> = memo(({ locale }) => {
 	const useCreateListingStore = useCreateListingContext();
 	const price = useCreateListingStore((store) => store.price);
 	const setPrice = useCreateListingStore((store) => store.setPrice);
@@ -123,4 +123,4 @@ export const PriceWrapper: FC<PriceWrapper.Props> = ({ locale }) => {
 			</Container>
 		</Container>
 	);
-};
+});
