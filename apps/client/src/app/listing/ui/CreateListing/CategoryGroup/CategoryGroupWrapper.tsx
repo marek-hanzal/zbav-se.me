@@ -79,66 +79,60 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 					}}
 					renderSuccess={({ data }) => {
 						return (
-							<div className="relative">
-								<Container
-									ref={snapperRef}
-									layout={"horizontal-full"}
-									overflow={"horizontal"}
-									snap={"horizontal-start"}
-									gap={"md"}
-								>
-									{Array.from(
-										{
-											length: Math.ceil(
-												data.length / grid,
-											),
-										},
-										(_, chunkIndex) => {
-											const startIndex =
-												chunkIndex * grid;
-											const chunk = data.slice(
-												startIndex,
-												startIndex + grid,
-											);
+							<Container
+								ref={snapperRef}
+								layout={"horizontal-full"}
+								overflow={"horizontal"}
+								snap={"horizontal-start"}
+								gap={"md"}
+							>
+								{Array.from(
+									{
+										length: Math.ceil(data.length / grid),
+									},
+									(_, chunkIndex) => {
+										const startIndex = chunkIndex * grid;
+										const chunk = data.slice(
+											startIndex,
+											startIndex + grid,
+										);
 
-											return (
-												<Sheet
-													key={`${groupId}-${chunkIndex}-${startIndex}`}
-													tone={"primary"}
-													theme={"light"}
-													tweak={{
-														slot: {
-															root: {
-																class: [
-																	"grid",
-																	"grid-rows-3",
-																	"grid-cols-2",
-																	"gap-2",
-																	"h-full",
-																	"w-full",
-																	"p-4",
-																],
-															},
+										return (
+											<Sheet
+												key={`${groupId}-${chunkIndex}-${startIndex}`}
+												tone={"unset"}
+												theme={"unset"}
+												tweak={{
+													slot: {
+														root: {
+															class: [
+																"border-none",
+																"shadow-none",
+																"grid",
+																"grid-rows-3",
+																"grid-cols-2",
+																"gap-2",
+															],
 														},
-													}}
-												>
-													{chunk.map((item) => {
-														return (
-															<CategoryGroupItem
-																key={item.id}
-																selection={
-																	selection
-																}
-																item={item}
-															/>
-														);
-													})}
-												</Sheet>
-											);
-										},
-									)}
-								</Container>
-							</div>
+													},
+												}}
+											>
+												{chunk.map((item) => {
+													return (
+														<CategoryGroupItem
+															key={item.id}
+															selection={
+																selection
+															}
+															item={item}
+														/>
+													);
+												})}
+											</Sheet>
+										);
+									},
+								)}
+							</Container>
 						);
 					}}
 				/>

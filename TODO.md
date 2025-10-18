@@ -2,6 +2,8 @@
 
 - Display progress bar on top of filled items in listing creation
 
+- SubmitWrapper - display clickable icons what's done and what's missing
+
 - Auto-advance on item selection
 - Split Condition -> keep the vertical flow
 - Overlay background does not match with underlaying element height/width (on Android)
@@ -9,7 +11,6 @@
 - Bigger header in create listings
 - Elipsis in header?
 - Animate location searh result
-- Remove search from Categories
 - Test capacitor + native app build
 
 - Resolve why fuckin' webglob is not forwarding mails
@@ -23,8 +24,6 @@
 
 - Extract "local" states (search and co.) into store so it could be controlled between pages (e.g. by removing
     selection and search when category group changes )
-- Chrome on Android fucks up the page when scrolling down - try to solve it by svh or somehow locking the page?
-- Edit snapper - value & edit
 - Show snapper with selected item (by finding an element -> scroll to it?)
 - Resolve /null get calls from TSR/TSS
 

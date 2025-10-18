@@ -44,7 +44,7 @@ export const Title: FC<Title.Props> = ({
 			<Tx
 				label={textTitle}
 				font={"bold"}
-				size={"md"}
+				size={"xl"}
 			/>
 
 			{right ? (

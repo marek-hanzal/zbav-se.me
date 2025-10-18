@@ -55,7 +55,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 		>
 			<Sheet
 				ref={selectedRef}
-				tone={"secondary"}
+				tone={"primary"}
 				theme={"dark"}
 				onClick={() => {
 					selection.toggle(item);
@@ -64,7 +64,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 			>
 				<Status
 					icon={CheckIcon}
-					tone={"secondary"}
+					tone={"primary"}
 					theme={"dark"}
 					textTitle={item.name}
 					titleProps={{
@@ -75,7 +75,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 
 			<Sheet
 				ref={unselectedRef}
-				tone={"secondary"}
+				tone={"primary"}
 				theme={"light"}
 				onClick={() => {
 					selection.toggle(item);
@@ -84,7 +84,7 @@ export const CategoryGroupItem: FC<CategoryGroupItem.Props> = ({
 			>
 				<Status
 					icon={CategoryGroupIcon}
-					tone={"secondary"}
+					tone={"primary"}
 					theme={"light"}
 					textTitle={item.name}
 					titleProps={{

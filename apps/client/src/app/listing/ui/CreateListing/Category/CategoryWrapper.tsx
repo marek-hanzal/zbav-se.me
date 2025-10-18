@@ -127,19 +127,18 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 										return (
 											<Sheet
 												key={`${groupId}-${chunkIndex}-${startIndex}`}
-												tone={"primary"}
-												theme={"light"}
+												tone={"unset"}
+												theme={"unset"}
 												tweak={{
 													slot: {
 														root: {
 															class: [
+																"border-none",
+																"shadow-none",
 																"grid",
 																"grid-rows-3",
 																"grid-cols-2",
 																"gap-2",
-																"h-full",
-																"w-full",
-																"p-4",
 															],
 														},
 													},
