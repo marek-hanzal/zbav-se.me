@@ -1,1 +1,1 @@
-export const AgeIcon = "icon-[hugeicons--package-process]";
+export const AgeIcon = "icon-[meteor-icons--clock]";

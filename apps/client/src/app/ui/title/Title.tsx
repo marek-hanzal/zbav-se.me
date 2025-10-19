@@ -5,6 +5,7 @@ export namespace Title {
 	export interface Props extends Container.Props {
 		ref?: Ref<HTMLDivElement>;
 		textTitle: string;
+		textSubtitle?: string;
 		right?: ReactNode;
 		left?: ReactNode;
 	}
@@ -13,6 +14,7 @@ export namespace Title {
 export const Title: FC<Title.Props> = ({
 	ref,
 	textTitle,
+	textSubtitle,
 	right,
 	left,
 	...props
@@ -35,13 +37,21 @@ export const Title: FC<Title.Props> = ({
 			}}
 			{...props}
 		>
-			<div className="inline-flex flex-row gap-1 items-center justify-start">
+			<div className="inline-flex flex-row gap-1 items-start justify-start">
 				{left}
-				<Tx
-					label={textTitle}
-					font={"bold"}
-					size={"xl"}
-				/>
+				<div className="inline-flex flex-col gap-0 items-start justify-start">
+					<Tx
+						label={textTitle}
+						font={"bold"}
+						size={"xl"}
+					/>
+					{textSubtitle ? (
+						<Tx
+							label={textSubtitle}
+							size={"sm"}
+						/>
+					) : null}
+				</div>
 			</div>
 
 			{right ? (

@@ -30,14 +30,9 @@ tx({
 				name: "ListingContainer",
 				attr: "textTitle",
 			},
-			//
 			{
-				name: "Condition",
-				attr: "textTitle",
-			},
-			{
-				name: "Condition",
-				attr: "textDescription",
+				name: "ListingContainer",
+				attr: "textSubtitle",
 			},
 			//
 			{

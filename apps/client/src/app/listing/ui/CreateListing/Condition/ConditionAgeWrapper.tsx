@@ -21,19 +21,13 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
-				textTitle={
-					hasAge
-						? `Condition - Age [${age}] (title)`
-						: "Condition - Age (title)"
-				}
+				textTitle={"Condition - Age (title)"}
 				bottom={{
 					next: hasAge,
 				}}
 			>
 				<Condition
 					icon={AgeIcon}
-					textTitle={"Condition - Age (title)"}
-					textDescription={"Condition - Age (description)"}
 					textHint={<Tx label={`Condition - Age [${age}] (hint)`} />}
 					value={age}
 					onChange={setAge}

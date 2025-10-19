@@ -12,6 +12,7 @@ export namespace ListingContainer {
 		listingNavApi: useSnapperNav.Api;
 		progress?: boolean;
 		textTitle?: string;
+		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
 		back?: boolean;
 		bottom?: {
@@ -23,6 +24,7 @@ export namespace ListingContainer {
 export const ListingContainer: FC<ListingContainer.Props> = ({
 	progress = true,
 	textTitle,
+	textSubtitle,
 	titleProps,
 	back = true,
 	bottom,
@@ -37,6 +39,7 @@ export const ListingContainer: FC<ListingContainer.Props> = ({
 			{textTitle ? (
 				<Title
 					textTitle={textTitle}
+					textSubtitle={textSubtitle}
 					left={
 						back ? (
 							<LeftButton listingNavApi={listingNavApi} />

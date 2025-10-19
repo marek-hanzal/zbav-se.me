@@ -24,7 +24,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
-				textTitle={hasPrice ? "Price set (title)" : "Price (title)"}
+				textTitle={"Price (title)"}
 				titleProps={{
 					right: price ? (
 						<PriceInline

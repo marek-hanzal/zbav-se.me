@@ -25,19 +25,13 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
-				textTitle={
-					hasCondition
-						? `Condition - Overall [${condition}] (title)`
-						: "Condition - Overall (title)"
-				}
+				textTitle={"Condition - Overall (title)"}
 				bottom={{
 					next: hasCondition,
 				}}
 			>
 				<Condition
 					icon={ConditionIcon}
-					textTitle={"Condition - Overall (title)"}
-					textDescription={"Condition - Overall (description)"}
 					textHint={
 						<Tx
 							label={`Condition - Overall [${condition}] (hint)`}

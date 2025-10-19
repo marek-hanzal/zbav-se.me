@@ -10,14 +10,6 @@ export namespace Condition {
 		 */
 		icon: Icon.Type;
 		/**
-		 * Translation label for the title
-		 */
-		textTitle: string;
-		/**
-		 * Translation label for the description
-		 */
-		textDescription: string;
-		/**
 		 * Translation label for the hint (should include value placeholder)
 		 */
 		textHint: ReactNode;
@@ -38,8 +30,6 @@ export namespace Condition {
 
 export const Condition: FC<Condition.Props> = ({
 	icon,
-	textTitle,
-	textDescription,
 	textHint,
 	value,
 	onChange,
@@ -49,8 +39,6 @@ export const Condition: FC<Condition.Props> = ({
 		<Sheet>
 			<Status
 				icon={icon}
-				textTitle={textTitle}
-				textMessage={textDescription}
 				action={
 					<Rating
 						value={value}

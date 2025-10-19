@@ -40,9 +40,6 @@
 1fa8994e8265e67b6a672e5259de8a72adbba2e86c6ea9d0b5a75610:
   ref: Agreement with (label)
   value: Agreement with (label)
-249accb1a47c3bdb2902f39fc8c80456bad09625a35572efda058c0c:
-  ref: Submit - one more thing (title)
-  value: Submit - one more thing (title)
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
   ref: Back to Dashboard (label)
   value: Back to Dashboard (label)
@@ -55,9 +52,6 @@
 2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
   ref: Please wait...
   value: Please wait...
-294149e2faba8e8642efaed4ec43c45114f9b2836f4faea02af8c45a:
-  ref: Condition - Age (description)
-  value: Condition - Age (description)
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
   ref: zbav-se.me
   value: zbav-se.me
@@ -73,6 +67,9 @@
 323351b9e4c55b173d9f38ae62898421c4bbfb45584093c73f1f2a8c:
   ref: Enter your email
   value: Enter your email
+33838ed382d4f7df3d330fc3cc36aef5e63d208a40cadd327500286a:
+  ref: Listing category groups (subtitle)
+  value: Listing category groups (subtitle)
 3502b6c107b0c5ebe42a84b6c3822e308ed5a099dcbb11ff3b7b5ae3:
   ref: What - buyers (badge 2)
   value: What - buyers (badge 2)
@@ -148,9 +145,6 @@
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
-5aa13a488df37a89ce3c123a4d113ff14df85c789b0eb3a4a079ca6c:
-  ref: Condition - Overall (description)
-  value: Condition - Overall (description)
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
@@ -190,9 +184,6 @@
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
   ref: Clear files
   value: Clear files
-7397118d3c89293d35a7c6103ee117e73a145e0b78e08c12b6ec9fdb:
-  ref: Price set (title)
-  value: Price set (title)
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
   ref: There is nothing to see right now.
   value: There is nothing to see right now.

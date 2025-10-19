@@ -19,7 +19,6 @@ import { ListingPageIndex } from "~/app/listing/ui/CreateListing/ListingPageInde
 import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
-import { Title } from "~/app/ui/title/Title";
 
 const IconMap = ListingPageIndex.Page;
 
@@ -78,11 +77,6 @@ export const SubmitWrapper: FC<{
 	if (missing.length > 0) {
 		return (
 			<ListingContainer listingNavApi={listingNavApi}>
-				<Title
-					tone={"primary"}
-					textTitle="Submit - one more thing (title)"
-				/>
-
 				<Sheet
 					tone={"primary"}
 					theme={"light"}
