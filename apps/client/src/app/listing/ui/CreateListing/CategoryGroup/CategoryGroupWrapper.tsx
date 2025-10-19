@@ -20,13 +20,13 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryGroupWrapper {
 	export interface Props {
-		listingNavApi: useSnapperNav.Api;
+		listingNav: useSnapperNav.Result;
 		locale: string;
 	}
 }
 
 export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
-	({ listingNavApi, locale }) => {
+	({ listingNav, locale }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const setCategoryGroup = useCreateListingStore(
 			(store) => store.setCategoryGroup,
@@ -72,7 +72,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 						selection.optional.single()?.name ??
 						"Listing category groups (title)"
 					}
-					left={<LeftButton onClick={listingNavApi.prev} />}
+					left={<LeftButton listingNav={listingNav} />}
 				/>
 
 				<Data
@@ -154,7 +154,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNavApi={listingNavApi}
+						listingNav={listingNav}
 						disabled={!selection.hasAny}
 					/>
 				</BottomContainer>

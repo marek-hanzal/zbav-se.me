@@ -15,13 +15,13 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace PriceWrapper {
 	export interface Props {
-		listingNavApi: SnapperNavType.Api;
+		listingNav: SnapperNavType.Result;
 		locale: string;
 	}
 }
 
 export const PriceWrapper: FC<PriceWrapper.Props> = memo(
-	({ listingNavApi, locale }) => {
+	({ listingNav, locale }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const price = useCreateListingStore((store) => store.price);
 		const setPrice = useCreateListingStore((store) => store.setPrice);
@@ -78,7 +78,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 
 				<Title
 					textTitle={"Price (title)"}
-					left={<LeftButton onClick={listingNavApi.prev} />}
+					left={<LeftButton listingNav={listingNav} />}
 				/>
 
 				<Dial
@@ -91,7 +91,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNavApi={listingNavApi}
+						listingNav={listingNav}
 						disabled={!hasPrice}
 					/>
 				</BottomContainer>

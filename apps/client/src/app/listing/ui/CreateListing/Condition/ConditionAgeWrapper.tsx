@@ -12,12 +12,12 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace ConditionAgeWrapper {
 	export interface Props {
-		listingNavApi: useSnapperNav.Api;
+		listingNav: useSnapperNav.Result;
 	}
 }
 
 export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
-	({ listingNavApi }) => {
+	({ listingNav }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const hasAge = useCreateListingStore((store) => store.hasAge);
 		const age = useCreateListingStore((state) => state.age);
@@ -33,7 +33,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 							? `Condition - Age [${age}] (title)`
 							: "Condition - Age (title)"
 					}
-					left={<LeftButton onClick={listingNavApi.prev} />}
+					left={<LeftButton listingNav={listingNav} />}
 				/>
 
 				<Condition
@@ -50,7 +50,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNavApi={listingNavApi}
+						listingNav={listingNav}
 						disabled={!hasAge}
 					/>
 				</BottomContainer>

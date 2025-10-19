@@ -12,12 +12,12 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace ConditionOverallWrapper {
 	export interface Props {
-		listingNavApi: useSnapperNav.Api;
+		listingNav: useSnapperNav.Result;
 	}
 }
 
 export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
-	({ listingNavApi }) => {
+	({ listingNav }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const hasCondition = useCreateListingStore(
 			(store) => store.hasCondition,
@@ -37,7 +37,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 							? `Condition - Overall [${condition}] (title)`
 							: "Condition - Overall (title)"
 					}
-					left={<LeftButton onClick={listingNavApi.prev} />}
+					left={<LeftButton listingNav={listingNav} />}
 				/>
 
 				<Condition
@@ -58,7 +58,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNavApi={listingNavApi}
+						listingNav={listingNav}
 						disabled={!hasCondition}
 					/>
 				</BottomContainer>

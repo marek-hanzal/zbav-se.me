@@ -22,13 +22,13 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace LocationWrapper {
 	export interface Props {
-		listingNavApi: useSnapperNav.Api;
+		listingNav: useSnapperNav.Result;
 		locale: string;
 	}
 }
 
 export const LocationWrapper: FC<LocationWrapper.Props> = memo(
-	({ listingNavApi, locale }) => {
+	({ listingNav, locale }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const location = useCreateListingStore((state) => state.location);
 		const setLocation = useCreateListingStore((state) => state.setLocation);
@@ -97,7 +97,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 
 				<Title
 					textTitle={"Location (title)"}
-					left={<LeftButton onClick={listingNavApi.prev} />}
+					left={<LeftButton listingNav={listingNav} />}
 				/>
 
 				<Container
@@ -252,7 +252,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNavApi={listingNavApi}
+						listingNav={listingNav}
 						disabled={!location}
 					/>
 				</BottomContainer>

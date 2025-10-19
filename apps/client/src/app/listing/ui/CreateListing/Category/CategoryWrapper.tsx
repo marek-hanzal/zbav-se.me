@@ -22,13 +22,13 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryWrapper {
 	export interface Props {
-		listingNavApi: useSnapperNav.Api;
+		listingNav: useSnapperNav.Result;
 		locale: string;
 	}
 }
 
 export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
-	({ listingNavApi, locale }) => {
+	({ listingNav, locale }) => {
 		const containerRef = useRef<HTMLDivElement>(null);
 		const useCreateListingStore = useCreateListingContext();
 		const setCategory = useCreateListingStore((store) => store.setCategory);
@@ -94,7 +94,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 									border
 									background
 									size={"lg"}
-									onClick={listingNavApi.prev}
+									listingNav={listingNav}
 									label={"Select category group (button)"}
 									iconProps={{
 										size: "sm",
@@ -116,7 +116,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 						selection.optional.single()?.name ??
 						"Listing category (title)"
 					}
-					left={<LeftButton onClick={listingNavApi.prev} />}
+					left={<LeftButton listingNav={listingNav} />}
 				/>
 
 				<Data
@@ -198,7 +198,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNavApi={listingNavApi}
+						listingNav={listingNav}
 						disabled={!selection.hasAny}
 					/>
 				</BottomContainer>

@@ -14,57 +14,15 @@ import type { FC } from "react";
 import { memo, useId, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import type { createListingStore } from "~/app/listing/store/createListingStore";
-import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
+import { ListingPageIndex } from "~/app/listing/ui/CreateListing/ListingPageIndex";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { Sheet } from "~/app/sheet/Sheet";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
-import { AgeIcon } from "~/app/ui/icon/AgeIcon";
-import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
-import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
-import { LocationIcon } from "~/app/ui/icon/LocationIcon";
-import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
-import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { Title } from "~/app/ui/title/Title";
 
-const IconMap: Record<
-	createListingStore.Missing,
-	{
-		index: number;
-		icon: Icon.Type;
-	}
-> = {
-	photos: {
-		index: 1,
-		icon: PhotoIcon,
-	},
-	categoryGroup: {
-		index: 2,
-		icon: CategoryGroupIcon,
-	},
-	category: {
-		index: 3,
-		icon: CategoryIcon,
-	},
-	condition: {
-		index: 4,
-		icon: ConditionIcon,
-	},
-	age: {
-		index: 5,
-		icon: AgeIcon,
-	},
-	price: {
-		index: 6,
-		icon: PriceIcon,
-	},
-	location: {
-		index: 7,
-		icon: LocationIcon,
-	},
-};
+const IconMap = ListingPageIndex.IconMap;
 
 export const SubmitWrapper: FC<{
 	listingNavApi: useSnapperNav.Api;
@@ -180,10 +138,7 @@ export const SubmitWrapper: FC<{
 
 	return (
 		<FlowContainer>
-			<Title
-				textTitle={"Submit listing - status (title)"}
-				left={<LeftButton onClick={listingNavApi.prev} />}
-			/>
+			<Title textTitle={"Submit listing - status (title)"} />
 
 			<Sheet tone={"primary"}>
 				<Status
