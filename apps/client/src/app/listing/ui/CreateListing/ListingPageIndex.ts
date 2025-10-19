@@ -14,7 +14,7 @@ export namespace ListingPageIndex {
 		icon: Icon.Type;
 	}
 
-	export const IconMap: Record<createListingStore.Missing, PageInfo> = {
+	export const Page: Record<createListingStore.Missing, PageInfo> = {
 		photos: {
 			index: 1,
 			icon: PhotoIcon,
@@ -43,89 +43,5 @@ export namespace ListingPageIndex {
 			index: 7,
 			icon: LocationIcon,
 		},
-	};
-
-	/**
-	 * Get the page index for a missing field
-	 */
-	export const getPageIndex = (
-		missing: createListingStore.Missing,
-	): number => {
-		return IconMap[missing].index;
-	};
-
-	/**
-	 * Get the icon for a missing field
-	 */
-	export const getIcon = (missing: createListingStore.Missing): Icon.Type => {
-		return IconMap[missing].icon;
-	};
-
-	/**
-	 * Get all missing fields sorted by their page index
-	 */
-	export const getMissingFieldsSorted = (
-		missing: createListingStore.Missing[],
-	): createListingStore.Missing[] => {
-		return [
-			...missing,
-		].sort((a, b) => getPageIndex(a) - getPageIndex(b));
-	};
-
-	/**
-	 * Find the next missing field after the current page
-	 */
-	export const getNextMissingField = (
-		currentPageIndex: number,
-		missing: createListingStore.Missing[],
-	): createListingStore.Missing | null => {
-		const sortedMissing = getMissingFieldsSorted(missing);
-		return (
-			sortedMissing.find(
-				(field) => getPageIndex(field) > currentPageIndex,
-			) || null
-		);
-	};
-
-	/**
-	 * Find the previous missing field before the current page
-	 */
-	export const getPreviousMissingField = (
-		currentPageIndex: number,
-		missing: createListingStore.Missing[],
-	): createListingStore.Missing | null => {
-		const sortedMissing = getMissingFieldsSorted(missing);
-		const reversed = [
-			...sortedMissing,
-		].reverse();
-		return (
-			reversed.find((field) => getPageIndex(field) < currentPageIndex) ||
-			null
-		);
-	};
-
-	/**
-	 * Get the page index to navigate to for the next missing field
-	 */
-	export const getNextMissingPageIndex = (
-		currentPageIndex: number,
-		missing: createListingStore.Missing[],
-	): number | null => {
-		const nextMissing = getNextMissingField(currentPageIndex, missing);
-		return nextMissing ? getPageIndex(nextMissing) : null;
-	};
-
-	/**
-	 * Get the page index to navigate to for the previous missing field
-	 */
-	export const getPreviousMissingPageIndex = (
-		currentPageIndex: number,
-		missing: createListingStore.Missing[],
-	): number | null => {
-		const previousMissing = getPreviousMissingField(
-			currentPageIndex,
-			missing,
-		);
-		return previousMissing ? getPageIndex(previousMissing) : null;
 	};
 }

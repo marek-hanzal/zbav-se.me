@@ -72,7 +72,7 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 				<div />
 
 				<NextButton
-					listingNav={listingNav}
+					listingNavApi={listingNav.api}
 					disabled={!hasPhotos}
 				/>
 			</BottomContainer>

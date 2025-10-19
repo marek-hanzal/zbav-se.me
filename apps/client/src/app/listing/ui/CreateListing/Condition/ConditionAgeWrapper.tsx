@@ -33,7 +33,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 							? `Condition - Age [${age}] (title)`
 							: "Condition - Age (title)"
 					}
-					left={<LeftButton listingNav={listingNav} />}
+					left={<LeftButton listingNavApi={listingNav.api} />}
 				/>
 
 				<Condition
@@ -50,7 +50,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNav={listingNav}
+						listingNavApi={listingNav.api}
 						disabled={!hasAge}
 					/>
 				</BottomContainer>

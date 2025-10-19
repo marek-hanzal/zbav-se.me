@@ -94,7 +94,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 									border
 									background
 									size={"lg"}
-									listingNav={listingNav}
+									listingNavApi={listingNav.api}
 									label={"Select category group (button)"}
 									iconProps={{
 										size: "sm",
@@ -116,7 +116,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 						selection.optional.single()?.name ??
 						"Listing category (title)"
 					}
-					left={<LeftButton listingNav={listingNav} />}
+					left={<LeftButton listingNavApi={listingNav.api} />}
 				/>
 
 				<Data
@@ -198,7 +198,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNav={listingNav}
+						listingNavApi={listingNav.api}
 						disabled={!selection.hasAny}
 					/>
 				</BottomContainer>

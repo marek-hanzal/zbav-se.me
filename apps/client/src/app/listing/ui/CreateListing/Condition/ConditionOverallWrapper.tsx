@@ -37,7 +37,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 							? `Condition - Overall [${condition}] (title)`
 							: "Condition - Overall (title)"
 					}
-					left={<LeftButton listingNav={listingNav} />}
+					left={<LeftButton listingNavApi={listingNav.api} />}
 				/>
 
 				<Condition
@@ -58,7 +58,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNav={listingNav}
+						listingNavApi={listingNav.api}
 						disabled={!hasCondition}
 					/>
 				</BottomContainer>

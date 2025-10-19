@@ -97,7 +97,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 
 				<Title
 					textTitle={"Location (title)"}
-					left={<LeftButton listingNav={listingNav} />}
+					left={<LeftButton listingNavApi={listingNav.api} />}
 				/>
 
 				<Container
@@ -252,7 +252,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNav={listingNav}
+						listingNavApi={listingNav.api}
 						disabled={!location}
 					/>
 				</BottomContainer>

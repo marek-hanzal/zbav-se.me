@@ -22,7 +22,7 @@ import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { Title } from "~/app/ui/title/Title";
 
-const IconMap = ListingPageIndex.IconMap;
+const IconMap = ListingPageIndex.Page;
 
 export const SubmitWrapper: FC<{
 	listingNavApi: useSnapperNav.Api;

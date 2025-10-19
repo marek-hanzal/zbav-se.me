@@ -78,7 +78,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 
 				<Title
 					textTitle={"Price (title)"}
-					left={<LeftButton listingNav={listingNav} />}
+					left={<LeftButton listingNavApi={listingNav.api} />}
 				/>
 
 				<Dial
@@ -91,7 +91,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 					<div />
 
 					<NextButton
-						listingNav={listingNav}
+						listingNavApi={listingNav.api}
 						disabled={!hasPrice}
 					/>
 				</BottomContainer>
