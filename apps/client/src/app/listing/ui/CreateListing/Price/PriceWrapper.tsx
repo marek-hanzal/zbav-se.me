@@ -1,9 +1,5 @@
 import {
-	Button,
-	Container,
-	SnapperNav,
 	type useSnapperNav as SnapperNavType,
-	Status,
 	useSnapperNav,
 } from "@use-pico/client";
 import { type FC, memo, useRef, useState } from "react";
@@ -11,13 +7,10 @@ import { useCreateListingContext } from "~/app/listing/context/useCreateListingC
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
-import { Price } from "~/app/listing/ui/CreateListing/Price/Price";
-import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Dial } from "~/app/ui/dial/Dial";
 import { anim, useAnim } from "~/app/ui/gsap";
-import { PriceIcon } from "~/app/ui/icon/PriceIcon";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace PriceWrapper {
@@ -88,58 +81,11 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 					left={<LeftButton onClick={listingNavApi.prev} />}
 				/>
 
-				<Container position={"relative"}>
-					<SnapperNav
-						snapperNav={snapperNav}
-						orientation={"horizontal"}
-						iconProps={() => ({
-							size: "xs",
-						})}
-						subtle
-					/>
-
-					<Container
-						ref={rootRef}
-						layout={"horizontal-full"}
-						overflow={"horizontal"}
-						snap={"horizontal-start"}
-						gap={"md"}
-						round={"lg"}
-					>
-						<Sheet>
-							<Status
-								ref={priceRef}
-								icon={PriceIcon}
-								textTitle={"Price (label)"}
-								action={
-									cost === undefined ? (
-										<Button
-											onClick={snapperNav.api.next}
-											size={"xl"}
-											tone={"secondary"}
-											theme={"dark"}
-											label={"Price not set (button)"}
-										/>
-									) : (
-										<Price
-											locale={locale}
-											price={cost}
-											onClear={onClear}
-										/>
-									)
-								}
-							/>
-						</Sheet>
-
-						<Sheet>
-							<Dial
-								locale={locale}
-								value={price}
-								onChange={onPrice}
-							/>
-						</Sheet>
-					</Container>
-				</Container>
+				<Dial
+					locale={locale}
+					value={price}
+					onChange={onPrice}
+				/>
 
 				<BottomContainer>
 					<div />
