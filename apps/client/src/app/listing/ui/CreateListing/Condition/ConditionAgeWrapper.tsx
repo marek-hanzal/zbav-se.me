@@ -30,7 +30,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 				<Title
 					textTitle={
 						hasAge
-							? `Condition - Age [${age}] (label)`
+							? `Condition - Age [${age}] (title)`
 							: "Condition - Age (title)"
 					}
 					left={<LeftButton onClick={listingNavApi.prev} />}

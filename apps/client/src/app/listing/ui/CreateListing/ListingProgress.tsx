@@ -8,7 +8,7 @@ export const ListingProgress = () => {
 	const requiredCount = useCreateListingStore((store) => store.requiredCount);
 	const { slots } = useCls(ThemeCls);
 
-	return (
+	return missing.length > 0 ? (
 		<div
 			className={slots.default({
 				slot: {
@@ -48,5 +48,5 @@ export const ListingProgress = () => {
 				}}
 			/>
 		</div>
-	);
+	) : null;
 };

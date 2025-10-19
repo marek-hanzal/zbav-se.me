@@ -34,7 +34,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 				<Title
 					textTitle={
 						hasCondition
-							? `Condition - Overall [${condition}] (label)`
+							? `Condition - Overall [${condition}] (title)`
 							: "Condition - Overall (title)"
 					}
 					left={<LeftButton onClick={listingNavApi.prev} />}

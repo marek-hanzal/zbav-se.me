@@ -418,7 +418,7 @@ c4b158980cb127ec4b61c7409fd02fabe867d223c95b7884ecf64f78:
     value: Email
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
-    value: Price (title)
+    value: Nastav cenu
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!
@@ -526,3 +526,33 @@ faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
     ref: Bag (label)
     value: Nákupní taška
+Condition - Overall [1] (title):
+    value: Na díly
+    static: true
+Condition - Overall [2] (title):
+    value: Opotřebované
+    static: true
+Condition - Overall [3] (title):
+    value: Dobrý stav
+    static: true
+Condition - Overall [4] (title):
+    value: Jako nové
+    static: true
+Condition - Overall [5] (title):
+    value: Zbrusu nové
+    static: true
+Condition - Age [1] (title):
+    value: Velmi staré
+    static: true
+Condition - Age [2] (title):
+    value: Staré
+    static: true
+Condition - Age [3] (title):
+    value: Průměrné
+    static: true
+Condition - Age [4] (title):
+    value: Novější
+    static: true
+Condition - Age [5] (title):
+    value: Zcela nové
+    static: true
