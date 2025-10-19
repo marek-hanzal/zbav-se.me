@@ -13,6 +13,9 @@
 - Animate location searh result
 - Test capacitor + native app build
 
+- When deploying hit endpoint to mark deployment (eventually also disable clients)
+    - When done, prompt to reload
+
 - Resolve why fuckin' webglob is not forwarding mails
 - Add endpoint to purge old files from storages
 - Use GSAP snapping instead of native one - better for events

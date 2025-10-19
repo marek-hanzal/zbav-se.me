@@ -18,7 +18,7 @@ import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { anim, useAnim } from "~/app/ui/gsap";
-import { SearchIcon } from "~/app/ui/icon/SearchIcon";
+import { LocationIcon } from "~/app/ui/icon/LocationIcon";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace LocationWrapper {
@@ -115,9 +115,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 						theme={"light"}
 					>
 						<Status
-							icon={SearchIcon}
-							textTitle={"Location (title)"}
-							textMessage={"Location (message)"}
+							icon={LocationIcon}
 							action={
 								<div className="flex flex-col gap-2 items-center w-full">
 									<Fulltext
