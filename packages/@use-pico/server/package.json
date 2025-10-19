@@ -27,7 +27,7 @@
 		"@use-pico/tsconfig": "5.0.0",
 		"npm-run-all2": "8.0.4",
 		"react": "19.2.0",
-		"rollup": "4.52.4",
+		"rollup": "4.52.5",
 		"rollup-plugin-dts": "6.2.3",
 		"typescript": "^5.9.3",
 		"vitest": "3.2.4"
