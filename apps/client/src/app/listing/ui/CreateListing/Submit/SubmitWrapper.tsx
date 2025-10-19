@@ -106,10 +106,6 @@ export const SubmitWrapper: FC<{
 								<div className="flex flex-row items-center justify-center gap-2 w-full">
 									{Object.entries(IconMap).map(
 										([key, { index, icon }]) => {
-											console.log("missing", {
-												key,
-												missing,
-											});
 											return missing.includes(
 												key as createListingStore.Missing,
 											) ? (

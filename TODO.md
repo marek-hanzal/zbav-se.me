@@ -1,5 +1,6 @@
 # TODO
 
+- Map tiles + cache on CDN is allowed (+ attribution in UI)
 - Overlay background does not match with underlaying element height/width (on Android)
 
 - Animate location searh result
