@@ -1,7 +1,5 @@
 import {
-	ArrowRightIcon,
 	Badge,
-	Button,
 	Container,
 	Data,
 	Fulltext,
@@ -14,6 +12,7 @@ import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
+import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
@@ -252,14 +251,9 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 				<BottomContainer>
 					<div />
 
-					<Button
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
+					<NextButton
+						listingNavApi={listingNavApi}
 						disabled={!location}
-						tone={"secondary"}
-						theme={"dark"}
-						onClick={listingNavApi.next}
-						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

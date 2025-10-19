@@ -1,6 +1,4 @@
 import {
-	ArrowRightIcon,
-	Button,
 	Container,
 	Data,
 	Status,
@@ -14,6 +12,7 @@ import { useCreateListingContext } from "~/app/listing/context/useCreateListingC
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
+import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
@@ -198,14 +197,9 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 				<BottomContainer>
 					<div />
 
-					<Button
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
+					<NextButton
+						listingNavApi={listingNavApi}
 						disabled={!selection.hasAny}
-						tone={"secondary"}
-						theme={"dark"}
-						onClick={listingNavApi.next}
-						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

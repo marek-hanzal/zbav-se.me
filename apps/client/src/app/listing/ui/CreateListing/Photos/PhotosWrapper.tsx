@@ -1,13 +1,8 @@
-import {
-	ArrowRightIcon,
-	Button,
-	Container,
-	Typo,
-	type useSnapperNav,
-} from "@use-pico/client";
+import { Container, Typo, type useSnapperNav } from "@use-pico/client";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
+import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -77,14 +72,9 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(
 				<BottomContainer>
 					<div />
 
-					<Button
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
+					<NextButton
+						listingNavApi={listingNavApi}
 						disabled={!hasPhotos}
-						tone={"secondary"}
-						theme={"dark"}
-						onClick={listingNavApi.next}
-						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

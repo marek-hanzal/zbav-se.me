@@ -1,14 +1,10 @@
-import {
-	ArrowRightIcon,
-	Button,
-	Tx,
-	type useSnapperNav,
-} from "@use-pico/client";
+import { Tx, type useSnapperNav } from "@use-pico/client";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
+import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { AgeIcon } from "~/app/ui/icon/AgeIcon";
@@ -52,16 +48,10 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 
 				<BottomContainer>
 					<div />
-					<Button
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
+
+					<NextButton
+						listingNavApi={listingNavApi}
 						disabled={!hasAge}
-						tone={"secondary"}
-						theme={"dark"}
-						onClick={() => {
-							listingNavApi.next();
-						}}
-						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>

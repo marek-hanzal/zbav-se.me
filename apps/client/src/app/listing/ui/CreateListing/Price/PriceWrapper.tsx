@@ -1,5 +1,4 @@
 import {
-	ArrowRightIcon,
 	Button,
 	Container,
 	SnapperNav,
@@ -11,6 +10,7 @@ import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
+import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
 import { Price } from "~/app/listing/ui/CreateListing/Price/Price";
 import { Sheet } from "~/app/sheet/Sheet";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -144,14 +144,9 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 				<BottomContainer>
 					<div />
 
-					<Button
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
+					<NextButton
+						listingNavApi={listingNavApi}
 						disabled={!hasPrice}
-						tone={"secondary"}
-						theme={"dark"}
-						onClick={listingNavApi.next}
-						size={"lg"}
 					/>
 				</BottomContainer>
 			</FlowContainer>
