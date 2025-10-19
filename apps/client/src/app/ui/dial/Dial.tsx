@@ -7,11 +7,10 @@ import {
 	useDoubleTap,
 } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
-import { toHumanNumber } from "@use-pico/common";
-import { type FC, type RefObject, useState } from "react";
+import type { FC, RefObject } from "react";
 import { Item } from "~/app/ui/dial/Item";
 import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
+import { ClearIcon } from "~/app/ui/icon/ClearIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
@@ -37,24 +36,15 @@ const icons = {
 export namespace Dial {
 	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
-		locale: string;
 		value: number | undefined;
 		onChange: (value: number | undefined) => void;
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
-	const [price, setPrice] = useState(value?.toString() ?? "");
-	const number = parseFloat(price);
-
-	const onClear = () => {
-		onChange(undefined);
-	};
-
+export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 	const { onTouchStart } = useDoubleTap({
 		onDoubleTap() {
-			setPrice("");
-			onClear();
+			onChange(undefined);
 		},
 		delay: 250,
 	});
@@ -88,32 +78,13 @@ export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 					},
 				}}
 			>
-				{price ? (
-					<div className={"flex flex-col items-start"}>
-						<Typo
-							label={price}
-							size={"xl"}
-							font={"bold"}
-							display={"block"}
-						/>
-						<Typo
-							label={toHumanNumber({
-								locale,
-								number: parseFloat(price),
-							})}
-							size={"sm"}
-							display={"block"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"opacity-50",
-										],
-									},
-								},
-							}}
-						/>
-					</div>
+				{value ? (
+					<Typo
+						label={value}
+						size={"xl"}
+						font={"bold"}
+						display={"block"}
+					/>
 				) : (
 					<Tx
 						label={"Price (placeholder)"}
@@ -127,9 +98,10 @@ export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 					icon={BackspaceIcon}
 					tone="secondary"
 					theme="light"
-					disabled={!price}
+					disabled={!value}
 					onClick={() => {
-						setPrice((prev) => prev.slice(0, -1));
+						const change = value?.toString().slice(0, -1);
+						onChange(change ? parseFloat(change) : undefined);
 					}}
 					onTouchStart={onTouchStart}
 				/>
@@ -149,31 +121,48 @@ export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 					<Item
 						key={`price-${index + 1}`}
 						icon={icons[(index + 1) as keyof typeof icons]}
-						onClick={() =>
-							setPrice((prev) => digit(prev, index + 1))
-						}
+						onClick={() => {
+							onChange(
+								parseFloat(
+									digit(
+										value ? value.toString() : "",
+										index + 1,
+									),
+								),
+							);
+						}}
 						disabled={false}
 					/>
 				))}
 
 				<Item
 					icon={"icon-[fluent--comma-20-filled]"}
-					disabled={!price || price.includes(".")}
-					onClick={() => setPrice((prev) => digit(prev, "."))}
+					disabled={!value || value.toString().includes(".")}
+					onClick={() => {
+						onChange(
+							parseFloat(
+								digit(value ? value.toString() : "", "."),
+							),
+						);
+					}}
 				/>
 
 				<Item
 					icon={icons[0]}
 					disabled={false}
-					onClick={() => setPrice((prev) => digit(prev, 0))}
+					onClick={() => {
+						onChange(
+							parseFloat(digit(value ? value.toString() : "", 0)),
+						);
+					}}
 				/>
 
 				<Item
-					icon={CheckIcon}
-					disabled={!price}
-					onClick={() => onChange(number)}
-					tone={"primary"}
-					theme={"dark"}
+					icon={ClearIcon}
+					disabled={!value}
+					onClick={() => {
+						onChange(undefined);
+					}}
 				/>
 			</div>
 		</Container>
