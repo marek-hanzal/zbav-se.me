@@ -308,6 +308,7 @@ export const ButtonCls = contract(PicoCls.contract)
 			class: [
 				"bg-none",
 				"bg-transparent",
+				"shadow-none",
 			],
 		},
 	})
