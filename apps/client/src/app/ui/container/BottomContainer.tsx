@@ -8,11 +8,8 @@ export namespace BottomContainer {
 export const BottomContainer: FC<BottomContainer.Props> = (props) => {
 	return (
 		<Container
-			tone={"primary"}
-			theme={"light"}
 			round={"lg"}
 			square={"md"}
-			border={"default"}
 			tweak={{
 				slot: {
 					root: {

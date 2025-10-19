@@ -19,12 +19,8 @@ export const Title: FC<Title.Props> = ({
 }) => {
 	return (
 		<Container
-			tone={"primary"}
-			theme={"light"}
 			round={"lg"}
 			square={"md"}
-			border={"default"}
-			shadow={"default"}
 			tweak={{
 				slot: {
 					root: {
