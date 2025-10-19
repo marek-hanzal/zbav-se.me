@@ -1,11 +1,4 @@
-import {
-	Badge,
-	Container,
-	Icon,
-	Tx,
-	Typo,
-	useDoubleTap,
-} from "@use-pico/client";
+import { Badge, Container, Icon, Tx, Typo } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import type { FC, RefObject } from "react";
 import { Item } from "~/app/ui/dial/Item";
@@ -36,19 +29,12 @@ const icons = {
 export namespace Dial {
 	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
-		value: number | undefined;
-		onChange: (value: number | undefined) => void;
+		value: string | undefined;
+		onChange: (value: string | undefined) => void;
 	}
 }
 
 export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
-	const { onTouchStart } = useDoubleTap({
-		onDoubleTap() {
-			onChange(undefined);
-		},
-		delay: 250,
-	});
-
 	return (
 		<Container
 			ref={ref}
@@ -100,10 +86,8 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 					theme="light"
 					disabled={!value}
 					onClick={() => {
-						const change = value?.toString().slice(0, -1);
-						onChange(change ? parseFloat(change) : undefined);
+						onChange(value?.slice(0, -1) || undefined);
 					}}
-					onTouchStart={onTouchStart}
 				/>
 			</Badge>
 
@@ -122,14 +106,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 						key={`price-${index + 1}`}
 						icon={icons[(index + 1) as keyof typeof icons]}
 						onClick={() => {
-							onChange(
-								parseFloat(
-									digit(
-										value ? value.toString() : "",
-										index + 1,
-									),
-								),
-							);
+							onChange(digit(value || "", index + 1));
 						}}
 						disabled={false}
 					/>
@@ -137,13 +114,9 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 
 				<Item
 					icon={"icon-[fluent--comma-20-filled]"}
-					disabled={!value || value.toString().includes(".")}
+					disabled={!value || value.includes(".")}
 					onClick={() => {
-						onChange(
-							parseFloat(
-								digit(value ? value.toString() : "", "."),
-							),
-						);
+						onChange(digit(value || "", "."));
 					}}
 				/>
 
@@ -151,9 +124,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 					icon={icons[0]}
 					disabled={false}
 					onClick={() => {
-						onChange(
-							parseFloat(digit(value ? value.toString() : "", 0)),
-						);
+						onChange(digit(value || "", 0));
 					}}
 				/>
 

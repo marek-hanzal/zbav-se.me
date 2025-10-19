@@ -1,4 +1,4 @@
-import { type useSnapperNav as SnapperNavType } from "@use-pico/client";
+import type { useSnapperNav as SnapperNavType } from "@use-pico/client";
 import { toHumanNumber } from "@use-pico/common";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
@@ -16,6 +16,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 	({ listingNav, locale }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const price = useCreateListingStore((store) => store.price);
+		const getPrice = useCreateListingStore((store) => store.getPrice);
 		const setPrice = useCreateListingStore((store) => store.setPrice);
 		const hasPrice = useCreateListingStore((store) => store.hasPrice);
 
@@ -26,7 +27,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 				textSubtitle={
 					hasPrice
 						? toHumanNumber({
-								number: price,
+								number: getPrice(),
 								locale,
 							})
 						: "Price (subtitle)"
@@ -36,7 +37,6 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 				}}
 			>
 				<Dial
-					locale={locale}
 					value={price}
 					onChange={setPrice}
 				/>

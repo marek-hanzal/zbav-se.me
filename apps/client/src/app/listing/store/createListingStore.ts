@@ -39,8 +39,9 @@ export namespace createListingStore {
 		setAge(age: number): void;
 		hasAge: boolean;
 		//
-		price: number | undefined;
-		setPrice(price: number | undefined): void;
+		price: string | undefined;
+		setPrice(price: string | undefined): void;
+		getPrice(): number | undefined;
 		hasPrice: boolean;
 		//
 		location: string | undefined;
@@ -66,7 +67,7 @@ const defaultMissing: createListingStore.Missing[] = [
 export const createListingStore = ({
 	photoCountLimit,
 }: createListingStore.Props) =>
-	create<createListingStore.Store>((set) => ({
+	create<createListingStore.Store>((set, get) => ({
 		photoCountLimit,
 		photos: Array.from(
 			{
@@ -203,8 +204,9 @@ export const createListingStore = ({
 		price: undefined,
 		setPrice(price) {
 			set(({ missing }) => {
+				const value = price === "" ? undefined : price;
 				const $missing = dedupe<createListingStore.Missing[]>(
-					price === undefined
+					!value
 						? [
 								...missing,
 								"price",
@@ -213,12 +215,16 @@ export const createListingStore = ({
 				);
 
 				return {
-					price,
-					hasPrice: price !== undefined,
+					price: value,
+					hasPrice: !!value,
 					missing: $missing,
 					isValid: $missing.length === 0,
 				};
 			});
+		},
+		getPrice() {
+			const price = get().price;
+			return price ? parseFloat(price) : undefined;
 		},
 		hasPrice: false,
 		//
