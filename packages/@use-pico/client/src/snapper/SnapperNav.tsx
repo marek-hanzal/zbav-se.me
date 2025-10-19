@@ -293,7 +293,7 @@ const BaseSnapperNav: FC<SnapperNav.Props> = ({
 		],
 	);
 
-	return (
+	return snapperNav.state.count > 1 ? (
 		<div
 			data-ui="SnapperNav-root"
 			ref={ref}
@@ -308,7 +308,7 @@ const BaseSnapperNav: FC<SnapperNav.Props> = ({
 					: renderPages()}
 			</div>
 		</div>
-	);
+	) : null;
 };
 
 export const SnapperNav = withCls(BaseSnapperNav, SnapperNavCls);

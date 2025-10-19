@@ -1,9 +1,10 @@
 import {
 	Container,
 	Data,
+	SnapperNav,
 	Status,
 	useSelection,
-	type useSnapperNav,
+	useSnapperNav,
 } from "@use-pico/client";
 import type { Category } from "@zbav-se.me/sdk";
 import { type FC, memo, useEffect, useId, useRef } from "react";
@@ -29,7 +30,7 @@ export namespace CategoryWrapper {
 
 export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 	({ listingNav, locale }) => {
-		const containerRef = useRef<HTMLDivElement>(null);
+		const snapperRef = useRef<HTMLDivElement>(null);
 		const useCreateListingStore = useCreateListingContext();
 		const setCategory = useCreateListingStore((store) => store.setCategory);
 		const categoryGroupSelection = useCreateListingStore(
@@ -63,6 +64,12 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 		);
 		const groupId = useId();
 		const grid = 3 * 2;
+
+		const snapperNav = useSnapperNav({
+			containerRef: snapperRef,
+			orientation: "horizontal",
+			count: Math.ceil((categoryQuery.data?.length ?? 0) / grid),
+		});
 
 		// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching data
 		useEffect(() => {
@@ -119,80 +126,107 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 					left={<LeftButton listingNavApi={listingNav.api} />}
 				/>
 
-				<Data
-					result={categoryQuery}
-					renderLoading={() => {
-						return <SpinnerSheet />;
-					}}
-					renderSuccess={({ data }) => {
-						return (
-							<Container
-								ref={containerRef}
-								layout={"horizontal-full"}
-								overflow={"horizontal"}
-								snap={"horizontal-start"}
-								gap={"md"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"CategoryWrapper-Data-Container[success]",
-											],
-										},
-									},
-								}}
-							>
-								{Array.from(
-									{
-										length: Math.ceil(data.length / grid),
-									},
-									(_, chunkIndex) => {
-										const startIndex = chunkIndex * grid;
-										const chunk = data.slice(
-											startIndex,
-											startIndex + grid,
-										);
+				<div className={"relative"}>
+					<Data
+						result={categoryQuery}
+						renderLoading={() => {
+							return <SpinnerSheet />;
+						}}
+						renderSuccess={({ data }) => {
+							return (
+								<>
+									<SnapperNav
+										snapperNav={snapperNav}
+										orientation={"horizontal"}
+										iconProps={() => ({
+											size: "sm",
+										})}
+										tweak={{
+											slot: {
+												root: {
+													class: [
+														"bottom-0",
+													],
+												},
+											},
+										}}
+										subtle
+									/>
 
-										return (
-											<Sheet
-												key={`${groupId}-${chunkIndex}-${startIndex}`}
-												tone={"unset"}
-												theme={"unset"}
-												tweak={{
-													slot: {
-														root: {
-															class: [
-																"CategoryWrapper-Item-Sheet",
-																"border-none",
-																"shadow-none",
-																"grid",
-																"grid-rows-3",
-																"grid-cols-2",
-																"gap-2",
-															],
-														},
-													},
-												}}
-											>
-												{chunk.map((item) => {
-													return (
-														<CategoryItem
-															key={item.id}
-															selection={
-																selection
-															}
-															item={item}
-														/>
-													);
-												})}
-											</Sheet>
-										);
-									},
-								)}
-							</Container>
-						);
-					}}
-				/>
+									<Container
+										ref={snapperRef}
+										layout={"horizontal-full"}
+										overflow={"horizontal"}
+										snap={"horizontal-start"}
+										gap={"md"}
+										tweak={{
+											slot: {
+												root: {
+													class: [
+														"CategoryWrapper-Data-Container[success]",
+													],
+												},
+											},
+										}}
+									>
+										{Array.from(
+											{
+												length: Math.ceil(
+													data.length / grid,
+												),
+											},
+											(_, chunkIndex) => {
+												const startIndex =
+													chunkIndex * grid;
+												const chunk = data.slice(
+													startIndex,
+													startIndex + grid,
+												);
+
+												return (
+													<Sheet
+														key={`${groupId}-${chunkIndex}-${startIndex}`}
+														tone={"unset"}
+														theme={"unset"}
+														tweak={{
+															slot: {
+																root: {
+																	class: [
+																		"CategoryWrapper-Item-Sheet",
+																		"border-none",
+																		"shadow-none",
+																		"grid",
+																		"grid-rows-3",
+																		"grid-cols-2",
+																		"gap-2",
+																	],
+																},
+															},
+														}}
+													>
+														{chunk.map((item) => {
+															return (
+																<CategoryItem
+																	key={
+																		item.id
+																	}
+																	selection={
+																		selection
+																	}
+																	item={item}
+																/>
+															);
+														})}
+													</Sheet>
+												);
+											},
+										)}
+									</Container>
+								</>
+							);
+						}}
+					/>
+				</div>
 
 				<BottomContainer>
 					<div />

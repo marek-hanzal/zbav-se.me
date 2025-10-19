@@ -1,6 +1,7 @@
 # TODO
 
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
+    - We can connect CDN pullzone directly to maptiles with API key
 - Overlay background does not match with underlaying element height/width (on Android)
 
 - Animate location searh result
