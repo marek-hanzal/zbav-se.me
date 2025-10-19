@@ -1,9 +1,11 @@
 import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
-import { genId, linkTo, withList } from "@use-pico/common";
+import { genId, linkTo, withFetch, withList } from "@use-pico/common";
 import { sql } from "kysely";
 import { database } from "../database/kysely";
 import { AppEnv } from "../env";
+import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
+import { withLocationQueryBuilderWithSort } from "./withLocationQueryBuilder";
 
 /**
  * Soft schema from Geoapify (we believe in them - a mistake?)
@@ -183,5 +185,55 @@ withLocationApi.openapi(
 			});
 
 		return c.json(results);
+	},
+);
+
+withLocationApi.openapi(
+	createRoute({
+		method: "post",
+		path: "/location/fetch",
+		description: "Return a location based on the provided query",
+		operationId: "apiLocationFetch",
+		request: {
+			body: {
+				content: {
+					"application/json": {
+						schema: LocationQuerySchema,
+					},
+				},
+				description: "Query object for location fetch",
+			},
+		},
+		responses: {
+			200: {
+				content: {
+					"application/json": {
+						schema: LocationSchema,
+					},
+				},
+				description: "Return a location based on the provided query",
+			},
+		},
+		tags: [
+			"location",
+		],
+	}),
+	async ({ json, req }) => {
+		const { filter, where, sort } = req.valid("json");
+		return json(
+			await withFetch({
+				select: database.kysely.selectFrom("Location").selectAll(),
+				output: LocationSchema,
+				filter,
+				where,
+				query({ select, where }) {
+					return withLocationQueryBuilderWithSort({
+						select,
+						where,
+						sort,
+					});
+				},
+			}),
+		);
 	},
 );

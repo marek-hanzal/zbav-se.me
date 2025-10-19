@@ -11,6 +11,7 @@ import {
 import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { LocationIcon } from "~/app/ui/icon/LocationIcon";
@@ -36,6 +37,16 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 			},
 			{
 				enabled: Boolean(search && search.length >= 3),
+			},
+		);
+		const selectedQuery = withLocationFetchQuery().useQuery(
+			{
+				where: {
+					id: location,
+				},
+			},
+			{
+				enabled: Boolean(location),
 			},
 		);
 
@@ -90,7 +101,11 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 			<ListingContainer
 				listingNavApi={listingNav.api}
 				textTitle={"Location (title)"}
-				textSubtitle={location ? location : "Location (subtitle)"}
+				textSubtitle={
+					selectedQuery.data
+						? selectedQuery.data.address
+						: "Location (subtitle)"
+				}
 				bottom={{
 					next: !!location,
 				}}
