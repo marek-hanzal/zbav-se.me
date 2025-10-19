@@ -1,5 +1,7 @@
 # TODO
 
+- Maybe it would be necessary to strip userId's from backend output
+    - Also content server stores files in /<id> - unpredictable, but initial part may be readable?
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
     - We can connect CDN pullzone directly to maptiles with API key
 - A11y is quite an important thing

@@ -163,6 +163,7 @@ export const InitialMigration: Migration = {
 		await db.schema
 			.createTable("Listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
 			.addColumn("condition", "integer", (col) => col.notNull())
 			.addColumn("age", "integer", (col) => col.notNull())
@@ -175,6 +176,13 @@ export const InitialMigration: Migration = {
 			.addColumn("updatedAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
+			.execute();
+
+		// Create index for userId
+		await db.schema
+			.createIndex("Listing_userId_idx")
+			.on("Listing")
+			.column("userId")
 			.execute();
 
 		// Create foreign key constraint for location

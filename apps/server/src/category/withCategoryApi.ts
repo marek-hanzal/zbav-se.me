@@ -1,7 +1,8 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { withCount, withFetch, withList } from "@use-pico/common";
 import { database } from "../database/kysely";
 import { CountSchema } from "../schema/CountSchema";
+import { withSessionHono } from "../withSessionHono";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
 import {
@@ -9,7 +10,7 @@ import {
 	withCategoryQueryBuilderWithSort,
 } from "./withCategoryQueryBuilder";
 
-export const withCategoryApi = new OpenAPIHono();
+export const withCategoryApi = withSessionHono();
 
 withCategoryApi.openapi(
 	createRoute({

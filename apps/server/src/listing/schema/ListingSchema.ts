@@ -5,6 +5,9 @@ export const ListingSchema = z
 		id: z.string().openapi({
 			description: "ID of the listing",
 		}),
+		userId: z.string().openapi({
+			description: "ID of the user who created the listing",
+		}),
 		price: z.coerce.number().openapi({
 			description: "Price of the listing",
 		}),

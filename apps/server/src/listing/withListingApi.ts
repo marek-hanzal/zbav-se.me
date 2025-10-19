@@ -1,7 +1,8 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { genId, withCount, withFetch, withList } from "@use-pico/common";
 import { database } from "../database/kysely";
 import { CountSchema } from "../schema/CountSchema";
+import { withSessionHono } from "../withSessionHono";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import { ListingSchema } from "./schema/ListingSchema";
@@ -10,7 +11,7 @@ import {
 	withListingQueryBuilderWithSort,
 } from "./withListingQueryBuilder";
 
-export const withListingApi = new OpenAPIHono();
+export const withListingApi = withSessionHono();
 
 withListingApi.openapi(
 	createRoute({
@@ -42,8 +43,9 @@ withListingApi.openapi(
 			"listing",
 		],
 	}),
-	async ({ json, req }) => {
-		const data = req.valid("json");
+	async (c) => {
+		const data = c.req.valid("json");
+		const user = c.get("user");
 		const id = genId();
 		const now = new Date().toISOString();
 
@@ -51,6 +53,7 @@ withListingApi.openapi(
 			.insertInto("Listing")
 			.values({
 				id,
+				userId: user.id,
 				price: data.price,
 				condition: data.condition,
 				age: data.age,
@@ -63,7 +66,7 @@ withListingApi.openapi(
 			.returningAll()
 			.executeTakeFirstOrThrow();
 
-		return json(listing);
+		return c.json(listing);
 	},
 );
 

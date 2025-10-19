@@ -1,5 +1,6 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { database } from "../database/kysely";
+import { withHono } from "../withHono";
 
 const MigrationSchema = z
 	.object({
@@ -26,7 +27,7 @@ const MigrationSchema = z
 	})
 	.openapi("Migration");
 
-export const withMigrationApi = new OpenAPIHono();
+export const withMigrationApi = withHono();
 
 withMigrationApi.openapi(
 	createRoute({

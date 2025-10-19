@@ -1,4 +1,5 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
+import { withHono } from "../withHono";
 
 const HealthSchema = z
 	.object({
@@ -6,7 +7,7 @@ const HealthSchema = z
 	})
 	.openapi("Health");
 
-export const withHealthApi = new OpenAPIHono();
+export const withHealthApi = withHono();
 
 withHealthApi.openapi(
 	createRoute({

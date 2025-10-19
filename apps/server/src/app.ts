@@ -1,4 +1,3 @@
-import { OpenAPIHono } from "@hono/zod-openapi";
 import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
@@ -13,18 +12,12 @@ import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
+import { withHono } from "./withHono";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
  */
-const app = withOpenApi(
-	new OpenAPIHono<{
-		Variables: {
-			user: typeof auth.$Infer.Session.user | null;
-			session: typeof auth.$Infer.Session.session | null;
-		};
-	}>(),
-);
+const app = withOpenApi(withHono());
 
 //
 app.use(requestId());
@@ -59,22 +52,29 @@ app.use(
 	}),
 );
 app.use(async (c, next) => {
-	const session = await auth.api.getSession({
-		headers: c.req.raw.headers,
-	});
-	if (!session) {
+	try {
+		const session = await auth.api.getSession({
+			headers: c.req.raw.headers,
+		});
+		if (!session) {
+			c.set("user", null);
+			c.set("session", null);
+			return next();
+		}
+		c.set("user", session.user);
+		c.set("session", session.session);
+		return next();
+	} catch {
 		c.set("user", null);
 		c.set("session", null);
 		return next();
 	}
-	c.set("user", session.user);
-	c.set("session", session.session);
-	return next();
 });
 
 app.use("/api/protected/*", async (c, next) => {
 	const session = c.get("session");
-	if (!session) {
+	const user = c.get("user");
+	if (!session || !user) {
 		return c.json(
 			{
 				error: "Shooooo! Shooo!",
@@ -97,23 +97,23 @@ app.on(
 	(c) => auth.handler(c.req.raw),
 );
 //
-const protectedEndpoints = new OpenAPIHono();
+const protectedEndpoints = withHono();
 protectedEndpoints.route("/", withContentApi);
 protectedEndpoints.route("/", withCategoryGroupApi);
 protectedEndpoints.route("/", withCategoryApi);
 protectedEndpoints.route("/", withListingApi);
 protectedEndpoints.route("/", withLocationApi);
-protectedEndpoints.route("/", withMigrationApi);
 
-const publicEndpoints = new OpenAPIHono();
+const publicEndpoints = withHono();
 publicEndpoints.route("/", withHealthApi);
+publicEndpoints.route("/", withMigrationApi);
 
 //
 
-const protectedRoutes = new OpenAPIHono();
+const protectedRoutes = withHono();
 protectedRoutes.route("/protected", protectedEndpoints);
 
-const publicRoutes = new OpenAPIHono();
+const publicRoutes = withHono();
 publicRoutes.route("/public", publicEndpoints);
 
 app.route("/api", protectedRoutes);

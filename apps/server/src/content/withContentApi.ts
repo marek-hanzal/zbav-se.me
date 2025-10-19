@@ -1,8 +1,9 @@
-import { createRoute, OpenAPIHono } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { linkTo } from "@use-pico/common";
 import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
 import { z } from "zod";
 import { AppEnv } from "../env";
+import { withSessionHono } from "../withSessionHono";
 
 const ClientPayloadSchema = z.object({
 	listingId: z.string().min(1).optional(),
@@ -12,8 +13,8 @@ type ClientPayload = z.infer<typeof ClientPayloadSchema>;
 
 const PutBlobResultSchema = z
 	.looseObject({
-		url: z.string().url(),
-		downloadUrl: z.string().url(),
+		url: z.url(),
+		downloadUrl: z.url(),
 		pathname: z.string(),
 		size: z.number().int().nonnegative(),
 		uploadedAt: z.string(),
@@ -63,7 +64,7 @@ const HandleUploadResponseSchema = z
 	])
 	.openapi("HandleUploadResponse");
 
-export const withContentApi = new OpenAPIHono();
+export const withContentApi = withSessionHono();
 
 withContentApi.openapi(
 	createRoute({
@@ -103,7 +104,14 @@ withContentApi.openapi(
 				request: c.req.raw,
 				body: c.req.valid("json") satisfies HandleUploadBody,
 				token: AppEnv.VERCEL_BLOB,
-				async onBeforeGenerateToken(_pathname, clientPayload) {
+				async onBeforeGenerateToken(pathname, clientPayload) {
+					const user = c.get("user");
+					if (!pathname.startsWith(`/${user.id}/`)) {
+						throw new Error(
+							"Unauthorized: Path must start with user ID",
+						);
+					}
+
 					return {
 						allowedContentTypes: [
 							"image/jpeg",

@@ -1,8 +1,8 @@
 import { withQuery } from "@use-pico/client";
 import {
-    apiListingCollection,
-    type Listing,
-    type ListingQuery,
+	apiListingCollection,
+	type Listing,
+	type ListingQuery,
 } from "@zbav-se.me/sdk";
 
 export const withListingListQuery = () => {

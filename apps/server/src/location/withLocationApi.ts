@@ -1,8 +1,9 @@
-import { createRoute, OpenAPIHono, z } from "@hono/zod-openapi";
+import { createRoute, z } from "@hono/zod-openapi";
 import { genId, linkTo, withFetch, withList } from "@use-pico/common";
 import { sql } from "kysely";
 import { database } from "../database/kysely";
 import { AppEnv } from "../env";
+import { withSessionHono } from "../withSessionHono";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
 import { withLocationQueryBuilderWithSort } from "./withLocationQueryBuilder";
@@ -43,7 +44,7 @@ const getLockId = (text: string, lang: string): number => {
 	return Math.abs(hash);
 };
 
-export const withLocationApi = new OpenAPIHono();
+export const withLocationApi = withSessionHono();
 
 withLocationApi.openapi(
 	createRoute({
