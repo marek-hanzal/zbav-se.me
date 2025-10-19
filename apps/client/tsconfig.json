@@ -25,7 +25,8 @@
 		],
 		"types": [
 			"vite/client",
-			"@types/bun"
+			"@types/bun",
+			"node"
 		],
 		"jsx": "preserve",
 		"jsxImportSource": "react",

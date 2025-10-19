@@ -2,6 +2,7 @@
 	"extends": "@use-pico/tsconfig/common.json",
 	"compilerOptions": {
 		"types": [
+			"@types/bun",
 			"node"
 		]
 	},

@@ -1,9 +1,8 @@
 import { Button, type Icon } from "@use-pico/client";
 import type { FC } from "react";
-import type { DialCls } from "~/app/ui/dial/DialCls";
 
 export namespace Item {
-	export interface Props extends DialCls.Props {
+	export interface Props {
 		icon: Icon.Type;
 		disabled: boolean;
 		onClick(): void;

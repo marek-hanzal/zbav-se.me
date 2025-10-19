@@ -6,10 +6,9 @@ import {
 	Typo,
 	useDoubleTap,
 } from "@use-pico/client";
-import { tvc, useCls } from "@use-pico/cls";
+import { tvc } from "@use-pico/cls";
 import { toHumanNumber } from "@use-pico/common";
 import { type FC, type RefObject, useRef, useState } from "react";
-import { DialCls } from "~/app/ui/dial/DialCls";
 import { Item } from "~/app/ui/dial/Item";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
@@ -37,7 +36,7 @@ const icons = {
 } as const;
 
 export namespace Dial {
-	export interface Props extends DialCls.Props {
+	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
 		locale: string;
 		value: number | undefined;
@@ -45,15 +44,7 @@ export namespace Dial {
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({
-	ref,
-	locale,
-	value,
-	onChange,
-	cls = DialCls,
-	tweak,
-}) => {
-	const { slots } = useCls(cls, tweak);
+export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 	const [price, setPrice] = useState(value?.toString() ?? "");
 	const displayRef = useRef<HTMLDivElement>(null);
 	const number = parseFloat(price);
