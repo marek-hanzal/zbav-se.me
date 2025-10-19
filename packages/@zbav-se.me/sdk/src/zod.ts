@@ -298,6 +298,215 @@ export const apiCategoryCountResponse = zod.object({
 
 
 /**
+ * Create a new listing
+ */
+export const apiListingCreateBody = zod.object({
+  "price": zod.number().nullable().describe('Price of the listing'),
+  "condition": zod.number().describe('Condition of the item (0-based index)'),
+  "age": zod.number().describe('Age of the item (0-based index)'),
+  "locationId": zod.string().describe('ID of the location'),
+  "categoryGroupId": zod.string().describe('ID of the category group'),
+  "categoryId": zod.string().describe('ID of the category')
+}).describe('Data required to create a new listing')
+
+export const apiListingCreateResponse = zod.object({
+  "id": zod.string().describe('ID of the listing'),
+  "price": zod.number().nullable().describe('Price of the listing'),
+  "condition": zod.number().describe('Condition of the item (0-based index)'),
+  "age": zod.number().describe('Age of the item (0-based index)'),
+  "locationId": zod.string().describe('ID of the location'),
+  "categoryGroupId": zod.string().describe('ID of the category group'),
+  "categoryId": zod.string().describe('ID of the category'),
+  "createdAt": zod.iso.datetime({}).describe('Creation timestamp'),
+  "updatedAt": zod.iso.datetime({}).describe('Last update timestamp')
+}).describe('Represents a marketplace listing')
+
+
+/**
+ * Return a listing based on the provided query
+ */
+export const apiListingFetchBodyCursorPageMin = 0;export const apiListingFetchBodyCursorSizeMax = 1000;
+
+export const apiListingFetchBody = zod.object({
+  "cursor": zod.object({
+  "page": zod.number().min(apiListingFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
+  "size": zod.number().min(1).max(apiListingFetchBodyCursorSizeMax).describe('Page size')
+}).nullish().describe('Cursor for pagination'),
+  "filter": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
+  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
+  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
+  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
+  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
+  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
+  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
+  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
+  "categoryGroupId": zod.string().nullish().describe('This filter matches listings with the exact category group ID'),
+  "categoryGroupIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category group IDs in the provided array'),
+  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
+  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array')
+}).nullish().describe('User-land filters'),
+  "where": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
+  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
+  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
+  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
+  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
+  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
+  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
+  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
+  "categoryGroupId": zod.string().nullish().describe('This filter matches listings with the exact category group ID'),
+  "categoryGroupIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category group IDs in the provided array'),
+  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
+  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array')
+}).nullish().describe('App-based filters'),
+  "sort": zod.array(zod.object({
+  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt']),
+  "sort": zod.enum(['asc', 'desc']).nullish()
+}).describe('Sort object for listing collection')).nullish()
+}).describe('Query object for listing collection')
+
+export const apiListingFetchResponse = zod.object({
+  "id": zod.string().describe('ID of the listing'),
+  "price": zod.number().nullable().describe('Price of the listing'),
+  "condition": zod.number().describe('Condition of the item (0-based index)'),
+  "age": zod.number().describe('Age of the item (0-based index)'),
+  "locationId": zod.string().describe('ID of the location'),
+  "categoryGroupId": zod.string().describe('ID of the category group'),
+  "categoryId": zod.string().describe('ID of the category'),
+  "createdAt": zod.iso.datetime({}).describe('Creation timestamp'),
+  "updatedAt": zod.iso.datetime({}).describe('Last update timestamp')
+}).describe('Represents a marketplace listing')
+
+
+/**
+ * Returns listings based on provided parameters
+ */
+export const apiListingCollectionBodyCursorPageMin = 0;export const apiListingCollectionBodyCursorSizeMax = 1000;
+
+export const apiListingCollectionBody = zod.object({
+  "cursor": zod.object({
+  "page": zod.number().min(apiListingCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
+  "size": zod.number().min(1).max(apiListingCollectionBodyCursorSizeMax).describe('Page size')
+}).nullish().describe('Cursor for pagination'),
+  "filter": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
+  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
+  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
+  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
+  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
+  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
+  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
+  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
+  "categoryGroupId": zod.string().nullish().describe('This filter matches listings with the exact category group ID'),
+  "categoryGroupIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category group IDs in the provided array'),
+  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
+  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array')
+}).nullish().describe('User-land filters'),
+  "where": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
+  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
+  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
+  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
+  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
+  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
+  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
+  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
+  "categoryGroupId": zod.string().nullish().describe('This filter matches listings with the exact category group ID'),
+  "categoryGroupIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category group IDs in the provided array'),
+  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
+  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array')
+}).nullish().describe('App-based filters'),
+  "sort": zod.array(zod.object({
+  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt']),
+  "sort": zod.enum(['asc', 'desc']).nullish()
+}).describe('Sort object for listing collection')).nullish()
+}).describe('Query object for listing collection')
+
+export const apiListingCollectionResponseItem = zod.object({
+  "id": zod.string().describe('ID of the listing'),
+  "price": zod.number().nullable().describe('Price of the listing'),
+  "condition": zod.number().describe('Condition of the item (0-based index)'),
+  "age": zod.number().describe('Age of the item (0-based index)'),
+  "locationId": zod.string().describe('ID of the location'),
+  "categoryGroupId": zod.string().describe('ID of the category group'),
+  "categoryId": zod.string().describe('ID of the category'),
+  "createdAt": zod.iso.datetime({}).describe('Creation timestamp'),
+  "updatedAt": zod.iso.datetime({}).describe('Last update timestamp')
+}).describe('Represents a marketplace listing')
+export const apiListingCollectionResponse = zod.array(apiListingCollectionResponseItem)
+
+
+/**
+ * Returns count of listings based on provided query
+ */
+export const apiListingCountBodyCursorPageMin = 0;export const apiListingCountBodyCursorSizeMax = 1000;
+
+export const apiListingCountBody = zod.object({
+  "cursor": zod.object({
+  "page": zod.number().min(apiListingCountBodyCursorPageMin).describe('Page number (0-indexed)'),
+  "size": zod.number().min(1).max(apiListingCountBodyCursorSizeMax).describe('Page size')
+}).nullish().describe('Cursor for pagination'),
+  "filter": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
+  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
+  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
+  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
+  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
+  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
+  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
+  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
+  "categoryGroupId": zod.string().nullish().describe('This filter matches listings with the exact category group ID'),
+  "categoryGroupIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category group IDs in the provided array'),
+  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
+  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array')
+}).nullish().describe('User-land filters'),
+  "where": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
+  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
+  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
+  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
+  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
+  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
+  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
+  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
+  "categoryGroupId": zod.string().nullish().describe('This filter matches listings with the exact category group ID'),
+  "categoryGroupIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category group IDs in the provided array'),
+  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
+  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array')
+}).nullish().describe('App-based filters'),
+  "sort": zod.array(zod.object({
+  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt']),
+  "sort": zod.enum(['asc', 'desc']).nullish()
+}).describe('Sort object for listing collection')).nullish()
+}).describe('Query object for listing collection')
+
+export const apiListingCountResponse = zod.object({
+  "where": zod.number().describe('Count of items based on provided where query.'),
+  "filter": zod.number().describe('Count of items based on provided filter query.'),
+  "total": zod.number().describe('Total count of items (no filters applied).')
+}).describe('Complex count of items based on provided query.')
+
+
+/**
  * Return a location autocomplete
  */
 export const apiLocationAutocompleteQueryTextMin = 3;export const apiLocationAutocompleteQueryLangMin = 2;

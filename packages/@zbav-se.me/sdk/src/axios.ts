@@ -410,6 +410,262 @@ export interface CategoryQuery {
 }
 
 /**
+ * Represents a marketplace listing
+ */
+export interface Listing {
+  /** ID of the listing */
+  id: string;
+  /**
+   * Price of the listing
+   * @nullable
+   */
+  price: number | null;
+  /** Condition of the item (0-based index) */
+  condition: number;
+  /** Age of the item (0-based index) */
+  age: number;
+  /** ID of the location */
+  locationId: string;
+  /** ID of the category group */
+  categoryGroupId: string;
+  /** ID of the category */
+  categoryId: string;
+  /** Creation timestamp */
+  createdAt: string;
+  /** Last update timestamp */
+  updatedAt: string;
+}
+
+/**
+ * Data required to create a new listing
+ */
+export interface ListingCreate {
+  /**
+   * Price of the listing
+   * @nullable
+   */
+  price: number | null;
+  /** Condition of the item (0-based index) */
+  condition: number;
+  /** Age of the item (0-based index) */
+  age: number;
+  /** ID of the location */
+  locationId: string;
+  /** ID of the category group */
+  categoryGroupId: string;
+  /** ID of the category */
+  categoryId: string;
+}
+
+/**
+ * User-land filters
+ * @nullable
+ */
+export type ListingFilter = {
+  /**
+   * This filter matches the exact id
+   * @nullable
+   */
+  id?: string | null;
+  /**
+   * This filter matches the ids
+   * @nullable
+   */
+  idIn?: string[] | null;
+  /**
+   * Runs fulltext on the collection/query.
+   * @nullable
+   */
+  fulltext?: string | null;
+  /**
+   * This filter matches listings with price greater than or equal to the provided value
+   * @nullable
+   */
+  priceMin?: number | null;
+  /**
+   * This filter matches listings with price less than or equal to the provided value
+   * @nullable
+   */
+  priceMax?: number | null;
+  /**
+   * This filter matches listings with condition greater than or equal to the provided value
+   * @nullable
+   */
+  conditionMin?: number | null;
+  /**
+   * This filter matches listings with condition less than or equal to the provided value
+   * @nullable
+   */
+  conditionMax?: number | null;
+  /**
+   * This filter matches listings with age greater than or equal to the provided value
+   * @nullable
+   */
+  ageMin?: number | null;
+  /**
+   * This filter matches listings with age less than or equal to the provided value
+   * @nullable
+   */
+  ageMax?: number | null;
+  /**
+   * This filter matches listings with the exact location ID
+   * @nullable
+   */
+  locationId?: string | null;
+  /**
+   * This filter matches listings with location IDs in the provided array
+   * @nullable
+   */
+  locationIdIn?: string[] | null;
+  /**
+   * This filter matches listings with the exact category group ID
+   * @nullable
+   */
+  categoryGroupId?: string | null;
+  /**
+   * This filter matches listings with category group IDs in the provided array
+   * @nullable
+   */
+  categoryGroupIdIn?: string[] | null;
+  /**
+   * This filter matches listings with the exact category ID
+   * @nullable
+   */
+  categoryId?: string | null;
+  /**
+   * This filter matches listings with category IDs in the provided array
+   * @nullable
+   */
+  categoryIdIn?: string[] | null;
+} | null;
+
+/**
+ * App-based filters
+ * @nullable
+ */
+export type ListingWhere = {
+  /**
+   * This filter matches the exact id
+   * @nullable
+   */
+  id?: string | null;
+  /**
+   * This filter matches the ids
+   * @nullable
+   */
+  idIn?: string[] | null;
+  /**
+   * Runs fulltext on the collection/query.
+   * @nullable
+   */
+  fulltext?: string | null;
+  /**
+   * This filter matches listings with price greater than or equal to the provided value
+   * @nullable
+   */
+  priceMin?: number | null;
+  /**
+   * This filter matches listings with price less than or equal to the provided value
+   * @nullable
+   */
+  priceMax?: number | null;
+  /**
+   * This filter matches listings with condition greater than or equal to the provided value
+   * @nullable
+   */
+  conditionMin?: number | null;
+  /**
+   * This filter matches listings with condition less than or equal to the provided value
+   * @nullable
+   */
+  conditionMax?: number | null;
+  /**
+   * This filter matches listings with age greater than or equal to the provided value
+   * @nullable
+   */
+  ageMin?: number | null;
+  /**
+   * This filter matches listings with age less than or equal to the provided value
+   * @nullable
+   */
+  ageMax?: number | null;
+  /**
+   * This filter matches listings with the exact location ID
+   * @nullable
+   */
+  locationId?: string | null;
+  /**
+   * This filter matches listings with location IDs in the provided array
+   * @nullable
+   */
+  locationIdIn?: string[] | null;
+  /**
+   * This filter matches listings with the exact category group ID
+   * @nullable
+   */
+  categoryGroupId?: string | null;
+  /**
+   * This filter matches listings with category group IDs in the provided array
+   * @nullable
+   */
+  categoryGroupIdIn?: string[] | null;
+  /**
+   * This filter matches listings with the exact category ID
+   * @nullable
+   */
+  categoryId?: string | null;
+  /**
+   * This filter matches listings with category IDs in the provided array
+   * @nullable
+   */
+  categoryIdIn?: string[] | null;
+} | null;
+
+export type ListingSortValue = typeof ListingSortValue[keyof typeof ListingSortValue];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ListingSortValue = {
+  price: 'price',
+  condition: 'condition',
+  age: 'age',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+} as const;
+
+/**
+ * @nullable
+ */
+export type ListingSortSort = typeof ListingSortSort[keyof typeof ListingSortSort] | null;
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ListingSortSort = {
+  asc: 'asc',
+  desc: 'desc',
+} as const;
+
+/**
+ * Sort object for listing collection
+ */
+export interface ListingSort {
+  value: ListingSortValue;
+  /** @nullable */
+  sort?: ListingSortSort;
+}
+
+/**
+ * Query object for listing collection
+ */
+export interface ListingQuery {
+  cursor?: Cursor;
+  filter?: ListingFilter;
+  where?: ListingWhere;
+  /** @nullable */
+  sort?: ListingSort[] | null;
+}
+
+/**
  * A location cache table
  */
 export interface Location {
@@ -730,6 +986,54 @@ export const apiCategoryCount = <TData = AxiosResponse<Count>>(
   }
 
 /**
+ * Create a new listing
+ */
+export const apiListingCreate = <TData = AxiosResponse<Listing>>(
+    listingCreate: ListingCreate, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/listing/create`,
+      listingCreate,options
+    );
+  }
+
+/**
+ * Return a listing based on the provided query
+ */
+export const apiListingFetch = <TData = AxiosResponse<Listing>>(
+    listingQuery: ListingQuery, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/listing/fetch`,
+      listingQuery,options
+    );
+  }
+
+/**
+ * Returns listings based on provided parameters
+ */
+export const apiListingCollection = <TData = AxiosResponse<Listing[]>>(
+    listingQuery: ListingQuery, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/listing/collection`,
+      listingQuery,options
+    );
+  }
+
+/**
+ * Returns count of listings based on provided query
+ */
+export const apiListingCount = <TData = AxiosResponse<Count>>(
+    listingQuery: ListingQuery, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/listing/count`,
+      listingQuery,options
+    );
+  }
+
+/**
  * Return a location autocomplete
  */
 export const apiLocationAutocomplete = <TData = AxiosResponse<Location[]>>(
@@ -783,6 +1087,10 @@ export type ApiCategoryGroupCountResult = AxiosResponse<Count>
 export type ApiCategoryFetchResult = AxiosResponse<Category>
 export type ApiCategoryCollectionResult = AxiosResponse<Category[]>
 export type ApiCategoryCountResult = AxiosResponse<Count>
+export type ApiListingCreateResult = AxiosResponse<Listing>
+export type ApiListingFetchResult = AxiosResponse<Listing>
+export type ApiListingCollectionResult = AxiosResponse<Listing[]>
+export type ApiListingCountResult = AxiosResponse<Count>
 export type ApiLocationAutocompleteResult = AxiosResponse<Location[]>
 export type ApiLocationFetchResult = AxiosResponse<Location>
 export type ApiMigrationRunResult = AxiosResponse<Migration[]>

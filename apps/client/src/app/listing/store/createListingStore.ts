@@ -1,5 +1,10 @@
 import { dedupe } from "@use-pico/common";
-import type { Category, CategoryGroup } from "@zbav-se.me/sdk";
+import {
+	apiListingCreateBody,
+	type Category,
+	type CategoryGroup,
+	type ListingCreate,
+} from "@zbav-se.me/sdk";
 import { create } from "zustand";
 
 export namespace createListingStore {
@@ -51,6 +56,8 @@ export namespace createListingStore {
 		requiredCount: number;
 		missing: Missing[];
 		isValid: boolean;
+		//
+		get(): ListingCreate;
 	}
 }
 
@@ -254,4 +261,24 @@ export const createListingStore = ({
 			...defaultMissing,
 		],
 		isValid: false,
+		//
+		get() {
+			if (!get().isValid) {
+				throw new Error("Cannot create listing: store is not valid");
+			}
+
+			const price = get().getPrice();
+			const location = get().location;
+			const [categoryGroup] = get().categoryGroup;
+			const [category] = get().category;
+
+			return apiListingCreateBody.parse({
+				price,
+				condition: get().condition,
+				age: get().age,
+				locationId: location,
+				categoryGroupId: categoryGroup?.id,
+				categoryId: category?.id,
+			} as ListingCreate);
+		},
 	}));

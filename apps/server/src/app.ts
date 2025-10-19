@@ -9,6 +9,7 @@ import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
 import { withContentApi } from "./content/withContentApi";
 import { AppEnv } from "./env";
 import { withHealthApi } from "./health/withHealthApi";
+import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
@@ -65,6 +66,7 @@ app.on(
 app.route("/api", withContentApi);
 app.route("/api", withCategoryGroupApi);
 app.route("/api", withCategoryApi);
+app.route("/api", withListingApi);
 app.route("/api", withLocationApi);
 app.route("/api", withMigrationApi);
 app.route("/api", withHealthApi);

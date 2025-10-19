@@ -150,13 +150,59 @@ export const InitialMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("Location_[lang-hash")
+			.createIndex("Location_[lang-hash]_unique_idx")
 			.on("Location")
 			.columns([
 				"lang",
 				"hash",
 			])
 			.unique()
+			.execute();
+
+		// Create Listing table
+		await db.schema
+			.createTable("Listing")
+			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
+			.addColumn("condition", "integer", (col) => col.notNull())
+			.addColumn("age", "integer", (col) => col.notNull())
+			.addColumn("locationId", "text", (col) => col.notNull())
+			.addColumn("categoryGroupId", "text", (col) => col.notNull())
+			.addColumn("categoryId", "text", (col) => col.notNull())
+			.addColumn("createdAt", "timestamp", (col) =>
+				col.notNull().defaultTo("now()"),
+			)
+			.addColumn("updatedAt", "timestamp", (col) =>
+				col.notNull().defaultTo("now()"),
+			)
+			.execute();
+
+		// Create foreign key constraint for location
+		await db.schema
+			.createIndex("Listing_locationId_idx")
+			.on("Listing")
+			.column("locationId")
+			.execute();
+
+		// Create index for category group
+		await db.schema
+			.createIndex("Listing_categoryGroupId_idx")
+			.on("Listing")
+			.column("categoryGroupId")
+			.execute();
+
+		// Create index for category
+		await db.schema
+			.createIndex("Listing_categoryId_idx")
+			.on("Listing")
+			.column("categoryId")
+			.execute();
+
+		// Create index for created date
+		await db.schema
+			.createIndex("Listing_createdAt_idx")
+			.on("Listing")
+			.column("createdAt")
 			.execute();
 	},
 };

@@ -2,7 +2,6 @@
 
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
     - We can connect CDN pullzone directly to maptiles with API key
-- Overlay background does not match with underlaying element height/width (on Android)
 - A11y is quite an important thing
 
 - Animate location searh result
@@ -13,16 +12,8 @@
 
 - Resolve why fuckin' webglob is not forwarding mails
 - Add endpoint to purge old files from storages
-- Use GSAP snapping instead of native one - better for events
 - Post process photos - remove metadata -> or use Bunny optimizer (which can do this on delivery)
 
-- Simplify price -> Just dial with price and done
-- Simplify listing process - less swipes, more controls on screen
-    - Preview next page in Container -> Snapper (little card down?)
-
-- Extract "local" states (search and co.) into store so it could be controlled between pages (e.g. by removing
-    selection and search when category group changes )
-- Show snapper with selected item (by finding an element -> scroll to it?)
 - Resolve /null get calls from TSR/TSS
 
 - When I know user's favourite groups/categories, I can fetch them _before_ the other ones (+ e.g. button "show all" to
@@ -31,9 +22,6 @@
 - Prompt user to use passkey?
 - Allow anonymous user + test it's flow (check if there is isAnonym flag)
 - When listing is saved, recompute user's "favourite" category list
-- Use Fuse.js for category search: feed will be combo of category group - category, already translated (this will probably need useQuery)
-- Fix "Submit" page of create listing - Maybe use Snapper with overview what a user has selected (this looks like quite a good idea)
-    - Submit button _must_ be visible all the times to prevent slowing user down 
 - Create Tiers (plans) for users to define limits an user have
     - Number of submitted photos
     - Number of categories
