@@ -248,7 +248,7 @@ jobs:
         name: Update CDN
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-client]
+        needs: [client-build]
         env:
             BUNNY_HOST: ${{ vars.BUNNY_HOST }}
             BUNNY_USER: ${{ vars.BUNNY_USER }}
