@@ -7,17 +7,16 @@ export namespace Item {
 		icon: Icon.Type;
 		disabled: boolean;
 		onClick(): void;
-		slots: DialCls.Slots;
 	}
 }
 
-export const Item: FC<Item.Props> = ({ icon, disabled, onClick, slots }) => {
+export const Item: FC<Item.Props> = ({ icon, disabled, onClick }) => {
 	return (
 		<Button
 			iconEnabled={icon}
 			disabled={disabled}
 			onClick={onClick}
-			tone={"secondary"}
+			tone={"primary"}
 			size={"xl"}
 		/>
 	);

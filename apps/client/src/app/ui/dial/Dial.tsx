@@ -1,4 +1,11 @@
-import { Badge, Icon, Tx, Typo, useDoubleTap } from "@use-pico/client";
+import {
+	Badge,
+	Container,
+	Icon,
+	Tx,
+	Typo,
+	useDoubleTap,
+} from "@use-pico/client";
 import { tvc, useCls } from "@use-pico/cls";
 import { toHumanNumber } from "@use-pico/common";
 import { type FC, type RefObject, useRef, useState } from "react";
@@ -97,19 +104,17 @@ export const Dial: FC<Dial.Props> = ({
 	});
 
 	return (
-		<div
-			ref={ref}
-			className={slots.root()}
-		>
+		<Container layout={"vertical-header-content"}>
 			<Badge
-				ref={displayRef}
-				tone={"secondary"}
+				tone={"primary"}
 				theme={"light"}
 				size={"xl"}
 				tweak={{
 					slot: {
 						root: {
 							class: [
+								"border-none",
+								"shadow-none",
 								"inline-flex",
 								"flex-row",
 								"items-center",
@@ -188,7 +193,6 @@ export const Dial: FC<Dial.Props> = ({
 							setPrice((prev) => digit(prev, index + 1))
 						}
 						disabled={false}
-						slots={slots}
 					/>
 				))}
 
@@ -196,23 +200,20 @@ export const Dial: FC<Dial.Props> = ({
 					icon={"icon-[fluent--comma-20-filled]"}
 					disabled={!price || price.includes(".")}
 					onClick={() => setPrice((prev) => digit(prev, "."))}
-					slots={slots}
 				/>
 
 				<Item
 					icon={icons[0]}
 					disabled={false}
 					onClick={() => setPrice((prev) => digit(prev, 0))}
-					slots={slots}
 				/>
 
 				<Item
 					icon={CheckIcon}
 					disabled={!price}
 					onClick={() => onConfirm(number)}
-					slots={slots}
 				/>
 			</div>
-		</div>
+		</Container>
 	);
 };
