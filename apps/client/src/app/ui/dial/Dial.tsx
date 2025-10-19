@@ -179,7 +179,7 @@ export const Dial: FC<Dial.Props> = ({
 				className={tvc([
 					"grid",
 					"grid-cols-3",
-					"gap-4",
+					"gap-2",
 					"place-items-center",
 				])}
 			>
