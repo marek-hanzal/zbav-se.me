@@ -5,6 +5,7 @@ import {
 import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -73,9 +74,12 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 		);
 
 		return (
-			<FlowContainer>
-				<ListingProgress />
-
+			<ListingContainer
+				listingNavApi={listingNav.api}
+				bottom={{
+					next: hasPrice,
+				}}
+			>
 				<Title
 					textTitle={"Price (title)"}
 					left={<LeftButton listingNavApi={listingNav.api} />}
@@ -86,16 +90,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 					value={price}
 					onChange={onPrice}
 				/>
-
-				<BottomContainer>
-					<div />
-
-					<NextButton
-						listingNavApi={listingNav.api}
-						disabled={!hasPrice}
-					/>
-				</BottomContainer>
-			</FlowContainer>
+			</ListingContainer>
 		);
 	},
 );

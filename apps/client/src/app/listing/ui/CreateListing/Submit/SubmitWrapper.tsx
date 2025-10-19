@@ -14,10 +14,9 @@ import type { FC } from "react";
 import { memo, useId, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import type { createListingStore } from "~/app/listing/store/createListingStore";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { ListingPageIndex } from "~/app/listing/ui/CreateListing/ListingPageIndex";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { Sheet } from "~/app/sheet/Sheet";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 import { Title } from "~/app/ui/title/Title";
@@ -78,9 +77,7 @@ export const SubmitWrapper: FC<{
 
 	if (missing.length > 0) {
 		return (
-			<FlowContainer>
-				<ListingProgress />
-
+			<ListingContainer listingNavApi={listingNavApi}>
 				<Title
 					tone={"primary"}
 					textTitle="Submit - one more thing (title)"
@@ -128,12 +125,15 @@ export const SubmitWrapper: FC<{
 						}
 					/>
 				</Sheet>
-			</FlowContainer>
+			</ListingContainer>
 		);
 	}
 
 	return (
-		<FlowContainer>
+		<ListingContainer
+			listingNavApi={listingNavApi}
+			progress={false}
+		>
 			<Title textTitle={"Submit listing - status (title)"} />
 
 			<Sheet tone={"primary"}>
@@ -188,6 +188,6 @@ export const SubmitWrapper: FC<{
 					})}
 				</Status>
 			</Sheet>
-		</FlowContainer>
+		</ListingContainer>
 	);
 });

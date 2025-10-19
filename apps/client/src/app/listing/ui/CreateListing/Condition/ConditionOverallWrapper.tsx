@@ -3,10 +3,7 @@ import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
-import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
 import { Title } from "~/app/ui/title/Title";
 
@@ -28,9 +25,12 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 		);
 
 		return (
-			<FlowContainer>
-				<ListingProgress />
-
+			<ListingContainer
+				listingNavApi={listingNav.api}
+				bottom={{
+					next: hasCondition,
+				}}
+			>
 				<Title
 					textTitle={
 						hasCondition
@@ -53,16 +53,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 					onChange={setCondition}
 					limit={5}
 				/>
-
-				<BottomContainer>
-					<div />
-
-					<NextButton
-						listingNavApi={listingNav.api}
-						disabled={!hasCondition}
-					/>
-				</BottomContainer>
-			</FlowContainer>
+			</ListingContainer>
 		);
 	},
 );
