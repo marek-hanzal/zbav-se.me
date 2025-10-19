@@ -3,7 +3,7 @@ import { Scalar } from "@scalar/hono-api-reference";
 
 const docsUrl = "/v3/api-docs";
 
-export const withOpenApi = <TApi extends OpenAPIHono>(api: TApi) => {
+export const withOpenApi = <TApi extends OpenAPIHono<any>>(api: TApi) => {
 	api.get(
 		"/",
 		Scalar({

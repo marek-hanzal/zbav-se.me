@@ -4,11 +4,11 @@ import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
 import { z } from "zod";
 import { AppEnv } from "../env";
 
-// const ClientPayloadSchema = z.object({
-// 	listingId: z.string().min(1).optional(),
-// 	checksum: z.string(),
-// });
-// type ClientPayload = z.infer<typeof ClientPayloadSchema>;
+const ClientPayloadSchema = z.object({
+	listingId: z.string().min(1).optional(),
+	checksum: z.string(),
+});
+type ClientPayload = z.infer<typeof ClientPayloadSchema>;
 
 const PutBlobResultSchema = z
 	.looseObject({
@@ -103,8 +103,7 @@ withContentApi.openapi(
 				request: c.req.raw,
 				body: c.req.valid("json") satisfies HandleUploadBody,
 				token: AppEnv.VERCEL_BLOB,
-
-				async onBeforeGenerateToken(_pathname, _clientPayload) {
+				async onBeforeGenerateToken(_pathname, clientPayload) {
 					return {
 						allowedContentTypes: [
 							"image/jpeg",
@@ -120,11 +119,11 @@ withContentApi.openapi(
 							base: AppEnv.VITE_API,
 							href: "/api/content/upload",
 						}),
-						// tokenPayload: JSON.stringify(payload),
-						tokenPayload: null,
+						tokenPayload: JSON.stringify(
+							ClientPayloadSchema.parse(clientPayload),
+						),
 					};
 				},
-
 				async onUploadCompleted({ blob, tokenPayload: _ }) {
 					// const payload = ClientPayloadSchema.parse(
 					// 	JSON.parse(tokenPayload ?? "{}"),

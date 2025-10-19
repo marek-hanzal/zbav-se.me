@@ -908,7 +908,7 @@ export const apiContentUpload = <TData = AxiosResponse<HandleUploadResponse>>(
     handleUploadBody: HandleUploadBody, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/content/upload`,
+      `/api/protected/content/upload`,
       handleUploadBody,options
     );
   }
@@ -920,7 +920,7 @@ export const apiCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
     categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/category-group/fetch`,
+      `/api/protected/category-group/fetch`,
       categoryGroupQuery,options
     );
   }
@@ -932,7 +932,7 @@ export const apiCategoryGroupCollection = <TData = AxiosResponse<CategoryGroup[]
     categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/category-group/collection`,
+      `/api/protected/category-group/collection`,
       categoryGroupQuery,options
     );
   }
@@ -944,7 +944,7 @@ export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
     categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/category-group/count`,
+      `/api/protected/category-group/count`,
       categoryGroupQuery,options
     );
   }
@@ -956,7 +956,7 @@ export const apiCategoryFetch = <TData = AxiosResponse<Category>>(
     categoryQuery: CategoryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/category/fetch`,
+      `/api/protected/category/fetch`,
       categoryQuery,options
     );
   }
@@ -968,7 +968,7 @@ export const apiCategoryCollection = <TData = AxiosResponse<Category[]>>(
     categoryQuery: CategoryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/category/collection`,
+      `/api/protected/category/collection`,
       categoryQuery,options
     );
   }
@@ -980,7 +980,7 @@ export const apiCategoryCount = <TData = AxiosResponse<Count>>(
     categoryQuery: CategoryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/category/count`,
+      `/api/protected/category/count`,
       categoryQuery,options
     );
   }
@@ -992,7 +992,7 @@ export const apiListingCreate = <TData = AxiosResponse<Listing>>(
     listingCreate: ListingCreate, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/listing/create`,
+      `/api/protected/listing/create`,
       listingCreate,options
     );
   }
@@ -1004,7 +1004,7 @@ export const apiListingFetch = <TData = AxiosResponse<Listing>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/listing/fetch`,
+      `/api/protected/listing/fetch`,
       listingQuery,options
     );
   }
@@ -1016,7 +1016,7 @@ export const apiListingCollection = <TData = AxiosResponse<Listing[]>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/listing/collection`,
+      `/api/protected/listing/collection`,
       listingQuery,options
     );
   }
@@ -1028,7 +1028,7 @@ export const apiListingCount = <TData = AxiosResponse<Count>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/listing/count`,
+      `/api/protected/listing/count`,
       listingQuery,options
     );
   }
@@ -1040,7 +1040,7 @@ export const apiLocationAutocomplete = <TData = AxiosResponse<Location[]>>(
     params: ApiLocationAutocompleteParams, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.get(
-      `/api/location/autocomplete`,{
+      `/api/protected/location/autocomplete`,{
     ...options,
         params: {...params, ...options?.params},}
     );
@@ -1053,7 +1053,7 @@ export const apiLocationFetch = <TData = AxiosResponse<Location>>(
     locationQuery: LocationQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/location/fetch`,
+      `/api/protected/location/fetch`,
       locationQuery,options
     );
   }
@@ -1065,7 +1065,7 @@ export const apiMigrationRun = <TData = AxiosResponse<Migration[]>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.get(
-      `/api/migration/run`,options
+      `/api/protected/migration/run`,options
     );
   }
 
@@ -1076,7 +1076,7 @@ export const apiHealth = <TData = AxiosResponse<Health>>(
      options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.get(
-      `/api/health`,options
+      `/api/public/health`,options
     );
   }
 
