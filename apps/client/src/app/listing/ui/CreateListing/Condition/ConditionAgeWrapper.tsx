@@ -11,6 +11,7 @@ import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import { AgeIcon } from "~/app/ui/icon/AgeIcon";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace ConditionAgeWrapper {
@@ -40,7 +41,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 				/>
 
 				<Condition
-					icon={"icon-[hugeicons--package-process]"}
+					icon={AgeIcon}
 					textTitle={"Condition - Age (title)"}
 					textDescription={"Condition - Age (description)"}
 					textHint={<Tx label={`Condition - Age [${age}] (hint)`} />}

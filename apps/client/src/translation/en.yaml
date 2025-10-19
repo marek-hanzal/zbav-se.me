@@ -88,9 +88,6 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
   ref: Select item
   value: Select item
-3990d65ca1fd5b3162d9950befaaf90d62dd64383520857bcd5a67cb:
-  ref: Location (message)
-  value: Location (message)
 3a39726e6ef577773a0794eb6243a905052eb0e9228592b9200e29aa:
   ref: Landing - Feature overview (title)
   value: Landing - Feature overview (title)
@@ -256,6 +253,9 @@
 9fcf609e1aa87339701add40d4ed0b04427891c73fd33dcdccc3cff6:
   ref: Listing - intro (description)
   value: Listing - intro (description)
+a09023bd0d9ebef1f8be45ed156b49e28fe50af7ad10a5d79ada4b3f:
+  ref: Submit listing - status - cannot submit (message)
+  value: Submit listing - status - cannot submit (message)
 a1308b7983fef7def9ffd06bed7ff767fa4216baf9d9d911af1e7e2e:
   ref: Password
   value: Password

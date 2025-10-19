@@ -1,7 +1,5 @@
 # TODO
 
-- Display progress bar on top of filled items in listing creation
-
 - SubmitWrapper - display clickable icons what's done and what's missing
 
 - Auto-advance on item selection

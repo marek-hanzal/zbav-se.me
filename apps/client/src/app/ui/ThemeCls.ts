@@ -21,11 +21,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:text-pink-800",
 			],
 		},
-		"tone.primary.light.text:focus-visible": {
-			class: [
-				"focus:text-pink-800",
-			],
-		},
 		"tone.primary.light.bg": {
 			class: [
 				"bg-pink-50",
@@ -34,11 +29,6 @@ export const ThemeCls = contract(PicoCls.contract)
 		"tone.primary.light.bg:hover": {
 			class: [
 				"hover:bg-pink-200",
-			],
-		},
-		"tone.primary.light.bg:focus-visible": {
-			class: [
-				"focus:bg-pink-200",
 			],
 		},
 		"tone.primary.light.bg:even": {
@@ -78,12 +68,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:border-b-pink-300",
 			],
 		},
-		"tone.primary.light.border:focus-visible": {
-			class: [
-				"focus:border-pink-300/60",
-				"focus:border-b-pink-300",
-			],
-		},
 		"tone.primary.light.border:group-hover": {
 			class: [
 				"group-hover:border-pink-300/60",
@@ -100,26 +84,21 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:shadow-pink-300/60",
 			],
 		},
-		"tone.primary.light.shadow:focus-visible": {
-			class: [
-				"focus:shadow-pink-300/60",
-			],
-		},
 		"tone.primary.light.set": {
 			token: [
 				"tone.primary.light.text",
 				"tone.primary.light.text:hover",
-				"tone.primary.light.text:focus-visible",
+				"tone.primary.light.text",
 				"tone.primary.light.bg",
 				"tone.primary.light.bg:hover",
-				"tone.primary.light.bg:focus-visible",
+				"tone.primary.light.bg",
 				"tone.primary.light.border",
 				"tone.primary.light.border:hover",
-				"tone.primary.light.border:focus-visible",
+				"tone.primary.light.border",
 				"tone.primary.light.border:group-hover",
 				"tone.primary.light.shadow",
 				"tone.primary.light.shadow:hover",
-				"tone.primary.light.shadow:focus-visible",
+				"tone.primary.light.shadow",
 			],
 		},
 		//
@@ -133,11 +112,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:text-pink-50/80",
 			],
 		},
-		"tone.primary.dark.text:focus-visible": {
-			class: [
-				"focus:text-pink-50",
-			],
-		},
 		"tone.primary.dark.bg": {
 			class: [
 				"bg-pink-900/90",
@@ -146,11 +120,6 @@ export const ThemeCls = contract(PicoCls.contract)
 		"tone.primary.dark.bg:hover": {
 			class: [
 				"hover:bg-pink-800/90",
-			],
-		},
-		"tone.primary.dark.bg:focus-visible": {
-			class: [
-				"focus:bg-pink-800/90",
 			],
 		},
 		"tone.primary.dark.bg:even": {
@@ -190,12 +159,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:border-b-pink-400/90",
 			],
 		},
-		"tone.primary.dark.border:focus-visible": {
-			class: [
-				"focus:border-pink-400/70",
-				"focus:border-b-pink-400/90",
-			],
-		},
 		"tone.primary.dark.border:group-hover": {
 			class: [
 				"group-hover:border-pink-400/70",
@@ -212,26 +175,21 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:shadow-pink-800/50",
 			],
 		},
-		"tone.primary.dark.shadow:focus-visible": {
-			class: [
-				"focus:shadow-pink-800/50",
-			],
-		},
 		"tone.primary.dark.set": {
 			token: [
 				"tone.primary.dark.text",
 				"tone.primary.dark.text:hover",
-				"tone.primary.dark.text:focus-visible",
+				"tone.primary.dark.text",
 				"tone.primary.dark.bg",
 				"tone.primary.dark.bg:hover",
-				"tone.primary.dark.bg:focus-visible",
+				"tone.primary.dark.bg",
 				"tone.primary.dark.border",
 				"tone.primary.dark.border:hover",
-				"tone.primary.dark.border:focus-visible",
+				"tone.primary.dark.border",
 				"tone.primary.dark.border:group-hover",
 				"tone.primary.dark.shadow",
 				"tone.primary.dark.shadow:hover",
-				"tone.primary.dark.shadow:focus-visible",
+				"tone.primary.dark.shadow",
 			],
 		},
 
@@ -246,11 +204,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:text-purple-800",
 			],
 		},
-		"tone.secondary.light.text:focus-visible": {
-			class: [
-				"focus:text-purple-800",
-			],
-		},
 		"tone.secondary.light.bg": {
 			class: [
 				"bg-purple-100",
@@ -259,11 +212,6 @@ export const ThemeCls = contract(PicoCls.contract)
 		"tone.secondary.light.bg:hover": {
 			class: [
 				"hover:bg-purple-200",
-			],
-		},
-		"tone.secondary.light.bg:focus-visible": {
-			class: [
-				"focus:bg-purple-200",
 			],
 		},
 		"tone.secondary.light.bg:even": {
@@ -303,12 +251,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:border-b-purple-300",
 			],
 		},
-		"tone.secondary.light.border:focus-visible": {
-			class: [
-				"focus:border-purple-300/60",
-				"focus:border-b-purple-300",
-			],
-		},
 		"tone.secondary.light.border:group-hover": {
 			class: [
 				"group-hover:border-purple-300/60",
@@ -325,26 +267,21 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:shadow-purple-300/60",
 			],
 		},
-		"tone.secondary.light.shadow:focus-visible": {
-			class: [
-				"focus:shadow-purple-300/60",
-			],
-		},
 		"tone.secondary.light.set": {
 			token: [
 				"tone.secondary.light.text",
 				"tone.secondary.light.text:hover",
-				"tone.secondary.light.text:focus-visible",
+				"tone.secondary.light.text",
 				"tone.secondary.light.bg",
 				"tone.secondary.light.bg:hover",
-				"tone.secondary.light.bg:focus-visible",
+				"tone.secondary.light.bg",
 				"tone.secondary.light.border",
 				"tone.secondary.light.border:hover",
-				"tone.secondary.light.border:focus-visible",
+				"tone.secondary.light.border",
 				"tone.secondary.light.border:group-hover",
 				"tone.secondary.light.shadow",
 				"tone.secondary.light.shadow:hover",
-				"tone.secondary.light.shadow:focus-visible",
+				"tone.secondary.light.shadow",
 			],
 		},
 		//
@@ -358,11 +295,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:text-purple-50",
 			],
 		},
-		"tone.secondary.dark.text:focus-visible": {
-			class: [
-				"focus:text-purple-50",
-			],
-		},
 		"tone.secondary.dark.bg": {
 			class: [
 				"bg-purple-900/90",
@@ -371,11 +303,6 @@ export const ThemeCls = contract(PicoCls.contract)
 		"tone.secondary.dark.bg:hover": {
 			class: [
 				"hover:bg-purple-800/90",
-			],
-		},
-		"tone.secondary.dark.bg:focus-visible": {
-			class: [
-				"focus:bg-purple-800/90",
 			],
 		},
 		"tone.secondary.dark.bg:even": {
@@ -415,12 +342,6 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:border-b-purple-400/90",
 			],
 		},
-		"tone.secondary.dark.border:focus-visible": {
-			class: [
-				"focus:border-purple-400/70",
-				"focus:border-b-purple-400/90",
-			],
-		},
 		"tone.secondary.dark.border:group-hover": {
 			class: [
 				"group-hover:border-purple-400/70",
@@ -437,26 +358,21 @@ export const ThemeCls = contract(PicoCls.contract)
 				"hover:shadow-purple-800/50",
 			],
 		},
-		"tone.secondary.dark.shadow:focus-visible": {
-			class: [
-				"focus:shadow-purple-800/50",
-			],
-		},
 		"tone.secondary.dark.set": {
 			token: [
 				"tone.secondary.dark.text",
 				"tone.secondary.dark.text:hover",
-				"tone.secondary.dark.text:focus-visible",
+				"tone.secondary.dark.text",
 				"tone.secondary.dark.bg",
 				"tone.secondary.dark.bg:hover",
-				"tone.secondary.dark.bg:focus-visible",
+				"tone.secondary.dark.bg",
 				"tone.secondary.dark.border",
 				"tone.secondary.dark.border:hover",
-				"tone.secondary.dark.border:focus-visible",
+				"tone.secondary.dark.border",
 				"tone.secondary.dark.border:group-hover",
 				"tone.secondary.dark.shadow",
 				"tone.secondary.dark.shadow:hover",
-				"tone.secondary.dark.shadow:focus-visible",
+				"tone.secondary.dark.shadow",
 			],
 		},
 	})
