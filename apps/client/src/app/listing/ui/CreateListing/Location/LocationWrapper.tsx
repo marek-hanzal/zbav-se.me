@@ -90,6 +90,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 			<ListingContainer
 				listingNavApi={listingNav.api}
 				textTitle={"Location (title)"}
+				textSubtitle={location ? location : "Location (subtitle)"}
 				bottom={{
 					next: !!location,
 				}}

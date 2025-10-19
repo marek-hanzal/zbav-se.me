@@ -22,6 +22,11 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 			<ListingContainer
 				listingNavApi={listingNav.api}
 				textTitle={"Condition - Age (title)"}
+				textSubtitle={
+					hasAge
+						? `Condition - Age [${age}] (subtitle)`
+						: "Condition - Age (subtitle)"
+				}
 				bottom={{
 					next: hasAge,
 				}}

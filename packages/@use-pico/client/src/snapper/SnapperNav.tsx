@@ -54,7 +54,7 @@ const BaseSnapperNav: FC<SnapperNav.Props> = ({
 	//
 	subtle,
 	orientation,
-	tone = "primary",
+	tone = "secondary",
 	align,
 	//
 	iconProps,

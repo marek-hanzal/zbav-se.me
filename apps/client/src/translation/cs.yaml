@@ -1,6 +1,6 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
-    value: Ještě zařadíme do kategorie
+    value: Kategorie
 06b287f89d953410f1b6757665730e61f9d838cebf755e371408a2d9:
     ref: Listing category groups (title)
     value: Kam inzerát zařadíme?
@@ -38,6 +38,9 @@
 1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
     ref: Logout (title)
     value: Logout (title)
+1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
+    ref: Price (subtitle)
+    value: Za kolik nabízíš?
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
     ref: Landing - Feature 1 (title) - hint
     value: "Provede tě rychlý průvodce: cvakneš fotky a pak už jen pár kliků —
@@ -164,6 +167,9 @@
 5e5b22386d6916d54d543deb3fa2ae94dc60928062b03b80fa4f4292:
     ref: Landing - Feature 2 (title) - hint
     value: Hledání v appce i na netu - je šance, že tvůj inzerát najdeš na Googlu.
+5f59ee856fc962dd13fa8b6564b0a657f661d45ee2a1e5d0ecf3de8f:
+    ref: Condition - Age (subtitle)
+    value: Zhodnoť věk
 6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
     ref: Login (link)
     value: Máte účet? Přihlaste se!
@@ -273,7 +279,7 @@ Condition - Age [1] (hint):
     value:
         Věci, které už to mají téměř za sebou nebo budou vyžadovat extrémní péči
         na zotavení.
-Condition - Age [1] (title):
+Condition - Age [1] (subtitle):
     value: Velmi staré
     static: true
 Condition - Age [2] (hint):
@@ -281,13 +287,13 @@ Condition - Age [2] (hint):
     value:
         Dvě hvězdy dejte věcem, které už něco zažily a spíš dříve, než později
         mohou vyžadovat servis nebo zručné ruce.
-Condition - Age [2] (title):
+Condition - Age [2] (subtitle):
     value: Staré
     static: true
 Condition - Age [3] (hint):
     static: true
     value: Průměrný věk, to jest např. rok dva starý běžný telefon.
-Condition - Age [3] (title):
+Condition - Age [3] (subtitle):
     value: Průměrné
     static: true
 Condition - Age [4] (hint):
@@ -295,7 +301,7 @@ Condition - Age [4] (hint):
     value:
         Čtyři hvězdy pro věci, které se moc dlouho neohřály mimo krabici, např.
         dva - tři měsíce starý (nerozstřískaný) telefon.
-Condition - Age [4] (title):
+Condition - Age [4] (subtitle):
     value: Novější
     static: true
 Condition - Age [5] (hint):
@@ -303,7 +309,7 @@ Condition - Age [5] (hint):
     value:
         Zcela nová věc, jako by právě vypadla z fabriky. Krabička, příslušenství,
         originální obal - vše na svém místě.
-Condition - Age [5] (title):
+Condition - Age [5] (subtitle):
     value: Zcela nové
     static: true
 Condition - Overall [0] (hint):
@@ -317,21 +323,21 @@ Condition - Overall [1] (hint):
         Předmět nabídky již neplní svou funkci, nicméně je možné jej použít buď
         na náhradní díly nebo jiným dílem opět uvést do provozu. Obecně vyžaduje
         zručnost na straně kupujícího.
-Condition - Overall [1] (title):
+Condition - Overall [1] (subtitle):
     value: Na díly
     static: true
 Condition - Overall [2] (hint):
     static: true
     value: Předmět nabídky plní svou funkci, nicméně je poškozen a obecně může
         vyžadovat opravdu nebo zručnost na straně kupujícího.
-Condition - Overall [2] (title):
+Condition - Overall [2] (subtitle):
     value: Opotřebované
     static: true
 Condition - Overall [3] (hint):
     static: true
     value: Průměrné opotřebení relativní k věku předmětu. Obecně tak lze označit
         věci, které by bez větší údržby ještě nějakou dobu měly sloužit.
-Condition - Overall [3] (title):
+Condition - Overall [3] (subtitle):
     value: Dobrý stav
     static: true
 Condition - Overall [4] (hint):
@@ -339,14 +345,14 @@ Condition - Overall [4] (hint):
     value:
         Obecně perfektní stav s malým opotřebením. Známky použití mohou být znát,
         ale minimálně. Např. půl roku starý telefon bez rozmláceného displaye.
-Condition - Overall [4] (title):
+Condition - Overall [4] (subtitle):
     value: Jako nové
     static: true
 Condition - Overall [5] (hint):
     static: true
     value: Takto označte věci, které jsou zbrusu nové, mají veškeré náležité
         příslušenství a originální obal.
-Condition - Overall [5] (title):
+Condition - Overall [5] (subtitle):
     value: Zbrusu nové
     static: true
 a09023bd0d9ebef1f8be45ed156b49e28fe50af7ad10a5d79ada4b3f:
@@ -436,6 +442,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 c118529a347762d0d979fb0a605ed91c451f3105e3d1db2a5a9f8f6a:
     ref: Sign in (title)
     value: Vítejte zpět!
+c3c7b1e9a512b8727a11c7b86573da0e04033bf97ca9444906ec1f28:
+    ref: Condition - Overall (subtitle)
+    value: Zhodnoť stav
 c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
     ref: What - buyers (badge 3)
     value: Ověření prodejců

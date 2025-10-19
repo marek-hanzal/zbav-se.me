@@ -1,7 +1,5 @@
-import {
-	PriceInline,
-	type useSnapperNav as SnapperNavType,
-} from "@use-pico/client";
+import { type useSnapperNav as SnapperNavType } from "@use-pico/client";
+import { toHumanNumber } from "@use-pico/common";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
@@ -25,15 +23,14 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 			<ListingContainer
 				listingNavApi={listingNav.api}
 				textTitle={"Price (title)"}
-				titleProps={{
-					right: price ? (
-						<PriceInline
-							value={{
-								price,
-							}}
-						/>
-					) : null,
-				}}
+				textSubtitle={
+					hasPrice
+						? toHumanNumber({
+								number: price,
+								locale,
+							})
+						: "Price (subtitle)"
+				}
 				bottom={{
 					next: hasPrice,
 				}}

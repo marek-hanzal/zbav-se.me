@@ -34,6 +34,9 @@
 1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
   ref: Logout (title)
   value: Logout (title)
+1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
+  ref: Price (subtitle)
+  value: Price (subtitle)
 1f70f558f99db1b5638ce76b57fe3dd8c4724ad0e36d61619e848d22:
   ref: Landing - Feature 1 (title) - hint
   value: Landing - Feature 1 (title) - hint
@@ -154,6 +157,9 @@
 5e5b22386d6916d54d543deb3fa2ae94dc60928062b03b80fa4f4292:
   ref: Landing - Feature 2 (title) - hint
   value: Landing - Feature 2 (title) - hint
+5f59ee856fc962dd13fa8b6564b0a657f661d45ee2a1e5d0ecf3de8f:
+  ref: Condition - Age (subtitle)
+  value: Condition - Age (subtitle)
 6212dbd7147760fc25e692c4d4e94e2e429e7adae46d98ca3bc21a07:
   ref: Login (link)
   value: Login (link)
@@ -336,6 +342,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
 c118529a347762d0d979fb0a605ed91c451f3105e3d1db2a5a9f8f6a:
   ref: Sign in (title)
   value: Sign in (title)
+c3c7b1e9a512b8727a11c7b86573da0e04033bf97ca9444906ec1f28:
+  ref: Condition - Overall (subtitle)
+  value: Condition - Overall (subtitle)
 c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
   ref: What - buyers (badge 3)
   value: What - buyers (badge 3)

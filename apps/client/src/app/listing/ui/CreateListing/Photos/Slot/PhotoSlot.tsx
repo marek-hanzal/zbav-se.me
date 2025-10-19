@@ -237,11 +237,11 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 					<Status
 						icon={PhotoIcon}
 						iconProps={{
-							size: "4xl",
+							size: "2xl",
 						}}
 						textTitle={"Upload (title)"}
 						titleProps={{
-							size: "4xl",
+							size: "2xl",
 						}}
 						textMessage={
 							props.disabled
@@ -249,7 +249,7 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 								: "Listing - upload photo (placeholder)"
 						}
 						messageProps={{
-							size: "2xl",
+							size: "xl",
 						}}
 						tone={"primary"}
 					/>

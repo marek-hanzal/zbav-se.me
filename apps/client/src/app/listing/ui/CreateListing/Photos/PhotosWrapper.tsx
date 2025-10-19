@@ -32,23 +32,24 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 			textTitle={"Listing photos (title)"}
 			back={false}
 			titleProps={{
-				right: (
-					<>
-						<Typo
-							label={selectedCount}
-							font={"bold"}
-							display={"inline"}
-						/>
-						<Typo
-							label={"/"}
-							display={"inline"}
-						/>
-						<Typo
-							label={total}
-							display={"inline"}
-						/>
-					</>
-				),
+				right:
+					selectedCount > 0 ? (
+						<>
+							<Typo
+								label={selectedCount}
+								font={"bold"}
+								display={"inline"}
+							/>
+							<Typo
+								label={"/"}
+								display={"inline"}
+							/>
+							<Typo
+								label={total}
+								display={"inline"}
+							/>
+						</>
+					) : null,
 			}}
 			bottom={{
 				next: hasPhotos,
