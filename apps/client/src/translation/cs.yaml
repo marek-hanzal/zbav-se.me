@@ -182,6 +182,9 @@
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
     ref: Landing - Hero (title)
     value: Nakupuješ nebo prodáváš?
+67505b3ac329bf674d8dceeeaa32e8d9cb6f6b409aa16a2320e90884:
+    ref: Location (subtitle)
+    value: Umísti inzerát na mapě
 68df66fbac9de67547d703604ad74542f4cf229da6a7cc3e35d1a986:
     ref: Set location (hint)
     value: ...a vybrat, kam inzerát patří
