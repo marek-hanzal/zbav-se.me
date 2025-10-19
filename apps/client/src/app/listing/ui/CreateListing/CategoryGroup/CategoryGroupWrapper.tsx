@@ -12,11 +12,8 @@ import { withCategoryGroupListQuery } from "~/app/category-group/query/withCateg
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
-import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { Sheet } from "~/app/sheet/Sheet";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
 import { Title } from "~/app/ui/title/Title";
 
@@ -79,9 +76,12 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 		});
 
 		return (
-			<FlowContainer>
-				<ListingProgress />
-
+			<ListingContainer
+				listingNavApi={listingNav.api}
+				bottom={{
+					next: selection.hasAny,
+				}}
+			>
 				<Title
 					textTitle={
 						selection.optional.single()?.name ??
@@ -191,16 +191,7 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 						}}
 					/>
 				</div>
-
-				<BottomContainer>
-					<div />
-
-					<NextButton
-						listingNavApi={listingNav.api}
-						disabled={!selection.hasAny}
-					/>
-				</BottomContainer>
-			</FlowContainer>
+			</ListingContainer>
 		);
 	},
 );

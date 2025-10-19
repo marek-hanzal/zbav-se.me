@@ -11,11 +11,8 @@ import {
 import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
-import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { LocationIcon } from "~/app/ui/icon/LocationIcon";
 import { Title } from "~/app/ui/title/Title";
@@ -92,9 +89,12 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 		);
 
 		return (
-			<FlowContainer>
-				<ListingProgress />
-
+			<ListingContainer
+				listingNavApi={listingNav.api}
+				bottom={{
+					next: !!location,
+				}}
+			>
 				<Title
 					textTitle={"Location (title)"}
 					left={<LeftButton listingNavApi={listingNav.api} />}
@@ -250,16 +250,7 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 						</Data>
 					</Container>
 				</Container>
-
-				<BottomContainer>
-					<div />
-
-					<NextButton
-						listingNavApi={listingNav.api}
-						disabled={!location}
-					/>
-				</BottomContainer>
-			</FlowContainer>
+			</ListingContainer>
 		);
 	},
 );

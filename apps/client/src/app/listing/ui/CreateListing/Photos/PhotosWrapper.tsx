@@ -1,12 +1,9 @@
 import { Container, SnapperNav, Typo, useSnapperNav } from "@use-pico/client";
 import { type FC, memo, useRef } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
-import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Title } from "~/app/ui/title/Title";
 
 export namespace PhotosWrapper {
@@ -31,9 +28,12 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 	});
 
 	return (
-		<FlowContainer>
-			<ListingProgress />
-
+		<ListingContainer
+			listingNavApi={listingNav.api}
+			bottom={{
+				next: hasPhotos,
+			}}
+		>
 			<Title
 				textTitle={"Listing photos (title)"}
 				right={
@@ -67,7 +67,8 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 							root: {
 								class: [
 									"bottom-1",
-									"opacity-60",
+									"transition-opacity",
+									hasPhotos ? "opacity-60" : "opacity-0",
 								],
 							},
 						},
@@ -96,15 +97,6 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 					})}
 				</Container>
 			</div>
-
-			<BottomContainer>
-				<div />
-
-				<NextButton
-					listingNavApi={listingNav.api}
-					disabled={!hasPhotos}
-				/>
-			</BottomContainer>
-		</FlowContainer>
+		</ListingContainer>
 	);
 });

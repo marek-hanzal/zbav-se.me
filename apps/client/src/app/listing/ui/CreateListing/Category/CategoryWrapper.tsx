@@ -12,11 +12,8 @@ import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuer
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
-import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
+import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { Sheet } from "~/app/sheet/Sheet";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
 import { Title } from "~/app/ui/title/Title";
@@ -81,9 +78,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 
 		if (!hasCategoryGroup) {
 			return (
-				<FlowContainer>
-					<ListingProgress />
-
+				<ListingContainer listingNavApi={listingNav.api}>
 					<div />
 
 					<Sheet
@@ -110,14 +105,17 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 							}
 						/>
 					</Sheet>
-				</FlowContainer>
+				</ListingContainer>
 			);
 		}
 
 		return (
-			<FlowContainer>
-				<ListingProgress />
-
+			<ListingContainer
+				listingNavApi={listingNav.api}
+				bottom={{
+					next: selection.hasAny,
+				}}
+			>
 				<Title
 					textTitle={
 						selection.optional.single()?.name ??
@@ -227,16 +225,7 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 						}}
 					/>
 				</div>
-
-				<BottomContainer>
-					<div />
-
-					<NextButton
-						listingNavApi={listingNav.api}
-						disabled={!selection.hasAny}
-					/>
-				</BottomContainer>
-			</FlowContainer>
+			</ListingContainer>
 		);
 	},
 );
