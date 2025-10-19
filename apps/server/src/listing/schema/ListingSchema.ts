@@ -26,10 +26,10 @@ export const ListingSchema = z
 		categoryId: z.string().openapi({
 			description: "ID of the category",
 		}),
-		createdAt: z.iso.datetime().openapi({
+		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",
 		}),
-		updatedAt: z.iso.datetime().openapi({
+		updatedAt: z.coerce.date().openapi({
 			description: "Last update timestamp",
 		}),
 	})

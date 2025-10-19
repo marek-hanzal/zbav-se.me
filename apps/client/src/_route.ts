@@ -23,6 +23,7 @@ import { Route as LocaleAppFeedRouteImport } from './@routes/$locale/app/feed'
 import { Route as LocaleAppDashboardRouteImport } from './@routes/$locale/app/dashboard'
 import { Route as LocaleAppBagRouteImport } from './@routes/$locale/app/bag'
 import { Route as LocaleAppListingCreateRouteImport } from './@routes/$locale/app/listing/create'
+import { Route as LocaleAppListingIdViewRouteImport } from './@routes/$locale/app/listing/$id/view'
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -94,6 +95,11 @@ const LocaleAppListingCreateRoute = LocaleAppListingCreateRouteImport.update({
   path: '/listing/create',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const LocaleAppListingIdViewRoute = LocaleAppListingIdViewRouteImport.update({
+  id: '/listing/$id/view',
+  path: '/listing/$id/view',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
+  '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByTo {
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
+  '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -142,6 +150,7 @@ export interface FileRoutesById {
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
+  '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -160,6 +169,7 @@ export interface FileRouteTypes {
     | '/$locale/app/feed'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
+    | '/$locale/app/listing/$id/view'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/$locale/app/feed'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
+    | '/$locale/app/listing/$id/view'
   id:
     | '__root__'
     | '/'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/$locale/app/feed'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
+    | '/$locale/app/listing/$id/view'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -298,6 +310,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppListingCreateRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/listing/$id/view': {
+      id: '/$locale/app/listing/$id/view'
+      path: '/listing/$id/view'
+      fullPath: '/$locale/app/listing/$id/view'
+      preLoaderRoute: typeof LocaleAppListingIdViewRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
   }
 }
 
@@ -307,6 +326,7 @@ interface LocaleAppRouteChildren {
   LocaleAppFeedRoute: typeof LocaleAppFeedRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppListingCreateRoute: typeof LocaleAppListingCreateRoute
+  LocaleAppListingIdViewRoute: typeof LocaleAppListingIdViewRoute
 }
 
 const LocaleAppRouteChildren: LocaleAppRouteChildren = {
@@ -315,6 +335,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppFeedRoute: LocaleAppFeedRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppListingCreateRoute: LocaleAppListingCreateRoute,
+  LocaleAppListingIdViewRoute: LocaleAppListingIdViewRoute,
 }
 
 const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(

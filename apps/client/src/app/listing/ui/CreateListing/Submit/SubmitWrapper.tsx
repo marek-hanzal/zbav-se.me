@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "@tanstack/react-router";
 import {
 	Button,
 	Container,
@@ -23,6 +24,10 @@ const IconMap = ListingPageIndex.Page;
 export const SubmitWrapper: FC<{
 	listingNavApi: useSnapperNav.Api;
 }> = memo(({ listingNavApi }) => {
+	const navigate = useNavigate();
+	const { locale } = useParams({
+		from: "/$locale",
+	});
 	const useCreateListingStore = useCreateListingContext();
 	const store = useCreateListingStore();
 	const missingId = useId();
@@ -72,7 +77,17 @@ export const SubmitWrapper: FC<{
 	// 	},
 	// });
 
-	const createListingMutation = withListingCreateMutation().useMutation();
+	const createListingMutation = withListingCreateMutation().useMutation({
+		async onSuccess(data) {
+			return navigate({
+				to: "/$locale/app/listing/$id/view",
+				params: {
+					id: data.id,
+					locale,
+				},
+			});
+		},
+	});
 
 	if (store.missing.length > 0) {
 		return (

@@ -47,7 +47,7 @@ withListingApi.openapi(
 		const data = c.req.valid("json");
 		const user = c.get("user");
 		const id = genId();
-		const now = new Date().toISOString();
+		const now = new Date();
 
 		const listing = await database.kysely
 			.insertInto("Listing")
