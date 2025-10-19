@@ -69,8 +69,6 @@ export const SubmitWrapper: FC<{
 	if (missing.length > 0) {
 		return (
 			<FlowContainer>
-				<ListingProgress />
-
 				<Title
 					tone={"secondary"}
 					textTitle="Submit - one more thing (title)"
