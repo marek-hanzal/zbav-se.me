@@ -145,7 +145,7 @@ export const SubmitWrapper: FC<{
 								layout={"horizontal-full"}
 								overflow={"horizontal"}
 							>
-								<div className="flex flex-row items-center justify-evenly gap-2">
+								<div className="flex flex-row items-center gap-2 w-full">
 									{Object.entries(IconMap).map(
 										([key, { index, icon }]) => {
 											console.log("missing", {

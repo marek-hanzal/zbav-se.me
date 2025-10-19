@@ -1,13 +1,7 @@
 # TODO
 
-- SubmitWrapper - display clickable icons what's done and what's missing
-
-- Auto-advance on item selection
-- Split Condition -> keep the vertical flow
 - Overlay background does not match with underlaying element height/width (on Android)
 
-- Bigger header in create listings
-- Elipsis in header?
 - Animate location searh result
 - Test capacitor + native app build
 
