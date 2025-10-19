@@ -16,7 +16,6 @@ import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContaine
 import { Sheet } from "~/app/sheet/Sheet";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
-import { Title } from "~/app/ui/title/Title";
 
 export namespace CategoryWrapper {
 	export interface Props {
@@ -112,119 +111,111 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
+				textTitle={
+					selection.optional.single()?.name ??
+					"Listing category (title)"
+				}
 				bottom={{
 					next: selection.hasAny,
 				}}
 			>
-				<Title
-					textTitle={
-						selection.optional.single()?.name ??
-						"Listing category (title)"
-					}
-					left={<LeftButton listingNavApi={listingNav.api} />}
-				/>
-
-				<div className={"relative"}>
-					<Data
-						result={categoryQuery}
-						renderLoading={() => {
-							return <SpinnerSheet />;
-						}}
-						renderSuccess={({ data }) => {
-							return (
-								<>
-									<SnapperNav
-										snapperNav={snapperNav}
-										orientation={"horizontal"}
-										iconProps={() => ({
-											size: "sm",
-										})}
-										tweak={{
-											slot: {
-												root: {
-													class: [
-														"bottom-0",
-													],
-												},
+				<Data
+					result={categoryQuery}
+					renderLoading={() => {
+						return <SpinnerSheet />;
+					}}
+					renderSuccess={({ data }) => {
+						return (
+							<>
+								<SnapperNav
+									snapperNav={snapperNav}
+									orientation={"horizontal"}
+									iconProps={() => ({
+										size: "sm",
+									})}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"bottom-0",
+												],
 											},
-										}}
-										subtle
-									/>
+										},
+									}}
+									subtle
+								/>
 
-									<Container
-										ref={snapperRef}
-										layout={"horizontal-full"}
-										overflow={"horizontal"}
-										snap={"horizontal-start"}
-										gap={"md"}
-										tweak={{
-											slot: {
-												root: {
-													class: [
-														"CategoryWrapper-Data-Container[success]",
-													],
-												},
+								<Container
+									ref={snapperRef}
+									layout={"horizontal-full"}
+									overflow={"horizontal"}
+									snap={"horizontal-start"}
+									gap={"md"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"CategoryWrapper-Data-Container[success]",
+												],
 											},
-										}}
-									>
-										{Array.from(
-											{
-												length: Math.ceil(
-													data.length / grid,
-												),
-											},
-											(_, chunkIndex) => {
-												const startIndex =
-													chunkIndex * grid;
-												const chunk = data.slice(
-													startIndex,
-													startIndex + grid,
-												);
+										},
+									}}
+								>
+									{Array.from(
+										{
+											length: Math.ceil(
+												data.length / grid,
+											),
+										},
+										(_, chunkIndex) => {
+											const startIndex =
+												chunkIndex * grid;
+											const chunk = data.slice(
+												startIndex,
+												startIndex + grid,
+											);
 
-												return (
-													<Sheet
-														key={`${groupId}-${chunkIndex}-${startIndex}`}
-														tone={"unset"}
-														theme={"unset"}
-														tweak={{
-															slot: {
-																root: {
-																	class: [
-																		"CategoryWrapper-Item-Sheet",
-																		"border-none",
-																		"shadow-none",
-																		"grid",
-																		"grid-rows-3",
-																		"grid-cols-2",
-																		"gap-2",
-																	],
-																},
+											return (
+												<Sheet
+													key={`${groupId}-${chunkIndex}-${startIndex}`}
+													tone={"unset"}
+													theme={"unset"}
+													tweak={{
+														slot: {
+															root: {
+																class: [
+																	"CategoryWrapper-Item-Sheet",
+																	"border-none",
+																	"shadow-none",
+																	"grid",
+																	"grid-rows-3",
+																	"grid-cols-2",
+																	"gap-2",
+																],
 															},
-														}}
-													>
-														{chunk.map((item) => {
-															return (
-																<CategoryItem
-																	key={
-																		item.id
-																	}
-																	selection={
-																		selection
-																	}
-																	item={item}
-																/>
-															);
-														})}
-													</Sheet>
-												);
-											},
-										)}
-									</Container>
-								</>
-							);
-						}}
-					/>
-				</div>
+														},
+													}}
+												>
+													{chunk.map((item) => {
+														return (
+															<CategoryItem
+																key={item.id}
+																selection={
+																	selection
+																}
+																item={item}
+															/>
+														);
+													})}
+												</Sheet>
+											);
+										},
+									)}
+								</Container>
+							</>
+						);
+					}}
+				/>
 			</ListingContainer>
 		);
 	},

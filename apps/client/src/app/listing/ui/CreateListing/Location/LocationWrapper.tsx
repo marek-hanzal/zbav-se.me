@@ -10,12 +10,10 @@ import {
 } from "@use-pico/client";
 import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { anim, useAnim } from "~/app/ui/gsap";
 import { LocationIcon } from "~/app/ui/icon/LocationIcon";
-import { Title } from "~/app/ui/title/Title";
 
 export namespace LocationWrapper {
 	export interface Props {
@@ -91,15 +89,11 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
+				textTitle={"Location (title)"}
 				bottom={{
 					next: !!location,
 				}}
 			>
-				<Title
-					textTitle={"Location (title)"}
-					left={<LeftButton listingNavApi={listingNav.api} />}
-				/>
-
 				<Container
 					ref={containerRef}
 					layout={"horizontal-full"}

@@ -4,7 +4,6 @@ import { useCreateListingContext } from "~/app/listing/context/useCreateListingC
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { PhotoSlot } from "~/app/listing/ui/CreateListing/Photos/Slot/PhotoSlot";
 import { useSnapperPage } from "~/app/listing/ui/CreateListing/Photos/useSnapperPage";
-import { Title } from "~/app/ui/title/Title";
 
 export namespace PhotosWrapper {
 	export interface Props {
@@ -30,13 +29,10 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 	return (
 		<ListingContainer
 			listingNavApi={listingNav.api}
-			bottom={{
-				next: hasPhotos,
-			}}
-		>
-			<Title
-				textTitle={"Listing photos (title)"}
-				right={
+			textTitle={"Listing photos (title)"}
+			back={false}
+			titleProps={{
+				right: (
 					<>
 						<Typo
 							label={selectedCount}
@@ -52,51 +48,52 @@ export const PhotosWrapper: FC<PhotosWrapper.Props> = memo(({ listingNav }) => {
 							display={"inline"}
 						/>
 					</>
-				}
+				),
+			}}
+			bottom={{
+				next: hasPhotos,
+			}}
+		>
+			<SnapperNav
+				snapperNav={snapperNav}
+				orientation={"horizontal"}
+				iconProps={() => ({
+					size: "sm",
+				})}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"bottom-1",
+								"transition-opacity",
+								hasPhotos ? "opacity-60" : "opacity-0",
+							],
+						},
+					},
+				}}
+				subtle={false}
 			/>
 
-			<div className={"relative"}>
-				<SnapperNav
-					snapperNav={snapperNav}
-					orientation={"horizontal"}
-					iconProps={() => ({
-						size: "sm",
-					})}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"bottom-1",
-									"transition-opacity",
-									hasPhotos ? "opacity-60" : "opacity-0",
-								],
-							},
-						},
-					}}
-					subtle={false}
-				/>
+			<Container
+				ref={snapperRef}
+				layout="horizontal-full"
+				overflow={"horizontal"}
+				snap={"horizontal-start"}
+				gap={"md"}
+				round={"lg"}
+			>
+				{pages.map((_, slot) => {
+					const disabled = slot > 0 && !photos[slot - 1];
 
-				<Container
-					ref={snapperRef}
-					layout="horizontal-full"
-					overflow={"horizontal"}
-					snap={"horizontal-start"}
-					gap={"md"}
-					round={"lg"}
-				>
-					{pages.map((_, slot) => {
-						const disabled = slot > 0 && !photos[slot - 1];
-
-						return (
-							<PhotoSlot
-								key={`photo-${slot + 1}`}
-								slot={slot}
-								disabled={disabled}
-							/>
-						);
-					})}
-				</Container>
-			</div>
+					return (
+						<PhotoSlot
+							key={`photo-${slot + 1}`}
+							slot={slot}
+							disabled={disabled}
+						/>
+					);
+				})}
+			</Container>
 		</ListingContainer>
 	);
 });

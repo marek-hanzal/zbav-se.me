@@ -4,15 +4,9 @@ import {
 } from "@use-pico/client";
 import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
-import { ListingProgress } from "~/app/listing/ui/CreateListing/ListingProgress";
-import { NextButton } from "~/app/listing/ui/CreateListing/NextButton";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Dial } from "~/app/ui/dial/Dial";
 import { anim, useAnim } from "~/app/ui/gsap";
-import { Title } from "~/app/ui/title/Title";
 
 export namespace PriceWrapper {
 	export interface Props {
@@ -76,15 +70,11 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
+				textTitle={"Price (title)"}
 				bottom={{
 					next: hasPrice,
 				}}
 			>
-				<Title
-					textTitle={"Price (title)"}
-					left={<LeftButton listingNavApi={listingNav.api} />}
-				/>
-
 				<Dial
 					locale={locale}
 					value={price}
