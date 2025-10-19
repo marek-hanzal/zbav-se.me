@@ -112,6 +112,9 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 						layout={"vertical-header-content"}
 						tone={"primary"}
 						theme={"light"}
+						border={"default"}
+						shadow={"default"}
+						round={"lg"}
 					>
 						<Status
 							icon={LocationIcon}

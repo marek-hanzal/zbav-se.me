@@ -1,5 +1,6 @@
-import { type Icon, Sheet, Status } from "@use-pico/client";
+import { type Icon, Status } from "@use-pico/client";
 import type { FC, ReactNode } from "react";
+import { Sheet } from "~/app/sheet/Sheet";
 import { Rating } from "~/app/ui/rating/Rating";
 
 export namespace Condition {
