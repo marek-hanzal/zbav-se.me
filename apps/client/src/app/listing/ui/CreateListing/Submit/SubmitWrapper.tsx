@@ -132,7 +132,6 @@ export const SubmitWrapper: FC<{
 	return (
 		<ListingContainer
 			listingNavApi={listingNavApi}
-			// textTitle={"Submit listing - status (title)"}
 			progress={false}
 		>
 			<Sheet tone={"primary"}>

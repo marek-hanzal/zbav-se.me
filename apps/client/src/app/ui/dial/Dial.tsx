@@ -8,9 +8,8 @@ import {
 } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import { toHumanNumber } from "@use-pico/common";
-import { type FC, type RefObject, useRef, useState } from "react";
+import { type FC, type RefObject, useState } from "react";
 import { Item } from "~/app/ui/dial/Item";
-import { anim, useAnim } from "~/app/ui/gsap";
 import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 
@@ -46,56 +45,26 @@ export namespace Dial {
 
 export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 	const [price, setPrice] = useState(value?.toString() ?? "");
-	const displayRef = useRef<HTMLDivElement>(null);
 	const number = parseFloat(price);
 
-	const { contextSafe } = useAnim({
-		scope: ref,
-	});
-
-	const onConfirm = contextSafe((number: number | undefined) => {
-		onChange(number);
-		anim.timeline()
-			.to(displayRef.current, {
-				scale: 0.8,
-				onComplete() {
-					setPrice("");
-				},
-			})
-			.to(displayRef.current, {
-				scale: 1,
-			});
-	});
-
-	const onClear = contextSafe(() => {
-		anim.timeline({
-			defaults: {
-				duration: 0.15,
-			},
-		})
-			.to(displayRef.current, {
-				opacity: 0,
-				scale: 0.8,
-				onComplete() {
-					setPrice("");
-					onChange(undefined);
-				},
-			})
-			.to(displayRef.current, {
-				opacity: 1,
-				scale: 1,
-			});
-	});
+	const onClear = () => {
+		onChange(undefined);
+	};
 
 	const { onTouchStart } = useDoubleTap({
 		onDoubleTap() {
+			setPrice("");
 			onClear();
 		},
 		delay: 250,
 	});
 
 	return (
-		<Container layout={"vertical-header-content"}>
+		<Container
+			ref={ref}
+			layout={"vertical-header-content"}
+			gap={"sm"}
+		>
 			<Badge
 				tone={"primary"}
 				theme={"light"}
@@ -104,8 +73,6 @@ export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 					slot: {
 						root: {
 							class: [
-								"border-none",
-								"shadow-none",
 								"inline-flex",
 								"flex-row",
 								"items-center",
@@ -114,6 +81,8 @@ export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 							],
 							token: [
 								"round.lg",
+								"tone.secondary.light.border",
+								"tone.secondary.light.shadow",
 							],
 						},
 					},
@@ -202,7 +171,9 @@ export const Dial: FC<Dial.Props> = ({ ref, locale, value, onChange }) => {
 				<Item
 					icon={CheckIcon}
 					disabled={!price}
-					onClick={() => onConfirm(number)}
+					onClick={() => onChange(number)}
+					tone={"primary"}
+					theme={"dark"}
 				/>
 			</div>
 		</Container>
