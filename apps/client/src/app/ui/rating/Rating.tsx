@@ -18,7 +18,7 @@ export namespace Rating {
 		value: number;
 		limit: number;
 		allowClear?: boolean;
-		onChange: (value: number) => void;
+		onChange?: (value: number) => void;
 	}
 }
 
@@ -124,9 +124,9 @@ export const Rating: FC<Rating.Props> = ({
 							selected={idx <= visualValue}
 							onClick={() => {
 								if (allowClear && idx === clampedValue) {
-									onChange(0);
+									onChange?.(0);
 								} else {
-									onChange(idx);
+									onChange?.(idx);
 								}
 							}}
 						/>
