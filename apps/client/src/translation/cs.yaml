@@ -182,6 +182,9 @@
 6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
     ref: Condition - Overall (title)
     value: Celkový stav
+6da421b164aea62a4034c7b5fdd3c445319482eb5937faee9dffd81c:
+    ref: Listing category (subtitle)
+    value: Ještě zařaď inzerát do konkrétní kategorie
 6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
     ref: Submit listing - status (title)
     value: Vše připraveno!

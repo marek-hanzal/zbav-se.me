@@ -111,9 +111,10 @@ export const CategoryWrapper: FC<CategoryWrapper.Props> = memo(
 		return (
 			<ListingContainer
 				listingNavApi={listingNav.api}
-				textTitle={
+				textTitle={"Listing category (title)"}
+				textSubtitle={
 					selection.optional.single()?.name ??
-					"Listing category (title)"
+					"Listing category (subtitle)"
 				}
 				bottom={{
 					next: selection.hasAny,
