@@ -5,7 +5,6 @@ export const withTokenHono = () => {
 	return new OpenAPIHono<{
 		Variables: {
 			user: typeof auth.$Infer.Session.user;
-			session: typeof auth.$Infer.Session.session;
 		};
 	}>();
 };

@@ -14,6 +14,7 @@ import { database } from "../database/kysely";
 import { AppEnv } from "../env";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
+import { withTokenHono } from "../hono/withTokenHono";
 import { CountSchema } from "../schema/CountSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
@@ -23,10 +24,11 @@ import {
 	withListingQueryBuilderWithSort,
 } from "./withListingQueryBuilder";
 
-export const withListingApi: Routes.Fn = ({ session }) => {
-	const hono = withSessionHono();
+export const withListingApi: Routes.Fn = ({ session, token }) => {
+	const sessionEndpoints = withSessionHono();
+	const tokenEndpoints = withTokenHono();
 
-	hono.openapi(
+	sessionEndpoints.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/create",
@@ -83,7 +85,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		},
 	);
 
-	hono.openapi(
+	sessionEndpoints.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/fetch",
@@ -134,7 +136,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		},
 	);
 
-	hono.openapi(
+	sessionEndpoints.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/collection",
@@ -185,7 +187,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		},
 	);
 
-	hono.openapi(
+	sessionEndpoints.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/count",
@@ -232,7 +234,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		},
 	);
 
-	hono.openapi(
+	tokenEndpoints.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing/gallery/upload",
@@ -334,5 +336,6 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		},
 	);
 
-	session.route("/", hono);
+	session.route("/", sessionEndpoints);
+	token.route("/", tokenEndpoints);
 };

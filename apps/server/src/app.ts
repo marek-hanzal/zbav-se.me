@@ -87,6 +87,9 @@ app.use("/api/session/*", async (c, next) => {
 	}
 	return next();
 });
+app.use("/api/token/*", async (c, next) => {
+	return next();
+});
 
 //
 
