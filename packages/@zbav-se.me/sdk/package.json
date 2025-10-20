@@ -1,6 +1,7 @@
 {
 	"name": "@zbav-se.me/sdk",
 	"version": "0.5.0",
+	"type": "module",
 	"scripts": {
 		"sdk": "bun x orval",
 		"typecheck": "tsc --noEmit"
