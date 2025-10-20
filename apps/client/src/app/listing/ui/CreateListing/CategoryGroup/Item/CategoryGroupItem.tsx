@@ -1,7 +1,6 @@
-import { Status, type useSelection } from "@use-pico/client";
+import { type SheetCls, Status, type useSelection } from "@use-pico/client";
 import { type Cls, tvc } from "@use-pico/cls";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
-import type { SheetCls } from "node_modules/@use-pico/client/src/sheet/SheetCls";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { Sheet } from "~/app/sheet/Sheet";

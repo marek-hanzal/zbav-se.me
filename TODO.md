@@ -1,5 +1,7 @@
 # TODO
 
+- Generate user-specific feed based on filter he set's up
+    - something like Feed table + endpoint; favourite listing could be marked in this feed
 - Maybe it would be necessary to strip userId's from backend output
     - Also content server stores files in /<id> - unpredictable, but initial part may be readable?
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
