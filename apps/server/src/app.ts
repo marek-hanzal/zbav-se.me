@@ -7,6 +7,7 @@ import { withCategoryApi } from "./category/withCategoryApi";
 import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
 import { withContentApi } from "./content/withContentApi";
 import { AppEnv } from "./env";
+import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withHealthApi } from "./health/withHealthApi";
 import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
@@ -102,6 +103,7 @@ protectedEndpoints.route("/", withContentApi);
 protectedEndpoints.route("/", withCategoryGroupApi);
 protectedEndpoints.route("/", withCategoryApi);
 protectedEndpoints.route("/", withListingApi);
+protectedEndpoints.route("/", withGalleryApi);
 protectedEndpoints.route("/", withLocationApi);
 
 const publicEndpoints = withHono();

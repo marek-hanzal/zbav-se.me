@@ -212,5 +212,39 @@ export const InitialMigration: Migration = {
 			.on("Listing")
 			.column("createdAt")
 			.execute();
+
+		// Create Gallery table
+		await db.schema
+			.createTable("Gallery")
+			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			.addColumn("userId", "text", (col) => col.notNull())
+			.addColumn("listingId", "text", (col) => col.notNull())
+			.addColumn("sort", "integer", (col) => col.notNull())
+			.addColumn("url", "text", (col) => col.notNull())
+			.addColumn("createdAt", "timestamp", (col) =>
+				col.notNull().defaultTo("now()"),
+			)
+			.addColumn("updatedAt", "timestamp", (col) =>
+				col.notNull().defaultTo("now()"),
+			)
+			.execute();
+
+		await db.schema
+			.createIndex("Gallery_userId_idx")
+			.on("Gallery")
+			.column("userId")
+			.execute();
+
+		await db.schema
+			.createIndex("Gallery_listingId_idx")
+			.on("Gallery")
+			.column("listingId")
+			.execute();
+
+		await db.schema
+			.createIndex("Gallery_createdAt_idx")
+			.on("Gallery")
+			.column("createdAt")
+			.execute();
 	},
 };

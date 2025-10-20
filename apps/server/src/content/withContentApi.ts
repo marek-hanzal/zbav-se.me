@@ -1,68 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { linkTo } from "@use-pico/common";
 import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
-import { z } from "zod";
 import { AppEnv } from "../env";
 import { withSessionHono } from "../withSessionHono";
-
-const ClientPayloadSchema = z.object({
-	listingId: z.string().min(1).optional(),
-	checksum: z.string(),
-});
-type ClientPayload = z.infer<typeof ClientPayloadSchema>;
-
-const PutBlobResultSchema = z
-	.looseObject({
-		url: z.url(),
-		downloadUrl: z.url(),
-		pathname: z.string(),
-		size: z.number().int().nonnegative(),
-		uploadedAt: z.string(),
-		contentType: z.string(),
-		contentDisposition: z.string(),
-	})
-	.openapi("PutBlobResult");
-
-const GenerateClientTokenEventSchema = z
-	.object({
-		type: z.literal("blob.generate-client-token"),
-		payload: z.object({
-			pathname: z.string(),
-			multipart: z.boolean(),
-			clientPayload: z.string().nullable(),
-		}),
-	})
-	.openapi("GenerateClientTokenEvent");
-
-const UploadCompletedEventSchema = z
-	.object({
-		type: z.literal("blob.upload-completed"),
-		payload: z.object({
-			blob: PutBlobResultSchema,
-			tokenPayload: z.string().nullable().optional(),
-		}),
-	})
-	.openapi("UploadCompletedEvent");
-
-const HandleUploadBodySchema = z
-	.union([
-		GenerateClientTokenEventSchema,
-		UploadCompletedEventSchema,
-	])
-	.openapi("HandleUploadBody");
-
-const HandleUploadResponseSchema = z
-	.union([
-		z.object({
-			type: z.literal("blob.generate-client-token"),
-			clientToken: z.string(),
-		}),
-		z.object({
-			type: z.literal("blob.upload-completed"),
-			response: z.literal("ok"),
-		}),
-	])
-	.openapi("HandleUploadResponse");
+import { ClientPayloadSchema } from "./schema/ClientPayloadSchema";
+import { HandleUploadBodySchema } from "./schema/HandleUploadBodySchema";
+import { HandleUploadResponseSchema } from "./schema/HandleUploadResponseSchema";
 
 export const withContentApi = withSessionHono();
 

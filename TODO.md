@@ -8,6 +8,8 @@
     - We can connect CDN pullzone directly to maptiles with API key
 - A11y is quite an important thing
 
+- MCP
+
 - Animate location searh result
 - Test capacitor + native app build
 
