@@ -1,6 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { database } from "../database/kysely";
-import { withHono } from "../withHono";
+import type { Routes } from "../hono/Routes";
+import { withHono } from "../hono/withHono";
 
 const MigrationSchema = z
 	.object({
@@ -27,29 +28,33 @@ const MigrationSchema = z
 	})
 	.openapi("Migration");
 
-export const withMigrationApi = withHono();
+export const withMigrationApi = ({ public: publicRoutes }: Routes) => {
+	const hono = withHono();
 
-withMigrationApi.openapi(
-	createRoute({
-		method: "get",
-		path: "/migration/run",
-		description: "This route directly executes the migrations",
-		operationId: "apiMigrationRun",
-		responses: {
-			200: {
-				content: {
-					"application/json": {
-						schema: z.array(MigrationSchema).optional(),
+	hono.openapi(
+		createRoute({
+			method: "get",
+			path: "/migration/run",
+			description: "This route directly executes the migrations",
+			operationId: "apiMigrationRun",
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: z.array(MigrationSchema).optional(),
+						},
 					},
+					description: "Executes app migrations",
 				},
-				description: "Executes app migrations",
 			},
+			tags: [
+				"misc",
+			],
+		}),
+		async (c) => {
+			return c.json(await database.migrate());
 		},
-		tags: [
-			"misc",
-		],
-	}),
-	async (c) => {
-		return c.json(await database.migrate());
-	},
-);
+	);
+
+	publicRoutes.route("/", hono);
+};

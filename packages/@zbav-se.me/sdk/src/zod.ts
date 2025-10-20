@@ -7,126 +7,6 @@
 import zod from 'zod';
 
 /**
- * Return a category group based on the provided query
- */
-export const apiCategoryGroupFetchBodyCursorPageMin = 0;export const apiCategoryGroupFetchBodyCursorSizeMax = 1000;
-
-export const apiCategoryGroupFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiCategoryGroupFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiCategoryGroupFetchBodyCursorSizeMax).describe('Page size')
-}).nullish().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
-}).nullish().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
-}).nullish().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['name', 'sort']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for category group collection')).nullish()
-}).describe('Query object for category group collection')
-
-export const apiCategoryGroupFetchResponse = zod.object({
-  "id": zod.string().describe('ID of the category group'),
-  "name": zod.string().describe('Name of the category group'),
-  "sort": zod.number().describe('Sort order (position) of the category group'),
-  "locale": zod.string().describe('Locale/language of the category group')
-}).describe('Represents a group of categories a listing can be assigned to')
-
-
-/**
- * Returns category groups based on provided parameters
- */
-export const apiCategoryGroupCollectionBodyCursorPageMin = 0;export const apiCategoryGroupCollectionBodyCursorSizeMax = 1000;
-
-export const apiCategoryGroupCollectionBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiCategoryGroupCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiCategoryGroupCollectionBodyCursorSizeMax).describe('Page size')
-}).nullish().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
-}).nullish().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
-}).nullish().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['name', 'sort']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for category group collection')).nullish()
-}).describe('Query object for category group collection')
-
-export const apiCategoryGroupCollectionResponseItem = zod.object({
-  "id": zod.string().describe('ID of the category group'),
-  "name": zod.string().describe('Name of the category group'),
-  "sort": zod.number().describe('Sort order (position) of the category group'),
-  "locale": zod.string().describe('Locale/language of the category group')
-}).describe('Represents a group of categories a listing can be assigned to')
-export const apiCategoryGroupCollectionResponse = zod.array(apiCategoryGroupCollectionResponseItem)
-
-
-/**
- * Returns count of category groups based on provided query
- */
-export const apiCategoryGroupCountBodyCursorPageMin = 0;export const apiCategoryGroupCountBodyCursorSizeMax = 1000;
-
-export const apiCategoryGroupCountBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiCategoryGroupCountBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiCategoryGroupCountBodyCursorSizeMax).describe('Page size')
-}).nullish().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
-}).nullish().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
-}).nullish().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['name', 'sort']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for category group collection')).nullish()
-}).describe('Query object for category group collection')
-
-export const apiCategoryGroupCountResponse = zod.object({
-  "where": zod.number().describe('Count of items based on provided where query.'),
-  "filter": zod.number().describe('Count of items based on provided filter query.'),
-  "total": zod.number().describe('Total count of items (no filters applied).')
-}).describe('Complex count of items based on provided query.')
-
-
-/**
  * Return a category based on the provided query
  */
 export const apiCategoryFetchBodyCursorPageMin = 0;export const apiCategoryFetchBodyCursorSizeMax = 1000;
@@ -254,6 +134,126 @@ export const apiCategoryCountBody = zod.object({
 }).describe('Query object for category collection')
 
 export const apiCategoryCountResponse = zod.object({
+  "where": zod.number().describe('Count of items based on provided where query.'),
+  "filter": zod.number().describe('Count of items based on provided filter query.'),
+  "total": zod.number().describe('Total count of items (no filters applied).')
+}).describe('Complex count of items based on provided query.')
+
+
+/**
+ * Return a category group based on the provided query
+ */
+export const apiCategoryGroupFetchBodyCursorPageMin = 0;export const apiCategoryGroupFetchBodyCursorSizeMax = 1000;
+
+export const apiCategoryGroupFetchBody = zod.object({
+  "cursor": zod.object({
+  "page": zod.number().min(apiCategoryGroupFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
+  "size": zod.number().min(1).max(apiCategoryGroupFetchBodyCursorSizeMax).describe('Page size')
+}).nullish().describe('Cursor for pagination'),
+  "filter": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
+  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
+  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
+}).nullish().describe('User-land filters'),
+  "where": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
+  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
+  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
+}).nullish().describe('App-based filters'),
+  "sort": zod.array(zod.object({
+  "value": zod.enum(['name', 'sort']),
+  "sort": zod.enum(['asc', 'desc']).nullish()
+}).describe('Sort object for category group collection')).nullish()
+}).describe('Query object for category group collection')
+
+export const apiCategoryGroupFetchResponse = zod.object({
+  "id": zod.string().describe('ID of the category group'),
+  "name": zod.string().describe('Name of the category group'),
+  "sort": zod.number().describe('Sort order (position) of the category group'),
+  "locale": zod.string().describe('Locale/language of the category group')
+}).describe('Represents a group of categories a listing can be assigned to')
+
+
+/**
+ * Returns category groups based on provided parameters
+ */
+export const apiCategoryGroupCollectionBodyCursorPageMin = 0;export const apiCategoryGroupCollectionBodyCursorSizeMax = 1000;
+
+export const apiCategoryGroupCollectionBody = zod.object({
+  "cursor": zod.object({
+  "page": zod.number().min(apiCategoryGroupCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
+  "size": zod.number().min(1).max(apiCategoryGroupCollectionBodyCursorSizeMax).describe('Page size')
+}).nullish().describe('Cursor for pagination'),
+  "filter": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
+  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
+  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
+}).nullish().describe('User-land filters'),
+  "where": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
+  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
+  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
+}).nullish().describe('App-based filters'),
+  "sort": zod.array(zod.object({
+  "value": zod.enum(['name', 'sort']),
+  "sort": zod.enum(['asc', 'desc']).nullish()
+}).describe('Sort object for category group collection')).nullish()
+}).describe('Query object for category group collection')
+
+export const apiCategoryGroupCollectionResponseItem = zod.object({
+  "id": zod.string().describe('ID of the category group'),
+  "name": zod.string().describe('Name of the category group'),
+  "sort": zod.number().describe('Sort order (position) of the category group'),
+  "locale": zod.string().describe('Locale/language of the category group')
+}).describe('Represents a group of categories a listing can be assigned to')
+export const apiCategoryGroupCollectionResponse = zod.array(apiCategoryGroupCollectionResponseItem)
+
+
+/**
+ * Returns count of category groups based on provided query
+ */
+export const apiCategoryGroupCountBodyCursorPageMin = 0;export const apiCategoryGroupCountBodyCursorSizeMax = 1000;
+
+export const apiCategoryGroupCountBody = zod.object({
+  "cursor": zod.object({
+  "page": zod.number().min(apiCategoryGroupCountBodyCursorPageMin).describe('Page number (0-indexed)'),
+  "size": zod.number().min(1).max(apiCategoryGroupCountBodyCursorSizeMax).describe('Page size')
+}).nullish().describe('Cursor for pagination'),
+  "filter": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
+  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
+  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
+}).nullish().describe('User-land filters'),
+  "where": zod.object({
+  "id": zod.string().nullish().describe('This filter matches the exact id'),
+  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
+  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
+  "name": zod.string().nullish().describe('This filter matches the exact name of the category group'),
+  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category group'),
+  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches category groups with locales in the provided array')
+}).nullish().describe('App-based filters'),
+  "sort": zod.array(zod.object({
+  "value": zod.enum(['name', 'sort']),
+  "sort": zod.enum(['asc', 'desc']).nullish()
+}).describe('Sort object for category group collection')).nullish()
+}).describe('Query object for category group collection')
+
+export const apiCategoryGroupCountResponse = zod.object({
   "where": zod.number().describe('Count of items based on provided where query.'),
   "filter": zod.number().describe('Count of items based on provided filter query.'),
   "total": zod.number().describe('Total count of items (no filters applied).')

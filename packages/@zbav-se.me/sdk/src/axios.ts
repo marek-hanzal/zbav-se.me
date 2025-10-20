@@ -11,16 +11,18 @@ import type {
 } from 'axios';
 
 /**
- * Represents a group of categories a listing can be assigned to
+ * Represents a category a listing can be assigned to
  */
-export interface CategoryGroup {
-  /** ID of the category group */
+export interface Category {
+  /** ID of the category */
   id: string;
-  /** Name of the category group */
+  /** Name of the category */
   name: string;
-  /** Sort order (position) of the category group */
+  /** Sort order (position) of the category */
   sort: number;
-  /** Locale/language of the category group */
+  /** ID of the category group the category belongs to */
+  categoryGroupId: string;
+  /** Locale/language of the category */
   locale: string;
 }
 
@@ -41,149 +43,6 @@ export type Cursor = {
    */
   size: number;
 } | null;
-
-/**
- * User-land filters
- * @nullable
- */
-export type CategoryGroupFilter = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact name of the category group
-   * @nullable
-   */
-  name?: string | null;
-  /**
-   * This filter matches the exact locale of the category group
-   * @nullable
-   */
-  locale?: string | null;
-  /**
-   * This filter matches category groups with locales in the provided array
-   * @nullable
-   */
-  localeIn?: string[] | null;
-} | null;
-
-/**
- * App-based filters
- * @nullable
- */
-export type CategoryGroupWhere = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact name of the category group
-   * @nullable
-   */
-  name?: string | null;
-  /**
-   * This filter matches the exact locale of the category group
-   * @nullable
-   */
-  locale?: string | null;
-  /**
-   * This filter matches category groups with locales in the provided array
-   * @nullable
-   */
-  localeIn?: string[] | null;
-} | null;
-
-export type CategoryGroupSortValue = typeof CategoryGroupSortValue[keyof typeof CategoryGroupSortValue];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const CategoryGroupSortValue = {
-  name: 'name',
-  sort: 'sort',
-} as const;
-
-/**
- * @nullable
- */
-export type CategoryGroupSortSort = typeof CategoryGroupSortSort[keyof typeof CategoryGroupSortSort] | null;
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const CategoryGroupSortSort = {
-  asc: 'asc',
-  desc: 'desc',
-} as const;
-
-/**
- * Sort object for category group collection
- */
-export interface CategoryGroupSort {
-  value: CategoryGroupSortValue;
-  /** @nullable */
-  sort?: CategoryGroupSortSort;
-}
-
-/**
- * Query object for category group collection
- */
-export interface CategoryGroupQuery {
-  cursor?: Cursor;
-  filter?: CategoryGroupFilter;
-  where?: CategoryGroupWhere;
-  /** @nullable */
-  sort?: CategoryGroupSort[] | null;
-}
-
-/**
- * Complex count of items based on provided query.
- */
-export interface Count {
-  /** Count of items based on provided where query. */
-  where: number;
-  /** Count of items based on provided filter query. */
-  filter: number;
-  /** Total count of items (no filters applied). */
-  total: number;
-}
-
-/**
- * Represents a category a listing can be assigned to
- */
-export interface Category {
-  /** ID of the category */
-  id: string;
-  /** Name of the category */
-  name: string;
-  /** Sort order (position) of the category */
-  sort: number;
-  /** ID of the category group the category belongs to */
-  categoryGroupId: string;
-  /** Locale/language of the category */
-  locale: string;
-}
 
 /**
  * User-land filters
@@ -318,6 +177,147 @@ export interface CategoryQuery {
   where?: CategoryWhere;
   /** @nullable */
   sort?: CategorySort[] | null;
+}
+
+/**
+ * Complex count of items based on provided query.
+ */
+export interface Count {
+  /** Count of items based on provided where query. */
+  where: number;
+  /** Count of items based on provided filter query. */
+  filter: number;
+  /** Total count of items (no filters applied). */
+  total: number;
+}
+
+/**
+ * Represents a group of categories a listing can be assigned to
+ */
+export interface CategoryGroup {
+  /** ID of the category group */
+  id: string;
+  /** Name of the category group */
+  name: string;
+  /** Sort order (position) of the category group */
+  sort: number;
+  /** Locale/language of the category group */
+  locale: string;
+}
+
+/**
+ * User-land filters
+ * @nullable
+ */
+export type CategoryGroupFilter = {
+  /**
+   * This filter matches the exact id
+   * @nullable
+   */
+  id?: string | null;
+  /**
+   * This filter matches the ids
+   * @nullable
+   */
+  idIn?: string[] | null;
+  /**
+   * Runs fulltext on the collection/query.
+   * @nullable
+   */
+  fulltext?: string | null;
+  /**
+   * This filter matches the exact name of the category group
+   * @nullable
+   */
+  name?: string | null;
+  /**
+   * This filter matches the exact locale of the category group
+   * @nullable
+   */
+  locale?: string | null;
+  /**
+   * This filter matches category groups with locales in the provided array
+   * @nullable
+   */
+  localeIn?: string[] | null;
+} | null;
+
+/**
+ * App-based filters
+ * @nullable
+ */
+export type CategoryGroupWhere = {
+  /**
+   * This filter matches the exact id
+   * @nullable
+   */
+  id?: string | null;
+  /**
+   * This filter matches the ids
+   * @nullable
+   */
+  idIn?: string[] | null;
+  /**
+   * Runs fulltext on the collection/query.
+   * @nullable
+   */
+  fulltext?: string | null;
+  /**
+   * This filter matches the exact name of the category group
+   * @nullable
+   */
+  name?: string | null;
+  /**
+   * This filter matches the exact locale of the category group
+   * @nullable
+   */
+  locale?: string | null;
+  /**
+   * This filter matches category groups with locales in the provided array
+   * @nullable
+   */
+  localeIn?: string[] | null;
+} | null;
+
+export type CategoryGroupSortValue = typeof CategoryGroupSortValue[keyof typeof CategoryGroupSortValue];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CategoryGroupSortValue = {
+  name: 'name',
+  sort: 'sort',
+} as const;
+
+/**
+ * @nullable
+ */
+export type CategoryGroupSortSort = typeof CategoryGroupSortSort[keyof typeof CategoryGroupSortSort] | null;
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const CategoryGroupSortSort = {
+  asc: 'asc',
+  desc: 'desc',
+} as const;
+
+/**
+ * Sort object for category group collection
+ */
+export interface CategoryGroupSort {
+  value: CategoryGroupSortValue;
+  /** @nullable */
+  sort?: CategoryGroupSortSort;
+}
+
+/**
+ * Query object for category group collection
+ */
+export interface CategoryGroupQuery {
+  cursor?: Cursor;
+  filter?: CategoryGroupFilter;
+  where?: CategoryGroupWhere;
+  /** @nullable */
+  sort?: CategoryGroupSort[] | null;
 }
 
 /**
@@ -1062,49 +1062,13 @@ lang: string;
 };
 
 /**
- * Return a category group based on the provided query
- */
-export const apiCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
-    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/protected/category-group/fetch`,
-      categoryGroupQuery,options
-    );
-  }
-
-/**
- * Returns category groups based on provided parameters
- */
-export const apiCategoryGroupCollection = <TData = AxiosResponse<CategoryGroup[]>>(
-    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/protected/category-group/collection`,
-      categoryGroupQuery,options
-    );
-  }
-
-/**
- * Returns count of category groups based on provided query
- */
-export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
-    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/protected/category-group/count`,
-      categoryGroupQuery,options
-    );
-  }
-
-/**
  * Return a category based on the provided query
  */
 export const apiCategoryFetch = <TData = AxiosResponse<Category>>(
     categoryQuery: CategoryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/category/fetch`,
+      `/api/session/category/fetch`,
       categoryQuery,options
     );
   }
@@ -1116,7 +1080,7 @@ export const apiCategoryCollection = <TData = AxiosResponse<Category[]>>(
     categoryQuery: CategoryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/category/collection`,
+      `/api/session/category/collection`,
       categoryQuery,options
     );
   }
@@ -1128,8 +1092,44 @@ export const apiCategoryCount = <TData = AxiosResponse<Count>>(
     categoryQuery: CategoryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/category/count`,
+      `/api/session/category/count`,
       categoryQuery,options
+    );
+  }
+
+/**
+ * Return a category group based on the provided query
+ */
+export const apiCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
+    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/session/category-group/fetch`,
+      categoryGroupQuery,options
+    );
+  }
+
+/**
+ * Returns category groups based on provided parameters
+ */
+export const apiCategoryGroupCollection = <TData = AxiosResponse<CategoryGroup[]>>(
+    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/session/category-group/collection`,
+      categoryGroupQuery,options
+    );
+  }
+
+/**
+ * Returns count of category groups based on provided query
+ */
+export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
+    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/session/category-group/count`,
+      categoryGroupQuery,options
     );
   }
 
@@ -1140,7 +1140,7 @@ export const apiListingCreate = <TData = AxiosResponse<Listing>>(
     listingCreate: ListingCreate, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/listing/create`,
+      `/api/session/listing/create`,
       listingCreate,options
     );
   }
@@ -1152,7 +1152,7 @@ export const apiListingFetch = <TData = AxiosResponse<Listing>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/listing/fetch`,
+      `/api/session/listing/fetch`,
       listingQuery,options
     );
   }
@@ -1164,7 +1164,7 @@ export const apiListingCollection = <TData = AxiosResponse<Listing[]>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/listing/collection`,
+      `/api/session/listing/collection`,
       listingQuery,options
     );
   }
@@ -1176,7 +1176,7 @@ export const apiListingCount = <TData = AxiosResponse<Count>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/listing/count`,
+      `/api/session/listing/count`,
       listingQuery,options
     );
   }
@@ -1188,7 +1188,7 @@ export const apiListingGalleryUpload = <TData = AxiosResponse<HandleUploadRespon
     handleUploadBody: HandleUploadBody, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/listing/gallery/upload`,
+      `/api/session/listing/gallery/upload`,
       handleUploadBody,options
     );
   }
@@ -1200,7 +1200,7 @@ export const apiGalleryFetch = <TData = AxiosResponse<Gallery>>(
     galleryQuery: GalleryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/gallery/fetch`,
+      `/api/session/gallery/fetch`,
       galleryQuery,options
     );
   }
@@ -1212,7 +1212,7 @@ export const apiGalleryCollection = <TData = AxiosResponse<Gallery[]>>(
     galleryQuery: GalleryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/gallery/collection`,
+      `/api/session/gallery/collection`,
       galleryQuery,options
     );
   }
@@ -1224,7 +1224,7 @@ export const apiGalleryCount = <TData = AxiosResponse<Count>>(
     galleryQuery: GalleryQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/gallery/count`,
+      `/api/session/gallery/count`,
       galleryQuery,options
     );
   }
@@ -1236,7 +1236,7 @@ export const apiLocationAutocomplete = <TData = AxiosResponse<Location[]>>(
     params: ApiLocationAutocompleteParams, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.get(
-      `/api/protected/location/autocomplete`,{
+      `/api/session/location/autocomplete`,{
     ...options,
         params: {...params, ...options?.params},}
     );
@@ -1249,7 +1249,7 @@ export const apiLocationFetch = <TData = AxiosResponse<Location>>(
     locationQuery: LocationQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
-      `/api/protected/location/fetch`,
+      `/api/session/location/fetch`,
       locationQuery,options
     );
   }
@@ -1276,12 +1276,12 @@ export const apiMigrationRun = <TData = AxiosResponse<Migration[]>>(
     );
   }
 
-export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>
-export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>
-export type ApiCategoryGroupCountResult = AxiosResponse<Count>
 export type ApiCategoryFetchResult = AxiosResponse<Category>
 export type ApiCategoryCollectionResult = AxiosResponse<Category[]>
 export type ApiCategoryCountResult = AxiosResponse<Count>
+export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>
+export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>
+export type ApiCategoryGroupCountResult = AxiosResponse<Count>
 export type ApiListingCreateResult = AxiosResponse<Listing>
 export type ApiListingFetchResult = AxiosResponse<Listing>
 export type ApiListingCollectionResult = AxiosResponse<Listing[]>

@@ -8,11 +8,14 @@ import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
 import { AppEnv } from "./env";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withHealthApi } from "./health/withHealthApi";
+import type { Routes } from "./hono/Routes";
+import { withHono } from "./hono/withHono";
+import { withSessionHono } from "./hono/withSessionHono";
+import { withTokenHono } from "./hono/withTokenHono";
 import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
-import { withHono } from "./withHono";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -71,7 +74,7 @@ app.use(async (c, next) => {
 	}
 });
 
-app.use("/api/protected/*", async (c, next) => {
+app.use("/api/session/*", async (c, next) => {
 	const session = c.get("session");
 	const user = c.get("user");
 	if (!session || !user) {
@@ -97,26 +100,33 @@ app.on(
 	(c) => auth.handler(c.req.raw),
 );
 //
-const protectedEndpoints = withHono();
-protectedEndpoints.route("/", withCategoryGroupApi);
-protectedEndpoints.route("/", withCategoryApi);
-protectedEndpoints.route("/", withListingApi);
-protectedEndpoints.route("/", withGalleryApi);
-protectedEndpoints.route("/", withLocationApi);
+const routes: Routes = {
+	session: withSessionHono(),
+	token: withTokenHono(),
+	public: withHono(),
+};
 
-const publicEndpoints = withHono();
-publicEndpoints.route("/", withHealthApi);
-publicEndpoints.route("/", withMigrationApi);
+withCategoryApi(routes);
+withCategoryGroupApi(routes);
+withListingApi(routes);
+withGalleryApi(routes);
+withLocationApi(routes);
+withHealthApi(routes);
+withMigrationApi(routes);
 
 //
 
-const protectedRoutes = withHono();
-protectedRoutes.route("/protected", protectedEndpoints);
+const sessionRoutes = withSessionHono();
+sessionRoutes.route("/session", routes.session);
+
+const tokenRoutes = withTokenHono();
+tokenRoutes.route("/token", routes.token);
 
 const publicRoutes = withHono();
-publicRoutes.route("/public", publicEndpoints);
+publicRoutes.route("/public", routes.public);
 
-app.route("/api", protectedRoutes);
+app.route("/api", sessionRoutes);
+app.route("/api", tokenRoutes);
 app.route("/api", publicRoutes);
 //
 app.get("/origin", (c) =>

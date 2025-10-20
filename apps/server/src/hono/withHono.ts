@@ -1,5 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import type { auth } from "./auth";
+import type { auth } from "../auth";
 
 export const withHono = () => {
 	return new OpenAPIHono<{
@@ -9,3 +9,5 @@ export const withHono = () => {
 		};
 	}>();
 };
+
+export type withHono = ReturnType<typeof withHono>;
