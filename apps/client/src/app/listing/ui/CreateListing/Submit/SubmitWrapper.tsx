@@ -3,11 +3,14 @@ import {
 	Button,
 	Container,
 	Icon,
+	Progress,
 	Status,
 	type useSnapperNav,
 } from "@use-pico/client";
-// import { upload } from "@vercel/blob/client";
-// import PQueue from "p-queue";
+import { linkTo } from "@use-pico/common";
+import { upload } from "@vercel/blob/client";
+import { ListingGalleryPayload } from "@zbav-se.me/common";
+import PQueue from "p-queue";
 import type { FC } from "react";
 import { memo, useId, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
@@ -33,52 +36,63 @@ export const SubmitWrapper: FC<{
 	const missingId = useId();
 	const files = store.photos.filter((photo) => !!photo);
 
-	// Track progress for each photo individually
-	const [photoProgress, setPhotoProgress] = useState<Record<string, number>>(
-		{},
-	);
+	// Track overall upload progress for all photos
+	const [progress, setProgress] = useState(0);
 
-	// Commented out file upload functionality
-	// const uploadContentMutation = useMutation<any, Error, File[]>({
-	// 	mutationKey: [
-	// 		"content",
-	// 		"upload",
-	// 	],
-	// 	async mutationFn(photos) {
-	// 		// Reset progress state
-	// 		setPhotoProgress({});
+	// Photo upload functionality with cumulative progress
+	const uploadPhotos = async (photos: File[], listingId: string) => {
+		setProgress(0);
 
-	// 		const queue = new PQueue({
-	// 			concurrency: 3,
-	// 		});
+		const queue = new PQueue({
+			concurrency: 3,
+		});
 
-	// 		const uploadPromises = photos.map(async (photo) => {
-	// 			return queue.add(() =>
-	// 				upload(photo.name, photo, {
-	// 					access: "public",
-	// 					contentType: photo.type,
-	// 					handleUploadUrl: linkTo({
-	// 						base: import.meta.env.VITE_API,
-	// 						href: "/api/content/upload",
-	// 					}),
-	// 					onUploadProgress({ percentage }) {
-	// 						setPhotoProgress((prev) => ({
-	// 							...prev,
-	// 							[photo.name]: percentage,
-	// 						}));
-	// 					},
-	// 					multipart: true,
-	// 				}),
-	// 			);
-	// 		});
+		const totalUploads = photos.length;
+		const photoProgresses = new Array(totalUploads).fill(0);
 
-	// 		// Wait for all uploads to complete
-	// 		return Promise.all(uploadPromises);
-	// 	},
-	// });
+		const uploadPromises = photos.map(async (photo, index) => {
+			return queue.add(() =>
+				upload(photo.name, photo, {
+					access: "public",
+					contentType: photo.type,
+					handleUploadUrl: linkTo({
+						base: import.meta.env.VITE_API,
+						href: "/api/protected/listing/gallery/upload",
+					}),
+					onUploadProgress({ percentage }) {
+						// Update progress for this specific photo
+						photoProgresses[index] = percentage;
+
+						// Calculate cumulative progress
+						const totalProgress = photoProgresses.reduce(
+							(sum, progress) => sum + progress,
+							0,
+						);
+						const averageProgress = totalProgress / totalUploads;
+						setProgress(averageProgress);
+					},
+					multipart: false,
+					clientPayload: JSON.stringify(
+						ListingGalleryPayload.parse({
+							listingId,
+							sort: index,
+						}),
+					),
+					headers: {
+						Authorization:
+							"Bearer nejaky-fake-token-jen-tak-pro-prdel",
+					},
+				}),
+			);
+		});
+
+		await Promise.all(uploadPromises);
+	};
 
 	const createListingMutation = withListingCreateMutation().useMutation({
 		async onSuccess(data) {
+			await uploadPhotos(files, data.id);
+
 			return navigate({
 				to: "/$locale/app/listing/$id/view",
 				params: {
@@ -154,8 +168,17 @@ export const SubmitWrapper: FC<{
 							tone={"primary"}
 							theme={"dark"}
 							size={"xl"}
-							label={"Submit listing (button)"}
-							disabled={createListingMutation.isPending}
+							label={
+								progress > 0 && progress < 100
+									? "Uploading photos..."
+									: createListingMutation.isPending
+										? "Creating listing..."
+										: "Submit listing (button)"
+							}
+							disabled={
+								createListingMutation.isPending ||
+								(progress > 0 && progress < 100)
+							}
 							onClick={() => {
 								try {
 									createListingMutation.mutate(store.get());
@@ -177,27 +200,18 @@ export const SubmitWrapper: FC<{
 						},
 					}}
 				>
-					{/* Commented out photo progress display */}
-					{/* {files.map((photo) => {
-						const progress = photoProgress[photo.name] || 0;
-						if (progress <= 0 || progress >= 100) {
-							return null;
-						}
-
-						return (
-							<Progress
-								key={photo?.name}
-								value={progress}
-								size={"lg"}
-								tweak={{
-									variant: {
-										tone: "primary",
-										theme: "dark",
-									},
-								}}
-							/>
-						);
-					})} */}
+					{progress > 0 && progress < 100 && (
+						<Progress
+							value={progress}
+							size={"lg"}
+							tweak={{
+								variant: {
+									tone: "primary",
+									theme: "dark",
+								},
+							}}
+						/>
+					)}
 				</Status>
 			</Sheet>
 		</ListingContainer>

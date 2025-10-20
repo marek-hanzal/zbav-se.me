@@ -258,7 +258,7 @@ withListingApi.openapi(
 			},
 		},
 		tags: [
-			"content",
+			"listing",
 		],
 	}),
 	async (c) => {
@@ -301,6 +301,9 @@ withListingApi.openapi(
 						JSON.parse(tokenPayload ?? "{}"),
 					);
 
+					/**
+					 * Be sure request comes to the right listing
+					 */
 					const listing = await database.kysely
 						.selectFrom("Listing")
 						.where("id", "=", payload.listingId)
