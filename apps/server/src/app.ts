@@ -5,7 +5,6 @@ import { secureHeaders } from "hono/secure-headers";
 import { auth } from "./auth";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
-import { withContentApi } from "./content/withContentApi";
 import { AppEnv } from "./env";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withHealthApi } from "./health/withHealthApi";
@@ -99,7 +98,6 @@ app.on(
 );
 //
 const protectedEndpoints = withHono();
-protectedEndpoints.route("/", withContentApi);
 protectedEndpoints.route("/", withCategoryGroupApi);
 protectedEndpoints.route("/", withCategoryApi);
 protectedEndpoints.route("/", withListingApi);

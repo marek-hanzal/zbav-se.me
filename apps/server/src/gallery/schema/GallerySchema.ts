@@ -14,6 +14,9 @@ export const GallerySchema = z
 		url: z.string().url().openapi({
 			description: "Public URL to the image",
 		}),
+		sort: z.number().openapi({
+			description: "Sort order of the image in the listing's gallery",
+		}),
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",
 		}),

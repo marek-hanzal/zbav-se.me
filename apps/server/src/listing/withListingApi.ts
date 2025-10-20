@@ -1,6 +1,17 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import {
+	genId,
+	linkTo,
+	withCount,
+	withFetch,
+	withList,
+} from "@use-pico/common";
+import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
+import { ListingGalleryPayload } from "@zbav-se.me/common";
+import { HandleUploadBodySchema } from "../content/schema/HandleUploadBodySchema";
+import { HandleUploadResponseSchema } from "../content/schema/HandleUploadResponseSchema";
 import { database } from "../database/kysely";
+import { AppEnv } from "../env";
 import { CountSchema } from "../schema/CountSchema";
 import { withSessionHono } from "../withSessionHono";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
@@ -213,6 +224,105 @@ withListingApi.openapi(
 						select,
 						where,
 					});
+				},
+			}),
+		);
+	},
+);
+
+withListingApi.openapi(
+	createRoute({
+		method: "post",
+		path: "/listing/gallery/upload",
+		description: "Upload a photo to the listing gallery",
+		operationId: "apiListingGalleryUpload",
+		request: {
+			body: {
+				content: {
+					"application/json": {
+						schema: HandleUploadBodySchema,
+					},
+				},
+				required: true,
+				description: "Request body consumed by @vercel/blob/client",
+			},
+		},
+		responses: {
+			200: {
+				description: "Response consumed by @vercel/blob/client",
+				content: {
+					"application/json": {
+						schema: HandleUploadResponseSchema,
+					},
+				},
+			},
+		},
+		tags: [
+			"content",
+		],
+	}),
+	async (c) => {
+		return c.json(
+			await handleUpload({
+				request: c.req.raw,
+				body: c.req.valid("json") satisfies HandleUploadBody,
+				token: AppEnv.VERCEL_BLOB,
+				async onBeforeGenerateToken(pathname, clientPayload) {
+					const user = c.get("user");
+					if (!pathname.startsWith(`/${user.id}/`)) {
+						throw new Error(
+							"Unauthorized: Path must start with user ID",
+						);
+					}
+
+					return {
+						allowedContentTypes: [
+							"image/jpeg",
+							"image/png",
+							"image/webp",
+							"image/avif",
+						],
+						addRandomSuffix: true,
+						allowOverwrite: false,
+						cacheControlMaxAge: 60 * 60 * 24 * 30,
+						maximumSizeInBytes: 16 * 1024 * 1024,
+						callbackUrl: linkTo({
+							base: AppEnv.VITE_API,
+							href: "/api/content/upload",
+						}),
+						tokenPayload: JSON.stringify(
+							ListingGalleryPayload.parse(clientPayload),
+						),
+					};
+				},
+				async onUploadCompleted({ blob, tokenPayload }) {
+					const user = c.get("user");
+					const payload = ListingGalleryPayload.parse(
+						JSON.parse(tokenPayload ?? "{}"),
+					);
+
+					const listing = await database.kysely
+						.selectFrom("Listing")
+						.where("id", "=", payload.listingId)
+						.where("userId", "=", user.id)
+						.selectAll()
+						.executeTakeFirstOrThrow();
+
+					await database.kysely
+						.insertInto("Gallery")
+						.values({
+							id: genId(),
+							createdAt: new Date(),
+							listingId: listing.id,
+							updatedAt: new Date(),
+							url: linkTo({
+								base: "https://content.zbav-se.me",
+								href: blob.pathname,
+							}),
+							sort: payload.sort,
+							userId: user.id,
+						})
+						.execute();
 				},
 			}),
 		);

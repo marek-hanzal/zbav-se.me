@@ -7,7 +7,8 @@
 		]
 	},
 	"include": [
-		"src/**/*"
+		"src/**/*",
+		"../../packages/@zbav-se.me/common/src/listing/schema/ListingGalleryPayload.ts"
 	],
 	"exclude": [
 		"node_modules"
