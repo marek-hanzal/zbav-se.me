@@ -320,6 +320,61 @@ export interface CategoryGroupQuery {
   sort?: CategoryGroupSort[] | null;
 }
 
+export interface ListingDto {
+  /** ID of the listing */
+  id: string;
+  /** ID of the user who created the listing */
+  userId: string;
+  /**
+   * Price of the listing
+   * @nullable
+   */
+  price: number | null;
+  /** Condition of the item (0-based index) */
+  condition: number;
+  /** Age of the item (0-based index) */
+  age: number;
+  /** ID of the location */
+  locationId: string;
+  /** ID of the category group */
+  categoryGroupId: string;
+  /** ID of the category */
+  categoryId: string;
+  /**
+   * Creation timestamp
+   * @nullable
+   */
+  createdAt: string | null;
+  /**
+   * Last update timestamp
+   * @nullable
+   */
+  updatedAt: string | null;
+  /** Token used to upload the listing image; don't be afraid, it's short-lived. */
+  upload: string;
+}
+
+/**
+ * Data required to create a new listing
+ */
+export interface ListingCreate {
+  /**
+   * Price of the listing
+   * @nullable
+   */
+  price: number | null;
+  /** Condition of the item (0-based index) */
+  condition: number;
+  /** Age of the item (0-based index) */
+  age: number;
+  /** ID of the location */
+  locationId: string;
+  /** ID of the category group */
+  categoryGroupId: string;
+  /** ID of the category */
+  categoryId: string;
+}
+
 /**
  * Represents a marketplace listing
  */
@@ -353,27 +408,6 @@ export interface Listing {
    * @nullable
    */
   updatedAt: string | null;
-}
-
-/**
- * Data required to create a new listing
- */
-export interface ListingCreate {
-  /**
-   * Price of the listing
-   * @nullable
-   */
-  price: number | null;
-  /** Condition of the item (0-based index) */
-  condition: number;
-  /** Age of the item (0-based index) */
-  age: number;
-  /** ID of the location */
-  locationId: string;
-  /** ID of the category group */
-  categoryGroupId: string;
-  /** ID of the category */
-  categoryId: string;
 }
 
 /**
@@ -583,95 +617,6 @@ export interface ListingQuery {
   /** @nullable */
   sort?: ListingSort[] | null;
 }
-
-export type HandleUploadResponseAnyOfType = typeof HandleUploadResponseAnyOfType[keyof typeof HandleUploadResponseAnyOfType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const HandleUploadResponseAnyOfType = {
-  'blobgenerate-client-token': 'blob.generate-client-token',
-} as const;
-
-export type HandleUploadResponseAnyOf = {
-  type: HandleUploadResponseAnyOfType;
-  clientToken: string;
-};
-
-export type HandleUploadResponseAnyOfThreeType = typeof HandleUploadResponseAnyOfThreeType[keyof typeof HandleUploadResponseAnyOfThreeType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const HandleUploadResponseAnyOfThreeType = {
-  'blobupload-completed': 'blob.upload-completed',
-} as const;
-
-export type HandleUploadResponseAnyOfThreeResponse = typeof HandleUploadResponseAnyOfThreeResponse[keyof typeof HandleUploadResponseAnyOfThreeResponse];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const HandleUploadResponseAnyOfThreeResponse = {
-  ok: 'ok',
-} as const;
-
-export type HandleUploadResponseAnyOfThree = {
-  type: HandleUploadResponseAnyOfThreeType;
-  response: HandleUploadResponseAnyOfThreeResponse;
-};
-
-export type HandleUploadResponse = HandleUploadResponseAnyOf | HandleUploadResponseAnyOfThree;
-
-export type GenerateClientTokenEventType = typeof GenerateClientTokenEventType[keyof typeof GenerateClientTokenEventType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const GenerateClientTokenEventType = {
-  'blobgenerate-client-token': 'blob.generate-client-token',
-} as const;
-
-export type GenerateClientTokenEventPayload = {
-  pathname: string;
-  multipart: boolean;
-  /** @nullable */
-  clientPayload: string | null;
-};
-
-export interface GenerateClientTokenEvent {
-  type: GenerateClientTokenEventType;
-  payload: GenerateClientTokenEventPayload;
-}
-
-export interface PutBlobResult {
-  url: string;
-  downloadUrl: string;
-  pathname: string;
-  /** @minimum 0 */
-  size: number;
-  uploadedAt: string;
-  contentType: string;
-  contentDisposition: string;
-  [key: string]: unknown | null;
-}
-
-export type UploadCompletedEventType = typeof UploadCompletedEventType[keyof typeof UploadCompletedEventType];
-
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const UploadCompletedEventType = {
-  'blobupload-completed': 'blob.upload-completed',
-} as const;
-
-export type UploadCompletedEventPayload = {
-  blob: PutBlobResult;
-  /** @nullable */
-  tokenPayload?: string | null;
-};
-
-export interface UploadCompletedEvent {
-  type: UploadCompletedEventType;
-  payload: UploadCompletedEventPayload;
-}
-
-export type HandleUploadBody = GenerateClientTokenEvent | UploadCompletedEvent;
 
 /**
  * Represents a photo in a listing's gallery
@@ -1011,6 +956,95 @@ export interface LocationQuery {
   sort?: LocationSort[] | null;
 }
 
+export type HandleUploadResponseAnyOfType = typeof HandleUploadResponseAnyOfType[keyof typeof HandleUploadResponseAnyOfType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const HandleUploadResponseAnyOfType = {
+  'blobgenerate-client-token': 'blob.generate-client-token',
+} as const;
+
+export type HandleUploadResponseAnyOf = {
+  type: HandleUploadResponseAnyOfType;
+  clientToken: string;
+};
+
+export type HandleUploadResponseAnyOfThreeType = typeof HandleUploadResponseAnyOfThreeType[keyof typeof HandleUploadResponseAnyOfThreeType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const HandleUploadResponseAnyOfThreeType = {
+  'blobupload-completed': 'blob.upload-completed',
+} as const;
+
+export type HandleUploadResponseAnyOfThreeResponse = typeof HandleUploadResponseAnyOfThreeResponse[keyof typeof HandleUploadResponseAnyOfThreeResponse];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const HandleUploadResponseAnyOfThreeResponse = {
+  ok: 'ok',
+} as const;
+
+export type HandleUploadResponseAnyOfThree = {
+  type: HandleUploadResponseAnyOfThreeType;
+  response: HandleUploadResponseAnyOfThreeResponse;
+};
+
+export type HandleUploadResponse = HandleUploadResponseAnyOf | HandleUploadResponseAnyOfThree;
+
+export type GenerateClientTokenEventType = typeof GenerateClientTokenEventType[keyof typeof GenerateClientTokenEventType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const GenerateClientTokenEventType = {
+  'blobgenerate-client-token': 'blob.generate-client-token',
+} as const;
+
+export type GenerateClientTokenEventPayload = {
+  pathname: string;
+  multipart: boolean;
+  /** @nullable */
+  clientPayload: string | null;
+};
+
+export interface GenerateClientTokenEvent {
+  type: GenerateClientTokenEventType;
+  payload: GenerateClientTokenEventPayload;
+}
+
+export interface PutBlobResult {
+  url: string;
+  downloadUrl: string;
+  pathname: string;
+  /** @minimum 0 */
+  size: number;
+  uploadedAt: string;
+  contentType: string;
+  contentDisposition: string;
+  [key: string]: unknown | null;
+}
+
+export type UploadCompletedEventType = typeof UploadCompletedEventType[keyof typeof UploadCompletedEventType];
+
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const UploadCompletedEventType = {
+  'blobupload-completed': 'blob.upload-completed',
+} as const;
+
+export type UploadCompletedEventPayload = {
+  blob: PutBlobResult;
+  /** @nullable */
+  tokenPayload?: string | null;
+};
+
+export interface UploadCompletedEvent {
+  type: UploadCompletedEventType;
+  payload: UploadCompletedEventPayload;
+}
+
+export type HandleUploadBody = GenerateClientTokenEvent | UploadCompletedEvent;
+
 export interface Health {
   status: boolean;
 }
@@ -1136,7 +1170,7 @@ export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
 /**
  * Create a new listing
  */
-export const apiListingCreate = <TData = AxiosResponse<Listing>>(
+export const apiListingCreate = <TData = AxiosResponse<ListingDto>>(
     listingCreate: ListingCreate, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
@@ -1178,18 +1212,6 @@ export const apiListingCount = <TData = AxiosResponse<Count>>(
     return axios.post(
       `/api/session/listing/count`,
       listingQuery,options
-    );
-  }
-
-/**
- * Upload a photo to the listing gallery
- */
-export const apiListingGalleryUpload = <TData = AxiosResponse<HandleUploadResponse>>(
-    handleUploadBody: HandleUploadBody, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/listing/gallery/upload`,
-      handleUploadBody,options
     );
   }
 
@@ -1255,6 +1277,18 @@ export const apiLocationFetch = <TData = AxiosResponse<Location>>(
   }
 
 /**
+ * Upload a photo to the listing gallery
+ */
+export const apiListingGalleryUpload = <TData = AxiosResponse<HandleUploadResponse>>(
+    handleUploadBody: HandleUploadBody, options?: AxiosRequestConfig
+ ): Promise<TData> => {
+    return axios.post(
+      `/api/token/listing/gallery/upload`,
+      handleUploadBody,options
+    );
+  }
+
+/**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealth = <TData = AxiosResponse<Health>>(
@@ -1282,15 +1316,15 @@ export type ApiCategoryCountResult = AxiosResponse<Count>
 export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>
 export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>
 export type ApiCategoryGroupCountResult = AxiosResponse<Count>
-export type ApiListingCreateResult = AxiosResponse<Listing>
+export type ApiListingCreateResult = AxiosResponse<ListingDto>
 export type ApiListingFetchResult = AxiosResponse<Listing>
 export type ApiListingCollectionResult = AxiosResponse<Listing[]>
 export type ApiListingCountResult = AxiosResponse<Count>
-export type ApiListingGalleryUploadResult = AxiosResponse<HandleUploadResponse>
 export type ApiGalleryFetchResult = AxiosResponse<Gallery>
 export type ApiGalleryCollectionResult = AxiosResponse<Gallery[]>
 export type ApiGalleryCountResult = AxiosResponse<Count>
 export type ApiLocationAutocompleteResult = AxiosResponse<Location[]>
 export type ApiLocationFetchResult = AxiosResponse<Location>
+export type ApiListingGalleryUploadResult = AxiosResponse<HandleUploadResponse>
 export type ApiHealthResult = AxiosResponse<Health>
 export type ApiMigrationRunResult = AxiosResponse<Migration[]>

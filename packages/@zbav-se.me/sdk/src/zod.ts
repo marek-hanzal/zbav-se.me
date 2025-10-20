@@ -282,8 +282,9 @@ export const apiListingCreateResponse = zod.object({
   "categoryGroupId": zod.string().describe('ID of the category group'),
   "categoryId": zod.string().describe('ID of the category'),
   "createdAt": zod.iso.date().nullable().describe('Creation timestamp'),
-  "updatedAt": zod.iso.date().nullable().describe('Last update timestamp')
-}).describe('Represents a marketplace listing')
+  "updatedAt": zod.iso.date().nullable().describe('Last update timestamp'),
+  "upload": zod.string().describe('Token used to upload the listing image; don\'t be afraid, it\'s short-lived.')
+})
 
 
 /**
@@ -470,43 +471,6 @@ export const apiListingCountResponse = zod.object({
   "filter": zod.number().describe('Count of items based on provided filter query.'),
   "total": zod.number().describe('Total count of items (no filters applied).')
 }).describe('Complex count of items based on provided query.')
-
-
-/**
- * Upload a photo to the listing gallery
- */
-export const apiListingGalleryUploadBodyPayloadBlobSizeMin = 0;
-
-export const apiListingGalleryUploadBody = zod.union([zod.object({
-  "type": zod.enum(['blob.generate-client-token']),
-  "payload": zod.object({
-  "pathname": zod.string(),
-  "multipart": zod.boolean(),
-  "clientPayload": zod.string().nullable()
-})
-}),zod.object({
-  "type": zod.enum(['blob.upload-completed']),
-  "payload": zod.object({
-  "blob": zod.object({
-  "url": zod.url(),
-  "downloadUrl": zod.url(),
-  "pathname": zod.string(),
-  "size": zod.number().min(apiListingGalleryUploadBodyPayloadBlobSizeMin),
-  "uploadedAt": zod.string(),
-  "contentType": zod.string(),
-  "contentDisposition": zod.string()
-}),
-  "tokenPayload": zod.string().nullish()
-})
-})])
-
-export const apiListingGalleryUploadResponse = zod.union([zod.object({
-  "type": zod.enum(['blob.generate-client-token']),
-  "clientToken": zod.string()
-}),zod.object({
-  "type": zod.enum(['blob.upload-completed']),
-  "response": zod.enum(['ok'])
-})])
 
 
 /**
@@ -721,6 +685,43 @@ export const apiLocationFetchResponse = zod.object({
   "lat": zod.number().nullable().describe('Latitude of the location'),
   "lon": zod.number().nullable().describe('Longitude of the location')
 }).describe('A location cache table')
+
+
+/**
+ * Upload a photo to the listing gallery
+ */
+export const apiListingGalleryUploadBodyPayloadBlobSizeMin = 0;
+
+export const apiListingGalleryUploadBody = zod.union([zod.object({
+  "type": zod.enum(['blob.generate-client-token']),
+  "payload": zod.object({
+  "pathname": zod.string(),
+  "multipart": zod.boolean(),
+  "clientPayload": zod.string().nullable()
+})
+}),zod.object({
+  "type": zod.enum(['blob.upload-completed']),
+  "payload": zod.object({
+  "blob": zod.object({
+  "url": zod.url(),
+  "downloadUrl": zod.url(),
+  "pathname": zod.string(),
+  "size": zod.number().min(apiListingGalleryUploadBodyPayloadBlobSizeMin),
+  "uploadedAt": zod.string(),
+  "contentType": zod.string(),
+  "contentDisposition": zod.string()
+}),
+  "tokenPayload": zod.string().nullish()
+})
+})])
+
+export const apiListingGalleryUploadResponse = zod.union([zod.object({
+  "type": zod.enum(['blob.generate-client-token']),
+  "clientToken": zod.string()
+}),zod.object({
+  "type": zod.enum(['blob.upload-completed']),
+  "response": zod.enum(['ok'])
+})])
 
 
 /**

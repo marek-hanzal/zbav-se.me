@@ -37,6 +37,7 @@ jobs:
             NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
             #
             BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
             #
             GEOAPIFY: ${{ secrets.GEOAPIFY }}
         steps:
@@ -58,6 +59,7 @@ jobs:
                   : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
                   : "${NEON_API_KEY:?NEON_API_KEY missing}"
                   : "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET missing}"
+                  : "${JWT_SECRET:?JWT_SECRET missing}"
                   : "${GEOAPIFY:?GEOAPIFY missing}"
                   echo "OK: required variables present."
 
@@ -122,6 +124,7 @@ jobs:
             COOKIE: ${{ vars.COOKIE }}
             GEOAPIFY: ${{ secrets.GEOAPIFY }}
             BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
             VITE_API: ${{ vars.VITE_API }}
         steps:
             - uses: actions/checkout@v4

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useLoaderData, useNavigate, useParams } from "@tanstack/react-router";
 import {
 	Button,
 	Container,
@@ -31,6 +31,9 @@ export const SubmitWrapper: FC<{
 	const { locale } = useParams({
 		from: "/$locale",
 	});
+	const { user } = useLoaderData({
+		from: "/$locale/app",
+	});
 	const useCreateListingStore = useCreateListingContext();
 	const store = useCreateListingStore();
 	const missingId = useId();
@@ -40,7 +43,11 @@ export const SubmitWrapper: FC<{
 	const [progress, setProgress] = useState(0);
 
 	// Photo upload functionality with cumulative progress
-	const uploadPhotos = async (photos: File[], listingId: string) => {
+	const uploadPhotos = async (
+		photos: File[],
+		listingId: string,
+		token: string,
+	) => {
 		setProgress(0);
 
 		const queue = new PQueue({
@@ -52,12 +59,12 @@ export const SubmitWrapper: FC<{
 
 		const uploadPromises = photos.map(async (photo, index) => {
 			return queue.add(() =>
-				upload(photo.name, photo, {
+				upload(`/${user.id}/${photo.name}`, photo, {
 					access: "public",
 					contentType: photo.type,
 					handleUploadUrl: linkTo({
 						base: import.meta.env.VITE_API,
-						href: "/api/protected/listing/gallery/upload",
+						href: "/api/token/listing/gallery/upload",
 					}),
 					onUploadProgress({ percentage }) {
 						// Update progress for this specific photo
@@ -79,8 +86,7 @@ export const SubmitWrapper: FC<{
 						}),
 					),
 					headers: {
-						Authorization:
-							"Bearer nejaky-fake-token-jen-tak-pro-prdel",
+						Authorization: `Bearer ${token}`,
 					},
 				}),
 			);
@@ -91,7 +97,7 @@ export const SubmitWrapper: FC<{
 
 	const createListingMutation = withListingCreateMutation().useMutation({
 		async onSuccess(data) {
-			await uploadPhotos(files, data.id);
+			await uploadPhotos(files, data.id, data.upload);
 
 			return navigate({
 				to: "/$locale/app/listing/$id/view",

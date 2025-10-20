@@ -8,15 +8,18 @@ import {
 } from "@use-pico/common";
 import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
 import { ListingGalleryPayload } from "@zbav-se.me/common";
+import { AppEnv } from "../AppEnv";
 import { HandleUploadBodySchema } from "../content/schema/HandleUploadBodySchema";
 import { HandleUploadResponseSchema } from "../content/schema/HandleUploadResponseSchema";
 import { database } from "../database/kysely";
-import { AppEnv } from "../env";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withTokenHono } from "../hono/withTokenHono";
+import { PayloadSchema } from "../jwt/PayloadSchema";
+import { sign } from "../jwt/sign";
 import { CountSchema } from "../schema/CountSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
+import { ListingDtoSchema } from "./schema/ListingDtoSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import { ListingSchema } from "./schema/ListingSchema";
 import {
@@ -48,7 +51,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: ListingSchema,
+							schema: ListingDtoSchema,
 						},
 					},
 					description: "The created listing",
@@ -81,7 +84,18 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				.returningAll()
 				.executeTakeFirstOrThrow();
 
-			return c.json(listing);
+			return c.json({
+				...listing,
+				upload: await sign({
+					schema: PayloadSchema,
+					issuer: AppEnv.VITE_API,
+					scope: "/api/token/listing/gallery/upload",
+					secret: AppEnv.JWT_SECRET,
+					userId: user.id,
+					subject: listing.id,
+					expiresIn: "18m",
+				}),
+			});
 		},
 	);
 
@@ -273,6 +287,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 					token: AppEnv.VERCEL_BLOB,
 					async onBeforeGenerateToken(pathname, clientPayload) {
 						const user = c.get("user");
+
 						if (!pathname.startsWith(`/${user.id}/`)) {
 							throw new Error(
 								"Unauthorized: Path must start with user ID",
@@ -295,7 +310,9 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 								href: "/api/content/upload",
 							}),
 							tokenPayload: JSON.stringify(
-								ListingGalleryPayload.parse(clientPayload),
+								ListingGalleryPayload.parse(
+									JSON.parse(clientPayload ?? "{}"),
+								),
 							),
 						};
 					},

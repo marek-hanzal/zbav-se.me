@@ -2,16 +2,19 @@ import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
+import { AppEnv } from "./AppEnv";
 import { auth } from "./auth";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
-import { AppEnv } from "./env";
+import { database } from "./database/kysely";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withHealthApi } from "./health/withHealthApi";
 import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withTokenHono } from "./hono/withTokenHono";
+import { PayloadSchema } from "./jwt/PayloadSchema";
+import { verify } from "./jwt/verify";
 import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
@@ -88,6 +91,33 @@ app.use("/api/session/*", async (c, next) => {
 	return next();
 });
 app.use("/api/token/*", async (c, next) => {
+	const [, token] = c.req.header("Authorization")?.split(" ") ?? [];
+
+	if (!token) {
+		return c.json(
+			{
+				error: "Shooooo! Shooo!",
+			},
+			401,
+		);
+	}
+
+	const { payload } = await verify(token, {
+		issuer: AppEnv.VITE_API,
+		secret: AppEnv.JWT_SECRET,
+		scope: c.req.path,
+		schema: PayloadSchema,
+	});
+
+	c.set(
+		"user",
+		await database.kysely
+			.selectFrom("user")
+			.where("id", "=", payload.userId)
+			.selectAll()
+			.executeTakeFirstOrThrow(),
+	);
+
 	return next();
 });
 

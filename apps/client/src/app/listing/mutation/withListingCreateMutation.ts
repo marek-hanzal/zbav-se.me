@@ -1,12 +1,12 @@
 import { withMutation } from "@use-pico/client";
 import {
 	apiListingCreate,
-	type Listing,
 	type ListingCreate,
+	type ListingDto,
 } from "@zbav-se.me/sdk";
 
 export const withListingCreateMutation = () => {
-	return withMutation<ListingCreate, Listing>({
+	return withMutation<ListingCreate, ListingDto>({
 		keys() {
 			return [
 				"listing",

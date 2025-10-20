@@ -10,6 +10,8 @@
 
 - MCP
 
+- Better way of handling env. variables
+
 - Animate location searh result
 - Test capacitor + native app build
 
