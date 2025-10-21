@@ -307,7 +307,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 							maximumSizeInBytes: 16 * 1024 * 1024,
 							callbackUrl: linkTo({
 								base: AppEnv.VITE_API,
-								href: "/api/content/upload",
+								href: "/api/token/listing/gallery/upload",
 							}),
 							tokenPayload: JSON.stringify(
 								ListingGalleryPayload.parse(
