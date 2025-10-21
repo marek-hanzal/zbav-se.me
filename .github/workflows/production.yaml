@@ -17,7 +17,6 @@ env:
     # -------------------------------
     BUNNY_HOST: ${{ vars.BUNNY_HOST }}
     BUNNY_USER: ${{ vars.BUNNY_USER }}
-    COOKIE: ${{ vars.COOKIE }}
     NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
     ORIGIN: ${{ vars.ORIGIN }}
     VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
