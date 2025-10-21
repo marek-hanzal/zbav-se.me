@@ -350,8 +350,6 @@ export interface ListingDto {
    * @nullable
    */
   updatedAt: string | null;
-  /** Token used to upload the listing image; don't be afraid, it's short-lived. */
-  upload: string;
 }
 
 /**

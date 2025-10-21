@@ -1,11 +1,8 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { genId, withCount, withFetch, withList } from "@use-pico/common";
-import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
-import { PayloadSchema } from "../jwt/PayloadSchema";
-import { sign } from "../jwt/sign";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
@@ -75,21 +72,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				.returningAll()
 				.executeTakeFirstOrThrow();
 
-			return c.json(
-				{
-					...listing,
-					upload: await sign({
-						schema: PayloadSchema,
-						issuer: AppEnv.VITE_API,
-						scope: "/api/token/listing/gallery/upload",
-						secret: AppEnv.JWT_SECRET,
-						userId: user.id,
-						subject: listing.id,
-						expiresIn: "18m",
-					}),
-				},
-				201,
-			);
+			return c.json(listing satisfies ListingDtoSchema.Type, 201);
 		},
 	);
 
