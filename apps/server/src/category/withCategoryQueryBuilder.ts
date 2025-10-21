@@ -4,14 +4,14 @@ import type { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 
 export namespace withCategoryQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "Category", any>;
+		select: SelectQueryBuilder<Database, "category", any>;
 		where?: CategoryQuerySchema.Type["where"];
 		sort?: CategoryQuerySchema.Type["sort"];
 	}
 
 	export type Callback = (
 		props: Props,
-	) => SelectQueryBuilder<Database, "Category", any>;
+	) => SelectQueryBuilder<Database, "category", any>;
 }
 
 /**

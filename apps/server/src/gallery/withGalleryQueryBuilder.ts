@@ -4,14 +4,14 @@ import type { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 
 export namespace withGalleryQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "Gallery", any>;
+		select: SelectQueryBuilder<Database, "gallery", any>;
 		where?: GalleryQuerySchema.Type["where"];
 		sort?: GalleryQuerySchema.Type["sort"];
 	}
 
 	export type Callback = (
 		props: Props,
-	) => SelectQueryBuilder<Database, "Gallery", any>;
+	) => SelectQueryBuilder<Database, "gallery", any>;
 }
 
 export const withGalleryQueryBuilder: withGalleryQueryBuilder.Callback = ({

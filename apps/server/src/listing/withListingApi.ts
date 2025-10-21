@@ -68,7 +68,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			const now = new Date();
 
 			const listing = await database.kysely
-				.insertInto("Listing")
+				.insertInto("listing")
 				.values({
 					id,
 					userId: user.id,
@@ -134,7 +134,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 
 			return json(
 				await withFetch({
-					select: database.kysely.selectFrom("Listing").selectAll(),
+					select: database.kysely.selectFrom("listing").selectAll(),
 					output: ListingSchema,
 					filter,
 					where,
@@ -184,7 +184,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			const { cursor, filter, where, sort } = req.valid("json");
 			return json(
 				await withList({
-					select: database.kysely.selectFrom("Listing").selectAll(),
+					select: database.kysely.selectFrom("listing").selectAll(),
 					output: ListingSchema,
 					cursor,
 					filter,
@@ -234,7 +234,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			const { filter, where } = req.valid("json");
 			return json(
 				await withCount({
-					select: database.kysely.selectFrom("Listing").selectAll(),
+					select: database.kysely.selectFrom("listing").selectAll(),
 					filter,
 					where,
 					query({ select, where }) {
@@ -326,14 +326,14 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 						 * Be sure request comes to the right listing
 						 */
 						const listing = await database.kysely
-							.selectFrom("Listing")
+							.selectFrom("listing")
 							.where("id", "=", payload.listingId)
 							.where("userId", "=", user.id)
 							.selectAll()
 							.executeTakeFirstOrThrow();
 
 						await database.kysely
-							.insertInto("Gallery")
+							.insertInto("gallery")
 							.values({
 								id: genId(),
 								createdAt: new Date(),

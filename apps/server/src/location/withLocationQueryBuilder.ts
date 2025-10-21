@@ -4,14 +4,14 @@ import type { LocationQuerySchema } from "./schema/LocationQuerySchema.js";
 
 export namespace withLocationQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "Location", any>;
+		select: SelectQueryBuilder<Database, "location", any>;
 		where?: LocationQuerySchema.Type["where"];
 		sort?: LocationQuerySchema.Type["sort"];
 	}
 
 	export type Callback = (
 		props: Props,
-	) => SelectQueryBuilder<Database, "Location", any>;
+	) => SelectQueryBuilder<Database, "location", any>;
 }
 
 /**

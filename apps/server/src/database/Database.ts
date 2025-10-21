@@ -6,10 +6,10 @@ import type { ListingSchema } from "../listing/schema/ListingSchema";
 import type { LocationSchema } from "../location/schema/LocationSchema";
 
 export interface Database {
-	Category: CategorySchema.Type;
-	CategoryGroup: CategoryGroupSchema.Type;
-	Listing: ListingSchema.Type;
-	Location: LocationSchema.Type;
-	Gallery: GallerySchema.Type;
+	category: CategorySchema.Type;
+	category_group: CategoryGroupSchema.Type;
+	listing: ListingSchema.Type;
+	location: LocationSchema.Type;
+	gallery: GallerySchema.Type;
 	user: typeof auth.$Infer.Session.user;
 }

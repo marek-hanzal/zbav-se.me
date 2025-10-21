@@ -4,14 +4,14 @@ import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
 
 export namespace withListingQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "Listing", any>;
+		select: SelectQueryBuilder<Database, "listing", any>;
 		where?: ListingQuerySchema.Type["where"];
 		sort?: ListingQuerySchema.Type["sort"];
 	}
 
 	export type Callback = (
 		props: Props,
-	) => SelectQueryBuilder<Database, "Listing", any>;
+	) => SelectQueryBuilder<Database, "listing", any>;
 }
 
 /**

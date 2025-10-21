@@ -50,7 +50,7 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 			return json(
 				await withFetch({
 					select: database.kysely
-						.selectFrom("CategoryGroup")
+						.selectFrom("category_group")
 						.selectAll(),
 					output: CategoryGroupSchema,
 					filter,
@@ -102,7 +102,7 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 			return json(
 				await withList({
 					select: database.kysely
-						.selectFrom("CategoryGroup")
+						.selectFrom("category_group")
 						.selectAll(),
 					output: CategoryGroupSchema,
 					cursor,
@@ -155,7 +155,7 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 			return json(
 				await withCount({
 					select: database.kysely
-						.selectFrom("CategoryGroup")
+						.selectFrom("category_group")
 						.selectAll(),
 					filter,
 					where,

@@ -4,14 +4,14 @@ import type { CategoryGroupQuerySchema } from "./schema/CategoryGroupQuerySchema
 
 export namespace withCategoryGroupQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "CategoryGroup", any>;
+		select: SelectQueryBuilder<Database, "category_group", any>;
 		where?: CategoryGroupQuerySchema.Type["where"];
 		sort?: CategoryGroupQuerySchema.Type["sort"];
 	}
 
 	export type Callback = (
 		props: Props,
-	) => SelectQueryBuilder<Database, "CategoryGroup", any>;
+	) => SelectQueryBuilder<Database, "category_group", any>;
 }
 
 /**

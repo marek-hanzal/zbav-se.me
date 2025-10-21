@@ -80,7 +80,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			// First check: quick cache lookup without lock (outside transaction)
 			const quickCache = await withList({
 				select: database.kysely
-					.selectFrom("Location")
+					.selectFrom("location")
 					.where("query", "=", text)
 					.where("lang", "=", lang)
 					.selectAll(),
@@ -113,7 +113,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					// Second check: cache might have been filled while waiting for lock
 					const cache = await withList({
 						select: trx
-							.selectFrom("Location")
+							.selectFrom("location")
 							.where("query", "=", text)
 							.where("lang", "=", lang)
 							.orderBy("confidence", "desc")
@@ -171,7 +171,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 
 					locations.length > 0 &&
 						(await trx
-							.insertInto("Location")
+							.insertInto("location")
 							.values(locations)
 							.onConflict((oc) =>
 								oc
@@ -231,7 +231,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			const { filter, where, sort } = req.valid("json");
 			return json(
 				await withFetch({
-					select: database.kysely.selectFrom("Location").selectAll(),
+					select: database.kysely.selectFrom("location").selectAll(),
 					output: LocationSchema,
 					filter,
 					where,

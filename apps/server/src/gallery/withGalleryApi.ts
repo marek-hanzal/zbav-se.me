@@ -49,7 +49,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 			const { filter, where, sort } = req.valid("json");
 			return json(
 				await withFetch({
-					select: database.kysely.selectFrom("Gallery").selectAll(),
+					select: database.kysely.selectFrom("gallery").selectAll(),
 					output: GallerySchema,
 					filter,
 					where,
@@ -99,7 +99,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 			const { cursor, filter, where, sort } = req.valid("json");
 			return json(
 				await withList({
-					select: database.kysely.selectFrom("Gallery").selectAll(),
+					select: database.kysely.selectFrom("gallery").selectAll(),
 					output: GallerySchema,
 					cursor,
 					filter,
@@ -150,7 +150,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 			const { filter, where } = req.valid("json");
 			return json(
 				await withCount({
-					select: database.kysely.selectFrom("Gallery").selectAll(),
+					select: database.kysely.selectFrom("gallery").selectAll(),
 					filter,
 					where,
 					query({ select, where }) {

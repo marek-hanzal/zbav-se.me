@@ -53,19 +53,19 @@ const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
 
 export const InitialMigration: Migration = {
 	async up(db) {
-		// Create CategoryGroup table
+		// Create category_group table
 		await db.schema
-			.createTable("CategoryGroup")
+			.createTable("category_group")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("locale", "text", (col) => col.notNull())
 			.execute();
 
-		// Create unique index for CategoryGroup [name, locale]
+		// Create unique index for category_group [name, locale]
 		await db.schema
-			.createIndex("CategoryGroup_[name-locale]_unique_idx")
-			.on("CategoryGroup")
+			.createIndex("category_group_[name-locale]_unique_idx")
+			.on("category_group")
 			.columns([
 				"name",
 				"locale",
@@ -73,9 +73,9 @@ export const InitialMigration: Migration = {
 			.unique()
 			.execute();
 
-		// Create Category table
+		// Create category table
 		await db.schema
-			.createTable("Category")
+			.createTable("category")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
@@ -83,10 +83,10 @@ export const InitialMigration: Migration = {
 			.addColumn("locale", "text", (col) => col.notNull())
 			.execute();
 
-		// Create unique index for Category [name, locale, categoryGroupId]
+		// Create unique index for category [name, locale, categoryGroupId]
 		await db.schema
-			.createIndex("Category_[name-locale-categoryGroupId]_unique_idx")
-			.on("Category")
+			.createIndex("category_[name-locale-categoryGroupId]_unique_idx")
+			.on("category")
 			.columns([
 				"name",
 				"locale",
@@ -95,10 +95,10 @@ export const InitialMigration: Migration = {
 			.unique()
 			.execute();
 
-		// Insert CategoryGroup seed data and get the inserted rows
+		// Insert category_group seed data and get the inserted rows
 		const categoryGroupData = generateCategoryGroupSeedData();
 		const insertedCategoryGroups = await db
-			.insertInto("CategoryGroup")
+			.insertInto("category_group")
 			.values(categoryGroupData)
 			.returningAll()
 			.execute();
@@ -109,14 +109,14 @@ export const InitialMigration: Migration = {
 			categoryGroupMap.set(group.name, group.id);
 		});
 
-		// Insert Category seed data with proper group assignments
+		// Insert category seed data with proper group assignments
 		await db
-			.insertInto("Category")
+			.insertInto("category")
 			.values(generateCategorySeedData(categoryGroupMap))
 			.execute();
 
 		await db.schema
-			.createTable("Location")
+			.createTable("location")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("query", "varchar(128)", (col) => col.notNull())
@@ -141,8 +141,8 @@ export const InitialMigration: Migration = {
 
 		// Create composite index for fast exact match lookups
 		await db.schema
-			.createIndex("Location_[query-lang]_idx")
-			.on("Location")
+			.createIndex("location_[query-lang]_idx")
+			.on("location")
 			.columns([
 				"query",
 				"lang",
@@ -150,8 +150,8 @@ export const InitialMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("Location_[lang-hash]_unique_idx")
-			.on("Location")
+			.createIndex("location_[lang-hash]_unique_idx")
+			.on("location")
 			.columns([
 				"lang",
 				"hash",
@@ -159,9 +159,9 @@ export const InitialMigration: Migration = {
 			.unique()
 			.execute();
 
-		// Create Listing table
+		// Create listing table
 		await db.schema
-			.createTable("Listing")
+			.createTable("listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
@@ -180,42 +180,42 @@ export const InitialMigration: Migration = {
 
 		// Create index for userId
 		await db.schema
-			.createIndex("Listing_userId_idx")
-			.on("Listing")
+			.createIndex("listing_userId_idx")
+			.on("listing")
 			.column("userId")
 			.execute();
 
 		// Create foreign key constraint for location
 		await db.schema
-			.createIndex("Listing_locationId_idx")
-			.on("Listing")
+			.createIndex("listing_locationId_idx")
+			.on("listing")
 			.column("locationId")
 			.execute();
 
 		// Create index for category group
 		await db.schema
-			.createIndex("Listing_categoryGroupId_idx")
-			.on("Listing")
+			.createIndex("listing_categoryGroupId_idx")
+			.on("listing")
 			.column("categoryGroupId")
 			.execute();
 
 		// Create index for category
 		await db.schema
-			.createIndex("Listing_categoryId_idx")
-			.on("Listing")
+			.createIndex("listing_categoryId_idx")
+			.on("listing")
 			.column("categoryId")
 			.execute();
 
 		// Create index for created date
 		await db.schema
-			.createIndex("Listing_createdAt_idx")
-			.on("Listing")
+			.createIndex("listing_createdAt_idx")
+			.on("listing")
 			.column("createdAt")
 			.execute();
 
-		// Create Gallery table
+		// Create gallery table
 		await db.schema
-			.createTable("Gallery")
+			.createTable("gallery")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
@@ -230,20 +230,20 @@ export const InitialMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("Gallery_userId_idx")
-			.on("Gallery")
+			.createIndex("gallery_userId_idx")
+			.on("gallery")
 			.column("userId")
 			.execute();
 
 		await db.schema
-			.createIndex("Gallery_listingId_idx")
-			.on("Gallery")
+			.createIndex("gallery_listingId_idx")
+			.on("gallery")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("Gallery_createdAt_idx")
-			.on("Gallery")
+			.createIndex("gallery_createdAt_idx")
+			.on("gallery")
 			.column("createdAt")
 			.execute();
 	},

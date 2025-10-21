@@ -50,7 +50,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 
 			return json(
 				await withFetch({
-					select: database.kysely.selectFrom("Category").selectAll(),
+					select: database.kysely.selectFrom("category").selectAll(),
 					output: CategorySchema,
 					filter,
 					where,
@@ -100,7 +100,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 			const { cursor, filter, where, sort } = req.valid("json");
 			return json(
 				await withList({
-					select: database.kysely.selectFrom("Category").selectAll(),
+					select: database.kysely.selectFrom("category").selectAll(),
 					output: CategorySchema,
 					cursor,
 					filter,
@@ -150,7 +150,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 			const { filter, where } = req.valid("json");
 			return json(
 				await withCount({
-					select: database.kysely.selectFrom("Category").selectAll(),
+					select: database.kysely.selectFrom("category").selectAll(),
 					filter,
 					where,
 					query({ select, where }) {
