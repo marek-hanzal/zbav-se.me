@@ -11,8 +11,6 @@ concurrency:
 permissions:
     contents: read
 
-# Global environment (available to all jobs/steps).
-# Vercel CLI will read org/project from these envs when set.
 env:
     # -------------------------------
     # Public (non-sensitive) variables
@@ -70,7 +68,6 @@ jobs:
                   : "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET missing}"
                   : "${JWT_SECRET:?JWT_SECRET missing}"
                   : "${GEOAPIFY:?GEOAPIFY missing}"
-                  : "${MIGRATION_URL:?MIGRATION_URL missing}"
                   echo "OK: required variables present."
 
     vercel-env-client:
@@ -81,8 +78,17 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Install Vercel CLI
-              run: npm i -g vercel@latest
+            # Use bunx + cache to speed up Vercel CLI startup
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
 
             # Upsert client build-time envs (production)
             - name: Upsert client env
@@ -109,8 +115,17 @@ jobs:
         steps:
             - uses: actions/checkout@v4
 
-            - name: Install Vercel CLI
-              run: npm i -g vercel@latest
+            # Use bunx + cache to speed up Vercel CLI startup
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache bunx packages (~/.bun)
+              uses: actions/cache@v4
+              with:
+                  path: ~/.bun
+                  key: bunx-cache-${{ runner.os }}-v1
+                  restore-keys: |
+                      bunx-cache-${{ runner.os }}-
 
             # Resolve DATABASE_URL (production branch) from Neon
             - name: Resolve prod DB URL via Neon
