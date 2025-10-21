@@ -126,7 +126,7 @@ jobs:
               run: |
                   set -euo pipefail
                   #for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
-                  for KEY in ORIGIN GEOAPIFY; do
+                  for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY; do
                     VAL="${!KEY}"
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN"
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
