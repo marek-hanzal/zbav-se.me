@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate, useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { Button, Progress, Status, type useSnapperNav } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
@@ -23,9 +23,6 @@ export const SubmitWrapper: FC<{
 	const { locale } = useParams({
 		from: "/$locale",
 	});
-	const { user } = useLoaderData({
-		from: "/$locale/app",
-	});
 	const useCreateListingStore = useCreateListingContext();
 	const store = useCreateListingStore();
 	const files = store.photos.filter(Boolean) as File[];
@@ -46,7 +43,7 @@ export const SubmitWrapper: FC<{
 		const perFile = new Array(total).fill(0);
 
 		const upload = async (photo: File, index: number) => {
-			const path = `/${user.id}/listings/${listingId}/gallery/`;
+			const path = `listing/${listingId}`;
 			const contentType = photo.type as AllowedContentTypes;
 			const dot = photo.name.lastIndexOf(".");
 			const extension =

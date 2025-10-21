@@ -9,7 +9,7 @@ export const ListingGalleryCreateSchema = z
 			description:
 				"Public URL of the image to add to the listing's gallery",
 		}),
-		sort: z.number().int().positive().openapi({
+		sort: z.number().int().gte(0).openapi({
 			description: "Sort order of the image in the listing's gallery",
 		}),
 	})

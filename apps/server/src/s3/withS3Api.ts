@@ -60,7 +60,8 @@ export const S3PreSignResponseSchema = z
 		}),
 		path: z.string().openapi({
 			example:
-				"/123e4567-e89b-12d3-a456-426614174000/listings/abc/gallery/photo-3f1c9a4a.webp",
+				"/123e4567-e89b-12d3-a456-426614174000/listing/abc/photo.webp",
+			description: "Path on the bucket",
 		}),
 	})
 	.openapi("S3PreSignResponse");
@@ -116,27 +117,11 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { path, contentType } = c.req.valid("json");
+			const { path, extension } = c.req.valid("json");
 
 			const user = c.get("user");
 
-			if (!path.replace(/^\/+/, "").startsWith(`${user.id}/`)) {
-				return c.json(
-					{
-						error: "Unauthorized: Path must start with user ID",
-					},
-					403,
-				);
-			}
-
-			const key = (() => {
-				const suffix = genId();
-				const dot = path.lastIndexOf(".");
-				if (dot === -1) {
-					return `${path}-${suffix}`;
-				}
-				return `${path.slice(0, dot)}-${suffix}${path.slice(dot)}`;
-			})();
+			const key = `${user.id}/${path}/${genId()}.${extension}`;
 
 			try {
 				return c.json(
