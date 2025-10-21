@@ -81,12 +81,19 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache bunx packages (~/.bun)
+            - name: Detect Bun version
+              id: bunver
+              run: echo "ver=$(bun --version)" >> $GITHUB_OUTPUT
+
+            - name: Cache bunx (BUN_INSTALL + cache)
               uses: actions/cache@v4
               with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
+                  path: |
+                      ${{ env.BUN_INSTALL }}
+                      ${{ env.BUN_INSTALL }}/install/cache
+                  key: bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-vercel-latest-v1
                   restore-keys: |
+                      bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-
                       bunx-cache-${{ runner.os }}-
 
             # Upsert client build-time envs (production)
@@ -98,13 +105,13 @@ jobs:
                   set -euo pipefail
                   for KEY in VITE_ASSET_BASE VITE_API; do
                     VAL="${!KEY}"
-                    vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
-                    printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN"
+                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
+                    printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
                   # Optional: include ORIGIN if your client build needs it
                   # KEY=ORIGIN; VAL="${!KEY}"
-                  # vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
-                  # printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN"
+                  # bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN"
+                  # printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
 
     vercel-env-server:
         name: Vercel env (server)
@@ -118,12 +125,19 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache bunx packages (~/.bun)
+            - name: Detect Bun version
+              id: bunver
+              run: echo "ver=$(bun --version)" >> $GITHUB_OUTPUT
+
+            - name: Cache bunx (BUN_INSTALL + cache)
               uses: actions/cache@v4
               with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
+                  path: |
+                      ${{ env.BUN_INSTALL }}
+                      ${{ env.BUN_INSTALL }}/install/cache
+                  key: bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-vercel-latest-v1
                   restore-keys: |
+                      bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-
                       bunx-cache-${{ runner.os }}-
 
             # Resolve DATABASE_URL (production branch) from Neon
@@ -146,8 +160,8 @@ jobs:
                   set -euo pipefail
                   for KEY in ORIGIN COOKIE GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
                     VAL="${!KEY}"
-                    vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
-                    printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN"
+                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN"
+                    printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
 
     client-build:
@@ -246,12 +260,19 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache bunx packages (~/.bun)
+            - name: Detect Bun version
+              id: bunver
+              run: echo "ver=$(bun --version)" >> $GITHUB_OUTPUT
+
+            - name: Cache bunx (BUN_INSTALL + cache)
               uses: actions/cache@v4
               with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
+                  path: |
+                      ${{ env.BUN_INSTALL }}
+                      ${{ env.BUN_INSTALL }}/install/cache
+                  key: bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-vercel-latest-v1
                   restore-keys: |
+                      bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-
                       bunx-cache-${{ runner.os }}-
 
             - name: Strip assets
@@ -283,12 +304,19 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            - name: Cache bunx packages (~/.bun)
+            - name: Detect Bun version
+              id: bunver
+              run: echo "ver=$(bun --version)" >> $GITHUB_OUTPUT
+
+            - name: Cache bunx (BUN_INSTALL + cache)
               uses: actions/cache@v4
               with:
-                  path: ~/.bun
-                  key: bunx-cache-${{ runner.os }}-v1
+                  path: |
+                      ${{ env.BUN_INSTALL }}
+                      ${{ env.BUN_INSTALL }}/install/cache
+                  key: bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-vercel-latest-v1
                   restore-keys: |
+                      bunx-cache-${{ runner.os }}-${{ steps.bunver.outputs.ver }}-
                       bunx-cache-${{ runner.os }}-
 
             - name: Deploy to Vercel (server)
