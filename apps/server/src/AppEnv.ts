@@ -18,5 +18,3 @@ const AppEnvSchema = z.object({
 });
 
 export const AppEnv = AppEnvSchema.parse(process.env);
-
-console.log("app", AppEnv);
