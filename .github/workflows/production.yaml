@@ -25,6 +25,7 @@ env:
     VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
     VITE_API: ${{ vars.VITE_API }}
     VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
+    UPSTASH_REDIS_REST_URL: ${{ vars.UPSTASH_REDIS_REST_URL }}
 
     # --------------------------------
     # Private (sensitive) secrets
@@ -36,6 +37,7 @@ env:
     NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
     VERCEL_BLOB: ${{ secrets.VERCEL_BLOB }}
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
 
     # -------------------------------
     # Local (GHA only)
@@ -67,6 +69,8 @@ jobs:
                   : "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET missing}"
                   : "${JWT_SECRET:?JWT_SECRET missing}"
                   : "${GEOAPIFY:?GEOAPIFY missing}"
+                  : "${UPSTASH_REDIS_REST_URL:?UPSTASH_REDIS_REST_URL missing}"
+                  : "${UPSTASH_REDIS_REST_TOKEN:?UPSTASH_REDIS_REST_TOKEN missing}"
                   echo "OK: required variables present."
 
     vercel-env-client:
@@ -158,7 +162,7 @@ jobs:
                   DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
               run: |
                   set -euo pipefail
-                  for KEY in ORIGIN COOKIE GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
+                  for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
                     VAL="${!KEY}"
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN"
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"

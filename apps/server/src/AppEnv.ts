@@ -10,6 +10,8 @@ const AppEnvSchema = z.object({
 	VERCEL_BLOB: z.string().min(1, "Vercel blob is required"),
 	GEOAPIFY: z.string().min(1, "Geoapify API key is required"),
 	VITE_API: z.string().min(1, "Vite API is required"),
+	UPSTASH_REDIS_REST_URL: z.string().min(1, "Upstash URL is required"),
+	UPSTASH_REDIS_REST_TOKEN: z.string().min(1, "Upstash token is required"),
 });
 
 export const AppEnv = AppEnvSchema.parse(process.env);
