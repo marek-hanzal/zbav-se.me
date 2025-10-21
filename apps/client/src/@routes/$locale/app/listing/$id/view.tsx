@@ -69,6 +69,15 @@ export const Route = createFileRoute("/$locale/app/listing/$id/view")({
 									>
 										[Dashboard]
 									</LinkTo>
+
+									{data.gallery.map((image) => (
+										<img
+											key={image.id}
+											className={"w-full"}
+											src={image.url}
+											alt={image.id}
+										/>
+									))}
 								</div>
 							);
 						}}

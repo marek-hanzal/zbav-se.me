@@ -323,6 +323,8 @@ export const apiListingFetchBody = zod.object({
 }).describe('Sort object for listing collection')).nullish()
 }).describe('Query object for listing collection')
 
+export const apiListingFetchResponseGalleryItemSortMin = 0;
+
 export const apiListingFetchResponse = zod.object({
   "id": zod.string().describe('ID of the listing'),
   "userId": zod.string().describe('ID of the user who created the listing'),
@@ -333,8 +335,13 @@ export const apiListingFetchResponse = zod.object({
   "categoryGroupId": zod.string().describe('ID of the category group'),
   "categoryId": zod.string().describe('ID of the category'),
   "createdAt": zod.iso.date().nullable().describe('Creation timestamp'),
-  "updatedAt": zod.iso.date().nullable().describe('Last update timestamp')
-}).describe('Represents a marketplace listing')
+  "updatedAt": zod.iso.date().nullable().describe('Last update timestamp'),
+  "gallery": zod.array(zod.object({
+  "id": zod.string(),
+  "url": zod.string(),
+  "sort": zod.number().min(apiListingFetchResponseGalleryItemSortMin)
+})).describe('Array of listing gallery images')
+})
 
 
 /**

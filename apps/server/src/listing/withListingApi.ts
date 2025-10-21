@@ -72,7 +72,18 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				.returningAll()
 				.executeTakeFirstOrThrow();
 
-			return c.json(listing satisfies ListingDtoSchema.Type, 201);
+			return c.json(
+				{
+					...listing,
+					gallery: await database.kysely
+						.selectFrom("gallery")
+						.selectAll()
+						.where("listingId", "=", listing.id)
+						.orderBy("sort")
+						.execute(),
+				} satisfies ListingDtoSchema.Type,
+				201,
+			);
 		},
 	);
 
@@ -96,7 +107,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: ListingSchema,
+							schema: ListingDtoSchema,
 						},
 					},
 					description: "Return a listing based on the provided query",
@@ -134,11 +145,22 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					}),
 			});
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
+			return c.json(
+				{
+					...data,
+					gallery: await database.kysely
+						.selectFrom("gallery")
+						.selectAll()
+						.where("listingId", "=", data.id)
+						.orderBy("sort")
+						.execute(),
 				},
-			});
+				{
+					headers: {
+						"X-Cached": hit ? "true" : "false",
+					},
+				},
+			);
 		},
 	);
 

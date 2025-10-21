@@ -1,12 +1,12 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiListingFetch,
-	type Listing,
+	type ListingDto,
 	type ListingQuery,
 } from "@zbav-se.me/sdk";
 
 export const withListingFetchQuery = () => {
-	return withQuery<ListingQuery, Listing>({
+	return withQuery<ListingQuery, ListingDto>({
 		keys(data) {
 			return [
 				"listing",

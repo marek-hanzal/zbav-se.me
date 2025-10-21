@@ -320,6 +320,13 @@ export interface CategoryGroupQuery {
   sort?: CategoryGroupSort[] | null;
 }
 
+export type ListingDtoGalleryItem = {
+  id: string;
+  url: string;
+  /** @minimum 0 */
+  sort: number;
+};
+
 export interface ListingDto {
   /** ID of the listing */
   id: string;
@@ -350,6 +357,8 @@ export interface ListingDto {
    * @nullable
    */
   updatedAt: string | null;
+  /** Array of listing gallery images */
+  gallery: ListingDtoGalleryItem[];
 }
 
 /**
@@ -371,41 +380,6 @@ export interface ListingCreate {
   categoryGroupId: string;
   /** ID of the category */
   categoryId: string;
-}
-
-/**
- * Represents a marketplace listing
- */
-export interface Listing {
-  /** ID of the listing */
-  id: string;
-  /** ID of the user who created the listing */
-  userId: string;
-  /**
-   * Price of the listing
-   * @nullable
-   */
-  price: number | null;
-  /** Condition of the item (0-based index) */
-  condition: number;
-  /** Age of the item (0-based index) */
-  age: number;
-  /** ID of the location */
-  locationId: string;
-  /** ID of the category group */
-  categoryGroupId: string;
-  /** ID of the category */
-  categoryId: string;
-  /**
-   * Creation timestamp
-   * @nullable
-   */
-  createdAt: string | null;
-  /**
-   * Last update timestamp
-   * @nullable
-   */
-  updatedAt: string | null;
 }
 
 /**
@@ -617,6 +591,41 @@ export interface ListingQuery {
 }
 
 /**
+ * Represents a marketplace listing
+ */
+export interface Listing {
+  /** ID of the listing */
+  id: string;
+  /** ID of the user who created the listing */
+  userId: string;
+  /**
+   * Price of the listing
+   * @nullable
+   */
+  price: number | null;
+  /** Condition of the item (0-based index) */
+  condition: number;
+  /** Age of the item (0-based index) */
+  age: number;
+  /** ID of the location */
+  locationId: string;
+  /** ID of the category group */
+  categoryGroupId: string;
+  /** ID of the category */
+  categoryId: string;
+  /**
+   * Creation timestamp
+   * @nullable
+   */
+  createdAt: string | null;
+  /**
+   * Last update timestamp
+   * @nullable
+   */
+  updatedAt: string | null;
+}
+
+/**
  * Standard error response format
  */
 export interface Error {
@@ -635,7 +644,6 @@ export interface ListingGalleryCreate {
   /**
    * Sort order of the image in the listing's gallery
    * @minimum 0
-   * @exclusiveMinimum
    */
   sort: number;
 }
@@ -980,6 +988,7 @@ export interface LocationQuery {
 
 export interface S3PreSignResponse {
   url: string;
+  /** Path on the bucket */
   path: string;
 }
 
@@ -1163,7 +1172,7 @@ export const apiListingCreate = <TData = AxiosResponse<ListingDto>>(
 /**
  * Return a listing based on the provided query
  */
-export const apiListingFetch = <TData = AxiosResponse<Listing>>(
+export const apiListingFetch = <TData = AxiosResponse<ListingDto>>(
     listingQuery: ListingQuery, options?: AxiosRequestConfig
  ): Promise<TData> => {
     return axios.post(
@@ -1310,7 +1319,7 @@ export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>
 export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>
 export type ApiCategoryGroupCountResult = AxiosResponse<Count>
 export type ApiListingCreateResult = AxiosResponse<ListingDto>
-export type ApiListingFetchResult = AxiosResponse<Listing>
+export type ApiListingFetchResult = AxiosResponse<ListingDto>
 export type ApiListingCollectionResult = AxiosResponse<Listing[]>
 export type ApiListingCountResult = AxiosResponse<Count>
 export type ApiListingGalleryCreateResult = AxiosResponse<void>
