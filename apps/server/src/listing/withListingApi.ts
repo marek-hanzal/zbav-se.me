@@ -17,6 +17,7 @@ import { withSessionHono } from "../hono/withSessionHono";
 import { withTokenHono } from "../hono/withTokenHono";
 import { PayloadSchema } from "../jwt/PayloadSchema";
 import { sign } from "../jwt/sign";
+import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingDtoSchema } from "./schema/ListingDtoSchema";
@@ -129,24 +130,38 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				"listing",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where, sort } = req.valid("json");
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where, sort } = json;
 
-			return json(
-				await withFetch({
-					select: database.kysely.selectFrom("listing").selectAll(),
-					output: ListingSchema,
-					filter,
-					where,
-					query({ select, where }) {
-						return withListingQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
-					},
-				}),
-			);
+			const { data, hit } = await withCache({
+				key: {
+					scope: "listing:fetch",
+					value: json,
+				},
+				fetch: () =>
+					withFetch({
+						select: database.kysely
+							.selectFrom("listing")
+							.selectAll(),
+						output: ListingSchema,
+						filter,
+						where,
+						query({ select, where }) {
+							return withListingQueryBuilderWithSort({
+								select,
+								where,
+								sort,
+							});
+						},
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 
@@ -180,24 +195,39 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				"listing",
 			],
 		}),
-		async ({ json, req }) => {
-			const { cursor, filter, where, sort } = req.valid("json");
-			return json(
-				await withList({
-					select: database.kysely.selectFrom("listing").selectAll(),
-					output: ListingSchema,
-					cursor,
-					filter,
-					where,
-					query({ select, where }) {
-						return withListingQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
-					},
-				}),
-			);
+		async (c) => {
+			const json = c.req.valid("json");
+			const { cursor, filter, where, sort } = json;
+
+			const { data, hit } = await withCache({
+				key: {
+					scope: "listing:collection",
+					value: json,
+				},
+				fetch: () =>
+					withList({
+						select: database.kysely
+							.selectFrom("listing")
+							.selectAll(),
+						output: ListingSchema,
+						cursor,
+						filter,
+						where,
+						query({ select, where }) {
+							return withListingQueryBuilderWithSort({
+								select,
+								where,
+								sort,
+							});
+						},
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 
@@ -230,21 +260,36 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				"listing",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where } = req.valid("json");
-			return json(
-				await withCount({
-					select: database.kysely.selectFrom("listing").selectAll(),
-					filter,
-					where,
-					query({ select, where }) {
-						return withListingQueryBuilder({
-							select,
-							where,
-						});
-					},
-				}),
-			);
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where } = json;
+
+			const { data, hit } = await withCache({
+				key: {
+					scope: "listing:count",
+					value: json,
+				},
+				fetch: () =>
+					withCount({
+						select: database.kysely
+							.selectFrom("listing")
+							.selectAll(),
+						filter,
+						where,
+						query({ select, where }) {
+							return withListingQueryBuilder({
+								select,
+								where,
+							});
+						},
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 
