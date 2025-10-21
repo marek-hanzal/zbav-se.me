@@ -24,7 +24,6 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 }) => {
 	let query = select;
 
-	// Apply base filters
 	if (where?.id) {
 		query = query.where("id", "=", where.id);
 	}
@@ -41,7 +40,6 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 		);
 	}
 
-	// Apply custom filters
 	if (where?.name) {
 		query = query.where("name", "like", `%${where.name}%`);
 	}

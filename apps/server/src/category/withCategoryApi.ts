@@ -3,6 +3,7 @@ import { withCount, withFetch, withList } from "@use-pico/common";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
+import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
@@ -45,24 +46,38 @@ export const withCategoryApi = ({ session }: Routes) => {
 				"category",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where, sort } = req.valid("json");
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where, sort } = json;
 
-			return json(
-				await withFetch({
-					select: database.kysely.selectFrom("category").selectAll(),
-					output: CategorySchema,
-					filter,
-					where,
-					query({ select, where }) {
-						return withCategoryQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
-					},
-				}),
-			);
+			const { data, hit } = await withCache({
+				key: {
+					scope: "category:fetch",
+					value: json,
+				},
+				fetch: () =>
+					withFetch({
+						select: database.kysely
+							.selectFrom("category")
+							.selectAll(),
+						output: CategorySchema,
+						filter,
+						where,
+						query({ select, where }) {
+							return withCategoryQueryBuilderWithSort({
+								select,
+								where,
+								sort,
+							});
+						},
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 
@@ -96,24 +111,39 @@ export const withCategoryApi = ({ session }: Routes) => {
 				"category",
 			],
 		}),
-		async ({ json, req }) => {
-			const { cursor, filter, where, sort } = req.valid("json");
-			return json(
-				await withList({
-					select: database.kysely.selectFrom("category").selectAll(),
-					output: CategorySchema,
-					cursor,
-					filter,
-					where,
-					query({ select, where }) {
-						return withCategoryQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
-					},
-				}),
-			);
+		async (c) => {
+			const json = c.req.valid("json");
+			const { cursor, filter, where, sort } = json;
+
+			const { data, hit } = await withCache({
+				key: {
+					scope: "category:collection",
+					value: json,
+				},
+				fetch: () =>
+					withList({
+						select: database.kysely
+							.selectFrom("category")
+							.selectAll(),
+						output: CategorySchema,
+						cursor,
+						filter,
+						where,
+						query({ select, where }) {
+							return withCategoryQueryBuilderWithSort({
+								select,
+								where,
+								sort,
+							});
+						},
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 
@@ -146,21 +176,36 @@ export const withCategoryApi = ({ session }: Routes) => {
 				"category",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where } = req.valid("json");
-			return json(
-				await withCount({
-					select: database.kysely.selectFrom("category").selectAll(),
-					filter,
-					where,
-					query({ select, where }) {
-						return withCategoryQueryBuilder({
-							select,
-							where,
-						});
-					},
-				}),
-			);
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where } = json;
+
+			const { data, hit } = await withCache({
+				key: {
+					scope: "category:count",
+					value: json,
+				},
+				fetch: () =>
+					withCount({
+						select: database.kysely
+							.selectFrom("category")
+							.selectAll(),
+						filter,
+						where,
+						query({ select, where }) {
+							return withCategoryQueryBuilder({
+								select,
+								where,
+							});
+						},
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 
