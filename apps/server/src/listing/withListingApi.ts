@@ -137,6 +137,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			const { data, hit } = await withCache({
 				key: {
 					scope: "listing:fetch",
+					version: "1",
 					value: json,
 				},
 				fetch: () =>
@@ -202,6 +203,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			const { data, hit } = await withCache({
 				key: {
 					scope: "listing:collection",
+					version: "1",
 					value: json,
 				},
 				fetch: () =>
@@ -267,6 +269,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			const { data, hit } = await withCache({
 				key: {
 					scope: "listing:count",
+					version: "1",
 					value: json,
 				},
 				fetch: () =>

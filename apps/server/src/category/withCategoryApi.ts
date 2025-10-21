@@ -53,6 +53,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 			const { data, hit } = await withCache({
 				key: {
 					scope: "category:fetch",
+					version: "1",
 					value: json,
 				},
 				fetch: () =>
@@ -118,6 +119,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 			const { data, hit } = await withCache({
 				key: {
 					scope: "category:collection",
+					version: "1",
 					value: json,
 				},
 				fetch: () =>
@@ -183,6 +185,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 			const { data, hit } = await withCache({
 				key: {
 					scope: "category:count",
+					version: "1",
 					value: json,
 				},
 				fetch: () =>
