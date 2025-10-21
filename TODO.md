@@ -8,6 +8,7 @@
     - We can connect CDN pullzone directly to maptiles with API key
 - A11y is quite an important thing
 
+- Staging (-> dev)
 - MCP
 
 - Better way of handling env. variables
