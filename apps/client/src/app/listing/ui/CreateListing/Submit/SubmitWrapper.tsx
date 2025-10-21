@@ -1,28 +1,20 @@
 import { useLoaderData, useNavigate, useParams } from "@tanstack/react-router";
-import {
-	Button,
-	Container,
-	Icon,
-	Progress,
-	Status,
-	type useSnapperNav,
-} from "@use-pico/client";
+import { Button, Progress, Status, type useSnapperNav } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
-import { upload } from "@vercel/blob/client";
-import { ListingGalleryPayload } from "@zbav-se.me/common";
+import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
+import axios from "axios";
 import PQueue from "p-queue";
 import type { FC } from "react";
-import { memo, useId, useState } from "react";
+import { memo, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { withListingCreateMutation } from "~/app/listing/mutation/withListingCreateMutation";
-import type { createListingStore } from "~/app/listing/store/createListingStore";
+import { withListingGalleryCreateMutation } from "~/app/listing/mutation/withListingGalleryCreateMutation";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
-import { ListingPageIndex } from "~/app/listing/ui/CreateListing/ListingPageIndex";
+import { InvalidSubmit } from "~/app/listing/ui/CreateListing/Submit/InvalidSubmit";
+import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
-
-const IconMap = ListingPageIndex.Page;
 
 export const SubmitWrapper: FC<{
 	listingNavApi: useSnapperNav.Api;
@@ -36,69 +28,86 @@ export const SubmitWrapper: FC<{
 	});
 	const useCreateListingStore = useCreateListingContext();
 	const store = useCreateListingStore();
-	const missingId = useId();
-	const files = store.photos.filter((photo) => !!photo);
+	const files = store.photos.filter(Boolean) as File[];
 
-	// Track overall upload progress for all photos
+	const preSignMutation = withS3PreSignMutation.useMutation();
+	const createListingGalleryMutation =
+		withListingGalleryCreateMutation.useMutation();
+
 	const [progress, setProgress] = useState(0);
 
-	// Photo upload functionality with cumulative progress
-	const uploadPhotos = async (
-		photos: File[],
-		listingId: string,
-		token: string,
-	) => {
+	const uploadPhotos = async (photos: File[], listingId: string) => {
 		setProgress(0);
 
 		const queue = new PQueue({
 			concurrency: 3,
 		});
+		const total = photos.length;
+		const perFile = new Array(total).fill(0);
 
-		const totalUploads = photos.length;
-		const photoProgresses = new Array(totalUploads).fill(0);
+		const upload = async (photo: File, index: number) => {
+			const path = `/${user.id}/listings/${listingId}/gallery/`;
+			const contentType = photo.type as AllowedContentTypes;
+			const dot = photo.name.lastIndexOf(".");
+			const extension =
+				dot !== -1 && dot < photo.name.length - 1
+					? photo.name.slice(dot + 1).toLowerCase()
+					: "unknown";
 
-		const uploadPromises = photos.map(async (photo, index) => {
-			return queue.add(() =>
-				upload(`/${user.id}/${photo.name}`, photo, {
-					access: "public",
-					contentType: photo.type,
-					handleUploadUrl: linkTo({
-						base: import.meta.env.VITE_API,
-						href: "/api/token/listing/gallery/upload",
-					}),
-					onUploadProgress({ percentage }) {
-						// Update progress for this specific photo
-						photoProgresses[index] = percentage;
+			const presign = await preSignMutation.mutateAsync({
+				path,
+				extension: extension as AllowedExtensions,
+				contentType,
+			});
 
-						// Calculate cumulative progress
-						const totalProgress = photoProgresses.reduce(
-							(sum, progress) => sum + progress,
-							0,
-						);
-						const averageProgress = totalProgress / totalUploads;
-						setProgress(averageProgress);
-					},
-					multipart: false,
-					clientPayload: JSON.stringify(
-						ListingGalleryPayload.parse({
-							listingId,
-							sort: index,
-						}),
-					),
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
+			await axios.put(presign.url, photo, {
+				headers: {
+					"Content-Type": contentType,
+				},
+				onUploadProgress: (e) => {
+					const totalSize = e.total ?? photo.size;
+					if (!totalSize || totalSize <= 0) {
+						return;
+					}
+					perFile[index] = Math.max(
+						0,
+						Math.min(100, (e.loaded / totalSize) * 100),
+					);
+					setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+				},
+			});
+
+			await createListingGalleryMutation.mutateAsync({
+				listingId,
+				sort: index,
+				url: linkTo({
+					base: "https://content.zbav-se.me",
+					href: presign.path,
 				}),
-			);
+			});
+
+			perFile[index] = 100;
+			setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+		};
+
+		photos.forEach((photo, index) => {
+			queue.add(async () => {
+				try {
+					await upload(photo, index);
+				} catch (err) {
+					console.error("[upload photo] failed", err);
+					perFile[index] = 100;
+					setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+				}
+			});
 		});
 
-		await Promise.all(uploadPromises);
+		await queue.onIdle();
 	};
 
 	const createListingMutation = withListingCreateMutation().useMutation({
 		async onSuccess(data) {
-			await uploadPhotos(files, data.id, data.upload);
-
+			await uploadPhotos(files, data.id);
 			return navigate({
 				to: "/$locale/app/listing/$id/view",
 				params: {
@@ -110,52 +119,7 @@ export const SubmitWrapper: FC<{
 	});
 
 	if (store.missing.length > 0) {
-		return (
-			<ListingContainer listingNavApi={listingNavApi}>
-				<Sheet
-					tone={"primary"}
-					theme={"light"}
-				>
-					<Status
-						icon={SendPackageIcon}
-						tone={"primary"}
-						theme={"light"}
-						textTitle="Submit listing - status - cannot submit (title)"
-						textMessage={
-							"Submit listing - status - cannot submit (message)"
-						}
-						action={
-							<Container
-								layout={"horizontal-full"}
-								overflow={"horizontal"}
-							>
-								<div className="flex flex-row items-center justify-center gap-2 w-fit mx-auto">
-									{Object.entries(IconMap).map(
-										([key, { index, icon }]) => {
-											return store.missing.includes(
-												key as createListingStore.Missing,
-											) ? (
-												<Icon
-													key={`${missingId}-${key}`}
-													icon={icon}
-													tone={"secondary"}
-													size={"xl"}
-													onClick={() => {
-														listingNavApi.snapTo(
-															index,
-														);
-													}}
-												/>
-											) : null;
-										},
-									)}
-								</div>
-							</Container>
-						}
-					/>
-				</Sheet>
-			</ListingContainer>
-		);
+		return <InvalidSubmit listingNavApi={listingNavApi} />;
 	}
 
 	return (

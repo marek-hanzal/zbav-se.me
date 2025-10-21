@@ -13,9 +13,6 @@ When adding a new environment variable, you must update the following files:
 - **Add validation schema**: `NEW_VAR: z.string().min(1, "Description is required")`
 - **Add parsing logic**: Include fallback to `process.env.NEW_VAR`
 
-#### `apps/server/nitro.config.ts`
-- **Add build-time injection**: `__NEW_VAR__: JSON.stringify(process.env.NEW_VAR)`
-
 ### 2. Build System Configuration
 
 #### `turbo.json`
@@ -70,8 +67,10 @@ When adding a new environment variable, you must update the following files:
 - `COOKIE` - Cookie domain configuration
 - `BETTER_AUTH_SECRET` - Better Auth secret key
 - `JWT_SECRET` - JWT token signing secret
-- `VERCEL_BLOB` - Vercel blob storage token
 - `GEOAPIFY` - Geoapify API key
+- `S3_API` - S3 API endpoint URL
+- `S3_KEY` - S3 access key
+- `S3_SECRET` - S3 secret key
 - `VITE_API` - API endpoint URL
 
 ### Client-side
@@ -83,7 +82,6 @@ When adding a new environment variable, you must update the following files:
 - [ ] Add declaration to `apps/server/src/AppEnv.ts`
 - [ ] Add validation schema to `apps/server/src/AppEnv.ts`
 - [ ] Add parsing logic to `apps/server/src/AppEnv.ts`
-- [ ] Add build-time injection to `apps/server/nitro.config.ts`
 - [ ] Add to `dev` task in `turbo.json`
 - [ ] Add to `preview` task in `turbo.json`
 - [ ] Add to `build` task in `turbo.json`

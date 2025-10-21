@@ -1,26 +1,17 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import {
-	genId,
-	linkTo,
-	withCount,
-	withFetch,
-	withList,
-} from "@use-pico/common";
-import { type HandleUploadBody, handleUpload } from "@vercel/blob/client";
-import { ListingGalleryPayload } from "@zbav-se.me/common";
+import { genId, withCount, withFetch, withList } from "@use-pico/common";
 import { AppEnv } from "../AppEnv";
-import { HandleUploadBodySchema } from "../content/schema/HandleUploadBodySchema";
-import { HandleUploadResponseSchema } from "../content/schema/HandleUploadResponseSchema";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
-import { withTokenHono } from "../hono/withTokenHono";
 import { PayloadSchema } from "../jwt/PayloadSchema";
 import { sign } from "../jwt/sign";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
+import { ErrorSchema } from "../schema/ErrorSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingDtoSchema } from "./schema/ListingDtoSchema";
+import { ListingGalleryCreateSchema } from "./schema/ListingGalleryCreateSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import { ListingSchema } from "./schema/ListingSchema";
 import {
@@ -28,9 +19,8 @@ import {
 	withListingQueryBuilderWithSort,
 } from "./withListingQueryBuilder";
 
-export const withListingApi: Routes.Fn = ({ session, token }) => {
+export const withListingApi: Routes.Fn = ({ session }) => {
 	const sessionEndpoints = withSessionHono();
-	const tokenEndpoints = withTokenHono();
 
 	sessionEndpoints.openapi(
 		createRoute({
@@ -49,7 +39,7 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				},
 			},
 			responses: {
-				200: {
+				201: {
 					content: {
 						"application/json": {
 							schema: ListingDtoSchema,
@@ -85,18 +75,21 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 				.returningAll()
 				.executeTakeFirstOrThrow();
 
-			return c.json({
-				...listing,
-				upload: await sign({
-					schema: PayloadSchema,
-					issuer: AppEnv.VITE_API,
-					scope: "/api/token/listing/gallery/upload",
-					secret: AppEnv.JWT_SECRET,
-					userId: user.id,
-					subject: listing.id,
-					expiresIn: "18m",
-				}),
-			});
+			return c.json(
+				{
+					...listing,
+					upload: await sign({
+						schema: PayloadSchema,
+						issuer: AppEnv.VITE_API,
+						scope: "/api/token/listing/gallery/upload",
+						secret: AppEnv.JWT_SECRET,
+						userId: user.id,
+						subject: listing.id,
+						expiresIn: "18m",
+					}),
+				},
+				201,
+			);
 		},
 	);
 
@@ -296,31 +289,35 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 		},
 	);
 
-	tokenEndpoints.openapi(
+	sessionEndpoints.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing/gallery/upload",
-			description: "Upload a photo to the listing gallery",
-			operationId: "apiListingGalleryUpload",
+			path: "/listing/gallery/create",
+			description: "Add an image to a listing's gallery",
+			operationId: "apiListingGalleryCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: HandleUploadBodySchema,
+							schema: ListingGalleryCreateSchema,
 						},
 					},
-					required: true,
-					description: "Request body consumed by @vercel/blob/client",
+					description:
+						"Data for adding an image to the listing's gallery",
 				},
 			},
 			responses: {
-				200: {
-					description: "Response consumed by @vercel/blob/client",
+				201: {
+					description: "Gallery item created successfully",
+				},
+				403: {
 					content: {
 						"application/json": {
-							schema: HandleUploadResponseSchema,
+							schema: ErrorSchema,
 						},
 					},
+					description:
+						"Forbidden - listing not found or no permission",
 				},
 			},
 			tags: [
@@ -328,79 +325,44 @@ export const withListingApi: Routes.Fn = ({ session, token }) => {
 			],
 		}),
 		async (c) => {
-			return c.json(
-				await handleUpload({
-					request: c.req.raw,
-					body: c.req.valid("json") satisfies HandleUploadBody,
-					token: AppEnv.VERCEL_BLOB,
-					async onBeforeGenerateToken(pathname, clientPayload) {
-						const user = c.get("user");
+			const data = c.req.valid("json");
+			const user = c.get("user");
+			const now = new Date();
 
-						if (!pathname.startsWith(`/${user.id}/`)) {
-							throw new Error(
-								"Unauthorized: Path must start with user ID",
-							);
-						}
+			// Verify that the listing belongs to the user
+			const listing = await database.kysely
+				.selectFrom("listing")
+				.select("id")
+				.where("id", "=", data.listingId)
+				.where("userId", "=", user.id)
+				.executeTakeFirst();
 
-						return {
-							allowedContentTypes: [
-								"image/jpeg",
-								"image/png",
-								"image/webp",
-								"image/avif",
-							],
-							addRandomSuffix: true,
-							allowOverwrite: false,
-							cacheControlMaxAge: 60 * 60 * 24 * 30,
-							maximumSizeInBytes: 16 * 1024 * 1024,
-							callbackUrl: linkTo({
-								base: AppEnv.VITE_API,
-								href: "/api/token/listing/gallery/upload",
-							}),
-							tokenPayload: JSON.stringify(
-								ListingGalleryPayload.parse(
-									JSON.parse(clientPayload ?? "{}"),
-								),
-							),
-						};
+			if (!listing) {
+				return c.json(
+					{
+						error: "Nope. Shoo. I don't like you!",
 					},
-					async onUploadCompleted({ blob, tokenPayload }) {
-						const user = c.get("user");
-						const payload = ListingGalleryPayload.parse(
-							JSON.parse(tokenPayload ?? "{}"),
-						);
+					403,
+				);
+			}
 
-						/**
-						 * Be sure request comes to the right listing
-						 */
-						const listing = await database.kysely
-							.selectFrom("listing")
-							.where("id", "=", payload.listingId)
-							.where("userId", "=", user.id)
-							.selectAll()
-							.executeTakeFirstOrThrow();
+			// Insert the gallery item
+			await database.kysely
+				.insertInto("gallery")
+				.values({
+					id: genId(),
+					userId: user.id,
+					listingId: data.listingId,
+					url: data.url,
+					sort: data.sort,
+					createdAt: now,
+					updatedAt: now,
+				})
+				.execute();
 
-						await database.kysely
-							.insertInto("gallery")
-							.values({
-								id: genId(),
-								createdAt: new Date(),
-								listingId: listing.id,
-								updatedAt: new Date(),
-								url: linkTo({
-									base: "https://content.zbav-se.me",
-									href: blob.pathname,
-								}),
-								sort: payload.sort,
-								userId: user.id,
-							})
-							.execute();
-					},
-				}),
-			);
+			return c.json(null, 201);
 		},
 	);
 
 	session.route("/", sessionEndpoints);
-	token.route("/", tokenEndpoints);
 };

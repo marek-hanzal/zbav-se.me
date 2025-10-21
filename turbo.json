@@ -13,9 +13,12 @@
 				"GEOAPIFY",
 				"JWT_SECRET",
 				"ORIGIN",
+				"S3_API",
+				"S3_KEY",
+				"S3_SECRET",
+				"S3_BUCKET",
 				"UPSTASH_REDIS_REST_TOKEN",
 				"UPSTASH_REDIS_REST_URL",
-				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
 			]
@@ -29,9 +32,12 @@
 				"GEOAPIFY",
 				"JWT_SECRET",
 				"ORIGIN",
+				"S3_API",
+				"S3_KEY",
+				"S3_SECRET",
+				"S3_BUCKET",
 				"UPSTASH_REDIS_REST_TOKEN",
 				"UPSTASH_REDIS_REST_URL",
-				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
 			]
@@ -65,9 +71,12 @@
 				"GEOAPIFY",
 				"JWT_SECRET",
 				"ORIGIN",
+				"S3_API",
+				"S3_KEY",
+				"S3_SECRET",
+				"S3_BUCKET",
 				"UPSTASH_REDIS_REST_TOKEN",
 				"UPSTASH_REDIS_REST_URL",
-				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
 			]
