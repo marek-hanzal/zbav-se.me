@@ -92,7 +92,7 @@ jobs:
                   set -euo pipefail
                   for KEY in VITE_ASSET_BASE VITE_API; do
                     VAL="${!KEY}"
-                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN"
+                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
 
@@ -125,10 +125,9 @@ jobs:
                   DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
               run: |
                   set -euo pipefail
-                  #for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
-                  for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY; do
+                  for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
                     VAL="${!KEY}"
-                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN"
+                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
 
