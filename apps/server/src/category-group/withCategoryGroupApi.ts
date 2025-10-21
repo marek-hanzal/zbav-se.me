@@ -3,6 +3,7 @@ import { withCount, withFetch, withList } from "@use-pico/common";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
+import { redis } from "../redis/redis";
 import { CountSchema } from "../schema/CountSchema";
 import { CategoryGroupQuerySchema } from "./schema/CategoryGroupQuerySchema";
 import { CategoryGroupSchema } from "./schema/CategoryGroupSchema";
@@ -45,9 +46,21 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 				"category-group",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where, sort } = req.valid("json");
-			return json(
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where, sort } = json;
+
+			const key = JSON.stringify(json);
+			const cached = await redis.get<CategoryGroupSchema.Type>(key);
+			if (cached) {
+				return c.json(cached, {
+					headers: {
+						"X-Cached": "true",
+					},
+				});
+			}
+
+			return c.json(
 				await withFetch({
 					select: database.kysely
 						.selectFrom("category_group")
@@ -63,6 +76,11 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 						});
 					},
 				}),
+				{
+					headers: {
+						"X-Cached": "false",
+					},
+				},
 			);
 		},
 	);
@@ -97,26 +115,45 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 				"category-group",
 			],
 		}),
-		async ({ json, req }) => {
-			const { cursor, filter, where, sort } = req.valid("json");
-			return json(
-				await withList({
-					select: database.kysely
-						.selectFrom("category_group")
-						.selectAll(),
-					output: CategoryGroupSchema,
-					cursor,
-					filter,
-					where,
-					query({ select, where }) {
-						return withCategoryGroupQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
+		async (c) => {
+			const json = c.req.valid("json");
+			const { cursor, filter, where, sort } = json;
+
+			const key = JSON.stringify(json);
+			const cached = await redis.get<CategoryGroupSchema.Type[]>(key);
+
+			if (cached) {
+				return c.json(cached, {
+					headers: {
+						"X-Cached": "true",
 					},
-				}),
-			);
+				});
+			}
+
+			const list = await withList({
+				select: database.kysely
+					.selectFrom("category_group")
+					.selectAll(),
+				output: CategoryGroupSchema,
+				cursor,
+				filter,
+				where,
+				query({ select, where }) {
+					return withCategoryGroupQueryBuilderWithSort({
+						select,
+						where,
+						sort,
+					});
+				},
+			});
+
+			redis.set(key, list);
+
+			return c.json(list, {
+				headers: {
+					"X-Cached": "false",
+				},
+			});
 		},
 	);
 
@@ -150,23 +187,41 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 				"category-group",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where } = req.valid("json");
-			return json(
-				await withCount({
-					select: database.kysely
-						.selectFrom("category_group")
-						.selectAll(),
-					filter,
-					where,
-					query({ select, where }) {
-						return withCategoryGroupQueryBuilder({
-							select,
-							where,
-						});
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where } = json;
+
+			const key = JSON.stringify(json);
+			const cached = await redis.get<CountSchema.Type>(key);
+			if (cached) {
+				return c.json(cached, {
+					headers: {
+						"X-Cached": "true",
 					},
-				}),
-			);
+				});
+			}
+
+			const count = await withCount({
+				select: database.kysely
+					.selectFrom("category_group")
+					.selectAll(),
+				filter,
+				where,
+				query({ select, where }) {
+					return withCategoryGroupQueryBuilder({
+						select,
+						where,
+					});
+				},
+			});
+
+			redis.set(key, count);
+
+			return c.json(count, {
+				headers: {
+					"X-Cached": "false",
+				},
+			});
 		},
 	);
 

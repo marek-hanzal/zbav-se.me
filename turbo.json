@@ -9,11 +9,12 @@
 			"persistent": true,
 			"env": [
 				"BETTER_AUTH_SECRET",
-				"COOKIE",
 				"DATABASE_URL",
 				"GEOAPIFY",
 				"JWT_SECRET",
 				"ORIGIN",
+				"UPSTASH_REDIS_REST_TOKEN",
+				"UPSTASH_REDIS_REST_URL",
 				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
@@ -24,11 +25,12 @@
 			"persistent": true,
 			"env": [
 				"BETTER_AUTH_SECRET",
-				"COOKIE",
 				"DATABASE_URL",
 				"GEOAPIFY",
 				"JWT_SECRET",
 				"ORIGIN",
+				"UPSTASH_REDIS_REST_TOKEN",
+				"UPSTASH_REDIS_REST_URL",
 				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
@@ -59,11 +61,12 @@
 			"cache": false,
 			"env": [
 				"BETTER_AUTH_SECRET",
-				"COOKIE",
 				"DATABASE_URL",
 				"GEOAPIFY",
 				"JWT_SECRET",
 				"ORIGIN",
+				"UPSTASH_REDIS_REST_TOKEN",
+				"UPSTASH_REDIS_REST_URL",
 				"VERCEL_BLOB",
 				"VITE_API",
 				"VITE_ASSET_BASE"
