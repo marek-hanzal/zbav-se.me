@@ -11,6 +11,8 @@ concurrency:
 permissions:
     contents: read
 
+# Global environment (available to all jobs/steps).
+# Vercel CLI will read org/project from these envs when set.
 env:
     # -------------------------------
     # Public (non-sensitive) variables
@@ -36,6 +38,11 @@ env:
     NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
     VERCEL_BLOB: ${{ secrets.VERCEL_BLOB }}
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    # -------------------------------
+    # Local (GHA only)
+    # -------------------------------
+    MIGRATION_URL: https://api.zbav-se.me/api/public/migration/run
 
 jobs:
     validate-env:
@@ -63,6 +70,7 @@ jobs:
                   : "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET missing}"
                   : "${JWT_SECRET:?JWT_SECRET missing}"
                   : "${GEOAPIFY:?GEOAPIFY missing}"
+                  : "${MIGRATION_URL:?MIGRATION_URL missing}"
                   echo "OK: required variables present."
 
     vercel-env-client:
@@ -76,14 +84,22 @@ jobs:
             - name: Install Vercel CLI
               run: npm i -g vercel@latest
 
+            # Upsert client build-time envs (production)
             - name: Upsert client env
+              env:
+                  # Bind the client project for this step; Vercel CLI reads from env
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_CLIENT_PROJECT_ID }}
               run: |
                   set -euo pipefail
                   for KEY in VITE_ASSET_BASE VITE_API; do
-                      VAL="${!KEY}"
-                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
-                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
+                    VAL="${!KEY}"
+                    vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
+                    printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
+                  # Optional: include ORIGIN if your client build needs it
+                  # KEY=ORIGIN; VAL="${!KEY}"
+                  # vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
+                  # printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN"
 
     vercel-env-server:
         name: Vercel env (server)
@@ -96,6 +112,7 @@ jobs:
             - name: Install Vercel CLI
               run: npm i -g vercel@latest
 
+            # Resolve DATABASE_URL (production branch) from Neon
             - name: Resolve prod DB URL via Neon
               id: neon
               uses: neondatabase/create-branch-action@v6
@@ -106,15 +123,17 @@ jobs:
                   role: neondb_owner
                   api_key: ${{ env.NEON_API_KEY }}
 
+            # Upsert server runtime envs including DATABASE_URL
             - name: Upsert server env
               env:
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
                   DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
               run: |
                   set -euo pipefail
                   for KEY in ORIGIN COOKIE GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
-                      VAL="${!KEY}"
-                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
-                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
+                    VAL="${!KEY}"
+                    vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
+                    printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
 
     client-build:
@@ -227,11 +246,13 @@ jobs:
 
             - name: Deploy to Vercel (client)
               working-directory: apps/client
+              env:
+                  # Bind client project for this deploy step
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_CLIENT_PROJECT_ID }}
               run: |
                   bunx -y vercel@latest deploy \
                     --prebuilt \
                     --prod --yes \
-                    --project "$VERCEL_CLIENT_PROJECT_ID" \
                     --token "$VERCEL_TOKEN"
 
     vercel-server:
@@ -258,11 +279,13 @@ jobs:
 
             - name: Deploy to Vercel (server)
               working-directory: apps/server
+              env:
+                  # Bind server project for this deploy step
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
               run: |
                   bunx -y vercel@latest deploy \
                     --prebuilt \
                     --prod --yes \
-                    --project "$VERCEL_SERVER_PROJECT_ID" \
                     --token "$VERCEL_TOKEN"
 
     bunny-cdn:
@@ -336,8 +359,6 @@ jobs:
         needs: [vercel-server]
         steps:
             - name: Trigger migrations endpoint
-              env:
-                  MIGRATION_URL: https://api.zbav-se.me/api/public/migration/run
               run: |
                   set -euo pipefail
                   code=$(curl -sS -o /dev/null -w "%{http_code}" "$MIGRATION_URL")
