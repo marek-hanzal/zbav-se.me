@@ -57,7 +57,6 @@ jobs:
                   : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
                   : "${VERCEL_BLOB:?VERCEL_BLOB missing}"
                   : "${ORIGIN:?ORIGIN missing}"
-                  : "${COOKIE:?COOKIE missing}"
                   : "${VITE_ASSET_BASE:?VITE_ASSET_BASE missing}"
                   : "${VITE_API:?VITE_API missing}"
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
