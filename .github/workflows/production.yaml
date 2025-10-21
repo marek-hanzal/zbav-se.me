@@ -45,7 +45,7 @@ env:
 
 jobs:
     validate-env:
-        name: Validate environment variables & secrets
+        name: Validate env
         runs-on: ubuntu-latest
         environment: production
         steps:
@@ -235,7 +235,6 @@ jobs:
             - name: Deploy to Vercel (client)
               working-directory: apps/client
               env:
-                  # Bind client project for this deploy step
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_CLIENT_PROJECT_ID }}
               run: |
                   bunx -y vercel@latest deploy \
@@ -260,7 +259,6 @@ jobs:
             - name: Deploy to Vercel (server)
               working-directory: apps/server
               env:
-                  # Bind server project for this deploy step
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
               run: |
                   bunx -y vercel@latest deploy \
