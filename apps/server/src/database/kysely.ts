@@ -11,9 +11,9 @@ import { migrations } from "./migrations";
 export const database = withDatabase<Database>({
 	dialect,
 	async onPreMigration() {
-		const migrations = await getMigrations(auth.options);
-
-		return migrations.runMigrations();
+		return getMigrations(auth.options).then(({ runMigrations }) => {
+			return runMigrations();
+		});
 	},
 	async getMigrations() {
 		return migrations;
