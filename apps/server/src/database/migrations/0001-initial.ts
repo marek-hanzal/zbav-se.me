@@ -81,6 +81,17 @@ export const InitialMigration: Migration = {
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("categoryGroupId", "text", (col) => col.notNull())
 			.addColumn("locale", "text", (col) => col.notNull())
+			.addForeignKeyConstraint(
+				"category_categoryGroupId_fk",
+				[
+					"categoryGroupId",
+				],
+				"category_group",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		// Create unique index for category [name, locale, categoryGroupId]
@@ -176,6 +187,50 @@ export const InitialMigration: Migration = {
 			.addColumn("updatedAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
+			.addForeignKeyConstraint(
+				"listing_userId_fk",
+				[
+					"userId",
+				],
+				"user",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"listing_locationId_fk",
+				[
+					"locationId",
+				],
+				"location",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"listing_categoryGroupId_fk",
+				[
+					"categoryGroupId",
+				],
+				"category_group",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"listing_categoryId_fk",
+				[
+					"categoryId",
+				],
+				"category",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		// Create index for userId
@@ -226,6 +281,28 @@ export const InitialMigration: Migration = {
 			)
 			.addColumn("updatedAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
+			)
+			.addForeignKeyConstraint(
+				"gallery_userId_fk",
+				[
+					"userId",
+				],
+				"user",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"gallery_listingId_fk",
+				[
+					"listingId",
+				],
+				"listing",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
 			)
 			.execute();
 
