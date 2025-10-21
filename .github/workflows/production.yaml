@@ -66,7 +66,7 @@ jobs:
                   echo "OK: required variables present."
 
     vercel-env-client:
-        name: Vercel env
+        name: Vercel env (client)
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -81,8 +81,8 @@ jobs:
                   set -euo pipefail
                   for KEY in VITE_ASSET_BASE VITE_API; do
                       VAL="${!KEY}"
-                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID" >/dev/null 2>&1 || true
-                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID"
+                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
+                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
                   done
 
     vercel-env-server:
@@ -113,8 +113,8 @@ jobs:
                   set -euo pipefail
                   for KEY in ORIGIN COOKIE GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
                       VAL="${!KEY}"
-                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID" >/dev/null 2>&1 || true
-                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID"
+                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
+                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --scope "$VERCEL_SERVER_PROJECT_ID"
                   done
 
     client-build:
