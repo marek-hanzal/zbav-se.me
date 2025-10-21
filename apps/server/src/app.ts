@@ -20,6 +20,8 @@ import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
 
+console.log("env", process.env);
+
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
  */

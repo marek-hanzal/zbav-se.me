@@ -1,8 +1,8 @@
-name: Production Deploy
+name: Production No-Deploy
 
 on:
     push:
-        branches: ["main"]
+        branches: ["main-aaa"]
 
 concurrency:
     group: production-deploy
@@ -11,37 +11,35 @@ concurrency:
 permissions:
     contents: read
 
-env:
-    # -------------------------------
-    # Public (non-sensitive) variables
-    # -------------------------------
-    BUNNY_HOST: ${{ vars.BUNNY_HOST }}
-    BUNNY_USER: ${{ vars.BUNNY_USER }}
-    COOKIE: ${{ vars.COOKIE }}
-    NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
-    ORIGIN: ${{ vars.ORIGIN }}
-    VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
-    VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-    VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
-    VITE_API: ${{ vars.VITE_API }}
-    VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
-
-    # --------------------------------
-    # Private (sensitive) secrets
-    # --------------------------------
-    BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-    BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
-    GEOAPIFY: ${{ secrets.GEOAPIFY }}
-    JWT_SECRET: ${{ secrets.JWT_SECRET }}
-    NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-    VERCEL_BLOB: ${{ secrets.VERCEL_BLOB }}
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-
 jobs:
     validate-env:
         name: Validate environment variables & secrets
         runs-on: ubuntu-latest
         environment: production
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
+            VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+            VERCEL_BLOB: ${{ secrets.VERCEL_BLOB }}
+            #
+            VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
+            VITE_API: ${{ vars.VITE_API }}
+            #
+            ORIGIN: ${{ vars.ORIGIN }}
+            COOKIE: ${{ vars.COOKIE }}
+            #
+            BUNNY_HOST: ${{ vars.BUNNY_HOST }}
+            BUNNY_USER: ${{ vars.BUNNY_USER }}
+            BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
+            #
+            NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+            NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+            #
+            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
+            #
+            GEOAPIFY: ${{ secrets.GEOAPIFY }}
         steps:
             - name: Check required vars (fail fast)
               run: |
@@ -65,63 +63,15 @@ jobs:
                   : "${GEOAPIFY:?GEOAPIFY missing}"
                   echo "OK: required variables present."
 
-    vercel-env-client:
-        name: Vercel env
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [validate-env]
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Install Vercel CLI
-              run: npm i -g vercel@latest
-
-            - name: Upsert client env
-              run: |
-                  set -euo pipefail
-                  for KEY in VITE_ASSET_BASE VITE_API; do
-                      VAL="${!KEY}"
-                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID" >/dev/null 2>&1 || true
-                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID"
-                  done
-
-    vercel-env-server:
-        name: Vercel env (server)
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [validate-env]
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Install Vercel CLI
-              run: npm i -g vercel@latest
-
-            - name: Resolve prod DB URL via Neon
-              id: neon
-              uses: neondatabase/create-branch-action@v6
-              with:
-                  project_id: ${{ env.NEON_PROJECT_ID }}
-                  branch_name: production
-                  database: neondb
-                  role: neondb_owner
-                  api_key: ${{ env.NEON_API_KEY }}
-
-            - name: Upsert server env
-              env:
-                  DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
-              run: |
-                  set -euo pipefail
-                  for KEY in ORIGIN COOKIE GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL; do
-                      VAL="${!KEY}"
-                      vercel env rm "$KEY" production --yes --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID" >/dev/null 2>&1 || true
-                      printf "%s" "$VAL" | vercel env add "$KEY" production --token "$VERCEL_TOKEN" --project "$VERCEL_SERVER_PROJECT_ID"
-                  done
-
     client-build:
         name: Build client
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-client]
+        needs: [validate-env]
+        env:
+            VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
+            VITE_API: ${{ vars.VITE_API }}
+            ORIGIN: ${{ vars.ORIGIN }}
         steps:
             - uses: actions/checkout@v4
 
@@ -149,6 +99,8 @@ jobs:
 
             - name: Build client
               working-directory: apps/client
+              env:
+                  VITE_ASSET_BASE: ${{ env.VITE_ASSET_BASE }}
               run: bun run build
 
             - name: Upload artifact (client prebuilt)
@@ -162,9 +114,33 @@ jobs:
         name: Build server
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-server]
+        needs: [validate-env]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_BLOB: ${{ secrets.VERCEL_BLOB }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+            ORIGIN: ${{ vars.ORIGIN }}
+            COOKIE: ${{ vars.COOKIE }}
+            GEOAPIFY: ${{ secrets.GEOAPIFY }}
+            BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+            JWT_SECRET: ${{ secrets.JWT_SECRET }}
+            VITE_API: ${{ vars.VITE_API }}
         steps:
             - uses: actions/checkout@v4
+
+            - name: Resolve prod DB URL via Neon
+              id: neon
+              uses: neondatabase/create-branch-action@v6
+              with:
+                  project_id: ${{ vars.NEON_PROJECT_ID }}
+                  branch_name: production
+                  database: neondb
+                  role: neondb_owner
+                  api_key: ${{ secrets.NEON_API_KEY }}
+
+            - name: Export DATABASE_URL for subsequent steps
+              run: echo "DATABASE_URL=${{ steps.neon.outputs.db_url_pooled }}" >> $GITHUB_ENV
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
@@ -204,6 +180,10 @@ jobs:
         runs-on: ubuntu-latest
         environment: production
         needs: [client-build]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -225,13 +205,12 @@ jobs:
               working-directory: apps/client
               run: rm -rf .vercel/output/static/assets || true
 
-            - name: Deploy to Vercel (client)
+            - name: Deploy to Vercel
               working-directory: apps/client
               run: |
                   bunx -y vercel@latest deploy \
                     --prebuilt \
                     --prod --yes \
-                    --project "$VERCEL_CLIENT_PROJECT_ID" \
                     --token "$VERCEL_TOKEN"
 
     vercel-server:
@@ -239,6 +218,10 @@ jobs:
         runs-on: ubuntu-latest
         environment: production
         needs: [server-build]
+        env:
+            VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+            VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+            VERCEL_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -256,13 +239,12 @@ jobs:
                   restore-keys: |
                       bunx-cache-${{ runner.os }}-
 
-            - name: Deploy to Vercel (server)
+            - name: Deploy to Vercel
               working-directory: apps/server
               run: |
                   bunx -y vercel@latest deploy \
                     --prebuilt \
                     --prod --yes \
-                    --project "$VERCEL_SERVER_PROJECT_ID" \
                     --token "$VERCEL_TOKEN"
 
     bunny-cdn:
@@ -270,6 +252,10 @@ jobs:
         runs-on: ubuntu-latest
         environment: production
         needs: [client-build]
+        env:
+            BUNNY_HOST: ${{ vars.BUNNY_HOST }}
+            BUNNY_USER: ${{ vars.BUNNY_USER }}
+            BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -278,7 +264,6 @@ jobs:
 
             - name: Prepare rclone config
               run: |
-                  set -euo pipefail
                   CONF="${GITHUB_WORKSPACE}/rclone.conf"
                   OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
                   cat > "$CONF" <<EOF
