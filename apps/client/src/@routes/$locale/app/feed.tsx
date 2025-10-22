@@ -12,6 +12,7 @@ import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 
 export const Route = createFileRoute("/$locale/app/feed")({
 	component() {
+		const { locale } = Route.useParams();
 		const listingQuery = useListingInfiniteQuery();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();
@@ -70,6 +71,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 									<ListingPreview
 										key={`${feedId}-${listing.id}`}
 										listing={listing}
+										locale={locale}
 									/>
 								);
 							});

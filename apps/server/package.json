@@ -11,7 +11,7 @@
 		"@hono/zod-openapi": "1.1.4",
 		"@scalar/hono-api-reference": "0.9.22",
 		"@upstash/redis": "1.35.6",
-		"@use-pico/common": "5.0.87",
+		"@use-pico/common": "5.0.89",
 		"@zbav-se.me/common": "0.5.0",
 		"better-auth": "1.3.28",
 		"hono": "4.10.2",

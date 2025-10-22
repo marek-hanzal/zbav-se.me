@@ -1,6 +1,7 @@
 import { Container, DateInline } from "@use-pico/client";
+import { toHumanNumber, toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
-import type { FC } from "react";
+import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { Title } from "~/app/ui/title/Title";
@@ -8,47 +9,49 @@ import { Title } from "~/app/ui/title/Title";
 export namespace ListingPreview {
 	export interface Props {
 		listing: ListingDto;
+		locale: string;
 	}
 }
 
-export const ListingPreview: FC<ListingPreview.Props> = ({ listing }) => {
-	const [hero] = listing.gallery as [
-		Gallery,
-		...Gallery[],
-	];
+export const ListingPreview: FC<ListingPreview.Props> = memo(
+	({ locale, listing }) => {
+		const [hero] = listing.gallery as [
+			Gallery,
+			...Gallery[],
+		];
 
-	return (
-		<Container layout={"vertical-header-content-footer"}>
-			<Title
-				textTitle={listing.location.code}
-				// textSubtitle={`${listing.category.name} / ${listing.categoryGroup.name}`}
-				right={
-					<DateInline
-						date={listing.createdAt}
-						options={{
-							year: "2-digit",
-							day: "2-digit",
-							month: "narrow",
-						}}
-					/>
-				}
-			/>
-
-			<Container
-				tone={"primary"}
-				theme={"light"}
-				border={"default"}
-				shadow={"default"}
-				round={"lg"}
-			>
-				<HeroImage
-					src={hero.url}
-					alt={`Hero image for listing ${listing.id}`}
-					className={"w-full h-full object-cover rounded-lg"}
+		return (
+			<Container layout={"vertical-header-content-footer"}>
+				<Title
+					textTitle={toHumanNumber({
+						number: listing.price,
+						locale,
+						minimumFractionDigits: 2,
+						maximumFractionDigits: 2,
+						trailingZeroDisplay: "stripIfInteger",
+					})}
+					// textSubtitle={`${listing.category.name} / ${listing.categoryGroup.name}`}
+					right={toTimeDiff({
+						time: listing.createdAt,
+					})}
 				/>
-			</Container>
 
-			<BottomContainer>yup</BottomContainer>
-		</Container>
-	);
-};
+				<Container
+					tone={"primary"}
+					theme={"light"}
+					border={"default"}
+					shadow={"default"}
+					round={"xl"}
+				>
+					<HeroImage
+						src={hero.url}
+						alt={`Hero image for listing ${listing.id}`}
+						className={"w-full h-full object-cover rounded-xl"}
+					/>
+				</Container>
+
+				<BottomContainer>yup</BottomContainer>
+			</Container>
+		);
+	},
+);

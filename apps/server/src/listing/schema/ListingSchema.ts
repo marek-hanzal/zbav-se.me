@@ -10,6 +10,7 @@ export const ListingSchema = z
 		}),
 		price: z.coerce.number().openapi({
 			description: "Price of the listing",
+			type: "number",
 		}),
 		condition: z.number().openapi({
 			description: "Condition of the item (0-based index)",
@@ -28,9 +29,11 @@ export const ListingSchema = z
 		}),
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",
+			type: "string",
 		}),
 		updatedAt: z.coerce.date().openapi({
 			description: "Last update timestamp",
+			type: "string",
 		}),
 	})
 	.openapi("Listing", {

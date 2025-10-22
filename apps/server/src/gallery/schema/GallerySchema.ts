@@ -19,9 +19,11 @@ export const GallerySchema = z
 		}),
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",
+			type: "string",
 		}),
 		updatedAt: z.coerce.date().openapi({
 			description: "Last update timestamp",
+			type: "string",
 		}),
 	})
 	.openapi("Gallery", {

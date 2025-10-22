@@ -25,10 +25,10 @@
         "@tanstack/react-router": "1.133.22",
         "@tanstack/react-router-ssr-query": "1.133.22",
         "@tanstack/react-start": "1.133.22",
-        "@use-pico/client": "5.0.210",
-        "@use-pico/cls": "5.0.67",
-        "@use-pico/common": "5.0.87",
-        "@use-pico/server": "5.0.91",
+        "@use-pico/client": "5.0.212",
+        "@use-pico/cls": "5.0.68",
+        "@use-pico/common": "5.0.89",
+        "@use-pico/server": "5.0.93",
         "@zbav-se.me/common": "0.5.0",
         "@zbav-se.me/sdk": "0.5.0",
         "axios": "1.12.2",
@@ -73,7 +73,7 @@
         "@hono/zod-openapi": "1.1.4",
         "@scalar/hono-api-reference": "0.9.22",
         "@upstash/redis": "1.35.6",
-        "@use-pico/common": "5.0.87",
+        "@use-pico/common": "5.0.89",
         "@zbav-se.me/common": "0.5.0",
         "better-auth": "1.3.28",
         "hono": "4.10.2",
@@ -765,13 +765,13 @@
 
     "@upstash/redis": ["@upstash/redis@1.35.6", "", { "dependencies": { "uncrypto": "^0.1.3" } }, "sha512-aSEIGJgJ7XUfTYvhQcQbq835re7e/BXjs8Janq6Pvr6LlmTZnyqwT97RziZLO/8AVUL037RLXqqiQC6kCt+5pA=="],
 
-    "@use-pico/client": ["@use-pico/client@5.0.210", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.37.0", "@lexical/react": "0.37.0", "@lexical/utils": "0.37.0", "@tanstack/react-query": "5.90.5", "@tanstack/react-router": "1.133.22", "@types/luxon": "3.7.1", "@use-pico/cls": "5.0.67", "@use-pico/common": "5.0.87", "axios": "1.12.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.37.0", "localstorage-slim": "2.7.1", "luxon": "3.7.2", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.8.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-X21/vDXmLy3DEzRYCKD0yx8XL4mvZY00WLRZeVhGBLqjRcCf5t+OqQW9ibfRV4ckwz+8f9GWz7SJL6ob6GmR4Q=="],
+    "@use-pico/client": ["@use-pico/client@5.0.212", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.37.0", "@lexical/react": "0.37.0", "@lexical/utils": "0.37.0", "@tanstack/react-query": "5.90.5", "@tanstack/react-router": "1.133.22", "@types/luxon": "3.7.1", "@use-pico/cls": "5.0.68", "@use-pico/common": "5.0.89", "axios": "1.12.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.37.0", "localstorage-slim": "2.7.1", "luxon": "3.7.2", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.8.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-Z4EAZf+0rkMW2NvKgZ4wofDXloKkM7P9Xko9uyMrrJR05jzaT5NXP3g1PZ64LH3TzqCHeM9v9NVxMXCevxkgPA=="],
 
-    "@use-pico/cls": ["@use-pico/cls@5.0.67", "", { "dependencies": { "react": "19.2.0", "tailwind-merge": "3.3.1" } }, "sha512-zhvOvCat1hNtAzs1BOsuzJN4PlI6PNKUNqDBpMTSM//DNwQt52HbSBrCdr75m8UQNmCNrFkbTa3M+/asCjh8Yw=="],
+    "@use-pico/cls": ["@use-pico/cls@5.0.68", "", { "dependencies": { "react": "19.2.0", "tailwind-merge": "3.3.1" } }, "sha512-dgEmQSP250tceuMmg1w2W2LsqkBxdQ9MnLieEfMDkMeKYycdwu2phCsf8/WbMC56gP+AKCWubBzaFqC5lWXWSw=="],
 
-    "@use-pico/common": ["@use-pico/common@5.0.87", "", { "dependencies": { "@apollo/client": "4.0.7", "@graphql-typed-document-node/core": "3.2.0", "@paralleldrive/cuid2": "3.1.0", "@types/is-callable": "1.1.2", "@types/is-empty": "1.2.3", "@types/luxon": "3.7.1", "@types/object-path": "0.11.4", "@types/qs": "6.14.0", "axios": "1.12.2", "axios-rate-limit": "1.4.0", "fast-clean": "1.5.2", "flattie": "1.1.1", "is-callable": "1.2.7", "is-empty": "1.2.0", "is-string": "1.1.1", "js-sha256": "0.11.1", "kysely": "0.28.8", "luxon": "3.7.2", "object-path": "0.11.8", "preferred-locale": "2.0.2", "qs": "6.14.0", "read-excel-file": "6.0.1", "timer-node": "5.0.9", "zod": "4.1.12" } }, "sha512-/tVXO3qeSf7d78+7CB/ySrXPpxCUgZ3PS9hYkSuZB57TCXd5yQecax2V4rCBq1ScrhObESyJlNYcA+7QjRpGSw=="],
+    "@use-pico/common": ["@use-pico/common@5.0.89", "", { "dependencies": { "@apollo/client": "4.0.7", "@graphql-typed-document-node/core": "3.2.0", "@paralleldrive/cuid2": "3.1.0", "@types/is-callable": "1.1.2", "@types/is-empty": "1.2.3", "@types/luxon": "3.7.1", "@types/object-path": "0.11.4", "@types/qs": "6.14.0", "axios": "1.12.2", "axios-rate-limit": "1.4.0", "fast-clean": "1.5.2", "flattie": "1.1.1", "is-callable": "1.2.7", "is-empty": "1.2.0", "is-string": "1.1.1", "js-sha256": "0.11.1", "kysely": "0.28.8", "luxon": "3.7.2", "object-path": "0.11.8", "preferred-locale": "2.0.2", "qs": "6.14.0", "read-excel-file": "6.0.1", "timer-node": "5.0.9", "zod": "4.1.12" } }, "sha512-xW5hwJbZE9BtTvoSj30UThh8QeazIWhaPNBKscnf0v0JT6C60DvHKN8GJKObh0iI3jH179XewU1QkGdYfhQKTQ=="],
 
-    "@use-pico/server": ["@use-pico/server@5.0.91", "", { "dependencies": { "@phenomnomnominal/tsquery": "6.1.3", "@types/cli-progress": "3.11.6", "@use-pico/common": "5.0.87", "cli-progress": "3.12.0", "yaml": "2.8.1" } }, "sha512-MgR2ORcuvdtuPy2lQQB2aSytWrh8QGbKqnSdNtnQEs+RSFyQiV0IIamWPIVs2N8KQ8/ag+impn/g565p6S4eSQ=="],
+    "@use-pico/server": ["@use-pico/server@5.0.93", "", { "dependencies": { "@phenomnomnominal/tsquery": "6.1.3", "@types/cli-progress": "3.11.6", "@use-pico/common": "5.0.89", "cli-progress": "3.12.0", "yaml": "2.8.1" } }, "sha512-neVjGgSr6VgSpUt50zmTNv5k+UvrlYCTWU8QhfROkPW32yhtlt8W1Bm1PiNUTJyZ2Vwrw67YFIMpsAS9G9oNig=="],
 
     "@use-pico/tsconfig": ["@use-pico/tsconfig@5.0.0", "", {}, "sha512-l6rC6r+TzPT5z/QOMR7o2TNYuWehrZEpN5zR/5KW293i0ovErWLTe8e/1VDtyu6ZmXeqUt0YNVmsLdeknOIlew=="],
 
