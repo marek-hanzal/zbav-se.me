@@ -1,35 +1,53 @@
-import { Status } from "@use-pico/client";
-import { useCls, VariantProvider } from "@use-pico/cls";
+import { Container, type Icon, Status } from "@use-pico/client";
+import { VariantProvider } from "@use-pico/cls";
 import type { FC } from "react";
-import { TileCls } from "~/app/ui/dashboard/TileCls";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export namespace Tile {
-	export interface Props extends TileCls.Props<Status.Props> {}
+	export interface Props extends Container.Props {
+		icon: Icon.Type;
+		textTitle?: string;
+		textMessage?: string;
+	}
 }
 
-export const Tile: FC<Tile.Props> = ({ cls = TileCls, tweak, ...props }) => {
-	const { slots } = useCls(cls, tweak);
-
+export const Tile: FC<Tile.Props> = ({
+	icon,
+	textTitle,
+	textMessage,
+	tone = "primary",
+	theme = "light",
+	...props
+}) => {
 	return (
-		<div className={slots.root()}>
+		<Container
+			tone={tone}
+			theme={theme}
+			border={"default"}
+			shadow={"default"}
+			round={"lg"}
+			layout={"vertical-content-footer"}
+			{...props}
+		>
 			<VariantProvider
 				cls={ThemeCls}
 				variant={{
-					tone: "secondary",
-					theme: "light",
+					tone,
+					theme,
 				}}
 			>
 				<Status
+					icon={icon}
+					textTitle={textTitle}
+					textMessage={textMessage}
 					titleProps={{
 						size: "xl",
 					}}
 					messageProps={{
 						size: "sm",
 					}}
-					{...props}
 				/>
 			</VariantProvider>
-		</div>
+		</Container>
 	);
 };

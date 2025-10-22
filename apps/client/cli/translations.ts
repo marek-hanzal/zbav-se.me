@@ -17,6 +17,11 @@ tx({
 				attr: "textTitle",
 			},
 			{
+				name: "Tile",
+				attr: "textMessage",
+			},
+			//
+			{
 				name: "Title",
 				attr: "textTitle",
 			},

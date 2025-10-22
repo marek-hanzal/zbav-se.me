@@ -22,6 +22,7 @@ import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppFeedRouteImport } from './@routes/$locale/app/feed'
 import { Route as LocaleAppDashboardRouteImport } from './@routes/$locale/app/dashboard'
 import { Route as LocaleAppBagRouteImport } from './@routes/$locale/app/bag'
+import { Route as LocaleAppListingMyRouteImport } from './@routes/$locale/app/listing/my'
 import { Route as LocaleAppListingCreateRouteImport } from './@routes/$locale/app/listing/create'
 import { Route as LocaleAppListingIdViewRouteImport } from './@routes/$locale/app/listing/$id/view'
 
@@ -90,6 +91,11 @@ const LocaleAppBagRoute = LocaleAppBagRouteImport.update({
   path: '/bag',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const LocaleAppListingMyRoute = LocaleAppListingMyRouteImport.update({
+  id: '/listing/my',
+  path: '/listing/my',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
 const LocaleAppListingCreateRoute = LocaleAppListingCreateRouteImport.update({
   id: '/listing/create',
   path: '/listing/create',
@@ -116,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
+  '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
   '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
 }
 export interface FileRoutesByTo {
@@ -132,6 +139,7 @@ export interface FileRoutesByTo {
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
+  '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
   '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
 }
 export interface FileRoutesById {
@@ -150,6 +158,7 @@ export interface FileRoutesById {
   '/$locale/app/feed': typeof LocaleAppFeedRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
+  '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
   '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
 }
 export interface FileRouteTypes {
@@ -169,6 +178,7 @@ export interface FileRouteTypes {
     | '/$locale/app/feed'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
+    | '/$locale/app/listing/my'
     | '/$locale/app/listing/$id/view'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -185,6 +195,7 @@ export interface FileRouteTypes {
     | '/$locale/app/feed'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
+    | '/$locale/app/listing/my'
     | '/$locale/app/listing/$id/view'
   id:
     | '__root__'
@@ -202,6 +213,7 @@ export interface FileRouteTypes {
     | '/$locale/app/feed'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
+    | '/$locale/app/listing/my'
     | '/$locale/app/listing/$id/view'
   fileRoutesById: FileRoutesById
 }
@@ -303,6 +315,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppBagRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/listing/my': {
+      id: '/$locale/app/listing/my'
+      path: '/listing/my'
+      fullPath: '/$locale/app/listing/my'
+      preLoaderRoute: typeof LocaleAppListingMyRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
     '/$locale/app/listing/create': {
       id: '/$locale/app/listing/create'
       path: '/listing/create'
@@ -326,6 +345,7 @@ interface LocaleAppRouteChildren {
   LocaleAppFeedRoute: typeof LocaleAppFeedRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppListingCreateRoute: typeof LocaleAppListingCreateRoute
+  LocaleAppListingMyRoute: typeof LocaleAppListingMyRoute
   LocaleAppListingIdViewRoute: typeof LocaleAppListingIdViewRoute
 }
 
@@ -335,6 +355,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppFeedRoute: LocaleAppFeedRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppListingCreateRoute: LocaleAppListingCreateRoute,
+  LocaleAppListingMyRoute: LocaleAppListingMyRoute,
   LocaleAppListingIdViewRoute: LocaleAppListingIdViewRoute,
 }
 

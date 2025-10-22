@@ -46,6 +46,9 @@
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
   ref: Back to Dashboard (label)
   value: Back to Dashboard (label)
+258aa9f4960e7b1967b2d4e71b2b667d7f8bebb8176e6e935602929b:
+  ref: Dashboard (title)
+  value: Dashboard (title)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
@@ -226,6 +229,9 @@
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
   ref: Previous (tour)
   value: Previous (tour)
+8c0b4530f4b4899fd9428482e22f472c3db3fc465becfe849b333c38:
+  ref: Creating listing...
+  value: Creating listing...
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
   ref: Feed (label)
   value: Feed (label)
@@ -286,6 +292,9 @@ a5eb219baee2d44fbeb2efb0fefefa8cca868c985927a2010eca1bd0:
 aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
   ref: Sorted by desc, sort by asc; keeps column sorted in selected order
   value: Sorted by desc, sort by asc; keeps column sorted in selected order
+abbd4cfb1a30741f49617788f31cc7e4608806890cfa5c277770fce5:
+  ref: Uploading photos...
+  value: Uploading photos...
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
   ref: Success (toast)
   value: Success (toast)
@@ -325,6 +334,9 @@ b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
   ref: Downloading file...
   value: Downloading file...
+ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
+  ref: My listings (label)
+  value: My listings (label)
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
