@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Status } from "@use-pico/client";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useId, useRef } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { useListingInfiniteQuery } from "~/app/listing/query/useListingInfiniteQuery";
 import { ListingPreview } from "~/app/listing/ui/ListingPreview";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
@@ -13,6 +14,10 @@ export const Route = createFileRoute("/$locale/app/feed")({
 		const listingQuery = useListingInfiniteQuery();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();
+		const debouncedFetchNextPage = useDebouncedCallback(
+			listingQuery.fetchNextPage,
+			250,
+		);
 
 		useAnim(
 			() => {
@@ -21,8 +26,8 @@ export const Route = createFileRoute("/$locale/app/feed")({
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						if (self.progress > 0.5) {
-							listingQuery.fetchNextPage();
+						if (self.progress >= 0.4) {
+							debouncedFetchNextPage();
 						}
 					},
 				});
