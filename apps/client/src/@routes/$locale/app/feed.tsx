@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 		const feedId = useId();
 		const debouncedFetchNextPage = useDebouncedCallback(
 			listingQuery.fetchNextPage,
-			250,
+			150,
 		);
 
 		useAnim(
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						if (self.progress >= 0.4) {
+						if (self.progress >= 0.5) {
 							debouncedFetchNextPage();
 						}
 					},

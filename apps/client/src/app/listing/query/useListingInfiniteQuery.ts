@@ -17,7 +17,7 @@ export const useListingInfiniteQuery = () => {
 			return apiListingCollection(
 				{
 					cursor: {
-						page: pageParam as number,
+						page: pageParam,
 						size,
 					},
 					sort: [
