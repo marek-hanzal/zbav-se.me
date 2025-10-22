@@ -11,6 +11,8 @@ export const HeroImage: FC<HeroImage.Props> = (props) => {
 			loading={"eager"}
 			fetchPriority={"high"}
 			decoding={"async"}
+			referrerPolicy={"origin"}
+			crossOrigin={"anonymous"}
 			{...props}
 		/>
 	);
