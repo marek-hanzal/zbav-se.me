@@ -1089,6 +1089,45 @@ export const apiListingFetchResponse = zod.object({
 	categoryId: zod.string().describe("ID of the category"),
 	createdAt: zod.iso.date().nullable().describe("Creation timestamp"),
 	updatedAt: zod.iso.date().nullable().describe("Last update timestamp"),
+	location: zod
+		.object({
+			id: zod.string(),
+			query: zod
+				.string()
+				.describe("The query that was used to get the location"),
+			lang: zod
+				.string()
+				.describe("The language that was used to get the location"),
+			country: zod
+				.string()
+				.describe("The country that the location is in"),
+			code: zod.string().describe("Country code"),
+			county: zod
+				.string()
+				.nullish()
+				.describe("The county that the location is in"),
+			municipality: zod
+				.string()
+				.nullish()
+				.describe("The municipality that the location is in"),
+			state: zod
+				.string()
+				.nullish()
+				.describe("The state that the location is in"),
+			address: zod
+				.string()
+				.describe("Full address preview of a location"),
+			confidence: zod
+				.number()
+				.nullable()
+				.describe("Confidence score of the location (based on query)"),
+			hash: zod
+				.string()
+				.describe("Used to uniquely identify this location entry"),
+			lat: zod.number().nullable().describe("Latitude of the location"),
+			lon: zod.number().nullable().describe("Longitude of the location"),
+		})
+		.describe("A location cache table"),
 	gallery: zod
 		.array(
 			zod.object({
@@ -1326,25 +1365,107 @@ export const apiListingCollectionBody = zod
 	})
 	.describe("Query object for listing collection");
 
-export const apiListingCollectionResponseItem = zod
+export const apiListingCollectionResponseDataItemGalleryItemSortMin = 0;
+
+export const apiListingCollectionResponse = zod
 	.object({
-		id: zod.string().describe("ID of the listing"),
-		userId: zod.string().describe("ID of the user who created the listing"),
-		price: zod.number().nullable().describe("Price of the listing"),
-		condition: zod
-			.number()
-			.describe("Condition of the item (0-based index)"),
-		age: zod.number().describe("Age of the item (0-based index)"),
-		locationId: zod.string().describe("ID of the location"),
-		categoryGroupId: zod.string().describe("ID of the category group"),
-		categoryId: zod.string().describe("ID of the category"),
-		createdAt: zod.iso.date().nullable().describe("Creation timestamp"),
-		updatedAt: zod.iso.date().nullable().describe("Last update timestamp"),
+		data: zod.array(
+			zod.object({
+				id: zod.string().describe("ID of the listing"),
+				userId: zod
+					.string()
+					.describe("ID of the user who created the listing"),
+				price: zod.number().nullable().describe("Price of the listing"),
+				condition: zod
+					.number()
+					.describe("Condition of the item (0-based index)"),
+				age: zod.number().describe("Age of the item (0-based index)"),
+				locationId: zod.string().describe("ID of the location"),
+				categoryGroupId: zod
+					.string()
+					.describe("ID of the category group"),
+				categoryId: zod.string().describe("ID of the category"),
+				createdAt: zod.iso
+					.date()
+					.nullable()
+					.describe("Creation timestamp"),
+				updatedAt: zod.iso
+					.date()
+					.nullable()
+					.describe("Last update timestamp"),
+				location: zod
+					.object({
+						id: zod.string(),
+						query: zod
+							.string()
+							.describe(
+								"The query that was used to get the location",
+							),
+						lang: zod
+							.string()
+							.describe(
+								"The language that was used to get the location",
+							),
+						country: zod
+							.string()
+							.describe("The country that the location is in"),
+						code: zod.string().describe("Country code"),
+						county: zod
+							.string()
+							.nullish()
+							.describe("The county that the location is in"),
+						municipality: zod
+							.string()
+							.nullish()
+							.describe(
+								"The municipality that the location is in",
+							),
+						state: zod
+							.string()
+							.nullish()
+							.describe("The state that the location is in"),
+						address: zod
+							.string()
+							.describe("Full address preview of a location"),
+						confidence: zod
+							.number()
+							.nullable()
+							.describe(
+								"Confidence score of the location (based on query)",
+							),
+						hash: zod
+							.string()
+							.describe(
+								"Used to uniquely identify this location entry",
+							),
+						lat: zod
+							.number()
+							.nullable()
+							.describe("Latitude of the location"),
+						lon: zod
+							.number()
+							.nullable()
+							.describe("Longitude of the location"),
+					})
+					.describe("A location cache table"),
+				gallery: zod
+					.array(
+						zod.object({
+							id: zod.string(),
+							url: zod.string(),
+							sort: zod
+								.number()
+								.min(
+									apiListingCollectionResponseDataItemGalleryItemSortMin,
+								),
+						}),
+					)
+					.describe("Array of listing gallery images"),
+			}),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
 	})
-	.describe("Represents a marketplace listing");
-export const apiListingCollectionResponse = zod.array(
-	apiListingCollectionResponseItem,
-);
+	.describe("Collection of listings");
 
 /**
  * Returns count of listings based on provided query

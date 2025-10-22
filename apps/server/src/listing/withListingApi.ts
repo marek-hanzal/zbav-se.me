@@ -1,20 +1,21 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import { createRoute } from "@hono/zod-openapi";
+import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
+import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingDtoSchema } from "./schema/ListingDtoSchema";
 import { ListingGalleryCreateSchema } from "./schema/ListingGalleryCreateSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
-import { ListingSchema } from "./schema/ListingSchema";
 import {
 	withListingQueryBuilder,
 	withListingQueryBuilderWithSort,
 } from "./withListingQueryBuilder";
+import { withListingSelect } from "./withListingSelect";
 
 export const withListingApi: Routes.Fn = ({ session }) => {
 	const sessionEndpoints = withSessionHono();
@@ -55,7 +56,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 			const id = genId();
 			const now = new Date();
 
-			const listing = await database.kysely
+			await database.kysely
 				.insertInto("listing")
 				.values({
 					id,
@@ -73,15 +74,19 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				.executeTakeFirstOrThrow();
 
 			return c.json(
-				{
-					...listing,
-					gallery: await database.kysely
-						.selectFrom("gallery")
-						.selectAll()
-						.where("listingId", "=", listing.id)
-						.orderBy("sort")
-						.execute(),
-				} satisfies ListingDtoSchema.Type,
+				await withFetch({
+					select: withListingSelect(),
+					output: ListingDtoSchema,
+					where: {
+						id,
+					},
+					query({ select, where }) {
+						return withListingQueryBuilderWithSort({
+							select,
+							where,
+						});
+					},
+				}),
 				201,
 			);
 		},
@@ -112,6 +117,14 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					},
 					description: "Return a listing based on the provided query",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Listing not found",
+				},
 			},
 			tags: [
 				"listing",
@@ -129,10 +142,8 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withFetch({
-						select: database.kysely
-							.selectFrom("listing")
-							.selectAll(),
-						output: ListingSchema,
+						select: withListingSelect(),
+						output: ListingDtoSchema,
 						filter,
 						where,
 						query({ select, where }) {
@@ -145,22 +156,20 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					}),
 			});
 
-			return c.json(
-				{
-					...data,
-					gallery: await database.kysely
-						.selectFrom("gallery")
-						.selectAll()
-						.where("listingId", "=", data.id)
-						.orderBy("sort")
-						.execute(),
-				},
-				{
-					headers: {
-						"X-Cached": hit ? "true" : "false",
+			if (!data) {
+				return c.json(
+					{
+						message: "Listing not found",
 					},
+					404,
+				);
+			}
+			return c.json(data satisfies ListingDtoSchema.Type, {
+				status: 200,
+				headers: {
+					"X-Cached": hit ? "true" : "false",
 				},
-			);
+			});
 		},
 	);
 
@@ -183,7 +192,11 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: z.array(ListingSchema),
+							schema: withCollectionSchema({
+								schema: ListingDtoSchema,
+								type: "ListingCollection",
+								description: "Collection of listings",
+							}),
 						},
 					},
 					description:
@@ -205,12 +218,13 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					value: json,
 				},
 				fetch: () =>
-					withList({
-						select: database.kysely
-							.selectFrom("listing")
-							.selectAll(),
-						output: ListingSchema,
-						cursor,
+					withCollection({
+						select: withListingSelect(),
+						output: ListingDtoSchema,
+						cursor: cursor ?? {
+							page: 0,
+							size: 10,
+						},
 						filter,
 						where,
 						query({ select, where }) {

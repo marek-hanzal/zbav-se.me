@@ -320,6 +320,55 @@ export interface CategoryGroupQuery {
 	sort?: CategoryGroupSort[] | null;
 }
 
+/**
+ * A location cache table
+ */
+export interface Location {
+	id: string;
+	/** The query that was used to get the location */
+	query: string;
+	/** The language that was used to get the location */
+	lang: string;
+	/** The country that the location is in */
+	country: string;
+	/** Country code */
+	code: string;
+	/**
+	 * The county that the location is in
+	 * @nullable
+	 */
+	county?: string | null;
+	/**
+	 * The municipality that the location is in
+	 * @nullable
+	 */
+	municipality?: string | null;
+	/**
+	 * The state that the location is in
+	 * @nullable
+	 */
+	state?: string | null;
+	/** Full address preview of a location */
+	address: string;
+	/**
+	 * Confidence score of the location (based on query)
+	 * @nullable
+	 */
+	confidence: number | null;
+	/** Used to uniquely identify this location entry */
+	hash: string;
+	/**
+	 * Latitude of the location
+	 * @nullable
+	 */
+	lat: number | null;
+	/**
+	 * Longitude of the location
+	 * @nullable
+	 */
+	lon: number | null;
+}
+
 export type ListingDtoGalleryItem = {
 	id: string;
 	url: string;
@@ -357,6 +406,7 @@ export interface ListingDto {
 	 * @nullable
 	 */
 	updatedAt: string | null;
+	location: Location;
 	/** Array of listing gallery images */
 	gallery: ListingDtoGalleryItem[];
 }
@@ -592,38 +642,12 @@ export interface ListingQuery {
 }
 
 /**
- * Represents a marketplace listing
+ * Collection of listings
  */
-export interface Listing {
-	/** ID of the listing */
-	id: string;
-	/** ID of the user who created the listing */
-	userId: string;
-	/**
-	 * Price of the listing
-	 * @nullable
-	 */
-	price: number | null;
-	/** Condition of the item (0-based index) */
-	condition: number;
-	/** Age of the item (0-based index) */
-	age: number;
-	/** ID of the location */
-	locationId: string;
-	/** ID of the category group */
-	categoryGroupId: string;
-	/** ID of the category */
-	categoryId: string;
-	/**
-	 * Creation timestamp
-	 * @nullable
-	 */
-	createdAt: string | null;
-	/**
-	 * Last update timestamp
-	 * @nullable
-	 */
-	updatedAt: string | null;
+export interface ListingCollection {
+	data: ListingDto[];
+	/** Whether there are more items to fetch */
+	more: boolean;
 }
 
 /**
@@ -800,55 +824,6 @@ export interface GalleryQuery {
 	where?: GalleryWhere;
 	/** @nullable */
 	sort?: GallerySort[] | null;
-}
-
-/**
- * A location cache table
- */
-export interface Location {
-	id: string;
-	/** The query that was used to get the location */
-	query: string;
-	/** The language that was used to get the location */
-	lang: string;
-	/** The country that the location is in */
-	country: string;
-	/** Country code */
-	code: string;
-	/**
-	 * The county that the location is in
-	 * @nullable
-	 */
-	county?: string | null;
-	/**
-	 * The municipality that the location is in
-	 * @nullable
-	 */
-	municipality?: string | null;
-	/**
-	 * The state that the location is in
-	 * @nullable
-	 */
-	state?: string | null;
-	/** Full address preview of a location */
-	address: string;
-	/**
-	 * Confidence score of the location (based on query)
-	 * @nullable
-	 */
-	confidence: number | null;
-	/** Used to uniquely identify this location entry */
-	hash: string;
-	/**
-	 * Latitude of the location
-	 * @nullable
-	 */
-	lat: number | null;
-	/**
-	 * Longitude of the location
-	 * @nullable
-	 */
-	lon: number | null;
 }
 
 /**
@@ -1189,7 +1164,7 @@ export const apiListingFetch = <TData = AxiosResponse<ListingDto>>(
 /**
  * Returns listings based on provided parameters
  */
-export const apiListingCollection = <TData = AxiosResponse<Listing[]>>(
+export const apiListingCollection = <TData = AxiosResponse<ListingCollection>>(
 	listingQuery: ListingQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1312,7 +1287,7 @@ export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
 export type ApiCategoryGroupCountResult = AxiosResponse<Count>;
 export type ApiListingCreateResult = AxiosResponse<ListingDto>;
 export type ApiListingFetchResult = AxiosResponse<ListingDto>;
-export type ApiListingCollectionResult = AxiosResponse<Listing[]>;
+export type ApiListingCollectionResult = AxiosResponse<ListingCollection>;
 export type ApiListingCountResult = AxiosResponse<Count>;
 export type ApiListingGalleryCreateResult = AxiosResponse<void>;
 export type ApiGalleryFetchResult = AxiosResponse<Gallery>;

@@ -5,6 +5,7 @@ import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
+import { ErrorSchema } from "../schema/ErrorSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
 import { withLocationQueryBuilderWithSort } from "./withLocationQueryBuilder";
@@ -222,28 +223,46 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					description:
 						"Return a location based on the provided query",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Location not found",
+				},
 			},
 			tags: [
 				"location",
 			],
 		}),
-		async ({ json, req }) => {
-			const { filter, where, sort } = req.valid("json");
-			return json(
-				await withFetch({
-					select: database.kysely.selectFrom("location").selectAll(),
-					output: LocationSchema,
-					filter,
-					where,
-					query({ select, where }) {
-						return withLocationQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
+		async (c) => {
+			const { filter, where, sort } = c.req.valid("json");
+
+			const result = await withFetch({
+				select: database.kysely.selectFrom("location").selectAll(),
+				output: LocationSchema,
+				filter,
+				where,
+				query({ select, where }) {
+					return withLocationQueryBuilderWithSort({
+						select,
+						where,
+						sort,
+					});
+				},
+			});
+
+			if (!result) {
+				return c.json(
+					{
+						message: "Location not found",
 					},
-				}),
-			);
+					404,
+				);
+			}
+
+			return c.json(result, 200);
 		},
 	);
 

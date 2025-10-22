@@ -138,7 +138,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 			} catch {
 				return c.json(
 					{
-						error: "Failed to generate pre-signed URL",
+						message: "Failed to generate pre-signed URL",
 					},
 					500,
 				);
