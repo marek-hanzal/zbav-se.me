@@ -28,7 +28,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						if (self.progress >= 0.75) {
+						if (self.progress >= 0.65) {
 							debouncedFetchNextPage();
 						}
 					},
