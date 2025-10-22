@@ -14,6 +14,24 @@ export const withListingSelect = () => {
 					.whereRef("location.id", "=", "listing.locationId")
 					.limit(1),
 			).as("location"),
+			jsonObjectFrom(
+				eb
+					.selectFrom("category")
+					.selectAll("category")
+					.whereRef("category.id", "=", "listing.categoryId")
+					.limit(1),
+			).as("category"),
+			jsonObjectFrom(
+				eb
+					.selectFrom("category_group")
+					.selectAll("category_group")
+					.whereRef(
+						"category_group.id",
+						"=",
+						"listing.categoryGroupId",
+					)
+					.limit(1),
+			).as("categoryGroup"),
 			eb.fn
 				.coalesce(
 					jsonArrayFrom(

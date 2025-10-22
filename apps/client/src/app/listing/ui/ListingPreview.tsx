@@ -1,6 +1,7 @@
-import { Container } from "@use-pico/client";
+import { Container, DateInline } from "@use-pico/client";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import type { FC } from "react";
+import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { Title } from "~/app/ui/title/Title";
 
@@ -18,14 +19,30 @@ export const ListingPreview: FC<ListingPreview.Props> = ({ listing }) => {
 
 	return (
 		<Container layout={"vertical-header-content-footer"}>
-			<Title textTitle={listing.location.address} />
+			<Title
+				textTitle={listing.location.address}
+				textSubtitle={`${listing.category.name} / ${listing.categoryGroup.name}`}
+				right={
+					<DateInline
+						date={listing.createdAt}
+						options={{
+							year: "numeric",
+							day: "2-digit",
+							month: "narrow",
+							hour: "2-digit",
+							minute: "2-digit",
+						}}
+					/>
+				}
+			/>
 
 			<HeroImage
 				src={hero.url}
 				alt={`Hero image for listing ${listing.id}`}
+				className={"w-full h-full object-cover"}
 			/>
 
-			<div>footer</div>
+			<BottomContainer>yup</BottomContainer>
 		</Container>
 	);
 };

@@ -5,6 +5,13 @@ export namespace HeroImage {
 }
 
 export const HeroImage: FC<HeroImage.Props> = (props) => {
-	// biome-ignore lint/a11y/useAltText: Should go from props
-	return <img {...props} />;
+	return (
+		// biome-ignore lint/a11y/useAltText: Should go from props
+		<img
+			loading={"eager"}
+			fetchPriority={"high"}
+			decoding={"async"}
+			{...props}
+		/>
+	);
 };
