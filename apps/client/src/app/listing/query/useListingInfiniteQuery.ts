@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { apiListingCollection } from "@zbav-se.me/sdk";
 
 export const useListingInfiniteQuery = () => {
-	const size = 3;
+	const size = 4;
 
 	return useInfiniteQuery({
 		queryKey: [
