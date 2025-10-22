@@ -95,14 +95,12 @@ export const InfiniteData = <
 			.when(
 				(r) => r.isLoading,
 				() => {
-					console.log("loading");
 					return renderLoading();
 				},
 			)
 			.when(
 				(r) => r.isFetching && Boolean(r.data),
 				(r) => {
-					console.log("fetching with data");
 					return renderFetchingWithData({
 						// biome-ignore lint/style/noNonNullAssertion: We're OK
 						data: r.data!,
@@ -112,7 +110,6 @@ export const InfiniteData = <
 			.when(
 				(r) => r.isFetching,
 				(r) => {
-					console.log("fetching");
 					return renderFetching({
 						data: r.data,
 					});
@@ -121,8 +118,6 @@ export const InfiniteData = <
 			.when(
 				(r) => r.isError,
 				(r) => {
-					console.log("error");
-
 					return renderError({
 						// biome-ignore lint/style/noNonNullAssertion: We're OK
 						error: r.error!,
@@ -132,8 +127,6 @@ export const InfiniteData = <
 			.when(
 				(r) => r.isSuccess,
 				(r) => {
-					console.log("success");
-
 					return renderSuccess({
 						// biome-ignore lint/style/noNonNullAssertion: We're OK
 						data: r.data!,

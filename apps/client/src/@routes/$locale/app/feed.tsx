@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, Status } from "@use-pico/client";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useListingInfiniteQuery } from "~/app/listing/query/useListingInfiniteQuery";
 import { ListingPreview } from "~/app/listing/ui/ListingPreview";
@@ -19,26 +19,31 @@ export const Route = createFileRoute("/$locale/app/feed")({
 			listingQuery.fetchNextPage,
 			150,
 		);
+		const scroller = useRef<ScrollTrigger>(null);
 
 		useAnim(
 			() => {
-				ScrollTrigger.create({
+				scroller.current = ScrollTrigger.create({
 					scroller: containerRef.current,
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						if (self.progress >= 0.5) {
+						if (self.progress >= 0.65) {
 							debouncedFetchNextPage();
 						}
 					},
 				});
 			},
 			{
-				dependencies: [
-					containerRef.current,
-				],
+				dependencies: [],
 			},
 		);
+
+		useEffect(() => {
+			scroller.current?.refresh();
+		}, [
+			listingQuery.data,
+		]);
 
 		return (
 			<Container position={"relative"}>
