@@ -1,7 +1,8 @@
 import { Badge, Container, Icon, Tx, Typo } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
-import type { FC, RefObject } from "react";
+import { type FC, type RefObject, useRef } from "react";
 import { Item } from "~/app/ui/dial/Item";
+import { anim, useAnim } from "~/app/ui/gsap";
 import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
 import { ClearIcon } from "~/app/ui/icon/ClearIcon";
 

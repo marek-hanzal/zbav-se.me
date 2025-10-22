@@ -149,8 +149,16 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 									<Tx
 										label={"Location security (hint)"}
 										font={"bold"}
-										size={"md"}
-										italic
+										size={"lg"}
+										tweak={{
+											slot: {
+												root: {
+													class: [
+														"text-justify",
+													],
+												},
+											},
+										}}
 									/>
 								)}
 							</div>
