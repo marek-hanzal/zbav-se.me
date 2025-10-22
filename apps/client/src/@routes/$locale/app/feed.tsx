@@ -9,12 +9,12 @@ export const Route = createFileRoute("/$locale/app/feed")({
 		const listingQuery = withListingCollectionQuery().useQuery({
 			cursor: {
 				page: 0,
-				size: 10,
+				size: 5,
 			},
 			sort: [
 				{
 					value: "createdAt",
-					sort: "desc",
+					sort: "asc",
 				},
 			],
 		});
