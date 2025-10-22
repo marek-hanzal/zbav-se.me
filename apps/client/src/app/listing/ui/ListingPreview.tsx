@@ -20,27 +20,33 @@ export const ListingPreview: FC<ListingPreview.Props> = ({ listing }) => {
 	return (
 		<Container layout={"vertical-header-content-footer"}>
 			<Title
-				textTitle={listing.location.address}
-				textSubtitle={`${listing.category.name} / ${listing.categoryGroup.name}`}
+				textTitle={listing.location.code}
+				// textSubtitle={`${listing.category.name} / ${listing.categoryGroup.name}`}
 				right={
 					<DateInline
 						date={listing.createdAt}
 						options={{
-							year: "numeric",
+							year: "2-digit",
 							day: "2-digit",
 							month: "narrow",
-							hour: "2-digit",
-							minute: "2-digit",
 						}}
 					/>
 				}
 			/>
 
-			<HeroImage
-				src={hero.url}
-				alt={`Hero image for listing ${listing.id}`}
-				className={"w-full h-full object-cover"}
-			/>
+			<Container
+				tone={"primary"}
+				theme={"light"}
+				border={"default"}
+				shadow={"default"}
+				round={"lg"}
+			>
+				<HeroImage
+					src={hero.url}
+					alt={`Hero image for listing ${listing.id}`}
+					className={"w-full h-full object-cover rounded-lg"}
+				/>
+			</Container>
 
 			<BottomContainer>yup</BottomContainer>
 		</Container>
