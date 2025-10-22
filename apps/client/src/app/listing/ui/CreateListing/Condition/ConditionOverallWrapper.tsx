@@ -1,4 +1,4 @@
-import { Tx, type useSnapperNav } from "@use-pico/client";
+import type { useSnapperNav } from "@use-pico/client";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
@@ -37,11 +37,7 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 			>
 				<Condition
 					icon={ConditionIcon}
-					textHint={
-						<Tx
-							label={`Condition - Overall [${condition}] (hint)`}
-						/>
-					}
+					textHint={`Condition - Overall [${condition}] (hint)`}
 					value={condition}
 					onChange={setCondition}
 					limit={5}

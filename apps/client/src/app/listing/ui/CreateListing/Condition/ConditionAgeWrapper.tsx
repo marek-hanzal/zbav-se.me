@@ -1,4 +1,4 @@
-import { Tx, type useSnapperNav } from "@use-pico/client";
+import type { useSnapperNav } from "@use-pico/client";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
@@ -33,7 +33,7 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 			>
 				<Condition
 					icon={AgeIcon}
-					textHint={<Tx label={`Condition - Age [${age}] (hint)`} />}
+					textHint={`Condition - Age [${age}] (hint)`}
 					value={age}
 					onChange={setAge}
 					limit={5}

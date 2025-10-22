@@ -48,6 +48,11 @@ tx({
 				name: "SearchSheet",
 				attr: "textMessage",
 			},
+			//
+			{
+				name: "Condition",
+				attr: "textHint",
+			},
 		],
 	},
 });

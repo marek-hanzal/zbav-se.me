@@ -1,5 +1,11 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { Button, Progress, Status, type useSnapperNav } from "@use-pico/client";
+import {
+	Button,
+	Container,
+	Progress,
+	Status,
+	type useSnapperNav,
+} from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
 import axios from "axios";
@@ -12,7 +18,6 @@ import { withListingGalleryCreateMutation } from "~/app/listing/mutation/withLis
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { InvalidSubmit } from "~/app/listing/ui/CreateListing/Submit/InvalidSubmit";
 import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
-import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
 import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
 
@@ -124,7 +129,7 @@ export const SubmitWrapper: FC<{
 			listingNavApi={listingNavApi}
 			progress={false}
 		>
-			<Sheet tone={"primary"}>
+			<Container layout={"vertical-content-footer"}>
 				<Status
 					icon={SendPackageIcon}
 					textTitle={"Submit listing - status (title)"}
@@ -180,7 +185,7 @@ export const SubmitWrapper: FC<{
 						/>
 					)}
 				</Status>
-			</Sheet>
+			</Container>
 		</ListingContainer>
 	);
 });

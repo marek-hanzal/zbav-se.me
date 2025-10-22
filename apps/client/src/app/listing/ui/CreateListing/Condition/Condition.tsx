@@ -1,6 +1,5 @@
-import { type Icon, Status } from "@use-pico/client";
-import type { FC, ReactNode } from "react";
-import { Sheet } from "~/app/sheet/Sheet";
+import { Container, type Icon, Status, Tx } from "@use-pico/client";
+import type { FC } from "react";
 import { Rating } from "~/app/ui/rating/Rating";
 
 export namespace Condition {
@@ -12,7 +11,7 @@ export namespace Condition {
 		/**
 		 * Translation label for the hint (should include value placeholder)
 		 */
-		textHint: ReactNode;
+		textHint: string;
 		/**
 		 * Current rating value
 		 */
@@ -36,7 +35,7 @@ export const Condition: FC<Condition.Props> = ({
 	limit,
 }) => {
 	return (
-		<Sheet>
+		<Container layout={"vertical-content-footer"}>
 			<Status
 				icon={icon}
 				action={
@@ -47,8 +46,14 @@ export const Condition: FC<Condition.Props> = ({
 					/>
 				}
 			>
-				<div className={"text-justify min-h-48 h-48"}>{textHint}</div>
+				<div className={"text-justify min-h-48 h-48"}>
+					<Tx
+						label={textHint}
+						font={"bold"}
+						size={"lg"}
+					/>
+				</div>
 			</Status>
-		</Sheet>
+		</Container>
 	);
 };
