@@ -74,11 +74,10 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						}}
 					>
 						<PriceInline
-							value={{
-								price: listing.price,
-							}}
+							price={listing.price}
 							locale={locale}
-							currency={"czk"}
+							// TODO listing.currency
+							currency={"CZK"}
 						/>
 					</Badge>
 

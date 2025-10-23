@@ -1,6 +1,7 @@
 # TODO
 
 - Stripe DEV
+- ListingPreview - price inline has hardcoded currency code
 
 - _Fix infinite scroll; 0.5 threshold is low -> change to static pixels_
 

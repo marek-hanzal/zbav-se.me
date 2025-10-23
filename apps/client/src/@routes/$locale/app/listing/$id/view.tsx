@@ -48,11 +48,7 @@ export const Route = createFileRoute("/$locale/app/listing/$id/view")({
 										limit={5}
 									/>
 									<div>
-										<PriceInline
-											value={{
-												price: data.price,
-											}}
-										/>
+										<PriceInline price={data.price} />
 									</div>
 									<Data
 										result={locationQuery}

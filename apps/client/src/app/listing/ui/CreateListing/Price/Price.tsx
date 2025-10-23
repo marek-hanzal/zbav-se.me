@@ -34,10 +34,7 @@ export const Price: FC<Price.Props> = ({ locale, price, onClear }) => {
 				label={
 					<PriceInline
 						locale={locale}
-						value={{
-							price,
-							withVat: undefined,
-						}}
+						price={price}
 					/>
 				}
 				font={"bold"}
