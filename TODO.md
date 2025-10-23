@@ -1,5 +1,7 @@
 # TODO
 
+- Move availableCurrencies to "common" package for client and server
+    - _validate currency on server_
 - Add expireAt on listing (drop DB again :()
     - Add listing duration in listing creation
 - Add auction switch on a listing (PRO feature)

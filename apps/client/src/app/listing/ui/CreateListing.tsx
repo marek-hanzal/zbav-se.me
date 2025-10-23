@@ -1,5 +1,6 @@
 import { Container, useSnapperNav } from "@use-pico/client";
 import { type FC, useRef } from "react";
+import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryWrapper } from "~/app/listing/ui/CreateListing/Category/CategoryWrapper";
 import { CategoryGroupWrapper } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroupWrapper";
 import { ConditionAgeWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionAgeWrapper";
@@ -23,6 +24,8 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 		orientation: "vertical",
 		count: 9,
 	});
+	const useCreateListingStore = useCreateListingContext();
+	const isValid = useCreateListingStore((store) => store.isValid);
 
 	return (
 		<Container
@@ -30,6 +33,17 @@ export const CreateListing: FC<CreateListing.Props> = ({ locale }) => {
 			layout={"vertical-full"}
 			snap={"vertical-start"}
 			gap={"md"}
+			tweak={{
+				slot: {
+					root: {
+						class: isValid
+							? []
+							: [
+									"overflow-hidden",
+								],
+					},
+				},
+			}}
 		>
 			<IntroWrapper listingNavApi={listingNav.api} />
 
