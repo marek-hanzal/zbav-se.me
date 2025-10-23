@@ -175,6 +175,9 @@
 64d1d959871730b453081489881ac52d2b3eb84fb20e372802ddacb2:
   ref: Landing - Hero (title)
   value: Landing - Hero (title)
+65a79e6a07d53da30afce7099e4093ca4a3b2707ae6377371d9977e6:
+  ref: Upload hero image (placeholder)
+  value: Upload hero image (placeholder)
 67505b3ac329bf674d8dceeeaa32e8d9cb6f6b409aa16a2320e90884:
   ref: Location (subtitle)
   value: Location (subtitle)
@@ -229,9 +232,6 @@
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
   ref: Missing required token(s). (message)
   value: Missing required token(s). (message)
-89dbab7e6f158a0076038c969fb2936c6746937d31c2a9963daa9bde:
-  ref: stripIfInteger
-  value: stripIfInteger
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
   ref: Listing - upload photo (placeholder)
   value: Listing - upload photo (placeholder)
@@ -340,6 +340,9 @@ b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
 b65d42611ff7cab6a942af611b0d58db85dbce7be2cfd00067877d4d:
   ref: Password is required
   value: Password is required
+b70e68eea8b11b0bb69b041f07034244e83c5b797da75559eb35dcc1:
+  ref: dashboard
+  value: dashboard
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
   ref: Downloading file...
   value: Downloading file...
@@ -459,6 +462,9 @@ ec4a4862ee04c61e1fdfa3e4be7eabc32fa95e9f33a193e11251c8f2:
 ecc602947a2a601b6c9f099ca41d26c7f3910eff377fac630e5e43d2:
   ref: danger
   value: danger
+ed54e44d009ac9e86c9395ad1fb850e7727feecc8bd42fceb2978110:
+  ref: Upload hero image (title)
+  value: Upload hero image (title)
 ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
   ref: No category selected
   value: No category selected

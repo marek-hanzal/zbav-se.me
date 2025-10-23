@@ -233,7 +233,23 @@ export const PhotoSlot: FC<PhotoSlot.Props> = ({
 				}}
 				{...props}
 			>
-				{src ? null : (
+				{src ? null : slot === 0 ? (
+					<Status
+						icon={PhotoIcon}
+						iconProps={{
+							size: "2xl",
+						}}
+						textTitle={"Upload hero image (title)"}
+						titleProps={{
+							size: "2xl",
+						}}
+						textMessage={"Upload hero image (placeholder)"}
+						messageProps={{
+							size: "xl",
+						}}
+						tone={"primary"}
+					/>
+				) : (
 					<Status
 						icon={PhotoIcon}
 						iconProps={{
