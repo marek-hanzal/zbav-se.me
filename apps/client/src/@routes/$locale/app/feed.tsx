@@ -18,13 +18,16 @@ export const Route = createFileRoute("/$locale/app/feed")({
 
 		const { locale } = Route.useParams();
 		const { slots } = useCls(ThemeCls);
-		const listingQuery = useListingInfiniteQuery();
+		const listingQuery = useListingInfiniteQuery({
+			size: 2,
+		});
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();
 		const debouncedFetchNextPage = useDebouncedCallback(
-			(progress: number) => {
-				if (listingQuery.hasNextPage && progress >= 0.75) {
-					console.log("debounced", progress);
+			(height: number, end: number, position: number) => {
+				const trigger = end - height * 1.75;
+
+				if (listingQuery.hasNextPage && position >= trigger) {
 					listingQuery.fetchNextPage();
 				}
 			},
@@ -42,7 +45,11 @@ export const Route = createFileRoute("/$locale/app/feed")({
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						debouncedFetchNextPage(self.progress);
+						debouncedFetchNextPage(
+							containerRef.current?.clientHeight ?? 0,
+							self.end,
+							self.scroll(),
+						);
 					},
 				});
 			},

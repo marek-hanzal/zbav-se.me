@@ -1,9 +1,15 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { apiListingCollection } from "@zbav-se.me/sdk";
 
-export const useListingInfiniteQuery = () => {
-	const size = 3;
+export namespace useListingInfiniteQuery {
+	export interface Props {
+		size: number;
+	}
+}
 
+export const useListingInfiniteQuery = ({
+	size,
+}: useListingInfiniteQuery.Props) => {
 	return useInfiniteQuery({
 		queryKey: [
 			"listing",

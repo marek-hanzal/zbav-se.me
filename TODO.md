@@ -2,7 +2,8 @@
 
 - Stripe DEV
 
-- Fix infinite scroll; 0.5 threshold is low
+- _Fix infinite scroll; 0.5 threshold is low -> change to static pixels_
+
 - Move availableCurrencies to "common" package for client and server
     - _validate currency on server_
 - Add expireAt on listing (drop DB again :()
