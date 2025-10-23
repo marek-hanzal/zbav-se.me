@@ -48,7 +48,10 @@ export const Route = createFileRoute("/$locale/app/listing/$id/view")({
 										limit={5}
 									/>
 									<div>
-										<PriceInline price={data.price} />
+										<PriceInline
+											price={data.price}
+											currency={data.currency}
+										/>
 									</div>
 									<Data
 										result={locationQuery}
