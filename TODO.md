@@ -1,5 +1,32 @@
 # TODO
 
+- Allow video? - how to store + process + display?
+
+- Extend listing of
+    - price - exchange/for free
+    - shipping - post/personal/...
+    - availability from (... this one?)
+    - store amount (multiple instances on a single listing?)
+
+- Demo scraping from unstash + demo listings for testing
+    - preset locations, the rest does not matter
+
+- Likes in feed counts likness score on listing
+    - category; overriding each other depending on what was clicked and when
+
+- Interactive button on listing detail for "Instant buy"
+    - this will move to chat with default (randomized) message "I would like to buy the thing"
+
+- Add ability to make a discount on listing + show the new price + allow search for discounts
+
+- Show hot info on feed (ListingPreview) - combo of
+    - listing score (bags + feed presence)
+    - seller score
+
+- Calculate score of listing - hottness
+    - how many users has the thing in the bag
+    - how many times the thing is in the feed of an user
+
 - Listing -> connect to /api/listing/feed
     - Everytime user finishes the feed, he can create a new one
     - Because we know feed creation datetime, we can sell this info to buyers as data
@@ -39,12 +66,15 @@
 - Animate location searh result
 - Test capacitor + native app build
 
+- Select mutliple photos
+
 - When deploying hit endpoint to mark deployment (eventually also disable clients)
     - When done, prompt to reload
 
 - Resolve why fuckin' webglob is not forwarding mails
 - Add endpoint to purge old files from storages
 - Post process photos - remove metadata -> or use Bunny optimizer (which can do this on delivery)
+- marking favourite users (sellers) + info about that
 
 - Resolve /null get calls from TSR/TSS
 
