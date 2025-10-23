@@ -1,4 +1,4 @@
-import { Container, DateInline } from "@use-pico/client";
+import { Container } from "@use-pico/client";
 import { toHumanNumber, toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, Status } from "@use-pico/client";
+import { useCls } from "@use-pico/cls";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -9,10 +10,12 @@ import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { InfiniteData } from "~/app/ui/data/InfiniteData";
 import { useAnim } from "~/app/ui/gsap";
 import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
+import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/app/feed")({
 	component() {
 		const { locale } = Route.useParams();
+		const { slots } = useCls(ThemeCls);
 		const listingQuery = useListingInfiniteQuery();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();
@@ -79,15 +82,41 @@ export const Route = createFileRoute("/$locale/app/feed")({
 				>
 					{({ content }) => {
 						return (
-							<FlowContainer
-								key={feedId}
-								ref={containerRef}
-								layout={"vertical-full"}
-								snap={"vertical-center"}
-								overflow={"vertical"}
-							>
-								{content}
-							</FlowContainer>
+							<>
+								<FlowContainer
+									key={feedId}
+									ref={containerRef}
+									layout={"vertical-full"}
+									snap={"vertical-center"}
+									overflow={"vertical"}
+								>
+									{content}
+								</FlowContainer>
+
+								{listingQuery.isFetchingNextPage ? (
+									<div
+										className={slots.default({
+											slot: {
+												default: {
+													class: [
+														"absolute",
+														"bottom-1",
+														"left-2",
+														"right-2",
+														"h-2",
+														"animate-pulse",
+														"opacity-50",
+														"rounded-4xl",
+													],
+													token: [
+														"tone.primary.dark.bg",
+													],
+												},
+											},
+										})}
+									/>
+								) : null}
+							</>
 						);
 					}}
 				</InfiniteData>

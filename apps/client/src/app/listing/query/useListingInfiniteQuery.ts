@@ -2,7 +2,7 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { apiListingCollection } from "@zbav-se.me/sdk";
 
 export const useListingInfiniteQuery = () => {
-	const size = 2;
+	const size = 5;
 
 	return useInfiniteQuery({
 		queryKey: [
@@ -18,7 +18,7 @@ export const useListingInfiniteQuery = () => {
 				{
 					cursor: {
 						page: pageParam,
-						size: pageParam > 0 ? size : 6,
+						size,
 					},
 					sort: [
 						{
