@@ -23,7 +23,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 		const feedId = useId();
 		const debouncedFetchNextPage = useDebouncedCallback(
 			(progress: number) => {
-				if (listingQuery.hasNextPage && progress >= 0.5) {
+				if (listingQuery.hasNextPage && progress >= 0.75) {
 					console.log("debounced", progress);
 					listingQuery.fetchNextPage();
 				}
