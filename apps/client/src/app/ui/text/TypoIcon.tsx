@@ -4,7 +4,7 @@ import type { FC, PropsWithChildren } from "react";
 export namespace TypoIcon {
 	export interface Props extends PropsWithChildren {
 		icon: Icon.Type;
-		iconProps?: Icon.Props;
+		iconProps?: Icon.PropsEx;
 	}
 }
 

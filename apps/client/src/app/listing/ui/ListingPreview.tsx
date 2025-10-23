@@ -9,7 +9,9 @@ import {
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { StarIcon } from "~/app/ui/icon/StarIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
+import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
 export namespace ListingPreview {
 	export interface Props {
@@ -78,6 +80,33 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							locale={locale}
 							currency={"czk"}
 						/>
+					</Badge>
+
+					<Badge
+						tone={"secondary"}
+						theme={"dark"}
+						size={"lg"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"absolute",
+										"top-2",
+										"right-2",
+									],
+								},
+							},
+						}}
+					>
+						<TypoIcon
+							icon={StarIcon}
+							iconProps={{
+								tone: "secondary",
+								theme: "dark",
+							}}
+						>
+							{listing.condition}
+						</TypoIcon>
 					</Badge>
 				</Container>
 
