@@ -32,7 +32,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						if (self.progress >= 0.45) {
+						if (self.progress >= 0.4) {
 							debouncedFetchNextPage();
 						}
 					},
@@ -90,6 +90,18 @@ export const Route = createFileRoute("/$locale/app/feed")({
 								overflow={"vertical"}
 							>
 								{content}
+
+								{listingQuery.hasNextPage ? null : (
+									<Status
+										icon={
+											"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
+										}
+										textTitle={"That's all for now (title)"}
+										textMessage={
+											"No more listings to show (message)"
+										}
+									/>
+								)}
 							</FlowContainer>
 						);
 					}}
@@ -104,16 +116,16 @@ export const Route = createFileRoute("/$locale/app/feed")({
 									"bottom-1",
 									"left-2",
 									"right-2",
-									"h-2",
+									"h-3",
 									"transition-opacity",
-									"duration-300",
+									"duration-1500",
 									listingQuery.isFetchingNextPage
 										? [
 												"animate-pulse",
 												"opacity-75",
 											]
 										: "opacity-0",
-									"rounded-4xl",
+									"rounded-full",
 								],
 								token: [
 									"border.default",

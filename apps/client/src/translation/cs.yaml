@@ -224,15 +224,24 @@
 7f90897e701a64cc5eeedc3ffa925deaac0eaa4bc564cd8fa2a2a1ea:
     ref: What - sellers (badge 2)
     value: Přístup k analytickým nástrojům
+80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
+    ref: No more listings to show (message)
+    value: To je prozatím vše - zkuste jiné nastavení filtrů nebo prozkoumat další možnosti vyhledávání!
 816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
     ref: Close (label)
     value: Close (label)
+85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
+    ref: No listings (title)
+    value: Kde nic, tu nic. Ale všechno bude, všechno bude!
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
     ref: Missing required token(s). (message)
     value: Missing required token(s). (message)
+89dbab7e6f158a0076038c969fb2936c6746937d31c2a9963daa9bde:
+    ref: stripIfInteger
+    value: stripIfInteger
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
     ref: Listing - upload photo (placeholder)
     value: Ťuknutím vyfoť nebo vyber z galerie
@@ -439,6 +448,9 @@ ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     ref: Location search (placeholder)
     value: Kam inzerát umístíme?
+badc5b78cb713413bf87d581fc96eecd594bcf82de763ad73cdf01f0:
+    ref: No listings found (message)
+    value: No listings found (message)
 bc8d20ddfef0269574f555d7dc0162bdaa424a1385f9b73a54b06273:
     ref: Landing - Feature 4 (title)
     value: 💡 Chytré nabídky
@@ -460,6 +472,9 @@ c118529a347762d0d979fb0a605ed91c451f3105e3d1db2a5a9f8f6a:
 c3c7b1e9a512b8727a11c7b86573da0e04033bf97ca9444906ec1f28:
     ref: Condition - Overall (subtitle)
     value: Zhodnoť stav
+c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
+    ref: That's all for now (title)
+    value: To je prozatím vše!
 c4240d52350cfde693748107c89f1babce4b61b9a3be9532116ce003:
     ref: What - buyers (badge 3)
     value: Ověření prodejců
