@@ -73,17 +73,17 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					updatedAt: now,
 					currency: data.currency,
 					expiresAt: match(data.expiresAt)
-						.with("3-days", () =>
-							DateTime.now()
-								.plus({
-									days: 3,
-								})
-								.toJSDate(),
-						)
 						.with("7-days", () =>
 							DateTime.now()
 								.plus({
 									days: 7,
+								})
+								.toJSDate(),
+						)
+						.with("14-days", () =>
+							DateTime.now()
+								.plus({
+									days: 14,
 								})
 								.toJSDate(),
 						)

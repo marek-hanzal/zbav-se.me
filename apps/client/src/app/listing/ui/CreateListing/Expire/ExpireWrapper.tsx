@@ -85,17 +85,17 @@ export const ExpireWrapper: FC<ExpireWrapper.Props> = memo(
 									/>
 									<Typo
 										label={match(expire)
-											.with("3-days", () =>
-												DateTime.now()
-													.plus({
-														days: 3,
-													})
-													.toFormat("dd.MM.yyyy"),
-											)
 											.with("7-days", () =>
 												DateTime.now()
 													.plus({
 														days: 7,
+													})
+													.toFormat("dd.MM.yyyy"),
+											)
+											.with("14-days", () =>
+												DateTime.now()
+													.plus({
+														days: 14,
 													})
 													.toFormat("dd.MM.yyyy"),
 											)

@@ -862,8 +862,8 @@ export const apiListingCreateBody = zod
 			.describe("Currency code (ISO 4217)"),
 		expiresAt: zod
 			.enum([
-				"3-days",
 				"7-days",
+				"14-days",
 				"1-month",
 			])
 			.describe("Expiration period for the listing"),

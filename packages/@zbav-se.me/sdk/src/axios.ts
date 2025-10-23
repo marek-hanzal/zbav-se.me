@@ -421,8 +421,8 @@ export type ListingExpire = (typeof ListingExpire)[keyof typeof ListingExpire];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingExpire = {
-	"3-days": "3-days",
 	"7-days": "7-days",
+	"14-days": "14-days",
 	"1-month": "1-month",
 } as const;
 

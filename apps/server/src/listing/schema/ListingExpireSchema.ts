@@ -2,8 +2,8 @@ import { z } from "@hono/zod-openapi";
 
 export const ListingExpireSchema = z
 	.enum([
-		"3-days",
 		"7-days",
+		"14-days",
 		"1-month",
 	])
 	.openapi("ListingExpire", {

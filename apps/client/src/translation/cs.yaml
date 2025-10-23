@@ -614,12 +614,12 @@ fba4c8a805650ffe7264342944ffd910ddcc82a1892b9b354d48369b:
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
     ref: Bag (label)
     value: Nákupní taška
-Expire in 3-days:
-    static: true
-    value: Za 3 dny
 Expire in 7-days:
     static: true
     value: Za týden
+Expire in 14-days:
+    static: true
+    value: Za dva týdny
 Expire in 1-month:
     static: true
     value: Za měsíc

@@ -77,8 +77,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							<PriceInline
 								price={listing.price}
 								locale={locale}
-								// TODO listing.currency
-								currency={"CZK"}
+								currency={listing.currency}
 							/>
 						) : (
 							<Tx label={"Price - free"} />
