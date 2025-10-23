@@ -1,5 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
+import { DateTime } from "luxon";
+import { match } from "ts-pattern";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
@@ -69,6 +71,30 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					categoryId: data.categoryId,
 					createdAt: now,
 					updatedAt: now,
+					currency: data.currency,
+					expiresAt: match(data.expiresAt)
+						.with("3-days", () =>
+							DateTime.now()
+								.plus({
+									days: 3,
+								})
+								.toJSDate(),
+						)
+						.with("7-days", () =>
+							DateTime.now()
+								.plus({
+									days: 7,
+								})
+								.toJSDate(),
+						)
+						.with("1-month", () =>
+							DateTime.now()
+								.plus({
+									months: 1,
+								})
+								.toJSDate(),
+						)
+						.exhaustive(),
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();

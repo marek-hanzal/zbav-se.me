@@ -19,7 +19,8 @@ export namespace createListingStore {
 		| "condition"
 		| "age"
 		| "location"
-		| "price";
+		| "price"
+		| "currency";
 
 	export interface Store {
 		//
@@ -49,6 +50,10 @@ export namespace createListingStore {
 		getPrice(): number | undefined;
 		hasPrice: boolean;
 		//
+		currency: string | undefined;
+		setCurrency(currency: string | undefined): void;
+		hasCurrency: boolean;
+		//
 		location: string | undefined;
 		setLocation(location: string | undefined): void;
 		hasLocation: boolean;
@@ -69,6 +74,7 @@ const defaultMissing: createListingStore.Missing[] = [
 	"age",
 	"location",
 	"price",
+	"currency",
 ];
 
 export const createListingStore = ({
@@ -235,6 +241,27 @@ export const createListingStore = ({
 		},
 		hasPrice: false,
 		//
+		currency: undefined,
+		setCurrency(currency) {
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					currency === undefined
+						? [
+								...missing,
+								"currency",
+							]
+						: missing.filter((m) => m !== "currency"),
+				);
+				return {
+					currency,
+					hasCurrency: currency !== undefined,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
+			});
+		},
+		hasCurrency: false,
+		//
 		location: undefined,
 		setLocation(location) {
 			set(({ missing }) => {
@@ -267,18 +294,17 @@ export const createListingStore = ({
 				throw new Error("Cannot create listing: store is not valid");
 			}
 
-			const price = get().getPrice();
-			const location = get().location;
 			const [categoryGroup] = get().categoryGroup;
 			const [category] = get().category;
 
 			return apiListingCreateBody.parse({
-				price,
+				price: get().getPrice(),
 				condition: get().condition,
 				age: get().age,
-				locationId: location,
+				locationId: get().location,
 				categoryGroupId: categoryGroup?.id,
 				categoryId: category?.id,
+				currency: get().currency,
 			} as ListingCreate);
 		},
 	}));

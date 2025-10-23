@@ -1,10 +1,11 @@
 import type { useSnapperNav as SnapperNavType } from "@use-pico/client";
 import { toHumanNumber } from "@use-pico/common";
+import { CurrencyList } from "@zbav-se.me/common";
 import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { Dial } from "~/app/ui/dial/Dial";
-import { availableCurrencies, countryToCurrency } from "~/locales";
+import { countryToCurrency } from "~/locales";
 
 export namespace PriceWrapper {
 	export interface Props {
@@ -45,7 +46,7 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 						countryToCurrency[locale as countryToCurrency.Key] ??
 						countryToCurrency.unknown
 					}
-					availableCurrencies={availableCurrencies}
+					availableCurrencies={CurrencyList}
 				/>
 			</ListingContainer>
 		);

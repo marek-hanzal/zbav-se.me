@@ -9,7 +9,7 @@ import {
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { StarIcon } from "~/app/ui/icon/StarIcon";
+import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
@@ -73,12 +73,16 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							},
 						}}
 					>
-						<PriceInline
-							price={listing.price}
-							locale={locale}
-							// TODO listing.currency
-							currency={"CZK"}
-						/>
+						{listing.price > 0 ? (
+							<PriceInline
+								price={listing.price}
+								locale={locale}
+								// TODO listing.currency
+								currency={"CZK"}
+							/>
+						) : (
+							<Tx label={"Price - free"} />
+						)}
 					</Badge>
 
 					<Badge
@@ -98,7 +102,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						}}
 					>
 						<TypoIcon
-							icon={StarIcon}
+							icon={ConditionIcon}
 							iconProps={{
 								tone: "secondary",
 								theme: "dark",

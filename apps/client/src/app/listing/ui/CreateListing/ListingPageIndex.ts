@@ -14,7 +14,10 @@ export namespace ListingPageIndex {
 		icon: Icon.Type;
 	}
 
-	export const Page: Record<createListingStore.Missing, PageInfo> = {
+	export const Page: Record<
+		Exclude<createListingStore.Missing, "currency">,
+		PageInfo
+	> = {
 		photos: {
 			index: 1,
 			icon: PhotoIcon,
@@ -40,7 +43,7 @@ export namespace ListingPageIndex {
 			icon: PriceIcon,
 		},
 		location: {
-			index: 7,
+			index: 8,
 			icon: LocationIcon,
 		},
 	};

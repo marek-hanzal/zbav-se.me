@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { CurrencyListSchema } from "../../schema/CurrencyListSchema";
 
 export const ListingSchema = z
 	.object({
@@ -12,6 +13,7 @@ export const ListingSchema = z
 			description: "Price of the listing",
 			type: "number",
 		}),
+		currency: CurrencyListSchema,
 		condition: z.number().openapi({
 			description: "Condition of the item (0-based index)",
 		}),
@@ -26,6 +28,10 @@ export const ListingSchema = z
 		}),
 		categoryId: z.string().openapi({
 			description: "ID of the category",
+		}),
+		expiresAt: z.coerce.date().openapi({
+			description: "Expiration timestamp",
+			type: "string",
 		}),
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",

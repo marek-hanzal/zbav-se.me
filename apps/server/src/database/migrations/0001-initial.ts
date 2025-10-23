@@ -176,11 +176,13 @@ export const InitialMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
+			.addColumn("currency", "varchar(3)", (col) => col.notNull())
 			.addColumn("condition", "integer", (col) => col.notNull())
 			.addColumn("age", "integer", (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryGroupId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
+			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
@@ -266,6 +268,13 @@ export const InitialMigration: Migration = {
 			.createIndex("listing_createdAt_idx")
 			.on("listing")
 			.column("createdAt")
+			.execute();
+
+		// Create index for expiration date
+		await db.schema
+			.createIndex("listing_expiresAt_idx")
+			.on("listing")
+			.column("expiresAt")
 			.execute();
 
 		// Create gallery table

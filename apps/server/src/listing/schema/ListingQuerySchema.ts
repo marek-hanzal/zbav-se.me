@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { OrderSchema } from "@use-pico/common";
+import { CurrencyListSchema } from "../../schema/CurrencyListSchema";
 import { CursorSchema } from "../../schema/CursorSchema";
 import { DefaultFilterSchema } from "../../schema/DefaultFilterSchema";
 
@@ -54,6 +55,22 @@ const FilterSchema = z
 			description:
 				"This filter matches listings with category IDs in the provided array",
 		}),
+		currency: CurrencyListSchema.nullish().openapi({
+			description:
+				"This filter matches listings with the exact currency code",
+		}),
+		currencyIn: z.array(CurrencyListSchema).nullish().openapi({
+			description:
+				"This filter matches listings with currency codes in the provided array",
+		}),
+		expiresAtBefore: z.coerce.date().nullish().openapi({
+			description:
+				"This filter matches listings that expire before the provided date",
+		}),
+		expiresAtAfter: z.coerce.date().nullish().openapi({
+			description:
+				"This filter matches listings that expire after the provided date",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",
@@ -74,6 +91,7 @@ export const ListingQuerySchema = z
 					"age",
 					"createdAt",
 					"updatedAt",
+					"expiresAt",
 				]),
 				sort: OrderSchema,
 			})

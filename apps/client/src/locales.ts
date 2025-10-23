@@ -4,16 +4,6 @@ export const locales = [
 	"en",
 ];
 
-export const availableCurrencies = [
-	"CZK",
-	"EUR",
-	"USD",
-	"GBP",
-	"PLN",
-	"HUF",
-	"CHF",
-] as const;
-
 export const countryToCurrency = {
 	cs: "CZK",
 	sk: "EUR",
