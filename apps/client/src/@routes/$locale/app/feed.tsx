@@ -14,14 +14,24 @@ import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/app/feed")({
 	component() {
+		const debounceTimeout = 150;
+
 		const { locale } = Route.useParams();
 		const { slots } = useCls(ThemeCls);
 		const listingQuery = useListingInfiniteQuery();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();
 		const debouncedFetchNextPage = useDebouncedCallback(
-			listingQuery.fetchNextPage,
-			150,
+			(progress: number) => {
+				if (listingQuery.hasNextPage && progress >= 0.5) {
+					console.log("debounced", progress);
+					listingQuery.fetchNextPage();
+				}
+			},
+			debounceTimeout,
+			{
+				maxWait: debounceTimeout * 3,
+			},
 		);
 		const scroller = useRef<ScrollTrigger>(null);
 
@@ -32,9 +42,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 					start: 0,
 					end: "max",
 					onUpdate: (self) => {
-						if (self.progress >= 0.4) {
-							debouncedFetchNextPage();
-						}
+						debouncedFetchNextPage(self.progress);
 					},
 				});
 			},

@@ -1,10 +1,8 @@
 import { Container } from "@use-pico/client";
-import { toHumanNumber, toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { HeroImage } from "~/app/ui/img/HeroImage";
-import { Title } from "~/app/ui/title/Title";
 
 export namespace ListingPreview {
 	export interface Props {
@@ -21,8 +19,8 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 		];
 
 		return (
-			<Container layout={"vertical-header-content-footer"}>
-				<Title
+			<Container layout={"vertical-content-footer"}>
+				{/* <Title
 					textTitle={toHumanNumber({
 						number: listing.price,
 						locale,
@@ -34,7 +32,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					right={toTimeDiff({
 						time: listing.createdAt,
 					})}
-				/>
+				/> */}
 
 				<Container
 					tone={"primary"}
