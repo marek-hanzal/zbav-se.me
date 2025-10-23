@@ -103,6 +103,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				.execute(async (trx) => {
 					// Acquire advisory lock to prevent duplicate API calls
 					const lockId = getLockId(text, lang);
+					const limit = 2;
 
 					// Acquire lock (blocks until available)
 					// Using pg_advisory_xact_lock - automatically released at transaction end
@@ -119,7 +120,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 							.where("lang", "=", lang)
 							.orderBy("confidence", "desc")
 							.offset(0)
-							.limit(3)
+							.limit(limit)
 							.selectAll(),
 						output: LocationSchema,
 					});
@@ -141,7 +142,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 							text,
 							apiKey: AppEnv.GEOAPIFY,
 							lang,
-							limit: 3,
+							limit,
 						},
 					});
 
