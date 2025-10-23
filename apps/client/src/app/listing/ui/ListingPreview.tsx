@@ -1,4 +1,11 @@
-import { Container } from "@use-pico/client";
+import {
+	ArrowLeftIcon,
+	Badge,
+	Container,
+	LinkTo,
+	PriceInline,
+	Tx,
+} from "@use-pico/client";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
@@ -39,6 +46,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					theme={"light"}
 					border={"default"}
 					shadow={"default"}
+					position={"relative"}
 					round={"xl"}
 				>
 					<HeroImage
@@ -46,9 +54,44 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						alt={`Hero image for listing ${listing.id}`}
 						className={"w-full h-full object-cover rounded-xl"}
 					/>
+
+					<Badge
+						tone={"secondary"}
+						theme={"dark"}
+						size={"lg"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"absolute",
+										"top-2",
+										"left-2",
+									],
+								},
+							},
+						}}
+					>
+						<PriceInline
+							value={{
+								price: listing.price,
+							}}
+							locale={locale}
+							currency={"czk"}
+						/>
+					</Badge>
 				</Container>
 
-				<BottomContainer>yup</BottomContainer>
+				<BottomContainer>
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/app/dashboard"}
+						params={{
+							locale,
+						}}
+					>
+						<Tx label={"dashboard"} />
+					</LinkTo>
+				</BottomContainer>
 			</Container>
 		);
 	},

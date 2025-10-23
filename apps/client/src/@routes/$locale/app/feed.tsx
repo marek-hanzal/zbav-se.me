@@ -95,6 +95,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 								ref={containerRef}
 								layout={"vertical-full"}
 								snap={"vertical-center"}
+								gap={"md"}
 								overflow={"vertical"}
 							>
 								{content}
