@@ -14,6 +14,8 @@ export const useListingInfiniteQuery = () => {
 		],
 		initialPageParam: 0,
 		async queryFn({ pageParam, signal }) {
+			await new Promise((resolve) => setTimeout(resolve, 2000));
+
 			return apiListingCollection(
 				{
 					cursor: {

@@ -82,44 +82,50 @@ export const Route = createFileRoute("/$locale/app/feed")({
 				>
 					{({ content }) => {
 						return (
-							<>
-								<FlowContainer
-									key={feedId}
-									ref={containerRef}
-									layout={"vertical-full"}
-									snap={"vertical-center"}
-									overflow={"vertical"}
-								>
-									{content}
-								</FlowContainer>
-
-								{listingQuery.isFetchingNextPage ? (
-									<div
-										className={slots.default({
-											slot: {
-												default: {
-													class: [
-														"absolute",
-														"bottom-1",
-														"left-2",
-														"right-2",
-														"h-2",
-														"animate-pulse",
-														"opacity-50",
-														"rounded-4xl",
-													],
-													token: [
-														"tone.primary.dark.bg",
-													],
-												},
-											},
-										})}
-									/>
-								) : null}
-							</>
+							<FlowContainer
+								key={feedId}
+								ref={containerRef}
+								layout={"vertical-full"}
+								snap={"vertical-center"}
+								overflow={"vertical"}
+							>
+								{content}
+							</FlowContainer>
 						);
 					}}
 				</InfiniteData>
+
+				<div
+					className={slots.default({
+						slot: {
+							default: {
+								class: [
+									"absolute",
+									"bottom-1",
+									"left-2",
+									"right-2",
+									"h-2",
+									"transition-opacity",
+									"duration-300",
+									listingQuery.isFetchingNextPage
+										? [
+												"animate-pulse",
+												"opacity-75",
+											]
+										: "opacity-0",
+									"rounded-4xl",
+								],
+								token: [
+									"border.default",
+									"shadow.default",
+									"tone.secondary.dark.bg",
+									"tone.secondary.dark.border",
+									"tone.secondary.dark.shadow",
+								],
+							},
+						},
+					})}
+				/>
 			</Container>
 		);
 	},
