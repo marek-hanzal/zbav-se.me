@@ -4,6 +4,7 @@ import { CategoryWrapper } from "~/app/listing/ui/CreateListing/Category/Categor
 import { CategoryGroupWrapper } from "~/app/listing/ui/CreateListing/CategoryGroup/CategoryGroupWrapper";
 import { ConditionAgeWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionAgeWrapper";
 import { ConditionOverallWrapper } from "~/app/listing/ui/CreateListing/Condition/ConditionOverallWrapper";
+import { ExpireWrapper } from "~/app/listing/ui/CreateListing/Expire/ExpireWrapper";
 import { IntroWrapper } from "~/app/listing/ui/CreateListing/Intro/IntroWrapper";
 import { LocationWrapper } from "~/app/listing/ui/CreateListing/Location/LocationWrapper";
 import { PhotosWrapper } from "~/app/listing/ui/CreateListing/Photos/PhotosWrapper";
@@ -21,7 +22,7 @@ export const Content: FC<Content.Props> = memo(({ listingRef, locale }) => {
 	const listingNav = useSnapperNav({
 		containerRef: listingRef,
 		orientation: "vertical",
-		count: 9,
+		count: 10,
 		threshold: 0.65,
 	});
 
@@ -54,6 +55,8 @@ export const Content: FC<Content.Props> = memo(({ listingRef, locale }) => {
 				listingNav={listingNav}
 				locale={locale}
 			/>
+
+			<ExpireWrapper listingNavApi={listingNav.api} />
 
 			<SubmitWrapper listingNavApi={listingNav.api} />
 		</>

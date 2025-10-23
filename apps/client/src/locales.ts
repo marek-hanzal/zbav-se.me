@@ -13,7 +13,7 @@ export const countryToCurrency = {
 	at: "EUR",
 	gb: "GBP",
 	us: "USD",
-	unknown: "EUR",
+	unknown: "CZK",
 } as const;
 
 export type countryToCurrency = typeof countryToCurrency;

@@ -3,13 +3,16 @@ import {
 	apiListingCreateBody,
 	type Category,
 	type CategoryGroup,
+	type CurrencyList,
 	type ListingCreate,
+	type ListingExpire,
 } from "@zbav-se.me/sdk";
 import { create } from "zustand";
 
 export namespace createListingStore {
 	export interface Props {
 		photoCountLimit: number;
+		defaultCurrency: CurrencyList;
 	}
 
 	export type Missing =
@@ -20,7 +23,8 @@ export namespace createListingStore {
 		| "age"
 		| "location"
 		| "price"
-		| "currency";
+		| "currency"
+		| "expiresAt";
 
 	export interface Store {
 		//
@@ -58,6 +62,10 @@ export namespace createListingStore {
 		setLocation(location: string | undefined): void;
 		hasLocation: boolean;
 		//
+		expiresAt: ListingExpire | undefined;
+		setExpiresAt(expiresAt: ListingExpire | undefined): void;
+		hasExpiresAt: boolean;
+		//
 		requiredCount: number;
 		missing: Missing[];
 		isValid: boolean;
@@ -74,11 +82,12 @@ const defaultMissing: createListingStore.Missing[] = [
 	"age",
 	"location",
 	"price",
-	"currency",
+	"expiresAt",
 ];
 
 export const createListingStore = ({
 	photoCountLimit,
+	defaultCurrency,
 }: createListingStore.Props) =>
 	create<createListingStore.Store>((set, get) => ({
 		photoCountLimit,
@@ -241,7 +250,7 @@ export const createListingStore = ({
 		},
 		hasPrice: false,
 		//
-		currency: undefined,
+		currency: defaultCurrency,
 		setCurrency(currency) {
 			set(({ missing }) => {
 				const $missing = dedupe<createListingStore.Missing[]>(
@@ -260,7 +269,7 @@ export const createListingStore = ({
 				};
 			});
 		},
-		hasCurrency: false,
+		hasCurrency: true,
 		//
 		location: undefined,
 		setLocation(location) {
@@ -282,6 +291,27 @@ export const createListingStore = ({
 			});
 		},
 		hasLocation: false,
+		//
+		expiresAt: undefined,
+		setExpiresAt(expiresAt) {
+			set(({ missing }) => {
+				const $missing = dedupe<createListingStore.Missing[]>(
+					expiresAt === undefined
+						? [
+								...missing,
+								"expiresAt",
+							]
+						: missing.filter((m) => m !== "expiresAt"),
+				);
+				return {
+					expiresAt,
+					hasExpiresAt: !!expiresAt,
+					missing: $missing,
+					isValid: $missing.length === 0,
+				};
+			});
+		},
+		hasExpiresAt: false,
 		//
 		requiredCount: defaultMissing.length,
 		missing: [
@@ -305,6 +335,7 @@ export const createListingStore = ({
 				categoryGroupId: categoryGroup?.id,
 				categoryId: category?.id,
 				currency: get().currency,
+				expiresAt: get().expiresAt,
 			} as ListingCreate);
 		},
 	}));

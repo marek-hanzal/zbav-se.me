@@ -7,11 +7,19 @@ export namespace CurrencySnapper {
 		locale: string;
 		defaultCurrency?: string;
 		availableCurrencies?: readonly string[];
+		onChange(currency: string): void;
 	}
 }
 
 export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
-	({ locale, defaultCurrency, availableCurrencies, tweak, ...props }) => {
+	({
+		locale,
+		defaultCurrency,
+		availableCurrencies,
+		onChange,
+		tweak,
+		...props
+	}) => {
 		const containerRef = useRef<HTMLDivElement>(null);
 		const currencyId = useId();
 		const currencyList = useMemo(() => {
@@ -28,6 +36,12 @@ export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
 			containerRef,
 			count: currencyList.length,
 			orientation: "vertical",
+			onSnap(index) {
+				const currency = currencyList[index]?.code;
+				if (currency) {
+					onChange(currency);
+				}
+			},
 		});
 
 		useEffect(() => {
@@ -44,7 +58,7 @@ export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
 			<Container
 				ref={containerRef}
 				layout={"vertical-full"}
-				snap={"vertical-center"}
+				snap={"vertical-start"}
 				overflow={"vertical"}
 				gap={"lg"}
 				tweak={[

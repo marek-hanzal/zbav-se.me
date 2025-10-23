@@ -40,6 +40,7 @@ export namespace Dial {
 		locale: string;
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
+		onChangeCurrency: (currency: string) => void;
 		defaultCurrency?: string;
 		availableCurrencies?: readonly string[];
 	}
@@ -50,6 +51,7 @@ export const Dial: FC<Dial.Props> = ({
 	locale,
 	value,
 	onChange,
+	onChangeCurrency,
 	defaultCurrency,
 	availableCurrencies,
 }) => {
@@ -141,6 +143,7 @@ export const Dial: FC<Dial.Props> = ({
 					tweak={currencyTweak}
 					defaultCurrency={defaultCurrency}
 					availableCurrencies={availableCurrencies}
+					onChange={onChangeCurrency}
 				/>
 			</div>
 

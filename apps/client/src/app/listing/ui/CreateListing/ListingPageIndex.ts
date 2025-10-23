@@ -4,6 +4,7 @@ import { AgeIcon } from "~/app/ui/icon/AgeIcon";
 import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
 import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
+import { ExpireIcon } from "~/app/ui/icon/ExpireIcon";
 import { LocationIcon } from "~/app/ui/icon/LocationIcon";
 import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
 import { PriceIcon } from "~/app/ui/icon/PriceIcon";
@@ -43,8 +44,12 @@ export namespace ListingPageIndex {
 			icon: PriceIcon,
 		},
 		location: {
-			index: 8,
+			index: 7,
 			icon: LocationIcon,
+		},
+		expiresAt: {
+			index: 8,
+			icon: ExpireIcon,
 		},
 	};
 }

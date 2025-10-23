@@ -4,26 +4,24 @@
  * zbav.se.me API
  * OpenAPI spec version: 0.5.0
  */
-import axios from 'axios';
-import type {
-  AxiosRequestConfig,
-  AxiosResponse
-} from 'axios';
+
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 
 /**
  * Represents a category a listing can be assigned to
  */
 export interface Category {
-  /** ID of the category */
-  id: string;
-  /** Name of the category */
-  name: string;
-  /** Sort order (position) of the category */
-  sort: number;
-  /** ID of the category group the category belongs to */
-  categoryGroupId: string;
-  /** Locale/language of the category */
-  locale: string;
+	/** ID of the category */
+	id: string;
+	/** Name of the category */
+	name: string;
+	/** Sort order (position) of the category */
+	sort: number;
+	/** ID of the category group the category belongs to */
+	categoryGroupId: string;
+	/** Locale/language of the category */
+	locale: string;
 }
 
 /**
@@ -31,17 +29,17 @@ export interface Category {
  * @nullable
  */
 export type Cursor = {
-  /**
-   * Page number (0-indexed)
-   * @minimum 0
-   */
-  page: number;
-  /**
-   * Page size
-   * @minimum 1
-   * @maximum 1000
-   */
-  size: number;
+	/**
+	 * Page number (0-indexed)
+	 * @minimum 0
+	 */
+	page: number;
+	/**
+	 * Page size
+	 * @minimum 1
+	 * @maximum 1000
+	 */
+	size: number;
 } | null;
 
 /**
@@ -49,46 +47,46 @@ export type Cursor = {
  * @nullable
  */
 export type CategoryFilter = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact name of the category
-   * @nullable
-   */
-  name?: string | null;
-  /**
-   * This filter matches the exact id of the category group the category belongs to
-   * @nullable
-   */
-  categoryGroupId?: string | null;
-  /**
-   * This filter matches the ids of the category groups the category belongs to
-   * @nullable
-   */
-  categoryGroupIdIn?: string[] | null;
-  /**
-   * This filter matches the exact locale of the category
-   * @nullable
-   */
-  locale?: string | null;
-  /**
-   * This filter matches categories with locales in the provided array
-   * @nullable
-   */
-  localeIn?: string[] | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category
+	 * @nullable
+	 */
+	name?: string | null;
+	/**
+	 * This filter matches the exact id of the category group the category belongs to
+	 * @nullable
+	 */
+	categoryGroupId?: string | null;
+	/**
+	 * This filter matches the ids of the category groups the category belongs to
+	 * @nullable
+	 */
+	categoryGroupIdIn?: string[] | null;
+	/**
+	 * This filter matches the exact locale of the category
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches categories with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
 /**
@@ -96,113 +94,114 @@ export type CategoryFilter = {
  * @nullable
  */
 export type CategoryWhere = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact name of the category
-   * @nullable
-   */
-  name?: string | null;
-  /**
-   * This filter matches the exact id of the category group the category belongs to
-   * @nullable
-   */
-  categoryGroupId?: string | null;
-  /**
-   * This filter matches the ids of the category groups the category belongs to
-   * @nullable
-   */
-  categoryGroupIdIn?: string[] | null;
-  /**
-   * This filter matches the exact locale of the category
-   * @nullable
-   */
-  locale?: string | null;
-  /**
-   * This filter matches categories with locales in the provided array
-   * @nullable
-   */
-  localeIn?: string[] | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category
+	 * @nullable
+	 */
+	name?: string | null;
+	/**
+	 * This filter matches the exact id of the category group the category belongs to
+	 * @nullable
+	 */
+	categoryGroupId?: string | null;
+	/**
+	 * This filter matches the ids of the category groups the category belongs to
+	 * @nullable
+	 */
+	categoryGroupIdIn?: string[] | null;
+	/**
+	 * This filter matches the exact locale of the category
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches categories with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
-export type CategorySortValue = typeof CategorySortValue[keyof typeof CategorySortValue];
-
+export type CategorySortValue =
+	(typeof CategorySortValue)[keyof typeof CategorySortValue];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CategorySortValue = {
-  name: 'name',
-  sort: 'sort',
+	name: "name",
+	sort: "sort",
 } as const;
 
 /**
  * @nullable
  */
-export type CategorySortSort = typeof CategorySortSort[keyof typeof CategorySortSort] | null;
-
+export type CategorySortSort =
+	| (typeof CategorySortSort)[keyof typeof CategorySortSort]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CategorySortSort = {
-  asc: 'asc',
-  desc: 'desc',
+	asc: "asc",
+	desc: "desc",
 } as const;
 
 /**
  * Sort object for category collection
  */
 export interface CategorySort {
-  value: CategorySortValue;
-  /** @nullable */
-  sort?: CategorySortSort;
+	value: CategorySortValue;
+	/** @nullable */
+	sort?: CategorySortSort;
 }
 
 /**
  * Query object for category collection
  */
 export interface CategoryQuery {
-  cursor?: Cursor;
-  filter?: CategoryFilter;
-  where?: CategoryWhere;
-  /** @nullable */
-  sort?: CategorySort[] | null;
+	cursor?: Cursor;
+	filter?: CategoryFilter;
+	where?: CategoryWhere;
+	/** @nullable */
+	sort?: CategorySort[] | null;
 }
 
 /**
  * Complex count of items based on provided query.
  */
 export interface Count {
-  /** Count of items based on provided where query. */
-  where: number;
-  /** Count of items based on provided filter query. */
-  filter: number;
-  /** Total count of items (no filters applied). */
-  total: number;
+	/** Count of items based on provided where query. */
+	where: number;
+	/** Count of items based on provided filter query. */
+	filter: number;
+	/** Total count of items (no filters applied). */
+	total: number;
 }
 
 /**
  * Represents a group of categories a listing can be assigned to
  */
 export interface CategoryGroup {
-  /** ID of the category group */
-  id: string;
-  /** Name of the category group */
-  name: string;
-  /** Sort order (position) of the category group */
-  sort: number;
-  /** Locale/language of the category group */
-  locale: string;
+	/** ID of the category group */
+	id: string;
+	/** Name of the category group */
+	name: string;
+	/** Sort order (position) of the category group */
+	sort: number;
+	/** Locale/language of the category group */
+	locale: string;
 }
 
 /**
@@ -210,36 +209,36 @@ export interface CategoryGroup {
  * @nullable
  */
 export type CategoryGroupFilter = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact name of the category group
-   * @nullable
-   */
-  name?: string | null;
-  /**
-   * This filter matches the exact locale of the category group
-   * @nullable
-   */
-  locale?: string | null;
-  /**
-   * This filter matches category groups with locales in the provided array
-   * @nullable
-   */
-  localeIn?: string[] | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category group
+	 * @nullable
+	 */
+	name?: string | null;
+	/**
+	 * This filter matches the exact locale of the category group
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches category groups with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
 /**
@@ -247,231 +246,231 @@ export type CategoryGroupFilter = {
  * @nullable
  */
 export type CategoryGroupWhere = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact name of the category group
-   * @nullable
-   */
-  name?: string | null;
-  /**
-   * This filter matches the exact locale of the category group
-   * @nullable
-   */
-  locale?: string | null;
-  /**
-   * This filter matches category groups with locales in the provided array
-   * @nullable
-   */
-  localeIn?: string[] | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact name of the category group
+	 * @nullable
+	 */
+	name?: string | null;
+	/**
+	 * This filter matches the exact locale of the category group
+	 * @nullable
+	 */
+	locale?: string | null;
+	/**
+	 * This filter matches category groups with locales in the provided array
+	 * @nullable
+	 */
+	localeIn?: string[] | null;
 } | null;
 
-export type CategoryGroupSortValue = typeof CategoryGroupSortValue[keyof typeof CategoryGroupSortValue];
-
+export type CategoryGroupSortValue =
+	(typeof CategoryGroupSortValue)[keyof typeof CategoryGroupSortValue];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CategoryGroupSortValue = {
-  name: 'name',
-  sort: 'sort',
+	name: "name",
+	sort: "sort",
 } as const;
 
 /**
  * @nullable
  */
-export type CategoryGroupSortSort = typeof CategoryGroupSortSort[keyof typeof CategoryGroupSortSort] | null;
-
+export type CategoryGroupSortSort =
+	| (typeof CategoryGroupSortSort)[keyof typeof CategoryGroupSortSort]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CategoryGroupSortSort = {
-  asc: 'asc',
-  desc: 'desc',
+	asc: "asc",
+	desc: "desc",
 } as const;
 
 /**
  * Sort object for category group collection
  */
 export interface CategoryGroupSort {
-  value: CategoryGroupSortValue;
-  /** @nullable */
-  sort?: CategoryGroupSortSort;
+	value: CategoryGroupSortValue;
+	/** @nullable */
+	sort?: CategoryGroupSortSort;
 }
 
 /**
  * Query object for category group collection
  */
 export interface CategoryGroupQuery {
-  cursor?: Cursor;
-  filter?: CategoryGroupFilter;
-  where?: CategoryGroupWhere;
-  /** @nullable */
-  sort?: CategoryGroupSort[] | null;
+	cursor?: Cursor;
+	filter?: CategoryGroupFilter;
+	where?: CategoryGroupWhere;
+	/** @nullable */
+	sort?: CategoryGroupSort[] | null;
 }
 
 /**
  * Currency code (ISO 4217)
  */
-export type CurrencyList = typeof CurrencyList[keyof typeof CurrencyList];
-
+export type CurrencyList = (typeof CurrencyList)[keyof typeof CurrencyList];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CurrencyList = {
-  CZK: 'CZK',
-  EUR: 'EUR',
-  USD: 'USD',
-  GBP: 'GBP',
-  PLN: 'PLN',
-  HUF: 'HUF',
-  CHF: 'CHF',
+	CZK: "CZK",
+	EUR: "EUR",
+	USD: "USD",
+	GBP: "GBP",
+	PLN: "PLN",
+	HUF: "HUF",
+	CHF: "CHF",
 } as const;
 
 /**
  * A location cache table
  */
 export interface Location {
-  id: string;
-  /** The query that was used to get the location */
-  query: string;
-  /** The language that was used to get the location */
-  lang: string;
-  /** The country that the location is in */
-  country: string;
-  /** Country code */
-  code: string;
-  /**
-   * The county that the location is in
-   * @nullable
-   */
-  county?: string | null;
-  /**
-   * The municipality that the location is in
-   * @nullable
-   */
-  municipality?: string | null;
-  /**
-   * The state that the location is in
-   * @nullable
-   */
-  state?: string | null;
-  /** Full address preview of a location */
-  address: string;
-  /** Confidence score of the location (based on query) */
-  confidence: number;
-  /** Used to uniquely identify this location entry */
-  hash: string;
-  /** Latitude of the location */
-  lat: number;
-  /** Longitude of the location */
-  lon: number;
+	id: string;
+	/** The query that was used to get the location */
+	query: string;
+	/** The language that was used to get the location */
+	lang: string;
+	/** The country that the location is in */
+	country: string;
+	/** Country code */
+	code: string;
+	/**
+	 * The county that the location is in
+	 * @nullable
+	 */
+	county?: string | null;
+	/**
+	 * The municipality that the location is in
+	 * @nullable
+	 */
+	municipality?: string | null;
+	/**
+	 * The state that the location is in
+	 * @nullable
+	 */
+	state?: string | null;
+	/** Full address preview of a location */
+	address: string;
+	/** Confidence score of the location (based on query) */
+	confidence: number;
+	/** Used to uniquely identify this location entry */
+	hash: string;
+	/** Latitude of the location */
+	lat: number;
+	/** Longitude of the location */
+	lon: number;
 }
 
 export type ListingDtoGalleryItem = {
-  id: string;
-  url: string;
-  /** @minimum 0 */
-  sort: number;
+	id: string;
+	url: string;
+	/** @minimum 0 */
+	sort: number;
 };
 
 export interface ListingDto {
-  /** ID of the listing */
-  id: string;
-  /** ID of the user who created the listing */
-  userId: string;
-  /** Price of the listing */
-  price: number;
-  currency: CurrencyList;
-  /** Condition of the item (0-based index) */
-  condition: number;
-  /** Age of the item (0-based index) */
-  age: number;
-  /** ID of the location */
-  locationId: string;
-  /** ID of the category group */
-  categoryGroupId: string;
-  /** ID of the category */
-  categoryId: string;
-  /** Expiration timestamp */
-  expiresAt: string;
-  /** Creation timestamp */
-  createdAt: string;
-  /** Last update timestamp */
-  updatedAt: string;
-  location: Location;
-  category: Category;
-  categoryGroup: CategoryGroup;
-  /** Array of listing gallery images */
-  gallery: ListingDtoGalleryItem[];
+	/** ID of the listing */
+	id: string;
+	/** ID of the user who created the listing */
+	userId: string;
+	/** Price of the listing */
+	price: number;
+	currency: CurrencyList;
+	/** Condition of the item (0-based index) */
+	condition: number;
+	/** Age of the item (0-based index) */
+	age: number;
+	/** ID of the location */
+	locationId: string;
+	/** ID of the category group */
+	categoryGroupId: string;
+	/** ID of the category */
+	categoryId: string;
+	/** Expiration timestamp */
+	expiresAt: string;
+	/** Creation timestamp */
+	createdAt: string;
+	/** Last update timestamp */
+	updatedAt: string;
+	location: Location;
+	category: Category;
+	categoryGroup: CategoryGroup;
+	/** Array of listing gallery images */
+	gallery: ListingDtoGalleryItem[];
 }
 
 /**
  * Expiration period for the listing
  */
-export type ListingExpire = typeof ListingExpire[keyof typeof ListingExpire];
-
+export type ListingExpire = (typeof ListingExpire)[keyof typeof ListingExpire];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingExpire = {
-  '3-days': '3-days',
-  '7-days': '7-days',
-  '1-month': '1-month',
+	"3-days": "3-days",
+	"7-days": "7-days",
+	"1-month": "1-month",
 } as const;
 
 /**
  * Data required to create a new listing
  */
 export interface ListingCreate {
-  /** Price of the listing */
-  price: number;
-  /** Condition of the item (0-based index) */
-  condition: number;
-  /** Age of the item (0-based index) */
-  age: number;
-  /** ID of the location */
-  locationId: string;
-  /** ID of the category group */
-  categoryGroupId: string;
-  /** ID of the category */
-  categoryId: string;
-  currency: CurrencyList;
-  expiresAt: ListingExpire;
+	/** Price of the listing */
+	price: number;
+	/** Condition of the item (0-based index) */
+	condition: number;
+	/** Age of the item (0-based index) */
+	age: number;
+	/** ID of the location */
+	locationId: string;
+	/** ID of the category group */
+	categoryGroupId: string;
+	/** ID of the category */
+	categoryId: string;
+	currency: CurrencyList;
+	expiresAt: ListingExpire;
 }
 
 /**
  * Standard error response format
  */
 export interface Error {
-  /** Error message describing what went wrong */
-  message: string;
+	/** Error message describing what went wrong */
+	message: string;
 }
 
 /**
  * This filter matches listings with the exact currency code
  * @nullable
  */
-export type ListingFilterCurrency = typeof ListingFilterCurrency[keyof typeof ListingFilterCurrency] | null;
-
+export type ListingFilterCurrency =
+	| (typeof ListingFilterCurrency)[keyof typeof ListingFilterCurrency]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingFilterCurrency = {
-  CZK: 'CZK',
-  EUR: 'EUR',
-  USD: 'USD',
-  GBP: 'GBP',
-  PLN: 'PLN',
-  HUF: 'HUF',
-  CHF: 'CHF',
+	CZK: "CZK",
+	EUR: "EUR",
+	USD: "USD",
+	GBP: "GBP",
+	PLN: "PLN",
+	HUF: "HUF",
+	CHF: "CHF",
 } as const;
 
 /**
@@ -479,119 +478,120 @@ export const ListingFilterCurrency = {
  * @nullable
  */
 export type ListingFilter = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches listings with price greater than or equal to the provided value
-   * @nullable
-   */
-  priceMin?: number | null;
-  /**
-   * This filter matches listings with price less than or equal to the provided value
-   * @nullable
-   */
-  priceMax?: number | null;
-  /**
-   * This filter matches listings with condition greater than or equal to the provided value
-   * @nullable
-   */
-  conditionMin?: number | null;
-  /**
-   * This filter matches listings with condition less than or equal to the provided value
-   * @nullable
-   */
-  conditionMax?: number | null;
-  /**
-   * This filter matches listings with age greater than or equal to the provided value
-   * @nullable
-   */
-  ageMin?: number | null;
-  /**
-   * This filter matches listings with age less than or equal to the provided value
-   * @nullable
-   */
-  ageMax?: number | null;
-  /**
-   * This filter matches listings with the exact location ID
-   * @nullable
-   */
-  locationId?: string | null;
-  /**
-   * This filter matches listings with location IDs in the provided array
-   * @nullable
-   */
-  locationIdIn?: string[] | null;
-  /**
-   * This filter matches listings with the exact category group ID
-   * @nullable
-   */
-  categoryGroupId?: string | null;
-  /**
-   * This filter matches listings with category group IDs in the provided array
-   * @nullable
-   */
-  categoryGroupIdIn?: string[] | null;
-  /**
-   * This filter matches listings with the exact category ID
-   * @nullable
-   */
-  categoryId?: string | null;
-  /**
-   * This filter matches listings with category IDs in the provided array
-   * @nullable
-   */
-  categoryIdIn?: string[] | null;
-  /**
-   * This filter matches listings with the exact currency code
-   * @nullable
-   */
-  currency?: ListingFilterCurrency;
-  /**
-   * This filter matches listings with currency codes in the provided array
-   * @nullable
-   */
-  currencyIn?: CurrencyList[] | null;
-  /**
-   * This filter matches listings that expire before the provided date
-   * @nullable
-   */
-  expiresAtBefore?: string | null;
-  /**
-   * This filter matches listings that expire after the provided date
-   * @nullable
-   */
-  expiresAtAfter?: string | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches listings with price greater than or equal to the provided value
+	 * @nullable
+	 */
+	priceMin?: number | null;
+	/**
+	 * This filter matches listings with price less than or equal to the provided value
+	 * @nullable
+	 */
+	priceMax?: number | null;
+	/**
+	 * This filter matches listings with condition greater than or equal to the provided value
+	 * @nullable
+	 */
+	conditionMin?: number | null;
+	/**
+	 * This filter matches listings with condition less than or equal to the provided value
+	 * @nullable
+	 */
+	conditionMax?: number | null;
+	/**
+	 * This filter matches listings with age greater than or equal to the provided value
+	 * @nullable
+	 */
+	ageMin?: number | null;
+	/**
+	 * This filter matches listings with age less than or equal to the provided value
+	 * @nullable
+	 */
+	ageMax?: number | null;
+	/**
+	 * This filter matches listings with the exact location ID
+	 * @nullable
+	 */
+	locationId?: string | null;
+	/**
+	 * This filter matches listings with location IDs in the provided array
+	 * @nullable
+	 */
+	locationIdIn?: string[] | null;
+	/**
+	 * This filter matches listings with the exact category group ID
+	 * @nullable
+	 */
+	categoryGroupId?: string | null;
+	/**
+	 * This filter matches listings with category group IDs in the provided array
+	 * @nullable
+	 */
+	categoryGroupIdIn?: string[] | null;
+	/**
+	 * This filter matches listings with the exact category ID
+	 * @nullable
+	 */
+	categoryId?: string | null;
+	/**
+	 * This filter matches listings with category IDs in the provided array
+	 * @nullable
+	 */
+	categoryIdIn?: string[] | null;
+	/**
+	 * This filter matches listings with the exact currency code
+	 * @nullable
+	 */
+	currency?: ListingFilterCurrency;
+	/**
+	 * This filter matches listings with currency codes in the provided array
+	 * @nullable
+	 */
+	currencyIn?: CurrencyList[] | null;
+	/**
+	 * This filter matches listings that expire before the provided date
+	 * @nullable
+	 */
+	expiresAtBefore?: string | null;
+	/**
+	 * This filter matches listings that expire after the provided date
+	 * @nullable
+	 */
+	expiresAtAfter?: string | null;
 } | null;
 
 /**
  * This filter matches listings with the exact currency code
  * @nullable
  */
-export type ListingWhereCurrency = typeof ListingWhereCurrency[keyof typeof ListingWhereCurrency] | null;
-
+export type ListingWhereCurrency =
+	| (typeof ListingWhereCurrency)[keyof typeof ListingWhereCurrency]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingWhereCurrency = {
-  CZK: 'CZK',
-  EUR: 'EUR',
-  USD: 'USD',
-  GBP: 'GBP',
-  PLN: 'PLN',
-  HUF: 'HUF',
-  CHF: 'CHF',
+	CZK: "CZK",
+	EUR: "EUR",
+	USD: "USD",
+	GBP: "GBP",
+	PLN: "PLN",
+	HUF: "HUF",
+	CHF: "CHF",
 } as const;
 
 /**
@@ -599,190 +599,191 @@ export const ListingWhereCurrency = {
  * @nullable
  */
 export type ListingWhere = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches listings with price greater than or equal to the provided value
-   * @nullable
-   */
-  priceMin?: number | null;
-  /**
-   * This filter matches listings with price less than or equal to the provided value
-   * @nullable
-   */
-  priceMax?: number | null;
-  /**
-   * This filter matches listings with condition greater than or equal to the provided value
-   * @nullable
-   */
-  conditionMin?: number | null;
-  /**
-   * This filter matches listings with condition less than or equal to the provided value
-   * @nullable
-   */
-  conditionMax?: number | null;
-  /**
-   * This filter matches listings with age greater than or equal to the provided value
-   * @nullable
-   */
-  ageMin?: number | null;
-  /**
-   * This filter matches listings with age less than or equal to the provided value
-   * @nullable
-   */
-  ageMax?: number | null;
-  /**
-   * This filter matches listings with the exact location ID
-   * @nullable
-   */
-  locationId?: string | null;
-  /**
-   * This filter matches listings with location IDs in the provided array
-   * @nullable
-   */
-  locationIdIn?: string[] | null;
-  /**
-   * This filter matches listings with the exact category group ID
-   * @nullable
-   */
-  categoryGroupId?: string | null;
-  /**
-   * This filter matches listings with category group IDs in the provided array
-   * @nullable
-   */
-  categoryGroupIdIn?: string[] | null;
-  /**
-   * This filter matches listings with the exact category ID
-   * @nullable
-   */
-  categoryId?: string | null;
-  /**
-   * This filter matches listings with category IDs in the provided array
-   * @nullable
-   */
-  categoryIdIn?: string[] | null;
-  /**
-   * This filter matches listings with the exact currency code
-   * @nullable
-   */
-  currency?: ListingWhereCurrency;
-  /**
-   * This filter matches listings with currency codes in the provided array
-   * @nullable
-   */
-  currencyIn?: CurrencyList[] | null;
-  /**
-   * This filter matches listings that expire before the provided date
-   * @nullable
-   */
-  expiresAtBefore?: string | null;
-  /**
-   * This filter matches listings that expire after the provided date
-   * @nullable
-   */
-  expiresAtAfter?: string | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches listings with price greater than or equal to the provided value
+	 * @nullable
+	 */
+	priceMin?: number | null;
+	/**
+	 * This filter matches listings with price less than or equal to the provided value
+	 * @nullable
+	 */
+	priceMax?: number | null;
+	/**
+	 * This filter matches listings with condition greater than or equal to the provided value
+	 * @nullable
+	 */
+	conditionMin?: number | null;
+	/**
+	 * This filter matches listings with condition less than or equal to the provided value
+	 * @nullable
+	 */
+	conditionMax?: number | null;
+	/**
+	 * This filter matches listings with age greater than or equal to the provided value
+	 * @nullable
+	 */
+	ageMin?: number | null;
+	/**
+	 * This filter matches listings with age less than or equal to the provided value
+	 * @nullable
+	 */
+	ageMax?: number | null;
+	/**
+	 * This filter matches listings with the exact location ID
+	 * @nullable
+	 */
+	locationId?: string | null;
+	/**
+	 * This filter matches listings with location IDs in the provided array
+	 * @nullable
+	 */
+	locationIdIn?: string[] | null;
+	/**
+	 * This filter matches listings with the exact category group ID
+	 * @nullable
+	 */
+	categoryGroupId?: string | null;
+	/**
+	 * This filter matches listings with category group IDs in the provided array
+	 * @nullable
+	 */
+	categoryGroupIdIn?: string[] | null;
+	/**
+	 * This filter matches listings with the exact category ID
+	 * @nullable
+	 */
+	categoryId?: string | null;
+	/**
+	 * This filter matches listings with category IDs in the provided array
+	 * @nullable
+	 */
+	categoryIdIn?: string[] | null;
+	/**
+	 * This filter matches listings with the exact currency code
+	 * @nullable
+	 */
+	currency?: ListingWhereCurrency;
+	/**
+	 * This filter matches listings with currency codes in the provided array
+	 * @nullable
+	 */
+	currencyIn?: CurrencyList[] | null;
+	/**
+	 * This filter matches listings that expire before the provided date
+	 * @nullable
+	 */
+	expiresAtBefore?: string | null;
+	/**
+	 * This filter matches listings that expire after the provided date
+	 * @nullable
+	 */
+	expiresAtAfter?: string | null;
 } | null;
 
-export type ListingSortValue = typeof ListingSortValue[keyof typeof ListingSortValue];
-
+export type ListingSortValue =
+	(typeof ListingSortValue)[keyof typeof ListingSortValue];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingSortValue = {
-  price: 'price',
-  condition: 'condition',
-  age: 'age',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
-  expiresAt: 'expiresAt',
+	price: "price",
+	condition: "condition",
+	age: "age",
+	createdAt: "createdAt",
+	updatedAt: "updatedAt",
+	expiresAt: "expiresAt",
 } as const;
 
 /**
  * @nullable
  */
-export type ListingSortSort = typeof ListingSortSort[keyof typeof ListingSortSort] | null;
-
+export type ListingSortSort =
+	| (typeof ListingSortSort)[keyof typeof ListingSortSort]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingSortSort = {
-  asc: 'asc',
-  desc: 'desc',
+	asc: "asc",
+	desc: "desc",
 } as const;
 
 /**
  * Sort object for listing collection
  */
 export interface ListingSort {
-  value: ListingSortValue;
-  /** @nullable */
-  sort?: ListingSortSort;
+	value: ListingSortValue;
+	/** @nullable */
+	sort?: ListingSortSort;
 }
 
 /**
  * Query object for listing collection
  */
 export interface ListingQuery {
-  cursor?: Cursor;
-  filter?: ListingFilter;
-  where?: ListingWhere;
-  /** @nullable */
-  sort?: ListingSort[] | null;
+	cursor?: Cursor;
+	filter?: ListingFilter;
+	where?: ListingWhere;
+	/** @nullable */
+	sort?: ListingSort[] | null;
 }
 
 /**
  * Collection of listings
  */
 export interface ListingCollection {
-  data: ListingDto[];
-  /** Whether there are more items to fetch */
-  more: boolean;
+	data: ListingDto[];
+	/** Whether there are more items to fetch */
+	more: boolean;
 }
 
 /**
  * Data required to add an image to a listing's gallery
  */
 export interface ListingGalleryCreate {
-  /** ID of the listing to add the image to */
-  listingId: string;
-  /** Public URL of the image to add to the listing's gallery */
-  url: string;
-  /**
-   * Sort order of the image in the listing's gallery
-   * @minimum 0
-   */
-  sort: number;
+	/** ID of the listing to add the image to */
+	listingId: string;
+	/** Public URL of the image to add to the listing's gallery */
+	url: string;
+	/**
+	 * Sort order of the image in the listing's gallery
+	 * @minimum 0
+	 */
+	sort: number;
 }
 
 /**
  * Represents a photo in a listing's gallery
  */
 export interface Gallery {
-  /** ID of the gallery item */
-  id: string;
-  /** ID of the user who owns the gallery item */
-  userId: string;
-  /** ID of the listing this image belongs to */
-  listingId: string;
-  /** Public URL to the image */
-  url: string;
-  /** Sort order of the image in the listing's gallery */
-  sort: number;
-  /** Creation timestamp */
-  createdAt: string;
-  /** Last update timestamp */
-  updatedAt: string;
+	/** ID of the gallery item */
+	id: string;
+	/** ID of the user who owns the gallery item */
+	userId: string;
+	/** ID of the listing this image belongs to */
+	listingId: string;
+	/** Public URL to the image */
+	url: string;
+	/** Sort order of the image in the listing's gallery */
+	sort: number;
+	/** Creation timestamp */
+	createdAt: string;
+	/** Last update timestamp */
+	updatedAt: string;
 }
 
 /**
@@ -790,41 +791,41 @@ export interface Gallery {
  * @nullable
  */
 export type GalleryFilter = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * Exact user id
-   * @nullable
-   */
-  userId?: string | null;
-  /**
-   * User ids in the provided array
-   * @nullable
-   */
-  userIdIn?: string[] | null;
-  /**
-   * Exact listing id
-   * @nullable
-   */
-  listingId?: string | null;
-  /**
-   * Listing ids in the provided array
-   * @nullable
-   */
-  listingIdIn?: string[] | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * Exact user id
+	 * @nullable
+	 */
+	userId?: string | null;
+	/**
+	 * User ids in the provided array
+	 * @nullable
+	 */
+	userIdIn?: string[] | null;
+	/**
+	 * Exact listing id
+	 * @nullable
+	 */
+	listingId?: string | null;
+	/**
+	 * Listing ids in the provided array
+	 * @nullable
+	 */
+	listingIdIn?: string[] | null;
 } | null;
 
 /**
@@ -832,83 +833,84 @@ export type GalleryFilter = {
  * @nullable
  */
 export type GalleryWhere = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * Exact user id
-   * @nullable
-   */
-  userId?: string | null;
-  /**
-   * User ids in the provided array
-   * @nullable
-   */
-  userIdIn?: string[] | null;
-  /**
-   * Exact listing id
-   * @nullable
-   */
-  listingId?: string | null;
-  /**
-   * Listing ids in the provided array
-   * @nullable
-   */
-  listingIdIn?: string[] | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * Exact user id
+	 * @nullable
+	 */
+	userId?: string | null;
+	/**
+	 * User ids in the provided array
+	 * @nullable
+	 */
+	userIdIn?: string[] | null;
+	/**
+	 * Exact listing id
+	 * @nullable
+	 */
+	listingId?: string | null;
+	/**
+	 * Listing ids in the provided array
+	 * @nullable
+	 */
+	listingIdIn?: string[] | null;
 } | null;
 
-export type GallerySortValue = typeof GallerySortValue[keyof typeof GallerySortValue];
-
+export type GallerySortValue =
+	(typeof GallerySortValue)[keyof typeof GallerySortValue];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GallerySortValue = {
-  sort: 'sort',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt',
+	sort: "sort",
+	createdAt: "createdAt",
+	updatedAt: "updatedAt",
 } as const;
 
 /**
  * @nullable
  */
-export type GallerySortSort = typeof GallerySortSort[keyof typeof GallerySortSort] | null;
-
+export type GallerySortSort =
+	| (typeof GallerySortSort)[keyof typeof GallerySortSort]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const GallerySortSort = {
-  asc: 'asc',
-  desc: 'desc',
+	asc: "asc",
+	desc: "desc",
 } as const;
 
 /**
  * Sort object for gallery collection
  */
 export interface GallerySort {
-  value: GallerySortValue;
-  /** @nullable */
-  sort?: GallerySortSort;
+	value: GallerySortValue;
+	/** @nullable */
+	sort?: GallerySortSort;
 }
 
 /**
  * Query object for gallery collection
  */
 export interface GalleryQuery {
-  cursor?: Cursor;
-  filter?: GalleryFilter;
-  where?: GalleryWhere;
-  /** @nullable */
-  sort?: GallerySort[] | null;
+	cursor?: Cursor;
+	filter?: GalleryFilter;
+	where?: GalleryWhere;
+	/** @nullable */
+	sort?: GallerySort[] | null;
 }
 
 /**
@@ -916,46 +918,46 @@ export interface GalleryQuery {
  * @nullable
  */
 export type LocationFilter = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact query that was used to get the location
-   * @nullable
-   */
-  query?: string | null;
-  /**
-   * This filter matches the exact language that was used to get the location
-   * @nullable
-   */
-  lang?: string | null;
-  /**
-   * This filter matches the exact country of the location
-   * @nullable
-   */
-  country?: string | null;
-  /**
-   * This filter matches the exact country code of the location
-   * @nullable
-   */
-  code?: string | null;
-  /**
-   * This filter matches locations with confidence greater than or equal to the provided value
-   * @nullable
-   */
-  confidenceMin?: number | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact query that was used to get the location
+	 * @nullable
+	 */
+	query?: string | null;
+	/**
+	 * This filter matches the exact language that was used to get the location
+	 * @nullable
+	 */
+	lang?: string | null;
+	/**
+	 * This filter matches the exact country of the location
+	 * @nullable
+	 */
+	country?: string | null;
+	/**
+	 * This filter matches the exact country code of the location
+	 * @nullable
+	 */
+	code?: string | null;
+	/**
+	 * This filter matches locations with confidence greater than or equal to the provided value
+	 * @nullable
+	 */
+	confidenceMin?: number | null;
 } | null;
 
 /**
@@ -963,433 +965,423 @@ export type LocationFilter = {
  * @nullable
  */
 export type LocationWhere = {
-  /**
-   * This filter matches the exact id
-   * @nullable
-   */
-  id?: string | null;
-  /**
-   * This filter matches the ids
-   * @nullable
-   */
-  idIn?: string[] | null;
-  /**
-   * Runs fulltext on the collection/query.
-   * @nullable
-   */
-  fulltext?: string | null;
-  /**
-   * This filter matches the exact query that was used to get the location
-   * @nullable
-   */
-  query?: string | null;
-  /**
-   * This filter matches the exact language that was used to get the location
-   * @nullable
-   */
-  lang?: string | null;
-  /**
-   * This filter matches the exact country of the location
-   * @nullable
-   */
-  country?: string | null;
-  /**
-   * This filter matches the exact country code of the location
-   * @nullable
-   */
-  code?: string | null;
-  /**
-   * This filter matches locations with confidence greater than or equal to the provided value
-   * @nullable
-   */
-  confidenceMin?: number | null;
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * This filter matches the exact query that was used to get the location
+	 * @nullable
+	 */
+	query?: string | null;
+	/**
+	 * This filter matches the exact language that was used to get the location
+	 * @nullable
+	 */
+	lang?: string | null;
+	/**
+	 * This filter matches the exact country of the location
+	 * @nullable
+	 */
+	country?: string | null;
+	/**
+	 * This filter matches the exact country code of the location
+	 * @nullable
+	 */
+	code?: string | null;
+	/**
+	 * This filter matches locations with confidence greater than or equal to the provided value
+	 * @nullable
+	 */
+	confidenceMin?: number | null;
 } | null;
 
-export type LocationSortValue = typeof LocationSortValue[keyof typeof LocationSortValue];
-
+export type LocationSortValue =
+	(typeof LocationSortValue)[keyof typeof LocationSortValue];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const LocationSortValue = {
-  confidence: 'confidence',
-  query: 'query',
-  country: 'country',
-  address: 'address',
+	confidence: "confidence",
+	query: "query",
+	country: "country",
+	address: "address",
 } as const;
 
 /**
  * @nullable
  */
-export type LocationSortSort = typeof LocationSortSort[keyof typeof LocationSortSort] | null;
-
+export type LocationSortSort =
+	| (typeof LocationSortSort)[keyof typeof LocationSortSort]
+	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const LocationSortSort = {
-  asc: 'asc',
-  desc: 'desc',
+	asc: "asc",
+	desc: "desc",
 } as const;
 
 /**
  * Sort object for location collection
  */
 export interface LocationSort {
-  value: LocationSortValue;
-  /** @nullable */
-  sort?: LocationSortSort;
+	value: LocationSortValue;
+	/** @nullable */
+	sort?: LocationSortSort;
 }
 
 /**
  * Query object for location collection
  */
 export interface LocationQuery {
-  cursor?: Cursor;
-  filter?: LocationFilter;
-  where?: LocationWhere;
-  /** @nullable */
-  sort?: LocationSort[] | null;
+	cursor?: Cursor;
+	filter?: LocationFilter;
+	where?: LocationWhere;
+	/** @nullable */
+	sort?: LocationSort[] | null;
 }
 
 export interface S3PreSignResponse {
-  url: string;
-  /** Path on the bucket */
-  path: string;
+	url: string;
+	/** Path on the bucket */
+	path: string;
 }
 
 /**
  * File extension. Must be one of the allowed extensions.
  */
-export type AllowedExtensions = typeof AllowedExtensions[keyof typeof AllowedExtensions];
-
+export type AllowedExtensions =
+	(typeof AllowedExtensions)[keyof typeof AllowedExtensions];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AllowedExtensions = {
-  webp: 'webp',
-  png: 'png',
-  jpg: 'jpg',
-  jpeg: 'jpeg',
-  avif: 'avif',
-  heic: 'heic',
-  heif: 'heif',
+	webp: "webp",
+	png: "png",
+	jpg: "jpg",
+	jpeg: "jpeg",
+	avif: "avif",
+	heic: "heic",
+	heif: "heif",
 } as const;
 
 /**
  * Browser-provided Content-Type used for PUT upload.
  */
-export type AllowedContentTypes = typeof AllowedContentTypes[keyof typeof AllowedContentTypes];
-
+export type AllowedContentTypes =
+	(typeof AllowedContentTypes)[keyof typeof AllowedContentTypes];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const AllowedContentTypes = {
-  'image/jpeg': 'image/jpeg',
-  'image/png': 'image/png',
-  'image/webp': 'image/webp',
-  'image/avif': 'image/avif',
-  'image/heic': 'image/heic',
-  'image/heif': 'image/heif',
+	"image/jpeg": "image/jpeg",
+	"image/png": "image/png",
+	"image/webp": "image/webp",
+	"image/avif": "image/avif",
+	"image/heic": "image/heic",
+	"image/heif": "image/heif",
 } as const;
 
 export interface S3PreSignRequest {
-  /**
-   * Object path. After stripping leading '/', must start with `<userId>/`
-   * @minLength 3
-   */
-  path: string;
-  extension: AllowedExtensions;
-  contentType: AllowedContentTypes;
+	/**
+	 * Object path. After stripping leading '/', must start with `<userId>/`
+	 * @minLength 3
+	 */
+	path: string;
+	extension: AllowedExtensions;
+	contentType: AllowedContentTypes;
 }
 
 export interface Health {
-  status: boolean;
+	status: boolean;
 }
 
 /**
  * Migration direction
  */
-export type MigrationDirection = typeof MigrationDirection[keyof typeof MigrationDirection];
-
+export type MigrationDirection =
+	(typeof MigrationDirection)[keyof typeof MigrationDirection];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MigrationDirection = {
-  Up: 'Up',
-  Down: 'Down',
+	Up: "Up",
+	Down: "Down",
 } as const;
 
 /**
  * Migration status
  */
-export type MigrationStatus = typeof MigrationStatus[keyof typeof MigrationStatus];
-
+export type MigrationStatus =
+	(typeof MigrationStatus)[keyof typeof MigrationStatus];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const MigrationStatus = {
-  Success: 'Success',
-  Error: 'Error',
-  NotExecuted: 'NotExecuted',
+	Success: "Success",
+	Error: "Error",
+	NotExecuted: "NotExecuted",
 } as const;
 
 export interface Migration {
-  /** Migration name run */
-  migrationName: string;
-  /** Migration direction */
-  direction: MigrationDirection;
-  /** Migration status */
-  status: MigrationStatus;
+	/** Migration name run */
+	migrationName: string;
+	/** Migration direction */
+	direction: MigrationDirection;
+	/** Migration status */
+	status: MigrationStatus;
 }
 
 export type ApiLocationAutocompleteParams = {
-/**
- * @minLength 3
- */
-text: string;
-/**
- * @minLength 2
- * @maxLength 8
- */
-lang: string;
+	/**
+	 * @minLength 3
+	 */
+	text: string;
+	/**
+	 * @minLength 2
+	 * @maxLength 8
+	 */
+	lang: string;
 };
 
 /**
  * Return a category based on the provided query
  */
 export const apiCategoryFetch = <TData = AxiosResponse<Category>>(
-    categoryQuery: CategoryQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/category/fetch`,
-      categoryQuery,options
-    );
-  }
+	categoryQuery: CategoryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/category/fetch`, categoryQuery, options);
+};
 
 /**
  * Returns categories based on provided parameters
  */
 export const apiCategoryCollection = <TData = AxiosResponse<Category[]>>(
-    categoryQuery: CategoryQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/category/collection`,
-      categoryQuery,options
-    );
-  }
+	categoryQuery: CategoryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(
+		`/api/session/category/collection`,
+		categoryQuery,
+		options,
+	);
+};
 
 /**
  * Returns count of categories based on provided query
  */
 export const apiCategoryCount = <TData = AxiosResponse<Count>>(
-    categoryQuery: CategoryQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/category/count`,
-      categoryQuery,options
-    );
-  }
+	categoryQuery: CategoryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/category/count`, categoryQuery, options);
+};
 
 /**
  * Return a category group based on the provided query
  */
 export const apiCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
-    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/category-group/fetch`,
-      categoryGroupQuery,options
-    );
-  }
+	categoryGroupQuery: CategoryGroupQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(
+		`/api/session/category-group/fetch`,
+		categoryGroupQuery,
+		options,
+	);
+};
 
 /**
  * Returns category groups based on provided parameters
  */
-export const apiCategoryGroupCollection = <TData = AxiosResponse<CategoryGroup[]>>(
-    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/category-group/collection`,
-      categoryGroupQuery,options
-    );
-  }
+export const apiCategoryGroupCollection = <
+	TData = AxiosResponse<CategoryGroup[]>,
+>(
+	categoryGroupQuery: CategoryGroupQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(
+		`/api/session/category-group/collection`,
+		categoryGroupQuery,
+		options,
+	);
+};
 
 /**
  * Returns count of category groups based on provided query
  */
 export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
-    categoryGroupQuery: CategoryGroupQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/category-group/count`,
-      categoryGroupQuery,options
-    );
-  }
+	categoryGroupQuery: CategoryGroupQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(
+		`/api/session/category-group/count`,
+		categoryGroupQuery,
+		options,
+	);
+};
 
 /**
  * Create a new listing
  */
 export const apiListingCreate = <TData = AxiosResponse<ListingDto>>(
-    listingCreate: ListingCreate, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/listing/create`,
-      listingCreate,options
-    );
-  }
+	listingCreate: ListingCreate,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/listing/create`, listingCreate, options);
+};
 
 /**
  * Return a listing based on the provided query
  */
 export const apiListingFetch = <TData = AxiosResponse<ListingDto>>(
-    listingQuery: ListingQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/listing/fetch`,
-      listingQuery,options
-    );
-  }
+	listingQuery: ListingQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/listing/fetch`, listingQuery, options);
+};
 
 /**
  * Returns listings based on provided parameters
  */
 export const apiListingCollection = <TData = AxiosResponse<ListingCollection>>(
-    listingQuery: ListingQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/listing/collection`,
-      listingQuery,options
-    );
-  }
+	listingQuery: ListingQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/listing/collection`, listingQuery, options);
+};
 
 /**
  * Returns count of listings based on provided query
  */
 export const apiListingCount = <TData = AxiosResponse<Count>>(
-    listingQuery: ListingQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/listing/count`,
-      listingQuery,options
-    );
-  }
+	listingQuery: ListingQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/listing/count`, listingQuery, options);
+};
 
 /**
  * Add an image to a listing's gallery
  */
 export const apiListingGalleryCreate = <TData = AxiosResponse<void>>(
-    listingGalleryCreate: ListingGalleryCreate, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/listing/gallery/create`,
-      listingGalleryCreate,options
-    );
-  }
+	listingGalleryCreate: ListingGalleryCreate,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(
+		`/api/session/listing/gallery/create`,
+		listingGalleryCreate,
+		options,
+	);
+};
 
 /**
  * Return a gallery item based on the provided query
  */
 export const apiGalleryFetch = <TData = AxiosResponse<Gallery>>(
-    galleryQuery: GalleryQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/gallery/fetch`,
-      galleryQuery,options
-    );
-  }
+	galleryQuery: GalleryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/gallery/fetch`, galleryQuery, options);
+};
 
 /**
  * Returns gallery items based on provided parameters
  */
 export const apiGalleryCollection = <TData = AxiosResponse<Gallery[]>>(
-    galleryQuery: GalleryQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/gallery/collection`,
-      galleryQuery,options
-    );
-  }
+	galleryQuery: GalleryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/gallery/collection`, galleryQuery, options);
+};
 
 /**
  * Returns count of gallery items based on provided query
  */
 export const apiGalleryCount = <TData = AxiosResponse<Count>>(
-    galleryQuery: GalleryQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/gallery/count`,
-      galleryQuery,options
-    );
-  }
+	galleryQuery: GalleryQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/gallery/count`, galleryQuery, options);
+};
 
 /**
  * Return a location autocomplete
  */
 export const apiLocationAutocomplete = <TData = AxiosResponse<Location[]>>(
-    params: ApiLocationAutocompleteParams, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/session/location/autocomplete`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
+	params: ApiLocationAutocompleteParams,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.get(`/api/session/location/autocomplete`, {
+		...options,
+		params: {
+			...params,
+			...options?.params,
+		},
+	});
+};
 
 /**
  * Return a location based on the provided query
  */
 export const apiLocationFetch = <TData = AxiosResponse<Location>>(
-    locationQuery: LocationQuery, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/location/fetch`,
-      locationQuery,options
-    );
-  }
+	locationQuery: LocationQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/location/fetch`, locationQuery, options);
+};
 
 /**
  * Generate a pre-signed URL for direct S3-compatible PUT upload (private bucket). Expiration is server-controlled. A random suffix is always added.
  */
 export const apiS3Presign = <TData = AxiosResponse<S3PreSignResponse>>(
-    s3PreSignRequest: S3PreSignRequest, options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.post(
-      `/api/session/s3/pre-sign`,
-      s3PreSignRequest,options
-    );
-  }
+	s3PreSignRequest: S3PreSignRequest,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/s3/pre-sign`, s3PreSignRequest, options);
+};
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealth = <TData = AxiosResponse<Health>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/public/health`,options
-    );
-  }
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.get(`/api/public/health`, options);
+};
 
 /**
  * This route directly executes the migrations
  */
 export const apiMigrationRun = <TData = AxiosResponse<Migration[]>>(
-     options?: AxiosRequestConfig
- ): Promise<TData> => {
-    return axios.get(
-      `/api/public/migration/run`,options
-    );
-  }
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.get(`/api/public/migration/run`, options);
+};
 
-export type ApiCategoryFetchResult = AxiosResponse<Category>
-export type ApiCategoryCollectionResult = AxiosResponse<Category[]>
-export type ApiCategoryCountResult = AxiosResponse<Count>
-export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>
-export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>
-export type ApiCategoryGroupCountResult = AxiosResponse<Count>
-export type ApiListingCreateResult = AxiosResponse<ListingDto>
-export type ApiListingFetchResult = AxiosResponse<ListingDto>
-export type ApiListingCollectionResult = AxiosResponse<ListingCollection>
-export type ApiListingCountResult = AxiosResponse<Count>
-export type ApiListingGalleryCreateResult = AxiosResponse<void>
-export type ApiGalleryFetchResult = AxiosResponse<Gallery>
-export type ApiGalleryCollectionResult = AxiosResponse<Gallery[]>
-export type ApiGalleryCountResult = AxiosResponse<Count>
-export type ApiLocationAutocompleteResult = AxiosResponse<Location[]>
-export type ApiLocationFetchResult = AxiosResponse<Location>
-export type ApiS3PresignResult = AxiosResponse<S3PreSignResponse>
-export type ApiHealthResult = AxiosResponse<Health>
-export type ApiMigrationRunResult = AxiosResponse<Migration[]>
+export type ApiCategoryFetchResult = AxiosResponse<Category>;
+export type ApiCategoryCollectionResult = AxiosResponse<Category[]>;
+export type ApiCategoryCountResult = AxiosResponse<Count>;
+export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>;
+export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
+export type ApiCategoryGroupCountResult = AxiosResponse<Count>;
+export type ApiListingCreateResult = AxiosResponse<ListingDto>;
+export type ApiListingFetchResult = AxiosResponse<ListingDto>;
+export type ApiListingCollectionResult = AxiosResponse<ListingCollection>;
+export type ApiListingCountResult = AxiosResponse<Count>;
+export type ApiListingGalleryCreateResult = AxiosResponse<void>;
+export type ApiGalleryFetchResult = AxiosResponse<Gallery>;
+export type ApiGalleryCollectionResult = AxiosResponse<Gallery[]>;
+export type ApiGalleryCountResult = AxiosResponse<Count>;
+export type ApiLocationAutocompleteResult = AxiosResponse<Location[]>;
+export type ApiLocationFetchResult = AxiosResponse<Location>;
+export type ApiS3PresignResult = AxiosResponse<S3PreSignResponse>;
+export type ApiHealthResult = AxiosResponse<Health>;
+export type ApiMigrationRunResult = AxiosResponse<Migration[]>;

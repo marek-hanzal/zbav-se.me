@@ -2,6 +2,7 @@
 
 - Stripe DEV
 - ListingPreview - price inline has hardcoded currency code
+- Mark listing near the expiration (from the server?)
 
 - _Fix infinite scroll; 0.5 threshold is low -> change to static pixels_
 
