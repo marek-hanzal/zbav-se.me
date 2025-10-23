@@ -3,6 +3,7 @@
 - Add expireAt on listing (drop DB again :()
     - Add listing duration in listing creation
 - Add auction switch on a listing (PRO feature)
+- Stripe + dev/testing
 
 - Generate user-specific feed based on filter he set's up
     - something like Feed table + endpoint; favourite listing could be marked in this feed
@@ -11,11 +12,13 @@
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
     - We can connect CDN pullzone directly to maptiles with API key
 - A11y is quite an important thing
+- Create README
+    - Merge with ENV.md
+    - Describe tech stack
+    - Keep costs estimated (based on stack) for different MAU user groups (e.g. 10k/100k/500k)
 
 - Staging (-> dev)
 - MCP
-
-- Better way of handling env. variables
 
 - Animate location searh result
 - Test capacitor + native app build
@@ -39,15 +42,8 @@
     - Number of submitted photos
     - Number of categories
     - If the user can see additional info when choosing category groups + categories (expand on category + pay coins)
-- "Enforce" flow in listing creation - instead of "hasPhotos" and co. create an array with items "valid", e.g. valid = ["photos", "category"] and so on
-    - When showing a page, check, what's missing and display proper message based on this
-        - Maybe show only one at a time (first missing); for this we've to have required items and valid and compare them to get what's missing
-- In list where appropriate prepend card (so default index will be 1 instead of 0) with search
-    - After search, switch to next card which may contain results/no-result message
-- Resolve translations as it's now quite big P.I.T.A to have keys only and translations in a file
-- Create Spotlight in database which will index language versions of different items, so we'll be able to search server-side through DB (e.g. localized search
-    for something in category list instead of using fuse); it would be also possible to eventually return localized strings directly from server instead of
-    pure keys
+
+- Go by subscription model with quotas - update ToS accomodate this
 
 ## Interesting stuff
 

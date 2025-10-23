@@ -3,7 +3,12 @@ import { translator } from "@use-pico/common";
 
 export const Route = createFileRoute("/$locale")({
 	async loader({ params: { locale } }) {
-		return (await import(`../translation/${locale}.yaml`)).default;
+		try {
+			return (await import(`../translation/${locale}.yaml`)).default;
+		} catch {
+			console.warn(`Locale [${locale}] not found, using default locale`);
+			return (await import(`../translation/cs.yaml`)).default;
+		}
 	},
 	staleTime: 1000 * 60 * 60,
 	component() {

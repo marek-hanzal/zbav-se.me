@@ -4,6 +4,7 @@ import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { Dial } from "~/app/ui/dial/Dial";
+import { availableCurrencies, countryToCurrency } from "~/locales";
 
 export namespace PriceWrapper {
 	export interface Props {
@@ -37,8 +38,14 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 				}}
 			>
 				<Dial
+					locale={locale}
 					value={price}
 					onChange={setPrice}
+					defaultCurrency={
+						countryToCurrency[locale as countryToCurrency.Key] ??
+						countryToCurrency.unknown
+					}
+					availableCurrencies={availableCurrencies}
 				/>
 			</ListingContainer>
 		);

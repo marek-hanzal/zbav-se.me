@@ -1,6 +1,14 @@
-import { Badge, Container, Icon, Tx, Typo } from "@use-pico/client";
-import { tvc } from "@use-pico/cls";
-import type { FC, RefObject } from "react";
+import {
+	Badge,
+	Container,
+	type ContainerCls,
+	Icon,
+	Tx,
+	Typo,
+} from "@use-pico/client";
+import { type Cls, tvc } from "@use-pico/cls";
+import { type FC, type RefObject, useMemo } from "react";
+import { CurrencySnapper } from "~/app/ui/currency/CurrencySnapper";
 import { Item } from "~/app/ui/dial/Item";
 import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
 import { ClearIcon } from "~/app/ui/icon/ClearIcon";
@@ -29,67 +37,112 @@ const icons = {
 export namespace Dial {
 	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
+		locale: string;
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
+		defaultCurrency?: string;
+		availableCurrencies?: readonly string[];
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
+export const Dial: FC<Dial.Props> = ({
+	ref,
+	locale,
+	value,
+	onChange,
+	defaultCurrency,
+	availableCurrencies,
+}) => {
+	/**
+	 * Strange, but necessary to prevent PriceSnapper re-renders which is computing
+	 * currency list on every render.
+	 */
+	const currencyTweak: Cls.TweaksOf<ContainerCls> = useMemo(
+		() => ({
+			slot: {
+				root: {
+					class: [
+						"w-1/2",
+					],
+				},
+			},
+		}),
+		[],
+	);
+
 	return (
 		<Container
 			ref={ref}
 			layout={"vertical-header-content"}
 			gap={"sm"}
 		>
-			<Badge
-				tone={"primary"}
-				theme={"light"}
-				size={"xl"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"inline-flex",
-								"flex-row",
-								"items-center",
-								"justify-between",
-								"w-full",
-							],
-							token: [
-								"round.lg",
-								"tone.secondary.light.border",
-								"tone.secondary.light.shadow",
-							],
-						},
-					},
-				}}
+			<div
+				className={tvc([
+					"flex",
+					"flex-row",
+					"items-center",
+					"justify-between",
+					"gap-2",
+					"w-full",
+				])}
 			>
-				{value ? (
-					<Typo
-						label={value}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
-					/>
-				) : (
-					<Tx
-						label={"Price (placeholder)"}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
-					/>
-				)}
-
-				<Icon
-					icon={BackspaceIcon}
-					tone="secondary"
-					theme="light"
-					disabled={!value}
-					onClick={() => {
-						onChange(value?.slice(0, -1) || undefined);
+				<Badge
+					tone={"primary"}
+					theme={"light"}
+					size={"xl"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"inline-flex",
+									"flex-row",
+									"items-center",
+									"justify-between",
+									"w-full",
+								],
+								token: [
+									"round.lg",
+									"tone.secondary.light.border",
+									"tone.secondary.light.shadow",
+								],
+							},
+						},
 					}}
+				>
+					{value ? (
+						<Typo
+							label={value}
+							size={"xl"}
+							font={"bold"}
+							display={"block"}
+						/>
+					) : (
+						<Tx
+							label={"Price (placeholder)"}
+							size={"xl"}
+							font={"bold"}
+							display={"block"}
+						/>
+					)}
+
+					<Icon
+						icon={BackspaceIcon}
+						tone="secondary"
+						theme="light"
+						disabled={!value}
+						onClick={() => {
+							onChange(value?.slice(0, -1) || undefined);
+						}}
+					/>
+				</Badge>
+
+				<CurrencySnapper
+					locale={locale}
+					tweak={currencyTweak}
+					defaultCurrency={defaultCurrency}
+					availableCurrencies={availableCurrencies}
 				/>
-			</Badge>
+			</div>
 
 			<div
 				className={tvc([
