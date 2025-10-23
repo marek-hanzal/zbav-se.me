@@ -19,6 +19,7 @@ import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
 import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
+import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
 import { Route as LocaleAppFeedRouteImport } from './@routes/$locale/app/feed'
 import { Route as LocaleAppDashboardRouteImport } from './@routes/$locale/app/dashboard'
 import { Route as LocaleAppBagRouteImport } from './@routes/$locale/app/bag'
@@ -76,6 +77,11 @@ const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
   path: '/user',
   getParentRoute: () => LocaleAppRoute,
 } as any)
+const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => LocaleAppRoute,
+} as any)
 const LocaleAppFeedRoute = LocaleAppFeedRouteImport.update({
   id: '/feed',
   path: '/feed',
@@ -120,6 +126,7 @@ export interface FileRoutesByFullPath {
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
   '/$locale/app/feed': typeof LocaleAppFeedRoute
+  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
   '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
   '/$locale/app/feed': typeof LocaleAppFeedRoute
+  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
   '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
@@ -156,6 +164,7 @@ export interface FileRoutesById {
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
   '/$locale/app/feed': typeof LocaleAppFeedRoute
+  '/$locale/app/shop': typeof LocaleAppShopRoute
   '/$locale/app/user': typeof LocaleAppUserRoute
   '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
   '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
@@ -176,6 +185,7 @@ export interface FileRouteTypes {
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
     | '/$locale/app/feed'
+    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
     | '/$locale/app/listing/my'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
     | '/$locale/app/feed'
+    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
     | '/$locale/app/listing/my'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
     | '/$locale/app/feed'
+    | '/$locale/app/shop'
     | '/$locale/app/user'
     | '/$locale/app/listing/create'
     | '/$locale/app/listing/my'
@@ -294,6 +306,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleAppUserRouteImport
       parentRoute: typeof LocaleAppRoute
     }
+    '/$locale/app/shop': {
+      id: '/$locale/app/shop'
+      path: '/shop'
+      fullPath: '/$locale/app/shop'
+      preLoaderRoute: typeof LocaleAppShopRouteImport
+      parentRoute: typeof LocaleAppRoute
+    }
     '/$locale/app/feed': {
       id: '/$locale/app/feed'
       path: '/feed'
@@ -343,6 +362,7 @@ interface LocaleAppRouteChildren {
   LocaleAppBagRoute: typeof LocaleAppBagRoute
   LocaleAppDashboardRoute: typeof LocaleAppDashboardRoute
   LocaleAppFeedRoute: typeof LocaleAppFeedRoute
+  LocaleAppShopRoute: typeof LocaleAppShopRoute
   LocaleAppUserRoute: typeof LocaleAppUserRoute
   LocaleAppListingCreateRoute: typeof LocaleAppListingCreateRoute
   LocaleAppListingMyRoute: typeof LocaleAppListingMyRoute
@@ -353,6 +373,7 @@ const LocaleAppRouteChildren: LocaleAppRouteChildren = {
   LocaleAppBagRoute: LocaleAppBagRoute,
   LocaleAppDashboardRoute: LocaleAppDashboardRoute,
   LocaleAppFeedRoute: LocaleAppFeedRoute,
+  LocaleAppShopRoute: LocaleAppShopRoute,
   LocaleAppUserRoute: LocaleAppUserRoute,
   LocaleAppListingCreateRoute: LocaleAppListingCreateRoute,
   LocaleAppListingMyRoute: LocaleAppListingMyRoute,

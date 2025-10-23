@@ -7,8 +7,8 @@ import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { FeedIcon } from "~/app/ui/icon/FeedIcon";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
 import { PublicIcon } from "~/app/ui/icon/PublicIcon";
+import { ShopIcon } from "~/app/ui/icon/ShopIcon";
 import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
-import { Title } from "~/app/ui/title/Title";
 
 export const Route = createFileRoute("/$locale/app/dashboard")({
 	component() {
@@ -30,8 +30,6 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 				<PrimaryOverlay />
 
 				<FlowContainer overflow={"vertical"}>
-					<Title textTitle={"Dashboard (title)"} />
-
 					<div className="grid grid-cols-2 grid-rows-3 gap-2 h-full w-full">
 						<LinkTo
 							to="/$locale/app/feed"
@@ -82,6 +80,19 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 							<Tile
 								icon={BagIcon}
 								textTitle={"Bag (label)"}
+							/>
+						</LinkTo>
+
+						<LinkTo
+							to="/$locale/app/shop"
+							params={{
+								locale,
+							}}
+							tweak={linkTweak}
+						>
+							<Tile
+								icon={ShopIcon}
+								textTitle={"Shop (label)"}
 							/>
 						</LinkTo>
 
