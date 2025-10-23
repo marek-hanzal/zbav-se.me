@@ -1,5 +1,8 @@
 # TODO
 
+- Listing -> connect to /api/listing/feed
+    - Everytime user finishes the feed, he can create a new one
+    - Because we know feed creation datetime, we can sell this info to buyers as data
 - Stripe DEV
 - ListingPreview - price inline has hardcoded currency code
 - Mark listing near the expiration (from the server?)
@@ -57,6 +60,8 @@
     - If the user can see additional info when choosing category groups + categories (expand on category + pay coins)
 
 - Go by subscription model with quotas - update ToS accomodate this
+
+- When redirecting from native mobile app use email/push notification with link to login in browser to pay less in the zbm shop
 
 ## Interesting stuff
 

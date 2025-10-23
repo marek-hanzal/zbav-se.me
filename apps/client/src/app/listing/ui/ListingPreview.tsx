@@ -6,11 +6,15 @@ import {
 	PriceInline,
 	Tx,
 } from "@use-pico/client";
+import { VariantProvider } from "@use-pico/cls";
+import { toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
+import { ExpireIcon } from "~/app/ui/icon/ExpireIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
+import { ThemeCls } from "~/app/ui/ThemeCls";
 import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
 export namespace ListingPreview {
@@ -29,20 +33,6 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 
 		return (
 			<Container layout={"vertical-content-footer"}>
-				{/* <Title
-					textTitle={toHumanNumber({
-						number: listing.price,
-						locale,
-						minimumFractionDigits: 2,
-						maximumFractionDigits: 2,
-						trailingZeroDisplay: "stripIfInteger",
-					})}
-					// textSubtitle={`${listing.category.name} / ${listing.categoryGroup.name}`}
-					right={toTimeDiff({
-						time: listing.createdAt,
-					})}
-				/> */}
-
 				<Container
 					tone={"primary"}
 					theme={"light"}
@@ -110,6 +100,40 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							{listing.condition}
 						</TypoIcon>
 					</Badge>
+
+					<VariantProvider
+						cls={ThemeCls}
+						variant={{
+							tone: "secondary",
+							theme: "light",
+						}}
+					>
+						<Badge
+							size={"lg"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"absolute",
+											"bottom-2",
+											"left-2",
+										],
+									},
+								},
+							}}
+						>
+							<TypoIcon
+								icon={ExpireIcon}
+								iconProps={{
+									size: "xs",
+								}}
+							>
+								{toTimeDiff({
+									time: listing.expiresAt,
+								})}
+							</TypoIcon>
+						</Badge>
+					</VariantProvider>
 				</Container>
 
 				<BottomContainer>
