@@ -32,6 +32,9 @@ export const PriceWrapper: FC<PriceWrapper.Props> = memo(
 						? toHumanNumber({
 								number: getPrice(),
 								locale,
+								currency,
+								style: "currency",
+								trailingZeroDisplay: "stripIfInteger",
 							})
 						: "Price (subtitle)"
 				}

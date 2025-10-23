@@ -1,4 +1,5 @@
 import {
+	Action,
 	ArrowLeftIcon,
 	Badge,
 	Container,
@@ -11,6 +12,7 @@ import { toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
+import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
 import { ExpireIcon } from "~/app/ui/icon/ExpireIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
@@ -143,9 +145,20 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						params={{
 							locale,
 						}}
-					>
-						<Tx label={"dashboard"} />
-					</LinkTo>
+					/>
+
+					<Action
+						iconEnabled={BagIcon}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"bg-none",
+									],
+								},
+							},
+						}}
+					/>
 				</BottomContainer>
 			</Container>
 		);

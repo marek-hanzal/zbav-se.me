@@ -44,21 +44,19 @@ export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
 			},
 		});
 
+		// biome-ignore lint/correctness/useExhaustiveDependencies: One-time-shot
 		useEffect(() => {
 			if (!defaultCurrency) {
 				return;
 			}
 			snapperNav.api.snapTo(`.currency-${defaultCurrency}`, "instant");
-		}, [
-			snapperNav.api,
-			defaultCurrency,
-		]);
+		}, []);
 
 		return (
 			<Container
 				ref={containerRef}
 				layout={"vertical-full"}
-				snap={"vertical-start"}
+				snap={"vertical-center"}
 				overflow={"vertical"}
 				gap={"lg"}
 				tweak={[
@@ -82,6 +80,7 @@ export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
 					return (
 						<Badge
 							key={`${currencyId}-${info.code}`}
+							tone={"primary"}
 							size={"lg"}
 							tweak={{
 								slot: {
