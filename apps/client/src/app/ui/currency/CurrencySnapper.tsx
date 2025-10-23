@@ -54,6 +54,7 @@ export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
 							root: {
 								class: [
 									"h-12",
+									"overscroll-contain",
 								],
 							},
 						},

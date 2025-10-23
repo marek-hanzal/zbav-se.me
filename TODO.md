@@ -17,6 +17,11 @@
     - Describe tech stack
     - Keep costs estimated (based on stack) for different MAU user groups (e.g. 10k/100k/500k)
 
+- When there is a locale without groups, show a page with "market" redirect
+    - Status with "Market not available yet in your country" ?
+
+- Revisit currencies, it's not the best thing how
+
 - Staging (-> dev)
 - MCP
 
