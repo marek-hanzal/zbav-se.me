@@ -25,7 +25,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 		const feedId = useId();
 		const debouncedFetchNextPage = useDebouncedCallback(
 			(height: number, end: number, position: number) => {
-				const trigger = end - height * 1.75;
+				const trigger = end - height * 2.25;
 
 				if (listingQuery.hasNextPage && position >= trigger) {
 					listingQuery.fetchNextPage();
