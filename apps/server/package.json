@@ -27,7 +27,7 @@
 		"@types/pg": "8.15.5",
 		"@use-pico/tsconfig": "5.0.0",
 		"h3": "1.15.4",
-		"nitropack": "2.12.7",
+		"nitropack": "2.12.8",
 		"rollup-plugin-esbuild": "6.2.1",
 		"typescript": "^5.9.3"
 	},

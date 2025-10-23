@@ -20,19 +20,7 @@ export const CreateListing: FC<CreateListing.Props> = memo(({ locale }) => {
 			layout={"vertical-full"}
 			snap={"vertical-start"}
 			gap={"md"}
-			tweak={{
-				slot: {
-					root: {
-						class: isValid
-							? []
-							: [
-									"touch-pan-x",
-									"[&_*]:touch-pan-x",
-									"overscroll-y-contain",
-								],
-					},
-				},
-			}}
+			lock={isValid ? undefined : "vertical"}
 		>
 			<Content
 				listingRef={listingRef}

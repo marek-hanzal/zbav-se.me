@@ -1,5 +1,7 @@
 # TODO
 
+- Stripe DEV
+
 - Move availableCurrencies to "common" package for client and server
     - _validate currency on server_
 - Add expireAt on listing (drop DB again :()
