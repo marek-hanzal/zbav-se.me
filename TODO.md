@@ -8,6 +8,8 @@
     - availability from (... this one?)
     - store amount (multiple instances on a single listing?)
 
+- Allow moving/switching neighbour photos (new controls -> new bar with controls and trash icon)
+
 - Demo scraping from unstash + demo listings for testing
     - preset locations, the rest does not matter
 
