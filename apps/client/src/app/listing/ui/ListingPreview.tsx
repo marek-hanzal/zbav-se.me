@@ -1,13 +1,17 @@
-import { Badge, Container, Icon, PriceInline, Tx } from "@use-pico/client";
+import {
+	Badge,
+	Container,
+	Icon,
+	PriceInline,
+	Tx,
+	Typo,
+} from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import { toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
-import { ExpireIcon } from "~/app/ui/icon/ExpireIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 import { ThemeCls } from "~/app/ui/ThemeCls";
-import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
 export namespace ListingPreview {
 	export interface Props {
@@ -45,6 +49,16 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						size={"lg"}
 						snapTo={"top-left"}
 						round={"md"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"border-none",
+										"shadow-none",
+									],
+								},
+							},
+						}}
 					>
 						{listing.price > 0 ? (
 							<PriceInline
@@ -82,7 +96,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						/>
 					</Badge>
 
-					<VariantProvider
+					{/* <VariantProvider
 						cls={ThemeCls}
 						variant={{
 							tone: "secondary",
@@ -105,7 +119,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 								})}
 							</TypoIcon>
 						</Badge>
-					</VariantProvider>
+					</VariantProvider> */}
 
 					<VariantProvider
 						cls={ThemeCls}
@@ -117,67 +131,25 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						<Badge
 							size={"lg"}
 							round={"md"}
-							snapTo={"bottom-right"}
+							snapTo={"bottom"}
 							tweak={{
 								slot: {
 									root: {
 										class: [
-											"min-w-0",
-											"max-w-1/2",
+											"opacity-75",
+											"overflow-hidden",
 										],
 									},
 								},
 							}}
 						>
-							<TypoIcon
-								icon={ExpireIcon}
-								iconProps={{
-									size: "xs",
-								}}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"min-w-0",
-											],
-										},
-										content: {
-											class: [
-												"truncate",
-												"max-w-full",
-											],
-										},
-									},
-								}}
-							>
-								{listing.location.address}
-							</TypoIcon>
+							<Typo
+								truncate
+								label={listing.location.address}
+							/>
 						</Badge>
 					</VariantProvider>
 				</Container>
-
-				{/* <BottomContainer>
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to={"/$locale/app/dashboard"}
-						params={{
-							locale,
-						}}
-					/>
-
-					<Action
-						iconEnabled={BagIcon}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"bg-none",
-									],
-								},
-							},
-						}}
-					/>
-				</BottomContainer> */}
 			</Container>
 		);
 	},
