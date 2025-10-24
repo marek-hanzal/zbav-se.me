@@ -1,4 +1,4 @@
-import { Badge, Status, Tx, Typo, type useSnapperNav } from "@use-pico/client";
+import { Button, Status, Tx, Typo, type useSnapperNav } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { ListingExpire } from "@zbav-se.me/sdk";
 import { DateTime } from "luxon";
@@ -62,17 +62,18 @@ export const ExpireWrapper: FC<ExpireWrapper.Props> = memo(
 										expiresAt === expire ? "dark" : "light",
 								}}
 							>
-								<Badge
+								<Button
 									onClick={() => setExpiresAt(expire)}
 									size={"xl"}
+									full
 									tweak={{
 										slot: {
 											root: {
 												class: [
-													"w-full",
 													"flex",
-													"flex-col",
+													"flex-row",
 													"items-center",
+													"justify-between",
 													"gap-1",
 												],
 											},
@@ -109,7 +110,7 @@ export const ExpireWrapper: FC<ExpireWrapper.Props> = memo(
 											.exhaustive()}
 										size={"md"}
 									/>
-								</Badge>
+								</Button>
 							</VariantProvider>
 						);
 					})}

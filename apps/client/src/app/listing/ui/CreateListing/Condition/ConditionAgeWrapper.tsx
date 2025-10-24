@@ -3,7 +3,6 @@ import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
-import { AgeIcon } from "~/app/ui/icon/AgeIcon";
 
 export namespace ConditionAgeWrapper {
 	export interface Props {
@@ -22,21 +21,14 @@ export const ConditionAgeWrapper: FC<ConditionAgeWrapper.Props> = memo(
 			<ListingContainer
 				listingNavApi={listingNav.api}
 				textTitle={"Condition - Age (title)"}
-				textSubtitle={
-					hasAge
-						? `Condition - Age [${age}] (subtitle)`
-						: "Condition - Age (subtitle)"
-				}
 				bottom={{
 					next: hasAge,
 				}}
 			>
 				<Condition
-					icon={AgeIcon}
-					textHint={`Condition - Age [${age}] (hint)`}
+					textHint={(value) => `Condition - Age [${value}] (hint)`}
 					value={age}
 					onChange={setAge}
-					limit={5}
 				/>
 			</ListingContainer>
 		);

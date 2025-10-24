@@ -67,6 +67,7 @@ export const IntroWrapper: FC<IntroWrapper.Props> = memo(
 											"flex",
 											"flex-col",
 											"gap-2",
+											"items-start",
 										],
 									},
 								},

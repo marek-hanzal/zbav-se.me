@@ -3,7 +3,6 @@ import { type FC, memo } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Condition } from "~/app/listing/ui/CreateListing/Condition/Condition";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
-import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
 
 export namespace ConditionOverallWrapper {
 	export interface Props {
@@ -26,21 +25,16 @@ export const ConditionOverallWrapper: FC<ConditionOverallWrapper.Props> = memo(
 			<ListingContainer
 				listingNavApi={listingNav.api}
 				textTitle={"Condition - Overall (title)"}
-				textSubtitle={
-					hasCondition
-						? `Condition - Overall [${condition}] (subtitle)`
-						: "Condition - Overall (subtitle)"
-				}
 				bottom={{
 					next: hasCondition,
 				}}
 			>
 				<Condition
-					icon={ConditionIcon}
-					textHint={`Condition - Overall [${condition}] (hint)`}
+					textHint={(value) =>
+						`Condition - Overall [${value}] (hint)`
+					}
 					value={condition}
 					onChange={setCondition}
-					limit={5}
 				/>
 			</ListingContainer>
 		);

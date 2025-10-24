@@ -1,138 +1,136 @@
-import { useCls } from "@use-pico/cls";
-import {
-	type FC,
-	type Ref,
-	useEffect,
-	useId,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
-import { anim, useAnim } from "~/app/ui/gsap";
+import { Button, Tx } from "@use-pico/client";
+import { useCls, VariantProvider } from "@use-pico/cls";
+import { type FC, type Ref, useId } from "react";
+import { LetterAIcon } from "~/app/ui/icon/LetterAIcon";
+import { LetterBIcon } from "~/app/ui/icon/LetterBIcon";
+import { LetterCIcon } from "~/app/ui/icon/LetterCIcon";
+import { LetterDIcon } from "~/app/ui/icon/LetterDIcon";
+import { LetterEIcon } from "~/app/ui/icon/LetterEIcon";
+import { LetterFIcon } from "~/app/ui/icon/LetterFIcon";
 import { RatingCls } from "~/app/ui/rating/RatingCls";
-import { Star } from "~/app/ui/rating/Star";
+import { ThemeCls } from "~/app/ui/ThemeCls";
+import { TypoIcon } from "~/app/ui/text/TypoIcon";
+
+const RatingToIcon = {
+	1: LetterFIcon,
+	2: LetterEIcon,
+	3: LetterDIcon,
+	4: LetterCIcon,
+	5: LetterBIcon,
+	6: LetterAIcon,
+} as const;
+
+type RatingToIcon = typeof RatingToIcon;
+
+namespace RatingToIcon {
+	export type Value = keyof RatingToIcon;
+}
 
 export namespace Rating {
 	export interface Props extends RatingCls.Props {
 		ref?: Ref<HTMLDivElement>;
-		value: number;
-		limit: number;
+		textHint(value: number): string;
 		allowClear?: boolean;
-		onChange?: (value: number) => void;
+		value: number;
+		onChange(value: number): void;
 	}
 }
 
 export const Rating: FC<Rating.Props> = ({
 	ref,
-	value,
-	limit,
+	textHint,
 	allowClear = true,
+	value,
 	onChange,
 	cls = RatingCls,
 	tweak,
 }) => {
+	const limit = 6;
 	const { slots } = useCls(cls, tweak);
 
-	const innerRef = useRef<HTMLDivElement>(null);
-
-	// Visual value lags the real value and flips at mid-animation
-	const [visualValue, setVisualValue] = useState<number>(value);
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're good
-	useEffect(() => {
-		// keep in sync on mount/external programmatic changes
-		setVisualValue((v) => (v !== value ? v : value));
-	}, []); // only on mount
-
-	const prevValueRef = useRef<number>(value);
-	const clampedValue = useMemo(
-		() => Math.max(0, Math.min(limit, value)),
-		[
-			value,
-			limit,
-		],
-	);
-
-	useAnim(
-		() => {
-			const prev = prevValueRef.current;
-			const next = clampedValue;
-			if (prev === next) {
-				return;
-			}
-
-			const stars = anim.utils.toArray(".Star-root");
-			const low = Math.min(prev, next);
-			const high = Math.max(prev, next);
-			const affected = stars.slice(low, high);
-			const items = prev < next ? affected : affected.slice().reverse();
-
-			const tl = anim.timeline({
-				defaults: {
-					duration: 0.15,
-					ease: "power2.out",
-				},
-			});
-
-			// Phase 1: nudge & pop (before selected flips)
-			tl.to(items, {
-				scale: prev < next ? 1.25 : 0.75,
-				opacity: 0,
-				stagger: 0.035,
-			});
-
-			// MIDPOINT: now flip which stars are "selected"
-			tl.call(() => {
-				setVisualValue(next);
-			});
-
-			// Phase 2: settle
-			tl.to(items, {
-				opacity: 1,
-				scale: 1,
-				stagger: 0.035,
-			});
-
-			// Store next for direction on future runs
-			tl.call(() => {
-				prevValueRef.current = next;
-			});
-		},
-		{
-			scope: innerRef,
-			dependencies: [
-				clampedValue,
-				limit,
-			],
-		},
-	);
-
-	const starId = useId();
+	const itemId = useId();
 
 	return (
 		<div
 			ref={ref}
 			className={slots.root()}
 		>
-			<div ref={innerRef}>
-				{Array.from({
-					length: limit,
-				}).map((_, index) => {
-					const idx = index + 1;
-					return (
-						<Star
-							key={`rating-${starId}-${idx}`}
-							selected={idx <= visualValue}
-							onClick={() => {
-								if (allowClear && idx === clampedValue) {
-									onChange?.(0);
-								} else {
-									onChange?.(idx);
-								}
+			{Array.from({
+				length: limit,
+			}).map((_, index) => {
+				const idx = limit - index;
+				const icon = RatingToIcon[idx as RatingToIcon.Value];
+				const selected = idx === value;
+
+				if (!icon) {
+					return null;
+				}
+
+				return (
+					<VariantProvider
+						key={`rating-${itemId}-${idx}`}
+						cls={ThemeCls}
+						variant={{
+							tone: "primary",
+							theme: selected ? "dark" : "light",
+						}}
+					>
+						<Button
+							size={"xl"}
+							full
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"px-4",
+										],
+									},
+								},
 							}}
-						/>
-					);
-				})}
-			</div>
+						>
+							<TypoIcon
+								icon={icon}
+								onClick={() => {
+									if (allowClear && idx === value) {
+										onChange(0);
+										return;
+									}
+
+									onChange(idx);
+								}}
+								iconProps={{
+									size: "md",
+									tweak: {
+										slot: {
+											root: {
+												class: [
+													"Rating-Item-root",
+												],
+											},
+										},
+									},
+								}}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"justify-start",
+												"w-full",
+											],
+										},
+									},
+								}}
+							>
+								<Tx
+									label={textHint(idx)}
+									font={"bold"}
+									size={"lg"}
+								/>
+							</TypoIcon>
+						</Button>
+					</VariantProvider>
+				);
+			})}
 		</div>
 	);
 };

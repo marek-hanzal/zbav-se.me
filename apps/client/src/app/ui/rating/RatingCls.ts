@@ -6,32 +6,19 @@ export const RatingCls = contract(ThemeCls.contract)
 		"root",
 		"item",
 	])
-	.bool("check")
 	.def()
 	.root({
 		root: {
 			class: [
+				"Rating-root",
 				"flex",
-				"items-center",
-				"gap-1",
+				"flex-col",
+				"items-start",
+				"gap-2",
 			],
 		},
 	})
-	.switch(
-		"check",
-		{
-			item: {
-				class: [],
-			},
-		},
-		{
-			item: {
-				class: [],
-			},
-		},
-	)
 	.defaults({
-		check: false,
 		tone: "primary",
 		theme: "light",
 	})

@@ -4,7 +4,6 @@ import { withListingFetchQuery } from "~/app/listing/query/withListingFetchQuery
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 import { Sheet } from "~/app/sheet/Sheet";
 import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
-import { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/app/listing/$id/view")({
 	component() {
@@ -39,14 +38,6 @@ export const Route = createFileRoute("/$locale/app/listing/$id/view")({
 						renderSuccess={({ data }) => {
 							return (
 								<div className={"flex flex-col gap-2 px-4"}>
-									<Rating
-										value={data.condition}
-										limit={5}
-									/>
-									<Rating
-										value={data.age}
-										limit={5}
-									/>
 									<div>
 										<PriceInline
 											price={data.price}
