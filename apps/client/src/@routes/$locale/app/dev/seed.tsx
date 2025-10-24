@@ -22,37 +22,37 @@ function range(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-async function unsplash(): Promise<{
-	data: Buffer;
+export async function picsum(): Promise<{
+	data: Blob;
 	contentType: string;
 	ext: "jpg";
 }> {
-	const topics = [
-		"electronics",
-		"home",
-		"tools",
-		"clothes",
-		"gadget",
-		"device",
-	] as const;
-	const topic = topics[range(0, topics.length - 1)]!;
-
 	const sig = genId();
-	const url = linkTo({
-		base: "https://source.unsplash.com",
-		href: `/featured/1024x768/${topic}`,
-		query: {
-			sig,
-		},
+
+	const proxy = linkTo({
+		base: import.meta.env.VITE_API, // např. http://localhost:4089
+		href: "/api/cors-proxy",
 	});
 
-	const result = await axios.get<ArrayBuffer>(url, {
-		responseType: "arraybuffer",
-		maxRedirects: 5,
+	const target = linkTo({
+		base: "https://picsum.photos",
+		href: `/seed/${sig}/1024/768.jpg`,
 	});
+
+	const proxied = `${proxy}?url=${encodeURIComponent(target)}`;
+
+	const result = await axios.get<Blob>(proxied, {
+		responseType: "blob",
+		maxRedirects: 0,
+		timeout: 10_000,
+	});
+
+	const contentType =
+		result.headers["content-type"] || result.data.type || "image/jpeg";
+
 	return {
-		data: Buffer.from(result.data),
-		contentType: "image/jpeg",
+		data: result.data,
+		contentType,
 		ext: "jpg",
 	};
 }
@@ -81,7 +81,7 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 				];
 
 				const queue = new PQueue({
-					concurrency: 3,
+					concurrency: 5,
 				});
 
 				const createListing = async () => {
@@ -110,7 +110,7 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 						}).then((res) => res.data[0]!.id),
 					}).then((res) => res.data);
 
-					const photo = await unsplash();
+					const photo = await picsum();
 
 					const presign = await preSignMutation.mutateAsync({
 						path: `listing/${listing.id}`,
@@ -118,7 +118,7 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 						contentType: photo.contentType as AllowedContentTypes,
 					});
 
-					await axios.put(presign.url, photo, {
+					await axios.put(presign.url, photo.data, {
 						headers: {
 							"Content-Type": photo.contentType,
 						},
@@ -136,7 +136,9 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 					return listing;
 				};
 
-				for (let i = 0; i < 10; i++) {
+				const limit = 250;
+
+				for (let i = 0; i < limit; i++) {
 					queue.add(createListing);
 				}
 

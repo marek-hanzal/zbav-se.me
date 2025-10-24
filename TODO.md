@@ -4,6 +4,8 @@
     - Also keep the option to skip and "just browse" with defaults ?
 
 - Allow video? - how to store + process + display?
+- Integrate Packeta
+    - with this we can hide user details, so nobody can know each other (fully secure/anonymous)
 
 - Extend listing of
     - price - exchange/for free
