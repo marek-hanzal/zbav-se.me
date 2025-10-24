@@ -28,75 +28,67 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 		];
 
 		return (
-			<Container layout={"vertical-content-footer"}>
-				<Container
-					tone={"primary"}
-					theme={"light"}
-					border={"default"}
-					shadow={"default"}
-					position={"relative"}
-					round={"xl"}
+			<Container position={"relative"}>
+				<HeroImage
+					src={hero.url}
+					alt={`Hero image for listing ${listing.id}`}
+					className={"w-full h-full object-cover"}
+				/>
+
+				<Badge
+					tone={"secondary"}
+					theme={"dark"}
+					size={"lg"}
+					snapTo={"top-left"}
+					round={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"border-none",
+									"shadow-none",
+								],
+							},
+						},
+					}}
 				>
-					<HeroImage
-						src={hero.url}
-						alt={`Hero image for listing ${listing.id}`}
-						className={"w-full h-full object-cover rounded-xl"}
-					/>
-
-					<Badge
-						tone={"secondary"}
-						theme={"dark"}
-						size={"lg"}
-						snapTo={"top-left"}
-						round={"md"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"border-none",
-										"shadow-none",
-									],
-								},
-							},
-						}}
-					>
-						{listing.price > 0 ? (
-							<PriceInline
-								price={listing.price}
-								locale={locale}
-								currency={listing.currency}
-							/>
-						) : (
-							<Tx label={"Price - free"} />
-						)}
-					</Badge>
-
-					<Badge
-						tone={"secondary"}
-						size={"lg"}
-						snapTo={"top-right"}
-						round={"full"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"p-2",
-										"opacity-75",
-									],
-								},
-							},
-						}}
-					>
-						<Icon
-							icon={
-								RatingToIcon[
-									listing.condition as RatingToIcon.Value
-								]
-							}
+					{listing.price > 0 ? (
+						<PriceInline
+							price={listing.price}
+							locale={locale}
+							currency={listing.currency}
 						/>
-					</Badge>
+					) : (
+						<Tx label={"Price - free"} />
+					)}
+				</Badge>
 
-					{/* <VariantProvider
+				<Badge
+					tone={"secondary"}
+					size={"lg"}
+					snapTo={"top-right"}
+					round={"full"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"p-2",
+									"opacity-75",
+								],
+							},
+						},
+					}}
+				>
+					<Icon
+						icon={
+							RatingToIcon[
+								listing.condition as RatingToIcon.Value
+							]
+						}
+					/>
+				</Badge>
+
+				{/* <VariantProvider
 						cls={ThemeCls}
 						variant={{
 							tone: "secondary",
@@ -121,35 +113,34 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						</Badge>
 					</VariantProvider> */}
 
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "secondary",
-							theme: "light",
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "secondary",
+						theme: "light",
+					}}
+				>
+					<Badge
+						size={"lg"}
+						round={"md"}
+						snapTo={"bottom"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"opacity-85",
+										"overflow-hidden",
+									],
+								},
+							},
 						}}
 					>
-						<Badge
-							size={"lg"}
-							round={"md"}
-							snapTo={"bottom"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"opacity-85",
-											"overflow-hidden",
-										],
-									},
-								},
-							}}
-						>
-							<Typo
-								truncate
-								label={listing.location.address}
-							/>
-						</Badge>
-					</VariantProvider>
-				</Container>
+						<Typo
+							truncate
+							label={listing.location.address}
+						/>
+					</Badge>
+				</VariantProvider>
 			</Container>
 		);
 	},
