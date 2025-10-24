@@ -1,5 +1,8 @@
 # TODO
 
+- Fresh listing - generate feed, collect filters
+    - Also keep the option to skip and "just browse" with defaults ?
+
 - Allow video? - how to store + process + display?
 
 - Extend listing of

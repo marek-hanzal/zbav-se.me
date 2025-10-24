@@ -76,7 +76,7 @@ export const Rating: FC<Rating.Props> = ({
 						}}
 					>
 						<Button
-							size={"xl"}
+							size={"lg"}
 							full
 							tweak={{
 								slot: {
