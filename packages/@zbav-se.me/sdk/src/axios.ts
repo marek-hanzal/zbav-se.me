@@ -1315,7 +1315,9 @@ export const apiGalleryCount = <TData = AxiosResponse<Count>>(
 /**
  * Return a location autocomplete
  */
-export const apiLocationAutocomplete = <TData = AxiosResponse<Location[]>>(
+export const apiLocationAutocomplete = <
+	TData = AxiosResponse<Location[] | Location[]>,
+>(
 	params: ApiLocationAutocompleteParams,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1380,7 +1382,9 @@ export type ApiListingGalleryCreateResult = AxiosResponse<void>;
 export type ApiGalleryFetchResult = AxiosResponse<Gallery>;
 export type ApiGalleryCollectionResult = AxiosResponse<Gallery[]>;
 export type ApiGalleryCountResult = AxiosResponse<Count>;
-export type ApiLocationAutocompleteResult = AxiosResponse<Location[]>;
+export type ApiLocationAutocompleteResult = AxiosResponse<
+	Location[] | Location[]
+>;
 export type ApiLocationFetchResult = AxiosResponse<Location>;
 export type ApiS3PresignResult = AxiosResponse<S3PreSignResponse>;
 export type ApiHealthResult = AxiosResponse<Health>;

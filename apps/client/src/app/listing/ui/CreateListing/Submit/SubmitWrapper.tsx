@@ -38,78 +38,75 @@ export const SubmitWrapper: FC<{
 
 	const [progress, setProgress] = useState(0);
 
-	const upload = async (photos: File[], listingId: string) => {
-		setProgress(0);
-
-		const queue = new PQueue({
-			concurrency: 3,
-		});
-		const total = photos.length;
-		const perFile = new Array(total).fill(0);
-
-		const upload = async (photo: File, index: number) => {
-			const path = `listing/${listingId}`;
-			const contentType = photo.type as AllowedContentTypes;
-			const dot = photo.name.lastIndexOf(".");
-			const extension =
-				dot !== -1 && dot < photo.name.length - 1
-					? photo.name.slice(dot + 1).toLowerCase()
-					: "unknown";
-
-			const presign = await preSignMutation.mutateAsync({
-				path,
-				extension: extension as AllowedExtensions,
-				contentType,
-			});
-
-			await axios.put(presign.url, photo, {
-				headers: {
-					"Content-Type": contentType,
-				},
-				onUploadProgress: (e) => {
-					const totalSize = e.total ?? photo.size;
-					if (!totalSize || totalSize <= 0) {
-						return;
-					}
-					perFile[index] = Math.max(
-						0,
-						Math.min(100, (e.loaded / totalSize) * 100),
-					);
-					setProgress(perFile.reduce((s, v) => s + v, 0) / total);
-				},
-			});
-
-			await createListingGalleryMutation.mutateAsync({
-				listingId,
-				sort: index,
-				url: linkTo({
-					base: "https://content.zbav-se.me",
-					href: presign.path,
-				}),
-			});
-
-			perFile[index] = 100;
-			setProgress(perFile.reduce((s, v) => s + v, 0) / total);
-		};
-
-		photos.forEach((photo, index) => {
-			queue.add(async () => {
-				try {
-					await upload(photo, index);
-				} catch (err) {
-					console.error("[upload photo] failed", err);
-					perFile[index] = 100;
-					setProgress(perFile.reduce((s, v) => s + v, 0) / total);
-				}
-			});
-		});
-
-		await queue.onIdle();
-	};
-
 	const createListingMutation = withListingCreateMutation().useMutation({
 		async onSuccess(data) {
-			await upload(files, data.id);
+			setProgress(0);
+
+			const queue = new PQueue({
+				concurrency: 3,
+			});
+			const total = files.length;
+			const perFile = new Array(total).fill(0);
+
+			const upload = async (photo: File, index: number) => {
+				const path = `listing/${data.id}`;
+				const contentType = photo.type as AllowedContentTypes;
+				const dot = photo.name.lastIndexOf(".");
+				const extension =
+					dot !== -1 && dot < photo.name.length - 1
+						? photo.name.slice(dot + 1).toLowerCase()
+						: "unknown";
+
+				const presign = await preSignMutation.mutateAsync({
+					path,
+					extension: extension as AllowedExtensions,
+					contentType,
+				});
+
+				await axios.put(presign.url, photo, {
+					headers: {
+						"Content-Type": contentType,
+					},
+					onUploadProgress: (e) => {
+						const totalSize = e.total ?? photo.size;
+						if (!totalSize || totalSize <= 0) {
+							return;
+						}
+						perFile[index] = Math.max(
+							0,
+							Math.min(100, (e.loaded / totalSize) * 100),
+						);
+						setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+					},
+				});
+
+				await createListingGalleryMutation.mutateAsync({
+					listingId: data.id,
+					sort: index,
+					url: linkTo({
+						base: "https://content.zbav-se.me",
+						href: presign.path,
+					}),
+				});
+
+				perFile[index] = 100;
+				setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+			};
+
+			files.forEach((photo, index) => {
+				queue.add(async () => {
+					try {
+						await upload(photo, index);
+					} catch (err) {
+						console.error("[upload photo] failed", err);
+						perFile[index] = 100;
+						setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+					}
+				});
+			});
+
+			await queue.onIdle();
+
 			return navigate({
 				to: "/$locale/app/listing/$id/view",
 				params: {
@@ -140,6 +137,7 @@ export const SubmitWrapper: FC<{
 								value={progress}
 								size={"lg"}
 								tone={"secondary"}
+								theme={"dark"}
 							/>
 						) : (
 							<Button

@@ -96,8 +96,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 						)
 						.exhaustive(),
 				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
+				.execute();
 
 			return c.json(
 				await withFetch({
