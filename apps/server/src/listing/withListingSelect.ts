@@ -3,14 +3,23 @@ import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { database } from "../database/kysely";
 
 export namespace withListingSelect {
+	export interface Props {
+		requireGallery?: boolean;
+	}
+
 	export type Select = ReturnType<typeof withListingSelect>;
 }
 
-export const withListingSelect = () => {
-	return database.kysely
-		.selectFrom("listing as l")
-		.innerJoin("gallery as g", "g.listingId", "l.id")
-		.selectAll("l")
+export const withListingSelect = ({
+	requireGallery = true,
+}: withListingSelect.Props = {}) => {
+	let query = database.kysely.selectFrom("listing as l").selectAll("l");
+
+	if (requireGallery) {
+		query = query.innerJoin("gallery as g", "g.listingId", "l.id");
+	}
+
+	return query
 		.select((eb) => [
 			jsonObjectFrom(
 				eb

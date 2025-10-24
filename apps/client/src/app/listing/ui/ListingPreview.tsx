@@ -136,7 +136,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 								slot: {
 									root: {
 										class: [
-											"opacity-75",
+											"opacity-85",
 											"overflow-hidden",
 										],
 									},

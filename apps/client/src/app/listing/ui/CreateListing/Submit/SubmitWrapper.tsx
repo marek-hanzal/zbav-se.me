@@ -39,7 +39,7 @@ export const SubmitWrapper: FC<{
 	const [progress, setProgress] = useState(0);
 
 	const createListingMutation = withListingCreateMutation().useMutation({
-		async onSuccess(data) {
+		async onPostMutation({ result }) {
 			setProgress(0);
 
 			const queue = new PQueue({
@@ -49,7 +49,7 @@ export const SubmitWrapper: FC<{
 			const perFile = new Array(total).fill(0);
 
 			const upload = async (photo: File, index: number) => {
-				const path = `listing/${data.id}`;
+				const path = `listing/${result.id}`;
 				const contentType = photo.type as AllowedContentTypes;
 				const dot = photo.name.lastIndexOf(".");
 				const extension =
@@ -81,7 +81,7 @@ export const SubmitWrapper: FC<{
 				});
 
 				await createListingGalleryMutation.mutateAsync({
-					listingId: data.id,
+					listingId: result.id,
 					sort: index,
 					url: linkTo({
 						base: "https://content.zbav-se.me",
@@ -110,7 +110,7 @@ export const SubmitWrapper: FC<{
 			return navigate({
 				to: "/$locale/app/listing/$id/view",
 				params: {
-					id: data.id,
+					id: result.id,
 					locale,
 				},
 			});

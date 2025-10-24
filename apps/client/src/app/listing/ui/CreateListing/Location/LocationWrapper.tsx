@@ -1,11 +1,11 @@
 import {
 	Badge,
+	Button,
 	Container,
 	Data,
 	Fulltext,
 	Status,
 	Tx,
-	Typo,
 	type useSnapperNav,
 } from "@use-pico/client";
 import { type FC, memo, useRef, useState } from "react";
@@ -175,24 +175,9 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 							return data.length > 0 ? (
 								data.map((item) => {
 									return (
-										<Badge
+										<Button
 											key={item.id}
-											tweak={{
-												slot: {
-													root: {
-														class: [
-															"Location-item",
-															"w-full",
-															"h-fit",
-															"opacity-0",
-														],
-														token: [
-															"padding.lg",
-															"round.lg",
-														],
-													},
-												},
-											}}
+											full
 											tone={"primary"}
 											theme={
 												location === item.id
@@ -202,12 +187,18 @@ export const LocationWrapper: FC<LocationWrapper.Props> = memo(
 											onClick={() => {
 												setLocation(item.id);
 											}}
-										>
-											<Typo
-												label={item.address}
-												size={"md"}
-											/>
-										</Badge>
+											size={"xl"}
+											tweak={{
+												slot: {
+													root: {
+														class: [
+															"justify-start",
+														],
+													},
+												},
+											}}
+											label={item.address}
+										/>
 									);
 								})
 							) : (
