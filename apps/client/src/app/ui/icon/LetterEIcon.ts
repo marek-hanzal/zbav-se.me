@@ -1,1 +1,1 @@
-export const LetterEIcon = "icon-[mynaui--letter-e-waves]";
+export const LetterEIcon = "icon-[tabler--hexagon-letter-e]";

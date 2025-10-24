@@ -1,19 +1,8 @@
-import {
-	Action,
-	ArrowLeftIcon,
-	Badge,
-	Container,
-	Icon,
-	LinkTo,
-	PriceInline,
-	Tx,
-} from "@use-pico/client";
+import { Badge, Container, Icon, PriceInline, Tx } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { ExpireIcon } from "~/app/ui/icon/ExpireIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
@@ -70,7 +59,6 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 
 					<Badge
 						tone={"secondary"}
-						theme={"dark"}
 						size={"lg"}
 						snapTo={"top-right"}
 						round={"full"}
@@ -79,6 +67,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 								root: {
 									class: [
 										"p-2",
+										"opacity-75",
 									],
 								},
 							},
@@ -167,7 +156,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					</VariantProvider>
 				</Container>
 
-				<BottomContainer>
+				{/* <BottomContainer>
 					<LinkTo
 						icon={ArrowLeftIcon}
 						to={"/$locale/app/dashboard"}
@@ -188,7 +177,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							},
 						}}
 					/>
-				</BottomContainer>
+				</BottomContainer> */}
 			</Container>
 		);
 	},
