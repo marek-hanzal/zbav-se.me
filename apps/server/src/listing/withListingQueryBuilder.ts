@@ -1,17 +1,14 @@
-import type { SelectQueryBuilder } from "kysely";
-import type { Database } from "../database/Database";
 import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import type { withListingSelect } from "./withListingSelect";
 
 export namespace withListingQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "listing", any>;
+		select: withListingSelect.Select;
 		where?: ListingQuerySchema.Type["where"];
 		sort?: ListingQuerySchema.Type["sort"];
 	}
 
-	export type Callback = (
-		props: Props,
-	) => SelectQueryBuilder<Database, "listing", any>;
+	export type Callback = (props: Props) => withListingSelect.Select;
 }
 
 /**
@@ -26,11 +23,11 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 
 	// Apply base filters
 	if (where?.id) {
-		query = query.where("id", "=", where.id);
+		query = query.where("l.id", "=", where.id);
 	}
 
 	if (where?.idIn && where.idIn.length > 0) {
-		query = query.where("id", "in", where.idIn);
+		query = query.where("l.id", "in", where.idIn);
 	}
 
 	if (where?.fulltext) {
@@ -42,51 +39,51 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 	// Apply custom filters
 
 	if (where?.priceMin !== undefined) {
-		query = query.where("price", ">=", where.priceMin);
+		query = query.where("l.price", ">=", where.priceMin);
 	}
 
 	if (where?.priceMax !== undefined) {
-		query = query.where("price", "<=", where.priceMax);
+		query = query.where("l.price", "<=", where.priceMax);
 	}
 
 	if (where?.conditionMin !== undefined) {
-		query = query.where("condition", ">=", where.conditionMin);
+		query = query.where("l.condition", ">=", where.conditionMin);
 	}
 
 	if (where?.conditionMax !== undefined) {
-		query = query.where("condition", "<=", where.conditionMax);
+		query = query.where("l.condition", "<=", where.conditionMax);
 	}
 
 	if (where?.ageMin !== undefined) {
-		query = query.where("age", ">=", where.ageMin);
+		query = query.where("l.age", ">=", where.ageMin);
 	}
 
 	if (where?.ageMax !== undefined) {
-		query = query.where("age", "<=", where.ageMax);
+		query = query.where("l.age", "<=", where.ageMax);
 	}
 
 	if (where?.locationId) {
-		query = query.where("locationId", "=", where.locationId);
+		query = query.where("l.locationId", "=", where.locationId);
 	}
 
 	if (where?.locationIdIn && where.locationIdIn.length > 0) {
-		query = query.where("locationId", "in", where.locationIdIn);
+		query = query.where("l.locationId", "in", where.locationIdIn);
 	}
 
 	if (where?.categoryGroupId) {
-		query = query.where("categoryGroupId", "=", where.categoryGroupId);
+		query = query.where("l.categoryGroupId", "=", where.categoryGroupId);
 	}
 
 	if (where?.categoryGroupIdIn && where.categoryGroupIdIn.length > 0) {
-		query = query.where("categoryGroupId", "in", where.categoryGroupIdIn);
+		query = query.where("l.categoryGroupId", "in", where.categoryGroupIdIn);
 	}
 
 	if (where?.categoryId) {
-		query = query.where("categoryId", "=", where.categoryId);
+		query = query.where("l.categoryId", "=", where.categoryId);
 	}
 
 	if (where?.categoryIdIn && where.categoryIdIn.length > 0) {
-		query = query.where("categoryId", "in", where.categoryIdIn);
+		query = query.where("l.categoryId", "in", where.categoryIdIn);
 	}
 
 	return query;
@@ -105,19 +102,19 @@ export const withListingQueryBuilderWithSort = (
 		if (sortItem.sort) {
 			switch (sortItem.value) {
 				case "price":
-					query = query.orderBy("price", sortItem.sort);
+					query = query.orderBy("l.price", sortItem.sort);
 					break;
 				case "condition":
-					query = query.orderBy("condition", sortItem.sort);
+					query = query.orderBy("l.condition", sortItem.sort);
 					break;
 				case "age":
-					query = query.orderBy("age", sortItem.sort);
+					query = query.orderBy("l.age", sortItem.sort);
 					break;
 				case "createdAt":
-					query = query.orderBy("createdAt", sortItem.sort);
+					query = query.orderBy("l.createdAt", sortItem.sort);
 					break;
 				case "updatedAt":
-					query = query.orderBy("updatedAt", sortItem.sort);
+					query = query.orderBy("l.updatedAt", sortItem.sort);
 					break;
 			}
 		}

@@ -38,7 +38,7 @@ export const SubmitWrapper: FC<{
 
 	const [progress, setProgress] = useState(0);
 
-	const uploadPhotos = async (photos: File[], listingId: string) => {
+	const upload = async (photos: File[], listingId: string) => {
 		setProgress(0);
 
 		const queue = new PQueue({
@@ -109,7 +109,7 @@ export const SubmitWrapper: FC<{
 
 	const createListingMutation = withListingCreateMutation().useMutation({
 		async onSuccess(data) {
-			await uploadPhotos(files, data.id);
+			await upload(files, data.id);
 			return navigate({
 				to: "/$locale/app/listing/$id/view",
 				params: {
@@ -135,56 +135,33 @@ export const SubmitWrapper: FC<{
 					textTitle={"Submit listing - status (title)"}
 					tone={"primary"}
 					action={
-						<Button
-							iconEnabled={CheckIcon}
-							tone={"primary"}
-							theme={"dark"}
-							size={"xl"}
-							label={
-								progress > 0 && progress < 100
-									? "Uploading photos..."
-									: createListingMutation.isPending
-										? "Creating listing..."
-										: "Submit listing (button)"
-							}
-							disabled={
-								createListingMutation.isPending ||
-								(progress > 0 && progress < 100)
-							}
-							onClick={() => {
-								try {
-									createListingMutation.mutate(store.get());
-								} catch (error) {
-									console.error(error);
-								}
-							}}
-						/>
+						progress > 0 ? (
+							<Progress
+								value={progress}
+								size={"lg"}
+								tone={"secondary"}
+							/>
+						) : (
+							<Button
+								iconEnabled={CheckIcon}
+								tone={"primary"}
+								theme={"dark"}
+								size={"xl"}
+								label={"Submit listing (button)"}
+								disabled={createListingMutation.isPending}
+								onClick={() => {
+									try {
+										createListingMutation.mutate(
+											store.get(),
+										);
+									} catch (error) {
+										console.error(error);
+									}
+								}}
+							/>
+						)
 					}
-					tweak={{
-						slot: {
-							body: {
-								class: [
-									"flex",
-									"flex-col",
-									"gap-2",
-								],
-							},
-						},
-					}}
-				>
-					{progress > 0 && progress < 100 && (
-						<Progress
-							value={progress}
-							size={"lg"}
-							tweak={{
-								variant: {
-									tone: "primary",
-									theme: "dark",
-								},
-							}}
-						/>
-					)}
-				</Status>
+				/>
 			</Container>
 		</ListingContainer>
 	);

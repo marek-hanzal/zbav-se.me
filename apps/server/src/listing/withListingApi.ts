@@ -312,9 +312,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withCount({
-						select: database.kysely
-							.selectFrom("listing")
-							.selectAll(),
+						select: withListingSelect(),
 						filter,
 						where,
 						query({ select, where }) {
