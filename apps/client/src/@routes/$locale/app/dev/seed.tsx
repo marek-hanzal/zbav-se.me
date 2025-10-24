@@ -81,7 +81,7 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 				];
 
 				const queue = new PQueue({
-					concurrency: 5,
+					concurrency: 3,
 				});
 
 				const createListing = async () => {
@@ -136,7 +136,7 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 					return listing;
 				};
 
-				const limit = 250;
+				const limit = 16;
 
 				for (let i = 0; i < limit; i++) {
 					queue.add(createListing);
