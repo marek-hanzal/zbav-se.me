@@ -75,13 +75,40 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 					(res) => res.data,
 				);
 				const locations = [
-					"Nejdek",
-					"Pičín",
-					"Berlín",
+					"Praha",
+					"Brno",
+					"Ostrava",
+					"Plzeň",
+					"Liberec",
+					"Olomouc",
+					"Ústí nad Labem",
+					"Hradec Králové",
+					"České Budějovice",
+					"Zlín",
+					"Pardubice",
+					"Jihlava",
+					"Karlovy Vary",
+					"Teplice",
+					"Děčín",
+					"Chomutov",
+					"Frýdek-Místek",
+					"Mladá Boleslav",
+					"Tábor",
+					"Kroměříž",
+					"Uherské Hradiště",
+					"Znojmo",
+					"Havlíčkův Brod",
+					"Cheb",
+					"Trutnov",
+					"Kolín",
+					"Opava",
+					"Písek",
+					"Jablonec nad Nisou",
+					"Litoměřice",
 				];
 
 				const queue = new PQueue({
-					concurrency: 3,
+					concurrency: 8,
 				});
 
 				const createListing = async () => {
@@ -92,7 +119,7 @@ export const Route = createFileRoute("/$locale/app/dev/seed")({
 							categoryGroup[range(0, categoryGroup.length - 1)]!
 								.id,
 						categoryId: category[range(0, category.length - 1)]!.id,
-						price: range(0, 10000),
+						price: range(0, 99_999),
 						currency:
 							CurrencyList[range(0, CurrencyList.length - 1)]!,
 						expiresAt:

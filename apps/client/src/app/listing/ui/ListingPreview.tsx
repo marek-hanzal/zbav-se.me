@@ -136,6 +136,55 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							</TypoIcon>
 						</Badge>
 					</VariantProvider>
+
+					<VariantProvider
+						cls={ThemeCls}
+						variant={{
+							tone: "secondary",
+							theme: "light",
+						}}
+					>
+						<Badge
+							size={"lg"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"absolute",
+											"bottom-2",
+											"right-2",
+											"min-w-0",
+											"max-w-1/2",
+										],
+									},
+								},
+							}}
+						>
+							<TypoIcon
+								icon={ExpireIcon}
+								iconProps={{
+									size: "xs",
+								}}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"min-w-0",
+											],
+										},
+										content: {
+											class: [
+												"truncate",
+												"max-w-full",
+											],
+										},
+									},
+								}}
+							>
+								{listing.location.address}
+							</TypoIcon>
+						</Badge>
+					</VariantProvider>
 				</Container>
 
 				<BottomContainer>
