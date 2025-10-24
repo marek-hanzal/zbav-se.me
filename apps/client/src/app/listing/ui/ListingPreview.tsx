@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	Badge,
 	Container,
+	Icon,
 	LinkTo,
 	PriceInline,
 	Tx,
@@ -13,9 +14,9 @@ import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { BottomContainer } from "~/app/ui/container/BottomContainer";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
-import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
 import { ExpireIcon } from "~/app/ui/icon/ExpireIcon";
 import { HeroImage } from "~/app/ui/img/HeroImage";
+import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 import { ThemeCls } from "~/app/ui/ThemeCls";
 import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
@@ -87,20 +88,19 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 										"absolute",
 										"top-2",
 										"right-2",
+										"p-2",
 									],
 								},
 							},
 						}}
 					>
-						<TypoIcon
-							icon={ConditionIcon}
-							iconProps={{
-								tone: "secondary",
-								theme: "dark",
-							}}
-						>
-							{listing.condition}
-						</TypoIcon>
+						<Icon
+							icon={
+								RatingToIcon[
+									listing.condition as RatingToIcon.Value
+								]
+							}
+						/>
 					</Badge>
 
 					<VariantProvider

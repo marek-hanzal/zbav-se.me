@@ -68,7 +68,23 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 							schema: z.array(LocationSchema),
 						},
 					},
-					description: "Return a location autocomplete",
+					description: "Location(s) found (cache hit)",
+				},
+				201: {
+					content: {
+						"application/json": {
+							schema: z.array(LocationSchema),
+						},
+					},
+					description: "Location(s) created (cache miss)",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Location not found",
 				},
 			},
 			tags: [
@@ -94,7 +110,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					"public, max-age=31536000, immutable",
 				);
 				c.header("X-Location-Cache", "hit");
-				return c.json(quickCache);
+				return c.json(quickCache, 200);
 			}
 
 			// Execute within transaction to ensure advisory lock is held properly
@@ -194,7 +210,16 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					return locations;
 				});
 
-			return c.json(results);
+			if (results.length === 0) {
+				return c.json(
+					{
+						message: "Location not found",
+					},
+					404,
+				);
+			}
+
+			return c.json(results, 201);
 		},
 	);
 

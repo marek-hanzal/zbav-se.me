@@ -45,7 +45,7 @@ export const ExpireWrapper: FC<ExpireWrapper.Props> = memo(
 								class: [
 									"flex",
 									"flex-col",
-									"gap-4",
+									"gap-2",
 								],
 							},
 						},

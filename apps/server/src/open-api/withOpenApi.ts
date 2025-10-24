@@ -7,7 +7,18 @@ export const withOpenApi = <TApi extends OpenAPIHono<any>>(api: TApi) => {
 	api.get(
 		"/",
 		Scalar({
-			url: docsUrl,
+			title: "zbav.se.me API",
+			pageTitle: "zbav.se.me API",
+			sources: [
+				{
+					url: docsUrl,
+					title: "Core API",
+				},
+				{
+					url: "/api/auth/open-api/generate-schema",
+					title: "Auth",
+				},
+			],
 		}),
 	);
 	api.doc(docsUrl, {

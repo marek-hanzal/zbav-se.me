@@ -1,6 +1,6 @@
 import { genId } from "@use-pico/common";
 import { betterAuth } from "better-auth";
-import { anonymous } from "better-auth/plugins";
+import { anonymous, openAPI } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
 import { AppEnv } from "./AppEnv";
 import { dialect } from "./database/dialect";
@@ -21,6 +21,9 @@ export const auth = betterAuth({
 			async onLinkAccount() {
 				//
 			},
+		}),
+		openAPI({
+			disableDefaultReference: true,
 		}),
 	],
 	trustedOrigins: [
