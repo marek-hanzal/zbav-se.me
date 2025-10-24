@@ -5,6 +5,7 @@ import { database } from "../database/kysely";
 export const withListingSelect = () => {
 	return database.kysely
 		.selectFrom("listing")
+		.innerJoin("gallery", "gallery.listingId", "listing.id")
 		.selectAll("listing")
 		.select((eb) => [
 			jsonObjectFrom(
@@ -44,5 +45,6 @@ export const withListingSelect = () => {
 					sql`'[]'::json`,
 				)
 				.as("gallery"),
-		]);
+		])
+		.groupBy("listing.id");
 };
