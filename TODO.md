@@ -1,5 +1,10 @@
 # TODO
 
+- Extract create listing Wrappers into standalone components as they will serve as "inputs" for search or displaying listing detail
+
+- Listing watch time - after a timeout send (using a queue) watch increase
+    - learn from skipped listings? - e.g. wrong category/price/whatever - build internal "interest" score of the user
+
 - Fresh listing - generate feed, collect filters
     - Also keep the option to skip and "just browse" with defaults ?
 
@@ -13,10 +18,7 @@
     - availability from (... this one?)
     - store amount (multiple instances on a single listing?)
 
-- Allow moving/switching neighbour photos (new controls -> new bar with controls and trash icon)
-
-- Demo scraping from unstash + demo listings for testing
-    - preset locations, the rest does not matter
+- Allow moving/switching neighbor photos (new controls -> new bar with controls and trash icon)
 
 - Likes in feed counts likness score on listing
     - category; overriding each other depending on what was clicked and when

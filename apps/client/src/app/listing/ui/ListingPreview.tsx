@@ -54,17 +54,8 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						tone={"secondary"}
 						theme={"dark"}
 						size={"lg"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"absolute",
-										"top-2",
-										"left-2",
-									],
-								},
-							},
-						}}
+						snapTo={"top-left"}
+						round={"md"}
 					>
 						{listing.price > 0 ? (
 							<PriceInline
@@ -81,13 +72,12 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						tone={"secondary"}
 						theme={"dark"}
 						size={"lg"}
+						snapTo={"top-right"}
+						round={"full"}
 						tweak={{
 							slot: {
 								root: {
 									class: [
-										"absolute",
-										"top-2",
-										"right-2",
 										"p-2",
 									],
 								},
@@ -112,17 +102,8 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					>
 						<Badge
 							size={"lg"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"absolute",
-											"bottom-2",
-											"left-2",
-										],
-									},
-								},
-							}}
+							snapTo={"bottom-left"}
+							round={"md"}
 						>
 							<TypoIcon
 								icon={ExpireIcon}
@@ -146,13 +127,12 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					>
 						<Badge
 							size={"lg"}
+							round={"md"}
+							snapTo={"bottom-right"}
 							tweak={{
 								slot: {
 									root: {
 										class: [
-											"absolute",
-											"bottom-2",
-											"right-2",
 											"min-w-0",
 											"max-w-1/2",
 										],
