@@ -19,7 +19,7 @@ export const Route = createFileRoute("/$locale/app/feed")({
 		const { locale } = Route.useParams();
 		const { slots } = useCls(ThemeCls);
 		const listingQuery = useListingInfiniteQuery({
-			size: 2,
+			size: 5,
 		});
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();
