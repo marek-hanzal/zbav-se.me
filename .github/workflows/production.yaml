@@ -430,7 +430,7 @@ jobs:
         name: Update CDN (web)
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build]
+        needs: [web-build, app-build, server-build]
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -494,7 +494,7 @@ jobs:
         name: Update CDN (app)
         runs-on: ubuntu-latest
         environment: production
-        needs: [app-build]
+        needs: [web-build, app-build, server-build]
         steps:
             - uses: actions/download-artifact@v4
               with:
