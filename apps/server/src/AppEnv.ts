@@ -27,6 +27,7 @@ const ServerOriginSchema = z.object({
 
 const AppEnvSchema = z.object({
 	VITE_DOMAIN: z.string().min(1, "Domain is required"),
+	VITE_SERVER_API: z.string().min(1, "Server API is required"),
 	...ServerOriginSchema.shape,
 	SERVER_BETTER_AUTH_SECRET: z
 		.string()

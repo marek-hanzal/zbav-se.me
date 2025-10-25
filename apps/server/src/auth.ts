@@ -10,11 +10,11 @@ export const auth = betterAuth({
 	secret: AppEnv.SERVER_BETTER_AUTH_SECRET,
 	plugins: [
 		passkey({
-			rpID: AppEnv.DOMAIN,
-			rpName: AppEnv.DOMAIN,
+			rpID: AppEnv.VITE_DOMAIN,
+			rpName: AppEnv.VITE_DOMAIN,
 		}),
 		anonymous({
-			emailDomainName: AppEnv.DOMAIN,
+			emailDomainName: AppEnv.VITE_DOMAIN,
 			generateName: () => genId(),
 			async onLinkAccount() {
 				//
@@ -25,8 +25,8 @@ export const auth = betterAuth({
 		}),
 	],
 	trustedOrigins: [
-		AppEnv.WEB_ORIGIN,
-		AppEnv.APP_ORIGIN,
+		AppEnv.VITE_WEB_ORIGIN,
+		AppEnv.VITE_APP_ORIGIN,
 	],
 	rateLimit: {
 		window: 10,
@@ -38,7 +38,7 @@ export const auth = betterAuth({
 	advanced: {
 		crossSubDomainCookies: {
 			enabled: true,
-			domain: AppEnv.DOMAIN,
+			domain: AppEnv.VITE_DOMAIN,
 		},
 		database: {
 			generateId: () => genId(),

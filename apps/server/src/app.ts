@@ -31,7 +31,10 @@ app.use(requestId());
 app.use(secureHeaders());
 app.use(
 	cors({
-		origin: AppEnv.WEB_ORIGIN,
+		origin: [
+			AppEnv.VITE_WEB_ORIGIN,
+			AppEnv.VITE_APP_ORIGIN,
+		],
 		allowHeaders: [
 			"Content-Type",
 			"Authorization",
@@ -219,7 +222,10 @@ app.route("/api", publicRoutes);
 //
 app.get("/origin", (c) =>
 	c.json({
-		origin: AppEnv.WEB_ORIGIN,
+		origin: [
+			AppEnv.VITE_WEB_ORIGIN,
+			AppEnv.VITE_APP_ORIGIN,
+		],
 	}),
 );
 //
