@@ -16,7 +16,7 @@ import {
 	useSnapperNav,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import { translator } from "@use-pico/common";
+import { linkTo, translator } from "@use-pico/common";
 import { useRef } from "react";
 import { z } from "zod";
 import { authClient } from "~/app/auth/authClient";
@@ -55,10 +55,13 @@ export const Route = createFileRoute("/$locale/login")({
 		const signInMutation = withEmailSignInMutation.useMutation({
 			async onSuccess() {
 				return navigate({
-					to: "/$locale/app/dashboard",
-					params: {
-						locale,
-					},
+					href: linkTo({
+						base: import.meta.env.VITE_APP_ORIGIN,
+						href: "/:locale/app/dashboard",
+						query: {
+							locale,
+						},
+					}),
 				});
 			},
 		});
@@ -69,10 +72,13 @@ export const Route = createFileRoute("/$locale/login")({
 			},
 			async onSuccess() {
 				await navigate({
-					to: "/$locale/app/dashboard",
-					params: {
-						locale,
-					},
+					href: linkTo({
+						base: import.meta.env.VITE_APP_ORIGIN,
+						href: "/:locale/app/dashboard",
+						query: {
+							locale,
+						},
+					}),
 				});
 			},
 		});

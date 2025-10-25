@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { linkTo } from "@use-pico/common";
 import { getSessionFn } from "~/app/auth/getSessionFn";
 import { getLocaleFn } from "~/app/locale/getLocaleFn";
 
@@ -17,10 +18,14 @@ export const Route = createFileRoute("/")({
 		}
 
 		throw redirect({
-			to: "/$locale/landing",
-			params: {
-				locale,
-			},
+			href: linkTo({
+				base: import.meta.env.VITE_WEB_ORIGIN,
+				href: "/:locale/login",
+				query: {
+					locale,
+				},
+			}),
+			statusCode: 302,
 		});
 	},
 });

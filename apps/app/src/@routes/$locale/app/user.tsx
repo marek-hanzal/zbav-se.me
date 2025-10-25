@@ -5,6 +5,7 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import { Button, Container, LinkTo, Status, UserIcon } from "@use-pico/client";
+import { linkTo } from "@use-pico/common";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 import { Sheet } from "~/app/sheet/Sheet";
 import { DashboardIcon } from "~/app/ui/icon/DashboardIcon";
@@ -24,10 +25,13 @@ export const Route = createFileRoute("/$locale/app/user")({
 		const signOutMutation = withSignOutMutation.useMutation({
 			onSuccess() {
 				navigate({
-					to: "/$locale/login",
-					params: {
-						locale,
-					},
+					href: linkTo({
+						base: import.meta.env.VITE_WEB_ORIGIN,
+						href: "/:locale/landing",
+						query: {
+							locale,
+						},
+					}),
 				});
 			},
 		});

@@ -12,11 +12,6 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
-import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
-import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
-import { Route as LocaleLoginRouteImport } from './@routes/$locale/login'
-import { Route as LocaleLandingRouteImport } from './@routes/$locale/landing'
 import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
 import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
 import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
@@ -41,31 +36,6 @@ const IndexRoute = IndexRouteImport.update({
 const LocaleIndexRoute = LocaleIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleTosRoute = LocaleTosRouteImport.update({
-  id: '/tos',
-  path: '/tos',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleRegisterRoute = LocaleRegisterRouteImport.update({
-  id: '/register',
-  path: '/register',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocalePrivacyRoute = LocalePrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleLoginRoute = LocaleLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleLandingRoute = LocaleLandingRouteImport.update({
-  id: '/landing',
-  path: '/landing',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleAppRoute = LocaleAppRouteImport.update({
@@ -123,11 +93,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
-  '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/login': typeof LocaleLoginRoute
-  '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/register': typeof LocaleRegisterRoute
-  '/$locale/tos': typeof LocaleTosRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
@@ -142,11 +107,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$locale/app': typeof LocaleAppRouteWithChildren
-  '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/login': typeof LocaleLoginRoute
-  '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/register': typeof LocaleRegisterRoute
-  '/$locale/tos': typeof LocaleTosRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
@@ -163,11 +123,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
   '/$locale/app': typeof LocaleAppRouteWithChildren
-  '/$locale/landing': typeof LocaleLandingRoute
-  '/$locale/login': typeof LocaleLoginRoute
-  '/$locale/privacy': typeof LocalePrivacyRoute
-  '/$locale/register': typeof LocaleRegisterRoute
-  '/$locale/tos': typeof LocaleTosRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/app/bag': typeof LocaleAppBagRoute
   '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
@@ -185,11 +140,6 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/app'
-    | '/$locale/landing'
-    | '/$locale/login'
-    | '/$locale/privacy'
-    | '/$locale/register'
-    | '/$locale/tos'
     | '/$locale/'
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
@@ -204,11 +154,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/$locale/app'
-    | '/$locale/landing'
-    | '/$locale/login'
-    | '/$locale/privacy'
-    | '/$locale/register'
-    | '/$locale/tos'
     | '/$locale'
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
@@ -224,11 +169,6 @@ export interface FileRouteTypes {
     | '/'
     | '/$locale'
     | '/$locale/app'
-    | '/$locale/landing'
-    | '/$locale/login'
-    | '/$locale/privacy'
-    | '/$locale/register'
-    | '/$locale/tos'
     | '/$locale/'
     | '/$locale/app/bag'
     | '/$locale/app/dashboard'
@@ -267,41 +207,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/$locale/'
       preLoaderRoute: typeof LocaleIndexRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/tos': {
-      id: '/$locale/tos'
-      path: '/tos'
-      fullPath: '/$locale/tos'
-      preLoaderRoute: typeof LocaleTosRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/register': {
-      id: '/$locale/register'
-      path: '/register'
-      fullPath: '/$locale/register'
-      preLoaderRoute: typeof LocaleRegisterRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/privacy': {
-      id: '/$locale/privacy'
-      path: '/privacy'
-      fullPath: '/$locale/privacy'
-      preLoaderRoute: typeof LocalePrivacyRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/login': {
-      id: '/$locale/login'
-      path: '/login'
-      fullPath: '/$locale/login'
-      preLoaderRoute: typeof LocaleLoginRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/landing': {
-      id: '/$locale/landing'
-      path: '/landing'
-      fullPath: '/$locale/landing'
-      preLoaderRoute: typeof LocaleLandingRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/app': {
@@ -407,21 +312,11 @@ const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(
 
 interface LocaleRouteChildren {
   LocaleAppRoute: typeof LocaleAppRouteWithChildren
-  LocaleLandingRoute: typeof LocaleLandingRoute
-  LocaleLoginRoute: typeof LocaleLoginRoute
-  LocalePrivacyRoute: typeof LocalePrivacyRoute
-  LocaleRegisterRoute: typeof LocaleRegisterRoute
-  LocaleTosRoute: typeof LocaleTosRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleAppRoute: LocaleAppRouteWithChildren,
-  LocaleLandingRoute: LocaleLandingRoute,
-  LocaleLoginRoute: LocaleLoginRoute,
-  LocalePrivacyRoute: LocalePrivacyRoute,
-  LocaleRegisterRoute: LocaleRegisterRoute,
-  LocaleTosRoute: LocaleTosRoute,
   LocaleIndexRoute: LocaleIndexRoute,
 }
 

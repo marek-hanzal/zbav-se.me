@@ -12,7 +12,7 @@ import {
 	UserIcon,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import { translator } from "@use-pico/common";
+import { linkTo, translator } from "@use-pico/common";
 import { useRef } from "react";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";
@@ -32,10 +32,13 @@ export const Route = createFileRoute("/$locale/register")({
 		const registerMutation = withRegisterMutation.useMutation({
 			async onSuccess() {
 				await navigate({
-					to: "/$locale/app/dashboard",
-					params: {
-						locale,
-					},
+					href: linkTo({
+						base: import.meta.env.VITE_APP_ORIGIN,
+						href: "/:locale/app/dashboard",
+						query: {
+							locale,
+						},
+					}),
 				});
 			},
 		});

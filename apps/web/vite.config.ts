@@ -60,13 +60,7 @@ export default defineConfig({
 	server: {
 		host: true,
 		strictPort: true,
-		port: 4088,
-		proxy: {
-			"/api": {
-				target: "http://localhost:4089",
-				changeOrigin: true,
-			},
-		},
+		port: 3030,
 	},
 	build: {
 		target: "esnext",
