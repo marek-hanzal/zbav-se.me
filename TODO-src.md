@@ -1,5 +1,7 @@
 # TODO
 
+- Upstash can be used with TCP
+
 - categories:
     - tickets (+ related stuff)
     - food (is it legal?)

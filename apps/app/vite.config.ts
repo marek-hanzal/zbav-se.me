@@ -13,7 +13,7 @@ import { prerender } from "./src/prerender";
 
 export default defineConfig({
 	clearScreen: false,
-	base: process.env.VITE_APP_ASSET_BASE,
+	base: process.env.VITE_APP_ASSETS,
 	plugins: [
 		tanstackStart({
 			prerender: {
