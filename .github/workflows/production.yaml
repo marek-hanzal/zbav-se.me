@@ -16,16 +16,7 @@ env:
     # Common env. variables
     # -------------------------------
     VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
-
-    # -------------------------------
-    # Web env. variables
-    # -------------------------------
-    # WEB_ORIGIN: ${{ vars.WEB_ORIGIN }}
-    # APP_ORIGIN: ${{ vars.APP_ORIGIN }}
-    # VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
-    # VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
-    # VITE_APP_ASSET_BASE: ${{ vars.VITE_APP_ASSET_BASE }}
-    # SERVER_UPSTASH_REDIS_REST_URL: ${{ vars.SERVER_UPSTASH_REDIS_REST_URL }}
+    VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
 
     # -------------------------------
     # Server env. variables
@@ -38,13 +29,10 @@ env:
     # --------------------------------
     # Private (sensitive) secrets
     # --------------------------------
-    # SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
-
-    # SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
-    # SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-
-    # VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    # SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
+    SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
+    SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
+    SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
+    SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
 
     # -------------------------------
     # Local (GHA only)
@@ -52,26 +40,43 @@ env:
     BUNNY_HOST: ${{ vars.BUNNY_HOST }}
     BUNNY_USER: ${{ vars.BUNNY_USER }}
     BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
-    #
+
     NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
     NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
-    #
+
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
     VERCEL_WEB_PROJECT_ID: ${{ vars.VERCEL_WEB_PROJECT_ID }}
     VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
-    #
-    MIGRATION_URL: ${VITE_SERVER_API}/api/public/migration/run
+
+    MIGRATION_URL: ${{ vars.VITE_SERVER_API }}/api/public/migration/run
 
     # -------------------------------
-    # Web environment variables list
+    # Web environment variables list (multiline)
     # -------------------------------
-    WEB_ENV_VARS: "VITE_WEB_ASSETS VITE_SERVER_API"
+    VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
+    WEB_ENV_KEYS: |
+        VITE_WEB_ASSET_BASE
+        VITE_SERVER_API
+        VITE_DOMAIN
 
     # -------------------------------
-    # Server environment variables list
+    # Server environment variables list (multiline)
     # -------------------------------
-    SERVER_ENV_VARS: "SERVER_WEB_ORIGIN SERVER_APP_ORIGIN SERVER_UPSTASH_REDIS_REST_TOKEN SERVER_UPSTASH_REDIS_REST_URL SERVER_GEOAPIFY_TOKEN SERVER_BETTER_AUTH_SECRET SERVER_JWT_SECRET VITE_SERVER_API SERVER_DATABASE_URL SERVER_S3_API SERVER_S3_KEY SERVER_S3_SECRET SERVER_S3_BUCKET"
+    SERVER_ENV_KEYS: |
+        SERVER_WEB_ORIGIN
+        SERVER_APP_ORIGIN
+        SERVER_UPSTASH_REDIS_REST_TOKEN
+        SERVER_UPSTASH_REDIS_REST_URL
+        SERVER_GEOAPIFY_TOKEN
+        SERVER_BETTER_AUTH_SECRET
+        SERVER_JWT_SECRET
+        VITE_SERVER_API
+        SERVER_DATABASE_URL
+        SERVER_S3_API
+        SERVER_S3_KEY
+        SERVER_S3_SECRET
+        SERVER_S3_BUCKET
 
 jobs:
     validate-env:
@@ -85,17 +90,24 @@ jobs:
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
                   : "${BUNNY_USER:?BUNNY_USER missing}"
+
                   : "${NEON_API_KEY:?NEON_API_KEY missing}"
                   : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+
                   : "${SERVER_S3_API:?SERVER_S3_API missing}"
                   : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
                   : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
                   : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
+
                   : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
                   : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
                   : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
                   : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
+
                   : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
+                  : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
+                  : "${VITE_WEB_ASSET_BASE:?VITE_WEB_ASSET_BASE missing}"
+
                   echo "OK: required variables present."
 
     vercel-env-web:
@@ -109,23 +121,26 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            # Upsert web build-time envs (production)
             - name: Upsert web env
               env:
-                  # Bind the web project for this step; Vercel CLI reads from env
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_WEB_PROJECT_ID }}
+                  KEYS: ${{ env.WEB_ENV_KEYS }}
               run: |
                   set -euo pipefail
-                  for KEY in ${{ env.WEB_ENV_VARS }}; do
+                  # iterate line-by-line; skip empty/comment lines
+                  while IFS= read -r KEY; do
+                    [ -z "${KEY// }" ] && continue
+                    case "$KEY" in \#*) continue ;; esac
+
+                    VAL="${!KEY:-}"
                     if [ -z "$VAL" ]; then
                       echo "Error: Environment variable '$KEY' is not set"
                       exit 1
                     fi
-                    VAL="${!KEY}"
                     echo "Setting $KEY..."
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
-                  done
+                  done <<< "$KEYS"
 
     vercel-env-server:
         name: "Server: Sync env. variables"
@@ -138,7 +153,6 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            # Resolve DATABASE_URL (production branch) from Neon
             - name: Resolve prod DB URL via Neon
               id: neon
               uses: neondatabase/create-branch-action@v6
@@ -149,23 +163,26 @@ jobs:
                   role: neondb_owner
                   api_key: ${{ env.NEON_API_KEY }}
 
-            # Upsert server runtime envs including DATABASE_URL
             - name: Upsert server env
               env:
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
                   SERVER_DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
+                  KEYS: ${{ env.SERVER_ENV_KEYS }}
               run: |
                   set -euo pipefail
-                  for KEY in ${{ env.SERVER_ENV_VARS }}; do
+                  while IFS= read -r KEY; do
+                    [ -z "${KEY// }" ] && continue
+                    case "$KEY" in \#*) continue ;; esac
+
+                    VAL="${!KEY:-}"
                     if [ -z "$VAL" ]; then
                       echo "Error: Environment variable '$KEY' is not set"
                       exit 1
                     fi
-                    VAL="${!KEY}"
                     echo "Setting $KEY..."
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
-                  done
+                  done <<< "$KEYS"
 
     web-build:
         name: Build web
@@ -258,6 +275,7 @@ jobs:
             - uses: actions/download-artifact@v4
               with:
                   name: web
+                  #  path is where vercel expects
                   path: apps/web/.vercel/output
 
             - name: Setup Bun
