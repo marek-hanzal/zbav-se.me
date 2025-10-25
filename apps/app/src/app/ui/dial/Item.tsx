@@ -1,6 +1,6 @@
 import { Button, type Icon } from "@use-pico/client";
+import { anim, useAnim } from "@zbav-se.me/ui";
 import { type FC, useRef } from "react";
-import { anim, useAnim } from "~/app/ui/gsap";
 
 export namespace Item {
 	export interface Props extends Button.Props {

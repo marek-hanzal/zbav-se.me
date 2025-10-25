@@ -1,5 +1,5 @@
+import { anim, useAnim } from "@zbav-se.me/ui";
 import type { RefObject } from "react";
-import { anim, useAnim } from "~/app/ui/gsap";
 
 export namespace useOpacityAnim {
 	export interface Props {

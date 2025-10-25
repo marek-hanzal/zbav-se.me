@@ -1,6 +1,6 @@
 import type { useSetUnset } from "@use-pico/client";
+import { anim, useAnim } from "@zbav-se.me/ui";
 import type { RefObject } from "react";
-import { anim, useAnim } from "~/app/ui/gsap";
 
 export namespace useChangeAnim {
 	export interface Props {

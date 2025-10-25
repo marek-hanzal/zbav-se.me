@@ -8,13 +8,12 @@ import {
 	Tx,
 	type useSnapperNav,
 } from "@use-pico/client";
+import { anim, LocationIcon, useAnim } from "@zbav-se.me/ui";
 import { type FC, memo, useRef, useState } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
-import { anim, useAnim } from "~/app/ui/gsap";
-import { LocationIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/LocationIcon";
 
 export namespace LocationWrapper {
 	export interface Props {
