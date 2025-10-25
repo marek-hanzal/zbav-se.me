@@ -10,7 +10,7 @@ import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { InfiniteData } from "~/app/ui/data/InfiniteData";
 import { useAnim } from "~/app/ui/gsap";
 import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
-import { ThemeCls } from "~/app/ui/ThemeCls";
+import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export const Route = createFileRoute("/$locale/app/feed")({
 	component() {

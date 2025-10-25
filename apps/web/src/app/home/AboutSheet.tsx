@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client";
+import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
 import { type FC, useRef } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
-import { Fade } from "~/app/ui/fade/Fade";
 import { Markdown } from "~/app/ui/Markdown";
 
 export namespace AboutSheet {

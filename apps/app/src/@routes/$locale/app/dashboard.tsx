@@ -5,12 +5,12 @@ import { useRef } from "react";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { Fade } from "~/app/ui/fade/Fade";
-import { BagIcon } from "~/app/ui/icon/BagIcon";
-import { FeedIcon } from "~/app/ui/icon/FeedIcon";
-import { PostIcon } from "~/app/ui/icon/PostIcon";
-import { PublicIcon } from "~/app/ui/icon/PublicIcon";
-import { ShopIcon } from "~/app/ui/icon/ShopIcon";
 import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
+import { BagIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/BagIcon";
+import { FeedIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/FeedIcon";
+import { PostIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/PostIcon";
+import { PublicIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/PublicIcon";
+import { ShopIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/ShopIcon";
 
 export const Route = createFileRoute("/$locale/app/dashboard")({
 	component() {

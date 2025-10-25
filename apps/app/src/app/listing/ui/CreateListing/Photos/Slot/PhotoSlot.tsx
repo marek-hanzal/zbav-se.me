@@ -18,7 +18,7 @@ import {
 } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { Sheet } from "~/app/sheet/Sheet";
-import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
+import { PhotoIcon } from "../../../../../../../../../packages/@zbav-se.me/ui/src/icon/PhotoIcon";
 import { useChangeAnim } from "./useChangeAnim";
 import { useObjectUrl } from "./useObjectUrl";
 import { useOpacityAnim } from "./useOpacityAnim";

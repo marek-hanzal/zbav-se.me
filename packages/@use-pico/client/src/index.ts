@@ -28,6 +28,7 @@ export { PageCls } from "./css/PageCls";
 export { Cursor } from "./cursor/Cursor";
 export { CursorCls } from "./cursor/CursorCls";
 export { Data } from "./data/Data";
+export { InfiniteData } from "./data/InfiniteData";
 export { DateInline } from "./date-inline/DateInline";
 export { deepHtml } from "./deep-html/deepHtml";
 export { Detail } from "./detail/Detail";

@@ -8,8 +8,8 @@ import {
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
 import axios from "axios";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
+import { ThemeCls } from "../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;

@@ -1,6 +1,6 @@
 import { useCls } from "@use-pico/cls";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { ThemeCls } from "~/app/ui/ThemeCls";
+import { ThemeCls } from "../../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export const ListingProgress = () => {
 	const useCreateListingStore = useCreateListingContext();

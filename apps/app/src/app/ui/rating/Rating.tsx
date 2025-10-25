@@ -3,8 +3,8 @@ import { useCls, VariantProvider } from "@use-pico/cls";
 import { type FC, type Ref, useId } from "react";
 import { RatingCls } from "~/app/ui/rating/RatingCls";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 import { TypoIcon } from "~/app/ui/text/TypoIcon";
+import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace Rating {
 	export interface Props extends RatingCls.Props {

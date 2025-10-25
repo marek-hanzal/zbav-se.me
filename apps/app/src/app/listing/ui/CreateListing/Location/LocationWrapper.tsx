@@ -14,7 +14,7 @@ import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContaine
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 import { anim, useAnim } from "~/app/ui/gsap";
-import { LocationIcon } from "~/app/ui/icon/LocationIcon";
+import { LocationIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/LocationIcon";
 
 export namespace LocationWrapper {
 	export interface Props {

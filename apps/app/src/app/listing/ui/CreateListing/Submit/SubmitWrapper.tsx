@@ -18,8 +18,8 @@ import { withListingGalleryCreateMutation } from "~/app/listing/mutation/withLis
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { InvalidSubmit } from "~/app/listing/ui/CreateListing/Submit/InvalidSubmit";
 import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { SendPackageIcon } from "~/app/ui/icon/SendPackageIcon";
+import { CheckIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CheckIcon";
+import { SendPackageIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/SendPackageIcon";
 
 export const SubmitWrapper: FC<{
 	listingNavApi: useSnapperNav.Api;

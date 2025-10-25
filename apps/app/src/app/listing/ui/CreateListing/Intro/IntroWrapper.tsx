@@ -8,15 +8,15 @@ import {
 import { VariantProvider } from "@use-pico/cls";
 import { type FC, memo } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
-import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
-import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
-import { ConditionIcon } from "~/app/ui/icon/ConditionIcon";
-import { LocationIcon } from "~/app/ui/icon/LocationIcon";
-import { PhotoIcon } from "~/app/ui/icon/PhotoIcon";
-import { PostIcon } from "~/app/ui/icon/PostIcon";
-import { PriceIcon } from "~/app/ui/icon/PriceIcon";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 import { TypoIcon } from "~/app/ui/text/TypoIcon";
+import { CategoryGroupIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryGroupIcon";
+import { CategoryIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
+import { ConditionIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/ConditionIcon";
+import { LocationIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/LocationIcon";
+import { PhotoIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/PhotoIcon";
+import { PostIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/PostIcon";
+import { PriceIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/PriceIcon";
+import { ThemeCls } from "../../../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace IntroWrapper {
 	export interface Props {

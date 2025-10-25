@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, SnapperNav, useSnapperNav } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
+import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
+import { SecondaryOverlay } from "@zbav-se.me/ui/src/overlay/SecondaryOverlay";
 import { useRef } from "react";
 import { AboutSheet } from "~/app/home/AboutSheet";
 import { ContactSheet } from "~/app/home/ContactSheet";
@@ -9,9 +12,6 @@ import { FeaturesSheet } from "~/app/home/FeaturesSheet";
 import { HeroSheet } from "~/app/home/HeroSheet";
 import { useEnterAnim } from "~/app/home/useEnterAnim";
 import { WhatSheet } from "~/app/home/WhatSheet";
-import { Fade } from "~/app/ui/fade/Fade";
-import { SecondaryOverlay } from "~/app/ui/overlay/SecondaryOverlay";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/landing")({
 	async loader({ params: { locale } }) {

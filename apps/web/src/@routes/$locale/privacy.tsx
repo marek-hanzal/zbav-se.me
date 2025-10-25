@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@use-pico/client";
+import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
 import { useRef } from "react";
-import { Fade } from "~/app/ui/fade/Fade";
 import { Markdown } from "~/app/ui/Markdown";
 
 export const Route = createFileRoute("/$locale/privacy")({

@@ -13,14 +13,14 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo, translator } from "@use-pico/common";
+import { ThemeCls } from "@zbav-se.me/ui";
+import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
+import { PrimaryOverlay } from "@zbav-se.me/ui/src/overlay/PrimaryOverlay";
 import { useRef } from "react";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";
 import { Sheet } from "~/app/sheet/Sheet";
-import { Fade } from "~/app/ui/fade/Fade";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export const Route = createFileRoute("/$locale/register")({
 	component() {

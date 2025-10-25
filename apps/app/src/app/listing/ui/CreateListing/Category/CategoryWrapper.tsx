@@ -14,8 +14,8 @@ import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryIt
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { Sheet } from "~/app/sheet/Sheet";
-import { CategoryIcon } from "~/app/ui/icon/CategoryIcon";
 import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
+import { CategoryIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
 
 export namespace CategoryWrapper {
 	export interface Props {

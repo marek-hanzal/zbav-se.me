@@ -10,8 +10,8 @@ import { type Cls, tvc } from "@use-pico/cls";
 import { type FC, type RefObject, useMemo } from "react";
 import { CurrencySnapper } from "~/app/ui/currency/CurrencySnapper";
 import { Item } from "~/app/ui/dial/Item";
-import { BackspaceIcon } from "~/app/ui/icon/BackspaceIcon";
-import { ClearIcon } from "~/app/ui/icon/ClearIcon";
+import { BackspaceIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/BackspaceIcon";
+import { ClearIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/ClearIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");

@@ -11,7 +11,7 @@ import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
 import { type FC, memo } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
-import { ThemeCls } from "~/app/ui/ThemeCls";
+import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace ListingPreview {
 	export interface Props {

@@ -4,8 +4,8 @@ import type { CategoryGroup } from "@zbav-se.me/sdk";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
 import { Sheet } from "~/app/sheet/Sheet";
-import { CategoryGroupIcon } from "~/app/ui/icon/CategoryGroupIcon";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
+import { CategoryGroupIcon } from "../../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryGroupIcon";
+import { CheckIcon } from "../../../../../../../../../packages/@zbav-se.me/ui/src/icon/CheckIcon";
 
 export namespace CategoryGroupItem {
 	export interface Props {

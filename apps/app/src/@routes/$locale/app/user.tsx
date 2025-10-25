@@ -8,9 +8,9 @@ import { Button, Container, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 import { Sheet } from "~/app/sheet/Sheet";
-import { DashboardIcon } from "~/app/ui/icon/DashboardIcon";
-import { LockIcon } from "~/app/ui/icon/LockIcon";
 import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
+import { DashboardIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/DashboardIcon";
+import { LockIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/LockIcon";
 
 export const Route = createFileRoute("/$locale/app/user")({
 	component() {

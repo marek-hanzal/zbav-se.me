@@ -42,7 +42,8 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.cjs",
-		"**/*.js"
+		"**/*.js",
+		"../../packages/@zbav-se.me/ui/src/theme/ThemeCls.ts"
 	],
 	"exclude": [
 		"node_modules",

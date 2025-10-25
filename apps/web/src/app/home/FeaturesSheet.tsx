@@ -1,9 +1,9 @@
 import { Status, Tx } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
 import type { FC } from "react";
 import { Sheet } from "~/app/sheet/Sheet";
 import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
 export const FeaturesSheet: FC = () => {
