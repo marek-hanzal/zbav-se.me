@@ -224,7 +224,7 @@ jobs:
         name: Build web
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-web]
+        needs: [vercel-env-web, vercel-env-app, vercel-env-server]
         steps:
             - uses: actions/checkout@v4
 
@@ -265,7 +265,7 @@ jobs:
         name: Build app
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-app]
+        needs: [vercel-env-web, vercel-env-app, vercel-env-server]
         steps:
             - uses: actions/checkout@v4
 
@@ -306,7 +306,7 @@ jobs:
         name: Build server
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-server]
+        needs: [vercel-env-web, vercel-env-app, vercel-env-server]
         steps:
             - uses: actions/checkout@v4
 
