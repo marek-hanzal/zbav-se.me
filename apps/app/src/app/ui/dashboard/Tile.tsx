@@ -1,7 +1,7 @@
 import { Container, type Icon, Status } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace Tile {
 	export interface Props extends Container.Props {

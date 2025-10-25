@@ -1,6 +1,6 @@
 import { Badge, Icon, PriceInline, Typo } from "@use-pico/client";
+import { ClearIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { ClearIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/ClearIcon";
 
 export namespace Price {
 	export interface Props {

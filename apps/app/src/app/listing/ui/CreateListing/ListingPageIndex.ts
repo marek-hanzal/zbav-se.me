@@ -1,13 +1,15 @@
 import type { Icon } from "@use-pico/client";
+import {
+	AgeIcon,
+	CategoryGroupIcon,
+	CategoryIcon,
+	ConditionIcon,
+	ExpireIcon,
+	LocationIcon,
+	PhotoIcon,
+	PriceIcon,
+} from "@zbav-se.me/ui";
 import type { createListingStore } from "~/app/listing/store/createListingStore";
-import { AgeIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/AgeIcon";
-import { CategoryGroupIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryGroupIcon";
-import { CategoryIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
-import { ConditionIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/ConditionIcon";
-import { ExpireIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/ExpireIcon";
-import { LocationIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/LocationIcon";
-import { PhotoIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/PhotoIcon";
-import { PriceIcon } from "../../../../../../../packages/@zbav-se.me/ui/src/icon/PriceIcon";
 
 export namespace ListingPageIndex {
 	export interface PageInfo {

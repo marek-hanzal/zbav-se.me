@@ -1,6 +1,6 @@
 import { useCls } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { ThemeCls } from "../../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export const ListingProgress = () => {
 	const useCreateListingStore = useCreateListingContext();
@@ -19,7 +19,7 @@ export const ListingProgress = () => {
 							"left-2",
 							"right-2",
 							"opacity-25",
-							"z-[50]",
+							"z-50",
 						],
 						token: [
 							"round.full",

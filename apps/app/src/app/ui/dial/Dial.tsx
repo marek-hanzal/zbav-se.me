@@ -7,11 +7,10 @@ import {
 	Typo,
 } from "@use-pico/client";
 import { type Cls, tvc } from "@use-pico/cls";
+import { BackspaceIcon, ClearIcon } from "@zbav-se.me/ui";
 import { type FC, type RefObject, useMemo } from "react";
 import { CurrencySnapper } from "~/app/ui/currency/CurrencySnapper";
 import { Item } from "~/app/ui/dial/Item";
-import { BackspaceIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/BackspaceIcon";
-import { ClearIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/ClearIcon";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");

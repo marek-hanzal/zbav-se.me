@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
 import {
 	Button,
+	CheckIcon,
 	Container,
 	Progress,
 	Status,
@@ -8,6 +9,7 @@ import {
 } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
+import { SendPackageIcon } from "@zbav-se.me/ui";
 import axios from "axios";
 import PQueue from "p-queue";
 import type { FC } from "react";
@@ -18,8 +20,6 @@ import { withListingGalleryCreateMutation } from "~/app/listing/mutation/withLis
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { InvalidSubmit } from "~/app/listing/ui/CreateListing/Submit/InvalidSubmit";
 import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
-import { CheckIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CheckIcon";
-import { SendPackageIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/SendPackageIcon";
 
 export const SubmitWrapper: FC<{
 	listingNavApi: useSnapperNav.Api;

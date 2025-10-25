@@ -1,5 +1,5 @@
 import { type Cls, contract } from "@use-pico/cls";
-import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
+import { ThemeCls } from "@zbav-se.me/ui";
 
 export const RatingCls = contract(ThemeCls.contract)
 	.slots([

@@ -8,10 +8,10 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
+import { ThemeCls } from "@zbav-se.me/ui";
 import { type FC, memo } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
-import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace ListingPreview {
 	export interface Props {

@@ -1,12 +1,14 @@
 import { SnapperNav, type useSnapperNav } from "@use-pico/client";
+import {
+	CategoryGroupIcon,
+	CategoryIcon,
+	ConditionIcon,
+	PhotoIcon,
+	PriceIcon,
+	SendPackageIcon,
+} from "@zbav-se.me/ui";
 import type { FC } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { CategoryGroupIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryGroupIcon";
-import { CategoryIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
-import { ConditionIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/ConditionIcon";
-import { PhotoIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/PhotoIcon";
-import { PriceIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/PriceIcon";
-import { SendPackageIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/SendPackageIcon";
 
 export namespace SnapperPages {
 	export interface Props {

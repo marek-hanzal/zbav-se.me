@@ -7,9 +7,9 @@ import {
 } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
 import axios from "axios";
 import styles from "~/assets/style.css?url";
-import { ThemeCls } from "../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export const Route = createRootRouteWithContext<{
 	queryClient: QueryClient;
