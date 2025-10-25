@@ -17,7 +17,7 @@ export const HeroSheet: FC = () => {
 					"flex",
 					"flex-col",
 					"justify-evenly",
-					"h-[100dvh]",
+					"h-dvh",
 					"py-16",
 					"px-4",
 					"opacity-0",
@@ -44,20 +44,7 @@ export const HeroSheet: FC = () => {
 							}}
 							tone={"secondary"}
 							theme={"dark"}
-							tweak={{
-								slot: {
-									wrapper: {
-										class: [
-											"w-full",
-										],
-									},
-									root: {
-										class: [
-											"w-full",
-										],
-									},
-								},
-							}}
+							full
 							size={"xl"}
 							label={"Login (hero)"}
 						/>
@@ -76,20 +63,7 @@ export const HeroSheet: FC = () => {
 							}}
 							tone={"primary"}
 							theme={"dark"}
-							tweak={{
-								slot: {
-									wrapper: {
-										class: [
-											"w-full",
-										],
-									},
-									root: {
-										class: [
-											"w-full",
-										],
-									},
-								},
-							}}
+							full
 							size={"xl"}
 							label={"Register (hero)"}
 						/>
