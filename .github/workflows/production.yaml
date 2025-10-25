@@ -13,7 +13,7 @@ permissions:
 
 env:
     # -------------------------------
-    # Public (non-sensitive) variables
+    # Web env. variables
     # -------------------------------
     # WEB_ORIGIN: ${{ vars.WEB_ORIGIN }}
     # APP_ORIGIN: ${{ vars.APP_ORIGIN }}
@@ -21,8 +21,14 @@ env:
     # VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
     # VITE_APP_ASSET_BASE: ${{ vars.VITE_APP_ASSET_BASE }}
     # SERVER_UPSTASH_REDIS_REST_URL: ${{ vars.SERVER_UPSTASH_REDIS_REST_URL }}
-    # SERVER_S3_API: ${{ vars.SERVER_S3_API }}
-    # SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
+
+    # -------------------------------
+    # Server env. variables
+    # -------------------------------
+    SERVER_S3_API: ${{ vars.SERVER_S3_API }}
+    SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
+    SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
+    SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
 
     # --------------------------------
     # Private (sensitive) secrets
@@ -32,8 +38,6 @@ env:
     # SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     # SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
 
-    # SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
-    # SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
     # VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     # SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
 
@@ -68,6 +72,10 @@ jobs:
                   : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${NEON_API_KEY:?NEON_API_KEY missing}"
                   : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+                  : "${SERVER_S3_API:?SERVER_S3_API missing}"
+                  : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
+                  : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
+                  : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
                   : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
                   : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
                   : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
