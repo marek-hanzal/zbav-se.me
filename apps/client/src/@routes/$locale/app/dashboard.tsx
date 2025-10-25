@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls, UserIcon } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
+import { useRef } from "react";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
+import { Fade } from "~/app/ui/fade/Fade";
 import { BagIcon } from "~/app/ui/icon/BagIcon";
 import { FeedIcon } from "~/app/ui/icon/FeedIcon";
 import { PostIcon } from "~/app/ui/icon/PostIcon";
@@ -13,6 +15,7 @@ import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 export const Route = createFileRoute("/$locale/app/dashboard")({
 	component() {
 		const { locale } = Route.useParams();
+		const scrollRef = useRef<HTMLDivElement>(null);
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -29,7 +32,12 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 			<Container position={"relative"}>
 				<PrimaryOverlay />
 
-				<FlowContainer overflow={"vertical"}>
+				<Fade scrollableRef={scrollRef} />
+
+				<FlowContainer
+					ref={scrollRef}
+					overflow={"vertical"}
+				>
 					<div className="grid gap-2">
 						<LinkTo
 							to="/$locale/app/feed"
