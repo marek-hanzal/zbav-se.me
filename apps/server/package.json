@@ -3,7 +3,7 @@
 	"version": "0.5.0",
 	"type": "module",
 	"scripts": {
-		"dev": "PORT=4089 nitro dev --host",
+		"dev": "PORT=3032 nitro dev --host",
 		"build": "nitro build && bun ./cli/size.ts",
 		"typecheck": "tsc --noEmit"
 	},

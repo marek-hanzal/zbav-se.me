@@ -1,0 +1,11 @@
+@import "./font.css";
+@import "tailwindcss";
+
+@plugin "@iconify/tailwind4";
+
+@config "../../tailwind.config.ts";
+
+@theme {
+	--font-sans: "Sansation", sans-serif;
+	--font-limelight: "Limelight", sans-serif;
+}
