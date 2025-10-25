@@ -1,10 +1,8 @@
 import { useParams } from "@tanstack/react-router";
 import { Button, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
+import { Logo, Sheet, UnlockIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { Sheet } from "~/app/sheet/Sheet";
-import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
-import { Logo } from "~/app/ui/Logo";
 
 export const HeroSheet: FC = () => {
 	const { locale } = useParams({

@@ -1,11 +1,9 @@
 import { type SheetCls, Status, type useSelection } from "@use-pico/client";
 import { type Cls, tvc } from "@use-pico/cls";
 import type { Category } from "@zbav-se.me/sdk";
+import { CategoryIcon, CheckIcon, Sheet } from "@zbav-se.me/ui";
 import { type FC, useRef } from "react";
 import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
-import { Sheet } from "~/app/sheet/Sheet";
-import { CategoryIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
-import { CheckIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CheckIcon";
 
 export namespace CategoryItem {
 	export interface Props {

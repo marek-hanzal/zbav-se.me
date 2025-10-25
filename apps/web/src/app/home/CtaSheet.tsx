@@ -1,8 +1,8 @@
 import { useParams } from "@tanstack/react-router";
 import { Button, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
+import { Sheet } from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { Sheet } from "~/app/sheet/Sheet";
 
 export const CtaSheet: FC = () => {
 	const { locale } = useParams({

@@ -1,12 +1,14 @@
 import { Status, Tx } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
+import {
+	BuyerIcon,
+	CheckIcon,
+	SellerIcon,
+	Sheet,
+	ThemeCls,
+	TypoIcon,
+} from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { Sheet } from "~/app/sheet/Sheet";
-import { BuyerIcon } from "~/app/ui/icon/BuyerIcon";
-import { CheckIcon } from "~/app/ui/icon/CheckIcon";
-import { SellerIcon } from "~/app/ui/icon/SellerIcon";
-import { ThemeCls } from "~/app/ui/ThemeCls";
-import { TypoIcon } from "~/app/ui/text/TypoIcon";
 
 export const WhatSheet: FC = () => {
 	return (

@@ -7,6 +7,7 @@ import {
 	TrashIcon,
 	useSetUnset,
 } from "@use-pico/client";
+import { PhotoIcon, Sheet } from "@zbav-se.me/ui";
 import {
 	type ChangeEvent,
 	type FC,
@@ -17,8 +18,6 @@ import {
 	useState,
 } from "react";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { Sheet } from "~/app/sheet/Sheet";
-import { PhotoIcon } from "../../../../../../../../../packages/@zbav-se.me/ui/src/icon/PhotoIcon";
 import { useChangeAnim } from "./useChangeAnim";
 import { useObjectUrl } from "./useObjectUrl";
 import { useOpacityAnim } from "./useOpacityAnim";

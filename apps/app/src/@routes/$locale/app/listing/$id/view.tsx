@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, Data, LinkTo, PriceInline } from "@use-pico/client";
+import { PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
 import { withListingFetchQuery } from "~/app/listing/query/withListingFetchQuery";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
-import { Sheet } from "~/app/sheet/Sheet";
-import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
 
 export const Route = createFileRoute("/$locale/app/listing/$id/view")({
 	component() {

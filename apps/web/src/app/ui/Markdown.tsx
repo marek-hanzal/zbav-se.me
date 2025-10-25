@@ -1,9 +1,9 @@
 import { Typo } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
 import type { FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 
 export namespace Markdown {
 	export interface Props {

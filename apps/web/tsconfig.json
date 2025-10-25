@@ -43,8 +43,9 @@
 		"**/*.tsx",
 		"**/*.cjs",
 		"**/*.js",
-		"../../packages/@use-pico/client/src/data/InfiniteData.tsx"
-, "../../packages/@zbav-se.me/ui/src/gsap/gsap.ts"	],
+		"../../packages/@use-pico/client/src/data/InfiniteData.tsx",
+		"../../packages/@zbav-se.me/ui/src/gsap/gsap.ts"
+	],
 	"exclude": [
 		"node_modules",
 		"dist"

@@ -7,8 +7,8 @@ import {
 } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
+import { ThemeCls } from "@zbav-se.me/ui";
 import axios from "axios";
-import { ThemeCls } from "~/app/ui/ThemeCls";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{

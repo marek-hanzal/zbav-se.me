@@ -1,7 +1,7 @@
 import { Icon } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import type { FC, HTMLAttributes } from "react";
-import { TypoIconCls } from "~/app/ui/text/TypoIconCls";
+import { TypoIconCls } from "./TypoIconCls";
 
 export namespace TypoIcon {
 	export interface Props

@@ -1,16 +1,18 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls, UserIcon } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
+import {
+	BagIcon,
+	Fade,
+	FeedIcon,
+	PostIcon,
+	PrimaryOverlay,
+	PublicIcon,
+	ShopIcon,
+} from "@zbav-se.me/ui";
 import { useRef } from "react";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
-import { Fade } from "~/app/ui/fade/Fade";
-import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
-import { BagIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/BagIcon";
-import { FeedIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/FeedIcon";
-import { PostIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/PostIcon";
-import { PublicIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/PublicIcon";
-import { ShopIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/ShopIcon";
 
 export const Route = createFileRoute("/$locale/app/dashboard")({
 	component() {

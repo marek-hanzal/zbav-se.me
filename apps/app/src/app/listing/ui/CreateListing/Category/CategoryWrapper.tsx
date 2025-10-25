@@ -7,15 +7,13 @@ import {
 	useSnapperNav,
 } from "@use-pico/client";
 import type { Category } from "@zbav-se.me/sdk";
+import { CategoryIcon, Sheet, SpinnerSheet } from "@zbav-se.me/ui";
 import { type FC, memo, useEffect, useId, useRef } from "react";
 import { withCategoryListQuery } from "~/app/category/query/withCategoryListQuery";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { CategoryItem } from "~/app/listing/ui/CreateListing/Category/CategoryItem";
 import { LeftButton } from "~/app/listing/ui/CreateListing/LeftButton";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
-import { Sheet } from "~/app/sheet/Sheet";
-import { SpinnerSheet } from "~/app/ui/spinner/SpinnerSheet";
-import { CategoryIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
 
 export namespace CategoryWrapper {
 	export interface Props {

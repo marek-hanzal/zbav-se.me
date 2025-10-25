@@ -6,17 +6,19 @@ import {
 	type useSnapperNav,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
+import {
+	CategoryGroupIcon,
+	CategoryIcon,
+	ConditionIcon,
+	LocationIcon,
+	PhotoIcon,
+	PostIcon,
+	PriceIcon,
+	Sheet,
+	ThemeCls,
+	TypoIcon,
+} from "@zbav-se.me/ui";
 import { type FC, memo } from "react";
-import { Sheet } from "~/app/sheet/Sheet";
-import { TypoIcon } from "~/app/ui/text/TypoIcon";
-import { CategoryGroupIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryGroupIcon";
-import { CategoryIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/CategoryIcon";
-import { ConditionIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/ConditionIcon";
-import { LocationIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/LocationIcon";
-import { PhotoIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/PhotoIcon";
-import { PostIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/PostIcon";
-import { PriceIcon } from "../../../../../../../../packages/@zbav-se.me/ui/src/icon/PriceIcon";
-import { ThemeCls } from "../../../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace IntroWrapper {
 	export interface Props {

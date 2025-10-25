@@ -6,11 +6,8 @@ import {
 } from "@tanstack/react-router";
 import { Button, Container, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
+import { DashboardIcon, LockIcon, PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
-import { Sheet } from "~/app/sheet/Sheet";
-import { PrimaryOverlay } from "~/app/ui/overlay/PrimaryOverlay";
-import { DashboardIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/DashboardIcon";
-import { LockIcon } from "../../../../../../packages/@zbav-se.me/ui/src/icon/LockIcon";
 
 export const Route = createFileRoute("/$locale/app/user")({
 	component() {

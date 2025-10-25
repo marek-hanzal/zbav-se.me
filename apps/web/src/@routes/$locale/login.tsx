@@ -17,7 +17,13 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo, translator } from "@use-pico/common";
-import { ThemeCls } from "@zbav-se.me/ui";
+import {
+	PassKeyIcon,
+	Sheet,
+	SocialIcon,
+	ThemeCls,
+	UnlockIcon,
+} from "@zbav-se.me/ui";
 import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
 import { PrimaryOverlay } from "@zbav-se.me/ui/src/overlay/PrimaryOverlay";
 import { useRef } from "react";
@@ -25,10 +31,6 @@ import { z } from "zod";
 import { authClient } from "~/app/auth/authClient";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
 import { useAppForm } from "~/app/form/useAppForm";
-import { Sheet } from "~/app/sheet/Sheet";
-import { PassKeyIcon } from "~/app/ui/icon/PassKeyIcon";
-import { SocialIcon } from "~/app/ui/icon/SocialIcon";
-import { UnlockIcon } from "~/app/ui/icon/UnlockIcon";
 
 const LoginSchema = z.object({
 	email: z.email({

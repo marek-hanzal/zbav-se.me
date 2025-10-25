@@ -1,10 +1,9 @@
 import { Button, Tx } from "@use-pico/client";
 import { useCls, VariantProvider } from "@use-pico/cls";
+import { ThemeCls, TypoIcon } from "@zbav-se.me/ui";
 import { type FC, type Ref, useId } from "react";
 import { RatingCls } from "~/app/ui/rating/RatingCls";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
-import { TypoIcon } from "~/app/ui/text/TypoIcon";
-import { ThemeCls } from "../../../../../../packages/@zbav-se.me/ui/src/theme/ThemeCls";
 
 export namespace Rating {
 	export interface Props extends RatingCls.Props {
