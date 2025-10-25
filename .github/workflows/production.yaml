@@ -117,11 +117,11 @@ jobs:
               run: |
                   set -euo pipefail
                   for KEY in ${{ env.WEB_ENV_VARS }}; do
-                    VAL="${!KEY}"
                     if [ -z "$VAL" ]; then
                       echo "Error: Environment variable '$KEY' is not set"
                       exit 1
                     fi
+                    VAL="${!KEY}"
                     echo "Setting $KEY..."
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
@@ -157,11 +157,11 @@ jobs:
               run: |
                   set -euo pipefail
                   for KEY in ${{ env.SERVER_ENV_VARS }}; do
-                    VAL="${!KEY}"
                     if [ -z "$VAL" ]; then
                       echo "Error: Environment variable '$KEY' is not set"
                       exit 1
                     fi
+                    VAL="${!KEY}"
                     echo "Setting $KEY..."
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
