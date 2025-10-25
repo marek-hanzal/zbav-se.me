@@ -17,7 +17,6 @@ env:
     # -------------------------------
     VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
-    VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
 
     # -------------------------------
     # Server env. variables
@@ -26,15 +25,13 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
-
-    # --------------------------------
-    # Private (sensitive) secrets
-    # --------------------------------
+    SERVER_WEB_ORIGIN: ${{ vars.SERVER_WEB_ORIGIN }}
+    SERVER_APP_ORIGIN: ${{ vars.SERVER_APP_ORIGIN }}
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-    SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
-
+    SERVER_UPSTASH_REDIS_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_TOKEN }}
+    SERVER_UPSTASH_REDIS_URL: ${{ vars.SERVER_UPSTASH_REDIS_URL }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -48,16 +45,30 @@ env:
     VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
     VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
     VERCEL_WEB_PROJECT_ID: ${{ vars.VERCEL_WEB_PROJECT_ID }}
+    VERCEL_APP_PROJECT_ID: ${{ vars.VERCEL_APP_PROJECT_ID }}
     VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
 
-    # Použij GH expressions, ne shell expanzi
     MIGRATION_URL: ${{ vars.VITE_SERVER_API }}/api/public/migration/run
 
     # -------------------------------
     # Web environment variables list (multiline)
     # -------------------------------
+    VITE_WEB_ASSETS: ${{ vars.VITE_WEB_ASSETS }}
+    VITE_WEB_ORIGIN: ${{ vars.VITE_WEB_ORIGIN }}
     WEB_ENV_KEYS: |
-        VITE_WEB_ASSET_BASE
+        VITE_WEB_ASSETS
+        VITE_WEB_ORIGIN
+        VITE_SERVER_API
+        VITE_DOMAIN
+
+    # -------------------------------
+    # App environment variables list (multiline)
+    # -------------------------------
+    VITE_APP_ASSETS: ${{ vars.VITE_APP_ASSETS }}
+    VITE_APP_ORIGIN: ${{ vars.VITE_APP_ORIGIN }}
+    APP_ENV_KEYS: |
+        VITE_APP_ASSETS
+        VITE_APP_ORIGIN
         VITE_SERVER_API
         VITE_DOMAIN
 
@@ -65,27 +76,27 @@ env:
     # Server environment variables list (multiline)
     # -------------------------------
     SERVER_ENV_KEYS: |
-        SERVER_WEB_ORIGIN
-        SERVER_APP_ORIGIN
-        SERVER_UPSTASH_REDIS_REST_TOKEN
-        SERVER_UPSTASH_REDIS_REST_URL
-        SERVER_GEOAPIFY_TOKEN
         SERVER_BETTER_AUTH_SECRET
-        SERVER_JWT_SECRET
-        VITE_SERVER_API
         SERVER_DATABASE_URL
+        SERVER_GEOAPIFY_TOKEN
+        SERVER_JWT_SECRET
         SERVER_S3_API
+        SERVER_S3_BUCKET
         SERVER_S3_KEY
         SERVER_S3_SECRET
-        SERVER_S3_BUCKET
+        SERVER_UPSTASH_REDIS_TOKEN
+        SERVER_UPSTASH_REDIS_URL
+        VITE_APP_ORIGIN
+        VITE_SERVER_API
+        VITE_WEB_ORIGIN
 
 jobs:
-    validate-env:
-        name: Validate env
+    validate-common-env:
+        name: Validate common env
         runs-on: ubuntu-latest
         environment: production
         steps:
-            - name: Check environment variables
+            - name: Check common environment variables
               run: |
                   set -euo pipefail
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
@@ -95,19 +106,11 @@ jobs:
                   : "${NEON_API_KEY:?NEON_API_KEY missing}"
                   : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
 
-                  : "${SERVER_S3_API:?SERVER_S3_API missing}"
-                  : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
-                  : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
-                  : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
-
                   : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
-                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
                   : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
                   : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
-
-                  : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
-                  : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
-                  : "${VITE_WEB_ASSET_BASE:?VITE_WEB_ASSET_BASE missing}"
+                  : "${VERCEL_APP_PROJECT_ID:?VERCEL_APP_PROJECT_ID missing}"
+                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
 
                   echo "OK: required variables present."
 
@@ -115,7 +118,7 @@ jobs:
         name: "Web: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
-        needs: [validate-env]
+        needs: [validate-common-env]
         steps:
             - uses: actions/checkout@v4
 
@@ -143,11 +146,43 @@ jobs:
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done <<< "$KEYS"
 
+    vercel-env-app:
+        name: "App: Sync env. variables"
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [validate-common-env]
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Upsert app env
+              env:
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
+                  KEYS: ${{ env.APP_ENV_KEYS }}
+              run: |
+                  set -euo pipefail
+                  # iterate line-by-line; skip empty/comment lines
+                  while IFS= read -r KEY; do
+                    [ -z "${KEY// }" ] && continue
+                    case "$KEY" in \#*) continue ;; esac
+
+                    VAL="${!KEY:-}"
+                    if [ -z "$VAL" ]; then
+                      echo "Error: Environment variable '$KEY' is not set"
+                      exit 1
+                    fi
+                    echo "Setting $KEY..."
+                    bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
+                    printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
+                  done <<< "$KEYS"
+
     vercel-env-server:
         name: "Server: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
-        needs: [validate-env]
+        needs: [validate-common-env]
         steps:
             - uses: actions/checkout@v4
 
@@ -226,6 +261,47 @@ jobs:
                   path: apps/web/.vercel/output
                   include-hidden-files: true
 
+    app-build:
+        name: Build app
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [vercel-env-app]
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache node_modules (root)
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      root-nm-${{ runner.os }}-bun-
+
+            - name: Cache node_modules (app, isolated)
+              uses: actions/cache@v4
+              with:
+                  path: apps/app/node_modules
+                  key: app-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      app-nm-${{ runner.os }}-bun-
+
+            - name: Install dependencies (root)
+              run: bun install
+
+            - name: Build app
+              working-directory: apps/app
+              run: bun run build
+
+            - name: Upload artifact (app prebuilt)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: app
+                  path: apps/app/.vercel/output
+                  include-hidden-files: true
+
     server-build:
         name: Build server
         runs-on: ubuntu-latest
@@ -296,6 +372,35 @@ jobs:
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
 
+    vercel-app:
+        name: Deploy app to Vercel
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [app-build]
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: app
+                  #  path is where vercel expects
+                  path: apps/app/.vercel/output
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Strip assets
+              working-directory: apps/app
+              run: rm -rf .vercel/output/static/assets || true
+
+            - name: Deploy to Vercel (app)
+              working-directory: apps/app
+              env:
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_APP_PROJECT_ID }}
+              run: |
+                  bunx -y vercel@latest deploy \
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
+
     vercel-server:
         name: Deploy server to Vercel
         runs-on: ubuntu-latest
@@ -320,8 +425,8 @@ jobs:
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
 
-    bunny-cdn:
-        name: Update CDN
+    bunny-cdn-web:
+        name: Update CDN (web)
         runs-on: ubuntu-latest
         environment: production
         needs: [web-build]
@@ -346,11 +451,11 @@ jobs:
                   EOF
                   echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
 
-            - name: Sync CDN
+            - name: Sync CDN (web assets)
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      sync /github/workspace/apps/web/.vercel/output/static/assets bunny:/assets
+                      sync /github/workspace/apps/web/.vercel/output/static/assets bunny:/web/assets
                       --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
@@ -368,6 +473,70 @@ jobs:
               with:
                   args: >
                       copy /github/workspace/apps/web/.vercel/output/static bunny:/
+                      --config /github/workspace/rclone.conf
+                      --inplace
+                      --include "/favicon*.ico"
+                      --include "/favicon*.png"
+                      --include "/favicon*.svg"
+                      --include "/apple-touch-icon*.png"
+                      --include "/site.webmanifest"
+                      --exclude "*"
+                      --sftp-set-modtime=false
+                      --transfers=4
+                      --checkers=8
+                      --timeout=2m
+                      --retries=5
+                      --low-level-retries=10
+                      --verbose
+
+    bunny-cdn-app:
+        name: Update CDN (app)
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [app-build]
+        steps:
+            - uses: actions/download-artifact@v4
+              with:
+                  name: app
+                  path: apps/app/.vercel/output
+
+            - name: Prepare rclone config
+              run: |
+                  set -euo pipefail
+                  CONF="${GITHUB_WORKSPACE}/rclone.conf"
+                  OBF=$(docker run --rm rclone/rclone:1.66 obscure "${BUNNY_TOKEN}")
+                  cat > "$CONF" <<EOF
+                  [bunny]
+                  type = sftp
+                  host = ${BUNNY_HOST}
+                  user = ${BUNNY_USER}
+                  port = 22
+                  pass = ${OBF}
+                  EOF
+                  echo "RCLONE_CONFIG=$CONF" >> "$GITHUB_ENV"
+
+            - name: Sync CDN (app assets)
+              uses: docker://rclone/rclone:1.66
+              with:
+                  args: >
+                      sync /github/workspace/apps/app/.vercel/output/static/assets bunny:/app/assets
+                      --config /github/workspace/rclone.conf
+                      --inplace
+                      --sftp-set-modtime=false
+                      --size-only
+                      --transfers=8
+                      --checkers=16
+                      --fast-list
+                      --timeout=2m
+                      --retries=5
+                      --low-level-retries=10
+                      --verbose
+
+            - name: Copy root favicon/manifest to CDN /
+              uses: docker://rclone/rclone:1.66
+              with:
+                  args: >
+                      copy /github/workspace/apps/app/.vercel/output/static bunny:/
                       --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"
