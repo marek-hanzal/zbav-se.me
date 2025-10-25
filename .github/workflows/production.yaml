@@ -54,9 +54,9 @@ env:
     # -------------------------------
     # Web environment variables list (multiline)
     # -------------------------------
-    VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
+    VITE_WEB_ASSETS: ${{ vars.VITE_WEB_ASSETS }}
     WEB_ENV_KEYS: |
-        VITE_WEB_ASSET_BASE
+        VITE_WEB_ASSETS
         VITE_SERVER_API
         VITE_DOMAIN
 
