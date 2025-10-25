@@ -14,7 +14,7 @@ export const RatingCls = contract(ThemeCls.contract)
 				"flex",
 				"flex-col",
 				"items-start",
-				"gap-2",
+				"gap-1",
 			],
 		},
 	})
