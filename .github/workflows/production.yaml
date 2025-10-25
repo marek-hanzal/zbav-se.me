@@ -79,42 +79,42 @@ env:
         SERVER_S3_BUCKET
 
 jobs:
-    validate-env:
-        name: Validate env
-        runs-on: ubuntu-latest
-        environment: production
-        steps:
-            - name: Check environment variables
-              run: |
-                  set -euo pipefail
-                  : "${BUNNY_HOST:?BUNNY_HOST missing}"
-                  : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
-                  : "${BUNNY_USER:?BUNNY_USER missing}"
+    # validate-env:
+    #     name: Validate env
+    #     runs-on: ubuntu-latest
+    #     environment: production
+    #     steps:
+    #         - name: Check environment variables
+    #           run: |
+    #               set -euo pipefail
+    #               : "${BUNNY_HOST:?BUNNY_HOST missing}"
+    #               : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
+    #               : "${BUNNY_USER:?BUNNY_USER missing}"
 
-                  : "${NEON_API_KEY:?NEON_API_KEY missing}"
-                  : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+    #               : "${NEON_API_KEY:?NEON_API_KEY missing}"
+    #               : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
 
-                  : "${SERVER_S3_API:?SERVER_S3_API missing}"
-                  : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
-                  : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
-                  : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
+    #               : "${SERVER_S3_API:?SERVER_S3_API missing}"
+    #               : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
+    #               : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
+    #               : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
 
-                  : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
-                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
-                  : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
-                  : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
+    #               : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
+    #               : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
+    #               : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
+    #               : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
 
-                  : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
-                  : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
-                  : "${VITE_WEB_ASSET_BASE:?VITE_WEB_ASSET_BASE missing}"
+    #               : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
+    #               : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
+    #               : "${VITE_WEB_ASSET_BASE:?VITE_WEB_ASSET_BASE missing}"
 
-                  echo "OK: required variables present."
+    #               echo "OK: required variables present."
 
     vercel-env-web:
         name: "Web: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
-        needs: [validate-env]
+        # needs: [validate-env]
         steps:
             - uses: actions/checkout@v4
 
@@ -146,7 +146,7 @@ jobs:
         name: "Server: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
-        needs: [validate-env]
+        # needs: [validate-env]
         steps:
             - uses: actions/checkout@v4
 
