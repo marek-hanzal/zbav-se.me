@@ -13,6 +13,11 @@ permissions:
 
 env:
     # -------------------------------
+    # Common env. variables
+    # -------------------------------
+    VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
+
+    # -------------------------------
     # Web env. variables
     # -------------------------------
     # WEB_ORIGIN: ${{ vars.WEB_ORIGIN }}
@@ -80,6 +85,7 @@ jobs:
                   : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
                   : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
                   : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
+                  : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
                   echo "OK: required variables present."
 
     vercel-env-web:

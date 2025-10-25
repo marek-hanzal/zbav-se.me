@@ -5,12 +5,12 @@ import { Button } from "@use-pico/client";
 import { genId, linkTo } from "@use-pico/common";
 import { CurrencyList } from "@zbav-se.me/common";
 import {
-    type AllowedContentTypes,
-    apiCategoryCollection,
-    apiCategoryGroupCollection,
-    apiListingCreate,
-    apiLocationAutocomplete,
-    ListingExpire,
+	type AllowedContentTypes,
+	apiCategoryCollection,
+	apiCategoryGroupCollection,
+	apiListingCreate,
+	apiLocationAutocomplete,
+	ListingExpire,
 } from "@zbav-se.me/sdk";
 import axios from "axios";
 import PQueue from "p-queue";

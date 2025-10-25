@@ -1,7 +1,7 @@
 {
 	"name": "@zbav-se.me/web",
-	"version": "0.5.0",
 	"description": "Public site for zbav-se.me",
+	"version": "0.5.0",
 	"type": "module",
 	"scripts": {
 		"build": "vite build && bun ./cli/size.ts",
