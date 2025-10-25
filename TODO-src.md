@@ -4,6 +4,9 @@
     - tickets (+ related stuff)
     - food (is it legal?)
 
+- Create general "values" doc with values provided by the service
+    - anonymity
+
 - because now we have locked vertical scroll, each page can now utilize inner-vertical scroll, so the overall flow can stay consistent
 
 - dynamic listing creation based on selected category
