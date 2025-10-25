@@ -17,6 +17,7 @@ env:
     # -------------------------------
     VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
+    VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
 
     # -------------------------------
     # Server env. variables
@@ -25,13 +26,15 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
-    SERVER_WEB_ORIGIN: ${{ vars.SERVER_WEB_ORIGIN }}
-    SERVER_APP_ORIGIN: ${{ vars.SERVER_APP_ORIGIN }}
+
+    # --------------------------------
+    # Private (sensitive) secrets
+    # --------------------------------
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-    SERVER_UPSTASH_REDIS_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_TOKEN }}
-    SERVER_UPSTASH_REDIS_URL: ${{ vars.SERVER_UPSTASH_REDIS_URL }}
+    SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
+
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -47,16 +50,14 @@ env:
     VERCEL_WEB_PROJECT_ID: ${{ vars.VERCEL_WEB_PROJECT_ID }}
     VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
 
+    # Použij GH expressions, ne shell expanzi
     MIGRATION_URL: ${{ vars.VITE_SERVER_API }}/api/public/migration/run
 
     # -------------------------------
     # Web environment variables list (multiline)
     # -------------------------------
-    VITE_WEB_ASSETS: ${{ vars.VITE_WEB_ASSETS }}
-    VITE_WEB_ORIGIN: ${{ vars.VITE_WEB_ORIGIN }}
     WEB_ENV_KEYS: |
-        VITE_WEB_ASSETS
-        VITE_WEB_ORIGIN
+        VITE_WEB_ASSET_BASE
         VITE_SERVER_API
         VITE_DOMAIN
 
@@ -64,57 +65,57 @@ env:
     # Server environment variables list (multiline)
     # -------------------------------
     SERVER_ENV_KEYS: |
-        SERVER_BETTER_AUTH_SECRET
-        SERVER_DATABASE_URL
+        SERVER_WEB_ORIGIN
+        SERVER_APP_ORIGIN
+        SERVER_UPSTASH_REDIS_REST_TOKEN
+        SERVER_UPSTASH_REDIS_REST_URL
         SERVER_GEOAPIFY_TOKEN
+        SERVER_BETTER_AUTH_SECRET
         SERVER_JWT_SECRET
+        VITE_SERVER_API
+        SERVER_DATABASE_URL
         SERVER_S3_API
-        SERVER_S3_BUCKET
         SERVER_S3_KEY
         SERVER_S3_SECRET
-        SERVER_UPSTASH_REDIS_TOKEN
-        SERVER_UPSTASH_REDIS_URL
-        VITE_APP_ORIGIN
-        VITE_SERVER_API
-        VITE_WEB_ORIGIN
+        SERVER_S3_BUCKET
 
 jobs:
-    # validate-env:
-    #     name: Validate env
-    #     runs-on: ubuntu-latest
-    #     environment: production
-    #     steps:
-    #         - name: Check environment variables
-    #           run: |
-    #               set -euo pipefail
-    #               : "${BUNNY_HOST:?BUNNY_HOST missing}"
-    #               : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
-    #               : "${BUNNY_USER:?BUNNY_USER missing}"
+    validate-env:
+        name: Validate env
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - name: Check environment variables
+              run: |
+                  set -euo pipefail
+                  : "${BUNNY_HOST:?BUNNY_HOST missing}"
+                  : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
+                  : "${BUNNY_USER:?BUNNY_USER missing}"
 
-    #               : "${NEON_API_KEY:?NEON_API_KEY missing}"
-    #               : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+                  : "${NEON_API_KEY:?NEON_API_KEY missing}"
+                  : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
 
-    #               : "${SERVER_S3_API:?SERVER_S3_API missing}"
-    #               : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
-    #               : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
-    #               : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
+                  : "${SERVER_S3_API:?SERVER_S3_API missing}"
+                  : "${SERVER_S3_BUCKET:?SERVER_S3_BUCKET missing}"
+                  : "${SERVER_S3_KEY:?SERVER_S3_KEY missing}"
+                  : "${SERVER_S3_SECRET:?SERVER_S3_SECRET missing}"
 
-    #               : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
-    #               : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
-    #               : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
-    #               : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
+                  : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
+                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
+                  : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
+                  : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
 
-    #               : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
-    #               : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
-    #               : "${VITE_WEB_ASSET_BASE:?VITE_WEB_ASSET_BASE missing}"
+                  : "${VITE_DOMAIN:?VITE_DOMAIN missing}"
+                  : "${VITE_SERVER_API:?VITE_SERVER_API missing}"
+                  : "${VITE_WEB_ASSET_BASE:?VITE_WEB_ASSET_BASE missing}"
 
-    #               echo "OK: required variables present."
+                  echo "OK: required variables present."
 
     vercel-env-web:
         name: "Web: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
-        # needs: [validate-env]
+        needs: [validate-env]
         steps:
             - uses: actions/checkout@v4
 
@@ -146,7 +147,7 @@ jobs:
         name: "Server: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
-        # needs: [validate-env]
+        needs: [validate-env]
         steps:
             - uses: actions/checkout@v4
 
