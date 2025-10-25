@@ -26,6 +26,10 @@ export const Route = createRootRouteWithContext<{
 			{
 				title: "Zbav se mě!",
 			},
+			{
+				name: "referrer",
+				content: "strict-origin-when-cross-origin",
+			},
 		],
 		links: [
 			{
