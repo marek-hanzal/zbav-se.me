@@ -66,12 +66,27 @@ env:
     # -------------------------------
     # Web environment variables list
     # -------------------------------
-    WEB_ENV_VARS: "VITE_WEB_ASSETS VITE_SERVER_API"
+    WEB_ENV_VARS: >
+        VITE_WEB_ASSETS
+        VITE_SERVER_API
 
     # -------------------------------
     # Server environment variables list
     # -------------------------------
-    SERVER_ENV_VARS: "SERVER_WEB_ORIGIN SERVER_APP_ORIGIN SERVER_UPSTASH_REDIS_REST_TOKEN SERVER_UPSTASH_REDIS_REST_URL SERVER_GEOAPIFY_TOKEN SERVER_BETTER_AUTH_SECRET SERVER_JWT_SECRET VITE_SERVER_API SERVER_DATABASE_URL SERVER_S3_API SERVER_S3_KEY SERVER_S3_SECRET SERVER_S3_BUCKET"
+    SERVER_ENV_VARS: >
+        SERVER_WEB_ORIGIN
+        SERVER_APP_ORIGIN
+        SERVER_UPSTASH_REDIS_REST_TOKEN
+        SERVER_UPSTASH_REDIS_REST_URL
+        SERVER_GEOAPIFY_TOKEN
+        SERVER_BETTER_AUTH_SECRET
+        SERVER_JWT_SECRET
+        VITE_SERVER_API
+        SERVER_DATABASE_URL
+        SERVER_S3_API
+        SERVER_S3_KEY
+        SERVER_S3_SECRET
+        SERVER_S3_BUCKET
 
 jobs:
     validate-env:
@@ -118,6 +133,11 @@ jobs:
                   set -euo pipefail
                   for KEY in ${{ env.WEB_ENV_VARS }}; do
                     VAL="${!KEY}"
+                    if [ -z "$VAL" ]; then
+                      echo "Error: Environment variable '$KEY' is not set"
+                      exit 1
+                    fi
+                    echo "Setting $KEY..."
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
@@ -153,6 +173,11 @@ jobs:
                   set -euo pipefail
                   for KEY in ${{ env.SERVER_ENV_VARS }}; do
                     VAL="${!KEY}"
+                    if [ -z "$VAL" ]; then
+                      echo "Error: Environment variable '$KEY' is not set"
+                      exit 1
+                    fi
+                    echo "Setting $KEY..."
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
