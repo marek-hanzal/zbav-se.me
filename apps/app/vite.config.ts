@@ -13,7 +13,7 @@ import { prerender } from "./src/prerender";
 
 export default defineConfig({
 	clearScreen: false,
-	base: process.env.VITE_ASSET_BASE,
+	base: process.env.VITE_APP_ASSET_BASE,
 	plugins: [
 		tanstackStart({
 			prerender: {
@@ -34,7 +34,7 @@ export default defineConfig({
 				generatedRouteTree: "./_route.ts",
 			},
 			sitemap: {
-				host: process.env.ORIGIN,
+				host: process.env.APP_ORIGIN,
 			},
 		}),
 		paths(),

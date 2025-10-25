@@ -6,5 +6,5 @@ export const authClient = createAuthClient({
 		passkeyClient(),
 		anonymousClient(),
 	],
-	baseURL: import.meta.env.VITE_API,
+	baseURL: import.meta.env.VITE_SERVER_API,
 });

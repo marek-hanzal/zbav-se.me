@@ -9,7 +9,7 @@ export default defineConfig({
 			mock: false,
 			// clean: true,
 		},
-		input: `${process.env.VITE_API}/v3/api-docs`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
 	},
 	zod: {
 		output: {
@@ -19,6 +19,6 @@ export default defineConfig({
 			mock: false,
 			// clean: true,
 		},
-		input: `${process.env.VITE_API}/v3/api-docs`,
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
 	},
 });

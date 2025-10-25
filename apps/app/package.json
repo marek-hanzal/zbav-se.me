@@ -1,5 +1,5 @@
 {
-	"name": "zbav-se.me",
+	"name": "@zbav-se.me/app",
 	"version": "0.5.0",
 	"type": "module",
 	"description": "User-land (mobile) application for zbav-se.me",

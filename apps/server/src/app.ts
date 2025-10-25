@@ -31,7 +31,7 @@ app.use(requestId());
 app.use(secureHeaders());
 app.use(
 	cors({
-		origin: AppEnv.ORIGIN,
+		origin: AppEnv.WEB_ORIGIN,
 		allowHeaders: [
 			"Content-Type",
 			"Authorization",
@@ -104,8 +104,8 @@ app.use("/api/token/*", async (c, next) => {
 	}
 
 	const { payload } = await verify(token, {
-		issuer: AppEnv.VITE_API,
-		secret: AppEnv.JWT_SECRET,
+		issuer: AppEnv.VITE_SERVER_API,
+		secret: AppEnv.SERVER_JWT_SECRET,
 		scope: c.req.path,
 		schema: PayloadSchema,
 	});
@@ -219,7 +219,7 @@ app.route("/api", publicRoutes);
 //
 app.get("/origin", (c) =>
 	c.json({
-		origin: AppEnv.ORIGIN,
+		origin: AppEnv.WEB_ORIGIN,
 	}),
 );
 //

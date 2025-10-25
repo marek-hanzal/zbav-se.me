@@ -1,9 +1,9 @@
 import type { QueryClient } from "@tanstack/react-query";
 import {
-	createRootRouteWithContext,
-	HeadContent,
-	Outlet,
-	Scripts,
+    createRootRouteWithContext,
+    HeadContent,
+    Outlet,
+    Scripts,
 } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
@@ -43,7 +43,7 @@ export const Route = createRootRouteWithContext<{
 		 *
 		 * Maybe it's OK, I'll see...
 		 */
-		axios.defaults.baseURL = import.meta.env.VITE_API;
+		axios.defaults.baseURL = import.meta.env.VITE_SERVER_API;
 		axios.defaults.withCredentials = true;
 
 		return (

@@ -127,7 +127,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						url: await s3.presignedPutObject(
-							AppEnv.S3_BUCKET,
+							AppEnv.SERVER_S3_BUCKET,
 							key,
 							60 * 30,
 						),

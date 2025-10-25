@@ -15,37 +15,44 @@ env:
     # -------------------------------
     # Public (non-sensitive) variables
     # -------------------------------
-    BUNNY_HOST: ${{ vars.BUNNY_HOST }}
-    BUNNY_USER: ${{ vars.BUNNY_USER }}
-    NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
-    ORIGIN: ${{ vars.ORIGIN }}
-    VERCEL_CLIENT_PROJECT_ID: ${{ vars.VERCEL_CLIENT_PROJECT_ID }}
-    VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
-    VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
-    VITE_API: ${{ vars.VITE_API }}
-    VITE_ASSET_BASE: ${{ vars.VITE_ASSET_BASE }}
-    UPSTASH_REDIS_REST_URL: ${{ vars.UPSTASH_REDIS_REST_URL }}
-    S3_API: ${{ vars.S3_API }}
-    S3_BUCKET: ${{ vars.S3_BUCKET }}
+    # WEB_ORIGIN: ${{ vars.WEB_ORIGIN }}
+    # APP_ORIGIN: ${{ vars.APP_ORIGIN }}
+    # VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
+    # VITE_WEB_ASSET_BASE: ${{ vars.VITE_WEB_ASSET_BASE }}
+    # VITE_APP_ASSET_BASE: ${{ vars.VITE_APP_ASSET_BASE }}
+    # SERVER_UPSTASH_REDIS_REST_URL: ${{ vars.SERVER_UPSTASH_REDIS_REST_URL }}
+    # SERVER_S3_API: ${{ vars.SERVER_S3_API }}
+    # SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
 
     # --------------------------------
     # Private (sensitive) secrets
     # --------------------------------
-    BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-    BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
-    GEOAPIFY: ${{ secrets.GEOAPIFY }}
-    JWT_SECRET: ${{ secrets.JWT_SECRET }}
-    NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-    S3_KEY: ${{ secrets.S3_KEY }}
-    S3_SECRET: ${{ secrets.S3_SECRET }}
-    VERCEL_BLOB: ${{ secrets.VERCEL_BLOB }}
-    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-    UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+    # SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
+
+    # SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
+    # SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
+
+    # SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
+    # SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
+    # VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    # SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
 
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
-    MIGRATION_URL: https://api.zbav-se.me/api/public/migration/run
+    BUNNY_HOST: ${{ vars.BUNNY_HOST }}
+    BUNNY_USER: ${{ vars.BUNNY_USER }}
+    BUNNY_TOKEN: ${{ secrets.BUNNY_TOKEN }}
+    #
+    NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+    NEON_PROJECT_ID: ${{ vars.NEON_PROJECT_ID }}
+    #
+    VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+    VERCEL_ORG_ID: ${{ vars.VERCEL_ORG_ID }}
+    VERCEL_WEB_PROJECT_ID: ${{ vars.VERCEL_WEB_PROJECT_ID }}
+    VERCEL_SERVER_PROJECT_ID: ${{ vars.VERCEL_SERVER_PROJECT_ID }}
+    #
+    MIGRATION_URL: ${VITE_SERVER_API}/api/public/migration/run
 
 jobs:
     validate-env:
@@ -56,32 +63,19 @@ jobs:
             - name: Check required vars (fail fast)
               run: |
                   set -euo pipefail
-                  : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
-                  : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
-                  : "${VERCEL_CLIENT_PROJECT_ID:?VERCEL_CLIENT_PROJECT_ID missing}"
-                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
-                  : "${VERCEL_BLOB:?VERCEL_BLOB missing}"
-                  : "${ORIGIN:?ORIGIN missing}"
-                  : "${VITE_ASSET_BASE:?VITE_ASSET_BASE missing}"
-                  : "${VITE_API:?VITE_API missing}"
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
-                  : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${BUNNY_TOKEN:?BUNNY_TOKEN missing}"
-                  : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+                  : "${BUNNY_USER:?BUNNY_USER missing}"
                   : "${NEON_API_KEY:?NEON_API_KEY missing}"
-                  : "${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET missing}"
-                  : "${JWT_SECRET:?JWT_SECRET missing}"
-                  : "${GEOAPIFY:?GEOAPIFY missing}"
-                  : "${S3_API:?S3_API missing}"
-                  : "${S3_KEY:?S3_KEY missing}"
-                  : "${S3_SECRET:?S3_SECRET missing}"
-                  : "${S3_BUCKET:?S3_BUCKET missing}"
-                  : "${UPSTASH_REDIS_REST_URL:?UPSTASH_REDIS_REST_URL missing}"
-                  : "${UPSTASH_REDIS_REST_TOKEN:?UPSTASH_REDIS_REST_TOKEN missing}"
+                  : "${NEON_PROJECT_ID:?NEON_PROJECT_ID missing}"
+                  : "${VERCEL_ORG_ID:?VERCEL_ORG_ID missing}"
+                  : "${VERCEL_SERVER_PROJECT_ID:?VERCEL_SERVER_PROJECT_ID missing}"
+                  : "${VERCEL_TOKEN:?VERCEL_TOKEN missing}"
+                  : "${VERCEL_WEB_PROJECT_ID:?VERCEL_WEB_PROJECT_ID missing}"
                   echo "OK: required variables present."
 
-    vercel-env-client:
-        name: Vercel env (client)
+    vercel-env-web:
+        name: Vercel env (web)
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -91,14 +85,14 @@ jobs:
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
-            # Upsert client build-time envs (production)
-            - name: Upsert client env
+            # Upsert web build-time envs (production)
+            - name: Upsert web env
               env:
-                  # Bind the client project for this step; Vercel CLI reads from env
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_CLIENT_PROJECT_ID }}
+                  # Bind the web project for this step; Vercel CLI reads from env
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_WEB_PROJECT_ID }}
               run: |
                   set -euo pipefail
-                  for KEY in VITE_ASSET_BASE VITE_API; do
+                  for KEY in VITE_WEB_ASSET_BASE VITE_SERVER_API; do
                     VAL="${!KEY}"
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
@@ -130,20 +124,20 @@ jobs:
             - name: Upsert server env
               env:
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
-                  DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
+                  SERVER_DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
               run: |
                   set -euo pipefail
-                  for KEY in ORIGIN UPSTASH_REDIS_REST_TOKEN UPSTASH_REDIS_REST_URL GEOAPIFY BETTER_AUTH_SECRET JWT_SECRET VERCEL_BLOB VITE_API DATABASE_URL S3_API S3_KEY S3_SECRET S3_BUCKET; do
+                  for KEY in WEB_ORIGIN SERVER_UPSTASH_REDIS_REST_TOKEN SERVER_UPSTASH_REDIS_REST_URL SERVER_GEOAPIFY_TOKEN SERVER_BETTER_AUTH_SECRET SERVER_JWT_SECRET VITE_SERVER_API SERVER_DATABASE_URL SERVER_S3_API SERVER_S3_KEY SERVER_S3_SECRET SERVER_S3_BUCKET; do
                     VAL="${!KEY}"
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
 
-    client-build:
-        name: Build client
+    web-build:
+        name: Build web
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-env-client]
+        needs: [vercel-env-web]
         steps:
             - uses: actions/checkout@v4
 
@@ -158,26 +152,26 @@ jobs:
                   restore-keys: |
                       root-nm-${{ runner.os }}-bun-
 
-            - name: Cache node_modules (client, isolated)
+            - name: Cache node_modules (web, isolated)
               uses: actions/cache@v4
               with:
-                  path: apps/client/node_modules
-                  key: client-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  path: apps/web/node_modules
+                  key: web-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
                   restore-keys: |
-                      client-nm-${{ runner.os }}-bun-
+                      web-nm-${{ runner.os }}-bun-
 
             - name: Install dependencies (root)
               run: bun install
 
-            - name: Build client
-              working-directory: apps/client
+            - name: Build web
+              working-directory: apps/web
               run: bun run build
 
-            - name: Upload artifact (client prebuilt)
+            - name: Upload artifact (web prebuilt)
               uses: actions/upload-artifact@v4
               with:
-                  name: client
-                  path: apps/client/.vercel/output
+                  name: web
+                  path: apps/web/.vercel/output
                   include-hidden-files: true
 
     server-build:
@@ -221,28 +215,28 @@ jobs:
                   path: apps/server/.vercel/output
                   include-hidden-files: true
 
-    vercel-client:
-        name: Deploy client to Vercel
+    vercel-web:
+        name: Deploy web to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [client-build]
+        needs: [web-build]
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: client
-                  path: apps/client/.vercel/output
+                  name: web
+                  path: apps/web/.vercel/output
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
 
             - name: Strip assets
-              working-directory: apps/client
+              working-directory: apps/web
               run: rm -rf .vercel/output/static/assets || true
 
-            - name: Deploy to Vercel (client)
-              working-directory: apps/client
+            - name: Deploy to Vercel (web)
+              working-directory: apps/web
               env:
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_CLIENT_PROJECT_ID }}
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_WEB_PROJECT_ID }}
               run: |
                   bunx -y vercel@latest deploy \
                     --prebuilt \
@@ -277,12 +271,12 @@ jobs:
         name: Update CDN
         runs-on: ubuntu-latest
         environment: production
-        needs: [client-build]
+        needs: [web-build]
         steps:
             - uses: actions/download-artifact@v4
               with:
-                  name: client
-                  path: apps/client/.vercel/output
+                  name: web
+                  path: apps/web/.vercel/output
 
             - name: Prepare rclone config
               run: |
@@ -303,7 +297,7 @@ jobs:
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      sync /github/workspace/apps/client/.vercel/output/static/assets bunny:/assets
+                      sync /github/workspace/apps/web/.vercel/output/static/assets bunny:/assets
                       --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
@@ -320,7 +314,7 @@ jobs:
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      copy /github/workspace/apps/client/.vercel/output/static bunny:/
+                      copy /github/workspace/apps/web/.vercel/output/static bunny:/
                       --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"

@@ -156,7 +156,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 						href: "/v1/geocode/autocomplete",
 						query: {
 							text,
-							apiKey: AppEnv.GEOAPIFY,
+							apiKey: AppEnv.SERVER_GEOAPIFY_TOKEN,
 							lang,
 							limit,
 						},

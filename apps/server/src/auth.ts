@@ -5,18 +5,16 @@ import { passkey } from "better-auth/plugins/passkey";
 import { AppEnv } from "./AppEnv";
 import { dialect } from "./database/dialect";
 
-const origin = new URL(AppEnv.ORIGIN).hostname;
-
 export const auth = betterAuth({
 	database: dialect,
-	secret: AppEnv.BETTER_AUTH_SECRET,
+	secret: AppEnv.SERVER_BETTER_AUTH_SECRET,
 	plugins: [
 		passkey({
-			rpID: origin,
-			rpName: origin,
+			rpID: AppEnv.DOMAIN,
+			rpName: AppEnv.DOMAIN,
 		}),
 		anonymous({
-			emailDomainName: origin,
+			emailDomainName: AppEnv.DOMAIN,
 			generateName: () => genId(),
 			async onLinkAccount() {
 				//
@@ -27,7 +25,8 @@ export const auth = betterAuth({
 		}),
 	],
 	trustedOrigins: [
-		AppEnv.ORIGIN,
+		AppEnv.WEB_ORIGIN,
+		AppEnv.APP_ORIGIN,
 	],
 	rateLimit: {
 		window: 10,
@@ -39,7 +38,7 @@ export const auth = betterAuth({
 	advanced: {
 		crossSubDomainCookies: {
 			enabled: true,
-			domain: origin,
+			domain: AppEnv.DOMAIN,
 		},
 		database: {
 			generateId: () => genId(),

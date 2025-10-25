@@ -1,46 +1,17 @@
 {
 	"$schema": "https://turborepo.org/schema.json",
+	"envMode": "loose",
 	"globalDependencies": [
 		"tsconfig.json"
 	],
 	"tasks": {
 		"dev": {
 			"cache": false,
-			"persistent": true,
-			"env": [
-				"BETTER_AUTH_SECRET",
-				"DATABASE_URL",
-				"GEOAPIFY",
-				"JWT_SECRET",
-				"ORIGIN",
-				"S3_API",
-				"S3_KEY",
-				"S3_SECRET",
-				"S3_BUCKET",
-				"UPSTASH_REDIS_REST_TOKEN",
-				"UPSTASH_REDIS_REST_URL",
-				"VITE_API",
-				"VITE_ASSET_BASE"
-			]
+			"persistent": true
 		},
 		"preview": {
 			"cache": false,
-			"persistent": true,
-			"env": [
-				"BETTER_AUTH_SECRET",
-				"DATABASE_URL",
-				"GEOAPIFY",
-				"JWT_SECRET",
-				"ORIGIN",
-				"S3_API",
-				"S3_KEY",
-				"S3_SECRET",
-				"S3_BUCKET",
-				"UPSTASH_REDIS_REST_TOKEN",
-				"UPSTASH_REDIS_REST_URL",
-				"VITE_API",
-				"VITE_ASSET_BASE"
-			]
+			"persistent": true
 		},
 		"typecheck": {
 			"inputs": [
@@ -64,22 +35,7 @@
 				"dist/**",
 				"build/**"
 			],
-			"cache": false,
-			"env": [
-				"BETTER_AUTH_SECRET",
-				"DATABASE_URL",
-				"GEOAPIFY",
-				"JWT_SECRET",
-				"ORIGIN",
-				"S3_API",
-				"S3_KEY",
-				"S3_SECRET",
-				"S3_BUCKET",
-				"UPSTASH_REDIS_REST_TOKEN",
-				"UPSTASH_REDIS_REST_URL",
-				"VITE_API",
-				"VITE_ASSET_BASE"
-			]
+			"cache": false
 		},
 		"translations": {
 			"inputs": [
@@ -91,10 +47,7 @@
 			"cache": false
 		},
 		"sdk": {
-			"cache": false,
-			"env": [
-				"VITE_API"
-			]
+			"cache": false
 		}
 	}
 }
