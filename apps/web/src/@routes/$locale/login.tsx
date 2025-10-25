@@ -55,7 +55,7 @@ export const Route = createFileRoute("/$locale/login")({
 		const navigate = useNavigate();
 
 		const signInMutation = withEmailSignInMutation.useMutation({
-			async onSuccess() {
+			async onPostMutation() {
 				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
@@ -70,9 +70,7 @@ export const Route = createFileRoute("/$locale/login")({
 
 		const passkeyMutation = useMutation({
 			async mutationFn() {
-				return authClient.signIn.passkey();
-			},
-			async onSuccess() {
+				await authClient.signIn.passkey();
 				await navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
