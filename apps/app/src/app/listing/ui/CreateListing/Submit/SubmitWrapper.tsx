@@ -108,7 +108,7 @@ export const SubmitWrapper: FC<{
 			await queue.onIdle();
 
 			return navigate({
-				to: "/$locale/app/listing/$id/view",
+				to: "/$locale/listing/$id/view",
 				params: {
 					id: result.id,
 					locale,

@@ -12,16 +12,15 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as LocaleAppRouteImport } from './@routes/$locale/app'
-import { Route as LocaleAppUserRouteImport } from './@routes/$locale/app/user'
-import { Route as LocaleAppShopRouteImport } from './@routes/$locale/app/shop'
-import { Route as LocaleAppFeedRouteImport } from './@routes/$locale/app/feed'
-import { Route as LocaleAppDashboardRouteImport } from './@routes/$locale/app/dashboard'
-import { Route as LocaleAppBagRouteImport } from './@routes/$locale/app/bag'
-import { Route as LocaleAppListingMyRouteImport } from './@routes/$locale/app/listing/my'
-import { Route as LocaleAppListingCreateRouteImport } from './@routes/$locale/app/listing/create'
-import { Route as LocaleAppDevSeedRouteImport } from './@routes/$locale/app/dev/seed'
-import { Route as LocaleAppListingIdViewRouteImport } from './@routes/$locale/app/listing/$id/view'
+import { Route as LocaleUserRouteImport } from './@routes/$locale/user'
+import { Route as LocaleShopRouteImport } from './@routes/$locale/shop'
+import { Route as LocaleFeedRouteImport } from './@routes/$locale/feed'
+import { Route as LocaleDashboardRouteImport } from './@routes/$locale/dashboard'
+import { Route as LocaleBagRouteImport } from './@routes/$locale/bag'
+import { Route as LocaleListingMyRouteImport } from './@routes/$locale/listing/my'
+import { Route as LocaleListingCreateRouteImport } from './@routes/$locale/listing/create'
+import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
+import { Route as LocaleListingIdViewRouteImport } from './@routes/$locale/listing/$id/view'
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -38,147 +37,136 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppRoute = LocaleAppRouteImport.update({
-  id: '/app',
-  path: '/app',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleAppUserRoute = LocaleAppUserRouteImport.update({
+const LocaleUserRoute = LocaleUserRouteImport.update({
   id: '/user',
   path: '/user',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppShopRoute = LocaleAppShopRouteImport.update({
+const LocaleShopRoute = LocaleShopRouteImport.update({
   id: '/shop',
   path: '/shop',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppFeedRoute = LocaleAppFeedRouteImport.update({
+const LocaleFeedRoute = LocaleFeedRouteImport.update({
   id: '/feed',
   path: '/feed',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppDashboardRoute = LocaleAppDashboardRouteImport.update({
+const LocaleDashboardRoute = LocaleDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppBagRoute = LocaleAppBagRouteImport.update({
+const LocaleBagRoute = LocaleBagRouteImport.update({
   id: '/bag',
   path: '/bag',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppListingMyRoute = LocaleAppListingMyRouteImport.update({
+const LocaleListingMyRoute = LocaleListingMyRouteImport.update({
   id: '/listing/my',
   path: '/listing/my',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppListingCreateRoute = LocaleAppListingCreateRouteImport.update({
+const LocaleListingCreateRoute = LocaleListingCreateRouteImport.update({
   id: '/listing/create',
   path: '/listing/create',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppDevSeedRoute = LocaleAppDevSeedRouteImport.update({
+const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   id: '/dev/seed',
   path: '/dev/seed',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleAppListingIdViewRoute = LocaleAppListingIdViewRouteImport.update({
+const LocaleListingIdViewRoute = LocaleListingIdViewRouteImport.update({
   id: '/listing/$id/view',
   path: '/listing/$id/view',
-  getParentRoute: () => LocaleAppRoute,
+  getParentRoute: () => LocaleRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/bag': typeof LocaleBagRoute
+  '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/feed': typeof LocaleFeedRoute
+  '/$locale/shop': typeof LocaleShopRoute
+  '/$locale/user': typeof LocaleUserRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/app/bag': typeof LocaleAppBagRoute
-  '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
-  '/$locale/app/feed': typeof LocaleAppFeedRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
-  '/$locale/app/user': typeof LocaleAppUserRoute
-  '/$locale/app/dev/seed': typeof LocaleAppDevSeedRoute
-  '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
-  '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
-  '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
+  '/$locale/dev/seed': typeof LocaleDevSeedRoute
+  '/$locale/listing/create': typeof LocaleListingCreateRoute
+  '/$locale/listing/my': typeof LocaleListingMyRoute
+  '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/bag': typeof LocaleBagRoute
+  '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/feed': typeof LocaleFeedRoute
+  '/$locale/shop': typeof LocaleShopRoute
+  '/$locale/user': typeof LocaleUserRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/app/bag': typeof LocaleAppBagRoute
-  '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
-  '/$locale/app/feed': typeof LocaleAppFeedRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
-  '/$locale/app/user': typeof LocaleAppUserRoute
-  '/$locale/app/dev/seed': typeof LocaleAppDevSeedRoute
-  '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
-  '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
-  '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
+  '/$locale/dev/seed': typeof LocaleDevSeedRoute
+  '/$locale/listing/create': typeof LocaleListingCreateRoute
+  '/$locale/listing/my': typeof LocaleListingMyRoute
+  '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/app': typeof LocaleAppRouteWithChildren
+  '/$locale/bag': typeof LocaleBagRoute
+  '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/feed': typeof LocaleFeedRoute
+  '/$locale/shop': typeof LocaleShopRoute
+  '/$locale/user': typeof LocaleUserRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/app/bag': typeof LocaleAppBagRoute
-  '/$locale/app/dashboard': typeof LocaleAppDashboardRoute
-  '/$locale/app/feed': typeof LocaleAppFeedRoute
-  '/$locale/app/shop': typeof LocaleAppShopRoute
-  '/$locale/app/user': typeof LocaleAppUserRoute
-  '/$locale/app/dev/seed': typeof LocaleAppDevSeedRoute
-  '/$locale/app/listing/create': typeof LocaleAppListingCreateRoute
-  '/$locale/app/listing/my': typeof LocaleAppListingMyRoute
-  '/$locale/app/listing/$id/view': typeof LocaleAppListingIdViewRoute
+  '/$locale/dev/seed': typeof LocaleDevSeedRoute
+  '/$locale/listing/create': typeof LocaleListingCreateRoute
+  '/$locale/listing/my': typeof LocaleListingMyRoute
+  '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/$locale'
-    | '/$locale/app'
+    | '/$locale/bag'
+    | '/$locale/dashboard'
+    | '/$locale/feed'
+    | '/$locale/shop'
+    | '/$locale/user'
     | '/$locale/'
-    | '/$locale/app/bag'
-    | '/$locale/app/dashboard'
-    | '/$locale/app/feed'
-    | '/$locale/app/shop'
-    | '/$locale/app/user'
-    | '/$locale/app/dev/seed'
-    | '/$locale/app/listing/create'
-    | '/$locale/app/listing/my'
-    | '/$locale/app/listing/$id/view'
+    | '/$locale/dev/seed'
+    | '/$locale/listing/create'
+    | '/$locale/listing/my'
+    | '/$locale/listing/$id/view'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$locale/app'
+    | '/$locale/bag'
+    | '/$locale/dashboard'
+    | '/$locale/feed'
+    | '/$locale/shop'
+    | '/$locale/user'
     | '/$locale'
-    | '/$locale/app/bag'
-    | '/$locale/app/dashboard'
-    | '/$locale/app/feed'
-    | '/$locale/app/shop'
-    | '/$locale/app/user'
-    | '/$locale/app/dev/seed'
-    | '/$locale/app/listing/create'
-    | '/$locale/app/listing/my'
-    | '/$locale/app/listing/$id/view'
+    | '/$locale/dev/seed'
+    | '/$locale/listing/create'
+    | '/$locale/listing/my'
+    | '/$locale/listing/$id/view'
   id:
     | '__root__'
     | '/'
     | '/$locale'
-    | '/$locale/app'
+    | '/$locale/bag'
+    | '/$locale/dashboard'
+    | '/$locale/feed'
+    | '/$locale/shop'
+    | '/$locale/user'
     | '/$locale/'
-    | '/$locale/app/bag'
-    | '/$locale/app/dashboard'
-    | '/$locale/app/feed'
-    | '/$locale/app/shop'
-    | '/$locale/app/user'
-    | '/$locale/app/dev/seed'
-    | '/$locale/app/listing/create'
-    | '/$locale/app/listing/my'
-    | '/$locale/app/listing/$id/view'
+    | '/$locale/dev/seed'
+    | '/$locale/listing/create'
+    | '/$locale/listing/my'
+    | '/$locale/listing/$id/view'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -209,115 +197,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/app': {
-      id: '/$locale/app'
-      path: '/app'
-      fullPath: '/$locale/app'
-      preLoaderRoute: typeof LocaleAppRouteImport
+    '/$locale/user': {
+      id: '/$locale/user'
+      path: '/user'
+      fullPath: '/$locale/user'
+      preLoaderRoute: typeof LocaleUserRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/user': {
-      id: '/$locale/app/user'
-      path: '/user'
-      fullPath: '/$locale/app/user'
-      preLoaderRoute: typeof LocaleAppUserRouteImport
-      parentRoute: typeof LocaleAppRoute
-    }
-    '/$locale/app/shop': {
-      id: '/$locale/app/shop'
+    '/$locale/shop': {
+      id: '/$locale/shop'
       path: '/shop'
-      fullPath: '/$locale/app/shop'
-      preLoaderRoute: typeof LocaleAppShopRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/shop'
+      preLoaderRoute: typeof LocaleShopRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/feed': {
-      id: '/$locale/app/feed'
+    '/$locale/feed': {
+      id: '/$locale/feed'
       path: '/feed'
-      fullPath: '/$locale/app/feed'
-      preLoaderRoute: typeof LocaleAppFeedRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/feed'
+      preLoaderRoute: typeof LocaleFeedRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/dashboard': {
-      id: '/$locale/app/dashboard'
+    '/$locale/dashboard': {
+      id: '/$locale/dashboard'
       path: '/dashboard'
-      fullPath: '/$locale/app/dashboard'
-      preLoaderRoute: typeof LocaleAppDashboardRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/dashboard'
+      preLoaderRoute: typeof LocaleDashboardRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/bag': {
-      id: '/$locale/app/bag'
+    '/$locale/bag': {
+      id: '/$locale/bag'
       path: '/bag'
-      fullPath: '/$locale/app/bag'
-      preLoaderRoute: typeof LocaleAppBagRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/bag'
+      preLoaderRoute: typeof LocaleBagRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/listing/my': {
-      id: '/$locale/app/listing/my'
+    '/$locale/listing/my': {
+      id: '/$locale/listing/my'
       path: '/listing/my'
-      fullPath: '/$locale/app/listing/my'
-      preLoaderRoute: typeof LocaleAppListingMyRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/listing/my'
+      preLoaderRoute: typeof LocaleListingMyRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/listing/create': {
-      id: '/$locale/app/listing/create'
+    '/$locale/listing/create': {
+      id: '/$locale/listing/create'
       path: '/listing/create'
-      fullPath: '/$locale/app/listing/create'
-      preLoaderRoute: typeof LocaleAppListingCreateRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/listing/create'
+      preLoaderRoute: typeof LocaleListingCreateRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/dev/seed': {
-      id: '/$locale/app/dev/seed'
+    '/$locale/dev/seed': {
+      id: '/$locale/dev/seed'
       path: '/dev/seed'
-      fullPath: '/$locale/app/dev/seed'
-      preLoaderRoute: typeof LocaleAppDevSeedRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/dev/seed'
+      preLoaderRoute: typeof LocaleDevSeedRouteImport
+      parentRoute: typeof LocaleRoute
     }
-    '/$locale/app/listing/$id/view': {
-      id: '/$locale/app/listing/$id/view'
+    '/$locale/listing/$id/view': {
+      id: '/$locale/listing/$id/view'
       path: '/listing/$id/view'
-      fullPath: '/$locale/app/listing/$id/view'
-      preLoaderRoute: typeof LocaleAppListingIdViewRouteImport
-      parentRoute: typeof LocaleAppRoute
+      fullPath: '/$locale/listing/$id/view'
+      preLoaderRoute: typeof LocaleListingIdViewRouteImport
+      parentRoute: typeof LocaleRoute
     }
   }
 }
 
-interface LocaleAppRouteChildren {
-  LocaleAppBagRoute: typeof LocaleAppBagRoute
-  LocaleAppDashboardRoute: typeof LocaleAppDashboardRoute
-  LocaleAppFeedRoute: typeof LocaleAppFeedRoute
-  LocaleAppShopRoute: typeof LocaleAppShopRoute
-  LocaleAppUserRoute: typeof LocaleAppUserRoute
-  LocaleAppDevSeedRoute: typeof LocaleAppDevSeedRoute
-  LocaleAppListingCreateRoute: typeof LocaleAppListingCreateRoute
-  LocaleAppListingMyRoute: typeof LocaleAppListingMyRoute
-  LocaleAppListingIdViewRoute: typeof LocaleAppListingIdViewRoute
-}
-
-const LocaleAppRouteChildren: LocaleAppRouteChildren = {
-  LocaleAppBagRoute: LocaleAppBagRoute,
-  LocaleAppDashboardRoute: LocaleAppDashboardRoute,
-  LocaleAppFeedRoute: LocaleAppFeedRoute,
-  LocaleAppShopRoute: LocaleAppShopRoute,
-  LocaleAppUserRoute: LocaleAppUserRoute,
-  LocaleAppDevSeedRoute: LocaleAppDevSeedRoute,
-  LocaleAppListingCreateRoute: LocaleAppListingCreateRoute,
-  LocaleAppListingMyRoute: LocaleAppListingMyRoute,
-  LocaleAppListingIdViewRoute: LocaleAppListingIdViewRoute,
-}
-
-const LocaleAppRouteWithChildren = LocaleAppRoute._addFileChildren(
-  LocaleAppRouteChildren,
-)
-
 interface LocaleRouteChildren {
-  LocaleAppRoute: typeof LocaleAppRouteWithChildren
+  LocaleBagRoute: typeof LocaleBagRoute
+  LocaleDashboardRoute: typeof LocaleDashboardRoute
+  LocaleFeedRoute: typeof LocaleFeedRoute
+  LocaleShopRoute: typeof LocaleShopRoute
+  LocaleUserRoute: typeof LocaleUserRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleDevSeedRoute: typeof LocaleDevSeedRoute
+  LocaleListingCreateRoute: typeof LocaleListingCreateRoute
+  LocaleListingMyRoute: typeof LocaleListingMyRoute
+  LocaleListingIdViewRoute: typeof LocaleListingIdViewRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
-  LocaleAppRoute: LocaleAppRouteWithChildren,
+  LocaleBagRoute: LocaleBagRoute,
+  LocaleDashboardRoute: LocaleDashboardRoute,
+  LocaleFeedRoute: LocaleFeedRoute,
+  LocaleShopRoute: LocaleShopRoute,
+  LocaleUserRoute: LocaleUserRoute,
   LocaleIndexRoute: LocaleIndexRoute,
+  LocaleDevSeedRoute: LocaleDevSeedRoute,
+  LocaleListingCreateRoute: LocaleListingCreateRoute,
+  LocaleListingMyRoute: LocaleListingMyRoute,
+  LocaleListingIdViewRoute: LocaleListingIdViewRoute,
 }
 
 const LocaleRouteWithChildren =

@@ -9,10 +9,10 @@ import { linkTo } from "@use-pico/common";
 import { DashboardIcon, LockIcon, PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 
-export const Route = createFileRoute("/$locale/app/user")({
+export const Route = createFileRoute("/$locale/user")({
 	component() {
 		const { user } = useLoaderData({
-			from: "/$locale/app",
+			from: "/$locale",
 		});
 		const navigate = useNavigate();
 		const { locale } = useParams({
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/$locale/app/user")({
 		// 	onError(error) {
 		// 		console.error(error);
 		// 	},
-		// });
+		// })
 
 		return (
 			<Container
@@ -56,7 +56,7 @@ export const Route = createFileRoute("/$locale/app/user")({
 							textMessage={user.name}
 							action={
 								<LinkTo
-									to={"/$locale/app/dashboard"}
+									to={"/$locale/dashboard"}
 									params={{
 										locale,
 									}}

@@ -43,7 +43,7 @@ export default defineConfig({
 		host: true,
 		strictPort: true,
 		port: 3031,
-        allowedHosts: true,
+		allowedHosts: true,
 	},
 	build: {
 		target: "esnext",

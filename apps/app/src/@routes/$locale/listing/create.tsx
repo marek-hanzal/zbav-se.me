@@ -5,7 +5,7 @@ import { CreateListingProvider } from "~/app/listing/context/CreateListingProvid
 import { CreateListing } from "~/app/listing/ui/CreateListing";
 import { countryToCurrency } from "~/locales";
 
-export const Route = createFileRoute("/$locale/app/listing/create")({
+export const Route = createFileRoute("/$locale/listing/create")({
 	component() {
 		const { locale } = Route.useParams();
 

@@ -14,7 +14,7 @@ import { useRef } from "react";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
 
-export const Route = createFileRoute("/$locale/app/dashboard")({
+export const Route = createFileRoute("/$locale/dashboard")({
 	component() {
 		const { locale } = Route.useParams();
 		const scrollRef = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 				>
 					<div className="grid gap-2">
 						<LinkTo
-							to="/$locale/app/feed"
+							to="/$locale/feed"
 							params={{
 								locale,
 							}}
@@ -55,7 +55,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/app/listing/create"
+							to="/$locale/listing/create"
 							params={{
 								locale,
 							}}
@@ -68,7 +68,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/app/listing/my"
+							to="/$locale/listing/my"
 							params={{
 								locale,
 							}}
@@ -81,7 +81,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/app/bag"
+							to="/$locale/bag"
 							params={{
 								locale,
 							}}
@@ -94,7 +94,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/app/shop"
+							to="/$locale/shop"
 							params={{
 								locale,
 							}}
@@ -107,7 +107,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/app/user"
+							to="/$locale/user"
 							params={{
 								locale,
 							}}

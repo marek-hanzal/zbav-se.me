@@ -10,7 +10,7 @@ export const Route = createFileRoute("/")({
 
 		if (session) {
 			throw redirect({
-				to: "/$locale/app/dashboard",
+				to: "/$locale/dashboard",
 				params: {
 					locale,
 				},

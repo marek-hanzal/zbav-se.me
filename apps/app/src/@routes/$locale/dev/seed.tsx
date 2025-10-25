@@ -57,7 +57,7 @@ export async function picsum(): Promise<{
 	};
 }
 
-export const Route = createFileRoute("/$locale/app/dev/seed")({
+export const Route = createFileRoute("/$locale/dev/seed")({
 	component() {
 		const preSignMutation = withS3PreSignMutation.useMutation();
 		const createListingGalleryMutation =
