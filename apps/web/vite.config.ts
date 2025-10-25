@@ -11,61 +11,66 @@ import paths from "vite-tsconfig-paths";
 import { locales } from "./src/locales";
 import { prerender } from "./src/prerender";
 
-export default defineConfig({
-	clearScreen: false,
-	base: process.env.VITE_WEB_ASSETS,
-	plugins: [
-		tanstackStart({
-			prerender: {
-				enabled: true,
-				concurrency: 8,
-				crawlLinks: false,
-			},
-			pages: locales.flatMap((locale) =>
-				prerender.map((path) => ({
-					path: path.replace(":locale", locale),
-					prerender: {
-						crawlLinks: false,
-					},
-				})),
-			),
-			router: {
-				routesDirectory: "./@routes",
-				generatedRouteTree: "./_route.ts",
-			},
-			sitemap: {
-				host: process.env.VITE_WEB_ORIGIN,
-			},
-		}),
-		paths(),
-		react({}),
-		ViteYaml(),
-		dynamicImport(),
-		wasm(),
-		qrcode(),
-		tailwindcss(),
-		nitro({
-			config: {
-				preset: "vercel",
-			},
-		}),
-	],
-	worker: {
-		format: "es",
-		plugins: () => [
+export default defineConfig(({ mode }) => {
+	return {
+		clearScreen: false,
+		base: process.env.VITE_WEB_ASSETS,
+		plugins: [
+			tanstackStart({
+				prerender: {
+					enabled: true,
+					concurrency: 8,
+					crawlLinks: false,
+				},
+				pages: locales.flatMap((locale) =>
+					prerender.map((path) => ({
+						path: path.replace(":locale", locale),
+						prerender: {
+							crawlLinks: false,
+						},
+					})),
+				),
+				router: {
+					routesDirectory: "./@routes",
+					generatedRouteTree: "./_route.ts",
+				},
+				sitemap: {
+					host: process.env.VITE_WEB_ORIGIN,
+				},
+			}),
 			paths(),
+			react({}),
+			ViteYaml(),
+			dynamicImport(),
 			wasm(),
+			qrcode(),
+			tailwindcss(),
+			mode === "production"
+				? nitro({
+						config: {
+							preset: "vercel",
+						},
+					})
+				: undefined,
 		],
-	},
-	server: {
-		host: true,
-		strictPort: true,
-		port: 3030,
-	},
-	build: {
-		target: "esnext",
-		assetsDir: "assets",
-		sourcemap: true,
-		manifest: true,
-	},
+		worker: {
+			format: "es",
+			plugins: () => [
+				paths(),
+				wasm(),
+			],
+		},
+		server: {
+			host: true,
+			port: 3030,
+			strictPort: true,
+			allowedHosts: true,
+		},
+		build: {
+			target: "esnext",
+			assetsDir: "assets",
+			sourcemap: true,
+			manifest: true,
+		},
+	};
 });
