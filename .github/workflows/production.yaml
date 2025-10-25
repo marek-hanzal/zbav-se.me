@@ -348,7 +348,7 @@ jobs:
         name: Deploy web to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build]
+        needs: [web-build, app-build, server-build, vercel-server]
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -377,7 +377,7 @@ jobs:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build]
+        needs: [web-build, app-build, server-build, vercel-server]
         steps:
             - uses: actions/download-artifact@v4
               with:
