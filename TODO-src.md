@@ -1,5 +1,6 @@
 # TODO
 
+- Add app-level env. check in github action (e.g. simple script validating env. schemas)
 - Upstash can be used with TCP
 
 - categories:

@@ -63,13 +63,38 @@ env:
     #
     MIGRATION_URL: ${VITE_SERVER_API}/api/public/migration/run
 
+    # -------------------------------
+    # Web environment variables list
+    # -------------------------------
+    WEB_ENV_VARS: |
+        VITE_WEB_ASSETS
+        VITE_SERVER_API
+
+    # -------------------------------
+    # Server environment variables list
+    # -------------------------------
+    SERVER_ENV_VARS: |
+        SERVER_WEB_ORIGIN
+        SERVER_APP_ORIGIN
+        SERVER_UPSTASH_REDIS_REST_TOKEN
+        SERVER_UPSTASH_REDIS_REST_URL
+        SERVER_GEOAPIFY_TOKEN
+        SERVER_BETTER_AUTH_SECRET
+        SERVER_JWT_SECRET
+        VITE_SERVER_API
+        SERVER_DATABASE_URL
+        SERVER_S3_API
+        SERVER_S3_KEY
+        SERVER_S3_SECRET
+        SERVER_S3_BUCKET
+
 jobs:
     validate-env:
         name: Validate env
         runs-on: ubuntu-latest
         environment: production
         steps:
-            - name: Check required vars (fail fast)
+            - name: Check environment variables
               run: |
                   set -euo pipefail
                   : "${BUNNY_HOST:?BUNNY_HOST missing}"
@@ -89,7 +114,7 @@ jobs:
                   echo "OK: required variables present."
 
     vercel-env-web:
-        name: Vercel env (web)
+        name: "Web: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -106,14 +131,14 @@ jobs:
                   VERCEL_PROJECT_ID: ${{ env.VERCEL_WEB_PROJECT_ID }}
               run: |
                   set -euo pipefail
-                  for KEY in VITE_WEB_ASSET_BASE VITE_SERVER_API; do
+                  for KEY in ${{ env.WEB_ENV_VARS }}; do
                     VAL="${!KEY}"
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done
 
     vercel-env-server:
-        name: Vercel env (server)
+        name: "Server: Sync env. variables"
         runs-on: ubuntu-latest
         environment: production
         needs: [validate-env]
@@ -141,7 +166,7 @@ jobs:
                   SERVER_DATABASE_URL: ${{ steps.neon.outputs.db_url_pooled }}
               run: |
                   set -euo pipefail
-                  for KEY in WEB_ORIGIN SERVER_UPSTASH_REDIS_REST_TOKEN SERVER_UPSTASH_REDIS_REST_URL SERVER_GEOAPIFY_TOKEN SERVER_BETTER_AUTH_SECRET SERVER_JWT_SECRET VITE_SERVER_API SERVER_DATABASE_URL SERVER_S3_API SERVER_S3_KEY SERVER_S3_SECRET SERVER_S3_BUCKET; do
+                  for KEY in ${{ env.SERVER_ENV_VARS }}; do
                     VAL="${!KEY}"
                     bunx -y vercel@latest env rm "$KEY" production --yes --token "$VERCEL_TOKEN" >/dev/null 2>&1 || true
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
