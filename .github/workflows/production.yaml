@@ -66,27 +66,12 @@ env:
     # -------------------------------
     # Web environment variables list
     # -------------------------------
-    WEB_ENV_VARS: >
-        VITE_WEB_ASSETS
-        VITE_SERVER_API
+    WEB_ENV_VARS: "VITE_WEB_ASSETS VITE_SERVER_API"
 
     # -------------------------------
     # Server environment variables list
     # -------------------------------
-    SERVER_ENV_VARS: >
-        SERVER_WEB_ORIGIN
-        SERVER_APP_ORIGIN
-        SERVER_UPSTASH_REDIS_REST_TOKEN
-        SERVER_UPSTASH_REDIS_REST_URL
-        SERVER_GEOAPIFY_TOKEN
-        SERVER_BETTER_AUTH_SECRET
-        SERVER_JWT_SECRET
-        VITE_SERVER_API
-        SERVER_DATABASE_URL
-        SERVER_S3_API
-        SERVER_S3_KEY
-        SERVER_S3_SECRET
-        SERVER_S3_BUCKET
+    SERVER_ENV_VARS: "SERVER_WEB_ORIGIN SERVER_APP_ORIGIN SERVER_UPSTASH_REDIS_REST_TOKEN SERVER_UPSTASH_REDIS_REST_URL SERVER_GEOAPIFY_TOKEN SERVER_BETTER_AUTH_SECRET SERVER_JWT_SECRET VITE_SERVER_API SERVER_DATABASE_URL SERVER_S3_API SERVER_S3_KEY SERVER_S3_SECRET SERVER_S3_BUCKET"
 
 jobs:
     validate-env:
