@@ -1,5 +1,14 @@
 # TODO
 
+## Categories & Content
+- categories:
+    - tickets (+ related stuff)
+    - food (is it legal?)
+
+- dynamic listing creation based on selected category
+
+- enable labels/vendors/some sort of text on listing?
+
 ## Listing Features
 - Extract create listing Wrappers into standalone components as they will serve as "inputs" for search or displaying listing detail
 - Allow video? - how to store + process + display?
