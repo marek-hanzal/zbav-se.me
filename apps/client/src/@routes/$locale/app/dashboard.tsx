@@ -30,7 +30,7 @@ export const Route = createFileRoute("/$locale/app/dashboard")({
 				<PrimaryOverlay />
 
 				<FlowContainer overflow={"vertical"}>
-					<div className="grid grid-cols-2 grid-rows-3 gap-2 h-full w-full">
+					<div className="grid gap-2">
 						<LinkTo
 							to="/$locale/app/feed"
 							params={{
