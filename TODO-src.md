@@ -4,7 +4,11 @@
     - tickets (+ related stuff)
     - food (is it legal?)
 
+- because now we have locked vertical scroll, each page can now utilize inner-vertical scroll, so the overall flow can stay consistent
+
 - dynamic listing creation based on selected category
+
+- if the user opens listing from feed, mark all "previous" listings as "viewed" and start from the viewed onwards
 
 - enable labels/vendors/some sort of text on listing?
 

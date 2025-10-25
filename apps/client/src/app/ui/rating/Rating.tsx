@@ -63,7 +63,7 @@ export const Rating: FC<Rating.Props> = ({
 									root: {
 										class: [
 											"px-4",
-											"py-8",
+											"py-6",
 										],
 									},
 								},
