@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { genId } from "@use-pico/common";
+import { genId, keyOf } from "@use-pico/common";
 import { AppEnv } from "../AppEnv";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
@@ -121,7 +121,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 
 			const user = c.get("user");
 
-			const key = `${user.id}/${path}/${genId()}.${extension}`;
+			const key = `${keyOf(user.id)}/${path}/${genId()}.${extension}`;
 
 			try {
 				return c.json(
