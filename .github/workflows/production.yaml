@@ -25,10 +25,8 @@ env:
     SERVER_S3_BUCKET: ${{ vars.SERVER_S3_BUCKET }}
     SERVER_S3_KEY: ${{ secrets.SERVER_S3_KEY }}
     SERVER_S3_SECRET: ${{ secrets.SERVER_S3_SECRET }}
-
-    # --------------------------------
-    # Private (sensitive) secrets
-    # --------------------------------
+    SERVER_WEB_ORIGIN: ${{ vars.SERVER_WEB_ORIGIN }}
+    SERVER_APP_ORIGIN: ${{ vars.SERVER_APP_ORIGIN }}
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
