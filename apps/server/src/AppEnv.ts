@@ -17,10 +17,10 @@ const ServerDatabaseSchema = z.object({
 });
 
 const ServerOriginSchema = z.object({
-	SERVER_WEB_ORIGIN: z
+	VITE_WEB_ORIGIN: z
 		.string()
 		.min(1, "Web domain ORIGIN is required (used for CORS and auth)"),
-	SERVER_APP_ORIGIN: z
+	VITE_APP_ORIGIN: z
 		.string()
 		.min(1, "App domain ORIGIN is required (used for CORS and auth)"),
 });

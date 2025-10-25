@@ -30,8 +30,8 @@ env:
     SERVER_BETTER_AUTH_SECRET: ${{ secrets.SERVER_BETTER_AUTH_SECRET }}
     SERVER_GEOAPIFY_TOKEN: ${{ secrets.SERVER_GEOAPIFY_TOKEN }}
     SERVER_JWT_SECRET: ${{ secrets.SERVER_JWT_SECRET }}
-    SERVER_UPSTASH_REDIS_REST_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_REST_TOKEN }}
-
+    SERVER_UPSTASH_REDIS_TOKEN: ${{ secrets.SERVER_UPSTASH_REDIS_TOKEN }}
+    SERVER_UPSTASH_REDIS_URL: ${{ vars.SERVER_UPSTASH_REDIS_URL }}
     # -------------------------------
     # Local (GHA only)
     # -------------------------------
@@ -53,8 +53,10 @@ env:
     # Web environment variables list (multiline)
     # -------------------------------
     VITE_WEB_ASSETS: ${{ vars.VITE_WEB_ASSETS }}
+    VITE_WEB_ORIGIN: ${{ vars.VITE_WEB_ORIGIN }}
     WEB_ENV_KEYS: |
         VITE_WEB_ASSETS
+        VITE_WEB_ORIGIN
         VITE_SERVER_API
         VITE_DOMAIN
 
@@ -62,19 +64,19 @@ env:
     # Server environment variables list (multiline)
     # -------------------------------
     SERVER_ENV_KEYS: |
-        SERVER_WEB_ORIGIN
-        SERVER_APP_ORIGIN
-        SERVER_UPSTASH_REDIS_REST_TOKEN
-        SERVER_UPSTASH_REDIS_REST_URL
-        SERVER_GEOAPIFY_TOKEN
         SERVER_BETTER_AUTH_SECRET
-        SERVER_JWT_SECRET
-        VITE_SERVER_API
         SERVER_DATABASE_URL
+        SERVER_GEOAPIFY_TOKEN
+        SERVER_JWT_SECRET
         SERVER_S3_API
+        SERVER_S3_BUCKET
         SERVER_S3_KEY
         SERVER_S3_SECRET
-        SERVER_S3_BUCKET
+        SERVER_UPSTASH_REDIS_TOKEN
+        SERVER_UPSTASH_REDIS_URL
+        VITE_APP_ORIGIN
+        VITE_SERVER_API
+        VITE_WEB_ORIGIN
 
 jobs:
     # validate-env:

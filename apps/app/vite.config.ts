@@ -34,7 +34,7 @@ export default defineConfig({
 				generatedRouteTree: "./_route.ts",
 			},
 			sitemap: {
-				host: process.env.APP_ORIGIN,
+				host: process.env.VITE_APP_ORIGIN,
 			},
 		}),
 		paths(),
