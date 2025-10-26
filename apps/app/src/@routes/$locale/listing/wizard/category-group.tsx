@@ -8,8 +8,7 @@ import {
 	LinkTo,
 	useSelection,
 } from "@use-pico/client";
-import { translator } from "@use-pico/common";
-import type { CategoryGroup } from "@zbav-se.me/sdk";
+import { type EntitySchema, translator } from "@use-pico/common";
 import { Fade } from "@zbav-se.me/ui";
 import { useRef } from "react";
 import z from "zod";
@@ -30,8 +29,15 @@ export const Route = createFileRoute("/$locale/listing/wizard/category-group")({
 		const { locale } = Route.useParams();
 		const { uploadIds, categoryGroupId } = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const selection = useSelection<CategoryGroup>({
+		const selection = useSelection<EntitySchema.Type>({
 			mode: "single",
+			initial: categoryGroupId
+				? [
+						{
+							id: categoryGroupId,
+						},
+					]
+				: undefined,
 			onMulti(items) {
 				navigate({
 					search({ categoryGroupId, ...prev }) {
@@ -61,7 +67,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category-group")({
 				ui="CategoryGroup-root"
 				textTitle={"Listing category groups (title)"}
 				textSubtitle={
-					selection.optional.single()?.name ??
+					// selection.optional.single()?.name ??
 					"Listing category groups (subtitle)"
 				}
 				left={
