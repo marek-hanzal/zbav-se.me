@@ -1,9 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { withCount, withFetch, withList } from "@use-pico/common";
+import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
+import { UploadCreateSchema } from "./schema/UploadCreateSchema";
 import { UploadDtoSchema } from "./schema/UploadDtoSchema";
 import { UploadQuerySchema } from "./schema/UploadQuerySchema";
 import {
@@ -14,6 +16,71 @@ import { withUploadSelect } from "./withUploadSelect";
 
 export const withUploadApi: Routes.Fn = ({ session }) => {
 	const hono = withSessionHono();
+
+	hono.openapi(
+		createRoute({
+			method: "post",
+			path: "/upload/create",
+			description: "Create a new upload",
+			operationId: "apiUploadCreate",
+			request: {
+				body: {
+					content: {
+						"application/json": {
+							schema: UploadCreateSchema,
+						},
+					},
+					description: "Data for creating a new upload",
+				},
+			},
+			responses: {
+				201: {
+					content: {
+						"application/json": {
+							schema: UploadDtoSchema,
+						},
+					},
+					description: "The created upload",
+				},
+			},
+			tags: [
+				"upload",
+			],
+		}),
+		async (c) => {
+			const data = c.req.valid("json");
+			const user = c.get("user");
+			const id = genId();
+			const now = new Date();
+
+			await database.kysely
+				.insertInto("upload")
+				.values({
+					id,
+					userId: user.id,
+					url: data.url,
+					createdAt: now,
+				})
+				.execute();
+
+			return c.json(
+				await withFetch({
+					select: withUploadSelect(),
+					output: UploadDtoSchema,
+					where: {
+						id,
+					},
+					query({ select, where }) {
+						return withUploadQueryBuilderWithSort({
+							select,
+							where,
+						});
+					},
+				}),
+				201,
+			);
+		},
+	);
 
 	hono.openapi(
 		createRoute({
