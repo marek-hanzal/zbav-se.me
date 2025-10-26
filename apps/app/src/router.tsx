@@ -31,6 +31,7 @@ export function getRouter() {
 				</Sheet>
 			);
 		},
+		defaultViewTransition: true,
 		defaultPendingMs: 500,
 	});
 
