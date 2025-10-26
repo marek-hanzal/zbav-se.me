@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
+	ArrowRightIcon,
+	Button,
 	Container,
 	DotIcon,
 	LinkTo,
@@ -69,6 +71,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 		 * TODO Resolve photo limit from the user's tokens/plan/whatever
 		 */
 		const photoCountLimit = 10;
+		const hasUploads = uploadIds.length > 0;
 
 		return (
 			<ListingContainer
@@ -84,27 +87,42 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 					/>
 				}
 				titleProps={{
-					right:
-						uploadIds.length > 0 ? (
-							<>
-								<Typo
-									label={uploadIds.length}
-									font={"bold"}
-									display={"inline"}
-								/>
-								<Typo
-									label={"/"}
-									display={"inline"}
-								/>
-								<Typo
-									label={photoCountLimit}
-									display={"inline"}
-								/>
-							</>
-						) : null,
+					right: hasUploads ? (
+						<>
+							<Typo
+								label={uploadIds.length}
+								font={"bold"}
+								display={"inline"}
+							/>
+							<Typo
+								label={"/"}
+								display={"inline"}
+							/>
+							<Typo
+								label={photoCountLimit}
+								display={"inline"}
+							/>
+						</>
+					) : null,
 				}}
 				bottom={{
-					next: "link to next",
+					next: (
+						<LinkTo
+							to={"/$locale/listing/wizard/category-group"}
+							params={{
+								locale,
+							}}
+							search={{
+								uploadIds,
+							}}
+						>
+							<Button
+								tone={"primary"}
+								theme={"dark"}
+								iconEnabled={ArrowRightIcon}
+							/>
+						</LinkTo>
+					),
 				}}
 			>
 				<SnapperNav
@@ -119,9 +137,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 								class: [
 									"bottom-1",
 									"transition-opacity",
-									uploadIds.length > 0
-										? "opacity-60"
-										: "opacity-0",
+									hasUploads ? "opacity-60" : "opacity-0",
 								],
 							},
 						},

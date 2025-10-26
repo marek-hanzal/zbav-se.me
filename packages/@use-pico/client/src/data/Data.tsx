@@ -15,7 +15,6 @@ const DefaultError = () => (
 );
 
 const DefaultEmpty: Data.EmptyComponent.RenderFn = () => null;
-
 const DefaultContent: Data.Content.RenderFn = ({ content }) => content;
 
 export namespace Data {
@@ -26,9 +25,7 @@ export namespace Data {
 		export type RenderFn<TData> = (props: Props<TData>) => ReactNode;
 	}
 
-	/**
-	 * Success, but empty
-	 */
+	/** Success, but empty */
 	export namespace EmptyComponent {
 		export type RenderFn = () => ReactNode;
 	}
@@ -41,13 +38,12 @@ export namespace Data {
 		export interface Props<TData> {
 			data: TData;
 		}
-
 		export type RenderFn<TData> = (props: Props<TData>) => ReactNode;
 	}
 
 	export namespace ErrorComponent {
 		export interface Props {
-			error: Error;
+			error: Error | null;
 		}
 		export type RenderFn = (props: Props) => ReactNode;
 	}
@@ -81,40 +77,54 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 	renderEmpty = DefaultEmpty,
 	children = DefaultContent,
 }: Data.Props<TResult>) => {
+	// Helper: treat undefined/null OR empty arrays as "empty".
+	const isEmptyData = (data: unknown) =>
+		data == null || (Array.isArray(data) && data.length === 0);
+
 	return children({
 		content: match(result)
-			.when(
-				(r) => r.isLoading,
-				() => renderLoading(),
-			)
-			.when(
-				(r) => r.isFetching,
-				(r) => {
-					return renderFetching({
-						// biome-ignore lint/style/noNonNullAssertion: We've data,
-						data: r.data!,
-					});
-				},
-			)
+			// 1) Hard error
 			.when(
 				(r) => r.isError,
-				(r) => {
-					return renderError({
-						// biome-ignore lint/style/noNonNullAssertion: We've already checked isError,
-						error: r.error!,
-					});
-				},
+				(r) =>
+					renderError({
+						error: r.error,
+					}),
 			)
+			// 2) Fetching with stale data present (keep content, show fetching UI)
+			.when(
+				(r) => r.isFetching && r.data != null,
+				(r) =>
+					renderFetching({
+						// biome-ignore lint/style/noNonNullAssertion: We're ok
+						data: r.data!,
+					}),
+			)
+			// 3) Disabled query (enabled: false) with no data -> treat as "empty"
+			.when(
+				(r) =>
+					r.status === "pending" &&
+					r.fetchStatus === "idle" &&
+					r.data == null,
+				() => renderEmpty(),
+			)
+			// 4) Initial load (no data yet) and actively fetching -> loading
+			.when(
+				(r) =>
+					r.isLoading && r.fetchStatus !== "idle" && r.data == null,
+				() => renderLoading(),
+			)
+			// 5) Success: decide between empty vs success-with-data
 			.when(
 				(r) => r.isSuccess,
-				(r) => {
-					return r.data
+				(r) =>
+					isEmptyData(r.data)
 						? renderEmpty()
 						: renderSuccess({
-								data: r.data,
-							});
-				},
+								data: r.data as NonNullable<typeof r.data>,
+							}),
 			)
+			// 6) Fallback: nothing to render
 			.otherwise(() => null),
 	});
 };

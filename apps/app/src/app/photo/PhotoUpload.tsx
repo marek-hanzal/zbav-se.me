@@ -1,8 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { Container, Data } from "@use-pico/client";
+import {
+	Container,
+	Data,
+	Progress,
+	SpinnerIcon,
+	Status,
+} from "@use-pico/client";
 import { genId } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
-import type { Sheet } from "@zbav-se.me/ui";
+import { PhotoIcon, Sheet } from "@zbav-se.me/ui";
 import axios from "axios";
 import {
 	type ChangeEvent,
@@ -36,9 +42,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 }) => {
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
-	const sheetRef = useRef<HTMLDivElement>(null);
-	const trashRef = useRef<HTMLDivElement>(null);
-	const spinnerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
 
 	const uploadFetchQuery = withUploadFetchQuery.useQuery(
@@ -51,8 +54,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			enabled: !!value,
 		},
 	);
-
-	console.log(uploadFetchQuery.status);
 
 	const preSignMutation = withS3PreSignMutation.useMutation();
 	const createUploadMutation = withUploadCreateMutation.useMutation();
@@ -97,7 +98,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			});
 
 			const upload = await createUploadMutation.mutateAsync({
-				url: presign.url,
+				url: presign.cdn,
 			});
 
 			onChange(upload.id);
@@ -148,15 +149,70 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={onUpload}
 			/>
 
-			<Data
-				result={uploadFetchQuery}
-				renderEmpty={() => {
-					return "nope!";
+			<Sheet
+				onClick={pick}
+				onKeyDown={onKeyDown}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"relative",
+							],
+						},
+					},
 				}}
-				renderSuccess={() => {
-					return "yep!";
-				}}
-			/>
+				{...props}
+			>
+				<Data
+					result={uploadFetchQuery}
+					renderEmpty={() =>
+						uploadMutation.isPending || progress > 0 ? (
+							<Status
+								icon={SpinnerIcon}
+								textTitle={"Uploading photo (title)"}
+								tone={"secondary"}
+								action={
+									<Progress
+										value={progress * 100}
+										size={"lg"}
+										tone={"secondary"}
+										theme={"dark"}
+									/>
+								}
+							/>
+						) : (
+							<Status
+								icon={PhotoIcon}
+								iconProps={{
+									size: "2xl",
+								}}
+								textTitle={"Upload (title)"}
+								titleProps={{
+									size: "2xl",
+								}}
+								textMessage={
+									props.disabled
+										? "Upload - disabled (placeholder)"
+										: "Listing - upload photo (placeholder)"
+								}
+								messageProps={{
+									size: "xl",
+								}}
+								tone={"primary"}
+							/>
+						)
+					}
+					renderSuccess={({ data }) => {
+						return (
+							<img
+								src={data.url}
+								alt={data.id}
+								className="absolute inset-0 h-full w-full object-cover object-center"
+							/>
+						);
+					}}
+				/>
+			</Sheet>
 
 			{/* <Action
 				ref={trashRef}
