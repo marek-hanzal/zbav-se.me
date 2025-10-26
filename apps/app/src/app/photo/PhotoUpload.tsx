@@ -44,24 +44,15 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
 
-	const uploadFetchQuery = withUploadFetchQuery.useQuery(
-		{
-			where: {
-				id: value,
-			},
-		},
-		{
-			enabled: !!value && progress === 0,
-		},
-	);
-	const setUpload = withUploadFetchQuery.useSet();
-
 	const preSignMutation = withS3PreSignMutation.useMutation();
 	const createUploadMutation = withUploadCreateMutation.useMutation();
+
+	const setUpload = withUploadFetchQuery.useSet();
 
 	const pick = useCallback(() => {
 		inputRef.current?.click();
 	}, []);
+
 	const onKeyDown = useCallback((e: KeyboardEvent) => {
 		if (e.key === "Enter" || e.key === " ") {
 			e.preventDefault();
@@ -74,16 +65,23 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			"upload",
 		],
 		async mutationFn(file: File) {
+			setProgress(0);
+
+			setUpload(undefined, {
+				where: {
+					id: value,
+				},
+			});
+
 			const id = genId();
 			const path = `upload/${id}`;
 			const contentType = file.type as AllowedContentTypes;
+
 			const dot = file.name.lastIndexOf(".");
 			const extension =
 				dot !== -1 && dot < file.name.length - 1
 					? file.name.slice(dot + 1).toLowerCase()
 					: "unknown";
-
-			setProgress(0);
 
 			const presign = await preSignMutation.mutateAsync({
 				path,
@@ -109,10 +107,23 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					id: upload.id,
 				},
 			});
-
 			onChange(upload.id);
 		},
+		onSettled() {
+			setProgress(0);
+		},
 	});
+
+	const uploadFetchQuery = withUploadFetchQuery.useQuery(
+		{
+			where: {
+				id: value,
+			},
+		},
+		{
+			enabled: !!value && !uploadMutation.isPending,
+		},
+	);
 
 	const stop = useCallback((event: SyntheticEvent) => {
 		event.preventDefault();
@@ -127,6 +138,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			}
 
 			uploadMutation.mutate(file);
+
+			e.target.value = "";
 		},
 		[
 			uploadMutation,
@@ -174,8 +187,9 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			>
 				<Data
 					result={uploadFetchQuery}
+					forceEmpty={uploadMutation.isPending}
 					renderEmpty={() =>
-						uploadMutation.isPending || progress > 0 ? (
+						uploadMutation.isPending ? (
 							<Status
 								icon={SpinnerIcon}
 								textTitle={"Uploading photo (title)"}
@@ -212,51 +226,20 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 							/>
 						)
 					}
-					renderSuccess={({ data }) => {
-						return (
-							<img
-								src={data.url}
-								alt={data.id}
-								className="absolute inset-0 h-full w-full object-cover object-center"
-							/>
-						);
-					}}
+					renderSuccess={({ data }) => (
+						<img
+							src={data.url}
+							alt={data.id}
+							className="absolute inset-0 h-full w-full object-cover object-center"
+						/>
+					)}
 				/>
 			</Sheet>
 
-			{/* <Action
-				ref={trashRef}
-				iconEnabled={TrashIcon}
-				onClick={(e) => {
-					stop(e);
-					onChange(undefined);
-				}}
-				onKeyDown={(e) => {
-					if (e.key === "Enter" || e.key === " ") {
-						stop(e);
-						onChange(undefined);
-					}
-				}}
-				size={"md"}
-				tone={"danger"}
-				border={false}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"absolute",
-								"top-8",
-								"right-1/2",
-								"translate-x-1/2",
-								"transition-none",
-								"z-10",
-								"opacity-0",
-								"scale-75",
-							],
-						},
-					},
-				}}
-			/>*/}
+			{/* 
+        If you bring back the "trash" action, also clear the cache to avoid flash:
+        setUpload(undefined, { where: { id: value } });
+      */}
 		</Container>
 	);
 };
