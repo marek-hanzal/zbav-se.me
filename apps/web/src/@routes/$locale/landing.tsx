@@ -30,7 +30,7 @@ export const Route = createFileRoute("/$locale/landing")({
 		const snapperNav = useSnapperNav({
 			containerRef: scrollerRef,
 			orientation: "vertical",
-			count: 6,
+			count: 5,
 		});
 
 		return (
@@ -47,9 +47,6 @@ export const Route = createFileRoute("/$locale/landing")({
 						theme: "light",
 					})}
 					limit={7}
-					pages={{
-						count: 6,
-					}}
 					subtle
 					orientation={"vertical"}
 				/>

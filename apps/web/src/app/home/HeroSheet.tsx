@@ -1,6 +1,12 @@
 import { useParams } from "@tanstack/react-router";
-import { Button, LinkTo, Status, UserIcon } from "@use-pico/client";
-import { tvc } from "@use-pico/cls";
+import {
+	Button,
+	LinkTo,
+	type LinkToCls,
+	Status,
+	UserIcon,
+} from "@use-pico/client";
+import { type Cls, tvc } from "@use-pico/cls";
 import { Logo, Sheet, UnlockIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
 
@@ -8,6 +14,17 @@ export const HeroSheet: FC = () => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
+
+	const linkToTweak: Cls.TweaksOf<LinkToCls> = {
+		slot: {
+			root: {
+				class: [
+					"block",
+					"w-full",
+				],
+			},
+		},
+	};
 
 	return (
 		<Sheet>
@@ -36,6 +53,7 @@ export const HeroSheet: FC = () => {
 						params={{
 							locale,
 						}}
+						tweak={linkToTweak}
 					>
 						<Button
 							iconEnabled={UnlockIcon}
@@ -55,6 +73,7 @@ export const HeroSheet: FC = () => {
 						params={{
 							locale,
 						}}
+						tweak={linkToTweak}
 					>
 						<Button
 							iconEnabled={UserIcon}

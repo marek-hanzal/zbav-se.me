@@ -6,6 +6,14 @@ export const TypoIconCls = contract(ThemeCls.contract)
 		"root",
 		"content",
 	])
+	.variant("justify", [
+		"start",
+		"center",
+	])
+	.variant("items", [
+		"start",
+		"center",
+	])
 	.def()
 	.root({
 		root: {
@@ -14,8 +22,6 @@ export const TypoIconCls = contract(ThemeCls.contract)
 				"flex",
 				"flex-row",
 				"gap-2",
-				"items-center",
-				"justify-center",
 			],
 		},
 		content: {
@@ -26,7 +32,40 @@ export const TypoIconCls = contract(ThemeCls.contract)
 			],
 		},
 	})
+	//
+	.match("justify", "start", {
+		root: {
+			class: [
+				"justify-start",
+			],
+		},
+	})
+	.match("justify", "center", {
+		root: {
+			class: [
+				"justify-center",
+			],
+		},
+	})
+	//
+	.match("items", "start", {
+		content: {
+			class: [
+				"items-start",
+			],
+		},
+	})
+	.match("items", "center", {
+		content: {
+			class: [
+				"items-center",
+			],
+		},
+	})
+	//
 	.defaults({
+		justify: "center",
+		items: "center",
 		tone: "primary",
 		theme: "light",
 	})

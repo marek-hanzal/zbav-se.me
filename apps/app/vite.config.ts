@@ -9,46 +9,50 @@ import { qrcode } from "vite-plugin-qrcode";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
 
-export default defineConfig({
-	clearScreen: false,
-	base: process.env.VITE_APP_ASSETS,
-	plugins: [
-		tanstackStart({
-			router: {
-				routesDirectory: "./@routes",
-				generatedRouteTree: "./_route.ts",
-			},
-		}),
-		paths(),
-		react({}),
-		ViteYaml(),
-		dynamicImport(),
-		wasm(),
-		qrcode(),
-		tailwindcss(),
-		nitro({
-			config: {
-				preset: "vercel",
-			},
-		}),
-	],
-	worker: {
-		format: "es",
-		plugins: () => [
+export default defineConfig(({ mode }) => {
+	return {
+		clearScreen: false,
+		base: process.env.VITE_APP_ASSETS,
+		plugins: [
+			tanstackStart({
+				router: {
+					routesDirectory: "./@routes",
+					generatedRouteTree: "./_route.ts",
+				},
+			}),
 			paths(),
+			react({}),
+			ViteYaml(),
+			dynamicImport(),
 			wasm(),
+			qrcode(),
+			tailwindcss(),
+			mode === "production"
+				? nitro({
+						config: {
+							preset: "vercel",
+						},
+					})
+				: undefined,
 		],
-	},
-	server: {
-		host: true,
-		strictPort: true,
-		port: 3031,
-		allowedHosts: true,
-	},
-	build: {
-		target: "esnext",
-		assetsDir: "assets",
-		sourcemap: true,
-		manifest: true,
-	},
+		worker: {
+			format: "es",
+			plugins: () => [
+				paths(),
+				wasm(),
+			],
+		},
+		server: {
+			host: true,
+			strictPort: true,
+			port: 3031,
+			allowedHosts: true,
+		},
+		build: {
+			target: "esnext",
+			assetsDir: "assets",
+			sourcemap: true,
+			manifest: true,
+		},
+	};
 });

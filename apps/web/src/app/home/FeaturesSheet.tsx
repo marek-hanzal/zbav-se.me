@@ -26,7 +26,11 @@ export const FeaturesSheet: FC = () => {
 						theme: "light",
 					}}
 				>
-					<TypoIcon icon={CheckIcon}>
+					<TypoIcon
+						icon={CheckIcon}
+						justify="start"
+						items="start"
+					>
 						<Tx
 							label={"Landing - Feature 1 (title)"}
 							display={"block"}
@@ -38,7 +42,11 @@ export const FeaturesSheet: FC = () => {
 							size={"sm"}
 						/>
 					</TypoIcon>
-					<TypoIcon icon={CheckIcon}>
+					<TypoIcon
+						icon={CheckIcon}
+						justify="start"
+						items="start"
+					>
 						<Tx
 							label={"Landing - Feature 2 (title)"}
 							display={"block"}
@@ -50,7 +58,11 @@ export const FeaturesSheet: FC = () => {
 							size={"sm"}
 						/>
 					</TypoIcon>
-					<TypoIcon icon={CheckIcon}>
+					<TypoIcon
+						icon={CheckIcon}
+						justify="start"
+						items="start"
+					>
 						<Tx
 							label={"Landing - Feature 3 (title)"}
 							display={"block"}
@@ -62,7 +74,11 @@ export const FeaturesSheet: FC = () => {
 							size={"sm"}
 						/>
 					</TypoIcon>
-					<TypoIcon icon={CheckIcon}>
+					<TypoIcon
+						icon={CheckIcon}
+						justify="start"
+						items="start"
+					>
 						<Tx
 							label={"Landing - Feature 4 (title)"}
 							display={"block"}
@@ -74,7 +90,11 @@ export const FeaturesSheet: FC = () => {
 							size={"sm"}
 						/>
 					</TypoIcon>
-					<TypoIcon icon={CheckIcon}>
+					<TypoIcon
+						icon={CheckIcon}
+						justify="start"
+						items="start"
+					>
 						<Tx
 							label={"Landing - Feature 5 (title)"}
 							display={"block"}

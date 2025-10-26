@@ -1,5 +1,5 @@
 import { Icon } from "@use-pico/client";
-import { useCls } from "@use-pico/cls";
+import { type Cls, useCls } from "@use-pico/cls";
 import type { FC, HTMLAttributes } from "react";
 import { TypoIconCls } from "./TypoIconCls";
 
@@ -8,18 +8,27 @@ export namespace TypoIcon {
 		extends TypoIconCls.Props<HTMLAttributes<HTMLDivElement>> {
 		icon: Icon.Type;
 		iconProps?: Icon.PropsEx;
+		justify?: Cls.VariantOf<TypoIconCls, "justify">;
+		items?: Cls.VariantOf<TypoIconCls, "items">;
 	}
 }
 
 export const TypoIcon: FC<TypoIcon.Props> = ({
 	icon,
 	iconProps,
+	justify,
+	items,
 	children,
 	cls = TypoIconCls,
 	tweak,
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak);
+	const { slots } = useCls(cls, tweak, {
+		variant: {
+			justify,
+			items,
+		},
+	});
 
 	return (
 		<div

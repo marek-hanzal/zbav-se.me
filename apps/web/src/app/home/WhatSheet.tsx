@@ -27,7 +27,10 @@ export const WhatSheet: FC = () => {
 						}}
 					>
 						<div className="flex flex-col gap-1">
-							<TypoIcon icon={CheckIcon}>
+							<TypoIcon
+								icon={CheckIcon}
+								justify="start"
+							>
 								<Tx
 									label={"What - sellers (badge 1)"}
 									display={"block"}
@@ -35,7 +38,10 @@ export const WhatSheet: FC = () => {
 								/>
 							</TypoIcon>
 
-							<TypoIcon icon={CheckIcon}>
+							<TypoIcon
+								icon={CheckIcon}
+								justify="start"
+							>
 								<Tx
 									label={"What - sellers (badge 2)"}
 									display={"block"}
@@ -43,7 +49,10 @@ export const WhatSheet: FC = () => {
 								/>
 							</TypoIcon>
 
-							<TypoIcon icon={CheckIcon}>
+							<TypoIcon
+								icon={CheckIcon}
+								justify="start"
+							>
 								<Tx
 									label={"What - sellers (badge 3)"}
 									display={"block"}
@@ -68,7 +77,10 @@ export const WhatSheet: FC = () => {
 						}}
 					>
 						<div className="flex flex-col gap-1">
-							<TypoIcon icon={CheckIcon}>
+							<TypoIcon
+								icon={CheckIcon}
+								justify="start"
+							>
 								<Tx
 									label={"What - buyers (badge 1)"}
 									display={"block"}
@@ -76,7 +88,10 @@ export const WhatSheet: FC = () => {
 								/>
 							</TypoIcon>
 
-							<TypoIcon icon={CheckIcon}>
+							<TypoIcon
+								icon={CheckIcon}
+								justify="start"
+							>
 								<Tx
 									label={"What - buyers (badge 2)"}
 									display={"block"}
@@ -84,7 +99,10 @@ export const WhatSheet: FC = () => {
 								/>
 							</TypoIcon>
 
-							<TypoIcon icon={CheckIcon}>
+							<TypoIcon
+								icon={CheckIcon}
+								justify="start"
+							>
 								<Tx
 									label={"What - buyers (badge 3)"}
 									display={"block"}

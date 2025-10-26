@@ -38,6 +38,7 @@ export const ContactSheet: FC = () => {
 						slot: {
 							root: {
 								class: [
+									"w-fit",
 									"mx-auto",
 								],
 							},
