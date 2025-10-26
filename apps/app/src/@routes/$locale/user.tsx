@@ -20,8 +20,8 @@ export const Route = createFileRoute("/$locale/user")({
 		});
 
 		const signOutMutation = withSignOutMutation.useMutation({
-			onSuccess() {
-				navigate({
+			async onPostMutation() {
+				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_WEB_ORIGIN,
 						href: "/:locale/landing",
