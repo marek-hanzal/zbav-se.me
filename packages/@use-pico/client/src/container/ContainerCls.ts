@@ -100,7 +100,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("height", "full", {
 		root: {
 			class: [
-				"Container-root-height[full]",
 				"h-full",
 				"min-h-0",
 				"max-h-full",
@@ -110,7 +109,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("height", "dvh", {
 		root: {
 			class: [
-				"Container-root-height[dvh]",
 				"h-dvh",
 				"min-h-dvh",
 				"w-full",
@@ -120,7 +118,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("height", "auto", {
 		root: {
 			class: [
-				"Container-root-height[auto]",
 				"h-auto",
 				"min-h-0",
 				"w-full",
@@ -131,7 +128,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("width", "full", {
 		root: {
 			class: [
-				"Container-root-width[full]",
 				"w-full",
 				"min-w-0",
 				"max-w-full",
@@ -141,7 +137,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("width", "dvw", {
 		root: {
 			class: [
-				"Container-root-width[dvw]",
 				"w-dvw",
 				"min-w-dvw",
 			],
@@ -150,7 +145,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("width", "auto", {
 		root: {
 			class: [
-				"Container-root-width[auto]",
 				"w-auto",
 				"min-w-0",
 				"h-full",
@@ -161,7 +155,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "horizontal", {
 		root: {
 			class: [
-				"Container-root-orientation[horizontal]",
 				"grid",
 				"grid-flow-col",
 				"auto-cols-auto",
@@ -172,7 +165,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "horizontal-full", {
 		root: {
 			class: [
-				"Container-root-orientation[horizontal-full]",
 				"grid",
 				"grid-flow-col",
 				"grid-rows-1",
@@ -187,7 +179,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "vertical", {
 		root: {
 			class: [
-				"Container-root-orientation[vertical]",
 				"grid",
 				"grid-flow-row",
 				"auto-rows-auto",
@@ -198,7 +189,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "vertical-header-content-footer", {
 		root: {
 			class: [
-				"Container-root-orientation[vertical-header-content-footer]",
 				"grid",
 				"grid-rows-[min-content_1fr_min-content]",
 				"grid-cols-1",
@@ -208,7 +198,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "vertical-header-content", {
 		root: {
 			class: [
-				"Container-root-orientation[vertical-header-content]",
 				"grid",
 				"grid-rows-[min-content_1fr]",
 				"grid-cols-1",
@@ -218,7 +207,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "vertical-content-footer", {
 		root: {
 			class: [
-				"Container-root-orientation[vertical-content-footer]",
 				"grid",
 				"grid-rows-[1fr_min-content]",
 				"grid-cols-1",
@@ -228,7 +216,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "vertical-content", {
 		root: {
 			class: [
-				"Container-root-orientation[vertical-content]",
 				"grid",
 				"grid-rows-[min-content]",
 				"grid-cols-1",
@@ -238,7 +225,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("layout", "vertical-full", {
 		root: {
 			class: [
-				"Container-root-orientation[vertical-full]",
 				"grid",
 				"grid-flow-row",
 				"grid-cols-1",
@@ -254,7 +240,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("overflow", "horizontal", {
 		root: {
 			class: [
-				"Container-root-overflow[horizontal]",
 				"isolate",
 				"overflow-x-auto",
 				"overflow-y-clip",
@@ -266,7 +251,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("overflow", "vertical", {
 		root: {
 			class: [
-				"Container-root-overflow[vertical]",
 				"isolate",
 				"overflow-y-auto",
 				"overflow-x-clip",
@@ -279,7 +263,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("snap", "horizontal-start", {
 		root: {
 			class: [
-				"Container-root-snap[horizontal-start]",
 				"isolate",
 				"overflow-x-auto",
 				"overflow-y-clip",
@@ -293,7 +276,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("snap", "horizontal-center", {
 		root: {
 			class: [
-				"Container-root-snap[horizontal-center]",
 				"isolate",
 				"overflow-x-auto",
 				"overflow-y-clip",
@@ -307,7 +289,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("snap", "horizontal-end", {
 		root: {
 			class: [
-				"Container-root-snap[horizontal-end]",
 				"isolate",
 				"overflow-x-auto",
 				"overflow-y-clip",
@@ -322,7 +303,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("snap", "vertical-start", {
 		root: {
 			class: [
-				"Container-root-snap[vertical-start]",
 				"isolate",
 				"overflow-y-auto",
 				"overflow-x-clip",
@@ -336,7 +316,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("snap", "vertical-center", {
 		root: {
 			class: [
-				"Container-root-snap[vertical-center]",
 				"isolate",
 				"overflow-y-auto",
 				"overflow-x-clip",
@@ -350,7 +329,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("snap", "vertical-end", {
 		root: {
 			class: [
-				"Container-root-snap[vertical-end]",
 				"isolate",
 				"overflow-y-auto",
 				"overflow-x-clip",
@@ -365,7 +343,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("lock", "horizontal", {
 		root: {
 			class: [
-				"Container-root-lock[horizontal]",
 				"touch-pan-y",
 				"[&_*]:touch-pan-y",
 			],
@@ -374,7 +351,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("lock", "vertical", {
 		root: {
 			class: [
-				"Container-root-lock[vertical]",
 				"touch-pan-x",
 				"[&_*]:touch-pan-x",
 			],
@@ -383,9 +359,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	// Square paddings via tokens
 	.match("square", "xs", {
 		root: {
-			class: [
-				"Container-root-square[xs]",
-			],
 			token: [
 				"square.xs",
 			],
@@ -393,9 +366,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	})
 	.match("square", "sm", {
 		root: {
-			class: [
-				"Container-root-square[sm]",
-			],
 			token: [
 				"square.sm",
 			],
@@ -403,9 +373,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	})
 	.match("square", "md", {
 		root: {
-			class: [
-				"Container-root-square[md]",
-			],
 			token: [
 				"square.md",
 			],
@@ -413,9 +380,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	})
 	.match("square", "lg", {
 		root: {
-			class: [
-				"Container-root-square[lg]",
-			],
 			token: [
 				"square.lg",
 			],
@@ -423,9 +387,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	})
 	.match("square", "xl", {
 		root: {
-			class: [
-				"Container-root-square[xl]",
-			],
 			token: [
 				"square.xl",
 			],
@@ -435,7 +396,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("gap", "xs", {
 		root: {
 			class: [
-				"Container-root-gap[xs]",
 				"gap-1",
 			],
 		},
@@ -443,7 +403,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("gap", "sm", {
 		root: {
 			class: [
-				"Container-root-gap[sm]",
 				"gap-2",
 			],
 		},
@@ -451,7 +410,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("gap", "md", {
 		root: {
 			class: [
-				"Container-root-gap[md]",
 				"gap-3",
 			],
 		},
@@ -459,7 +417,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("gap", "lg", {
 		root: {
 			class: [
-				"Container-root-gap[lg]",
 				"gap-4",
 			],
 		},
@@ -467,7 +424,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("gap", "xl", {
 		root: {
 			class: [
-				"Container-root-gap[xl]",
 				"gap-5",
 			],
 		},
@@ -476,7 +432,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("position", "absolute", {
 		root: {
 			class: [
-				"Container-root-position[absolute]",
 				"absolute",
 			],
 		},
@@ -484,7 +439,6 @@ export const ContainerCls = contract(PicoCls.contract)
 	.match("position", "relative", {
 		root: {
 			class: [
-				"Container-root-position[relative]",
 				"relative",
 			],
 		},
