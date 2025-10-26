@@ -9,6 +9,7 @@ import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
 import { withLocationQueryBuilderWithSort } from "./withLocationQueryBuilder";
 import { withLocationSelect } from "./withLocationSelect";
+import { database } from "../database/kysely";
 
 /**
  * Soft schema from Geoapify (we believe in them - a mistake?)
