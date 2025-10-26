@@ -10,6 +10,7 @@ import {
 } from "@use-pico/client";
 import { translator } from "@use-pico/common";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
+import { Fade } from "@zbav-se.me/ui";
 import { useEffect, useRef } from "react";
 import z from "zod";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
@@ -119,25 +120,32 @@ export const Route = createFileRoute("/$locale/listing/wizard/category-group")({
 					renderSuccess={({ data }) => {
 						return (
 							<Container
-								ref={containerRef}
-								layout={"vertical-content"}
-								height={"full"}
-								overflow={"vertical"}
+								layout={"vertical"}
+								position={"relative"}
 							>
+								<Fade scrollableRef={containerRef} />
+
 								<Container
-									ui="CategoryGroup-Container"
+									ref={containerRef}
 									layout={"vertical-content"}
-									gap={"md"}
+									overflow={"vertical"}
+									position={"relative"}
 								>
-									{data.map((item) => {
-										return (
-											<CategoryGroupItem
-												key={item.id}
-												selection={selection}
-												item={item}
-											/>
-										);
-									})}
+									<Container
+										ui="CategoryGroup-Container"
+										layout={"vertical-content"}
+										gap={"md"}
+									>
+										{data.map((item) => {
+											return (
+												<CategoryGroupItem
+													key={item.id}
+													selection={selection}
+													item={item}
+												/>
+											);
+										})}
+									</Container>
 								</Container>
 							</Container>
 						);
