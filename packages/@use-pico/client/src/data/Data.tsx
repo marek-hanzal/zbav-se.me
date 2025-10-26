@@ -1,17 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { ErrorIcon, Icon, SpinnerIcon, Status } from "@use-pico/client";
+import { ErrorIcon, Spinner, Status } from "@use-pico/client";
 import type { ReactNode } from "react";
 import { match } from "ts-pattern";
-
-const DefaultSpinner = () => (
-	<div className="Data-spinner grid place-content-center">
-		<Icon
-			icon={SpinnerIcon}
-			size="xl"
-			tone="secondary"
-		/>
-	</div>
-);
 
 const DefaultError = () => (
 	<div className="Data-error grid place-content-center">
@@ -75,8 +65,8 @@ export namespace Data {
 export const Data = <TResult extends UseQueryResult<any, Error>>({
 	result,
 	renderSuccess,
-	renderLoading = DefaultSpinner,
-	renderFetching = DefaultSpinner,
+	renderLoading = () => <Spinner />,
+	renderFetching = () => <Spinner />,
 	renderError = DefaultError,
 	children = DefaultContent,
 }: Data.Props<TResult>) => {

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, InfiniteData, Status } from "@use-pico/client";
+import { Container, InfiniteData, Spinner, Status } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -67,6 +67,13 @@ export const Route = createFileRoute("/$locale/feed")({
 
 				<InfiniteData
 					result={listingQuery}
+					renderLoading={() => (
+						<Spinner
+							tone="secondary"
+							theme={"dark"}
+						/>
+					)}
+					renderFetching={() => <Spinner />}
 					renderSuccess={({ data: { pages } }) => {
 						if (pages.length === 0) {
 							return (

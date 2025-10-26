@@ -153,6 +153,7 @@ export { useSnapperNav } from "./snapper/useSnapperNav";
 export { DeleteControl } from "./source/DeleteControl";
 export { withMutation } from "./source/withMutation";
 export { withQuery } from "./source/withQuery";
+export { Spinner } from "./spinner/Spinner";
 export { Status } from "./status/Status";
 export { StatusCls } from "./status/StatusCls";
 export { TranslationSources } from "./TranslationSources";

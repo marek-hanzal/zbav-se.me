@@ -2,19 +2,8 @@ import type { UseInfiniteQueryResult } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { match } from "ts-pattern";
 import { ErrorIcon } from "../icon/ErrorIcon";
-import { Icon } from "../icon/Icon";
-import { SpinnerIcon } from "../icon/SpinnerIcon";
+import { Spinner } from "../spinner/Spinner";
 import { Status } from "../status/Status";
-
-const DefaultSpinner = () => (
-	<div className="Data-spinner grid place-content-center">
-		<Icon
-			icon={SpinnerIcon}
-			size="xl"
-			tone="secondary"
-		/>
-	</div>
-);
 
 const DefaultError = () => (
 	<div className="Data-error grid place-content-center">
@@ -87,8 +76,8 @@ export const InfiniteData = <
 >({
 	result,
 	renderSuccess,
-	renderLoading = DefaultSpinner,
-	renderFetching = () => <DefaultSpinner />,
+	renderLoading = () => <Spinner />,
+	renderFetching = () => <Spinner />,
 	renderFetchingWithData = renderSuccess,
 	renderError = DefaultError,
 	children = DefaultContent,
