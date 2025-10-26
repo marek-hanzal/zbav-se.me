@@ -83,6 +83,8 @@ export const Route = createFileRoute("/$locale/user")({
 						action={
 							<Button
 								onClick={() => signOutMutation.mutate({})}
+								disabled={signOutMutation.isPending}
+								loading={signOutMutation.isPending}
 								tone="danger"
 								theme={"light"}
 								label={"Sign out"}
