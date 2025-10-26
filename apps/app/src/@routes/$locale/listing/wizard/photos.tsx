@@ -4,52 +4,15 @@ import {
 	ArrowRightIcon,
 	Button,
 	Container,
-	DotIcon,
 	LinkTo,
 	SnapperNav,
 	Typo,
 	useSnapperNav,
 } from "@use-pico/client";
-import { useId, useMemo, useRef } from "react";
+import { useId, useRef } from "react";
 import { z } from "zod";
-import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { PhotoUpload } from "~/app/photo/PhotoUpload";
-
-export const useSnapperPage = (): SnapperNav.Page[] => {
-	const useCreateListingStore = useCreateListingContext();
-	const photoCountLimit = useCreateListingStore(
-		(store) => store.photoCountLimit,
-	);
-	const photos = useCreateListingStore((store) => store.photos);
-
-	return useMemo(
-		() =>
-			Array.from(
-				{
-					length: photoCountLimit,
-				},
-				(_, index) =>
-					({
-						id: `p-${index + 1}`,
-						icon: DotIcon,
-						iconProps() {
-							return photos[index]
-								? {
-										tone: "secondary",
-									}
-								: {
-										tone: "primary",
-									};
-						},
-					}) satisfies SnapperNav.Page,
-			),
-		[
-			photoCountLimit,
-			photos,
-		],
-	);
-};
 
 export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 	validateSearch: z.object({
@@ -59,18 +22,20 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 		const { locale } = Route.useParams();
 		const { uploadIds } = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const pages = useSnapperPage();
-		const snapperRef = useRef<HTMLDivElement>(null);
-		const snapperNav = useSnapperNav({
-			containerRef: snapperRef,
-			orientation: "horizontal",
-			count: pages.length,
-		});
-		const uploadId = useId();
+		const pageNavId = useId();
+
 		/**
 		 * TODO Resolve photo limit from the user's tokens/plan/whatever
 		 */
 		const photoCountLimit = 10;
+
+		const snapperRef = useRef<HTMLDivElement>(null);
+		const snapperNav = useSnapperNav({
+			containerRef: snapperRef,
+			orientation: "horizontal",
+			count: photoCountLimit,
+		});
+		const uploadId = useId();
 		const hasUploads = uploadIds.length > 0;
 
 		return (
@@ -153,7 +118,9 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 					gap={"md"}
 					round={"lg"}
 				>
-					{pages.map((_, slot) => {
+					{Array.from({
+						length: photoCountLimit,
+					}).map((_, slot) => {
 						const disabled = slot > 0 && !uploadIds[slot - 1];
 
 						return (

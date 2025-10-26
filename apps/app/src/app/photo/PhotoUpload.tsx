@@ -189,7 +189,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 							<Progress
 								value={progress * 100}
 								size={"lg"}
-								tone={"secondary"}
+								tone={"primary"}
 								theme={"dark"}
 							/>
 						}
