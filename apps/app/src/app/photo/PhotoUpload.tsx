@@ -1,3 +1,4 @@
+import { useMutation } from "@tanstack/react-query";
 import {
 	Action,
 	Container,
@@ -6,9 +7,21 @@ import {
 	Status,
 	TrashIcon,
 } from "@use-pico/client";
+import { genId } from "@use-pico/common";
+import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
 import { PhotoIcon, Sheet } from "@zbav-se.me/ui";
+import axios from "axios";
 import src from "gsap/src";
-import { type FC, type SyntheticEvent, useCallback, useRef } from "react";
+import {
+	type ChangeEvent,
+	type FC,
+	type SyntheticEvent,
+	useCallback,
+	useRef,
+	useState,
+} from "react";
+import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
+import { withUploadCreateMutation } from "~/app/upload/mutation/withUploadCreateMutation";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;
@@ -32,26 +45,66 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	const sheetRef = useRef<HTMLDivElement>(null);
 	const trashRef = useRef<HTMLDivElement>(null);
 	const spinnerRef = useRef<HTMLDivElement>(null);
+	const [progress, setProgress] = useState(0);
+
+	const preSignMutation = withS3PreSignMutation.useMutation();
+	const createUploadMutation = withUploadCreateMutation.useMutation();
+
+	const uploadMutation = useMutation({
+		mutationKey: [
+			"upload",
+		],
+		async mutationFn(file: File) {
+			const id = genId();
+			const path = `upload/${id}`;
+			const contentType = file.type as AllowedContentTypes;
+			const dot = file.name.lastIndexOf(".");
+			const extension =
+				dot !== -1 && dot < file.name.length - 1
+					? file.name.slice(dot + 1).toLowerCase()
+					: "unknown";
+
+			const presign = await preSignMutation.mutateAsync({
+				path,
+				extension: extension as AllowedExtensions,
+				contentType,
+			});
+
+			await axios.put(presign.url, file, {
+				headers: {
+					"Content-Type": contentType,
+				},
+				onUploadProgress(e) {
+					setProgress(e.progress ?? 0);
+				},
+			});
+
+			const upload = await createUploadMutation.mutateAsync({
+				url: presign.url,
+			});
+
+			onChange(upload.id);
+		},
+	});
 
 	const stop = useCallback((event: SyntheticEvent) => {
 		event.preventDefault();
 		event.stopPropagation();
 	}, []);
 
-	// const onChangeInput = useCallback(
-	// 	(e: ChangeEvent<HTMLInputElement>) => {
-	// 		const file = e.target.files?.[0];
-	// 		if (!file) {
-	// 			return;
-	// 		}
-	// 		setPhoto(slot, file);
-	// 		e.currentTarget.value = "";
-	// 	},
-	// 	[
-	// 		setPhoto,
-	// 		slot,
-	// 	],
-	// );
+	const onUpload = useCallback(
+		async (e: ChangeEvent<HTMLInputElement>) => {
+			const file = e.target.files?.[0];
+			if (!file) {
+				return;
+			}
+
+			uploadMutation.mutate(file);
+		},
+		[
+			uploadMutation,
+		],
+	);
 
 	return (
 		<Container
@@ -75,7 +128,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				accept="image/*"
 				capture={camera ? "environment" : undefined}
 				className="sr-only"
-				// onChange={onChangeInput}
+				onChange={onUpload}
 			/>
 
 			<Action
