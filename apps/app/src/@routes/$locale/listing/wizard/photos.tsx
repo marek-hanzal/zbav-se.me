@@ -49,6 +49,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 						params={{
 							locale,
 						}}
+						tone={"secondary"}
 					/>
 				}
 				titleProps={{
@@ -82,7 +83,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 							}}
 						>
 							<Button
-								tone={"primary"}
+								tone={"secondary"}
 								theme={"dark"}
 								iconEnabled={ArrowRightIcon}
 							/>

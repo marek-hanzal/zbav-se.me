@@ -1,6 +1,7 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { type Cls, useCls } from "@use-pico/cls";
+import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { AnchorHTMLAttributes, ComponentProps, FC, Ref } from "react";
+import { PicoCls } from "../cls/PicoCls";
 import { Icon } from "../icon/Icon";
 import { LinkToCls } from "./LinkToCls";
 
@@ -24,7 +25,7 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	children,
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak, {
+	const { slots, variant } = useCls(cls, tweak, {
 		variant: {
 			tone,
 			theme,
@@ -32,19 +33,24 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	});
 
 	return (
-		<a
-			{...props}
-			ref={ref}
-			data-ui="LinkTo-root"
-			className={slots.root()}
+		<VariantProvider
+			cls={PicoCls}
+			variant={variant}
 		>
-			<Icon
-				icon={icon}
-				size={"xs"}
-				{...iconProps}
-			/>
-			{children}
-		</a>
+			<a
+				{...props}
+				ref={ref}
+				data-ui="LinkTo-root"
+				className={slots.root()}
+			>
+				<Icon
+					icon={icon}
+					size={"xs"}
+					{...iconProps}
+				/>
+				{children}
+			</a>
+		</VariantProvider>
 	);
 };
 
