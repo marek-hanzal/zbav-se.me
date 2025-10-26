@@ -78,6 +78,7 @@ env:
     # -------------------------------
     SERVER_ENV_KEYS: |
         SERVER_BETTER_AUTH_SECRET
+        SERVER_CONTENT_CDN
         SERVER_DATABASE_URL
         SERVER_GEOAPIFY_TOKEN
         SERVER_JWT_SECRET

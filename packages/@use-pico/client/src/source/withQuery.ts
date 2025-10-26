@@ -216,7 +216,7 @@ export function withQuery<TData, TResult>({
 		},
 		useSet() {
 			const queryClient = useQueryClient();
-			return (value: TResult, data?: TData) => {
+			return (value: TResult | undefined, data?: TData) => {
 				queryClient.setQueryData($keys(data), value);
 			};
 		},

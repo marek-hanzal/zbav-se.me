@@ -51,7 +51,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			},
 		},
 		{
-			enabled: !!value,
+			enabled: !!value && progress === 0,
 		},
 	);
 	const setUpload = withUploadFetchQuery.useSet();
