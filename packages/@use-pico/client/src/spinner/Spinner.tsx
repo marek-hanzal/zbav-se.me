@@ -13,7 +13,8 @@ export const Spinner = ({ icon = SpinnerIcon, ...props }: Spinner.Props) => {
 			<Icon
 				icon={icon}
 				size="xl"
-				tone="secondary"
+				tone="primary"
+				theme={"light"}
 				{...props}
 			/>
 		</div>

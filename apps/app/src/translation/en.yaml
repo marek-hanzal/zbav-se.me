@@ -58,6 +58,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
   ref: Select item
   value: Select item
+3a162151e342554b06c07c9a9e62707b70a58c873973378d16d62e73:
+  ref: At least one photo is required!
+  value: At least one photo is required!
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
@@ -76,6 +79,9 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
+45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
+  ref: Uploading photo (title)
+  value: Uploading photo (title)
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
   ref: currency
   value: currency
@@ -103,9 +109,6 @@
 5d6bb45eb861bb2a56b96924c18424e8a1c7fd31df44492a6d6f9da3:
   ref: primary
   value: primary
-65a79e6a07d53da30afce7099e4093ca4a3b2707ae6377371d9977e6:
-  ref: Upload hero image (placeholder)
-  value: Upload hero image (placeholder)
 67505b3ac329bf674d8dceeeaa32e8d9cb6f6b409aa16a2320e90884:
   ref: Location (subtitle)
   value: Location (subtitle)
@@ -306,9 +309,6 @@ eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
 ecc602947a2a601b6c9f099ca41d26c7f3910eff377fac630e5e43d2:
   ref: danger
   value: danger
-ed54e44d009ac9e86c9395ad1fb850e7727feecc8bd42fceb2978110:
-  ref: Upload hero image (title)
-  value: Upload hero image (title)
 ef2e0675854160d5c30c4f2afc8178ea445a912e8b6773860d0ce412:
   ref: No category selected
   value: No category selected

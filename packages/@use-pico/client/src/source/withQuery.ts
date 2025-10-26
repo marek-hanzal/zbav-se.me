@@ -214,5 +214,11 @@ export function withQuery<TData, TResult>({
 		async ensure(queryClient: QueryClient, data: TData) {
 			return queryClient.ensureQueryData(options(data));
 		},
+		useSet() {
+			const queryClient = useQueryClient();
+			return (value: TResult, data?: TData) => {
+				queryClient.setQueryData($keys(data), value);
+			};
+		},
 	} as const;
 }

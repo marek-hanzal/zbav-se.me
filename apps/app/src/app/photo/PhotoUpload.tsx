@@ -54,6 +54,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			enabled: !!value,
 		},
 	);
+	const setUpload = withUploadFetchQuery.useSet();
 
 	const preSignMutation = withS3PreSignMutation.useMutation();
 	const createUploadMutation = withUploadCreateMutation.useMutation();
@@ -82,6 +83,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					? file.name.slice(dot + 1).toLowerCase()
 					: "unknown";
 
+			setProgress(0);
+
 			const presign = await preSignMutation.mutateAsync({
 				path,
 				extension: extension as AllowedExtensions,
@@ -99,6 +102,12 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			const upload = await createUploadMutation.mutateAsync({
 				url: presign.cdn,
+			});
+
+			setUpload(upload, {
+				where: {
+					id: upload.id,
+				},
 			});
 
 			onChange(upload.id);
@@ -170,7 +179,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 							<Status
 								icon={SpinnerIcon}
 								textTitle={"Uploading photo (title)"}
-								tone={"secondary"}
+								tone={"primary"}
+								theme={"light"}
 								action={
 									<Progress
 										value={progress * 100}
@@ -246,65 +256,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 						},
 					},
 				}}
-			/>
-
-			<Icon
-				ref={spinnerRef}
-				icon={SpinnerIcon}
-				size={"xl"}
-				tone={"primary"}
-				theme={"light"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"absolute",
-								"top-1/2",
-								"left-1/2",
-								"-translate-x-1/2",
-								"-translate-y-1/2",
-								"opacity-0",
-							],
-						},
-					},
-				}}
-			/>
-
-			<Sheet
-				ref={sheetRef}
-				onClick={pick}
-				onKeyDown={onKeyDown}
-				style={{
-					backgroundImage: `url(${src})`,
-					backgroundSize: "cover",
-					backgroundPosition: "center",
-
-					backgroundRepeat: "no-repeat",
-				}}
-				{...props}
-			>
-				{src ? null : (
-					<Status
-						icon={PhotoIcon}
-						iconProps={{
-							size: "2xl",
-						}}
-						textTitle={"Upload (title)"}
-						titleProps={{
-							size: "2xl",
-						}}
-						textMessage={
-							props.disabled
-								? "Upload - disabled (placeholder)"
-								: "Listing - upload photo (placeholder)"
-						}
-						messageProps={{
-							size: "xl",
-						}}
-						tone={"primary"}
-					/>
-				)}
-			</Sheet> */}
+			/>*/}
 		</Container>
 	);
 };
