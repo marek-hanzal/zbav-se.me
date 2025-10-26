@@ -1,16 +1,17 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { withCount, withFetch, withList } from "@use-pico/common";
-import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
+import { ErrorSchema } from "../schema/ErrorSchema";
 import { CategoryGroupQuerySchema } from "./schema/CategoryGroupQuerySchema";
 import { CategoryGroupSchema } from "./schema/CategoryGroupSchema";
 import {
 	withCategoryGroupQueryBuilder,
 	withCategoryGroupQueryBuilderWithSort,
 } from "./withCategoryGroupQueryBuilder";
+import { withCategoryGroupSelect } from "./withCategoryGroupSelect";
 
 export const withCategoryGroupApi = ({ session }: Routes) => {
 	const hono = withSessionHono();
@@ -41,6 +42,14 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 					description:
 						"Return a category group based on the provided query",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Category group not found",
+				},
 			},
 			tags: [
 				"category-group",
@@ -58,9 +67,7 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withFetch({
-						select: database.kysely
-							.selectFrom("category_group")
-							.selectAll(),
+						select: withCategoryGroupSelect(),
 						output: CategoryGroupSchema,
 						filter,
 						where,
@@ -74,7 +81,17 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 					}),
 			});
 
+			if (!data) {
+				return c.json(
+					{
+						message: "Category group not found",
+					},
+					404,
+				);
+			}
+
 			return c.json(data, {
+				status: 200,
 				headers: {
 					"X-Cached": hit ? "true" : "false",
 				},
@@ -124,9 +141,7 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withList({
-						select: database.kysely
-							.selectFrom("category_group")
-							.selectAll(),
+						select: withCategoryGroupSelect(),
 						output: CategoryGroupSchema,
 						cursor,
 						filter,
@@ -191,9 +206,7 @@ export const withCategoryGroupApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withCount({
-						select: database.kysely
-							.selectFrom("category_group")
-							.selectAll(),
+						select: withCategoryGroupSelect(),
 						filter,
 						where,
 						query({ select, where }) {

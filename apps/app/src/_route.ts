@@ -17,9 +17,11 @@ import { Route as LocaleShopRouteImport } from './@routes/$locale/shop'
 import { Route as LocaleFeedRouteImport } from './@routes/$locale/feed'
 import { Route as LocaleDashboardRouteImport } from './@routes/$locale/dashboard'
 import { Route as LocaleBagRouteImport } from './@routes/$locale/bag'
+import { Route as LocaleListingWizardRouteImport } from './@routes/$locale/listing/wizard'
 import { Route as LocaleListingMyRouteImport } from './@routes/$locale/listing/my'
-import { Route as LocaleListingCreateRouteImport } from './@routes/$locale/listing/create'
 import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
+import { Route as LocaleListingWizardStartRouteImport } from './@routes/$locale/listing/wizard/start'
+import { Route as LocaleListingWizardPhotosRouteImport } from './@routes/$locale/listing/wizard/photos'
 import { Route as LocaleListingIdViewRouteImport } from './@routes/$locale/listing/$id/view'
 
 const LocaleRoute = LocaleRouteImport.update({
@@ -62,14 +64,14 @@ const LocaleBagRoute = LocaleBagRouteImport.update({
   path: '/bag',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleListingWizardRoute = LocaleListingWizardRouteImport.update({
+  id: '/listing/wizard',
+  path: '/listing/wizard',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleListingMyRoute = LocaleListingMyRouteImport.update({
   id: '/listing/my',
   path: '/listing/my',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleListingCreateRoute = LocaleListingCreateRouteImport.update({
-  id: '/listing/create',
-  path: '/listing/create',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
@@ -77,6 +79,18 @@ const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   path: '/dev/seed',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleListingWizardStartRoute =
+  LocaleListingWizardStartRouteImport.update({
+    id: '/start',
+    path: '/start',
+    getParentRoute: () => LocaleListingWizardRoute,
+  } as any)
+const LocaleListingWizardPhotosRoute =
+  LocaleListingWizardPhotosRouteImport.update({
+    id: '/photos',
+    path: '/photos',
+    getParentRoute: () => LocaleListingWizardRoute,
+  } as any)
 const LocaleListingIdViewRoute = LocaleListingIdViewRouteImport.update({
   id: '/listing/$id/view',
   path: '/listing/$id/view',
@@ -93,9 +107,11 @@ export interface FileRoutesByFullPath {
   '/$locale/user': typeof LocaleUserRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
-  '/$locale/listing/create': typeof LocaleListingCreateRoute
   '/$locale/listing/my': typeof LocaleListingMyRoute
+  '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
+  '/$locale/listing/wizard/start': typeof LocaleListingWizardStartRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -106,9 +122,11 @@ export interface FileRoutesByTo {
   '/$locale/user': typeof LocaleUserRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
-  '/$locale/listing/create': typeof LocaleListingCreateRoute
   '/$locale/listing/my': typeof LocaleListingMyRoute
+  '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
+  '/$locale/listing/wizard/start': typeof LocaleListingWizardStartRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -121,9 +139,11 @@ export interface FileRoutesById {
   '/$locale/user': typeof LocaleUserRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
-  '/$locale/listing/create': typeof LocaleListingCreateRoute
   '/$locale/listing/my': typeof LocaleListingMyRoute
+  '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
+  '/$locale/listing/wizard/start': typeof LocaleListingWizardStartRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,9 +157,11 @@ export interface FileRouteTypes {
     | '/$locale/user'
     | '/$locale/'
     | '/$locale/dev/seed'
-    | '/$locale/listing/create'
     | '/$locale/listing/my'
+    | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/photos'
+    | '/$locale/listing/wizard/start'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,9 +172,11 @@ export interface FileRouteTypes {
     | '/$locale/user'
     | '/$locale'
     | '/$locale/dev/seed'
-    | '/$locale/listing/create'
     | '/$locale/listing/my'
+    | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/photos'
+    | '/$locale/listing/wizard/start'
   id:
     | '__root__'
     | '/'
@@ -164,9 +188,11 @@ export interface FileRouteTypes {
     | '/$locale/user'
     | '/$locale/'
     | '/$locale/dev/seed'
-    | '/$locale/listing/create'
     | '/$locale/listing/my'
+    | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/photos'
+    | '/$locale/listing/wizard/start'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -232,18 +258,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBagRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/listing/wizard': {
+      id: '/$locale/listing/wizard'
+      path: '/listing/wizard'
+      fullPath: '/$locale/listing/wizard'
+      preLoaderRoute: typeof LocaleListingWizardRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/listing/my': {
       id: '/$locale/listing/my'
       path: '/listing/my'
       fullPath: '/$locale/listing/my'
       preLoaderRoute: typeof LocaleListingMyRouteImport
-      parentRoute: typeof LocaleRoute
-    }
-    '/$locale/listing/create': {
-      id: '/$locale/listing/create'
-      path: '/listing/create'
-      fullPath: '/$locale/listing/create'
-      preLoaderRoute: typeof LocaleListingCreateRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/dev/seed': {
@@ -252,6 +278,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/dev/seed'
       preLoaderRoute: typeof LocaleDevSeedRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/$locale/listing/wizard/start': {
+      id: '/$locale/listing/wizard/start'
+      path: '/start'
+      fullPath: '/$locale/listing/wizard/start'
+      preLoaderRoute: typeof LocaleListingWizardStartRouteImport
+      parentRoute: typeof LocaleListingWizardRoute
+    }
+    '/$locale/listing/wizard/photos': {
+      id: '/$locale/listing/wizard/photos'
+      path: '/photos'
+      fullPath: '/$locale/listing/wizard/photos'
+      preLoaderRoute: typeof LocaleListingWizardPhotosRouteImport
+      parentRoute: typeof LocaleListingWizardRoute
     }
     '/$locale/listing/$id/view': {
       id: '/$locale/listing/$id/view'
@@ -263,6 +303,19 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LocaleListingWizardRouteChildren {
+  LocaleListingWizardPhotosRoute: typeof LocaleListingWizardPhotosRoute
+  LocaleListingWizardStartRoute: typeof LocaleListingWizardStartRoute
+}
+
+const LocaleListingWizardRouteChildren: LocaleListingWizardRouteChildren = {
+  LocaleListingWizardPhotosRoute: LocaleListingWizardPhotosRoute,
+  LocaleListingWizardStartRoute: LocaleListingWizardStartRoute,
+}
+
+const LocaleListingWizardRouteWithChildren =
+  LocaleListingWizardRoute._addFileChildren(LocaleListingWizardRouteChildren)
+
 interface LocaleRouteChildren {
   LocaleBagRoute: typeof LocaleBagRoute
   LocaleDashboardRoute: typeof LocaleDashboardRoute
@@ -271,8 +324,8 @@ interface LocaleRouteChildren {
   LocaleUserRoute: typeof LocaleUserRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
   LocaleDevSeedRoute: typeof LocaleDevSeedRoute
-  LocaleListingCreateRoute: typeof LocaleListingCreateRoute
   LocaleListingMyRoute: typeof LocaleListingMyRoute
+  LocaleListingWizardRoute: typeof LocaleListingWizardRouteWithChildren
   LocaleListingIdViewRoute: typeof LocaleListingIdViewRoute
 }
 
@@ -284,8 +337,8 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleUserRoute: LocaleUserRoute,
   LocaleIndexRoute: LocaleIndexRoute,
   LocaleDevSeedRoute: LocaleDevSeedRoute,
-  LocaleListingCreateRoute: LocaleListingCreateRoute,
   LocaleListingMyRoute: LocaleListingMyRoute,
+  LocaleListingWizardRoute: LocaleListingWizardRouteWithChildren,
   LocaleListingIdViewRoute: LocaleListingIdViewRoute,
 }
 

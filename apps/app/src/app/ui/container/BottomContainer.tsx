@@ -8,6 +8,7 @@ export namespace BottomContainer {
 export const BottomContainer: FC<BottomContainer.Props> = (props) => {
 	return (
 		<Container
+			ui="BottomContainer-root"
 			round={"lg"}
 			square={"md"}
 			tweak={{

@@ -1,17 +1,14 @@
-import type { SelectQueryBuilder } from "kysely";
-import type { Database } from "../database/Database";
 import type { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
+import type { withCategorySelect } from "./withCategorySelect";
 
 export namespace withCategoryQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "category", any>;
+		select: withCategorySelect.Select;
 		where?: CategoryQuerySchema.Type["where"];
 		sort?: CategoryQuerySchema.Type["sort"];
 	}
 
-	export type Callback = (
-		props: Props,
-	) => SelectQueryBuilder<Database, "category", any>;
+	export type Callback = (props: Props) => withCategorySelect.Select;
 }
 
 /**
@@ -25,39 +22,39 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 	let query = select;
 
 	if (where?.id) {
-		query = query.where("id", "=", where.id);
+		query = query.where("c.id", "=", where.id);
 	}
 
 	if (where?.idIn && where.idIn.length > 0) {
-		query = query.where("id", "in", where.idIn);
+		query = query.where("c.id", "in", where.idIn);
 	}
 
 	if (where?.fulltext) {
 		query = query.where((eb) =>
 			eb.or([
-				eb("name", "ilike", `%${where.fulltext}%`),
+				eb("c.name", "ilike", `%${where.fulltext}%`),
 			]),
 		);
 	}
 
 	if (where?.name) {
-		query = query.where("name", "like", `%${where.name}%`);
+		query = query.where("c.name", "like", `%${where.name}%`);
 	}
 
 	if (where?.categoryGroupId) {
-		query = query.where("categoryGroupId", "=", where.categoryGroupId);
+		query = query.where("c.categoryGroupId", "=", where.categoryGroupId);
 	}
 
 	if (where?.categoryGroupIdIn && where.categoryGroupIdIn.length > 0) {
-		query = query.where("categoryGroupId", "in", where.categoryGroupIdIn);
+		query = query.where("c.categoryGroupId", "in", where.categoryGroupIdIn);
 	}
 
 	if (where?.locale) {
-		query = query.where("locale", "=", where.locale);
+		query = query.where("c.locale", "=", where.locale);
 	}
 
 	if (where?.localeIn && where.localeIn.length > 0) {
-		query = query.where("locale", "in", where.localeIn);
+		query = query.where("c.locale", "in", where.localeIn);
 	}
 
 	return query;
@@ -76,10 +73,10 @@ export const withCategoryQueryBuilderWithSort = (
 		if (sortItem.sort) {
 			switch (sortItem.value) {
 				case "name":
-					query = query.orderBy("name", sortItem.sort);
+					query = query.orderBy("c.name", sortItem.sort);
 					break;
 				case "sort":
-					query = query.orderBy("sort", sortItem.sort);
+					query = query.orderBy("c.sort", sortItem.sort);
 					break;
 			}
 		}

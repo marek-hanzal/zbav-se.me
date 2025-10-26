@@ -20,6 +20,7 @@ import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
 import { withS3Api } from "./s3/withS3Api";
+import { withUploadApi } from "./upload/withUploadApi";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -147,6 +148,7 @@ withCategoryApi(routes);
 withCategoryGroupApi(routes);
 withListingApi(routes);
 withGalleryApi(routes);
+withUploadApi(routes);
 withLocationApi(routes);
 withHealthApi(routes);
 withMigrationApi(routes);

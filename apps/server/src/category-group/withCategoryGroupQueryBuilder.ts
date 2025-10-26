@@ -1,17 +1,14 @@
-import type { SelectQueryBuilder } from "kysely";
-import type { Database } from "../database/Database.js";
-import type { CategoryGroupQuerySchema } from "./schema/CategoryGroupQuerySchema.js";
+import type { CategoryGroupQuerySchema } from "./schema/CategoryGroupQuerySchema";
+import type { withCategoryGroupSelect } from "./withCategoryGroupSelect";
 
 export namespace withCategoryGroupQueryBuilder {
 	export interface Props {
-		select: SelectQueryBuilder<Database, "category_group", any>;
+		select: withCategoryGroupSelect.Select;
 		where?: CategoryGroupQuerySchema.Type["where"];
 		sort?: CategoryGroupQuerySchema.Type["sort"];
 	}
 
-	export type Callback = (
-		props: Props,
-	) => SelectQueryBuilder<Database, "category_group", any>;
+	export type Callback = (props: Props) => withCategoryGroupSelect.Select;
 }
 
 /**
@@ -24,32 +21,32 @@ export const withCategoryGroupQueryBuilder: withCategoryGroupQueryBuilder.Callba
 
 		// Apply base filters
 		if (where?.id) {
-			query = query.where("id", "=", where.id);
+			query = query.where("cg.id", "=", where.id);
 		}
 
 		if (where?.idIn && where.idIn.length > 0) {
-			query = query.where("id", "in", where.idIn);
+			query = query.where("cg.id", "in", where.idIn);
 		}
 
 		if (where?.fulltext) {
 			query = query.where((eb) =>
 				eb.or([
-					eb("name", "ilike", `%${where.fulltext}%`),
+					eb("cg.name", "ilike", `%${where.fulltext}%`),
 				]),
 			);
 		}
 
 		// Apply custom filters
 		if (where?.name) {
-			query = query.where("name", "like", `%${where.name}%`);
+			query = query.where("cg.name", "like", `%${where.name}%`);
 		}
 
 		if (where?.locale) {
-			query = query.where("locale", "=", where.locale);
+			query = query.where("cg.locale", "=", where.locale);
 		}
 
 		if (where?.localeIn && where.localeIn.length > 0) {
-			query = query.where("locale", "in", where.localeIn);
+			query = query.where("cg.locale", "in", where.localeIn);
 		}
 
 		return query;
@@ -68,10 +65,10 @@ export const withCategoryGroupQueryBuilderWithSort = (
 		if (sortItem.sort) {
 			switch (sortItem.value) {
 				case "name":
-					query = query.orderBy("name", sortItem.sort);
+					query = query.orderBy("cg.name", sortItem.sort);
 					break;
 				case "sort":
-					query = query.orderBy("sort", sortItem.sort);
+					query = query.orderBy("cg.sort", sortItem.sort);
 					break;
 			}
 		}

@@ -55,7 +55,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/listing/create"
+							to="/$locale/listing/wizard/start"
 							params={{
 								locale,
 							}}

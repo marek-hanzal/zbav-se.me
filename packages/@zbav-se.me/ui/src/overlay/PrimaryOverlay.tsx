@@ -8,6 +8,7 @@ export namespace PrimaryOverlay {
 export const PrimaryOverlay: FC<PrimaryOverlay.Props> = ({ ...props }) => {
 	return (
 		<Overlay
+			ui="PrimaryOverlay-root"
 			type="bg-1"
 			opacity={"25"}
 			accentFrom="secondary.dark"

@@ -1,5 +1,9 @@
 # TODO
 
+- extend Location to store city/street/blabla in fields
+- Ensure Upload collection returns data _without_ userId
+- Currently Gallery and Upload gets paths from client - use tokens/something as users now can
+    send mailicious stuff without validation
 - Revisit cookie settings
 - Add app-level env. check in github action (e.g. simple script validating env. schemas)
 - Upstash can be used with TCP

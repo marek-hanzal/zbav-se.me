@@ -22,6 +22,7 @@ export const Title: FC<Title.Props> = ({
 }) => {
 	return (
 		<Container
+			ui="Title-root"
 			round={"lg"}
 			square={"md"}
 			tweak={{

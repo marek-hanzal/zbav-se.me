@@ -16,13 +16,12 @@ import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContaine
 
 export namespace CategoryGroupWrapper {
 	export interface Props {
-		listingNav: useSnapperNav.Result;
 		locale: string;
 	}
 }
 
 export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
-	({ listingNav, locale }) => {
+	({ locale }) => {
 		const useCreateListingStore = useCreateListingContext();
 		const setCategoryGroup = useCreateListingStore(
 			(store) => store.setCategoryGroup,
@@ -74,7 +73,6 @@ export const CategoryGroupWrapper: FC<CategoryGroupWrapper.Props> = memo(
 
 		return (
 			<ListingContainer
-				listingNavApi={listingNav.api}
 				textTitle={"Listing category groups (title)"}
 				textSubtitle={
 					selection.optional.single()?.name ??

@@ -10,6 +10,7 @@ export const ListingProgress = () => {
 
 	return missing.length > 0 ? (
 		<div
+			data-ui="ListingProgress-root"
 			className={slots.default({
 				slot: {
 					default: {

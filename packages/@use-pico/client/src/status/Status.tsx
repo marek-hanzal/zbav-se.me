@@ -1,6 +1,7 @@
 import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { FC, PropsWithChildren, ReactNode, Ref } from "react";
 import { PicoCls } from "../cls/PicoCls";
+import type { UiProps } from "../component/UiProps";
 import { Icon } from "../icon/Icon";
 import type { IconCls } from "../icon/IconCls";
 import { Tx } from "../tx/Tx";
@@ -8,7 +9,7 @@ import type { Typo } from "../typo/Typo";
 import { StatusCls } from "./StatusCls";
 
 export namespace Status {
-	export interface Props extends StatusCls.Props<PropsWithChildren> {
+	export interface Props extends UiProps<StatusCls.Props<PropsWithChildren>> {
 		ref?: Ref<HTMLDivElement>;
 		/**
 		 * Translation key for the title text.
@@ -33,6 +34,7 @@ export namespace Status {
 
 export const Status: FC<Status.Props> = ({
 	ref,
+	ui,
 	textTitle,
 	textMessage,
 	action,
@@ -62,7 +64,7 @@ export const Status: FC<Status.Props> = ({
 			}}
 		>
 			<div
-				data-ui="Status-root"
+				data-ui={ui ?? "Status-root"}
 				ref={ref}
 				className={slots.root()}
 			>

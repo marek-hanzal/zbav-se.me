@@ -1,9 +1,11 @@
 import { type Cls, useCls } from "@use-pico/cls";
-import type { FC, HTMLAttributes, PropsWithChildren, Ref } from "react";
+import type { ComponentProps, FC, PropsWithChildren, Ref } from "react";
+import type { UiProps } from "../component/UiProps";
 import { ContainerCls } from "./ContainerCls";
 
 export namespace Container {
-	export interface Props extends ContainerCls.Props<PropsWithChildren> {
+	export interface Props
+		extends UiProps<ContainerCls.Props<PropsWithChildren>> {
 		ref?: Ref<HTMLDivElement>;
 
 		/**
@@ -148,15 +150,13 @@ export namespace Container {
 		 *
 		 * Extracted so they won't pollute the container's props.
 		 */
-		divProps?: Omit<
-			HTMLAttributes<HTMLDivElement>,
-			"children" | "className"
-		>;
+		divProps?: Omit<ComponentProps<"div">, "children" | "className">;
 	}
 }
 
 export const Container: FC<Container.Props> = ({
 	ref,
+	ui,
 	//
 	tone,
 	theme,
@@ -201,7 +201,7 @@ export const Container: FC<Container.Props> = ({
 	return (
 		<div
 			ref={ref}
-			data-ui="Container-root"
+			data-ui={ui ?? "Container-root"}
 			className={slots.root()}
 			{...divProps}
 		>

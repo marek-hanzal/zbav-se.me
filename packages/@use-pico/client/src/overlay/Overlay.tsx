@@ -1,9 +1,10 @@
 import { type Cls, tvc, useCls } from "@use-pico/cls";
 import type { FC } from "react";
+import type { UiProps } from "../component/UiProps";
 import { OverlayCls } from "./OverlayCls";
 
 export namespace Overlay {
-	export interface Props extends OverlayCls.Props {
+	export interface Props extends UiProps<OverlayCls.Props> {
 		opacity?: Cls.VariantOf<OverlayCls, "opacity">;
 		type?: Cls.VariantOf<OverlayCls, "type">;
 		accentFrom?: Cls.VariantOf<OverlayCls, "accent-from">;
@@ -12,6 +13,7 @@ export namespace Overlay {
 }
 
 export const Overlay: FC<Overlay.Props> = ({
+	ui,
 	opacity,
 	type,
 	accentFrom,
@@ -29,7 +31,10 @@ export const Overlay: FC<Overlay.Props> = ({
 	});
 
 	return (
-		<div className={tvc(slots.root())}>
+		<div
+			data-ui={ui ?? "Overlay-root"}
+			className={tvc(slots.root())}
+		>
 			<div className={tvc(slots.top())} />
 			<div className={tvc(slots.bottom())} />
 		</div>

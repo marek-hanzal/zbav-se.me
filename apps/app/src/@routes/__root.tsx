@@ -59,6 +59,7 @@ export const Route = createRootRouteWithContext<{
 				<body>
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
 						<Container
+							ui="Root-root"
 							height="dvh"
 							width="full"
 							tweak={{

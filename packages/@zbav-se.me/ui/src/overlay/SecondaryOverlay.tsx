@@ -8,6 +8,7 @@ export namespace SecondaryOverlay {
 export const SecondaryOverlay: FC<SecondaryOverlay.Props> = ({ ...props }) => {
 	return (
 		<Overlay
+			ui="SecondaryOverlay-root"
 			type="bg-2"
 			accentFrom="primary.dark"
 			accentTo="secondary.dark"

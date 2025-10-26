@@ -2,13 +2,13 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { genId, linkTo, withFetch, withList } from "@use-pico/common";
 import { sql } from "kysely";
 import { AppEnv } from "../AppEnv";
-import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { ErrorSchema } from "../schema/ErrorSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
 import { withLocationQueryBuilderWithSort } from "./withLocationQueryBuilder";
+import { withLocationSelect } from "./withLocationSelect";
 
 /**
  * Soft schema from Geoapify (we believe in them - a mistake?)
@@ -266,7 +266,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			const { filter, where, sort } = c.req.valid("json");
 
 			const result = await withFetch({
-				select: database.kysely.selectFrom("location").selectAll(),
+				select: withLocationSelect(),
 				output: LocationSchema,
 				filter,
 				where,

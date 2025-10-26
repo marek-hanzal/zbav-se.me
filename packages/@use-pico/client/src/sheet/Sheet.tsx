@@ -1,10 +1,11 @@
 import { type Cls, useCls } from "@use-pico/cls";
 import type { FC, HTMLAttributes, Ref } from "react";
+import type { UiProps } from "../component/UiProps";
 import { SheetCls } from "./SheetCls";
 
 export namespace Sheet {
 	export interface Props
-		extends SheetCls.Props<HTMLAttributes<HTMLDivElement>> {
+		extends UiProps<SheetCls.Props<HTMLAttributes<HTMLDivElement>>> {
 		ref?: Ref<HTMLDivElement>;
 		disabled?: boolean;
 		tone?: Cls.VariantOf<SheetCls, "tone">;
@@ -14,6 +15,7 @@ export namespace Sheet {
 }
 
 export const Sheet: FC<Sheet.Props> = ({
+	ui,
 	ref,
 	//
 	disabled,
@@ -37,7 +39,7 @@ export const Sheet: FC<Sheet.Props> = ({
 
 	return (
 		<div
-			data-ui={"Sheet-root"}
+			data-ui={ui ?? "Sheet-root"}
 			ref={ref}
 			className={slots.root()}
 			{...props}

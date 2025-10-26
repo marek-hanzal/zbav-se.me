@@ -5,7 +5,6 @@ import {
 	Container,
 	Progress,
 	Status,
-	type useSnapperNav,
 } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
@@ -21,16 +20,14 @@ import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContaine
 import { InvalidSubmit } from "~/app/listing/ui/CreateListing/Submit/InvalidSubmit";
 import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
 
-export const SubmitWrapper: FC<{
-	listingNavApi: useSnapperNav.Api;
-}> = memo(({ listingNavApi }) => {
+export const SubmitWrapper: FC = memo(() => {
 	const navigate = useNavigate();
 	const { locale } = useParams({
 		from: "/$locale",
 	});
 	const useCreateListingStore = useCreateListingContext();
 	const store = useCreateListingStore();
-	const files = store.photos.filter(Boolean) as File[];
+	const files = store.photos.filter(Boolean) as string[];
 
 	const preSignMutation = withS3PreSignMutation.useMutation();
 	const createListingGalleryMutation =
@@ -94,15 +91,15 @@ export const SubmitWrapper: FC<{
 			};
 
 			files.forEach((photo, index) => {
-				queue.add(async () => {
-					try {
-						await upload(photo, index);
-					} catch (err) {
-						console.error("[upload photo] failed", err);
-						perFile[index] = 100;
-						setProgress(perFile.reduce((s, v) => s + v, 0) / total);
-					}
-				});
+				// queue.add(async () => {
+				// 	try {
+				// 		await upload(photo, index);
+				// 	} catch (err) {
+				// 		console.error("[upload photo] failed", err);
+				// 		perFile[index] = 100;
+				// 		setProgress(perFile.reduce((s, v) => s + v, 0) / total);
+				// 	}
+				// });
 			});
 
 			await queue.onIdle();
@@ -118,14 +115,11 @@ export const SubmitWrapper: FC<{
 	});
 
 	if (store.missing.length > 0) {
-		return <InvalidSubmit listingNavApi={listingNavApi} />;
+		return <InvalidSubmit />;
 	}
 
 	return (
-		<ListingContainer
-			listingNavApi={listingNavApi}
-			progress={false}
-		>
+		<ListingContainer progress={false}>
 			<Container layout={"vertical-content-footer"}>
 				<Status
 					icon={SendPackageIcon}

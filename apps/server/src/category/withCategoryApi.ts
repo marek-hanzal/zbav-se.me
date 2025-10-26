@@ -1,16 +1,17 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { withCount, withFetch, withList } from "@use-pico/common";
-import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
+import { ErrorSchema } from "../schema/ErrorSchema";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
 import {
 	withCategoryQueryBuilder,
 	withCategoryQueryBuilderWithSort,
 } from "./withCategoryQueryBuilder";
+import { withCategorySelect } from "./withCategorySelect";
 
 export const withCategoryApi = ({ session }: Routes) => {
 	const hono = withSessionHono();
@@ -41,6 +42,14 @@ export const withCategoryApi = ({ session }: Routes) => {
 					description:
 						"Return a category based on the provided query",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Category not found",
+				},
 			},
 			tags: [
 				"category",
@@ -58,9 +67,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withFetch({
-						select: database.kysely
-							.selectFrom("category")
-							.selectAll(),
+						select: withCategorySelect(),
 						output: CategorySchema,
 						filter,
 						where,
@@ -74,7 +81,17 @@ export const withCategoryApi = ({ session }: Routes) => {
 					}),
 			});
 
+			if (!data) {
+				return c.json(
+					{
+						message: "Category not found",
+					},
+					404,
+				);
+			}
+
 			return c.json(data, {
+				status: 200,
 				headers: {
 					"X-Cached": hit ? "true" : "false",
 				},
@@ -124,9 +141,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withList({
-						select: database.kysely
-							.selectFrom("category")
-							.selectAll(),
+						select: withCategorySelect(),
 						output: CategorySchema,
 						cursor,
 						filter,
@@ -190,9 +205,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withCount({
-						select: database.kysely
-							.selectFrom("category")
-							.selectAll(),
+						select: withCategorySelect(),
 						filter,
 						where,
 						query({ select, where }) {

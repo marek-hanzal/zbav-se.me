@@ -4,42 +4,42 @@ import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
-import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
-import { GallerySchema } from "./schema/GallerySchema";
+import { UploadDtoSchema } from "./schema/UploadDtoSchema";
+import { UploadQuerySchema } from "./schema/UploadQuerySchema";
 import {
-	withGalleryQueryBuilder,
-	withGalleryQueryBuilderWithSort,
-} from "./withGalleryQueryBuilder";
-import { withGallerySelect } from "./withGallerySelect";
+	withUploadQueryBuilder,
+	withUploadQueryBuilderWithSort,
+} from "./withUploadQueryBuilder";
+import { withUploadSelect } from "./withUploadSelect";
 
-export const withGalleryApi: Routes.Fn = ({ session }) => {
+export const withUploadApi: Routes.Fn = ({ session }) => {
 	const hono = withSessionHono();
 
 	hono.openapi(
 		createRoute({
 			method: "post",
-			path: "/gallery/fetch",
-			description: "Return a gallery item based on the provided query",
-			operationId: "apiGalleryFetch",
+			path: "/upload/fetch",
+			description: "Return an upload item based on the provided query",
+			operationId: "apiUploadFetch",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: GalleryQuerySchema,
+							schema: UploadQuerySchema,
 						},
 					},
-					description: "Query object for gallery fetch",
+					description: "Query object for upload fetch",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: GallerySchema,
+							schema: UploadDtoSchema,
 						},
 					},
 					description:
-						"Return a gallery item based on the provided query",
+						"Return an upload item based on the provided query",
 				},
 				404: {
 					content: {
@@ -47,23 +47,23 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 							schema: ErrorSchema,
 						},
 					},
-					description: "Gallery item not found",
+					description: "Upload not found",
 				},
 			},
 			tags: [
-				"gallery",
+				"upload",
 			],
 		}),
 		async (c) => {
 			const { filter, where, sort } = c.req.valid("json");
 
 			const result = await withFetch({
-				select: withGallerySelect(),
-				output: GallerySchema,
+				select: withUploadSelect(),
+				output: UploadDtoSchema,
 				filter,
 				where,
 				query({ select, where }) {
-					return withGalleryQueryBuilderWithSort({
+					return withUploadQueryBuilderWithSort({
 						select,
 						where,
 						sort,
@@ -74,7 +74,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 			if (!result) {
 				return c.json(
 					{
-						message: "Gallery item not found",
+						message: "Upload not found",
 					},
 					404,
 				);
@@ -87,14 +87,14 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 	hono.openapi(
 		createRoute({
 			method: "post",
-			path: "/gallery/collection",
-			description: "Returns gallery items based on provided parameters",
-			operationId: "apiGalleryCollection",
+			path: "/upload/collection",
+			description: "Returns upload items based on provided parameters",
+			operationId: "apiUploadCollection",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: GalleryQuerySchema,
+							schema: UploadQuerySchema,
 						},
 					},
 				},
@@ -103,28 +103,28 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: z.array(GallerySchema),
+							schema: z.array(UploadDtoSchema),
 						},
 					},
 					description:
-						"Access collection of gallery items based on provided query",
+						"Access collection of upload items based on provided query",
 				},
 			},
 			tags: [
-				"gallery",
+				"upload",
 			],
 		}),
 		async (c) => {
 			const { cursor, filter, where, sort } = c.req.valid("json");
 			return c.json(
 				await withList({
-					select: withGallerySelect(),
-					output: GallerySchema,
+					select: withUploadSelect(),
+					output: UploadDtoSchema,
 					cursor,
 					filter,
 					where,
 					query({ select, where }) {
-						return withGalleryQueryBuilderWithSort({
+						return withUploadQueryBuilderWithSort({
 							select,
 							where,
 							sort,
@@ -138,15 +138,15 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 	hono.openapi(
 		createRoute({
 			method: "post",
-			path: "/gallery/count",
+			path: "/upload/count",
 			description:
-				"Returns count of gallery items based on provided query",
-			operationId: "apiGalleryCount",
+				"Returns count of upload items based on provided query",
+			operationId: "apiUploadCount",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: GalleryQuerySchema,
+							schema: UploadQuerySchema,
 						},
 					},
 				},
@@ -162,18 +162,18 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 				},
 			},
 			tags: [
-				"gallery",
+				"upload",
 			],
 		}),
 		async (c) => {
 			const { filter, where } = c.req.valid("json");
 			return c.json(
 				await withCount({
-					select: withGallerySelect(),
+					select: withUploadSelect(),
 					filter,
 					where,
 					query({ select, where }) {
-						return withGalleryQueryBuilder({
+						return withUploadQueryBuilder({
 							select,
 							where,
 						});

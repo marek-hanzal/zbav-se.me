@@ -29,8 +29,8 @@ export namespace createListingStore {
 	export interface Store {
 		//
 		photoCountLimit: number;
-		photos: (File | undefined)[];
-		setPhoto(slot: number, photo: File | undefined): void;
+		photos: (string | undefined)[];
+		setPhoto(slot: number, photo: string | undefined): void;
 		hasPhotos: boolean;
 		//
 		categoryGroup: CategoryGroup[];
@@ -104,8 +104,8 @@ export const createListingStore = ({
 				];
 				next[slot] = photo;
 
-				const compact: (File | undefined)[] = next.filter(
-					(f): f is File => !!f,
+				const compact: (string | undefined)[] = next.filter(
+					(f): f is string => !!f,
 				);
 
 				while (compact.length < photoCountLimit) {
