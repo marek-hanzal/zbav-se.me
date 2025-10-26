@@ -11,7 +11,7 @@ import {
 import { translator } from "@use-pico/common";
 import type { CategoryGroup } from "@zbav-se.me/sdk";
 import { Fade } from "@zbav-se.me/ui";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import z from "zod";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { CategoryGroupItem } from "~/app/category-group/ui/CategoryGroupItem";
@@ -55,20 +55,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/category-group")({
 			],
 		});
 		const containerRef = useRef<HTMLDivElement>(null);
-
-		useEffect(() => {
-			selection.clear();
-			navigate({
-				search(prev) {
-					return {
-						...prev,
-						categoryGroupId: undefined,
-					};
-				},
-			});
-		}, [
-			categoryGroupQuery.data,
-		]);
 
 		return (
 			<ListingContainer
