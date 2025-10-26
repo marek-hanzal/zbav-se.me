@@ -65,9 +65,6 @@ export namespace Data {
 		renderError?: ErrorComponent.RenderFn;
 		renderEmpty?: EmptyComponent.RenderFn;
 		children?: Content.RenderFn;
-
-		/** Hard override: when true, always render "empty" regardless of query state. */
-		forceEmpty?: boolean;
 	}
 }
 
@@ -79,18 +76,10 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 	renderError = DefaultError,
 	renderEmpty = DefaultEmpty,
 	children = DefaultContent,
-	forceEmpty = false,
 }: Data.Props<TResult>) => {
 	/** Treat undefined/null OR empty arrays as "empty". */
 	const isEmptyData = (data: unknown) =>
 		data == null || (Array.isArray(data) && data.length === 0);
-
-	/** Hard override for cases like "upload in progress, show empty". */
-	if (forceEmpty) {
-		return children({
-			content: renderEmpty(),
-		});
-	}
 
 	return children({
 		content: match(result)

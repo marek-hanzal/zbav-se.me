@@ -40,6 +40,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	onChange,
 	...props
 }) => {
+	const [current, setCurrent] = useState<string | undefined>(value);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
@@ -69,7 +70,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			setUpload(undefined, {
 				where: {
-					id: value,
+					id: current,
 				},
 			});
 
@@ -107,21 +108,19 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					id: upload.id,
 				},
 			});
+			setCurrent(upload.id);
 			onChange(upload.id);
-		},
-		onSettled() {
-			setProgress(0);
 		},
 	});
 
 	const uploadFetchQuery = withUploadFetchQuery.useQuery(
 		{
 			where: {
-				id: value,
+				id: current,
 			},
 		},
 		{
-			enabled: !!value && !uploadMutation.isPending,
+			enabled: !!current && !uploadMutation.isPending,
 		},
 	);
 
@@ -185,55 +184,56 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				}}
 				{...props}
 			>
-				<Data
-					result={uploadFetchQuery}
-					forceEmpty={uploadMutation.isPending}
-					renderEmpty={() =>
-						uploadMutation.isPending ? (
-							<Status
-								icon={SpinnerIcon}
-								textTitle={"Uploading photo (title)"}
-								tone={"primary"}
-								theme={"light"}
-								action={
-									<Progress
-										value={progress * 100}
-										size={"lg"}
-										tone={"secondary"}
-										theme={"dark"}
-									/>
-								}
+				{uploadMutation.isPending ? (
+					<Status
+						icon={SpinnerIcon}
+						textTitle={"Uploading photo (title)"}
+						tone={"primary"}
+						theme={"light"}
+						action={
+							<Progress
+								value={progress * 100}
+								size={"lg"}
+								tone={"secondary"}
+								theme={"dark"}
 							/>
-						) : (
-							<Status
-								icon={PhotoIcon}
-								iconProps={{
-									size: "2xl",
-								}}
-								textTitle={"Upload (title)"}
-								titleProps={{
-									size: "2xl",
-								}}
-								textMessage={
-									props.disabled
-										? "Upload - disabled (placeholder)"
-										: "Listing - upload photo (placeholder)"
-								}
-								messageProps={{
-									size: "xl",
-								}}
-								tone={"primary"}
+						}
+					/>
+				) : (
+					<Data
+						result={uploadFetchQuery}
+						renderEmpty={() => {
+							return (
+								<Status
+									icon={PhotoIcon}
+									iconProps={{
+										size: "2xl",
+									}}
+									textTitle={"Upload (title)"}
+									titleProps={{
+										size: "2xl",
+									}}
+									textMessage={
+										props.disabled
+											? "Upload - disabled (placeholder)"
+											: "Listing - upload photo (placeholder)"
+									}
+									messageProps={{
+										size: "xl",
+									}}
+									tone={"primary"}
+								/>
+							);
+						}}
+						renderSuccess={({ data }) => (
+							<img
+								src={data.url}
+								alt={data.id}
+								className="absolute inset-0 h-full w-full object-cover object-center"
 							/>
-						)
-					}
-					renderSuccess={({ data }) => (
-						<img
-							src={data.url}
-							alt={data.id}
-							className="absolute inset-0 h-full w-full object-cover object-center"
-						/>
-					)}
-				/>
+						)}
+					/>
+				)}
 			</Sheet>
 
 			{/* 
