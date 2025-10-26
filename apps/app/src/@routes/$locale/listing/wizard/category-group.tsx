@@ -6,11 +6,12 @@ import {
 	Container,
 	Data,
 	LinkTo,
+	useScrollTo,
 	useSelection,
 } from "@use-pico/client";
 import { type EntitySchema, translator } from "@use-pico/common";
 import { Fade } from "@zbav-se.me/ui";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import z from "zod";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
 import { CategoryGroupItem } from "~/app/category-group/ui/CategoryGroupItem";
@@ -61,6 +62,15 @@ export const Route = createFileRoute("/$locale/listing/wizard/category-group")({
 			],
 		});
 		const containerRef = useRef<HTMLDivElement>(null);
+		const scrollTo = useScrollTo(containerRef);
+
+		useEffect(() => {
+			if (categoryGroupId) {
+				scrollTo(`.CategoryGroupItem-${categoryGroupId}`);
+			}
+		}, [
+			categoryGroupQuery.data,
+		]);
 
 		return (
 			<ListingContainer

@@ -53,6 +53,7 @@ export { Highlighter } from "./highlighter/Highlighter";
 export { HighlighterCls } from "./highlighter/HighlighterCls";
 export { HighlighterTarget } from "./highlighter/HighlighterTarget";
 export { useDoubleTap } from "./hook/useDoubleTap";
+export { useScrollTo } from "./hook/useScrollTo";
 export { useSetUnset } from "./hook/useSetUnset";
 export { useStableCallback } from "./hook/useStableCallback";
 export { useStableMemo } from "./hook/useStableMemo";
