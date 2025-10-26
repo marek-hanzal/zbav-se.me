@@ -307,7 +307,6 @@ export const SheetCls = contract(PicoCls.contract)
 	.match("disabled", true, {
 		root: {
 			class: [
-				"Sheet-root[disabled]",
 				"opacity-80",
 				"pointer-events-none",
 			],

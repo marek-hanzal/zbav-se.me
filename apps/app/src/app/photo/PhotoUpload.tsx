@@ -14,7 +14,6 @@ import {
 	type ChangeEvent,
 	type FC,
 	type KeyboardEvent,
-	type SyntheticEvent,
 	useCallback,
 	useRef,
 	useState,
@@ -38,6 +37,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
+	tweak,
+	disabled,
 	...props
 }) => {
 	const [current, setCurrent] = useState<string | undefined>(value);
@@ -124,11 +125,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 		},
 	);
 
-	const stop = useCallback((event: SyntheticEvent) => {
-		event.preventDefault();
-		event.stopPropagation();
-	}, []);
-
 	const onUpload = useCallback(
 		async (e: ChangeEvent<HTMLInputElement>) => {
 			const file = e.target.files?.[0];
@@ -148,20 +144,11 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	return (
 		<Container
 			ref={containerRef}
-			data-ui="PhotoSlot-root"
+			ui="PhotoUpload-Container"
 			position="relative"
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"PhotoSlot-root",
-						],
-					},
-				},
-			}}
 		>
 			<input
-				data-ui="PhotoSlot-input"
+				data-ui="PhotoUpload-Input"
 				ref={inputRef}
 				type="file"
 				accept="image/*"
@@ -171,17 +158,25 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			/>
 
 			<Sheet
+				ui="PhotoUpload-Sheet"
 				onClick={pick}
 				onKeyDown={onKeyDown}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"relative",
-							],
+				disabled={disabled || uploadMutation.isPending}
+				tweak={[
+					tweak,
+					{
+						slot: {
+							root: {
+								class: [
+									/**
+									 * Because of internal <img/> uses absolute sizes.
+									 */
+									"relative",
+								],
+							},
 						},
 					},
-				}}
+				]}
 				{...props}
 			>
 				{uploadMutation.isPending ? (

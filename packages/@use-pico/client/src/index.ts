@@ -56,6 +56,7 @@ export { useDoubleTap } from "./hook/useDoubleTap";
 export { useSetUnset } from "./hook/useSetUnset";
 export { useStableCallback } from "./hook/useStableCallback";
 export { useStableMemo } from "./hook/useStableMemo";
+export { useStopEvent } from "./hook/useStopEvent";
 export { ActionMenuIcon } from "./icon/ActionMenuIcon";
 export { ArrowDownIcon } from "./icon/ArrowDownIcon";
 export { ArrowLeftIcon } from "./icon/ArrowLeftIcon";
