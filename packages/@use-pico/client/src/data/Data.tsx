@@ -14,6 +14,8 @@ const DefaultError = () => (
 	</div>
 );
 
+const DefaultEmpty: Data.EmptyComponent.RenderFn = () => null;
+
 const DefaultContent: Data.Content.RenderFn = ({ content }) => content;
 
 export namespace Data {
@@ -22,6 +24,13 @@ export namespace Data {
 			data: TData;
 		}
 		export type RenderFn<TData> = (props: Props<TData>) => ReactNode;
+	}
+
+	/**
+	 * Success, but empty
+	 */
+	export namespace EmptyComponent {
+		export type RenderFn = () => ReactNode;
 	}
 
 	export namespace LoadingComponent {
@@ -58,6 +67,7 @@ export namespace Data {
 			NonNullable<TResult["data"]>
 		>;
 		renderError?: ErrorComponent.RenderFn;
+		renderEmpty?: EmptyComponent.RenderFn;
 		children?: Content.RenderFn;
 	}
 }
@@ -68,6 +78,7 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 	renderLoading = () => <Spinner />,
 	renderFetching = () => <Spinner />,
 	renderError = DefaultError,
+	renderEmpty = DefaultEmpty,
 	children = DefaultContent,
 }: Data.Props<TResult>) => {
 	return children({
@@ -97,10 +108,11 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 			.when(
 				(r) => r.isSuccess,
 				(r) => {
-					return renderSuccess({
-						// biome-ignore lint/style/noNonNullAssertion: We've already checked isSuccess,
-						data: r.data!,
-					});
+					return r.data
+						? renderEmpty()
+						: renderSuccess({
+								data: r.data,
+							});
 				},
 			)
 			.otherwise(() => null),

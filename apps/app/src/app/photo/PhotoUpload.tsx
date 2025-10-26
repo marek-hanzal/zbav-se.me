@@ -1,17 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import {
-	Action,
-	Container,
-	Icon,
-	SpinnerIcon,
-	Status,
-	TrashIcon,
-} from "@use-pico/client";
+import { Container, Data } from "@use-pico/client";
 import { genId } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
-import { PhotoIcon, Sheet } from "@zbav-se.me/ui";
+import type { Sheet } from "@zbav-se.me/ui";
 import axios from "axios";
-import src from "gsap/src";
 import {
 	type ChangeEvent,
 	type FC,
@@ -23,6 +15,7 @@ import {
 } from "react";
 import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
 import { withUploadCreateMutation } from "~/app/upload/mutation/withUploadCreateMutation";
+import { withUploadFetchQuery } from "~/app/upload/query/withUploadFetchQuery";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;
@@ -47,6 +40,19 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	const trashRef = useRef<HTMLDivElement>(null);
 	const spinnerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
+
+	const uploadFetchQuery = withUploadFetchQuery.useQuery(
+		{
+			where: {
+				id: value,
+			},
+		},
+		{
+			enabled: !!value,
+		},
+	);
+
+	console.log(uploadFetchQuery.status);
 
 	const preSignMutation = withS3PreSignMutation.useMutation();
 	const createUploadMutation = withUploadCreateMutation.useMutation();
@@ -142,7 +148,17 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={onUpload}
 			/>
 
-			<Action
+			<Data
+				result={uploadFetchQuery}
+				renderEmpty={() => {
+					return "nope!";
+				}}
+				renderSuccess={() => {
+					return "yep!";
+				}}
+			/>
+
+			{/* <Action
 				ref={trashRef}
 				iconEnabled={TrashIcon}
 				onClick={(e) => {
@@ -206,6 +222,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					backgroundImage: `url(${src})`,
 					backgroundSize: "cover",
 					backgroundPosition: "center",
+
 					backgroundRepeat: "no-repeat",
 				}}
 				{...props}
@@ -231,7 +248,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 						tone={"primary"}
 					/>
 				)}
-			</Sheet>
+			</Sheet> */}
 		</Container>
 	);
 };
