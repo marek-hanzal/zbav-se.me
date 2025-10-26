@@ -209,7 +209,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 										size: "2xl",
 									}}
 									textMessage={
-										props.disabled
+										disabled
 											? "Upload - disabled (placeholder)"
 											: "Listing - upload photo (placeholder)"
 									}
