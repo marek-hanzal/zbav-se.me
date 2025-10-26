@@ -22,7 +22,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 		const { locale } = Route.useParams();
 		const { uploadIds } = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const pageNavId = useId();
 
 		/**
 		 * TODO Resolve photo limit from the user's tokens/plan/whatever
@@ -81,79 +80,86 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 							search={{
 								uploadIds,
 							}}
+							disabled={!hasUploads}
 						>
 							<Button
 								tone={"secondary"}
 								theme={"dark"}
 								iconEnabled={ArrowRightIcon}
+								size={"lg"}
+								disabled={!hasUploads}
 							/>
 						</LinkTo>
 					),
 				}}
 			>
-				<SnapperNav
-					snapperNav={snapperNav}
-					orientation={"horizontal"}
-					iconProps={() => ({
-						size: "sm",
-					})}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"bottom-1",
-									"transition-opacity",
-									hasUploads ? "opacity-60" : "opacity-0",
-								],
+				<div className={"relative"}>
+					<SnapperNav
+						snapperNav={snapperNav}
+						orientation={"horizontal"}
+						iconProps={() => ({
+							size: "sm",
+						})}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"bottom-1",
+										"transition-opacity",
+										hasUploads ? "opacity-60" : "opacity-0",
+									],
+								},
 							},
-						},
-					}}
-					subtle={false}
-				/>
+						}}
+						subtle={false}
+					/>
 
-				<Container
-					ref={snapperRef}
-					layout="horizontal-full"
-					overflow={"horizontal"}
-					snap={"horizontal-start"}
-					gap={"md"}
-					round={"lg"}
-				>
-					{Array.from({
-						length: photoCountLimit,
-					}).map((_, slot) => {
-						const disabled = slot > 0 && !uploadIds[slot - 1];
+					<Container
+						ref={snapperRef}
+						layout="horizontal-full"
+						overflow={"horizontal"}
+						snap={"horizontal-start"}
+						gap={"md"}
+						round={"lg"}
+					>
+						{Array.from({
+							length: photoCountLimit,
+						}).map((_, slot) => {
+							const disabled = slot > 0 && !uploadIds[slot - 1];
 
-						return (
-							<PhotoUpload
-								key={`${uploadId}-${slot + 1}`}
-								disabled={disabled}
-								value={uploadIds[slot]}
-								onChange={(uploadId) => {
-									navigate({
-										search({ uploadIds, ...search }) {
-											const next: (string | undefined)[] =
-												[
+							return (
+								<PhotoUpload
+									key={`${uploadId}-${slot + 1}`}
+									disabled={disabled}
+									value={uploadIds[slot]}
+									onChange={(uploadId) => {
+										navigate({
+											search({ uploadIds, ...search }) {
+												const next: (
+													| string
+													| undefined
+												)[] = [
 													...uploadIds,
 												];
-											next[slot] = uploadId;
+												next[slot] = uploadId;
 
-											const compact: string[] =
-												next.filter(
-													(f): f is string => !!f,
-												);
+												const compact: string[] =
+													next.filter(
+														(f): f is string => !!f,
+													);
 
-											return {
-												...search,
-												uploadIds: compact,
-											};
-										},
-									});
-								}}
-							/>
-						);
-					})}
-				</Container>
+												return {
+													...search,
+													uploadIds: compact,
+												};
+											},
+										});
+									}}
+								/>
+							);
+						})}
+					</Container>
+				</div>
 			</ListingContainer>
 		);
 	},

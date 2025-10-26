@@ -23,6 +23,7 @@ import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
 import { Route as LocaleListingWizardStartRouteImport } from './@routes/$locale/listing/wizard/start'
 import { Route as LocaleListingWizardPhotosRouteImport } from './@routes/$locale/listing/wizard/photos'
 import { Route as LocaleListingWizardCategoryGroupRouteImport } from './@routes/$locale/listing/wizard/category-group'
+import { Route as LocaleListingWizardCategoryRouteImport } from './@routes/$locale/listing/wizard/category'
 import { Route as LocaleListingIdViewRouteImport } from './@routes/$locale/listing/$id/view'
 
 const LocaleRoute = LocaleRouteImport.update({
@@ -98,6 +99,12 @@ const LocaleListingWizardCategoryGroupRoute =
     path: '/category-group',
     getParentRoute: () => LocaleListingWizardRoute,
   } as any)
+const LocaleListingWizardCategoryRoute =
+  LocaleListingWizardCategoryRouteImport.update({
+    id: '/category',
+    path: '/category',
+    getParentRoute: () => LocaleListingWizardRoute,
+  } as any)
 const LocaleListingIdViewRoute = LocaleListingIdViewRouteImport.update({
   id: '/listing/$id/view',
   path: '/listing/$id/view',
@@ -117,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/$locale/listing/my': typeof LocaleListingMyRoute
   '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/category': typeof LocaleListingWizardCategoryRoute
   '/$locale/listing/wizard/category-group': typeof LocaleListingWizardCategoryGroupRoute
   '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
   '/$locale/listing/wizard/start': typeof LocaleListingWizardStartRoute
@@ -133,6 +141,7 @@ export interface FileRoutesByTo {
   '/$locale/listing/my': typeof LocaleListingMyRoute
   '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/category': typeof LocaleListingWizardCategoryRoute
   '/$locale/listing/wizard/category-group': typeof LocaleListingWizardCategoryGroupRoute
   '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
   '/$locale/listing/wizard/start': typeof LocaleListingWizardStartRoute
@@ -151,6 +160,7 @@ export interface FileRoutesById {
   '/$locale/listing/my': typeof LocaleListingMyRoute
   '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/category': typeof LocaleListingWizardCategoryRoute
   '/$locale/listing/wizard/category-group': typeof LocaleListingWizardCategoryGroupRoute
   '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
   '/$locale/listing/wizard/start': typeof LocaleListingWizardStartRoute
@@ -170,6 +180,7 @@ export interface FileRouteTypes {
     | '/$locale/listing/my'
     | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/category'
     | '/$locale/listing/wizard/category-group'
     | '/$locale/listing/wizard/photos'
     | '/$locale/listing/wizard/start'
@@ -186,6 +197,7 @@ export interface FileRouteTypes {
     | '/$locale/listing/my'
     | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/category'
     | '/$locale/listing/wizard/category-group'
     | '/$locale/listing/wizard/photos'
     | '/$locale/listing/wizard/start'
@@ -203,6 +215,7 @@ export interface FileRouteTypes {
     | '/$locale/listing/my'
     | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/category'
     | '/$locale/listing/wizard/category-group'
     | '/$locale/listing/wizard/photos'
     | '/$locale/listing/wizard/start'
@@ -313,6 +326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleListingWizardCategoryGroupRouteImport
       parentRoute: typeof LocaleListingWizardRoute
     }
+    '/$locale/listing/wizard/category': {
+      id: '/$locale/listing/wizard/category'
+      path: '/category'
+      fullPath: '/$locale/listing/wizard/category'
+      preLoaderRoute: typeof LocaleListingWizardCategoryRouteImport
+      parentRoute: typeof LocaleListingWizardRoute
+    }
     '/$locale/listing/$id/view': {
       id: '/$locale/listing/$id/view'
       path: '/listing/$id/view'
@@ -324,12 +344,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleListingWizardRouteChildren {
+  LocaleListingWizardCategoryRoute: typeof LocaleListingWizardCategoryRoute
   LocaleListingWizardCategoryGroupRoute: typeof LocaleListingWizardCategoryGroupRoute
   LocaleListingWizardPhotosRoute: typeof LocaleListingWizardPhotosRoute
   LocaleListingWizardStartRoute: typeof LocaleListingWizardStartRoute
 }
 
 const LocaleListingWizardRouteChildren: LocaleListingWizardRouteChildren = {
+  LocaleListingWizardCategoryRoute: LocaleListingWizardCategoryRoute,
   LocaleListingWizardCategoryGroupRoute: LocaleListingWizardCategoryGroupRoute,
   LocaleListingWizardPhotosRoute: LocaleListingWizardPhotosRoute,
   LocaleListingWizardStartRoute: LocaleListingWizardStartRoute,

@@ -3,7 +3,7 @@ import { type Cls, tvc } from "@use-pico/cls";
 import type { Category } from "@zbav-se.me/sdk";
 import { CategoryIcon, CheckIcon, Sheet } from "@zbav-se.me/ui";
 import { type FC, useRef } from "react";
-import { useAnimation } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/useAnimation";
+import { useAnimation } from "~/app/category-group/ui/useAnimation";
 
 export namespace CategoryItem {
 	export interface Props {

@@ -1,5 +1,6 @@
 import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, type Ref, useCallback, useId, useMemo } from "react";
+import type { UiProps } from "../component/UiProps";
 import { useDoubleTap } from "../hook/useDoubleTap";
 import { DotIcon } from "../icon/DotIcon";
 import { Icon } from "../icon/Icon";
@@ -34,7 +35,7 @@ export namespace SnapperNav {
 		icon?: Icon.Type;
 	}
 
-	export interface Props extends SnapperNavCls.Props {
+	export interface Props extends UiProps<SnapperNavCls.Props> {
 		ref?: Ref<HTMLDivElement>;
 		snapperNav: useSnapperNav.Result;
 		pages?: Page[] | Count;
@@ -48,6 +49,7 @@ export namespace SnapperNav {
 }
 
 export const SnapperNav: FC<SnapperNav.Props> = ({
+	ui,
 	ref,
 	snapperNav,
 	pages,
@@ -295,7 +297,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 	return snapperNav.state.count > 1 ? (
 		<div
-			data-ui="SnapperNav-root"
+			data-ui={ui ?? "SnapperNav-root"}
 			ref={ref}
 			className={slots.root()}
 		>

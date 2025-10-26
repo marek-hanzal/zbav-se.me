@@ -42,14 +42,7 @@ export const ListingContainer: FC<ListingContainer.Props> = ({
 				<div />
 			)}
 
-			{children ? (
-				<div
-					data-ui="ListingContainer-content"
-					className={"relative"}
-				>
-					{children}
-				</div>
-			) : null}
+			{children}
 
 			{bottom ? (
 				<BottomContainer>

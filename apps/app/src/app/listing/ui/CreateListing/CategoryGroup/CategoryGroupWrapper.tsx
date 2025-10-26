@@ -10,8 +10,8 @@ import { Sheet, SpinnerSheet } from "@zbav-se.me/ui";
 import { type FC, memo, useEffect, useId, useRef } from "react";
 import { withCategoryGroupCountQuery } from "~/app/category-group/query/withCategoryGroupCountQuery";
 import { withCategoryGroupListQuery } from "~/app/category-group/query/withCategoryGroupListQuery";
+import { CategoryGroupItem } from "~/app/category-group/ui/CategoryGroupItem";
 import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
-import { CategoryGroupItem } from "~/app/listing/ui/CreateListing/CategoryGroup/Item/CategoryGroupItem";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 
 export namespace CategoryGroupWrapper {
