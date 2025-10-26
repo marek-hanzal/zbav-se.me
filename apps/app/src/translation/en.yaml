@@ -61,9 +61,6 @@
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
-3b522974c1d62e07a45b46adac02b29e3ad44475356bf339207555dc:
-  ref: Nothing found (badge)
-  value: Nothing found (badge)
 3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
   ref: Error (toast)
   value: Error (toast)
@@ -208,9 +205,6 @@ aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
   ref: Success (toast)
   value: Success (toast)
-ace3cb7fde09a6de2d13e87440ee5f21a920cd7dff6ac1dc2ee6ba48:
-  ref: Search (title)
-  value: Search (title)
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
   ref: Export settings (title)
   value: Export settings (title)
@@ -333,6 +327,9 @@ faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
 fba4c8a805650ffe7264342944ffd910ddcc82a1892b9b354d48369b:
   ref: Listing expire (title)
   value: Listing expire (title)
+fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
+  ref: Back to home (link)
+  value: Back to home (link)
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
   ref: Bag (label)
   value: Bag (label)

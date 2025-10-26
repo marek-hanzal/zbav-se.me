@@ -1,5 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, InfiniteData, Spinner, Status } from "@use-pico/client";
+import {
+	ArrowLeftIcon,
+	Button,
+	Container,
+	InfiniteData,
+	LinkTo,
+	Sheet,
+	Spinner,
+	Status,
+} from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
 import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -115,15 +124,37 @@ export const Route = createFileRoute("/$locale/feed")({
 								{content}
 
 								{listingQuery.hasNextPage ? null : (
-									<Status
-										icon={
-											"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
-										}
-										textTitle={"That's all for now (title)"}
-										textMessage={
-											"No more listings to show (message)"
-										}
-									/>
+									<Sheet>
+										<Status
+											icon={
+												"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
+											}
+											textTitle={
+												"That's all for now (title)"
+											}
+											textMessage={
+												"No more listings to show (message)"
+											}
+											action={
+												<LinkTo
+													to={"/$locale/dashboard"}
+													params={{
+														locale,
+													}}
+												>
+													<Button
+														iconEnabled={
+															ArrowLeftIcon
+														}
+														tone={"secondary"}
+														label={
+															"Back to home (link)"
+														}
+													/>
+												</LinkTo>
+											}
+										/>
+									</Sheet>
 								)}
 							</FlowContainer>
 						);
