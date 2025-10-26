@@ -1,5 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
@@ -42,6 +43,14 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 					},
 					description: "The created upload",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Invalid URL",
+				},
 			},
 			tags: [
 				"upload",
@@ -52,6 +61,15 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
+
+			if (!data.url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
+				return c.json(
+					{
+						message: "Only content from the CDN can be uploaded",
+					} satisfies ErrorSchema.Type,
+					400,
+				);
+			}
 
 			await database.kysely
 				.insertInto("upload")
@@ -142,7 +160,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Upload not found",
-					},
+					} satisfies ErrorSchema.Type,
 					404,
 				);
 			}

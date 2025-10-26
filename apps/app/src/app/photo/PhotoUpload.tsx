@@ -15,6 +15,7 @@ import src from "gsap/src";
 import {
 	type ChangeEvent,
 	type FC,
+	type KeyboardEvent,
 	type SyntheticEvent,
 	useCallback,
 	useRef,
@@ -49,6 +50,16 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 	const preSignMutation = withS3PreSignMutation.useMutation();
 	const createUploadMutation = withUploadCreateMutation.useMutation();
+
+	const pick = useCallback(() => {
+		inputRef.current?.click();
+	}, []);
+	const onKeyDown = useCallback((e: KeyboardEvent) => {
+		if (e.key === "Enter" || e.key === " ") {
+			e.preventDefault();
+			inputRef.current?.click();
+		}
+	}, []);
 
 	const uploadMutation = useMutation({
 		mutationKey: [
@@ -189,8 +200,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 			<Sheet
 				ref={sheetRef}
-				// onClick={pick}
-				// onKeyDown={onKeyDown}
+				onClick={pick}
+				onKeyDown={onKeyDown}
 				style={{
 					backgroundImage: `url(${src})`,
 					backgroundSize: "cover",

@@ -154,10 +154,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					await createListingGalleryMutation.mutateAsync({
 						listingId: listing.id,
 						sort: 0,
-						url: linkTo({
-							base: "https://content.zbav-se.me",
-							href: presign.path,
-						}),
+						url: presign.cdn,
 					});
 
 					return listing;

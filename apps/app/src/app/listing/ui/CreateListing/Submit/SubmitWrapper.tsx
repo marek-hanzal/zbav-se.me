@@ -6,7 +6,6 @@ import {
 	Progress,
 	Status,
 } from "@use-pico/client";
-import { linkTo } from "@use-pico/common";
 import type { AllowedContentTypes, AllowedExtensions } from "@zbav-se.me/sdk";
 import { SendPackageIcon } from "@zbav-se.me/ui";
 import axios from "axios";
@@ -80,10 +79,7 @@ export const SubmitWrapper: FC = memo(() => {
 				await createListingGalleryMutation.mutateAsync({
 					listingId: result.id,
 					sort: index,
-					url: linkTo({
-						base: "https://content.zbav-se.me",
-						href: presign.path,
-					}),
+					url: presign.cdn,
 				});
 
 				perFile[index] = 100;

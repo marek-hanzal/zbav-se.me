@@ -1,5 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { genId, keyOf } from "@use-pico/common";
+import { genId, keyOf, linkTo } from "@use-pico/common";
 import { AppEnv } from "../AppEnv";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
@@ -58,10 +58,10 @@ export const S3PreSignResponseSchema = z
 			example:
 				"https://s3.eu-central-003.backblazeb2.com/...?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...",
 		}),
-		path: z.string().openapi({
+		cdn: z.string().openapi({
 			example:
-				"/123e4567-e89b-12d3-a456-426614174000/listing/abc/photo.webp",
-			description: "Path on the bucket",
+				"https://content.zbav-se.me/123e4567-e89b-12d3-a456-426614174000/listing/abc/photo.webp",
+			description: "CDN url where the file lives",
 		}),
 	})
 	.openapi("S3PreSignResponse");
@@ -131,7 +131,10 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 							key,
 							60 * 30,
 						),
-						path: `/${key}`,
+						cdn: linkTo({
+							base: AppEnv.SERVER_CONTENT_CDN,
+							href: `/${key}`,
+						}),
 					} satisfies z.infer<typeof S3PreSignResponseSchema>,
 					201,
 				);

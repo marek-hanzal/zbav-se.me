@@ -2,6 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
+import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
@@ -354,6 +355,14 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				201: {
 					description: "Gallery item created successfully",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Invalid URL",
+				},
 				403: {
 					content: {
 						"application/json": {
@@ -373,7 +382,16 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 			const user = c.get("user");
 			const now = new Date();
 
-			// Verify that the listing belongs to the user
+			if (!data.url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
+				return c.json(
+					{
+						message:
+							"Only content from the CDN can be added to the gallery",
+					} satisfies ErrorSchema.Type,
+					400,
+				);
+			}
+
 			const listing = await database.kysely
 				.selectFrom("listing")
 				.select("id")
@@ -384,8 +402,8 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 			if (!listing) {
 				return c.json(
 					{
-						error: "Nope. Shoo. I don't like you!",
-					},
+						message: "Nope. Shoo. I don't like you!",
+					} satisfies ErrorSchema.Type,
 					403,
 				);
 			}

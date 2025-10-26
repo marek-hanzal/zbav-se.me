@@ -28,12 +28,17 @@ const ServerOriginSchema = z.object({
 const AppEnvSchema = z.object({
 	VITE_DOMAIN: z.string().min(1, "Domain is required"),
 	VITE_SERVER_API: z.string().min(1, "Server API is required"),
-	...ServerOriginSchema.shape,
+	//
+	SERVER_CONTENT_CDN: z.string().min(1, "Content CDN is required"),
+	//
 	SERVER_BETTER_AUTH_SECRET: z
 		.string()
 		.min(1, "Better Auth secret is required"),
+	//
 	SERVER_JWT_SECRET: z.string().min(1, "JWT secret is required"),
 	SERVER_GEOAPIFY_TOKEN: z.string().min(1, "Geoapify API key is required"),
+	//
+	...ServerOriginSchema.shape,
 	...ServerOriginSchema.shape,
 	...ServerDatabaseSchema.shape,
 	...ServerUpstashSchema.shape,
