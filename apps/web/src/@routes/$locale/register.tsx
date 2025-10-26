@@ -28,7 +28,7 @@ export const Route = createFileRoute("/$locale/register")({
 		const navigate = useNavigate();
 
 		const registerMutation = withRegisterMutation.useMutation({
-			async onSuccess() {
+			async onPostMutation() {
 				await navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
