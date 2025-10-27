@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
+	ArrowLeftIcon,
 	Badge,
 	Button,
 	Container,
 	Data,
 	Fulltext,
+	LinkTo,
 	Status,
 	Tx,
 } from "@use-pico/client";
@@ -97,6 +99,17 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 					selectedQuery.data
 						? selectedQuery.data.address
 						: "Location (subtitle)"
+				}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/listing/wizard/price"}
+						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
 				}
 				// bottom={{
 				// 	next: !!location,
