@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowLeftIcon, LinkTo } from "@use-pico/client";
 import { toHumanNumber } from "@use-pico/common";
 import { CurrencyList } from "@zbav-se.me/common";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -25,6 +26,17 @@ export const Route = createFileRoute("/$locale/listing/wizard/price")({
 								trailingZeroDisplay: "stripIfInteger",
 							})
 						: "Price (subtitle)"
+				}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/listing/wizard/category"}
+						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
 				}
 			>
 				<Dial

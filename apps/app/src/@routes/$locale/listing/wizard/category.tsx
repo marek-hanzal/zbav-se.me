@@ -130,7 +130,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 				bottom={{
 					next: (
 						<LinkTo
-							to={"/$locale/listing/wizard/category"}
+							to={"/$locale/listing/wizard/price"}
 							params={{
 								locale,
 							}}
