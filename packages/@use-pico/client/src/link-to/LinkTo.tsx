@@ -10,6 +10,7 @@ interface BaseLinkToProps
 	ref?: Ref<HTMLAnchorElement>;
 	icon?: Icon.Type;
 	iconProps?: Icon.PropsEx;
+	display?: Cls.VariantOf<LinkToCls, "display">;
 	tone?: Cls.VariantOf<LinkToCls, "tone">;
 	theme?: Cls.VariantOf<LinkToCls, "theme">;
 }
@@ -18,6 +19,7 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	ref,
 	icon,
 	iconProps,
+	display,
 	tone,
 	theme,
 	cls = LinkToCls,
@@ -27,6 +29,7 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 }) => {
 	const { slots, variant } = useCls(cls, tweak, {
 		variant: {
+			display,
 			tone,
 			theme,
 		},
@@ -45,7 +48,7 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 			>
 				<Icon
 					icon={icon}
-					size={"xs"}
+					size={"sm"}
 					{...iconProps}
 				/>
 				{children}

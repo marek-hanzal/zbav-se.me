@@ -1,5 +1,6 @@
 # TODO
 
+- When an user searches for category/group and nothing is found, log the missing words (e.g. >= 3/5 chars) to table for investigation
 - extend Location to store city/street/blabla in fields
 - Ensure Upload collection returns data _without_ userId
 - Currently Gallery and Upload gets paths from client - use tokens/something as users now can

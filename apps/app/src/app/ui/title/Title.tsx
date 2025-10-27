@@ -1,5 +1,4 @@
 import { Container, Tx } from "@use-pico/client";
-import { tvc } from "@use-pico/cls";
 import type { FC, ReactNode, Ref } from "react";
 
 export namespace Title {
@@ -40,32 +39,35 @@ export const Title: FC<Title.Props> = ({
 			{...props}
 		>
 			<div
-				className={tvc(
-					"inline-flex",
-					"flex-row",
-					"gap-1",
-					"justify-start",
-					textSubtitle ? "items-start" : "items-center",
-				)}
+				data-ui="Title-title"
+				className="inline-flex flex-col gap-0 items-start justify-center"
 			>
-				{left}
-				<div className="inline-flex flex-col gap-0 items-start justify-center">
+				<div className="inline-flex flex-row gap-1 items-center justify-center">
+					{left ? (
+						<div className="flex flex-row items-center justify-center">
+							{left}
+						</div>
+					) : null}
 					<Tx
 						label={textTitle}
 						font={"bold"}
 						size={"xl"}
 					/>
-					{textSubtitle ? (
-						<Tx
-							label={textSubtitle}
-							size={"sm"}
-						/>
-					) : null}
 				</div>
+
+				{textSubtitle ? (
+					<Tx
+						label={textSubtitle}
+						size={"sm"}
+					/>
+				) : null}
 			</div>
 
 			{right ? (
-				<div className="inline-flex flex-row gap-1 items-end justify-center max-w-[50%]">
+				<div
+					data-ui="Title-right"
+					className="inline-flex flex-row gap-1 items-end justify-center max-w-[50%]"
+				>
 					{right}
 				</div>
 			) : null}

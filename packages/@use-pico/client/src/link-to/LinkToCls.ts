@@ -4,6 +4,10 @@ import { PicoCls } from "../cls/PicoCls";
 
 export const LinkToCls = contract(PicoCls.contract)
 	.slot("root")
+	.variant("display", [
+		"block",
+		"inline",
+	])
 	.def()
 	.root({
 		root: {
@@ -24,6 +28,21 @@ export const LinkToCls = contract(PicoCls.contract)
 				"round.default",
 				"scale.default",
 				"border.default",
+			],
+		},
+	})
+	//
+	.match("display", "block", {
+		root: {
+			class: [
+				"block",
+			],
+		},
+	})
+	.match("display", "inline", {
+		root: {
+			class: [
+				"inline",
 			],
 		},
 	})
