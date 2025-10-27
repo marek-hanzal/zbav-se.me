@@ -36,38 +36,6 @@
 - Prompt user to use passkey?
 - Allow anonymous user + test its flow (check if there is isAnonym flag)
 
-## Monetization & Subscriptions
-- Stripe DEV
-- Stripe + dev/testing
-- Create Tiers (plans) for users to define limits a user has
-    - Number of submitted photos
-    - Number of categories
-    - If the user can see additional info when choosing category groups + categories (expand on category + pay coins)
-
-- Go by subscription model with quotas - update ToS accommodate this
-
-- When redirecting from native mobile app use email/push notification with link to login in browser to pay less in the zbm shop
-
-## Integrations
-- Integrate Packeta
-    - with this we can hide user details, so nobody can know each other (fully secure/anonymous)
-
-## UI/UX Improvements
-- Animate location search result
-- A11y is quite an important thing
-- When there is a locale without groups, show a page with "market" redirect
-    - Status with "Market not available yet in your country" ?
-
-- because now we have locked vertical scroll, each page can now utilize inner-vertical scroll, so the overall flow can stay consistent
-
-## Technical Infrastructure
-- _Fix infinite scroll; 0.5 threshold is low -> change to static pixels_
-
-- Move availableCurrencies to "common" package for client and server
-    - _validate currency on server_
-- Revisit currencies, it's not the best thing how
-- ListingPreview - price inline has hardcoded currency code
-
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
     - We can connect CDN pullzone directly to maptiles with API key
 
@@ -78,9 +46,7 @@
 - Resolve /null get calls from TSR/TSS
 - Resolve why fuckin' webglob is not forwarding mails
 
-- extend Location to store city/street/blabla in fields
 - Add app-level env. check in github action (e.g. simple script validating env. schemas)
-- Upstash can be used with TCP
 
 ## Development & Deployment
 - Staging (-> dev)
