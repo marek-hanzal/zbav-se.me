@@ -1,33 +1,12 @@
 import { genId } from "@use-pico/common";
 import type { Migration } from "kysely";
-import categoriesCsData from "./0001-initial/categories.cs.json";
-import categoryGroupsCsData from "./0001-initial/category-groups.cs.json";
+import categoriesCsData from "./0002-category/categories.cs.json";
 
 // Types for JSON imports
-type CategoryGroupSeed = {
-	name: string;
-	locale: string;
-};
-
 type CategorySeed = {
 	name: string;
 	group: string;
 	locale: string;
-};
-
-const generateCategoryGroupSeedData = () => {
-	const allGroups = [
-		...categoryGroupsCsData,
-	];
-	return allGroups.map(
-		(group: CategoryGroupSeed, index: number) =>
-			({
-				id: genId(),
-				name: group.name,
-				sort: index,
-				locale: group.locale,
-			}) as const,
-	);
 };
 
 const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
@@ -51,26 +30,8 @@ const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
 	});
 };
 
-export const InitialMigration: Migration = {
+export const CategoryMigration: Migration = {
 	async up(db) {
-		await db.schema
-			.createTable("category_group")
-			.addColumn("id", "text", (col) => col.primaryKey().notNull())
-			.addColumn("name", "text", (col) => col.notNull())
-			.addColumn("sort", "integer", (col) => col.notNull())
-			.addColumn("locale", "text", (col) => col.notNull())
-			.execute();
-
-		await db.schema
-			.createIndex("category_group_[name-locale]_unique_idx")
-			.on("category_group")
-			.columns([
-				"name",
-				"locale",
-			])
-			.unique()
-			.execute();
-
 		await db.schema
 			.createTable("category")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
@@ -102,11 +63,9 @@ export const InitialMigration: Migration = {
 			.unique()
 			.execute();
 
-		const categoryGroupData = generateCategoryGroupSeedData();
 		const insertedCategoryGroups = await db
-			.insertInto("category_group")
-			.values(categoryGroupData)
-			.returningAll()
+			.selectFrom("category_group")
+			.selectAll()
 			.execute();
 
 		const categoryGroupMap = new Map<string, string>();
