@@ -23,9 +23,10 @@ export const CategoryMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("category_[group-category]_unique_idx")
+			.createIndex("category_[locale-group-category]_unique_idx")
 			.on("category")
 			.columns([
+				"locale",
 				"group",
 				"category",
 			])

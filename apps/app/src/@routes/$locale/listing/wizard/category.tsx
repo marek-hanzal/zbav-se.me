@@ -7,6 +7,7 @@ import {
 	Data,
 	Fulltext,
 	LinkTo,
+	Typo,
 	useScrollTo,
 	useSelection,
 } from "@use-pico/client";
@@ -49,14 +50,28 @@ const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 					},
 					root: {
 						class: [
-							"justify-start",
+							"justify-center",
+							"items-start",
 							"text-left",
+							"flex",
+							"flex-col",
+							"gap-1",
+							"w-full",
 						],
 					},
 				},
 			}}
 		>
-			{item.name}
+			<Typo
+				label={item.group}
+				size={"sm"}
+			/>
+
+			<Typo
+				label={item.category}
+				size={"lg"}
+				font={"bold"}
+			/>
 		</Button>
 	);
 };
