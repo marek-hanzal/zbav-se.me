@@ -1,39 +1,5 @@
 # TODO
 
-## Categories & Content
-- categories:
-    - tickets (+ related stuff)
-    - food (is it legal?)
-
-- Create general "values" doc with values provided by the service
-    - anonymity
-
-- dynamic listing creation based on selected category
-
-- enable labels/vendors/some sort of text on listing?
-
-## Listing Features
-- Extract create listing Wrappers into standalone components as they will serve as "inputs" for search or displaying listing detail
-- Allow video? - how to store + process + display?
-- Allow moving/switching neighbor photos (new controls -> new bar with controls and trash icon)
-- Select multiple photos
-- Post process photos - remove metadata -> or use Bunny optimizer (which can do this on delivery)
-
-- Extend listing of
-    - price - exchange/for free
-    - shipping - post/personal/...
-    - availability from (... this one?)
-    - store amount (multiple instances on a single listing?)
-
-- Add expireAt on listing (drop DB again :()
-    - Add listing duration in listing creation
-- Add auction switch on a listing (PRO feature)
-- Mark listing near the expiration (from the server?)
-
-- Add ability to make a discount on listing + show the new price + allow search for discounts
-- Interactive button on listing detail for "Instant buy"
-    - this will move to chat with default (randomized) message "I would like to buy the thing"
-
 ## Feed & User Experience
 - Fresh listing - generate feed, collect filters
     - Also keep the option to skip and "just browse" with defaults ?

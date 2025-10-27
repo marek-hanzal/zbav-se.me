@@ -36,17 +36,17 @@ export const CategorySeedMigration: Migration = {
 			)
 			.flatMap((category) => {
 				const categoryId = categoryMap.get(category.slug);
-				if (!categoryId) return [];
+				if (!categoryId) {
+					return [];
+				}
 
-				return (
-					category.spotlight?.map((text, weight) => ({
-						id: genId(),
-						categoryId,
-						text,
-						locale: category.locale,
-						weight: weight + 1, // Start from 1
-					})) || []
-				);
+				return category.spotlight.map((text, weight) => ({
+					id: genId(),
+					categoryId,
+					text,
+					locale: category.locale,
+					weight: weight + 1,
+				}));
 			});
 
 		if (spotlightData.length > 0) {

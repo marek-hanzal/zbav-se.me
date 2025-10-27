@@ -33,6 +33,17 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 		query = query.where((eb) =>
 			eb.or([
 				eb("c.name", "ilike", `%${where.fulltext}%`),
+				eb.exists(
+					eb
+						.selectFrom("category_spotlight")
+						.select("category_spotlight.categoryId")
+						.whereRef("category_spotlight.categoryId", "=", "c.id")
+						.where(
+							"category_spotlight.text",
+							"ilike",
+							`${where.fulltext}%`,
+						),
+				),
 			]),
 		);
 	}

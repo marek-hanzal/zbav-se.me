@@ -270,12 +270,12 @@
 		"locale": "cs",
 		"spotlight": [
 			"dětské",
-			"dětské oblečení",
-			"děti",
+			"children",
+			"kids",
 			"baby",
 			"kojenecké",
 			"batolecí",
-			"dětské oblečení"
+			"children clothing"
 		]
 	},
 	{
@@ -768,7 +768,7 @@
 			"šatní skříň",
 			"úložný nábytek",
 			"vestavěná skříň",
-			"komoda"
+			"wardrobe"
 		]
 	},
 	{
@@ -1486,191 +1486,531 @@
 	{
 		"name": "Hobby a kreativita → DIY sady a materiál",
 		"slug": "hobby-a-kreativita--diy-sady-a-material",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"diy sady",
+			"materiál",
+			"diy kits",
+			"craft supplies",
+			"diy projects",
+			"materials",
+			"tools",
+			"supplies"
+		]
 	},
 	{
 		"name": "Krása a osobní péče → Parfémy",
 		"slug": "krasa-a-osobni-pece--parfemy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"parfémy",
+			"perfumes",
+			"fragrances",
+			"colognes",
+			"eau de toilette",
+			"eau de parfum",
+			"parfum"
+		]
 	},
 	{
 		"name": "Krása a osobní péče → Péče o pleť",
 		"slug": "krasa-a-osobni-pece--pece-o-plet",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"péče o pleť",
+			"skincare",
+			"face care",
+			"moisturizers",
+			"cleansers",
+			"serums",
+			"face masks"
+		]
 	},
 	{
 		"name": "Krása a osobní péče → Péče o vlasy",
 		"slug": "krasa-a-osobni-pece--pece-o-vlasy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"péče o vlasy",
+			"hair care",
+			"shampoo",
+			"conditioner",
+			"hair products",
+			"hair treatments",
+			"styling"
+		]
 	},
 	{
 		"name": "Krása a osobní péče → Holicí strojky a epilátory",
 		"slug": "krasa-a-osobni-pece--holici-strojky-a-epilatory",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"holicí strojky",
+			"epilátory",
+			"razors",
+			"electric razors",
+			"epilators",
+			"shaving",
+			"hair removal"
+		]
 	},
 	{
 		"name": "Krása a osobní péče → Žehličky a kulmy",
 		"slug": "krasa-a-osobni-pece--zehlicky-a-kulmy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"žehličky",
+			"kulmy",
+			"hair straighteners",
+			"curling irons",
+			"hair styling",
+			"flat irons",
+			"hair tools"
+		]
 	},
 	{
 		"name": "Krása a osobní péče → Manikúra a pedikúra",
 		"slug": "krasa-a-osobni-pece--manikura-a-pedikura",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"manikúra",
+			"pedikúra",
+			"nail care",
+			"nail polish",
+			"nail art",
+			"nail tools",
+			"nail files",
+			"cuticle care"
+		]
 	},
 	{
 		"name": "Hudební nástroje → Kytary a baskytary",
 		"slug": "hudebni-nastroje--kytary-a-baskytary",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"kytary",
+			"baskytary",
+			"guitars",
+			"bass guitars",
+			"acoustic guitar",
+			"electric guitar",
+			"classical guitar"
+		]
 	},
 	{
 		"name": "Hudební nástroje → Klávesy a piana",
 		"slug": "hudebni-nastroje--klavesy-a-piana",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"klávesy",
+			"piana",
+			"keyboards",
+			"pianos",
+			"digital piano",
+			"synthesizer",
+			"organ",
+			"keyboard"
+		]
 	},
 	{
 		"name": "Hudební nástroje → Bicí a perkuse",
 		"slug": "hudebni-nastroje--bici-a-perkuse",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"bicí",
+			"perkuse",
+			"drums",
+			"percussion",
+			"drum set",
+			"cymbals",
+			"snare drum",
+			"drum kit"
+		]
 	},
 	{
 		"name": "Hudební nástroje → Dechové nástroje",
 		"slug": "hudebni-nastroje--dechove-nastroje",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dechové nástroje",
+			"wind instruments",
+			"flute",
+			"saxophone",
+			"trumpet",
+			"clarinet",
+			"trombone"
+		]
 	},
 	{
 		"name": "Hudební nástroje → MIDI a studiová technika",
 		"slug": "hudebni-nastroje--midi-a-studiova-technika",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"midi",
+			"studiová technika",
+			"studio equipment",
+			"audio interface",
+			"mixer",
+			"microphone",
+			"recording"
+		]
 	},
 	{
 		"name": "Hudební nástroje → Struny, paličky a příslušenství",
 		"slug": "hudebni-nastroje--struny-palicky-a-prislusenstvi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"struny",
+			"paličky",
+			"příslušenství",
+			"strings",
+			"drumsticks",
+			"guitar strings",
+			"accessories"
+		]
 	},
 	{
 		"name": "Sběratelství a starožitnosti → Mince a bankovky",
 		"slug": "sberatelstvi-a-starozitnosti--mince-a-bankovky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"mince",
+			"bankovky",
+			"coins",
+			"banknotes",
+			"numismatics",
+			"currency",
+			"collectible coins"
+		]
 	},
 	{
 		"name": "Sběratelství a starožitnosti → Poštovní známky",
 		"slug": "sberatelstvi-a-starozitnosti--postovni-znamky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"poštovní známky",
+			"stamps",
+			"philately",
+			"postage stamps",
+			"collectible stamps",
+			"postal stamps"
+		]
 	},
 	{
 		"name": "Sběratelství a starožitnosti → Figurky a modely",
 		"slug": "sberatelstvi-a-starozitnosti--figurky-a-modely",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"figurky",
+			"modely",
+			"figures",
+			"models",
+			"action figures",
+			"collectible figures",
+			"scale models"
+		]
 	},
 	{
 		"name": "Sběratelství a starožitnosti → Retro a vintage",
 		"slug": "sberatelstvi-a-starozitnosti--retro-a-vintage",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"retro",
+			"vintage",
+			"antique",
+			"old",
+			"classic",
+			"nostalgic",
+			"collectible",
+			"rare"
+		]
 	},
 	{
 		"name": "Sběratelství a starožitnosti → Starožitnosti",
 		"slug": "sberatelstvi-a-starozitnosti--starozitnosti",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"starožitnosti",
+			"antiques",
+			"historical",
+			"old items",
+			"vintage",
+			"collectible",
+			"museum pieces"
+		]
 	},
 	{
 		"name": "Sběratelství a starožitnosti → Památky a kuriozity",
 		"slug": "sberatelstvi-a-starozitnosti--pamatky-a-kuriozity",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"památky",
+			"kuriozity",
+			"memorabilia",
+			"curiosities",
+			"souvenirs",
+			"collectibles",
+			"unique items"
+		]
 	},
 	{
 		"name": "Umění a design → Obrazy a grafiky",
 		"slug": "umeni-a-design--obrazy-a-grafiky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"obrazy",
+			"grafiky",
+			"paintings",
+			"graphics",
+			"art",
+			"prints",
+			"artwork",
+			"visual art"
+		]
 	},
 	{
 		"name": "Umění a design → Plakáty a printy",
 		"slug": "umeni-a-design--plakaty-a-printy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"plakáty",
+			"printy",
+			"posters",
+			"prints",
+			"wall art",
+			"decorative prints",
+			"art prints"
+		]
 	},
 	{
 		"name": "Umění a design → Sochy a objekty",
 		"slug": "umeni-a-design--sochy-a-objekty",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"sochy",
+			"objekty",
+			"sculptures",
+			"statues",
+			"art objects",
+			"decorative objects",
+			"figurines"
+		]
 	},
 	{
 		"name": "Umění a design → Autorský design",
 		"slug": "umeni-a-design--autorsky-design",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"autorský design",
+			"design",
+			"original design",
+			"custom design",
+			"unique design",
+			"artistic design"
+		]
 	},
 	{
 		"name": "Umění a design → Rámování a pasparty",
 		"slug": "umeni-a-design--ramovani-a-pasparty",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"rámování",
+			"pasparty",
+			"framing",
+			"matting",
+			"picture frames",
+			"art framing",
+			"custom frames"
+		]
 	},
 	{
 		"name": "Umění a design → Umělecké potřeby",
 		"slug": "umeni-a-design--umelecke-potreby",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"umělecké potřeby",
+			"art supplies",
+			"art materials",
+			"painting supplies",
+			"drawing supplies",
+			"craft supplies"
+		]
 	},
 	{
 		"name": "Nemovitosti → Prodej bytu",
 		"slug": "nemovitosti--prodej-bytu",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"prodej bytu",
+			"apartment sale",
+			"flat sale",
+			"byt na prodej",
+			"apartment",
+			"flat",
+			"real estate"
+		]
 	},
 	{
 		"name": "Nemovitosti → Pronájem bytu",
 		"slug": "nemovitosti--pronajem-bytu",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pronájem bytu",
+			"apartment rental",
+			"flat rental",
+			"byt k pronájmu",
+			"rental",
+			"lease",
+			"apartment rent"
+		]
 	},
 	{
 		"name": "Nemovitosti → Prodej domu",
 		"slug": "nemovitosti--prodej-domu",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"prodej domu",
+			"house sale",
+			"dům na prodej",
+			"house",
+			"home",
+			"family house",
+			"villa"
+		]
 	},
 	{
 		"name": "Nemovitosti → Pronájem domu",
 		"slug": "nemovitosti--pronajem-domu",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pronájem domu",
+			"house rental",
+			"dům k pronájmu",
+			"house rent",
+			"villa rental",
+			"family house rent"
+		]
 	},
 	{
 		"name": "Nemovitosti → Pozemky",
 		"slug": "nemovitosti--pozemky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pozemky",
+			"land",
+			"plots",
+			"building land",
+			"agricultural land",
+			"development land",
+			"vacant land"
+		]
 	},
 	{
 		"name": "Nemovitosti → Garáže a parkování",
 		"slug": "nemovitosti--garaze-a-parkovani",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"garáže",
+			"parkování",
+			"garages",
+			"parking",
+			"parking spaces",
+			"garage sale",
+			"parking spots"
+		]
 	},
 	{
 		"name": "Nemovitosti → Chaty a chalupy",
 		"slug": "nemovitosti--chaty-a-chalupy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"chaty",
+			"chalupy",
+			"cottages",
+			"cabins",
+			"summer houses",
+			"weekend houses",
+			"vacation homes"
+		]
 	},
 	{
 		"name": "Nemovitosti → Komerční prostory",
 		"slug": "nemovitosti--komercni-prostory",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"komerční prostory",
+			"commercial spaces",
+			"office spaces",
+			"retail spaces",
+			"business premises",
+			"commercial real estate"
+		]
 	},
 	{
 		"name": "Ostatní → Dárkové poukazy",
 		"slug": "ostatni--darkove-poukazy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dárkové poukazy",
+			"gift cards",
+			"vouchers",
+			"gift certificates",
+			"prepaid cards",
+			"gift vouchers"
+		]
 	},
 	{
 		"name": "Ostatní → Ztráty a nálezy",
 		"slug": "ostatni--ztraty-a-nalezy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"ztráty",
+			"nálezy",
+			"lost and found",
+			"lost items",
+			"found items",
+			"lost property",
+			"missing items"
+		]
 	},
 	{
 		"name": "Ostatní → Bazarové sety a mixy",
 		"slug": "ostatni--bazarove-sety-a-mixy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"bazarové sety",
+			"mixy",
+			"bundle deals",
+			"mixed lots",
+			"assorted items",
+			"variety packs",
+			"mixed collections"
+		]
 	},
 	{
 		"name": "Ostatní → Náhradní díly různé",
 		"slug": "ostatni--nahradni-dily-ruzne",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"náhradní díly",
+			"spare parts",
+			"replacement parts",
+			"various parts",
+			"miscellaneous parts",
+			"generic parts"
+		]
 	},
 	{
 		"name": "Ostatní → Nezařazené",
 		"slug": "ostatni--nezarazene",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"nezařazené",
+			"miscellaneous",
+			"unclassified",
+			"other",
+			"various",
+			"mixed items"
+		]
 	}
 ]
