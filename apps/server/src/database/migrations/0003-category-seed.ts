@@ -11,7 +11,8 @@ export const CategorySeedMigration: Migration = {
 					(category, index) =>
 						({
 							id: genId(),
-							name: category.name,
+							group: category.group,
+							category: category.category,
 							slug: category.slug,
 							sort: index,
 							locale: category.locale,

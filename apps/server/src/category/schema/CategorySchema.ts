@@ -5,8 +5,11 @@ export const CategorySchema = z
 		id: z.string().openapi({
 			description: "ID of the category",
 		}),
-		name: z.string().openapi({
-			description: "Name of the category",
+		group: z.string().openapi({
+			description: "Group/name of the category",
+		}),
+		category: z.string().openapi({
+			description: "Category name within the group",
 		}),
 		slug: z.string().openapi({
 			description: "Slug of the category",

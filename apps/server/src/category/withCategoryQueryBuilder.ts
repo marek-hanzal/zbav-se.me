@@ -32,7 +32,8 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 	if (where?.fulltext) {
 		query = query.where((eb) =>
 			eb.or([
-				eb("c.name", "ilike", `%${where.fulltext}%`),
+				eb("c.group", "ilike", `${where.fulltext}%`),
+				eb("c.category", "ilike", `${where.fulltext}%`),
 				eb.exists(
 					eb
 						.selectFrom("category_spotlight")
@@ -48,8 +49,12 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 		);
 	}
 
-	if (where?.name) {
-		query = query.where("c.name", "like", `%${where.name}%`);
+	if (where?.group) {
+		query = query.where("c.group", "ilike", `${where.group}%`);
+	}
+
+	if (where?.category) {
+		query = query.where("c.category", "ilike", `${where.category}%`);
 	}
 
 	if (where?.locale) {
@@ -75,8 +80,11 @@ export const withCategoryQueryBuilderWithSort = (
 	for (const sortItem of props.sort ?? []) {
 		if (sortItem.sort) {
 			switch (sortItem.value) {
-				case "name":
-					query = query.orderBy("c.name", sortItem.sort);
+				case "group":
+					query = query.orderBy("c.group", sortItem.sort);
+					break;
+				case "category":
+					query = query.orderBy("c.category", sortItem.sort);
 					break;
 				case "sort":
 					query = query.orderBy("c.sort", sortItem.sort);

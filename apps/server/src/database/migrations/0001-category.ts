@@ -5,7 +5,8 @@ export const CategoryMigration: Migration = {
 		await db.schema
 			.createTable("category")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
-			.addColumn("name", "text", (col) => col.notNull())
+			.addColumn("group", "text", (col) => col.notNull())
+			.addColumn("category", "text", (col) => col.notNull())
 			.addColumn("slug", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("locale", "text", (col) => col.notNull())
@@ -17,6 +18,16 @@ export const CategoryMigration: Migration = {
 			.columns([
 				"slug",
 				"locale",
+			])
+			.unique()
+			.execute();
+
+		await db.schema
+			.createIndex("category_[group-category]_unique_idx")
+			.on("category")
+			.columns([
+				"group",
+				"category",
 			])
 			.unique()
 			.execute();

@@ -6,8 +6,11 @@ import { DefaultFilterSchema } from "../../schema/DefaultFilterSchema";
 const FilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
-		name: z.string().nullish().openapi({
-			description: "This filter matches the exact name of the category",
+		group: z.string().nullish().openapi({
+			description: "This filter matches the exact group of the category",
+		}),
+		category: z.string().nullish().openapi({
+			description: "This filter matches the exact category name",
 		}),
 		locale: z.string().nullish().openapi({
 			description: "This filter matches the exact locale of the category",
@@ -31,7 +34,8 @@ export const CategoryQuerySchema = z
 		sort: z
 			.object({
 				value: z.enum([
-					"name",
+					"group",
+					"category",
 					"sort",
 				]),
 				sort: OrderSchema,

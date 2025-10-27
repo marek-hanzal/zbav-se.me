@@ -1,3 +1,4 @@
+import { PostgresExtensionsMigration } from "./0000-postgres-extensions";
 import { CategoryMigration } from "./0001-category";
 import { CategorySpotlightMigration } from "./0002-category-spotlight";
 import { CategorySeedMigration } from "./0003-category-seed";
@@ -7,6 +8,7 @@ import { ListingMigration } from "./0006-listing";
 import { GalleryMigration } from "./0007-gallery";
 
 export const migrations = {
+	"0000-postgres-extensions": PostgresExtensionsMigration,
 	"0001-category": CategoryMigration,
 	"0002-category-spotlight": CategorySpotlightMigration,
 	"0003-category-seed": CategorySeedMigration,
