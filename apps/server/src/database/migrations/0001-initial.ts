@@ -53,7 +53,6 @@ const generateCategorySeedData = (categoryGroupMap: Map<string, string>) => {
 
 export const InitialMigration: Migration = {
 	async up(db) {
-		// Create category_group table
 		await db.schema
 			.createTable("category_group")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
@@ -62,7 +61,6 @@ export const InitialMigration: Migration = {
 			.addColumn("locale", "text", (col) => col.notNull())
 			.execute();
 
-		// Create unique index for category_group [name, locale]
 		await db.schema
 			.createIndex("category_group_[name-locale]_unique_idx")
 			.on("category_group")
@@ -73,7 +71,6 @@ export const InitialMigration: Migration = {
 			.unique()
 			.execute();
 
-		// Create category table
 		await db.schema
 			.createTable("category")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
@@ -94,7 +91,6 @@ export const InitialMigration: Migration = {
 			)
 			.execute();
 
-		// Create unique index for category [name, locale, categoryGroupId]
 		await db.schema
 			.createIndex("category_[name-locale-categoryGroupId]_unique_idx")
 			.on("category")
@@ -106,7 +102,6 @@ export const InitialMigration: Migration = {
 			.unique()
 			.execute();
 
-		// Insert category_group seed data and get the inserted rows
 		const categoryGroupData = generateCategoryGroupSeedData();
 		const insertedCategoryGroups = await db
 			.insertInto("category_group")
@@ -114,13 +109,11 @@ export const InitialMigration: Migration = {
 			.returningAll()
 			.execute();
 
-		// Create a map of group names to IDs
 		const categoryGroupMap = new Map<string, string>();
 		insertedCategoryGroups.forEach((group) => {
 			categoryGroupMap.set(group.name, group.id);
 		});
 
-		// Insert category seed data with proper group assignments
 		await db
 			.insertInto("category")
 			.values(generateCategorySeedData(categoryGroupMap))

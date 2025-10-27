@@ -16,6 +16,9 @@ export const LocationMigration: Migration = {
 			.addColumn("state", "varchar(128)")
 			//
 			.addColumn("address", "varchar(255)", (col) => col.notNull())
+			.addColumn("city", "varchar(128)")
+			.addColumn("street", "varchar(255)")
+			.addColumn("zip", "varchar(32)")
 			//
 			.addColumn("confidence", "numeric", (col) => col.notNull())
 			//
@@ -26,7 +29,6 @@ export const LocationMigration: Migration = {
 			//
 			.execute();
 
-		// Create composite index for fast exact match lookups
 		await db.schema
 			.createIndex("location_[query-lang]_idx")
 			.on("location")

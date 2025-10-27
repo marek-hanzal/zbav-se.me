@@ -24,7 +24,9 @@ interface Feature {
 		lat: number;
 		lon: number;
 		municipality: string;
+		postcode: string;
 		state: string;
+		street: string;
 		place_id: string;
 		rank: {
 			confidence: number;
@@ -179,6 +181,9 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 						state: properties.state,
 						county: properties.county,
 						address: properties.formatted,
+						city: properties.city,
+						street: properties.street,
+						zip: properties.postcode,
 						//
 						confidence: properties.rank.confidence,
 						//

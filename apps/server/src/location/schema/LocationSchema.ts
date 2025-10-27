@@ -27,6 +27,15 @@ export const LocationSchema = z
 		address: z.string().openapi({
 			description: "Full address preview of a location",
 		}),
+		city: z.string().nullish().openapi({
+			description: "The city that the location is in",
+		}),
+		street: z.string().nullish().openapi({
+			description: "The street that the location is on",
+		}),
+		zip: z.string().nullish().openapi({
+			description: "The postal/zip code of the location",
+		}),
 		confidence: z.coerce.number().openapi({
 			description: "Confidence score of the location (based on query)",
 			type: "number",
