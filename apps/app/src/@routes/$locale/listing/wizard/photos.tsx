@@ -18,7 +18,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
-		const { uploadIds } = Route.useSearch();
+		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
 
 		/**
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 			count: photoCountLimit,
 		});
 		const uploadId = useId();
-		const hasUploads = uploadIds.length > 0;
+		const hasUploads = state.uploadIds.length > 0;
 
 		return (
 			<ListingContainer
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 					right: hasUploads ? (
 						<>
 							<Typo
-								label={uploadIds.length}
+								label={state.uploadIds.length}
 								font={"bold"}
 								display={"inline"}
 							/>
@@ -75,9 +75,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 							params={{
 								locale,
 							}}
-							search={{
-								uploadIds,
-							}}
+							search={state}
 							disabled={!hasUploads}
 						>
 							<Button
@@ -123,13 +121,14 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 						{Array.from({
 							length: photoCountLimit,
 						}).map((_, slot) => {
-							const disabled = slot > 0 && !uploadIds[slot - 1];
+							const disabled =
+								slot > 0 && !state.uploadIds[slot - 1];
 
 							return (
 								<PhotoUpload
 									key={`${uploadId}-${slot + 1}`}
 									disabled={disabled}
-									value={uploadIds[slot]}
+									value={state.uploadIds[slot]}
 									onChange={(uploadId) => {
 										navigate({
 											search({ uploadIds, ...search }) {
