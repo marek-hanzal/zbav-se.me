@@ -5,15 +5,15 @@ import {
 	Button,
 	Container,
 	Data,
+	Fulltext,
 	LinkTo,
 	useScrollTo,
 	useSelection,
 } from "@use-pico/client";
 import type { EntitySchema } from "@use-pico/common";
 import type { Category } from "@zbav-se.me/sdk";
-import { Fade } from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
@@ -44,7 +44,13 @@ const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 				slot: {
 					wrapper: {
 						class: [
-							`CategoryGroupItem-${item.id}`,
+							`CategoryItem-${item.id}`,
+						],
+					},
+					root: {
+						class: [
+							"justify-start",
+							"text-left",
 						],
 					},
 				},
@@ -61,6 +67,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
+		const [fulltext, setFulltext] = useState<Fulltext.Value>();
 		const selection = useSelection<EntitySchema.Type>({
 			mode: "single",
 			initial: state.categoryId
@@ -84,6 +91,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 		const categoryQuery = withCategoryCollectionQuery().useQuery({
 			filter: {
 				locale,
+				fulltext,
 			},
 			sort: [
 				{
@@ -100,9 +108,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 				scrollTo(`.CategoryItem-${state.categoryId}`);
 			}
 		}, [
-			state.categoryId,
 			categoryQuery.data,
-			scrollTo,
 		]);
 
 		return (
@@ -142,16 +148,34 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 					),
 				}}
 			>
-				<Data
-					result={categoryQuery}
-					renderSuccess={({ data }) => {
-						return (
-							<Container
-								layout={"vertical"}
-								position={"relative"}
-							>
-								<Fade scrollableRef={containerRef} />
+				<Container
+					layout={"vertical-content"}
+					position={"relative"}
+					gap={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"contain-paint",
+								],
+							},
+						},
+					}}
+				>
+					<div className={"min-h-0"}>
+						<Fulltext
+							state={{
+								value: fulltext,
 
+								set: setFulltext,
+							}}
+						/>
+					</div>
+
+					<Data
+						result={categoryQuery}
+						renderSuccess={({ data }) => {
+							return (
 								<Container
 									ref={containerRef}
 									layout={"vertical-content"}
@@ -174,10 +198,10 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 										})}
 									</Container>
 								</Container>
-							</Container>
-						);
-					}}
-				/>
+							);
+						}}
+					/>
+				</Container>
 			</ListingContainer>
 		);
 	},
