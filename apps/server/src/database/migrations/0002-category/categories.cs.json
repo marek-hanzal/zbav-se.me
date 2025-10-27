@@ -1,738 +1,717 @@
 [
 	{
-		"name": "Smartphone",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Smartphone",
+		"slug": "mobily-a-prislusenstvi--smartphone",
 		"locale": "cs"
 	},
 	{
-		"name": "Tlačítkový telefon",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Tlačítkový telefon",
+		"slug": "mobily-a-prislusenstvi--tlacitkovy-telefon",
 		"locale": "cs"
 	},
 	{
-		"name": "Chytré hodinky",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Chytré hodinky",
+		"slug": "mobily-a-prislusenstvi--chytre-hodinky",
 		"locale": "cs"
 	},
 	{
-		"name": "Příslušenství k mobilům",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Příslušenství k mobilům",
+		"slug": "mobily-a-prislusenstvi--prislusenstvi-k-mobilum",
 		"locale": "cs"
 	},
 	{
-		"name": "Powerbanka",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Powerbanka",
+		"slug": "mobily-a-prislusenstvi--powerbanka",
 		"locale": "cs"
 	},
 	{
-		"name": "Nabíječky a kabely",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Nabíječky a kabely",
+		"slug": "mobily-a-prislusenstvi--nabijecky-a-kabely",
 		"locale": "cs"
 	},
 	{
-		"name": "Pouzdra a skla",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Pouzdra a skla",
+		"slug": "mobily-a-prislusenstvi--pouzdra-a-skla",
 		"locale": "cs"
 	},
 	{
-		"name": "Paměťové karty",
-		"group": "Mobily a příslušenství",
+		"name": "Mobily a příslušenství → Paměťové karty",
+		"slug": "mobily-a-prislusenstvi--pametove-karty",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Notebook",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Notebook",
+		"slug": "pocitace-a-kancelar--notebook",
 		"locale": "cs"
 	},
 	{
-		"name": "Stolní PC",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Stolní PC",
+		"slug": "pocitace-a-kancelar--stolni-pc",
 		"locale": "cs"
 	},
 	{
-		"name": "Monitor",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Monitor",
+		"slug": "pocitace-a-kancelar--monitor",
 		"locale": "cs"
 	},
 	{
-		"name": "PC komponenty (CPU/GPU/RAM)",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → PC komponenty (CPU/GPU/RAM)",
+		"slug": "pocitace-a-kancelar--pc-komponenty-cpu-gpu-ram",
 		"locale": "cs"
 	},
 	{
-		"name": "Periferie (klávesnice/myš)",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Periferie (klávesnice/myš)",
+		"slug": "pocitace-a-kancelar--periferie-klavesnice-mys",
 		"locale": "cs"
 	},
 	{
-		"name": "Síťové prvky (router/NAS)",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Síťové prvky (router/NAS)",
+		"slug": "pocitace-a-kancelar--sitove-prvky-router-nas",
 		"locale": "cs"
 	},
 	{
-		"name": "Tiskárny a skenery",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Tiskárny a skenery",
+		"slug": "pocitace-a-kancelar--tiskarny-a-skenery",
 		"locale": "cs"
 	},
 	{
-		"name": "Úložiště (SSD/HDD)",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Úložiště (SSD/HDD)",
+		"slug": "pocitace-a-kancelar--uloziste-ssd-hdd",
 		"locale": "cs"
 	},
 	{
-		"name": "Software a licence",
-		"group": "Počítače a kancelář",
+		"name": "Počítače a kancelář → Software a licence",
+		"slug": "pocitace-a-kancelar--software-a-licence",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Dámské oblečení",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Dámské oblečení",
+		"slug": "obleceni-a-doplnky--damske-obleceni",
 		"locale": "cs"
 	},
 	{
-		"name": "Pánské oblečení",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Pánské oblečení",
+		"slug": "obleceni-a-doplnky--panske-obleceni",
 		"locale": "cs"
 	},
 	{
-		"name": "Dětské oblečení",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Dětské oblečení",
+		"slug": "obleceni-a-doplnky--detske-obleceni",
 		"locale": "cs"
 	},
 	{
-		"name": "Boty",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Boty",
+		"slug": "obleceni-a-doplnky--boty",
 		"locale": "cs"
 	},
 	{
-		"name": "Kabelky a tašky",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Kabelky a tašky",
+		"slug": "obleceni-a-doplnky--kabelky-a-tasky",
 		"locale": "cs"
 	},
 	{
-		"name": "Hodinky a šperky",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Hodinky a šperky",
+		"slug": "obleceni-a-doplnky--hodinky-a-sperky",
 		"locale": "cs"
 	},
 	{
-		"name": "Sportovní oblečení",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Sportovní oblečení",
+		"slug": "obleceni-a-doplnky--sportovni-obleceni",
 		"locale": "cs"
 	},
 	{
-		"name": "Doplňky (čepice/pásky)",
-		"group": "Oblečení a doplňky",
+		"name": "Oblečení a doplňky → Doplňky (čepice/pásky)",
+		"slug": "obleceni-a-doplnky--doplnky-cepice-pasky",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Herní konzole",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → Herní konzole",
+		"slug": "hry-a-konzole--herni-konzole",
 		"locale": "cs"
 	},
 	{
-		"name": "Hry pro PlayStation",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → Hry pro PlayStation",
+		"slug": "hry-a-konzole--hry-pro-playstation",
 		"locale": "cs"
 	},
 	{
-		"name": "Hry pro Xbox",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → Hry pro Xbox",
+		"slug": "hry-a-konzole--hry-pro-xbox",
 		"locale": "cs"
 	},
 	{
-		"name": "Hry pro Nintendo",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → Hry pro Nintendo",
+		"slug": "hry-a-konzole--hry-pro-nintendo",
 		"locale": "cs"
 	},
 	{
-		"name": "PC hry",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → PC hry",
+		"slug": "hry-a-konzole--pc-hry",
 		"locale": "cs"
 	},
 	{
-		"name": "Ovladače a příslušenství",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → Ovladače a příslušenství",
+		"slug": "hry-a-konzole--ovladace-a-prislusenstvi",
 		"locale": "cs"
 	},
 	{
-		"name": "VR headsety",
-		"group": "Hry a konzole",
+		"name": "Hry a konzole → VR headsety",
+		"slug": "hry-a-konzole--vr-headsety",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Televize",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Televize",
+		"slug": "tv-audio-a-foto--televize",
 		"locale": "cs"
 	},
 	{
-		"name": "Set-top boxy a přehrávače",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Set-top boxy a přehrávače",
+		"slug": "tv-audio-a-foto--set-top-boxy-a-prehravace",
 		"locale": "cs"
 	},
 	{
-		"name": "Reproduktory a soundbary",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Reproduktory a soundbary",
+		"slug": "tv-audio-a-foto--reproduktory-a-soundbary",
 		"locale": "cs"
 	},
 	{
-		"name": "Sluchátka",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Sluchátka",
+		"slug": "tv-audio-a-foto--sluchatka",
 		"locale": "cs"
 	},
 	{
-		"name": "Fotoaparáty",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Fotoaparáty",
+		"slug": "tv-audio-a-foto--fotoaparaty",
 		"locale": "cs"
 	},
 	{
-		"name": "Objektivy a příslušenství",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Objektivy a příslušenství",
+		"slug": "tv-audio-a-foto--objektivy-a-prislusenstvi",
 		"locale": "cs"
 	},
 	{
-		"name": "Projektory",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Projektory",
+		"slug": "tv-audio-a-foto--projektory",
 		"locale": "cs"
 	},
 	{
-		"name": "Drony s kamerou",
-		"group": "TV, audio a foto",
+		"name": "TV, audio a foto → Drony s kamerou",
+		"slug": "tv-audio-a-foto--drony-s-kamerou",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Kočárky",
-		"group": "Dětské zboží",
+		"name": "Dětské zboží → Kočárky",
+		"slug": "detske-zbozi--kocarky",
 		"locale": "cs"
 	},
 	{
-		"name": "Autosedačky",
-		"group": "Dětské zboží",
+		"name": "Dětské zboží → Autosedačky",
+		"slug": "detske-zbozi--autosedacky",
 		"locale": "cs"
 	},
 	{
-		"name": "Dětské postýlky a židličky",
-		"group": "Dětské zboží",
+		"name": "Dětské zboží → Dětské postýlky a židličky",
+		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
 		"locale": "cs"
 	},
 	{
-		"name": "Hračky",
-		"group": "Dětské zboží",
+		"name": "Dětské zboží → Hračky",
+		"slug": "detske-zbozi--hracky",
 		"locale": "cs"
 	},
 	{
-		"name": "Dětské oblečení a obuv",
-		"group": "Dětské zboží",
+		"name": "Dětské zboží → Dětské oblečení a obuv",
+		"slug": "detske-zbozi--detske-obleceni-a-obuv",
 		"locale": "cs"
 	},
 	{
-		"name": "Přebalování a péče",
-		"group": "Dětské zboží",
+		"name": "Dětské zboží → Přebalování a péče",
+		"slug": "detske-zbozi--prebalovani-a-pece",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Osvětlení",
-		"group": "Dům a bydlení",
+		"name": "Dům a bydlení → Osvětlení",
+		"slug": "dum-a-bydleni--osvetleni",
 		"locale": "cs"
 	},
 	{
-		"name": "Textil (závěsy/koberce)",
-		"group": "Dům a bydlení",
+		"name": "Dům a bydlení → Textil (závěsy/koberce)",
+		"slug": "dum-a-bydleni--textil-zavesy-koberce",
 		"locale": "cs"
 	},
 	{
-		"name": "Dekorace",
-		"group": "Dům a bydlení",
+		"name": "Dům a bydlení → Dekorace",
+		"slug": "dum-a-bydleni--dekorace",
 		"locale": "cs"
 	},
 	{
-		"name": "Úložné boxy a organizéry",
-		"group": "Dům a bydlení",
+		"name": "Dům a bydlení → Úložné boxy a organizéry",
+		"slug": "dum-a-bydleni--ulozne-boxy-a-organizery",
 		"locale": "cs"
 	},
 	{
-		"name": "Zrcadla a rámy",
-		"group": "Dům a bydlení",
+		"name": "Dům a bydlení → Zrcadla a rámy",
+		"slug": "dum-a-bydleni--zrcadla-a-ramy",
 		"locale": "cs"
 	},
 	{
-		"name": "Smart home (chytrá domácnost)",
-		"group": "Dům a bydlení",
+		"name": "Dům a bydlení → Smart home (chytrá domácnost)",
+		"slug": "dum-a-bydleni--smart-home-chytra-domacnost",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Pohovky a sedací soupravy",
-		"group": "Nábytek",
+		"name": "Nábytek → Pohovky a sedací soupravy",
+		"slug": "nabytek--pohovky-a-sedaci-soupravy",
 		"locale": "cs"
 	},
 	{
-		"name": "Postele a matrace",
-		"group": "Nábytek",
+		"name": "Nábytek → Postele a matrace",
+		"slug": "nabytek--postele-a-matrace",
 		"locale": "cs"
 	},
 	{
-		"name": "Skříně a komody",
-		"group": "Nábytek",
+		"name": "Nábytek → Skříně a komody",
+		"slug": "nabytek--skrine-a-komody",
 		"locale": "cs"
 	},
 	{
-		"name": "Stoly a židle",
-		"group": "Nábytek",
+		"name": "Nábytek → Stoly a židle",
+		"slug": "nabytek--stoly-a-zidle",
 		"locale": "cs"
 	},
 	{
-		"name": "Police a regály",
-		"group": "Nábytek",
+		"name": "Nábytek → Police a regály",
+		"slug": "nabytek--police-a-regaly",
 		"locale": "cs"
 	},
 	{
-		"name": "Zahradní nábytek",
-		"group": "Nábytek",
+		"name": "Nábytek → Zahradní nábytek",
+		"slug": "nabytek--zahradni-nabytek",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Lednice a mrazáky",
-		"group": "Bílá technika",
+		"name": "Bílá technika → Lednice a mrazáky",
+		"slug": "bila-technika--lednice-a-mrazaky",
 		"locale": "cs"
 	},
 	{
-		"name": "Pračky a sušičky",
-		"group": "Bílá technika",
+		"name": "Bílá technika → Pračky a sušičky",
+		"slug": "bila-technika--pracky-a-susicky",
 		"locale": "cs"
 	},
 	{
-		"name": "Myčky nádobí",
-		"group": "Bílá technika",
+		"name": "Bílá technika → Myčky nádobí",
+		"slug": "bila-technika--mycky-nadobi",
 		"locale": "cs"
 	},
 	{
-		"name": "Sporáky a trouby",
-		"group": "Bílá technika",
+		"name": "Bílá technika → Sporáky a trouby",
+		"slug": "bila-technika--sporaky-a-trouby",
 		"locale": "cs"
 	},
 	{
-		"name": "Mikrovlnky",
-		"group": "Bílá technika",
+		"name": "Bílá technika → Mikrovlnky",
+		"slug": "bila-technika--mikrovlnky",
 		"locale": "cs"
 	},
 	{
-		"name": "Vysavače a parní čističe",
-		"group": "Bílá technika",
+		"name": "Bílá technika → Vysavače a parní čističe",
+		"slug": "bila-technika--vysavace-a-parni-cistice",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Nádobí a příbory",
-		"group": "Kuchyň a jídelna",
+		"name": "Kuchyň a jídelna → Nádobí a příbory",
+		"slug": "kuchyn-a-jidelna--nadobi-a-pribory",
 		"locale": "cs"
 	},
 	{
-		"name": "Hrnce a pánve",
-		"group": "Kuchyň a jídelna",
+		"name": "Kuchyň a jídelna → Hrnce a pánve",
+		"slug": "kuchyn-a-jidelna--hrnce-a-panve",
 		"locale": "cs"
 	},
 	{
-		"name": "Sklenice a hrnky",
-		"group": "Kuchyň a jídelna",
+		"name": "Kuchyň a jídelna → Sklenice a hrnky",
+		"slug": "kuchyn-a-jidelna--sklenice-a-hrnky",
 		"locale": "cs"
 	},
 	{
-		"name": "Kuchyňské spotřebiče malé",
-		"group": "Kuchyň a jídelna",
+		"name": "Kuchyň a jídelna → Kuchyňské spotřebiče malé",
+		"slug": "kuchyn-a-jidelna--kuchynske-spotrebice-male",
 		"locale": "cs"
 	},
 	{
-		"name": "Káva a kávovary",
-		"group": "Kuchyň a jídelna",
+		"name": "Kuchyň a jídelna → Káva a kávovary",
+		"slug": "kuchyn-a-jidelna--kava-a-kavovary",
 		"locale": "cs"
 	},
 	{
-		"name": "Boxy a organizéry do kuchyně",
-		"group": "Kuchyň a jídelna",
+		"name": "Kuchyň a jídelna → Boxy a organizéry do kuchyně",
+		"slug": "kuchyn-a-jidelna--boxy-a-organizery-do-kuchyne",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Kola a příslušenství",
-		"group": "Sport a outdoor",
+		"name": "Sport a outdoor → Kola a příslušenství",
+		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
 		"locale": "cs"
 	},
 	{
-		"name": "Běh a fitness",
-		"group": "Sport a outdoor",
+		"name": "Sport a outdoor → Běh a fitness",
+		"slug": "sport-a-outdoor--beh-a-fitness",
 		"locale": "cs"
 	},
 	{
-		"name": "Lyže a snowboard",
-		"group": "Sport a outdoor",
+		"name": "Sport a outdoor → Lyže a snowboard",
+		"slug": "sport-a-outdoor--lyze-a-snowboard",
 		"locale": "cs"
 	},
 	{
-		"name": "Kemping (stany/spacáky)",
-		"group": "Sport a outdoor",
+		"name": "Sport a outdoor → Kemping (stany/spacáky)",
+		"slug": "sport-a-outdoor--kemping-stany-spacaky",
 		"locale": "cs"
 	},
 	{
-		"name": "Koloběžky a longboardy",
-		"group": "Sport a outdoor",
+		"name": "Sport a outdoor → Koloběžky a longboardy",
+		"slug": "sport-a-outdoor--kolobezky-a-longboardy",
 		"locale": "cs"
 	},
 	{
-		"name": "Rybaření",
-		"group": "Sport a outdoor",
+		"name": "Sport a outdoor → Rybaření",
+		"slug": "sport-a-outdoor--rybareni",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Osobní auta",
-		"group": "Auto-moto",
+		"name": "Auto-moto → Osobní auta",
+		"slug": "auto-moto--osobni-auta",
 		"locale": "cs"
 	},
 	{
-		"name": "Motocykly a skútry",
-		"group": "Auto-moto",
+		"name": "Auto-moto → Motocykly a skútry",
+		"slug": "auto-moto--motocykly-a-skutry",
 		"locale": "cs"
 	},
 	{
-		"name": "Pneumatiky a disky",
-		"group": "Auto-moto",
+		"name": "Auto-moto → Pneumatiky a disky",
+		"slug": "auto-moto--pneumatiky-a-disky",
 		"locale": "cs"
 	},
 	{
-		"name": "Autodoplňky",
-		"group": "Auto-moto",
+		"name": "Auto-moto → Autodoplňky",
+		"slug": "auto-moto--autodoplnky",
 		"locale": "cs"
 	},
 	{
-		"name": "Náhradní díly",
-		"group": "Auto-moto",
+		"name": "Auto-moto → Náhradní díly",
+		"slug": "auto-moto--nahradni-dily",
 		"locale": "cs"
 	},
 	{
-		"name": "Helmy a výbava",
-		"group": "Auto-moto",
+		"name": "Auto-moto → Helmy a výbava",
+		"slug": "auto-moto--helmy-a-vybava",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Sekačky a křovinořezy",
-		"group": "Zahrada a dílna",
+		"name": "Zahrada a dílna → Sekačky a křovinořezy",
+		"slug": "zahrada-a-dilna--sekacky-a-krovinorezy",
 		"locale": "cs"
 	},
 	{
-		"name": "Pily a řetězové pily",
-		"group": "Zahrada a dílna",
+		"name": "Zahrada a dílna → Pily a řetězové pily",
+		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
 		"locale": "cs"
 	},
 	{
-		"name": "Aku nářadí (vrtačky/brusky)",
-		"group": "Zahrada a dílna",
+		"name": "Zahrada a dílna → Aku nářadí (vrtačky/brusky)",
+		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
 		"locale": "cs"
 	},
 	{
-		"name": "Ruční nářadí",
-		"group": "Zahrada a dílna",
+		"name": "Zahrada a dílna → Ruční nářadí",
+		"slug": "zahrada-a-dilna--rucni-naradi",
 		"locale": "cs"
 	},
 	{
-		"name": "Zavlažování a zahradní technika",
-		"group": "Zahrada a dílna",
+		"name": "Zahrada a dílna → Zavlažování a zahradní technika",
+		"slug": "zahrada-a-dilna--zavlazovani-a-zahradni-technika",
 		"locale": "cs"
 	},
 	{
-		"name": "Grily a příslušenství",
-		"group": "Zahrada a dílna",
+		"name": "Zahrada a dílna → Grily a příslušenství",
+		"slug": "zahrada-a-dilna--grily-a-prislusenstvi",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Pelíšky a boudy",
-		"group": "Domácí zvířata",
+		"name": "Domácí zvířata → Pelíšky a boudy",
+		"slug": "domaci-zvirata--pelisky-a-boudy",
 		"locale": "cs"
 	},
 	{
-		"name": "Misky a krmítka",
-		"group": "Domácí zvířata",
+		"name": "Domácí zvířata → Misky a krmítka",
+		"slug": "domaci-zvirata--misky-a-krmitka",
 		"locale": "cs"
 	},
 	{
-		"name": "Vodítka a obojky",
-		"group": "Domácí zvířata",
+		"name": "Domácí zvířata → Vodítka a obojky",
+		"slug": "domaci-zvirata--voditka-a-obojky",
 		"locale": "cs"
 	},
 	{
-		"name": "Hračky pro zvířata",
-		"group": "Domácí zvířata",
+		"name": "Domácí zvířata → Hračky pro zvířata",
+		"slug": "domaci-zvirata--hracky-pro-zvirata",
 		"locale": "cs"
 	},
 	{
-		"name": "Akvária a terária",
-		"group": "Domácí zvířata",
+		"name": "Domácí zvířata → Akvária a terária",
+		"slug": "domaci-zvirata--akvaria-a-teraria",
 		"locale": "cs"
 	},
 	{
-		"name": "Klece a přepravky",
-		"group": "Domácí zvířata",
+		"name": "Domácí zvířata → Klece a přepravky",
+		"slug": "domaci-zvirata--klece-a-prepravky",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Knihy",
-		"group": "Knihy, filmy a hudba",
+		"name": "Knihy, filmy a hudba → Knihy",
+		"slug": "knihy-filmy-a-hudba--knihy",
 		"locale": "cs"
 	},
 	{
-		"name": "Komiksy a manga",
-		"group": "Knihy, filmy a hudba",
+		"name": "Knihy, filmy a hudba → Komiksy a manga",
+		"slug": "knihy-filmy-a-hudba--komiksy-a-manga",
 		"locale": "cs"
 	},
 	{
-		"name": "Vinyl a gramodesky",
-		"group": "Knihy, filmy a hudba",
+		"name": "Knihy, filmy a hudba → Vinyl a gramodesky",
+		"slug": "knihy-filmy-a-hudba--vinyl-a-gramodesky",
 		"locale": "cs"
 	},
 	{
-		"name": "CD a kazety",
-		"group": "Knihy, filmy a hudba",
+		"name": "Knihy, filmy a hudba → CD a kazety",
+		"slug": "knihy-filmy-a-hudba--cd-a-kazety",
 		"locale": "cs"
 	},
 	{
-		"name": "DVD a Blu-ray",
-		"group": "Knihy, filmy a hudba",
+		"name": "Knihy, filmy a hudba → DVD a Blu-ray",
+		"slug": "knihy-filmy-a-hudba--dvd-a-blu-ray",
 		"locale": "cs"
 	},
 	{
-		"name": "Noty a zpěvníky",
-		"group": "Knihy, filmy a hudba",
+		"name": "Knihy, filmy a hudba → Noty a zpěvníky",
+		"slug": "knihy-filmy-a-hudba--noty-a-zpevniky",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Deskovky a puzzle",
-		"group": "Hobby a kreativita",
+		"name": "Hobby a kreativita → Deskovky a puzzle",
+		"slug": "hobby-a-kreativita--deskovky-a-puzzle",
 		"locale": "cs"
 	},
 	{
-		"name": "Modelářství (RC/drony)",
-		"group": "Hobby a kreativita",
+		"name": "Hobby a kreativita → Modelářství (RC/drony)",
+		"slug": "hobby-a-kreativita--modelarstvi-rc-drony",
 		"locale": "cs"
 	},
 	{
-		"name": "3D tisk a filamenty",
-		"group": "Hobby a kreativita",
+		"name": "Hobby a kreativita → 3D tisk a filamenty",
+		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
 		"locale": "cs"
 	},
 	{
-		"name": "Malování a kreslení",
-		"group": "Hobby a kreativita",
+		"name": "Hobby a kreativita → Malování a kreslení",
+		"slug": "hobby-a-kreativita--malovani-a-kresleni",
 		"locale": "cs"
 	},
 	{
-		"name": "Šití a háčkování",
-		"group": "Hobby a kreativita",
+		"name": "Hobby a kreativita → Šití a háčkování",
+		"slug": "hobby-a-kreativita--siti-a-hackovani",
 		"locale": "cs"
 	},
 	{
-		"name": "DIY sady a materiál",
-		"group": "Hobby a kreativita",
+		"name": "Hobby a kreativita → DIY sady a materiál",
+		"slug": "hobby-a-kreativita--diy-sady-a-material",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Parfémy",
-		"group": "Krása a osobní péče",
+		"name": "Krása a osobní péče → Parfémy",
+		"slug": "krasa-a-osobni-pece--parfemy",
 		"locale": "cs"
 	},
 	{
-		"name": "Péče o pleť",
-		"group": "Krása a osobní péče",
+		"name": "Krása a osobní péče → Péče o pleť",
+		"slug": "krasa-a-osobni-pece--pece-o-plet",
 		"locale": "cs"
 	},
 	{
-		"name": "Péče o vlasy",
-		"group": "Krása a osobní péče",
+		"name": "Krása a osobní péče → Péče o vlasy",
+		"slug": "krasa-a-osobni-pece--pece-o-vlasy",
 		"locale": "cs"
 	},
 	{
-		"name": "Holicí strojky a epilátory",
-		"group": "Krása a osobní péče",
+		"name": "Krása a osobní péče → Holicí strojky a epilátory",
+		"slug": "krasa-a-osobni-pece--holici-strojky-a-epilatory",
 		"locale": "cs"
 	},
 	{
-		"name": "Žehličky a kulmy",
-		"group": "Krása a osobní péče",
+		"name": "Krása a osobní péče → Žehličky a kulmy",
+		"slug": "krasa-a-osobni-pece--zehlicky-a-kulmy",
 		"locale": "cs"
 	},
 	{
-		"name": "Manikúra a pedikúra",
-		"group": "Krása a osobní péče",
+		"name": "Krása a osobní péče → Manikúra a pedikúra",
+		"slug": "krasa-a-osobni-pece--manikura-a-pedikura",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Kytary a baskytary",
-		"group": "Hudební nástroje",
+		"name": "Hudební nástroje → Kytary a baskytary",
+		"slug": "hudebni-nastroje--kytary-a-baskytary",
 		"locale": "cs"
 	},
 	{
-		"name": "Klávesy a piana",
-		"group": "Hudební nástroje",
+		"name": "Hudební nástroje → Klávesy a piana",
+		"slug": "hudebni-nastroje--klavesy-a-piana",
 		"locale": "cs"
 	},
 	{
-		"name": "Bicí a perkuse",
-		"group": "Hudební nástroje",
+		"name": "Hudební nástroje → Bicí a perkuse",
+		"slug": "hudebni-nastroje--bici-a-perkuse",
 		"locale": "cs"
 	},
 	{
-		"name": "Dechové nástroje",
-		"group": "Hudební nástroje",
+		"name": "Hudební nástroje → Dechové nástroje",
+		"slug": "hudebni-nastroje--dechove-nastroje",
 		"locale": "cs"
 	},
 	{
-		"name": "MIDI a studiová technika",
-		"group": "Hudební nástroje",
+		"name": "Hudební nástroje → MIDI a studiová technika",
+		"slug": "hudebni-nastroje--midi-a-studiova-technika",
 		"locale": "cs"
 	},
 	{
-		"name": "Struny, paličky a příslušenství",
-		"group": "Hudební nástroje",
+		"name": "Hudební nástroje → Struny, paličky a příslušenství",
+		"slug": "hudebni-nastroje--struny-palicky-a-prislusenstvi",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Mince a bankovky",
-		"group": "Sběratelství a starožitnosti",
+		"name": "Sběratelství a starožitnosti → Mince a bankovky",
+		"slug": "sberatelstvi-a-starozitnosti--mince-a-bankovky",
 		"locale": "cs"
 	},
 	{
-		"name": "Poštovní známky",
-		"group": "Sběratelství a starožitnosti",
+		"name": "Sběratelství a starožitnosti → Poštovní známky",
+		"slug": "sberatelstvi-a-starozitnosti--postovni-znamky",
 		"locale": "cs"
 	},
 	{
-		"name": "Figurky a modely",
-		"group": "Sběratelství a starožitnosti",
+		"name": "Sběratelství a starožitnosti → Figurky a modely",
+		"slug": "sberatelstvi-a-starozitnosti--figurky-a-modely",
 		"locale": "cs"
 	},
 	{
-		"name": "Retro a vintage",
-		"group": "Sběratelství a starožitnosti",
+		"name": "Sběratelství a starožitnosti → Retro a vintage",
+		"slug": "sberatelstvi-a-starozitnosti--retro-a-vintage",
 		"locale": "cs"
 	},
 	{
-		"name": "Starožitnosti",
-		"group": "Sběratelství a starožitnosti",
+		"name": "Sběratelství a starožitnosti → Starožitnosti",
+		"slug": "sberatelstvi-a-starozitnosti--starozitnosti",
 		"locale": "cs"
 	},
 	{
-		"name": "Památky a kuriozity",
-		"group": "Sběratelství a starožitnosti",
+		"name": "Sběratelství a starožitnosti → Památky a kuriozity",
+		"slug": "sberatelstvi-a-starozitnosti--pamatky-a-kuriozity",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Obrazy a grafiky",
-		"group": "Umění a design",
+		"name": "Umění a design → Obrazy a grafiky",
+		"slug": "umeni-a-design--obrazy-a-grafiky",
 		"locale": "cs"
 	},
 	{
-		"name": "Plakáty a printy",
-		"group": "Umění a design",
+		"name": "Umění a design → Plakáty a printy",
+		"slug": "umeni-a-design--plakaty-a-printy",
 		"locale": "cs"
 	},
 	{
-		"name": "Sochy a objekty",
-		"group": "Umění a design",
+		"name": "Umění a design → Sochy a objekty",
+		"slug": "umeni-a-design--sochy-a-objekty",
 		"locale": "cs"
 	},
 	{
-		"name": "Autorský design",
-		"group": "Umění a design",
+		"name": "Umění a design → Autorský design",
+		"slug": "umeni-a-design--autorsky-design",
 		"locale": "cs"
 	},
 	{
-		"name": "Rámování a pasparty",
-		"group": "Umění a design",
+		"name": "Umění a design → Rámování a pasparty",
+		"slug": "umeni-a-design--ramovani-a-pasparty",
 		"locale": "cs"
 	},
 	{
-		"name": "Umělecké potřeby",
-		"group": "Umění a design",
+		"name": "Umění a design → Umělecké potřeby",
+		"slug": "umeni-a-design--umelecke-potreby",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Prodej bytu",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Prodej bytu",
+		"slug": "nemovitosti--prodej-bytu",
 		"locale": "cs"
 	},
 	{
-		"name": "Pronájem bytu",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Pronájem bytu",
+		"slug": "nemovitosti--pronajem-bytu",
 		"locale": "cs"
 	},
 	{
-		"name": "Prodej domu",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Prodej domu",
+		"slug": "nemovitosti--prodej-domu",
 		"locale": "cs"
 	},
 	{
-		"name": "Pronájem domu",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Pronájem domu",
+		"slug": "nemovitosti--pronajem-domu",
 		"locale": "cs"
 	},
 	{
-		"name": "Pozemky",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Pozemky",
+		"slug": "nemovitosti--pozemky",
 		"locale": "cs"
 	},
 	{
-		"name": "Garáže a parkování",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Garáže a parkování",
+		"slug": "nemovitosti--garaze-a-parkovani",
 		"locale": "cs"
 	},
 	{
-		"name": "Chaty a chalupy",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Chaty a chalupy",
+		"slug": "nemovitosti--chaty-a-chalupy",
 		"locale": "cs"
 	},
 	{
-		"name": "Komerční prostory",
-		"group": "Nemovitosti",
+		"name": "Nemovitosti → Komerční prostory",
+		"slug": "nemovitosti--komercni-prostory",
 		"locale": "cs"
 	},
-
 	{
-		"name": "Dárkové poukazy",
-		"group": "Ostatní",
+		"name": "Ostatní → Dárkové poukazy",
+		"slug": "ostatni--darkove-poukazy",
 		"locale": "cs"
 	},
 	{
-		"name": "Ztráty a nálezy",
-		"group": "Ostatní",
+		"name": "Ostatní → Ztráty a nálezy",
+		"slug": "ostatni--ztraty-a-nalezy",
 		"locale": "cs"
 	},
 	{
-		"name": "Bazarové sety a mixy",
-		"group": "Ostatní",
+		"name": "Ostatní → Bazarové sety a mixy",
+		"slug": "ostatni--bazarove-sety-a-mixy",
 		"locale": "cs"
 	},
 	{
-		"name": "Náhradní díly různé",
-		"group": "Ostatní",
+		"name": "Ostatní → Náhradní díly různé",
+		"slug": "ostatni--nahradni-dily-ruzne",
 		"locale": "cs"
 	},
 	{
-		"name": "Nezařazené",
-		"group": "Ostatní",
+		"name": "Ostatní → Nezařazené",
+		"slug": "ostatni--nezarazene",
 		"locale": "cs"
 	}
 ]

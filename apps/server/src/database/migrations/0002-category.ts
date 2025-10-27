@@ -2,10 +2,9 @@ import { genId } from "@use-pico/common";
 import type { Migration } from "kysely";
 import categoriesCsData from "./0002-category/categories.cs.json";
 
-// Types for JSON imports
 type CategorySeed = {
 	name: string;
-	group: string;
+	slug: string;
 	locale: string;
 };
 
