@@ -7,11 +7,10 @@ export const ListingMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
-			.addColumn("currency", "varchar(3)", (col) => col.notNull())
+			.addColumn("currency", "text", (col) => col.notNull())
 			.addColumn("condition", "integer", (col) => col.notNull())
 			.addColumn("age", "integer", (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
-			.addColumn("categoryGroupId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
@@ -43,17 +42,6 @@ export const ListingMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_categoryGroupId_fk",
-				[
-					"categoryGroupId",
-				],
-				"category_group",
-				[
-					"id",
-				],
-				(c) => c.onDelete("cascade"),
-			)
-			.addForeignKeyConstraint(
 				"listing_categoryId_fk",
 				[
 					"categoryId",
@@ -76,12 +64,6 @@ export const ListingMigration: Migration = {
 			.createIndex("listing_locationId_idx")
 			.on("listing")
 			.column("locationId")
-			.execute();
-
-		await db.schema
-			.createIndex("listing_categoryGroupId_idx")
-			.on("listing")
-			.column("categoryGroupId")
 			.execute();
 
 		await db.schema

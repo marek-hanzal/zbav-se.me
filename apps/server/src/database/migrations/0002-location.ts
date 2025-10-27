@@ -6,23 +6,23 @@ export const LocationMigration: Migration = {
 			.createTable("location")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
-			.addColumn("query", "varchar(128)", (col) => col.notNull())
-			.addColumn("lang", "varchar(8)", (col) => col.notNull())
+			.addColumn("query", "text", (col) => col.notNull())
+			.addColumn("lang", "text", (col) => col.notNull())
 			//
-			.addColumn("country", "varchar(72)", (col) => col.notNull())
-			.addColumn("code", "varchar(8)", (col) => col.notNull())
-			.addColumn("county", "varchar(128)")
-			.addColumn("municipality", "varchar(128)")
-			.addColumn("state", "varchar(128)")
+			.addColumn("country", "text", (col) => col.notNull())
+			.addColumn("code", "text", (col) => col.notNull())
+			.addColumn("county", "text")
+			.addColumn("municipality", "text")
+			.addColumn("state", "text")
 			//
-			.addColumn("address", "varchar(255)", (col) => col.notNull())
-			.addColumn("city", "varchar(128)")
-			.addColumn("street", "varchar(255)")
-			.addColumn("zip", "varchar(32)")
+			.addColumn("address", "text", (col) => col.notNull())
+			.addColumn("city", "text")
+			.addColumn("street", "text")
+			.addColumn("zip", "text")
 			//
 			.addColumn("confidence", "numeric", (col) => col.notNull())
 			//
-			.addColumn("hash", "varchar(255)", (col) => col.notNull())
+			.addColumn("hash", "text", (col) => col.notNull())
 			//
 			.addColumn("lat", "decimal(9, 6)", (col) => col.notNull())
 			.addColumn("lon", "decimal(10, 6)", (col) => col.notNull())

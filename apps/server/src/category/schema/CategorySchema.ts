@@ -8,11 +8,11 @@ export const CategorySchema = z
 		name: z.string().openapi({
 			description: "Name of the category",
 		}),
+		slug: z.string().openapi({
+			description: "Slug of the category",
+		}),
 		sort: z.number().openapi({
 			description: "Sort order (position) of the category",
-		}),
-		categoryGroupId: z.string().openapi({
-			description: "ID of the category group the category belongs to",
 		}),
 		locale: z.string().openapi({
 			description: "Locale/language of the category",

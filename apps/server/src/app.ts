@@ -5,7 +5,6 @@ import { secureHeaders } from "hono/secure-headers";
 import { AppEnv } from "./AppEnv";
 import { auth } from "./auth";
 import { withCategoryApi } from "./category/withCategoryApi";
-import { withCategoryGroupApi } from "./category-group/withCategoryGroupApi";
 import { database } from "./database/kysely";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withHealthApi } from "./health/withHealthApi";
@@ -145,7 +144,6 @@ const routes: Routes = {
 };
 
 withCategoryApi(routes);
-withCategoryGroupApi(routes);
 withListingApi(routes);
 withGalleryApi(routes);
 withUploadApi(routes);

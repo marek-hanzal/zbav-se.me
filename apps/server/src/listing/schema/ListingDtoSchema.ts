@@ -1,6 +1,5 @@
 import z from "zod";
 import { CategorySchema } from "../../category/schema/CategorySchema";
-import { CategoryGroupSchema } from "../../category-group/schema/CategoryGroupSchema";
 import { LocationSchema } from "../../location/schema/LocationSchema";
 import { ListingSchema } from "./ListingSchema";
 
@@ -9,7 +8,6 @@ export const ListingDtoSchema = z
 		...ListingSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
-		categoryGroup: CategoryGroupSchema,
 		gallery: z
 			.array(
 				z.object({
