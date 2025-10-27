@@ -10,14 +10,12 @@ import {
 	useSnapperNav,
 } from "@use-pico/client";
 import { useId, useRef } from "react";
-import { z } from "zod";
+import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { PhotoUpload } from "~/app/photo/PhotoUpload";
 
 export const Route = createFileRoute("/$locale/listing/wizard/photos")({
-	validateSearch: z.object({
-		uploadIds: z.array(z.string()).default([]),
-	}),
+	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const { uploadIds } = Route.useSearch();
@@ -73,7 +71,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 				bottom={{
 					next: (
 						<LinkTo
-							to={"/$locale/listing/wizard/category-group"}
+							to={"/$locale/listing/wizard/category"}
 							params={{
 								locale,
 							}}

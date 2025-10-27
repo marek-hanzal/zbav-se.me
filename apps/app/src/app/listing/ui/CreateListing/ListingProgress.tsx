@@ -1,14 +1,21 @@
 import { useCls } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
-import { useCreateListingContext } from "~/app/listing/context/useCreateListingContext";
+import type { FC } from "react";
 
-export const ListingProgress = () => {
-	const useCreateListingStore = useCreateListingContext();
-	const missing = useCreateListingStore((store) => store.missing);
-	const requiredCount = useCreateListingStore((store) => store.requiredCount);
+export namespace ListingProgress {
+	export interface Props {
+		count: number;
+		total: number;
+	}
+}
+
+export const ListingProgress: FC<ListingProgress.Props> = ({
+	count,
+	total,
+}) => {
 	const { slots } = useCls(ThemeCls);
 
-	return missing.length > 0 ? (
+	return count > 0 ? (
 		<div
 			data-ui="ListingProgress-root"
 			className={slots.default({
@@ -45,7 +52,7 @@ export const ListingProgress = () => {
 					},
 				})}
 				style={{
-					width: `${Math.min(100, 100 - (missing.length / requiredCount) * 100)}%`,
+					width: `${Math.min(100, 100 - (count / total) * 100)}%`,
 				}}
 			/>
 		</div>

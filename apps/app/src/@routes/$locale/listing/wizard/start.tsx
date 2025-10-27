@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Button, Container, LinkTo, Status, Tx } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import {
-	CategoryGroupIcon,
 	CategoryIcon,
 	ConditionIcon,
 	LocationIcon,
@@ -74,10 +73,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/start")({
 						>
 							<TypoIcon icon={PhotoIcon}>
 								<Tx label={"Add photos (hint)"} />
-							</TypoIcon>
-
-							<TypoIcon icon={CategoryGroupIcon}>
-								<Tx label={"Select category group (hint)"} />
 							</TypoIcon>
 
 							<TypoIcon icon={CategoryIcon}>

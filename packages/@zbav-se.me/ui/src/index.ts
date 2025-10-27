@@ -5,7 +5,6 @@ export { AgeIcon } from "./icon/AgeIcon";
 export { BackspaceIcon } from "./icon/BackspaceIcon";
 export { BagIcon } from "./icon/BagIcon";
 export { BuyerIcon } from "./icon/BuyerIcon";
-export { CategoryGroupIcon } from "./icon/CategoryGroupIcon";
 export { CategoryIcon } from "./icon/CategoryIcon";
 export { CheckIcon } from "./icon/CheckIcon";
 export { ClearFilterIcon } from "./icon/ClearFilterIcon";

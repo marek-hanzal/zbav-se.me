@@ -16,10 +16,10 @@ export interface Category {
 	id: string;
 	/** Name of the category */
 	name: string;
+	/** Slug of the category */
+	slug: string;
 	/** Sort order (position) of the category */
 	sort: number;
-	/** ID of the category group the category belongs to */
-	categoryGroupId: string;
 	/** Locale/language of the category */
 	locale: string;
 }
@@ -76,16 +76,6 @@ export type CategoryFilter = {
 	 */
 	name?: string | null;
 	/**
-	 * This filter matches the exact id of the category group the category belongs to
-	 * @nullable
-	 */
-	categoryGroupId?: string | null;
-	/**
-	 * This filter matches the ids of the category groups the category belongs to
-	 * @nullable
-	 */
-	categoryGroupIdIn?: string[] | null;
-	/**
 	 * This filter matches the exact locale of the category
 	 * @nullable
 	 */
@@ -122,16 +112,6 @@ export type CategoryWhere = {
 	 * @nullable
 	 */
 	name?: string | null;
-	/**
-	 * This filter matches the exact id of the category group the category belongs to
-	 * @nullable
-	 */
-	categoryGroupId?: string | null;
-	/**
-	 * This filter matches the ids of the category groups the category belongs to
-	 * @nullable
-	 */
-	categoryGroupIdIn?: string[] | null;
 	/**
 	 * This filter matches the exact locale of the category
 	 * @nullable
@@ -199,136 +179,6 @@ export interface Count {
 }
 
 /**
- * Represents a group of categories a listing can be assigned to
- */
-export interface CategoryGroup {
-	/** ID of the category group */
-	id: string;
-	/** Name of the category group */
-	name: string;
-	/** Sort order (position) of the category group */
-	sort: number;
-	/** Locale/language of the category group */
-	locale: string;
-}
-
-/**
- * User-land filters
- * @nullable
- */
-export type CategoryGroupFilter = {
-	/**
-	 * This filter matches the exact id
-	 * @nullable
-	 */
-	id?: string | null;
-	/**
-	 * This filter matches the ids
-	 * @nullable
-	 */
-	idIn?: string[] | null;
-	/**
-	 * Runs fulltext on the collection/query.
-	 * @nullable
-	 */
-	fulltext?: string | null;
-	/**
-	 * This filter matches the exact name of the category group
-	 * @nullable
-	 */
-	name?: string | null;
-	/**
-	 * This filter matches the exact locale of the category group
-	 * @nullable
-	 */
-	locale?: string | null;
-	/**
-	 * This filter matches category groups with locales in the provided array
-	 * @nullable
-	 */
-	localeIn?: string[] | null;
-} | null;
-
-/**
- * App-based filters
- * @nullable
- */
-export type CategoryGroupWhere = {
-	/**
-	 * This filter matches the exact id
-	 * @nullable
-	 */
-	id?: string | null;
-	/**
-	 * This filter matches the ids
-	 * @nullable
-	 */
-	idIn?: string[] | null;
-	/**
-	 * Runs fulltext on the collection/query.
-	 * @nullable
-	 */
-	fulltext?: string | null;
-	/**
-	 * This filter matches the exact name of the category group
-	 * @nullable
-	 */
-	name?: string | null;
-	/**
-	 * This filter matches the exact locale of the category group
-	 * @nullable
-	 */
-	locale?: string | null;
-	/**
-	 * This filter matches category groups with locales in the provided array
-	 * @nullable
-	 */
-	localeIn?: string[] | null;
-} | null;
-
-export type CategoryGroupSortValue =
-	(typeof CategoryGroupSortValue)[keyof typeof CategoryGroupSortValue];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const CategoryGroupSortValue = {
-	name: "name",
-	sort: "sort",
-} as const;
-
-/**
- * @nullable
- */
-export type CategoryGroupSortSort =
-	| (typeof CategoryGroupSortSort)[keyof typeof CategoryGroupSortSort]
-	| null;
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const CategoryGroupSortSort = {
-	asc: "asc",
-	desc: "desc",
-} as const;
-
-/**
- * Sort object for category group collection
- */
-export interface CategoryGroupSort {
-	value: CategoryGroupSortValue;
-	/** @nullable */
-	sort?: CategoryGroupSortSort;
-}
-
-/**
- * Query object for category group collection
- */
-export interface CategoryGroupQuery {
-	cursor?: Cursor;
-	filter?: CategoryGroupFilter;
-	where?: CategoryGroupWhere;
-	/** @nullable */
-	sort?: CategoryGroupSort[] | null;
-}
-
-/**
  * Currency code (ISO 4217)
  */
 export type CurrencyList = (typeof CurrencyList)[keyof typeof CurrencyList];
@@ -374,6 +224,21 @@ export interface Location {
 	state?: string | null;
 	/** Full address preview of a location */
 	address: string;
+	/**
+	 * The city that the location is in
+	 * @nullable
+	 */
+	city?: string | null;
+	/**
+	 * The street that the location is on
+	 * @nullable
+	 */
+	street?: string | null;
+	/**
+	 * The postal/zip code of the location
+	 * @nullable
+	 */
+	zip?: string | null;
 	/** Confidence score of the location (based on query) */
 	confidence: number;
 	/** Used to uniquely identify this location entry */
@@ -405,8 +270,6 @@ export interface ListingDto {
 	age: number;
 	/** ID of the location */
 	locationId: string;
-	/** ID of the category group */
-	categoryGroupId: string;
 	/** ID of the category */
 	categoryId: string;
 	/** Expiration timestamp */
@@ -417,7 +280,6 @@ export interface ListingDto {
 	updatedAt: string;
 	location: Location;
 	category: Category;
-	categoryGroup: CategoryGroup;
 	/** Array of listing gallery images */
 	gallery: ListingDtoGalleryItem[];
 }
@@ -446,8 +308,6 @@ export interface ListingCreate {
 	age: number;
 	/** ID of the location */
 	locationId: string;
-	/** ID of the category group */
-	categoryGroupId: string;
 	/** ID of the category */
 	categoryId: string;
 	currency: CurrencyList;
@@ -533,16 +393,6 @@ export type ListingFilter = {
 	 * @nullable
 	 */
 	locationIdIn?: string[] | null;
-	/**
-	 * This filter matches listings with the exact category group ID
-	 * @nullable
-	 */
-	categoryGroupId?: string | null;
-	/**
-	 * This filter matches listings with category group IDs in the provided array
-	 * @nullable
-	 */
-	categoryGroupIdIn?: string[] | null;
 	/**
 	 * This filter matches listings with the exact category ID
 	 * @nullable
@@ -654,16 +504,6 @@ export type ListingWhere = {
 	 * @nullable
 	 */
 	locationIdIn?: string[] | null;
-	/**
-	 * This filter matches listings with the exact category group ID
-	 * @nullable
-	 */
-	categoryGroupId?: string | null;
-	/**
-	 * This filter matches listings with category group IDs in the provided array
-	 * @nullable
-	 */
-	categoryGroupIdIn?: string[] | null;
 	/**
 	 * This filter matches listings with the exact category ID
 	 * @nullable
@@ -1290,50 +1130,6 @@ export const apiCategoryCount = <TData = AxiosResponse<Count>>(
 };
 
 /**
- * Return a category group based on the provided query
- */
-export const apiCategoryGroupFetch = <TData = AxiosResponse<CategoryGroup>>(
-	categoryGroupQuery: CategoryGroupQuery,
-	options?: AxiosRequestConfig,
-): Promise<TData> => {
-	return axios.post(
-		`/api/session/category-group/fetch`,
-		categoryGroupQuery,
-		options,
-	);
-};
-
-/**
- * Returns category groups based on provided parameters
- */
-export const apiCategoryGroupCollection = <
-	TData = AxiosResponse<CategoryGroup[]>,
->(
-	categoryGroupQuery: CategoryGroupQuery,
-	options?: AxiosRequestConfig,
-): Promise<TData> => {
-	return axios.post(
-		`/api/session/category-group/collection`,
-		categoryGroupQuery,
-		options,
-	);
-};
-
-/**
- * Returns count of category groups based on provided query
- */
-export const apiCategoryGroupCount = <TData = AxiosResponse<Count>>(
-	categoryGroupQuery: CategoryGroupQuery,
-	options?: AxiosRequestConfig,
-): Promise<TData> => {
-	return axios.post(
-		`/api/session/category-group/count`,
-		categoryGroupQuery,
-		options,
-	);
-};
-
-/**
  * Create a new listing
  */
 export const apiListingCreate = <TData = AxiosResponse<ListingDto>>(
@@ -1516,9 +1312,6 @@ export const apiMigrationRun = <TData = AxiosResponse<Migration[]>>(
 export type ApiCategoryFetchResult = AxiosResponse<Category>;
 export type ApiCategoryCollectionResult = AxiosResponse<Category[]>;
 export type ApiCategoryCountResult = AxiosResponse<Count>;
-export type ApiCategoryGroupFetchResult = AxiosResponse<CategoryGroup>;
-export type ApiCategoryGroupCollectionResult = AxiosResponse<CategoryGroup[]>;
-export type ApiCategoryGroupCountResult = AxiosResponse<Count>;
 export type ApiListingCreateResult = AxiosResponse<ListingDto>;
 export type ApiListingFetchResult = AxiosResponse<ListingDto>;
 export type ApiListingCollectionResult = AxiosResponse<ListingCollection>;

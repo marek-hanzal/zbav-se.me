@@ -31,7 +31,7 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 	}
 
 	if (where?.fulltext) {
-		// For listings, we can search in category/categoryGroup names via joins
+		// For listings, we can search in category names via joins
 		// For now, we'll skip fulltext search since listings don't have text fields
 		// This could be enhanced later with proper joins to category tables
 	}
@@ -68,14 +68,6 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 
 	if (where?.locationIdIn && where.locationIdIn.length > 0) {
 		query = query.where("l.locationId", "in", where.locationIdIn);
-	}
-
-	if (where?.categoryGroupId) {
-		query = query.where("l.categoryGroupId", "=", where.categoryGroupId);
-	}
-
-	if (where?.categoryGroupIdIn && where.categoryGroupIdIn.length > 0) {
-		query = query.where("l.categoryGroupId", "in", where.categoryGroupIdIn);
 	}
 
 	if (where?.categoryId) {

@@ -68,7 +68,6 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					condition: data.condition,
 					age: data.age,
 					locationId: data.locationId,
-					categoryGroupId: data.categoryGroupId,
 					categoryId: data.categoryId,
 					createdAt: now,
 					updatedAt: now,

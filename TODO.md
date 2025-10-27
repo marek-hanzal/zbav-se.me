@@ -5,6 +5,9 @@
     - tickets (+ related stuff)
     - food (is it legal?)
 
+- Create general "values" doc with values provided by the service
+    - anonymity
+
 - dynamic listing creation based on selected category
 
 - enable labels/vendors/some sort of text on listing?
@@ -39,7 +42,7 @@
     - something like Feed table + endpoint; favourite listing could be marked in this feed
 
 - Listing -> connect to /api/listing/feed
-    - every time user finishes the feed, he can create a new one
+    - Everytime user finishes the feed, he can create a new one
     - Because we know feed creation datetime, we can sell this info to buyers as data
 
 - Listing watch time - after a timeout send (using a queue) watch increase
@@ -56,11 +59,12 @@
     - how many users has the thing in the bag
     - how many times the thing is in the feed of an user
 
-- When I know user's favourite groups/categories, I can fetch them _before_ the other ones (+ e.g. button "show all" to
-    display/fetch remaining)
+- When I know user's favourite groups/categories, I can fetch them _before_ the other ones (+ e.g. button "show all" to display/fetch remaining)
 
 - Marking favourite users (sellers) + info about that
 - When listing is saved, recompute user's "favourite" category list
+
+- if the user opens listing from feed, mark all "previous" listings as "viewed" and start from the viewed onwards
 
 ## User Management & Auth
 - Prompt user to use passkey?
@@ -88,6 +92,8 @@
 - When there is a locale without groups, show a page with "market" redirect
     - Status with "Market not available yet in your country" ?
 
+- because now we have locked vertical scroll, each page can now utilize inner-vertical scroll, so the overall flow can stay consistent
+
 ## Technical Infrastructure
 - _Fix infinite scroll; 0.5 threshold is low -> change to static pixels_
 
@@ -95,9 +101,6 @@
     - _validate currency on server_
 - Revisit currencies, it's not the best thing how
 - ListingPreview - price inline has hardcoded currency code
-
-- Maybe it would be necessary to strip userId's from backend output
-    - Also content server stores files in /<id> - unpredictable, but initial part may be readable?
 
 - Map tiles + cache on CDN is allowed (+ attribution in UI)
     - We can connect CDN pullzone directly to maptiles with API key
@@ -108,6 +111,10 @@
 - Add endpoint to purge old files from storages
 - Resolve /null get calls from TSR/TSS
 - Resolve why fuckin' webglob is not forwarding mails
+
+- extend Location to store city/street/blabla in fields
+- Add app-level env. check in github action (e.g. simple script validating env. schemas)
+- Upstash can be used with TCP
 
 ## Development & Deployment
 - Staging (-> dev)

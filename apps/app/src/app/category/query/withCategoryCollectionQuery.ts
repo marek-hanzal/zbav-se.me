@@ -5,12 +5,12 @@ import {
 	type CategoryQuery,
 } from "@zbav-se.me/sdk";
 
-export const withCategoryListQuery = () => {
+export const withCategoryCollectionQuery = () => {
 	return withQuery<CategoryQuery, Category[]>({
 		keys(data) {
 			return [
 				"category",
-				"list",
+				"collection",
 				data,
 			];
 		},

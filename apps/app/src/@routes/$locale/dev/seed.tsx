@@ -7,7 +7,6 @@ import { CurrencyList } from "@zbav-se.me/common";
 import {
 	type AllowedContentTypes,
 	apiCategoryCollection,
-	apiCategoryGroupCollection,
 	apiListingCreate,
 	apiLocationAutocomplete,
 	ListingExpire,
@@ -68,9 +67,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				"seed",
 			],
 			async mutationFn() {
-				const categoryGroup = await apiCategoryGroupCollection({}).then(
-					(res) => res.data,
-				);
 				const category = await apiCategoryCollection({}).then(
 					(res) => res.data,
 				);
@@ -115,9 +111,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					const listing = await apiListingCreate({
 						age: range(1, 6),
 						condition: range(1, 6),
-						categoryGroupId:
-							categoryGroup[range(0, categoryGroup.length - 1)]!
-								.id,
 						categoryId: category[range(0, category.length - 1)]!.id,
 						price: range(0, 99_999),
 						currency:

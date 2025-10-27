@@ -2,527 +2,1486 @@
 	{
 		"name": "Mobily a příslušenství → Smartphone",
 		"slug": "mobily-a-prislusenstvi--smartphone",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"mobil",
+			"telefon",
+			"chytrý telefon",
+			"android",
+			"iphone",
+			"samsung",
+			"huawei",
+			"xiaomi"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Tlačítkový telefon",
 		"slug": "mobily-a-prislusenstvi--tlacitkovy-telefon",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"klasický telefon",
+			"starý telefon",
+			"tlačítkový",
+			"nokia",
+			"motorola"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Chytré hodinky",
 		"slug": "mobily-a-prislusenstvi--chytre-hodinky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"smartwatch",
+			"apple watch",
+			"samsung galaxy watch",
+			"fitbit",
+			"garmin",
+			"sportovní hodinky"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Příslušenství k mobilům",
 		"slug": "mobily-a-prislusenstvi--prislusenstvi-k-mobilum",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"mobilní doplňky",
+			"telefonní příslušenství",
+			"akcesory",
+			"doplňky"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Powerbanka",
 		"slug": "mobily-a-prislusenstvi--powerbanka",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"baterka",
+			"přenosná baterie",
+			"power bank",
+			"nabíječka",
+			"externí baterie"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Nabíječky a kabely",
 		"slug": "mobily-a-prislusenstvi--nabijecky-a-kabely",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"nabíječka",
+			"kabel",
+			"usb kabel",
+			"lightning",
+			"usb-c",
+			"wireless charger",
+			"bezdrátová nabíječka"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Pouzdra a skla",
 		"slug": "mobily-a-prislusenstvi--pouzdra-a-skla",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pouzdro",
+			"obal",
+			"ochranné sklo",
+			"tempered glass",
+			"case",
+			"cover",
+			"folie"
+		]
 	},
 	{
 		"name": "Mobily a příslušenství → Paměťové karty",
 		"slug": "mobily-a-prislusenstvi--pametove-karty",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"microsd",
+			"sd karta",
+			"paměťová karta",
+			"flash karta",
+			"memory card",
+			"úložiště"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Notebook",
 		"slug": "pocitace-a-kancelar--notebook",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"laptop",
+			"přenosný počítač",
+			"macbook",
+			"thinkpad",
+			"asus",
+			"hp",
+			"dell",
+			"lenovo"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Stolní PC",
 		"slug": "pocitace-a-kancelar--stolni-pc",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"desktop",
+			"stolní počítač",
+			"pc",
+			"počítač",
+			"komputer",
+			"workstation"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Monitor",
 		"slug": "pocitace-a-kancelar--monitor",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"displej",
+			"obrazovka",
+			"screen",
+			"lcd",
+			"led",
+			"oled",
+			"4k",
+			"ultrawide"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → PC komponenty (CPU/GPU/RAM)",
 		"slug": "pocitace-a-kancelar--pc-komponenty-cpu-gpu-ram",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"procesor",
+			"grafická karta",
+			"paměť",
+			"ram",
+			"cpu",
+			"gpu",
+			"intel",
+			"amd",
+			"nvidia"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Periferie (klávesnice/myš)",
 		"slug": "pocitace-a-kancelar--periferie-klavesnice-mys",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"klávesnice",
+			"myš",
+			"keyboard",
+			"mouse",
+			"gaming",
+			"mechanická",
+			"bezdrátová"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Síťové prvky (router/NAS)",
 		"slug": "pocitace-a-kancelar--sitove-prvky-router-nas",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"router",
+			"wifi",
+			"nas",
+			"switch",
+			"modem",
+			"síť",
+			"internet",
+			"wi-fi"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Tiskárny a skenery",
 		"slug": "pocitace-a-kancelar--tiskarny-a-skenery",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"tiskárna",
+			"skener",
+			"printer",
+			"scanner",
+			"laserová",
+			"inkoustová",
+			"multifunkční"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Úložiště (SSD/HDD)",
 		"slug": "pocitace-a-kancelar--uloziste-ssd-hdd",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"ssd",
+			"hdd",
+			"disk",
+			"úložiště",
+			"hard disk",
+			"solid state",
+			"nvme",
+			"m.2"
+		]
 	},
 	{
 		"name": "Počítače a kancelář → Software a licence",
 		"slug": "pocitace-a-kancelar--software-a-licence",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"software",
+			"program",
+			"aplikace",
+			"licence",
+			"windows",
+			"office",
+			"antivirus"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Dámské oblečení",
 		"slug": "obleceni-a-doplnky--damske-obleceni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dámské",
+			"ženské",
+			"sukně",
+			"šaty",
+			"kalhoty",
+			"trička",
+			"svetry",
+			"obleky"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Pánské oblečení",
 		"slug": "obleceni-a-doplnky--panske-obleceni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pánské",
+			"mužské",
+			"košile",
+			"kalhoty",
+			"trička",
+			"svetry",
+			"obleky",
+			"kraťasy"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Dětské oblečení",
 		"slug": "obleceni-a-doplnky--detske-obleceni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dětské",
+			"dětské oblečení",
+			"děti",
+			"baby",
+			"kojenecké",
+			"batolecí",
+			"dětské oblečení"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Boty",
 		"slug": "obleceni-a-doplnky--boty",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"obuv",
+			"sandály",
+			"tenisky",
+			"kozačky",
+			"lodičky",
+			"sneakers",
+			"boots",
+			"sandals"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Kabelky a tašky",
 		"slug": "obleceni-a-doplnky--kabelky-a-tasky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"kabelka",
+			"taška",
+			"batoh",
+			"aktovka",
+			"handbag",
+			"backpack",
+			"messenger",
+			"tote"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Hodinky a šperky",
 		"slug": "obleceni-a-doplnky--hodinky-a-sperky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"hodinky",
+			"šperky",
+			"náramek",
+			"náhrdelník",
+			"prsten",
+			"watch",
+			"jewelry",
+			"bracelet"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Sportovní oblečení",
 		"slug": "obleceni-a-doplnky--sportovni-obleceni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"sport",
+			"fitness",
+			"běh",
+			"cvičení",
+			"sportovní",
+			"athletic",
+			"workout",
+			"gym"
+		]
 	},
 	{
 		"name": "Oblečení a doplňky → Doplňky (čepice/pásky)",
 		"slug": "obleceni-a-doplnky--doplnky-cepice-pasky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"čepice",
+			"klobouk",
+			"pásek",
+			"šátek",
+			"rukavice",
+			"hat",
+			"cap",
+			"belt",
+			"scarf"
+		]
 	},
 	{
 		"name": "Hry a konzole → Herní konzole",
 		"slug": "hry-a-konzole--herni-konzole",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"konzole",
+			"playstation",
+			"xbox",
+			"nintendo",
+			"switch",
+			"ps5",
+			"ps4",
+			"xbox series"
+		]
 	},
 	{
 		"name": "Hry a konzole → Hry pro PlayStation",
 		"slug": "hry-a-konzole--hry-pro-playstation",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"playstation hry",
+			"ps hry",
+			"ps4 hry",
+			"ps5 hry",
+			"sony",
+			"exclusive",
+			"playstation games"
+		]
 	},
 	{
 		"name": "Hry a konzole → Hry pro Xbox",
 		"slug": "hry-a-konzole--hry-pro-xbox",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"xbox hry",
+			"xbox games",
+			"microsoft",
+			"xbox series",
+			"xbox one",
+			"game pass"
+		]
 	},
 	{
 		"name": "Hry a konzole → Hry pro Nintendo",
 		"slug": "hry-a-konzole--hry-pro-nintendo",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"nintendo hry",
+			"switch hry",
+			"wii",
+			"3ds",
+			"nintendo games",
+			"mario",
+			"zelda",
+			"pokemon"
+		]
 	},
 	{
 		"name": "Hry a konzole → PC hry",
 		"slug": "hry-a-konzole--pc-hry",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pc hry",
+			"počítačové hry",
+			"steam",
+			"epic games",
+			"origin",
+			"pc games",
+			"gaming"
+		]
 	},
 	{
 		"name": "Hry a konzole → Ovladače a příslušenství",
 		"slug": "hry-a-konzole--ovladace-a-prislusenstvi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"ovladač",
+			"controller",
+			"gamepad",
+			"joystick",
+			"příslušenství",
+			"accessories",
+			"gaming"
+		]
 	},
 	{
 		"name": "Hry a konzole → VR headsety",
 		"slug": "hry-a-konzole--vr-headsety",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"vr",
+			"virtual reality",
+			"oculus",
+			"htc vive",
+			"vr headset",
+			"meta quest",
+			"vr brýle"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Televize",
 		"slug": "tv-audio-a-foto--televize",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"tv",
+			"televize",
+			"led tv",
+			"oled",
+			"4k",
+			"smart tv",
+			"samsung",
+			"lg",
+			"sony"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Set-top boxy a přehrávače",
 		"slug": "tv-audio-a-foto--set-top-boxy-a-prehravace",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"set-top box",
+			"přehrávač",
+			"android tv",
+			"chromecast",
+			"apple tv",
+			"roku",
+			"streaming"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Reproduktory a soundbary",
 		"slug": "tv-audio-a-foto--reproduktory-a-soundbary",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"reproduktory",
+			"soundbar",
+			"hifi",
+			"bluetooth",
+			"wireless",
+			"jbl",
+			"bose",
+			"sonos"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Sluchátka",
 		"slug": "tv-audio-a-foto--sluchatka",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"sluchátka",
+			"headphones",
+			"earphones",
+			"bezdrátová",
+			"bluetooth",
+			"airpods",
+			"sony",
+			"sennheiser"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Fotoaparáty",
 		"slug": "tv-audio-a-foto--fotoaparaty",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"fotoaparát",
+			"camera",
+			"canon",
+			"nikon",
+			"sony",
+			"dslr",
+			"mirrorless",
+			"kompaktní"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Objektivy a příslušenství",
 		"slug": "tv-audio-a-foto--objektivy-a-prislusenstvi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"objektiv",
+			"lens",
+			"teleobjektiv",
+			"širokoúhlý",
+			"makro",
+			"filtry",
+			"stativ"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Projektory",
 		"slug": "tv-audio-a-foto--projektory",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"projektor",
+			"beamer",
+			"promítání",
+			"4k projektor",
+			"full hd",
+			"epson",
+			"benq"
+		]
 	},
 	{
 		"name": "TV, audio a foto → Drony s kamerou",
 		"slug": "tv-audio-a-foto--drony-s-kamerou",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dron",
+			"quadcopter",
+			"fpv",
+			"dji",
+			"mavic",
+			"phantom",
+			"air",
+			"mini"
+		]
 	},
 	{
 		"name": "Dětské zboží → Kočárky",
 		"slug": "detske-zbozi--kocarky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"kočárek",
+			"buggy",
+			"sportovní kočárek",
+			"golf",
+			"baby",
+			"dětský kočárek"
+		]
 	},
 	{
 		"name": "Dětské zboží → Autosedačky",
 		"slug": "detske-zbozi--autosedacky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"autosedačka",
+			"car seat",
+			"dětská sedačka",
+			"bezpečnostní sedačka",
+			"baby seat"
+		]
 	},
 	{
 		"name": "Dětské zboží → Dětské postýlky a židličky",
 		"slug": "detske-zbozi--detske-postylky-a-zidlicky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"postýlka",
+			"židlička",
+			"baby bed",
+			"high chair",
+			"stolička",
+			"dětský nábytek"
+		]
 	},
 	{
 		"name": "Dětské zboží → Hračky",
 		"slug": "detske-zbozi--hracky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"hračky",
+			"toys",
+			"dětské hračky",
+			"lego",
+			"barbie",
+			"panenky",
+			"autíčka"
+		]
 	},
 	{
 		"name": "Dětské zboží → Dětské oblečení a obuv",
 		"slug": "detske-zbozi--detske-obleceni-a-obuv",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dětské oblečení",
+			"dětské boty",
+			"baby clothes",
+			"dětská obuv",
+			"kojenecké oblečení"
+		]
 	},
 	{
 		"name": "Dětské zboží → Přebalování a péče",
 		"slug": "detske-zbozi--prebalovani-a-pece",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"přebalování",
+			"plenky",
+			"dětská péče",
+			"baby care",
+			"kojenecké potřeby",
+			"hygiena"
+		]
 	},
 	{
 		"name": "Dům a bydlení → Osvětlení",
 		"slug": "dum-a-bydleni--osvetleni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"osvětlení",
+			"svítidla",
+			"lampy",
+			"lustr",
+			"stolní lampa",
+			"led",
+			"žárovky"
+		]
 	},
 	{
 		"name": "Dům a bydlení → Textil (závěsy/koberce)",
 		"slug": "dum-a-bydleni--textil-zavesy-koberce",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"textil",
+			"závěsy",
+			"koberce",
+			"záclony",
+			"koberec",
+			"podložky",
+			"deky"
+		]
 	},
 	{
 		"name": "Dům a bydlení → Dekorace",
 		"slug": "dum-a-bydleni--dekorace",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dekorace",
+			"ozdoby",
+			"květináče",
+			"svíčky",
+			"obrazy",
+			"sošky",
+			"interiér"
+		]
 	},
 	{
 		"name": "Dům a bydlení → Úložné boxy a organizéry",
 		"slug": "dum-a-bydleni--ulozne-boxy-a-organizery",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"úložné boxy",
+			"organizéry",
+			"koše",
+			"boxy",
+			"organizace",
+			"úložiště",
+			"kontejnery"
+		]
 	},
 	{
 		"name": "Dům a bydlení → Zrcadla a rámy",
 		"slug": "dum-a-bydleni--zrcadla-a-ramy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"zrcadla",
+			"rámy",
+			"obrazové rámy",
+			"zrcadlo",
+			"fotografické rámy",
+			"dekorativní rámy"
+		]
 	},
 	{
 		"name": "Dům a bydlení → Smart home (chytrá domácnost)",
 		"slug": "dum-a-bydleni--smart-home-chytra-domacnost",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"smart home",
+			"chytrá domácnost",
+			"iot",
+			"alexa",
+			"google home",
+			"smart",
+			"automatizace"
+		]
 	},
 	{
 		"name": "Nábytek → Pohovky a sedací soupravy",
 		"slug": "nabytek--pohovky-a-sedaci-soupravy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pohovka",
+			"sedací souprava",
+			"gauč",
+			"sofa",
+			"sedací nábytek",
+			"rohová pohovka"
+		]
 	},
 	{
 		"name": "Nábytek → Postele a matrace",
 		"slug": "nabytek--postele-a-matrace",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"postel",
+			"matrace",
+			"lůžko",
+			"spaní",
+			"ložnice",
+			"postelový nábytek",
+			"pružiny"
+		]
 	},
 	{
 		"name": "Nábytek → Skříně a komody",
 		"slug": "nabytek--skrine-a-komody",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"skříň",
+			"komoda",
+			"šatní skříň",
+			"úložný nábytek",
+			"vestavěná skříň",
+			"komoda"
+		]
 	},
 	{
 		"name": "Nábytek → Stoly a židle",
 		"slug": "nabytek--stoly-a-zidle",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"stoly",
+			"židle",
+			"jídelní stůl",
+			"kancelářská židle",
+			"křeslo",
+			"sedací nábytek",
+			"stolní nábytek"
+		]
 	},
 	{
 		"name": "Nábytek → Police a regály",
 		"slug": "nabytek--police-a-regaly",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"police",
+			"regály",
+			"knihovna",
+			"úložné police",
+			"skříňky",
+			"poličky",
+			"úložný systém"
+		]
 	},
 	{
 		"name": "Nábytek → Zahradní nábytek",
 		"slug": "nabytek--zahradni-nabytek",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"zahradní nábytek",
+			"terasa",
+			"balkon",
+			"zahradní stůl",
+			"zahradní židle",
+			"outdoor nábytek"
+		]
 	},
 	{
 		"name": "Bílá technika → Lednice a mrazáky",
 		"slug": "bila-technika--lednice-a-mrazaky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"lednice",
+			"mrazák",
+			"chladnička",
+			"mraznička",
+			"bosh",
+			"siemens",
+			"electrolux"
+		]
 	},
 	{
 		"name": "Bílá technika → Pračky a sušičky",
 		"slug": "bila-technika--pracky-a-susicky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pračka",
+			"sušička",
+			"praní",
+			"sušení",
+			"bosh",
+			"siemens",
+			"electrolux",
+			"whirlpool"
+		]
 	},
 	{
 		"name": "Bílá technika → Myčky nádobí",
 		"slug": "bila-technika--mycky-nadobi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"myčka",
+			"myčka nádobí",
+			"bosh",
+			"siemens",
+			"electrolux",
+			"whirlpool",
+			"miele"
+		]
 	},
 	{
 		"name": "Bílá technika → Sporáky a trouby",
 		"slug": "bila-technika--sporaky-a-trouby",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"sporák",
+			"trouba",
+			"vaření",
+			"pečení",
+			"bosh",
+			"siemens",
+			"electrolux",
+			"induction"
+		]
 	},
 	{
 		"name": "Bílá technika → Mikrovlnky",
 		"slug": "bila-technika--mikrovlnky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"mikrovlnka",
+			"mikrovlnná trouba",
+			"microwave",
+			"ohřev",
+			"bosh",
+			"siemens",
+			"electrolux"
+		]
 	},
 	{
 		"name": "Bílá technika → Vysavače a parní čističe",
 		"slug": "bila-technika--vysavace-a-parni-cistice",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"vysavač",
+			"parní čistič",
+			"vacuum",
+			"steam cleaner",
+			"dyson",
+			"bosh",
+			"siemens"
+		]
 	},
 	{
 		"name": "Kuchyň a jídelna → Nádobí a příbory",
 		"slug": "kuchyn-a-jidelna--nadobi-a-pribory",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"nádobí",
+			"příbory",
+			"talíře",
+			"sklenice",
+			"poháry",
+			"kuchyňské nádobí",
+			"jídelní souprava"
+		]
 	},
 	{
 		"name": "Kuchyň a jídelna → Hrnce a pánve",
 		"slug": "kuchyn-a-jidelna--hrnce-a-panve",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"hrnce",
+			"pánve",
+			"vaření",
+			"kuchyňské nádobí",
+			"teflon",
+			"nerez",
+			"cast iron"
+		]
 	},
 	{
 		"name": "Kuchyň a jídelna → Sklenice a hrnky",
 		"slug": "kuchyn-a-jidelna--sklenice-a-hrnky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"sklenice",
+			"hrnky",
+			"poháry",
+			"šálky",
+			"hrnečky",
+			"sklo",
+			"porcelán"
+		]
 	},
 	{
 		"name": "Kuchyň a jídelna → Kuchyňské spotřebiče malé",
 		"slug": "kuchyn-a-jidelna--kuchynske-spotrebice-male",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"malé spotřebiče",
+			"mixér",
+			"blender",
+			"kávovar",
+			"toustovač",
+			"mixer",
+			"robot"
+		]
 	},
 	{
 		"name": "Kuchyň a jídelna → Káva a kávovary",
 		"slug": "kuchyn-a-jidelna--kava-a-kavovary",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"káva",
+			"kávovar",
+			"espresso",
+			"nespresso",
+			"dolce gusto",
+			"french press",
+			"moka"
+		]
 	},
 	{
 		"name": "Kuchyň a jídelna → Boxy a organizéry do kuchyně",
 		"slug": "kuchyn-a-jidelna--boxy-a-organizery-do-kuchyne",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"boxy",
+			"organizéry",
+			"kuchyňské boxy",
+			"úložné boxy",
+			"kontejnery",
+			"organizace"
+		]
 	},
 	{
 		"name": "Sport a outdoor → Kola a příslušenství",
 		"slug": "sport-a-outdoor--kola-a-prislusenstvi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"kolo",
+			"bike",
+			"cyklistika",
+			"horská kola",
+			"silniční kola",
+			"elektrokola",
+			"cyklistické doplňky"
+		]
 	},
 	{
 		"name": "Sport a outdoor → Běh a fitness",
 		"slug": "sport-a-outdoor--beh-a-fitness",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"běh",
+			"fitness",
+			"cvičení",
+			"běžecké boty",
+			"fitness vybavení",
+			"gym",
+			"workout"
+		]
 	},
 	{
 		"name": "Sport a outdoor → Lyže a snowboard",
 		"slug": "sport-a-outdoor--lyze-a-snowboard",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"lyže",
+			"snowboard",
+			"zimní sporty",
+			"sjezdové lyže",
+			"běžky",
+			"snowboardové boty"
+		]
 	},
 	{
 		"name": "Sport a outdoor → Kemping (stany/spacáky)",
 		"slug": "sport-a-outdoor--kemping-stany-spacaky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"kemping",
+			"stany",
+			"spacáky",
+			"outdoor",
+			"camping",
+			"stan",
+			"spacák",
+			"turistika"
+		]
 	},
 	{
 		"name": "Sport a outdoor → Koloběžky a longboardy",
 		"slug": "sport-a-outdoor--kolobezky-a-longboardy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"koloběžky",
+			"longboardy",
+			"scooter",
+			"skateboard",
+			"longboard",
+			"koloběžka",
+			"skate"
+		]
 	},
 	{
 		"name": "Sport a outdoor → Rybaření",
 		"slug": "sport-a-outdoor--rybareni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"rybaření",
+			"fishing",
+			"rybářské potřeby",
+			"udice",
+			"návnady",
+			"rybářský prut",
+			"rybářské náčiní"
+		]
 	},
 	{
 		"name": "Auto-moto → Osobní auta",
 		"slug": "auto-moto--osobni-auta",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"auto",
+			"osobní auto",
+			"automobil",
+			"vozidlo",
+			"car",
+			"sedan",
+			"hatchback",
+			"suv"
+		]
 	},
 	{
 		"name": "Auto-moto → Motocykly a skútry",
 		"slug": "auto-moto--motocykly-a-skutry",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"motocykl",
+			"skútr",
+			"moto",
+			"motorcycle",
+			"scooter",
+			"bike",
+			"čtyřkolka",
+			"atv"
+		]
 	},
 	{
 		"name": "Auto-moto → Pneumatiky a disky",
 		"slug": "auto-moto--pneumatiky-a-disky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pneumatiky",
+			"disky",
+			"kola",
+			"tires",
+			"wheels",
+			"ráfky",
+			"letní pneumatiky",
+			"zimní pneumatiky"
+		]
 	},
 	{
 		"name": "Auto-moto → Autodoplňky",
 		"slug": "auto-moto--autodoplnky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"autodoplňky",
+			"car accessories",
+			"auto doplňky",
+			"automotive",
+			"car parts",
+			"auto příslušenství"
+		]
 	},
 	{
 		"name": "Auto-moto → Náhradní díly",
 		"slug": "auto-moto--nahradni-dily",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"náhradní díly",
+			"auto díly",
+			"car parts",
+			"spare parts",
+			"automotive parts",
+			"auto komponenty"
+		]
 	},
 	{
 		"name": "Auto-moto → Helmy a výbava",
 		"slug": "auto-moto--helmy-a-vybava",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"helmy",
+			"výbava",
+			"helmets",
+			"gear",
+			"motocyklová helma",
+			"ochranné pomůcky",
+			"motocyklová výbava"
+		]
 	},
 	{
 		"name": "Zahrada a dílna → Sekačky a křovinořezy",
 		"slug": "zahrada-a-dilna--sekacky-a-krovinorezy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"sekačky",
+			"křovinořezy",
+			"trávníkové sekačky",
+			"motorové sekačky",
+			"strunové sekačky",
+			"garden tools"
+		]
 	},
 	{
 		"name": "Zahrada a dílna → Pily a řetězové pily",
 		"slug": "zahrada-a-dilna--pily-a-retezove-pily",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pily",
+			"řetězové pily",
+			"chainsaw",
+			"circular saw",
+			"handsaw",
+			"jigsaw",
+			"reciprocating saw"
+		]
 	},
 	{
 		"name": "Zahrada a dílna → Aku nářadí (vrtačky/brusky)",
 		"slug": "zahrada-a-dilna--aku-naradi-vrtacky-brusky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"aku nářadí",
+			"vrtačky",
+			"brusky",
+			"cordless tools",
+			"battery tools",
+			"drill",
+			"grinder",
+			"sander"
+		]
 	},
 	{
 		"name": "Zahrada a dílna → Ruční nářadí",
 		"slug": "zahrada-a-dilna--rucni-naradi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"ruční nářadí",
+			"hand tools",
+			"kladiva",
+			"šroubováky",
+			"kleště",
+			"hammers",
+			"screwdrivers",
+			"pliers"
+		]
 	},
 	{
 		"name": "Zahrada a dílna → Zavlažování a zahradní technika",
 		"slug": "zahrada-a-dilna--zavlazovani-a-zahradni-technika",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"zavlažování",
+			"zahradní technika",
+			"irrigation",
+			"garden tools",
+			"zahradní nářadí",
+			"watering",
+			"garden equipment"
+		]
 	},
 	{
 		"name": "Zahrada a dílna → Grily a příslušenství",
 		"slug": "zahrada-a-dilna--grily-a-prislusenstvi",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"grily",
+			"grill",
+			"barbecue",
+			"bbq",
+			"grilování",
+			"charcoal grill",
+			"gas grill",
+			"electric grill"
+		]
 	},
 	{
 		"name": "Domácí zvířata → Pelíšky a boudy",
 		"slug": "domaci-zvirata--pelisky-a-boudy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"pelíšky",
+			"boudy",
+			"pet beds",
+			"dog houses",
+			"cat beds",
+			"psí boudy",
+			"kočičí pelíšky"
+		]
 	},
 	{
 		"name": "Domácí zvířata → Misky a krmítka",
 		"slug": "domaci-zvirata--misky-a-krmitka",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"misky",
+			"krmítka",
+			"pet bowls",
+			"feeding bowls",
+			"water bowls",
+			"automatic feeders",
+			"pet feeders"
+		]
 	},
 	{
 		"name": "Domácí zvířata → Vodítka a obojky",
 		"slug": "domaci-zvirata--voditka-a-obojky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"vodítka",
+			"obojky",
+			"leashes",
+			"collars",
+			"dog leash",
+			"cat collar",
+			"harness",
+			"retractable leash"
+		]
 	},
 	{
 		"name": "Domácí zvířata → Hračky pro zvířata",
 		"slug": "domaci-zvirata--hracky-pro-zvirata",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"hračky pro zvířata",
+			"pet toys",
+			"dog toys",
+			"cat toys",
+			"chew toys",
+			"interactive toys",
+			"pet play"
+		]
 	},
 	{
 		"name": "Domácí zvířata → Akvária a terária",
 		"slug": "domaci-zvirata--akvaria-a-teraria",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"akvária",
+			"terária",
+			"aquariums",
+			"terrariums",
+			"fish tanks",
+			"reptile tanks",
+			"aquarium equipment"
+		]
 	},
 	{
 		"name": "Domácí zvířata → Klece a přepravky",
 		"slug": "domaci-zvirata--klece-a-prepravky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"klece",
+			"přepravky",
+			"cages",
+			"carriers",
+			"pet carriers",
+			"travel cages",
+			"bird cages",
+			"hamster cages"
+		]
 	},
 	{
 		"name": "Knihy, filmy a hudba → Knihy",
 		"slug": "knihy-filmy-a-hudba--knihy",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"knihy",
+			"books",
+			"literatura",
+			"romány",
+			"beletrie",
+			"naučná literatura",
+			"knihkupectví"
+		]
 	},
 	{
 		"name": "Knihy, filmy a hudba → Komiksy a manga",
 		"slug": "knihy-filmy-a-hudba--komiksy-a-manga",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"komiksy",
+			"manga",
+			"comics",
+			"graphic novels",
+			"superhero comics",
+			"japanese manga",
+			"comic books"
+		]
 	},
 	{
 		"name": "Knihy, filmy a hudba → Vinyl a gramodesky",
 		"slug": "knihy-filmy-a-hudba--vinyl-a-gramodesky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"vinyl",
+			"gramodesky",
+			"vinyl records",
+			"lp",
+			"vinyl lp",
+			"vinyl albums",
+			"record player",
+			"turntable"
+		]
 	},
 	{
 		"name": "Knihy, filmy a hudba → CD a kazety",
 		"slug": "knihy-filmy-a-hudba--cd-a-kazety",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"cd",
+			"kazety",
+			"cds",
+			"cassettes",
+			"music cds",
+			"audio cassettes",
+			"cd albums",
+			"tape cassettes"
+		]
 	},
 	{
 		"name": "Knihy, filmy a hudba → DVD a Blu-ray",
 		"slug": "knihy-filmy-a-hudba--dvd-a-blu-ray",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"dvd",
+			"blu-ray",
+			"movies",
+			"films",
+			"dvds",
+			"blu ray",
+			"movie discs",
+			"film collection"
+		]
 	},
 	{
 		"name": "Knihy, filmy a hudba → Noty a zpěvníky",
 		"slug": "knihy-filmy-a-hudba--noty-a-zpevniky",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"noty",
+			"zpěvníky",
+			"sheet music",
+			"songbooks",
+			"music sheets",
+			"piano music",
+			"guitar tabs"
+		]
 	},
 	{
 		"name": "Hobby a kreativita → Deskovky a puzzle",
 		"slug": "hobby-a-kreativita--deskovky-a-puzzle",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"deskovky",
+			"puzzle",
+			"board games",
+			"jigsaw puzzles",
+			"card games",
+			"strategy games",
+			"family games"
+		]
 	},
 	{
 		"name": "Hobby a kreativita → Modelářství (RC/drony)",
 		"slug": "hobby-a-kreativita--modelarstvi-rc-drony",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"modelářství",
+			"rc",
+			"drony",
+			"model building",
+			"remote control",
+			"rc cars",
+			"rc planes",
+			"model kits"
+		]
 	},
 	{
 		"name": "Hobby a kreativita → 3D tisk a filamenty",
 		"slug": "hobby-a-kreativita--3d-tisk-a-filamenty",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"3d tisk",
+			"filamenty",
+			"3d printing",
+			"filaments",
+			"pla",
+			"abs",
+			"petg",
+			"3d printer"
+		]
 	},
 	{
 		"name": "Hobby a kreativita → Malování a kreslení",
 		"slug": "hobby-a-kreativita--malovani-a-kresleni",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"malování",
+			"kreslení",
+			"painting",
+			"drawing",
+			"art supplies",
+			"brushes",
+			"paints",
+			"canvas"
+		]
 	},
 	{
 		"name": "Hobby a kreativita → Šití a háčkování",
 		"slug": "hobby-a-kreativita--siti-a-hackovani",
-		"locale": "cs"
+		"locale": "cs",
+		"spotlight": [
+			"šití",
+			"háčkování",
+			"sewing",
+			"crocheting",
+			"knitting",
+			"yarn",
+			"fabric",
+			"needles"
+		]
 	},
 	{
 		"name": "Hobby a kreativita → DIY sady a materiál",

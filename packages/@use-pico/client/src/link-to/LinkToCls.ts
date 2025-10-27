@@ -276,6 +276,7 @@ export const LinkToCls = contract(PicoCls.contract)
 	.defaults({
 		tone: "link",
 		theme: "light",
+		display: "inline",
 	})
 	.cls();
 

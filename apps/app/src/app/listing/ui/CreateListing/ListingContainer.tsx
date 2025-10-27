@@ -6,7 +6,7 @@ import { Title } from "~/app/ui/title/Title";
 
 export namespace ListingContainer {
 	export interface Props extends FlowContainer.Props {
-		progress?: boolean;
+		progress?: ListingProgress.Props;
 		textTitle?: string;
 		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
@@ -18,7 +18,7 @@ export namespace ListingContainer {
 }
 
 export const ListingContainer: FC<ListingContainer.Props> = ({
-	progress = true,
+	progress,
 	textTitle,
 	textSubtitle,
 	titleProps,
@@ -29,7 +29,7 @@ export const ListingContainer: FC<ListingContainer.Props> = ({
 }) => {
 	return (
 		<FlowContainer {...props}>
-			{progress ? <ListingProgress /> : null}
+			{progress ? <ListingProgress {...progress} /> : null}
 
 			{textTitle ? (
 				<Title

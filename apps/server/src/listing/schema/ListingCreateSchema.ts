@@ -17,9 +17,6 @@ export const ListingCreateSchema = z
 		locationId: z.string().openapi({
 			description: "ID of the location",
 		}),
-		categoryGroupId: z.string().openapi({
-			description: "ID of the category group",
-		}),
 		categoryId: z.string().openapi({
 			description: "ID of the category",
 		}),

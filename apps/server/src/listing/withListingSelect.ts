@@ -35,13 +35,6 @@ export const withListingSelect = ({
 					.whereRef("category.id", "=", "l.categoryId")
 					.limit(1),
 			).as("category"),
-			jsonObjectFrom(
-				eb
-					.selectFrom("category_group")
-					.selectAll("category_group")
-					.whereRef("category_group.id", "=", "l.categoryGroupId")
-					.limit(1),
-			).as("categoryGroup"),
 			eb.fn
 				.coalesce(
 					jsonArrayFrom(

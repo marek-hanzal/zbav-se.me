@@ -7,7 +7,6 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import {
-	CategoryGroupIcon,
 	CategoryIcon,
 	ConditionIcon,
 	LocationIcon,
@@ -77,10 +76,6 @@ export const IntroWrapper: FC<IntroWrapper.Props> = memo(
 						>
 							<TypoIcon icon={PhotoIcon}>
 								<Tx label={"Add photos (hint)"} />
-							</TypoIcon>
-
-							<TypoIcon icon={CategoryGroupIcon}>
-								<Tx label={"Select category group (hint)"} />
 							</TypoIcon>
 
 							<TypoIcon icon={CategoryIcon}>

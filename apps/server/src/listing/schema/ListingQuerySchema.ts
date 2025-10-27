@@ -39,14 +39,6 @@ const FilterSchema = z
 			description:
 				"This filter matches listings with location IDs in the provided array",
 		}),
-		categoryGroupId: z.string().nullish().openapi({
-			description:
-				"This filter matches listings with the exact category group ID",
-		}),
-		categoryGroupIdIn: z.array(z.string()).nullish().openapi({
-			description:
-				"This filter matches listings with category group IDs in the provided array",
-		}),
 		categoryId: z.string().nullish().openapi({
 			description:
 				"This filter matches listings with the exact category ID",

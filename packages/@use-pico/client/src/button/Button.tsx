@@ -2,6 +2,7 @@ import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { ButtonHTMLAttributes, FC, Ref } from "react";
 import { useMemo } from "react";
 import { PicoCls } from "../cls/PicoCls";
+import type { UiProps } from "../component/UiProps";
 import { Icon } from "../icon/Icon";
 import type { IconCls } from "../icon/IconCls";
 import { SpinnerIcon } from "../icon/SpinnerIcon";
@@ -10,7 +11,9 @@ import { ButtonCls } from "./ButtonCls";
 
 export namespace Button {
 	export interface Props
-		extends ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>> {
+		extends UiProps<
+			ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>
+		> {
 		wrapperRef?: Ref<HTMLDivElement>;
 		buttonRef?: Ref<HTMLButtonElement>;
 		/**
@@ -46,6 +49,7 @@ const ICON_SIZE_MAP: Partial<
 } as const;
 
 export const Button: FC<Button.Props> = ({
+	ui,
 	wrapperRef,
 	buttonRef,
 	label,
@@ -134,7 +138,7 @@ export const Button: FC<Button.Props> = ({
 			}}
 		>
 			<div
-				data-ui="Button-wrapper"
+				data-ui={ui ?? "Button-wrapper"}
 				ref={wrapperRef}
 				className={slots.wrapper()}
 			>
