@@ -1,0 +1,37 @@
+name: Staging Deploy
+
+on:
+    push:
+        branches: ["staging"]
+
+concurrency:
+    group: staging-deploy
+    cancel-in-progress: false
+
+permissions:
+    contents: read
+
+jobs:
+    check:
+        name: Check
+        runs-on: ubuntu-latest
+        environment: staging
+        steps:
+            - uses: actions/checkout@v4
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Cache node_modules (root)
+              uses: actions/cache@v4
+              with:
+                  path: node_modules
+                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
+                  restore-keys: |
+                      root-nm-${{ runner.os }}-bun-
+
+            - name: Install dependencies (root)
+              run: bun install
+
+            - name: Check
+              run: bun run workflow:check
