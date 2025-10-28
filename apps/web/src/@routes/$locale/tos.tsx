@@ -1,34 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@use-pico/client";
-import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
-import { useRef } from "react";
-import { Markdown } from "~/app/ui/Markdown";
+import { Sheet, Status } from "@use-pico/client";
 
 export const Route = createFileRoute("/$locale/tos")({
-	async loader({ params: { locale } }) {
-		return import(`../../@md/tos/${locale}.md?raw`).then(
-			(res) => res.default,
-		)
-	},
 	component() {
-		const rootRef = useRef<HTMLDivElement>(null);
-		const markdown = Route.useLoaderData();
-
 		return (
-			<div className={"relative w-full h-full"}>
-				<Fade scrollableRef={rootRef} />
-
-				<Container
-					ref={rootRef}
-					layout={"vertical"}
-					overflow={"vertical"}
-					tone={"primary"}
-					theme={"light"}
-					square={"lg"}
-				>
-					<Markdown>{markdown}</Markdown>
-				</Container>
-			</div>
-		)
+			<Sheet>
+				<Status
+					textTitle={"ToS not available in this language (title)"}
+					textMessage={
+						"ToS not available in this language (description)"
+					}
+				/>
+			</Sheet>
+		);
 	},
 });

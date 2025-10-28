@@ -13,6 +13,7 @@ import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
 import { Route as CsTosRouteImport } from './@routes/cs/tos'
+import { Route as CsPrivacyRouteImport } from './@routes/cs/privacy'
 import { Route as LocaleTosRouteImport } from './@routes/$locale/tos'
 import { Route as LocaleRegisterRouteImport } from './@routes/$locale/register'
 import { Route as LocalePrivacyRouteImport } from './@routes/$locale/privacy'
@@ -37,6 +38,11 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
 const CsTosRoute = CsTosRouteImport.update({
   id: '/cs/tos',
   path: '/cs/tos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CsPrivacyRoute = CsPrivacyRouteImport.update({
+  id: '/cs/privacy',
+  path: '/cs/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LocaleTosRoute = LocaleTosRouteImport.update({
@@ -73,6 +79,7 @@ export interface FileRoutesByFullPath {
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
+  '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
   '/$locale/': typeof LocaleIndexRoute
 }
@@ -83,6 +90,7 @@ export interface FileRoutesByTo {
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
+  '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
   '/$locale': typeof LocaleIndexRoute
 }
@@ -95,6 +103,7 @@ export interface FileRoutesById {
   '/$locale/privacy': typeof LocalePrivacyRoute
   '/$locale/register': typeof LocaleRegisterRoute
   '/$locale/tos': typeof LocaleTosRoute
+  '/cs/privacy': typeof CsPrivacyRoute
   '/cs/tos': typeof CsTosRoute
   '/$locale/': typeof LocaleIndexRoute
 }
@@ -108,6 +117,7 @@ export interface FileRouteTypes {
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
+    | '/cs/privacy'
     | '/cs/tos'
     | '/$locale/'
   fileRoutesByTo: FileRoutesByTo
@@ -118,6 +128,7 @@ export interface FileRouteTypes {
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
+    | '/cs/privacy'
     | '/cs/tos'
     | '/$locale'
   id:
@@ -129,6 +140,7 @@ export interface FileRouteTypes {
     | '/$locale/privacy'
     | '/$locale/register'
     | '/$locale/tos'
+    | '/cs/privacy'
     | '/cs/tos'
     | '/$locale/'
   fileRoutesById: FileRoutesById
@@ -136,6 +148,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LocaleRoute: typeof LocaleRouteWithChildren
+  CsPrivacyRoute: typeof CsPrivacyRoute
   CsTosRoute: typeof CsTosRoute
 }
 
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/cs/tos'
       fullPath: '/cs/tos'
       preLoaderRoute: typeof CsTosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cs/privacy': {
+      id: '/cs/privacy'
+      path: '/cs/privacy'
+      fullPath: '/cs/privacy'
+      preLoaderRoute: typeof CsPrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$locale/tos': {
@@ -231,6 +251,7 @@ const LocaleRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LocaleRoute: LocaleRouteWithChildren,
+  CsPrivacyRoute: CsPrivacyRoute,
   CsTosRoute: CsTosRoute,
 }
 export const routeTree = rootRouteImport
