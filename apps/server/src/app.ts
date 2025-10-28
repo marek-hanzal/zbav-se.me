@@ -139,8 +139,11 @@ const withUserRateLimiter = rateLimiter<{
 	store: new RedisStore({
 		client: redis,
 	}),
+	/**
+	 * 15min
+	 */
 	windowMs: 15 * 60 * 1000,
-	limit: 6,
+	limit: 256,
 	keyGenerator(c) {
 		return `user:${c.get("user").id}`;
 	},
