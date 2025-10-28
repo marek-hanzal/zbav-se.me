@@ -8,15 +8,13 @@ import {
 	Data,
 	Fulltext,
 	LinkTo,
-	Status,
 	Tx,
 } from "@use-pico/client";
-import { anim, LocationIcon, useAnim } from "@zbav-se.me/ui";
+import { anim, useAnim } from "@zbav-se.me/ui";
 import { useRef, useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
 import { withLocationAutocompleteQuery } from "~/app/location/query/withLocationAutocompleteQuery";
-import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 
 export const Route = createFileRoute("/$locale/listing/wizard/location")({
 	validateSearch: ListingWizardSchema,
@@ -39,16 +37,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 				},
 			);
 		const isSelected = Boolean(locationId);
-		const selectedQuery = withLocationFetchQuery().useQuery(
-			{
-				where: {
-					id: locationId,
-				},
-			},
-			{
-				enabled: isSelected,
-			},
-		);
 
 		useAnim(
 			() => {
@@ -100,11 +88,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 		return (
 			<ListingContainer
 				textTitle={"Location (title)"}
-				textSubtitle={
-					selectedQuery.data
-						? selectedQuery.data.address
-						: "Location (subtitle)"
-				}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -148,51 +131,44 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 					gap={"md"}
 					round={"lg"}
 				>
-					<Status
-						icon={LocationIcon}
-						action={
-							<div className="flex flex-col gap-2 items-center w-full">
-								<Fulltext
-									state={{
-										value: search,
-										set: setSearch,
-									}}
-									textPlaceholder={
-										"Location search (placeholder)"
-									}
-									withSubmit
-									tweak={{
-										slot: {
-											input: {
-												class: [
-													"px-8",
-												],
-												token: [
-													"size.lg",
-												],
-											},
+					<div className="flex flex-col gap-2 items-center w-full">
+						<Fulltext
+							state={{
+								value: search,
+								set: setSearch,
+							}}
+							textPlaceholder={"Location search (placeholder)"}
+							withSubmit
+							tweak={{
+								slot: {
+									input: {
+										class: [
+											"px-8",
+										],
+										token: [
+											"size.lg",
+										],
+									},
+								},
+							}}
+						/>
+						{search || locationId ? null : (
+							<Tx
+								label={"Location security (hint)"}
+								font={"bold"}
+								size={"lg"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"text-justify",
+											],
 										},
-									}}
-								/>
-								{search || locationId ? null : (
-									<Tx
-										label={"Location security (hint)"}
-										font={"bold"}
-										size={"lg"}
-										tweak={{
-											slot: {
-												root: {
-													class: [
-														"text-justify",
-													],
-												},
-											},
-										}}
-									/>
-								)}
-							</div>
-						}
-					/>
+									},
+								}}
+							/>
+						)}
+					</div>
 
 					<Data
 						result={locationAutocompleteQuery}

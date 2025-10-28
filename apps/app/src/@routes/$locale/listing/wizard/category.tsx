@@ -119,7 +119,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 			<ListingContainer
 				ui="Category-root"
 				textTitle={"Listing category (title)"}
-				textSubtitle={"Listing category (subtitle)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}

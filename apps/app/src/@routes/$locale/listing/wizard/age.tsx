@@ -5,19 +5,21 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
+import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/listing/wizard/age")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const [age, setAge] = useState<number | undefined>(state.age);
 
 		return (
 			<ListingContainer
 				textTitle={"Age (title)"}
-				textSubtitle={"Age (subtitle)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -37,7 +39,9 @@ export const Route = createFileRoute("/$locale/listing/wizard/age")({
 						}}
 						search={{
 							...state,
+							age,
 						}}
+						disabled={!age}
 						full
 					>
 						<Button
@@ -48,11 +52,24 @@ export const Route = createFileRoute("/$locale/listing/wizard/age")({
 							full
 							iconPosition={"right"}
 							label={"Next - price (button)"}
+							disabled={!age}
 						/>
 					</LinkTo>
 				}
 			>
-				age
+				<div
+					className={
+						"grid grid-rows-1 justify-stretch items-center w-full h-full"
+					}
+				>
+					<Rating
+						textHint={(value) =>
+							`Condition - Age [${value}] (hint)`
+						}
+						value={age ?? 0}
+						onChange={setAge}
+					/>
+				</div>
 			</ListingContainer>
 		);
 	},

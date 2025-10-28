@@ -10,7 +10,6 @@ export const RatingCls = contract(ThemeCls.contract)
 	.root({
 		root: {
 			class: [
-				"Rating-root",
 				"flex",
 				"flex-col",
 				"items-start",
