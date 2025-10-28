@@ -123,9 +123,6 @@
 68df66fbac9de67547d703604ad74542f4cf229da6a7cc3e35d1a986:
     ref: Set location (hint)
     value: ...a vybrat, kam inzerát patří
-6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
-    ref: Submit listing - status (title)
-    value: Vše připraveno!
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
     ref: User profile (label)
     value: Tvůj profil
@@ -197,6 +194,12 @@
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
     ref: Submit (title)
     value: Vše připraveno
+9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
+    ref: No categories found (message)
+    value: |
+        Tuhle kategorii bohužel nemáme. Zkus jinou nebo v případě nouze
+        vyber "Ostatní". Tak či tak, tvůj dotaz byl zaznamenán a třeba
+        kategorii přidáme.
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
     ref: Fulltext (placeholder)
     value: Co hledáme?
@@ -398,3 +401,6 @@ fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav
+ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
+    ref: No categories found (title)
+    value: Ajajaj, nic jsme nenašli!

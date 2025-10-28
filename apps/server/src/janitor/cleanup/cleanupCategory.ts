@@ -11,18 +11,17 @@ export async function cleanupCategory(): Promise<CleanupSchema.Type> {
 
 	const total = await database.kysely
 		.selectFrom("category_miss")
-		.where("updatedAt", "<", cutoffDate)
 		.select((eb) => eb.fn.count<number>("id").as("count"))
 		.executeTakeFirstOrThrow();
 
 	const result = await database.kysely
 		.deleteFrom("category_miss")
 		.where("updatedAt", "<", cutoffDate)
-		.execute();
+		.executeTakeFirst();
 
 	return {
 		type: "category",
-		total: total.count,
-		deleted: result.length,
+		total: Number(total.count),
+		deleted: Number(result.numDeletedRows),
 	};
 }

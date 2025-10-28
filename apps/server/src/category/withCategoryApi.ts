@@ -160,7 +160,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 
 			if (data.length === 0 && (where?.fulltext || filter?.fulltext)) {
 				const fulltext = filter?.fulltext || where?.fulltext;
-				if (fulltext) {
+				if (fulltext && fulltext.length >= 4) {
 					try {
 						await database.kysely
 							.insertInto("category_miss")
