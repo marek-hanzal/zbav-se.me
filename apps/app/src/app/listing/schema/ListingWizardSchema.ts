@@ -6,6 +6,7 @@ export const ListingWizardSchema = z.object({
 	...apiListingCreateBody
 		.omit({
 			price: true,
+			currency: true,
 		})
 		.partial().shape,
 });
