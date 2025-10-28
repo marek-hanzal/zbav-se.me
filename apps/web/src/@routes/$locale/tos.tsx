@@ -8,7 +8,7 @@ export const Route = createFileRoute("/$locale/tos")({
 	async loader({ params: { locale } }) {
 		return import(`../../@md/tos/${locale}.md?raw`).then(
 			(res) => res.default,
-		);
+		)
 	},
 	component() {
 		const rootRef = useRef<HTMLDivElement>(null);
@@ -29,6 +29,6 @@ export const Route = createFileRoute("/$locale/tos")({
 					<Markdown>{markdown}</Markdown>
 				</Container>
 			</div>
-		);
+		)
 	},
 });

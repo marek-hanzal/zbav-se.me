@@ -34,11 +34,47 @@ export const TypoCls = contract(PicoCls.contract)
 	])
 	.bool("italic")
 	.bool("truncate")
+	.variant("text", [
+		"unset",
+		"center",
+		"left",
+		"right",
+		"justify",
+	])
 	.def()
 	.root({
 		root: {
 			class: [
 				"Typo-root",
+			],
+		},
+	})
+	//
+	.match("text", "center", {
+		root: {
+			class: [
+				"text-center",
+			],
+		},
+	})
+	.match("text", "left", {
+		root: {
+			class: [
+				"text-left",
+			],
+		},
+	})
+	.match("text", "right", {
+		root: {
+			class: [
+				"text-right",
+			],
+		},
+	})
+	.match("text", "justify", {
+		root: {
+			class: [
+				"text-justify",
 			],
 		},
 	})
@@ -357,6 +393,7 @@ export const TypoCls = contract(PicoCls.contract)
 		font: "unset",
 		tone: "unset",
 		theme: "unset",
+		text: "unset",
 		display: "inline",
 		wrap: "unset",
 		italic: false,

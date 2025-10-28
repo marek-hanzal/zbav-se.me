@@ -12,7 +12,7 @@ export const Route = createFileRoute("/")({
 			throw redirect({
 				href: linkTo({
 					base: import.meta.env.VITE_APP_ORIGIN,
-					href: "/:locale/app/dashboard",
+					href: "/:locale/dashboard",
 					query: {
 						locale,
 					},

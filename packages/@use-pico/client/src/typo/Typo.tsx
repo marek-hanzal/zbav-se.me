@@ -10,6 +10,7 @@ export namespace Typo {
 		label: Value;
 		truncate?: boolean;
 		display?: Cls.VariantOf<TypoCls, "display">;
+		text?: Cls.VariantOf<TypoCls, "text">;
 		wrap?: Cls.VariantOf<TypoCls, "wrap">;
 		size?: Cls.VariantOf<TypoCls, "size">;
 		font?: Cls.VariantOf<TypoCls, "font">;
@@ -25,6 +26,7 @@ export const Typo: FC<Typo.Props> = ({
 	label,
 	truncate,
 	display,
+	text,
 	wrap,
 	size,
 	font,
@@ -39,6 +41,7 @@ export const Typo: FC<Typo.Props> = ({
 		variant: {
 			truncate,
 			display,
+			text,
 			wrap,
 			size,
 			font,
