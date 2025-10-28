@@ -29,7 +29,7 @@ export const Route = createFileRoute("/$locale/register")({
 
 		const registerMutation = withRegisterMutation.useMutation({
 			async onPostMutation() {
-				await navigate({
+				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
 						href: "/:locale/dashboard",

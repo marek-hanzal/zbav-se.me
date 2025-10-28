@@ -12,6 +12,7 @@ import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withTokenHono } from "./hono/withTokenHono";
+import { withJanitorApi } from "./janitor/withJanitorApi";
 import { PayloadSchema } from "./jwt/PayloadSchema";
 import { verify } from "./jwt/verify";
 import { withListingApi } from "./listing/withListingApi";
@@ -151,6 +152,7 @@ withLocationApi(routes);
 withHealthApi(routes);
 withMigrationApi(routes);
 withS3Api(routes);
+withJanitorApi(routes);
 
 app.options("/api/cors-proxy", (c) => {
 	c.header("Access-Control-Allow-Origin", "*");
