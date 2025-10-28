@@ -12,6 +12,7 @@ import { useId, useRef, useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { PhotoUpload } from "~/app/photo/PhotoUpload";
+import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";
 
 export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 	validateSearch: ListingWizardSchema,
@@ -35,6 +36,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 		});
 		const uploadId = useId();
 		const hasUploads = uploadIds.length > 0;
+		const isUploading = withUploadMutation.useIsMutating();
 
 		return (
 			<ListingContainer
@@ -60,7 +62,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 							...state,
 							uploadIds,
 						}}
-						disabled={!hasUploads}
+						disabled={!hasUploads || isUploading}
 						full
 					>
 						<Button
@@ -69,7 +71,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
 							size={"lg"}
-							disabled={!hasUploads}
+							disabled={!hasUploads || isUploading}
 							label={"Next - category (button)"}
 							full
 						/>
