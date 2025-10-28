@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/listing/$id/view")({
 										<img
 											key={image.id}
 											className={"w-full"}
-											src={image.url}
+											src={image.upload.url}
 											alt={image.id}
 										/>
 									))}

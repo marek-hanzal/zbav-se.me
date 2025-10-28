@@ -58,9 +58,6 @@ export const withGalleryQueryBuilderWithSort = (
 				case "createdAt":
 					query = query.orderBy("g.createdAt", sortItem.sort);
 					break;
-				case "updatedAt":
-					query = query.orderBy("g.updatedAt", sortItem.sort);
-					break;
 			}
 		}
 	}

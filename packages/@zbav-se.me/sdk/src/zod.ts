@@ -417,6 +417,7 @@ export const apiCategoryCountResponse = zod
 /**
  * Create a new listing
  */
+
 export const apiListingCreateBody = zod
 	.object({
 		price: zod.number().describe("Price of the listing"),
@@ -444,6 +445,12 @@ export const apiListingCreateBody = zod
 				"1-month",
 			])
 			.describe("Expiration period for the listing"),
+		uploadIds: zod
+			.array(zod.string())
+			.min(1)
+			.describe(
+				"IDs of the uploads; order of uploads defines order in the gallery",
+			),
 	})
 	.describe("Data required to create a new listing");
 
@@ -737,8 +744,6 @@ export const apiListingFetchBody = zod
 	})
 	.describe("Query object for listing collection");
 
-export const apiListingFetchResponseGalleryItemSortMin = 0;
-
 export const apiListingFetchResponse = zod.object({
 	id: zod.string().describe("ID of the listing"),
 	userId: zod.string().describe("ID of the user who created the listing"),
@@ -825,13 +830,34 @@ export const apiListingFetchResponse = zod.object({
 		.describe("Represents a category a listing can be assigned to"),
 	gallery: zod
 		.array(
-			zod.object({
-				id: zod.string(),
-				url: zod.string(),
-				sort: zod
-					.number()
-					.min(apiListingFetchResponseGalleryItemSortMin),
-			}),
+			zod
+				.object({
+					id: zod.string().describe("ID of the gallery item"),
+					listingId: zod
+						.string()
+						.describe("ID of the listing this image belongs to"),
+					uploadId: zod
+						.string()
+						.describe("ID of the upload this image belongs to"),
+					sort: zod
+						.number()
+						.describe(
+							"Sort order of the image in the listing's gallery",
+						),
+					createdAt: zod.string().describe("Creation timestamp"),
+					upload: zod
+						.object({
+							id: zod.string().describe("ID of the upload"),
+							url: zod
+								.url()
+								.describe("Public URL to the uploaded file"),
+							createdAt: zod
+								.string()
+								.describe("Creation timestamp"),
+						})
+						.describe("Upload data transfer object"),
+				})
+				.describe("Gallery data transfer object"),
 		)
 		.describe("Array of listing gallery images"),
 });
@@ -1126,8 +1152,6 @@ export const apiListingCollectionBody = zod
 	})
 	.describe("Query object for listing collection");
 
-export const apiListingCollectionResponseDataItemGalleryItemSortMin = 0;
-
 export const apiListingCollectionResponse = zod
 	.object({
 		data: zod.array(
@@ -1239,15 +1263,46 @@ export const apiListingCollectionResponse = zod
 					),
 				gallery: zod
 					.array(
-						zod.object({
-							id: zod.string(),
-							url: zod.string(),
-							sort: zod
-								.number()
-								.min(
-									apiListingCollectionResponseDataItemGalleryItemSortMin,
-								),
-						}),
+						zod
+							.object({
+								id: zod
+									.string()
+									.describe("ID of the gallery item"),
+								listingId: zod
+									.string()
+									.describe(
+										"ID of the listing this image belongs to",
+									),
+								uploadId: zod
+									.string()
+									.describe(
+										"ID of the upload this image belongs to",
+									),
+								sort: zod
+									.number()
+									.describe(
+										"Sort order of the image in the listing's gallery",
+									),
+								createdAt: zod
+									.string()
+									.describe("Creation timestamp"),
+								upload: zod
+									.object({
+										id: zod
+											.string()
+											.describe("ID of the upload"),
+										url: zod
+											.url()
+											.describe(
+												"Public URL to the uploaded file",
+											),
+										createdAt: zod
+											.string()
+											.describe("Creation timestamp"),
+									})
+									.describe("Upload data transfer object"),
+							})
+							.describe("Gallery data transfer object"),
 					)
 					.describe("Array of listing gallery images"),
 			}),
@@ -1561,28 +1616,6 @@ export const apiListingCountResponse = zod
 	.describe("Complex count of items based on provided query.");
 
 /**
- * Add an image to a listing's gallery
- */
-export const apiListingGalleryCreateBodySortMin = 0;
-
-export const apiListingGalleryCreateBody = zod
-	.object({
-		listingId: zod
-			.string()
-			.describe("ID of the listing to add the image to"),
-		url: zod
-			.url()
-			.describe(
-				"Public URL of the image to add to the listing's gallery",
-			),
-		sort: zod
-			.number()
-			.min(apiListingGalleryCreateBodySortMin)
-			.describe("Sort order of the image in the listing's gallery"),
-	})
-	.describe("Data required to add an image to a listing's gallery");
-
-/**
  * Return a gallery item based on the provided query
  */
 export const apiGalleryFetchBodyCursorPageMin = 0;
@@ -1690,12 +1723,13 @@ export const apiGalleryFetchResponse = zod
 		listingId: zod
 			.string()
 			.describe("ID of the listing this image belongs to"),
-		url: zod.url().describe("Public URL to the image"),
+		uploadId: zod
+			.string()
+			.describe("ID of the upload this image belongs to"),
 		sort: zod
 			.number()
 			.describe("Sort order of the image in the listing's gallery"),
 		createdAt: zod.string().describe("Creation timestamp"),
-		updatedAt: zod.string().describe("Last update timestamp"),
 	})
 	.describe("Represents a photo in a listing's gallery");
 
@@ -1807,12 +1841,13 @@ export const apiGalleryCollectionResponseItem = zod
 		listingId: zod
 			.string()
 			.describe("ID of the listing this image belongs to"),
-		url: zod.url().describe("Public URL to the image"),
+		uploadId: zod
+			.string()
+			.describe("ID of the upload this image belongs to"),
 		sort: zod
 			.number()
 			.describe("Sort order of the image in the listing's gallery"),
 		createdAt: zod.string().describe("Creation timestamp"),
-		updatedAt: zod.string().describe("Last update timestamp"),
 	})
 	.describe("Represents a photo in a listing's gallery");
 export const apiGalleryCollectionResponse = zod.array(

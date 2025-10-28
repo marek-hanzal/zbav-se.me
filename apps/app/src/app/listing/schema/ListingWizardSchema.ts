@@ -2,7 +2,6 @@ import { apiListingCreateBody } from "@zbav-se.me/sdk";
 import z from "zod";
 
 export const ListingWizardSchema = z.object({
-	uploadIds: z.array(z.string()).optional(),
 	price: z.string().optional(),
 	...apiListingCreateBody
 		.omit({

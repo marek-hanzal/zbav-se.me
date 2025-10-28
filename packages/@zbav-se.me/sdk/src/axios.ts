@@ -262,12 +262,34 @@ export interface Location {
 	lon: number;
 }
 
-export type ListingDtoGalleryItem = {
+/**
+ * Upload data transfer object
+ */
+export interface UploadDto {
+	/** ID of the upload */
 	id: string;
+	/** Public URL to the uploaded file */
 	url: string;
-	/** @minimum 0 */
+	/** Creation timestamp */
+	createdAt: string;
+}
+
+/**
+ * Gallery data transfer object
+ */
+export interface GalleryDto {
+	/** ID of the gallery item */
+	id: string;
+	/** ID of the listing this image belongs to */
+	listingId: string;
+	/** ID of the upload this image belongs to */
+	uploadId: string;
+	/** Sort order of the image in the listing's gallery */
 	sort: number;
-};
+	/** Creation timestamp */
+	createdAt: string;
+	upload: UploadDto;
+}
 
 export interface ListingDto {
 	/** ID of the listing */
@@ -294,7 +316,7 @@ export interface ListingDto {
 	location: Location;
 	category: Category;
 	/** Array of listing gallery images */
-	gallery: ListingDtoGalleryItem[];
+	gallery: GalleryDto[];
 }
 
 /**
@@ -325,6 +347,11 @@ export interface ListingCreate {
 	categoryId: string;
 	currency: CurrencyList;
 	expiresAt: ListingExpire;
+	/**
+	 * IDs of the uploads; order of uploads defines order in the gallery
+	 * @minItems 1
+	 */
+	uploadIds: string[];
 }
 
 /**
@@ -605,21 +632,6 @@ export interface ListingCollection {
 }
 
 /**
- * Data required to add an image to a listing's gallery
- */
-export interface ListingGalleryCreate {
-	/** ID of the listing to add the image to */
-	listingId: string;
-	/** Public URL of the image to add to the listing's gallery */
-	url: string;
-	/**
-	 * Sort order of the image in the listing's gallery
-	 * @minimum 0
-	 */
-	sort: number;
-}
-
-/**
  * Represents a photo in a listing's gallery
  */
 export interface Gallery {
@@ -629,14 +641,12 @@ export interface Gallery {
 	userId: string;
 	/** ID of the listing this image belongs to */
 	listingId: string;
-	/** Public URL to the image */
-	url: string;
+	/** ID of the upload this image belongs to */
+	uploadId: string;
 	/** Sort order of the image in the listing's gallery */
 	sort: number;
 	/** Creation timestamp */
 	createdAt: string;
-	/** Last update timestamp */
-	updatedAt: string;
 }
 
 /**
@@ -764,18 +774,6 @@ export interface GalleryQuery {
 	where?: GalleryWhere;
 	/** @nullable */
 	sort?: GallerySort[] | null;
-}
-
-/**
- * Upload data transfer object
- */
-export interface UploadDto {
-	/** ID of the upload */
-	id: string;
-	/** Public URL to the uploaded file */
-	url: string;
-	/** Creation timestamp */
-	createdAt: string;
 }
 
 /**
@@ -1183,20 +1181,6 @@ export const apiListingCount = <TData = AxiosResponse<Count>>(
 };
 
 /**
- * Add an image to a listing's gallery
- */
-export const apiListingGalleryCreate = <TData = AxiosResponse<void>>(
-	listingGalleryCreate: ListingGalleryCreate,
-	options?: AxiosRequestConfig,
-): Promise<TData> => {
-	return axios.post(
-		`/api/session/listing/gallery/create`,
-		listingGalleryCreate,
-		options,
-	);
-};
-
-/**
  * Return a gallery item based on the provided query
  */
 export const apiGalleryFetch = <TData = AxiosResponse<Gallery>>(
@@ -1329,7 +1313,6 @@ export type ApiListingCreateResult = AxiosResponse<ListingDto>;
 export type ApiListingFetchResult = AxiosResponse<ListingDto>;
 export type ApiListingCollectionResult = AxiosResponse<ListingCollection>;
 export type ApiListingCountResult = AxiosResponse<Count>;
-export type ApiListingGalleryCreateResult = AxiosResponse<void>;
 export type ApiGalleryFetchResult = AxiosResponse<Gallery>;
 export type ApiGalleryCollectionResult = AxiosResponse<Gallery[]>;
 export type ApiGalleryCountResult = AxiosResponse<Count>;

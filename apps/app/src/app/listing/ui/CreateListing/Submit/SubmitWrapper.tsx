@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
 import {
 	Button,
 	CheckIcon,
@@ -8,23 +7,10 @@ import {
 } from "@use-pico/client";
 import { SendPackageIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
-import { memo, useState } from "react";
-import { withListingGalleryCreateMutation } from "~/app/listing/mutation/withListingGalleryCreateMutation";
+import { memo } from "react";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
-import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
 
 export const SubmitWrapper: FC = memo(() => {
-	const navigate = useNavigate();
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
-	const preSignMutation = withS3PreSignMutation.useMutation();
-	const createListingGalleryMutation =
-		withListingGalleryCreateMutation.useMutation();
-
-	const [progress, setProgress] = useState(0);
-
 	// const createListingMutation = withListingCreateMutation().useMutation({
 	// 	async onPostMutation({ result }) {
 	// 		setProgress(0);
@@ -92,6 +78,8 @@ export const SubmitWrapper: FC = memo(() => {
 	// if (store.missing.length > 0) {
 	// 	return <InvalidSubmit />;
 	// }
+
+	const progress = 0;
 
 	return (
 		<ListingContainer>

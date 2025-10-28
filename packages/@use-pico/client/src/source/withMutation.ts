@@ -14,6 +14,17 @@ export namespace withMutation {
 		mutationId?: string;
 	}
 
+	export namespace PreMutation {
+		export interface Props<TVariables> {
+			variables: TVariables;
+		}
+
+		/**
+		 * Result of the callback is unused
+		 */
+		export type Fn<TVariables> = (props: Props<TVariables>) => Promise<any>;
+	}
+
 	export namespace PostMutation {
 		export interface Props<TVariables, TResult> {
 			variables: TVariables;
@@ -63,6 +74,12 @@ export namespace withMutation {
 	> & {
 		meta?: Meta;
 		/**
+		 * Optional callback called right _before_ mutationFn - this blocking the mutation itself
+		 *
+		 * Fails the mutation if an error is thrown.
+		 */
+		onPreMutation?: PreMutation.Fn<TVariables>;
+		/**
 		 * Optional callback called right _after_ mutationFn - this blocking the mutation itself (it's not a onSuccess callback)
 		 */
 		onPostMutation?: PostMutation.Fn<TVariables, TResult>;
@@ -110,12 +127,16 @@ export function withMutation<TVariables, TResult>({
 		useMutation<TContext = unknown>(
 			options?: withMutation.UseOptions<TVariables, TResult, TContext>,
 		): UseMutationResult<TResult, Error, TVariables, TContext> {
-			const { onSuccess, onPostMutation, ...$options } = options ?? {};
+			const { onSuccess, onPreMutation, onPostMutation, ...$options } =
+				options ?? {};
 			const queryClient = useQueryClient();
 
 			return useMutation<TResult, Error, TVariables, TContext>({
 				mutationKey: keys(),
 				async mutationFn(variables) {
+					await onPreMutation?.({
+						variables,
+					});
 					const result = await mutationFn(variables);
 					await onPostMutation?.({
 						variables,
