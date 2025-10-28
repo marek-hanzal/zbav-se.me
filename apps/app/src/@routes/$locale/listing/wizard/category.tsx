@@ -81,7 +81,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const navigate = Route.useNavigate();
 		const [fulltext, setFulltext] = useState<Fulltext.Value>();
 		const selection = useSelection<EntitySchema.Type>({
 			mode: "single",
@@ -92,16 +91,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 						},
 					]
 				: undefined,
-			onMulti(items) {
-				navigate({
-					search({ categoryId, ...prev }) {
-						return {
-							...prev,
-							categoryId: items[0]?.id,
-						};
-					},
-				});
-			},
 		});
 		const categoryQuery = withCategoryCollectionQuery().useQuery({
 			filter: {
@@ -142,26 +131,29 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 						tone={"secondary"}
 					/>
 				}
-				bottom={{
-					next: (
-						<LinkTo
-							to={"/$locale/listing/wizard/price"}
-							params={{
-								locale,
-							}}
-							search={state}
+				bottom={
+					<LinkTo
+						to={"/$locale/listing/wizard/price"}
+						params={{
+							locale,
+						}}
+						search={{
+							...state,
+							categoryId: selection.optional.singleId(),
+						}}
+						disabled={!selection.hasAny}
+						full
+					>
+						<Button
+							tone={"secondary"}
+							theme={"dark"}
+							iconEnabled={ArrowRightIcon}
 							disabled={!selection.hasAny}
-						>
-							<Button
-								tone={"secondary"}
-								theme={"dark"}
-								iconEnabled={ArrowRightIcon}
-								disabled={!selection.hasAny}
-								size={"lg"}
-							/>
-						</LinkTo>
-					),
-				}}
+							size={"lg"}
+							full
+						/>
+					</LinkTo>
+				}
 			>
 				<Container
 					layout={"vertical-content"}

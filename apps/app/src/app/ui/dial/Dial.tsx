@@ -1,15 +1,7 @@
-import {
-	Badge,
-	Container,
-	type ContainerCls,
-	Icon,
-	Tx,
-	Typo,
-} from "@use-pico/client";
-import { type Cls, tvc } from "@use-pico/cls";
+import { Badge, Container, Icon, Tx, Typo } from "@use-pico/client";
+import { tvc } from "@use-pico/cls";
 import { BackspaceIcon, ClearIcon } from "@zbav-se.me/ui";
-import { type FC, type RefObject, useMemo } from "react";
-import { CurrencySnapper } from "~/app/ui/currency/CurrencySnapper";
+import type { FC, RefObject } from "react";
 import { Item } from "~/app/ui/dial/Item";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
@@ -36,41 +28,12 @@ const icons = {
 export namespace Dial {
 	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
-		locale: string;
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
-		onChangeCurrency: (currency: string) => void;
-		defaultCurrency?: string;
-		availableCurrencies?: readonly string[];
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({
-	ref,
-	locale,
-	value,
-	onChange,
-	onChangeCurrency,
-	defaultCurrency,
-	availableCurrencies,
-}) => {
-	/**
-	 * Strange, but necessary to prevent PriceSnapper re-renders which is computing
-	 * currency list on every render.
-	 */
-	const currencyTweak: Cls.TweaksOf<ContainerCls> = useMemo(
-		() => ({
-			slot: {
-				root: {
-					class: [
-						"w-1/2",
-					],
-				},
-			},
-		}),
-		[],
-	);
-
+export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 	return (
 		<Container
 			ref={ref}
@@ -103,8 +66,8 @@ export const Dial: FC<Dial.Props> = ({
 								],
 								token: [
 									"round.lg",
-									"tone.secondary.light.border",
-									"tone.secondary.light.shadow",
+									"tone.primary.light.border",
+									"tone.primary.light.shadow",
 								],
 							},
 						},
@@ -136,14 +99,6 @@ export const Dial: FC<Dial.Props> = ({
 						}}
 					/>
 				</Badge>
-
-				<CurrencySnapper
-					locale={locale}
-					tweak={currencyTweak}
-					defaultCurrency={defaultCurrency}
-					availableCurrencies={availableCurrencies}
-					onChange={onChangeCurrency}
-				/>
 			</div>
 
 			<div

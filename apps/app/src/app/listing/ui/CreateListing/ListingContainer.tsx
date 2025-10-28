@@ -11,9 +11,7 @@ export namespace ListingContainer {
 		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
 		left?: ReactNode;
-		bottom?: {
-			next?: ReactNode;
-		};
+		bottom?: ReactNode;
 	}
 }
 
@@ -44,13 +42,7 @@ export const ListingContainer: FC<ListingContainer.Props> = ({
 
 			{children}
 
-			{bottom ? (
-				<BottomContainer>
-					<div />
-
-					{bottom.next}
-				</BottomContainer>
-			) : null}
+			{bottom ? <BottomContainer>{bottom}</BottomContainer> : null}
 		</FlowContainer>
 	);
 };

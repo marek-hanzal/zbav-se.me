@@ -5,9 +5,11 @@ import { PicoCls } from "../cls/PicoCls";
 export const LinkToCls = contract(PicoCls.contract)
 	.slot("root")
 	.variant("display", [
+		"unset",
 		"block",
 		"inline",
 	])
+	.bool("full")
 	.def()
 	.root({
 		root: {
@@ -28,6 +30,15 @@ export const LinkToCls = contract(PicoCls.contract)
 				"round.default",
 				"scale.default",
 				"border.default",
+			],
+		},
+	})
+	//
+	.match("full", true, {
+		root: {
+			class: [
+				"w-full",
+				"block",
 			],
 		},
 	})
@@ -276,7 +287,8 @@ export const LinkToCls = contract(PicoCls.contract)
 	.defaults({
 		tone: "link",
 		theme: "light",
-		display: "inline",
+		display: "unset",
+		full: false,
 	})
 	.cls();
 

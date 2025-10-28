@@ -25,11 +25,11 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
 		})
 			.to(rootRef.current, {
 				scale: 1.1,
-				opacity: 0.75,
+				y: "-5%",
 			})
 			.to(rootRef.current, {
 				scale: 1,
-				opacity: 1,
+				y: 0,
 			});
 	});
 
