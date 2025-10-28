@@ -4,6 +4,7 @@ import {
 	ErrorIcon,
 	LinkTo,
 	PriceInline,
+	SpinnerIcon,
 	Status,
 	Tx,
 	Typo,
@@ -18,6 +19,30 @@ import { countryToCurrency } from "~/locales";
 export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 	validateSearch: ListingWizardSchema,
 	ssr: false,
+	pendingComponent() {
+		const { locale } = Route.useParams();
+		const state = Route.useSearch();
+
+		return (
+			<ListingContainer
+				textTitle={"Submit (title)"}
+				textSubtitle={"Submit (subtitle)"}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/listing/wizard/expire-at"}
+						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+			>
+				<Status icon={SpinnerIcon} />
+			</ListingContainer>
+		);
+	},
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
