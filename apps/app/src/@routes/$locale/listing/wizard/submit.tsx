@@ -52,6 +52,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const { data: category } = withCategoryFetchQuery().useSuspenseQuery(
 			{
 				where: {
@@ -67,7 +68,16 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 				id: state.locationId,
 			},
 		});
-		const createListingMutation = withListingCreateMutation().useMutation();
+		const createListingMutation = withListingCreateMutation().useMutation({
+			async onPostMutation({ result }) {
+				return navigate({
+					to: "/$locale/listing/$id/view",
+					params: {
+						id: result.id,
+					},
+				});
+			},
+		});
 		const valid = apiListingCreateBody.safeParse({
 			...state,
 			currency: countryToCurrency[locale as countryToCurrency.Key],
@@ -269,6 +279,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 														"flex-col",
 														"items-start",
 														"h-fit",
+														"w-full",
 													],
 													token: [
 														"round.md",
