@@ -67,8 +67,10 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 							tone={"secondary"}
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
+							iconPosition={"right"}
 							size={"lg"}
 							disabled={!hasUploads}
+							label={"Next - category (button)"}
 							full
 						/>
 					</LinkTo>

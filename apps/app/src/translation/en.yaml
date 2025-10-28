@@ -76,6 +76,9 @@
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
   ref: Price - free (title)
   value: Price - free (title)
+4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
+  ref: Next - price (button)
+  value: Next - price (button)
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
   ref: currency
   value: currency
@@ -118,6 +121,9 @@
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
   ref: User profile (label)
   value: User profile (label)
+6ebda19c4bb7b7ce06704892a9a18c9d655f820d4d1c6807d2abb8d3:
+  ref: Next - location (button)
+  value: Next - location (button)
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
   ref: Clear files
   value: Clear files
@@ -205,6 +211,9 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
   ref: Invalid data provided (title)
   value: Invalid data provided (title)
+b2c5e1ab63bde746cb442d3c4bd5a84ae037df7adac301ea412f5316:
+  ref: Next - category (button)
+  value: Next - category (button)
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
   ref: Sign out
   value: Sign out

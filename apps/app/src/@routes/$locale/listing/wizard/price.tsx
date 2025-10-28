@@ -70,6 +70,8 @@ export const Route = createFileRoute("/$locale/listing/wizard/price")({
 							disabled={!price}
 							size={"lg"}
 							full
+							iconPosition={"right"}
+							label={"Next - location (button)"}
 						/>
 					</LinkTo>
 				}

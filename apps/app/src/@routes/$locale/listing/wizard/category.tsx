@@ -148,6 +148,8 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 							tone={"secondary"}
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
+							iconPosition={"right"}
+							label={"Next - price (button)"}
 							disabled={!selection.hasAny}
 							size={"lg"}
 							full
