@@ -62,7 +62,7 @@ export const withJanitorApi: Routes.Fn = ({ public: publicEndpoints }) => {
 		}),
 		async (c) => {
 			try {
-				const limit = 200;
+				const limit = 512;
 				const maxScan = 5000;
 
 				const uploads = await database.kysely
