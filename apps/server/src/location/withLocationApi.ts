@@ -113,10 +113,6 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			});
 
 			if (quickCache.length > 0) {
-				c.header(
-					"Cache-Control",
-					"public, max-age=31536000, immutable",
-				);
 				c.header("X-Location-Cache", "hit");
 				return c.json(quickCache, 200);
 			}
@@ -150,10 +146,6 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					});
 
 					if (cache.length > 0) {
-						c.header(
-							"Cache-Control",
-							"public, max-age=31536000, immutable",
-						);
 						c.header("X-Location-Cache", "wait");
 						return cache;
 					}

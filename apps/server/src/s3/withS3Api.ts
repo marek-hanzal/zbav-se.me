@@ -3,7 +3,7 @@ import { genId, keyOf, linkTo } from "@use-pico/common";
 import { AppEnv } from "../AppEnv";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
-import { s3 } from "../s3"; // MinIO client init
+import { s3 } from "../s3";
 import { ErrorSchema } from "../schema/ErrorSchema";
 
 /**
