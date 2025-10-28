@@ -1,8 +1,8 @@
 import { withQuery } from "@use-pico/client";
 import {
-    type ApiLocationAutocompleteParams,
-    apiLocationAutocomplete,
-    type Location,
+	type ApiLocationAutocompleteParams,
+	apiLocationAutocomplete,
+	type Location,
 } from "@zbav-se.me/sdk";
 
 export const withLocationAutocompleteQuery = withQuery<

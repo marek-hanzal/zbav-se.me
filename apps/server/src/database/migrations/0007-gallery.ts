@@ -8,15 +8,12 @@ export const GalleryMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
-			.addColumn("url", "text", (col) => col.notNull())
+			.addColumn("uploadId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
-			.addColumn("updatedAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
 			.addForeignKeyConstraint(
-				"gallery_userId_fk",
+				"gallery_[userId]_fk",
 				[
 					"userId",
 				],
@@ -27,7 +24,7 @@ export const GalleryMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"gallery_listingId_fk",
+				"gallery_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -37,22 +34,33 @@ export const GalleryMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addForeignKeyConstraint(
+				"gallery_[uploadId]_fk",
+				[
+					"uploadId",
+				],
+				"upload",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		await db.schema
-			.createIndex("gallery_userId_idx")
+			.createIndex("gallery_[userId]_idx")
 			.on("gallery")
 			.column("userId")
 			.execute();
 
 		await db.schema
-			.createIndex("gallery_listingId_idx")
+			.createIndex("gallery_[listingId]_idx")
 			.on("gallery")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("gallery_createdAt_idx")
+			.createIndex("gallery_[createdAt]_idx")
 			.on("gallery")
 			.column("createdAt")
 			.execute();

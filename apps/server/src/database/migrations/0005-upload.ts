@@ -11,7 +11,7 @@ export const UploadMigration: Migration = {
 				col.notNull().defaultTo("now()"),
 			)
 			.addForeignKeyConstraint(
-				"upload_userId_fk",
+				"upload_[userId]_fk",
 				[
 					"userId",
 				],
@@ -24,13 +24,13 @@ export const UploadMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("upload_userId_idx")
+			.createIndex("upload_[userId]_idx")
 			.on("upload")
 			.column("userId")
 			.execute();
 
 		await db.schema
-			.createIndex("upload_createdAt_idx")
+			.createIndex("upload_[createdAt]_idx")
 			.on("upload")
 			.column("createdAt")
 			.execute();

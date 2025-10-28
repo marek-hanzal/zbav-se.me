@@ -20,7 +20,7 @@ export const ListingMigration: Migration = {
 				col.notNull().defaultTo("now()"),
 			)
 			.addForeignKeyConstraint(
-				"listing_userId_fk",
+				"listing_[userId]_fk",
 				[
 					"userId",
 				],
@@ -31,7 +31,7 @@ export const ListingMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_locationId_fk",
+				"listing_[locationId]_fk",
 				[
 					"locationId",
 				],
@@ -42,7 +42,7 @@ export const ListingMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_categoryId_fk",
+				"listing_[categoryId]_fk",
 				[
 					"categoryId",
 				],
@@ -55,31 +55,31 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_userId_idx")
+			.createIndex("listing_[userId]_idx")
 			.on("listing")
 			.column("userId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_locationId_idx")
+			.createIndex("listing_[locationId]_idx")
 			.on("listing")
 			.column("locationId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_categoryId_idx")
+			.createIndex("listing_[categoryId]_idx")
 			.on("listing")
 			.column("categoryId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_createdAt_idx")
+			.createIndex("listing_[createdAt]_idx")
 			.on("listing")
 			.column("createdAt")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_expiresAt_idx")
+			.createIndex("listing_[expiresAt]_idx")
 			.on("listing")
 			.column("expiresAt")
 			.execute();
