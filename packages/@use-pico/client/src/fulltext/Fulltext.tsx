@@ -133,7 +133,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 							tone={"secondary"}
 							onClick={() => {
 								setSearch("");
-								set("");
+								set(undefined);
 							}}
 						/>
 					</div>

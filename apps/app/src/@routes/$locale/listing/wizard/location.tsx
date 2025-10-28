@@ -126,6 +126,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 				}
 			>
 				<Container
+					ui="Location-root"
 					ref={containerRef}
 					layout={"vertical-header-content"}
 					gap={"md"}
@@ -138,7 +139,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 								set: setSearch,
 							}}
 							textPlaceholder={"Location search (placeholder)"}
-							withSubmit
 							tweak={{
 								slot: {
 									input: {
@@ -241,11 +241,18 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 						{({ content }) => {
 							return (
 								<Container
+									ui="Location-content"
 									overflow={"vertical"}
 									height={"full"}
 								>
-									<div className="grid grid-row auto-rows-max gap-2 p-4">
-										{content}
+									<div
+										className={
+											"grid grid-rows-1 justify-stretch items-center h-full"
+										}
+									>
+										<div className="grid grid-row auto-rows-max gap-2 p-4">
+											{content}
+										</div>
 									</div>
 								</Container>
 							);
