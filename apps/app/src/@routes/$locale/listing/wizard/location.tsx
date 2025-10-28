@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
+	ArrowRightIcon,
 	Badge,
 	Button,
 	Container,
@@ -14,34 +15,38 @@ import { anim, LocationIcon, useAnim } from "@zbav-se.me/ui";
 import { useRef, useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { withLocationAutocompleteQuery } from "~/app/location/query/withLocationAutocompleteQuery";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
-import { withLocationQuery } from "~/app/location/query/withLocationQuery";
 
 export const Route = createFileRoute("/$locale/listing/wizard/location")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const navigate = Route.useNavigate();
+		const [locationId, setLocationId] = useState(state.locationId);
 		const [search, setSearch] = useState<Fulltext.Value>();
 		const containerRef = useRef<HTMLDivElement>(null);
-		const locationQuery = withLocationQuery.useQuery(
-			{
-				lang: locale,
-				text: search ?? "",
-			},
-			{
-				enabled: Boolean(search && search.length >= 3),
-			},
-		);
+		const locationAutocompleteQuery =
+			withLocationAutocompleteQuery.useQuery(
+				{
+					lang: locale,
+					text: search ?? locationId ?? "",
+				},
+				{
+					enabled: Boolean(
+						(search && search.length >= 3) || locationId,
+					),
+				},
+			);
+		const isSelected = Boolean(locationId);
 		const selectedQuery = withLocationFetchQuery().useQuery(
 			{
 				where: {
-					id: state.locationId,
+					id: locationId,
 				},
 			},
 			{
-				enabled: Boolean(state.locationId),
+				enabled: isSelected,
 			},
 		);
 
@@ -60,7 +65,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 			{
 				scope: containerRef,
 				dependencies: [
-					locationQuery.isFetching,
+					locationAutocompleteQuery.isFetching,
 				],
 			},
 		);
@@ -87,7 +92,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 			{
 				scope: containerRef,
 				dependencies: [
-					locationQuery.data,
+					locationAutocompleteQuery.data,
 				],
 			},
 		);
@@ -111,9 +116,31 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 						tone={"secondary"}
 					/>
 				}
-				// bottom={{
-				// 	next: !!location,
-				// }}
+				bottom={
+					<LinkTo
+						to={"/$locale/listing/wizard/condition"}
+						params={{
+							locale,
+						}}
+						search={{
+							...state,
+							locationId,
+						}}
+						disabled={!locationId}
+						full
+					>
+						<Button
+							tone={"secondary"}
+							theme={"dark"}
+							iconEnabled={ArrowRightIcon}
+							disabled={!locationId}
+							size={"lg"}
+							full
+							iconPosition={"right"}
+							label={"Next - condition (button)"}
+						/>
+					</LinkTo>
+				}
 			>
 				<Container
 					ref={containerRef}
@@ -147,7 +174,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 										},
 									}}
 								/>
-								{search ? null : (
+								{search || locationId ? null : (
 									<Tx
 										label={"Location security (hint)"}
 										font={"bold"}
@@ -168,12 +195,8 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 					/>
 
 					<Data
-						result={locationQuery}
+						result={locationAutocompleteQuery}
 						renderSuccess={({ data }) => {
-							if (!search) {
-								return null;
-							}
-
 							return data.map((item) => {
 								return (
 									<Button
@@ -182,29 +205,25 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 										full
 										tone={"primary"}
 										theme={
-											state.locationId === item.id
+											locationId === item.id
 												? "dark"
 												: "light"
 										}
 										onClick={() => {
-											navigate({
-												search({
-													locationId,
-													...prev
-												}) {
-													return {
-														...prev,
-														locationId: item.id,
-													};
-												},
-											});
+											setLocationId(item.id);
 										}}
 										size={"xl"}
 										tweak={{
 											slot: {
 												root: {
 													class: [
-														"justify-start",
+														"justify-center",
+														"items-start",
+														"text-left",
+														"flex",
+														"flex-col",
+														"gap-1",
+														"w-full",
 													],
 												},
 											},
@@ -215,10 +234,13 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 							});
 						}}
 						renderEmpty={() => {
+							if (!isSelected) {
+								return null;
+							}
 							return (
 								<Badge
-									size={"xl"}
-									tone={"secondary"}
+									size={"lg"}
+									tone={"primary"}
 									theme={"light"}
 									tweak={{
 										slot: {

@@ -26,7 +26,9 @@ import { Route as LocaleListingWizardPriceRouteImport } from './@routes/$locale/
 import { Route as LocaleListingWizardPhotosRouteImport } from './@routes/$locale/listing/wizard/photos'
 import { Route as LocaleListingWizardLocationRouteImport } from './@routes/$locale/listing/wizard/location'
 import { Route as LocaleListingWizardExpireAtRouteImport } from './@routes/$locale/listing/wizard/expire-at'
+import { Route as LocaleListingWizardConditionRouteImport } from './@routes/$locale/listing/wizard/condition'
 import { Route as LocaleListingWizardCategoryRouteImport } from './@routes/$locale/listing/wizard/category'
+import { Route as LocaleListingWizardAgeRouteImport } from './@routes/$locale/listing/wizard/age'
 import { Route as LocaleListingIdViewRouteImport } from './@routes/$locale/listing/$id/view'
 
 const LocaleRoute = LocaleRouteImport.update({
@@ -120,12 +122,23 @@ const LocaleListingWizardExpireAtRoute =
     path: '/expire-at',
     getParentRoute: () => LocaleListingWizardRoute,
   } as any)
+const LocaleListingWizardConditionRoute =
+  LocaleListingWizardConditionRouteImport.update({
+    id: '/condition',
+    path: '/condition',
+    getParentRoute: () => LocaleListingWizardRoute,
+  } as any)
 const LocaleListingWizardCategoryRoute =
   LocaleListingWizardCategoryRouteImport.update({
     id: '/category',
     path: '/category',
     getParentRoute: () => LocaleListingWizardRoute,
   } as any)
+const LocaleListingWizardAgeRoute = LocaleListingWizardAgeRouteImport.update({
+  id: '/age',
+  path: '/age',
+  getParentRoute: () => LocaleListingWizardRoute,
+} as any)
 const LocaleListingIdViewRoute = LocaleListingIdViewRouteImport.update({
   id: '/listing/$id/view',
   path: '/listing/$id/view',
@@ -145,7 +158,9 @@ export interface FileRoutesByFullPath {
   '/$locale/listing/my': typeof LocaleListingMyRoute
   '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/age': typeof LocaleListingWizardAgeRoute
   '/$locale/listing/wizard/category': typeof LocaleListingWizardCategoryRoute
+  '/$locale/listing/wizard/condition': typeof LocaleListingWizardConditionRoute
   '/$locale/listing/wizard/expire-at': typeof LocaleListingWizardExpireAtRoute
   '/$locale/listing/wizard/location': typeof LocaleListingWizardLocationRoute
   '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
@@ -165,7 +180,9 @@ export interface FileRoutesByTo {
   '/$locale/listing/my': typeof LocaleListingMyRoute
   '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/age': typeof LocaleListingWizardAgeRoute
   '/$locale/listing/wizard/category': typeof LocaleListingWizardCategoryRoute
+  '/$locale/listing/wizard/condition': typeof LocaleListingWizardConditionRoute
   '/$locale/listing/wizard/expire-at': typeof LocaleListingWizardExpireAtRoute
   '/$locale/listing/wizard/location': typeof LocaleListingWizardLocationRoute
   '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
@@ -187,7 +204,9 @@ export interface FileRoutesById {
   '/$locale/listing/my': typeof LocaleListingMyRoute
   '/$locale/listing/wizard': typeof LocaleListingWizardRouteWithChildren
   '/$locale/listing/$id/view': typeof LocaleListingIdViewRoute
+  '/$locale/listing/wizard/age': typeof LocaleListingWizardAgeRoute
   '/$locale/listing/wizard/category': typeof LocaleListingWizardCategoryRoute
+  '/$locale/listing/wizard/condition': typeof LocaleListingWizardConditionRoute
   '/$locale/listing/wizard/expire-at': typeof LocaleListingWizardExpireAtRoute
   '/$locale/listing/wizard/location': typeof LocaleListingWizardLocationRoute
   '/$locale/listing/wizard/photos': typeof LocaleListingWizardPhotosRoute
@@ -210,7 +229,9 @@ export interface FileRouteTypes {
     | '/$locale/listing/my'
     | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/age'
     | '/$locale/listing/wizard/category'
+    | '/$locale/listing/wizard/condition'
     | '/$locale/listing/wizard/expire-at'
     | '/$locale/listing/wizard/location'
     | '/$locale/listing/wizard/photos'
@@ -230,7 +251,9 @@ export interface FileRouteTypes {
     | '/$locale/listing/my'
     | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/age'
     | '/$locale/listing/wizard/category'
+    | '/$locale/listing/wizard/condition'
     | '/$locale/listing/wizard/expire-at'
     | '/$locale/listing/wizard/location'
     | '/$locale/listing/wizard/photos'
@@ -251,7 +274,9 @@ export interface FileRouteTypes {
     | '/$locale/listing/my'
     | '/$locale/listing/wizard'
     | '/$locale/listing/$id/view'
+    | '/$locale/listing/wizard/age'
     | '/$locale/listing/wizard/category'
+    | '/$locale/listing/wizard/condition'
     | '/$locale/listing/wizard/expire-at'
     | '/$locale/listing/wizard/location'
     | '/$locale/listing/wizard/photos'
@@ -386,11 +411,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleListingWizardExpireAtRouteImport
       parentRoute: typeof LocaleListingWizardRoute
     }
+    '/$locale/listing/wizard/condition': {
+      id: '/$locale/listing/wizard/condition'
+      path: '/condition'
+      fullPath: '/$locale/listing/wizard/condition'
+      preLoaderRoute: typeof LocaleListingWizardConditionRouteImport
+      parentRoute: typeof LocaleListingWizardRoute
+    }
     '/$locale/listing/wizard/category': {
       id: '/$locale/listing/wizard/category'
       path: '/category'
       fullPath: '/$locale/listing/wizard/category'
       preLoaderRoute: typeof LocaleListingWizardCategoryRouteImport
+      parentRoute: typeof LocaleListingWizardRoute
+    }
+    '/$locale/listing/wizard/age': {
+      id: '/$locale/listing/wizard/age'
+      path: '/age'
+      fullPath: '/$locale/listing/wizard/age'
+      preLoaderRoute: typeof LocaleListingWizardAgeRouteImport
       parentRoute: typeof LocaleListingWizardRoute
     }
     '/$locale/listing/$id/view': {
@@ -404,7 +443,9 @@ declare module '@tanstack/react-router' {
 }
 
 interface LocaleListingWizardRouteChildren {
+  LocaleListingWizardAgeRoute: typeof LocaleListingWizardAgeRoute
   LocaleListingWizardCategoryRoute: typeof LocaleListingWizardCategoryRoute
+  LocaleListingWizardConditionRoute: typeof LocaleListingWizardConditionRoute
   LocaleListingWizardExpireAtRoute: typeof LocaleListingWizardExpireAtRoute
   LocaleListingWizardLocationRoute: typeof LocaleListingWizardLocationRoute
   LocaleListingWizardPhotosRoute: typeof LocaleListingWizardPhotosRoute
@@ -414,7 +455,9 @@ interface LocaleListingWizardRouteChildren {
 }
 
 const LocaleListingWizardRouteChildren: LocaleListingWizardRouteChildren = {
+  LocaleListingWizardAgeRoute: LocaleListingWizardAgeRoute,
   LocaleListingWizardCategoryRoute: LocaleListingWizardCategoryRoute,
+  LocaleListingWizardConditionRoute: LocaleListingWizardConditionRoute,
   LocaleListingWizardExpireAtRoute: LocaleListingWizardExpireAtRoute,
   LocaleListingWizardLocationRoute: LocaleListingWizardLocationRoute,
   LocaleListingWizardPhotosRoute: LocaleListingWizardPhotosRoute,

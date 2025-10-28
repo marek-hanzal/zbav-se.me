@@ -101,7 +101,12 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			const quickCache = await withList({
 				select: database.kysely
 					.selectFrom("location")
-					.where("query", "=", text)
+					.where((qb) => {
+						return qb.or([
+							qb("id", "=", text),
+							qb("query", "=", text),
+						]);
+					})
 					.where("lang", "=", lang)
 					.selectAll(),
 				output: LocationSchema,
