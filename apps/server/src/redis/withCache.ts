@@ -12,7 +12,7 @@ export const withCache = async <TResult>({
 	key,
 	fetch,
 }: withCache.Props<TResult>) => {
-	const cachedKey = await genKey(key);
+	const cachedKey = genKey(key);
 
 	const cached = await redis.get<TResult>(cachedKey);
 	if (cached) {

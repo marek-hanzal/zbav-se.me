@@ -1,24 +1,9 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { AppEnv } from "../AppEnv";
-import { database } from "../database/kysely";
+import { createRoute } from "@hono/zod-openapi";
 import type { Routes } from "../hono/Routes";
 import { withHono } from "../hono/withHono";
-import { s3 } from "../s3";
 import { ErrorSchema } from "../schema/ErrorSchema";
-
-const CleanupResponseSchema = z
-	.object({
-		scanned: z.number(),
-		deleted: z.number(),
-		removed: z.array(z.string()),
-	})
-	.openapi("CleanupResponse");
-
-type CleanupResponseSchema = typeof CleanupResponseSchema;
-
-namespace CleanupResponseSchema {
-	export type Type = z.infer<CleanupResponseSchema>;
-}
+import { cleanup } from "./cleanup/cleanup";
+import { CleanupResponseSchema } from "./schema/CleanupResponseSchema";
 
 export const withJanitorApi: Routes.Fn = ({ public: publicEndpoints }) => {
 	const endpoints = withHono();
@@ -53,57 +38,10 @@ export const withJanitorApi: Routes.Fn = ({ public: publicEndpoints }) => {
 		}),
 		async (c) => {
 			try {
-				const limit = 512;
-				const maxScan = 5000;
-
-				const uploads = await database.kysely
-					.selectFrom("upload")
-					.select([
-						"url",
-					])
-					.execute();
-				const urls = new Set(
-					uploads.map((r) => new URL(r.url).pathname),
-				);
-
-				let scanned = 0;
-				const kill: string[] = [];
-
-				await new Promise<void>((resolve, reject) => {
-					const stream = s3.listObjectsV2(
-						AppEnv.SERVER_S3_BUCKET,
-						"",
-						true,
-					);
-
-					stream.on("data", (obj) => {
-						if (scanned >= maxScan) {
-							stream.removeAllListeners();
-							return resolve();
-						}
-
-						scanned++;
-
-						if (!obj.name || obj.name.endsWith("/")) {
-							return;
-						}
-						if (!urls.has(`/${obj.name}`) && kill.length < limit) {
-							kill.push(obj.name);
-						}
-					});
-
-					stream.on("end", resolve);
-					stream.on("error", reject);
-				});
-
-				await s3.removeObjects(AppEnv.SERVER_S3_BUCKET, kill);
-
 				return c.json(
-					{
-						scanned,
-						deleted: kill.length,
-						removed: kill,
-					} satisfies CleanupResponseSchema.Type,
+					(await Promise.all(
+						cleanup.map((fn) => fn()),
+					)) satisfies CleanupResponseSchema.Type,
 					200,
 				);
 			} catch (e) {

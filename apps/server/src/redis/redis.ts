@@ -1,10 +1,7 @@
-// export const redis = Redis.fromEnv();
+import { Redis } from "@upstash/redis";
+import { AppEnv } from "../AppEnv";
 
-export const redis = {
-	async get<T>(_: string): Promise<T | null> {
-		return null;
-	},
-	async set(_: string, __: unknown) {
-		//
-	},
-} as const;
+export const redis = new Redis({
+	url: AppEnv.SERVER_UPSTASH_REDIS_URL,
+	token: AppEnv.SERVER_UPSTASH_REDIS_TOKEN,
+});

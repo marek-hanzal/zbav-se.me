@@ -7,12 +7,14 @@ import {
 	Data,
 	Fulltext,
 	LinkTo,
+	Status,
 	Typo,
 	useScrollTo,
 	useSelection,
 } from "@use-pico/client";
 import type { EntitySchema } from "@use-pico/common";
 import type { Category } from "@zbav-se.me/sdk";
+import { SearchIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
@@ -206,6 +208,17 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 										})}
 									</Container>
 								</Container>
+							);
+						}}
+						renderEmpty={() => {
+							return (
+								<Status
+									icon={SearchIcon}
+									textTitle={"No categories found (title)"}
+									textMessage={
+										"No categories found (message)"
+									}
+								/>
 							);
 						}}
 					/>

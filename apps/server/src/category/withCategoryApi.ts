@@ -1,5 +1,7 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { withCount, withFetch, withList } from "@use-pico/common";
+import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import { sql } from "kysely";
+import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
@@ -155,6 +157,35 @@ export const withCategoryApi = ({ session }: Routes) => {
 						},
 					}),
 			});
+
+			if (data.length === 0 && (where?.fulltext || filter?.fulltext)) {
+				const fulltext = filter?.fulltext || where?.fulltext;
+				if (fulltext && fulltext.length >= 4) {
+					try {
+						await database.kysely
+							.insertInto("category_miss")
+							.values({
+								id: genId(),
+								category: fulltext,
+								count: 1,
+								updatedAt: new Date(),
+							})
+							.onConflict((oc) =>
+								oc
+									.columns([
+										"category",
+									])
+									.doUpdateSet({
+										count: sql`category_miss.count + 1`,
+										updatedAt: new Date(),
+									}),
+							)
+							.execute();
+					} catch (error) {
+						console.error("Failed to track category miss:", error);
+					}
+				}
+			}
 
 			return c.json(data, {
 				headers: {
