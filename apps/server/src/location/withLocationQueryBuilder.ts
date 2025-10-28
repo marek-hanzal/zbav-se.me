@@ -1,3 +1,4 @@
+import { withLikeEx } from "../database/expression/withLikeEx";
 import type { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import type { withLocationSelect } from "./withLocationSelect";
 
@@ -31,14 +32,15 @@ export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({
 	}
 
 	if (where?.fulltext) {
+		const term = where.fulltext;
 		query = query.where((eb) =>
 			eb.or([
-				eb("l.query", "ilike", `%${where.fulltext}%`),
-				eb("l.address", "ilike", `%${where.fulltext}%`),
-				eb("l.country", "ilike", `%${where.fulltext}%`),
-				eb("l.municipality", "ilike", `%${where.fulltext}%`),
-				eb("l.state", "ilike", `%${where.fulltext}%`),
-				eb("l.county", "ilike", `%${where.fulltext}%`),
+				withLikeEx(eb.ref("l.query"), term),
+				withLikeEx(eb.ref("l.address"), term),
+				withLikeEx(eb.ref("l.country"), term),
+				withLikeEx(eb.ref("l.municipality"), term),
+				withLikeEx(eb.ref("l.state"), term),
+				withLikeEx(eb.ref("l.county"), term),
 			]),
 		);
 	}

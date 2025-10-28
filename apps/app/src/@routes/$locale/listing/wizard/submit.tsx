@@ -1,6 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
+	Badge,
+	type BadgeCls,
+	Button,
 	ErrorIcon,
 	LinkTo,
 	PriceInline,
@@ -9,8 +12,11 @@ import {
 	Tx,
 	Typo,
 } from "@use-pico/client";
+import { type Cls, VariantProvider } from "@use-pico/cls";
 import { apiListingCreateBody } from "@zbav-se.me/sdk";
+import { SubmitIcon, ThemeCls } from "@zbav-se.me/ui";
 import { withCategoryFetchQuery } from "~/app/category/query/withCategoryFetchQuery";
+import { withListingCreateMutation } from "~/app/listing/mutation/withListingCreateMutation";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
@@ -46,6 +52,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const { data: category } = withCategoryFetchQuery().useSuspenseQuery(
 			{
 				where: {
@@ -61,11 +68,40 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 				id: state.locationId,
 			},
 		});
+		const createListingMutation = withListingCreateMutation().useMutation({
+			async onPostMutation({ result }) {
+				return navigate({
+					to: "/$locale/listing/$id/view",
+					params: {
+						id: result.id,
+					},
+				});
+			},
+		});
 		const valid = apiListingCreateBody.safeParse({
 			...state,
 			currency: countryToCurrency[locale as countryToCurrency.Key],
 			price: state.price ? parseFloat(state.price) : undefined,
 		});
+
+		const badgeTweak: Cls.TweaksOf<BadgeCls> = {
+			slot: {
+				root: {
+					class: [
+						"flex",
+						"flex-row",
+						"gap-1",
+						"justify-between",
+						"w-full",
+						"h-fit",
+					],
+					token: [
+						"round.md",
+						"square.md",
+					],
+				},
+			},
+		};
 
 		return (
 			<ListingContainer
@@ -82,11 +118,35 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 						tone={"secondary"}
 					/>
 				}
+				bottom={
+					<Button
+						iconEnabled={SubmitIcon}
+						label={"Submit listing (button)"}
+						disabled={
+							createListingMutation.isPending || !valid.success
+						}
+						loading={createListingMutation.isPending}
+						tone={"primary"}
+						theme={"dark"}
+						size={"lg"}
+						full
+						onClick={() => {
+							valid.success &&
+								createListingMutation.mutate(valid.data);
+						}}
+					/>
+				}
 			>
 				{valid.success ? (
 					<div>
 						<div className={"grid grid-auto-rows gap-2"}>
-							<div>
+							<VariantProvider
+								cls={ThemeCls}
+								variant={{
+									tone: "primary",
+									theme: "light",
+								}}
+							>
 								<LinkTo
 									to={"/$locale/listing/wizard/photos"}
 									params={{
@@ -94,17 +154,20 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing photos (label)"}
-										preset={"label"}
-									/>
+									<Badge tweak={badgeTweak}>
+										<Tx
+											label={"Listing photos (label)"}
+											preset={"label"}
+										/>
+
+										<Typo
+											label={valid.data.uploadIds.length}
+										/>
+									</Badge>
 								</LinkTo>
 
-								<Typo label={valid.data.uploadIds.length} />
-							</div>
-
-							<div>
 								<LinkTo
 									to={"/$locale/listing/wizard/category"}
 									params={{
@@ -112,23 +175,28 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing category (label)"}
-										preset={"label"}
-									/>
+									<Badge tweak={badgeTweak}>
+										<Tx
+											label={"Listing category (label)"}
+											preset={"label"}
+										/>
+
+										<div
+											className={
+												"flex flex-col gap-1 items-end"
+											}
+										>
+											<Typo
+												label={category.group}
+												size={"sm"}
+											/>
+											<Typo label={category.category} />
+										</div>
+									</Badge>
 								</LinkTo>
 
-								<div className={"flex flex-col gap-1"}>
-									<Typo
-										label={category.group}
-										size={"sm"}
-									/>
-									<Typo label={category.category} />
-								</div>
-							</div>
-
-							<div>
 								<LinkTo
 									to={"/$locale/listing/wizard/condition"}
 									params={{
@@ -136,19 +204,20 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing condition (label)"}
-										preset={"label"}
-									/>
+									<Badge tweak={badgeTweak}>
+										<Tx
+											label={"Listing condition (label)"}
+											preset={"label"}
+										/>
+
+										<Tx
+											label={`Condition - Overall [${valid.data.condition}] (hint)`}
+										/>
+									</Badge>
 								</LinkTo>
 
-								<Tx
-									label={`Condition - Overall [${valid.data.condition}] (hint)`}
-								/>
-							</div>
-
-							<div>
 								<LinkTo
 									to={"/$locale/listing/wizard/age"}
 									params={{
@@ -156,19 +225,20 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing age (label)"}
-										preset={"label"}
-									/>
+									<Badge tweak={badgeTweak}>
+										<Tx
+											label={"Listing age (label)"}
+											preset={"label"}
+										/>
+
+										<Tx
+											label={`Condition - Age [${valid.data.age}] (hint)`}
+										/>
+									</Badge>
 								</LinkTo>
 
-								<Tx
-									label={`Condition - Age [${valid.data.age}] (hint)`}
-								/>
-							</div>
-
-							<div>
 								<LinkTo
 									to={"/$locale/listing/wizard/price"}
 									params={{
@@ -176,20 +246,21 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing price (label)"}
-										preset={"label"}
-									/>
+									<Badge tweak={badgeTweak}>
+										<Tx
+											label={"Listing price (label)"}
+											preset={"label"}
+										/>
+
+										<PriceInline
+											price={valid.data.price}
+											currency={valid.data.currency}
+										/>
+									</Badge>
 								</LinkTo>
 
-								<PriceInline
-									price={valid.data.price}
-									currency={valid.data.currency}
-								/>
-							</div>
-
-							<div>
 								<LinkTo
 									to={"/$locale/listing/wizard/location"}
 									params={{
@@ -197,17 +268,39 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing location (label)"}
-										preset={"label"}
-									/>
+									<Badge
+										tweak={{
+											slot: {
+												root: {
+													class: [
+														"flex",
+														"flex-col",
+														"items-start",
+														"h-fit",
+														"w-full",
+													],
+													token: [
+														"round.md",
+														"square.md",
+													],
+												},
+											},
+										}}
+									>
+										<Tx
+											label={"Listing location (label)"}
+											preset={"label"}
+										/>
+
+										<Typo
+											label={location.address}
+											wrap={"wrap"}
+										/>
+									</Badge>
 								</LinkTo>
 
-								<Typo label={location.address} />
-							</div>
-
-							<div>
 								<LinkTo
 									to={"/$locale/listing/wizard/expire-at"}
 									params={{
@@ -215,15 +308,20 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 									}}
 									search={state}
 									display={"block"}
+									full
 								>
-									<Tx
-										label={"Listing expire at (label)"}
-										preset={"label"}
-									/>
-								</LinkTo>
+									<Badge tweak={badgeTweak}>
+										<Tx
+											label={"Listing expire at (label)"}
+											preset={"label"}
+										/>
 
-								<Tx label={`Expire in ${state.expiresAt}`} />
-							</div>
+										<Tx
+											label={`Expire in ${state.expiresAt}`}
+										/>
+									</Badge>
+								</LinkTo>
+							</VariantProvider>
 						</div>
 					</div>
 				) : (

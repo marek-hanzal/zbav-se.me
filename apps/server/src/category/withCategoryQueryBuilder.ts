@@ -1,3 +1,4 @@
+import { withLikeEx } from "../database/expression/withLikeEx";
 import type { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import type { withCategorySelect } from "./withCategorySelect";
 
@@ -25,24 +26,24 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 		query = query.where("c.id", "=", where.id);
 	}
 
-	if (where?.idIn && where.idIn.length > 0) {
+	if (where?.idIn?.length) {
 		query = query.where("c.id", "in", where.idIn);
 	}
 
 	if (where?.fulltext) {
+		const term = where.fulltext;
+
 		query = query.where((eb) =>
 			eb.or([
-				eb("c.group", "ilike", `${where.fulltext}%`),
-				eb("c.category", "ilike", `${where.fulltext}%`),
+				withLikeEx(eb.ref("c.group"), term),
+				withLikeEx(eb.ref("c.category"), term),
 				eb.exists(
 					eb
 						.selectFrom("category_spotlight")
 						.select("category_spotlight.categoryId")
 						.whereRef("category_spotlight.categoryId", "=", "c.id")
-						.where(
-							"category_spotlight.text",
-							"ilike",
-							`${where.fulltext}%`,
+						.where((eb) =>
+							withLikeEx(eb.ref("category_spotlight.text"), term),
 						),
 				),
 			]),
@@ -50,18 +51,20 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 	}
 
 	if (where?.group) {
-		query = query.where("c.group", "ilike", `${where.group}%`);
+		query = query.where((eb) => withLikeEx(eb.ref("c.group"), where.group));
 	}
 
 	if (where?.category) {
-		query = query.where("c.category", "ilike", `${where.category}%`);
+		query = query.where((eb) =>
+			withLikeEx(eb.ref("c.category"), where.category),
+		);
 	}
 
 	if (where?.locale) {
 		query = query.where("c.locale", "=", where.locale);
 	}
 
-	if (where?.localeIn && where.localeIn.length > 0) {
+	if (where?.localeIn?.length) {
 		query = query.where("c.locale", "in", where.localeIn);
 	}
 
