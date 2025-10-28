@@ -2,7 +2,6 @@ import { createRoute } from "@hono/zod-openapi";
 import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
-import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
@@ -12,7 +11,6 @@ import { ErrorSchema } from "../schema/ErrorSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingDtoSchema } from "./schema/ListingDtoSchema";
-import { ListingGalleryCreateSchema } from "./schema/ListingGalleryCreateSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import {
 	withListingQueryBuilder,
@@ -96,6 +94,20 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 						)
 						.exhaustive(),
 				})
+				.execute();
+
+			await database.kysely
+				.insertInto("gallery")
+				.values(
+					data.uploadIds.map((uploadId, index) => ({
+						id: genId(),
+						userId: user.id,
+						createdAt: now,
+						listingId: id,
+						uploadId,
+						sort: index,
+					})),
+				)
 				.execute();
 
 			return c.json(
@@ -330,98 +342,6 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					"X-Cached": hit ? "true" : "false",
 				},
 			});
-		},
-	);
-
-	sessionEndpoints.openapi(
-		createRoute({
-			method: "post",
-			path: "/listing/gallery/create",
-			description: "Add an image to a listing's gallery",
-			operationId: "apiListingGalleryCreate",
-			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: ListingGalleryCreateSchema,
-						},
-					},
-					description:
-						"Data for adding an image to the listing's gallery",
-				},
-			},
-			responses: {
-				201: {
-					description: "Gallery item created successfully",
-				},
-				400: {
-					content: {
-						"application/json": {
-							schema: ErrorSchema,
-						},
-					},
-					description: "Invalid URL",
-				},
-				403: {
-					content: {
-						"application/json": {
-							schema: ErrorSchema,
-						},
-					},
-					description:
-						"Forbidden - listing not found or no permission",
-				},
-			},
-			tags: [
-				"listing",
-			],
-		}),
-		async (c) => {
-			const data = c.req.valid("json");
-			const user = c.get("user");
-			const now = new Date();
-
-			if (!data.url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
-				return c.json(
-					{
-						message:
-							"Only content from the CDN can be added to the gallery",
-					} satisfies ErrorSchema.Type,
-					400,
-				);
-			}
-
-			const listing = await database.kysely
-				.selectFrom("listing")
-				.select("id")
-				.where("id", "=", data.listingId)
-				.where("userId", "=", user.id)
-				.executeTakeFirst();
-
-			if (!listing) {
-				return c.json(
-					{
-						message: "Nope. Shoo. I don't like you!",
-					} satisfies ErrorSchema.Type,
-					403,
-				);
-			}
-
-			// Insert the gallery item
-			await database.kysely
-				.insertInto("gallery")
-				.values({
-					id: genId(),
-					userId: user.id,
-					listingId: data.listingId,
-					url: data.url,
-					sort: data.sort,
-					createdAt: now,
-					updatedAt: now,
-				})
-				.execute();
-
-			return c.json(null, 201);
 		},
 	);
 

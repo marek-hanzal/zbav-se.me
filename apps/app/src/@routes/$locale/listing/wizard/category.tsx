@@ -17,7 +17,7 @@ import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace CategoryItem {

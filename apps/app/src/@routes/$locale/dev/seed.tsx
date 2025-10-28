@@ -5,7 +5,6 @@ import { Button } from "@use-pico/client";
 import { genId, linkTo } from "@use-pico/common";
 import { CurrencyList } from "@zbav-se.me/common";
 import {
-	type AllowedContentTypes,
 	apiCategoryCollection,
 	apiListingCreate,
 	apiLocationAutocomplete,
@@ -14,18 +13,13 @@ import {
 import { Sheet } from "@zbav-se.me/ui";
 import axios from "axios";
 import PQueue from "p-queue";
-import { withListingGalleryCreateMutation } from "~/app/listing/mutation/withListingGalleryCreateMutation";
-import { withS3PreSignMutation } from "~/app/s3/mutation/withS3PreSignMutation";
+import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";
 
 function range(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-export async function picsum(): Promise<{
-	data: Blob;
-	contentType: string;
-	ext: "jpg";
-}> {
+export async function picsum(): Promise<Blob> {
 	const sig = genId();
 
 	const proxy = linkTo({
@@ -38,29 +32,18 @@ export async function picsum(): Promise<{
 		href: `/seed/${sig}/1024/768.jpg`,
 	});
 
-	const proxied = `${proxy}?url=${encodeURIComponent(target)}`;
-
-	const result = await axios.get<Blob>(proxied, {
-		responseType: "blob",
-		maxRedirects: 0,
-		timeout: 10_000,
-	});
-
-	const contentType =
-		result.headers["content-type"] || result.data.type || "image/jpeg";
-
-	return {
-		data: result.data,
-		contentType,
-		ext: "jpg",
-	};
+	return axios
+		.get<Blob>(`${proxy}?url=${encodeURIComponent(target)}`, {
+			responseType: "blob",
+			maxRedirects: 0,
+			timeout: 10_000,
+		})
+		.then((res) => res.data);
 }
 
 export const Route = createFileRoute("/$locale/dev/seed")({
 	component() {
-		const preSignMutation = withS3PreSignMutation.useMutation();
-		const createListingGalleryMutation =
-			withListingGalleryCreateMutation.useMutation();
+		const uploadMutation = withUploadMutation.useMutation();
 
 		const seedMutation = useMutation({
 			mutationKey: [
@@ -108,7 +91,12 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				});
 
 				const createListing = async () => {
-					const listing = await apiListingCreate({
+					const upload = await uploadMutation.mutateAsync({
+						name: "photo.jpg",
+						blob: await picsum().then((res) => res),
+					});
+
+					return apiListingCreate({
 						age: range(1, 6),
 						condition: range(1, 6),
 						categoryId: category[range(0, category.length - 1)]!.id,
@@ -128,29 +116,10 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							lang: "cs",
 							text: locations[range(0, locations.length - 1)]!,
 						}).then((res) => res.data[0]!.id),
+						uploadIds: [
+							upload.id,
+						],
 					}).then((res) => res.data);
-
-					const photo = await picsum();
-
-					const presign = await preSignMutation.mutateAsync({
-						path: `listing/${listing.id}`,
-						extension: "jpeg",
-						contentType: photo.contentType as AllowedContentTypes,
-					});
-
-					await axios.put(presign.url, photo.data, {
-						headers: {
-							"Content-Type": photo.contentType,
-						},
-					});
-
-					await createListingGalleryMutation.mutateAsync({
-						listingId: listing.id,
-						sort: 0,
-						url: presign.cdn,
-					});
-
-					return listing;
 				};
 
 				const limit = 16;

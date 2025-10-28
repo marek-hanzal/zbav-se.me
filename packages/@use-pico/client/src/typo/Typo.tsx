@@ -8,6 +8,7 @@ export namespace Typo {
 		| "none"
 		| "header"
 		| "subheader"
+		| "label"
 		| "paragraph"
 		| "blockquote";
 
@@ -31,6 +32,10 @@ export namespace Typo {
 
 const presets: Record<Typo.Preset, Cls.VariantsOf<TypoCls>> = {
 	none: {},
+	label: {
+		size: "lg",
+		font: "bold",
+	},
 	header: {
 		size: "3xl",
 		font: "bold",

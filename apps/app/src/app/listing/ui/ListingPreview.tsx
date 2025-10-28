@@ -7,7 +7,7 @@ import {
 	Typo,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import type { Gallery, ListingDto } from "@zbav-se.me/sdk";
+import type { GalleryDto, ListingDto } from "@zbav-se.me/sdk";
 import { ThemeCls } from "@zbav-se.me/ui";
 import { type FC, memo } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
@@ -23,14 +23,14 @@ export namespace ListingPreview {
 export const ListingPreview: FC<ListingPreview.Props> = memo(
 	({ locale, listing }) => {
 		const [hero] = listing.gallery as [
-			Gallery,
-			...Gallery[],
+			GalleryDto,
+			...GalleryDto[],
 		];
 
 		return (
 			<Container position={"relative"}>
 				<HeroImage
-					src={hero.url}
+					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"w-full h-full object-cover"}
 				/>

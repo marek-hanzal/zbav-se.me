@@ -41,6 +41,19 @@ export const withListingSelect = ({
 						eb
 							.selectFrom("gallery")
 							.selectAll("gallery")
+							.select((eb) => [
+								jsonObjectFrom(
+									eb
+										.selectFrom("upload")
+										.selectAll("upload")
+										.whereRef(
+											"upload.id",
+											"=",
+											"gallery.uploadId",
+										)
+										.limit(1),
+								).as("upload"),
+							])
 							.whereRef("gallery.listingId", "=", "l.id")
 							.orderBy("gallery.sort"),
 					),

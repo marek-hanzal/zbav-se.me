@@ -7,7 +7,7 @@ import {
 } from "@use-pico/client";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/listing/wizard/condition")({

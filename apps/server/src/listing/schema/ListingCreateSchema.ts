@@ -22,6 +22,13 @@ export const ListingCreateSchema = z
 		}),
 		currency: CurrencyListSchema,
 		expiresAt: ListingExpireSchema,
+		uploadIds: z
+			.array(z.string())
+			.min(1, "At least one upload is required")
+			.openapi({
+				description:
+					"IDs of the uploads; order of uploads defines order in the gallery",
+			}),
 	})
 	.openapi("ListingCreate", {
 		description: "Data required to create a new listing",

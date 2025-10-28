@@ -1,5 +1,6 @@
 import z from "zod";
 import { CategorySchema } from "../../category/schema/CategorySchema";
+import { GalleryDtoSchema } from "../../gallery/schema/GalleryDtoSchema";
 import { LocationSchema } from "../../location/schema/LocationSchema";
 import { ListingSchema } from "./ListingSchema";
 
@@ -8,17 +9,9 @@ export const ListingDtoSchema = z
 		...ListingSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
-		gallery: z
-			.array(
-				z.object({
-					id: z.string(),
-					url: z.string(),
-					sort: z.number().int().gte(0),
-				}),
-			)
-			.openapi({
-				description: "Array of listing gallery images",
-			}),
+		gallery: z.array(GalleryDtoSchema).openapi({
+			description: "Array of listing gallery images",
+		}),
 	})
 	.openapi("ListingDto");
 

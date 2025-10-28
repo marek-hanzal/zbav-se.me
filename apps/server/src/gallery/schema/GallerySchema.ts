@@ -11,18 +11,14 @@ export const GallerySchema = z
 		listingId: z.string().openapi({
 			description: "ID of the listing this image belongs to",
 		}),
-		url: z.string().url().openapi({
-			description: "Public URL to the image",
+		uploadId: z.string().openapi({
+			description: "ID of the upload this image belongs to",
 		}),
 		sort: z.number().openapi({
 			description: "Sort order of the image in the listing's gallery",
 		}),
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",
-			type: "string",
-		}),
-		updatedAt: z.coerce.date().openapi({
-			description: "Last update timestamp",
 			type: "string",
 		}),
 	})

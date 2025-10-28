@@ -12,15 +12,15 @@
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
     ref: Missing required token(s). (title)
     value: Missing required token(s). (title)
-14888b4617c96154850f3707f77eecbc3a54da463e93dc23186b0f90:
-    ref: Listing expire (message)
-    value: Vyber si, za jak dlouho se inzerát automaticky ukončí
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Stav
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
     ref: Loading...
     value: Loading...
+1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
+    ref: Listing photos (label)
+    value: Počet fotek
 1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
     ref: File downloaded...
     value: File downloaded...
@@ -60,6 +60,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
     ref: Select item
     value: Select item
+3b25f85d532657d509b12da1d687a994f0da387a55ede88e53ffc704:
+    ref: Listing price (label)
+    value: Cena
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
     ref: Price (placeholder)
     value: Cena
@@ -78,6 +81,9 @@
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
     ref: Cancel (button)
     value: Cancel (button)
+42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
+    ref: Listing category (label)
+    value: Kategorie
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
@@ -111,18 +117,12 @@
 5d6bb45eb861bb2a56b96924c18424e8a1c7fd31df44492a6d6f9da3:
     ref: primary
     value: primary
-67505b3ac329bf674d8dceeeaa32e8d9cb6f6b409aa16a2320e90884:
-    ref: Location (subtitle)
-    value: Umísti inzerát na mapě
+5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
+    ref: Listing age (label)
+    value: Stáří
 68df66fbac9de67547d703604ad74542f4cf229da6a7cc3e35d1a986:
     ref: Set location (hint)
     value: ...a vybrat, kam inzerát patří
-6be2e3b13c519a15549180dbc90ebcc6367f58cdd6cec981cd4d37cf:
-    ref: Condition - Overall (title)
-    value: Celkový stav
-6da421b164aea62a4034c7b5fdd3c445319482eb5937faee9dffd81c:
-    ref: Listing category (subtitle)
-    value: Ještě zařaď inzerát do konkrétní kategorie
 6de34b98643455db9da5279b5b11719014342aec0c3a3cd4de2c5dc5:
     ref: Submit listing - status (title)
     value: Vše připraveno!
@@ -138,6 +138,9 @@
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
     ref: Clear files
     value: Clear files
+770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
+    ref: Listing location (label)
+    value: Umístění
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
     ref: There is nothing to see right now.
     value: There is nothing to see right now.
@@ -179,6 +182,9 @@
 95364d50edbc5532834a1af5c47d2efd5ad9be3b2f4e8e221f83ec64:
     ref: Set price (hint)
     value: Nastavit cenu
+96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
+    ref: Invalid/missing fields
+    value: Invalid/missing fields
 9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
     ref: Nothing here
     value: Nothing here
@@ -266,12 +272,15 @@ abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
+ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
+    ref: Listing expire at (label)
+    value: Automatické ukončení
 af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
     ref: Drag 'n' drop a file here
     value: Drag 'n' drop a file here
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
-    value: Automatické uzavření
+    value: Automatické ukončení
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
     ref: Invalid data provided (title)
     value: Invalid data provided (title)
@@ -287,9 +296,6 @@ b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
 b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
     ref: Select items (label)
     value: Select items (label)
-b62ca54e202f91bba88d387ce5efaf91689ce2d14ed5edf22ce2d44f:
-    ref: Condition - Age (title)
-    value: Věk
 b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
     ref: Downloading file...
     value: Downloading file...
@@ -335,6 +341,9 @@ d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
 d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
     ref: Next - expire (button)
     value: Automatické uzavření
+d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
+    ref: Listing condition (label)
+    value: Stav
 dbcca93a186df18b22eaca3db981500fa71cb0a4326c9ee54d1914a6:
     ref: Add photos (hint)
     value: Stačí vybrat pár fotek
@@ -362,9 +371,6 @@ e860d8c3797c35dbd392bbfcad1cd38c7b0f9efaad739f241097b41b:
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
     ref: Select item (label)
     value: Select item (label)
-eae91d68cb245f4ff1f17587ecf46fcb2dda4dca33e423ea6bc07a57:
-    ref: Condition (subtitle)
-    value: Odhadni stav předmětu inzerátu
 eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
     ref: Next (tour)
     value: Další
@@ -383,9 +389,6 @@ f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
 faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
     ref: loading
     value: loading
-fba4c8a805650ffe7264342944ffd910ddcc82a1892b9b354d48369b:
-    ref: Listing expire (title)
-    value: Automatické uzavření inzerátu
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů
@@ -395,6 +398,3 @@ fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav
-ff4b8306ae3cdd547e68dcfad3c59258146c16563cd71c2b22a13b8d:
-    ref: Age (subtitle)
-    value: Odhadni stáří předmětu inzerátu
