@@ -1,7 +1,9 @@
+import { RedisStore } from "@hono-rate-limiter/redis";
 import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
+import { rateLimiter } from "hono-rate-limiter";
 import { AppEnv } from "./AppEnv";
 import { auth } from "./auth";
 import { withCategoryApi } from "./category/withCategoryApi";
@@ -19,6 +21,7 @@ import { withListingApi } from "./listing/withListingApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
+import { redis } from "./redis/redis";
 import { withS3Api } from "./s3/withS3Api";
 import { withUploadApi } from "./upload/withUploadApi";
 
@@ -128,7 +131,27 @@ app.use("/api/token/*", async (c, next) => {
 
 //
 
+const withUserRateLimiter = rateLimiter<{
+	Variables: {
+		user: typeof auth.$Infer.Session.user;
+	};
+}>({
+	store: new RedisStore({
+		client: redis,
+	}),
+	windowMs: 15 * 60 * 1000,
+	limit: 6,
+	keyGenerator(c) {
+		return `user:${c.get("user").id}`;
+	},
+	message: "Rate limit exceeded. Please try again later.",
+});
+
+app.use("/api/session/*", withUserRateLimiter);
+app.use("/api/token/*", withUserRateLimiter);
+
 //
+
 app.on(
 	[
 		"POST",
