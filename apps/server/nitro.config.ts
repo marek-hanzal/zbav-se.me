@@ -19,7 +19,7 @@ export default defineNitroConfig({
 			crons: [
 				{
 					path: "/api/public/janitor/cleanup",
-					schedule: "* * 1 * *",
+					schedule: "0 0 * * *",
 				},
 			],
 		},
