@@ -4,6 +4,7 @@ import {
 	Badge,
 	type BadgeCls,
 	Button,
+	Container,
 	ErrorIcon,
 	LinkTo,
 	PriceInline,
@@ -138,7 +139,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 				}
 			>
 				{valid.success ? (
-					<div>
+					<Container overflow={"vertical"}>
 						<div className={"grid grid-auto-rows gap-2"}>
 							<VariantProvider
 								cls={ThemeCls}
@@ -323,7 +324,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 							</VariantProvider>
 						</div>
-					</div>
+					</Container>
 				) : (
 					<Status
 						icon={ErrorIcon}
