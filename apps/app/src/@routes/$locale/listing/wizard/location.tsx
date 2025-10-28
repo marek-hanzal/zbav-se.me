@@ -118,7 +118,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/condition"}
+						to={"/$locale/listing/wizard/expire-at"}
 						params={{
 							locale,
 						}}
@@ -137,7 +137,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 							size={"lg"}
 							full
 							iconPosition={"right"}
-							label={"Next - condition (button)"}
+							label={"Next - expire (button)"}
 						/>
 					</LinkTo>
 				}

@@ -21,7 +21,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/location"}
+						to={"/$locale/listing/wizard/category"}
 						search={state}
 						params={{
 							locale,
@@ -31,21 +31,19 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/condition"}
+						to={"/$locale/listing/wizard/age"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
 						}}
-						// disabled={!locationId}
 						full
 					>
 						<Button
 							tone={"secondary"}
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
-							// disabled={!locationId}
 							size={"lg"}
 							full
 							iconPosition={"right"}

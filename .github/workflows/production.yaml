@@ -458,7 +458,7 @@ jobs:
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      sync /github/workspace/apps/web/.vercel/output/static/assets bunny:/web/assets
+                      sync /github/workspace/apps/web/.vercel/output/static/assets bunny:/production/web/assets
                       --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
@@ -475,7 +475,7 @@ jobs:
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      copy /github/workspace/apps/web/.vercel/output/static bunny:/
+                      copy /github/workspace/apps/web/.vercel/output/static bunny:/production/web/
                       --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"
@@ -522,7 +522,7 @@ jobs:
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      sync /github/workspace/apps/app/.vercel/output/static/assets bunny:/app/assets
+                      sync /github/workspace/apps/app/.vercel/output/static/assets bunny:/production/app/assets
                       --config /github/workspace/rclone.conf
                       --inplace
                       --sftp-set-modtime=false
@@ -539,7 +539,7 @@ jobs:
               uses: docker://rclone/rclone:1.66
               with:
                   args: >
-                      copy /github/workspace/apps/app/.vercel/output/static bunny:/
+                      copy /github/workspace/apps/app/.vercel/output/static bunny:/production/app/
                       --config /github/workspace/rclone.conf
                       --inplace
                       --include "/favicon*.ico"

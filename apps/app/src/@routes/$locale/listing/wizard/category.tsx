@@ -133,7 +133,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/price"}
+						to={"/$locale/listing/wizard/condition"}
 						params={{
 							locale,
 						}}
@@ -149,7 +149,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							label={"Next - price (button)"}
+							label={"Next - condition (button)"}
 							disabled={!selection.hasAny}
 							size={"lg"}
 							full

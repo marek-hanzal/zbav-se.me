@@ -1,5 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Button, Status, Tx, Typo } from "@use-pico/client";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	Button,
+	LinkTo,
+	Status,
+	Tx,
+	Typo,
+} from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { ListingExpire } from "@zbav-se.me/sdk";
 import { ExpireIcon, ThemeCls } from "@zbav-se.me/ui";
@@ -13,11 +21,47 @@ export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const navigate = Route.useNavigate();
+		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const expireId = useId();
 
 		return (
-			<ListingContainer textTitle={"Expire (title)"}>
+			<ListingContainer
+				textTitle={"Expire (title)"}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/listing/wizard/location"}
+						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				bottom={
+					<LinkTo
+						to={"/$locale/listing/wizard/submit"}
+						params={{
+							locale,
+						}}
+						search={{
+							...state,
+						}}
+						full
+					>
+						<Button
+							tone={"secondary"}
+							theme={"dark"}
+							iconEnabled={ArrowRightIcon}
+							size={"lg"}
+							full
+							iconPosition={"right"}
+							label={"Next - submit (button)"}
+						/>
+					</LinkTo>
+				}
+			>
 				<Status
 					icon={ExpireIcon}
 					textTitle={"Listing expire (title)"}
