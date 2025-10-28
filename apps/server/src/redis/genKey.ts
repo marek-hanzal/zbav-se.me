@@ -9,5 +9,5 @@ export namespace genKey {
 }
 
 export const genKey = ({ scope, version, value }: genKey.Props) => {
-	return `${AppEnv.VITE_DOMAIN}${scope}:${version}:${JSON.stringify(value)}`;
+	return `${AppEnv.VITE_DOMAIN}:${scope}:${version}:${JSON.stringify(value)}`;
 };
