@@ -6,6 +6,7 @@ import { LocationMigration } from "./0004-location";
 import { UploadMigration } from "./0005-upload";
 import { ListingMigration } from "./0006-listing";
 import { GalleryMigration } from "./0007-gallery";
+import { CategoryMissMigration } from "./0008-category-miss";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -16,4 +17,5 @@ export const migrations = {
 	"0005-upload": UploadMigration,
 	"0006-listing": ListingMigration,
 	"0007-gallery": GalleryMigration,
+	"0008-category-miss": CategoryMissMigration,
 } as const;
