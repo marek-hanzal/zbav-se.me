@@ -11,7 +11,7 @@ import {
 import { apiListingCreateBody } from "@zbav-se.me/sdk";
 import { withCategoryFetchQuery } from "~/app/category/query/withCategoryFetchQuery";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 import { countryToCurrency } from "~/locales";
 
@@ -99,10 +99,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 										label={category.group}
 										size={"sm"}
 									/>
-									<Typo
-										label={category.category}
-										font={"bold"}
-									/>
+									<Typo label={category.category} />
 								</div>
 							</div>
 

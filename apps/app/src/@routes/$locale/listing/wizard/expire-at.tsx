@@ -14,7 +14,7 @@ import { DateTime } from "luxon";
 import { useId, useState } from "react";
 import { match } from "ts-pattern";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
 export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 	validateSearch: ListingWizardSchema,

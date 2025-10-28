@@ -9,7 +9,7 @@ import {
 import { toHumanNumber } from "@use-pico/common";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
+import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Dial } from "~/app/ui/dial/Dial";
 import { countryToCurrency } from "~/locales";
 
