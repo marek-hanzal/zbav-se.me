@@ -25,19 +25,10 @@ export const withJanitorApi: Routes.Fn = ({ public: publicEndpoints }) => {
 
 	endpoints.openapi(
 		createRoute({
-			method: "post",
+			method: "get",
 			path: "/janitor/cleanup",
 			description: "Smaže z MinIO vše, co není v tabulce `upload`.",
 			operationId: "apiJanitorCleanup",
-			request: {
-				body: {
-					content: {
-						"application/json": {
-							schema: z.object({}),
-						},
-					},
-				},
-			},
 			responses: {
 				200: {
 					content: {
