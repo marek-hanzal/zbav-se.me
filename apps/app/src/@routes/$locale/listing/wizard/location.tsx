@@ -10,7 +10,6 @@ import {
 	LinkTo,
 	Tx,
 } from "@use-pico/client";
-import { anim, useAnim } from "@zbav-se.me/ui";
 import { useRef, useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/CreateListing/ListingContainer";
@@ -37,53 +36,6 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 				},
 			);
 		const isSelected = Boolean(locationId);
-
-		useAnim(
-			() => {
-				anim.timeline()
-					.set(".Data-spinner", {
-						opacity: 0,
-						scale: 0.75,
-					})
-					.to(".Data-spinner", {
-						opacity: 1,
-						scale: 1,
-					});
-			},
-			{
-				scope: containerRef,
-				dependencies: [
-					locationAutocompleteQuery.isFetching,
-				],
-			},
-		);
-
-		useAnim(
-			() => {
-				anim.timeline({
-					defaults: {
-						duration: 0.25,
-					},
-				})
-					.set(".Location-item", {
-						opacity: 0,
-						scale: 0.75,
-						y: "-50%",
-					})
-					.to(".Location-item", {
-						opacity: 1,
-						scale: 1,
-						y: 0,
-						stagger: 0.075,
-					});
-			},
-			{
-				scope: containerRef,
-				dependencies: [
-					locationAutocompleteQuery.data,
-				],
-			},
-		);
 
 		return (
 			<ListingContainer
