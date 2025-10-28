@@ -1,20 +1,6 @@
-import { type ReferenceExpression, sql } from "kysely";
+import { withLikeEx } from "../database/expression/withLikeEx";
 import type { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import type { withCategorySelect } from "./withCategorySelect";
-
-type LikeMode = "prefix" | "contains";
-
-export function unaccentLike<DB, TB extends keyof DB>(
-	column: ReferenceExpression<DB, TB>,
-	term: string,
-	mode: LikeMode = "prefix",
-) {
-	return sql<boolean>`lower(unaccent(${column})) like ${
-		mode === "prefix"
-			? sql`lower(unaccent(${term})) || '%'`
-			: sql`'%' || lower(unaccent(${term})) || '%'`
-	}`;
-}
 
 export namespace withCategoryQueryBuilder {
 	export interface Props {
@@ -49,19 +35,15 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 
 		query = query.where((eb) =>
 			eb.or([
-				unaccentLike(eb.ref("c.group"), term, "prefix"),
-				unaccentLike(eb.ref("c.category"), term, "prefix"),
+				withLikeEx(eb.ref("c.group"), term),
+				withLikeEx(eb.ref("c.category"), term),
 				eb.exists(
 					eb
 						.selectFrom("category_spotlight")
 						.select("category_spotlight.categoryId")
 						.whereRef("category_spotlight.categoryId", "=", "c.id")
 						.where((eb) =>
-							unaccentLike(
-								eb.ref("category_spotlight.text"),
-								term,
-								"prefix",
-							),
+							withLikeEx(eb.ref("category_spotlight.text"), term),
 						),
 				),
 			]),
@@ -69,16 +51,12 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 	}
 
 	if (where?.group) {
-		query = query.where((eb) =>
-			// biome-ignore lint/style/noNonNullAssertion: We're OK
-			unaccentLike(eb.ref("c.group"), where.group!, "prefix"),
-		);
+		query = query.where((eb) => withLikeEx(eb.ref("c.group"), where.group));
 	}
 
 	if (where?.category) {
 		query = query.where((eb) =>
-			// biome-ignore lint/style/noNonNullAssertion: We're OK
-			unaccentLike(eb.ref("c.category"), where.category!, "prefix"),
+			withLikeEx(eb.ref("c.category"), where.category),
 		);
 	}
 
