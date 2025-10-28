@@ -9,3 +9,8 @@
 	--font-sans: "Sansation", sans-serif;
 	--font-limelight: "Limelight", sans-serif;
 }
+
+html,
+body {
+	overscroll-behavior: contain;
+}
