@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, SnapperNav, useSnapperNav } from "@use-pico/client";
-import { SpinnerSheet } from "@zbav-se.me/ui";
+import {
+	ArrowLeftIcon,
+	Container,
+	LinkTo,
+	SnapperNav,
+	useSnapperNav,
+} from "@use-pico/client";
+import { SpinnerSheet, TitleContainer } from "@zbav-se.me/ui";
 import { useId, useRef } from "react";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
 import { FeedSelect } from "~/app/feed/ui/FeedSelect";
@@ -8,9 +14,34 @@ import { FeedSelect } from "~/app/feed/ui/FeedSelect";
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	ssr: false,
 	pendingComponent() {
-		return <SpinnerSheet />;
+		const { locale } = Route.useParams();
+
+		return (
+			<TitleContainer
+				textTitle={"Feed select (title)"}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/buyer"}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+			>
+				<SpinnerSheet
+					disableOverlay
+					tone={"unset"}
+					theme={"unset"}
+					square={"unset"}
+				/>
+			</TitleContainer>
+		);
 	},
 	component() {
+		const { locale } = Route.useParams();
+
 		const feedCountLimit = 10;
 
 		const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery({
@@ -30,7 +61,19 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 		const hasFeeds = feedCollectionQuery.data.data.length > 0;
 
 		return (
-			<Container layout={"vertical-content"}>
+			<TitleContainer
+				textTitle={"Feed select (title)"}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/buyer"}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+			>
 				<div className={"relative"}>
 					<SnapperNav
 						snapperNav={snapperNav}
@@ -70,6 +113,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 							return (
 								<FeedSelect
 									key={`${feedId}-${slot + 1}`}
+									locale={locale}
 									disabled={disabled}
 									feed={feedCollectionQuery.data.data[slot]}
 								/>
@@ -77,7 +121,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						})}
 					</Container>
 				</div>
-			</Container>
+			</TitleContainer>
 		);
 	},
 });

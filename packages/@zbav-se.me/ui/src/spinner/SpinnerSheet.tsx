@@ -4,20 +4,26 @@ import { PrimaryOverlay } from "../overlay/PrimaryOverlay";
 import { Sheet } from "../sheet/Sheet";
 
 export namespace SpinnerSheet {
-	export interface Props extends Sheet.Props {}
+	export interface Props extends Container.Props {
+		disableOverlay?: boolean;
+	}
 }
 
-export const SpinnerSheet: FC<SpinnerSheet.Props> = (props) => {
+export const SpinnerSheet: FC<SpinnerSheet.Props> = ({
+	disableOverlay = false,
+	...props
+}) => {
 	return (
 		<Container
 			square={"md"}
 			tone={"secondary"}
 			theme={"light"}
 			position={"relative"}
+			{...props}
 		>
-			<PrimaryOverlay />
+			{disableOverlay ? null : <PrimaryOverlay />}
 
-			<Sheet {...props}>
+			<Sheet>
 				<Status
 					icon={SpinnerIcon}
 					iconProps={{

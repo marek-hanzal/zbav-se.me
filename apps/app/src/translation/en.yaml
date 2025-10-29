@@ -1,3 +1,6 @@
+0018c507418ace9f07483edc17697a1cfe482a6fda6925d1f6dff154:
+  ref: Create new feed (description)
+  value: Create new feed (description)
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
@@ -82,12 +85,21 @@
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
+452535139282bd78198290c6677ba87b53636b4dd28f901b5006b125:
+  ref: Feed - intro (description)
+  value: Feed - intro (description)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
   ref: Price - free (title)
   value: Price - free (title)
+4b3c381c32b8e3f4715460d33e6905c18189002a4e52f0c41e7d8422:
+  ref: Create new feed - disabled (description)
+  value: Create new feed - disabled (description)
+4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
+  ref: Create new feed (button)
+  value: Create new feed (button)
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
   ref: Next - price (button)
   value: Next - price (button)
@@ -115,6 +127,9 @@
 5d6bb45eb861bb2a56b96924c18424e8a1c7fd31df44492a6d6f9da3:
   ref: primary
   value: primary
+5e5b79c24289a73aa41c52c4dabc9c2f64e36521139e4510f2f6ad11:
+  ref: Feed sorting (cta)
+  value: Feed sorting (cta)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
@@ -142,6 +157,9 @@
 77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
   ref: There is nothing to see right now.
   value: There is nothing to see right now.
+79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
+  ref: Create new feed (title)
+  value: Create new feed (title)
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
   ref: Next - submit (button)
   value: Next - submit (button)
@@ -169,6 +187,9 @@
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
   ref: Listing - upload photo (placeholder)
   value: Listing - upload photo (placeholder)
+8ad39860649daeaa240849b5f8b11601c75b062f71eb258cc4557169:
+  ref: Feed sorting (hint)
+  value: Feed sorting (hint)
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
   ref: Previous (tour)
   value: Previous (tour)
@@ -199,6 +220,9 @@
 9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
   ref: No categories found (message)
   value: No categories found (message)
+9d96a108b9c86846287f96e8664fd01cd443ac91d6eb92649db0a909:
+  ref: Feed select (title)
+  value: Feed select (title)
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
@@ -279,6 +303,9 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
+c60b97617a39beae57c007e98fd2be8c0d506721df3f7dc91cb1b554:
+  ref: Create new feed - disabled (title)
+  value: Create new feed - disabled (title)
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
   ref: Input is not Luxon DateTime!
   value: Input is not Luxon DateTime!
@@ -303,6 +330,9 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
+  ref: Feed sorting (title)
+  value: Feed sorting (title)
 dbcca93a186df18b22eaca3db981500fa71cb0a4326c9ee54d1914a6:
   ref: Add photos (hint)
   value: Add photos (hint)
@@ -351,6 +381,9 @@ faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
   ref: Back to home (link)
   value: Back to home (link)
+fcde4ab65c1cc4ef414559dd57b7c08bd6db88ba10eea8641c8a57cc:
+  ref: Feed - intro (title)
+  value: Feed - intro (title)
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
   ref: Bag (label)
   value: Bag (label)

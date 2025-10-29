@@ -55,7 +55,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { listing } = c.req.valid("json");
+			const { name, listing } = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
@@ -66,6 +66,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					.values({
 						id,
 						userId: user.id,
+						name,
 						listing,
 						createdAt: now,
 						updatedAt: now,
@@ -144,6 +145,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 		async (c) => {
 			const {
 				id,
+				name,
 				listing: { id: _, ...listing },
 			} = c.req.valid("json");
 			const user = c.get("user");
@@ -153,7 +155,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				const result = await database.kysely
 					.updateTable("feed")
 					.set({
-						...listing,
+						name,
+						listing,
 						updatedAt: now,
 					})
 					.where("id", "=", id)

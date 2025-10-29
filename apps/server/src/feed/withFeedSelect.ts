@@ -13,6 +13,7 @@ export namespace withFeedSelect {
 export const withFeedSelect = ({ sort }: withFeedSelect.Props = {}) => {
 	let query = database.kysely.selectFrom("feed as f").select([
 		"f.id",
+		"f.name",
 		"f.listing",
 	]);
 

@@ -11,6 +11,7 @@ import { UserExMigration } from "./0009-user-ex";
 import { ListingVendorModelMigration } from "./0010-listing-vendor-model";
 import { FeedMigration } from "./0011-feed";
 import { UserExSideMigration } from "./0012-user-ex-side";
+import { FeedNameMigration } from "./0013-feed-name";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -26,4 +27,5 @@ export const migrations = {
 	"0010-listing-vendor-model": ListingVendorModelMigration,
 	"0011-feed": FeedMigration,
 	"0012-user-ex-side": UserExSideMigration,
+	"0013-feed-name": FeedNameMigration,
 } as const;

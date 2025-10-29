@@ -27,16 +27,11 @@ tx({
 			},
 			//
 			{
-				name: "LeftButton",
-				attr: "label",
-			},
-			//
-			{
-				name: "ListingContainer",
+				name: "TitleContainer",
 				attr: "textTitle",
 			},
 			{
-				name: "ListingContainer",
+				name: "TitleContainer",
 				attr: "textSubtitle",
 			},
 			//

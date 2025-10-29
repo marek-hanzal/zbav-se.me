@@ -9,6 +9,9 @@ export const FeedSchema = z
 		userId: z.string().openapi({
 			description: "ID of the user who created the feed",
 		}),
+		name: z.string().openapi({
+			description: "Name of the feed",
+		}),
 		listing: ListingFilterSchema.openapi("ListingFilter", {
 			description: "Filter used to fetch the listings",
 		}),

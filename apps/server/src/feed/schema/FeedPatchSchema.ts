@@ -4,6 +4,9 @@ import { ListingFilterSchema } from "../../listing/schema/ListingFilterSchema";
 export const FeedPatchSchema = z
 	.object({
 		id: z.string().min(1),
+		name: z.string().min(1).optional().openapi({
+			description: "Name of the feed",
+		}),
 		listing: ListingFilterSchema,
 	})
 	.openapi("FeedPatch");
