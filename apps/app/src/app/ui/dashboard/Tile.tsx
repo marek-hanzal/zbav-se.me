@@ -6,15 +6,19 @@ import type { FC } from "react";
 export namespace Tile {
 	export interface Props extends Container.Props {
 		icon: Icon.Type;
+		iconProps?: Icon.PropsEx;
 		textTitle?: string;
 		textMessage?: string;
+		statusProps?: Omit<Status.Props, "textTitle" | "textMessage">;
 	}
 }
 
 export const Tile: FC<Tile.Props> = ({
 	icon,
+	iconProps,
 	textTitle,
 	textMessage,
+	statusProps,
 	tone = "primary",
 	theme = "light",
 	...props
@@ -38,6 +42,7 @@ export const Tile: FC<Tile.Props> = ({
 			>
 				<Status
 					icon={icon}
+					iconProps={iconProps}
 					textTitle={textTitle}
 					textMessage={textMessage}
 					titleProps={{
@@ -46,6 +51,7 @@ export const Tile: FC<Tile.Props> = ({
 					messageProps={{
 						size: "sm",
 					}}
+					{...statusProps}
 				/>
 			</VariantProvider>
 		</Container>
