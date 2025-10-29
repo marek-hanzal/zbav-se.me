@@ -1,5 +1,3 @@
-import { sql } from "kysely";
-import { match } from "ts-pattern";
 import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import type { withListingSelect } from "./withListingSelect";
 
@@ -7,7 +5,6 @@ export namespace withListingQueryBuilder {
 	export interface Props {
 		select: withListingSelect.Select;
 		where?: ListingQuerySchema.Type["where"];
-		sort?: ListingQuerySchema.Type["sort"];
 	}
 
 	export type Callback = (props: Props) => withListingSelect.Select;
@@ -76,73 +73,6 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 
 	if (where?.categoryIdIn && where.categoryIdIn.length > 0) {
 		query = query.where("l.categoryId", "in", where.categoryIdIn);
-	}
-
-	return query;
-};
-
-/**
- * Extended query builder that also handles sorting
- */
-export const withListingQueryBuilderWithSort = (
-	props: withListingQueryBuilder.Props,
-) => {
-	let query = withListingQueryBuilder(props);
-
-	for (const sortItem of props.sort ?? []) {
-		query = match(sortItem)
-			.with(
-				{
-					type: "listing",
-				},
-				(sort) => {
-					if (!sort.sort) {
-						return query;
-					}
-					const { sort: key, value } = sort;
-
-					return match(value)
-						.with("price", () => query.orderBy("l.price", key))
-						.with("condition", () =>
-							query.orderBy("l.condition", key),
-						)
-						.with("age", () => query.orderBy("l.age", key))
-						.with("createdAt", () =>
-							query.orderBy("l.createdAt", key),
-						)
-						.with("updatedAt", () =>
-							query.orderBy("l.updatedAt", key),
-						)
-						.with("expiresAt", () =>
-							query.orderBy("l.expiresAt", key),
-						)
-						.exhaustive();
-				},
-			)
-			.with(
-				{
-					type: "geo",
-				},
-				(sort) => {
-					const { sort: key, lon, lat } = sort;
-					if (!key) {
-						return query;
-					}
-
-					return query.orderBy(
-						(eb) =>
-							sql`
-                                ${eb.ref("loc.geo")}
-                                    <->
-                                ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)
-                            `,
-						key,
-					);
-				},
-			)
-			.with(null, () => query)
-			.with(undefined, () => query)
-			.exhaustive();
 	}
 
 	return query;

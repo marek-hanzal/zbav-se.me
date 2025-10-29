@@ -27,7 +27,6 @@ export const withDatabase = <TDatabase>({
 				kysely = new Kysely<TDatabase>({
 					dialect,
 					log: [
-						"query",
 						"error",
 					],
 				});
