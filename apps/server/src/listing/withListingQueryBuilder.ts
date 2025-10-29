@@ -130,7 +130,12 @@ export const withListingQueryBuilderWithSort = (
 					}
 
 					return query.orderBy(
-						sql`ST_Distance(l.geo, ST_Point(${lon}, ${lat}))`,
+						(eb) =>
+							sql`
+                                ${eb.ref("loc.geo")}
+                                    <->
+                                ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)
+                            `,
 						key,
 					);
 				},
