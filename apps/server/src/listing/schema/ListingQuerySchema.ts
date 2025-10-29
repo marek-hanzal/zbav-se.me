@@ -94,21 +94,24 @@ export const ListingQuerySchema = z
 		}).nullish(),
 		params: ParamsSchema.nullish(),
 		sort: z
-			.object({
-				value: z.enum([
-					"price",
-					"condition",
-					"age",
-					"createdAt",
-					"updatedAt",
-					"expiresAt",
-				]),
-				sort: OrderSchema,
-			})
-			.openapi("ListingSort", {
-				description: "Sort object for listing collection",
-			})
-			.array()
+			.array(
+				z
+					// use union + "type" ? - only union? - separate schemas and validate schema in query builder?
+					.object({
+						value: z.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+						]),
+						sort: OrderSchema,
+					})
+					.openapi("ListingSort", {
+						description: "Sort object for listing collection",
+					}),
+			)
 			.nullish(),
 	})
 	.openapi("ListingQuery", {
