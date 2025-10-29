@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
@@ -8,7 +8,7 @@ import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/dashboard")({
-	beforeLoad({ context: { user }, params: { locale } }) {
+	async beforeLoad({ params: { locale }, context: { user } }) {
 		if (user.side) {
 			match(user.side)
 				.with("seller", () => {
@@ -34,6 +34,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 	},
 	component() {
 		const { locale } = Route.useParams();
+		const router = useRouter();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -45,7 +46,11 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				},
 			},
 		};
-		const userExPatchMutation = withUserExPatchMutation.useMutation();
+		const userExPatchMutation = withUserExPatchMutation.useMutation({
+			async onPostMutation() {
+				return router.invalidate();
+			},
+		});
 
 		return (
 			<Container position={"relative"}>

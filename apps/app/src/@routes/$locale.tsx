@@ -1,12 +1,9 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { linkTo, translator } from "@use-pico/common";
-import { getSessionFn } from "~/app/auth/getSessionFn";
 
 export const Route = createFileRoute("/$locale")({
-	async beforeLoad({ params: { locale } }) {
-		const { data } = await getSessionFn();
-
-		if (!data) {
+	async beforeLoad({ params: { locale }, context: { user } }) {
+		if (!user) {
 			throw redirect({
 				href: linkTo({
 					base: import.meta.env.VITE_WEB_ORIGIN,
@@ -20,7 +17,7 @@ export const Route = createFileRoute("/$locale")({
 		}
 
 		return {
-			user: data.user,
+			user,
 		};
 	},
 	async loader({ params: { locale }, context: { user } }) {

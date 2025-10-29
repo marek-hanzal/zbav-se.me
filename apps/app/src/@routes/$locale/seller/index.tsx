@@ -1,4 +1,8 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+	createFileRoute,
+	useNavigate,
+	useRouter,
+} from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	Container,
@@ -17,6 +21,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 	component() {
 		const { locale } = Route.useParams();
 		const navigate = useNavigate();
+		const router = useRouter();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -30,6 +35,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 		};
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
+				await router.invalidate();
 				return navigate({
 					to: "/$locale/dashboard",
 					params: {

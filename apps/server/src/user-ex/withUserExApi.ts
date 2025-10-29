@@ -48,31 +48,35 @@ export const withUserExApi = ({ session }: Routes) => {
 			const { locationId, side } = json;
 
 			try {
-				await database.kysely
-					.insertInto("user_ex")
-					.values({
-						id: genId(),
-						userId: c.get("user").id,
-						locationId,
-						side,
-					})
-					.onConflict((oc) =>
-						oc
-							.columns([
-								"userId",
-							])
-							.doUpdateSet((eb) => ({
-								locationId: eb.fn.coalesce(
-									eb.ref("excluded.locationId"),
-									eb.ref("user_ex.locationId"),
-								),
-								side: eb.fn.coalesce(
-									eb.ref("excluded.side"),
-									eb.ref("user_ex.side"),
-								),
-							})),
-					)
-					.execute();
+				await database.kysely.transaction().execute(async (trx) => {
+					try {
+						const userEx = await trx
+							.selectFrom("user_ex")
+							.where("userId", "=", c.get("user").id)
+							.selectAll()
+							.executeTakeFirstOrThrow();
+
+						await trx
+							.updateTable("user_ex")
+							.set({
+								...userEx,
+								locationId,
+								side,
+							})
+							.where("id", "=", userEx.id)
+							.execute();
+					} catch {
+						await trx
+							.insertInto("user_ex")
+							.values({
+								id: genId(),
+								userId: c.get("user").id,
+								locationId,
+								side,
+							})
+							.execute();
+					}
+				});
 
 				return c.body(null, 200);
 			} catch (error) {

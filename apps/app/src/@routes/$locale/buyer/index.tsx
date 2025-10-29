@@ -1,9 +1,14 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import {
+	createFileRoute,
+	useNavigate,
+	useRouter,
+} from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	Container,
 	LinkTo,
 	type LinkToCls,
+	SpinnerIcon,
 	UserIcon,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
@@ -16,6 +21,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 	component() {
 		const { locale } = Route.useParams();
 		const navigate = useNavigate();
+		const router = useRouter();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -29,6 +35,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 		};
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
+				await router.invalidate();
 				return navigate({
 					to: "/$locale/dashboard",
 					params: {
@@ -100,7 +107,11 @@ export const Route = createFileRoute("/$locale/buyer/")({
 						</LinkTo>
 
 						<Tile
-							icon={ArrowLeftIcon}
+							icon={
+								userExPatchMutation.isPending
+									? SpinnerIcon
+									: ArrowLeftIcon
+							}
 							iconProps={{
 								size: "md",
 							}}

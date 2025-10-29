@@ -88,7 +88,7 @@ export const Route = createFileRoute("/$locale/user")({
 				<Sheet>
 					<LocationSelection
 						locale={locale}
-						value={user.locationId}
+						value={user.locationId ?? undefined}
 						onChange={(value) => {
 							useExPatchMutation.mutate({
 								locationId: value,

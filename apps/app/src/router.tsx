@@ -4,8 +4,11 @@ import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query
 import { Container } from "@use-pico/client";
 import { Logo, PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
 import { routeTree } from "~/_route";
+import { getSessionFn } from "~/app/auth/getSessionFn";
 
-export function getRouter() {
+export async function getRouter() {
+	const { data } = await getSessionFn();
+
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
@@ -18,6 +21,7 @@ export function getRouter() {
 	const router = createRouter({
 		routeTree,
 		context: {
+			user: data?.user,
 			queryClient,
 		},
 		defaultNotFoundComponent() {
