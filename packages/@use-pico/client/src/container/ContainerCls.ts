@@ -33,6 +33,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		"unset",
 		"horizontal",
 		"vertical",
+		"hidden",
 	])
 	.variant("snap", [
 		"unset",
@@ -256,6 +257,13 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-clip",
 				"overscroll-contain",
 				"[scrollbar-gutter:stable_both-edges]",
+			],
+		},
+	})
+	.match("overflow", "hidden", {
+		root: {
+			class: [
+				"overflow-hidden",
 			],
 		},
 	})
