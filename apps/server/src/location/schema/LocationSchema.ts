@@ -51,6 +51,9 @@ export const LocationSchema = z
 			description: "Longitude of the location",
 			type: "number",
 		}),
+		geo: z.string().openapi({
+			description: "Encoded PostGIS geometry of the location",
+		}),
 	})
 	.openapi("Location", {
 		description: "A location cache table",

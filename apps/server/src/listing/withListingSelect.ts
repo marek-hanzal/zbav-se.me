@@ -1,65 +1,115 @@
 import { sql } from "kysely";
 import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
+import { match } from "ts-pattern";
 import { database } from "../database/kysely";
+import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
 
 export namespace withListingSelect {
 	export interface Props {
-		requireGallery?: boolean;
+		sort?: ListingQuerySchema.Type["sort"];
 	}
 
 	export type Select = ReturnType<typeof withListingSelect>;
 }
 
-export const withListingSelect = ({
-	requireGallery = true,
-}: withListingSelect.Props = {}) => {
-	let query = database.kysely.selectFrom("listing as l").selectAll("l");
-
-	if (requireGallery) {
-		query = query.innerJoin("gallery as g", "g.listingId", "l.id");
-	}
-
-	return query
+export const withListingSelect = ({ sort }: withListingSelect.Props) => {
+	let query = database.kysely
+		.selectFrom("listing as l")
+		.selectAll("l")
+		.innerJoin("location as loc", "loc.id", "l.locationId")
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select((eb) => [
 			jsonObjectFrom(
 				eb
-					.selectFrom("location")
-					.selectAll("location")
-					.whereRef("location.id", "=", "l.locationId")
+					.selectFrom("location as loc")
+					.selectAll("loc")
+					.whereRef("loc.id", "=", "l.locationId")
 					.limit(1),
-			).as("location"),
+			)
+				.$notNull()
+				.as("location"),
+
 			jsonObjectFrom(
 				eb
-					.selectFrom("category")
-					.selectAll("category")
-					.whereRef("category.id", "=", "l.categoryId")
+					.selectFrom("category as cat")
+					.selectAll("cat")
+					.whereRef("cat.id", "=", "l.categoryId")
 					.limit(1),
-			).as("category"),
-			eb.fn
-				.coalesce(
-					jsonArrayFrom(
-						eb
-							.selectFrom("gallery")
-							.selectAll("gallery")
-							.select((eb) => [
-								jsonObjectFrom(
-									eb
-										.selectFrom("upload")
-										.selectAll("upload")
-										.whereRef(
-											"upload.id",
-											"=",
-											"gallery.uploadId",
-										)
-										.limit(1),
-								).as("upload"),
-							])
-							.whereRef("gallery.listingId", "=", "l.id")
-							.orderBy("gallery.sort"),
-					),
-					sql`'[]'::json`,
-				)
-				.as("gallery"),
-		])
-		.groupBy("l.id");
+			)
+				.$notNull()
+				.as("category"),
+
+			jsonArrayFrom(
+				eb
+					.selectFrom("gallery as g")
+					.selectAll("g")
+					.select((eb) =>
+						jsonObjectFrom(
+							eb
+								.selectFrom("upload as u")
+								.selectAll("u")
+								.whereRef("u.id", "=", "g.uploadId")
+								.limit(1),
+						)
+							.$notNull()
+							.as("upload"),
+					)
+					.whereRef("g.listingId", "=", "l.id")
+					.orderBy("g.sort"),
+			).as("gallery"),
+		]);
+
+	for (const sortItem of sort ?? []) {
+		query = match(sortItem)
+			.with(
+				{
+					type: "listing",
+				},
+				(sort) => {
+					if (!sort.sort) {
+						return query;
+					}
+					const { sort: key, value } = sort;
+
+					return match(value)
+						.with("price", () => query.orderBy("l.price", key))
+						.with("condition", () =>
+							query.orderBy("l.condition", key),
+						)
+						.with("age", () => query.orderBy("l.age", key))
+						.with("createdAt", () =>
+							query.orderBy("l.createdAt", key),
+						)
+						.with("updatedAt", () =>
+							query.orderBy("l.updatedAt", key),
+						)
+						.with("expiresAt", () =>
+							query.orderBy("l.expiresAt", key),
+						)
+						.exhaustive();
+				},
+			)
+			.with(
+				{
+					type: "geo",
+				},
+				(sort) => {
+					const { sort: key, lon, lat } = sort;
+					if (!key) {
+						return query;
+					}
+
+					return query.orderBy(
+						(eb) =>
+							sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)`,
+						key,
+					);
+				},
+			)
+			.with(null, () => query)
+			.with(undefined, () => query)
+			.exhaustive();
+	}
+
+	return query;
 };

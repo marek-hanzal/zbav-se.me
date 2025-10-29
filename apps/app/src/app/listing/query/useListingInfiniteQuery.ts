@@ -1,13 +1,16 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
+import type { LonLanSchema } from "@zbav-se.me/common";
 import { apiListingCollection } from "@zbav-se.me/sdk";
 
 export namespace useListingInfiniteQuery {
 	export interface Props {
+		lonLan?: LonLanSchema.Type | null;
 		size: number;
 	}
 }
 
 export const useListingInfiniteQuery = ({
+	lonLan,
 	size,
 }: useListingInfiniteQuery.Props) => {
 	return useInfiniteQuery({
@@ -27,7 +30,15 @@ export const useListingInfiniteQuery = ({
 						size,
 					},
 					sort: [
+						lonLan
+							? {
+									type: "geo",
+									sort: "asc",
+									...lonLan,
+								}
+							: undefined,
 						{
+							type: "listing",
 							value: "createdAt",
 							sort: "desc",
 						},

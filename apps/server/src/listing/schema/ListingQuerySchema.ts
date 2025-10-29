@@ -63,6 +63,14 @@ const FilterSchema = z
 			description:
 				"This filter matches listings that expire after the provided date",
 		}),
+		rangeMin: z.number().nullish().openapi({
+			description:
+				"This filter matches listings with range greater than or equal to the provided value (meters)",
+		}),
+		rangeMax: z.number().nullish().openapi({
+			description:
+				"This filter matches listings with range less than or equal to the provided value (meters)",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",
@@ -76,21 +84,50 @@ export const ListingQuerySchema = z
 			description: "App-based filters",
 		}).nullish(),
 		sort: z
-			.object({
-				value: z.enum([
-					"price",
-					"condition",
-					"age",
-					"createdAt",
-					"updatedAt",
-					"expiresAt",
-				]),
-				sort: OrderSchema,
-			})
-			.openapi("ListingSort", {
-				description: "Sort object for listing collection",
-			})
-			.array()
+			.array(
+				z
+					.union([
+						z
+							.object({
+								type: z.literal("listing").openapi({
+									description: "Common listing sort keys",
+								}),
+								value: z.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: OrderSchema,
+							})
+							.nullish()
+							.openapi("ListingCommonSort", {
+								description: "Common listing sort keys",
+							}),
+						z
+							.object({
+								type: z.literal("geo").openapi({
+									description: "Explicit geo sorting",
+								}),
+								lon: z.number().openapi({
+									description: "Longitude of the location",
+								}),
+								lat: z.number().openapi({
+									description: "Latitude of the location",
+								}),
+								sort: OrderSchema,
+							})
+							.nullish()
+							.openapi("ListingGeoSort", {
+								description: "Explicit geo sorting",
+							}),
+					])
+					.openapi("ListingSort", {
+						description: "Sort object for listing collection",
+					}),
+			)
 			.nullish(),
 	})
 	.openapi("ListingQuery", {

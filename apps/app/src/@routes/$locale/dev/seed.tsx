@@ -54,40 +54,63 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					(res) => res.data,
 				);
 				const locations = [
-					"Praha",
+					"Benátky nad Jizerou",
+					"Benešov",
+					"Břeclav",
 					"Brno",
-					"Ostrava",
-					"Plzeň",
-					"Liberec",
-					"Olomouc",
-					"Ústí nad Labem",
-					"Hradec Králové",
+					"Česká Lípa",
 					"České Budějovice",
-					"Zlín",
-					"Pardubice",
+					"Cheb",
+					"Chomutov",
+					"Děčín",
+					"Děčín",
+					"Domažlice",
+					"Frýdek-Místek",
+					"Havířov",
+					"Havlíčkův Brod",
+					"Hodonín",
+					"Hradec Králové",
+					"Humpolec",
+					"Jablonec nad Nisou",
 					"Jihlava",
 					"Karlovy Vary",
-					"Teplice",
-					"Děčín",
-					"Chomutov",
-					"Frýdek-Místek",
-					"Mladá Boleslav",
-					"Tábor",
-					"Kroměříž",
-					"Uherské Hradiště",
-					"Znojmo",
-					"Havlíčkův Brod",
-					"Cheb",
-					"Trutnov",
 					"Kolín",
-					"Opava",
-					"Písek",
-					"Jablonec nad Nisou",
+					"Kroměříž",
+					"Liberec",
 					"Litoměřice",
+					"Litvínov",
+					"Mělník",
+					"Mladá Boleslav",
+					"Nový Jičín",
+					"Olomouc",
+					"Opava",
+					"Ostrava",
+					"Pardubice",
+					"Písek",
+					"Plzeň",
+					"Poděbrady",
+					"Praha",
+					"Prostějov",
+					"Rakovník",
+					"Střelice",
+					"Tábor",
+					"Tavíkovice, Dobronice",
+					"Tavíkovice",
+					"Teplice",
+					"Třebíč",
+					"Trutnov",
+					"Uherské Hradiště",
+					"Ústí nad Labem",
+					"Vysoké Mýto",
+					"Zlín",
+					"Znojmo",
 				];
 
+				const concurrency = 8;
+				const limit = 1024;
+
 				const queue = new PQueue({
-					concurrency: 8,
+					concurrency,
 				});
 
 				const createListing = async () => {
@@ -121,8 +144,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						],
 					}).then((res) => res.data);
 				};
-
-				const limit = 16;
 
 				for (let i = 0; i < limit; i++) {
 					queue.add(createListing);

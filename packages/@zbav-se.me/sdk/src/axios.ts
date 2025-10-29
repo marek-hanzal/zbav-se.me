@@ -260,6 +260,8 @@ export interface Location {
 	lat: number;
 	/** Longitude of the location */
 	lon: number;
+	/** Encoded PostGIS geometry of the location */
+	geo: string;
 }
 
 /**
@@ -463,6 +465,16 @@ export type ListingFilter = {
 	 * @nullable
 	 */
 	expiresAtAfter?: string | null;
+	/**
+	 * This filter matches listings with range greater than or equal to the provided value (meters)
+	 * @nullable
+	 */
+	rangeMin?: number | null;
+	/**
+	 * This filter matches listings with range less than or equal to the provided value (meters)
+	 * @nullable
+	 */
+	rangeMax?: number | null;
 } | null;
 
 /**
@@ -574,13 +586,34 @@ export type ListingWhere = {
 	 * @nullable
 	 */
 	expiresAtAfter?: string | null;
+	/**
+	 * This filter matches listings with range greater than or equal to the provided value (meters)
+	 * @nullable
+	 */
+	rangeMin?: number | null;
+	/**
+	 * This filter matches listings with range less than or equal to the provided value (meters)
+	 * @nullable
+	 */
+	rangeMax?: number | null;
 } | null;
 
-export type ListingSortValue =
-	(typeof ListingSortValue)[keyof typeof ListingSortValue];
+/**
+ * Common listing sort keys
+ */
+export type ListingCommonSortType =
+	(typeof ListingCommonSortType)[keyof typeof ListingCommonSortType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingSortValue = {
+export const ListingCommonSortType = {
+	listing: "listing",
+} as const;
+
+export type ListingCommonSortValue =
+	(typeof ListingCommonSortValue)[keyof typeof ListingCommonSortValue];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ListingCommonSortValue = {
 	price: "price",
 	condition: "condition",
 	age: "age",
@@ -592,24 +625,76 @@ export const ListingSortValue = {
 /**
  * @nullable
  */
-export type ListingSortSort =
-	| (typeof ListingSortSort)[keyof typeof ListingSortSort]
+export type ListingCommonSortSort =
+	| (typeof ListingCommonSortSort)[keyof typeof ListingCommonSortSort]
 	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingSortSort = {
+export const ListingCommonSortSort = {
 	asc: "asc",
 	desc: "desc",
 } as const;
 
 /**
+ * Common listing sort keys
+ * @nullable
+ */
+export type ListingCommonSort = {
+	/** Common listing sort keys */
+	type: ListingCommonSortType;
+	value: ListingCommonSortValue;
+	/** @nullable */
+	sort?: ListingCommonSortSort;
+} | null;
+
+/**
+ * Explicit geo sorting
+ */
+export type ListingGeoSortType =
+	(typeof ListingGeoSortType)[keyof typeof ListingGeoSortType];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ListingGeoSortType = {
+	geo: "geo",
+} as const;
+
+/**
+ * @nullable
+ */
+export type ListingGeoSortSort =
+	| (typeof ListingGeoSortSort)[keyof typeof ListingGeoSortSort]
+	| null;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ListingGeoSortSort = {
+	asc: "asc",
+	desc: "desc",
+} as const;
+
+/**
+ * Explicit geo sorting
+ * @nullable
+ */
+export type ListingGeoSort = {
+	/** Explicit geo sorting */
+	type: ListingGeoSortType;
+	/** Longitude of the location */
+	lon: number;
+	/** Latitude of the location */
+	lat: number;
+	/** @nullable */
+	sort?: ListingGeoSortSort;
+} | null;
+
+/**
+ * @nullable
+ */
+export type ListingSortAnyOf = unknown | null;
+
+/**
  * Sort object for listing collection
  */
-export interface ListingSort {
-	value: ListingSortValue;
-	/** @nullable */
-	sort?: ListingSortSort;
-}
+export type ListingSort = ListingCommonSort | ListingGeoSort | ListingSortAnyOf;
 
 /**
  * Query object for listing collection

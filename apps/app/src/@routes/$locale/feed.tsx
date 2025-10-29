@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	Button,
@@ -23,9 +23,18 @@ export const Route = createFileRoute("/$locale/feed")({
 		const debounceTimeout = 150;
 
 		const { locale } = Route.useParams();
+		const { user } = useLoaderData({
+			from: "/$locale",
+		});
 		const { slots } = useCls(ThemeCls);
 		const listingQuery = useListingInfiniteQuery({
 			size: 5,
+			lonLan: user.location
+				? {
+						lon: user.location.lon,
+						lat: user.location.lat,
+					}
+				: undefined,
 		});
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();

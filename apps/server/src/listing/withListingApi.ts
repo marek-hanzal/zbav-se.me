@@ -12,10 +12,7 @@ import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingDtoSchema } from "./schema/ListingDtoSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
-import {
-	withListingQueryBuilder,
-	withListingQueryBuilderWithSort,
-} from "./withListingQueryBuilder";
+import { withListingQueryBuilder } from "./withListingQueryBuilder";
 import { withListingSelect } from "./withListingSelect";
 
 export const withListingApi: Routes.Fn = ({ session }) => {
@@ -112,15 +109,13 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 
 			return c.json(
 				await withFetch({
-					select: withListingSelect({
-						requireGallery: false,
-					}),
+					select: withListingSelect({}),
 					output: ListingDtoSchema,
 					where: {
 						id,
 					},
 					query({ select, where }) {
-						return withListingQueryBuilderWithSort({
+						return withListingQueryBuilder({
 							select,
 							where,
 						});
@@ -181,15 +176,16 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withFetch({
-						select: withListingSelect(),
+						select: withListingSelect({
+							sort,
+						}),
 						output: ListingDtoSchema,
 						filter,
 						where,
 						query({ select, where }) {
-							return withListingQueryBuilderWithSort({
+							return withListingQueryBuilder({
 								select,
 								where,
-								sort,
 							});
 						},
 					}),
@@ -258,7 +254,9 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withCollection({
-						select: withListingSelect(),
+						select: withListingSelect({
+							sort,
+						}),
 						output: ListingDtoSchema,
 						cursor: cursor ?? {
 							page: 0,
@@ -267,10 +265,9 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 						filter,
 						where,
 						query({ select, where }) {
-							return withListingQueryBuilderWithSort({
+							return withListingQueryBuilder({
 								select,
 								where,
-								sort,
 							});
 						},
 					}),
@@ -325,7 +322,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withCount({
-						select: withListingSelect(),
+						select: withListingSelect({}),
 						filter,
 						where,
 						query({ select, where }) {

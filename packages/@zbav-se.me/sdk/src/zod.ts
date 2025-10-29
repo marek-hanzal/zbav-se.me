@@ -595,6 +595,18 @@ export const apiListingFetchBody = zod
 					.describe(
 						"This filter matches listings that expire after the provided date",
 					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -716,28 +728,73 @@ export const apiListingFetchBody = zod
 					.describe(
 						"This filter matches listings that expire after the provided date",
 					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
 		sort: zod
 			.array(
 				zod
-					.object({
-						value: zod.enum([
-							"price",
-							"condition",
-							"age",
-							"createdAt",
-							"updatedAt",
-							"expiresAt",
-						]),
-						sort: zod
-							.enum([
-								"asc",
-								"desc",
-							])
-							.nullish(),
-					})
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.nullable()
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.nullable()
+							.describe("Explicit geo sorting"),
+						zod.unknown().nullable(),
+					])
 					.describe("Sort object for listing collection"),
 			)
 			.nullish(),
@@ -814,6 +871,9 @@ export const apiListingFetchResponse = zod.object({
 				.describe("Used to uniquely identify this location entry"),
 			lat: zod.number().describe("Latitude of the location"),
 			lon: zod.number().describe("Longitude of the location"),
+			geo: zod
+				.string()
+				.describe("Encoded PostGIS geometry of the location"),
 		})
 		.describe("A location cache table"),
 	category: zod
@@ -1003,6 +1063,18 @@ export const apiListingCollectionBody = zod
 					.describe(
 						"This filter matches listings that expire after the provided date",
 					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -1124,28 +1196,73 @@ export const apiListingCollectionBody = zod
 					.describe(
 						"This filter matches listings that expire after the provided date",
 					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
 		sort: zod
 			.array(
 				zod
-					.object({
-						value: zod.enum([
-							"price",
-							"condition",
-							"age",
-							"createdAt",
-							"updatedAt",
-							"expiresAt",
-						]),
-						sort: zod
-							.enum([
-								"asc",
-								"desc",
-							])
-							.nullish(),
-					})
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.nullable()
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.nullable()
+							.describe("Explicit geo sorting"),
+						zod.unknown().nullable(),
+					])
 					.describe("Sort object for listing collection"),
 			)
 			.nullish(),
@@ -1239,6 +1356,11 @@ export const apiListingCollectionResponse = zod
 							),
 						lat: zod.number().describe("Latitude of the location"),
 						lon: zod.number().describe("Longitude of the location"),
+						geo: zod
+							.string()
+							.describe(
+								"Encoded PostGIS geometry of the location",
+							),
 					})
 					.describe("A location cache table"),
 				category: zod
@@ -1452,6 +1574,18 @@ export const apiListingCountBody = zod
 					.describe(
 						"This filter matches listings that expire after the provided date",
 					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -1573,28 +1707,73 @@ export const apiListingCountBody = zod
 					.describe(
 						"This filter matches listings that expire after the provided date",
 					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
 		sort: zod
 			.array(
 				zod
-					.object({
-						value: zod.enum([
-							"price",
-							"condition",
-							"age",
-							"createdAt",
-							"updatedAt",
-							"expiresAt",
-						]),
-						sort: zod
-							.enum([
-								"asc",
-								"desc",
-							])
-							.nullish(),
-					})
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.nullable()
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.nullable()
+							.describe("Explicit geo sorting"),
+						zod.unknown().nullable(),
+					])
 					.describe("Sort object for listing collection"),
 			)
 			.nullish(),
@@ -2300,6 +2479,7 @@ export const apiLocationAutocompleteResponseItem = zod
 			.describe("Used to uniquely identify this location entry"),
 		lat: zod.number().describe("Latitude of the location"),
 		lon: zod.number().describe("Longitude of the location"),
+		geo: zod.string().describe("Encoded PostGIS geometry of the location"),
 	})
 	.describe("A location cache table");
 export const apiLocationAutocompleteResponse = zod.array(
@@ -2490,6 +2670,7 @@ export const apiLocationFetchResponse = zod
 			.describe("Used to uniquely identify this location entry"),
 		lat: zod.number().describe("Latitude of the location"),
 		lon: zod.number().describe("Longitude of the location"),
+		geo: zod.string().describe("Encoded PostGIS geometry of the location"),
 	})
 	.describe("A location cache table");
 
