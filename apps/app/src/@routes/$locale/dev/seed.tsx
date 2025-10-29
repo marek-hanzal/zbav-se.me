@@ -9,6 +9,7 @@ import {
 	apiListingCreate,
 	apiLocationAutocomplete,
 	ListingExpire,
+	type UploadDto,
 } from "@zbav-se.me/sdk";
 import { Sheet } from "@zbav-se.me/ui";
 import axios from "axios";
@@ -108,17 +109,22 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 				const concurrency = 8;
 				const limit = 1024;
+				const photos = 32;
+
+				const uploadIds = await Promise.all<UploadDto>(
+					new Array(photos).fill(0).map(async () => {
+						return uploadMutation.mutateAsync({
+							name: "photo.jpg",
+							blob: await picsum().then((res) => res),
+						});
+					}),
+				);
 
 				const queue = new PQueue({
 					concurrency,
 				});
 
 				const createListing = async () => {
-					const upload = await uploadMutation.mutateAsync({
-						name: "photo.jpg",
-						blob: await picsum().then((res) => res),
-					});
-
 					return apiListingCreate({
 						age: range(1, 6),
 						condition: range(1, 6),
@@ -140,7 +146,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							text: locations[range(0, locations.length - 1)]!,
 						}).then((res) => res.data[0]!.id),
 						uploadIds: [
-							upload.id,
+							uploadIds[range(0, uploadIds.length - 1)]!,
 						],
 					}).then((res) => res.data);
 				};
