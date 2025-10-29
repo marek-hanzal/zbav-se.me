@@ -107,8 +107,8 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					"Znojmo",
 				];
 
-				const concurrency = 8;
-				const limit = 1024;
+				const concurrency = 16;
+				const limit = 2048;
 				const photos = 32;
 
 				const uploadQueue = new PQueue({
@@ -123,6 +123,22 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 								name: "photo.jpg",
 								blob,
 							});
+						}),
+					),
+				);
+
+				const locationQueue = new PQueue({
+					concurrency: 4,
+				});
+
+				const locationIds = await Promise.all<string>(
+					locations.map((locationName) =>
+						locationQueue.add(async () => {
+							const result = await apiLocationAutocomplete({
+								lang: "cs",
+								text: locationName,
+							});
+							return result.data[0]!.id;
 						}),
 					),
 				);
@@ -148,10 +164,8 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 									)
 								] as keyof typeof ListingExpire
 							],
-						locationId: await apiLocationAutocomplete({
-							lang: "cs",
-							text: locations[range(0, locations.length - 1)]!,
-						}).then((res) => res.data[0]!.id),
+						locationId:
+							locationIds[range(0, locationIds.length - 1)]!,
 						uploadIds: [
 							uploadIds[range(0, uploadIds.length - 1)]!.id,
 						],
