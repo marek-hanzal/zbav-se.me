@@ -18,7 +18,7 @@ import { useListingInfiniteQuery } from "~/app/listing/query/useListingInfiniteQ
 import { ListingPreview } from "~/app/listing/ui/ListingPreview";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 
-export const Route = createFileRoute("/$locale/feed")({
+export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 	component() {
 		const debounceTimeout = 150;
 
