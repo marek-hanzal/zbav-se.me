@@ -12,8 +12,13 @@ import {
 	UserIcon,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import { BagIcon, FeedIcon, PrimaryOverlay, ShopIcon } from "@zbav-se.me/ui";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import {
+	BagIcon,
+	FeedIcon,
+	FlowContainer,
+	PrimaryOverlay,
+	ShopIcon,
+} from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 

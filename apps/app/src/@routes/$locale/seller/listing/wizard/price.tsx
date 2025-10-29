@@ -7,9 +7,9 @@ import {
 	LinkTo,
 } from "@use-pico/client";
 import { toHumanNumber } from "@use-pico/common";
+import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Dial } from "~/app/ui/dial/Dial";
 import { countryToCurrency } from "~/locales";
 
@@ -21,7 +21,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 		const [price, setPrice] = useState(state.price);
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				textTitle={"Price (title)"}
 				textSubtitle={
 					price
@@ -82,7 +82,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 						onChange={setPrice}
 					/>
 				</Container>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });

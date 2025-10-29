@@ -9,12 +9,11 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { ListingExpire } from "@zbav-se.me/sdk";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls, TitleContainer } from "@zbav-se.me/ui";
 import { DateTime } from "luxon";
 import { useId, useState } from "react";
 import { match } from "ts-pattern";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
 export const Route = createFileRoute(
 	"/$locale/seller/listing/wizard/expire-at",
@@ -29,7 +28,7 @@ export const Route = createFileRoute(
 		const expireId = useId();
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				textTitle={"Expire (title)"}
 				left={
 					<LinkTo
@@ -142,7 +141,7 @@ export const Route = createFileRoute(
 						})}
 					</div>
 				</div>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });

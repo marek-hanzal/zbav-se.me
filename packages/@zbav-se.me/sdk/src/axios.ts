@@ -1182,6 +1182,83 @@ export interface FeedPatch {
 	listing: ListingFilter;
 }
 
+/**
+ * User-land filters for feed items
+ */
+export interface FeedFilter {
+	/**
+	 * This filter matches the exact id
+	 * @nullable
+	 */
+	id?: string | null;
+	/**
+	 * This filter matches the ids
+	 * @nullable
+	 */
+	idIn?: string[] | null;
+	/**
+	 * Runs fulltext on the collection/query.
+	 * @nullable
+	 */
+	fulltext?: string | null;
+	/**
+	 * Exact user id
+	 * @nullable
+	 */
+	userId?: string | null;
+}
+
+export type FeedSortValue = (typeof FeedSortValue)[keyof typeof FeedSortValue];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const FeedSortValue = {
+	createdAt: "createdAt",
+	updatedAt: "updatedAt",
+} as const;
+
+/**
+ * @nullable
+ */
+export type FeedSortSort =
+	| (typeof FeedSortSort)[keyof typeof FeedSortSort]
+	| null;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const FeedSortSort = {
+	asc: "asc",
+	desc: "desc",
+} as const;
+
+/**
+ * Sort object for feed collection
+ */
+export interface FeedSort {
+	value: FeedSortValue;
+	/** @nullable */
+	sort?: FeedSortSort;
+}
+
+export type FeedQueryWhere = FeedFilter & unknown;
+
+/**
+ * Query object for feed collection
+ */
+export interface FeedQuery {
+	cursor?: Cursor;
+	filter?: FeedFilter;
+	where?: FeedQueryWhere;
+	sort?: FeedSort[];
+}
+
+/**
+ * Collection of feed items
+ */
+export interface FeedCollection {
+	data: FeedDto[];
+	/** Whether there are more items to fetch */
+	more: boolean;
+}
+
 export interface Health {
 	status: boolean;
 }
@@ -1464,6 +1541,26 @@ export const apiFeedPatch = <TData = AxiosResponse<FeedDto>>(
 };
 
 /**
+ * Return a feed item based on the provided query
+ */
+export const apiFeedFetch = <TData = AxiosResponse<FeedDto>>(
+	feedQuery: FeedQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/feed/fetch`, feedQuery, options);
+};
+
+/**
+ * Returns feed items based on provided parameters
+ */
+export const apiFeedCollection = <TData = AxiosResponse<FeedCollection>>(
+	feedQuery: FeedQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/feed/collection`, feedQuery, options);
+};
+
+/**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealth = <TData = AxiosResponse<Health>>(
@@ -1512,6 +1609,8 @@ export type ApiS3PresignResult = AxiosResponse<S3PreSignResponse>;
 export type ApiUserExPatchResult = AxiosResponse<void>;
 export type ApiFeedCreateResult = AxiosResponse<FeedDto>;
 export type ApiFeedPatchResult = AxiosResponse<FeedDto>;
+export type ApiFeedFetchResult = AxiosResponse<FeedDto>;
+export type ApiFeedCollectionResult = AxiosResponse<FeedCollection>;
 export type ApiHealthResult = AxiosResponse<Health>;
 export type ApiMigrationRunResult = AxiosResponse<Migration[]>;
 export type ApiJanitorCleanupResult = AxiosResponse<CleanupResponse>;

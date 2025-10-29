@@ -5,12 +5,12 @@ import { FeedSortSchema } from "./FeedSortSchema";
 
 export const FeedQuerySchema = z
 	.object({
-		cursor: CursorSchema.nullish(),
-		filter: FeedFilterSchema.nullish(),
+		cursor: CursorSchema.optional(),
+		filter: FeedFilterSchema.optional(),
 		where: FeedFilterSchema.openapi({
 			description: "App-based filters",
-		}).nullish(),
-		sort: FeedSortSchema.array().nullish(),
+		}).optional(),
+		sort: FeedSortSchema.array().optional(),
 	})
 	.openapi("FeedQuery", {
 		description: "Query object for feed collection",

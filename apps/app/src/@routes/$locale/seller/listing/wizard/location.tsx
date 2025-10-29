@@ -5,9 +5,9 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
+import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { LocationSelection } from "~/app/location/ui/LocationSelection";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 			);
 
 			return (
-				<ListingContainer
+				<TitleContainer
 					textTitle={"Location (title)"}
 					left={
 						<LinkTo
@@ -68,7 +68,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 						value={locationId}
 						onChange={setLocationId}
 					/>
-				</ListingContainer>
+				</TitleContainer>
 			);
 		},
 	},

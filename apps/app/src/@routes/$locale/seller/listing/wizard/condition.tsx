@@ -5,9 +5,9 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
+import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute(
@@ -22,7 +22,7 @@ export const Route = createFileRoute(
 		);
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				textTitle={"Condition (title)"}
 				left={
 					<LinkTo
@@ -74,7 +74,7 @@ export const Route = createFileRoute(
 						onChange={setCondition}
 					/>
 				</div>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });

@@ -10,13 +10,17 @@ import {
 	Status,
 } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
+import {
+	FlowContainer,
+	PrimaryOverlay,
+	ThemeCls,
+	useAnim,
+} from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useListingInfiniteQuery } from "~/app/listing/query/useListingInfiniteQuery";
 import { ListingPreview } from "~/app/listing/ui/ListingPreview";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 	component() {
