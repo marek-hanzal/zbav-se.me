@@ -4,9 +4,8 @@
  * zbav.se.me API
  * OpenAPI spec version: 0.5.0
  */
-
-import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
 /**
  * Represents a category a listing can be assigned to
@@ -1056,6 +1055,14 @@ export interface S3PreSignRequest {
 	contentType: AllowedContentTypes;
 }
 
+/**
+ * Schema for patching user extended information
+ */
+export interface UserPatch {
+	/** Default location for the user - used for listings & listing sorting */
+	locationId: string;
+}
+
 export interface Health {
 	status: boolean;
 }
@@ -1306,6 +1313,16 @@ export const apiS3Presign = <TData = AxiosResponse<S3PreSignResponse>>(
 };
 
 /**
+ * Update user extended information
+ */
+export const apiUserExPatch = <TData = AxiosResponse<void>>(
+	userPatch: UserPatch,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.patch(`/api/session/user-ex`, userPatch, options);
+};
+
+/**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealth = <TData = AxiosResponse<Health>>(
@@ -1351,6 +1368,7 @@ export type ApiLocationAutocompleteResult = AxiosResponse<
 >;
 export type ApiLocationFetchResult = AxiosResponse<Location>;
 export type ApiS3PresignResult = AxiosResponse<S3PreSignResponse>;
+export type ApiUserExPatchResult = AxiosResponse<void>;
 export type ApiHealthResult = AxiosResponse<Health>;
 export type ApiMigrationRunResult = AxiosResponse<Migration[]>;
 export type ApiJanitorCleanupResult = AxiosResponse<CleanupResponse>;
