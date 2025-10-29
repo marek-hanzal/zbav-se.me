@@ -6,7 +6,7 @@ export const UserExMigration: Migration = {
 			.createTable("user_ex")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull().unique())
-			.addColumn("locationId", "text", (col) => col.notNull())
+			.addColumn("locationId", "text")
 			.addForeignKeyConstraint(
 				"user_ex_[userId]_fk",
 				[

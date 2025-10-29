@@ -4,8 +4,9 @@
  * zbav.se.me API
  * OpenAPI spec version: 0.5.0
  */
-import axios from "axios";
+
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
 
 /**
  * Represents a category a listing can be assigned to
@@ -1060,7 +1061,7 @@ export interface S3PreSignRequest {
  */
 export interface UserPatch {
 	/** Default location for the user - used for listings & listing sorting */
-	locationId: string;
+	locationId?: string;
 }
 
 export interface Health {

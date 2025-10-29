@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 
 export const UserPatchSchema = z
 	.object({
-		locationId: z.string().openapi({
+		locationId: z.string().optional().openapi({
 			description:
 				"Default location for the user - used for listings & listing sorting",
 		}),

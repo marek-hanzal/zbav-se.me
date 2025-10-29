@@ -8,7 +8,7 @@ export const UserExSchema = z
 		userId: z.string().openapi({
 			description: "ID of the user (foreign key)",
 		}),
-		locationId: z.string().openapi({
+		locationId: z.string().optional().openapi({
 			description:
 				"Default location for the user - user for listings & listing sorting",
 		}),
