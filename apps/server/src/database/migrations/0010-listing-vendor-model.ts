@@ -12,7 +12,7 @@ export const ListingVendorModelMigration: Migration = {
 			.createIndex("listing_[vendor]_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(vendor) text_pattern_ops)`)
+			.expression(sql`(lower(vendor)) text_pattern_ops`)
 			.where(() => sql`vendor IS NOT NULL`)
 			.execute();
 
@@ -20,7 +20,7 @@ export const ListingVendorModelMigration: Migration = {
 			.createIndex("listing_[model]_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(model) text_pattern_ops)`)
+			.expression(sql`(lower(model)) text_pattern_ops`)
 			.where(() => sql`model IS NOT NULL`)
 			.execute();
 
@@ -28,8 +28,8 @@ export const ListingVendorModelMigration: Migration = {
 			.createIndex("listing_[vendor-model]_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(vendor) text_pattern_ops)`)
-			.expression(sql`(lower(model) text_pattern_ops)`)
+			.expression(sql`(lower(vendor)) text_pattern_ops`)
+			.expression(sql`(lower(model)) text_pattern_ops`)
 			.where(() => sql`vendor IS NOT NULL AND model IS NOT NULL`)
 			.execute();
 	},
