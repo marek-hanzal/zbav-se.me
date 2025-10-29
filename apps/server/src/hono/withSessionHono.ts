@@ -1,5 +1,5 @@
 import { OpenAPIHono } from "@hono/zod-openapi";
-import type { auth } from "../auth";
+import type { auth } from "../auth/auth";
 
 export const withSessionHono = () => {
 	return new OpenAPIHono<{

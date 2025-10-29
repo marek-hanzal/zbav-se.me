@@ -5,7 +5,7 @@ import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { rateLimiter } from "hono-rate-limiter";
 import { AppEnv } from "./AppEnv";
-import { auth } from "./auth";
+import { auth } from "./auth/auth";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { database } from "./database/kysely";
 import { withGalleryApi } from "./gallery/withGalleryApi";
@@ -24,6 +24,7 @@ import { withOpenApi } from "./open-api/withOpenApi";
 import { redis } from "./redis/redis";
 import { withS3Api } from "./s3/withS3Api";
 import { withUploadApi } from "./upload/withUploadApi";
+import { withUserExApi } from "./user-ex/withUserExApi";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -179,6 +180,7 @@ withHealthApi(routes);
 withMigrationApi(routes);
 withS3Api(routes);
 withJanitorApi(routes);
+withUserExApi(routes);
 
 app.options("/api/cors-proxy", (c) => {
 	c.header("Access-Control-Allow-Origin", "*");

@@ -2529,6 +2529,20 @@ export const apiS3PresignBody = zod.object({
 });
 
 /**
+ * Update user extended information
+ */
+export const apiUserExPatchBody = zod
+	.object({
+		locationId: zod
+			.string()
+			.optional()
+			.describe(
+				"Default location for the user - used for listings & listing sorting",
+			),
+	})
+	.describe("Schema for patching user extended information");
+
+/**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealthResponse = zod.object({
