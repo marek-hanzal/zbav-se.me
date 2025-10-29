@@ -84,6 +84,7 @@ export const ListingQuerySchema = z
 					"createdAt",
 					"updatedAt",
 					"expiresAt",
+					"geo",
 				]),
 				sort: OrderSchema,
 			})

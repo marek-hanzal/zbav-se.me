@@ -1,3 +1,4 @@
+import { match } from "ts-pattern";
 import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import type { withListingSelect } from "./withListingSelect";
 
@@ -89,27 +90,21 @@ export const withListingQueryBuilderWithSort = (
 ) => {
 	let query = withListingQueryBuilder(props);
 
-	// Apply sorting
 	for (const sortItem of props.sort ?? []) {
-		if (sortItem.sort) {
-			switch (sortItem.value) {
-				case "price":
-					query = query.orderBy("l.price", sortItem.sort);
-					break;
-				case "condition":
-					query = query.orderBy("l.condition", sortItem.sort);
-					break;
-				case "age":
-					query = query.orderBy("l.age", sortItem.sort);
-					break;
-				case "createdAt":
-					query = query.orderBy("l.createdAt", sortItem.sort);
-					break;
-				case "updatedAt":
-					query = query.orderBy("l.updatedAt", sortItem.sort);
-					break;
-			}
+		const { sort, value } = sortItem;
+		if (!sort) {
+			continue;
 		}
+
+		query = match(value)
+			.with("price", () => query.orderBy("l.price", sort))
+			.with("condition", () => query.orderBy("l.condition", sort))
+			.with("age", () => query.orderBy("l.age", sort))
+			.with("createdAt", () => query.orderBy("l.createdAt", sort))
+			.with("updatedAt", () => query.orderBy("l.updatedAt", sort))
+			.with("expiresAt", () => query.orderBy("l.expiresAt", sort))
+			// .with("geo", () => query.orderBy("l.updatedAt", sort))
+			.exhaustive();
 	}
 
 	return query;
