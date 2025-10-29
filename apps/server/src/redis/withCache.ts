@@ -1,5 +1,4 @@
-import { genKey } from "./genKey";
-import { redis } from "./redis";
+import type { genKey } from "./genKey";
 
 export namespace withCache {
 	export interface Props<TResult> {
@@ -12,17 +11,17 @@ export const withCache = async <TResult>({
 	key,
 	fetch,
 }: withCache.Props<TResult>) => {
-	const cachedKey = genKey(key);
+	// const cachedKey = genKey(key);
 
-	const cached = await redis.get<TResult>(cachedKey);
-	if (cached) {
-		return {
-			data: cached,
-			hit: true,
-		};
-	}
+	// const cached = await redis.get<TResult>(cachedKey);
+	// if (cached) {
+	// 	return {
+	// 		data: cached,
+	// 		hit: true,
+	// 	};
+	// }
 	const result = await fetch();
-	await redis.set(cachedKey, result);
+	// await redis.set(cachedKey, result);
 	return {
 		data: result,
 		hit: false,

@@ -80,7 +80,10 @@ export const Route = createFileRoute("/$locale/feed")({
 		]);
 
 		return (
-			<Container position={"relative"}>
+			<Container
+				position={"relative"}
+				overflow={"hidden"}
+			>
 				<PrimaryOverlay />
 
 				<InfiniteData
@@ -176,26 +179,25 @@ export const Route = createFileRoute("/$locale/feed")({
 							default: {
 								class: [
 									"absolute",
-									"bottom-1",
-									"left-2",
-									"right-2",
-									"h-3",
+									"-bottom-8",
+									"-left-8",
+									"-right-8",
+									"h-42",
+									"pointer-events-none",
 									"transition-opacity",
-									"duration-1500",
+									"bg-linear-to-b",
+									"blur-2xl",
+									"duration-750",
+									"ease-out",
+									"from-white/25",
+									"to-white",
 									listingQuery.isFetchingNextPage
 										? [
-												"animate-pulse",
-												"opacity-75",
+												"opacity-100",
 											]
-										: "opacity-0",
-									"rounded-full",
-								],
-								token: [
-									"border.default",
-									"shadow.default",
-									"tone.secondary.dark.bg",
-									"tone.secondary.dark.border",
-									"tone.secondary.dark.shadow",
+										: [
+												"opacity-0",
+											],
 								],
 							},
 						},
