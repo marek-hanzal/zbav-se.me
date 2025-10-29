@@ -3,11 +3,13 @@ import { apiListingCollection } from "@zbav-se.me/sdk";
 
 export namespace useListingInfiniteQuery {
 	export interface Props {
+		locationId?: string;
 		size: number;
 	}
 }
 
 export const useListingInfiniteQuery = ({
+	locationId,
 	size,
 }: useListingInfiniteQuery.Props) => {
 	return useInfiniteQuery({
@@ -26,12 +28,20 @@ export const useListingInfiniteQuery = ({
 						page: pageParam,
 						size,
 					},
-					sort: [
-						{
-							value: "createdAt",
-							sort: "desc",
-						},
-					],
+					params: locationId
+						? {
+								geo: {
+									locationId,
+									sort: "asc",
+								},
+							}
+						: undefined,
+					// sort: [
+					// 	{
+					// 		value: "createdAt",
+					// 		sort: "desc",
+					// 	},
+					// ],
 				},
 				{
 					signal,

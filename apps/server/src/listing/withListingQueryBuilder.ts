@@ -1,3 +1,4 @@
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import type { withListingSelect } from "./withListingSelect";
@@ -7,6 +8,7 @@ export namespace withListingQueryBuilder {
 		select: withListingSelect.Select;
 		where?: ListingQuerySchema.Type["where"];
 		sort?: ListingQuerySchema.Type["sort"];
+		params?: ListingQuerySchema.Type["params"];
 	}
 
 	export type Callback = (props: Props) => withListingSelect.Select;
@@ -88,19 +90,33 @@ export const withListingQueryBuilderWithSort = (
 ) => {
 	let query = withListingQueryBuilder(props);
 
+	// 1) Primary geo sort (if provided)
+	if (props.params?.geo?.locationId) {
+		const refId = props.params.geo.locationId;
+		const dir = props.params.geo.sort ?? "asc";
+
+		query = query.orderBy(
+			sql`
+          (select geo from "location" where id = l."locationId")
+          <->
+          (select geo from "location" where id = ${refId})
+        `,
+			dir,
+		);
+	}
+
+	// 2) Secondary sorts (tiebreakers)
 	for (const sortItem of props.sort ?? []) {
-		const { sort, value } = sortItem;
-		if (!sort) {
-			continue;
-		}
+		const { sort: dir, value } = sortItem;
+		if (!dir) continue;
 
 		query = match(value)
-			.with("price", () => query.orderBy("l.price", sort))
-			.with("condition", () => query.orderBy("l.condition", sort))
-			.with("age", () => query.orderBy("l.age", sort))
-			.with("createdAt", () => query.orderBy("l.createdAt", sort))
-			.with("updatedAt", () => query.orderBy("l.updatedAt", sort))
-			.with("expiresAt", () => query.orderBy("l.expiresAt", sort))
+			.with("price", () => query.orderBy("l.price", dir))
+			.with("condition", () => query.orderBy("l.condition", dir))
+			.with("age", () => query.orderBy("l.age", dir))
+			.with("createdAt", () => query.orderBy("l.createdAt", dir))
+			.with("updatedAt", () => query.orderBy("l.updatedAt", dir))
+			.with("expiresAt", () => query.orderBy("l.expiresAt", dir))
 			.exhaustive();
 	}
 

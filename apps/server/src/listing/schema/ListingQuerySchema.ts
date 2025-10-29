@@ -68,6 +68,23 @@ const FilterSchema = z
 		description: "User-land filters",
 	});
 
+const GeoParams = z.object({
+	locationId: z.string().openapi({
+		description: "Reference to a location for location sorting",
+	}),
+	sort: OrderSchema.openapi("Order", {
+		description: "Sort order for location sorting",
+	}),
+});
+
+const ParamsSchema = z
+	.object({
+		geo: GeoParams.optional(),
+	})
+	.openapi("ListingParams", {
+		description: "Extended parameters for listings",
+	});
+
 export const ListingQuerySchema = z
 	.object({
 		cursor: CursorSchema.nullish(),
@@ -75,6 +92,7 @@ export const ListingQuerySchema = z
 		where: FilterSchema.openapi("ListingWhere", {
 			description: "App-based filters",
 		}).nullish(),
+		params: ParamsSchema.nullish(),
 		sort: z
 			.object({
 				value: z.enum([

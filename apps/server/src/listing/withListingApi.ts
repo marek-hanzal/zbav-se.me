@@ -271,6 +271,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 								select,
 								where,
 								sort,
+								params: json.params,
 							});
 						},
 					}),
