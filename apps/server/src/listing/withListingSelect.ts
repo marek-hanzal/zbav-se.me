@@ -1,8 +1,4 @@
-import {
-	jsonArrayFrom,
-	jsonBuildObject,
-	jsonObjectFrom,
-} from "kysely/helpers/postgres";
+import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { database } from "../database/kysely";
 
 export namespace withListingSelect {
@@ -36,23 +32,18 @@ export const withListingSelect = () => {
 		jsonArrayFrom(
 			eb
 				.selectFrom("gallery as g")
-				.innerJoin("upload as u", "u.id", "g.uploadId")
+				.selectAll("g")
 				.select((eb) =>
-					jsonBuildObject({
-						id: eb.ref("g.id"),
-						listingId: eb.ref("g.listingId"),
-						uploadId: eb.ref("g.uploadId"),
-						sort: eb.ref("g.sort"),
-						createdAt: eb.ref("g.createdAt"),
-						upload: jsonBuildObject({
-							id: eb.ref("u.id"),
-							url: eb.ref("u.url"),
-						}),
-					}).as("item"),
+					jsonObjectFrom(
+						eb
+							.selectFrom("upload as u")
+							.selectAll("u")
+							.whereRef("u.id", "=", "g.uploadId")
+							.limit(1),
+					).as("upload"),
 				)
 				.whereRef("g.listingId", "=", "l.id")
 				.orderBy("g.sort"),
 		).as("gallery"),
 	]);
-	// Není potřeba groupBy, protože nahoře nic neagregujeme v hlavním SELECTu
 };
