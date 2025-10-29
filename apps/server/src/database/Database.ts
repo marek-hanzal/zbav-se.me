@@ -6,6 +6,7 @@ import type { GallerySchema } from "../gallery/schema/GallerySchema";
 import type { ListingSchema } from "../listing/schema/ListingSchema";
 import type { LocationSchema } from "../location/schema/LocationSchema";
 import type { UploadSchema } from "../upload/schema/UploadSchema";
+import type { UserExSchema } from "../user-ex/schema/UserExSchema";
 
 export interface Database {
 	category: CategorySchema.Type;
@@ -16,4 +17,5 @@ export interface Database {
 	gallery: GallerySchema.Type;
 	upload: UploadSchema.Type;
 	user: typeof auth.$Infer.Session.user;
+	user_ex: UserExSchema.Type;
 }
