@@ -4,6 +4,7 @@ import type { Cls } from "@use-pico/cls";
 import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
+import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/dashboard")({
 	component() {
@@ -19,6 +20,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				},
 			},
 		};
+		const userExPatchMutation = withUserExPatchMutation.useMutation();
 
 		return (
 			<Container position={"relative"}>
@@ -50,6 +52,11 @@ export const Route = createFileRoute("/$locale/dashboard")({
 								locale,
 							}}
 							tweak={linkTweak}
+							onClick={() =>
+								userExPatchMutation.mutate({
+									side: "seller",
+								})
+							}
 						>
 							<Tile
 								icon={SellerIcon}
@@ -63,6 +70,11 @@ export const Route = createFileRoute("/$locale/dashboard")({
 								locale,
 							}}
 							tweak={linkTweak}
+							onClick={() =>
+								userExPatchMutation.mutate({
+									side: "buyer",
+								})
+							}
 						>
 							<Tile
 								icon={BuyerIcon}

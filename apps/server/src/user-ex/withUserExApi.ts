@@ -45,7 +45,7 @@ export const withUserExApi = ({ session }: Routes) => {
 		}),
 		async (c) => {
 			const json = c.req.valid("json");
-			const { locationId } = json;
+			const { locationId, side } = json;
 
 			try {
 				await database.kysely
@@ -54,6 +54,7 @@ export const withUserExApi = ({ session }: Routes) => {
 						id: genId(),
 						userId: c.get("user").id,
 						locationId,
+						side,
 					})
 					.onConflict((oc) =>
 						oc
@@ -62,6 +63,7 @@ export const withUserExApi = ({ session }: Routes) => {
 							])
 							.doUpdateSet(({ ref }) => ({
 								locationId: ref("excluded.locationId"),
+								side: ref("excluded.side"),
 							})),
 					)
 					.execute();

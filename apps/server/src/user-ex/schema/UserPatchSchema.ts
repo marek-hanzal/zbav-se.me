@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { UserSideSchema } from "./UserSideSchema";
 
 export const UserPatchSchema = z
 	.object({
@@ -6,6 +7,7 @@ export const UserPatchSchema = z
 			description:
 				"Default location for the user - used for listings & listing sorting",
 		}),
+		side: UserSideSchema.optional(),
 	})
 	.openapi("UserPatch", {
 		description: "Schema for patching user extended information",
@@ -14,5 +16,5 @@ export const UserPatchSchema = z
 export type UserPatchSchema = typeof UserPatchSchema;
 
 export namespace UserPatchSchema {
-	export type Type = z.infer<typeof UserPatchSchema>;
+	export type Type = z.infer<UserPatchSchema>;
 }
