@@ -112,9 +112,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 
 			return c.json(
 				await withFetch({
-					select: withListingSelect({
-						requireGallery: false,
-					}),
+					select: withListingSelect(),
 					output: ListingDtoSchema,
 					where: {
 						id,
@@ -271,7 +269,6 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 								select,
 								where,
 								sort,
-								params: json.params,
 							});
 						},
 					}),

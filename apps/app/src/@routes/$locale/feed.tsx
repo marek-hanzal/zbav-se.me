@@ -29,7 +29,12 @@ export const Route = createFileRoute("/$locale/feed")({
 		const { slots } = useCls(ThemeCls);
 		const listingQuery = useListingInfiniteQuery({
 			size: 5,
-			locationId: user.locationId,
+			lonLan: user.location
+				? {
+						lon: user.location.lon,
+						lat: user.location.lat,
+					}
+				: undefined,
 		});
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();

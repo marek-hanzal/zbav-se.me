@@ -8,7 +8,6 @@ export namespace withListingQueryBuilder {
 		select: withListingSelect.Select;
 		where?: ListingQuerySchema.Type["where"];
 		sort?: ListingQuerySchema.Type["sort"];
-		params?: ListingQuerySchema.Type["params"];
 	}
 
 	export type Callback = (props: Props) => withListingSelect.Select;
@@ -90,40 +89,54 @@ export const withListingQueryBuilderWithSort = (
 ) => {
 	let query = withListingQueryBuilder(props);
 
-	// 1) Primary geo sort (if provided)
-	if (props.params?.geo?.locationId) {
-		const refId = props.params.geo.locationId;
-		const dir = props.params.geo.sort ?? "asc";
-
-		// TODO Receive "geo" column directly instead of using subquery
-		// - listing.geo (e.g. "0101000020E6100000DC662AC4239D30409E25C808A8984840")
-		// const refGeom = sql`ST_GeomFromEWKB(decode(${ewkbHex}, 'hex'))`;
-		// - keep "sorts" only process one specific sort key?
-
-		// TODO - ('SRID=4326;POINT(14.42076 50.08804)')::geometry
-
-		query = query.orderBy(
-			sql`
-          (select geo from "location" where id = l."locationId")
-          <->
-          (select geo from "location" where id = ${refId})
-        `,
-			dir,
-		);
-	}
-
-	// 2) Secondary sorts (tiebreakers)
 	for (const sortItem of props.sort ?? []) {
-		const { sort: dir, value } = sortItem;
-		if (!dir) continue;
+		query = match(sortItem)
+			.with(
+				{
+					type: "listing",
+				},
+				(sort) => {
+					if (!sort.sort) {
+						return query;
+					}
+					const { sort: key, value } = sort;
 
-		query = match(value)
-			.with("price", () => query.orderBy("l.price", dir))
-			.with("condition", () => query.orderBy("l.condition", dir))
-			.with("age", () => query.orderBy("l.age", dir))
-			.with("createdAt", () => query.orderBy("l.createdAt", dir))
-			.with("updatedAt", () => query.orderBy("l.updatedAt", dir))
-			.with("expiresAt", () => query.orderBy("l.expiresAt", dir))
+					return match(value)
+						.with("price", () => query.orderBy("l.price", key))
+						.with("condition", () =>
+							query.orderBy("l.condition", key),
+						)
+						.with("age", () => query.orderBy("l.age", key))
+						.with("createdAt", () =>
+							query.orderBy("l.createdAt", key),
+						)
+						.with("updatedAt", () =>
+							query.orderBy("l.updatedAt", key),
+						)
+						.with("expiresAt", () =>
+							query.orderBy("l.expiresAt", key),
+						)
+						.exhaustive();
+				},
+			)
+			.with(
+				{
+					type: "geo",
+				},
+				(sort) => {
+					const { sort: key, lon, lat } = sort;
+					if (!key) {
+						return query;
+					}
+
+					return query.orderBy(
+						sql`ST_Distance(l.geo, ST_Point(${lon}, ${lat}))`,
+						key,
+					);
+				},
+			)
+			.with(null, () => query)
+			.with(undefined, () => query)
 			.exhaustive();
 	}
 

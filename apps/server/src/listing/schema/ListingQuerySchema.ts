@@ -76,23 +76,6 @@ const FilterSchema = z
 		description: "User-land filters",
 	});
 
-const GeoParams = z.object({
-	locationId: z.string().openapi({
-		description: "Reference to a location for location sorting",
-	}),
-	sort: OrderSchema.openapi("Order", {
-		description: "Sort order for location sorting",
-	}),
-});
-
-const ParamsSchema = z
-	.object({
-		geo: GeoParams.optional(),
-	})
-	.openapi("ListingParams", {
-		description: "Extended parameters for listings",
-	});
-
 export const ListingQuerySchema = z
 	.object({
 		cursor: CursorSchema.nullish(),
@@ -100,22 +83,47 @@ export const ListingQuerySchema = z
 		where: FilterSchema.openapi("ListingWhere", {
 			description: "App-based filters",
 		}).nullish(),
-		params: ParamsSchema.nullish(),
 		sort: z
 			.array(
 				z
-					// use union + "type" ? - only union? - separate schemas and validate schema in query builder?
-					.object({
-						value: z.enum([
-							"price",
-							"condition",
-							"age",
-							"createdAt",
-							"updatedAt",
-							"expiresAt",
-						]),
-						sort: OrderSchema,
-					})
+					.union([
+						z
+							.object({
+								type: z.literal("listing").openapi({
+									description: "Common listing sort keys",
+								}),
+								value: z.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: OrderSchema,
+							})
+							.nullish()
+							.openapi("ListingCommonSort", {
+								description: "Common listing sort keys",
+							}),
+						z
+							.object({
+								type: z.literal("geo").openapi({
+									description: "Explicit geo sorting",
+								}),
+								lon: z.number().openapi({
+									description: "Longitude of the location",
+								}),
+								lat: z.number().openapi({
+									description: "Latitude of the location",
+								}),
+								sort: OrderSchema,
+							})
+							.nullish()
+							.openapi("ListingGeoSort", {
+								description: "Explicit geo sorting",
+							}),
+					])
 					.openapi("ListingSort", {
 						description: "Sort object for listing collection",
 					}),
