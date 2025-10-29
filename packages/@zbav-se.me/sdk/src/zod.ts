@@ -803,7 +803,6 @@ export const apiListingFetchBody = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Common listing sort keys"),
 						zod
 							.object({
@@ -812,6 +811,13 @@ export const apiListingFetchBody = zod
 										"geo",
 									])
 									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
 								lon: zod
 									.number()
 									.describe("Longitude of the location"),
@@ -825,9 +831,7 @@ export const apiListingFetchBody = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Explicit geo sorting"),
-						zod.unknown().nullable(),
 					])
 					.describe("Sort object for listing collection"),
 			)
@@ -1292,7 +1296,6 @@ export const apiListingCollectionBody = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Common listing sort keys"),
 						zod
 							.object({
@@ -1301,6 +1304,13 @@ export const apiListingCollectionBody = zod
 										"geo",
 									])
 									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
 								lon: zod
 									.number()
 									.describe("Longitude of the location"),
@@ -1314,9 +1324,7 @@ export const apiListingCollectionBody = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Explicit geo sorting"),
-						zod.unknown().nullable(),
 					])
 					.describe("Sort object for listing collection"),
 			)
@@ -1821,7 +1829,6 @@ export const apiListingCountBody = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Common listing sort keys"),
 						zod
 							.object({
@@ -1830,6 +1837,13 @@ export const apiListingCountBody = zod
 										"geo",
 									])
 									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
 								lon: zod
 									.number()
 									.describe("Longitude of the location"),
@@ -1843,9 +1857,7 @@ export const apiListingCountBody = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Explicit geo sorting"),
-						zod.unknown().nullable(),
 					])
 					.describe("Sort object for listing collection"),
 			)
@@ -2941,7 +2953,6 @@ export const apiFeedCreateBody = zod.object({
 							])
 							.nullish(),
 					})
-					.nullable()
 					.describe("Common listing sort keys"),
 				zod
 					.object({
@@ -2950,6 +2961,13 @@ export const apiFeedCreateBody = zod.object({
 								"geo",
 							])
 							.describe("Explicit geo sorting"),
+						value: zod
+							.enum([
+								"geo",
+							])
+							.describe(
+								"Just keeping the same API with rest of sorting values.",
+							),
 						lon: zod.number().describe("Longitude of the location"),
 						lat: zod.number().describe("Latitude of the location"),
 						sort: zod
@@ -2959,9 +2977,7 @@ export const apiFeedCreateBody = zod.object({
 							])
 							.nullish(),
 					})
-					.nullable()
 					.describe("Explicit geo sorting"),
-				zod.unknown().nullable(),
 			])
 			.describe("Sort object for listing collection"),
 	),
@@ -3146,7 +3162,6 @@ export const apiFeedPatchBody = zod.object({
 								])
 								.nullish(),
 						})
-						.nullable()
 						.describe("Common listing sort keys"),
 					zod
 						.object({
@@ -3155,6 +3170,13 @@ export const apiFeedPatchBody = zod.object({
 									"geo",
 								])
 								.describe("Explicit geo sorting"),
+							value: zod
+								.enum([
+									"geo",
+								])
+								.describe(
+									"Just keeping the same API with rest of sorting values.",
+								),
 							lon: zod
 								.number()
 								.describe("Longitude of the location"),
@@ -3168,9 +3190,7 @@ export const apiFeedPatchBody = zod.object({
 								])
 								.nullish(),
 						})
-						.nullable()
 						.describe("Explicit geo sorting"),
-					zod.unknown().nullable(),
 				])
 				.describe("Sort object for listing collection"),
 		)
@@ -3353,7 +3373,6 @@ export const apiFeedPatchResponse = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Common listing sort keys"),
 						zod
 							.object({
@@ -3362,6 +3381,13 @@ export const apiFeedPatchResponse = zod
 										"geo",
 									])
 									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
 								lon: zod
 									.number()
 									.describe("Longitude of the location"),
@@ -3375,9 +3401,7 @@ export const apiFeedPatchResponse = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Explicit geo sorting"),
-						zod.unknown().nullable(),
 					])
 					.describe("Sort object for listing collection"),
 			)
@@ -3641,7 +3665,6 @@ export const apiFeedFetchResponse = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Common listing sort keys"),
 						zod
 							.object({
@@ -3650,6 +3673,13 @@ export const apiFeedFetchResponse = zod
 										"geo",
 									])
 									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
 								lon: zod
 									.number()
 									.describe("Longitude of the location"),
@@ -3663,9 +3693,7 @@ export const apiFeedFetchResponse = zod
 									])
 									.nullish(),
 							})
-							.nullable()
 							.describe("Explicit geo sorting"),
-						zod.unknown().nullable(),
 					])
 					.describe("Sort object for listing collection"),
 			)
@@ -3940,7 +3968,6 @@ export const apiFeedCollectionResponse = zod
 												])
 												.nullish(),
 										})
-										.nullable()
 										.describe("Common listing sort keys"),
 									zod
 										.object({
@@ -3950,6 +3977,13 @@ export const apiFeedCollectionResponse = zod
 												])
 												.describe(
 													"Explicit geo sorting",
+												),
+											value: zod
+												.enum([
+													"geo",
+												])
+												.describe(
+													"Just keeping the same API with rest of sorting values.",
 												),
 											lon: zod
 												.number()
@@ -3968,9 +4002,7 @@ export const apiFeedCollectionResponse = zod
 												])
 												.nullish(),
 										})
-										.nullable()
 										.describe("Explicit geo sorting"),
-									zod.unknown().nullable(),
 								])
 								.describe("Sort object for listing collection"),
 						)
@@ -4011,7 +4043,7 @@ export const apiMigrationRunResponseItem = zod.object({
 export const apiMigrationRunResponse = zod.array(apiMigrationRunResponseItem);
 
 /**
- * Smaže z MinIO vše, co není v tabulce `upload`.
+ * General cleanup operation
  */
 export const apiJanitorCleanupResponseItem = zod
 	.object({

@@ -664,15 +664,14 @@ export const ListingCommonSortSort = {
 
 /**
  * Common listing sort keys
- * @nullable
  */
-export type ListingCommonSort = {
+export interface ListingCommonSort {
 	/** Common listing sort keys */
 	type: ListingCommonSortType;
 	value: ListingCommonSortValue;
 	/** @nullable */
 	sort?: ListingCommonSortSort;
-} | null;
+}
 
 /**
  * Explicit geo sorting
@@ -682,6 +681,17 @@ export type ListingGeoSortType =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ListingGeoSortType = {
+	geo: "geo",
+} as const;
+
+/**
+ * Just keeping the same API with rest of sorting values.
+ */
+export type ListingGeoSortValue =
+	(typeof ListingGeoSortValue)[keyof typeof ListingGeoSortValue];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const ListingGeoSortValue = {
 	geo: "geo",
 } as const;
 
@@ -700,28 +710,24 @@ export const ListingGeoSortSort = {
 
 /**
  * Explicit geo sorting
- * @nullable
  */
-export type ListingGeoSort = {
+export interface ListingGeoSort {
 	/** Explicit geo sorting */
 	type: ListingGeoSortType;
+	/** Just keeping the same API with rest of sorting values. */
+	value: ListingGeoSortValue;
 	/** Longitude of the location */
 	lon: number;
 	/** Latitude of the location */
 	lat: number;
 	/** @nullable */
 	sort?: ListingGeoSortSort;
-} | null;
-
-/**
- * @nullable
- */
-export type ListingSortAnyOf = unknown | null;
+}
 
 /**
  * Sort object for listing collection
  */
-export type ListingSort = ListingCommonSort | ListingGeoSort | ListingSortAnyOf;
+export type ListingSort = ListingCommonSort | ListingGeoSort;
 
 /**
  * Query object for listing collection
@@ -1598,7 +1604,7 @@ export const apiMigrationRun = <TData = AxiosResponse<Migration[]>>(
 };
 
 /**
- * Smaže z MinIO vše, co není v tabulce `upload`.
+ * General cleanup operation
  */
 export const apiJanitorCleanup = <TData = AxiosResponse<CleanupResponse>>(
 	options?: AxiosRequestConfig,

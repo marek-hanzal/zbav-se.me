@@ -12,6 +12,8 @@ export const FeedCreateSchema = z
 	})
 	.openapi("FeedCreate");
 
+export type FeedCreateSchema = typeof FeedCreateSchema;
+
 export namespace FeedCreateSchema {
-	export type Type = z.infer<typeof FeedCreateSchema>;
+	export type Type = z.infer<FeedCreateSchema>;
 }

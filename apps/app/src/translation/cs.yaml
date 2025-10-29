@@ -464,3 +464,8 @@ ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
+Listing common sort value price - asc:
+    value: Od nejlevnějšího po nejdražší
+Listing common sort value price - desc:
+    value: Od nejdražšího po nejlevnější
+\

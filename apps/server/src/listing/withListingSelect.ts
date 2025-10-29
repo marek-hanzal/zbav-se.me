@@ -119,8 +119,6 @@ export const withListingSelect = ({ sort }: withListingSelect.Props) => {
 					);
 				},
 			)
-			.with(null, () => query)
-			.with(undefined, () => query)
 			.exhaustive();
 	}
 

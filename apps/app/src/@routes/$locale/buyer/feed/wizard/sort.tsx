@@ -61,19 +61,35 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 					gap={"xs"}
 					height={"auto"}
 				>
-					{Object.values(ListingCommonSortValue).map((key) => {
-						return (
-							<Button
-								key={`${sortKeyId}-${key}`}
-								size={"md"}
-								full
-							>
-								<Tx
-									label={`Listing common sort value ${key}`}
-								/>
-							</Button>
-						);
-					})}
+					<div className="flex flex-col gap-2 w-full">
+						{Object.values(ListingCommonSortValue).map((key) => {
+							const sort = state.sort?.find(
+								(sort) => sort.value === key,
+							);
+
+							return (
+								<Button
+									key={`${sortKeyId}-${key}`}
+									size={"xl"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"justify-start",
+													"text-left",
+												],
+											},
+										},
+									}}
+									full
+								>
+									<Tx
+										label={`Listing common sort value ${key} - ${sort?.sort ?? "asc"}`}
+									/>
+								</Button>
+							);
+						})}
+					</div>
 				</Container>
 			</TitleContainer>
 		);

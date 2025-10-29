@@ -6,6 +6,10 @@ export const ListingGeoSortSchema = z
 		type: z.literal("geo").openapi({
 			description: "Explicit geo sorting",
 		}),
+		value: z.literal("geo").openapi({
+			description:
+				"Just keeping the same API with rest of sorting values.",
+		}),
 		lon: z.number().openapi({
 			description: "Longitude of the location",
 		}),
@@ -14,7 +18,6 @@ export const ListingGeoSortSchema = z
 		}),
 		sort: OrderSchema,
 	})
-	.nullish()
 	.openapi("ListingGeoSort", {
 		description: "Explicit geo sorting",
 	});

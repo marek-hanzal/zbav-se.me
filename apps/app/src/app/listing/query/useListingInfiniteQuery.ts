@@ -29,20 +29,27 @@ export const useListingInfiniteQuery = ({
 						page: pageParam,
 						size,
 					},
-					sort: [
-						lonLan
-							? {
+					sort: lonLan
+						? [
+								{
 									type: "geo",
+									value: "geo",
 									sort: "asc",
 									...lonLan,
-								}
-							: undefined,
-						{
-							type: "listing",
-							value: "createdAt",
-							sort: "desc",
-						},
-					],
+								},
+								{
+									type: "listing",
+									value: "createdAt",
+									sort: "desc",
+								},
+							]
+						: [
+								{
+									type: "listing",
+									value: "createdAt",
+									sort: "desc",
+								},
+							],
 				},
 				{
 					signal,
