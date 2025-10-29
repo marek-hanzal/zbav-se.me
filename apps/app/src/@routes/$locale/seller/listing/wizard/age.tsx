@@ -10,22 +10,20 @@ import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute("/$locale/listing/wizard/condition")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [condition, setCondition] = useState<number | undefined>(
-			state.condition,
-		);
+		const [age, setAge] = useState<number | undefined>(state.age);
 
 		return (
 			<ListingContainer
-				textTitle={"Condition (title)"}
+				textTitle={"Age (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/category"}
+						to={"/$locale/seller/listing/wizard/condition"}
 						search={state}
 						params={{
 							locale,
@@ -35,16 +33,16 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/age"}
+						to={"/$locale/seller/listing/wizard/price"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							condition,
+							age,
 						}}
+						disabled={!age}
 						full
-						disabled={!condition}
 					>
 						<Button
 							tone={"secondary"}
@@ -53,8 +51,8 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 							size={"lg"}
 							full
 							iconPosition={"right"}
-							label={"Next - age (button)"}
-							disabled={!condition}
+							label={"Next - price (button)"}
+							disabled={!age}
 						/>
 					</LinkTo>
 				}
@@ -66,10 +64,10 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 				>
 					<Rating
 						textHint={(value) =>
-							`Condition - Overall [${value}] (hint)`
+							`Condition - Age [${value}] (hint)`
 						}
-						value={condition ?? 0}
-						onChange={setCondition}
+						value={age ?? 0}
+						onChange={setAge}
 					/>
 				</div>
 			</ListingContainer>

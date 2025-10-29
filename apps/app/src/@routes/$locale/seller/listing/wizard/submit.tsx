@@ -23,7 +23,7 @@ import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 import { countryToCurrency } from "~/locales";
 
-export const Route = createFileRoute("/$locale/listing/wizard/submit")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 	validateSearch: ListingWizardSchema,
 	ssr: false,
 	pendingComponent() {
@@ -37,7 +37,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/expire-at"}
+						to={"/$locale/seller/listing/wizard/expire-at"}
 						search={state}
 						params={{
 							locale,
@@ -72,7 +72,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 		const createListingMutation = withListingCreateMutation().useMutation({
 			async onPostMutation({ result }) {
 				return navigate({
-					to: "/$locale/listing/$id/view",
+					to: "/$locale/seller/listing/$id/view",
 					params: {
 						id: result.id,
 					},
@@ -111,7 +111,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/expire-at"}
+						to={"/$locale/seller/listing/wizard/expire-at"}
 						search={state}
 						params={{
 							locale,
@@ -149,7 +149,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								}}
 							>
 								<LinkTo
-									to={"/$locale/listing/wizard/photos"}
+									to={"/$locale/seller/listing/wizard/photos"}
 									params={{
 										locale,
 									}}
@@ -170,7 +170,9 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 
 								<LinkTo
-									to={"/$locale/listing/wizard/category"}
+									to={
+										"/$locale/seller/listing/wizard/category"
+									}
 									params={{
 										locale,
 									}}
@@ -199,7 +201,9 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 
 								<LinkTo
-									to={"/$locale/listing/wizard/condition"}
+									to={
+										"/$locale/seller/listing/wizard/condition"
+									}
 									params={{
 										locale,
 									}}
@@ -220,7 +224,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 
 								<LinkTo
-									to={"/$locale/listing/wizard/age"}
+									to={"/$locale/seller/listing/wizard/age"}
 									params={{
 										locale,
 									}}
@@ -241,7 +245,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 
 								<LinkTo
-									to={"/$locale/listing/wizard/price"}
+									to={"/$locale/seller/listing/wizard/price"}
 									params={{
 										locale,
 									}}
@@ -263,7 +267,9 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 
 								<LinkTo
-									to={"/$locale/listing/wizard/location"}
+									to={
+										"/$locale/seller/listing/wizard/location"
+									}
 									params={{
 										locale,
 									}}
@@ -303,7 +309,9 @@ export const Route = createFileRoute("/$locale/listing/wizard/submit")({
 								</LinkTo>
 
 								<LinkTo
-									to={"/$locale/listing/wizard/expire-at"}
+									to={
+										"/$locale/seller/listing/wizard/expire-at"
+									}
 									params={{
 										locale,
 									}}

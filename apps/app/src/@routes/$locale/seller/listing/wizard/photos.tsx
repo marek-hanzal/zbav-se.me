@@ -14,7 +14,7 @@ import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { PhotoUpload } from "~/app/photo/PhotoUpload";
 import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";
 
-export const Route = createFileRoute("/$locale/listing/wizard/photos")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -54,7 +54,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/category"}
+						to={"/$locale/seller/listing/wizard/category"}
 						params={{
 							locale,
 						}}

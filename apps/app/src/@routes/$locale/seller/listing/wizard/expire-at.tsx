@@ -16,7 +16,9 @@ import { match } from "ts-pattern";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
-export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
+export const Route = createFileRoute(
+	"/$locale/seller/listing/wizard/expire-at",
+)({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -32,7 +34,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/location"}
+						to={"/$locale/seller/listing/wizard/location"}
 						search={state}
 						params={{
 							locale,
@@ -42,7 +44,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/submit"}
+						to={"/$locale/seller/listing/wizard/submit"}
 						params={{
 							locale,
 						}}

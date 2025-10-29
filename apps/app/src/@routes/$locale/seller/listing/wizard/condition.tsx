@@ -1,4 +1,4 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -8,27 +8,26 @@ import {
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { ListingContainer } from "~/app/listing/ui/ListingContainer";
-import { LocationSelection } from "~/app/location/ui/LocationSelection";
+import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute("/$locale/listing/wizard/location")({
+export const Route = createFileRoute(
+	"/$locale/seller/listing/wizard/condition",
+)({
 	validateSearch: ListingWizardSchema,
 	component() {
-		const { user } = useLoaderData({
-			from: "/$locale",
-		});
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [locationId, setLocationId] = useState(
-			state.locationId ?? user?.locationId ?? undefined,
+		const [condition, setCondition] = useState<number | undefined>(
+			state.condition,
 		);
 
 		return (
 			<ListingContainer
-				textTitle={"Location (title)"}
+				textTitle={"Condition (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/price"}
+						to={"/$locale/seller/listing/wizard/category"}
 						search={state}
 						params={{
 							locale,
@@ -38,35 +37,43 @@ export const Route = createFileRoute("/$locale/listing/wizard/location")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/expire-at"}
+						to={"/$locale/seller/listing/wizard/age"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							locationId,
+							condition,
 						}}
-						disabled={!locationId}
 						full
+						disabled={!condition}
 					>
 						<Button
 							tone={"secondary"}
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
-							disabled={!locationId}
 							size={"lg"}
 							full
 							iconPosition={"right"}
-							label={"Next - expire (button)"}
+							label={"Next - age (button)"}
+							disabled={!condition}
 						/>
 					</LinkTo>
 				}
 			>
-				<LocationSelection
-					locale={locale}
-					value={locationId}
-					onChange={setLocationId}
-				/>
+				<div
+					className={
+						"grid grid-rows-1 justify-stretch items-center w-full h-full"
+					}
+				>
+					<Rating
+						textHint={(value) =>
+							`Condition - Overall [${value}] (hint)`
+						}
+						value={condition ?? 0}
+						onChange={setCondition}
+					/>
+				</div>
 			</ListingContainer>
 		);
 	},

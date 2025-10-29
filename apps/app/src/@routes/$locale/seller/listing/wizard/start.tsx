@@ -13,7 +13,7 @@ import {
 	TypoIcon,
 } from "@zbav-se.me/ui";
 
-export const Route = createFileRoute("/$locale/listing/wizard/start")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 	component() {
 		const { locale } = Route.useParams();
 
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/start")({
 							textMessage={"Listing - intro (description)"}
 							action={
 								<LinkTo
-									to="/$locale/listing/wizard/photos"
+									to="/$locale/seller/listing/wizard/photos"
 									params={{
 										locale,
 									}}

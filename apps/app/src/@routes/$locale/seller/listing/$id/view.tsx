@@ -4,7 +4,7 @@ import { PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
 import { withListingFetchQuery } from "~/app/listing/query/withListingFetchQuery";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 
-export const Route = createFileRoute("/$locale/listing/$id/view")({
+export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 	component() {
 		const { id, locale } = Route.useParams();
 		const listingQuery = withListingFetchQuery().useQuery({

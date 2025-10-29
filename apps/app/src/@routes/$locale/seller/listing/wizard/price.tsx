@@ -13,7 +13,7 @@ import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Dial } from "~/app/ui/dial/Dial";
 import { countryToCurrency } from "~/locales";
 
-export const Route = createFileRoute("/$locale/listing/wizard/price")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/price")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/age"}
+						to={"/$locale/seller/listing/wizard/age"}
 						search={state}
 						params={{
 							locale,
@@ -52,7 +52,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/price")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/location"}
+						to={"/$locale/seller/listing/wizard/location"}
 						params={{
 							locale,
 						}}
