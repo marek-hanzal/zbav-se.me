@@ -3,13 +3,12 @@ import { betterAuth } from "better-auth";
 import { anonymous, customSession, openAPI } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
 import { Kysely } from "kysely";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { AppEnv } from "../AppEnv";
+import type { Database } from "../database/Database";
 import { dialect } from "../database/dialect";
-import type { UserExSchema } from "../user-ex/schema/UserExSchema";
 
-const authKysely = new Kysely<{
-	user_ex: UserExSchema.Type;
-}>({
+const authKysely = new Kysely<Database>({
 	dialect,
 	log: [
 		"error",
@@ -38,6 +37,15 @@ export const auth = betterAuth({
 			const userEx = await authKysely
 				.selectFrom("user_ex")
 				.selectAll()
+				.select((eb) => {
+					return jsonObjectFrom(
+						eb
+							.selectFrom("location")
+							.selectAll("location")
+							.whereRef("location.id", "=", "locationId")
+							.limit(1),
+					).as("location");
+				})
 				.where("userId", "=", user.id)
 				.executeTakeFirst();
 

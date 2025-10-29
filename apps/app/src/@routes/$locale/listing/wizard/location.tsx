@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -18,9 +18,14 @@ import { withLocationAutocompleteQuery } from "~/app/location/query/withLocation
 export const Route = createFileRoute("/$locale/listing/wizard/location")({
 	validateSearch: ListingWizardSchema,
 	component() {
+		const { user } = useLoaderData({
+			from: "/$locale",
+		});
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [locationId, setLocationId] = useState(state.locationId);
+		const [locationId, setLocationId] = useState(
+			state.locationId ?? user?.locationId,
+		);
 		const [search, setSearch] = useState<Fulltext.Value>();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const locationAutocompleteQuery =
