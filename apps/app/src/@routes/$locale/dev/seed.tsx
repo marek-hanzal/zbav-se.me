@@ -9,6 +9,7 @@ import {
 	apiListingCreate,
 	apiLocationAutocomplete,
 	ListingExpire,
+	type UploadDto,
 } from "@zbav-se.me/sdk";
 import { Sheet } from "@zbav-se.me/ui";
 import axios from "axios";
@@ -106,19 +107,47 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					"Znojmo",
 				];
 
-				const concurrency = 8;
-				const limit = 1024;
+				const concurrency = 16;
+				const limit = 2048;
+				const photos = 32;
+
+				const uploadQueue = new PQueue({
+					concurrency: 4,
+				});
+
+				const uploadIds = await Promise.all<UploadDto>(
+					new Array(photos).fill(0).map(() =>
+						uploadQueue.add(async () => {
+							const blob = await picsum();
+							return uploadMutation.mutateAsync({
+								name: "photo.jpg",
+								blob,
+							});
+						}),
+					),
+				);
+
+				const locationQueue = new PQueue({
+					concurrency: 4,
+				});
+
+				const locationIds = await Promise.all<string>(
+					locations.map((locationName) =>
+						locationQueue.add(async () => {
+							const result = await apiLocationAutocomplete({
+								lang: "cs",
+								text: locationName,
+							});
+							return result.data[0]!.id;
+						}),
+					),
+				);
 
 				const queue = new PQueue({
 					concurrency,
 				});
 
 				const createListing = async () => {
-					const upload = await uploadMutation.mutateAsync({
-						name: "photo.jpg",
-						blob: await picsum().then((res) => res),
-					});
-
 					return apiListingCreate({
 						age: range(1, 6),
 						condition: range(1, 6),
@@ -135,12 +164,10 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 									)
 								] as keyof typeof ListingExpire
 							],
-						locationId: await apiLocationAutocomplete({
-							lang: "cs",
-							text: locations[range(0, locations.length - 1)]!,
-						}).then((res) => res.data[0]!.id),
+						locationId:
+							locationIds[range(0, locationIds.length - 1)]!,
 						uploadIds: [
-							upload.id,
+							uploadIds[range(0, uploadIds.length - 1)]!.id,
 						],
 					}).then((res) => res.data);
 				};
