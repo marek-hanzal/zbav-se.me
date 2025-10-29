@@ -1,3 +1,4 @@
+import { withLikeEx } from "../database/expression/withLikeEx";
 import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import type { withListingSelect } from "./withListingSelect";
 
@@ -20,7 +21,6 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 }) => {
 	let query = select;
 
-	// Apply base filters
 	if (where?.id) {
 		query = query.where("l.id", "=", where.id);
 	}
@@ -30,9 +30,16 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 	}
 
 	if (where?.fulltext) {
-		// For listings, we can search in category names via joins
-		// For now, we'll skip fulltext search since listings don't have text fields
-		// This could be enhanced later with proper joins to category tables
+		const fulltext = where.fulltext;
+
+		query = query.where((eb) =>
+			eb.or([
+				withLikeEx(eb.ref("l.vendor"), fulltext),
+				withLikeEx(eb.ref("l.model"), fulltext),
+				withLikeEx(eb.ref("cat.category"), fulltext),
+				withLikeEx(eb.ref("cat.group"), fulltext),
+			]),
+		);
 	}
 
 	if (where?.priceMin !== undefined) {
@@ -73,6 +80,16 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 
 	if (where?.categoryIdIn && where.categoryIdIn.length > 0) {
 		query = query.where("l.categoryId", "in", where.categoryIdIn);
+	}
+
+	if (where?.vendor) {
+		query = query.where((eb) =>
+			withLikeEx(eb.ref("l.vendor"), where.vendor),
+		);
+	}
+
+	if (where?.model) {
+		query = query.where((eb) => withLikeEx(eb.ref("l.model"), where.model));
 	}
 
 	return query;

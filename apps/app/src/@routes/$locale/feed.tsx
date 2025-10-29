@@ -135,7 +135,8 @@ export const Route = createFileRoute("/$locale/feed")({
 							>
 								{content}
 
-								{listingQuery.hasNextPage ? null : (
+								{listingQuery.hasNextPage ||
+								listingQuery.isFetching ? null : (
 									<Sheet>
 										<Status
 											icon={
@@ -179,25 +180,32 @@ export const Route = createFileRoute("/$locale/feed")({
 							default: {
 								class: [
 									"absolute",
-									"-bottom-8",
+									"-bottom-[5%]",
 									"-left-8",
 									"-right-8",
-									"h-[50%]",
+									"h-[30%]",
 									"pointer-events-none",
-									"transition-opacity",
+									"transition-[opacity,blur]",
 									"bg-linear-to-b",
-									"blur-3xl",
 									"duration-750",
+									"backdrop-saturate-150",
 									"ease-out",
-									"from-white/25",
-									"to-white",
+									"border-12",
+									"border-white/30",
+									"mask-[linear-gradient(to_bottom,transparent,black_92px,black)]",
 									listingQuery.isFetchingNextPage
 										? [
 												"opacity-100",
+												"blur-xs",
 											]
 										: [
 												"opacity-0",
+												"blur-0",
 											],
+								],
+								token: [
+									"tone.primary.light.from",
+									"tone.primary.light.to",
 								],
 							},
 						},

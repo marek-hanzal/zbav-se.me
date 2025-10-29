@@ -315,6 +315,16 @@ export interface ListingDto {
 	createdAt: string;
 	/** Last update timestamp */
 	updatedAt: string;
+	/**
+	 * Vendor/manufacturer of the item
+	 * @nullable
+	 */
+	vendor?: string | null;
+	/**
+	 * Model of the item
+	 * @nullable
+	 */
+	model?: string | null;
 	location: Location;
 	category: Category;
 	/** Array of listing gallery images */
@@ -475,6 +485,16 @@ export type ListingFilter = {
 	 * @nullable
 	 */
 	rangeMax?: number | null;
+	/**
+	 * This filter matches listings with vendor matching the provided value
+	 * @nullable
+	 */
+	vendor?: string | null;
+	/**
+	 * This filter matches listings with model matching the provided value
+	 * @nullable
+	 */
+	model?: string | null;
 } | null;
 
 /**
@@ -596,6 +616,16 @@ export type ListingWhere = {
 	 * @nullable
 	 */
 	rangeMax?: number | null;
+	/**
+	 * This filter matches listings with vendor matching the provided value
+	 * @nullable
+	 */
+	vendor?: string | null;
+	/**
+	 * This filter matches listings with model matching the provided value
+	 * @nullable
+	 */
+	model?: string | null;
 } | null;
 
 /**

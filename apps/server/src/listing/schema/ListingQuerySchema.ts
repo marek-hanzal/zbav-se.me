@@ -71,6 +71,14 @@ const FilterSchema = z
 			description:
 				"This filter matches listings with range less than or equal to the provided value (meters)",
 		}),
+		vendor: z.string().nullish().openapi({
+			description:
+				"This filter matches listings with vendor matching the provided value",
+		}),
+		model: z.string().nullish().openapi({
+			description:
+				"This filter matches listings with model matching the provided value",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",

@@ -607,6 +607,18 @@ export const apiListingFetchBody = zod
 					.describe(
 						"This filter matches listings with range less than or equal to the provided value (meters)",
 					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -740,6 +752,18 @@ export const apiListingFetchBody = zod
 					.describe(
 						"This filter matches listings with range less than or equal to the provided value (meters)",
 					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
@@ -823,6 +847,8 @@ export const apiListingFetchResponse = zod.object({
 	expiresAt: zod.string().describe("Expiration timestamp"),
 	createdAt: zod.string().describe("Creation timestamp"),
 	updatedAt: zod.string().describe("Last update timestamp"),
+	vendor: zod.string().nullish().describe("Vendor/manufacturer of the item"),
+	model: zod.string().nullish().describe("Model of the item"),
 	location: zod
 		.object({
 			id: zod.string(),
@@ -1075,6 +1101,18 @@ export const apiListingCollectionBody = zod
 					.describe(
 						"This filter matches listings with range less than or equal to the provided value (meters)",
 					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -1208,6 +1246,18 @@ export const apiListingCollectionBody = zod
 					.describe(
 						"This filter matches listings with range less than or equal to the provided value (meters)",
 					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
 			})
 			.nullish()
 			.describe("App-based filters"),
@@ -1298,6 +1348,11 @@ export const apiListingCollectionResponse = zod
 				expiresAt: zod.string().describe("Expiration timestamp"),
 				createdAt: zod.string().describe("Creation timestamp"),
 				updatedAt: zod.string().describe("Last update timestamp"),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe("Vendor/manufacturer of the item"),
+				model: zod.string().nullish().describe("Model of the item"),
 				location: zod
 					.object({
 						id: zod.string(),
@@ -1586,6 +1641,18 @@ export const apiListingCountBody = zod
 					.describe(
 						"This filter matches listings with range less than or equal to the provided value (meters)",
 					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
 			})
 			.nullish()
 			.describe("User-land filters"),
@@ -1718,6 +1785,18 @@ export const apiListingCountBody = zod
 					.nullish()
 					.describe(
 						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
 					),
 			})
 			.nullish()
