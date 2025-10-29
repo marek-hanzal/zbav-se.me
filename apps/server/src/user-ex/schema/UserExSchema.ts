@@ -9,11 +9,11 @@ export const UserExSchema = z
 		userId: z.string().openapi({
 			description: "ID of the user (foreign key)",
 		}),
-		locationId: z.string().optional().openapi({
+		locationId: z.string().nullish().openapi({
 			description:
 				"Default location for the user - user for listings & listing sorting",
 		}),
-		side: UserSideSchema.optional(),
+		side: UserSideSchema.nullish(),
 	})
 	.openapi("UserEx", {
 		description: "Extended user information table",

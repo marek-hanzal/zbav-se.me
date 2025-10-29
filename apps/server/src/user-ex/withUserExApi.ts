@@ -61,9 +61,15 @@ export const withUserExApi = ({ session }: Routes) => {
 							.columns([
 								"userId",
 							])
-							.doUpdateSet(({ ref }) => ({
-								locationId: ref("excluded.locationId"),
-								side: ref("excluded.side"),
+							.doUpdateSet((eb) => ({
+								locationId: eb.fn.coalesce(
+									eb.ref("excluded.locationId"),
+									eb.ref("user_ex.locationId"),
+								),
+								side: eb.fn.coalesce(
+									eb.ref("excluded.side"),
+									eb.ref("user_ex.side"),
+								),
 							})),
 					)
 					.execute();

@@ -3,11 +3,11 @@ import { UserSideSchema } from "./UserSideSchema";
 
 export const UserPatchSchema = z
 	.object({
-		locationId: z.string().optional().openapi({
+		locationId: z.string().nullish().openapi({
 			description:
 				"Default location for the user - used for listings & listing sorting",
 		}),
-		side: UserSideSchema.optional(),
+		side: UserSideSchema.nullish(),
 	})
 	.openapi("UserPatch", {
 		description: "Schema for patching user extended information",

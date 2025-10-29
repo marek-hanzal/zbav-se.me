@@ -120,6 +120,9 @@
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Stáří
+6025fd5728efef0a53b96658627b99d37b2fff31f41742dd7a25dc26:
+    ref: Back to dashboard (label)
+    value: Zpět
 68df66fbac9de67547d703604ad74542f4cf229da6a7cc3e35d1a986:
     ref: Set location (hint)
     value: ...a vybrat, kam inzerát patří
@@ -144,6 +147,9 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
+7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
+    ref: I want to sell (label)
+    value: Chci prodávat
 80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
     ref: No more listings to show (message)
     value:
@@ -338,6 +344,9 @@ c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
     ref: Upload - disabled (placeholder)
     value: Musíš vybrat předchozí fotku pro odemčení této.
+cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
+    ref: I want to buy (label)
+    value: Chci nakupovat
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
     ref: Location not found (badge)
     value: Adres známe hodně, ale tuhle ne

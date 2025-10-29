@@ -1,12 +1,37 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
+import { match } from "ts-pattern";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/dashboard")({
+	beforeLoad({ context: { user }, params: { locale } }) {
+		if (user.side) {
+			match(user.side)
+				.with("seller", () => {
+					throw redirect({
+						to: "/$locale/seller",
+						params: {
+							locale,
+						},
+						statusCode: 302,
+					});
+				})
+				.with("buyer", () => {
+					throw redirect({
+						to: "/$locale/buyer",
+						params: {
+							locale,
+						},
+						statusCode: 302,
+					});
+				})
+				.exhaustive();
+		}
+	},
 	component() {
 		const { locale } = Route.useParams();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {

@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	Container,
@@ -10,10 +10,12 @@ import type { Cls } from "@use-pico/cls";
 import { BagIcon, FeedIcon, PrimaryOverlay, ShopIcon } from "@zbav-se.me/ui";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
+import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/buyer/")({
 	component() {
 		const { locale } = Route.useParams();
+		const navigate = useNavigate();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -25,6 +27,16 @@ export const Route = createFileRoute("/$locale/buyer/")({
 				},
 			},
 		};
+		const userExPatchMutation = withUserExPatchMutation.useMutation({
+			async onPostMutation() {
+				return navigate({
+					to: "/$locale/dashboard",
+					params: {
+						locale,
+					},
+				});
+			},
+		});
 
 		return (
 			<Container position={"relative"}>
@@ -87,25 +99,34 @@ export const Route = createFileRoute("/$locale/buyer/")({
 							/>
 						</LinkTo>
 
-						<LinkTo
-							to="/$locale/dashboard"
-							params={{
-								locale,
+						<Tile
+							icon={ArrowLeftIcon}
+							iconProps={{
+								size: "md",
 							}}
-						>
-							<Tile
-								icon={ArrowLeftIcon}
-								iconProps={{
+							textTitle={"Back to dashboard (label)"}
+							statusProps={{
+								titleProps: {
 									size: "md",
-								}}
-								textTitle={"Back to dashboard (label)"}
-								statusProps={{
-									titleProps: {
-										size: "md",
+								},
+							}}
+							divProps={{
+								onClick() {
+									userExPatchMutation.mutate({
+										side: null,
+									});
+								},
+							}}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"px-12",
+										],
 									},
-								}}
-							/>
-						</LinkTo>
+								},
+							}}
+						/>
 					</div>
 				</FlowContainer>
 			</Container>

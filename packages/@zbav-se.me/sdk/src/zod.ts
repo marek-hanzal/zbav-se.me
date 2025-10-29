@@ -872,8 +872,8 @@ export const apiS3PresignBody = zod.object({
  * Update user extended information
  */
 export const apiUserExPatchBody = zod.object({
-  "locationId": zod.string().optional().describe('Default location for the user - used for listings & listing sorting'),
-  "side": zod.enum(['seller', 'buyer']).optional().describe('User side - whether they are a seller or buyer')
+  "locationId": zod.string().nullish().describe('Default location for the user - used for listings & listing sorting'),
+  "side": zod.enum(['seller', 'buyer']).nullish().describe('User side - whether they are a seller or buyer')
 }).describe('Schema for patching user extended information')
 
 
