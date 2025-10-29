@@ -43,8 +43,8 @@ export const auth = betterAuth({
 
 			return {
 				user: {
-					...user,
 					...userEx,
+					...user,
 				},
 				session,
 			};
