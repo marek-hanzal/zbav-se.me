@@ -24,6 +24,7 @@ export async function getRouter() {
 			user: data?.user,
 			queryClient,
 		},
+		defaultPreload: "intent",
 		defaultNotFoundComponent() {
 			return <Sheet>4😞4</Sheet>;
 		},
