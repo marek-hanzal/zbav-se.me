@@ -63,6 +63,14 @@ const FilterSchema = z
 			description:
 				"This filter matches listings that expire after the provided date",
 		}),
+		rangeMin: z.number().nullish().openapi({
+			description:
+				"This filter matches listings with range greater than or equal to the provided value (meters)",
+		}),
+		rangeMax: z.number().nullish().openapi({
+			description:
+				"This filter matches listings with range less than or equal to the provided value (meters)",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",
