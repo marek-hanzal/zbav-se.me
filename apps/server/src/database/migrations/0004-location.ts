@@ -1,4 +1,5 @@
 import type { Migration } from "kysely";
+import { sql } from "kysely";
 
 export const LocationMigration: Migration = {
 	async up(db) {
@@ -27,7 +28,32 @@ export const LocationMigration: Migration = {
 			.addColumn("lat", "decimal(9, 6)", (col) => col.notNull())
 			.addColumn("lon", "decimal(10, 6)", (col) => col.notNull())
 			//
+			.addColumn("geo", sql`geography(Point,4326)`, (col) =>
+				col
+					.generatedAlwaysAs(
+						sql`
+                ST_SetSRID(
+                  ST_MakePoint("lon"::double precision, "lat"::double precision),
+                  4326
+                )::geography
+              `,
+					)
+					.stored(),
+			)
+			//
+			.addCheckConstraint(
+				"location_[lat]_chk",
+				sql`"lat" >= -90 AND "lat" <= 90`,
+			)
+			.addCheckConstraint(
+				"location_[lon]_chk",
+				sql`"lon" >= -180 AND "lon" <= 180`,
+			)
 			.execute();
+
+		await sql`
+            CREATE INDEX "location_[geo]_idx" ON "location" USING gist (geo)
+        `.execute(db);
 
 		await db.schema
 			.createIndex("location_[query-lang]_idx")
