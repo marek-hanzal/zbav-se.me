@@ -107,12 +107,12 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					"Znojmo",
 				];
 
-				const concurrency = 16;
-				const limit = 2048;
-				const photos = 32;
+				const concurrency = 4;
+				const limit = 1000 * 5;
+				const photos = 64;
 
 				const uploadQueue = new PQueue({
-					concurrency: 4,
+					concurrency,
 				});
 
 				const uploadIds = await Promise.all<UploadDto>(
@@ -128,7 +128,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				);
 
 				const locationQueue = new PQueue({
-					concurrency: 4,
+					concurrency,
 				});
 
 				const locationIds = await Promise.all<string>(
