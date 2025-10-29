@@ -37,8 +37,6 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		// This could be enhanced later with proper joins to category tables
 	}
 
-	// Apply custom filters
-
 	if (where?.priceMin !== undefined) {
 		query = query.where("l.price", ">=", where.priceMin);
 	}
@@ -103,7 +101,6 @@ export const withListingQueryBuilderWithSort = (
 			.with("createdAt", () => query.orderBy("l.createdAt", sort))
 			.with("updatedAt", () => query.orderBy("l.updatedAt", sort))
 			.with("expiresAt", () => query.orderBy("l.expiresAt", sort))
-			// .with("geo", () => query.orderBy("l.updatedAt", sort))
 			.exhaustive();
 	}
 
