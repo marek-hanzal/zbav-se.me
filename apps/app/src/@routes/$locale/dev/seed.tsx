@@ -111,13 +111,20 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				const limit = 1024;
 				const photos = 32;
 
+				const uploadQueue = new PQueue({
+					concurrency: 4,
+				});
+
 				const uploadIds = await Promise.all<UploadDto>(
-					new Array(photos).fill(0).map(async () => {
-						return uploadMutation.mutateAsync({
-							name: "photo.jpg",
-							blob: await picsum().then((res) => res),
-						});
-					}),
+					new Array(photos).fill(0).map(() =>
+						uploadQueue.add(async () => {
+							const blob = await picsum();
+							return uploadMutation.mutateAsync({
+								name: "photo.jpg",
+								blob,
+							});
+						}),
+					),
 				);
 
 				const queue = new PQueue({
@@ -146,7 +153,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							text: locations[range(0, locations.length - 1)]!,
 						}).then((res) => res.data[0]!.id),
 						uploadIds: [
-							uploadIds[range(0, uploadIds.length - 1)]!,
+							uploadIds[range(0, uploadIds.length - 1)]!.id,
 						],
 					}).then((res) => res.data);
 				};
