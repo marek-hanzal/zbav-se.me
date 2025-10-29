@@ -10,27 +10,18 @@ export const CategoryMigration: Migration = {
 			.addColumn("slug", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("locale", "text", (col) => col.notNull())
-			.execute();
-
-		await db.schema
-			.createIndex("category_[slug-locale]_unique_idx")
-			.on("category")
-			.columns([
+			.addUniqueConstraint("category_[slug-locale]_unique_idx", [
 				"slug",
 				"locale",
 			])
-			.unique()
-			.execute();
-
-		await db.schema
-			.createIndex("category_[locale-group-category]_unique_idx")
-			.on("category")
-			.columns([
-				"locale",
-				"group",
-				"category",
-			])
-			.unique()
+			.addUniqueConstraint(
+				"category_[locale-group-category]_unique_idx",
+				[
+					"locale",
+					"group",
+					"category",
+				],
+			)
 			.execute();
 	},
 };

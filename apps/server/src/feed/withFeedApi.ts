@@ -55,7 +55,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { name, listing } = c.req.valid("json");
+			const { name, filter, sort } = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
@@ -67,7 +67,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 						id,
 						userId: user.id,
 						name,
-						listing,
+						filter,
+						sort,
 						createdAt: now,
 						updatedAt: now,
 					})
@@ -143,11 +144,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const {
-				id,
-				name,
-				listing: { id: _, ...listing },
-			} = c.req.valid("json");
+			const { id, name, filter, sort } = c.req.valid("json");
 			const user = c.get("user");
 			const now = new Date();
 
@@ -156,7 +153,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					.updateTable("feed")
 					.set({
 						name,
-						listing,
+						filter,
+						sort,
 						updatedAt: now,
 					})
 					.where("id", "=", id)

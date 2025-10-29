@@ -15,6 +15,9 @@
 1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
     ref: Missing required token(s). (title)
     value: Missing required token(s). (title)
+13cea9df5f371b6673519dd0d4ccd348e73f94071e7d17b608e05545:
+    ref: Feed location (cta)
+    value: Nastavení polohy
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Stav
@@ -108,6 +111,9 @@
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
     ref: currency
     value: currency
+501b1f4b9d7915a52896fdc8cdbd9be18c239e3b0251f8b34b63ed91:
+    ref: Next - feed sort (button)
+    value: Nastavení řazení
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
     ref: Missing any token(s). (message)
     value: Missing any token(s). (message)
@@ -129,9 +135,6 @@
 5d6bb45eb861bb2a56b96924c18424e8a1c7fd31df44492a6d6f9da3:
     ref: primary
     value: primary
-5e5b79c24289a73aa41c52c4dabc9c2f64e36521139e4510f2f6ad11:
-    ref: Feed sorting (cta)
-    value: Nastavení řazení
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Stáří
@@ -185,6 +188,14 @@
 891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
     ref: Missing required token(s). (message)
     value: Missing required token(s). (message)
+89ce43e549ae96ce623508874d063e27e0a12b2bcece4e86069598b3:
+    ref: Feed - location security (hint)
+    value: >
+        Zadej libovolné umístění - od tohoto místa se budou inzeráty řadit (dej
+        např. Prahu, Benešov
+
+        se zobrazí dřív, než Brno). Na nic jiného se tato poloha nepoužije, nikdo ji
+        neuvidí.
 89dbab7e6f158a0076038c969fb2936c6746937d31c2a9963daa9bde:
     ref: stripIfInteger
     value: stripIfInteger
@@ -197,6 +208,10 @@
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
     ref: Previous (tour)
     value: Předchozí
+8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
+    ref: Feed location (hint)
+    value: Referenční poloha (odkud se budou inzeráty řadit), např. tvoje chata,
+        práce nebo domov.
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
     value: Nabídky
@@ -337,7 +352,7 @@ ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     value: Moje inzeráty
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     ref: Location search (placeholder)
-    value: Kam inzerát umístíme?
+    value: Napiš město, kraj, co tě napadne
 badc5b78cb713413bf87d581fc96eecd594bcf82de763ad73cdf01f0:
     ref: No listings found (message)
     value: No listings found (message)
@@ -368,6 +383,9 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
+cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
+    ref: Feed location (title)
+    value: Nastavení polohy
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
     ref: Upload - disabled (placeholder)
     value: Musíš vybrat předchozí fotku pro odemčení této.

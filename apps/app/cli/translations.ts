@@ -45,6 +45,11 @@ tx({
 			},
 			//
 			{
+				name: "LocationSelection",
+				attr: "textHint",
+			},
+			//
+			{
 				name: "Condition",
 				attr: "textHint",
 			},

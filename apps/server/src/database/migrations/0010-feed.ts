@@ -6,7 +6,9 @@ export const FeedMigration: Migration = {
 			.createTable("feed")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
-			.addColumn("listing", "jsonb", (col) => col.notNull())
+			.addColumn("name", "text", (col) => col.notNull())
+			.addColumn("filter", "jsonb", (col) => col.notNull())
+			.addColumn("sort", "jsonb", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
@@ -24,6 +26,10 @@ export const FeedMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addUniqueConstraint("feed_[userId-name]_unique_idx", [
+				"userId",
+				"name",
+			])
 			.execute();
 
 		await db.schema

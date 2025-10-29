@@ -3,29 +3,29 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
-	Container,
 	LinkTo,
-	Tx,
 } from "@use-pico/client";
-import { ListingCommonSortValue } from "@zbav-se.me/sdk";
 import { TitleContainer } from "@zbav-se.me/ui";
-import { useId } from "react";
+import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
+import { LocationSelection } from "~/app/location/ui/LocationSelection";
 
-export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
+export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 	validateSearch: FeedWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const sortKeyId = useId();
+		const [locationId, setLocationId] = useState<string | undefined>(
+			undefined,
+		);
 
 		return (
 			<TitleContainer
-				textTitle={"Feed sorting (title)"}
+				textTitle={"Feed location (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/wizard/location"}
+						to={"/$locale/buyer/feed/select"}
 						params={{
 							locale,
 						}}
@@ -40,6 +40,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 						}}
 						search={{
 							...state,
+							filter: {
+								...state.filter,
+								locationId,
+							},
 						}}
 						full
 					>
@@ -55,26 +59,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 					</LinkTo>
 				}
 			>
-				<Container
-					layout={"vertical"}
-					overflow={"horizontal"}
-					gap={"xs"}
-					height={"auto"}
-				>
-					{Object.values(ListingCommonSortValue).map((key) => {
-						return (
-							<Button
-								key={`${sortKeyId}-${key}`}
-								size={"md"}
-								full
-							>
-								<Tx
-									label={`Listing common sort value ${key}`}
-								/>
-							</Button>
-						);
-					})}
-				</Container>
+				<LocationSelection
+					locale={locale}
+					value={locationId}
+					onChange={setLocationId}
+					textHint={"Feed - location security (hint)"}
+				/>
 			</TitleContainer>
 		);
 	},

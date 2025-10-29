@@ -9,7 +9,13 @@ import {
 	Tx,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import { FeedIcon, Sheet, ThemeCls, TypoIcon } from "@zbav-se.me/ui";
+import {
+	FeedIcon,
+	LocationIcon,
+	Sheet,
+	ThemeCls,
+	TypoIcon,
+} from "@zbav-se.me/ui";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/start")({
 	component() {
@@ -39,7 +45,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/start")({
 							textMessage={"Feed - intro (description)"}
 							action={
 								<LinkTo
-									to="/$locale/buyer/feed/wizard/sort"
+									to="/$locale/buyer/feed/wizard/location"
 									params={{
 										locale,
 									}}
@@ -49,7 +55,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/start")({
 										iconProps={{
 											size: "md",
 										}}
-										label={"Feed sorting (cta)"}
+										label={"Feed location (cta)"}
 										tone={"secondary"}
 										theme={"dark"}
 										size={"xl"}
@@ -69,6 +75,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/start")({
 								},
 							}}
 						>
+							<TypoIcon icon={LocationIcon}>
+								<Tx label={"Feed location (hint)"} />
+							</TypoIcon>
+
 							<TypoIcon icon={SortIcon}>
 								<Tx label={"Feed sorting (hint)"} />
 							</TypoIcon>

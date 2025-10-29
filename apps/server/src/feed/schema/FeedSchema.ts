@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingFilterSchema } from "../../listing/schema/ListingFilterSchema";
+import { ListingSortSchema } from "../../listing/schema/ListingSortSchema";
 
 export const FeedSchema = z
 	.object({
@@ -12,7 +13,10 @@ export const FeedSchema = z
 		name: z.string().openapi({
 			description: "Name of the feed",
 		}),
-		listing: ListingFilterSchema.openapi("ListingFilter", {
+		filter: ListingFilterSchema.openapi({
+			description: "Filter used to fetch the listings",
+		}),
+		sort: ListingSortSchema.array().openapi({
 			description: "Filter used to fetch the listings",
 		}),
 		createdAt: z.coerce.date().openapi({
