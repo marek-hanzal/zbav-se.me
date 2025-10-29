@@ -262,6 +262,8 @@ export interface Location {
   lat: number;
   /** Longitude of the location */
   lon: number;
+  /** Encoded PostGIS geometry of the location */
+  geo: string;
 }
 
 /**

@@ -258,7 +258,8 @@ export const apiListingFetchResponse = zod.object({
   "confidence": zod.number().describe('Confidence score of the location (based on query)'),
   "hash": zod.string().describe('Used to uniquely identify this location entry'),
   "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location')
+  "lon": zod.number().describe('Longitude of the location'),
+  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
 }).describe('A location cache table'),
   "category": zod.object({
   "id": zod.string().describe('ID of the category'),
@@ -376,7 +377,8 @@ export const apiListingCollectionResponse = zod.object({
   "confidence": zod.number().describe('Confidence score of the location (based on query)'),
   "hash": zod.string().describe('Used to uniquely identify this location entry'),
   "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location')
+  "lon": zod.number().describe('Longitude of the location'),
+  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
 }).describe('A location cache table'),
   "category": zod.object({
   "id": zod.string().describe('ID of the category'),
@@ -767,7 +769,8 @@ export const apiLocationAutocompleteResponseItem = zod.object({
   "confidence": zod.number().describe('Confidence score of the location (based on query)'),
   "hash": zod.string().describe('Used to uniquely identify this location entry'),
   "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location')
+  "lon": zod.number().describe('Longitude of the location'),
+  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
 }).describe('A location cache table')
 export const apiLocationAutocompleteResponse = zod.array(apiLocationAutocompleteResponseItem)
 
@@ -828,7 +831,8 @@ export const apiLocationFetchResponse = zod.object({
   "confidence": zod.number().describe('Confidence score of the location (based on query)'),
   "hash": zod.string().describe('Used to uniquely identify this location entry'),
   "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location')
+  "lon": zod.number().describe('Longitude of the location'),
+  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
 }).describe('A location cache table')
 
 

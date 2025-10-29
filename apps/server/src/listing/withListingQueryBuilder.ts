@@ -99,6 +99,9 @@ export const withListingQueryBuilderWithSort = (
 		// - listing.geo (e.g. "0101000020E6100000DC662AC4239D30409E25C808A8984840")
 		// const refGeom = sql`ST_GeomFromEWKB(decode(${ewkbHex}, 'hex'))`;
 		// - keep "sorts" only process one specific sort key?
+
+		// TODO - ('SRID=4326;POINT(14.42076 50.08804)')::geometry
+
 		query = query.orderBy(
 			sql`
           (select geo from "location" where id = l."locationId")
