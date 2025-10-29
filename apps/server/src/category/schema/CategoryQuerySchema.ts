@@ -1,50 +1,16 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common";
 import { CursorSchema } from "../../schema/CursorSchema";
-import { DefaultFilterSchema } from "../../schema/DefaultFilterSchema";
-
-const FilterSchema = z
-	.object({
-		...DefaultFilterSchema.shape,
-		group: z.string().nullish().openapi({
-			description: "This filter matches the exact group of the category",
-		}),
-		category: z.string().nullish().openapi({
-			description: "This filter matches the exact category name",
-		}),
-		locale: z.string().nullish().openapi({
-			description: "This filter matches the exact locale of the category",
-		}),
-		localeIn: z.array(z.string()).nullish().openapi({
-			description:
-				"This filter matches categories with locales in the provided array",
-		}),
-	})
-	.openapi("CategoryFilter", {
-		description: "User-land filters",
-	});
+import { CategoryFilterSchema } from "./CategoryFilterSchema";
+import { CategorySortSchema } from "./CategorySortSchema";
 
 export const CategoryQuerySchema = z
 	.object({
-		cursor: CursorSchema.nullish(),
-		filter: FilterSchema.nullish(),
-		where: FilterSchema.openapi("CategoryWhere", {
+		cursor: CursorSchema.optional(),
+		filter: CategoryFilterSchema.optional(),
+		where: CategoryFilterSchema.openapi("CategoryWhere", {
 			description: "App-based filters",
-		}).nullish(),
-		sort: z
-			.object({
-				value: z.enum([
-					"group",
-					"category",
-					"sort",
-				]),
-				sort: OrderSchema,
-			})
-			.openapi("CategorySort", {
-				description: "Sort object for category collection",
-			})
-			.array()
-			.nullish(),
+		}).optional(),
+		sort: CategorySortSchema.array().optional(),
 	})
 	.openapi("CategoryQuery", {
 		description: "Query object for category collection",

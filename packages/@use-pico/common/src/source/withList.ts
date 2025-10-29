@@ -12,7 +12,7 @@ export namespace withList {
 			TFilter extends FilterSchema.Type,
 		> {
 			select: TSelect;
-			where?: TFilter | null;
+			where?: TFilter;
 		}
 	}
 
@@ -29,9 +29,9 @@ export namespace withList {
 		 */
 		output: EnsureOutput<TSelect, TOutputSchema>;
 
-		filter?: TFilter | null;
-		where?: TFilter | null;
-		cursor?: CursorSchema.Type | null;
+		filter?: TFilter;
+		where?: TFilter;
+		cursor?: CursorSchema.Type;
 	}
 
 	export type Callback<

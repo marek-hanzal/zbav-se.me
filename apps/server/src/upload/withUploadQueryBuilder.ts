@@ -1,11 +1,10 @@
-import type { UploadQuerySchema } from "./schema/UploadQuerySchema";
+import type { UploadFilterSchema } from "./schema/UploadFilterSchema";
 import type { withUploadSelect } from "./withUploadSelect";
 
 export namespace withUploadQueryBuilder {
 	export interface Props {
 		select: withUploadSelect.Select;
-		where?: UploadQuerySchema.Type["where"];
-		sort?: UploadQuerySchema.Type["sort"];
+		where?: UploadFilterSchema.Type;
 	}
 
 	export type Callback = (props: Props) => withUploadSelect.Select;
@@ -15,32 +14,17 @@ export const withUploadQueryBuilder: withUploadQueryBuilder.Callback = ({
 	select,
 	where,
 }) => {
+	if (!where) {
+		return select;
+	}
 	let query = select;
 
-	if (where?.id) {
+	if (where.id) {
 		query = query.where("u.id", "=", where.id);
 	}
 
-	if (where?.idIn && where.idIn.length > 0) {
+	if (where.idIn && where.idIn.length > 0) {
 		query = query.where("u.id", "in", where.idIn);
-	}
-
-	return query;
-};
-
-export const withUploadQueryBuilderWithSort = (
-	props: withUploadQueryBuilder.Props,
-) => {
-	let query = withUploadQueryBuilder(props);
-
-	for (const sortItem of props.sort ?? []) {
-		if (sortItem.sort) {
-			switch (sortItem.value) {
-				case "createdAt":
-					query = query.orderBy("u.createdAt", sortItem.sort);
-					break;
-			}
-		}
 	}
 
 	return query;

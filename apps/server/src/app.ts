@@ -8,6 +8,7 @@ import { AppEnv } from "./AppEnv";
 import { auth } from "./auth/auth";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { database } from "./database/kysely";
+import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withHealthApi } from "./health/withHealthApi";
 import type { Routes } from "./hono/Routes";
@@ -181,6 +182,7 @@ withMigrationApi(routes);
 withS3Api(routes);
 withJanitorApi(routes);
 withUserExApi(routes);
+withFeedApi(routes);
 
 app.options("/api/cors-proxy", (c) => {
 	c.header("Access-Control-Allow-Origin", "*");

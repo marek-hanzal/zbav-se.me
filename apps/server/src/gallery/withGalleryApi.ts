@@ -1,15 +1,13 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { withCount, withFetch, withList } from "@use-pico/common";
+import { createRoute } from "@hono/zod-openapi";
+import { withCollection, withCount, withFetch } from "@use-pico/common";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
+import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
-import {
-	withGalleryQueryBuilder,
-	withGalleryQueryBuilderWithSort,
-} from "./withGalleryQueryBuilder";
+import { withGalleryQueryBuilder } from "./withGalleryQueryBuilder";
 import { withGallerySelect } from "./withGallerySelect";
 
 export const withGalleryApi: Routes.Fn = ({ session }) => {
@@ -58,17 +56,13 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 			const { filter, where, sort } = c.req.valid("json");
 
 			const result = await withFetch({
-				select: withGallerySelect(),
+				select: withGallerySelect({
+					sort,
+				}),
 				output: GallerySchema,
 				filter,
 				where,
-				query({ select, where }) {
-					return withGalleryQueryBuilderWithSort({
-						select,
-						where,
-						sort,
-					});
-				},
+				query: withGalleryQueryBuilder,
 			});
 
 			if (!result) {
@@ -103,7 +97,11 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: z.array(GallerySchema),
+							schema: withCollectionSchema({
+								schema: GallerySchema,
+								type: "GalleryCollection",
+								description: "Collection of gallery items",
+							}),
 						},
 					},
 					description:
@@ -117,19 +115,18 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 		async (c) => {
 			const { cursor, filter, where, sort } = c.req.valid("json");
 			return c.json(
-				await withList({
-					select: withGallerySelect(),
+				await withCollection({
+					select: withGallerySelect({
+						sort,
+					}),
 					output: GallerySchema,
-					cursor,
+					cursor: cursor ?? {
+						page: 0,
+						size: 10,
+					},
 					filter,
 					where,
-					query({ select, where }) {
-						return withGalleryQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
-					},
+					query: withGalleryQueryBuilder,
 				}),
 			);
 		},
@@ -172,12 +169,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 					select: withGallerySelect(),
 					filter,
 					where,
-					query({ select, where }) {
-						return withGalleryQueryBuilder({
-							select,
-							where,
-						});
-					},
+					query: withGalleryQueryBuilder,
 				}),
 			);
 		},

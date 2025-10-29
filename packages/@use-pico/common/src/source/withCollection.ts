@@ -17,7 +17,7 @@ export namespace withCollection {
 			TFilter extends FilterSchema.Type,
 		> {
 			select: TSelect;
-			where?: TFilter | null;
+			where?: TFilter;
 		}
 	}
 
@@ -34,8 +34,8 @@ export namespace withCollection {
 		 */
 		output: EnsureOutput<TSelect, TOutputSchema>;
 
-		filter?: TFilter | null;
-		where?: TFilter | null;
+		filter?: TFilter;
+		where?: TFilter;
 		cursor: CursorSchema.Type;
 	}
 

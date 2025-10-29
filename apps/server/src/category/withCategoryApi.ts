@@ -1,5 +1,5 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import { createRoute } from "@hono/zod-openapi";
+import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { sql } from "kysely";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
@@ -7,12 +7,10 @@ import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
+import { withCollectionSchema } from "../schema/withCollectionSchema";
+import { CategoryDtoSchema } from "./schema/CategoryDtoSchema";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
-import { CategorySchema } from "./schema/CategorySchema";
-import {
-	withCategoryQueryBuilder,
-	withCategoryQueryBuilderWithSort,
-} from "./withCategoryQueryBuilder";
+import { withCategoryQueryBuilder } from "./withCategoryQueryBuilder";
 import { withCategorySelect } from "./withCategorySelect";
 
 export const withCategoryApi = ({ session }: Routes) => {
@@ -38,7 +36,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: CategorySchema,
+							schema: CategoryDtoSchema,
 						},
 					},
 					description:
@@ -69,17 +67,13 @@ export const withCategoryApi = ({ session }: Routes) => {
 				},
 				fetch: () =>
 					withFetch({
-						select: withCategorySelect(),
-						output: CategorySchema,
+						select: withCategorySelect({
+							sort,
+						}),
+						output: CategoryDtoSchema,
 						filter,
 						where,
-						query({ select, where }) {
-							return withCategoryQueryBuilderWithSort({
-								select,
-								where,
-								sort,
-							});
-						},
+						query: withCategoryQueryBuilder,
 					}),
 			});
 
@@ -120,7 +114,11 @@ export const withCategoryApi = ({ session }: Routes) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: z.array(CategorySchema),
+							schema: withCollectionSchema({
+								schema: CategoryDtoSchema,
+								type: "CategoryCollection",
+								description: "Collection of categories",
+							}),
 						},
 					},
 					description:
@@ -142,23 +140,25 @@ export const withCategoryApi = ({ session }: Routes) => {
 					value: json,
 				},
 				fetch: () =>
-					withList({
-						select: withCategorySelect(),
-						output: CategorySchema,
-						cursor,
+					withCollection({
+						select: withCategorySelect({
+							sort,
+						}),
+						output: CategoryDtoSchema,
+						cursor: cursor ?? {
+							page: 0,
+							size: 10,
+						},
 						filter,
 						where,
-						query({ select, where }) {
-							return withCategoryQueryBuilderWithSort({
-								select,
-								where,
-								sort,
-							});
-						},
+						query: withCategoryQueryBuilder,
 					}),
 			});
 
-			if (data.length === 0 && (where?.fulltext || filter?.fulltext)) {
+			if (
+				data.data.length === 0 &&
+				(where?.fulltext || filter?.fulltext)
+			) {
 				const fulltext = filter?.fulltext || where?.fulltext;
 				if (fulltext && fulltext.length >= 4) {
 					try {
@@ -239,12 +239,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 						select: withCategorySelect(),
 						filter,
 						where,
-						query({ select, where }) {
-							return withCategoryQueryBuilder({
-								select,
-								where,
-							});
-						},
+						query: withCategoryQueryBuilder,
 					}),
 			});
 

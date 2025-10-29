@@ -1,18 +1,16 @@
-import { createRoute, z } from "@hono/zod-openapi";
-import { genId, withCount, withFetch, withList } from "@use-pico/common";
+import { createRoute } from "@hono/zod-openapi";
+import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
+import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { UploadCreateSchema } from "./schema/UploadCreateSchema";
 import { UploadDtoSchema } from "./schema/UploadDtoSchema";
 import { UploadQuerySchema } from "./schema/UploadQuerySchema";
-import {
-	withUploadQueryBuilder,
-	withUploadQueryBuilderWithSort,
-} from "./withUploadQueryBuilder";
+import { withUploadQueryBuilder } from "./withUploadQueryBuilder";
 import { withUploadSelect } from "./withUploadSelect";
 
 export const withUploadApi: Routes.Fn = ({ session }) => {
@@ -88,12 +86,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 					where: {
 						id,
 					},
-					query({ select, where }) {
-						return withUploadQueryBuilderWithSort({
-							select,
-							where,
-						});
-					},
+					query: withUploadQueryBuilder,
 				}),
 				201,
 			);
@@ -143,17 +136,13 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 			const { filter, where, sort } = c.req.valid("json");
 
 			const result = await withFetch({
-				select: withUploadSelect(),
+				select: withUploadSelect({
+					sort,
+				}),
 				output: UploadDtoSchema,
 				filter,
 				where,
-				query({ select, where }) {
-					return withUploadQueryBuilderWithSort({
-						select,
-						where,
-						sort,
-					});
-				},
+				query: withUploadQueryBuilder,
 			});
 
 			if (!result) {
@@ -188,7 +177,11 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: z.array(UploadDtoSchema),
+							schema: withCollectionSchema({
+								schema: UploadDtoSchema,
+								type: "UploadCollection",
+								description: "Collection of upload items",
+							}),
 						},
 					},
 					description:
@@ -202,19 +195,18 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 		async (c) => {
 			const { cursor, filter, where, sort } = c.req.valid("json");
 			return c.json(
-				await withList({
-					select: withUploadSelect(),
+				await withCollection({
+					select: withUploadSelect({
+						sort,
+					}),
 					output: UploadDtoSchema,
-					cursor,
+					cursor: cursor ?? {
+						page: 0,
+						size: 10,
+					},
 					filter,
 					where,
-					query({ select, where }) {
-						return withUploadQueryBuilderWithSort({
-							select,
-							where,
-							sort,
-						});
-					},
+					query: withUploadQueryBuilder,
 				}),
 			);
 		},
@@ -257,12 +249,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 					select: withUploadSelect(),
 					filter,
 					where,
-					query({ select, where }) {
-						return withUploadQueryBuilder({
-							select,
-							where,
-						});
-					},
+					query: withUploadQueryBuilder,
 				}),
 			);
 		},

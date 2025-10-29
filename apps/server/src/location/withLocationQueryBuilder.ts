@@ -1,12 +1,11 @@
 import { withLikeEx } from "../database/expression/withLikeEx";
-import type { LocationQuerySchema } from "./schema/LocationQuerySchema";
+import type { LocationFilterSchema } from "./schema/LocationFilterSchema";
 import type { withLocationSelect } from "./withLocationSelect";
 
 export namespace withLocationQueryBuilder {
 	export interface Props {
 		select: withLocationSelect.Select;
-		where?: LocationQuerySchema.Type["where"];
-		sort?: LocationQuerySchema.Type["sort"];
+		where?: LocationFilterSchema.Type;
 	}
 
 	export type Callback = (props: Props) => withLocationSelect.Select;
@@ -20,18 +19,21 @@ export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({
 	select,
 	where,
 }) => {
+	if (!where) {
+		return select;
+	}
+
 	let query = select;
 
-	// Apply base filters
-	if (where?.id) {
+	if (where.id) {
 		query = query.where("l.id", "=", where.id);
 	}
 
-	if (where?.idIn && where.idIn.length > 0) {
+	if (where.idIn && where.idIn.length > 0) {
 		query = query.where("l.id", "in", where.idIn);
 	}
 
-	if (where?.fulltext) {
+	if (where.fulltext) {
 		const term = where.fulltext;
 		query = query.where((eb) =>
 			eb.or([
@@ -45,56 +47,24 @@ export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({
 		);
 	}
 
-	// Apply custom filters
-	if (where?.query) {
+	if (where.query) {
 		query = query.where("l.query", "=", where.query);
 	}
 
-	if (where?.lang) {
+	if (where.lang) {
 		query = query.where("l.lang", "=", where.lang);
 	}
 
-	if (where?.country) {
+	if (where.country) {
 		query = query.where("l.country", "=", where.country);
 	}
 
-	if (where?.code) {
+	if (where.code) {
 		query = query.where("l.code", "=", where.code);
 	}
 
-	if (where?.confidenceMin !== undefined) {
+	if (where.confidenceMin !== undefined) {
 		query = query.where("l.confidence", ">=", where.confidenceMin);
-	}
-
-	return query;
-};
-
-/**
- * Extended query builder that also handles sorting
- */
-export const withLocationQueryBuilderWithSort = (
-	props: withLocationQueryBuilder.Props,
-) => {
-	let query = withLocationQueryBuilder(props);
-
-	// Apply sorting
-	for (const sortItem of props.sort ?? []) {
-		if (sortItem.sort) {
-			switch (sortItem.value) {
-				case "confidence":
-					query = query.orderBy("l.confidence", sortItem.sort);
-					break;
-				case "query":
-					query = query.orderBy("l.query", sortItem.sort);
-					break;
-				case "country":
-					query = query.orderBy("l.country", sortItem.sort);
-					break;
-				case "address":
-					query = query.orderBy("l.address", sortItem.sort);
-					break;
-			}
-		}
 	}
 
 	return query;

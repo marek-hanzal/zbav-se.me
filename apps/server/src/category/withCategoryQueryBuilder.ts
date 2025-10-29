@@ -1,12 +1,11 @@
 import { withLikeEx } from "../database/expression/withLikeEx";
-import type { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
+import type { CategoryFilterSchema } from "./schema/CategoryFilterSchema";
 import type { withCategorySelect } from "./withCategorySelect";
 
 export namespace withCategoryQueryBuilder {
 	export interface Props {
 		select: withCategorySelect.Select;
-		where?: CategoryQuerySchema.Type["where"];
-		sort?: CategoryQuerySchema.Type["sort"];
+		where?: CategoryFilterSchema.Type;
 	}
 
 	export type Callback = (props: Props) => withCategorySelect.Select;
@@ -20,80 +19,58 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 	select,
 	where,
 }) => {
+	if (!where) {
+		return select;
+	}
 	let query = select;
 
-	if (where?.id) {
+	if (where.id) {
 		query = query.where("c.id", "=", where.id);
 	}
 
-	if (where?.idIn?.length) {
+	if (where.idIn && where.idIn.length > 0) {
 		query = query.where("c.id", "in", where.idIn);
 	}
 
-	if (where?.fulltext) {
-		const term = where.fulltext;
+	if (where.fulltext) {
+		const fulltext = where.fulltext;
 
 		query = query.where((eb) =>
 			eb.or([
-				withLikeEx(eb.ref("c.group"), term),
-				withLikeEx(eb.ref("c.category"), term),
+				withLikeEx(eb.ref("c.group"), fulltext),
+				withLikeEx(eb.ref("c.category"), fulltext),
 				eb.exists(
 					eb
 						.selectFrom("category_spotlight")
 						.select("category_spotlight.categoryId")
 						.whereRef("category_spotlight.categoryId", "=", "c.id")
 						.where((eb) =>
-							withLikeEx(eb.ref("category_spotlight.text"), term),
+							withLikeEx(
+								eb.ref("category_spotlight.text"),
+								fulltext,
+							),
 						),
 				),
 			]),
 		);
 	}
 
-	if (where?.group) {
+	if (where.group) {
 		query = query.where((eb) => withLikeEx(eb.ref("c.group"), where.group));
 	}
 
-	if (where?.category) {
+	if (where.category) {
 		query = query.where((eb) =>
 			withLikeEx(eb.ref("c.category"), where.category),
 		);
 	}
 
-	if (where?.locale) {
+	if (where.locale) {
 		query = query.where("c.locale", "=", where.locale);
 	}
 
-	if (where?.localeIn?.length) {
+	if (where.localeIn?.length) {
 		query = query.where("c.locale", "in", where.localeIn);
-	}
-
-	return query;
-};
-
-/**
- * Extended query builder that also handles sorting
- */
-export const withCategoryQueryBuilderWithSort = (
-	props: withCategoryQueryBuilder.Props,
-) => {
-	let query = withCategoryQueryBuilder(props);
-
-	// Apply sorting
-	for (const sortItem of props.sort ?? []) {
-		if (sortItem.sort) {
-			switch (sortItem.value) {
-				case "group":
-					query = query.orderBy("c.group", sortItem.sort);
-					break;
-				case "category":
-					query = query.orderBy("c.category", sortItem.sort);
-					break;
-				case "sort":
-					query = query.orderBy("c.sort", sortItem.sort);
-					break;
-			}
-		}
 	}
 
 	return query;

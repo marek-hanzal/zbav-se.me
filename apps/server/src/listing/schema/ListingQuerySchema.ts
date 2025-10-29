@@ -1,142 +1,16 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common";
-import { CurrencyListSchema } from "../../schema/CurrencyListSchema";
 import { CursorSchema } from "../../schema/CursorSchema";
-import { DefaultFilterSchema } from "../../schema/DefaultFilterSchema";
-
-const FilterSchema = z
-	.object({
-		...DefaultFilterSchema.shape,
-		priceMin: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with price greater than or equal to the provided value",
-		}),
-		priceMax: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with price less than or equal to the provided value",
-		}),
-		conditionMin: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with condition greater than or equal to the provided value",
-		}),
-		conditionMax: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with condition less than or equal to the provided value",
-		}),
-		ageMin: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with age greater than or equal to the provided value",
-		}),
-		ageMax: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with age less than or equal to the provided value",
-		}),
-		locationId: z.string().nullish().openapi({
-			description:
-				"This filter matches listings with the exact location ID",
-		}),
-		locationIdIn: z.array(z.string()).nullish().openapi({
-			description:
-				"This filter matches listings with location IDs in the provided array",
-		}),
-		categoryId: z.string().nullish().openapi({
-			description:
-				"This filter matches listings with the exact category ID",
-		}),
-		categoryIdIn: z.array(z.string()).nullish().openapi({
-			description:
-				"This filter matches listings with category IDs in the provided array",
-		}),
-		currency: CurrencyListSchema.nullish().openapi({
-			description:
-				"This filter matches listings with the exact currency code",
-		}),
-		currencyIn: z.array(CurrencyListSchema).nullish().openapi({
-			description:
-				"This filter matches listings with currency codes in the provided array",
-		}),
-		expiresAtBefore: z.coerce.date().nullish().openapi({
-			description:
-				"This filter matches listings that expire before the provided date",
-		}),
-		expiresAtAfter: z.coerce.date().nullish().openapi({
-			description:
-				"This filter matches listings that expire after the provided date",
-		}),
-		rangeMin: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with range greater than or equal to the provided value (meters)",
-		}),
-		rangeMax: z.number().nullish().openapi({
-			description:
-				"This filter matches listings with range less than or equal to the provided value (meters)",
-		}),
-		vendor: z.string().nullish().openapi({
-			description:
-				"This filter matches listings with vendor matching the provided value",
-		}),
-		model: z.string().nullish().openapi({
-			description:
-				"This filter matches listings with model matching the provided value",
-		}),
-	})
-	.openapi("ListingFilter", {
-		description: "User-land filters",
-	});
+import { ListingFilterSchema } from "./ListingFilterSchema";
+import { ListingSortSchema } from "./ListingSortSchema";
 
 export const ListingQuerySchema = z
 	.object({
-		cursor: CursorSchema.nullish(),
-		filter: FilterSchema.nullish(),
-		where: FilterSchema.openapi("ListingWhere", {
+		cursor: CursorSchema.optional(),
+		filter: ListingFilterSchema.optional(),
+		where: ListingFilterSchema.openapi("ListingWhere", {
 			description: "App-based filters",
-		}).nullish(),
-		sort: z
-			.array(
-				z
-					.union([
-						z
-							.object({
-								type: z.literal("listing").openapi({
-									description: "Common listing sort keys",
-								}),
-								value: z.enum([
-									"price",
-									"condition",
-									"age",
-									"createdAt",
-									"updatedAt",
-									"expiresAt",
-								]),
-								sort: OrderSchema,
-							})
-							.nullish()
-							.openapi("ListingCommonSort", {
-								description: "Common listing sort keys",
-							}),
-						z
-							.object({
-								type: z.literal("geo").openapi({
-									description: "Explicit geo sorting",
-								}),
-								lon: z.number().openapi({
-									description: "Longitude of the location",
-								}),
-								lat: z.number().openapi({
-									description: "Latitude of the location",
-								}),
-								sort: OrderSchema,
-							})
-							.nullish()
-							.openapi("ListingGeoSort", {
-								description: "Explicit geo sorting",
-							}),
-					])
-					.openapi("ListingSort", {
-						description: "Sort object for listing collection",
-					}),
-			)
-			.nullish(),
+		}).optional(),
+		sort: ListingSortSchema.array().optional(),
 	})
 	.openapi("ListingQuery", {
 		description: "Query object for listing collection",

@@ -2,11 +2,11 @@ import { sql } from "kysely";
 import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { database } from "../database/kysely";
-import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import type { ListingSortSchema } from "./schema/ListingSortSchema";
 
 export namespace withListingSelect {
 	export interface Props {
-		sort?: ListingQuerySchema.Type["sort"];
+		sort?: ListingSortSchema.Type[];
 	}
 
 	export type Select = ReturnType<typeof withListingSelect>;

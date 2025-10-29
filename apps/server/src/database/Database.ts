@@ -2,6 +2,7 @@ import type { auth } from "../auth/auth";
 import type { CategoryMissSchema } from "../category/schema/CategoryMissSchema";
 import type { CategorySchema } from "../category/schema/CategorySchema";
 import type { CategorySpotlightSchema } from "../category/schema/CategorySpotlightSchema";
+import type { FeedSchema } from "../feed/schema/FeedSchema";
 import type { GallerySchema } from "../gallery/schema/GallerySchema";
 import type { ListingSchema } from "../listing/schema/ListingSchema";
 import type { LocationSchema } from "../location/schema/LocationSchema";
@@ -12,6 +13,7 @@ export interface Database {
 	category: CategorySchema.Type;
 	category_miss: CategoryMissSchema.Type;
 	category_spotlight: CategorySpotlightSchema.Type;
+	feed: FeedSchema.Type;
 	listing: ListingSchema.Type;
 	location: LocationSchema.Type;
 	gallery: GallerySchema.Type;
