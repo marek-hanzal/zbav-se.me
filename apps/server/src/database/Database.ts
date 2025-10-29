@@ -1,4 +1,3 @@
-import type { auth } from "../auth";
 import type { CategoryMissSchema } from "../category/schema/CategoryMissSchema";
 import type { CategorySchema } from "../category/schema/CategorySchema";
 import type { CategorySpotlightSchema } from "../category/schema/CategorySpotlightSchema";
@@ -16,6 +15,6 @@ export interface Database {
 	location: LocationSchema.Type;
 	gallery: GallerySchema.Type;
 	upload: UploadSchema.Type;
-	user: typeof auth.$Infer.Session.user;
+	// user: typeof auth.$Infer.Session.user;
 	user_ex: UserExSchema.Type;
 }

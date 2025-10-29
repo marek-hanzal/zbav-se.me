@@ -1,9 +1,20 @@
 import { genId } from "@use-pico/common";
 import { betterAuth } from "better-auth";
-import { anonymous, openAPI } from "better-auth/plugins";
+import { anonymous, customSession, openAPI } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";
-import { AppEnv } from "./AppEnv";
-import { dialect } from "./database/dialect";
+import { Kysely } from "kysely";
+import { AppEnv } from "../AppEnv";
+import { dialect } from "../database/dialect";
+import type { UserExSchema } from "../user-ex/schema/UserExSchema";
+
+const authKysely = new Kysely<{
+	user_ex: UserExSchema.Type;
+}>({
+	dialect,
+	log: [
+		"error",
+	],
+});
 
 export const auth = betterAuth({
 	database: dialect,
@@ -22,6 +33,21 @@ export const auth = betterAuth({
 		}),
 		openAPI({
 			disableDefaultReference: true,
+		}),
+		customSession(async ({ user, session }) => {
+			const userEx = await authKysely
+				.selectFrom("user_ex")
+				.selectAll()
+				.where("userId", "=", user.id)
+				.executeTakeFirst();
+
+			return {
+				user: {
+					...user,
+					...userEx,
+				},
+				session,
+			};
 		}),
 	],
 	trustedOrigins: [

@@ -5,7 +5,7 @@ import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { rateLimiter } from "hono-rate-limiter";
 import { AppEnv } from "./AppEnv";
-import { auth } from "./auth";
+import { auth } from "./auth/auth";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { database } from "./database/kysely";
 import { withGalleryApi } from "./gallery/withGalleryApi";

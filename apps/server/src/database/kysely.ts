@@ -1,6 +1,5 @@
 import { withDatabase } from "@use-pico/common";
-import { getMigrations } from "better-auth/db";
-import { auth } from "../auth";
+import { runAuthMigration } from "../auth/runAuthMigration";
 import type { Database } from "./Database";
 import { dialect } from "./dialect";
 import { migrations } from "./migrations";
@@ -10,11 +9,7 @@ import { migrations } from "./migrations";
  */
 export const database = withDatabase<Database>({
 	dialect,
-	async onPreMigration() {
-		return getMigrations(auth.options).then(({ runMigrations }) => {
-			return runMigrations();
-		});
-	},
+	onPreMigration: runAuthMigration,
 	async getMigrations() {
 		return migrations;
 	},
