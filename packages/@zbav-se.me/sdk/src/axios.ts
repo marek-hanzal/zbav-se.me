@@ -213,9 +213,9 @@ export const CurrencyList = {
 } as const;
 
 /**
- * A location cache table
+ * Location data transfer object
  */
-export interface Location {
+export interface LocationDto {
 	id: string;
 	/** The query that was used to get the location */
 	query: string;
@@ -270,24 +270,6 @@ export interface Location {
 }
 
 /**
- * Represents a category a listing can be assigned to
- */
-export interface Category {
-	/** ID of the category */
-	id: string;
-	/** Group/name of the category */
-	group: string;
-	/** Category name within the group */
-	category: string;
-	/** Slug of the category */
-	slug: string;
-	/** Sort order (position) of the category */
-	sort: number;
-	/** Locale/language of the category */
-	locale: string;
-}
-
-/**
  * Upload data transfer object
  */
 export interface UploadDto {
@@ -309,16 +291,12 @@ export interface GalleryDto {
 	uploadId: string;
 	/** Sort order of the image in the listing's gallery */
 	sort: number;
-	/** Creation timestamp */
-	createdAt: string;
 	upload: UploadDto;
 }
 
 export interface ListingDto {
 	/** ID of the listing */
 	id: string;
-	/** ID of the user who created the listing */
-	userId: string;
 	/** Price of the listing */
 	price: number;
 	currency: CurrencyList;
@@ -346,8 +324,8 @@ export interface ListingDto {
 	 * @nullable
 	 */
 	model?: string | null;
-	location: Location;
-	category: Category;
+	location: LocationDto;
+	category: CategoryDto;
 	/** Array of listing gallery images */
 	gallery: GalleryDto[];
 }
@@ -765,24 +743,6 @@ export interface ListingCollection {
 }
 
 /**
- * Represents a photo in a listing's gallery
- */
-export interface Gallery {
-	/** ID of the gallery item */
-	id: string;
-	/** ID of the user who owns the gallery item */
-	userId: string;
-	/** ID of the listing this image belongs to */
-	listingId: string;
-	/** ID of the upload this image belongs to */
-	uploadId: string;
-	/** Sort order of the image in the listing's gallery */
-	sort: number;
-	/** Creation timestamp */
-	createdAt: string;
-}
-
-/**
  * User-land filters for gallery items
  */
 export interface GalleryFilter {
@@ -889,7 +849,7 @@ export interface GalleryQuery {
  * Collection of gallery items
  */
 export interface GalleryCollection {
-	data: Gallery[];
+	data: GalleryDto[];
 	/** Whether there are more items to fetch */
 	more: boolean;
 }
@@ -991,63 +951,6 @@ export interface UploadCollection {
 	data: UploadDto[];
 	/** Whether there are more items to fetch */
 	more: boolean;
-}
-
-/**
- * Location data transfer object
- */
-export interface LocationDto {
-	id: string;
-	/** The query that was used to get the location */
-	query: string;
-	/** The language that was used to get the location */
-	lang: string;
-	/** The country that the location is in */
-	country: string;
-	/** Country code */
-	code: string;
-	/**
-	 * The county that the location is in
-	 * @nullable
-	 */
-	county?: string | null;
-	/**
-	 * The municipality that the location is in
-	 * @nullable
-	 */
-	municipality?: string | null;
-	/**
-	 * The state that the location is in
-	 * @nullable
-	 */
-	state?: string | null;
-	/** Full address preview of a location */
-	address: string;
-	/**
-	 * The city that the location is in
-	 * @nullable
-	 */
-	city?: string | null;
-	/**
-	 * The street that the location is on
-	 * @nullable
-	 */
-	street?: string | null;
-	/**
-	 * The postal/zip code of the location
-	 * @nullable
-	 */
-	zip?: string | null;
-	/** Confidence score of the location (based on query) */
-	confidence: number;
-	/** Used to uniquely identify this location entry */
-	hash: string;
-	/** Latitude of the location */
-	lat: number;
-	/** Longitude of the location */
-	lon: number;
-	/** Encoded PostGIS geometry of the location */
-	geo: string;
 }
 
 /**
@@ -1409,7 +1312,7 @@ export const apiListingCount = <TData = AxiosResponse<Count>>(
 /**
  * Return a gallery item based on the provided query
  */
-export const apiGalleryFetch = <TData = AxiosResponse<Gallery>>(
+export const apiGalleryFetch = <TData = AxiosResponse<GalleryDto>>(
 	galleryQuery: GalleryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1578,7 +1481,7 @@ export type ApiListingCreateResult = AxiosResponse<ListingDto>;
 export type ApiListingFetchResult = AxiosResponse<ListingDto>;
 export type ApiListingCollectionResult = AxiosResponse<ListingCollection>;
 export type ApiListingCountResult = AxiosResponse<Count>;
-export type ApiGalleryFetchResult = AxiosResponse<Gallery>;
+export type ApiGalleryFetchResult = AxiosResponse<GalleryDto>;
 export type ApiGalleryCollectionResult = AxiosResponse<GalleryCollection>;
 export type ApiGalleryCountResult = AxiosResponse<Count>;
 export type ApiUploadCreateResult = AxiosResponse<UploadDto>;

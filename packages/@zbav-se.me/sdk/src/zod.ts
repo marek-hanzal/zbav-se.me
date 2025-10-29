@@ -837,7 +837,6 @@ export const apiListingFetchBody = zod
 
 export const apiListingFetchResponse = zod.object({
 	id: zod.string().describe("ID of the listing"),
-	userId: zod.string().describe("ID of the user who created the listing"),
 	price: zod.number().describe("Price of the listing"),
 	currency: zod
 		.enum([
@@ -911,7 +910,7 @@ export const apiListingFetchResponse = zod.object({
 				.string()
 				.describe("Encoded PostGIS geometry of the location"),
 		})
-		.describe("A location cache table"),
+		.describe("Location data transfer object"),
 	category: zod
 		.object({
 			id: zod.string().describe("ID of the category"),
@@ -923,7 +922,7 @@ export const apiListingFetchResponse = zod.object({
 				.describe("Sort order (position) of the category"),
 			locale: zod.string().describe("Locale/language of the category"),
 		})
-		.describe("Represents a category a listing can be assigned to"),
+		.describe("Category data transfer object"),
 	gallery: zod
 		.array(
 			zod
@@ -940,7 +939,6 @@ export const apiListingFetchResponse = zod.object({
 						.describe(
 							"Sort order of the image in the listing's gallery",
 						),
-					createdAt: zod.string().describe("Creation timestamp"),
 					upload: zod
 						.object({
 							id: zod.string().describe("ID of the upload"),
@@ -1331,9 +1329,6 @@ export const apiListingCollectionResponse = zod
 		data: zod.array(
 			zod.object({
 				id: zod.string().describe("ID of the listing"),
-				userId: zod
-					.string()
-					.describe("ID of the user who created the listing"),
 				price: zod.number().describe("Price of the listing"),
 				currency: zod
 					.enum([
@@ -1424,7 +1419,7 @@ export const apiListingCollectionResponse = zod
 								"Encoded PostGIS geometry of the location",
 							),
 					})
-					.describe("A location cache table"),
+					.describe("Location data transfer object"),
 				category: zod
 					.object({
 						id: zod.string().describe("ID of the category"),
@@ -1442,9 +1437,7 @@ export const apiListingCollectionResponse = zod
 							.string()
 							.describe("Locale/language of the category"),
 					})
-					.describe(
-						"Represents a category a listing can be assigned to",
-					),
+					.describe("Category data transfer object"),
 				gallery: zod
 					.array(
 						zod
@@ -1467,9 +1460,6 @@ export const apiListingCollectionResponse = zod
 									.describe(
 										"Sort order of the image in the listing's gallery",
 									),
-								createdAt: zod
-									.string()
-									.describe("Creation timestamp"),
 								upload: zod
 									.object({
 										id: zod
@@ -1962,9 +1952,6 @@ export const apiGalleryFetchBody = zod
 export const apiGalleryFetchResponse = zod
 	.object({
 		id: zod.string().describe("ID of the gallery item"),
-		userId: zod
-			.string()
-			.describe("ID of the user who owns the gallery item"),
 		listingId: zod
 			.string()
 			.describe("ID of the listing this image belongs to"),
@@ -1974,9 +1961,14 @@ export const apiGalleryFetchResponse = zod
 		sort: zod
 			.number()
 			.describe("Sort order of the image in the listing's gallery"),
-		createdAt: zod.string().describe("Creation timestamp"),
+		upload: zod
+			.object({
+				id: zod.string().describe("ID of the upload"),
+				url: zod.url().describe("Public URL to the uploaded file"),
+			})
+			.describe("Upload data transfer object"),
 	})
-	.describe("Represents a photo in a listing's gallery");
+	.describe("Gallery data transfer object");
 
 /**
  * Returns gallery items based on provided parameters
@@ -2066,9 +2058,6 @@ export const apiGalleryCollectionResponse = zod
 			zod
 				.object({
 					id: zod.string().describe("ID of the gallery item"),
-					userId: zod
-						.string()
-						.describe("ID of the user who owns the gallery item"),
 					listingId: zod
 						.string()
 						.describe("ID of the listing this image belongs to"),
@@ -2080,9 +2069,16 @@ export const apiGalleryCollectionResponse = zod
 						.describe(
 							"Sort order of the image in the listing's gallery",
 						),
-					createdAt: zod.string().describe("Creation timestamp"),
+					upload: zod
+						.object({
+							id: zod.string().describe("ID of the upload"),
+							url: zod
+								.url()
+								.describe("Public URL to the uploaded file"),
+						})
+						.describe("Upload data transfer object"),
 				})
-				.describe("Represents a photo in a listing's gallery"),
+				.describe("Gallery data transfer object"),
 		),
 		more: zod.boolean().describe("Whether there are more items to fetch"),
 	})
