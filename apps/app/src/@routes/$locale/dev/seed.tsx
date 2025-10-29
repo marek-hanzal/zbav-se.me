@@ -82,6 +82,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					"Kolín",
 					"Opava",
 					"Písek",
+					"Střelice",
 					"Jablonec nad Nisou",
 					"Litoměřice",
 				];
@@ -122,7 +123,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					}).then((res) => res.data);
 				};
 
-				const limit = 16;
+				const limit = 32;
 
 				for (let i = 0; i < limit; i++) {
 					queue.add(createListing);

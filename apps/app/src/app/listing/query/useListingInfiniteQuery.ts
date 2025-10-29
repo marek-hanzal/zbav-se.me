@@ -36,12 +36,12 @@ export const useListingInfiniteQuery = ({
 								},
 							}
 						: undefined,
-					// sort: [
-					// 	{
-					// 		value: "createdAt",
-					// 		sort: "desc",
-					// 	},
-					// ],
+					sort: [
+						{
+							value: "createdAt",
+							sort: "desc",
+						},
+					],
 				},
 				{
 					signal,

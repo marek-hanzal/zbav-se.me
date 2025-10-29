@@ -95,6 +95,9 @@ export const withListingQueryBuilderWithSort = (
 		const refId = props.params.geo.locationId;
 		const dir = props.params.geo.sort ?? "asc";
 
+		// TODO Receive "geo" column directly instead of using subquery
+		// - listing.geo (e.g. "0101000020E6100000DC662AC4239D30409E25C808A8984840")
+		// const refGeom = sql`ST_GeomFromEWKB(decode(${ewkbHex}, 'hex'))`;
 		query = query.orderBy(
 			sql`
           (select geo from "location" where id = l."locationId")

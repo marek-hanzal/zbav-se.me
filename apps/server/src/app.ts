@@ -144,7 +144,7 @@ const withUserRateLimiter = rateLimiter<{
 	 * 15min
 	 */
 	windowMs: 15 * 60 * 1000,
-	limit: 256,
+	limit: 256000,
 	keyGenerator(c) {
 		return `user:${c.get("user").id}`;
 	},
