@@ -1,12 +1,12 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiCategoryFetch,
-	type Category,
+	type CategoryDto,
 	type CategoryQuery,
 } from "@zbav-se.me/sdk";
 
 export const withCategoryFetchQuery = () => {
-	return withQuery<CategoryQuery, Category>({
+	return withQuery<CategoryQuery, CategoryDto>({
 		keys(data) {
 			return [
 				"category",

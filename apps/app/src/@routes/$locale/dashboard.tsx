@@ -3,21 +3,18 @@ import { Container, LinkTo, type LinkToCls, UserIcon } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import {
 	BagIcon,
-	Fade,
 	FeedIcon,
 	PostIcon,
 	PrimaryOverlay,
 	PublicIcon,
 	ShopIcon,
 } from "@zbav-se.me/ui";
-import { useRef } from "react";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
 
 export const Route = createFileRoute("/$locale/dashboard")({
 	component() {
 		const { locale } = Route.useParams();
-		const scrollRef = useRef<HTMLDivElement>(null);
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -34,12 +31,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 			<Container position={"relative"}>
 				<PrimaryOverlay />
 
-				<Fade scrollableRef={scrollRef} />
-
-				<FlowContainer
-					ref={scrollRef}
-					overflow={"vertical"}
-				>
+				<FlowContainer overflow={"vertical"}>
 					<div className="grid gap-2">
 						<LinkTo
 							to="/$locale/feed"

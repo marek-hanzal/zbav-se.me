@@ -151,7 +151,9 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					return apiListingCreate({
 						age: range(1, 6),
 						condition: range(1, 6),
-						categoryId: category[range(0, category.length - 1)]!.id,
+						categoryId:
+							category.data[range(0, category.data.length - 1)]!
+								.id,
 						price: range(0, 99_999),
 						currency:
 							CurrencyList[range(0, CurrencyList.length - 1)]!,

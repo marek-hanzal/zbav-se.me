@@ -114,12 +114,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					where: {
 						id,
 					},
-					query({ select, where }) {
-						return withListingQueryBuilder({
-							select,
-							where,
-						});
-					},
+					query: withListingQueryBuilder,
 				}),
 				201,
 			);
@@ -182,12 +177,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 						output: ListingDtoSchema,
 						filter,
 						where,
-						query({ select, where }) {
-							return withListingQueryBuilder({
-								select,
-								where,
-							});
-						},
+						query: withListingQueryBuilder,
 					}),
 			});
 
@@ -264,12 +254,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 						},
 						filter,
 						where,
-						query({ select, where }) {
-							return withListingQueryBuilder({
-								select,
-								where,
-							});
-						},
+						query: withListingQueryBuilder,
 					}),
 			});
 
@@ -325,12 +310,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 						select: withListingSelect({}),
 						filter,
 						where,
-						query({ select, where }) {
-							return withListingQueryBuilder({
-								select,
-								where,
-							});
-						},
+						query: withListingQueryBuilder,
 					}),
 			});
 

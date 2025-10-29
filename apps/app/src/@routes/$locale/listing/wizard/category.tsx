@@ -13,7 +13,7 @@ import {
 	useSelection,
 } from "@use-pico/client";
 import type { EntitySchema } from "@use-pico/common";
-import type { Category } from "@zbav-se.me/sdk";
+import type { CategoryDto } from "@zbav-se.me/sdk";
 import { SearchIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
@@ -25,7 +25,7 @@ import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 namespace CategoryItem {
 	export interface Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
-		item: Category;
+		item: CategoryDto;
 	}
 }
 
@@ -197,7 +197,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 										layout={"vertical-content"}
 										gap={"md"}
 									>
-										{data.map((item) => {
+										{data.data.map((item) => {
 											return (
 												<CategoryItem
 													key={item.id}

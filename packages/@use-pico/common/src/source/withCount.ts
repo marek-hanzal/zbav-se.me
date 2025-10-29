@@ -9,7 +9,7 @@ export namespace withCount {
 			TFilter extends FilterSchema.Type,
 		> {
 			select: TSelect;
-			where?: TFilter | null;
+			where?: TFilter;
 		}
 	}
 
@@ -20,8 +20,8 @@ export namespace withCount {
 		select: TSelect;
 		query?(props: Query.Props<TSelect, TFilter>): TSelect;
 
-		filter?: TFilter | null;
-		where?: TFilter | null;
+		filter?: TFilter;
+		where?: TFilter;
 	}
 
 	export type Callback<

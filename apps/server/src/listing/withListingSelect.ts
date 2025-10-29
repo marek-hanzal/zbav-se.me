@@ -2,11 +2,11 @@ import { sql } from "kysely";
 import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { database } from "../database/kysely";
-import type { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import type { ListingSortSchema } from "./schema/ListingSortSchema";
 
 export namespace withListingSelect {
 	export interface Props {
-		sort?: ListingQuerySchema.Type["sort"];
+		sort?: ListingSortSchema.Type[];
 	}
 
 	export type Select = ReturnType<typeof withListingSelect>;
@@ -15,7 +15,20 @@ export namespace withListingSelect {
 export const withListingSelect = ({ sort }: withListingSelect.Props) => {
 	let query = database.kysely
 		.selectFrom("listing as l")
-		.selectAll("l")
+		.select([
+			"l.age",
+			"l.categoryId",
+			"l.condition",
+			"l.createdAt",
+			"l.currency",
+			"l.expiresAt",
+			"l.id",
+			"l.locationId",
+			"l.model",
+			"l.price",
+			"l.updatedAt",
+			"l.vendor",
+		])
 		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select((eb) => [

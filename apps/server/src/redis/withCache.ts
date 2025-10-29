@@ -8,7 +8,7 @@ export namespace withCache {
 }
 
 export const withCache = async <TResult>({
-	key,
+	key: _,
 	fetch,
 }: withCache.Props<TResult>) => {
 	// const cachedKey = genKey(key);

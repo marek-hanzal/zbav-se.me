@@ -6,9 +6,9 @@ import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { ErrorSchema } from "../schema/ErrorSchema";
+import { LocationDtoSchema } from "./schema/LocationDtoSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
-import { LocationSchema } from "./schema/LocationSchema";
-import { withLocationQueryBuilderWithSort } from "./withLocationQueryBuilder";
+import { withLocationQueryBuilder } from "./withLocationQueryBuilder";
 import { withLocationSelect } from "./withLocationSelect";
 
 /**
@@ -68,7 +68,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: z.array(LocationSchema),
+							schema: z.array(LocationDtoSchema),
 						},
 					},
 					description: "Location(s) found (cache hit)",
@@ -76,7 +76,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				201: {
 					content: {
 						"application/json": {
-							schema: z.array(LocationSchema),
+							schema: z.array(LocationDtoSchema),
 						},
 					},
 					description: "Location(s) created (cache miss)",
@@ -109,7 +109,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					})
 					.where("lang", "=", lang)
 					.selectAll(),
-				output: LocationSchema,
+				output: LocationDtoSchema,
 			});
 
 			if (quickCache.length > 0) {
@@ -142,7 +142,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 							.offset(0)
 							.limit(limit)
 							.selectAll(),
-						output: LocationSchema,
+						output: LocationDtoSchema,
 					});
 
 					if (cache.length > 0) {
@@ -189,9 +189,9 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 						lat: properties.lat,
 						lon: properties.lon,
 					})) satisfies Omit<
-						LocationSchema.Type,
+						LocationDtoSchema.Type,
 						"geo"
-					>[] as LocationSchema.Type[];
+					>[] as LocationDtoSchema.Type[];
 
 					locations.length > 0 &&
 						(await trx
@@ -249,7 +249,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: LocationSchema,
+							schema: LocationDtoSchema,
 						},
 					},
 					description:
@@ -272,17 +272,13 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			const { filter, where, sort } = c.req.valid("json");
 
 			const result = await withFetch({
-				select: withLocationSelect(),
-				output: LocationSchema,
+				select: withLocationSelect({
+					sort,
+				}),
+				output: LocationDtoSchema,
 				filter,
 				where,
-				query({ select, where }) {
-					return withLocationQueryBuilderWithSort({
-						select,
-						where,
-						sort,
-					});
-				},
+				query: withLocationQueryBuilder,
 			});
 
 			if (!result) {

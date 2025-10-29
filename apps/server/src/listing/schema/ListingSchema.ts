@@ -38,6 +38,12 @@ export const ListingSchema = z
 			description: "Last update timestamp",
 			type: "string",
 		}),
+		vendor: z.string().nullish().openapi({
+			description: "Vendor/manufacturer of the item",
+		}),
+		model: z.string().nullish().openapi({
+			description: "Model of the item",
+		}),
 	})
 	.openapi("Listing", {
 		description: "Represents a marketplace listing",

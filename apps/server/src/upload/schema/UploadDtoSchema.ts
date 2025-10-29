@@ -7,6 +7,7 @@ export const UploadDtoSchema = z
 	})
 	.omit({
 		userId: true,
+		createdAt: true,
 	})
 	.openapi("UploadDto", {
 		description: "Upload data transfer object",
