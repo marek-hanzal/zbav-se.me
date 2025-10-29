@@ -9,6 +9,7 @@ export const GalleryDtoSchema = z
 	})
 	.omit({
 		userId: true,
+		createdAt: true,
 	})
 	.openapi("GalleryDto", {
 		description: "Gallery data transfer object",

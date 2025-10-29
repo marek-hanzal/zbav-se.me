@@ -5,8 +5,8 @@ import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorSchema } from "../schema/ErrorSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
+import { GalleryDtoSchema } from "./schema/GalleryDtoSchema";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
-import { GallerySchema } from "./schema/GallerySchema";
 import { withGalleryQueryBuilder } from "./withGalleryQueryBuilder";
 import { withGallerySelect } from "./withGallerySelect";
 
@@ -33,7 +33,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: GallerySchema,
+							schema: GalleryDtoSchema,
 						},
 					},
 					description:
@@ -59,7 +59,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 				select: withGallerySelect({
 					sort,
 				}),
-				output: GallerySchema,
+				output: GalleryDtoSchema,
 				filter,
 				where,
 				query: withGalleryQueryBuilder,
@@ -98,7 +98,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 					content: {
 						"application/json": {
 							schema: withCollectionSchema({
-								schema: GallerySchema,
+								schema: GalleryDtoSchema,
 								type: "GalleryCollection",
 								description: "Collection of gallery items",
 							}),
@@ -119,7 +119,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 					select: withGallerySelect({
 						sort,
 					}),
-					output: GallerySchema,
+					output: GalleryDtoSchema,
 					cursor: cursor ?? {
 						page: 0,
 						size: 10,

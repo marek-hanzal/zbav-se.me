@@ -9,9 +9,9 @@ import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";
 
 /**
- * Represents a category a listing can be assigned to
+ * Category data transfer object
  */
-export interface Category {
+export interface CategoryDto {
 	/** ID of the category */
 	id: string;
 	/** Group/name of the category */
@@ -36,9 +36,8 @@ export interface Error {
 
 /**
  * Cursor for pagination
- * @nullable
  */
-export type Cursor = {
+export interface Cursor {
 	/**
 	 * Page number (0-indexed)
 	 * @minimum 0
@@ -50,13 +49,12 @@ export type Cursor = {
 	 * @maximum 1000
 	 */
 	size: number;
-} | null;
+}
 
 /**
  * User-land filters
- * @nullable
  */
-export type CategoryFilter = {
+export interface CategoryFilter {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -92,13 +90,12 @@ export type CategoryFilter = {
 	 * @nullable
 	 */
 	localeIn?: string[] | null;
-} | null;
+}
 
 /**
  * App-based filters
- * @nullable
  */
-export type CategoryWhere = {
+export interface CategoryWhere {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -134,7 +131,7 @@ export type CategoryWhere = {
 	 * @nullable
 	 */
 	localeIn?: string[] | null;
-} | null;
+}
 
 export type CategorySortValue =
 	(typeof CategorySortValue)[keyof typeof CategorySortValue];
@@ -175,8 +172,16 @@ export interface CategoryQuery {
 	cursor?: Cursor;
 	filter?: CategoryFilter;
 	where?: CategoryWhere;
-	/** @nullable */
-	sort?: CategorySort[] | null;
+	sort?: CategorySort[];
+}
+
+/**
+ * Collection of categories
+ */
+export interface CategoryCollection {
+	data: CategoryDto[];
+	/** Whether there are more items to fetch */
+	more: boolean;
 }
 
 /**
@@ -265,6 +270,24 @@ export interface Location {
 }
 
 /**
+ * Represents a category a listing can be assigned to
+ */
+export interface Category {
+	/** ID of the category */
+	id: string;
+	/** Group/name of the category */
+	group: string;
+	/** Category name within the group */
+	category: string;
+	/** Slug of the category */
+	slug: string;
+	/** Sort order (position) of the category */
+	sort: number;
+	/** Locale/language of the category */
+	locale: string;
+}
+
+/**
  * Upload data transfer object
  */
 export interface UploadDto {
@@ -272,8 +295,6 @@ export interface UploadDto {
 	id: string;
 	/** Public URL to the uploaded file */
 	url: string;
-	/** Creation timestamp */
-	createdAt: string;
 }
 
 /**
@@ -387,9 +408,8 @@ export const ListingFilterCurrency = {
 
 /**
  * User-land filters
- * @nullable
  */
-export type ListingFilter = {
+export interface ListingFilter {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -495,7 +515,7 @@ export type ListingFilter = {
 	 * @nullable
 	 */
 	model?: string | null;
-} | null;
+}
 
 /**
  * This filter matches listings with the exact currency code
@@ -518,9 +538,8 @@ export const ListingWhereCurrency = {
 
 /**
  * App-based filters
- * @nullable
  */
-export type ListingWhere = {
+export interface ListingWhere {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -626,7 +645,7 @@ export type ListingWhere = {
 	 * @nullable
 	 */
 	model?: string | null;
-} | null;
+}
 
 /**
  * Common listing sort keys
@@ -733,8 +752,7 @@ export interface ListingQuery {
 	cursor?: Cursor;
 	filter?: ListingFilter;
 	where?: ListingWhere;
-	/** @nullable */
-	sort?: ListingSort[] | null;
+	sort?: ListingSort[];
 }
 
 /**
@@ -766,9 +784,8 @@ export interface Gallery {
 
 /**
  * User-land filters for gallery items
- * @nullable
  */
-export type GalleryFilter = {
+export interface GalleryFilter {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -790,27 +807,16 @@ export type GalleryFilter = {
 	 */
 	userId?: string | null;
 	/**
-	 * User ids in the provided array
-	 * @nullable
-	 */
-	userIdIn?: string[] | null;
-	/**
 	 * Exact listing id
 	 * @nullable
 	 */
 	listingId?: string | null;
-	/**
-	 * Listing ids in the provided array
-	 * @nullable
-	 */
-	listingIdIn?: string[] | null;
-} | null;
+}
 
 /**
  * App-based filters
- * @nullable
  */
-export type GalleryWhere = {
+export interface GalleryWhere {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -832,21 +838,11 @@ export type GalleryWhere = {
 	 */
 	userId?: string | null;
 	/**
-	 * User ids in the provided array
-	 * @nullable
-	 */
-	userIdIn?: string[] | null;
-	/**
 	 * Exact listing id
 	 * @nullable
 	 */
 	listingId?: string | null;
-	/**
-	 * Listing ids in the provided array
-	 * @nullable
-	 */
-	listingIdIn?: string[] | null;
-} | null;
+}
 
 export type GallerySortValue =
 	(typeof GallerySortValue)[keyof typeof GallerySortValue];
@@ -855,7 +851,6 @@ export type GallerySortValue =
 export const GallerySortValue = {
 	sort: "sort",
 	createdAt: "createdAt",
-	updatedAt: "updatedAt",
 } as const;
 
 /**
@@ -887,8 +882,16 @@ export interface GalleryQuery {
 	cursor?: Cursor;
 	filter?: GalleryFilter;
 	where?: GalleryWhere;
-	/** @nullable */
-	sort?: GallerySort[] | null;
+	sort?: GallerySort[];
+}
+
+/**
+ * Collection of gallery items
+ */
+export interface GalleryCollection {
+	data: Gallery[];
+	/** Whether there are more items to fetch */
+	more: boolean;
 }
 
 /**
@@ -901,9 +904,8 @@ export interface UploadCreate {
 
 /**
  * User-land filters for upload items
- * @nullable
  */
-export type UploadFilter = {
+export interface UploadFilter {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -919,13 +921,12 @@ export type UploadFilter = {
 	 * @nullable
 	 */
 	fulltext?: string | null;
-} | null;
+}
 
 /**
  * App-based filters
- * @nullable
  */
-export type UploadWhere = {
+export interface UploadWhere {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -941,7 +942,7 @@ export type UploadWhere = {
 	 * @nullable
 	 */
 	fulltext?: string | null;
-} | null;
+}
 
 export type UploadSortValue =
 	(typeof UploadSortValue)[keyof typeof UploadSortValue];
@@ -980,15 +981,79 @@ export interface UploadQuery {
 	cursor?: Cursor;
 	filter?: UploadFilter;
 	where?: UploadWhere;
-	/** @nullable */
-	sort?: UploadSort[] | null;
+	sort?: UploadSort[];
+}
+
+/**
+ * Collection of upload items
+ */
+export interface UploadCollection {
+	data: UploadDto[];
+	/** Whether there are more items to fetch */
+	more: boolean;
+}
+
+/**
+ * Location data transfer object
+ */
+export interface LocationDto {
+	id: string;
+	/** The query that was used to get the location */
+	query: string;
+	/** The language that was used to get the location */
+	lang: string;
+	/** The country that the location is in */
+	country: string;
+	/** Country code */
+	code: string;
+	/**
+	 * The county that the location is in
+	 * @nullable
+	 */
+	county?: string | null;
+	/**
+	 * The municipality that the location is in
+	 * @nullable
+	 */
+	municipality?: string | null;
+	/**
+	 * The state that the location is in
+	 * @nullable
+	 */
+	state?: string | null;
+	/** Full address preview of a location */
+	address: string;
+	/**
+	 * The city that the location is in
+	 * @nullable
+	 */
+	city?: string | null;
+	/**
+	 * The street that the location is on
+	 * @nullable
+	 */
+	street?: string | null;
+	/**
+	 * The postal/zip code of the location
+	 * @nullable
+	 */
+	zip?: string | null;
+	/** Confidence score of the location (based on query) */
+	confidence: number;
+	/** Used to uniquely identify this location entry */
+	hash: string;
+	/** Latitude of the location */
+	lat: number;
+	/** Longitude of the location */
+	lon: number;
+	/** Encoded PostGIS geometry of the location */
+	geo: string;
 }
 
 /**
  * User-land filters
- * @nullable
  */
-export type LocationFilter = {
+export interface LocationFilter {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -1029,13 +1094,12 @@ export type LocationFilter = {
 	 * @nullable
 	 */
 	confidenceMin?: number | null;
-} | null;
+}
 
 /**
  * App-based filters
- * @nullable
  */
-export type LocationWhere = {
+export interface LocationWhere {
 	/**
 	 * This filter matches the exact id
 	 * @nullable
@@ -1076,7 +1140,7 @@ export type LocationWhere = {
 	 * @nullable
 	 */
 	confidenceMin?: number | null;
-} | null;
+}
 
 export type LocationSortValue =
 	(typeof LocationSortValue)[keyof typeof LocationSortValue];
@@ -1118,8 +1182,7 @@ export interface LocationQuery {
 	cursor?: Cursor;
 	filter?: LocationFilter;
 	where?: LocationWhere;
-	/** @nullable */
-	sort?: LocationSort[] | null;
+	sort?: LocationSort[];
 }
 
 export interface S3PreSignResponse {
@@ -1177,6 +1240,27 @@ export interface S3PreSignRequest {
 export interface UserPatch {
 	/** Default location for the user - used for listings & listing sorting */
 	locationId?: string;
+}
+
+export type FeedDtoListing = ListingFilter & unknown;
+
+/**
+ * Feed data transfer object
+ */
+export interface FeedDto {
+	/** ID of the feed */
+	id: string;
+	listing: FeedDtoListing;
+}
+
+export interface FeedCreate {
+	listing: ListingFilter;
+}
+
+export interface FeedPatch {
+	/** @minLength 1 */
+	id: string;
+	listing: ListingFilter;
 }
 
 export interface Health {
@@ -1249,7 +1333,7 @@ export type ApiLocationAutocompleteParams = {
 /**
  * Return a category based on the provided query
  */
-export const apiCategoryFetch = <TData = AxiosResponse<Category>>(
+export const apiCategoryFetch = <TData = AxiosResponse<CategoryDto>>(
 	categoryQuery: CategoryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1259,7 +1343,9 @@ export const apiCategoryFetch = <TData = AxiosResponse<Category>>(
 /**
  * Returns categories based on provided parameters
  */
-export const apiCategoryCollection = <TData = AxiosResponse<Category[]>>(
+export const apiCategoryCollection = <
+	TData = AxiosResponse<CategoryCollection>,
+>(
 	categoryQuery: CategoryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1333,7 +1419,7 @@ export const apiGalleryFetch = <TData = AxiosResponse<Gallery>>(
 /**
  * Returns gallery items based on provided parameters
  */
-export const apiGalleryCollection = <TData = AxiosResponse<Gallery[]>>(
+export const apiGalleryCollection = <TData = AxiosResponse<GalleryCollection>>(
 	galleryQuery: GalleryQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1373,7 +1459,7 @@ export const apiUploadFetch = <TData = AxiosResponse<UploadDto>>(
 /**
  * Returns upload items based on provided parameters
  */
-export const apiUploadCollection = <TData = AxiosResponse<UploadDto[]>>(
+export const apiUploadCollection = <TData = AxiosResponse<UploadCollection>>(
 	uploadQuery: UploadQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1394,7 +1480,7 @@ export const apiUploadCount = <TData = AxiosResponse<Count>>(
  * Return a location autocomplete
  */
 export const apiLocationAutocomplete = <
-	TData = AxiosResponse<Location[] | Location[]>,
+	TData = AxiosResponse<LocationDto[] | LocationDto[]>,
 >(
 	params: ApiLocationAutocompleteParams,
 	options?: AxiosRequestConfig,
@@ -1411,7 +1497,7 @@ export const apiLocationAutocomplete = <
 /**
  * Return a location based on the provided query
  */
-export const apiLocationFetch = <TData = AxiosResponse<Location>>(
+export const apiLocationFetch = <TData = AxiosResponse<LocationDto>>(
 	locationQuery: LocationQuery,
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
@@ -1436,6 +1522,26 @@ export const apiUserExPatch = <TData = AxiosResponse<void>>(
 	options?: AxiosRequestConfig,
 ): Promise<TData> => {
 	return axios.patch(`/api/session/user-ex`, userPatch, options);
+};
+
+/**
+ * Create a new feed item
+ */
+export const apiFeedCreate = <TData = AxiosResponse<FeedDto>>(
+	feedCreate: FeedCreate,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/feed/create`, feedCreate, options);
+};
+
+/**
+ * Update an existing feed item
+ */
+export const apiFeedPatch = <TData = AxiosResponse<FeedDto>>(
+	feedPatch: FeedPatch,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.patch(`/api/session/feed/patch`, feedPatch, options);
 };
 
 /**
@@ -1465,26 +1571,28 @@ export const apiJanitorCleanup = <TData = AxiosResponse<CleanupResponse>>(
 	return axios.get(`/api/public/janitor/cleanup`, options);
 };
 
-export type ApiCategoryFetchResult = AxiosResponse<Category>;
-export type ApiCategoryCollectionResult = AxiosResponse<Category[]>;
+export type ApiCategoryFetchResult = AxiosResponse<CategoryDto>;
+export type ApiCategoryCollectionResult = AxiosResponse<CategoryCollection>;
 export type ApiCategoryCountResult = AxiosResponse<Count>;
 export type ApiListingCreateResult = AxiosResponse<ListingDto>;
 export type ApiListingFetchResult = AxiosResponse<ListingDto>;
 export type ApiListingCollectionResult = AxiosResponse<ListingCollection>;
 export type ApiListingCountResult = AxiosResponse<Count>;
 export type ApiGalleryFetchResult = AxiosResponse<Gallery>;
-export type ApiGalleryCollectionResult = AxiosResponse<Gallery[]>;
+export type ApiGalleryCollectionResult = AxiosResponse<GalleryCollection>;
 export type ApiGalleryCountResult = AxiosResponse<Count>;
 export type ApiUploadCreateResult = AxiosResponse<UploadDto>;
 export type ApiUploadFetchResult = AxiosResponse<UploadDto>;
-export type ApiUploadCollectionResult = AxiosResponse<UploadDto[]>;
+export type ApiUploadCollectionResult = AxiosResponse<UploadCollection>;
 export type ApiUploadCountResult = AxiosResponse<Count>;
 export type ApiLocationAutocompleteResult = AxiosResponse<
-	Location[] | Location[]
+	LocationDto[] | LocationDto[]
 >;
-export type ApiLocationFetchResult = AxiosResponse<Location>;
+export type ApiLocationFetchResult = AxiosResponse<LocationDto>;
 export type ApiS3PresignResult = AxiosResponse<S3PreSignResponse>;
 export type ApiUserExPatchResult = AxiosResponse<void>;
+export type ApiFeedCreateResult = AxiosResponse<FeedDto>;
+export type ApiFeedPatchResult = AxiosResponse<FeedDto>;
 export type ApiHealthResult = AxiosResponse<Health>;
 export type ApiMigrationRunResult = AxiosResponse<Migration[]>;
 export type ApiJanitorCleanupResult = AxiosResponse<CleanupResponse>;

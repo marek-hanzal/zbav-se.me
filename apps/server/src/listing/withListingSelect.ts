@@ -15,7 +15,20 @@ export namespace withListingSelect {
 export const withListingSelect = ({ sort }: withListingSelect.Props) => {
 	let query = database.kysely
 		.selectFrom("listing as l")
-		.selectAll("l")
+		.select([
+			"l.age",
+			"l.categoryId",
+			"l.condition",
+			"l.createdAt",
+			"l.currency",
+			"l.expiresAt",
+			"l.id",
+			"l.locationId",
+			"l.model",
+			"l.price",
+			"l.updatedAt",
+			"l.vendor",
+		])
 		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select((eb) => [

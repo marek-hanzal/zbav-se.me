@@ -197,7 +197,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 										layout={"vertical-content"}
 										gap={"md"}
 									>
-										{data.map((item) => {
+										{data.data.map((item) => {
 											return (
 												<CategoryItem
 													key={item.id}

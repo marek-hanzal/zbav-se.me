@@ -8,7 +8,6 @@ import { withSessionHono } from "../hono/withSessionHono";
 import { ErrorSchema } from "../schema/ErrorSchema";
 import { LocationDtoSchema } from "./schema/LocationDtoSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
-import type { LocationSchema } from "./schema/LocationSchema";
 import { withLocationQueryBuilder } from "./withLocationQueryBuilder";
 import { withLocationSelect } from "./withLocationSelect";
 
@@ -190,9 +189,9 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 						lat: properties.lat,
 						lon: properties.lon,
 					})) satisfies Omit<
-						LocationSchema.Type,
+						LocationDtoSchema.Type,
 						"geo"
-					>[] as LocationSchema.Type[];
+					>[] as LocationDtoSchema.Type[];
 
 					locations.length > 0 &&
 						(await trx
