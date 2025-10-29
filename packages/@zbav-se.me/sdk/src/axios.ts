@@ -1138,11 +1138,27 @@ export interface S3PreSignRequest {
 }
 
 /**
+ * User side - whether they are a seller or buyer
+ * @nullable
+ */
+export type UserSide = (typeof UserSide)[keyof typeof UserSide] | null;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const UserSide = {
+	seller: "seller",
+	buyer: "buyer",
+} as const;
+
+/**
  * Schema for patching user extended information
  */
 export interface UserPatch {
-	/** Default location for the user - used for listings & listing sorting */
-	locationId?: string;
+	/**
+	 * Default location for the user - used for listings & listing sorting
+	 * @nullable
+	 */
+	locationId?: string | null;
+	side?: UserSide;
 }
 
 export type FeedDtoListing = ListingFilter & unknown;

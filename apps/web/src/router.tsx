@@ -20,6 +20,7 @@ export function getRouter() {
 		context: {
 			queryClient,
 		},
+		defaultPreload: "render",
 		defaultNotFoundComponent() {
 			return <Sheet>4😞4</Sheet>;
 		},

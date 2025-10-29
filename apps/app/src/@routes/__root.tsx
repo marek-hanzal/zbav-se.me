@@ -9,9 +9,11 @@ import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
 import axios from "axios";
+import type { authClient } from "~/app/auth/authClient";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{
+	user?: typeof authClient.$Infer.Session.user | null;
 	queryClient: QueryClient;
 }>()({
 	head: () => ({

@@ -1,20 +1,40 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Container, LinkTo, type LinkToCls, UserIcon } from "@use-pico/client";
+import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import {
-	BagIcon,
-	FeedIcon,
-	PostIcon,
-	PrimaryOverlay,
-	PublicIcon,
-	ShopIcon,
-} from "@zbav-se.me/ui";
+import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
+import { match } from "ts-pattern";
 import { FlowContainer } from "~/app/ui/container/FlowContainer";
 import { Tile } from "~/app/ui/dashboard/Tile";
+import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/dashboard")({
+	async beforeLoad({ params: { locale }, context: { user } }) {
+		if (user.side) {
+			match(user.side)
+				.with("seller", () => {
+					throw redirect({
+						to: "/$locale/seller",
+						params: {
+							locale,
+						},
+						statusCode: 302,
+					});
+				})
+				.with("buyer", () => {
+					throw redirect({
+						to: "/$locale/buyer",
+						params: {
+							locale,
+						},
+						statusCode: 302,
+					});
+				})
+				.exhaustive();
+		}
+	},
 	component() {
 		const { locale } = Route.useParams();
+		const router = useRouter();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -26,93 +46,72 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				},
 			},
 		};
+		const userExPatchMutation = withUserExPatchMutation.useMutation({
+			async onPostMutation() {
+				return router.invalidate();
+			},
+		});
 
 		return (
 			<Container position={"relative"}>
 				<PrimaryOverlay />
 
-				<FlowContainer overflow={"vertical"}>
-					<div className="grid gap-2">
+				<FlowContainer
+					layout={"vertical-content"}
+					overflow={"vertical"}
+					height={"full"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"grid-rows-1",
+									// "place-content-center",
+									"place-items-center",
+								],
+							},
+						},
+					}}
+				>
+					<div
+						data-ui="Dashboard-link"
+						className="grid gap-2 w-full"
+					>
 						<LinkTo
-							to="/$locale/feed"
+							to="/$locale/seller"
 							params={{
 								locale,
 							}}
 							tweak={linkTweak}
+							onClick={() =>
+								userExPatchMutation.mutate({
+									side: "seller",
+								})
+							}
 						>
 							<Tile
-								icon={FeedIcon}
-								textTitle={"Feed (label)"}
+								icon={SellerIcon}
+								textTitle={"I want to sell (label)"}
 							/>
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/listing/wizard/start"
+							to="/$locale/buyer"
 							params={{
 								locale,
 							}}
 							tweak={linkTweak}
+							onClick={() =>
+								userExPatchMutation.mutate({
+									side: "buyer",
+								})
+							}
 						>
 							<Tile
-								icon={PostIcon}
-								textTitle={"Create listing (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/listing/my"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={PublicIcon}
-								textTitle={"My listings (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/bag"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={BagIcon}
-								textTitle={"Bag (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/shop"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={ShopIcon}
-								textTitle={"Shop (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/user"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={UserIcon}
-								textTitle={"User profile (label)"}
+								icon={BuyerIcon}
+								textTitle={"I want to buy (label)"}
 							/>
 						</LinkTo>
 					</div>
-
-					<div />
 				</FlowContainer>
 			</Container>
 		);

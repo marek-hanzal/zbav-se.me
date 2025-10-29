@@ -99,6 +99,10 @@ export const Route = createFileRoute("/$locale/listing/wizard/category")({
 				locale,
 				fulltext,
 			},
+			cursor: {
+				page: 0,
+				size: 256,
+			},
 			sort: [
 				{
 					value: "sort",
