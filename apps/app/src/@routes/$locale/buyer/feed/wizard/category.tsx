@@ -6,34 +6,32 @@ import {
 	LinkTo,
 	useSelection,
 } from "@use-pico/client";
+import type { EntitySchema } from "@use-pico/common";
 import { TitleContainer } from "@zbav-se.me/ui";
+import { CategorySelection } from "~/app/category/ui/CategorySelection";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
-import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
+export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 	validateSearch: FeedWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-
-		const selection = useSelection<Rating.RatingItem>({
+		const selection = useSelection<EntitySchema.Type>({
 			mode: "multi",
-			initial: state.filter?.conditionIn?.map((item) => ({
-				id: String(item),
+			initial: state.filter?.categoryIdIn?.map((id) => ({
+				id,
 			})),
 		});
 
-		const conditionIn = selection.optional
-			.multi()
-			.map((item) => Number.parseInt(item.id, 10));
+		const categoryIds = selection.optional.multiId();
 
 		return (
 			<TitleContainer
-				textTitle={"Feed condition (title)"}
+				textTitle={"Feed category (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/wizard/category"}
+						to={"/$locale/buyer/feed/wizard/sort"}
 						params={{
 							locale,
 						}}
@@ -45,7 +43,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/buyer/feed/wizard/name"}
+						to={"/$locale/buyer/feed/wizard/condition"}
 						params={{
 							locale,
 						}}
@@ -53,7 +51,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 							...state,
 							filter: {
 								...state.filter,
-								conditionIn,
+								categoryIdIn:
+									categoryIds.length > 0
+										? categoryIds
+										: undefined,
 							},
 						}}
 						full
@@ -63,17 +64,15 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							label={"Next - feed name (button)"}
 							size={"lg"}
+							label={"Next - feed condition (button)"}
 							full
 						/>
 					</LinkTo>
 				}
 			>
-				<Rating
-					textHint={(value) =>
-						`Condition - Overall [${value}] (hint)`
-					}
+				<CategorySelection
+					locale={locale}
 					selection={selection}
 				/>
 			</TitleContainer>
