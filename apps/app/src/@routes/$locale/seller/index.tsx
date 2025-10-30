@@ -12,8 +12,13 @@ import {
 	UserIcon,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import { PostIcon, PrimaryOverlay, PublicIcon, ShopIcon } from "@zbav-se.me/ui";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
+import {
+	FlowContainer,
+	PostIcon,
+	PrimaryOverlay,
+	PublicIcon,
+	ShopIcon,
+} from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
@@ -55,7 +60,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 						className="grid gap-2 place-items-center"
 					>
 						<LinkTo
-							to="/$locale/listing/wizard/start"
+							to="/$locale/seller/listing/wizard/start"
 							params={{
 								locale,
 							}}
@@ -68,7 +73,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 						</LinkTo>
 
 						<LinkTo
-							to="/$locale/listing/my"
+							to="/$locale/seller/listing/my"
 							params={{
 								locale,
 							}}

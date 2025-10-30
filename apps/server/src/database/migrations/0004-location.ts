@@ -49,6 +49,10 @@ export const LocationMigration: Migration = {
 				"location_[lon]_chk",
 				sql`"lon" >= -180 AND "lon" <= 180`,
 			)
+			.addUniqueConstraint("location_[lang-hash]_unique_idx", [
+				"lang",
+				"hash",
+			])
 			.execute();
 
 		await sql`
@@ -62,16 +66,6 @@ export const LocationMigration: Migration = {
 				"query",
 				"lang",
 			])
-			.execute();
-
-		await db.schema
-			.createIndex("location_[lang-hash]_unique_idx")
-			.on("location")
-			.columns([
-				"lang",
-				"hash",
-			])
-			.unique()
 			.execute();
 	},
 };

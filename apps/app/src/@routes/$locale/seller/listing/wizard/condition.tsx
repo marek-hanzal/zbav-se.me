@@ -5,12 +5,14 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
+import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute("/$locale/listing/wizard/condition")({
+export const Route = createFileRoute(
+	"/$locale/seller/listing/wizard/condition",
+)({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -20,12 +22,12 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 		);
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				textTitle={"Condition (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/category"}
+						to={"/$locale/seller/listing/wizard/category"}
 						search={state}
 						params={{
 							locale,
@@ -35,7 +37,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/age"}
+						to={"/$locale/seller/listing/wizard/age"}
 						params={{
 							locale,
 						}}
@@ -72,7 +74,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/condition")({
 						onChange={setCondition}
 					/>
 				</div>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });

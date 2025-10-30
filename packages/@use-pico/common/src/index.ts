@@ -37,6 +37,7 @@ export { withBoolSchema } from "./schema/withBoolSchema";
 export { withDateTimeSchema } from "./schema/withDateTimeSchema";
 export { withFloatSchema } from "./schema/withFloatSchema";
 export { withIntSchema } from "./schema/withIntSchema";
+export { withSort } from "./sort/withSort";
 export { CountSchema } from "./source/CountSchema";
 export { CursorSchema } from "./source/CursorSchema";
 export { EntitySchema } from "./source/EntitySchema";

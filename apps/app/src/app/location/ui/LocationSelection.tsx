@@ -1,4 +1,5 @@
 import { Badge, Button, Container, Data, Fulltext, Tx } from "@use-pico/client";
+import type { LocationDto } from "@zbav-se.me/sdk";
 import { type FC, type RefObject, useState } from "react";
 import { withLocationAutocompleteQuery } from "~/app/location/query/withLocationAutocompleteQuery";
 
@@ -6,8 +7,10 @@ export namespace LocationSelection {
 	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
 		locale: string;
-		value?: string;
+		value: string | undefined;
 		onChange(value: string): void;
+		onLocation?(value: LocationDto): void;
+		textHint?: string;
 	}
 }
 
@@ -16,6 +19,8 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 	locale,
 	value,
 	onChange,
+	onLocation,
+	textHint,
 }) => {
 	const [search, setSearch] = useState<Fulltext.Value>();
 	const locationAutocompleteQuery = withLocationAutocompleteQuery.useQuery(
@@ -58,7 +63,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 				/>
 				{search || value ? null : (
 					<Tx
-						label={"Location security (hint)"}
+						label={textHint ?? "Location security (hint)"}
 						font={"bold"}
 						size={"lg"}
 						tweak={{
@@ -87,6 +92,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 								theme={value === item.id ? "dark" : "light"}
 								onClick={() => {
 									onChange(item.id);
+									onLocation?.(item);
 								}}
 								size={"xl"}
 								tweak={{

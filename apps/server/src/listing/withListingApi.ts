@@ -3,6 +3,10 @@ import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { DateTime } from "luxon";
 import { match } from "ts-pattern";
 import { database } from "../database/kysely";
+import { FeedCollectionRequestSchema } from "../feed/schema/FeedCollectionRequestSchema";
+import { FeedDtoSchema } from "../feed/schema/FeedDtoSchema";
+import { withFeedQueryBuilder } from "../feed/withFeedQueryBuilder";
+import { withFeedSelect } from "../feed/withFeedSelect";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
@@ -118,6 +122,112 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				}),
 				201,
 			);
+		},
+	);
+
+	// Listing collection based on a Feed definition
+	sessionEndpoints.openapi(
+		createRoute({
+			method: "post",
+			path: "/listing/feed/collection",
+			description:
+				"Returns listings based on filter/sort stored in a feed (by id)",
+			operationId: "apiListingFeedCollection",
+			request: {
+				body: {
+					content: {
+						"application/json": {
+							schema: FeedCollectionRequestSchema,
+						},
+					},
+				},
+			},
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: withCollectionSchema({
+								schema: ListingDtoSchema,
+								type: "ListingCollection",
+								description: "Collection of listings",
+							}),
+						},
+					},
+					description:
+						"Access collection of listings based on a feed definition",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorSchema,
+						},
+					},
+					description: "Feed not found",
+				},
+			},
+			tags: [
+				"listing",
+			],
+		}),
+		async (c) => {
+			const { feedId, cursor } = c.req.valid("json");
+			// Fetch the feed by id
+			const feed = await withFetch({
+				select: withFeedSelect({}),
+				output: FeedDtoSchema,
+				where: {
+					id: feedId,
+				},
+				query: withFeedQueryBuilder,
+			});
+
+			if (!feed) {
+				return c.json(
+					{
+						message: "Feed item not found",
+					},
+					404,
+				);
+			}
+
+			// Omit locationId from filter as requested
+			const filter = {
+				...feed.filter,
+				locationId: undefined,
+			};
+
+			const { data, hit } = await withCache({
+				key: {
+					scope: "listing:feed:collection",
+					version: "1",
+					value: {
+						feedId,
+						cursor,
+						filter,
+						sort: feed.sort,
+					},
+				},
+				fetch: () =>
+					withCollection({
+						select: withListingSelect({
+							sort: feed.sort,
+						}),
+						output: ListingDtoSchema,
+						cursor: cursor ?? {
+							page: 0,
+							size: 10,
+						},
+						filter,
+						query: withListingQueryBuilder,
+					}),
+			});
+
+			return c.json(data, {
+				status: 200,
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
 		},
 	);
 

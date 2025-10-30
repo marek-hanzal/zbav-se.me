@@ -8,13 +8,13 @@ import {
 	SnapperNav,
 	useSnapperNav,
 } from "@use-pico/client";
+import { TitleContainer } from "@zbav-se.me/ui";
 import { useId, useRef, useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { PhotoUpload } from "~/app/photo/PhotoUpload";
 import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";
 
-export const Route = createFileRoute("/$locale/listing/wizard/photos")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 		const isUploading = withUploadMutation.useIsMutating();
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				ui="ListingWizard-Photos-root"
 				textTitle={"Listing photos (title)"}
 				left={
@@ -54,7 +54,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/category"}
+						to={"/$locale/seller/listing/wizard/category"}
 						params={{
 							locale,
 						}}
@@ -138,7 +138,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/photos")({
 						})}
 					</Container>
 				</div>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });

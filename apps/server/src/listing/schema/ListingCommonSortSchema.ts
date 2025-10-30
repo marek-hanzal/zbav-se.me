@@ -16,7 +16,6 @@ export const ListingCommonSortSchema = z
 		]),
 		sort: OrderSchema,
 	})
-	.nullish()
 	.openapi("ListingCommonSort", {
 		description: "Common listing sort keys",
 	});

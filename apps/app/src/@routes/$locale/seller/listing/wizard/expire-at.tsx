@@ -9,14 +9,15 @@ import {
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
 import { ListingExpire } from "@zbav-se.me/sdk";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls, TitleContainer } from "@zbav-se.me/ui";
 import { DateTime } from "luxon";
 import { useId, useState } from "react";
 import { match } from "ts-pattern";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
-export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
+export const Route = createFileRoute(
+	"/$locale/seller/listing/wizard/expire-at",
+)({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -27,12 +28,12 @@ export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 		const expireId = useId();
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				textTitle={"Expire (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/location"}
+						to={"/$locale/seller/listing/wizard/location"}
 						search={state}
 						params={{
 							locale,
@@ -42,7 +43,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/submit"}
+						to={"/$locale/seller/listing/wizard/submit"}
 						params={{
 							locale,
 						}}
@@ -140,7 +141,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/expire-at")({
 						})}
 					</div>
 				</div>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });

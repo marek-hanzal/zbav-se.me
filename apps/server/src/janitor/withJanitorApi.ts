@@ -12,7 +12,7 @@ export const withJanitorApi: Routes.Fn = ({ public: publicEndpoints }) => {
 		createRoute({
 			method: "get",
 			path: "/janitor/cleanup",
-			description: "Smaže z MinIO vše, co není v tabulce `upload`.",
+			description: "General cleanup operation",
 			operationId: "apiJanitorCleanup",
 			responses: {
 				200: {

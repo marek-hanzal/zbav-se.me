@@ -8,15 +8,9 @@ export const CategoryMissMigration: Migration = {
 			.addColumn("category", "text", (col) => col.notNull())
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
 			.addColumn("count", "integer", (col) => col.notNull())
-			.execute();
-
-		await db.schema
-			.createIndex("category_miss_[category]_unique_idx")
-			.on("category_miss")
-			.columns([
+			.addUniqueConstraint("category_miss_[category]_unique_idx", [
 				"category",
 			])
-			.unique()
 			.execute();
 	},
 };

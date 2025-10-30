@@ -1,9 +1,9 @@
 import type { FC, ReactNode } from "react";
-import { BottomContainer } from "~/app/ui/container/BottomContainer";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
-import { Title } from "~/app/ui/title/Title";
+import { Title } from "../title/Title";
+import { BottomContainer } from "./BottomContainer";
+import { FlowContainer } from "./FlowContainer";
 
-export namespace ListingContainer {
+export namespace TitleContainer {
 	export interface Props extends FlowContainer.Props {
 		textTitle?: string;
 		textSubtitle?: string;
@@ -13,7 +13,7 @@ export namespace ListingContainer {
 	}
 }
 
-export const ListingContainer: FC<ListingContainer.Props> = ({
+export const TitleContainer: FC<TitleContainer.Props> = ({
 	textTitle,
 	textSubtitle,
 	titleProps,

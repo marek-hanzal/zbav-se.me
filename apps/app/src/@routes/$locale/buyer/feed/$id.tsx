@@ -1,4 +1,4 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	Button,
@@ -10,31 +10,27 @@ import {
 	Status,
 } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
+import {
+	FlowContainer,
+	PrimaryOverlay,
+	ThemeCls,
+	useAnim,
+} from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { useListingInfiniteQuery } from "~/app/listing/query/useListingInfiniteQuery";
+import { useListingFeedInfiniteQuery } from "~/app/listing/query/useListingFeedInfiniteQuery";
 import { ListingPreview } from "~/app/listing/ui/ListingPreview";
-import { FlowContainer } from "~/app/ui/container/FlowContainer";
 
-export const Route = createFileRoute("/$locale/feed")({
+export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 	component() {
 		const debounceTimeout = 150;
 
-		const { locale } = Route.useParams();
-		const { user } = useLoaderData({
-			from: "/$locale",
-		});
+		const { locale, id } = Route.useParams();
 		const { slots } = useCls(ThemeCls);
-		const listingQuery = useListingInfiniteQuery({
+		const listingQuery = useListingFeedInfiniteQuery({
+			feedId: id,
 			size: 5,
-			lonLan: user.location
-				? {
-						lon: user.location.lon,
-						lat: user.location.lat,
-					}
-				: undefined,
 		});
 		const containerRef = useRef<HTMLDivElement>(null);
 		const feedId = useId();

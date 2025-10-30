@@ -5,25 +5,25 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
+import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute("/$locale/listing/wizard/age")({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [age, setAge] = useState<number | undefined>(state.age);
+		const [age, setAge] = useState(state.age);
 
 		return (
-			<ListingContainer
+			<TitleContainer
 				textTitle={"Age (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/listing/wizard/condition"}
+						to={"/$locale/seller/listing/wizard/condition"}
 						search={state}
 						params={{
 							locale,
@@ -33,7 +33,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/age")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/listing/wizard/price"}
+						to={"/$locale/seller/listing/wizard/price"}
 						params={{
 							locale,
 						}}
@@ -70,7 +70,7 @@ export const Route = createFileRoute("/$locale/listing/wizard/age")({
 						onChange={setAge}
 					/>
 				</div>
-			</ListingContainer>
+			</TitleContainer>
 		);
 	},
 });
