@@ -209,6 +209,9 @@
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
     ref: No listings (title)
     value: Kde nic, tu nic. Ale všechno bude, všechno bude!
+86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
+    ref: Delete feed (button)
+    value: Smazat
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
@@ -358,6 +361,9 @@ a421acdb6005685abf3ab655b39bd5a6fd36b74ffb42026ddc48fc6b:
 a5eb219baee2d44fbeb2efb0fefefa8cca868c985927a2010eca1bd0:
     ref: Sorted by asc, sort by desc; keeps column sorted in selected order
     value: Sorted by asc, sort by desc; keeps column sorted in selected order
+aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
+    ref: Number of listings (label)
+    value: "Počet inzerátů:"
 aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
     ref: Sorted by desc, sort by asc; keeps column sorted in selected order
     value: Sorted by desc, sort by asc; keeps column sorted in selected order
