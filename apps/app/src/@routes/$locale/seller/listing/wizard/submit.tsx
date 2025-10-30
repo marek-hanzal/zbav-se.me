@@ -15,7 +15,7 @@ import {
 } from "@use-pico/client";
 import { type Cls, VariantProvider } from "@use-pico/cls";
 import { apiListingCreateBody } from "@zbav-se.me/sdk";
-import { SubmitIcon, ThemeCls, TitleContainer } from "@zbav-se.me/ui";
+import { SendPackageIcon, ThemeCls, TitleContainer } from "@zbav-se.me/ui";
 import { withCategoryFetchQuery } from "~/app/category/query/withCategoryFetchQuery";
 import { withListingCreateMutation } from "~/app/listing/mutation/withListingCreateMutation";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -120,7 +120,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				}
 				bottom={
 					<Button
-						iconEnabled={SubmitIcon}
+						iconEnabled={SendPackageIcon}
 						label={"Submit listing (button)"}
 						disabled={
 							createListingMutation.isPending || !valid.success
