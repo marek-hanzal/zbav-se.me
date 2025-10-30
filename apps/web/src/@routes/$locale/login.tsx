@@ -130,7 +130,6 @@ export const Route = createFileRoute("/$locale/login")({
 				<Container
 					ref={rootRef}
 					layout={"vertical-full"}
-					overflow={"vertical"}
 					snap={"vertical-center"}
 					gap={"md"}
 					square={"md"}
@@ -245,10 +244,11 @@ export const Route = createFileRoute("/$locale/login")({
 										</div>
 									)}
 
-									<div
-										className={
-											"flex flex-col items-center justify-center gap-2 w-full"
-										}
+									<Container
+										layout={"vertical"}
+										items={"center"}
+										gap={"sm"}
+										width={"fit"}
 									>
 										<form.SubmitButton
 											iconEnabled={UnlockIcon}
@@ -281,7 +281,7 @@ export const Route = createFileRoute("/$locale/login")({
 												tone={"link"}
 											/>
 										</LinkTo>
-									</div>
+									</Container>
 								</form>
 							</Status>
 						</VariantProvider>

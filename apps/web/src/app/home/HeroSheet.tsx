@@ -1,6 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import {
 	Button,
+	Container,
 	LinkTo,
 	type LinkToCls,
 	Status,
@@ -40,9 +41,14 @@ export const HeroSheet: FC = () => {
 					"opacity-0",
 				])}
 			>
-				<div className="flex justify-center">
+				<Container
+					layout={"horizontal"}
+					items={"center"}
+					height={"auto"}
+					width={"fit"}
+				>
 					<Logo />
-				</div>
+				</Container>
 
 				<Status
 					textTitle={"Landing - Hero (title)"}

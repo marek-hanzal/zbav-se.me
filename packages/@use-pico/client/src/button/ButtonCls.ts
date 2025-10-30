@@ -10,6 +10,7 @@ export const ButtonCls = contract(PicoCls.contract)
 	.bool("border")
 	.bool("background")
 	.bool("full")
+	.bool("truncate")
 	.variant("size", [
 		"xs",
 		"sm",
@@ -326,6 +327,23 @@ export const ButtonCls = contract(PicoCls.contract)
 		},
 	})
 	/**
+	 * Truncate
+	 */
+	.match("truncate", true, {
+		wrapper: {
+			class: [
+				"min-w-0",
+				"max-w-full",
+			],
+		},
+		root: {
+			class: [
+				"min-w-0",
+				"max-w-full",
+			],
+		},
+	})
+	/**
 	 * Round rules
 	 */
 	.match("round", "default", {
@@ -379,6 +397,7 @@ export const ButtonCls = contract(PicoCls.contract)
 		border: true,
 		background: true,
 		round: "default",
+		truncate: false,
 	})
 	.cls();
 

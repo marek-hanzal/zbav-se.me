@@ -54,7 +54,6 @@ export const Route = createFileRoute("/$locale/landing")({
 				<Container
 					ref={scrollerRef}
 					layout={"vertical-full"}
-					overflow={"vertical"}
 					snap={"vertical-start"}
 					gap={"md"}
 				>

@@ -1,12 +1,7 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import {
-	BuyerIcon,
-	FlowContainer,
-	PrimaryOverlay,
-	SellerIcon,
-} from "@zbav-se.me/ui";
+import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
 import { match } from "ts-pattern";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
@@ -57,65 +52,54 @@ export const Route = createFileRoute("/$locale/dashboard")({
 		});
 
 		return (
-			<Container position={"relative"}>
+			<Container
+				layout={"vertical"}
+				scroll={"vertical"}
+				gap={"sm"}
+				height={"fit"}
+				items={"center"}
+				tone={"secondary"}
+				theme={"light"}
+				square={"md"}
+				position={"relative"}
+			>
 				<PrimaryOverlay />
 
-				<FlowContainer
-					layout={"vertical-content"}
-					overflow={"vertical"}
-					height={"full"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"grid-rows-1",
-									"place-items-center",
-								],
-							},
-						},
+				<LinkTo
+					to="/$locale/seller"
+					params={{
+						locale,
 					}}
+					tweak={linkTweak}
+					onClick={() =>
+						userExPatchMutation.mutate({
+							side: "seller",
+						})
+					}
 				>
-					<div
-						data-ui="Dashboard-link"
-						className="grid gap-2 w-full"
-					>
-						<LinkTo
-							to="/$locale/seller"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-							onClick={() =>
-								userExPatchMutation.mutate({
-									side: "seller",
-								})
-							}
-						>
-							<Tile
-								icon={SellerIcon}
-								textTitle={"I want to sell (label)"}
-							/>
-						</LinkTo>
+					<Tile
+						icon={SellerIcon}
+						textTitle={"I want to sell (label)"}
+					/>
+				</LinkTo>
 
-						<LinkTo
-							to="/$locale/buyer"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-							onClick={() =>
-								userExPatchMutation.mutate({
-									side: "buyer",
-								})
-							}
-						>
-							<Tile
-								icon={BuyerIcon}
-								textTitle={"I want to buy (label)"}
-							/>
-						</LinkTo>
-					</div>
-				</FlowContainer>
+				<LinkTo
+					to="/$locale/buyer"
+					params={{
+						locale,
+					}}
+					tweak={linkTweak}
+					onClick={() =>
+						userExPatchMutation.mutate({
+							side: "buyer",
+						})
+					}
+				>
+					<Tile
+						icon={BuyerIcon}
+						textTitle={"I want to buy (label)"}
+					/>
+				</LinkTo>
 			</Container>
 		);
 	},

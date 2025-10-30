@@ -34,6 +34,7 @@ export namespace Button {
 		tone?: Cls.VariantOf<ButtonCls, "tone">;
 		theme?: Cls.VariantOf<ButtonCls, "theme">;
 		round?: Cls.VariantOf<ButtonCls, "round">;
+		truncate?: boolean;
 	}
 }
 
@@ -66,6 +67,7 @@ export const Button: FC<Button.Props> = ({
 	border,
 	background,
 	full,
+	truncate,
 	//
 	cls = ButtonCls,
 	tweak,
@@ -93,6 +95,7 @@ export const Button: FC<Button.Props> = ({
 				border,
 				background,
 				full,
+				truncate,
 			},
 		},
 	);
@@ -155,6 +158,7 @@ export const Button: FC<Button.Props> = ({
 					<Tx
 						label={label}
 						display={"block"}
+						truncate={truncate}
 					/>
 
 					{children}

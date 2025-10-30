@@ -8,28 +8,30 @@ export const ContainerCls = contract(PicoCls.contract)
 	])
 	.variant("height", [
 		"unset",
-		"full",
-		"dvh",
+		"fit",
 		"auto",
+		"viewport",
 	])
 	.variant("width", [
 		"unset",
-		"full",
-		"dvw",
+		"fit",
 		"auto",
+		"viewport",
 	])
 	.variant("layout", [
 		"unset",
+		"horizontal",
+		"horizontal-full",
 		"vertical",
+		"vertical-full",
 		"vertical-header-content-footer",
 		"vertical-header-content",
 		"vertical-content-footer",
-		"vertical-content",
-		"vertical-full",
-		"horizontal",
-		"horizontal-full",
+		"vertical-centered",
+		"horizontal-flex",
+		"vertical-flex",
 	])
-	.variant("overflow", [
+	.variant("scroll", [
 		"unset",
 		"horizontal",
 		"vertical",
@@ -65,6 +67,29 @@ export const ContainerCls = contract(PicoCls.contract)
 		"lg",
 		"xl",
 	])
+	.variant("items", [
+		"unset",
+		"start",
+		"center",
+		"end",
+		"stretch",
+	])
+	.variant("place-items", [
+		"unset",
+		"start",
+		"center",
+		"end",
+		"stretch",
+	])
+	.variant("justify", [
+		"unset",
+		"start",
+		"center",
+		"end",
+		"between",
+		"around",
+		"evenly",
+	])
 	.variant("position", [
 		"unset",
 		"absolute",
@@ -98,7 +123,7 @@ export const ContainerCls = contract(PicoCls.contract)
 	])
 	.def()
 	// Height
-	.match("height", "full", {
+	.match("height", "fit", {
 		root: {
 			class: [
 				"h-full",
@@ -107,26 +132,25 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("height", "dvh", {
-		root: {
-			class: [
-				"h-dvh",
-				"min-h-dvh",
-				"w-full",
-			],
-		},
-	})
 	.match("height", "auto", {
 		root: {
 			class: [
 				"h-auto",
 				"min-h-0",
-				"w-full",
+			],
+		},
+	})
+	.match("height", "viewport", {
+		root: {
+			class: [
+				"h-dvh",
+				"min-h-dvh",
+				"max-h-dvh",
 			],
 		},
 	})
 	// Width
-	.match("width", "full", {
+	.match("width", "fit", {
 		root: {
 			class: [
 				"w-full",
@@ -135,20 +159,20 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("width", "dvw", {
-		root: {
-			class: [
-				"w-dvw",
-				"min-w-dvw",
-			],
-		},
-	})
 	.match("width", "auto", {
 		root: {
 			class: [
 				"w-auto",
 				"min-w-0",
-				"h-full",
+			],
+		},
+	})
+	.match("width", "viewport", {
+		root: {
+			class: [
+				"w-dvw",
+				"min-w-dvw",
+				"max-w-dvw",
 			],
 		},
 	})
@@ -170,6 +194,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"grid-flow-col",
 				"grid-rows-1",
 				"auto-cols-[100%]",
+				// Container needs full size for snap scrolling - width/height props should be "fit"
 				"w-full",
 				"h-full",
 				"min-w-0",
@@ -184,6 +209,21 @@ export const ContainerCls = contract(PicoCls.contract)
 				"grid-flow-row",
 				"auto-rows-auto",
 				"grid-cols-1",
+			],
+		},
+	})
+	.match("layout", "vertical-full", {
+		root: {
+			class: [
+				"grid",
+				"grid-flow-row",
+				"grid-cols-1",
+				"auto-rows-[100%]",
+				// Container needs full size for snap scrolling - width/height props should be "fit"
+				"w-full",
+				"h-full",
+				"min-w-0",
+				"min-h-0",
 			],
 		},
 	})
@@ -214,31 +254,48 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("layout", "vertical-content", {
+	.match("layout", "vertical-centered", {
 		root: {
 			class: [
 				"grid",
-				"grid-rows-[min-content]",
-				"grid-cols-1",
+				"grid-rows-1",
+				"justify-stretch",
 			],
 		},
 	})
-	.match("layout", "vertical-full", {
+	.match("layout", "horizontal-flex", {
 		root: {
 			class: [
-				"grid",
-				"grid-flow-row",
-				"grid-cols-1",
-				"auto-rows-[100%]",
-				"w-full",
-				"h-full",
-				"min-w-0",
-				"min-h-0",
+				"flex",
+				"flex-row",
+				"[&>*]:flex-shrink-0",
 			],
 		},
 	})
-	// Overflow
-	.match("overflow", "horizontal", {
+	.match("layout", "vertical-flex", {
+		root: {
+			class: [
+				"flex",
+				"flex-col",
+				"[&>*]:flex-shrink-0",
+			],
+		},
+	})
+	.rule(
+		{
+			layout: "vertical-centered",
+			items: "unset",
+		},
+		{
+			root: {
+				class: [
+					"place-items-center",
+				],
+			},
+		},
+	)
+	// Scroll
+	.match("scroll", "horizontal", {
 		root: {
 			class: [
 				"isolate",
@@ -249,7 +306,7 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("overflow", "vertical", {
+	.match("scroll", "vertical", {
 		root: {
 			class: [
 				"isolate",
@@ -260,14 +317,14 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("overflow", "hidden", {
+	.match("scroll", "hidden", {
 		root: {
 			class: [
 				"overflow-hidden",
 			],
 		},
 	})
-	// Snap X axis
+	// Snap X axis (automatically includes scrolling)
 	.match("snap", "horizontal-start", {
 		root: {
 			class: [
@@ -275,6 +332,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-auto",
 				"overflow-y-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-x",
 				"snap-mandatory",
 				"[&>*]:snap-start",
@@ -288,6 +346,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-auto",
 				"overflow-y-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-x",
 				"snap-mandatory",
 				"[&>*]:snap-center",
@@ -301,13 +360,14 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-auto",
 				"overflow-y-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-x",
 				"snap-mandatory",
 				"[&>*]:snap-end",
 			],
 		},
 	})
-	// Snap Y axis
+	// Snap Y axis (automatically includes scrolling)
 	.match("snap", "vertical-start", {
 		root: {
 			class: [
@@ -315,6 +375,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-y-auto",
 				"overflow-x-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-y",
 				"snap-mandatory",
 				"[&>*]:snap-start",
@@ -328,6 +389,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-y-auto",
 				"overflow-x-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-y",
 				"snap-mandatory",
 				"[&>*]:snap-center",
@@ -341,6 +403,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-y-auto",
 				"overflow-x-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-y",
 				"snap-mandatory",
 				"[&>*]:snap-end",
@@ -433,6 +496,148 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"gap-5",
+			],
+		},
+	})
+	// Items placement (align-items for flex layouts)
+	.match("items", "start", {
+		root: {
+			class: [
+				"items-start",
+			],
+		},
+	})
+	.match("items", "center", {
+		root: {
+			class: [
+				"items-center",
+			],
+		},
+	})
+	.match("items", "end", {
+		root: {
+			class: [
+				"items-end",
+			],
+		},
+	})
+	.match("items", "stretch", {
+		root: {
+			class: [
+				"items-stretch",
+			],
+		},
+	})
+	.rule(
+		{
+			items: "center",
+			height: "auto",
+		},
+		{
+			root: {
+				class: [
+					"self-center",
+				],
+			},
+		},
+	)
+	// Place items (place-items for grid layouts)
+	.match("place-items", "start", {
+		root: {
+			class: [
+				"place-items-start",
+			],
+		},
+	})
+	.match("place-items", "center", {
+		root: {
+			class: [
+				"place-items-center",
+			],
+		},
+	})
+	.rule(
+		{
+			layout: "vertical-centered",
+			"place-items": "unset",
+		},
+		{
+			root: {
+				class: [
+					"place-items-center",
+				],
+			},
+		},
+	)
+	.match("place-items", "end", {
+		root: {
+			class: [
+				"place-items-end",
+			],
+		},
+	})
+	.match("place-items", "stretch", {
+		root: {
+			class: [
+				"place-items-stretch",
+			],
+		},
+	})
+	.rule(
+		{
+			layout: "vertical-centered",
+			"place-items": "stretch",
+		},
+		{
+			root: {
+				class: [
+					"place-items-[initial]",
+					"justify-items-stretch",
+					"items-center",
+				],
+			},
+		},
+	)
+	// Justify content (for flex layouts, but not destructive if used elsewhere)
+	.match("justify", "start", {
+		root: {
+			class: [
+				"justify-start",
+			],
+		},
+	})
+	.match("justify", "center", {
+		root: {
+			class: [
+				"justify-center",
+			],
+		},
+	})
+	.match("justify", "end", {
+		root: {
+			class: [
+				"justify-end",
+			],
+		},
+	})
+	.match("justify", "between", {
+		root: {
+			class: [
+				"justify-between",
+			],
+		},
+	})
+	.match("justify", "around", {
+		root: {
+			class: [
+				"justify-around",
+			],
+		},
+	})
+	.match("justify", "evenly", {
+		root: {
+			class: [
+				"justify-evenly",
 			],
 		},
 	})
@@ -801,14 +1006,17 @@ export const ContainerCls = contract(PicoCls.contract)
 	.defaults({
 		tone: "unset",
 		theme: "unset",
-		height: "full",
-		width: "full",
+		height: "fit",
+		width: "fit",
 		layout: "unset",
-		overflow: "unset",
+		scroll: "unset",
 		snap: "unset",
 		lock: "unset",
 		square: "unset",
 		gap: "unset",
+		items: "unset",
+		"place-items": "unset",
+		justify: "unset",
 		position: "unset",
 		border: "unset",
 		round: "unset",

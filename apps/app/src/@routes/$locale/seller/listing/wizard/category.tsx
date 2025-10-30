@@ -14,7 +14,7 @@ import {
 } from "@use-pico/client";
 import type { EntitySchema } from "@use-pico/common";
 import type { CategoryDto } from "@zbav-se.me/sdk";
-import { SearchIcon, TitleContainer } from "@zbav-se.me/ui";
+import { SearchIcon, SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
@@ -163,24 +163,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 					}
 				>
 					<Container
-						layout={"vertical-content"}
-						position={"relative"}
+						layout={"vertical-header-content"}
 						gap={"md"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"contain-paint",
-									],
-								},
-							},
-						}}
+						height={"fit"}
 					>
 						<div className={"min-h-0"}>
 							<Fulltext
 								state={{
 									value: fulltext,
-
 									set: setFulltext,
 								}}
 							/>
@@ -192,26 +182,29 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 								return (
 									<Container
 										ref={containerRef}
-										layout={"vertical-content"}
-										overflow={"vertical"}
-										position={"relative"}
+										scroll={"vertical"}
+										layout={"vertical"}
+										gap={"md"}
+										height={"fit"}
 									>
-										<Container
-											ui="Category-Container"
-											layout={"vertical-content"}
-											gap={"md"}
-										>
-											{data.data.map((item) => {
-												return (
-													<CategoryItem
-														key={item.id}
-														selection={selection}
-														item={item}
-													/>
-												);
-											})}
-										</Container>
+										{data.data.map((item) => {
+											return (
+												<CategoryItem
+													key={item.id}
+													selection={selection}
+													item={item}
+												/>
+											);
+										})}
 									</Container>
+								);
+							}}
+							renderLoading={() => {
+								return (
+									<SpinnerContainer
+										disableOverlay
+										height={"fit"}
+									/>
 								);
 							}}
 							renderEmpty={() => {

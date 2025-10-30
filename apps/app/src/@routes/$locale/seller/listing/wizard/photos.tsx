@@ -45,7 +45,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/dashboard"}
+						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}
@@ -102,7 +102,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 					<Container
 						ref={snapperRef}
 						layout="horizontal-full"
-						overflow={"horizontal"}
 						snap={"horizontal-start"}
 						gap={"md"}
 						round={"lg"}

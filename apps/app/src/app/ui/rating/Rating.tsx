@@ -1,26 +1,40 @@
+import type { useSelection } from "@use-pico/client";
 import { Button, Tx } from "@use-pico/client";
 import { useCls, VariantProvider } from "@use-pico/cls";
+import type { EntitySchema } from "@use-pico/common";
 import { ThemeCls, TypoIcon } from "@zbav-se.me/ui";
-import { type FC, type Ref, useId } from "react";
+import { type FC, type Ref, useId, useMemo } from "react";
 import { RatingCls } from "~/app/ui/rating/RatingCls";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace Rating {
+	export interface RatingItem extends EntitySchema.Type {}
+
 	export interface Props extends RatingCls.Props {
 		ref?: Ref<HTMLDivElement>;
 		textHint(value: number): string;
-		allowClear?: boolean;
-		value: number;
-		onChange(value: number): void;
+		selection: useSelection.Selection<RatingItem>;
 	}
+}
+
+function withRatingItems(limit = 6): Rating.RatingItem[] {
+	return Array.from(
+		{
+			length: limit,
+		},
+		(_, index) => {
+			const idx = limit - index;
+			return {
+				id: String(idx),
+			};
+		},
+	);
 }
 
 export const Rating: FC<Rating.Props> = ({
 	ref,
 	textHint,
-	allowClear = true,
-	value,
-	onChange,
+	selection,
 	cls = RatingCls,
 	tweak,
 }) => {
@@ -29,17 +43,20 @@ export const Rating: FC<Rating.Props> = ({
 
 	const itemId = useId();
 
+	const ratingItems = useMemo<Rating.RatingItem[]>(
+		() => withRatingItems(limit),
+		[],
+	);
+
 	return (
 		<div
 			ref={ref}
 			className={slots.root()}
 		>
-			{Array.from({
-				length: limit,
-			}).map((_, index) => {
-				const idx = limit - index;
-				const icon = RatingToIcon[idx as RatingToIcon.Value];
-				const selected = idx === value;
+			{ratingItems.map((item) => {
+				const value = Number.parseInt(item.id, 10);
+				const icon = RatingToIcon[value as RatingToIcon.Value];
+				const selected = selection.isSelected(item.id);
 
 				if (!icon) {
 					return null;
@@ -47,7 +64,7 @@ export const Rating: FC<Rating.Props> = ({
 
 				return (
 					<VariantProvider
-						key={`rating-${itemId}-${idx}`}
+						key={`rating-${itemId}-${value}`}
 						cls={ThemeCls}
 						variant={{
 							tone: "primary",
@@ -55,14 +72,14 @@ export const Rating: FC<Rating.Props> = ({
 						}}
 					>
 						<Button
-							size={"lg"}
+							size={"xl"}
 							full
 							tweak={{
 								slot: {
 									root: {
 										class: [
-											"px-4",
-											"py-7",
+											// "px-4",
+											// "py-7",
 										],
 									},
 								},
@@ -71,12 +88,7 @@ export const Rating: FC<Rating.Props> = ({
 							<TypoIcon
 								icon={icon}
 								onClick={() => {
-									if (allowClear && idx === value) {
-										onChange(0);
-										return;
-									}
-
-									onChange(idx);
+									selection.toggle(item);
 								}}
 								iconProps={{
 									size: "md",
@@ -102,7 +114,7 @@ export const Rating: FC<Rating.Props> = ({
 								}}
 							>
 								<Tx
-									label={textHint(idx)}
+									label={textHint(value)}
 									font={"bold"}
 									size={"lg"}
 								/>

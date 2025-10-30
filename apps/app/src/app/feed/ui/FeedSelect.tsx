@@ -78,7 +78,7 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 						textMessage={"Create new feed (description)"}
 						action={
 							<LinkTo
-								to={"/$locale/buyer/feed/wizard/start"}
+								to={"/$locale/buyer/feed/wizard/location"}
 								params={{
 									locale,
 								}}

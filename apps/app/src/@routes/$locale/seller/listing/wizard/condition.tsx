@@ -3,10 +3,11 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
+	Container,
 	LinkTo,
+	useSelection,
 } from "@use-pico/client";
 import { TitleContainer } from "@zbav-se.me/ui";
-import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { Rating } from "~/app/ui/rating/Rating";
 
@@ -17,9 +18,20 @@ export const Route = createFileRoute(
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [condition, setCondition] = useState<number | undefined>(
-			state.condition,
-		);
+
+		const selection = useSelection<Rating.RatingItem>({
+			mode: "single",
+			initial: state.condition
+				? [
+						{
+							id: String(state.condition),
+						},
+					]
+				: [],
+		});
+
+		const itemId = selection.optional.singleId();
+		const condition = itemId ? Number.parseInt(itemId, 10) : undefined;
 
 		return (
 			<TitleContainer
@@ -46,7 +58,7 @@ export const Route = createFileRoute(
 							condition,
 						}}
 						full
-						disabled={!condition}
+						disabled={!selection.hasAny}
 					>
 						<Button
 							tone={"secondary"}
@@ -56,24 +68,23 @@ export const Route = createFileRoute(
 							full
 							iconPosition={"right"}
 							label={"Next - age (button)"}
-							disabled={!condition}
+							disabled={!selection.hasAny}
 						/>
 					</LinkTo>
 				}
 			>
-				<div
-					className={
-						"grid grid-rows-1 justify-stretch items-center w-full h-full"
-					}
+				<Container
+					scroll={"vertical"}
+					height={"fit"}
+					width={"fit"}
 				>
 					<Rating
 						textHint={(value) =>
 							`Condition - Overall [${value}] (hint)`
 						}
-						value={condition ?? 0}
-						onChange={setCondition}
+						selection={selection}
 					/>
-				</div>
+				</Container>
 			</TitleContainer>
 		);
 	},

@@ -10,12 +10,7 @@ import {
 	Status,
 } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import {
-	FlowContainer,
-	PrimaryOverlay,
-	ThemeCls,
-	useAnim,
-} from "@zbav-se.me/ui";
+import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -78,7 +73,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 		return (
 			<Container
 				position={"relative"}
-				overflow={"hidden"}
+				scroll={"hidden"}
 			>
 				<PrimaryOverlay />
 
@@ -118,16 +113,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 				>
 					{({ content }) => {
 						return (
-							<FlowContainer
+							<Container
 								key={feedId}
 								ref={containerRef}
 								layout={"vertical-full"}
 								snap={"vertical-start"}
-								square={"unset"}
-								tone={"unset"}
-								theme={"unset"}
-								gap={"unset"}
-								overflow={"vertical"}
 							>
 								{content}
 
@@ -165,7 +155,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 										/>
 									</Sheet>
 								)}
-							</FlowContainer>
+							</Container>
 						);
 					}}
 				</InfiniteData>

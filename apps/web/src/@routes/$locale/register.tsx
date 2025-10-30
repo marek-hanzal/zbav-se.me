@@ -70,7 +70,7 @@ export const Route = createFileRoute("/$locale/register")({
 					ref={scrollerRef}
 					square={"md"}
 					layout={"vertical"}
-					overflow={"vertical"}
+					scroll={"vertical"}
 				>
 					<Sheet>
 						<VariantProvider
@@ -275,10 +275,11 @@ export const Route = createFileRoute("/$locale/register")({
 										)}
 									</form.AppField>
 
-									<div
-										className={
-											"flex flex-col items-center justify-center gap-2 w-full"
-										}
+									<Container
+										layout={"vertical"}
+										items={"center"}
+										gap={"sm"}
+										width={"fit"}
 									>
 										<form.SubmitButton
 											iconEnabled={
@@ -312,7 +313,7 @@ export const Route = createFileRoute("/$locale/register")({
 												tone={"link"}
 											/>
 										</LinkTo>
-									</div>
+									</Container>
 
 									<div
 										className={"flex flex-col gap-2 w-full"}

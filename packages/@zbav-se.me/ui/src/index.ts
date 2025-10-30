@@ -1,5 +1,6 @@
 export { BottomContainer } from "./container/BottomContainer";
 export { FlowContainer } from "./container/FlowContainer";
+export { SpinnerContainer } from "./container/SpinnerContainer";
 export { TitleContainer } from "./container/TitleContainer";
 export { Fade } from "./fade/Fade";
 export { useAppForm } from "./form/useAppForm";
@@ -45,7 +46,6 @@ export { Logo } from "./logo/Logo";
 export { PrimaryOverlay } from "./overlay/PrimaryOverlay";
 export { SecondaryOverlay } from "./overlay/SecondaryOverlay";
 export { Sheet } from "./sheet/Sheet";
-export { SpinnerSheet } from "./spinner/SpinnerSheet";
 export { ThemeCls } from "./theme/ThemeCls";
 export { TypoIcon } from "./typo/TypoIcon";
 export { TypoIconCls } from "./typo/TypoIconCls";

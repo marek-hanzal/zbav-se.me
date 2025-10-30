@@ -30,7 +30,7 @@ export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
 			<Container
 				ref={scrollerRef}
 				layout={"vertical-full"}
-				overflow={"vertical"}
+				scroll={"vertical"}
 				tone={"unset"}
 				theme={"unset"}
 			>
