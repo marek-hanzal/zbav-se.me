@@ -51,10 +51,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 							...state,
 							filter: {
 								...state.filter,
-								categoryIdIn:
-									categoryIds.length > 0
-										? categoryIds
-										: undefined,
+								categoryIdIn: categoryIds,
 							},
 						}}
 						full

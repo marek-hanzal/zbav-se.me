@@ -56,7 +56,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { name, filter, sort } = c.req.valid("json");
+			const { name, filter, sort, meta } = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
@@ -70,6 +70,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 						name,
 						filter: JSON.stringify(filter) as any,
 						sort: JSON.stringify(sort) as any,
+						meta: JSON.stringify(meta) as any,
 						createdAt: now,
 						updatedAt: now,
 					})

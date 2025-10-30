@@ -74,7 +74,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 								"age",
 								"price",
 								"condition",
-								state.location ? "geo" : undefined,
+								state.meta?.latLon ? "geo" : undefined,
 							] satisfies (tListingSort["value"] | undefined)[]
 						).filter(Boolean) as tListingSort["value"][]
 					).map((sortValue) => {
