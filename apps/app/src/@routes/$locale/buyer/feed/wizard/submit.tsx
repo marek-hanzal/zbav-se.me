@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeftIcon, Button, LinkTo, Status } from "@use-pico/client";
 import { apiFeedCreateBody } from "@zbav-se.me/sdk";
 import { FeedIcon, TitleContainer } from "@zbav-se.me/ui";
@@ -10,7 +10,20 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const feedCreateMutation = withFeedCreateMutation.useMutation();
+		const navigate = useNavigate();
+		const feedCreateMutation = withFeedCreateMutation.useMutation({
+			async onPostMutation({ result }) {
+				return navigate({
+					to: "/$locale/buyer/feed/select",
+					params: {
+						locale,
+					},
+					search: {
+						feedId: result.id,
+					},
+				});
+			},
+		});
 
 		return (
 			<TitleContainer

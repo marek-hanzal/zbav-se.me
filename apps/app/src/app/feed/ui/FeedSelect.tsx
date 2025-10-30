@@ -25,6 +25,19 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 		<Container
 			ui="FeedSelect-Container"
 			position="relative"
+			tweak={
+				feed
+					? {
+							slot: {
+								root: {
+									class: [
+										`FeedItem-${feed.id}`,
+									],
+								},
+							},
+						}
+					: undefined
+			}
 		>
 			<Sheet
 				ui="FeedSelect-Sheet"
@@ -33,7 +46,24 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 				{feed ? (
 					<Status
 						icon={FeedIcon}
-						textTitle={feed.name}
+						action={
+							<LinkTo
+								to={"/$locale/buyer/feed/$id"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
+							>
+								<Button
+									label={feed.name}
+									iconEnabled={ArrowRightIcon}
+									iconPosition={"right"}
+									size={"xl"}
+									tone={"secondary"}
+									theme={"dark"}
+								/>
+							</LinkTo>
+						}
 					/>
 				) : props.disabled ? (
 					<Status

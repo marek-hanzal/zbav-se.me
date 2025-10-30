@@ -4,14 +4,19 @@ import {
 	Container,
 	LinkTo,
 	SnapperNav,
+	useScrollTo,
 	useSnapperNav,
 } from "@use-pico/client";
 import { SpinnerSheet, TitleContainer } from "@zbav-se.me/ui";
-import { useId, useRef } from "react";
+import { useEffect, useId, useRef } from "react";
+import z from "zod";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
 import { FeedSelect } from "~/app/feed/ui/FeedSelect";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
+	validateSearch: z.object({
+		feedId: z.string().optional(),
+	}),
 	ssr: false,
 	pendingComponent() {
 		const { locale } = Route.useParams();
@@ -41,6 +46,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	},
 	component() {
 		const { locale } = Route.useParams();
+		const search = Route.useSearch();
 
 		const feedCountLimit = 10;
 
@@ -59,6 +65,18 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 		});
 		const feedId = useId();
 		const hasFeeds = feedCollectionQuery.data.data.length > 0;
+		const scrollTo = useScrollTo(snapperRef);
+
+		useEffect(() => {
+			if (!search.feedId) {
+				return;
+			}
+			scrollTo(`.FeedItem-${search.feedId}`, {
+				axis: "x",
+			});
+		}, [
+			feedCollectionQuery.data,
+		]);
 
 		return (
 			<TitleContainer
