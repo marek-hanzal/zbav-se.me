@@ -5,7 +5,7 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
-import type { LonLanSchema } from "@zbav-se.me/common";
+import type { LonLanSchema } from "@zbav-se.me/sdk";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";

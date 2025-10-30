@@ -113,7 +113,10 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 
 			return c.json(
 				await withFetch({
-					select: withListingSelect({}),
+					select: withListingSelect({
+						sort: [],
+						meta: undefined,
+					}),
 					output: ListingDtoSchema,
 					where: {
 						id,
@@ -211,6 +214,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					withCollection({
 						select: withListingSelect({
 							sort: feed.sort,
+							meta: feed.meta,
 						}),
 						output: ListingDtoSchema,
 						cursor: cursor ?? {
@@ -271,7 +275,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		}),
 		async (c) => {
 			const json = c.req.valid("json");
-			const { filter, where, sort } = json;
+			const { filter, where, sort, meta } = json;
 
 			const { data, hit } = await withCache({
 				key: {
@@ -283,6 +287,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					withFetch({
 						select: withListingSelect({
 							sort,
+							meta,
 						}),
 						output: ListingDtoSchema,
 						filter,
@@ -344,7 +349,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		}),
 		async (c) => {
 			const json = c.req.valid("json");
-			const { cursor, filter, where, sort } = json;
+			const { cursor, filter, where, sort, meta } = json;
 
 			const { data, hit } = await withCache({
 				key: {
@@ -356,6 +361,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					withCollection({
 						select: withListingSelect({
 							sort,
+							meta,
 						}),
 						output: ListingDtoSchema,
 						cursor: cursor ?? {
@@ -407,7 +413,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		}),
 		async (c) => {
 			const json = c.req.valid("json");
-			const { filter, where } = json;
+			const { filter, where, meta } = json;
 
 			const { data, hit } = await withCache({
 				key: {
@@ -417,7 +423,10 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withCount({
-						select: withListingSelect({}),
+						select: withListingSelect({
+							sort: [],
+							meta,
+						}),
 						filter,
 						where,
 						query: withListingQueryBuilder,

@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingFilterSchema } from "../../listing/schema/ListingFilterSchema";
+import { ListingMetaSchema } from "../../listing/schema/ListingMetaSchema";
 import { ListingSortSchema } from "../../listing/schema/ListingSortSchema";
 
 export const FeedSchema = z
@@ -10,15 +11,20 @@ export const FeedSchema = z
 		userId: z.string().openapi({
 			description: "ID of the user who created the feed",
 		}),
+		//
 		name: z.string().openapi({
 			description: "Name of the feed",
 		}),
-		filter: ListingFilterSchema.openapi({
+		filter: ListingFilterSchema.optional().openapi({
 			description: "Filter used to fetch the listings",
 		}),
-		sort: ListingSortSchema.array().openapi({
+		sort: ListingSortSchema.array().optional().openapi({
 			description: "Filter used to fetch the listings",
 		}),
+		meta: ListingMetaSchema.optional().openapi({
+			description: "Metadata used to fetch the listings (e.g. location)",
+		}),
+		//
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",
 			type: "string",

@@ -656,6 +656,12 @@ export const apiListingFetchBodyCursorPageMin = 0;
 
 export const apiListingFetchBodyCursorSizeMax = 1000;
 
+export const apiListingFetchBodyMetaLatLonLatMin = -90;
+export const apiListingFetchBodyMetaLatLonLatMax = 90;
+
+export const apiListingFetchBodyMetaLatLonLonMin = -180;
+export const apiListingFetchBodyMetaLatLonLonMax = 180;
+
 export const apiListingFetchBody = zod
 	.object({
 		cursor: zod
@@ -977,62 +983,46 @@ export const apiListingFetchBody = zod
 		sort: zod
 			.array(
 				zod
-					.union([
-						zod
-							.object({
-								type: zod
-									.enum([
-										"listing",
-									])
-									.describe("Common listing sort keys"),
-								value: zod.enum([
-									"price",
-									"condition",
-									"age",
-									"createdAt",
-									"updatedAt",
-									"expiresAt",
-								]),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Common listing sort keys"),
-						zod
-							.object({
-								type: zod
-									.enum([
-										"geo",
-									])
-									.describe("Explicit geo sorting"),
-								value: zod
-									.enum([
-										"geo",
-									])
-									.describe(
-										"Just keeping the same API with rest of sorting values.",
-									),
-								lon: zod
-									.number()
-									.describe("Longitude of the location"),
-								lat: zod
-									.number()
-									.describe("Latitude of the location"),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Explicit geo sorting"),
-					])
+					.object({
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+							"geo",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
 					.describe("Sort object for listing collection"),
 			)
 			.optional(),
+		meta: zod
+			.object({
+				latLon: zod
+					.object({
+						lat: zod
+							.number()
+							.min(apiListingFetchBodyMetaLatLonLatMin)
+							.max(apiListingFetchBodyMetaLatLonLatMax)
+							.describe("Latitude coordinate"),
+						lon: zod
+							.number()
+							.min(apiListingFetchBodyMetaLatLonLonMin)
+							.max(apiListingFetchBodyMetaLatLonLonMax)
+							.describe("Longitude coordinate"),
+					})
+					.optional()
+					.describe("Latitude and longitude coordinates"),
+			})
+			.optional()
+			.describe("Metadata for a listing (query)"),
 	})
 	.describe("Query object for listing collection");
 
@@ -1160,6 +1150,12 @@ export const apiListingFetchResponse = zod.object({
 export const apiListingCollectionBodyCursorPageMin = 0;
 
 export const apiListingCollectionBodyCursorSizeMax = 1000;
+
+export const apiListingCollectionBodyMetaLatLonLatMin = -90;
+export const apiListingCollectionBodyMetaLatLonLatMax = 90;
+
+export const apiListingCollectionBodyMetaLatLonLonMin = -180;
+export const apiListingCollectionBodyMetaLatLonLonMax = 180;
 
 export const apiListingCollectionBody = zod
 	.object({
@@ -1482,62 +1478,46 @@ export const apiListingCollectionBody = zod
 		sort: zod
 			.array(
 				zod
-					.union([
-						zod
-							.object({
-								type: zod
-									.enum([
-										"listing",
-									])
-									.describe("Common listing sort keys"),
-								value: zod.enum([
-									"price",
-									"condition",
-									"age",
-									"createdAt",
-									"updatedAt",
-									"expiresAt",
-								]),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Common listing sort keys"),
-						zod
-							.object({
-								type: zod
-									.enum([
-										"geo",
-									])
-									.describe("Explicit geo sorting"),
-								value: zod
-									.enum([
-										"geo",
-									])
-									.describe(
-										"Just keeping the same API with rest of sorting values.",
-									),
-								lon: zod
-									.number()
-									.describe("Longitude of the location"),
-								lat: zod
-									.number()
-									.describe("Latitude of the location"),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Explicit geo sorting"),
-					])
+					.object({
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+							"geo",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
 					.describe("Sort object for listing collection"),
 			)
 			.optional(),
+		meta: zod
+			.object({
+				latLon: zod
+					.object({
+						lat: zod
+							.number()
+							.min(apiListingCollectionBodyMetaLatLonLatMin)
+							.max(apiListingCollectionBodyMetaLatLonLatMax)
+							.describe("Latitude coordinate"),
+						lon: zod
+							.number()
+							.min(apiListingCollectionBodyMetaLatLonLonMin)
+							.max(apiListingCollectionBodyMetaLatLonLonMax)
+							.describe("Longitude coordinate"),
+					})
+					.optional()
+					.describe("Latitude and longitude coordinates"),
+			})
+			.optional()
+			.describe("Metadata for a listing (query)"),
 	})
 	.describe("Query object for listing collection");
 
@@ -1705,6 +1685,12 @@ export const apiListingCollectionResponse = zod
 export const apiListingCountBodyCursorPageMin = 0;
 
 export const apiListingCountBodyCursorSizeMax = 1000;
+
+export const apiListingCountBodyMetaLatLonLatMin = -90;
+export const apiListingCountBodyMetaLatLonLatMax = 90;
+
+export const apiListingCountBodyMetaLatLonLonMin = -180;
+export const apiListingCountBodyMetaLatLonLonMax = 180;
 
 export const apiListingCountBody = zod
 	.object({
@@ -2027,62 +2013,46 @@ export const apiListingCountBody = zod
 		sort: zod
 			.array(
 				zod
-					.union([
-						zod
-							.object({
-								type: zod
-									.enum([
-										"listing",
-									])
-									.describe("Common listing sort keys"),
-								value: zod.enum([
-									"price",
-									"condition",
-									"age",
-									"createdAt",
-									"updatedAt",
-									"expiresAt",
-								]),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Common listing sort keys"),
-						zod
-							.object({
-								type: zod
-									.enum([
-										"geo",
-									])
-									.describe("Explicit geo sorting"),
-								value: zod
-									.enum([
-										"geo",
-									])
-									.describe(
-										"Just keeping the same API with rest of sorting values.",
-									),
-								lon: zod
-									.number()
-									.describe("Longitude of the location"),
-								lat: zod
-									.number()
-									.describe("Latitude of the location"),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Explicit geo sorting"),
-					])
+					.object({
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+							"geo",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
 					.describe("Sort object for listing collection"),
 			)
 			.optional(),
+		meta: zod
+			.object({
+				latLon: zod
+					.object({
+						lat: zod
+							.number()
+							.min(apiListingCountBodyMetaLatLonLatMin)
+							.max(apiListingCountBodyMetaLatLonLatMax)
+							.describe("Latitude coordinate"),
+						lon: zod
+							.number()
+							.min(apiListingCountBodyMetaLatLonLonMin)
+							.max(apiListingCountBodyMetaLatLonLonMax)
+							.describe("Longitude coordinate"),
+					})
+					.optional()
+					.describe("Latitude and longitude coordinates"),
+			})
+			.optional()
+			.describe("Metadata for a listing (query)"),
 	})
 	.describe("Query object for listing collection");
 
@@ -2978,6 +2948,11 @@ export const apiS3PresignBody = zod.object({
 		.describe("Browser-provided Content-Type used for PUT upload."),
 });
 
+export const apiS3PresignResponse = zod.object({
+	url: zod.url(),
+	cdn: zod.string().describe("CDN url where the file lives"),
+});
+
 /**
  * Update user extended information
  */
@@ -3157,55 +3132,23 @@ export const apiFeedCreateBody = zod.object({
 		.describe("User-land filters"),
 	sort: zod.array(
 		zod
-			.union([
-				zod
-					.object({
-						type: zod
-							.enum([
-								"listing",
-							])
-							.describe("Common listing sort keys"),
-						value: zod.enum([
-							"price",
-							"condition",
-							"age",
-							"createdAt",
-							"updatedAt",
-							"expiresAt",
-						]),
-						sort: zod
-							.enum([
-								"asc",
-								"desc",
-							])
-							.nullish(),
-					})
-					.describe("Common listing sort keys"),
-				zod
-					.object({
-						type: zod
-							.enum([
-								"geo",
-							])
-							.describe("Explicit geo sorting"),
-						value: zod
-							.enum([
-								"geo",
-							])
-							.describe(
-								"Just keeping the same API with rest of sorting values.",
-							),
-						lon: zod.number().describe("Longitude of the location"),
-						lat: zod.number().describe("Latitude of the location"),
-						sort: zod
-							.enum([
-								"asc",
-								"desc",
-							])
-							.nullish(),
-					})
-					.describe("Explicit geo sorting"),
-			])
+			.object({
+				value: zod.enum([
+					"price",
+					"condition",
+					"age",
+					"createdAt",
+					"updatedAt",
+					"expiresAt",
+					"geo",
+				]),
+				sort: zod
+					.enum([
+						"asc",
+						"desc",
+					])
+					.nullish(),
+			})
 			.describe("Sort object for listing collection"),
 	),
 });
@@ -3372,64 +3315,34 @@ export const apiFeedPatchBody = zod.object({
 	sort: zod
 		.array(
 			zod
-				.union([
-					zod
-						.object({
-							type: zod
-								.enum([
-									"listing",
-								])
-								.describe("Common listing sort keys"),
-							value: zod.enum([
-								"price",
-								"condition",
-								"age",
-								"createdAt",
-								"updatedAt",
-								"expiresAt",
-							]),
-							sort: zod
-								.enum([
-									"asc",
-									"desc",
-								])
-								.nullish(),
-						})
-						.describe("Common listing sort keys"),
-					zod
-						.object({
-							type: zod
-								.enum([
-									"geo",
-								])
-								.describe("Explicit geo sorting"),
-							value: zod
-								.enum([
-									"geo",
-								])
-								.describe(
-									"Just keeping the same API with rest of sorting values.",
-								),
-							lon: zod
-								.number()
-								.describe("Longitude of the location"),
-							lat: zod
-								.number()
-								.describe("Latitude of the location"),
-							sort: zod
-								.enum([
-									"asc",
-									"desc",
-								])
-								.nullish(),
-						})
-						.describe("Explicit geo sorting"),
-				])
+				.object({
+					value: zod.enum([
+						"price",
+						"condition",
+						"age",
+						"createdAt",
+						"updatedAt",
+						"expiresAt",
+						"geo",
+					]),
+					sort: zod
+						.enum([
+							"asc",
+							"desc",
+						])
+						.nullish(),
+				})
 				.describe("Sort object for listing collection"),
 		)
 		.optional()
 		.describe("Sort used to fetch the listings"),
 });
+
+export const apiFeedPatchResponseMetaLatLonLatMin = -90;
+export const apiFeedPatchResponseMetaLatLonLatMax = 90;
+
+export const apiFeedPatchResponseMetaLatLonLonMin = -180;
+export const apiFeedPatchResponseMetaLatLonLonMax = 180;
 
 export const apiFeedPatchResponse = zod
 	.object({
@@ -3585,66 +3498,59 @@ export const apiFeedPatchResponse = zod
 					),
 			})
 			.describe("User-land filters")
-			.and(zod.unknown().describe("Filter used to fetch the listings")),
+			.and(zod.unknown().describe("Filter used to fetch the listings"))
+			.optional(),
 		sort: zod
 			.array(
 				zod
-					.union([
-						zod
-							.object({
-								type: zod
-									.enum([
-										"listing",
-									])
-									.describe("Common listing sort keys"),
-								value: zod.enum([
-									"price",
-									"condition",
-									"age",
-									"createdAt",
-									"updatedAt",
-									"expiresAt",
-								]),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Common listing sort keys"),
-						zod
-							.object({
-								type: zod
-									.enum([
-										"geo",
-									])
-									.describe("Explicit geo sorting"),
-								value: zod
-									.enum([
-										"geo",
-									])
-									.describe(
-										"Just keeping the same API with rest of sorting values.",
-									),
-								lon: zod
-									.number()
-									.describe("Longitude of the location"),
-								lat: zod
-									.number()
-									.describe("Latitude of the location"),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Explicit geo sorting"),
-					])
+					.object({
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+							"geo",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
 					.describe("Sort object for listing collection"),
 			)
+			.optional()
 			.describe("Filter used to fetch the listings"),
+		meta: zod
+			.object({
+				latLon: zod
+					.object({
+						lat: zod
+							.number()
+							.min(apiFeedPatchResponseMetaLatLonLatMin)
+							.max(apiFeedPatchResponseMetaLatLonLatMax)
+							.describe("Latitude coordinate"),
+						lon: zod
+							.number()
+							.min(apiFeedPatchResponseMetaLatLonLonMin)
+							.max(apiFeedPatchResponseMetaLatLonLonMax)
+							.describe("Longitude coordinate"),
+					})
+					.optional()
+					.describe("Latitude and longitude coordinates"),
+			})
+			.describe("Metadata for a listing (query)")
+			.and(
+				zod
+					.unknown()
+					.describe(
+						"Metadata used to fetch the listings (e.g. location)",
+					),
+			)
+			.optional(),
 	})
 	.describe("Feed data transfer object");
 
@@ -3728,6 +3634,12 @@ export const apiFeedFetchBody = zod
 			.optional(),
 	})
 	.describe("Query object for feed collection");
+
+export const apiFeedFetchResponseMetaLatLonLatMin = -90;
+export const apiFeedFetchResponseMetaLatLonLatMax = 90;
+
+export const apiFeedFetchResponseMetaLatLonLonMin = -180;
+export const apiFeedFetchResponseMetaLatLonLonMax = 180;
 
 export const apiFeedFetchResponse = zod
 	.object({
@@ -3883,66 +3795,59 @@ export const apiFeedFetchResponse = zod
 					),
 			})
 			.describe("User-land filters")
-			.and(zod.unknown().describe("Filter used to fetch the listings")),
+			.and(zod.unknown().describe("Filter used to fetch the listings"))
+			.optional(),
 		sort: zod
 			.array(
 				zod
-					.union([
-						zod
-							.object({
-								type: zod
-									.enum([
-										"listing",
-									])
-									.describe("Common listing sort keys"),
-								value: zod.enum([
-									"price",
-									"condition",
-									"age",
-									"createdAt",
-									"updatedAt",
-									"expiresAt",
-								]),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Common listing sort keys"),
-						zod
-							.object({
-								type: zod
-									.enum([
-										"geo",
-									])
-									.describe("Explicit geo sorting"),
-								value: zod
-									.enum([
-										"geo",
-									])
-									.describe(
-										"Just keeping the same API with rest of sorting values.",
-									),
-								lon: zod
-									.number()
-									.describe("Longitude of the location"),
-								lat: zod
-									.number()
-									.describe("Latitude of the location"),
-								sort: zod
-									.enum([
-										"asc",
-										"desc",
-									])
-									.nullish(),
-							})
-							.describe("Explicit geo sorting"),
-					])
+					.object({
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+							"geo",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
 					.describe("Sort object for listing collection"),
 			)
+			.optional()
 			.describe("Filter used to fetch the listings"),
+		meta: zod
+			.object({
+				latLon: zod
+					.object({
+						lat: zod
+							.number()
+							.min(apiFeedFetchResponseMetaLatLonLatMin)
+							.max(apiFeedFetchResponseMetaLatLonLatMax)
+							.describe("Latitude coordinate"),
+						lon: zod
+							.number()
+							.min(apiFeedFetchResponseMetaLatLonLonMin)
+							.max(apiFeedFetchResponseMetaLatLonLonMax)
+							.describe("Longitude coordinate"),
+					})
+					.optional()
+					.describe("Latitude and longitude coordinates"),
+			})
+			.describe("Metadata for a listing (query)")
+			.and(
+				zod
+					.unknown()
+					.describe(
+						"Metadata used to fetch the listings (e.g. location)",
+					),
+			)
+			.optional(),
 	})
 	.describe("Feed data transfer object");
 
@@ -4026,6 +3931,12 @@ export const apiFeedCollectionBody = zod
 			.optional(),
 	})
 	.describe("Query object for feed collection");
+
+export const apiFeedCollectionResponseDataItemMetaLatLonLatMin = -90;
+export const apiFeedCollectionResponseDataItemMetaLatLonLatMax = 90;
+
+export const apiFeedCollectionResponseDataItemMetaLatLonLonMin = -180;
+export const apiFeedCollectionResponseDataItemMetaLatLonLonMax = 180;
 
 export const apiFeedCollectionResponse = zod
 	.object({
@@ -4190,80 +4101,465 @@ export const apiFeedCollectionResponse = zod
 							zod
 								.unknown()
 								.describe("Filter used to fetch the listings"),
-						),
+						)
+						.optional(),
 					sort: zod
 						.array(
 							zod
-								.union([
-									zod
-										.object({
-											type: zod
-												.enum([
-													"listing",
-												])
-												.describe(
-													"Common listing sort keys",
-												),
-											value: zod.enum([
-												"price",
-												"condition",
-												"age",
-												"createdAt",
-												"updatedAt",
-												"expiresAt",
-											]),
-											sort: zod
-												.enum([
-													"asc",
-													"desc",
-												])
-												.nullish(),
-										})
-										.describe("Common listing sort keys"),
-									zod
-										.object({
-											type: zod
-												.enum([
-													"geo",
-												])
-												.describe(
-													"Explicit geo sorting",
-												),
-											value: zod
-												.enum([
-													"geo",
-												])
-												.describe(
-													"Just keeping the same API with rest of sorting values.",
-												),
-											lon: zod
-												.number()
-												.describe(
-													"Longitude of the location",
-												),
-											lat: zod
-												.number()
-												.describe(
-													"Latitude of the location",
-												),
-											sort: zod
-												.enum([
-													"asc",
-													"desc",
-												])
-												.nullish(),
-										})
-										.describe("Explicit geo sorting"),
-								])
+								.object({
+									value: zod.enum([
+										"price",
+										"condition",
+										"age",
+										"createdAt",
+										"updatedAt",
+										"expiresAt",
+										"geo",
+									]),
+									sort: zod
+										.enum([
+											"asc",
+											"desc",
+										])
+										.nullish(),
+								})
 								.describe("Sort object for listing collection"),
 						)
+						.optional()
 						.describe("Filter used to fetch the listings"),
+					meta: zod
+						.object({
+							latLon: zod
+								.object({
+									lat: zod
+										.number()
+										.min(
+											apiFeedCollectionResponseDataItemMetaLatLonLatMin,
+										)
+										.max(
+											apiFeedCollectionResponseDataItemMetaLatLonLatMax,
+										)
+										.describe("Latitude coordinate"),
+									lon: zod
+										.number()
+										.min(
+											apiFeedCollectionResponseDataItemMetaLatLonLonMin,
+										)
+										.max(
+											apiFeedCollectionResponseDataItemMetaLatLonLonMax,
+										)
+										.describe("Longitude coordinate"),
+								})
+								.optional()
+								.describe("Latitude and longitude coordinates"),
+						})
+						.describe("Metadata for a listing (query)")
+						.and(
+							zod
+								.unknown()
+								.describe(
+									"Metadata used to fetch the listings (e.g. location)",
+								),
+						)
+						.optional(),
 				})
 				.describe("Feed data transfer object"),
 		),
 		more: zod.boolean().describe("Whether there are more items to fetch"),
 	})
 	.describe("Collection of feed items");
+
+/**
+ * Returns count of feed items based on provided query (user-specific)
+ */
+export const apiFeedCountBodyCursorPageMin = 0;
+
+export const apiFeedCountBodyCursorSizeMax = 1000;
+
+export const apiFeedCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiFeedCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiFeedCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.optional()
+			.describe("User-land filters for feed items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.describe("User-land filters for feed items")
+			.and(zod.unknown().describe("App-based filters"))
+			.optional(),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+							"updatedAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for feed collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for feed collection");
+
+export const apiFeedCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
+
+/**
+ * Delete a feed item based on the provided query (user-specific)
+ */
+export const apiFeedDeleteBodyCursorPageMin = 0;
+
+export const apiFeedDeleteBodyCursorSizeMax = 1000;
+
+export const apiFeedDeleteBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiFeedDeleteBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiFeedDeleteBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.optional()
+			.describe("User-land filters for feed items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.describe("User-land filters for feed items")
+			.and(zod.unknown().describe("App-based filters"))
+			.optional(),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+							"updatedAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for feed collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for feed collection");
+
+export const apiFeedDeleteResponseMetaLatLonLatMin = -90;
+export const apiFeedDeleteResponseMetaLatLonLatMax = 90;
+
+export const apiFeedDeleteResponseMetaLatLonLonMin = -180;
+export const apiFeedDeleteResponseMetaLatLonLonMax = 180;
+
+export const apiFeedDeleteResponse = zod
+	.object({
+		id: zod.string().describe("ID of the feed"),
+		name: zod.string().describe("Name of the feed"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.describe("User-land filters")
+			.and(zod.unknown().describe("Filter used to fetch the listings"))
+			.optional(),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+							"geo",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for listing collection"),
+			)
+			.optional()
+			.describe("Filter used to fetch the listings"),
+		meta: zod
+			.object({
+				latLon: zod
+					.object({
+						lat: zod
+							.number()
+							.min(apiFeedDeleteResponseMetaLatLonLatMin)
+							.max(apiFeedDeleteResponseMetaLatLonLatMax)
+							.describe("Latitude coordinate"),
+						lon: zod
+							.number()
+							.min(apiFeedDeleteResponseMetaLatLonLonMin)
+							.max(apiFeedDeleteResponseMetaLatLonLonMax)
+							.describe("Longitude coordinate"),
+					})
+					.optional()
+					.describe("Latitude and longitude coordinates"),
+			})
+			.describe("Metadata for a listing (query)")
+			.and(
+				zod
+					.unknown()
+					.describe(
+						"Metadata used to fetch the listings (e.g. location)",
+					),
+			)
+			.optional(),
+	})
+	.describe("Feed data transfer object");
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.

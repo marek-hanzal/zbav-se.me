@@ -3,11 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@use-pico/client";
 import { genId, linkTo } from "@use-pico/common";
-import { CurrencyList } from "@zbav-se.me/common";
 import {
 	apiCategoryCollection,
 	apiListingCreate,
 	apiLocationAutocomplete,
+	CurrencyList,
 	ListingExpire,
 	type UploadDto,
 } from "@zbav-se.me/sdk";
@@ -148,6 +148,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				});
 
 				const createListing = async () => {
+					const currencies = Object.values(CurrencyList);
 					return apiListingCreate({
 						age: range(1, 6),
 						condition: range(1, 6),
@@ -155,8 +156,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							category.data[range(0, category.data.length - 1)]!
 								.id,
 						price: range(0, 99_999),
-						currency:
-							CurrencyList[range(0, CurrencyList.length - 1)]!,
+						currency: currencies[range(0, currencies.length - 1)]!,
 						expiresAt:
 							ListingExpire[
 								Object.keys(ListingExpire)[

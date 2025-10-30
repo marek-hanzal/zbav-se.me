@@ -1,5 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import type { LonLanSchema } from "@zbav-se.me/common";
+import type { LonLanSchema } from "@zbav-se.me/sdk";
 import { apiListingCollection } from "@zbav-se.me/sdk";
 
 export namespace useListingInfiniteQuery {

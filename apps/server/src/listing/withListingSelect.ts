@@ -2,18 +2,20 @@ import { sql } from "kysely";
 import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { database } from "../database/kysely";
+import type { ListingMetaSchema } from "./schema/ListingMetaSchema";
 import type { ListingSortSchema } from "./schema/ListingSortSchema";
 
 export namespace withListingSelect {
 	export interface Props {
-		sort?: ListingSortSchema.Type[];
+		sort: ListingSortSchema.Type[] | undefined;
+		meta: ListingMetaSchema.Type | undefined;
 	}
 
 	export type Select = ReturnType<typeof withListingSelect>;
 }
 
-export const withListingSelect = ({ sort }: withListingSelect.Props) => {
-	let query = database.kysely
+export const withListingSelect = ({ sort, meta }: withListingSelect.Props) => {
+	const query = database.kysely
 		.selectFrom("listing as l")
 		.select([
 			"l.age",
@@ -72,53 +74,30 @@ export const withListingSelect = ({ sort }: withListingSelect.Props) => {
 			).as("gallery"),
 		]);
 
-	for (const sortItem of sort ?? []) {
-		query = match(sortItem)
-			.with(
-				{
-					type: "listing",
-				},
-				(sort) => {
-					if (!sort.sort) {
-						return query;
-					}
-					const { sort: key, value } = sort;
+	for (const item of sort ?? []) {
+		if (!item.sort) {
+			return query;
+		}
+		const { sort, value } = item;
 
-					return match(value)
-						.with("price", () => query.orderBy("l.price", key))
-						.with("condition", () =>
-							query.orderBy("l.condition", key),
-						)
-						.with("age", () => query.orderBy("l.age", key))
-						.with("createdAt", () =>
-							query.orderBy("l.createdAt", key),
-						)
-						.with("updatedAt", () =>
-							query.orderBy("l.updatedAt", key),
-						)
-						.with("expiresAt", () =>
-							query.orderBy("l.expiresAt", key),
-						)
-						.exhaustive();
-				},
-			)
-			.with(
-				{
-					type: "geo",
-				},
-				(sort) => {
-					const { sort: key, lon, lat } = sort;
-					if (!key) {
-						return query;
-					}
+		return match(value)
+			.with("price", () => query.orderBy("l.price", sort))
+			.with("condition", () => query.orderBy("l.condition", sort))
+			.with("age", () => query.orderBy("l.age", sort))
+			.with("createdAt", () => query.orderBy("l.createdAt", sort))
+			.with("updatedAt", () => query.orderBy("l.updatedAt", sort))
+			.with("expiresAt", () => query.orderBy("l.expiresAt", sort))
+			.with("geo", () => {
+				if (!meta?.latLon) {
+					return query;
+				}
+				const { lon, lat } = meta.latLon;
 
-					return query.orderBy(
-						(eb) =>
-							sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)`,
-						key,
-					);
-				},
-			)
+				return query.orderBy(
+					(eb) =>
+						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)`,
+				);
+			})
 			.exhaustive();
 	}
 

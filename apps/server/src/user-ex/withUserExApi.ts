@@ -26,7 +26,7 @@ export const withUserExApi = ({ session }: Routes) => {
 				},
 			},
 			responses: {
-				200: {
+				204: {
 					description:
 						"User extended information updated successfully",
 				},
@@ -78,13 +78,13 @@ export const withUserExApi = ({ session }: Routes) => {
 					}
 				});
 
-				return c.body(null, 200);
+				return c.body(null, 204);
 			} catch (error) {
 				console.error(error);
 				return c.json(
 					{
-						message: "Internal server error",
-					},
+						message: "Failed to update user extended information",
+					} satisfies ErrorSchema.Type,
 					500,
 				);
 			}

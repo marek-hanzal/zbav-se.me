@@ -1,12 +1,19 @@
 import { z } from "@hono/zod-openapi";
-import { ListingCommonSortSchema } from "./ListingCommonSortSchema";
-import { ListingGeoSortSchema } from "./ListingGeoSortSchema";
+import { OrderSchema } from "@use-pico/common";
 
 export const ListingSortSchema = z
-	.union([
-		ListingCommonSortSchema,
-		ListingGeoSortSchema,
-	])
+	.object({
+		value: z.enum([
+			"price",
+			"condition",
+			"age",
+			"createdAt",
+			"updatedAt",
+			"expiresAt",
+			"geo",
+		]),
+		sort: OrderSchema,
+	})
 	.openapi("ListingSort", {
 		description: "Sort object for listing collection",
 	});

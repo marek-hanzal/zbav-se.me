@@ -675,109 +675,66 @@ export interface ListingWhere {
 	model?: string | null;
 }
 
-/**
- * Common listing sort keys
- */
-export type ListingCommonSortType =
-	(typeof ListingCommonSortType)[keyof typeof ListingCommonSortType];
+export type ListingSortValue =
+	(typeof ListingSortValue)[keyof typeof ListingSortValue];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingCommonSortType = {
-	listing: "listing",
-} as const;
-
-export type ListingCommonSortValue =
-	(typeof ListingCommonSortValue)[keyof typeof ListingCommonSortValue];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingCommonSortValue = {
+export const ListingSortValue = {
 	price: "price",
 	condition: "condition",
 	age: "age",
 	createdAt: "createdAt",
 	updatedAt: "updatedAt",
 	expiresAt: "expiresAt",
-} as const;
-
-/**
- * @nullable
- */
-export type ListingCommonSortSort =
-	| (typeof ListingCommonSortSort)[keyof typeof ListingCommonSortSort]
-	| null;
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingCommonSortSort = {
-	asc: "asc",
-	desc: "desc",
-} as const;
-
-/**
- * Common listing sort keys
- */
-export interface ListingCommonSort {
-	/** Common listing sort keys */
-	type: ListingCommonSortType;
-	value: ListingCommonSortValue;
-	/** @nullable */
-	sort?: ListingCommonSortSort;
-}
-
-/**
- * Explicit geo sorting
- */
-export type ListingGeoSortType =
-	(typeof ListingGeoSortType)[keyof typeof ListingGeoSortType];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingGeoSortType = {
-	geo: "geo",
-} as const;
-
-/**
- * Just keeping the same API with rest of sorting values.
- */
-export type ListingGeoSortValue =
-	(typeof ListingGeoSortValue)[keyof typeof ListingGeoSortValue];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingGeoSortValue = {
 	geo: "geo",
 } as const;
 
 /**
  * @nullable
  */
-export type ListingGeoSortSort =
-	| (typeof ListingGeoSortSort)[keyof typeof ListingGeoSortSort]
+export type ListingSortSort =
+	| (typeof ListingSortSort)[keyof typeof ListingSortSort]
 	| null;
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const ListingGeoSortSort = {
+export const ListingSortSort = {
 	asc: "asc",
 	desc: "desc",
 } as const;
-
-/**
- * Explicit geo sorting
- */
-export interface ListingGeoSort {
-	/** Explicit geo sorting */
-	type: ListingGeoSortType;
-	/** Just keeping the same API with rest of sorting values. */
-	value: ListingGeoSortValue;
-	/** Longitude of the location */
-	lon: number;
-	/** Latitude of the location */
-	lat: number;
-	/** @nullable */
-	sort?: ListingGeoSortSort;
-}
 
 /**
  * Sort object for listing collection
  */
-export type ListingSort = ListingCommonSort | ListingGeoSort;
+export interface ListingSort {
+	value: ListingSortValue;
+	/** @nullable */
+	sort?: ListingSortSort;
+}
+
+/**
+ * Latitude and longitude coordinates
+ */
+export interface LatLon {
+	/**
+	 * Latitude coordinate
+	 * @minimum -90
+	 * @maximum 90
+	 */
+	lat: number;
+	/**
+	 * Longitude coordinate
+	 * @minimum -180
+	 * @maximum 180
+	 */
+	lon: number;
+}
+
+/**
+ * Metadata for a listing (query)
+ */
+export interface ListingMeta {
+	latLon?: LatLon;
+}
 
 /**
  * Query object for listing collection
@@ -787,6 +744,7 @@ export interface ListingQuery {
 	filter?: ListingFilter;
 	where?: ListingWhere;
 	sort?: ListingSort[];
+	meta?: ListingMeta;
 }
 
 /**
@@ -1210,6 +1168,8 @@ export interface UserPatch {
 
 export type FeedDtoFilter = ListingFilter & unknown;
 
+export type FeedDtoMeta = ListingMeta & unknown;
+
 /**
  * Feed data transfer object
  */
@@ -1218,9 +1178,10 @@ export interface FeedDto {
 	id: string;
 	/** Name of the feed */
 	name: string;
-	filter: FeedDtoFilter;
+	filter?: FeedDtoFilter;
 	/** Filter used to fetch the listings */
-	sort: ListingSort[];
+	sort?: ListingSort[];
+	meta?: FeedDtoMeta;
 }
 
 export interface FeedCreate {
@@ -1643,6 +1604,29 @@ export const apiFeedCollection = <TData = AxiosResponse<FeedCollection>>(
 };
 
 /**
+ * Returns count of feed items based on provided query (user-specific)
+ */
+export const apiFeedCount = <TData = AxiosResponse<Count>>(
+	feedQuery: FeedQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.post(`/api/session/feed/count`, feedQuery, options);
+};
+
+/**
+ * Delete a feed item based on the provided query (user-specific)
+ */
+export const apiFeedDelete = <TData = AxiosResponse<FeedDto>>(
+	feedQuery: FeedQuery,
+	options?: AxiosRequestConfig,
+): Promise<TData> => {
+	return axios.delete(`/api/session/feed/delete`, {
+		data: feedQuery,
+		...options,
+	});
+};
+
+/**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealth = <TData = AxiosResponse<Health>>(
@@ -1694,6 +1678,8 @@ export type ApiFeedCreateResult = AxiosResponse<FeedDto>;
 export type ApiFeedPatchResult = AxiosResponse<FeedDto>;
 export type ApiFeedFetchResult = AxiosResponse<FeedDto>;
 export type ApiFeedCollectionResult = AxiosResponse<FeedCollection>;
+export type ApiFeedCountResult = AxiosResponse<Count>;
+export type ApiFeedDeleteResult = AxiosResponse<FeedDto>;
 export type ApiHealthResult = AxiosResponse<Health>;
 export type ApiMigrationRunResult = AxiosResponse<Migration[]>;
 export type ApiJanitorCleanupResult = AxiosResponse<CleanupResponse>;
