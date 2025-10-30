@@ -127,7 +127,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 								tone={"unset"}
 								theme={"unset"}
 								gap={"unset"}
-								scroll={"vertical"}
 							>
 								{content}
 

@@ -57,7 +57,6 @@ export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
 				ref={containerRef}
 				layout={"vertical-full"}
 				snap={"vertical-center"}
-				scroll={"vertical"}
 				gap={"lg"}
 				tweak={[
 					tweak,

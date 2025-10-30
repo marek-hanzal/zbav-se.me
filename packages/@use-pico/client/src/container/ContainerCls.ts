@@ -267,7 +267,7 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	// Snap X axis
+	// Snap X axis (automatically includes scrolling)
 	.match("snap", "horizontal-start", {
 		root: {
 			class: [
@@ -275,6 +275,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-auto",
 				"overflow-y-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-x",
 				"snap-mandatory",
 				"[&>*]:snap-start",
@@ -288,6 +289,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-auto",
 				"overflow-y-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-x",
 				"snap-mandatory",
 				"[&>*]:snap-center",
@@ -301,13 +303,14 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-x-auto",
 				"overflow-y-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-x",
 				"snap-mandatory",
 				"[&>*]:snap-end",
 			],
 		},
 	})
-	// Snap Y axis
+	// Snap Y axis (automatically includes scrolling)
 	.match("snap", "vertical-start", {
 		root: {
 			class: [
@@ -315,6 +318,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-y-auto",
 				"overflow-x-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-y",
 				"snap-mandatory",
 				"[&>*]:snap-start",
@@ -328,6 +332,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-y-auto",
 				"overflow-x-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-y",
 				"snap-mandatory",
 				"[&>*]:snap-center",
@@ -341,6 +346,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"overflow-y-auto",
 				"overflow-x-clip",
 				"overscroll-contain",
+				"[scrollbar-gutter:stable_both-edges]",
 				"snap-y",
 				"snap-mandatory",
 				"[&>*]:snap-end",

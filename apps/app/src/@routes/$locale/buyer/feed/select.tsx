@@ -116,7 +116,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					<Container
 						ref={snapperRef}
 						layout="horizontal-full"
-						scroll={"horizontal"}
 						snap={"horizontal-start"}
 						gap={"md"}
 						round={"lg"}

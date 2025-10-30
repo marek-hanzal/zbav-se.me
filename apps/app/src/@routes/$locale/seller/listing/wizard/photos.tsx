@@ -102,7 +102,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 					<Container
 						ref={snapperRef}
 						layout="horizontal-full"
-						scroll={"horizontal"}
 						snap={"horizontal-start"}
 						gap={"md"}
 						round={"lg"}

@@ -70,6 +70,8 @@ export namespace Container {
 		 * - `"vertical"` - Vertical scrolling with stable scrollbar gutter
 		 * - `"hidden"` - Hide overflow content
 		 *
+		 * **Note:** When using `snap`, scrolling is automatically enabled and you don't need to specify `scroll` separately.
+		 *
 		 * @default "unset"
 		 */
 		scroll?: Cls.VariantOf<ContainerCls, "scroll">;
@@ -77,13 +79,16 @@ export namespace Container {
 		/**
 		 * Scroll snap behavior for smooth scrolling.
 		 *
+		 * Automatically enables scrolling in the appropriate direction (horizontal or vertical).
+		 * You don't need to specify `scroll` when using `snap` - it's included automatically.
+		 *
 		 * - `"unset"` - No scroll snap
-		 * - `"horizontal-start"` - Snap to start horizontally
-		 * - `"horizontal-center"` - Snap to center horizontally
-		 * - `"horizontal-end"` - Snap to end horizontally
-		 * - `"vertical-start"` - Snap to start vertically
-		 * - `"vertical-center"` - Snap to center vertically
-		 * - `"vertical-end"` - Snap to end vertically
+		 * - `"horizontal-start"` - Snap to start horizontally (includes horizontal scrolling)
+		 * - `"horizontal-center"` - Snap to center horizontally (includes horizontal scrolling)
+		 * - `"horizontal-end"` - Snap to end horizontally (includes horizontal scrolling)
+		 * - `"vertical-start"` - Snap to start vertically (includes vertical scrolling)
+		 * - `"vertical-center"` - Snap to center vertically (includes vertical scrolling)
+		 * - `"vertical-end"` - Snap to end vertically (includes vertical scrolling)
 		 *
 		 * @default "unset"
 		 */
