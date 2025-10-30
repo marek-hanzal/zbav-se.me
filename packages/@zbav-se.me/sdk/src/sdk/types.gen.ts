@@ -256,10 +256,6 @@ export type tLocationDto = {
      * Longitude of the location
      */
     lon: number;
-    /**
-     * Encoded PostGIS geometry of the location
-     */
-    geo: string;
 };
 
 /**
@@ -393,6 +389,14 @@ export type tListingCreate = {
     categoryId: string;
     currency: tCurrencyList;
     expiresAt: tListingExpire;
+    /**
+     * Vendor/manufacturer of the item
+     */
+    vendor?: string | null;
+    /**
+     * Model of the item
+     */
+    model?: string | null;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */

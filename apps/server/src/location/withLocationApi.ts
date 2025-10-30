@@ -9,6 +9,7 @@ import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationDtoSchema } from "./schema/LocationDtoSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
+import type { LocationSchema } from "./schema/LocationSchema";
 import { withLocationQueryBuilder } from "./withLocationQueryBuilder";
 import { withLocationSelect } from "./withLocationSelect";
 
@@ -104,16 +105,17 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 
 			// First check: quick cache lookup without lock (outside transaction)
 			const quickCache = await withList({
-				select: database.kysely
-					.selectFrom("location")
+				select: withLocationSelect({
+					sort: [],
+					source: database.kysely,
+				})
 					.where((qb) => {
 						return qb.or([
 							qb("id", "=", text),
 							qb("query", "=", text),
 						]);
 					})
-					.where("lang", "=", lang)
-					.selectAll(),
+					.where("lang", "=", lang),
 				output: LocationDtoSchema,
 			});
 
@@ -139,14 +141,15 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 
 					// Second check: cache might have been filled while waiting for lock
 					const cache = await withList({
-						select: trx
-							.selectFrom("location")
+						select: withLocationSelect({
+							sort: [],
+							source: trx,
+						})
 							.where("query", "=", text)
 							.where("lang", "=", lang)
 							.orderBy("confidence", "desc")
 							.offset(0)
-							.limit(limit)
-							.selectAll(),
+							.limit(limit),
 						output: LocationDtoSchema,
 					});
 
@@ -194,9 +197,9 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 						lat: properties.lat,
 						lon: properties.lon,
 					})) satisfies Omit<
-						LocationDtoSchema.Type,
+						LocationSchema.Type,
 						"geo"
-					>[] as LocationDtoSchema.Type[];
+					>[] as LocationSchema.Type[];
 
 					locations.length > 0 &&
 						(await trx
@@ -279,6 +282,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			const result = await withFetch({
 				select: withLocationSelect({
 					sort,
+					source: database.kysely,
 				}),
 				output: LocationDtoSchema,
 				filter,

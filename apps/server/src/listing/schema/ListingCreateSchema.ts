@@ -22,6 +22,12 @@ export const ListingCreateSchema = z
 		}),
 		currency: CurrencyListSchema,
 		expiresAt: ListingExpireSchema,
+		vendor: z.string().nullish().openapi({
+			description: "Vendor/manufacturer of the item",
+		}),
+		model: z.string().nullish().openapi({
+			description: "Model of the item",
+		}),
 		uploadIds: z
 			.array(z.string())
 			.min(1, "At least one upload is required")

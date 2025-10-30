@@ -241,12 +241,9 @@ export const sLocationDto = {
         },
         lon: {
             type: 'number'
-        },
-        geo: {
-            type: 'string'
         }
     },
-    required: ['id', 'query', 'lang', 'country', 'code', 'address', 'confidence', 'hash', 'lat', 'lon', 'geo']
+    required: ['id', 'query', 'lang', 'country', 'code', 'address', 'confidence', 'hash', 'lat', 'lon']
 } as const;
 
 export const sUploadDto = {
@@ -368,6 +365,12 @@ export const sListingCreate = {
         },
         expiresAt: {
             '$ref': '#/components/schemas/ListingExpire'
+        },
+        vendor: {
+            type: ['string', 'null']
+        },
+        model: {
+            type: ['string', 'null']
         },
         uploadIds: {
             type: 'array',

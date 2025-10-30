@@ -273,9 +273,6 @@ export const zLocationDto = z.object({
     }),
     lon: z.number().register(z.globalRegistry, {
         description: 'Longitude of the location'
-    }),
-    geo: z.string().register(z.globalRegistry, {
-        description: 'Encoded PostGIS geometry of the location'
     })
 }).register(z.globalRegistry, {
     description: 'Location data transfer object'
@@ -402,6 +399,14 @@ export const zListingCreate = z.object({
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
+    vendor: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    model: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })
