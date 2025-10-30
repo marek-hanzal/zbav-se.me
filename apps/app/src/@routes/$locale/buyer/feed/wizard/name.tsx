@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
@@ -17,7 +17,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = useNavigate();
 		const [name, setName] = useState<string>(state.name || "");
+
+		const handleSubmit = () => {
+			if (name.length > 0) {
+				navigate({
+					to: "/$locale/buyer/feed/wizard/submit",
+					params: {
+						locale,
+					},
+					search: {
+						...state,
+						name,
+					},
+				});
+			}
+		};
 
 		return (
 			<TitleContainer
@@ -80,6 +96,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 								<TextInput
 									value={name}
 									onChange={(e) => setName(e.target.value)}
+									onKeyDown={(e) => {
+										if (e.key === "Enter") {
+											e.preventDefault();
+											handleSubmit();
+										}
+									}}
 									placeholder={"Feed name (placeholder)"}
 									autoFocus
 									{...props}
