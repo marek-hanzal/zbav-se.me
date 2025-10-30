@@ -384,6 +384,7 @@ export const TypoCls = contract(PicoCls.contract)
 				"truncate",
 				"text-nowrap",
 				"min-w-0",
+				"max-w-full",
 			],
 		},
 	})

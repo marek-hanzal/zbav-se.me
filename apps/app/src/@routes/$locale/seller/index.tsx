@@ -60,7 +60,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 						className="grid gap-2 place-items-center"
 					>
 						<LinkTo
-							to="/$locale/seller/listing/wizard/start"
+							to="/$locale/seller/listing/wizard/photos"
 							params={{
 								locale,
 							}}

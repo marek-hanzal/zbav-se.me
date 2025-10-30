@@ -18,7 +18,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "single",
-			initial: [],
+			initial: state.age
+				? [
+						{
+							id: String(state.age),
+						},
+					]
+				: [],
 		});
 
 		const itemId = selection.optional.singleId();

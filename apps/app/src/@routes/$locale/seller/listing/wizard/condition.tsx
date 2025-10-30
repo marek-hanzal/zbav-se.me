@@ -20,7 +20,13 @@ export const Route = createFileRoute(
 
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "single",
-			initial: [],
+			initial: state.condition
+				? [
+						{
+							id: String(state.condition),
+						},
+					]
+				: [],
 		});
 
 		const itemId = selection.optional.singleId();

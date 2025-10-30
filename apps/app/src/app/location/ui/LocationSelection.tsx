@@ -95,6 +95,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 									onLocation?.(item);
 								}}
 								size={"xl"}
+								truncate
 								tweak={{
 									slot: {
 										root: {
@@ -156,7 +157,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 									"grid grid-rows-1 justify-stretch items-center h-full"
 								}
 							>
-								<div className="grid grid-row auto-rows-max gap-2 p-4">
+								<div className="grid grid-row auto-rows-max gap-2">
 									{content}
 								</div>
 							</div>
