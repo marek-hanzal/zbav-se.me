@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { genId, withCollection, withFetch } from "@use-pico/common";
+import { genId, withCollection, withCount, withFetch } from "@use-pico/common";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { CountSchema } from "../schema/CountSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
 import { FeedDtoSchema } from "./schema/FeedDtoSchema";
@@ -44,7 +45,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Internal server error",
@@ -55,7 +56,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { name, filter, sort } = c.req.valid("json");
+			const { name, filter, sort, meta } = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
@@ -69,6 +70,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 						name,
 						filter: JSON.stringify(filter) as any,
 						sort: JSON.stringify(sort) as any,
+						meta: JSON.stringify(meta) as any,
 						createdAt: now,
 						updatedAt: now,
 					})
@@ -76,7 +78,9 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 
 				return c.json(
 					await withFetch({
-						select: withFeedSelect({}),
+						select: withFeedSelect({
+							sort: [],
+						}),
 						output: FeedDtoSchema,
 						where: {
 							id,
@@ -89,8 +93,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				console.error(error);
 				return c.json(
 					{
-						message: "Internal server error",
-					},
+						message: "Failed to create feed",
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}
@@ -125,7 +129,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Feed item not found",
@@ -133,7 +137,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Internal server error",
@@ -172,7 +176,9 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 
 				return c.json(
 					await withFetch({
-						select: withFeedSelect({}),
+						select: withFeedSelect({
+							sort: [],
+						}),
 						output: FeedDtoSchema,
 						where: {
 							id,
@@ -185,8 +191,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				console.error(error);
 				return c.json(
 					{
-						message: "Internal server error",
-					},
+						message: "Failed to update feed",
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}
@@ -222,7 +228,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Feed item not found",
@@ -336,6 +342,177 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					"X-Cached": hit ? "true" : "false",
 				},
 			});
+		},
+	);
+
+	hono.openapi(
+		createRoute({
+			method: "post",
+			path: "/feed/count",
+			description:
+				"Returns count of feed items based on provided query (user-specific)",
+			operationId: "apiFeedCount",
+			request: {
+				body: {
+					content: {
+						"application/json": {
+							schema: FeedQuerySchema,
+						},
+					},
+				},
+			},
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: CountSchema,
+						},
+					},
+					description: "Return counts based on provided query",
+				},
+			},
+			tags: [
+				"feed",
+			],
+		}),
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where } = json;
+			const user = c.get("user");
+
+			const { data, hit } = await withCache({
+				key: {
+					scope: "feed:count",
+					version: "1",
+					value: {
+						...json,
+						userId: user.id,
+					},
+				},
+				fetch: () =>
+					withCount({
+						select: withFeedSelect({
+							sort: [],
+						}),
+						filter,
+						where: {
+							...where,
+							userId: user.id,
+						},
+						query: withFeedQueryBuilder,
+					}),
+			});
+
+			return c.json(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
+				},
+			});
+		},
+	);
+
+	hono.openapi(
+		createRoute({
+			method: "delete",
+			path: "/feed/delete",
+			description:
+				"Delete a feed item based on the provided query (user-specific)",
+			operationId: "apiFeedDelete",
+			request: {
+				body: {
+					content: {
+						"application/json": {
+							schema: FeedQuerySchema,
+						},
+					},
+					description: "Query object for feed deletion",
+				},
+			},
+			responses: {
+				200: {
+					content: {
+						"application/json": {
+							schema: FeedDtoSchema,
+						},
+					},
+					description: "The deleted feed item",
+				},
+				404: {
+					content: {
+						"application/json": {
+							schema: ErrorDtoSchema,
+						},
+					},
+					description: "Feed item not found",
+				},
+				500: {
+					content: {
+						"application/json": {
+							schema: ErrorDtoSchema,
+						},
+					},
+					description: "Internal server error",
+				},
+			},
+			tags: [
+				"feed",
+			],
+		}),
+		async (c) => {
+			const json = c.req.valid("json");
+			const { filter, where } = json;
+			const user = c.get("user");
+
+			try {
+				const feed = await database.kysely
+					.transaction()
+					.execute(async (trx) => {
+						const feed = await withFetch({
+							select: withFeedSelect({
+								sort: [],
+							}),
+							output: FeedDtoSchema,
+							filter,
+							where: {
+								...where,
+								userId: user.id,
+							},
+							query: withFeedQueryBuilder,
+						});
+
+						if (!feed) {
+							return null;
+						}
+
+						// Delete the feed
+						await trx
+							.deleteFrom("feed")
+							.where("id", "=", feed.id)
+							.where("userId", "=", user.id)
+							.execute();
+
+						return feed;
+					});
+
+				if (!feed) {
+					return c.json(
+						{
+							message: "Feed item not found",
+						},
+						404,
+					);
+				}
+
+				return c.json(feed satisfies FeedDtoSchema.Type, 200);
+			} catch (error) {
+				console.error(error);
+				return c.json(
+					{
+						message: "Failed to delete feed",
+					} satisfies ErrorDtoSchema.Type,
+					500,
+				);
+			}
 		},
 	);
 

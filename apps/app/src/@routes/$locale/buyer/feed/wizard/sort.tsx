@@ -8,12 +8,7 @@ import {
 	LinkTo,
 	Tx,
 } from "@use-pico/client";
-import type {
-	ListingCommonSort,
-	ListingCommonSortValue,
-	ListingGeoSort,
-	ListingSort,
-} from "@zbav-se.me/sdk";
+import type { tListingSort } from "@zbav-se.me/sdk";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useId, useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -24,7 +19,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const sortKeyId = useId();
-		const [sort, setSort] = useState<ListingSort[]>(state.sort ?? []);
+		const [sort, setSort] = useState<tListingSort[]>(state.sort ?? []);
 
 		return (
 			<TitleContainer
@@ -79,34 +74,14 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 								"age",
 								"price",
 								"condition",
-								state.location ? "geo" : undefined,
-							] satisfies (
-								| ListingCommonSortValue
-								| "geo"
-								| undefined
-							)[]
-						).filter(Boolean) as (ListingCommonSortValue | "geo")[]
+								state.meta?.latLon ? "geo" : undefined,
+							] satisfies (tListingSort["value"] | undefined)[]
+						).filter(Boolean) as tListingSort["value"][]
 					).map((sortValue) => {
-						const current =
-							sortValue === "geo"
-								? sort.find(
-										(s): s is ListingGeoSort =>
-											s.type === "geo",
-									)
-								: sort.find(
-										(s): s is ListingCommonSort =>
-											s.type === "listing" &&
-											s.value === sortValue,
-									);
+						const current = sort.find((s) => s.value === sortValue);
 
 						const position = current
-							? sort.findIndex((s) =>
-									sortValue === "geo"
-										? s.type === "geo"
-										: s.type === "listing" &&
-											(s as ListingCommonSort).value ===
-												sortValue,
-								) + 1
+							? sort.findIndex((s) => s.value === sortValue) + 1
 							: undefined;
 
 						return (
@@ -126,78 +101,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 								full
 								onClick={() => {
 									setSort((prev) => {
-										// Handle geo sort separately
-										if (sortValue === "geo") {
-											const idx = prev.findIndex(
-												(s): s is ListingGeoSort =>
-													s.type === "geo",
-											);
-
-											if (idx < 0) {
-												// Add geo sort if we have location
-												if (state.location) {
-													return [
-														...prev,
-														{
-															type: "geo",
-															value: "geo",
-															lon: state.location
-																.lon,
-															lat: state.location
-																.lat,
-															sort: "asc",
-														} satisfies ListingGeoSort,
-													];
-												}
-												return prev;
-											}
-
-											const cur = prev[idx];
-
-											if (!cur || cur.type !== "geo") {
-												return prev;
-											}
-
-											if (cur.sort === "asc") {
-												const next = [
-													...prev,
-												];
-												next[idx] = {
-													type: "geo",
-													value: "geo",
-													lon: cur.lon,
-													lat: cur.lat,
-													sort: "desc",
-												} satisfies ListingGeoSort;
-												return next;
-											}
-
-											return prev.filter(
-												(_, i) => i !== idx,
-											);
-										}
-
-										// Handle common sorts
 										const idx = prev.findIndex(
-											(s): s is ListingCommonSort =>
-												s.type === "listing" &&
-												s.value === sortValue,
+											(s) => s.value === sortValue,
 										);
 
 										if (idx < 0) {
 											return [
 												...prev,
 												{
-													type: "listing",
 													value: sortValue,
 													sort: "asc",
-												} satisfies ListingCommonSort,
+												} satisfies tListingSort,
 											];
 										}
 
 										const cur = prev[idx];
 
-										if (!cur || cur.type !== "listing") {
+										if (!cur || cur.value !== sortValue) {
 											return prev;
 										}
 
@@ -206,10 +126,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 												...prev,
 											];
 											next[idx] = {
-												type: "listing",
 												value: cur.value,
 												sort: "desc",
-											} satisfies ListingCommonSort;
+											} satisfies tListingSort;
 											return next;
 										}
 

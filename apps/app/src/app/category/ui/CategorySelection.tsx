@@ -5,11 +5,12 @@ import {
 	Fulltext,
 	Status,
 	Typo,
+	useScrollTo,
 	type useSelection,
 } from "@use-pico/client";
 import type { EntitySchema } from "@use-pico/common";
 import { SearchIcon, SpinnerContainer } from "@zbav-se.me/ui";
-import { type FC, type RefObject, useState } from "react";
+import { type FC, type RefObject, useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
 
 export namespace CategorySelection {
@@ -17,7 +18,6 @@ export namespace CategorySelection {
 		ref?: RefObject<HTMLDivElement | null>;
 		locale: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
-		textHint?: string;
 	}
 }
 
@@ -25,10 +25,11 @@ export const CategorySelection: FC<CategorySelection.Props> = ({
 	ref,
 	locale,
 	selection,
-	textHint,
 }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
-	const categoryQuery = withCategoryCollectionQuery().useQuery({
+	const scrollRef = useRef<HTMLDivElement>(null);
+	const scrollTo = useScrollTo(scrollRef);
+	const categoryQuery = withCategoryCollectionQuery.useQuery({
 		filter: {
 			locale,
 			fulltext,
@@ -44,6 +45,15 @@ export const CategorySelection: FC<CategorySelection.Props> = ({
 			},
 		],
 	});
+
+	const categoryIds = selection.optional.multiId();
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
+	useEffect(() => {
+		scrollTo(`.CategoryItem-${categoryIds[0]}`);
+	}, [
+		categoryQuery.data,
+	]);
 
 	return (
 		<Container
@@ -88,6 +98,7 @@ export const CategorySelection: FC<CategorySelection.Props> = ({
 
 					return (
 						<Container
+							ref={scrollRef}
 							layout={"vertical-flex"}
 							scroll={"vertical"}
 							gap={"sm"}

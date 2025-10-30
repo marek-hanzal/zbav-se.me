@@ -3,7 +3,7 @@ import { withCollection, withCount, withFetch } from "@use-pico/common";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { GalleryDtoSchema } from "./schema/GalleryDtoSchema";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
@@ -42,7 +42,7 @@ export const withGalleryApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Gallery item not found",

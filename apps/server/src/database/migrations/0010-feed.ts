@@ -9,6 +9,7 @@ export const FeedMigration: Migration = {
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("filter", "jsonb", (col) => col.notNull())
 			.addColumn("sort", "jsonb", (col) => col.notNull())
+			.addColumn("meta", "jsonb", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)

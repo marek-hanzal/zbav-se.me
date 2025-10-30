@@ -9,7 +9,7 @@ import {
 	Typo,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import { ListingExpire } from "@zbav-se.me/sdk";
+import { tListingExpire } from "@zbav-se.me/sdk";
 import { ThemeCls, TitleContainer } from "@zbav-se.me/ui";
 import { DateTime } from "luxon";
 import { useId, useState } from "react";
@@ -23,7 +23,7 @@ export const Route = createFileRoute(
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [expiresAt, setExpiresAt] = useState<ListingExpire | undefined>(
+		const [expiresAt, setExpiresAt] = useState<tListingExpire | undefined>(
 			state.expiresAt,
 		);
 		const expireId = useId();
@@ -74,7 +74,7 @@ export const Route = createFileRoute(
 					width={"fit"}
 					height={"auto"}
 				>
-					{Object.values(ListingExpire).map((expire) => {
+					{Object.values(tListingExpire).map((expire) => {
 						return (
 							<VariantProvider
 								key={`${expireId}-${expire}`}

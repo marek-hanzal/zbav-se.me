@@ -5,7 +5,8 @@ import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
+import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationDtoSchema } from "./schema/LocationDtoSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { withLocationQueryBuilder } from "./withLocationQueryBuilder";
@@ -54,15 +55,19 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 
 	hono.openapi(
 		createRoute({
-			method: "get",
+			method: "post",
 			path: "/location/autocomplete",
 			description: "Return a location autocomplete",
 			operationId: "apiLocationAutocomplete",
 			request: {
-				query: z.object({
-					text: z.string().min(3),
-					lang: z.string().min(2).max(8),
-				}),
+				body: {
+					content: {
+						"application/json": {
+							schema: LocationAutocompleteSchema,
+						},
+					},
+					description: "Request body for location autocomplete",
+				},
 			},
 			responses: {
 				200: {
@@ -84,7 +89,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Location not found",
@@ -95,7 +100,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { text, lang } = c.req.valid("query");
+			const { text, lang } = c.req.valid("json");
 
 			// First check: quick cache lookup without lock (outside transaction)
 			const quickCache = await withList({
@@ -258,7 +263,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Location not found",

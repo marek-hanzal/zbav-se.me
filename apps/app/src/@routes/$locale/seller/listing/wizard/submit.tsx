@@ -14,7 +14,7 @@ import {
 	Typo,
 } from "@use-pico/client";
 import { type Cls, VariantProvider } from "@use-pico/cls";
-import { apiListingCreateBody } from "@zbav-se.me/sdk";
+import { zListingCreate } from "@zbav-se.me/sdk";
 import { SendPackageIcon, ThemeCls, TitleContainer } from "@zbav-se.me/ui";
 import { withCategoryFetchQuery } from "~/app/category/query/withCategoryFetchQuery";
 import { withListingCreateMutation } from "~/app/listing/mutation/withListingCreateMutation";
@@ -68,7 +68,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				id: state.locationId,
 			},
 		});
-		const createListingMutation = withListingCreateMutation().useMutation({
+		const createListingMutation = withListingCreateMutation.useMutation({
 			async onPostMutation({ result }) {
 				return navigate({
 					to: "/$locale/seller/listing/$id/view",
@@ -78,7 +78,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				});
 			},
 		});
-		const valid = apiListingCreateBody.safeParse({
+		const valid = zListingCreate.safeParse({
 			...state,
 			currency: countryToCurrency[locale as countryToCurrency.Key],
 			price: state.price ? parseFloat(state.price) : undefined,

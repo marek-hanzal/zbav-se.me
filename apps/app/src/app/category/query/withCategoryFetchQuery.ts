@@ -1,12 +1,12 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiCategoryFetch,
-	type CategoryDto,
-	type CategoryQuery,
+	type tCategoryDto,
+	type tCategoryQuery,
 } from "@zbav-se.me/sdk";
 
 export const withCategoryFetchQuery = () => {
-	return withQuery<CategoryQuery, CategoryDto>({
+	return withQuery<tCategoryQuery, tCategoryDto>({
 		keys(data) {
 			return [
 				"category",
@@ -14,8 +14,11 @@ export const withCategoryFetchQuery = () => {
 				data,
 			];
 		},
-		async queryFn(data) {
-			return apiCategoryFetch(data).then((res) => res.data);
+		async queryFn(body) {
+			return apiCategoryFetch({
+				body,
+				throwOnError: true,
+			}).then((res) => res.data);
 		},
 	});
 };

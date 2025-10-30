@@ -245,7 +245,7 @@ export const Route = createFileRoute("/$locale/login")({
 									)}
 
 									<Container
-										layout={"vertical"}
+										layout={"vertical-flex"}
 										items={"center"}
 										gap={"sm"}
 										width={"fit"}

@@ -1,10 +1,10 @@
 import { withMutation } from "@use-pico/client";
 import { genId } from "@use-pico/common";
 import {
-	type AllowedContentTypes,
-	type AllowedExtensions,
 	apiS3Presign,
 	apiUploadCreate,
+	type tAllowedContentTypes,
+	type tAllowedExtensions,
 } from "@zbav-se.me/sdk";
 import axios from "axios";
 
@@ -25,7 +25,7 @@ export const withUploadMutation = withMutation<withUploadMutation.Props, any>({
 		];
 	},
 	async mutationFn({ name, blob, path, onProgress }) {
-		const contentType = blob.type as AllowedContentTypes;
+		const contentType = blob.type as tAllowedContentTypes;
 
 		const dot = name.lastIndexOf(".");
 		const extension =
@@ -34,9 +34,12 @@ export const withUploadMutation = withMutation<withUploadMutation.Props, any>({
 				: "unknown";
 
 		const presign = await apiS3Presign({
-			path: path ?? genId(),
-			extension: extension as AllowedExtensions,
-			contentType,
+			throwOnError: true,
+			body: {
+				path: path ?? genId(),
+				extension: extension as tAllowedExtensions,
+				contentType,
+			},
 		}).then((res) => res.data);
 
 		await axios.put(presign.url, blob, {
@@ -49,7 +52,10 @@ export const withUploadMutation = withMutation<withUploadMutation.Props, any>({
 		});
 
 		return apiUploadCreate({
-			url: presign.cdn,
+			throwOnError: true,
+			body: {
+				url: presign.cdn,
+			},
 		}).then((res) => res.data);
 	},
 });

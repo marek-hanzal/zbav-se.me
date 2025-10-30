@@ -1,18 +1,23 @@
 import { withMutation } from "@use-pico/client";
 import {
 	apiUploadCreate,
-	type UploadCreate,
-	type UploadDto,
+	type tUploadCreate,
+	type tUploadDto,
 } from "@zbav-se.me/sdk";
 
-export const withUploadCreateMutation = withMutation<UploadCreate, UploadDto>({
-	keys(variables) {
-		return [
-			"upload",
-			variables,
-		];
+export const withUploadCreateMutation = withMutation<tUploadCreate, tUploadDto>(
+	{
+		keys(variables) {
+			return [
+				"upload",
+				variables,
+			];
+		},
+		async mutationFn(body) {
+			return apiUploadCreate({
+				body,
+				throwOnError: true,
+			}).then((res) => res.data);
+		},
 	},
-	async mutationFn(variables) {
-		return apiUploadCreate(variables).then((res) => res.data);
-	},
-});
+);

@@ -1,9 +1,9 @@
-import { apiListingCreateBody } from "@zbav-se.me/sdk";
+import { zListingCreate } from "@zbav-se.me/sdk";
 import z from "zod";
 
 export const ListingWizardSchema = z.object({
 	price: z.string().optional(),
-	...apiListingCreateBody
+	...zListingCreate
 		.omit({
 			price: true,
 			currency: true,

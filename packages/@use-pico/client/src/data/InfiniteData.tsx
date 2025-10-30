@@ -58,7 +58,7 @@ export namespace InfiniteData {
 		export type RenderFn = (props: Props) => ReactNode;
 	}
 
-	export interface Props<TResult extends UseInfiniteQueryResult<any, Error>> {
+	export interface Props<TResult extends UseInfiniteQueryResult<any, any>> {
 		result: TResult;
 		renderSuccess: SuccessComponent.RenderFn<NonNullable<TResult["data"]>>;
 		renderLoading?: LoadingComponent.RenderFn;
@@ -71,9 +71,7 @@ export namespace InfiniteData {
 	}
 }
 
-export const InfiniteData = <
-	TResult extends UseInfiniteQueryResult<any, Error>,
->({
+export const InfiniteData = <TResult extends UseInfiniteQueryResult<any, any>>({
 	result,
 	renderSuccess,
 	renderLoading = () => <Spinner />,

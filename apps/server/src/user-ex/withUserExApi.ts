@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { UserPatchSchema } from "./schema/UserPatchSchema";
 
 export const withUserExApi = ({ session }: Routes) => {
@@ -26,14 +26,14 @@ export const withUserExApi = ({ session }: Routes) => {
 				},
 			},
 			responses: {
-				200: {
+				204: {
 					description:
 						"User extended information updated successfully",
 				},
 				500: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Internal server error",
@@ -78,13 +78,13 @@ export const withUserExApi = ({ session }: Routes) => {
 					}
 				});
 
-				return c.body(null, 200);
+				return c.body(null, 204);
 			} catch (error) {
 				console.error(error);
 				return c.json(
 					{
-						message: "Internal server error",
-					},
+						message: "Failed to update user extended information",
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}

@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeftIcon, Button, LinkTo, Status } from "@use-pico/client";
-import { apiFeedCreateBody } from "@zbav-se.me/sdk";
+import type { tFeedCreate } from "@zbav-se.me/sdk";
 import { FeedIcon, TitleContainer } from "@zbav-se.me/ui";
 import { withFeedCreateMutation } from "~/app/feed/mutation/withFeedCreateMutation";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -55,9 +55,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							disabled={feedCreateMutation.isPending}
 							loading={feedCreateMutation.isPending}
 							onClick={() => {
-								feedCreateMutation.mutate(
-									apiFeedCreateBody.parse(state),
-								);
+								/**
+								 * Validation is done in the mutation itself.
+								 */
+								feedCreateMutation.mutate(state as tFeedCreate);
 							}}
 						/>
 					}

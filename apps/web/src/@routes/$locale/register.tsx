@@ -276,7 +276,7 @@ export const Route = createFileRoute("/$locale/register")({
 									</form.AppField>
 
 									<Container
-										layout={"vertical"}
+										layout={"vertical-flex"}
 										items={"center"}
 										gap={"sm"}
 										width={"fit"}

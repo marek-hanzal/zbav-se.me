@@ -2,14 +2,17 @@ import { z } from "@hono/zod-openapi";
 
 export const CountSchema = z
 	.object({
-		where: z.number().openapi({
+		where: z.coerce.number().openapi({
 			description: "Count of items based on provided where query.",
+			type: "number",
 		}),
-		filter: z.number().openapi({
+		filter: z.coerce.number().openapi({
 			description: "Count of items based on provided filter query.",
+			type: "number",
 		}),
-		total: z.number().openapi({
+		total: z.coerce.number().openapi({
 			description: "Total count of items (no filters applied).",
+			type: "number",
 		}),
 	})
 	.openapi("Count", {

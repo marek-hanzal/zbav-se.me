@@ -1,21 +1,22 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiListingFetch,
-	type ListingDto,
-	type ListingQuery,
+	type tListingDto,
+	type tListingQuery,
 } from "@zbav-se.me/sdk";
 
-export const withListingFetchQuery = () => {
-	return withQuery<ListingQuery, ListingDto>({
-		keys(data) {
-			return [
-				"listing",
-				"fetch",
-				data,
-			];
-		},
-		async queryFn(data) {
-			return apiListingFetch(data).then((res) => res.data);
-		},
-	});
-};
+export const withListingFetchQuery = withQuery<tListingQuery, tListingDto>({
+	keys(data) {
+		return [
+			"listing",
+			"fetch",
+			data,
+		];
+	},
+	async queryFn(body) {
+		return apiListingFetch({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
+	},
+});

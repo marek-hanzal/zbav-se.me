@@ -1,11 +1,11 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiUploadFetch,
-	type UploadDto,
-	type UploadQuery,
+	type tUploadDto,
+	type tUploadQuery,
 } from "@zbav-se.me/sdk";
 
-export const withUploadFetchQuery = withQuery<UploadQuery, UploadDto>({
+export const withUploadFetchQuery = withQuery<tUploadQuery, tUploadDto>({
 	keys(variables) {
 		return [
 			"upload",
@@ -13,7 +13,10 @@ export const withUploadFetchQuery = withQuery<UploadQuery, UploadDto>({
 			variables,
 		];
 	},
-	async queryFn(variables) {
-		return apiUploadFetch(variables).then((res) => res.data);
+	async queryFn(body) {
+		return apiUploadFetch({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 });

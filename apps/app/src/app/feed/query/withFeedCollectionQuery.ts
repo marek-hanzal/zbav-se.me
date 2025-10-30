@@ -1,11 +1,11 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiFeedCollection,
-	type FeedCollection,
-	type FeedQuery,
+	type tFeedCollection,
+	type tFeedQuery,
 } from "@zbav-se.me/sdk";
 
-export const withFeedCollectionQuery = withQuery<FeedQuery, FeedCollection>({
+export const withFeedCollectionQuery = withQuery<tFeedQuery, tFeedCollection>({
 	keys(data) {
 		return [
 			"feed",
@@ -13,7 +13,10 @@ export const withFeedCollectionQuery = withQuery<FeedQuery, FeedCollection>({
 			data,
 		];
 	},
-	async queryFn(data) {
-		return apiFeedCollection(data).then((res) => res.data);
+	async queryFn(body) {
+		return apiFeedCollection({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 });

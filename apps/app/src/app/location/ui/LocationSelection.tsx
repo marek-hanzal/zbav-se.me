@@ -1,5 +1,5 @@
 import { Badge, Button, Container, Data, Fulltext, Tx } from "@use-pico/client";
-import type { LocationDto } from "@zbav-se.me/sdk";
+import type { tLocationDto } from "@zbav-se.me/sdk";
 import { SpinnerContainer } from "@zbav-se.me/ui";
 import { type FC, type RefObject, useState } from "react";
 import { withLocationAutocompleteQuery } from "~/app/location/query/withLocationAutocompleteQuery";
@@ -10,7 +10,7 @@ export namespace LocationSelection {
 		locale: string;
 		value: string | undefined;
 		onChange(value: string): void;
-		onLocation?(value: LocationDto): void;
+		onLocation?(value: tLocationDto): void;
 		textHint?: string;
 	}
 }

@@ -5,7 +5,6 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
-import type { LonLanSchema } from "@zbav-se.me/common";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -19,9 +18,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 		const [locationId, setLocationId] = useState<string | undefined>(
 			state.filter?.locationId ?? undefined,
 		);
-		const [location, setLocation] = useState<LonLanSchema.Type | undefined>(
-			state.location,
-		);
+		const [latLon, setLatLon] = useState(state.meta?.latLon);
 
 		return (
 			<TitleContainer
@@ -48,7 +45,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 								...state.filter,
 								locationId,
 							},
-							location,
+							meta: {
+								...state.meta,
+								latLon,
+							},
 						}}
 						full
 					>
@@ -69,7 +69,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 					value={locationId}
 					onChange={setLocationId}
 					onLocation={({ lon, lat }) =>
-						setLocation({
+						setLatLon({
 							lon,
 							lat,
 						})

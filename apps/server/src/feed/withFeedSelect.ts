@@ -4,18 +4,19 @@ import type { FeedSortSchema } from "./schema/FeedSortSchema";
 
 export namespace withFeedSelect {
 	export interface Props {
-		sort?: FeedSortSchema.Type[];
+		sort: FeedSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withFeedSelect>;
 }
 
-export const withFeedSelect = ({ sort }: withFeedSelect.Props = {}) => {
+export const withFeedSelect = ({ sort }: withFeedSelect.Props) => {
 	let query = database.kysely.selectFrom("feed as f").select([
 		"f.id",
 		"f.name",
 		"f.filter",
 		"f.sort",
+		"f.meta",
 	]);
 
 	for (const sortItem of sort ?? []) {

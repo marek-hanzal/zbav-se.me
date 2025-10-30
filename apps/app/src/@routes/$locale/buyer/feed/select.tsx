@@ -1,16 +1,20 @@
 import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
+	ArrowRightIcon,
+	Button,
 	Container,
 	LinkTo,
 	SnapperNav,
+	Status,
 	useScrollTo,
 	useSnapperNav,
 } from "@use-pico/client";
-import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
+import { FeedIcon, SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
 import { useEffect, useId, useRef } from "react";
 import z from "zod";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
+import { withFeedCountQuery } from "~/app/feed/query/withFeedCountQuery";
 import { FeedSelect } from "~/app/feed/ui/FeedSelect";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
@@ -57,11 +61,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 			},
 		});
 
+		const feedCountQuery = withFeedCountQuery.useSuspenseQuery({});
+
 		const snapperRef = useRef<HTMLDivElement>(null);
 		const snapperNav = useSnapperNav({
 			containerRef: snapperRef,
 			orientation: "horizontal",
-			count: feedCountLimit,
+			count: feedCountQuery.data.filter,
 		});
 		const feedId = useId();
 		const hasFeeds = feedCollectionQuery.data.data.length > 0;
@@ -120,22 +126,44 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						gap={"md"}
 						round={"lg"}
 					>
-						{Array.from({
-							length: feedCountLimit,
-						}).map((_, slot) => {
-							const disabled =
-								slot > 0 &&
-								!feedCollectionQuery.data.data[slot - 1];
-
+						{feedCollectionQuery.data.data.map((feed) => {
 							return (
 								<FeedSelect
-									key={`${feedId}-${slot + 1}`}
+									key={`${feedId}-${feed.id}`}
 									locale={locale}
-									disabled={disabled}
-									feed={feedCollectionQuery.data.data[slot]}
+									feed={feed}
 								/>
 							);
 						})}
+
+						{feedCountQuery.data.filter >= feedCountLimit ? null : (
+							<Status
+								icon={FeedIcon}
+								textTitle={"Create new feed (title)"}
+								textMessage={"Create new feed (description)"}
+								action={
+									<LinkTo
+										to={
+											"/$locale/buyer/feed/wizard/location"
+										}
+										params={{
+											locale,
+										}}
+										tone={"primary"}
+										display={"block"}
+									>
+										<Button
+											iconEnabled={ArrowRightIcon}
+											iconPosition={"right"}
+											label={"Create new feed (button)"}
+											tone={"primary"}
+											theme={"dark"}
+											size={"xl"}
+										/>
+									</LinkTo>
+								}
+							/>
+						)}
 					</Container>
 				</div>
 			</TitleContainer>

@@ -1,13 +1,13 @@
 import { withMutation } from "@use-pico/client";
 import {
 	apiS3Presign,
-	type S3PreSignRequest,
-	type S3PreSignResponse,
+	type tS3PreSignRequest,
+	type tS3PreSignResponse,
 } from "@zbav-se.me/sdk";
 
 export const withS3PreSignMutation = withMutation<
-	S3PreSignRequest,
-	S3PreSignResponse
+	tS3PreSignRequest,
+	tS3PreSignResponse
 >({
 	keys(variables) {
 		return [
@@ -16,7 +16,10 @@ export const withS3PreSignMutation = withMutation<
 			variables,
 		];
 	},
-	async mutationFn(variables) {
-		return apiS3Presign(variables).then((res) => res.data);
+	async mutationFn(body) {
+		return apiS3Presign({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 });

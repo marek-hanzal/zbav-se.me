@@ -6,7 +6,7 @@ import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { CategoryDtoSchema } from "./schema/CategoryDtoSchema";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
@@ -45,7 +45,7 @@ export const withCategoryApi = ({ session }: Routes) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Category not found",

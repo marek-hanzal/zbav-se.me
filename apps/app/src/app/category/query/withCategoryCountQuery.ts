@@ -1,21 +1,22 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiCategoryCount,
-	type CategoryQuery,
-	type Count,
+	type tCategoryQuery,
+	type tCount,
 } from "@zbav-se.me/sdk";
 
-export const withCategoryCountQuery = () => {
-	return withQuery<CategoryQuery, Count>({
-		keys(data) {
-			return [
-				"category",
-				"count",
-				data,
-			];
-		},
-		async queryFn(data) {
-			return apiCategoryCount(data).then((res) => res.data);
-		},
-	});
-};
+export const withCategoryCountQuery = withQuery<tCategoryQuery, tCount>({
+	keys(data) {
+		return [
+			"category",
+			"count",
+			data,
+		];
+	},
+	async queryFn(body) {
+		return apiCategoryCount({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
+	},
+});

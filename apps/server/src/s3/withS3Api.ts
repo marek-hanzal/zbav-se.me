@@ -1,70 +1,12 @@
-import { createRoute, z } from "@hono/zod-openapi";
+import { createRoute } from "@hono/zod-openapi";
 import { genId, keyOf, linkTo } from "@use-pico/common";
 import { AppEnv } from "../AppEnv";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { s3 } from "../s3";
-import { ErrorSchema } from "../schema/ErrorSchema";
-
-/**
- * ---- Schemas ----
- */
-
-const AllowedContentTypes = [
-	"image/jpeg",
-	"image/png",
-	"image/webp",
-	"image/avif",
-	"image/heic",
-	"image/heif",
-] as const;
-
-const AllowedExtensions = [
-	"webp",
-	"png",
-	"jpg",
-	"jpeg",
-	"avif",
-	"heic",
-	"heif",
-] as const;
-
-export const S3PreSignRequestSchema = z
-	.object({
-		path: z.string().min(3).openapi({
-			example:
-				"/123e4567-e89b-12d3-a456-426614174000/listings/abc/gallery/photo.webp",
-			description:
-				"Object path. After stripping leading '/', must start with `<userId>/`",
-		}),
-		extension: z.enum(AllowedExtensions).openapi("AllowedExtensions", {
-			example: "webp",
-			description:
-				"File extension. Must be one of the allowed extensions.",
-		}),
-		contentType: z
-			.enum(AllowedContentTypes)
-			.openapi("AllowedContentTypes", {
-				example: "image/webp",
-				description:
-					"Browser-provided Content-Type used for PUT upload.",
-			}),
-	})
-	.openapi("S3PreSignRequest");
-
-export const S3PreSignResponseSchema = z
-	.object({
-		url: z.url().openapi({
-			example:
-				"https://s3.eu-central-003.backblazeb2.com/...?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=...",
-		}),
-		cdn: z.string().openapi({
-			example:
-				"https://content.zbav-se.me/123e4567-e89b-12d3-a456-426614174000/listing/abc/photo.webp",
-			description: "CDN url where the file lives",
-		}),
-	})
-	.openapi("S3PreSignResponse");
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
+import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
+import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
 
 export const withS3Api: Routes.Fn = ({ session }) => {
 	const sessionEndpoints = withSessionHono();
@@ -87,7 +29,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 				},
 			},
 			responses: {
-				201: {
+				200: {
 					description: "Pre-signed URL generated successfully.",
 					content: {
 						"application/json": {
@@ -99,7 +41,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 					description: "Unauthorized (path prefix must match user).",
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 				},
@@ -107,7 +49,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 					description: "Failed to generate pre-signed URL.",
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 				},
@@ -135,14 +77,14 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 							base: AppEnv.SERVER_CONTENT_CDN,
 							href: `/${key}`,
 						}),
-					} satisfies z.infer<typeof S3PreSignResponseSchema>,
-					201,
+					} satisfies S3PreSignResponseSchema.Type,
+					200,
 				);
 			} catch {
 				return c.json(
 					{
 						message: "Failed to generate pre-signed URL",
-					},
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}

@@ -8,7 +8,6 @@ import {
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
-import axios from "axios";
 import type { authClient } from "~/app/auth/authClient";
 import styles from "~/assets/style.css?url";
 
@@ -42,16 +41,6 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	component() {
-		/**
-		 * Should be isomorphic
-		 *
-		 * Don't have better way, where to put this to make it work.
-		 *
-		 * Maybe it's OK, I'll see...
-		 */
-		axios.defaults.baseURL = import.meta.env.VITE_SERVER_API;
-		axios.defaults.withCredentials = true;
-
 		return (
 			<html>
 				<head>

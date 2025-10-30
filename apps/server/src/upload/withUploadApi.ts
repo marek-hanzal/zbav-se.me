@@ -5,7 +5,7 @@ import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { CountSchema } from "../schema/CountSchema";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { UploadCreateSchema } from "./schema/UploadCreateSchema";
 import { UploadDtoSchema } from "./schema/UploadDtoSchema";
@@ -44,7 +44,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 				400: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Invalid URL",
@@ -64,7 +64,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Only content from the CDN can be uploaded",
-					} satisfies ErrorSchema.Type,
+					} satisfies ErrorDtoSchema.Type,
 					400,
 				);
 			}
@@ -122,7 +122,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Upload not found",
@@ -149,7 +149,7 @@ export const withUploadApi: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Upload not found",
-					} satisfies ErrorSchema.Type,
+					} satisfies ErrorDtoSchema.Type,
 					404,
 				);
 			}
