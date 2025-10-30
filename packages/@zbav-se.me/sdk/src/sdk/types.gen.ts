@@ -1017,6 +1017,7 @@ export type tFeedCreate = {
     name: string;
     filter: tListingFilter;
     sort: Array<tListingSort>;
+    meta: tListingMeta;
 };
 
 export type tFeedPatch = {

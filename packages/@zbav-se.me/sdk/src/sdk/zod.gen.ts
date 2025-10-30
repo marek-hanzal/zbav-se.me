@@ -1167,7 +1167,8 @@ export const zFeedCreate = z.object({
         description: 'Name of the feed'
     }),
     filter: zListingFilter,
-    sort: z.array(zListingSort)
+    sort: z.array(zListingSort),
+    meta: zListingMeta
 });
 
 export type zFeedCreate = z.infer<typeof zFeedCreate>;

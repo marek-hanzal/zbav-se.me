@@ -1148,9 +1148,12 @@ export const sFeedCreate = {
             items: {
                 '$ref': '#/components/schemas/ListingSort'
             }
+        },
+        meta: {
+            '$ref': '#/components/schemas/ListingMeta'
         }
     },
-    required: ['name', 'filter', 'sort']
+    required: ['name', 'filter', 'sort', 'meta']
 } as const;
 
 export const sFeedPatch = {

@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingFilterSchema } from "../../listing/schema/ListingFilterSchema";
+import { ListingMetaSchema } from "../../listing/schema/ListingMetaSchema";
 import { ListingSortSchema } from "../../listing/schema/ListingSortSchema";
 
 export const FeedCreateSchema = z
@@ -9,6 +10,7 @@ export const FeedCreateSchema = z
 		}),
 		filter: ListingFilterSchema,
 		sort: ListingSortSchema.array(),
+		meta: ListingMetaSchema,
 	})
 	.openapi("FeedCreate");
 
