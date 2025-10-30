@@ -81,6 +81,9 @@
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
     ref: Price - free
     value: Zdarma
+3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
+    ref: Feed name (hint)
+    value: Pojmenuj si nastavení, ať víš, o co jde
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -96,6 +99,9 @@
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
+45f38d57f03d10600b22e4b266ffbcf96453703c411de26c2e945233:
+    ref: Next - feed name (button)
+    value: Další
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
     ref: Price - free (title)
     value: Zdarma
@@ -105,6 +111,9 @@
 4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
     ref: Create new feed (button)
     value: Vytvořit
+4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
+    ref: Next - feed submit (button)
+    value: Kontrola
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
     ref: Next - price (button)
     value: Cena
@@ -126,6 +135,9 @@
 591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
     ref: Logout (description)
     value: Logout (description)
+599911ccaeaeeecc1028f013d5109339022f2edce3f276561380c5d7:
+    ref: Feed submit - all set (title)
+    value: Teď stačí jenom uložit a prozkoumat, co je nového!
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
     ref: Field errors (title)
     value: Field errors (title)
@@ -138,6 +150,9 @@
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Stáří
+5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
+    ref: Feed name (placeholder)
+    value: Vymysli název
 6025fd5728efef0a53b96658627b99d37b2fff31f41742dd7a25dc26:
     ref: Back to dashboard (label)
     value: Zpět domů
@@ -168,6 +183,9 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
+7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
+    ref: Feed name (title)
+    value: Vyber si název
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
     ref: I want to sell (label)
     value: Chci prodávat
@@ -299,6 +317,42 @@ Expire in 14-days:
 Expire in 7-days:
     static: true
     value: Za týden
+Listing common sort value age - asc:
+    static: true
+    value: Od nejstaršího po nejmladší
+Listing common sort value age - desc:
+    static: true
+    value: Od nejmladšího po nejstarší
+Listing common sort value age - unused:
+    static: true
+    value: Stáří (bez řazení)
+Listing common sort value condition - asc:
+    static: true
+    value: Od nejhoršího po nejlepší
+Listing common sort value condition - desc:
+    static: true
+    value: Od nejlepšího po nejhorší
+Listing common sort value condition - unused:
+    static: true
+    value: Stav (bez řazení)
+Listing common sort value geo - asc:
+    static: true
+    value: Od nejbližšího po nejvzdálenější
+Listing common sort value geo - desc:
+    static: true
+    value: Od nejvzdálenějšího po nejbližší
+Listing common sort value geo - unused:
+    static: true
+    value: Poloha (bez řazení)
+Listing common sort value price - asc:
+    static: true
+    value: Od nejlevnějšího po nejdražší
+Listing common sort value price - desc:
+    static: true
+    value: Od nejdražšího po nejlevnější
+Listing common sort value price - unused:
+    static: true
+    value: Cena (bez řazení)
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
@@ -392,6 +446,9 @@ cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
     ref: Upload - disabled (placeholder)
     value: Musíš vybrat předchozí fotku pro odemčení této.
+cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
+    ref: Submit - feed (button)
+    value: Jdeme na to!
 cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
     ref: I want to buy (label)
     value: Chci nakupovat
@@ -449,6 +506,9 @@ ecc602947a2a601b6c9f099ca41d26c7f3910eff377fac630e5e43d2:
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat
+f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
+    ref: Feed submit (title)
+    value: Vše připraveno!
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
     ref: Error
     value: Error
@@ -473,39 +533,3 @@ ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
-Listing common sort value price - asc:
-    static: true
-    value: Od nejlevnějšího po nejdražší
-Listing common sort value price - desc:
-    static: true
-    value: Od nejdražšího po nejlevnější
-Listing common sort value price - unused:
-    static: true
-    value: Cena (bez řazení)
-Listing common sort value condition - asc:
-    static: true
-    value: Od nejhoršího po nejlepší
-Listing common sort value condition - desc:
-    static: true
-    value: Od nejlepšího po nejhorší
-Listing common sort value condition - unused:
-    static: true
-    value: Stav (bez řazení)
-Listing common sort value age - asc:
-    static: true
-    value: Od nejstaršího po nejmladší
-Listing common sort value age - desc:
-    static: true
-    value: Od nejmladšího po nejstarší
-Listing common sort value age - unused:
-    static: true
-    value: Stáří (bez řazení)
-Listing common sort value geo - asc:
-    static: true
-    value: Od nejbližšího po nejvzdálenější
-Listing common sort value geo - desc:
-    static: true
-    value: Od nejvzdálenějšího po nejbližší
-Listing common sort value geo - unused:
-    static: true
-    value: Poloha (bez řazení)

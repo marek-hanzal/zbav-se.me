@@ -1,3 +1,4 @@
+import { translator } from "@use-pico/common";
 import type { FC, InputHTMLAttributes } from "react";
 
 export namespace TextInput {
@@ -6,10 +7,11 @@ export namespace TextInput {
 	}
 }
 
-export const TextInput: FC<TextInput.Props> = (props) => {
+export const TextInput: FC<TextInput.Props> = ({ placeholder, ...props }) => {
 	return (
 		<input
 			type={"text"}
+			placeholder={placeholder ? translator.text(placeholder) : undefined}
 			{...props}
 		/>
 	);

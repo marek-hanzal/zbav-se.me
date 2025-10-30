@@ -33,8 +33,10 @@ import { Route as LocaleSellerListingWizardConditionRouteImport } from './@route
 import { Route as LocaleSellerListingWizardCategoryRouteImport } from './@routes/$locale/seller/listing/wizard/category'
 import { Route as LocaleSellerListingWizardAgeRouteImport } from './@routes/$locale/seller/listing/wizard/age'
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
+import { Route as LocaleBuyerFeedWizardSubmitRouteImport } from './@routes/$locale/buyer/feed/wizard/submit'
 import { Route as LocaleBuyerFeedWizardStartRouteImport } from './@routes/$locale/buyer/feed/wizard/start'
 import { Route as LocaleBuyerFeedWizardSortRouteImport } from './@routes/$locale/buyer/feed/wizard/sort'
+import { Route as LocaleBuyerFeedWizardNameRouteImport } from './@routes/$locale/buyer/feed/wizard/name'
 import { Route as LocaleBuyerFeedWizardLocationRouteImport } from './@routes/$locale/buyer/feed/wizard/location'
 import { Route as LocaleBuyerFeedWizardConditionRouteImport } from './@routes/$locale/buyer/feed/wizard/condition'
 
@@ -169,6 +171,12 @@ const LocaleSellerListingIdViewRoute =
     path: '/seller/listing/$id/view',
     getParentRoute: () => LocaleRoute,
   } as any)
+const LocaleBuyerFeedWizardSubmitRoute =
+  LocaleBuyerFeedWizardSubmitRouteImport.update({
+    id: '/buyer/feed/wizard/submit',
+    path: '/buyer/feed/wizard/submit',
+    getParentRoute: () => LocaleRoute,
+  } as any)
 const LocaleBuyerFeedWizardStartRoute =
   LocaleBuyerFeedWizardStartRouteImport.update({
     id: '/buyer/feed/wizard/start',
@@ -179,6 +187,12 @@ const LocaleBuyerFeedWizardSortRoute =
   LocaleBuyerFeedWizardSortRouteImport.update({
     id: '/buyer/feed/wizard/sort',
     path: '/buyer/feed/wizard/sort',
+    getParentRoute: () => LocaleRoute,
+  } as any)
+const LocaleBuyerFeedWizardNameRoute =
+  LocaleBuyerFeedWizardNameRouteImport.update({
+    id: '/buyer/feed/wizard/name',
+    path: '/buyer/feed/wizard/name',
     getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedWizardLocationRoute =
@@ -211,8 +225,10 @@ export interface FileRoutesByFullPath {
   '/$locale/seller/listing/wizard': typeof LocaleSellerListingWizardRouteWithChildren
   '/$locale/buyer/feed/wizard/condition': typeof LocaleBuyerFeedWizardConditionRoute
   '/$locale/buyer/feed/wizard/location': typeof LocaleBuyerFeedWizardLocationRoute
+  '/$locale/buyer/feed/wizard/name': typeof LocaleBuyerFeedWizardNameRoute
   '/$locale/buyer/feed/wizard/sort': typeof LocaleBuyerFeedWizardSortRoute
   '/$locale/buyer/feed/wizard/start': typeof LocaleBuyerFeedWizardStartRoute
+  '/$locale/buyer/feed/wizard/submit': typeof LocaleBuyerFeedWizardSubmitRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -240,8 +256,10 @@ export interface FileRoutesByTo {
   '/$locale/seller/listing/wizard': typeof LocaleSellerListingWizardRouteWithChildren
   '/$locale/buyer/feed/wizard/condition': typeof LocaleBuyerFeedWizardConditionRoute
   '/$locale/buyer/feed/wizard/location': typeof LocaleBuyerFeedWizardLocationRoute
+  '/$locale/buyer/feed/wizard/name': typeof LocaleBuyerFeedWizardNameRoute
   '/$locale/buyer/feed/wizard/sort': typeof LocaleBuyerFeedWizardSortRoute
   '/$locale/buyer/feed/wizard/start': typeof LocaleBuyerFeedWizardStartRoute
+  '/$locale/buyer/feed/wizard/submit': typeof LocaleBuyerFeedWizardSubmitRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -271,8 +289,10 @@ export interface FileRoutesById {
   '/$locale/seller/listing/wizard': typeof LocaleSellerListingWizardRouteWithChildren
   '/$locale/buyer/feed/wizard/condition': typeof LocaleBuyerFeedWizardConditionRoute
   '/$locale/buyer/feed/wizard/location': typeof LocaleBuyerFeedWizardLocationRoute
+  '/$locale/buyer/feed/wizard/name': typeof LocaleBuyerFeedWizardNameRoute
   '/$locale/buyer/feed/wizard/sort': typeof LocaleBuyerFeedWizardSortRoute
   '/$locale/buyer/feed/wizard/start': typeof LocaleBuyerFeedWizardStartRoute
+  '/$locale/buyer/feed/wizard/submit': typeof LocaleBuyerFeedWizardSubmitRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -303,8 +323,10 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard'
     | '/$locale/buyer/feed/wizard/condition'
     | '/$locale/buyer/feed/wizard/location'
+    | '/$locale/buyer/feed/wizard/name'
     | '/$locale/buyer/feed/wizard/sort'
     | '/$locale/buyer/feed/wizard/start'
+    | '/$locale/buyer/feed/wizard/submit'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -332,8 +354,10 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard'
     | '/$locale/buyer/feed/wizard/condition'
     | '/$locale/buyer/feed/wizard/location'
+    | '/$locale/buyer/feed/wizard/name'
     | '/$locale/buyer/feed/wizard/sort'
     | '/$locale/buyer/feed/wizard/start'
+    | '/$locale/buyer/feed/wizard/submit'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -362,8 +386,10 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard'
     | '/$locale/buyer/feed/wizard/condition'
     | '/$locale/buyer/feed/wizard/location'
+    | '/$locale/buyer/feed/wizard/name'
     | '/$locale/buyer/feed/wizard/sort'
     | '/$locale/buyer/feed/wizard/start'
+    | '/$locale/buyer/feed/wizard/submit'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -551,6 +577,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleSellerListingIdViewRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/buyer/feed/wizard/submit': {
+      id: '/$locale/buyer/feed/wizard/submit'
+      path: '/buyer/feed/wizard/submit'
+      fullPath: '/$locale/buyer/feed/wizard/submit'
+      preLoaderRoute: typeof LocaleBuyerFeedWizardSubmitRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/buyer/feed/wizard/start': {
       id: '/$locale/buyer/feed/wizard/start'
       path: '/buyer/feed/wizard/start'
@@ -563,6 +596,13 @@ declare module '@tanstack/react-router' {
       path: '/buyer/feed/wizard/sort'
       fullPath: '/$locale/buyer/feed/wizard/sort'
       preLoaderRoute: typeof LocaleBuyerFeedWizardSortRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/buyer/feed/wizard/name': {
+      id: '/$locale/buyer/feed/wizard/name'
+      path: '/buyer/feed/wizard/name'
+      fullPath: '/$locale/buyer/feed/wizard/name'
+      preLoaderRoute: typeof LocaleBuyerFeedWizardNameRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/wizard/location': {
@@ -631,8 +671,10 @@ interface LocaleRouteChildren {
   LocaleSellerListingWizardRoute: typeof LocaleSellerListingWizardRouteWithChildren
   LocaleBuyerFeedWizardConditionRoute: typeof LocaleBuyerFeedWizardConditionRoute
   LocaleBuyerFeedWizardLocationRoute: typeof LocaleBuyerFeedWizardLocationRoute
+  LocaleBuyerFeedWizardNameRoute: typeof LocaleBuyerFeedWizardNameRoute
   LocaleBuyerFeedWizardSortRoute: typeof LocaleBuyerFeedWizardSortRoute
   LocaleBuyerFeedWizardStartRoute: typeof LocaleBuyerFeedWizardStartRoute
+  LocaleBuyerFeedWizardSubmitRoute: typeof LocaleBuyerFeedWizardSubmitRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
 }
 
@@ -651,8 +693,10 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleSellerListingWizardRoute: LocaleSellerListingWizardRouteWithChildren,
   LocaleBuyerFeedWizardConditionRoute: LocaleBuyerFeedWizardConditionRoute,
   LocaleBuyerFeedWizardLocationRoute: LocaleBuyerFeedWizardLocationRoute,
+  LocaleBuyerFeedWizardNameRoute: LocaleBuyerFeedWizardNameRoute,
   LocaleBuyerFeedWizardSortRoute: LocaleBuyerFeedWizardSortRoute,
   LocaleBuyerFeedWizardStartRoute: LocaleBuyerFeedWizardStartRoute,
+  LocaleBuyerFeedWizardSubmitRoute: LocaleBuyerFeedWizardSubmitRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,
 }
 
