@@ -9,8 +9,9 @@ import {
 	LinkTo,
 	SpinnerIcon,
 	UserIcon,
+	useStopEvent,
 } from "@use-pico/client";
-import { BagIcon, FeedIcon, PrimaryOverlay, ShopIcon } from "@zbav-se.me/ui";
+import { BagIcon, FeedIcon, ShopIcon, TitleContainer } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
@@ -30,11 +31,32 @@ export const Route = createFileRoute("/$locale/buyer/")({
 				});
 			},
 		});
+		const stop = useStopEvent();
 
 		return (
-			<Container position={"relative"}>
-				<PrimaryOverlay />
-
+			<TitleContainer
+				textTitle={"Buyer home (title)"}
+				left={
+					<LinkTo
+						icon={
+							userExPatchMutation.isPending
+								? SpinnerIcon
+								: ArrowLeftIcon
+						}
+						to={"/$locale/dashboard"}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+						onClick={(e) => {
+							stop(e);
+							userExPatchMutation.mutate({
+								side: null,
+							});
+						}}
+					/>
+				}
+			>
 				<Container
 					layout={"vertical-flex"}
 					scroll={"vertical"}
@@ -95,41 +117,8 @@ export const Route = createFileRoute("/$locale/buyer/")({
 							textTitle={"User profile (label)"}
 						/>
 					</LinkTo>
-
-					<Tile
-						icon={
-							userExPatchMutation.isPending
-								? SpinnerIcon
-								: ArrowLeftIcon
-						}
-						iconProps={{
-							size: "md",
-						}}
-						textTitle={"Back to dashboard (label)"}
-						statusProps={{
-							titleProps: {
-								size: "md",
-							},
-						}}
-						divProps={{
-							onClick() {
-								userExPatchMutation.mutate({
-									side: null,
-								});
-							},
-						}}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"px-12",
-									],
-								},
-							},
-						}}
-					/>
 				</Container>
-			</Container>
+			</TitleContainer>
 		);
 	},
 });

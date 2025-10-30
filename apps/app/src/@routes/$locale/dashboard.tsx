@@ -1,7 +1,7 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
+import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui";
 import { match } from "ts-pattern";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
@@ -61,10 +61,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				tone={"secondary"}
 				theme={"light"}
 				square={"xl"}
-				position={"relative"}
 			>
-				<PrimaryOverlay />
-
 				<LinkTo
 					to="/$locale/seller"
 					params={{

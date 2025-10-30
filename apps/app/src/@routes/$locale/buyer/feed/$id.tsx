@@ -10,7 +10,7 @@ import {
 	Status,
 } from "@use-pico/client";
 import { useCls } from "@use-pico/cls";
-import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
+import { ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -75,8 +75,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 				position={"relative"}
 				scroll={"hidden"}
 			>
-				<PrimaryOverlay />
-
 				<InfiniteData
 					result={listingQuery}
 					renderLoading={() => (
