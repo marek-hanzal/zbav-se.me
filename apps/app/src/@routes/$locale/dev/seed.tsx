@@ -53,6 +53,12 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			async mutationFn() {
 				const category = await apiCategoryCollection({
 					throwOnError: true,
+					body: {
+						cursor: {
+							page: 0,
+							size: 512,
+						},
+					},
 				}).then((res) => res.data);
 				const locations = [
 					"Benátky nad Jizerou",
