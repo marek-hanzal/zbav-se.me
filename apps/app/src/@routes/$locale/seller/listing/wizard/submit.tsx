@@ -139,201 +139,192 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 			>
 				{valid.success ? (
 					<Container
+						layout={"vertical-flex"}
 						scroll={"vertical"}
-						height={"full"}
+						gap={"md"}
+						height={"fit"}
+						width={"fit"}
 					>
-						<div className={"grid grid-auto-rows gap-2"}>
-							<VariantProvider
-								cls={ThemeCls}
-								variant={{
-									tone: "primary",
-									theme: "light",
+						<VariantProvider
+							cls={ThemeCls}
+							variant={{
+								tone: "primary",
+								theme: "light",
+							}}
+						>
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/photos"}
+								params={{
+									locale,
 								}}
+								search={state}
+								display={"block"}
+								full
 							>
-								<LinkTo
-									to={"/$locale/seller/listing/wizard/photos"}
-									params={{
-										locale,
-									}}
-									search={state}
-									display={"block"}
-									full
-								>
-									<Badge tweak={badgeTweak}>
-										<Tx
-											label={"Listing photos (label)"}
-											preset={"label"}
-										/>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing photos (label)"}
+										preset={"label"}
+									/>
 
-										<Typo
-											label={valid.data.uploadIds.length}
-										/>
-									</Badge>
-								</LinkTo>
+									<Typo label={valid.data.uploadIds.length} />
+								</Badge>
+							</LinkTo>
 
-								<LinkTo
-									to={
-										"/$locale/seller/listing/wizard/category"
-									}
-									params={{
-										locale,
-									}}
-									search={state}
-									display={"block"}
-									full
-								>
-									<Badge tweak={badgeTweak}>
-										<Tx
-											label={"Listing category (label)"}
-											preset={"label"}
-										/>
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/category"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing category (label)"}
+										preset={"label"}
+									/>
 
-										<div
-											className={
-												"flex flex-col gap-1 items-end"
-											}
-										>
-											<Typo
-												label={category.group}
-												size={"sm"}
-											/>
-											<Typo label={category.category} />
-										</div>
-									</Badge>
-								</LinkTo>
-
-								<LinkTo
-									to={
-										"/$locale/seller/listing/wizard/condition"
-									}
-									params={{
-										locale,
-									}}
-									search={state}
-									display={"block"}
-									full
-								>
-									<Badge tweak={badgeTweak}>
-										<Tx
-											label={"Listing condition (label)"}
-											preset={"label"}
-										/>
-
-										<Tx
-											label={`Condition - Overall [${valid.data.condition}] (hint)`}
-										/>
-									</Badge>
-								</LinkTo>
-
-								<LinkTo
-									to={"/$locale/seller/listing/wizard/age"}
-									params={{
-										locale,
-									}}
-									search={state}
-									display={"block"}
-									full
-								>
-									<Badge tweak={badgeTweak}>
-										<Tx
-											label={"Listing age (label)"}
-											preset={"label"}
-										/>
-
-										<Tx
-											label={`Condition - Age [${valid.data.age}] (hint)`}
-										/>
-									</Badge>
-								</LinkTo>
-
-								<LinkTo
-									to={"/$locale/seller/listing/wizard/price"}
-									params={{
-										locale,
-									}}
-									search={state}
-									display={"block"}
-									full
-								>
-									<Badge tweak={badgeTweak}>
-										<Tx
-											label={"Listing price (label)"}
-											preset={"label"}
-										/>
-
-										<PriceInline
-											price={valid.data.price}
-											currency={valid.data.currency}
-										/>
-									</Badge>
-								</LinkTo>
-
-								<LinkTo
-									to={
-										"/$locale/seller/listing/wizard/location"
-									}
-									params={{
-										locale,
-									}}
-									search={state}
-									display={"block"}
-									full
-								>
-									<Badge
-										tweak={{
-											slot: {
-												root: {
-													class: [
-														"flex",
-														"flex-col",
-														"items-start",
-														"h-fit",
-														"w-full",
-													],
-													token: [
-														"round.md",
-														"square.md",
-													],
-												},
-											},
-										}}
+									<div
+										className={
+											"flex flex-col gap-1 items-end"
+										}
 									>
-										<Tx
-											label={"Listing location (label)"}
-											preset={"label"}
-										/>
-
 										<Typo
-											label={location.address}
-											wrap={"wrap"}
+											label={category.group}
+											size={"sm"}
 										/>
-									</Badge>
-								</LinkTo>
+										<Typo label={category.category} />
+									</div>
+								</Badge>
+							</LinkTo>
 
-								<LinkTo
-									to={
-										"/$locale/seller/listing/wizard/expire-at"
-									}
-									params={{
-										locale,
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/condition"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing condition (label)"}
+										preset={"label"}
+									/>
+
+									<Tx
+										label={`Condition - Overall [${valid.data.condition}] (hint)`}
+									/>
+								</Badge>
+							</LinkTo>
+
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/age"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing age (label)"}
+										preset={"label"}
+									/>
+
+									<Tx
+										label={`Condition - Age [${valid.data.age}] (hint)`}
+									/>
+								</Badge>
+							</LinkTo>
+
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/price"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing price (label)"}
+										preset={"label"}
+									/>
+
+									<PriceInline
+										price={valid.data.price}
+										currency={valid.data.currency}
+									/>
+								</Badge>
+							</LinkTo>
+
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/location"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"flex",
+													"flex-col",
+													"items-start",
+													"h-fit",
+													"w-full",
+												],
+												token: [
+													"round.md",
+													"square.md",
+												],
+											},
+										},
 									}}
-									search={state}
-									display={"block"}
-									full
 								>
-									<Badge tweak={badgeTweak}>
-										<Tx
-											label={"Listing expire at (label)"}
-											preset={"label"}
-										/>
+									<Tx
+										label={"Listing location (label)"}
+										preset={"label"}
+									/>
 
-										<Tx
-											label={`Expire in ${state.expiresAt}`}
-										/>
-									</Badge>
-								</LinkTo>
-							</VariantProvider>
-						</div>
+									<Typo
+										label={location.address}
+										wrap={"wrap"}
+									/>
+								</Badge>
+							</LinkTo>
+
+							<LinkTo
+								to={"/$locale/seller/listing/wizard/expire-at"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing expire at (label)"}
+										preset={"label"}
+									/>
+
+									<Tx
+										label={`Expire in ${state.expiresAt}`}
+									/>
+								</Badge>
+							</LinkTo>
+						</VariantProvider>
 					</Container>
 				) : (
 					<Status

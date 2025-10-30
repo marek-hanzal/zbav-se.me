@@ -58,6 +58,8 @@ export namespace Container {
 		 * - `"vertical-header-content"` - Two-row grid: header (min-content), flexible content (1fr)
 		 * - `"vertical-content-footer"` - Two-row grid: flexible content (1fr), footer (min-content)
 		 * - `"vertical-centered"` - Single-row grid that centers content vertically (useful for centering content in available space)
+		 * - `"horizontal-flex"` - Horizontal flexbox layout (flex-row)
+		 * - `"vertical-flex"` - Vertical flexbox layout (flex-col)
 		 *
 		 * @default "unset"
 		 */
@@ -114,7 +116,7 @@ export namespace Container {
 		square?: Cls.VariantOf<ContainerCls, "square">;
 
 		/**
-		 * Gap spacing between grid items.
+		 * Gap spacing between grid items or flex items.
 		 *
 		 * - `"unset"` - No gap applied
 		 * - `"xs"` - gap-1 (0.25rem)
@@ -128,17 +130,53 @@ export namespace Container {
 		gap?: Cls.VariantOf<ContainerCls, "gap">;
 
 		/**
-		 * Item placement within the grid container (place-items).
+		 * Item alignment for flex layouts (align-items).
 		 *
-		 * - `"unset"` - No placement applied (default grid behavior)
-		 * - `"start"` - Items aligned to start (place-items-start)
-		 * - `"center"` - Items centered within their grid cells (place-items-center)
-		 * - `"end"` - Items aligned to end (place-items-end)
-		 * - `"stretch"` - Items stretched to fill their grid cells (place-items-stretch)
+		 * Controls the alignment of items along the cross axis in flex containers.
+		 * Use `placeItems` for grid layouts instead.
+		 *
+		 * - `"unset"` - No alignment applied (default behavior)
+		 * - `"start"` - Items aligned to start (items-start)
+		 * - `"center"` - Items centered (items-center)
+		 * - `"end"` - Items aligned to end (items-end)
+		 * - `"stretch"` - Items stretched to fill available space (items-stretch)
 		 *
 		 * @default "unset"
 		 */
 		items?: Cls.VariantOf<ContainerCls, "items">;
+
+		/**
+		 * Item placement for grid layouts (place-items).
+		 *
+		 * Controls the alignment of items within their grid cells.
+		 * Use `items` for flex layouts instead.
+		 *
+		 * - `"unset"` - No placement applied (default behavior)
+		 * - `"start"` - Items aligned to start (place-items-start)
+		 * - `"center"` - Items centered (place-items-center)
+		 * - `"end"` - Items aligned to end (place-items-end)
+		 * - `"stretch"` - Items stretched to fill grid cells (place-items-stretch)
+		 *
+		 * @default "unset"
+		 */
+		placeItems?: Cls.VariantOf<ContainerCls, "place-items">;
+
+		/**
+		 * Justify content alignment (for flex layouts only).
+		 *
+		 * Controls the distribution of items along the main axis.
+		 *
+		 * - `"unset"` - No justification applied
+		 * - `"start"` - Items aligned to start (justify-start)
+		 * - `"center"` - Items centered (justify-center)
+		 * - `"end"` - Items aligned to end (justify-end)
+		 * - `"between"` - Items evenly distributed with space between (justify-between)
+		 * - `"around"` - Items evenly distributed with space around (justify-around)
+		 * - `"evenly"` - Items evenly distributed with equal space (justify-evenly)
+		 *
+		 * @default "unset"
+		 */
+		justify?: Cls.VariantOf<ContainerCls, "justify">;
 
 		/**
 		 * CSS position behavior.
@@ -196,6 +234,8 @@ export const Container: FC<Container.Props> = ({
 	square,
 	gap,
 	items,
+	placeItems,
+	justify,
 	position,
 	border,
 	round,
@@ -218,6 +258,8 @@ export const Container: FC<Container.Props> = ({
 			square,
 			gap,
 			items,
+			"place-items": placeItems,
+			justify,
 			position,
 			border,
 			round,

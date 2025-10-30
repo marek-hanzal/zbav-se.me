@@ -1,5 +1,6 @@
 import { Badge, Button, Container, Data, Fulltext, Tx } from "@use-pico/client";
 import type { LocationDto } from "@zbav-se.me/sdk";
+import { SpinnerContainer } from "@zbav-se.me/ui";
 import { type FC, type RefObject, useState } from "react";
 import { withLocationAutocompleteQuery } from "~/app/location/query/withLocationAutocompleteQuery";
 
@@ -81,6 +82,14 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 
 			<Data
 				result={locationAutocompleteQuery}
+				renderLoading={() => {
+					return (
+						<SpinnerContainer
+							disableOverlay
+							height={"fit"}
+						/>
+					);
+				}}
 				renderSuccess={({ data }) => {
 					return data.map((item) => {
 						return (
@@ -149,10 +158,9 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 					return (
 						<Container
 							ui="Location-content"
+							layout={"vertical-flex"}
 							scroll={"vertical"}
-							layout={"vertical"}
 							gap={"sm"}
-							height={"fit"}
 						>
 							{content}
 						</Container>

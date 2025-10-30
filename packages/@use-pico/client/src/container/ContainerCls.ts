@@ -28,6 +28,8 @@ export const ContainerCls = contract(PicoCls.contract)
 		"vertical-header-content",
 		"vertical-content-footer",
 		"vertical-centered",
+		"horizontal-flex",
+		"vertical-flex",
 	])
 	.variant("scroll", [
 		"unset",
@@ -71,6 +73,22 @@ export const ContainerCls = contract(PicoCls.contract)
 		"center",
 		"end",
 		"stretch",
+	])
+	.variant("place-items", [
+		"unset",
+		"start",
+		"center",
+		"end",
+		"stretch",
+	])
+	.variant("justify", [
+		"unset",
+		"start",
+		"center",
+		"end",
+		"between",
+		"around",
+		"evenly",
 	])
 	.variant("position", [
 		"unset",
@@ -242,6 +260,24 @@ export const ContainerCls = contract(PicoCls.contract)
 				"grid",
 				"grid-rows-1",
 				"justify-stretch",
+			],
+		},
+	})
+	.match("layout", "horizontal-flex", {
+		root: {
+			class: [
+				"flex",
+				"flex-row",
+				"[&>*]:flex-shrink-0",
+			],
+		},
+	})
+	.match("layout", "vertical-flex", {
+		root: {
+			class: [
+				"flex",
+				"flex-col",
+				"[&>*]:flex-shrink-0",
 			],
 		},
 	})
@@ -463,18 +499,32 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	// Items placement (place-items)
+	// Items placement (align-items for flex layouts)
 	.match("items", "start", {
 		root: {
 			class: [
-				"place-items-start",
+				"items-start",
 			],
 		},
 	})
 	.match("items", "center", {
 		root: {
 			class: [
-				"place-items-center",
+				"items-center",
+			],
+		},
+	})
+	.match("items", "end", {
+		root: {
+			class: [
+				"items-end",
+			],
+		},
+	})
+	.match("items", "stretch", {
+		root: {
+			class: [
+				"items-stretch",
 			],
 		},
 	})
@@ -491,14 +541,42 @@ export const ContainerCls = contract(PicoCls.contract)
 			},
 		},
 	)
-	.match("items", "end", {
+	// Place items (place-items for grid layouts)
+	.match("place-items", "start", {
+		root: {
+			class: [
+				"place-items-start",
+			],
+		},
+	})
+	.match("place-items", "center", {
+		root: {
+			class: [
+				"place-items-center",
+			],
+		},
+	})
+	.rule(
+		{
+			layout: "vertical-centered",
+			"place-items": "unset",
+		},
+		{
+			root: {
+				class: [
+					"place-items-center",
+				],
+			},
+		},
+	)
+	.match("place-items", "end", {
 		root: {
 			class: [
 				"place-items-end",
 			],
 		},
 	})
-	.match("items", "stretch", {
+	.match("place-items", "stretch", {
 		root: {
 			class: [
 				"place-items-stretch",
@@ -508,7 +586,7 @@ export const ContainerCls = contract(PicoCls.contract)
 	.rule(
 		{
 			layout: "vertical-centered",
-			items: "stretch",
+			"place-items": "stretch",
 		},
 		{
 			root: {
@@ -520,6 +598,49 @@ export const ContainerCls = contract(PicoCls.contract)
 			},
 		},
 	)
+	// Justify content (for flex layouts, but not destructive if used elsewhere)
+	.match("justify", "start", {
+		root: {
+			class: [
+				"justify-start",
+			],
+		},
+	})
+	.match("justify", "center", {
+		root: {
+			class: [
+				"justify-center",
+			],
+		},
+	})
+	.match("justify", "end", {
+		root: {
+			class: [
+				"justify-end",
+			],
+		},
+	})
+	.match("justify", "between", {
+		root: {
+			class: [
+				"justify-between",
+			],
+		},
+	})
+	.match("justify", "around", {
+		root: {
+			class: [
+				"justify-around",
+			],
+		},
+	})
+	.match("justify", "evenly", {
+		root: {
+			class: [
+				"justify-evenly",
+			],
+		},
+	})
 	// Position
 	.match("position", "absolute", {
 		root: {
@@ -894,6 +1015,8 @@ export const ContainerCls = contract(PicoCls.contract)
 		square: "unset",
 		gap: "unset",
 		items: "unset",
+		"place-items": "unset",
+		justify: "unset",
 		position: "unset",
 		border: "unset",
 		round: "unset",

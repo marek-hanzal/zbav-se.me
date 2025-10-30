@@ -48,35 +48,28 @@ export const Route = createFileRoute("/$locale/user")({
 				<PrimaryOverlay />
 
 				<Sheet>
-					<Container
-						layout={"vertical"}
-						gap={"md"}
-						items={"center"}
-						height={"fit"}
-					>
-						<Status
-							icon={UserIcon}
-							textTitle={user.email}
-							textMessage={user.name}
-							action={
-								<LinkTo
-									to={"/$locale/dashboard"}
-									params={{
-										locale,
-									}}
-									tone="unset"
-									theme="unset"
-								>
-									<Button
-										iconEnabled={DashboardIcon}
-										tone="secondary"
-										theme="light"
-										label={"Back to Dashboard (label)"}
-									/>
-								</LinkTo>
-							}
-						/>
-					</Container>
+					<Status
+						icon={UserIcon}
+						textTitle={user.email}
+						textMessage={user.name}
+						action={
+							<LinkTo
+								to={"/$locale/dashboard"}
+								params={{
+									locale,
+								}}
+								tone="unset"
+								theme="unset"
+							>
+								<Button
+									iconEnabled={DashboardIcon}
+									tone="secondary"
+									theme="light"
+									label={"Back to Dashboard (label)"}
+								/>
+							</LinkTo>
+						}
+					/>
 				</Sheet>
 
 				<Sheet>

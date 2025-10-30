@@ -164,7 +164,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				>
 					<Container
 						layout={"vertical-header-content"}
-						position={"relative"}
 						gap={"md"}
 						height={"fit"}
 					>
@@ -187,7 +186,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 										layout={"vertical"}
 										gap={"md"}
 										height={"fit"}
-										position={"relative"}
 									>
 										{data.data.map((item) => {
 											return (

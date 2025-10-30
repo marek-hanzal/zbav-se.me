@@ -72,8 +72,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 				}
 			>
 				<Container
-					layout={"vertical-centered"}
-					items={"stretch"}
 					scroll={"vertical"}
 					height={"fit"}
 					width={"fit"}

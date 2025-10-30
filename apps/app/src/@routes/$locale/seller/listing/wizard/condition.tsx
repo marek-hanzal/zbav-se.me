@@ -74,8 +74,6 @@ export const Route = createFileRoute(
 				}
 			>
 				<Container
-					layout={"vertical-centered"}
-					items={"stretch"}
 					scroll={"vertical"}
 					height={"fit"}
 					width={"fit"}
