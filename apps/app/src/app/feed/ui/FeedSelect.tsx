@@ -1,13 +1,18 @@
 import {
 	ArrowRightIcon,
+	Badge,
 	Button,
 	Container,
+	Data,
 	LinkTo,
+	Spinner,
 	Status,
+	Tx,
 } from "@use-pico/client";
 import type { tFeedDto } from "@zbav-se.me/sdk";
 import { FeedIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
+import { withListingCountQuery } from "~/app/listing/query/withListingCountQuery";
 
 export namespace FeedSelect {
 	export interface Props extends Container.Props {
@@ -22,6 +27,10 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 	tweak,
 	...props
 }) => {
+	const listingCountQuery = withListingCountQuery.useQuery({
+		filter: feed.filter,
+	});
+
 	return (
 		<Container
 			ui="FeedSelect-Container"
@@ -63,7 +72,35 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 						/>
 					</LinkTo>
 				}
-			/>
+				tweak={{
+					slot: {
+						body: {
+							class: [
+								"flex",
+								"flex-col",
+								"justify-center",
+								"items-center",
+							],
+						},
+					},
+				}}
+			>
+				<Data
+					result={listingCountQuery}
+					renderLoading={() => <Spinner />}
+					renderSuccess={({ data }) => {
+						return (
+							<Badge>
+								{data.filter > 0 ? (
+									data.filter
+								) : (
+									<Tx label={"No listings found (label)"} />
+								)}
+							</Badge>
+						);
+					}}
+				/>
+			</Status>
 		</Container>
 	);
 };

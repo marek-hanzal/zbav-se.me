@@ -500,14 +500,6 @@ export type tListingFilter = {
      * This filter matches listings with age less than or equal to the provided value
      */
     ageMax?: number;
-    /**
-     * This filter matches listings with the exact location ID
-     */
-    locationId?: string | null;
-    /**
-     * This filter matches listings with location IDs in the provided array
-     */
-    locationIdIn?: Array<string> | null;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyList;
@@ -576,14 +568,6 @@ export type tListingWhere = {
      * This filter matches listings with age less than or equal to the provided value
      */
     ageMax?: number;
-    /**
-     * This filter matches listings with the exact location ID
-     */
-    locationId?: string | null;
-    /**
-     * This filter matches listings with location IDs in the provided array
-     */
-    locationIdIn?: Array<string> | null;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyList;
@@ -651,6 +635,15 @@ export type tListingQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
     sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
+
+/**
+ * Query object for listing count (omits cursor, sort, and meta)
+ */
+export type tListingCountQuery = {
+    filter?: tListingFilter;
+    where?: tListingWhere;
     meta?: tListingMeta;
 };
 
@@ -1283,7 +1276,7 @@ export type tApiListingCollectionResponse = {
 export type apiListingCollectionResponse = tApiListingCollectionResponse[keyof tApiListingCollectionResponse];
 
 export type tApiListingCountRequest = {
-    body?: tListingQuery;
+    body?: tListingCountQuery;
     path?: never;
     query?: never;
     url: '/api/session/listing/count';

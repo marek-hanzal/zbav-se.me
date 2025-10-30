@@ -7,6 +7,9 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
     ref: Upload (title)
     value: Vyber fotku
+0b4c2a4d52dd18bc806051429f36f3fa76d3edf2f93aff6bf87a212e:
+    ref: Vendor & Model (subtitle)
+    value: Vendor & Model (subtitle)
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
     value:
@@ -66,6 +69,9 @@
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
     ref: Select item
     value: Select item
+3a95865efe852d218312b3d36e4c27696301f464f59a08811958b78f:
+    ref: Optional fields (hint)
+    value: Optional fields (hint)
 3b25f85d532657d509b12da1d687a994f0da387a55ede88e53ffc704:
     ref: Listing price (label)
     value: Cena
@@ -99,9 +105,6 @@
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
     ref: Price - free (title)
     value: Zdarma
-4b3c381c32b8e3f4715460d33e6905c18189002a4e52f0c41e7d8422:
-    ref: Create new feed - disabled (description)
-    value: Musíš si vytvořit předchozí nastavení nabídek.
 4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
     ref: Next - feed category (button)
     value: Kategorie
@@ -120,6 +123,9 @@
 501b1f4b9d7915a52896fdc8cdbd9be18c239e3b0251f8b34b63ed91:
     ref: Next - feed sort (button)
     value: Nastavení řazení
+51e32dd04b48037c02d74b18780fa11ad5f4c9c2694a95cc953d7260:
+    ref: Model (hint)
+    value: Model (hint)
 52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
     ref: Missing any token(s). (message)
     value: Missing any token(s). (message)
@@ -168,6 +174,9 @@
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
     ref: Clear files
     value: Clear files
+7262bca7b9248fb11e51c76eb7c2531fe7f7622a9f4d8923309e810e:
+    ref: Next - vendor & model (button)
+    value: Next - vendor & model (button)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
     value: Umístění
@@ -352,9 +361,15 @@ a5eb219baee2d44fbeb2efb0fefefa8cca868c985927a2010eca1bd0:
 aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
     ref: Sorted by desc, sort by asc; keeps column sorted in selected order
     value: Sorted by desc, sort by asc; keeps column sorted in selected order
+ab3fd8cf2260b65a0e2a09d81c4512ad025f5524b2947e16306349f5:
+    ref: Vendor (placeholder)
+    value: Vendor (placeholder)
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
     ref: Success (toast)
     value: Success (toast)
+ad2b3af7d8b3977729ea269069627a1c0fd5cbe7c6b05d4e66056b20:
+    ref: Listing vendor & model (label)
+    value: Listing vendor & model (label)
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
@@ -364,9 +379,6 @@ ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
 af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
     ref: Drag 'n' drop a file here
     value: Drag 'n' drop a file here
-afa96d71ae6b10fa0fddafc557eee3646e14037307d20c120c0637df:
-    ref: Feed category selection (hint)
-    value: Vyber si kategorie, které tě zajímají.
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
@@ -412,9 +424,6 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Nastav cenu
-c60b97617a39beae57c007e98fd2be8c0d506721df3f7dc91cb1b554:
-    ref: Create new feed - disabled (title)
-    value: Vytvoř předchozí nastavení nabídek
 c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
     ref: Input is not Luxon DateTime!
     value: Input is not Luxon DateTime!
@@ -424,9 +433,15 @@ c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
 c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
     ref: Cannot download the file...
     value: Cannot download the file...
+cb639f5715f5ab643f96fc184a220ee1283d44463f90d822f495b6e1:
+    ref: Vendor & Model (title)
+    value: Vendor & Model (title)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
     ref: Feed location (title)
     value: Nastavení polohy
+cbe83751eafacf03fbbd8c1346cd37084bcbd13506c35aae5f2c560c:
+    ref: Model (title)
+    value: Model (title)
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
     ref: Upload - disabled (placeholder)
     value: Musíš vybrat předchozí fotku pro odemčení této.
@@ -442,9 +457,15 @@ d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
 d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
     ref: Next - expire (button)
     value: Automatické uzavření
+d29f274cb31fbb9574b5e3ed8543d78b801c7fa3f46905995d4ba099:
+    ref: Model (placeholder)
+    value: Model (placeholder)
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
+d770b0904ac92501419502f5788b64260fab02a55fc43860b1564bc9:
+    ref: Vendor (title)
+    value: Vendor (title)
 d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
     ref: Feed condition (title)
     value: Jaké stavy tě zajímají
@@ -487,6 +508,9 @@ f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
 f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
     ref: Error
     value: Error
+f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
+    ref: No listings found (label)
+    value: Tad nic nenajdeš 😭
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
     ref: Confirm selection (label)
     value: Confirm selection (label)
@@ -499,6 +523,9 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
     ref: Bag (label)
     value: Nákupní taška
+fefe53a52244985c40772ce1aa20453aeb6c8f2b505f89ce2c65e4e3:
+    ref: Vendor (hint)
+    value: Vendor (hint)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav

@@ -502,17 +502,6 @@ export const sListingFilter = {
             type: 'number',
             minimum: 0
         },
-        locationId: {
-            type: ['string', 'null'],
-            minLength: 1
-        },
-        locationIdIn: {
-            type: ['array', 'null'],
-            items: {
-                type: 'string',
-                minLength: 1
-            }
-        },
         categoryId: {
             '$ref': '#/components/schemas/CategoryId'
         },
@@ -595,17 +584,6 @@ export const sListingWhere = {
         ageMax: {
             type: 'number',
             minimum: 0
-        },
-        locationId: {
-            type: ['string', 'null'],
-            minLength: 1
-        },
-        locationIdIn: {
-            type: ['array', 'null'],
-            items: {
-                type: 'string',
-                minLength: 1
-            }
         },
         categoryId: {
             '$ref': '#/components/schemas/CategoryId'
@@ -704,6 +682,21 @@ export const sListingQuery = {
             items: {
                 '$ref': '#/components/schemas/ListingSort'
             }
+        },
+        meta: {
+            '$ref': '#/components/schemas/ListingMeta'
+        }
+    }
+} as const;
+
+export const sListingCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            '$ref': '#/components/schemas/ListingFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingWhere'
         },
         meta: {
             '$ref': '#/components/schemas/ListingMeta'

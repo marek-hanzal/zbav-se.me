@@ -36,14 +36,6 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with age less than or equal to the provided value",
 		}),
-		locationId: z.string().min(1).nullish().openapi({
-			description:
-				"This filter matches listings with the exact location ID",
-		}),
-		locationIdIn: z.array(z.string().min(1)).nullish().openapi({
-			description:
-				"This filter matches listings with location IDs in the provided array",
-		}),
 		categoryId: CategoryIdSchema({
 			description:
 				"This filter matches listings with the exact category ID",

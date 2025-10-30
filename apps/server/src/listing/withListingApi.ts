@@ -13,6 +13,7 @@ import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
 import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
+import { ListingCountQuerySchema } from "./schema/ListingCountQuerySchema";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingDtoSchema } from "./schema/ListingDtoSchema";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
@@ -205,12 +206,6 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				);
 			}
 
-			// Omit locationId from filter as requested
-			const filter = {
-				...feed.filter,
-				locationId: undefined,
-			};
-
 			const { data, hit } = await withCache({
 				key: {
 					scope: "listing:feed:collection",
@@ -218,7 +213,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					value: {
 						feedId,
 						cursor,
-						filter,
+						filter: feed.filter,
 						sort: feed.sort,
 					},
 				},
@@ -233,7 +228,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 							page: 0,
 							size: 10,
 						},
-						filter,
+						filter: feed.filter,
 						query: withListingQueryBuilder,
 					}),
 			});
@@ -404,7 +399,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingQuerySchema,
+							schema: ListingCountQuerySchema,
 						},
 					},
 				},
@@ -425,7 +420,7 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 		}),
 		async (c) => {
 			const json = c.req.valid("json");
-			const { filter, where, meta } = json;
+			const { filter, where } = json;
 
 			const { data, hit } = await withCache({
 				key: {
@@ -436,8 +431,8 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 				fetch: () =>
 					withCount({
 						select: withListingSelect({
-							sort: [],
-							meta,
+							sort: undefined,
+							meta: undefined,
 						}),
 						filter,
 						where,
