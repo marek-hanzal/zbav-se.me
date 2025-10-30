@@ -9,7 +9,7 @@ import {
 	Spinner,
 	Status,
 } from "@use-pico/client";
-import { useCls } from "@use-pico/cls";
+import { tvc, useCls } from "@use-pico/cls";
 import { ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
@@ -71,9 +71,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 		]);
 
 		return (
-			<Container
-				position={"relative"}
-				scroll={"hidden"}
+			<div
+				className={tvc([
+					"relative",
+					"overflow-hidden",
+				])}
 			>
 				<InfiniteData
 					result={listingQuery}
@@ -195,7 +197,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 						},
 					})}
 				/>
-			</Container>
+			</div>
 		);
 	},
 });

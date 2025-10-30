@@ -1,12 +1,5 @@
-import {
-	Badge,
-	Container,
-	Icon,
-	PriceInline,
-	Tx,
-	Typo,
-} from "@use-pico/client";
-import { VariantProvider } from "@use-pico/cls";
+import { Badge, Icon, PriceInline, Tx, Typo } from "@use-pico/client";
+import { tvc, VariantProvider } from "@use-pico/cls";
 import type { tGalleryDto, tListingDto } from "@zbav-se.me/sdk";
 import { ThemeCls } from "@zbav-se.me/ui";
 import { type FC, memo } from "react";
@@ -28,7 +21,11 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 		];
 
 		return (
-			<Container position={"relative"}>
+			<div
+				className={tvc([
+					"relative",
+				])}
+			>
 				<HeroImage
 					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
@@ -141,7 +138,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						/>
 					</Badge>
 				</VariantProvider>
-			</Container>
+			</div>
 		);
 	},
 );

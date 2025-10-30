@@ -130,7 +130,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				.execute(async (trx) => {
 					// Acquire advisory lock to prevent duplicate API calls
 					const lockId = getLockId(text, lang);
-					const limit = 2;
+					const limit = 5;
 
 					// Acquire lock (blocks until available)
 					// Using pg_advisory_xact_lock - automatically released at transaction end
