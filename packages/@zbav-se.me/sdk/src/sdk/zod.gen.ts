@@ -273,9 +273,6 @@ export const zLocationDto = z.object({
     }),
     lon: z.number().register(z.globalRegistry, {
         description: 'Longitude of the location'
-    }),
-    geo: z.string().register(z.globalRegistry, {
-        description: 'Encoded PostGIS geometry of the location'
     })
 }).register(z.globalRegistry, {
     description: 'Location data transfer object'
@@ -402,6 +399,14 @@ export const zListingCreate = z.object({
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
+    vendor: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    model: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })
@@ -530,14 +535,6 @@ export const zListingFilter = z.object({
     ageMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
         description: 'This filter matches listings with age less than or equal to the provided value'
     })),
-    locationId: z.optional(z.union([
-        z.string().min(1),
-        z.null()
-    ])),
-    locationIdIn: z.optional(z.union([
-        z.array(z.string().min(1)),
-        z.null()
-    ])),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
@@ -606,14 +603,6 @@ export const zListingWhere = z.object({
     ageMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
         description: 'This filter matches listings with age less than or equal to the provided value'
     })),
-    locationId: z.optional(z.union([
-        z.string().min(1),
-        z.null()
-    ])),
-    locationIdIn: z.optional(z.union([
-        z.array(z.string().min(1)),
-        z.null()
-    ])),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
@@ -712,6 +701,19 @@ export const zListingQuery = z.object({
 });
 
 export type zListingQuery = z.infer<typeof zListingQuery>;
+
+/**
+ * Query object for listing count (omits cursor, sort, and meta)
+ */
+export const zListingCountQuery = z.object({
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    meta: z.optional(zListingMeta)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing count (omits cursor, sort, and meta)'
+});
+
+export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
 
 /**
  * User-land filters for gallery items
@@ -1423,7 +1425,7 @@ export const zApiListingCollectionResponse = zListingCollection;
 export type zapiListingCollectionResponse = z.infer<typeof zApiListingCollectionResponse>;
 
 export const zApiListingCountData = z.object({
-    body: z.optional(zListingQuery),
+    body: z.optional(zListingCountQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });

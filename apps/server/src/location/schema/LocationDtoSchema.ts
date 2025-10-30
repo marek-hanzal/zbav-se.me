@@ -5,6 +5,9 @@ export const LocationDtoSchema = z
 	.object({
 		...LocationSchema.shape,
 	})
+	.omit({
+		geo: true,
+	})
 	.openapi("LocationDto", {
 		description: "Location data transfer object",
 	});

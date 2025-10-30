@@ -21,5 +21,5 @@ export const ListingQuerySchema = z
 export type ListingQuerySchema = typeof ListingQuerySchema;
 
 export namespace ListingQuerySchema {
-	export type Type = z.infer<typeof ListingQuerySchema>;
+	export type Type = z.infer<ListingQuerySchema>;
 }

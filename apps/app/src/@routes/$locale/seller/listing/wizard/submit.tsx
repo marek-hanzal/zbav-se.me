@@ -36,7 +36,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/expire-at"}
+						to={"/$locale/seller/listing/wizard/vendor-model"}
 						search={state}
 						params={{
 							locale,
@@ -110,7 +110,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/expire-at"}
+						to={"/$locale/seller/listing/wizard/vendor-model"}
 						search={state}
 						params={{
 							locale,
@@ -322,6 +322,47 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									<Tx
 										label={`Expire in ${state.expiresAt}`}
 									/>
+								</Badge>
+							</LinkTo>
+
+							<LinkTo
+								to={
+									"/$locale/seller/listing/wizard/vendor-model"
+								}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<Badge tweak={badgeTweak}>
+									<Tx
+										label={"Listing vendor & model (label)"}
+										preset={"label"}
+									/>
+
+									<div
+										className={
+											"flex flex-col gap-1 items-end"
+										}
+									>
+										<Tx
+											label={
+												state.vendor
+													? state.vendor
+													: "Vendor (placeholder)"
+											}
+											size={"sm"}
+										/>
+										<Tx
+											label={
+												state.model
+													? state.model
+													: "Model (placeholder)"
+											}
+										/>
+									</div>
 								</Badge>
 							</LinkTo>
 						</VariantProvider>

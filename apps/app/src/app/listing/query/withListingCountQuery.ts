@@ -2,10 +2,10 @@ import { withQuery } from "@use-pico/client";
 import {
 	apiListingCount,
 	type tCount,
-	type tListingQuery,
+	type tListingCountQuery,
 } from "@zbav-se.me/sdk";
 
-export const withListingCountQuery = withQuery<tListingQuery, tCount>({
+export const withListingCountQuery = withQuery<tListingCountQuery, tCount>({
 	keys(data) {
 		return [
 			"listing",

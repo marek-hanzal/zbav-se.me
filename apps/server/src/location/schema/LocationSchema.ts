@@ -52,7 +52,9 @@ export const LocationSchema = z
 			type: "number",
 		}),
 		geo: z.string().openapi({
-			description: "Encoded PostGIS geometry of the location",
+			description:
+				"Encoded PostGIS geometry of the location (auto-generated from lat/lon)",
+			readOnly: true,
 		}),
 	})
 	.openapi("Location", {

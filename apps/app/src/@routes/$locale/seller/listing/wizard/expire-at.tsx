@@ -44,7 +44,7 @@ export const Route = createFileRoute(
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/submit"}
+						to={"/$locale/seller/listing/wizard/vendor-model"}
 						params={{
 							locale,
 						}}
@@ -62,7 +62,7 @@ export const Route = createFileRoute(
 							size={"lg"}
 							full
 							iconPosition={"right"}
-							label={"Next - submit (button)"}
+							label={"Next - vendor & model (button)"}
 							disabled={!expiresAt}
 						/>
 					</LinkTo>

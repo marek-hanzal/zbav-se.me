@@ -1,16 +1,37 @@
 import { match } from "ts-pattern";
-import { database } from "../database/kysely";
+import type { WithDatabase } from "../database/WithDatabase";
 import type { LocationSortSchema } from "./schema/LocationSortSchema";
 
 export namespace withLocationSelect {
 	export interface Props {
-		sort?: LocationSortSchema.Type[];
+		sort: LocationSortSchema.Type[] | undefined;
+		source: WithDatabase;
 	}
 	export type Select = ReturnType<typeof withLocationSelect>;
 }
 
-export const withLocationSelect = ({ sort }: withLocationSelect.Props = {}) => {
-	let query = database.kysely.selectFrom("location as l").selectAll("l");
+export const withLocationSelect = ({
+	sort,
+	source,
+}: withLocationSelect.Props) => {
+	let query = source.selectFrom("location as l").select([
+		"l.id",
+		"l.query",
+		"l.lang",
+		"l.country",
+		"l.code",
+		"l.county",
+		"l.municipality",
+		"l.state",
+		"l.address",
+		"l.city",
+		"l.street",
+		"l.zip",
+		"l.confidence",
+		"l.hash",
+		"l.lat",
+		"l.lon",
+	]);
 
 	for (const sortItem of sort ?? []) {
 		if (!sortItem.sort) {

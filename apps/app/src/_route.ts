@@ -23,6 +23,7 @@ import { Route as LocaleSellerListingWizardRouteImport } from './@routes/$locale
 import { Route as LocaleSellerListingMyRouteImport } from './@routes/$locale/seller/listing/my'
 import { Route as LocaleBuyerFeedSelectRouteImport } from './@routes/$locale/buyer/feed/select'
 import { Route as LocaleBuyerFeedIdRouteImport } from './@routes/$locale/buyer/feed/$id'
+import { Route as LocaleSellerListingWizardVendorModelRouteImport } from './@routes/$locale/seller/listing/wizard/vendor-model'
 import { Route as LocaleSellerListingWizardSubmitRouteImport } from './@routes/$locale/seller/listing/wizard/submit'
 import { Route as LocaleSellerListingWizardPriceRouteImport } from './@routes/$locale/seller/listing/wizard/price'
 import { Route as LocaleSellerListingWizardPhotosRouteImport } from './@routes/$locale/seller/listing/wizard/photos'
@@ -110,6 +111,12 @@ const LocaleBuyerFeedIdRoute = LocaleBuyerFeedIdRouteImport.update({
   path: '/buyer/feed/$id',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleSellerListingWizardVendorModelRoute =
+  LocaleSellerListingWizardVendorModelRouteImport.update({
+    id: '/vendor-model',
+    path: '/vendor-model',
+    getParentRoute: () => LocaleSellerListingWizardRoute,
+  } as any)
 const LocaleSellerListingWizardSubmitRoute =
   LocaleSellerListingWizardSubmitRouteImport.update({
     id: '/submit',
@@ -231,6 +238,7 @@ export interface FileRoutesByFullPath {
   '/$locale/seller/listing/wizard/photos': typeof LocaleSellerListingWizardPhotosRoute
   '/$locale/seller/listing/wizard/price': typeof LocaleSellerListingWizardPriceRoute
   '/$locale/seller/listing/wizard/submit': typeof LocaleSellerListingWizardSubmitRoute
+  '/$locale/seller/listing/wizard/vendor-model': typeof LocaleSellerListingWizardVendorModelRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -261,6 +269,7 @@ export interface FileRoutesByTo {
   '/$locale/seller/listing/wizard/photos': typeof LocaleSellerListingWizardPhotosRoute
   '/$locale/seller/listing/wizard/price': typeof LocaleSellerListingWizardPriceRoute
   '/$locale/seller/listing/wizard/submit': typeof LocaleSellerListingWizardSubmitRoute
+  '/$locale/seller/listing/wizard/vendor-model': typeof LocaleSellerListingWizardVendorModelRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -293,6 +302,7 @@ export interface FileRoutesById {
   '/$locale/seller/listing/wizard/photos': typeof LocaleSellerListingWizardPhotosRoute
   '/$locale/seller/listing/wizard/price': typeof LocaleSellerListingWizardPriceRoute
   '/$locale/seller/listing/wizard/submit': typeof LocaleSellerListingWizardSubmitRoute
+  '/$locale/seller/listing/wizard/vendor-model': typeof LocaleSellerListingWizardVendorModelRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -326,6 +336,7 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard/photos'
     | '/$locale/seller/listing/wizard/price'
     | '/$locale/seller/listing/wizard/submit'
+    | '/$locale/seller/listing/wizard/vendor-model'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -356,6 +367,7 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard/photos'
     | '/$locale/seller/listing/wizard/price'
     | '/$locale/seller/listing/wizard/submit'
+    | '/$locale/seller/listing/wizard/vendor-model'
   id:
     | '__root__'
     | '/'
@@ -387,6 +399,7 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard/photos'
     | '/$locale/seller/listing/wizard/price'
     | '/$locale/seller/listing/wizard/submit'
+    | '/$locale/seller/listing/wizard/vendor-model'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -493,6 +506,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/buyer/feed/$id'
       preLoaderRoute: typeof LocaleBuyerFeedIdRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/$locale/seller/listing/wizard/vendor-model': {
+      id: '/$locale/seller/listing/wizard/vendor-model'
+      path: '/vendor-model'
+      fullPath: '/$locale/seller/listing/wizard/vendor-model'
+      preLoaderRoute: typeof LocaleSellerListingWizardVendorModelRouteImport
+      parentRoute: typeof LocaleSellerListingWizardRoute
     }
     '/$locale/seller/listing/wizard/submit': {
       id: '/$locale/seller/listing/wizard/submit'
@@ -611,6 +631,7 @@ interface LocaleSellerListingWizardRouteChildren {
   LocaleSellerListingWizardPhotosRoute: typeof LocaleSellerListingWizardPhotosRoute
   LocaleSellerListingWizardPriceRoute: typeof LocaleSellerListingWizardPriceRoute
   LocaleSellerListingWizardSubmitRoute: typeof LocaleSellerListingWizardSubmitRoute
+  LocaleSellerListingWizardVendorModelRoute: typeof LocaleSellerListingWizardVendorModelRoute
 }
 
 const LocaleSellerListingWizardRouteChildren: LocaleSellerListingWizardRouteChildren =
@@ -627,6 +648,8 @@ const LocaleSellerListingWizardRouteChildren: LocaleSellerListingWizardRouteChil
     LocaleSellerListingWizardPhotosRoute: LocaleSellerListingWizardPhotosRoute,
     LocaleSellerListingWizardPriceRoute: LocaleSellerListingWizardPriceRoute,
     LocaleSellerListingWizardSubmitRoute: LocaleSellerListingWizardSubmitRoute,
+    LocaleSellerListingWizardVendorModelRoute:
+      LocaleSellerListingWizardVendorModelRoute,
   }
 
 const LocaleSellerListingWizardRouteWithChildren =

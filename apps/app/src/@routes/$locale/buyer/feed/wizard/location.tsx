@@ -15,9 +15,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [locationId, setLocationId] = useState<string | undefined>(
-			state.filter?.locationId ?? undefined,
-		);
+		const [locationId, setLocationId] = useState(state?.locationId);
 		const [latLon, setLatLon] = useState(state.meta?.latLon);
 
 		return (
@@ -41,10 +39,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 						}}
 						search={{
 							...state,
-							filter: {
-								...state.filter,
-								locationId,
-							},
 							meta: {
 								...state.meta,
 								latLon,
