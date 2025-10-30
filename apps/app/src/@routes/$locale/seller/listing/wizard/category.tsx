@@ -192,25 +192,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 								return (
 									<Container
 										ref={containerRef}
-										layout={"vertical-content"}
 										scroll={"vertical"}
+										layout={"vertical"}
+										gap={"md"}
+										height={"full"}
 										position={"relative"}
 									>
-										<Container
-											ui="Category-Container"
-											layout={"vertical-content"}
-											gap={"md"}
-										>
-											{data.data.map((item) => {
-												return (
-													<CategoryItem
-														key={item.id}
-														selection={selection}
-														item={item}
-													/>
-												);
-											})}
-										</Container>
+										{data.data.map((item) => {
+											return (
+												<CategoryItem
+													key={item.id}
+													selection={selection}
+													item={item}
+												/>
+											);
+										})}
 									</Container>
 								);
 							}}

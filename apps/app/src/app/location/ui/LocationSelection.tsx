@@ -145,25 +145,19 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 					);
 				}}
 			>
-				{({ content }) => {
-					return (
-						<Container
-							ui="Location-content"
-							scroll={"vertical"}
-							height={"full"}
-						>
-							<div
-								className={
-									"grid grid-rows-1 justify-stretch items-center h-full"
-								}
-							>
-								<div className="grid grid-row auto-rows-max gap-2">
-									{content}
-								</div>
-							</div>
-						</Container>
-					);
-				}}
+			{({ content }) => {
+				return (
+					<Container
+						ui="Location-content"
+						scroll={"vertical"}
+						layout={"vertical"}
+						gap={"sm"}
+						height={"full"}
+					>
+						{content}
+					</Container>
+				);
+			}}
 			</Data>
 		</Container>
 	);
