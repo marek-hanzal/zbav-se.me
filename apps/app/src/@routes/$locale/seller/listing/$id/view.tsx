@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container, Data, LinkTo, PriceInline } from "@use-pico/client";
-import { PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
+import { Sheet } from "@zbav-se.me/ui";
 import { withListingFetchQuery } from "~/app/listing/query/withListingFetchQuery";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 
@@ -29,8 +29,6 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 				tone={"secondary"}
 				theme={"light"}
 			>
-				<PrimaryOverlay />
-
 				<Sheet>
 					<Data
 						result={listingQuery}

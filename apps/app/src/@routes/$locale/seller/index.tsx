@@ -7,12 +7,11 @@ import {
 	ArrowLeftIcon,
 	Container,
 	LinkTo,
-	type LinkToCls,
 	SpinnerIcon,
 	UserIcon,
+	useStopEvent,
 } from "@use-pico/client";
-import type { Cls } from "@use-pico/cls";
-import { PostIcon, PrimaryOverlay, PublicIcon, ShopIcon } from "@zbav-se.me/ui";
+import { PostIcon, PublicIcon, ShopIcon, TitleContainer } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
@@ -21,17 +20,6 @@ export const Route = createFileRoute("/$locale/seller/")({
 		const { locale } = Route.useParams();
 		const navigate = useNavigate();
 		const router = useRouter();
-		const linkTweak: Cls.TweaksOf<LinkToCls> = {
-			slot: {
-				root: {
-					class: [
-						"block",
-						"h-full",
-						"w-full",
-					],
-				},
-			},
-		};
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
 				await router.invalidate();
@@ -43,14 +31,35 @@ export const Route = createFileRoute("/$locale/seller/")({
 				});
 			},
 		});
+		const stop = useStopEvent();
 
 		return (
-			<Container position={"relative"}>
-				<PrimaryOverlay />
-
+			<TitleContainer
+				textTitle={"Seller home (title)"}
+				left={
+					<LinkTo
+						icon={
+							userExPatchMutation.isPending
+								? SpinnerIcon
+								: ArrowLeftIcon
+						}
+						to={"/$locale/dashboard"}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+						onClick={(e) => {
+							stop(e);
+							userExPatchMutation.mutate({
+								side: null,
+							});
+						}}
+					/>
+				}
+			>
 				<Container
+					layout={"vertical-flex"}
 					scroll={"vertical"}
-					layout={"vertical"}
 					gap={"sm"}
 					items={"center"}
 					tone={"secondary"}
@@ -63,7 +72,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={PostIcon}
@@ -76,7 +85,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={PublicIcon}
@@ -89,7 +98,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={ShopIcon}
@@ -102,48 +111,15 @@ export const Route = createFileRoute("/$locale/seller/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={UserIcon}
 							textTitle={"User profile (label)"}
 						/>
 					</LinkTo>
-
-					<Tile
-						icon={
-							userExPatchMutation.isPending
-								? SpinnerIcon
-								: ArrowLeftIcon
-						}
-						iconProps={{
-							size: "md",
-						}}
-						textTitle={"Back to dashboard (label)"}
-						statusProps={{
-							titleProps: {
-								size: "md",
-							},
-						}}
-						divProps={{
-							onClick() {
-								userExPatchMutation.mutate({
-									side: null,
-								});
-							},
-						}}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"px-12",
-									],
-								},
-							},
-						}}
-					/>
 				</Container>
-			</Container>
+			</TitleContainer>
 		);
 	},
 });

@@ -1,7 +1,7 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import { BuyerIcon, PrimaryOverlay, SellerIcon } from "@zbav-se.me/ui";
+import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui";
 import { match } from "ts-pattern";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				root: {
 					class: [
 						"block",
-						"h-full",
+						"h-[100%]",
 						"w-full",
 					],
 				},
@@ -55,16 +55,13 @@ export const Route = createFileRoute("/$locale/dashboard")({
 			<Container
 				layout={"vertical"}
 				scroll={"vertical"}
-				gap={"sm"}
+				gap={"lg"}
 				height={"fit"}
 				items={"center"}
 				tone={"secondary"}
 				theme={"light"}
-				square={"md"}
-				position={"relative"}
+				square={"xl"}
 			>
-				<PrimaryOverlay />
-
 				<LinkTo
 					to="/$locale/seller"
 					params={{
@@ -80,6 +77,8 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Tile
 						icon={SellerIcon}
 						textTitle={"I want to sell (label)"}
+						height={"fit"}
+						layout={"vertical-centered"}
 					/>
 				</LinkTo>
 
@@ -98,6 +97,8 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Tile
 						icon={BuyerIcon}
 						textTitle={"I want to buy (label)"}
+						height={"fit"}
+						layout={"vertical-centered"}
 					/>
 				</LinkTo>
 			</Container>

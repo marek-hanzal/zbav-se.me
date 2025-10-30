@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-router";
 import { Button, Container, LinkTo, Status, UserIcon } from "@use-pico/client";
 import { linkTo } from "@use-pico/common";
-import { DashboardIcon, LockIcon, PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
+import { DashboardIcon, LockIcon, Sheet } from "@zbav-se.me/ui";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 
 export const Route = createFileRoute("/$locale/user")({
@@ -45,8 +45,6 @@ export const Route = createFileRoute("/$locale/user")({
 				snap={"vertical-start"}
 				gap={"md"}
 			>
-				<PrimaryOverlay />
-
 				<Sheet>
 					<Status
 						icon={UserIcon}

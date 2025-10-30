@@ -9,8 +9,8 @@ import {
 	Spinner,
 	Status,
 } from "@use-pico/client";
-import { useCls } from "@use-pico/cls";
-import { PrimaryOverlay, ThemeCls, useAnim } from "@zbav-se.me/ui";
+import { tvc, useCls } from "@use-pico/cls";
+import { ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -71,12 +71,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 		]);
 
 		return (
-			<Container
-				position={"relative"}
-				scroll={"hidden"}
+			<div
+				className={tvc([
+					"relative",
+					"overflow-hidden",
+				])}
 			>
-				<PrimaryOverlay />
-
 				<InfiniteData
 					result={listingQuery}
 					renderLoading={() => (
@@ -197,7 +197,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 						},
 					})}
 				/>
-			</Container>
+			</div>
 		);
 	},
 });

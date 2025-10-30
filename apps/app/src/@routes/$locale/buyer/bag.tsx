@@ -1,8 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@use-pico/client";
+import { tvc } from "@use-pico/cls";
 
 export const Route = createFileRoute("/$locale/buyer/bag")({
 	component() {
-		return <Container layout={"vertical"}>Not yet</Container>;
+		return (
+			<div
+				className={tvc([
+					"grid",
+					"grid-flow-row",
+					"auto-rows-auto",
+					"grid-cols-1",
+				])}
+			>
+				Not yet
+			</div>
+		);
 	},
 });

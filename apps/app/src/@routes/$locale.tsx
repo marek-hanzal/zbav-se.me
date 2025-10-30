@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { linkTo, translator } from "@use-pico/common";
+import { PrimaryOverlay } from "@zbav-se.me/ui";
 
 export const Route = createFileRoute("/$locale")({
 	async beforeLoad({ params: { locale }, context: { user } }) {
@@ -46,6 +47,12 @@ export const Route = createFileRoute("/$locale")({
 		 */
 		translator.push(Route.useLoaderData().translations);
 
-		return <Outlet />;
+		return (
+			<div className={"relative w-full h-full"}>
+				<PrimaryOverlay />
+
+				<Outlet />
+			</div>
+		);
 	},
 });
