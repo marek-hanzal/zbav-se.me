@@ -169,6 +169,9 @@
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
   ref: I want to sell (label)
   value: I want to sell (label)
+80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
+  ref: unused
+  value: unused
 80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
   ref: No more listings to show (message)
   value: No more listings to show (message)
@@ -342,6 +345,9 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
+  ref: Feed condition (title)
+  value: Feed condition (title)
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
   ref: Feed sorting (title)
   value: Feed sorting (title)
@@ -369,6 +375,9 @@ e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
 e860d8c3797c35dbd392bbfcad1cd38c7b0f9efaad739f241097b41b:
   ref: Set condition (hint)
   value: Set condition (hint)
+e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
+  ref: Next - feed condition (button)
+  value: Next - feed condition (button)
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
   ref: Select item (label)
   value: Select item (label)

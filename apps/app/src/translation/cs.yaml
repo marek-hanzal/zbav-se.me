@@ -171,6 +171,9 @@
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
     ref: I want to sell (label)
     value: Chci prodávat
+80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
+    ref: unused
+    value: unused
 80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
     ref: No more listings to show (message)
     value:
@@ -401,6 +404,9 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
+d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
+    ref: Feed condition (title)
+    value: Jaké stavy tě zajímají
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
     ref: Feed sorting (title)
     value: Jak chceš inzeráty řadit?
@@ -428,6 +434,9 @@ e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
 e860d8c3797c35dbd392bbfcad1cd38c7b0f9efaad739f241097b41b:
     ref: Set condition (hint)
     value: Naklikat stav
+e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
+    ref: Next - feed condition (button)
+    value: Stavy
 e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
     ref: Select item (label)
     value: Select item (label)
@@ -465,7 +474,38 @@ ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
 Listing common sort value price - asc:
+    static: true
     value: Od nejlevnějšího po nejdražší
 Listing common sort value price - desc:
+    static: true
     value: Od nejdražšího po nejlevnější
-\
+Listing common sort value price - unused:
+    static: true
+    value: Cena (bez řazení)
+Listing common sort value condition - asc:
+    static: true
+    value: Od nejhoršího po nejlepší
+Listing common sort value condition - desc:
+    static: true
+    value: Od nejlepšího po nejhorší
+Listing common sort value condition - unused:
+    static: true
+    value: Stav (bez řazení)
+Listing common sort value age - asc:
+    static: true
+    value: Od nejstaršího po nejmladší
+Listing common sort value age - desc:
+    static: true
+    value: Od nejmladšího po nejstarší
+Listing common sort value age - unused:
+    static: true
+    value: Stáří (bez řazení)
+Listing common sort value geo - asc:
+    static: true
+    value: Od nejbližšího po nejvzdálenější
+Listing common sort value geo - desc:
+    static: true
+    value: Od nejvzdálenějšího po nejbližší
+Listing common sort value geo - unused:
+    static: true
+    value: Poloha (bez řazení)

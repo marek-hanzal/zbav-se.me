@@ -5,6 +5,7 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
+import type { LonLanSchema } from "@zbav-se.me/common";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -16,7 +17,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const [locationId, setLocationId] = useState<string | undefined>(
-			undefined,
+			state.filter?.locationId ?? undefined,
+		);
+		const [location, setLocation] = useState<LonLanSchema.Type | undefined>(
+			state.location,
 		);
 
 		return (
@@ -44,6 +48,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 								...state.filter,
 								locationId,
 							},
+							location,
 						}}
 						full
 					>
@@ -63,6 +68,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 					locale={locale}
 					value={locationId}
 					onChange={setLocationId}
+					onLocation={({ lon, lat }) =>
+						setLocation({
+							lon,
+							lat,
+						})
+					}
 					textHint={"Feed - location security (hint)"}
 				/>
 			</TitleContainer>
