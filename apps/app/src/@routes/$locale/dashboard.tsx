@@ -39,7 +39,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				root: {
 					class: [
 						"block",
-						"h-full",
+						"h-[100%]",
 						"w-full",
 					],
 				},
@@ -55,12 +55,12 @@ export const Route = createFileRoute("/$locale/dashboard")({
 			<Container
 				layout={"vertical"}
 				scroll={"vertical"}
-				gap={"sm"}
+				gap={"lg"}
 				height={"fit"}
 				items={"center"}
 				tone={"secondary"}
 				theme={"light"}
-				square={"md"}
+				square={"xl"}
 				position={"relative"}
 			>
 				<PrimaryOverlay />
@@ -80,6 +80,8 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Tile
 						icon={SellerIcon}
 						textTitle={"I want to sell (label)"}
+						height={"fit"}
+						layout={"vertical-centered"}
 					/>
 				</LinkTo>
 
@@ -98,6 +100,8 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Tile
 						icon={BuyerIcon}
 						textTitle={"I want to buy (label)"}
+						height={"fit"}
+						layout={"vertical-centered"}
 					/>
 				</LinkTo>
 			</Container>

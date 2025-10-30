@@ -30,7 +30,8 @@ export const Tile: FC<Tile.Props> = ({
 			border={"default"}
 			shadow={"default"}
 			round={"lg"}
-			layout={"vertical-content-footer"}
+			height={"auto"}
+			// layout={"vertical-content-footer"}
 			{...props}
 		>
 			<VariantProvider

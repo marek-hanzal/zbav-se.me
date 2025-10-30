@@ -7,11 +7,9 @@ import {
 	ArrowLeftIcon,
 	Container,
 	LinkTo,
-	type LinkToCls,
 	SpinnerIcon,
 	UserIcon,
 } from "@use-pico/client";
-import type { Cls } from "@use-pico/cls";
 import { BagIcon, FeedIcon, PrimaryOverlay, ShopIcon } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
@@ -21,17 +19,6 @@ export const Route = createFileRoute("/$locale/buyer/")({
 		const { locale } = Route.useParams();
 		const navigate = useNavigate();
 		const router = useRouter();
-		const linkTweak: Cls.TweaksOf<LinkToCls> = {
-			slot: {
-				root: {
-					class: [
-						"block",
-						"h-full",
-						"w-full",
-					],
-				},
-			},
-		};
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
 				await router.invalidate();
@@ -49,21 +36,20 @@ export const Route = createFileRoute("/$locale/buyer/")({
 				<PrimaryOverlay />
 
 				<Container
+					layout={"vertical-flex"}
 					scroll={"vertical"}
-					layout={"vertical"}
 					gap={"sm"}
 					items={"center"}
 					tone={"secondary"}
 					theme={"light"}
 					square={"md"}
-					position={"relative"}
 				>
 					<LinkTo
 						to="/$locale/buyer/feed/select"
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={FeedIcon}
@@ -76,7 +62,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={BagIcon}
@@ -89,7 +75,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={ShopIcon}
@@ -102,7 +88,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 						params={{
 							locale,
 						}}
-						tweak={linkTweak}
+						full
 					>
 						<Tile
 							icon={UserIcon}
