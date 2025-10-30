@@ -15,7 +15,10 @@ export const withCategoryCollectionQuery = () => {
 			];
 		},
 		async queryFn(data) {
-			return apiCategoryCollection(data).then((res) => res.data);
+			return apiCategoryCollection({
+				body: data,
+				throwOnError: true,
+			}).then((res) => res.data);
 		},
 	});
 };

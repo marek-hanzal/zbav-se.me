@@ -1,9 +1,9 @@
-import { apiFeedCreateBody, LonLanSchema } from "@zbav-se.me/sdk";
+import { zFeedCreate, zLatLon } from "@zbav-se.me/sdk";
 import z from "zod";
 
 export const FeedWizardSchema = z.object({
-	...apiFeedCreateBody.partial().shape,
-	location: LatLonSchema.optional(),
+	...zFeedCreate.partial().shape,
+	location: zLatLon.optional(),
 });
 
 export type FeedWizardSchema = typeof FeedWizardSchema;

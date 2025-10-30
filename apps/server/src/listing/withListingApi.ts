@@ -167,6 +167,14 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 					},
 					description: "Feed not found",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: ErrorDtoSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing",
@@ -176,7 +184,9 @@ export const withListingApi: Routes.Fn = ({ session }) => {
 			const { feedId, cursor } = c.req.valid("json");
 			// Fetch the feed by id
 			const feed = await withFetch({
-				select: withFeedSelect({}),
+				select: withFeedSelect({
+					sort: [],
+				}),
 				output: FeedDtoSchema,
 				where: {
 					id: feedId,

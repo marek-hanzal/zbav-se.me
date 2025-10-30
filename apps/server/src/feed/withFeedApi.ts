@@ -77,7 +77,9 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 
 				return c.json(
 					await withFetch({
-						select: withFeedSelect({}),
+						select: withFeedSelect({
+							sort: [],
+						}),
 						output: FeedDtoSchema,
 						where: {
 							id,
@@ -173,7 +175,9 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 
 				return c.json(
 					await withFetch({
-						select: withFeedSelect({}),
+						select: withFeedSelect({
+							sort: [],
+						}),
 						output: FeedDtoSchema,
 						where: {
 							id,
@@ -386,7 +390,9 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				},
 				fetch: () =>
 					withCount({
-						select: withFeedSelect(),
+						select: withFeedSelect({
+							sort: [],
+						}),
 						filter,
 						where: {
 							...where,
@@ -461,12 +467,9 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					.transaction()
 					.execute(async (trx) => {
 						const feed = await withFetch({
-							select: trx.selectFrom("feed as f").select([
-								"f.id",
-								"f.name",
-								"f.filter",
-								"f.sort",
-							]),
+							select: withFeedSelect({
+								sort: [],
+							}),
 							output: FeedDtoSchema,
 							filter,
 							where: {

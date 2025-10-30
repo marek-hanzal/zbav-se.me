@@ -7,7 +7,6 @@ import {
 } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
-import { client } from "@zbav-se.me/sdk";
 import { ThemeCls } from "@zbav-se.me/ui";
 import type { authClient } from "~/app/auth/authClient";
 import styles from "~/assets/style.css?url";
@@ -42,21 +41,6 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	component() {
-		/**
-		 * Should be isomorphic
-		 *
-		 * Don't have better way, where to put this to make it work.
-		 *
-		 * Maybe it's OK, I'll see...
-		 */
-		// axios.defaults.baseURL = import.meta.env.VITE_SERVER_API;
-		// axios.defaults.withCredentials = true;
-
-		client.setConfig({
-			baseURL: import.meta.env.VITE_SERVER_API,
-			withCredentials: true,
-		});
-
 		return (
 			<html>
 				<head>

@@ -5,7 +5,7 @@ import {
 	Button,
 	LinkTo,
 } from "@use-pico/client";
-import type { LonLanSchema } from "@zbav-se.me/sdk";
+import type { zLatLon } from "@zbav-se.me/sdk";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -19,7 +19,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 		const [locationId, setLocationId] = useState<string | undefined>(
 			state.filter?.locationId ?? undefined,
 		);
-		const [location, setLocation] = useState<LonLanSchema.Type | undefined>(
+		const [location, setLocation] = useState<zLatLon | undefined>(
 			state.location,
 		);
 

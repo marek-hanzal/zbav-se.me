@@ -17,7 +17,6 @@ export namespace CategorySelection {
 		ref?: RefObject<HTMLDivElement | null>;
 		locale: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
-		textHint?: string;
 	}
 }
 
@@ -25,7 +24,6 @@ export const CategorySelection: FC<CategorySelection.Props> = ({
 	ref,
 	locale,
 	selection,
-	textHint,
 }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
 	const categoryQuery = withCategoryCollectionQuery().useQuery({

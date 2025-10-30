@@ -1,5 +1,9 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { apiListingFeedCollection } from "@zbav-se.me/sdk";
+import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
+import {
+	type ApiListingFeedCollectionError,
+	apiListingFeedCollection,
+	type ListingCollection,
+} from "@zbav-se.me/sdk";
 
 export namespace useListingFeedInfiniteQuery {
 	export interface Props {
@@ -12,30 +16,37 @@ export const useListingFeedInfiniteQuery = ({
 	feedId,
 	size,
 }: useListingFeedInfiniteQuery.Props) => {
-	return useInfiniteQuery({
-		queryKey: [
-			"listing",
-			"feed",
-			"infinite",
-			{
-				feedId,
-				size,
-			},
-		],
+	const queryKey = [
+		"listing",
+		"feed",
+		"infinite",
+		{
+			feedId,
+			size,
+		},
+	] as const;
+
+	return useInfiniteQuery<
+		ListingCollection,
+		ApiListingFeedCollectionError,
+		InfiniteData<ListingCollection>,
+		typeof queryKey,
+		number
+	>({
+		queryKey,
 		initialPageParam: 0,
 		async queryFn({ pageParam, signal }) {
-			return apiListingFeedCollection(
-				{
+			return apiListingFeedCollection({
+				body: {
 					feedId,
 					cursor: {
 						page: pageParam,
 						size,
 					},
 				},
-				{
-					signal,
-				},
-			).then((r) => r.data);
+				throwOnError: true,
+				signal,
+			}).then((r) => r.data);
 		},
 		getNextPageParam: (lastPage, _pages, lastPageParam) => {
 			return lastPage.more ? lastPageParam + 1 : undefined;
