@@ -1,5 +1,5 @@
 import type { SelectQueryBuilder } from "kysely";
-import type { CountSchema } from "./CountSchema";
+import { CountSchema } from "./CountSchema";
 import type { FilterSchema } from "./FilterSchema";
 
 export namespace withCount {
@@ -39,7 +39,7 @@ export const withCount = async <
 	filter,
 	where,
 }: withCount.Props<TSelect, TFilter>): Promise<CountSchema.Type> => {
-	return {
+	return CountSchema.parse({
 		total: (
 			await select
 				.clearSelect()
@@ -67,5 +67,5 @@ export const withCount = async <
 				.select((eb) => eb.fn.countAll<number>().as("count"))
 				.executeTakeFirstOrThrow()
 		).count,
-	};
+	});
 };

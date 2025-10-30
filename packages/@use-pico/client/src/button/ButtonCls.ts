@@ -31,6 +31,7 @@ export const ButtonCls = contract(PicoCls.contract)
 		wrapper: {
 			class: [
 				"Button-wrapper",
+				"w-fit",
 			],
 		},
 		root: {

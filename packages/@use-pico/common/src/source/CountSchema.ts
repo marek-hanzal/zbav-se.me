@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const CountSchema = z.object({
-	where: z.number(),
-	filter: z.number(),
-	total: z.number(),
+	where: z.coerce.number(),
+	filter: z.coerce.number(),
+	total: z.coerce.number(),
 });
 
 export type CountSchema = typeof CountSchema;
