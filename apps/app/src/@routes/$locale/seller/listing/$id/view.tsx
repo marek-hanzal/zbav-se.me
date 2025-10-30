@@ -7,7 +7,7 @@ import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQu
 export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 	component() {
 		const { id, locale } = Route.useParams();
-		const listingQuery = withListingFetchQuery().useQuery({
+		const listingQuery = withListingFetchQuery.useQuery({
 			where: {
 				id,
 			},

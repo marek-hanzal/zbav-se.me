@@ -21,8 +21,8 @@ export const withOpenApi = <TApi extends OpenAPIHono<any>>(api: TApi) => {
 			],
 		}),
 	);
-	api.doc(docsUrl, {
-		openapi: "3.0.0",
+	api.doc31(docsUrl, {
+		openapi: "3.1.0",
 		info: {
 			version: "0.5.0",
 			title: "zbav.se.me API",

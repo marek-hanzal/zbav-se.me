@@ -922,6 +922,22 @@ export const zUploadCollection = z.object({
 export type zUploadCollection = z.infer<typeof zUploadCollection>;
 
 /**
+ * Request body for location autocomplete
+ */
+export const zLocationAutocomplete = z.object({
+    text: z.string().min(3).register(z.globalRegistry, {
+        description: 'The search text for location autocomplete'
+    }),
+    lang: z.string().min(2).max(8).register(z.globalRegistry, {
+        description: 'The language code for the location search'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request body for location autocomplete'
+});
+
+export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
+
+/**
  * User-land filters
  */
 export const zLocationFilter = z.object({
@@ -1111,7 +1127,10 @@ export const zUserPatch = z.object({
         z.string(),
         z.null()
     ])),
-    side: z.optional(zUserSide)
+    side: z.optional(z.union([
+        zUserSide,
+        z.null()
+    ]))
 }).register(z.globalRegistry, {
     description: 'Schema for patching user extended information'
 });
@@ -1523,12 +1542,9 @@ export const zApiUploadCountResponse = zCount;
 export type zapiUploadCountResponse = z.infer<typeof zApiUploadCountResponse>;
 
 export const zApiLocationAutocompleteData = z.object({
-    body: z.optional(z.never()),
+    body: z.optional(zLocationAutocomplete),
     path: z.optional(z.never()),
-    query: z.object({
-        text: z.string().min(3),
-        lang: z.string().min(2).max(8)
-    })
+    query: z.optional(z.never())
 });
 
 export type zapiLocationAutocompleteRequest = z.infer<typeof zApiLocationAutocompleteData>;

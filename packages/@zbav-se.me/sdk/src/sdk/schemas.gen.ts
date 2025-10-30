@@ -55,35 +55,28 @@ export const sCategoryFilter = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         group: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         category: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         locale: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         localeIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
@@ -95,35 +88,28 @@ export const sCategoryWhere = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         group: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         category: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         locale: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         localeIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
@@ -139,8 +125,7 @@ export const sCategorySort = {
             enum: ['group', 'category', 'sort']
         },
         sort: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             enum: ['asc', 'desc']
         }
     },
@@ -225,31 +210,25 @@ export const sLocationDto = {
             type: 'string'
         },
         county: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         municipality: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         state: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         address: {
             type: 'string'
         },
         city: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         street: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         zip: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         confidence: {
             type: 'number'
@@ -340,12 +319,10 @@ export const sListingDto = {
             type: 'string'
         },
         vendor: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         model: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         location: {
             '$ref': '#/components/schemas/LocationDto'
@@ -426,8 +403,7 @@ export const sFeedCollectionRequest = {
             type: 'string'
         },
         cursor: {
-            type: 'object',
-            nullable: true,
+            type: ['object', 'null'],
             properties: {
                 page: {
                     type: 'number',
@@ -483,19 +459,16 @@ export const sListingFilter = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         priceMin: {
             '$ref': '#/components/schemas/PriceMin'
@@ -512,8 +485,7 @@ export const sListingFilter = {
             minimum: 0
         },
         conditionIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'number',
                 minimum: 0
@@ -528,13 +500,11 @@ export const sListingFilter = {
             minimum: 0
         },
         locationId: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             minLength: 1
         },
         locationIdIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string',
                 minLength: 1
@@ -553,33 +523,27 @@ export const sListingFilter = {
             '$ref': '#/components/schemas/CurrencyIn'
         },
         expiresAtBefore: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             format: 'date'
         },
         expiresAtAfter: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             format: 'date'
         },
         rangeMin: {
-            type: 'number',
-            nullable: true,
+            type: ['number', 'null'],
             minimum: 0
         },
         rangeMax: {
-            type: 'number',
-            nullable: true,
+            type: ['number', 'null'],
             minimum: 0
         },
         vendor: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             minLength: 1
         },
         model: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             minLength: 1
         }
     }
@@ -589,19 +553,16 @@ export const sListingWhere = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         priceMin: {
             '$ref': '#/components/schemas/PriceMin'
@@ -618,8 +579,7 @@ export const sListingWhere = {
             minimum: 0
         },
         conditionIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'number',
                 minimum: 0
@@ -634,13 +594,11 @@ export const sListingWhere = {
             minimum: 0
         },
         locationId: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             minLength: 1
         },
         locationIdIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string',
                 minLength: 1
@@ -659,33 +617,27 @@ export const sListingWhere = {
             '$ref': '#/components/schemas/CurrencyIn'
         },
         expiresAtBefore: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             format: 'date'
         },
         expiresAtAfter: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             format: 'date'
         },
         rangeMin: {
-            type: 'number',
-            nullable: true,
+            type: ['number', 'null'],
             minimum: 0
         },
         rangeMax: {
-            type: 'number',
-            nullable: true,
+            type: ['number', 'null'],
             minimum: 0
         },
         vendor: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             minLength: 1
         },
         model: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             minLength: 1
         }
     }
@@ -699,8 +651,7 @@ export const sListingSort = {
             enum: ['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt', 'geo']
         },
         sort: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             enum: ['asc', 'desc']
         }
     },
@@ -761,27 +712,22 @@ export const sGalleryFilter = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         userId: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         listingId: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -790,27 +736,22 @@ export const sGalleryWhere = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         userId: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         listingId: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -823,8 +764,7 @@ export const sGallerySort = {
             enum: ['sort', 'createdAt']
         },
         sort: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             enum: ['asc', 'desc']
         }
     },
@@ -883,19 +823,16 @@ export const sUploadFilter = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -904,19 +841,16 @@ export const sUploadWhere = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -929,8 +863,7 @@ export const sUploadSort = {
             enum: ['createdAt']
         },
         sort: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             enum: ['asc', 'desc']
         }
     },
@@ -974,43 +907,51 @@ export const sUploadCollection = {
     required: ['data', 'more']
 } as const;
 
+export const sLocationAutocomplete = {
+    type: 'object',
+    properties: {
+        text: {
+            type: 'string',
+            minLength: 3
+        },
+        lang: {
+            type: 'string',
+            minLength: 2,
+            maxLength: 8
+        }
+    },
+    required: ['text', 'lang']
+} as const;
+
 export const sLocationFilter = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         query: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         lang: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         country: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         code: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         confidenceMin: {
-            type: 'number',
-            nullable: true
+            type: ['number', 'null']
         }
     }
 } as const;
@@ -1019,39 +960,31 @@ export const sLocationWhere = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         query: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         lang: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         country: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         code: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         confidenceMin: {
-            type: 'number',
-            nullable: true
+            type: ['number', 'null']
         }
     }
 } as const;
@@ -1064,8 +997,7 @@ export const sLocationSort = {
             enum: ['confidence', 'query', 'country', 'address']
         },
         sort: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             enum: ['asc', 'desc']
         }
     },
@@ -1141,7 +1073,6 @@ export const sS3PreSignRequest = {
 
 export const sUserSide = {
     type: 'string',
-    nullable: true,
     enum: ['seller', 'buyer']
 } as const;
 
@@ -1149,11 +1080,20 @@ export const sUserPatch = {
     type: 'object',
     properties: {
         locationId: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         side: {
-            '$ref': '#/components/schemas/UserSide'
+            anyOf: [
+                {
+                    '$ref': '#/components/schemas/UserSide'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     }
 } as const;
@@ -1246,23 +1186,19 @@ export const sFeedFilter = {
     type: 'object',
     properties: {
         id: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         idIn: {
-            type: 'array',
-            nullable: true,
+            type: ['array', 'null'],
             items: {
                 type: 'string'
             }
         },
         fulltext: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         },
         userId: {
-            type: 'string',
-            nullable: true
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -1275,8 +1211,7 @@ export const sFeedSort = {
             enum: ['createdAt', 'updatedAt']
         },
         sort: {
-            type: 'string',
-            nullable: true,
+            type: ['string', 'null'],
             enum: ['asc', 'desc']
         }
     },

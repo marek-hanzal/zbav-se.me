@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "@hono/zod-openapi";
 import { FeedSchema } from "./FeedSchema";
 
 export const FeedDtoSchema = z

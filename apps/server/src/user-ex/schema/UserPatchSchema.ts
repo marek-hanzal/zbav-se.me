@@ -7,7 +7,12 @@ export const UserPatchSchema = z
 			description:
 				"Default location for the user - used for listings & listing sorting",
 		}),
-		side: UserSideSchema.nullish(),
+		side: z
+			.union([
+				UserSideSchema,
+				z.null(),
+			])
+			.optional(),
 	})
 	.openapi("UserPatch", {
 		description: "Schema for patching user extended information",

@@ -5,14 +5,14 @@ import {
 	LinkTo,
 	Status,
 } from "@use-pico/client";
-import type { FeedDto } from "@zbav-se.me/sdk";
+import type { tFeedDto } from "@zbav-se.me/sdk";
 import { FeedIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
 
 export namespace FeedSelect {
 	export interface Props extends Container.Props {
 		locale: string;
-		feed: FeedDto;
+		feed: tFeedDto;
 	}
 }
 

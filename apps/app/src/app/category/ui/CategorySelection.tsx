@@ -26,7 +26,7 @@ export const CategorySelection: FC<CategorySelection.Props> = ({
 	selection,
 }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
-	const categoryQuery = withCategoryCollectionQuery().useQuery({
+	const categoryQuery = withCategoryCollectionQuery.useQuery({
 		filter: {
 			locale,
 			fulltext,

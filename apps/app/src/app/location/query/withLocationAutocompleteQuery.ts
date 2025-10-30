@@ -1,13 +1,13 @@
 import { withQuery } from "@use-pico/client";
 import {
-	type ApiLocationAutocompleteParams,
 	apiLocationAutocomplete,
-	type LocationDto,
+	type tLocationAutocomplete,
+	type tLocationDto,
 } from "@zbav-se.me/sdk";
 
 export const withLocationAutocompleteQuery = withQuery<
-	ApiLocationAutocompleteParams,
-	LocationDto[]
+	tLocationAutocomplete,
+	tLocationDto[]
 >({
 	keys(data) {
 		return [
@@ -16,7 +16,10 @@ export const withLocationAutocompleteQuery = withQuery<
 			data,
 		];
 	},
-	async queryFn(data) {
-		return apiLocationAutocomplete(data).then((res) => res.data);
+	async queryFn(body) {
+		return apiLocationAutocomplete({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 });

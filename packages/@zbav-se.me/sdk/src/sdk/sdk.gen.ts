@@ -322,8 +322,8 @@ export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: O
 /**
  * Return a location autocomplete
  */
-export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => {
-    return (options.client ?? client).get<tApiLocationAutocompleteResponse, apiLocationAutocompleteErrors, ThrowOnError>({
+export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => {
+    return (options?.client ?? client).post<tApiLocationAutocompleteResponse, apiLocationAutocompleteErrors, ThrowOnError>({
         requestValidator: async (data) => {
             return await zApiLocationAutocompleteData.parseAsync(data);
         },
@@ -331,7 +331,11 @@ export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(op
             return await zApiLocationAutocompleteResponse.parseAsync(data);
         },
         url: '/api/session/location/autocomplete',
-        ...options
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options?.headers
+        }
     });
 };
 

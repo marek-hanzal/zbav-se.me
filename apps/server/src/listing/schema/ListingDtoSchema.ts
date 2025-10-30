@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "@hono/zod-openapi";
 import { CategoryDtoSchema } from "../../category/schema/CategoryDtoSchema";
 import { GalleryDtoSchema } from "../../gallery/schema/GalleryDtoSchema";
 import { LocationDtoSchema } from "../../location/schema/LocationDtoSchema";

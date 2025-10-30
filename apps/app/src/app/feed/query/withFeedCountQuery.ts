@@ -1,7 +1,7 @@
 import { withQuery } from "@use-pico/client";
-import { apiFeedCount, type Count, type FeedQuery } from "@zbav-se.me/sdk";
+import { apiFeedCount, type tCount, type tFeedQuery } from "@zbav-se.me/sdk";
 
-export const withFeedCountQuery = withQuery<FeedQuery, Count>({
+export const withFeedCountQuery = withQuery<tFeedQuery, tCount>({
 	keys(data) {
 		return [
 			"feed",
@@ -9,7 +9,10 @@ export const withFeedCountQuery = withQuery<FeedQuery, Count>({
 			data,
 		];
 	},
-	async queryFn(data) {
-		return apiFeedCount(data).then((res) => res.data);
+	async queryFn(body) {
+		return apiFeedCount({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 });

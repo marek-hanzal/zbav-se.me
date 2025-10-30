@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "@hono/zod-openapi";
 import { CategorySchema } from "./CategorySchema";
 
 export const CategoryDtoSchema = z

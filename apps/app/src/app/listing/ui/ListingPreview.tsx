@@ -7,7 +7,7 @@ import {
 	Typo,
 } from "@use-pico/client";
 import { VariantProvider } from "@use-pico/cls";
-import type { GalleryDto, ListingDto } from "@zbav-se.me/sdk";
+import type { tGalleryDto, tListingDto } from "@zbav-se.me/sdk";
 import { ThemeCls } from "@zbav-se.me/ui";
 import { type FC, memo } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
@@ -15,7 +15,7 @@ import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace ListingPreview {
 	export interface Props {
-		listing: ListingDto;
+		listing: tListingDto;
 		locale: string;
 	}
 }
@@ -23,8 +23,8 @@ export namespace ListingPreview {
 export const ListingPreview: FC<ListingPreview.Props> = memo(
 	({ locale, listing }) => {
 		const [hero] = listing.gallery as [
-			GalleryDto,
-			...GalleryDto[],
+			tGalleryDto,
+			...tGalleryDto[],
 		];
 
 		return (

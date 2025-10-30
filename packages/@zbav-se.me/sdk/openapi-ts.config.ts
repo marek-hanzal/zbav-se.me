@@ -64,7 +64,11 @@ export default defineConfig({
 			definitions: {
 				name: "t{{name}}",
 			},
-			enums: "typescript-const",
+			enums: {
+				case: "preserve",
+				mode: "javascript",
+				// constantsIgnoreNull,
+			},
 		},
 		{
 			name: "@hey-api/schemas",

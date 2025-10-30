@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "@hono/zod-openapi";
 import { UploadDtoSchema } from "../../upload/schema/UploadDtoSchema";
 import { GallerySchema } from "./GallerySchema";
 

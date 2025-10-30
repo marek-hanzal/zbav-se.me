@@ -1,8 +1,8 @@
 import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import {
-	type ApiListingFeedCollectionError,
 	apiListingFeedCollection,
-	type ListingCollection,
+	type apiListingFeedCollectionError,
+	type tListingCollection,
 } from "@zbav-se.me/sdk";
 
 export namespace useListingFeedInfiniteQuery {
@@ -27,9 +27,9 @@ export const useListingFeedInfiniteQuery = ({
 	] as const;
 
 	return useInfiniteQuery<
-		ListingCollection,
-		ApiListingFeedCollectionError,
-		InfiniteData<ListingCollection>,
+		tListingCollection,
+		apiListingFeedCollectionError,
+		InfiniteData<tListingCollection>,
 		typeof queryKey,
 		number
 	>({

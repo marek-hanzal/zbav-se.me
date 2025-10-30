@@ -13,7 +13,10 @@ export const withFeedCollectionQuery = withQuery<tFeedQuery, tFeedCollection>({
 			data,
 		];
 	},
-	async queryFn(data) {
-		return apiFeedCollection(data).then((res) => res.data);
+	async queryFn(body) {
+		return apiFeedCollection({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 });

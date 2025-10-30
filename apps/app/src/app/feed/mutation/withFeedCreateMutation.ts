@@ -1,8 +1,12 @@
 import { withMutation } from "@use-pico/client";
-import { apiFeedCreate, type FeedCreate, type FeedDto } from "@zbav-se.me/sdk";
+import {
+	apiFeedCreate,
+	type tFeedCreate,
+	type tFeedDto,
+} from "@zbav-se.me/sdk";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
 
-export const withFeedCreateMutation = withMutation<FeedCreate, FeedDto>({
+export const withFeedCreateMutation = withMutation<tFeedCreate, tFeedDto>({
 	keys(variables) {
 		return [
 			"feed",
@@ -10,8 +14,11 @@ export const withFeedCreateMutation = withMutation<FeedCreate, FeedDto>({
 			variables,
 		];
 	},
-	async mutationFn(variables) {
-		return apiFeedCreate(variables).then((res) => res.data);
+	async mutationFn(body) {
+		return apiFeedCreate({
+			body,
+			throwOnError: true,
+		}).then((res) => res.data);
 	},
 	invalidate: [
 		withFeedCollectionQuery,

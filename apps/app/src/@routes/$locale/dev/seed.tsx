@@ -7,9 +7,9 @@ import {
 	apiCategoryCollection,
 	apiListingCreate,
 	apiLocationAutocomplete,
-	CurrencyList,
-	ListingExpire,
-	type UploadDto,
+	tCurrencyList,
+	tListingExpire,
+	type tUploadDto,
 } from "@zbav-se.me/sdk";
 import { Sheet } from "@zbav-se.me/ui";
 import axios from "axios";
@@ -51,9 +51,9 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				"seed",
 			],
 			async mutationFn() {
-				const category = await apiCategoryCollection({}).then(
-					(res) => res.data,
-				);
+				const category = await apiCategoryCollection({
+					throwOnError: true,
+				}).then((res) => res.data);
 				const locations = [
 					"Benátky nad Jizerou",
 					"Benešov",
@@ -115,7 +115,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					concurrency,
 				});
 
-				const uploadIds = await Promise.all<UploadDto>(
+				const uploadIds = await Promise.all<tUploadDto>(
 					new Array(photos).fill(0).map(() =>
 						uploadQueue.add(async () => {
 							const blob = await picsum();
@@ -135,8 +135,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					locations.map((locationName) =>
 						locationQueue.add(async () => {
 							const result = await apiLocationAutocomplete({
-								lang: "cs",
-								text: locationName,
+								throwOnError: true,
+								body: {
+									lang: "cs",
+									text: locationName,
+								},
 							});
 							return result.data[0]!.id;
 						}),
@@ -148,29 +151,35 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				});
 
 				const createListing = async () => {
-					const currencies = Object.values(CurrencyList);
+					const currencies = Object.values(tCurrencyList);
 					return apiListingCreate({
-						age: range(1, 6),
-						condition: range(1, 6),
-						categoryId:
-							category.data[range(0, category.data.length - 1)]!
-								.id,
-						price: range(0, 99_999),
-						currency: currencies[range(0, currencies.length - 1)]!,
-						expiresAt:
-							ListingExpire[
-								Object.keys(ListingExpire)[
-									range(
-										0,
-										Object.keys(ListingExpire).length - 1,
-									)
-								] as keyof typeof ListingExpire
+						throwOnError: true,
+						body: {
+							age: range(1, 6),
+							condition: range(1, 6),
+							categoryId:
+								category.data[
+									range(0, category.data.length - 1)
+								]!.id,
+							price: range(0, 99_999),
+							currency:
+								currencies[range(0, currencies.length - 1)]!,
+							expiresAt:
+								tListingExpire[
+									Object.keys(tListingExpire)[
+										range(
+											0,
+											Object.keys(tListingExpire).length -
+												1,
+										)
+									] as keyof typeof tListingExpire
+								],
+							locationId:
+								locationIds[range(0, locationIds.length - 1)]!,
+							uploadIds: [
+								uploadIds[range(0, uploadIds.length - 1)]!.id,
 							],
-						locationId:
-							locationIds[range(0, locationIds.length - 1)]!,
-						uploadIds: [
-							uploadIds[range(0, uploadIds.length - 1)]!.id,
-						],
+						},
 					}).then((res) => res.data);
 				};
 

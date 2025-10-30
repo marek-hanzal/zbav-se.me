@@ -176,15 +176,20 @@ export type tCount = {
 /**
  * Currency code (ISO 4217)
  */
-export const enum tCurrencyList {
-    CZK = 'CZK',
-    EUR = 'EUR',
-    USD = 'USD',
-    GBP = 'GBP',
-    PLN = 'PLN',
-    HUF = 'HUF',
-    CHF = 'CHF'
-}
+export const tCurrencyList = {
+    CZK: 'CZK',
+    EUR: 'EUR',
+    USD: 'USD',
+    GBP: 'GBP',
+    PLN: 'PLN',
+    HUF: 'HUF',
+    CHF: 'CHF'
+} as const;
+
+/**
+ * Currency code (ISO 4217)
+ */
+export type tCurrencyList = typeof tCurrencyList[keyof typeof tCurrencyList];
 
 /**
  * Location data transfer object
@@ -351,11 +356,16 @@ export type tListingDto = {
 /**
  * Expiration period for the listing
  */
-export const enum tListingExpire {
-    '7_DAYS' = '7-days',
-    '14_DAYS' = '14-days',
-    '1_MONTH' = '1-month'
-}
+export const tListingExpire = {
+    '7-days': '7-days',
+    '14-days': '14-days',
+    '1-month': '1-month'
+} as const;
+
+/**
+ * Expiration period for the listing
+ */
+export type tListingExpire = typeof tListingExpire[keyof typeof tListingExpire];
 
 /**
  * Data required to create a new listing
@@ -797,6 +807,20 @@ export type tUploadCollection = {
 };
 
 /**
+ * Request body for location autocomplete
+ */
+export type tLocationAutocomplete = {
+    /**
+     * The search text for location autocomplete
+     */
+    text: string;
+    /**
+     * The language code for the location search
+     */
+    lang: string;
+};
+
+/**
  * User-land filters
  */
 export type tLocationFilter = {
@@ -901,27 +925,37 @@ export type tS3PreSignResponse = {
 /**
  * File extension. Must be one of the allowed extensions.
  */
-export const enum tAllowedExtensions {
-    WEBP = 'webp',
-    PNG = 'png',
-    JPG = 'jpg',
-    JPEG = 'jpeg',
-    AVIF = 'avif',
-    HEIC = 'heic',
-    HEIF = 'heif'
-}
+export const tAllowedExtensions = {
+    webp: 'webp',
+    png: 'png',
+    jpg: 'jpg',
+    jpeg: 'jpeg',
+    avif: 'avif',
+    heic: 'heic',
+    heif: 'heif'
+} as const;
+
+/**
+ * File extension. Must be one of the allowed extensions.
+ */
+export type tAllowedExtensions = typeof tAllowedExtensions[keyof typeof tAllowedExtensions];
 
 /**
  * Browser-provided Content-Type used for PUT upload.
  */
-export const enum tAllowedContentTypes {
-    IMAGE_JPEG = 'image/jpeg',
-    IMAGE_PNG = 'image/png',
-    IMAGE_WEBP = 'image/webp',
-    IMAGE_AVIF = 'image/avif',
-    IMAGE_HEIC = 'image/heic',
-    IMAGE_HEIF = 'image/heif'
-}
+export const tAllowedContentTypes = {
+    'image/jpeg': 'image/jpeg',
+    'image/png': 'image/png',
+    'image/webp': 'image/webp',
+    'image/avif': 'image/avif',
+    'image/heic': 'image/heic',
+    'image/heif': 'image/heif'
+} as const;
+
+/**
+ * Browser-provided Content-Type used for PUT upload.
+ */
+export type tAllowedContentTypes = typeof tAllowedContentTypes[keyof typeof tAllowedContentTypes];
 
 export type tS3PreSignRequest = {
     /**
@@ -935,10 +969,15 @@ export type tS3PreSignRequest = {
 /**
  * User side - whether they are a seller or buyer
  */
-export const enum tUserSide {
-    SELLER = 'seller',
-    BUYER = 'buyer'
-}
+export const tUserSide = {
+    seller: 'seller',
+    buyer: 'buyer'
+} as const;
+
+/**
+ * User side - whether they are a seller or buyer
+ */
+export type tUserSide = typeof tUserSide[keyof typeof tUserSide];
 
 /**
  * Schema for patching user extended information
@@ -948,7 +987,7 @@ export type tUserPatch = {
      * Default location for the user - used for listings & listing sorting
      */
     locationId?: string | null;
-    side?: tUserSide;
+    side?: tUserSide | null;
 };
 
 /**
@@ -1403,12 +1442,12 @@ export type tApiUploadCountResponse = {
 export type apiUploadCountResponse = tApiUploadCountResponse[keyof tApiUploadCountResponse];
 
 export type tApiLocationAutocompleteRequest = {
-    body?: never;
+    /**
+     * Request body for location autocomplete
+     */
+    body?: tLocationAutocomplete;
     path?: never;
-    query: {
-        text: string;
-        lang: string;
-    };
+    query?: never;
     url: '/api/session/location/autocomplete';
 };
 

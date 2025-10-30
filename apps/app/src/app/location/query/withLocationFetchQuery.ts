@@ -1,12 +1,12 @@
 import { withQuery } from "@use-pico/client";
 import {
 	apiLocationFetch,
-	type LocationDto,
-	type LocationQuery,
+	type tLocationDto,
+	type tLocationQuery,
 } from "@zbav-se.me/sdk";
 
 export const withLocationFetchQuery = () => {
-	return withQuery<LocationQuery, LocationDto>({
+	return withQuery<tLocationQuery, tLocationDto>({
 		keys(data) {
 			return [
 				"location",
@@ -14,8 +14,11 @@ export const withLocationFetchQuery = () => {
 				data,
 			];
 		},
-		async queryFn(data) {
-			return apiLocationFetch(data).then((res) => res.data);
+		async queryFn(body) {
+			return apiLocationFetch({
+				body,
+				throwOnError: true,
+			}).then((res) => res.data);
 		},
 	});
 };
