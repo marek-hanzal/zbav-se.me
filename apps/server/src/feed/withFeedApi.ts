@@ -5,7 +5,7 @@ import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { withCache } from "../redis/withCache";
 import { CountSchema } from "../schema/CountSchema";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { withCollectionSchema } from "../schema/withCollectionSchema";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
 import { FeedDtoSchema } from "./schema/FeedDtoSchema";
@@ -45,7 +45,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Internal server error",
@@ -91,7 +91,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Failed to create feed",
-					} satisfies ErrorSchema.Type,
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}
@@ -126,7 +126,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Feed item not found",
@@ -134,7 +134,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Internal server error",
@@ -187,7 +187,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Failed to update feed",
-					} satisfies ErrorSchema.Type,
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}
@@ -223,7 +223,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Feed item not found",
@@ -433,7 +433,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Feed item not found",
@@ -441,7 +441,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Internal server error",
@@ -505,7 +505,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Failed to delete feed",
-					} satisfies ErrorSchema.Type,
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}

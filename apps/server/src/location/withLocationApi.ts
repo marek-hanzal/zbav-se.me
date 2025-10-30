@@ -5,7 +5,7 @@ import { AppEnv } from "../AppEnv";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { LocationDtoSchema } from "./schema/LocationDtoSchema";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { withLocationQueryBuilder } from "./withLocationQueryBuilder";
@@ -84,7 +84,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Location not found",
@@ -258,7 +258,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 					description: "Location not found",

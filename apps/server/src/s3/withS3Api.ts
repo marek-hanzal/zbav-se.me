@@ -4,7 +4,7 @@ import { AppEnv } from "../AppEnv";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { s3 } from "../s3";
-import { ErrorSchema } from "../schema/ErrorSchema";
+import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
 
@@ -41,7 +41,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 					description: "Unauthorized (path prefix must match user).",
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 				},
@@ -49,7 +49,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 					description: "Failed to generate pre-signed URL.",
 					content: {
 						"application/json": {
-							schema: ErrorSchema,
+							schema: ErrorDtoSchema,
 						},
 					},
 				},
@@ -84,7 +84,7 @@ export const withS3Api: Routes.Fn = ({ session }) => {
 				return c.json(
 					{
 						message: "Failed to generate pre-signed URL",
-					} satisfies ErrorSchema.Type,
+					} satisfies ErrorDtoSchema.Type,
 					500,
 				);
 			}

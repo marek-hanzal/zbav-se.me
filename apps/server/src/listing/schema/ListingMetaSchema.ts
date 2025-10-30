@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "@hono/zod-openapi";
 import { LatLonSchema } from "../../schema/LatLonSchema";
 
 export const ListingMetaSchema = z
