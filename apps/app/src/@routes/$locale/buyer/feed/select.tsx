@@ -67,7 +67,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 		const snapperNav = useSnapperNav({
 			containerRef: snapperRef,
 			orientation: "horizontal",
-			count: feedCountQuery.data.filter,
+			count:
+				feedCountQuery.data.filter < feedCountLimit
+					? feedCountQuery.data.filter + 1
+					: feedCountQuery.data.filter,
 		});
 		const feedId = useId();
 		const hasFeeds = feedCollectionQuery.data.data.length > 0;
