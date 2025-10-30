@@ -65,6 +65,13 @@ export const ContainerCls = contract(PicoCls.contract)
 		"lg",
 		"xl",
 	])
+	.variant("items", [
+		"unset",
+		"start",
+		"center",
+		"end",
+		"stretch",
+	])
 	.variant("position", [
 		"unset",
 		"absolute",
@@ -442,6 +449,35 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	// Items placement (place-items)
+	.match("items", "start", {
+		root: {
+			class: [
+				"place-items-start",
+			],
+		},
+	})
+	.match("items", "center", {
+		root: {
+			class: [
+				"place-items-center",
+			],
+		},
+	})
+	.match("items", "end", {
+		root: {
+			class: [
+				"place-items-end",
+			],
+		},
+	})
+	.match("items", "stretch", {
+		root: {
+			class: [
+				"place-items-stretch",
+			],
+		},
+	})
 	// Position
 	.match("position", "absolute", {
 		root: {
@@ -815,6 +851,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		lock: "unset",
 		square: "unset",
 		gap: "unset",
+		items: "unset",
 		position: "unset",
 		border: "unset",
 		round: "unset",

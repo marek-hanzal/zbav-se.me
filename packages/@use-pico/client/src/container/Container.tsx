@@ -113,11 +113,31 @@ export namespace Container {
 		square?: Cls.VariantOf<ContainerCls, "square">;
 
 		/**
-		 * Gap between grid items.
+		 * Gap spacing between grid items.
+		 *
+		 * - `"unset"` - No gap applied
+		 * - `"xs"` - gap-1 (0.25rem)
+		 * - `"sm"` - gap-2 (0.5rem)
+		 * - `"md"` - gap-3 (0.75rem)
+		 * - `"lg"` - gap-4 (1rem)
+		 * - `"xl"` - gap-5 (1.25rem)
 		 *
 		 * @default "unset"
 		 */
 		gap?: Cls.VariantOf<ContainerCls, "gap">;
+
+		/**
+		 * Item placement within the grid container (place-items).
+		 *
+		 * - `"unset"` - No placement applied (default grid behavior)
+		 * - `"start"` - Items aligned to start (place-items-start)
+		 * - `"center"` - Items centered within their grid cells (place-items-center)
+		 * - `"end"` - Items aligned to end (place-items-end)
+		 * - `"stretch"` - Items stretched to fill their grid cells (place-items-stretch)
+		 *
+		 * @default "unset"
+		 */
+		items?: Cls.VariantOf<ContainerCls, "items">;
 
 		/**
 		 * CSS position behavior.

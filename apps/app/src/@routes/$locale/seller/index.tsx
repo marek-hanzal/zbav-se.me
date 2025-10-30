@@ -12,13 +12,7 @@ import {
 	UserIcon,
 } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
-import {
-	FlowContainer,
-	PostIcon,
-	PrimaryOverlay,
-	PublicIcon,
-	ShopIcon,
-} from "@zbav-se.me/ui";
+import { PostIcon, PrimaryOverlay, PublicIcon, ShopIcon } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
@@ -54,97 +48,101 @@ export const Route = createFileRoute("/$locale/seller/")({
 			<Container position={"relative"}>
 				<PrimaryOverlay />
 
-				<FlowContainer scroll={"vertical"}>
-					<div
-						data-ui="Seller-link"
-						className="grid gap-2 place-items-center"
+				<Container
+					scroll={"vertical"}
+					layout={"vertical"}
+					gap={"sm"}
+					items={"center"}
+					tone={"secondary"}
+					theme={"light"}
+					square={"md"}
+					position={"relative"}
+				>
+					<LinkTo
+						to="/$locale/seller/listing/wizard/photos"
+						params={{
+							locale,
+						}}
+						tweak={linkTweak}
 					>
-						<LinkTo
-							to="/$locale/seller/listing/wizard/photos"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={PostIcon}
-								textTitle={"Create listing (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/seller/listing/my"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={PublicIcon}
-								textTitle={"My listings (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/shop"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={ShopIcon}
-								textTitle={"Shop (label)"}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to="/$locale/user"
-							params={{
-								locale,
-							}}
-							tweak={linkTweak}
-						>
-							<Tile
-								icon={UserIcon}
-								textTitle={"User profile (label)"}
-							/>
-						</LinkTo>
-
 						<Tile
-							icon={
-								userExPatchMutation.isPending
-									? SpinnerIcon
-									: ArrowLeftIcon
-							}
-							iconProps={{
-								size: "md",
-							}}
-							textTitle={"Back to dashboard (label)"}
-							statusProps={{
-								titleProps: {
-									size: "md",
-								},
-							}}
-							divProps={{
-								onClick() {
-									userExPatchMutation.mutate({
-										side: null,
-									});
-								},
-							}}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"px-12",
-										],
-									},
-								},
-							}}
+							icon={PostIcon}
+							textTitle={"Create listing (label)"}
 						/>
-					</div>
-				</FlowContainer>
+					</LinkTo>
+
+					<LinkTo
+						to="/$locale/seller/listing/my"
+						params={{
+							locale,
+						}}
+						tweak={linkTweak}
+					>
+						<Tile
+							icon={PublicIcon}
+							textTitle={"My listings (label)"}
+						/>
+					</LinkTo>
+
+					<LinkTo
+						to="/$locale/shop"
+						params={{
+							locale,
+						}}
+						tweak={linkTweak}
+					>
+						<Tile
+							icon={ShopIcon}
+							textTitle={"Shop (label)"}
+						/>
+					</LinkTo>
+
+					<LinkTo
+						to="/$locale/user"
+						params={{
+							locale,
+						}}
+						tweak={linkTweak}
+					>
+						<Tile
+							icon={UserIcon}
+							textTitle={"User profile (label)"}
+						/>
+					</LinkTo>
+
+					<Tile
+						icon={
+							userExPatchMutation.isPending
+								? SpinnerIcon
+								: ArrowLeftIcon
+						}
+						iconProps={{
+							size: "md",
+						}}
+						textTitle={"Back to dashboard (label)"}
+						statusProps={{
+							titleProps: {
+								size: "md",
+							},
+						}}
+						divProps={{
+							onClick() {
+								userExPatchMutation.mutate({
+									side: null,
+								});
+							},
+						}}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"px-12",
+									],
+								},
+							},
+						}}
+					/>
+				</Container>
 			</Container>
 		);
 	},
