@@ -67,8 +67,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 						id,
 						userId: user.id,
 						name,
-						filter,
-						sort,
+						filter: JSON.stringify(filter) as any,
+						sort: JSON.stringify(sort) as any,
 						createdAt: now,
 						updatedAt: now,
 					})
@@ -153,8 +153,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					.updateTable("feed")
 					.set({
 						name,
-						filter,
-						sort,
+						filter: JSON.stringify(filter) as any,
+						sort: JSON.stringify(sort) as any,
 						updatedAt: now,
 					})
 					.where("id", "=", id)
