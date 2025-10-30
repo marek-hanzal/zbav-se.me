@@ -5,8 +5,8 @@ import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";
 import { s3 } from "../s3";
 import { ErrorDtoSchema } from "../schema/ErrorDtoSchema";
-import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
-import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
+import { S3PreSignRequestSchema } from "./schema2/S3PreSignRequestSchema";
+import { S3PreSignResponseSchema } from "./schema2/S3PreSignResponseSchema";
 
 export const withS3Api: Routes.Fn = ({ session }) => {
 	const sessionEndpoints = withSessionHono();
