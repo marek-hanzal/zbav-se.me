@@ -46,6 +46,7 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 				{feed ? (
 					<Status
 						icon={FeedIcon}
+						textTitle={feed.name}
 						action={
 							<LinkTo
 								to={"/$locale/buyer/feed/$id"}
@@ -55,10 +56,9 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 								}}
 							>
 								<Button
-									label={feed.name}
 									iconEnabled={ArrowRightIcon}
 									iconPosition={"right"}
-									size={"xl"}
+									size={"lg"}
 									tone={"secondary"}
 									theme={"dark"}
 								/>

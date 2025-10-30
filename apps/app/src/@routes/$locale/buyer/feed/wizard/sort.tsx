@@ -67,8 +67,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 				}
 			>
 				<Container
-					layout={"vertical"}
-					scroll={"horizontal"}
+					layout={"vertical-flex"}
+					scroll={"vertical"}
 					gap={"sm"}
 					height={"auto"}
 					width={"fit"}
@@ -219,6 +219,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 							>
 								<div className="flex items-center gap-2">
 									<Badge
+										tone={
+											position ? "primary" : "secondary"
+										}
 										theme={position ? "dark" : "light"}
 										size={"sm"}
 										tweak={{
