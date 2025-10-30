@@ -72,14 +72,14 @@ export const Rating: FC<Rating.Props> = ({
 						}}
 					>
 						<Button
-							size={"lg"}
+							size={"xl"}
 							full
 							tweak={{
 								slot: {
 									root: {
 										class: [
-											"px-4",
-											"py-7",
+											// "px-4",
+											// "py-7",
 										],
 									},
 								},

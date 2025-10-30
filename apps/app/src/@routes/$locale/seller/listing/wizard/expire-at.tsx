@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
+	Container,
 	LinkTo,
 	Tx,
 	Typo,
@@ -67,80 +68,80 @@ export const Route = createFileRoute(
 					</LinkTo>
 				}
 			>
-				<div
-					className={"grid grid-rows-1 justify-stretch items-center"}
+				<Container
+					layout={"vertical"}
+					gap={"sm"}
+					items={"center"}
+					width={"full"}
+					height={"auto"}
 				>
-					<div className={"flex flex-col gap-2 items-center"}>
-						{Object.values(ListingExpire).map((expire) => {
-							return (
-								<VariantProvider
-									key={`${expireId}-${expire}`}
-									cls={ThemeCls}
-									variant={{
-										tone: "primary",
-										theme:
-											expiresAt === expire
-												? "dark"
-												: "light",
+					{Object.values(ListingExpire).map((expire) => {
+						return (
+							<VariantProvider
+								key={`${expireId}-${expire}`}
+								cls={ThemeCls}
+								variant={{
+									tone: "primary",
+									theme:
+										expiresAt === expire ? "dark" : "light",
+								}}
+							>
+								<Button
+									ui="ExpireAtItem-root"
+									onClick={() => {
+										setExpiresAt(expire);
+									}}
+									size={"xl"}
+									full
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"flex",
+													"flex-row",
+													"items-center",
+													"justify-between",
+													"gap-1",
+												],
+											},
+										},
 									}}
 								>
-									<Button
-										ui="ExpireAtItem-root"
-										onClick={() => {
-											setExpiresAt(expire);
-										}}
-										size={"xl"}
-										full
-										tweak={{
-											slot: {
-												root: {
-													class: [
-														"flex",
-														"flex-row",
-														"items-center",
-														"justify-between",
-														"gap-1",
-													],
-												},
-											},
-										}}
-									>
-										<Tx
-											label={`Expire in ${expire}`}
-											font={"bold"}
-										/>
-										<Typo
-											label={match(expire)
-												.with("7-days", () =>
-													DateTime.now()
-														.plus({
-															days: 7,
-														})
-														.toFormat("dd.MM.yyyy"),
-												)
-												.with("14-days", () =>
-													DateTime.now()
-														.plus({
-															days: 14,
-														})
-														.toFormat("dd.MM.yyyy"),
-												)
-												.with("1-month", () =>
-													DateTime.now()
-														.plus({
-															months: 1,
-														})
-														.toFormat("dd.MM.yyyy"),
-												)
-												.exhaustive()}
-											size={"md"}
-										/>
-									</Button>
-								</VariantProvider>
-							);
-						})}
-					</div>
-				</div>
+									<Tx
+										label={`Expire in ${expire}`}
+										font={"bold"}
+									/>
+									<Typo
+										label={match(expire)
+											.with("7-days", () =>
+												DateTime.now()
+													.plus({
+														days: 7,
+													})
+													.toFormat("dd.MM.yyyy"),
+											)
+											.with("14-days", () =>
+												DateTime.now()
+													.plus({
+														days: 14,
+													})
+													.toFormat("dd.MM.yyyy"),
+											)
+											.with("1-month", () =>
+												DateTime.now()
+													.plus({
+														months: 1,
+													})
+													.toFormat("dd.MM.yyyy"),
+											)
+											.exhaustive()}
+										size={"md"}
+									/>
+								</Button>
+							</VariantProvider>
+						);
+					})}
+				</Container>
 			</TitleContainer>
 		);
 	},

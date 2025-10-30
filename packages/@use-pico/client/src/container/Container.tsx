@@ -55,6 +55,7 @@ export namespace Container {
 		 * - `"vertical-header-content"` - Two-row grid: header (min-content), flexible content (1fr)
 		 * - `"vertical-content-footer"` - Two-row grid: flexible content (1fr), footer (min-content)
 		 * - `"vertical-full"` - Vertical grid where each child takes 100% height (snap-scroll friendly)
+		 * - `"vertical-centered"` - Single-row grid that centers content vertically (useful for centering content in available space)
 		 * - `"horizontal"` - Horizontal grid with auto-sized columns
 		 * - `"horizontal-full"` - Horizontal grid where each child takes 100% width (snap-scroll friendly)
 		 *
@@ -194,6 +195,7 @@ export const Container: FC<Container.Props> = ({
 	lock,
 	square,
 	gap,
+	items,
 	position,
 	border,
 	round,
@@ -215,6 +217,7 @@ export const Container: FC<Container.Props> = ({
 			lock,
 			square,
 			gap,
+			items,
 			position,
 			border,
 			round,

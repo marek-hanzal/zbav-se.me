@@ -26,6 +26,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		"vertical-content-footer",
 		"vertical-content",
 		"vertical-full",
+		"vertical-centered",
 		"horizontal",
 		"horizontal-full",
 	])
@@ -244,6 +245,28 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	.match("layout", "vertical-centered", {
+		root: {
+			class: [
+				"grid",
+				"grid-rows-1",
+				"justify-stretch",
+			],
+		},
+	})
+	.rule(
+		{
+			layout: "vertical-centered",
+			items: "unset",
+		},
+		{
+			root: {
+				class: [
+					"place-items-center",
+				],
+			},
+		},
+	)
 	// Scroll
 	.match("scroll", "horizontal", {
 		root: {
@@ -464,6 +487,19 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	.rule(
+		{
+			items: "center",
+			height: "auto",
+		},
+		{
+			root: {
+				class: [
+					"self-center",
+				],
+			},
+		},
+	)
 	.match("items", "end", {
 		root: {
 			class: [
@@ -478,6 +514,21 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	.rule(
+		{
+			layout: "vertical-centered",
+			items: "stretch",
+		},
+		{
+			root: {
+				class: [
+					"place-items-[initial]",
+					"justify-items-stretch",
+					"items-center",
+				],
+			},
+		},
+	)
 	// Position
 	.match("position", "absolute", {
 		root: {

@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
+	Container,
 	LinkTo,
 	useSelection,
 } from "@use-pico/client";
@@ -70,10 +71,11 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 					</LinkTo>
 				}
 			>
-				<div
-					className={
-						"grid grid-rows-1 justify-stretch items-center w-full h-full"
-					}
+				<Container
+					layout={"vertical-centered"}
+					items={"stretch"}
+					height={"auto"}
+					width={"full"}
 				>
 					<Rating
 						textHint={(value) =>
@@ -81,7 +83,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 						}
 						selection={selection}
 					/>
-				</div>
+				</Container>
 			</TitleContainer>
 		);
 	},

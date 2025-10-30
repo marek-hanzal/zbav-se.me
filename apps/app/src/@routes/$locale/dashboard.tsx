@@ -52,56 +52,54 @@ export const Route = createFileRoute("/$locale/dashboard")({
 		});
 
 		return (
-			<Container position={"relative"}>
+			<Container
+				layout={"vertical"}
+				scroll={"vertical"}
+				gap={"sm"}
+				height={"full"}
+				items={"center"}
+				tone={"secondary"}
+				theme={"light"}
+				square={"md"}
+				position={"relative"}
+			>
 				<PrimaryOverlay />
 
-				<Container
-					layout={"vertical"}
-					scroll={"vertical"}
-					gap={"sm"}
-					height={"full"}
-					items={"center"}
-					tone={"secondary"}
-					theme={"light"}
-					square={"md"}
-					position={"relative"}
+				<LinkTo
+					to="/$locale/seller"
+					params={{
+						locale,
+					}}
+					tweak={linkTweak}
+					onClick={() =>
+						userExPatchMutation.mutate({
+							side: "seller",
+						})
+					}
 				>
-					<LinkTo
-						to="/$locale/seller"
-						params={{
-							locale,
-						}}
-						tweak={linkTweak}
-						onClick={() =>
-							userExPatchMutation.mutate({
-								side: "seller",
-							})
-						}
-					>
-						<Tile
-							icon={SellerIcon}
-							textTitle={"I want to sell (label)"}
-						/>
-					</LinkTo>
+					<Tile
+						icon={SellerIcon}
+						textTitle={"I want to sell (label)"}
+					/>
+				</LinkTo>
 
-					<LinkTo
-						to="/$locale/buyer"
-						params={{
-							locale,
-						}}
-						tweak={linkTweak}
-						onClick={() =>
-							userExPatchMutation.mutate({
-								side: "buyer",
-							})
-						}
-					>
-						<Tile
-							icon={BuyerIcon}
-							textTitle={"I want to buy (label)"}
-						/>
-					</LinkTo>
-				</Container>
+				<LinkTo
+					to="/$locale/buyer"
+					params={{
+						locale,
+					}}
+					tweak={linkTweak}
+					onClick={() =>
+						userExPatchMutation.mutate({
+							side: "buyer",
+						})
+					}
+				>
+					<Tile
+						icon={BuyerIcon}
+						textTitle={"I want to buy (label)"}
+					/>
+				</LinkTo>
 			</Container>
 		);
 	},
