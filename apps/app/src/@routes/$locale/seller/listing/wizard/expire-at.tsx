@@ -72,7 +72,7 @@ export const Route = createFileRoute(
 					layout={"vertical"}
 					gap={"sm"}
 					items={"center"}
-					width={"full"}
+					width={"fit"}
 					height={"auto"}
 				>
 					{Object.values(ListingExpire).map((expire) => {

@@ -59,8 +59,8 @@ export const Route = createRootRouteWithContext<{
 				<body>
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
 						<Container
-							height="dvh"
-							width="full"
+							height="viewport"
+							width="viewport"
 							tweak={{
 								slot: {
 									root: {

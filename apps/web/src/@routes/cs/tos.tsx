@@ -9,7 +9,7 @@ export const Route = createFileRoute("/cs/tos")({
 
 		return (
 			<Container
-				layout={"vertical-content"}
+				layout={"vertical"}
 				scroll={"vertical"}
 				tone={"secondary"}
 				theme={"light"}

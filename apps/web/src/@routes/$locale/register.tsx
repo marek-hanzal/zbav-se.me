@@ -279,7 +279,7 @@ export const Route = createFileRoute("/$locale/register")({
 										layout={"vertical"}
 										items={"center"}
 										gap={"sm"}
-										width={"full"}
+										width={"fit"}
 									>
 										<form.SubmitButton
 											iconEnabled={

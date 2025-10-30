@@ -7,7 +7,7 @@ import {
 	useScrollTo,
 	useSnapperNav,
 } from "@use-pico/client";
-import { SpinnerSheet, TitleContainer } from "@zbav-se.me/ui";
+import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
 import { useEffect, useId, useRef } from "react";
 import z from "zod";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					/>
 				}
 			>
-				<SpinnerSheet
+				<SpinnerContainer
 					disableOverlay
 					tone={"unset"}
 					theme={"unset"}

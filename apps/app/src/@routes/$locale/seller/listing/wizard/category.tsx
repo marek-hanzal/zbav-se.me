@@ -14,7 +14,7 @@ import {
 } from "@use-pico/client";
 import type { EntitySchema } from "@use-pico/common";
 import type { CategoryDto } from "@zbav-se.me/sdk";
-import { SearchIcon, TitleContainer } from "@zbav-se.me/ui";
+import { SearchIcon, SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
@@ -163,24 +163,15 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 					}
 				>
 					<Container
-						layout={"vertical-content"}
+						layout={"vertical-header-content"}
 						position={"relative"}
 						gap={"md"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"contain-paint",
-									],
-								},
-							},
-						}}
+						height={"fit"}
 					>
 						<div className={"min-h-0"}>
 							<Fulltext
 								state={{
 									value: fulltext,
-
 									set: setFulltext,
 								}}
 							/>
@@ -195,7 +186,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 										scroll={"vertical"}
 										layout={"vertical"}
 										gap={"md"}
-										height={"full"}
+										height={"fit"}
 										position={"relative"}
 									>
 										{data.data.map((item) => {
@@ -208,6 +199,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 											);
 										})}
 									</Container>
+								);
+							}}
+							renderLoading={() => {
+								return (
+									<SpinnerContainer
+										disableOverlay
+										height={"fit"}
+									/>
 								);
 							}}
 							renderEmpty={() => {

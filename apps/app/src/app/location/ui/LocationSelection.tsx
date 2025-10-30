@@ -145,19 +145,19 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 					);
 				}}
 			>
-			{({ content }) => {
-				return (
-					<Container
-						ui="Location-content"
-						scroll={"vertical"}
-						layout={"vertical"}
-						gap={"sm"}
-						height={"full"}
-					>
-						{content}
-					</Container>
-				);
-			}}
+				{({ content }) => {
+					return (
+						<Container
+							ui="Location-content"
+							scroll={"vertical"}
+							layout={"vertical"}
+							gap={"sm"}
+							height={"fit"}
+						>
+							{content}
+						</Container>
+					);
+				}}
 			</Data>
 		</Container>
 	);

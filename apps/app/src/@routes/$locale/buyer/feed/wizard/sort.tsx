@@ -71,7 +71,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 					scroll={"horizontal"}
 					gap={"sm"}
 					height={"auto"}
-					width={"full"}
+					width={"fit"}
 				>
 					{(
 						(

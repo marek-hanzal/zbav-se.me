@@ -45,7 +45,7 @@ export const HeroSheet: FC = () => {
 					layout={"horizontal"}
 					items={"center"}
 					height={"auto"}
-					width={"full"}
+					width={"fit"}
 				>
 					<Logo />
 				</Container>

@@ -73,13 +73,13 @@ export const Route = createFileRoute(
 					</LinkTo>
 				}
 			>
-			<Container
-				layout={"vertical-centered"}
-				items={"stretch"}
-				scroll={"vertical"}
-				height={"full"}
-				width={"full"}
-			>
+				<Container
+					layout={"vertical-centered"}
+					items={"stretch"}
+					scroll={"vertical"}
+					height={"fit"}
+					width={"fit"}
+				>
 					<Rating
 						textHint={(value) =>
 							`Condition - Overall [${value}] (hint)`

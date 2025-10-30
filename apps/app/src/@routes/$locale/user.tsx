@@ -52,7 +52,7 @@ export const Route = createFileRoute("/$locale/user")({
 						layout={"vertical"}
 						gap={"md"}
 						items={"center"}
-						height={"full"}
+						height={"fit"}
 					>
 						<Status
 							icon={UserIcon}

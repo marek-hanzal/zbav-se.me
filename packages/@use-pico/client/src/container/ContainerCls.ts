@@ -8,27 +8,26 @@ export const ContainerCls = contract(PicoCls.contract)
 	])
 	.variant("height", [
 		"unset",
-		"full",
-		"dvh",
+		"fit",
 		"auto",
+		"viewport",
 	])
 	.variant("width", [
 		"unset",
-		"full",
-		"dvw",
+		"fit",
 		"auto",
+		"viewport",
 	])
 	.variant("layout", [
 		"unset",
+		"horizontal",
+		"horizontal-full",
 		"vertical",
+		"vertical-full",
 		"vertical-header-content-footer",
 		"vertical-header-content",
 		"vertical-content-footer",
-		"vertical-content",
-		"vertical-full",
 		"vertical-centered",
-		"horizontal",
-		"horizontal-full",
 	])
 	.variant("scroll", [
 		"unset",
@@ -106,7 +105,7 @@ export const ContainerCls = contract(PicoCls.contract)
 	])
 	.def()
 	// Height
-	.match("height", "full", {
+	.match("height", "fit", {
 		root: {
 			class: [
 				"h-full",
@@ -115,26 +114,25 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("height", "dvh", {
-		root: {
-			class: [
-				"h-dvh",
-				"min-h-dvh",
-				"w-full",
-			],
-		},
-	})
 	.match("height", "auto", {
 		root: {
 			class: [
 				"h-auto",
 				"min-h-0",
-				"w-full",
+			],
+		},
+	})
+	.match("height", "viewport", {
+		root: {
+			class: [
+				"h-dvh",
+				"min-h-dvh",
+				"max-h-dvh",
 			],
 		},
 	})
 	// Width
-	.match("width", "full", {
+	.match("width", "fit", {
 		root: {
 			class: [
 				"w-full",
@@ -143,20 +141,20 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("width", "dvw", {
-		root: {
-			class: [
-				"w-dvw",
-				"min-w-dvw",
-			],
-		},
-	})
 	.match("width", "auto", {
 		root: {
 			class: [
 				"w-auto",
 				"min-w-0",
-				"h-full",
+			],
+		},
+	})
+	.match("width", "viewport", {
+		root: {
+			class: [
+				"w-dvw",
+				"min-w-dvw",
+				"max-w-dvw",
 			],
 		},
 	})
@@ -178,6 +176,7 @@ export const ContainerCls = contract(PicoCls.contract)
 				"grid-flow-col",
 				"grid-rows-1",
 				"auto-cols-[100%]",
+				// Container needs full size for snap scrolling - width/height props should be "fit"
 				"w-full",
 				"h-full",
 				"min-w-0",
@@ -192,6 +191,21 @@ export const ContainerCls = contract(PicoCls.contract)
 				"grid-flow-row",
 				"auto-rows-auto",
 				"grid-cols-1",
+			],
+		},
+	})
+	.match("layout", "vertical-full", {
+		root: {
+			class: [
+				"grid",
+				"grid-flow-row",
+				"grid-cols-1",
+				"auto-rows-[100%]",
+				// Container needs full size for snap scrolling - width/height props should be "fit"
+				"w-full",
+				"h-full",
+				"min-w-0",
+				"min-h-0",
 			],
 		},
 	})
@@ -219,29 +233,6 @@ export const ContainerCls = contract(PicoCls.contract)
 				"grid",
 				"grid-rows-[1fr_min-content]",
 				"grid-cols-1",
-			],
-		},
-	})
-	.match("layout", "vertical-content", {
-		root: {
-			class: [
-				"grid",
-				"grid-rows-[min-content]",
-				"grid-cols-1",
-			],
-		},
-	})
-	.match("layout", "vertical-full", {
-		root: {
-			class: [
-				"grid",
-				"grid-flow-row",
-				"grid-cols-1",
-				"auto-rows-[100%]",
-				"w-full",
-				"h-full",
-				"min-w-0",
-				"min-h-0",
 			],
 		},
 	})
@@ -894,8 +885,8 @@ export const ContainerCls = contract(PicoCls.contract)
 	.defaults({
 		tone: "unset",
 		theme: "unset",
-		height: "full",
-		width: "full",
+		height: "fit",
+		width: "fit",
 		layout: "unset",
 		scroll: "unset",
 		snap: "unset",

@@ -26,11 +26,11 @@ export namespace Container {
 		 * Height behavior of the container.
 		 *
 		 * - `"unset"` - Default div behavior (no classes applied)
-		 * - `"full"` - Takes full height with min-h-0 and max-h-full
-		 * - `"dvh"` - Uses dynamic viewport height (dvh) with min-h-dvh and w-full
-		 * - `"auto"` - Auto height with min-h-0 and w-full
+		 * - `"fit"` - Fits parent container (h-full with min-h-0 and max-h-full)
+		 * - `"auto"` - Adjusts to content (h-auto with min-h-0 and w-full)
+		 * - `"viewport"` - Uses dynamic viewport height (h-dvh with min-h-dvh and w-full)
 		 *
-		 * @default "full"
+		 * @default "fit"
 		 */
 		height?: Cls.VariantOf<ContainerCls, "height">;
 
@@ -38,11 +38,11 @@ export namespace Container {
 		 * Width behavior of the container.
 		 *
 		 * - `"unset"` - Default div behavior (no classes applied)
-		 * - `"full"` - Takes full width with min-w-0 and max-w-full
-		 * - `"dvw"` - Uses dynamic viewport width (dvw) with min-w-dvw
-		 * - `"auto"` - Auto width with min-w-0 and h-full
+		 * - `"fit"` - Fits parent container (w-full with min-w-0 and max-w-full)
+		 * - `"auto"` - Adjusts to content (w-auto with min-w-0 and h-full)
+		 * - `"viewport"` - Uses dynamic viewport width (w-dvw with min-w-dvw)
 		 *
-		 * @default "full"
+		 * @default "fit"
 		 */
 		width?: Cls.VariantOf<ContainerCls, "width">;
 
@@ -50,14 +50,14 @@ export namespace Container {
 		 * Layout behavior and grid configuration.
 		 *
 		 * - `"unset"` - No grid layout applied
+		 * - `"horizontal"` - Horizontal grid with auto-sized columns
+		 * - `"horizontal-full"` - Horizontal grid where each child takes 100% width (snap-scroll friendly)
 		 * - `"vertical"` - Vertical grid with auto-sized rows
+		 * - `"vertical-full"` - Vertical grid where each child takes 100% height (snap-scroll friendly)
 		 * - `"vertical-header-content-footer"` - Three-row grid: header (min-content), flexible content (1fr), footer (min-content)
 		 * - `"vertical-header-content"` - Two-row grid: header (min-content), flexible content (1fr)
 		 * - `"vertical-content-footer"` - Two-row grid: flexible content (1fr), footer (min-content)
-		 * - `"vertical-full"` - Vertical grid where each child takes 100% height (snap-scroll friendly)
 		 * - `"vertical-centered"` - Single-row grid that centers content vertically (useful for centering content in available space)
-		 * - `"horizontal"` - Horizontal grid with auto-sized columns
-		 * - `"horizontal-full"` - Horizontal grid where each child takes 100% width (snap-scroll friendly)
 		 *
 		 * @default "unset"
 		 */

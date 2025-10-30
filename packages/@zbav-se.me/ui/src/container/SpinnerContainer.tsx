@@ -1,15 +1,14 @@
 import { Container, SpinnerIcon, Status } from "@use-pico/client";
 import type { FC } from "react";
 import { PrimaryOverlay } from "../overlay/PrimaryOverlay";
-import { Sheet } from "../sheet/Sheet";
 
-export namespace SpinnerSheet {
+export namespace SpinnerContainer {
 	export interface Props extends Container.Props {
 		disableOverlay?: boolean;
 	}
 }
 
-export const SpinnerSheet: FC<SpinnerSheet.Props> = ({
+export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 	disableOverlay = false,
 	...props
 }) => {
@@ -19,18 +18,18 @@ export const SpinnerSheet: FC<SpinnerSheet.Props> = ({
 			tone={"secondary"}
 			theme={"light"}
 			position={"relative"}
+			layout={"vertical-centered"}
+			items={"center"}
 			{...props}
 		>
 			{disableOverlay ? null : <PrimaryOverlay />}
 
-			<Sheet>
-				<Status
-					icon={SpinnerIcon}
-					iconProps={{
-						size: "2xl",
-					}}
-				/>
-			</Sheet>
+			<Status
+				icon={SpinnerIcon}
+				iconProps={{
+					size: "2xl",
+				}}
+			/>
 		</Container>
 	);
 };
