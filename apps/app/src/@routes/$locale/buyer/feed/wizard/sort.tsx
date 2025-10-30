@@ -68,7 +68,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 			>
 				<Container
 					layout={"vertical"}
-					overflow={"horizontal"}
+					scroll={"horizontal"}
 					gap={"xs"}
 					height={"auto"}
 				>

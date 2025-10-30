@@ -138,7 +138,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				}
 			>
 				{valid.success ? (
-					<Container overflow={"vertical"}>
+					<Container scroll={"vertical"}>
 						<div className={"grid grid-auto-rows gap-2"}>
 							<VariantProvider
 								cls={ThemeCls}

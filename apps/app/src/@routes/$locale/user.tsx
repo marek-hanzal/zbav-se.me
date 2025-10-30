@@ -52,7 +52,7 @@ export const Route = createFileRoute("/$locale/user")({
 		return (
 			<Container
 				layout={"vertical-full"}
-				overflow={"vertical"}
+				scroll={"vertical"}
 				snap={"vertical-start"}
 				gap={"md"}
 			>

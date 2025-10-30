@@ -78,7 +78,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 		return (
 			<Container
 				position={"relative"}
-				overflow={"hidden"}
+				scroll={"hidden"}
 			>
 				<PrimaryOverlay />
 
@@ -127,7 +127,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 								tone={"unset"}
 								theme={"unset"}
 								gap={"unset"}
-								overflow={"vertical"}
+								scroll={"vertical"}
 							>
 								{content}
 

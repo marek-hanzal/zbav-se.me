@@ -70,7 +70,7 @@ export const Route = createFileRoute("/$locale/register")({
 					ref={scrollerRef}
 					square={"md"}
 					layout={"vertical"}
-					overflow={"vertical"}
+					scroll={"vertical"}
 				>
 					<Sheet>
 						<VariantProvider

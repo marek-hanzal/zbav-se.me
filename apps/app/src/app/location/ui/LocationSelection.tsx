@@ -149,7 +149,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 					return (
 						<Container
 							ui="Location-content"
-							overflow={"vertical"}
+							scroll={"vertical"}
 							height={"full"}
 						>
 							<div

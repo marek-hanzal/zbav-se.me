@@ -62,7 +62,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 
 				<FlowContainer
 					layout={"vertical-content"}
-					overflow={"vertical"}
+					scroll={"vertical"}
 					height={"full"}
 					tweak={{
 						slot: {

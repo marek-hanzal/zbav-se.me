@@ -54,7 +54,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 			<Container position={"relative"}>
 				<PrimaryOverlay />
 
-				<FlowContainer overflow={"vertical"}>
+				<FlowContainer scroll={"vertical"}>
 					<div
 						data-ui="Seller-link"
 						className="grid gap-2 place-items-center"

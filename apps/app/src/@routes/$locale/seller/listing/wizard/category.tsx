@@ -193,7 +193,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 									<Container
 										ref={containerRef}
 										layout={"vertical-content"}
-										overflow={"vertical"}
+										scroll={"vertical"}
 										position={"relative"}
 									>
 										<Container

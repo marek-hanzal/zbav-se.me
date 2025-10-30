@@ -130,7 +130,7 @@ export const Route = createFileRoute("/$locale/login")({
 				<Container
 					ref={rootRef}
 					layout={"vertical-full"}
-					overflow={"vertical"}
+					scroll={"vertical"}
 					snap={"vertical-center"}
 					gap={"md"}
 					square={"md"}

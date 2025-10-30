@@ -29,7 +29,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		"horizontal",
 		"horizontal-full",
 	])
-	.variant("overflow", [
+	.variant("scroll", [
 		"unset",
 		"horizontal",
 		"vertical",
@@ -237,8 +237,8 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	// Overflow
-	.match("overflow", "horizontal", {
+	// Scroll
+	.match("scroll", "horizontal", {
 		root: {
 			class: [
 				"isolate",
@@ -249,7 +249,7 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("overflow", "vertical", {
+	.match("scroll", "vertical", {
 		root: {
 			class: [
 				"isolate",
@@ -260,7 +260,7 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
-	.match("overflow", "hidden", {
+	.match("scroll", "hidden", {
 		root: {
 			class: [
 				"overflow-hidden",
@@ -804,7 +804,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		height: "full",
 		width: "full",
 		layout: "unset",
-		overflow: "unset",
+		scroll: "unset",
 		snap: "unset",
 		lock: "unset",
 		square: "unset",

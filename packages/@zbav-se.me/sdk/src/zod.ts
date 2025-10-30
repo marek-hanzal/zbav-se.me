@@ -4,7 +4,7 @@
  * zbav.se.me API
  * OpenAPI spec version: 0.5.0
  */
-import * as zod from 'zod';
+import * as zod from "zod";
 
 /**
  * Return a category based on the provided query
@@ -13,46 +13,132 @@ export const apiCategoryFetchBodyCursorPageMin = 0;
 
 export const apiCategoryFetchBodyCursorSizeMax = 1000;
 
+export const apiCategoryFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiCategoryFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiCategoryFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				group: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact group of the category",
+					),
+				category: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact category name"),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				group: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact group of the category",
+					),
+				category: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact category name"),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"group",
+							"category",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for category collection");
 
-
-export const apiCategoryFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiCategoryFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiCategoryFetchBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "group": zod.string().nullish().describe('This filter matches the exact group of the category'),
-  "category": zod.string().nullish().describe('This filter matches the exact category name'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches categories with locales in the provided array')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "group": zod.string().nullish().describe('This filter matches the exact group of the category'),
-  "category": zod.string().nullish().describe('This filter matches the exact category name'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches categories with locales in the provided array')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['group', 'category', 'sort']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for category collection')).optional()
-}).describe('Query object for category collection')
-
-export const apiCategoryFetchResponse = zod.object({
-  "id": zod.string().describe('ID of the category'),
-  "group": zod.string().describe('Group/name of the category'),
-  "category": zod.string().describe('Category name within the group'),
-  "slug": zod.string().describe('Slug of the category'),
-  "sort": zod.number().describe('Sort order (position) of the category'),
-  "locale": zod.string().describe('Locale/language of the category')
-}).describe('Category data transfer object')
-
+export const apiCategoryFetchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the category"),
+		group: zod.string().describe("Group/name of the category"),
+		category: zod.string().describe("Category name within the group"),
+		slug: zod.string().describe("Slug of the category"),
+		sort: zod.number().describe("Sort order (position) of the category"),
+		locale: zod.string().describe("Locale/language of the category"),
+	})
+	.describe("Category data transfer object");
 
 /**
  * Returns categories based on provided parameters
@@ -61,49 +147,145 @@ export const apiCategoryCollectionBodyCursorPageMin = 0;
 
 export const apiCategoryCollectionBodyCursorSizeMax = 1000;
 
+export const apiCategoryCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiCategoryCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiCategoryCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				group: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact group of the category",
+					),
+				category: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact category name"),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				group: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact group of the category",
+					),
+				category: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact category name"),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"group",
+							"category",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for category collection");
 
-
-export const apiCategoryCollectionBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiCategoryCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiCategoryCollectionBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "group": zod.string().nullish().describe('This filter matches the exact group of the category'),
-  "category": zod.string().nullish().describe('This filter matches the exact category name'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches categories with locales in the provided array')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "group": zod.string().nullish().describe('This filter matches the exact group of the category'),
-  "category": zod.string().nullish().describe('This filter matches the exact category name'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches categories with locales in the provided array')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['group', 'category', 'sort']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for category collection')).optional()
-}).describe('Query object for category collection')
-
-export const apiCategoryCollectionResponse = zod.object({
-  "data": zod.array(zod.object({
-  "id": zod.string().describe('ID of the category'),
-  "group": zod.string().describe('Group/name of the category'),
-  "category": zod.string().describe('Category name within the group'),
-  "slug": zod.string().describe('Slug of the category'),
-  "sort": zod.number().describe('Sort order (position) of the category'),
-  "locale": zod.string().describe('Locale/language of the category')
-}).describe('Category data transfer object')),
-  "more": zod.boolean().describe('Whether there are more items to fetch')
-}).describe('Collection of categories')
-
+export const apiCategoryCollectionResponse = zod
+	.object({
+		data: zod.array(
+			zod
+				.object({
+					id: zod.string().describe("ID of the category"),
+					group: zod.string().describe("Group/name of the category"),
+					category: zod
+						.string()
+						.describe("Category name within the group"),
+					slug: zod.string().describe("Slug of the category"),
+					sort: zod
+						.number()
+						.describe("Sort order (position) of the category"),
+					locale: zod
+						.string()
+						.describe("Locale/language of the category"),
+				})
+				.describe("Category data transfer object"),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
+	})
+	.describe("Collection of categories");
 
 /**
  * Returns count of categories based on provided query
@@ -112,61 +294,175 @@ export const apiCategoryCountBodyCursorPageMin = 0;
 
 export const apiCategoryCountBodyCursorSizeMax = 1000;
 
+export const apiCategoryCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiCategoryCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiCategoryCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				group: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact group of the category",
+					),
+				category: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact category name"),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				group: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact group of the category",
+					),
+				category: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact category name"),
+				locale: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact locale of the category",
+					),
+				localeIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches categories with locales in the provided array",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"group",
+							"category",
+							"sort",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for category collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for category collection");
 
-
-export const apiCategoryCountBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiCategoryCountBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiCategoryCountBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "group": zod.string().nullish().describe('This filter matches the exact group of the category'),
-  "category": zod.string().nullish().describe('This filter matches the exact category name'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches categories with locales in the provided array')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "group": zod.string().nullish().describe('This filter matches the exact group of the category'),
-  "category": zod.string().nullish().describe('This filter matches the exact category name'),
-  "locale": zod.string().nullish().describe('This filter matches the exact locale of the category'),
-  "localeIn": zod.array(zod.string()).nullish().describe('This filter matches categories with locales in the provided array')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['group', 'category', 'sort']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for category collection')).optional()
-}).describe('Query object for category collection')
-
-export const apiCategoryCountResponse = zod.object({
-  "where": zod.number().describe('Count of items based on provided where query.'),
-  "filter": zod.number().describe('Count of items based on provided filter query.'),
-  "total": zod.number().describe('Total count of items (no filters applied).')
-}).describe('Complex count of items based on provided query.')
-
+export const apiCategoryCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
 
 /**
  * Create a new listing
  */
 
-
-
-export const apiListingCreateBody = zod.object({
-  "price": zod.number().describe('Price of the listing'),
-  "condition": zod.number().describe('Condition of the item (0-based index)'),
-  "age": zod.number().describe('Age of the item (0-based index)'),
-  "locationId": zod.string().describe('ID of the location'),
-  "categoryId": zod.string().describe('ID of the category'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)'),
-  "expiresAt": zod.enum(['7-days', '14-days', '1-month']).describe('Expiration period for the listing'),
-  "uploadIds": zod.array(zod.string()).min(1).describe('IDs of the uploads; order of uploads defines order in the gallery')
-}).describe('Data required to create a new listing')
-
+export const apiListingCreateBody = zod
+	.object({
+		price: zod.number().describe("Price of the listing"),
+		condition: zod
+			.number()
+			.describe("Condition of the item (0-based index)"),
+		age: zod.number().describe("Age of the item (0-based index)"),
+		locationId: zod.string().describe("ID of the location"),
+		categoryId: zod.string().describe("ID of the category"),
+		currency: zod
+			.enum([
+				"CZK",
+				"EUR",
+				"USD",
+				"GBP",
+				"PLN",
+				"HUF",
+				"CHF",
+			])
+			.describe("Currency code (ISO 4217)"),
+		expiresAt: zod
+			.enum([
+				"7-days",
+				"14-days",
+				"1-month",
+			])
+			.describe("Expiration period for the listing"),
+		uploadIds: zod
+			.array(zod.string())
+			.min(1)
+			.describe(
+				"IDs of the uploads; order of uploads defines order in the gallery",
+			),
+	})
+	.describe("Data required to create a new listing");
 
 /**
  * Returns listings based on filter/sort stored in a feed (by id)
@@ -175,71 +471,183 @@ export const apiListingFeedCollectionBodyCursorPageMin = 0;
 
 export const apiListingFeedCollectionBodyCursorSizeMax = 1000;
 
+export const apiListingFeedCollectionBody = zod
+	.object({
+		feedId: zod.string().describe("ID of the feed to collect listings for"),
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiListingFeedCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiListingFeedCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.nullish()
+			.describe("Pagination cursor"),
+	})
+	.describe("Request to collect listings from a feed");
 
-
-export const apiListingFeedCollectionBody = zod.object({
-  "feedId": zod.string().describe('ID of the feed to collect listings for'),
-  "cursor": zod.object({
-  "page": zod.number().min(apiListingFeedCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiListingFeedCollectionBodyCursorSizeMax).describe('Page size')
-}).nullish().describe('Pagination cursor')
-}).describe('Request to collect listings from a feed')
-
-export const apiListingFeedCollectionResponse = zod.object({
-  "data": zod.array(zod.object({
-  "id": zod.string().describe('ID of the listing'),
-  "price": zod.number().describe('Price of the listing'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)'),
-  "condition": zod.number().describe('Condition of the item (0-based index)'),
-  "age": zod.number().describe('Age of the item (0-based index)'),
-  "locationId": zod.string().describe('ID of the location'),
-  "categoryId": zod.string().describe('ID of the category'),
-  "expiresAt": zod.string().describe('Expiration timestamp'),
-  "createdAt": zod.string().describe('Creation timestamp'),
-  "updatedAt": zod.string().describe('Last update timestamp'),
-  "vendor": zod.string().nullish().describe('Vendor/manufacturer of the item'),
-  "model": zod.string().nullish().describe('Model of the item'),
-  "location": zod.object({
-  "id": zod.string(),
-  "query": zod.string().describe('The query that was used to get the location'),
-  "lang": zod.string().describe('The language that was used to get the location'),
-  "country": zod.string().describe('The country that the location is in'),
-  "code": zod.string().describe('Country code'),
-  "county": zod.string().nullish().describe('The county that the location is in'),
-  "municipality": zod.string().nullish().describe('The municipality that the location is in'),
-  "state": zod.string().nullish().describe('The state that the location is in'),
-  "address": zod.string().describe('Full address preview of a location'),
-  "city": zod.string().nullish().describe('The city that the location is in'),
-  "street": zod.string().nullish().describe('The street that the location is on'),
-  "zip": zod.string().nullish().describe('The postal/zip code of the location'),
-  "confidence": zod.number().describe('Confidence score of the location (based on query)'),
-  "hash": zod.string().describe('Used to uniquely identify this location entry'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
-}).describe('Location data transfer object'),
-  "category": zod.object({
-  "id": zod.string().describe('ID of the category'),
-  "group": zod.string().describe('Group/name of the category'),
-  "category": zod.string().describe('Category name within the group'),
-  "slug": zod.string().describe('Slug of the category'),
-  "sort": zod.number().describe('Sort order (position) of the category'),
-  "locale": zod.string().describe('Locale/language of the category')
-}).describe('Category data transfer object'),
-  "gallery": zod.array(zod.object({
-  "id": zod.string().describe('ID of the gallery item'),
-  "listingId": zod.string().describe('ID of the listing this image belongs to'),
-  "uploadId": zod.string().describe('ID of the upload this image belongs to'),
-  "sort": zod.number().describe('Sort order of the image in the listing\'s gallery'),
-  "upload": zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')
-}).describe('Gallery data transfer object')).describe('Array of listing gallery images')
-})),
-  "more": zod.boolean().describe('Whether there are more items to fetch')
-}).describe('Collection of listings')
-
+export const apiListingFeedCollectionResponse = zod
+	.object({
+		data: zod.array(
+			zod.object({
+				id: zod.string().describe("ID of the listing"),
+				price: zod.number().describe("Price of the listing"),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.describe("Currency code (ISO 4217)"),
+				condition: zod
+					.number()
+					.describe("Condition of the item (0-based index)"),
+				age: zod.number().describe("Age of the item (0-based index)"),
+				locationId: zod.string().describe("ID of the location"),
+				categoryId: zod.string().describe("ID of the category"),
+				expiresAt: zod.string().describe("Expiration timestamp"),
+				createdAt: zod.string().describe("Creation timestamp"),
+				updatedAt: zod.string().describe("Last update timestamp"),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe("Vendor/manufacturer of the item"),
+				model: zod.string().nullish().describe("Model of the item"),
+				location: zod
+					.object({
+						id: zod.string(),
+						query: zod
+							.string()
+							.describe(
+								"The query that was used to get the location",
+							),
+						lang: zod
+							.string()
+							.describe(
+								"The language that was used to get the location",
+							),
+						country: zod
+							.string()
+							.describe("The country that the location is in"),
+						code: zod.string().describe("Country code"),
+						county: zod
+							.string()
+							.nullish()
+							.describe("The county that the location is in"),
+						municipality: zod
+							.string()
+							.nullish()
+							.describe(
+								"The municipality that the location is in",
+							),
+						state: zod
+							.string()
+							.nullish()
+							.describe("The state that the location is in"),
+						address: zod
+							.string()
+							.describe("Full address preview of a location"),
+						city: zod
+							.string()
+							.nullish()
+							.describe("The city that the location is in"),
+						street: zod
+							.string()
+							.nullish()
+							.describe("The street that the location is on"),
+						zip: zod
+							.string()
+							.nullish()
+							.describe("The postal/zip code of the location"),
+						confidence: zod
+							.number()
+							.describe(
+								"Confidence score of the location (based on query)",
+							),
+						hash: zod
+							.string()
+							.describe(
+								"Used to uniquely identify this location entry",
+							),
+						lat: zod.number().describe("Latitude of the location"),
+						lon: zod.number().describe("Longitude of the location"),
+						geo: zod
+							.string()
+							.describe(
+								"Encoded PostGIS geometry of the location",
+							),
+					})
+					.describe("Location data transfer object"),
+				category: zod
+					.object({
+						id: zod.string().describe("ID of the category"),
+						group: zod
+							.string()
+							.describe("Group/name of the category"),
+						category: zod
+							.string()
+							.describe("Category name within the group"),
+						slug: zod.string().describe("Slug of the category"),
+						sort: zod
+							.number()
+							.describe("Sort order (position) of the category"),
+						locale: zod
+							.string()
+							.describe("Locale/language of the category"),
+					})
+					.describe("Category data transfer object"),
+				gallery: zod
+					.array(
+						zod
+							.object({
+								id: zod
+									.string()
+									.describe("ID of the gallery item"),
+								listingId: zod
+									.string()
+									.describe(
+										"ID of the listing this image belongs to",
+									),
+								uploadId: zod
+									.string()
+									.describe(
+										"ID of the upload this image belongs to",
+									),
+								sort: zod
+									.number()
+									.describe(
+										"Sort order of the image in the listing's gallery",
+									),
+								upload: zod
+									.object({
+										id: zod
+											.string()
+											.describe("ID of the upload"),
+										url: zod
+											.url()
+											.describe(
+												"Public URL to the uploaded file",
+											),
+									})
+									.describe("Upload data transfer object"),
+							})
+							.describe("Gallery data transfer object"),
+					)
+					.describe("Array of listing gallery images"),
+			}),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
+	})
+	.describe("Collection of listings");
 
 /**
  * Return a listing based on the provided query
@@ -248,126 +656,503 @@ export const apiListingFetchBodyCursorPageMin = 0;
 
 export const apiListingFetchBodyCursorSizeMax = 1000;
 
-
-
-export const apiListingFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiListingFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiListingFetchBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).optional()
-}).describe('Query object for listing collection')
+export const apiListingFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiListingFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiListingFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Explicit geo sorting"),
+					])
+					.describe("Sort object for listing collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for listing collection");
 
 export const apiListingFetchResponse = zod.object({
-  "id": zod.string().describe('ID of the listing'),
-  "price": zod.number().describe('Price of the listing'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)'),
-  "condition": zod.number().describe('Condition of the item (0-based index)'),
-  "age": zod.number().describe('Age of the item (0-based index)'),
-  "locationId": zod.string().describe('ID of the location'),
-  "categoryId": zod.string().describe('ID of the category'),
-  "expiresAt": zod.string().describe('Expiration timestamp'),
-  "createdAt": zod.string().describe('Creation timestamp'),
-  "updatedAt": zod.string().describe('Last update timestamp'),
-  "vendor": zod.string().nullish().describe('Vendor/manufacturer of the item'),
-  "model": zod.string().nullish().describe('Model of the item'),
-  "location": zod.object({
-  "id": zod.string(),
-  "query": zod.string().describe('The query that was used to get the location'),
-  "lang": zod.string().describe('The language that was used to get the location'),
-  "country": zod.string().describe('The country that the location is in'),
-  "code": zod.string().describe('Country code'),
-  "county": zod.string().nullish().describe('The county that the location is in'),
-  "municipality": zod.string().nullish().describe('The municipality that the location is in'),
-  "state": zod.string().nullish().describe('The state that the location is in'),
-  "address": zod.string().describe('Full address preview of a location'),
-  "city": zod.string().nullish().describe('The city that the location is in'),
-  "street": zod.string().nullish().describe('The street that the location is on'),
-  "zip": zod.string().nullish().describe('The postal/zip code of the location'),
-  "confidence": zod.number().describe('Confidence score of the location (based on query)'),
-  "hash": zod.string().describe('Used to uniquely identify this location entry'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
-}).describe('Location data transfer object'),
-  "category": zod.object({
-  "id": zod.string().describe('ID of the category'),
-  "group": zod.string().describe('Group/name of the category'),
-  "category": zod.string().describe('Category name within the group'),
-  "slug": zod.string().describe('Slug of the category'),
-  "sort": zod.number().describe('Sort order (position) of the category'),
-  "locale": zod.string().describe('Locale/language of the category')
-}).describe('Category data transfer object'),
-  "gallery": zod.array(zod.object({
-  "id": zod.string().describe('ID of the gallery item'),
-  "listingId": zod.string().describe('ID of the listing this image belongs to'),
-  "uploadId": zod.string().describe('ID of the upload this image belongs to'),
-  "sort": zod.number().describe('Sort order of the image in the listing\'s gallery'),
-  "upload": zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')
-}).describe('Gallery data transfer object')).describe('Array of listing gallery images')
-})
-
+	id: zod.string().describe("ID of the listing"),
+	price: zod.number().describe("Price of the listing"),
+	currency: zod
+		.enum([
+			"CZK",
+			"EUR",
+			"USD",
+			"GBP",
+			"PLN",
+			"HUF",
+			"CHF",
+		])
+		.describe("Currency code (ISO 4217)"),
+	condition: zod.number().describe("Condition of the item (0-based index)"),
+	age: zod.number().describe("Age of the item (0-based index)"),
+	locationId: zod.string().describe("ID of the location"),
+	categoryId: zod.string().describe("ID of the category"),
+	expiresAt: zod.string().describe("Expiration timestamp"),
+	createdAt: zod.string().describe("Creation timestamp"),
+	updatedAt: zod.string().describe("Last update timestamp"),
+	vendor: zod.string().nullish().describe("Vendor/manufacturer of the item"),
+	model: zod.string().nullish().describe("Model of the item"),
+	location: zod
+		.object({
+			id: zod.string(),
+			query: zod
+				.string()
+				.describe("The query that was used to get the location"),
+			lang: zod
+				.string()
+				.describe("The language that was used to get the location"),
+			country: zod
+				.string()
+				.describe("The country that the location is in"),
+			code: zod.string().describe("Country code"),
+			county: zod
+				.string()
+				.nullish()
+				.describe("The county that the location is in"),
+			municipality: zod
+				.string()
+				.nullish()
+				.describe("The municipality that the location is in"),
+			state: zod
+				.string()
+				.nullish()
+				.describe("The state that the location is in"),
+			address: zod
+				.string()
+				.describe("Full address preview of a location"),
+			city: zod
+				.string()
+				.nullish()
+				.describe("The city that the location is in"),
+			street: zod
+				.string()
+				.nullish()
+				.describe("The street that the location is on"),
+			zip: zod
+				.string()
+				.nullish()
+				.describe("The postal/zip code of the location"),
+			confidence: zod
+				.number()
+				.describe("Confidence score of the location (based on query)"),
+			hash: zod
+				.string()
+				.describe("Used to uniquely identify this location entry"),
+			lat: zod.number().describe("Latitude of the location"),
+			lon: zod.number().describe("Longitude of the location"),
+			geo: zod
+				.string()
+				.describe("Encoded PostGIS geometry of the location"),
+		})
+		.describe("Location data transfer object"),
+	category: zod
+		.object({
+			id: zod.string().describe("ID of the category"),
+			group: zod.string().describe("Group/name of the category"),
+			category: zod.string().describe("Category name within the group"),
+			slug: zod.string().describe("Slug of the category"),
+			sort: zod
+				.number()
+				.describe("Sort order (position) of the category"),
+			locale: zod.string().describe("Locale/language of the category"),
+		})
+		.describe("Category data transfer object"),
+	gallery: zod
+		.array(
+			zod
+				.object({
+					id: zod.string().describe("ID of the gallery item"),
+					listingId: zod
+						.string()
+						.describe("ID of the listing this image belongs to"),
+					uploadId: zod
+						.string()
+						.describe("ID of the upload this image belongs to"),
+					sort: zod
+						.number()
+						.describe(
+							"Sort order of the image in the listing's gallery",
+						),
+					upload: zod
+						.object({
+							id: zod.string().describe("ID of the upload"),
+							url: zod
+								.url()
+								.describe("Public URL to the uploaded file"),
+						})
+						.describe("Upload data transfer object"),
+				})
+				.describe("Gallery data transfer object"),
+		)
+		.describe("Array of listing gallery images"),
+});
 
 /**
  * Returns listings based on provided parameters
@@ -376,129 +1161,543 @@ export const apiListingCollectionBodyCursorPageMin = 0;
 
 export const apiListingCollectionBodyCursorSizeMax = 1000;
 
+export const apiListingCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiListingCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiListingCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Explicit geo sorting"),
+					])
+					.describe("Sort object for listing collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for listing collection");
 
-
-export const apiListingCollectionBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiListingCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiListingCollectionBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).optional()
-}).describe('Query object for listing collection')
-
-export const apiListingCollectionResponse = zod.object({
-  "data": zod.array(zod.object({
-  "id": zod.string().describe('ID of the listing'),
-  "price": zod.number().describe('Price of the listing'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)'),
-  "condition": zod.number().describe('Condition of the item (0-based index)'),
-  "age": zod.number().describe('Age of the item (0-based index)'),
-  "locationId": zod.string().describe('ID of the location'),
-  "categoryId": zod.string().describe('ID of the category'),
-  "expiresAt": zod.string().describe('Expiration timestamp'),
-  "createdAt": zod.string().describe('Creation timestamp'),
-  "updatedAt": zod.string().describe('Last update timestamp'),
-  "vendor": zod.string().nullish().describe('Vendor/manufacturer of the item'),
-  "model": zod.string().nullish().describe('Model of the item'),
-  "location": zod.object({
-  "id": zod.string(),
-  "query": zod.string().describe('The query that was used to get the location'),
-  "lang": zod.string().describe('The language that was used to get the location'),
-  "country": zod.string().describe('The country that the location is in'),
-  "code": zod.string().describe('Country code'),
-  "county": zod.string().nullish().describe('The county that the location is in'),
-  "municipality": zod.string().nullish().describe('The municipality that the location is in'),
-  "state": zod.string().nullish().describe('The state that the location is in'),
-  "address": zod.string().describe('Full address preview of a location'),
-  "city": zod.string().nullish().describe('The city that the location is in'),
-  "street": zod.string().nullish().describe('The street that the location is on'),
-  "zip": zod.string().nullish().describe('The postal/zip code of the location'),
-  "confidence": zod.number().describe('Confidence score of the location (based on query)'),
-  "hash": zod.string().describe('Used to uniquely identify this location entry'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
-}).describe('Location data transfer object'),
-  "category": zod.object({
-  "id": zod.string().describe('ID of the category'),
-  "group": zod.string().describe('Group/name of the category'),
-  "category": zod.string().describe('Category name within the group'),
-  "slug": zod.string().describe('Slug of the category'),
-  "sort": zod.number().describe('Sort order (position) of the category'),
-  "locale": zod.string().describe('Locale/language of the category')
-}).describe('Category data transfer object'),
-  "gallery": zod.array(zod.object({
-  "id": zod.string().describe('ID of the gallery item'),
-  "listingId": zod.string().describe('ID of the listing this image belongs to'),
-  "uploadId": zod.string().describe('ID of the upload this image belongs to'),
-  "sort": zod.number().describe('Sort order of the image in the listing\'s gallery'),
-  "upload": zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')
-}).describe('Gallery data transfer object')).describe('Array of listing gallery images')
-})),
-  "more": zod.boolean().describe('Whether there are more items to fetch')
-}).describe('Collection of listings')
-
+export const apiListingCollectionResponse = zod
+	.object({
+		data: zod.array(
+			zod.object({
+				id: zod.string().describe("ID of the listing"),
+				price: zod.number().describe("Price of the listing"),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.describe("Currency code (ISO 4217)"),
+				condition: zod
+					.number()
+					.describe("Condition of the item (0-based index)"),
+				age: zod.number().describe("Age of the item (0-based index)"),
+				locationId: zod.string().describe("ID of the location"),
+				categoryId: zod.string().describe("ID of the category"),
+				expiresAt: zod.string().describe("Expiration timestamp"),
+				createdAt: zod.string().describe("Creation timestamp"),
+				updatedAt: zod.string().describe("Last update timestamp"),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe("Vendor/manufacturer of the item"),
+				model: zod.string().nullish().describe("Model of the item"),
+				location: zod
+					.object({
+						id: zod.string(),
+						query: zod
+							.string()
+							.describe(
+								"The query that was used to get the location",
+							),
+						lang: zod
+							.string()
+							.describe(
+								"The language that was used to get the location",
+							),
+						country: zod
+							.string()
+							.describe("The country that the location is in"),
+						code: zod.string().describe("Country code"),
+						county: zod
+							.string()
+							.nullish()
+							.describe("The county that the location is in"),
+						municipality: zod
+							.string()
+							.nullish()
+							.describe(
+								"The municipality that the location is in",
+							),
+						state: zod
+							.string()
+							.nullish()
+							.describe("The state that the location is in"),
+						address: zod
+							.string()
+							.describe("Full address preview of a location"),
+						city: zod
+							.string()
+							.nullish()
+							.describe("The city that the location is in"),
+						street: zod
+							.string()
+							.nullish()
+							.describe("The street that the location is on"),
+						zip: zod
+							.string()
+							.nullish()
+							.describe("The postal/zip code of the location"),
+						confidence: zod
+							.number()
+							.describe(
+								"Confidence score of the location (based on query)",
+							),
+						hash: zod
+							.string()
+							.describe(
+								"Used to uniquely identify this location entry",
+							),
+						lat: zod.number().describe("Latitude of the location"),
+						lon: zod.number().describe("Longitude of the location"),
+						geo: zod
+							.string()
+							.describe(
+								"Encoded PostGIS geometry of the location",
+							),
+					})
+					.describe("Location data transfer object"),
+				category: zod
+					.object({
+						id: zod.string().describe("ID of the category"),
+						group: zod
+							.string()
+							.describe("Group/name of the category"),
+						category: zod
+							.string()
+							.describe("Category name within the group"),
+						slug: zod.string().describe("Slug of the category"),
+						sort: zod
+							.number()
+							.describe("Sort order (position) of the category"),
+						locale: zod
+							.string()
+							.describe("Locale/language of the category"),
+					})
+					.describe("Category data transfer object"),
+				gallery: zod
+					.array(
+						zod
+							.object({
+								id: zod
+									.string()
+									.describe("ID of the gallery item"),
+								listingId: zod
+									.string()
+									.describe(
+										"ID of the listing this image belongs to",
+									),
+								uploadId: zod
+									.string()
+									.describe(
+										"ID of the upload this image belongs to",
+									),
+								sort: zod
+									.number()
+									.describe(
+										"Sort order of the image in the listing's gallery",
+									),
+								upload: zod
+									.object({
+										id: zod
+											.string()
+											.describe("ID of the upload"),
+										url: zod
+											.url()
+											.describe(
+												"Public URL to the uploaded file",
+											),
+									})
+									.describe("Upload data transfer object"),
+							})
+							.describe("Gallery data transfer object"),
+					)
+					.describe("Array of listing gallery images"),
+			}),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
+	})
+	.describe("Collection of listings");
 
 /**
  * Returns count of listings based on provided query
@@ -507,80 +1706,399 @@ export const apiListingCountBodyCursorPageMin = 0;
 
 export const apiListingCountBodyCursorSizeMax = 1000;
 
+export const apiListingCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiListingCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiListingCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Explicit geo sorting"),
+					])
+					.describe("Sort object for listing collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for listing collection");
 
-
-export const apiListingCountBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiListingCountBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiListingCountBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).optional()
-}).describe('Query object for listing collection')
-
-export const apiListingCountResponse = zod.object({
-  "where": zod.number().describe('Count of items based on provided where query.'),
-  "filter": zod.number().describe('Count of items based on provided filter query.'),
-  "total": zod.number().describe('Total count of items (no filters applied).')
-}).describe('Complex count of items based on provided query.')
-
+export const apiListingCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
 
 /**
  * Return a gallery item based on the provided query
@@ -589,44 +2107,101 @@ export const apiGalleryFetchBodyCursorPageMin = 0;
 
 export const apiGalleryFetchBodyCursorSizeMax = 1000;
 
+export const apiGalleryFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiGalleryFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiGalleryFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+				listingId: zod.string().nullish().describe("Exact listing id"),
+			})
+			.optional()
+			.describe("User-land filters for gallery items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+				listingId: zod.string().nullish().describe("Exact listing id"),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"sort",
+							"createdAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for gallery collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for gallery collection");
 
-
-export const apiGalleryFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiGalleryFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiGalleryFetchBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id'),
-  "listingId": zod.string().nullish().describe('Exact listing id')
-}).optional().describe('User-land filters for gallery items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id'),
-  "listingId": zod.string().nullish().describe('Exact listing id')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['sort', 'createdAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for gallery collection')).optional()
-}).describe('Query object for gallery collection')
-
-export const apiGalleryFetchResponse = zod.object({
-  "id": zod.string().describe('ID of the gallery item'),
-  "listingId": zod.string().describe('ID of the listing this image belongs to'),
-  "uploadId": zod.string().describe('ID of the upload this image belongs to'),
-  "sort": zod.number().describe('Sort order of the image in the listing\'s gallery'),
-  "upload": zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')
-}).describe('Gallery data transfer object')
-
+export const apiGalleryFetchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the gallery item"),
+		listingId: zod
+			.string()
+			.describe("ID of the listing this image belongs to"),
+		uploadId: zod
+			.string()
+			.describe("ID of the upload this image belongs to"),
+		sort: zod
+			.number()
+			.describe("Sort order of the image in the listing's gallery"),
+		upload: zod
+			.object({
+				id: zod.string().describe("ID of the upload"),
+				url: zod.url().describe("Public URL to the uploaded file"),
+			})
+			.describe("Upload data transfer object"),
+	})
+	.describe("Gallery data transfer object");
 
 /**
  * Returns gallery items based on provided parameters
@@ -635,47 +2210,112 @@ export const apiGalleryCollectionBodyCursorPageMin = 0;
 
 export const apiGalleryCollectionBodyCursorSizeMax = 1000;
 
+export const apiGalleryCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiGalleryCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiGalleryCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+				listingId: zod.string().nullish().describe("Exact listing id"),
+			})
+			.optional()
+			.describe("User-land filters for gallery items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+				listingId: zod.string().nullish().describe("Exact listing id"),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"sort",
+							"createdAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for gallery collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for gallery collection");
 
-
-export const apiGalleryCollectionBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiGalleryCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiGalleryCollectionBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id'),
-  "listingId": zod.string().nullish().describe('Exact listing id')
-}).optional().describe('User-land filters for gallery items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id'),
-  "listingId": zod.string().nullish().describe('Exact listing id')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['sort', 'createdAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for gallery collection')).optional()
-}).describe('Query object for gallery collection')
-
-export const apiGalleryCollectionResponse = zod.object({
-  "data": zod.array(zod.object({
-  "id": zod.string().describe('ID of the gallery item'),
-  "listingId": zod.string().describe('ID of the listing this image belongs to'),
-  "uploadId": zod.string().describe('ID of the upload this image belongs to'),
-  "sort": zod.number().describe('Sort order of the image in the listing\'s gallery'),
-  "upload": zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')
-}).describe('Gallery data transfer object')),
-  "more": zod.boolean().describe('Whether there are more items to fetch')
-}).describe('Collection of gallery items')
-
+export const apiGalleryCollectionResponse = zod
+	.object({
+		data: zod.array(
+			zod
+				.object({
+					id: zod.string().describe("ID of the gallery item"),
+					listingId: zod
+						.string()
+						.describe("ID of the listing this image belongs to"),
+					uploadId: zod
+						.string()
+						.describe("ID of the upload this image belongs to"),
+					sort: zod
+						.number()
+						.describe(
+							"Sort order of the image in the listing's gallery",
+						),
+					upload: zod
+						.object({
+							id: zod.string().describe("ID of the upload"),
+							url: zod
+								.url()
+								.describe("Public URL to the uploaded file"),
+						})
+						.describe("Upload data transfer object"),
+				})
+				.describe("Gallery data transfer object"),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
+	})
+	.describe("Collection of gallery items");
 
 /**
  * Returns count of gallery items based on provided query
@@ -684,47 +2324,103 @@ export const apiGalleryCountBodyCursorPageMin = 0;
 
 export const apiGalleryCountBodyCursorSizeMax = 1000;
 
+export const apiGalleryCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiGalleryCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiGalleryCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+				listingId: zod.string().nullish().describe("Exact listing id"),
+			})
+			.optional()
+			.describe("User-land filters for gallery items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+				listingId: zod.string().nullish().describe("Exact listing id"),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"sort",
+							"createdAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for gallery collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for gallery collection");
 
-
-export const apiGalleryCountBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiGalleryCountBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiGalleryCountBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id'),
-  "listingId": zod.string().nullish().describe('Exact listing id')
-}).optional().describe('User-land filters for gallery items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id'),
-  "listingId": zod.string().nullish().describe('Exact listing id')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['sort', 'createdAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for gallery collection')).optional()
-}).describe('Query object for gallery collection')
-
-export const apiGalleryCountResponse = zod.object({
-  "where": zod.number().describe('Count of items based on provided where query.'),
-  "filter": zod.number().describe('Count of items based on provided filter query.'),
-  "total": zod.number().describe('Total count of items (no filters applied).')
-}).describe('Complex count of items based on provided query.')
-
+export const apiGalleryCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
 
 /**
  * Create a new upload
  */
-export const apiUploadCreateBody = zod.object({
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Data for creating a new upload')
-
+export const apiUploadCreateBody = zod
+	.object({
+		url: zod.url().describe("Public URL to the uploaded file"),
+	})
+	.describe("Data for creating a new upload");
 
 /**
  * Return an upload item based on the provided query
@@ -733,34 +2429,82 @@ export const apiUploadFetchBodyCursorPageMin = 0;
 
 export const apiUploadFetchBodyCursorSizeMax = 1000;
 
+export const apiUploadFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiUploadFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiUploadFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+			})
+			.optional()
+			.describe("User-land filters for upload items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for upload collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for upload collection");
 
-
-export const apiUploadFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiUploadFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiUploadFetchBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.')
-}).optional().describe('User-land filters for upload items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['createdAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for upload collection')).optional()
-}).describe('Query object for upload collection')
-
-export const apiUploadFetchResponse = zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')
-
+export const apiUploadFetchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the upload"),
+		url: zod.url().describe("Public URL to the uploaded file"),
+	})
+	.describe("Upload data transfer object");
 
 /**
  * Returns upload items based on provided parameters
@@ -769,37 +2513,89 @@ export const apiUploadCollectionBodyCursorPageMin = 0;
 
 export const apiUploadCollectionBodyCursorSizeMax = 1000;
 
+export const apiUploadCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiUploadCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiUploadCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+			})
+			.optional()
+			.describe("User-land filters for upload items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for upload collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for upload collection");
 
-
-export const apiUploadCollectionBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiUploadCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiUploadCollectionBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.')
-}).optional().describe('User-land filters for upload items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['createdAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for upload collection')).optional()
-}).describe('Query object for upload collection')
-
-export const apiUploadCollectionResponse = zod.object({
-  "data": zod.array(zod.object({
-  "id": zod.string().describe('ID of the upload'),
-  "url": zod.url().describe('Public URL to the uploaded file')
-}).describe('Upload data transfer object')),
-  "more": zod.boolean().describe('Whether there are more items to fetch')
-}).describe('Collection of upload items')
-
+export const apiUploadCollectionResponse = zod
+	.object({
+		data: zod.array(
+			zod
+				.object({
+					id: zod.string().describe("ID of the upload"),
+					url: zod.url().describe("Public URL to the uploaded file"),
+				})
+				.describe("Upload data transfer object"),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
+	})
+	.describe("Collection of upload items");
 
 /**
  * Returns count of upload items based on provided query
@@ -808,35 +2604,89 @@ export const apiUploadCountBodyCursorPageMin = 0;
 
 export const apiUploadCountBodyCursorSizeMax = 1000;
 
+export const apiUploadCountBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiUploadCountBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiUploadCountBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+			})
+			.optional()
+			.describe("User-land filters for upload items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for upload collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for upload collection");
 
-
-export const apiUploadCountBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiUploadCountBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiUploadCountBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.')
-}).optional().describe('User-land filters for upload items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['createdAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for upload collection')).optional()
-}).describe('Query object for upload collection')
-
-export const apiUploadCountResponse = zod.object({
-  "where": zod.number().describe('Count of items based on provided where query.'),
-  "filter": zod.number().describe('Count of items based on provided filter query.'),
-  "total": zod.number().describe('Total count of items (no filters applied).')
-}).describe('Complex count of items based on provided query.')
-
+export const apiUploadCountResponse = zod
+	.object({
+		where: zod
+			.number()
+			.describe("Count of items based on provided where query."),
+		filter: zod
+			.number()
+			.describe("Count of items based on provided filter query."),
+		total: zod
+			.number()
+			.describe("Total count of items (no filters applied)."),
+	})
+	.describe("Complex count of items based on provided query.");
 
 /**
  * Return a location autocomplete
@@ -846,34 +2696,64 @@ export const apiLocationAutocompleteQueryTextMin = 3;
 export const apiLocationAutocompleteQueryLangMin = 2;
 export const apiLocationAutocompleteQueryLangMax = 8;
 
-
-
 export const apiLocationAutocompleteQueryParams = zod.object({
-  "text": zod.string().min(apiLocationAutocompleteQueryTextMin),
-  "lang": zod.string().min(apiLocationAutocompleteQueryLangMin).max(apiLocationAutocompleteQueryLangMax)
-})
+	text: zod.string().min(apiLocationAutocompleteQueryTextMin),
+	lang: zod
+		.string()
+		.min(apiLocationAutocompleteQueryLangMin)
+		.max(apiLocationAutocompleteQueryLangMax),
+});
 
-export const apiLocationAutocompleteResponseItem = zod.object({
-  "id": zod.string(),
-  "query": zod.string().describe('The query that was used to get the location'),
-  "lang": zod.string().describe('The language that was used to get the location'),
-  "country": zod.string().describe('The country that the location is in'),
-  "code": zod.string().describe('Country code'),
-  "county": zod.string().nullish().describe('The county that the location is in'),
-  "municipality": zod.string().nullish().describe('The municipality that the location is in'),
-  "state": zod.string().nullish().describe('The state that the location is in'),
-  "address": zod.string().describe('Full address preview of a location'),
-  "city": zod.string().nullish().describe('The city that the location is in'),
-  "street": zod.string().nullish().describe('The street that the location is on'),
-  "zip": zod.string().nullish().describe('The postal/zip code of the location'),
-  "confidence": zod.number().describe('Confidence score of the location (based on query)'),
-  "hash": zod.string().describe('Used to uniquely identify this location entry'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
-}).describe('Location data transfer object')
-export const apiLocationAutocompleteResponse = zod.array(apiLocationAutocompleteResponseItem)
-
+export const apiLocationAutocompleteResponseItem = zod
+	.object({
+		id: zod.string(),
+		query: zod
+			.string()
+			.describe("The query that was used to get the location"),
+		lang: zod
+			.string()
+			.describe("The language that was used to get the location"),
+		country: zod.string().describe("The country that the location is in"),
+		code: zod.string().describe("Country code"),
+		county: zod
+			.string()
+			.nullish()
+			.describe("The county that the location is in"),
+		municipality: zod
+			.string()
+			.nullish()
+			.describe("The municipality that the location is in"),
+		state: zod
+			.string()
+			.nullish()
+			.describe("The state that the location is in"),
+		address: zod.string().describe("Full address preview of a location"),
+		city: zod
+			.string()
+			.nullish()
+			.describe("The city that the location is in"),
+		street: zod
+			.string()
+			.nullish()
+			.describe("The street that the location is on"),
+		zip: zod
+			.string()
+			.nullish()
+			.describe("The postal/zip code of the location"),
+		confidence: zod
+			.number()
+			.describe("Confidence score of the location (based on query)"),
+		hash: zod
+			.string()
+			.describe("Used to uniquely identify this location entry"),
+		lat: zod.number().describe("Latitude of the location"),
+		lon: zod.number().describe("Longitude of the location"),
+		geo: zod.string().describe("Encoded PostGIS geometry of the location"),
+	})
+	.describe("Location data transfer object");
+export const apiLocationAutocompleteResponse = zod.array(
+	apiLocationAutocompleteResponseItem,
+);
 
 /**
  * Return a location based on the provided query
@@ -882,216 +2762,891 @@ export const apiLocationFetchBodyCursorPageMin = 0;
 
 export const apiLocationFetchBodyCursorSizeMax = 1000;
 
+export const apiLocationFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiLocationFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiLocationFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				query: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact query that was used to get the location",
+					),
+				lang: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact language that was used to get the location",
+					),
+				country: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact country of the location",
+					),
+				code: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact country code of the location",
+					),
+				confidenceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches locations with confidence greater than or equal to the provided value",
+					),
+			})
+			.optional()
+			.describe("User-land filters"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				query: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact query that was used to get the location",
+					),
+				lang: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact language that was used to get the location",
+					),
+				country: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact country of the location",
+					),
+				code: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches the exact country code of the location",
+					),
+				confidenceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches locations with confidence greater than or equal to the provided value",
+					),
+			})
+			.optional()
+			.describe("App-based filters"),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"confidence",
+							"query",
+							"country",
+							"address",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for location collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for location collection");
 
-
-export const apiLocationFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiLocationFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiLocationFetchBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "query": zod.string().nullish().describe('This filter matches the exact query that was used to get the location'),
-  "lang": zod.string().nullish().describe('This filter matches the exact language that was used to get the location'),
-  "country": zod.string().nullish().describe('This filter matches the exact country of the location'),
-  "code": zod.string().nullish().describe('This filter matches the exact country code of the location'),
-  "confidenceMin": zod.number().nullish().describe('This filter matches locations with confidence greater than or equal to the provided value')
-}).optional().describe('User-land filters'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "query": zod.string().nullish().describe('This filter matches the exact query that was used to get the location'),
-  "lang": zod.string().nullish().describe('This filter matches the exact language that was used to get the location'),
-  "country": zod.string().nullish().describe('This filter matches the exact country of the location'),
-  "code": zod.string().nullish().describe('This filter matches the exact country code of the location'),
-  "confidenceMin": zod.number().nullish().describe('This filter matches locations with confidence greater than or equal to the provided value')
-}).optional().describe('App-based filters'),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['confidence', 'query', 'country', 'address']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for location collection')).optional()
-}).describe('Query object for location collection')
-
-export const apiLocationFetchResponse = zod.object({
-  "id": zod.string(),
-  "query": zod.string().describe('The query that was used to get the location'),
-  "lang": zod.string().describe('The language that was used to get the location'),
-  "country": zod.string().describe('The country that the location is in'),
-  "code": zod.string().describe('Country code'),
-  "county": zod.string().nullish().describe('The county that the location is in'),
-  "municipality": zod.string().nullish().describe('The municipality that the location is in'),
-  "state": zod.string().nullish().describe('The state that the location is in'),
-  "address": zod.string().describe('Full address preview of a location'),
-  "city": zod.string().nullish().describe('The city that the location is in'),
-  "street": zod.string().nullish().describe('The street that the location is on'),
-  "zip": zod.string().nullish().describe('The postal/zip code of the location'),
-  "confidence": zod.number().describe('Confidence score of the location (based on query)'),
-  "hash": zod.string().describe('Used to uniquely identify this location entry'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "geo": zod.string().describe('Encoded PostGIS geometry of the location')
-}).describe('Location data transfer object')
-
+export const apiLocationFetchResponse = zod
+	.object({
+		id: zod.string(),
+		query: zod
+			.string()
+			.describe("The query that was used to get the location"),
+		lang: zod
+			.string()
+			.describe("The language that was used to get the location"),
+		country: zod.string().describe("The country that the location is in"),
+		code: zod.string().describe("Country code"),
+		county: zod
+			.string()
+			.nullish()
+			.describe("The county that the location is in"),
+		municipality: zod
+			.string()
+			.nullish()
+			.describe("The municipality that the location is in"),
+		state: zod
+			.string()
+			.nullish()
+			.describe("The state that the location is in"),
+		address: zod.string().describe("Full address preview of a location"),
+		city: zod
+			.string()
+			.nullish()
+			.describe("The city that the location is in"),
+		street: zod
+			.string()
+			.nullish()
+			.describe("The street that the location is on"),
+		zip: zod
+			.string()
+			.nullish()
+			.describe("The postal/zip code of the location"),
+		confidence: zod
+			.number()
+			.describe("Confidence score of the location (based on query)"),
+		hash: zod
+			.string()
+			.describe("Used to uniquely identify this location entry"),
+		lat: zod.number().describe("Latitude of the location"),
+		lon: zod.number().describe("Longitude of the location"),
+		geo: zod.string().describe("Encoded PostGIS geometry of the location"),
+	})
+	.describe("Location data transfer object");
 
 /**
  * Generate a pre-signed URL for direct S3-compatible PUT upload (private bucket). Expiration is server-controlled. A random suffix is always added.
  */
 export const apiS3PresignBodyPathMin = 3;
 
-
-
 export const apiS3PresignBody = zod.object({
-  "path": zod.string().min(apiS3PresignBodyPathMin).describe('Object path. After stripping leading \'/\', must start with `<userId>/`'),
-  "extension": zod.enum(['webp', 'png', 'jpg', 'jpeg', 'avif', 'heic', 'heif']).describe('File extension. Must be one of the allowed extensions.'),
-  "contentType": zod.enum(['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/heic', 'image/heif']).describe('Browser-provided Content-Type used for PUT upload.')
-})
-
+	path: zod
+		.string()
+		.min(apiS3PresignBodyPathMin)
+		.describe(
+			"Object path. After stripping leading '/', must start with `<userId>/`",
+		),
+	extension: zod
+		.enum([
+			"webp",
+			"png",
+			"jpg",
+			"jpeg",
+			"avif",
+			"heic",
+			"heif",
+		])
+		.describe("File extension. Must be one of the allowed extensions."),
+	contentType: zod
+		.enum([
+			"image/jpeg",
+			"image/png",
+			"image/webp",
+			"image/avif",
+			"image/heic",
+			"image/heif",
+		])
+		.describe("Browser-provided Content-Type used for PUT upload."),
+});
 
 /**
  * Update user extended information
  */
-export const apiUserExPatchBody = zod.object({
-  "locationId": zod.string().nullish().describe('Default location for the user - used for listings & listing sorting'),
-  "side": zod.enum(['seller', 'buyer']).nullish().describe('User side - whether they are a seller or buyer')
-}).describe('Schema for patching user extended information')
-
+export const apiUserExPatchBody = zod
+	.object({
+		locationId: zod
+			.string()
+			.nullish()
+			.describe(
+				"Default location for the user - used for listings & listing sorting",
+			),
+		side: zod
+			.enum([
+				"seller",
+				"buyer",
+			])
+			.nullish()
+			.describe("User side - whether they are a seller or buyer"),
+	})
+	.describe("Schema for patching user extended information");
 
 /**
  * Create a new feed item
  */
 
-
-
 export const apiFeedCreateBody = zod.object({
-  "name": zod.string().min(1).describe('Name of the feed'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).describe('User-land filters'),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection'))
-})
-
+	name: zod.string().min(1).describe("Name of the feed"),
+	filter: zod
+		.object({
+			id: zod
+				.string()
+				.nullish()
+				.describe("This filter matches the exact id"),
+			idIn: zod
+				.array(zod.string())
+				.nullish()
+				.describe("This filter matches the ids"),
+			fulltext: zod
+				.string()
+				.nullish()
+				.describe("Runs fulltext on the collection/query."),
+			priceMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with price greater than or equal to the provided value",
+				),
+			priceMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with price less than or equal to the provided value",
+				),
+			conditionMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with condition greater than or equal to the provided value",
+				),
+			conditionMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with condition less than or equal to the provided value",
+				),
+			conditionIn: zod
+				.array(zod.number())
+				.nullish()
+				.describe(
+					"This filter matches listings with conditions in the provided array",
+				),
+			ageMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with age greater than or equal to the provided value",
+				),
+			ageMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with age less than or equal to the provided value",
+				),
+			locationId: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with the exact location ID",
+				),
+			locationIdIn: zod
+				.array(zod.string())
+				.nullish()
+				.describe(
+					"This filter matches listings with location IDs in the provided array",
+				),
+			categoryId: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with the exact category ID",
+				),
+			categoryIdIn: zod
+				.array(zod.string())
+				.nullish()
+				.describe(
+					"This filter matches listings with category IDs in the provided array",
+				),
+			currency: zod
+				.enum([
+					"CZK",
+					"EUR",
+					"USD",
+					"GBP",
+					"PLN",
+					"HUF",
+					"CHF",
+				])
+				.nullish()
+				.describe(
+					"This filter matches listings with the exact currency code",
+				),
+			currencyIn: zod
+				.array(
+					zod
+						.enum([
+							"CZK",
+							"EUR",
+							"USD",
+							"GBP",
+							"PLN",
+							"HUF",
+							"CHF",
+						])
+						.describe("Currency code (ISO 4217)"),
+				)
+				.nullish()
+				.describe(
+					"This filter matches listings with currency codes in the provided array",
+				),
+			expiresAtBefore: zod.iso
+				.date()
+				.nullish()
+				.describe(
+					"This filter matches listings that expire before the provided date",
+				),
+			expiresAtAfter: zod.iso
+				.date()
+				.nullish()
+				.describe(
+					"This filter matches listings that expire after the provided date",
+				),
+			rangeMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with range greater than or equal to the provided value (meters)",
+				),
+			rangeMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with range less than or equal to the provided value (meters)",
+				),
+			vendor: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with vendor matching the provided value",
+				),
+			model: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with model matching the provided value",
+				),
+		})
+		.describe("User-land filters"),
+	sort: zod.array(
+		zod
+			.union([
+				zod
+					.object({
+						type: zod
+							.enum([
+								"listing",
+							])
+							.describe("Common listing sort keys"),
+						value: zod.enum([
+							"price",
+							"condition",
+							"age",
+							"createdAt",
+							"updatedAt",
+							"expiresAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Common listing sort keys"),
+				zod
+					.object({
+						type: zod
+							.enum([
+								"geo",
+							])
+							.describe("Explicit geo sorting"),
+						value: zod
+							.enum([
+								"geo",
+							])
+							.describe(
+								"Just keeping the same API with rest of sorting values.",
+							),
+						lon: zod.number().describe("Longitude of the location"),
+						lat: zod.number().describe("Latitude of the location"),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Explicit geo sorting"),
+			])
+			.describe("Sort object for listing collection"),
+	),
+});
 
 /**
  * Update an existing feed item
  */
 
-
-
-
 export const apiFeedPatchBody = zod.object({
-  "id": zod.string().min(1),
-  "name": zod.string().min(1).optional().describe('Name of the feed'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).describe('User-land filters').and(zod.unknown().describe('Filter used to fetch the listings')).optional(),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).optional().describe('Sort used to fetch the listings')
-})
+	id: zod.string().min(1),
+	name: zod.string().min(1).optional().describe("Name of the feed"),
+	filter: zod
+		.object({
+			id: zod
+				.string()
+				.nullish()
+				.describe("This filter matches the exact id"),
+			idIn: zod
+				.array(zod.string())
+				.nullish()
+				.describe("This filter matches the ids"),
+			fulltext: zod
+				.string()
+				.nullish()
+				.describe("Runs fulltext on the collection/query."),
+			priceMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with price greater than or equal to the provided value",
+				),
+			priceMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with price less than or equal to the provided value",
+				),
+			conditionMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with condition greater than or equal to the provided value",
+				),
+			conditionMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with condition less than or equal to the provided value",
+				),
+			conditionIn: zod
+				.array(zod.number())
+				.nullish()
+				.describe(
+					"This filter matches listings with conditions in the provided array",
+				),
+			ageMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with age greater than or equal to the provided value",
+				),
+			ageMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with age less than or equal to the provided value",
+				),
+			locationId: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with the exact location ID",
+				),
+			locationIdIn: zod
+				.array(zod.string())
+				.nullish()
+				.describe(
+					"This filter matches listings with location IDs in the provided array",
+				),
+			categoryId: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with the exact category ID",
+				),
+			categoryIdIn: zod
+				.array(zod.string())
+				.nullish()
+				.describe(
+					"This filter matches listings with category IDs in the provided array",
+				),
+			currency: zod
+				.enum([
+					"CZK",
+					"EUR",
+					"USD",
+					"GBP",
+					"PLN",
+					"HUF",
+					"CHF",
+				])
+				.nullish()
+				.describe(
+					"This filter matches listings with the exact currency code",
+				),
+			currencyIn: zod
+				.array(
+					zod
+						.enum([
+							"CZK",
+							"EUR",
+							"USD",
+							"GBP",
+							"PLN",
+							"HUF",
+							"CHF",
+						])
+						.describe("Currency code (ISO 4217)"),
+				)
+				.nullish()
+				.describe(
+					"This filter matches listings with currency codes in the provided array",
+				),
+			expiresAtBefore: zod.iso
+				.date()
+				.nullish()
+				.describe(
+					"This filter matches listings that expire before the provided date",
+				),
+			expiresAtAfter: zod.iso
+				.date()
+				.nullish()
+				.describe(
+					"This filter matches listings that expire after the provided date",
+				),
+			rangeMin: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with range greater than or equal to the provided value (meters)",
+				),
+			rangeMax: zod
+				.number()
+				.nullish()
+				.describe(
+					"This filter matches listings with range less than or equal to the provided value (meters)",
+				),
+			vendor: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with vendor matching the provided value",
+				),
+			model: zod
+				.string()
+				.nullish()
+				.describe(
+					"This filter matches listings with model matching the provided value",
+				),
+		})
+		.describe("User-land filters")
+		.and(zod.unknown().describe("Filter used to fetch the listings"))
+		.optional(),
+	sort: zod
+		.array(
+			zod
+				.union([
+					zod
+						.object({
+							type: zod
+								.enum([
+									"listing",
+								])
+								.describe("Common listing sort keys"),
+							value: zod.enum([
+								"price",
+								"condition",
+								"age",
+								"createdAt",
+								"updatedAt",
+								"expiresAt",
+							]),
+							sort: zod
+								.enum([
+									"asc",
+									"desc",
+								])
+								.nullish(),
+						})
+						.describe("Common listing sort keys"),
+					zod
+						.object({
+							type: zod
+								.enum([
+									"geo",
+								])
+								.describe("Explicit geo sorting"),
+							value: zod
+								.enum([
+									"geo",
+								])
+								.describe(
+									"Just keeping the same API with rest of sorting values.",
+								),
+							lon: zod
+								.number()
+								.describe("Longitude of the location"),
+							lat: zod
+								.number()
+								.describe("Latitude of the location"),
+							sort: zod
+								.enum([
+									"asc",
+									"desc",
+								])
+								.nullish(),
+						})
+						.describe("Explicit geo sorting"),
+				])
+				.describe("Sort object for listing collection"),
+		)
+		.optional()
+		.describe("Sort used to fetch the listings"),
+});
 
-export const apiFeedPatchResponse = zod.object({
-  "id": zod.string().describe('ID of the feed'),
-  "name": zod.string().describe('Name of the feed'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).describe('User-land filters').and(zod.unknown().describe('Filter used to fetch the listings')),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).describe('Filter used to fetch the listings')
-}).describe('Feed data transfer object')
-
+export const apiFeedPatchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the feed"),
+		name: zod.string().describe("Name of the feed"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.describe("User-land filters")
+			.and(zod.unknown().describe("Filter used to fetch the listings")),
+		sort: zod
+			.array(
+				zod
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Explicit geo sorting"),
+					])
+					.describe("Sort object for listing collection"),
+			)
+			.describe("Filter used to fetch the listings"),
+	})
+	.describe("Feed data transfer object");
 
 /**
  * Return a feed item based on the provided query
@@ -1100,71 +3655,296 @@ export const apiFeedFetchBodyCursorPageMin = 0;
 
 export const apiFeedFetchBodyCursorSizeMax = 1000;
 
+export const apiFeedFetchBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiFeedFetchBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiFeedFetchBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.optional()
+			.describe("User-land filters for feed items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.describe("User-land filters for feed items")
+			.and(zod.unknown().describe("App-based filters"))
+			.optional(),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+							"updatedAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for feed collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for feed collection");
 
-
-export const apiFeedFetchBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiFeedFetchBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiFeedFetchBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id')
-}).optional().describe('User-land filters for feed items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id')
-}).describe('User-land filters for feed items').and(zod.unknown().describe('App-based filters')).optional(),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['createdAt', 'updatedAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for feed collection')).optional()
-}).describe('Query object for feed collection')
-
-export const apiFeedFetchResponse = zod.object({
-  "id": zod.string().describe('ID of the feed'),
-  "name": zod.string().describe('Name of the feed'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).describe('User-land filters').and(zod.unknown().describe('Filter used to fetch the listings')),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).describe('Filter used to fetch the listings')
-}).describe('Feed data transfer object')
-
+export const apiFeedFetchResponse = zod
+	.object({
+		id: zod.string().describe("ID of the feed"),
+		name: zod.string().describe("Name of the feed"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				priceMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price greater than or equal to the provided value",
+					),
+				priceMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with price less than or equal to the provided value",
+					),
+				conditionMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition greater than or equal to the provided value",
+					),
+				conditionMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with condition less than or equal to the provided value",
+					),
+				conditionIn: zod
+					.array(zod.number())
+					.nullish()
+					.describe(
+						"This filter matches listings with conditions in the provided array",
+					),
+				ageMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age greater than or equal to the provided value",
+					),
+				ageMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with age less than or equal to the provided value",
+					),
+				locationId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact location ID",
+					),
+				locationIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with location IDs in the provided array",
+					),
+				categoryId: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact category ID",
+					),
+				categoryIdIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe(
+						"This filter matches listings with category IDs in the provided array",
+					),
+				currency: zod
+					.enum([
+						"CZK",
+						"EUR",
+						"USD",
+						"GBP",
+						"PLN",
+						"HUF",
+						"CHF",
+					])
+					.nullish()
+					.describe(
+						"This filter matches listings with the exact currency code",
+					),
+				currencyIn: zod
+					.array(
+						zod
+							.enum([
+								"CZK",
+								"EUR",
+								"USD",
+								"GBP",
+								"PLN",
+								"HUF",
+								"CHF",
+							])
+							.describe("Currency code (ISO 4217)"),
+					)
+					.nullish()
+					.describe(
+						"This filter matches listings with currency codes in the provided array",
+					),
+				expiresAtBefore: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire before the provided date",
+					),
+				expiresAtAfter: zod.iso
+					.date()
+					.nullish()
+					.describe(
+						"This filter matches listings that expire after the provided date",
+					),
+				rangeMin: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range greater than or equal to the provided value (meters)",
+					),
+				rangeMax: zod
+					.number()
+					.nullish()
+					.describe(
+						"This filter matches listings with range less than or equal to the provided value (meters)",
+					),
+				vendor: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with vendor matching the provided value",
+					),
+				model: zod
+					.string()
+					.nullish()
+					.describe(
+						"This filter matches listings with model matching the provided value",
+					),
+			})
+			.describe("User-land filters")
+			.and(zod.unknown().describe("Filter used to fetch the listings")),
+		sort: zod
+			.array(
+				zod
+					.union([
+						zod
+							.object({
+								type: zod
+									.enum([
+										"listing",
+									])
+									.describe("Common listing sort keys"),
+								value: zod.enum([
+									"price",
+									"condition",
+									"age",
+									"createdAt",
+									"updatedAt",
+									"expiresAt",
+								]),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Common listing sort keys"),
+						zod
+							.object({
+								type: zod
+									.enum([
+										"geo",
+									])
+									.describe("Explicit geo sorting"),
+								value: zod
+									.enum([
+										"geo",
+									])
+									.describe(
+										"Just keeping the same API with rest of sorting values.",
+									),
+								lon: zod
+									.number()
+									.describe("Longitude of the location"),
+								lat: zod
+									.number()
+									.describe("Latitude of the location"),
+								sort: zod
+									.enum([
+										"asc",
+										"desc",
+									])
+									.nullish(),
+							})
+							.describe("Explicit geo sorting"),
+					])
+					.describe("Sort object for listing collection"),
+			)
+			.describe("Filter used to fetch the listings"),
+	})
+	.describe("Feed data transfer object");
 
 /**
  * Returns feed items based on provided parameters
@@ -1173,100 +3953,358 @@ export const apiFeedCollectionBodyCursorPageMin = 0;
 
 export const apiFeedCollectionBodyCursorSizeMax = 1000;
 
+export const apiFeedCollectionBody = zod
+	.object({
+		cursor: zod
+			.object({
+				page: zod
+					.number()
+					.min(apiFeedCollectionBodyCursorPageMin)
+					.describe("Page number (0-indexed)"),
+				size: zod
+					.number()
+					.min(1)
+					.max(apiFeedCollectionBodyCursorSizeMax)
+					.describe("Page size"),
+			})
+			.optional()
+			.describe("Cursor for pagination"),
+		filter: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.optional()
+			.describe("User-land filters for feed items"),
+		where: zod
+			.object({
+				id: zod
+					.string()
+					.nullish()
+					.describe("This filter matches the exact id"),
+				idIn: zod
+					.array(zod.string())
+					.nullish()
+					.describe("This filter matches the ids"),
+				fulltext: zod
+					.string()
+					.nullish()
+					.describe("Runs fulltext on the collection/query."),
+				userId: zod.string().nullish().describe("Exact user id"),
+			})
+			.describe("User-land filters for feed items")
+			.and(zod.unknown().describe("App-based filters"))
+			.optional(),
+		sort: zod
+			.array(
+				zod
+					.object({
+						value: zod.enum([
+							"createdAt",
+							"updatedAt",
+						]),
+						sort: zod
+							.enum([
+								"asc",
+								"desc",
+							])
+							.nullish(),
+					})
+					.describe("Sort object for feed collection"),
+			)
+			.optional(),
+	})
+	.describe("Query object for feed collection");
 
-
-export const apiFeedCollectionBody = zod.object({
-  "cursor": zod.object({
-  "page": zod.number().min(apiFeedCollectionBodyCursorPageMin).describe('Page number (0-indexed)'),
-  "size": zod.number().min(1).max(apiFeedCollectionBodyCursorSizeMax).describe('Page size')
-}).optional().describe('Cursor for pagination'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id')
-}).optional().describe('User-land filters for feed items'),
-  "where": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "userId": zod.string().nullish().describe('Exact user id')
-}).describe('User-land filters for feed items').and(zod.unknown().describe('App-based filters')).optional(),
-  "sort": zod.array(zod.object({
-  "value": zod.enum(['createdAt', 'updatedAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Sort object for feed collection')).optional()
-}).describe('Query object for feed collection')
-
-export const apiFeedCollectionResponse = zod.object({
-  "data": zod.array(zod.object({
-  "id": zod.string().describe('ID of the feed'),
-  "name": zod.string().describe('Name of the feed'),
-  "filter": zod.object({
-  "id": zod.string().nullish().describe('This filter matches the exact id'),
-  "idIn": zod.array(zod.string()).nullish().describe('This filter matches the ids'),
-  "fulltext": zod.string().nullish().describe('Runs fulltext on the collection/query.'),
-  "priceMin": zod.number().nullish().describe('This filter matches listings with price greater than or equal to the provided value'),
-  "priceMax": zod.number().nullish().describe('This filter matches listings with price less than or equal to the provided value'),
-  "conditionMin": zod.number().nullish().describe('This filter matches listings with condition greater than or equal to the provided value'),
-  "conditionMax": zod.number().nullish().describe('This filter matches listings with condition less than or equal to the provided value'),
-  "conditionIn": zod.array(zod.number()).nullish().describe('This filter matches listings with conditions in the provided array'),
-  "ageMin": zod.number().nullish().describe('This filter matches listings with age greater than or equal to the provided value'),
-  "ageMax": zod.number().nullish().describe('This filter matches listings with age less than or equal to the provided value'),
-  "locationId": zod.string().nullish().describe('This filter matches listings with the exact location ID'),
-  "locationIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with location IDs in the provided array'),
-  "categoryId": zod.string().nullish().describe('This filter matches listings with the exact category ID'),
-  "categoryIdIn": zod.array(zod.string()).nullish().describe('This filter matches listings with category IDs in the provided array'),
-  "currency": zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).nullish().describe('This filter matches listings with the exact currency code'),
-  "currencyIn": zod.array(zod.enum(['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']).describe('Currency code (ISO 4217)')).nullish().describe('This filter matches listings with currency codes in the provided array'),
-  "expiresAtBefore": zod.iso.date().nullish().describe('This filter matches listings that expire before the provided date'),
-  "expiresAtAfter": zod.iso.date().nullish().describe('This filter matches listings that expire after the provided date'),
-  "rangeMin": zod.number().nullish().describe('This filter matches listings with range greater than or equal to the provided value (meters)'),
-  "rangeMax": zod.number().nullish().describe('This filter matches listings with range less than or equal to the provided value (meters)'),
-  "vendor": zod.string().nullish().describe('This filter matches listings with vendor matching the provided value'),
-  "model": zod.string().nullish().describe('This filter matches listings with model matching the provided value')
-}).describe('User-land filters').and(zod.unknown().describe('Filter used to fetch the listings')),
-  "sort": zod.array(zod.union([zod.object({
-  "type": zod.enum(['listing']).describe('Common listing sort keys'),
-  "value": zod.enum(['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt']),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Common listing sort keys'),zod.object({
-  "type": zod.enum(['geo']).describe('Explicit geo sorting'),
-  "value": zod.enum(['geo']).describe('Just keeping the same API with rest of sorting values.'),
-  "lon": zod.number().describe('Longitude of the location'),
-  "lat": zod.number().describe('Latitude of the location'),
-  "sort": zod.enum(['asc', 'desc']).nullish()
-}).describe('Explicit geo sorting')]).describe('Sort object for listing collection')).describe('Filter used to fetch the listings')
-}).describe('Feed data transfer object')),
-  "more": zod.boolean().describe('Whether there are more items to fetch')
-}).describe('Collection of feed items')
-
+export const apiFeedCollectionResponse = zod
+	.object({
+		data: zod.array(
+			zod
+				.object({
+					id: zod.string().describe("ID of the feed"),
+					name: zod.string().describe("Name of the feed"),
+					filter: zod
+						.object({
+							id: zod
+								.string()
+								.nullish()
+								.describe("This filter matches the exact id"),
+							idIn: zod
+								.array(zod.string())
+								.nullish()
+								.describe("This filter matches the ids"),
+							fulltext: zod
+								.string()
+								.nullish()
+								.describe(
+									"Runs fulltext on the collection/query.",
+								),
+							priceMin: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with price greater than or equal to the provided value",
+								),
+							priceMax: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with price less than or equal to the provided value",
+								),
+							conditionMin: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with condition greater than or equal to the provided value",
+								),
+							conditionMax: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with condition less than or equal to the provided value",
+								),
+							conditionIn: zod
+								.array(zod.number())
+								.nullish()
+								.describe(
+									"This filter matches listings with conditions in the provided array",
+								),
+							ageMin: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with age greater than or equal to the provided value",
+								),
+							ageMax: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with age less than or equal to the provided value",
+								),
+							locationId: zod
+								.string()
+								.nullish()
+								.describe(
+									"This filter matches listings with the exact location ID",
+								),
+							locationIdIn: zod
+								.array(zod.string())
+								.nullish()
+								.describe(
+									"This filter matches listings with location IDs in the provided array",
+								),
+							categoryId: zod
+								.string()
+								.nullish()
+								.describe(
+									"This filter matches listings with the exact category ID",
+								),
+							categoryIdIn: zod
+								.array(zod.string())
+								.nullish()
+								.describe(
+									"This filter matches listings with category IDs in the provided array",
+								),
+							currency: zod
+								.enum([
+									"CZK",
+									"EUR",
+									"USD",
+									"GBP",
+									"PLN",
+									"HUF",
+									"CHF",
+								])
+								.nullish()
+								.describe(
+									"This filter matches listings with the exact currency code",
+								),
+							currencyIn: zod
+								.array(
+									zod
+										.enum([
+											"CZK",
+											"EUR",
+											"USD",
+											"GBP",
+											"PLN",
+											"HUF",
+											"CHF",
+										])
+										.describe("Currency code (ISO 4217)"),
+								)
+								.nullish()
+								.describe(
+									"This filter matches listings with currency codes in the provided array",
+								),
+							expiresAtBefore: zod.iso
+								.date()
+								.nullish()
+								.describe(
+									"This filter matches listings that expire before the provided date",
+								),
+							expiresAtAfter: zod.iso
+								.date()
+								.nullish()
+								.describe(
+									"This filter matches listings that expire after the provided date",
+								),
+							rangeMin: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with range greater than or equal to the provided value (meters)",
+								),
+							rangeMax: zod
+								.number()
+								.nullish()
+								.describe(
+									"This filter matches listings with range less than or equal to the provided value (meters)",
+								),
+							vendor: zod
+								.string()
+								.nullish()
+								.describe(
+									"This filter matches listings with vendor matching the provided value",
+								),
+							model: zod
+								.string()
+								.nullish()
+								.describe(
+									"This filter matches listings with model matching the provided value",
+								),
+						})
+						.describe("User-land filters")
+						.and(
+							zod
+								.unknown()
+								.describe("Filter used to fetch the listings"),
+						),
+					sort: zod
+						.array(
+							zod
+								.union([
+									zod
+										.object({
+											type: zod
+												.enum([
+													"listing",
+												])
+												.describe(
+													"Common listing sort keys",
+												),
+											value: zod.enum([
+												"price",
+												"condition",
+												"age",
+												"createdAt",
+												"updatedAt",
+												"expiresAt",
+											]),
+											sort: zod
+												.enum([
+													"asc",
+													"desc",
+												])
+												.nullish(),
+										})
+										.describe("Common listing sort keys"),
+									zod
+										.object({
+											type: zod
+												.enum([
+													"geo",
+												])
+												.describe(
+													"Explicit geo sorting",
+												),
+											value: zod
+												.enum([
+													"geo",
+												])
+												.describe(
+													"Just keeping the same API with rest of sorting values.",
+												),
+											lon: zod
+												.number()
+												.describe(
+													"Longitude of the location",
+												),
+											lat: zod
+												.number()
+												.describe(
+													"Latitude of the location",
+												),
+											sort: zod
+												.enum([
+													"asc",
+													"desc",
+												])
+												.nullish(),
+										})
+										.describe("Explicit geo sorting"),
+								])
+								.describe("Sort object for listing collection"),
+						)
+						.describe("Filter used to fetch the listings"),
+				})
+				.describe("Feed data transfer object"),
+		),
+		more: zod.boolean().describe("Whether there are more items to fetch"),
+	})
+	.describe("Collection of feed items");
 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
 export const apiHealthResponse = zod.object({
-  "status": zod.boolean()
-})
-
+	status: zod.boolean(),
+});
 
 /**
  * This route directly executes the migrations
  */
 export const apiMigrationRunResponseItem = zod.object({
-  "migrationName": zod.string().describe('Migration name run'),
-  "direction": zod.enum(['Up', 'Down']).describe('Migration direction'),
-  "status": zod.enum(['Success', 'Error', 'NotExecuted']).describe('Migration status')
-})
-export const apiMigrationRunResponse = zod.array(apiMigrationRunResponseItem)
-
+	migrationName: zod.string().describe("Migration name run"),
+	direction: zod
+		.enum([
+			"Up",
+			"Down",
+		])
+		.describe("Migration direction"),
+	status: zod
+		.enum([
+			"Success",
+			"Error",
+			"NotExecuted",
+		])
+		.describe("Migration status"),
+});
+export const apiMigrationRunResponse = zod.array(apiMigrationRunResponseItem);
 
 /**
  * General cleanup operation
  */
-export const apiJanitorCleanupResponseItem = zod.object({
-  "type": zod.string().describe('Type of cleanup operation performed'),
-  "total": zod.number().describe('Total number of items processed during cleanup'),
-  "deleted": zod.number().describe('Number of items that were deleted')
-}).describe('Results from a cleanup operation')
-export const apiJanitorCleanupResponse = zod.array(apiJanitorCleanupResponseItem)
+export const apiJanitorCleanupResponseItem = zod
+	.object({
+		type: zod.string().describe("Type of cleanup operation performed"),
+		total: zod
+			.number()
+			.describe("Total number of items processed during cleanup"),
+		deleted: zod.number().describe("Number of items that were deleted"),
+	})
+	.describe("Results from a cleanup operation");
+export const apiJanitorCleanupResponse = zod.array(
+	apiJanitorCleanupResponseItem,
+);

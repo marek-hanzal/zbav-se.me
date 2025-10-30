@@ -63,15 +63,16 @@ export namespace Container {
 		layout?: Cls.VariantOf<ContainerCls, "layout">;
 
 		/**
-		 * Overflow behavior for scrolling.
+		 * Scroll behavior for scrolling.
 		 *
-		 * - `"unset"` - No overflow handling
+		 * - `"unset"` - No scroll handling
 		 * - `"horizontal"` - Horizontal scrolling with stable scrollbar gutter
 		 * - `"vertical"` - Vertical scrolling with stable scrollbar gutter
+		 * - `"hidden"` - Hide overflow content
 		 *
 		 * @default "unset"
 		 */
-		overflow?: Cls.VariantOf<ContainerCls, "overflow">;
+		scroll?: Cls.VariantOf<ContainerCls, "scroll">;
 
 		/**
 		 * Scroll snap behavior for smooth scrolling.
@@ -163,7 +164,7 @@ export const Container: FC<Container.Props> = ({
 	height,
 	width,
 	layout,
-	overflow,
+	scroll,
 	snap,
 	lock,
 	square,
@@ -184,7 +185,7 @@ export const Container: FC<Container.Props> = ({
 			height,
 			width,
 			layout,
-			overflow,
+			scroll,
 			snap,
 			lock,
 			square,
