@@ -4,9 +4,9 @@ import {
 	ArrowRightIcon,
 	Button,
 	LinkTo,
+	useSelection,
 } from "@use-pico/client";
 import { TitleContainer } from "@zbav-se.me/ui";
-import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import { Rating } from "~/app/ui/rating/Rating";
 
@@ -15,7 +15,17 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [rating, setRating] = useState<number>(0);
+
+		const selection = useSelection<Rating.RatingItem>({
+			mode: "multi",
+			initial: state.filter?.conditionIn?.map((item) => ({
+				id: String(item),
+			})),
+		});
+
+		const conditionIn = selection.optional
+			.multi()
+			.map((item) => Number.parseInt(item.id, 10));
 
 		return (
 			<TitleContainer
@@ -41,6 +51,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 						}}
 						search={{
 							...state,
+							filter: {
+								...state.filter,
+								conditionIn,
+							},
 						}}
 						full
 					>
@@ -57,9 +71,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 				}
 			>
 				<Rating
-					textHint={(value) => `Rating - ${value}`}
-					value={rating}
-					onChange={setRating}
+					textHint={(value) =>
+						`Condition - Overall [${value}] (hint)`
+					}
+					selection={selection}
 				/>
 			</TitleContainer>
 		);

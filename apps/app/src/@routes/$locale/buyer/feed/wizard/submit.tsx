@@ -11,6 +11,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = useNavigate();
+
 		const feedCreateMutation = withFeedCreateMutation.useMutation({
 			async onPostMutation({ result }) {
 				return navigate({

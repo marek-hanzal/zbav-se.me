@@ -21,6 +21,10 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with condition less than or equal to the provided value",
 		}),
+		conditionIn: z.array(z.number()).nullish().openapi({
+			description:
+				"This filter matches listings with conditions in the provided array",
+		}),
 		ageMin: z.number().nullish().openapi({
 			description:
 				"This filter matches listings with age greater than or equal to the provided value",

@@ -466,6 +466,11 @@ export interface ListingFilter {
    */
   conditionMax?: number | null;
   /**
+   * This filter matches listings with conditions in the provided array
+   * @nullable
+   */
+  conditionIn?: number[] | null;
+  /**
    * This filter matches listings with age greater than or equal to the provided value
    * @nullable
    */
@@ -594,6 +599,11 @@ export interface ListingWhere {
    * @nullable
    */
   conditionMax?: number | null;
+  /**
+   * This filter matches listings with conditions in the provided array
+   * @nullable
+   */
+  conditionIn?: number[] | null;
   /**
    * This filter matches listings with age greater than or equal to the provided value
    * @nullable

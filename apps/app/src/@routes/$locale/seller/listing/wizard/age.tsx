@@ -4,9 +4,9 @@ import {
 	ArrowRightIcon,
 	Button,
 	LinkTo,
+	useSelection,
 } from "@use-pico/client";
 import { TitleContainer } from "@zbav-se.me/ui";
-import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { Rating } from "~/app/ui/rating/Rating";
 
@@ -15,7 +15,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [age, setAge] = useState(state.age);
+
+		const selection = useSelection<Rating.RatingItem>({
+			mode: "single",
+			initial: [],
+		});
+
+		const itemId = selection.optional.singleId();
+		const age = itemId ? Number.parseInt(itemId, 10) : undefined;
 
 		return (
 			<TitleContainer
@@ -41,7 +48,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 							...state,
 							age,
 						}}
-						disabled={!age}
+						disabled={!selection.hasAny}
 						full
 					>
 						<Button
@@ -52,7 +59,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 							full
 							iconPosition={"right"}
 							label={"Next - price (button)"}
-							disabled={!age}
+							disabled={!selection.hasAny}
 						/>
 					</LinkTo>
 				}
@@ -66,8 +73,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 						textHint={(value) =>
 							`Condition - Age [${value}] (hint)`
 						}
-						value={age ?? 0}
-						onChange={setAge}
+						selection={selection}
 					/>
 				</div>
 			</TitleContainer>
