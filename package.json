@@ -3,7 +3,7 @@
 	"description": "Simple but clever c2c marketplace",
 	"scripts": {
 		"dev": "dotenv -c development -- turbo run dev --parallel --no-daemon",
-		"build": "dotenv -c development -- turbo run build --no-daemon --concurrency=1",
+		"build": "dotenv -c development -- turbo run build --no-daemon",
 		"preview": "dotenv -c development -- turbo run preview --no-daemon",
 		"sdk": "dotenv -c development -- bun x turbo run sdk --no-daemon",
 		"translations": "turbo run translations --no-daemon",
