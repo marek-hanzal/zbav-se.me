@@ -8,7 +8,7 @@ export namespace LocationSelection {
 	export interface Props {
 		ref?: RefObject<HTMLDivElement | null>;
 		locale: string;
-		value: string | undefined;
+		value: string | undefined | null;
 		onChange(value: string): void;
 		onLocation?(value: tLocationDto): void;
 		textHint?: string;
