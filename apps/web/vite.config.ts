@@ -78,15 +78,15 @@ const clientConfig = {
 	json: {
 		stringify: true,
 	},
-	// optimizeDeps: {
-	// 	noDiscovery: true,
-	// 	include: [
-	// 		"react",
-	// 		"react-dom",
-	// 		"zod",
-	// 		"@zbav-se.me/sdk",
-	// 	],
-	// },
+	optimizeDeps: {
+		noDiscovery: true,
+		include: [
+			"react",
+			"react-dom",
+			"zod",
+			"@zbav-se.me/sdk",
+		],
+	},
 } satisfies UserConfig;
 
 export default defineConfig(({ isSsrBuild, mode }) => {
