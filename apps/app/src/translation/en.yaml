@@ -1,9 +1,15 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
+065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
+  ref: Feed sorting (label)
+  value: Feed sorting (label)
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
   ref: Upload (title)
   value: Upload (title)
+0aa1048dff4a2f16c3f29e0491ce38c1ce74afce69e97fb801c2d303:
+  ref: Feed name not selected
+  value: Feed name not selected
 0b4c2a4d52dd18bc806051429f36f3fa76d3edf2f93aff6bf87a212e:
   ref: Vendor & Model (subtitle)
   value: Vendor & Model (subtitle)
@@ -19,6 +25,9 @@
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
   ref: Condition (title)
   value: Condition (title)
+16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
+  ref: Feed condition not selected
+  value: Feed condition not selected
 18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
   ref: Loading...
   value: Loading...
@@ -136,15 +145,18 @@
 58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
   ref: Feed category (title)
   value: Feed category (title)
+591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
+  ref: Feed name (label)
+  value: Feed name (label)
 591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
   ref: Logout (description)
   value: Logout (description)
-599911ccaeaeeecc1028f013d5109339022f2edce3f276561380c5d7:
-  ref: Feed submit - all set (title)
-  value: Feed submit - all set (title)
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
+5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
+  ref: Feed category (label)
+  value: Feed category (label)
 5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
   ref: Delete (button)
   value: Delete (button)
@@ -157,6 +169,9 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
   ref: Feed name (placeholder)
   value: Feed name (placeholder)
+69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
+  ref: Feed category not selected
+  value: Feed category not selected
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
   ref: User profile (label)
   value: User profile (label)
@@ -169,6 +184,9 @@
 70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
   ref: Clear files
   value: Clear files
+7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
+  ref: Feed sorting not selected
+  value: Feed sorting not selected
 7262bca7b9248fb11e51c76eb7c2531fe7f7622a9f4d8923309e810e:
   ref: Next - vendor & model (button)
   value: Next - vendor & model (button)
@@ -220,6 +238,9 @@
 8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
   ref: Previous (tour)
   value: Previous (tour)
+8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
+  ref: Feed location (label)
+  value: Feed location (label)
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
   ref: Feed (label)
   value: Feed (label)
@@ -402,6 +423,9 @@ e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
   ref: Seller home (title)
   value: Seller home (title)
+e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
+  ref: Feed location not selected
+  value: Feed location not selected
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
   ref: Next - feed condition (button)
   value: Next - feed condition (button)
@@ -429,6 +453,9 @@ f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
 f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
   ref: Confirm selection (label)
   value: Confirm selection (label)
+fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
+  ref: Feed condition (label)
+  value: Feed condition (label)
 faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
   ref: loading
   value: loading

@@ -53,6 +53,24 @@ tx({
 				name: "Condition",
 				attr: "textHint",
 			},
+			//
+			{
+				name: "BadgeValue",
+				attr: "textLabel",
+			},
+			{
+				name: "BadgeValue",
+				attr: "textValue",
+			},
+			//
+			{
+				name: "ContainerValueList",
+				attr: "textTitle",
+			},
+			{
+				name: "ContainerValueList",
+				attr: "textEmpty",
+			},
 		],
 	},
 });
