@@ -8,8 +8,6 @@ import dynamicImport from "vite-plugin-dynamic-import";
 import { qrcode } from "vite-plugin-qrcode";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
-import { locales } from "./src/locales";
-import { prerender } from "./src/prerender";
 
 export default defineConfig(({ mode }) => {
 	return {
@@ -17,19 +15,19 @@ export default defineConfig(({ mode }) => {
 		base: process.env.VITE_WEB_ASSETS,
 		plugins: [
 			tanstackStart({
-				prerender: {
-					enabled: true,
-					concurrency: 8,
-					crawlLinks: false,
-				},
-				pages: locales.flatMap((locale) =>
-					prerender.map((path) => ({
-						path: path.replace(":locale", locale),
-						prerender: {
-							crawlLinks: false,
-						},
-					})),
-				),
+				// prerender: {
+				// 	enabled: true,
+				// 	concurrency: 8,
+				// 	crawlLinks: false,
+				// },
+				// pages: locales.flatMap((locale) =>
+				// 	prerender.map((path) => ({
+				// 		path: path.replace(":locale", locale),
+				// 		prerender: {
+				// 			crawlLinks: false,
+				// 		},
+				// 	})),
+				// ),
 				router: {
 					routesDirectory: "./@routes",
 					generatedRouteTree: "./_route.ts",

@@ -87,7 +87,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 								},
 							},
 						}}
-					>                  
+					>
 						{render(item)}
 					</Badge>
 				))}
