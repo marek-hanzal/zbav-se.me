@@ -316,11 +316,7 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-bun-
 
-            - name: Strip app assets
-              working-directory: apps/app
-              run: rm -rf .vercel/output/static/assets || true
-
-            - name: Strip web assets
+            - name: Strip assets
               working-directory: apps/web
               run: rm -rf .vercel/output/static/assets || true
 
@@ -343,7 +339,6 @@ jobs:
             - uses: actions/download-artifact@v4
               with:
                   name: app
-                  #  path is where vercel expects
                   path: apps/app/.vercel/output
 
             - name: Setup Bun
