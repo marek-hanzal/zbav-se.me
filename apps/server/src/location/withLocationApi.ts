@@ -87,14 +87,6 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					},
 					description: "Location(s) created (cache miss)",
 				},
-				404: {
-					content: {
-						"application/json": {
-							schema: ErrorDtoSchema,
-						},
-					},
-					description: "Location not found",
-				},
 			},
 			tags: [
 				"location",
@@ -102,6 +94,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 		}),
 		async (c) => {
 			const { text, lang } = c.req.valid("json");
+			const limit = 5;
 
 			// First check: quick cache lookup without lock (outside transaction)
 			const quickCache = await withList({
@@ -112,10 +105,13 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 					.where((qb) => {
 						return qb.or([
 							qb("id", "=", text),
-							qb("query", "=", text),
+							qb("query", "ilike", text),
 						]);
 					})
-					.where("lang", "=", lang),
+					.where("lang", "=", lang)
+					.orderBy("confidence", "desc")
+					.offset(0)
+					.limit(limit),
 				output: LocationDtoSchema,
 			});
 
@@ -130,7 +126,6 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 				.execute(async (trx) => {
 					// Acquire advisory lock to prevent duplicate API calls
 					const lockId = getLockId(text, lang);
-					const limit = 5;
 
 					// Acquire lock (blocks until available)
 					// Using pg_advisory_xact_lock - automatically released at transaction end
@@ -145,7 +140,7 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 							sort: [],
 							source: trx,
 						})
-							.where("query", "=", text)
+							.where("query", "ilike", text)
 							.where("lang", "=", lang)
 							.orderBy("confidence", "desc")
 							.offset(0)
@@ -221,17 +216,19 @@ export const withLocationApi: Routes.Fn = ({ session }) => {
 
 					c.header("X-Location-Cache", "miss");
 
-					return locations;
+					return withList({
+						select: withLocationSelect({
+							sort: [],
+							source: trx,
+						})
+							.where("query", "ilike", text)
+							.where("lang", "=", lang)
+							.orderBy("confidence", "desc")
+							.offset(0)
+							.limit(limit),
+						output: LocationDtoSchema,
+					});
 				});
-
-			if (results.length === 0) {
-				return c.json(
-					{
-						message: "Location not found",
-					},
-					404,
-				);
-			}
 
 			return c.json(results, 201);
 		},
