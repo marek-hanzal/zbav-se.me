@@ -7,6 +7,7 @@ export const Route = createFileRoute("/$locale")({
 	async beforeLoad({ params: { locale }, context: { queryClient } }) {
 		const { data } = await withSessionQuery.ensure(queryClient, undefined, {
 			staleTime: 0,
+			throwOnError: true,
 		});
 
 		if (!data?.user) {

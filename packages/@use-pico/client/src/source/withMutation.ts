@@ -127,7 +127,7 @@ export function withMutation<TVariables, TResult>({
 		useMutation<TContext = unknown>(
 			options?: withMutation.UseOptions<TVariables, TResult, TContext>,
 		): UseMutationResult<TResult, Error, TVariables, TContext> {
-			const { onSuccess, onPreMutation, onPostMutation, ...$options } =
+			const { onPreMutation, onPostMutation, ...$options } =
 				options ?? {};
 			const queryClient = useQueryClient();
 
@@ -137,18 +137,18 @@ export function withMutation<TVariables, TResult>({
 					await onPreMutation?.({
 						variables,
 					});
+					//
 					const result = await mutationFn(variables);
+					await invalidate(queryClient);
+					//
 					await onPostMutation?.({
 						variables,
 						result,
 					});
+					//
 					return result;
 				},
 				...$options,
-				async onSuccess(data, variables, result, context) {
-					await invalidate(queryClient);
-					onSuccess?.(data, variables, result, context);
-				},
 			});
 		},
 		useIsMutating({ mutationId }: withMutation.Meta = {}) {
