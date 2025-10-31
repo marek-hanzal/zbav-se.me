@@ -92,7 +92,7 @@ export const Route = createFileRoute(
 											setVendor(e.target.value)
 										}
 										placeholder={"Vendor (placeholder)"}
-										autoFocus
+										autoFocus={!vendor}
 										{...props}
 									/>
 								)}
