@@ -4,11 +4,11 @@ import {
 	HeadContent,
 	Outlet,
 	Scripts,
+	useParams,
 } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
-import axios from "axios";
 import styles from "~/assets/style.css?url";
 
 export const Route = createRootRouteWithContext<{
@@ -40,18 +40,12 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	component() {
-		/**
-		 * Should be isomorphic
-		 *
-		 * Don't have better way, where to put this to make it work.
-		 *
-		 * Maybe it's OK, I'll see...
-		 */
-		axios.defaults.baseURL = import.meta.env.VITE_SERVER_API;
-		axios.defaults.withCredentials = true;
+		const { locale } = useParams({
+			from: "/$locale",
+		});
 
 		return (
-			<html>
+			<html lang={locale}>
 				<head>
 					<HeadContent />
 				</head>

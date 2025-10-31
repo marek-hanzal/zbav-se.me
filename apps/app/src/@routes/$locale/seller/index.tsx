@@ -16,6 +16,7 @@ import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/seller/")({
+	ssr: false,
 	component() {
 		const { locale } = Route.useParams();
 		const navigate = useNavigate();

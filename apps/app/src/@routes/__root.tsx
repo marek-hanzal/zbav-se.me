@@ -4,6 +4,7 @@ import {
 	HeadContent,
 	Outlet,
 	Scripts,
+	useParams,
 } from "@tanstack/react-router";
 import { Container, PicoCls } from "@use-pico/client";
 import { TokenProvider } from "@use-pico/cls";
@@ -41,8 +42,12 @@ export const Route = createRootRouteWithContext<{
 		],
 	}),
 	component() {
+		const { locale } = useParams({
+			from: "/$locale",
+		});
+
 		return (
-			<html>
+			<html lang={locale}>
 				<head>
 					<HeadContent />
 				</head>
