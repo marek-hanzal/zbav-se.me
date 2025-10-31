@@ -3,25 +3,48 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
-import { defineConfig } from "vite";
+import { defineConfig, mergeConfig, type UserConfig } from "vite";
 import dynamicImport from "vite-plugin-dynamic-import";
 import { qrcode } from "vite-plugin-qrcode";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
 
-export default defineConfig(({ mode }) => {
-	return {
+  const ssrConfig = {
+    build: {
+      minify: false,
+      sourcemap: false,
+    },
+    ssr: {
+      external: [
+        '@zbav-se.me/sdk',
+      ],
+      noExternal: ["@tanstack/*",],
+    },
+    optimizeDeps: { noDiscovery: true, include: [] },
+  } satisfies UserConfig;
+  
+  const clientConfig = {
+    build: {
+      minify: "esbuild",
+    },
+    optimizeDeps: {
+      noDiscovery: true,
+      include: ["react", "react-dom", "zod"],
+    },
+  } satisfies UserConfig;
+
+export default defineConfig(({ isSsrBuild, mode }) => {
+    const selected = isSsrBuild ? ssrConfig : clientConfig;
+
+	return mergeConfig({
 		clearScreen: false,
-		base: process.env.VITE_WEB_ASSETS,
+		base: process.env.VITE_APP_ASSETS,
 		plugins: [
 			tanstackStart({
 				router: {
 					routesDirectory: "./@routes",
 					generatedRouteTree: "./_route.ts",
 				},
-				// sitemap: {
-				// 	host: process.env.VITE_WEB_ORIGIN,
-				// },
 			}),
 			paths(),
 			react({}),
@@ -47,15 +70,18 @@ export default defineConfig(({ mode }) => {
 		},
 		server: {
 			host: true,
-			port: 3030,
 			strictPort: true,
+			port: 3031,
 			allowedHosts: true,
 		},
 		build: {
 			target: "esnext",
 			assetsDir: "assets",
-			sourcemap: true,
-			manifest: true,
+			sourcemap: false,
+			manifest: false,
+			rollupOptions: {
+				treeshake: true,
+			},
 		},
-	};
+	}, selected);
 });

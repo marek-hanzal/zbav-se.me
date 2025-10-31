@@ -27,4 +27,13 @@ export default defineNitroConfig({
 	compatibilityDate: "latest",
 	preset: "vercel",
 	srcDir: "src",
+	externals: {
+		external: [
+			"pg",
+			"pg-native",
+			"stripe",
+			"minio",
+			"@upstash/redis",
+		],
+	},
 });

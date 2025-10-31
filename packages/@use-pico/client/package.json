@@ -15,7 +15,7 @@
 		"@lexical/react": "0.38.2",
 		"@lexical/utils": "0.38.2",
 		"@tanstack/react-query": "5.90.5",
-		"@tanstack/react-router": "1.133.36",
+		"@tanstack/react-router": "1.134.4",
 		"@types/luxon": "3.7.1",
 		"@use-pico/cls": "5.0.71",
 		"@use-pico/common": "5.0.96",
