@@ -366,6 +366,8 @@ export const TypoCls = contract(PicoCls.contract)
 	.match("wrap", "wrap", {
 		root: {
 			class: [
+				"min-w-0",
+				"max-w-full",
 				"text-wrap",
 			],
 		},
