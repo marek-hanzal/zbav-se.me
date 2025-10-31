@@ -34,6 +34,8 @@ export const Route = createFileRoute("/$locale/seller/")({
 			},
 		});
 
+		console.log("userExPatchMutation", userExPatchMutation.error);
+
 		return (
 			<TitleContainer
 				textTitle={"Seller home (title)"}
