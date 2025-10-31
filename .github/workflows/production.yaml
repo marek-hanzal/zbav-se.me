@@ -223,8 +223,8 @@ jobs:
                     printf "%s" "$VAL" | bunx -y vercel@latest env add "$KEY" production --token "$VERCEL_TOKEN"
                   done <<< "$KEYS"
 
-    web-build:
-        name: Build web
+    build:
+        name: Build
         runs-on: ubuntu-latest
         environment: production
         needs: [vercel-env-web, vercel-env-app, vercel-env-server]
@@ -250,39 +250,6 @@ jobs:
                   restore-keys: |
                       web-nm-${{ runner.os }}-bun-
 
-            - name: Install dependencies (root)
-              run: bun install
-
-            - name: Build web
-              working-directory: apps/web
-              run: bun run build
-
-            - name: Upload artifact (web prebuilt)
-              uses: actions/upload-artifact@v4
-              with:
-                  name: web
-                  path: apps/web/.vercel/output
-                  include-hidden-files: true
-
-    app-build:
-        name: Build app
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [vercel-env-web, vercel-env-app, vercel-env-server]
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
-
-            - name: Cache node_modules (root)
-              uses: actions/cache@v4
-              with:
-                  path: node_modules
-                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-                  restore-keys: |
-                      root-nm-${{ runner.os }}-bun-
-
             - name: Cache node_modules (app, isolated)
               uses: actions/cache@v4
               with:
@@ -290,39 +257,6 @@ jobs:
                   key: app-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
                   restore-keys: |
                       app-nm-${{ runner.os }}-bun-
-
-            - name: Install dependencies (root)
-              run: bun install
-
-            - name: Build app
-              working-directory: apps/app
-              run: bun run build
-
-            - name: Upload artifact (app prebuilt)
-              uses: actions/upload-artifact@v4
-              with:
-                  name: app
-                  path: apps/app/.vercel/output
-                  include-hidden-files: true
-
-    server-build:
-        name: Build server
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [vercel-env-web, vercel-env-app, vercel-env-server]
-        steps:
-            - uses: actions/checkout@v4
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
-
-            - name: Cache node_modules (root)
-              uses: actions/cache@v4
-              with:
-                  path: node_modules
-                  key: root-nm-${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
-                  restore-keys: |
-                      root-nm-${{ runner.os }}-bun-
 
             - name: Cache node_modules (server, isolated)
               uses: actions/cache@v4
@@ -332,12 +266,25 @@ jobs:
                   restore-keys: |
                       server-nm-${{ runner.os }}-bun-
 
-            - name: Install dependencies (root, workspace)
+            - name: Install dependencies
               run: bun install
 
-            - name: Build server
-              working-directory: apps/server
+            - name: Build
               run: bun run build
+
+            - name: Upload artifact (web prebuilt)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: web
+                  path: apps/web/.vercel/output
+                  include-hidden-files: true
+
+            - name: Upload artifact (app prebuilt)
+              uses: actions/upload-artifact@v4
+              with:
+                  name: app
+                  path: apps/app/.vercel/output
+                  include-hidden-files: true
 
             - name: Upload artifact (server prebuilt)
               uses: actions/upload-artifact@v4
@@ -350,7 +297,7 @@ jobs:
         name: Deploy web to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build, vercel-server]
+        needs: [build, vercel-server]
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -379,7 +326,7 @@ jobs:
         name: Deploy app to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build, vercel-server]
+        needs: [build, vercel-server]
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -408,7 +355,7 @@ jobs:
         name: Deploy server to Vercel
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build]
+        needs: [build]
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -432,7 +379,7 @@ jobs:
         name: Update CDN (web)
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build, vercel-server]
+        needs: [build, vercel-server]
         steps:
             - uses: actions/download-artifact@v4
               with:
@@ -496,7 +443,7 @@ jobs:
         name: Update CDN (app)
         runs-on: ubuntu-latest
         environment: production
-        needs: [web-build, app-build, server-build, vercel-server]
+        needs: [build, vercel-server]
         steps:
             - uses: actions/download-artifact@v4
               with:
