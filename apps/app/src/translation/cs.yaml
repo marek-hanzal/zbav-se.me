@@ -159,9 +159,6 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
     value: Vymysli název
-6025fd5728efef0a53b96658627b99d37b2fff31f41742dd7a25dc26:
-    ref: Back to dashboard (label)
-    value: Zpět domů
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
     ref: User profile (label)
     value: Tvůj profil
@@ -256,6 +253,9 @@
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
     ref: Submit (title)
     value: Vše připraveno
+9b7458c481fd08b7afd860d8537e178cc9c6b202e12918923906e59c:
+    ref: Buyer home (title)
+    value: Chci nakupovat
 9c9daf461c6095205f5fde4031225d9f27b27b90b6b55aa197c67948:
     ref: No categories found (message)
     value: |
@@ -493,6 +493,9 @@ e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
     ref: Shop (label)
     value: Obchod
+e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
+    ref: Seller home (title)
+    value: Chci prodávat
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
     ref: Next - feed condition (button)
     value: Stavy
