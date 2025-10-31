@@ -7,7 +7,7 @@
 	"scripts": {
 		"typecheck": "tsc --noEmit",
 		"build:bundle": "bun x rollup -c",
-		"build": "run-p build:*",
+		"no:build": "run-p build:*",
 		"test": "run-s test:*",
 		"test:code": "vitest --run"
 	},
