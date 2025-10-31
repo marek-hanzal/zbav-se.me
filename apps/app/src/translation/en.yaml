@@ -112,6 +112,9 @@
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
   ref: Next - price (button)
   value: Next - price (button)
+4f3885321d39082d377d54a2de1e45a2618a3821847c68a3a2c66def:
+  ref: I want to sell (message)
+  value: I want to sell (message)
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
   ref: currency
   value: currency
@@ -280,6 +283,9 @@ ad2b3af7d8b3977729ea269069627a1c0fd5cbe7c6b05d4e66056b20:
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
   ref: Export settings (title)
   value: Export settings (title)
+adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
+  ref: I want to buy (message)
+  value: I want to buy (message)
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
   ref: Listing expire at (label)
   value: Listing expire at (label)
