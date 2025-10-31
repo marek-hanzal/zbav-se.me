@@ -1,12 +1,13 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { linkTo, translator } from "@use-pico/common";
 import { PrimaryOverlay } from "@zbav-se.me/ui";
-import { getSessionFn } from "~/app/auth/getSessionFn";
+import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale")({
-	// ssr: false,
-	async beforeLoad({ params: { locale } }) {
-		const { data } = await getSessionFn();
+	async beforeLoad({ params: { locale }, context: { queryClient } }) {
+		const { data } = await withSessionQuery.ensure(queryClient, undefined, {
+			staleTime: 0,
+		});
 
 		if (!data?.user) {
 			throw redirect({

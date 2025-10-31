@@ -41,6 +41,16 @@ export namespace withQuery {
 	>;
 
 	/**
+	 * Query options type excluding queryKey and queryFn (which are handled internally).
+	 *
+	 * @template TResult - Result type returned by the query function.
+	 */
+	export type QueryOptions<TResult> = OmitKeyof<
+		UseQueryOptions<TResult, Error>,
+		"queryKey" | "queryFn"
+	>;
+
+	/**
 	 * Typed public facing API for query operations.
 	 *
 	 * The `Api` type represents the complete interface returned by `withQuery()`,
@@ -93,19 +103,37 @@ export function withQuery<TData, TResult>({
 	queryFn,
 	keys,
 }: withQuery.Props<TData, TResult>) {
+	/**
+	 * Internal key generator function that cleans and formats query keys.
+	 * @param data - Optional input data for the query.
+	 * @returns The cleaned query key.
+	 */
 	const $keys = (data?: TData) => {
 		return cleanOf(keys(data)) as QueryKey;
 	};
 
-	const options = (data: TData) => {
+	/**
+	 * Creates query options for React Query.
+	 * @param data - The input data for the query.
+	 * @param opts - Optional query options to pass to queryOptions.
+	 * @returns Query options object compatible with TanStack Query.
+	 */
+	const options = (data: TData, opts?: withQuery.QueryOptions<TResult>) => {
 		const queryKey = $keys(data);
 
 		return queryOptions<TResult, Error, TResult, QueryKey>({
 			queryKey,
 			queryFn: () => queryFn(data),
+			...opts,
 		});
 	};
 
+	/**
+	 * Invalidates queries matching the query key.
+	 * @param queryClient - The React Query client instance.
+	 * @param data - Optional input data for the query to invalidate.
+	 * @returns Promise that resolves when invalidation is complete.
+	 */
 	const invalidate = async (queryClient: QueryClient, data?: TData) => {
 		return queryClient.invalidateQueries({
 			queryKey: $keys(data),
@@ -116,54 +144,52 @@ export function withQuery<TData, TResult>({
 	return {
 		/**
 		 * Returns the key generator function for the query.
+		 * @param data - Optional input data for the query.
+		 * @returns The cleaned query key.
 		 */
 		keys: $keys,
 		/**
 		 * Returns the queryOptions object for use with React Query hooks.
+		 * @param data - The input data for the query.
+		 * @param opts - Optional query options to pass to queryOptions.
+		 * @returns Query options object compatible with TanStack Query.
 		 */
 		options,
 		/**
 		 * React Query hook for fetching data (non-suspense).
+		 * @param data - The input data for the query.
+		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query.
 		 */
 		useQuery(
 			data: TData,
-			opts?: OmitKeyof<
-				UseQueryOptions<TResult, Error>,
-				"queryKey" | "queryFn"
-			>,
+			opts?: withQuery.QueryOptions<TResult>,
 		): UseQueryResult<TResult, Error> {
-			return useQuery({
-				...options(data),
-				...opts,
-			});
+			return useQuery(options(data, opts));
 		},
 		/**
 		 * React Query hook for fetching data with suspense.
+		 * @param data - The input data for the query.
+		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query (suspense-enabled).
 		 */
 		useSuspenseQuery(
 			data: TData,
-			opts?: OmitKeyof<
-				UseQueryOptions<TResult, Error>,
-				"queryKey" | "queryFn"
-			>,
+			opts?: withQuery.QueryOptions<TResult>,
 		): UseSuspenseQueryResult<TResult, Error> {
-			return useSuspenseQuery({
-				...options(data),
-				...opts,
-			});
+			return useSuspenseQuery(options(data, opts));
 		},
 		/**
 		 * Directly call query function. There is no caching or other logic here.
 		 * @param data - The input data for the query.
-		 * @returns The query result.
+		 * @returns Promise resolving to the query result.
 		 */
 		async query(data: TData) {
 			return queryFn(data);
 		},
 		/**
 		 * React Query hook for invalidating the query.
+		 * @param data - Optional input data for the query to invalidate.
 		 * @returns A function to invalidate the query.
 		 */
 		useInvalidate(data?: TData) {
@@ -171,6 +197,7 @@ export function withQuery<TData, TResult>({
 
 			/**
 			 * Invalidate the pre-configured query.
+			 * @returns Promise that resolves when invalidation is complete.
 			 */
 			return async () => {
 				return invalidate(queryClient, data);
@@ -180,6 +207,9 @@ export function withQuery<TData, TResult>({
 		 * Invalidate the pre-configured query.
 		 *
 		 * For use in a component you can use useInvalidate on this object.
+		 * @param queryClient - The React Query client instance.
+		 * @param data - Optional input data for the query to invalidate.
+		 * @returns Promise that resolves when invalidation is complete.
 		 */
 		invalidate,
 		/**
@@ -189,6 +219,8 @@ export function withQuery<TData, TResult>({
 		 *
 		 * This is useful when you want invalidate e.g. user with an ID:
 		 * Key is ['user', id], so you can call `invalidateData(id)`
+		 * @param data - The input data for the query to invalidate.
+		 * @returns Invalidator object with an invalidate method.
 		 */
 		invalidateData(data: TData): withInvalidator.Invalidate {
 			return {
@@ -201,7 +233,8 @@ export function withQuery<TData, TResult>({
 		 * Prefetches the query using the provided QueryClient.
 		 * Useful for loading data into the cache before rendering.
 		 * @param queryClient - The React Query client instance.
-		 * @returns Resolves when prefetching is complete.
+		 * @param data - The input data for the query.
+		 * @returns Promise that resolves when prefetching is complete.
 		 */
 		async prefetch(queryClient: QueryClient, data: TData) {
 			await queryClient.prefetchQuery(options(data));
@@ -209,13 +242,28 @@ export function withQuery<TData, TResult>({
 		/**
 		 * Ensures the query data is available in the cache, fetching if necessary.
 		 * @param queryClient - The React Query client instance.
+		 * @param data - The input data for the query.
+		 * @param opts - Optional query options to pass to queryOptions.
 		 * @returns Resolves with the query data.
 		 */
-		async ensure(queryClient: QueryClient, data: TData) {
-			return queryClient.ensureQueryData(options(data));
+		async ensure(
+			queryClient: QueryClient,
+			data: TData,
+			opts?: withQuery.QueryOptions<TResult>,
+		) {
+			return queryClient.ensureQueryData(options(data, opts));
 		},
+		/**
+		 * React Query hook for manually setting query data in the cache.
+		 * @returns A function to set query data.
+		 */
 		useSet() {
 			const queryClient = useQueryClient();
+			/**
+			 * Sets the query data in the cache.
+			 * @param value - The value to set in the cache.
+			 * @param data - Optional input data for the query.
+			 */
 			return (value: TResult | undefined, data?: TData) => {
 				queryClient.setQueryData($keys(data), value);
 			};
