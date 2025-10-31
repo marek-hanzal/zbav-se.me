@@ -1,6 +1,3 @@
-0018c507418ace9f07483edc17697a1cfe482a6fda6925d1f6dff154:
-    ref: Create new feed (description)
-    value: Nastav si nabídky, které tě zajímají.
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
     value: Kategorie
@@ -110,7 +107,7 @@
     value: Kategorie
 4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
     ref: Create new feed (button)
-    value: Vytvořit
+    value: Jdeme na to!
 4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
     ref: Next - feed submit (button)
     value: Kontrola
@@ -182,7 +179,7 @@
     value: There is nothing to see right now.
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
     ref: Create new feed (title)
-    value: Nastav si nabídky
+    value: Nastav si nabídky, které tě zajímají
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
@@ -206,9 +203,6 @@
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
     ref: No listings (title)
     value: Kde nic, tu nic. Ale všechno bude, všechno bude!
-86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
-    ref: Delete feed (button)
-    value: Smazat
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT

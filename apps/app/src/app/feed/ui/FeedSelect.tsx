@@ -63,6 +63,9 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 			<Status
 				icon={FeedIcon}
 				textTitle={feed.name}
+				iconProps={{
+					size: "4xl",
+				}}
 				tweak={{
 					slot: {
 						body: {
