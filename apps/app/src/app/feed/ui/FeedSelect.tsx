@@ -126,13 +126,7 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 							params: {
 								locale,
 							},
-							search: {
-								id: feed.id,
-								name: feed.name,
-								filter: feed.filter,
-								sort: feed.sort,
-								meta: feed.meta,
-							},
+							search: feed,
 						});
 					}}
 					tweak={{
