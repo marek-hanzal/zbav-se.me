@@ -25,6 +25,8 @@ export const Route = createFileRoute("/$locale/seller/")({
 				await router.invalidate({
 					sync: true,
 				});
+			},
+			async onSuccess() {
 				await navigate({
 					to: "/$locale/dashboard",
 					params: {
@@ -33,8 +35,6 @@ export const Route = createFileRoute("/$locale/seller/")({
 				});
 			},
 		});
-
-		console.log("userExPatchMutation", userExPatchMutation.error);
 
 		return (
 			<TitleContainer
