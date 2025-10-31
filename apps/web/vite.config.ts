@@ -19,9 +19,9 @@ export default defineConfig(({ mode }) => {
 					routesDirectory: "./@routes",
 					generatedRouteTree: "./_route.ts",
 				},
-				sitemap: {
-					host: process.env.VITE_WEB_ORIGIN,
-				},
+				// sitemap: {
+				// 	host: process.env.VITE_WEB_ORIGIN,
+				// },
 			}),
 			paths(),
 			react({}),
