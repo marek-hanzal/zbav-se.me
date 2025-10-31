@@ -22,9 +22,9 @@ export const Route = createFileRoute("/$locale/seller/")({
 		const router = useRouter();
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
-				await router.invalidate();
-			},
-			async onSuccess() {
+				await router.invalidate({
+					sync: true,
+				});
 				await navigate({
 					to: "/$locale/dashboard",
 					params: {
