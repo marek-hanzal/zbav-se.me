@@ -26,6 +26,15 @@ export const ButtonCls = contract(PicoCls.contract)
 		"xl",
 		"full",
 	])
+	.variant("snap-to", [
+		"unset",
+		"top-left",
+		"top-center",
+		"top-right",
+		"bottom-left",
+		"bottom-right",
+		"bottom",
+	])
 	.def()
 	.root({
 		wrapper: {
@@ -389,6 +398,66 @@ export const ButtonCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	/**
+	 * Snap-to rules
+	 */
+	.match("snap-to", "top-left", {
+		wrapper: {
+			class: [
+				"absolute",
+				"top-2",
+				"left-2",
+			],
+		},
+	})
+	.match("snap-to", "top-center", {
+		wrapper: {
+			class: [
+				"absolute",
+				"top-2",
+				"left-1/2",
+				"-translate-x-1/2",
+			],
+		},
+	})
+	.match("snap-to", "top-right", {
+		wrapper: {
+			class: [
+				"absolute",
+				"top-2",
+				"right-2",
+			],
+		},
+	})
+	.match("snap-to", "bottom-left", {
+		wrapper: {
+			class: [
+				"absolute",
+				"bottom-2",
+				"left-2",
+			],
+		},
+	})
+	.match("snap-to", "bottom-right", {
+		wrapper: {
+			class: [
+				"absolute",
+				"bottom-2",
+				"right-2",
+			],
+		},
+	})
+	.match("snap-to", "bottom", {
+		wrapper: {
+			class: [
+				"absolute",
+				"bottom-2",
+				"left-2",
+				"right-2",
+				"w-auto",
+			],
+		},
+	})
 	.defaults({
 		tone: "primary",
 		theme: "light",
@@ -399,6 +468,7 @@ export const ButtonCls = contract(PicoCls.contract)
 		background: true,
 		round: "default",
 		truncate: false,
+		"snap-to": "unset",
 	})
 	.cls();
 

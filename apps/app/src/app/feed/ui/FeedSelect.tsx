@@ -1,6 +1,5 @@
 import {
 	ArrowRightIcon,
-	Badge,
 	Button,
 	Container,
 	LinkTo,
@@ -60,25 +59,6 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 			<Status
 				icon={FeedIcon}
 				textTitle={feed.name}
-				action={
-					<Badge>
-						{hasListings ? (
-							<>
-								<Tx label={"Number of listings (label)"} />
-								<Typo
-									label={toHumanNumber({
-										locale,
-										number: listingCountQuery.data.filter,
-									})}
-									font={"bold"}
-									size={"lg"}
-								/>
-							</>
-						) : (
-							<Tx label={"No listings found (label)"} />
-						)}
-					</Badge>
-				}
 				tweak={{
 					slot: {
 						body: {
@@ -104,19 +84,34 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 					full
 				>
 					<Button
-						iconEnabled={ArrowRightIcon}
+						iconEnabled={hasListings ? ArrowRightIcon : undefined}
 						iconPosition={"right"}
-						size={"lg"}
+						size={"xl"}
 						tone={"secondary"}
 						theme={"dark"}
 						disabled={!hasListings || feedDeleteMutation.isPending}
 						full
-					/>
+					>
+						{hasListings ? (
+							<>
+								<Tx label={"Number of listings (label)"} />
+								<Typo
+									label={toHumanNumber({
+										locale,
+										number: listingCountQuery.data.filter,
+									})}
+									font={"bold"}
+									size={"lg"}
+								/>
+							</>
+						) : (
+							<Tx label={"No listings found (label)"} />
+						)}
+					</Button>
 				</LinkTo>
 
 				<Button
 					iconEnabled={TrashIcon}
-					label={"Delete feed (button)"}
 					tone={"danger"}
 					theme={"dark"}
 					onClick={() => {
@@ -128,6 +123,19 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 					}}
 					disabled={feedDeleteMutation.isPending}
 					loading={feedDeleteMutation.isPending}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"h-auto",
+									"p-4",
+								],
+								token: [
+									"round.full",
+								],
+							},
+						},
+					}}
 				/>
 			</Status>
 		</Container>
