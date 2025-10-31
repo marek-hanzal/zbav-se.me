@@ -17,6 +17,7 @@ env:
     # -------------------------------
     VITE_DOMAIN: ${{ vars.VITE_DOMAIN }}
     VITE_SERVER_API: ${{ vars.VITE_SERVER_API }}
+    NODE_OPTIONS: --max-old-space-size=1500
 
     # -------------------------------
     # Server env. variables
