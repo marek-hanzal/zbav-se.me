@@ -103,7 +103,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 										}
 									}}
 									placeholder={"Feed name (placeholder)"}
-									autoFocus
+									autoFocus={!name}
 									{...props}
 								/>
 							)}
