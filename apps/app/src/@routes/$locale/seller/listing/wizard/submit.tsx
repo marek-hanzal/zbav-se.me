@@ -53,7 +53,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const { data: category } = withCategoryFetchQuery().useSuspenseQuery(
+		const categoryFetchQuery = withCategoryFetchQuery.useSuspenseQuery(
 			{
 				where: {
 					id: state.categoryId,
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				enabled: !!state.categoryId,
 			},
 		);
-		const { data: location } = withLocationFetchQuery().useSuspenseQuery({
+		const locationFetchQuery = withLocationFetchQuery.useSuspenseQuery({
 			where: {
 				id: state.locationId,
 			},
@@ -192,10 +192,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 										}
 									>
 										<Typo
-											label={category.group}
+											label={
+												categoryFetchQuery.data.group
+											}
 											size={"sm"}
 										/>
-										<Typo label={category.category} />
+										<Typo
+											label={
+												categoryFetchQuery.data.category
+											}
+										/>
 									</div>
 								</Badge>
 							</LinkTo>
@@ -298,7 +304,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									/>
 
 									<Typo
-										label={location.address}
+										label={locationFetchQuery.data.address}
 										wrap={"wrap"}
 									/>
 								</Badge>

@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 				id,
 			},
 		});
-		const locationQuery = withLocationFetchQuery().useQuery(
+		const locationQuery = withLocationFetchQuery.useQuery(
 			{
 				where: {
 					id: listingQuery.data?.locationId,

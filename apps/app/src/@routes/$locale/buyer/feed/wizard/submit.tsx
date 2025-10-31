@@ -51,7 +51,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
 
-		const locationFetchQuery = withLocationFetchQuery().useSuspenseQuery(
+		const locationFetchQuery = withLocationFetchQuery.useSuspenseQuery(
 			{
 				where: {
 					id: state.locationId,
@@ -221,71 +221,64 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							</Badge>
 						</LinkTo>
 
-						<LinkTo
-							to={"/$locale/buyer/feed/wizard/sort"}
-							params={{
-								locale,
-							}}
-							search={state}
-							display={"block"}
-							full
-							disabled={!state.sort || state.sort.length === 0}
+						<Container
+							layout={"vertical-flex"}
+							gap={"sm"}
+							square={"sm"}
+							height={"auto"}
 						>
-							{state.sort && state.sort.length > 0 ? (
-								<>
-									<Badge
-										theme={"light"}
-										tweak={badgeTweak}
-									>
-										<Tx
-											label={"Feed sorting (label)"}
-											preset={"label"}
-										/>
-									</Badge>
-									<Container
-										layout={"vertical-flex"}
-										gap={"sm"}
-										square={"sm"}
-									>
-										{state.sort.map((sortItem, index) => (
-											<LinkTo
-												key={`${sortItem.value}-${index}`}
-												to={
-													"/$locale/buyer/feed/wizard/sort"
-												}
-												params={{
-													locale,
-												}}
-												search={state}
-												display={"block"}
-												full
-											>
-												<Badge
-													tone={"secondary"}
-													theme={"light"}
-													tweak={badgeTweak}
-												>
-													<Tx
-														label={`Listing common sort value ${sortItem.value} - ${sortItem.sort}`}
-													/>
-												</Badge>
-											</LinkTo>
-										))}
-									</Container>
-								</>
-							) : (
+							<LinkTo
+								to={"/$locale/buyer/feed/wizard/sort"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+								disabled={(state.sort ?? []).length === 0}
+							>
 								<Badge
-									disabled
+									theme={"light"}
 									tweak={badgeTweak}
 								>
 									<Tx
 										label={"Feed sorting (label)"}
 										preset={"label"}
 									/>
+								</Badge>
+							</LinkTo>
+
+							{(state.sort ?? []).map((sortItem, index) => (
+								<LinkTo
+									key={`${sortItem.value}-${index}`}
+									to={"/$locale/buyer/feed/wizard/sort"}
+									params={{
+										locale,
+									}}
+									search={state}
+									display={"block"}
+									full
+								>
+									<Badge
+										tone={"secondary"}
+										theme={"light"}
+										tweak={badgeTweak}
+									>
+										<Tx
+											label={`Listing common sort value ${sortItem.value} - ${sortItem.sort}`}
+										/>
+									</Badge>
+								</LinkTo>
+							))}
+							{(state.sort ?? []).length === 0 && (
+								<Badge
+									disabled
+									tweak={badgeTweak}
+								>
 									<Typo label={"Not selected"} />
 								</Badge>
 							)}
-						</LinkTo>
+						</Container>
 
 						<LinkTo
 							to={"/$locale/buyer/feed/wizard/category"}
@@ -296,82 +289,73 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							display={"block"}
 							full
 							disabled={
-								(categoryCollectionQuery.data?.data ?? [])
-									.length === 0
+								categoryCollectionQuery.data.data.length === 0
 							}
 						>
-							{(categoryCollectionQuery.data?.data ?? []).length >
-							0 ? (
-								<>
+							<Badge
+								theme={"light"}
+								tweak={badgeTweak}
+							>
+								<Tx
+									label={"Feed category (label)"}
+									preset={"label"}
+								/>
+							</Badge>
+
+							<Container
+								layout={"vertical-flex"}
+								gap={"sm"}
+								square={"sm"}
+								height={"auto"}
+							>
+								{categoryCollectionQuery.data.data.map(
+									(category) => (
+										<LinkTo
+											key={category.id}
+											to={
+												"/$locale/buyer/feed/wizard/category"
+											}
+											params={{
+												locale,
+											}}
+											search={state}
+											display={"block"}
+											full
+										>
+											<Badge
+												tone={"secondary"}
+												theme={"light"}
+												tweak={badgeTweak}
+											>
+												<div
+													className={
+														"flex flex-col gap-0.5 items-start"
+													}
+												>
+													<Typo
+														label={category.group}
+														size={"xs"}
+													/>
+													<Typo
+														label={
+															category.category
+														}
+													/>
+												</div>
+											</Badge>
+										</LinkTo>
+									),
+								)}
+								{categoryCollectionQuery.data.data.length ===
+									0 && (
 									<Badge
-										theme={"light"}
+										disabled
 										tweak={badgeTweak}
 									>
-										<Tx
-											label={"Feed category (label)"}
-											preset={"label"}
-										/>
+										<Typo label={"Not selected"} />
 									</Badge>
-									<Container
-										layout={"vertical-flex"}
-										gap={"sm"}
-										square={"sm"}
-									>
-										{(
-											categoryCollectionQuery.data
-												?.data ?? []
-										).map((category) => (
-											<LinkTo
-												key={category.id}
-												to={
-													"/$locale/buyer/feed/wizard/category"
-												}
-												params={{
-													locale,
-												}}
-												search={state}
-												display={"block"}
-												full
-											>
-												<Badge
-													tone={"secondary"}
-													theme={"light"}
-													tweak={badgeTweak}
-												>
-													<div
-														className={
-															"flex flex-col gap-0.5 items-start"
-														}
-													>
-														<Typo
-															label={
-																category.group
-															}
-															size={"xs"}
-														/>
-														<Typo
-															label={
-																category.category
-															}
-														/>
-													</div>
-												</Badge>
-											</LinkTo>
-										))}
-									</Container>
-								</>
-							) : (
-								<Badge
-									disabled
-									tweak={badgeTweak}
-								>
-									<Tx
-										label={"Feed category (label)"}
-										preset={"label"}
-									/>
-									<Typo label={"Not selected"} />
-								</Badge>
-							)}
+								)}
+							</Container>
 						</LinkTo>
 
 						<LinkTo
@@ -383,68 +367,61 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							display={"block"}
 							full
 							disabled={
-								!state.filter?.conditionIn ||
-								state.filter.conditionIn.length === 0
+								(state.filter?.conditionIn ?? []).length === 0
 							}
 						>
-							{state.filter?.conditionIn &&
-							state.filter.conditionIn.length > 0 ? (
-								<>
-									<Badge
-										theme={"light"}
-										tweak={badgeTweak}
+							<Badge
+								theme={"light"}
+								tweak={badgeTweak}
+							>
+								<Tx
+									label={"Feed condition (label)"}
+									preset={"label"}
+								/>
+							</Badge>
+						</LinkTo>
+
+						<Container
+							layout={"vertical-flex"}
+							gap={"sm"}
+							square={"sm"}
+							height={"auto"}
+						>
+							{(state.filter?.conditionIn ?? []).map(
+								(condition) => (
+									<LinkTo
+										key={condition}
+										to={
+											"/$locale/buyer/feed/wizard/condition"
+										}
+										params={{
+											locale,
+										}}
+										search={state}
+										display={"block"}
+										full
 									>
-										<Tx
-											label={"Feed condition (label)"}
-											preset={"label"}
-										/>
-									</Badge>
-									<Container
-										layout={"vertical-flex"}
-										gap={"sm"}
-										square={"sm"}
-									>
-										{state.filter.conditionIn.map(
-											(condition) => (
-												<LinkTo
-													key={condition}
-													to={
-														"/$locale/buyer/feed/wizard/condition"
-													}
-													params={{
-														locale,
-													}}
-													search={state}
-													display={"block"}
-													full
-												>
-													<Badge
-														tone={"secondary"}
-														theme={"light"}
-														tweak={badgeTweak}
-													>
-														<Tx
-															label={`Condition - Overall [${condition}] (hint)`}
-														/>
-													</Badge>
-												</LinkTo>
-											),
-										)}
-									</Container>
-								</>
-							) : (
+										<Badge
+											tone={"secondary"}
+											theme={"light"}
+											tweak={badgeTweak}
+										>
+											<Tx
+												label={`Condition - Overall [${condition}] (hint)`}
+											/>
+										</Badge>
+									</LinkTo>
+								),
+							)}
+							{(state.filter?.conditionIn ?? []).length === 0 && (
 								<Badge
 									disabled
 									tweak={badgeTweak}
 								>
-									<Tx
-										label={"Feed condition (label)"}
-										preset={"label"}
-									/>
 									<Typo label={"Not selected"} />
 								</Badge>
 							)}
-						</LinkTo>
+						</Container>
 					</VariantProvider>
 				</Container>
 			</TitleContainer>

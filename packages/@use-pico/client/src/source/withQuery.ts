@@ -236,8 +236,12 @@ export function withQuery<TData, TResult>({
 		 * @param data - The input data for the query.
 		 * @returns Promise that resolves when prefetching is complete.
 		 */
-		async prefetch(queryClient: QueryClient, data: TData) {
-			await queryClient.prefetchQuery(options(data));
+		async prefetch(
+			queryClient: QueryClient,
+			data: TData,
+			opts?: withQuery.QueryOptions<TResult>,
+		) {
+			await queryClient.prefetchQuery(options(data, opts));
 		},
 		/**
 		 * Ensures the query data is available in the cache, fetching if necessary.

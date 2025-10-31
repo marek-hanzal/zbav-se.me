@@ -1,1 +1,1 @@
-export const prerender = [];
+export const prerender: string[] = [];
