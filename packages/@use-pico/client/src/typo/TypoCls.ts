@@ -369,6 +369,12 @@ export const TypoCls = contract(PicoCls.contract)
 				"min-w-0",
 				"max-w-full",
 				"text-wrap",
+				"whitespace-normal",
+				"break-words",
+				"max-w-full",
+				"overflow-hidden",
+				"hyphens-auto",
+				"[-webkit-hyphens:auto]",
 			],
 		},
 	})

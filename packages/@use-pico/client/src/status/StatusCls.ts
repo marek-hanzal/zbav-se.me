@@ -21,6 +21,7 @@ export const StatusCls = contract(PicoCls.contract)
 				"justify-center",
 				"gap-2",
 				"w-full",
+				"min-w-0",
 			],
 			token: [
 				"square.md",
@@ -37,6 +38,7 @@ export const StatusCls = contract(PicoCls.contract)
 				"text-center",
 				"w-full",
 				"max-w-full",
+				"min-w-0",
 			],
 			token: [
 				"square.md",
