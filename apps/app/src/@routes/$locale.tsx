@@ -3,6 +3,7 @@ import { linkTo, translator } from "@use-pico/common";
 import { PrimaryOverlay } from "@zbav-se.me/ui";
 
 export const Route = createFileRoute("/$locale")({
+	ssr: false,
 	async beforeLoad({ params: { locale }, context: { user } }) {
 		if (!user) {
 			throw redirect({
@@ -36,7 +37,6 @@ export const Route = createFileRoute("/$locale")({
 			} as const;
 		}
 	},
-	staleTime: 1000 * 60 * 60,
 	component() {
 		/**
 		 * Ugly as hell, but for now I don't have better solution how to do this
