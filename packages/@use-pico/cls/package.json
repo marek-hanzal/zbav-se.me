@@ -28,12 +28,12 @@
 		"@types/testing-library__jest-dom": "6.0.0",
 		"@use-pico/tsconfig": "5.0.0",
 		"@vitejs/plugin-react": "5.1.0",
-		"jsdom": "27.0.1",
+		"jsdom": "27.1.0",
 		"npm-run-all2": "8.0.4",
 		"rollup": "4.52.5",
 		"rollup-plugin-dts": "6.2.3",
 		"typescript": "^5.9.3",
-		"vitest": "4.0.5"
+		"vitest": "4.0.6"
 	},
 	"main": "src/index.ts",
 	"module": "src/index.ts",

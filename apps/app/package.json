@@ -16,7 +16,7 @@
 		"@tanstack/react-query": "5.90.5",
 		"@tanstack/react-router": "1.133.36",
 		"@tanstack/react-router-ssr-query": "1.133.36",
-		"@tanstack/react-start": "1.134.0",
+		"@tanstack/react-start": "1.134.3",
 		"@use-pico/client": "5.0.241",
 		"@use-pico/cls": "5.0.71",
 		"@use-pico/common": "5.0.96",
@@ -38,7 +38,7 @@
 		"zustand": "5.0.8"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.401",
+		"@iconify/json": "2.2.402",
 		"@iconify/tailwind4": "1.0.6",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.16",

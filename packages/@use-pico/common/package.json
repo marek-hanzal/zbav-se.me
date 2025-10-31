@@ -45,7 +45,7 @@
 		"rollup": "4.52.5",
 		"rollup-plugin-dts": "6.2.3",
 		"typescript": "^5.9.3",
-		"vitest": "4.0.5"
+		"vitest": "4.0.6"
 	},
 	"main": "./src/index.ts",
 	"module": "./src/index.ts",
