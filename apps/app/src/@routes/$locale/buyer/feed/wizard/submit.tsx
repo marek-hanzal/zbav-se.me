@@ -1,8 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { ArrowLeftIcon, Button, LinkTo, Status } from "@use-pico/client";
-import type { tFeedCreate } from "@zbav-se.me/sdk";
+import type { tFeedCreate, tFeedPatch } from "@zbav-se.me/sdk";
 import { FeedIcon, TitleContainer } from "@zbav-se.me/ui";
 import { withFeedCreateMutation } from "~/app/feed/mutation/withFeedCreateMutation";
+import { withFeedPatchMutation } from "~/app/feed/mutation/withFeedPatchMutation";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
@@ -25,6 +26,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 				});
 			},
 		});
+
+		const feedPatchMutation = withFeedPatchMutation.useMutation({
+			async onPostMutation({ result }) {
+				return navigate({
+					to: "/$locale/buyer/feed/select",
+					params: {
+						locale,
+					},
+					search: {
+						feedId: result.id,
+					},
+				});
+			},
+		});
+
+		const isLoading =
+			feedCreateMutation.isPending || feedPatchMutation.isPending;
 
 		return (
 			<TitleContainer
@@ -52,12 +70,19 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							tone={"secondary"}
 							theme={"dark"}
 							size={"lg"}
-							disabled={feedCreateMutation.isPending}
-							loading={feedCreateMutation.isPending}
+							disabled={isLoading}
+							loading={isLoading}
 							onClick={() => {
 								/**
 								 * Validation is done in the mutation itself.
 								 */
+								if (state.id) {
+									feedPatchMutation.mutate(
+										state as tFeedPatch,
+									);
+									return;
+								}
+
 								feedCreateMutation.mutate(state as tFeedCreate);
 							}}
 						/>
