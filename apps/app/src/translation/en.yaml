@@ -1,6 +1,3 @@
-0018c507418ace9f07483edc17697a1cfe482a6fda6925d1f6dff154:
-  ref: Create new feed (description)
-  value: Create new feed (description)
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
@@ -202,9 +199,6 @@
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
   ref: No listings (title)
   value: No listings (title)
-86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
-  ref: Delete feed (button)
-  value: Delete feed (button)
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT

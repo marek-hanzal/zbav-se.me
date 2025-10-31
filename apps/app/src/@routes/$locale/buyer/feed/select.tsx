@@ -148,8 +148,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						{feedCountQuery.data.filter >= feedCountLimit ? null : (
 							<Status
 								icon={FeedIcon}
+								iconProps={{
+									size: "4xl",
+								}}
 								textTitle={"Create new feed (title)"}
-								textMessage={"Create new feed (description)"}
 								action={
 									<LinkTo
 										to={
