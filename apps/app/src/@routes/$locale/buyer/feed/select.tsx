@@ -65,7 +65,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						sort: [
 							{
 								value: "updatedAt",
-								sort: "asc",
+								sort: "desc",
 							},
 						],
 					}}

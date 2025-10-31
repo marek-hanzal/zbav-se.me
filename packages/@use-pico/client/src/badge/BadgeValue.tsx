@@ -60,7 +60,10 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 				preset={"label"}
 			/>
 
-			<Tx label={textValue} />
+			<Tx
+				label={textValue}
+				truncate
+			/>
 		</Badge>
 	);
 };

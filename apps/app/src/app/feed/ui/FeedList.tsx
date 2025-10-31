@@ -1,18 +1,10 @@
-import {
-	ArrowRightIcon,
-	Button,
-	Container,
-	EditIcon,
-	SnapperNav,
-	Status,
-	useScrollTo,
-	useSnapperNav,
-} from "@use-pico/client";
+import { Badge, Container, Icon, Tx } from "@use-pico/client";
 import type { tFeedQuery } from "@zbav-se.me/sdk";
-import { type FC, useEffect, useId, useRef } from "react";
+import { FeedIcon } from "@zbav-se.me/ui";
+import { type FC, useId } from "react";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
 import { withFeedCountQuery } from "~/app/feed/query/withFeedCountQuery";
-import { FeedSelect } from "~/app/feed/ui/FeedSelect";
+import { FeedItem } from "~/app/feed/ui/FeedItem";
 
 export namespace FeedList {
 	export interface Props {
@@ -28,99 +20,71 @@ export const FeedList: FC<FeedList.Props> = ({
 	query,
 	locale,
 	limit: feedCountLimit = 10,
-	scrollTo: scrollToFeedId,
+	scrollTo: _scrollTo,
 	onClickCreate,
 }) => {
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
 	const feedCountQuery = withFeedCountQuery.useSuspenseQuery({});
 
-	const snapperRef = useRef<HTMLDivElement>(null);
-	const shouldShowCreateButton =
-		onClickCreate !== undefined &&
-		feedCountQuery.data.filter < feedCountLimit;
-	const snapperNav = useSnapperNav({
-		containerRef: snapperRef,
-		orientation: "horizontal",
-		count: shouldShowCreateButton
-			? feedCountQuery.data.filter + 1
-			: feedCountQuery.data.filter,
-	});
 	const feedId = useId();
-	const hasFeeds = feedCollectionQuery.data.data.length > 0;
-	const scrollTo = useScrollTo(snapperRef);
-
-	useEffect(() => {
-		if (!scrollToFeedId) {
-			return;
-		}
-		scrollTo(`.FeedItem-${scrollToFeedId}`, {
-			axis: "x",
-		});
-	}, [
-		scrollToFeedId,
-		scrollTo,
-	]);
+	const isLimitReached = feedCountQuery.data.filter >= feedCountLimit;
+	const shouldShowCreateButton = onClickCreate !== undefined;
 
 	return (
-		<div className={"relative"}>
-			<SnapperNav
-				snapperNav={snapperNav}
-				orientation={"horizontal"}
-				iconProps={() => ({
-					size: "sm",
-				})}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"bottom-1",
-								"transition-opacity",
-								hasFeeds ? "opacity-60" : "opacity-0",
-							],
+		<Container
+			layout={"vertical-flex"}
+			scroll={"vertical"}
+			gap={"md"}
+			height={"fit"}
+		>
+			{shouldShowCreateButton ? (
+				<Badge
+					tone={"primary"}
+					theme={isLimitReached ? "light" : "dark"}
+					disabled={isLimitReached}
+					onClick={onClickCreate}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"inline-flex",
+									"flex-row",
+									"gap-2",
+									"w-full",
+									"h-fit",
+									"items-center",
+									"justify-start",
+									"py-2",
+									"px-4",
+								],
+								token: [
+									"round.md",
+								],
+							},
 						},
-					},
-				}}
-				subtle={false}
-			/>
-
-			<Container
-				ref={snapperRef}
-				layout="horizontal-full"
-				snap={"horizontal-start"}
-				gap={"md"}
-				round={"lg"}
-			>
-				{feedCollectionQuery.data.data.map((feed) => {
-					return (
-						<FeedSelect
-							key={`${feedId}-${feed.id}`}
-							locale={locale}
-							feed={feed}
-						/>
-					);
-				})}
-
-				{shouldShowCreateButton ? (
-					<Status
-						icon={EditIcon}
-						iconProps={{
-							size: "4xl",
-						}}
-						textTitle={"Create new feed (title)"}
-						action={
-							<Button
-								iconEnabled={ArrowRightIcon}
-								iconPosition={"right"}
-								label={"Create new feed (button)"}
-								tone={"primary"}
-								theme={"dark"}
-								size={"xl"}
-								onClick={onClickCreate}
-							/>
+					}}
+				>
+					{isLimitReached ? null : <Icon icon={FeedIcon} />}
+					<Tx
+						label={
+							isLimitReached
+								? "Feed limit reached (title)"
+								: "Create new feed (title)"
 						}
+						font={"bold"}
 					/>
-				) : null}
-			</Container>
-		</div>
+				</Badge>
+			) : null}
+
+			{feedCollectionQuery.data.data.map((feed) => {
+				return (
+					<FeedItem
+						key={`${feedId}-${feed.id}`}
+						feed={feed}
+						locale={locale}
+					/>
+				);
+			})}
+		</Container>
 	);
 };

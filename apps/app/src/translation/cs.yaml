@@ -114,9 +114,6 @@
 4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
     ref: Next - feed category (button)
     value: Kategorie
-4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
-    ref: Create new feed (button)
-    value: Jdeme na to!
 4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
     ref: Next - feed submit (button)
     value: Kontrola
@@ -189,6 +186,9 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
+710b682ea576decc640d142b398a04cfb28558a0f3c86456ed08daf2:
+    ref: Edit (link)
+    value: Upravit
 7262bca7b9248fb11e51c76eb7c2531fe7f7622a9f4d8923309e810e:
     ref: Next - vendor & model (button)
     value: Next - vendor & model (button)
@@ -200,7 +200,7 @@
     value: There is nothing to see right now.
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
     ref: Create new feed (title)
-    value: Nastav si nabídky, které tě zajímají
+    value: Vytvoř si další nabídku
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
@@ -402,6 +402,9 @@ adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
     value:
         Nastav si inzeráty, které tě zajímají, koukni do tašky, co máš uloženo a
         další nástroje pro nákup.
+adf2aa857314fdeb3999fc88ca3b16372a4af1a07a6c3b32f1b82e3a:
+    ref: Feed limit reached (title)
+    value: Hotovo, víc nejde - uprav si stávající nebo smaž existující nabídku.
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
     ref: Listing expire at (label)
     value: Automatické ukončení

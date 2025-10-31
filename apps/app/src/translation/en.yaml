@@ -112,9 +112,6 @@
 4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
   ref: Next - feed category (button)
   value: Next - feed category (button)
-4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
-  ref: Create new feed (button)
-  value: Create new feed (button)
 4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
   ref: Next - feed submit (button)
   value: Next - feed submit (button)
@@ -187,6 +184,9 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
+710b682ea576decc640d142b398a04cfb28558a0f3c86456ed08daf2:
+  ref: Edit (link)
+  value: Edit (link)
 7262bca7b9248fb11e51c76eb7c2531fe7f7622a9f4d8923309e810e:
   ref: Next - vendor & model (button)
   value: Next - vendor & model (button)
@@ -307,6 +307,9 @@ ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
 adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
   ref: I want to buy (message)
   value: I want to buy (message)
+adf2aa857314fdeb3999fc88ca3b16372a4af1a07a6c3b32f1b82e3a:
+  ref: Feed limit reached (title)
+  value: Feed limit reached (title)
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
   ref: Listing expire at (label)
   value: Listing expire at (label)
