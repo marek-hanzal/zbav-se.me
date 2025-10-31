@@ -25,8 +25,6 @@ export const Route = createFileRoute("/$locale/buyer/")({
 				await router.invalidate({
 					sync: true,
 				});
-			},
-			async onSuccess() {
 				await navigate({
 					to: "/$locale/dashboard",
 					params: {
