@@ -1,4 +1,11 @@
-import { Badge, EditIcon, LinkTo, Tx, Typo } from "@use-pico/client";
+import {
+	ArrowRightIcon,
+	Badge,
+	EditIcon,
+	LinkTo,
+	Tx,
+	Typo,
+} from "@use-pico/client";
 import { toHumanNumber } from "@use-pico/common";
 import type { tFeedDto } from "@zbav-se.me/sdk";
 import type { FC } from "react";
@@ -36,11 +43,22 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 				},
 			}}
 		>
-			<Typo
-				label={feed.name}
-				font={"bold"}
-				truncate
-			/>
+			<LinkTo
+				icon={ArrowRightIcon}
+				to={"/$locale/buyer/feed/$id"}
+				params={{
+					locale,
+					id: feed.id,
+				}}
+				iconPosition={"right"}
+				full
+			>
+				<Typo
+					label={feed.name}
+					font={"bold"}
+					truncate
+				/>
+			</LinkTo>
 
 			<div
 				className={

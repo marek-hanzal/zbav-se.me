@@ -9,6 +9,10 @@ export const LinkToCls = contract(PicoCls.contract)
 		"block",
 		"inline",
 	])
+	.variant("icon-position", [
+		"left",
+		"right",
+	])
 	.bool("full")
 	.def()
 	.root({
@@ -17,12 +21,12 @@ export const LinkToCls = contract(PicoCls.contract)
 				"LinkTo-root",
 				"flex",
 				"flex-row",
+				"flex-nowrap",
 				"gap-2",
 				"items-center",
-				"justify-between",
+				"justify-start",
 				"focus:outline-hidden",
 				"w-fit",
-				"truncate",
 				"border-transparent",
 				"transition-all",
 			],
@@ -30,6 +34,26 @@ export const LinkToCls = contract(PicoCls.contract)
 				"round.default",
 				"scale.default",
 				"border.default",
+			],
+		},
+	})
+	//
+	.match("icon-position", "left", {
+		root: {
+			class: [
+				"flex",
+				"flex-row",
+				"flex-nowrap",
+			],
+		},
+	})
+	.match("icon-position", "right", {
+		root: {
+			class: [
+				"flex",
+				"flex-row",
+				"flex-nowrap",
+				"justify-between",
 			],
 		},
 	})
@@ -42,6 +66,37 @@ export const LinkToCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	.rule(
+		{
+			full: true,
+			"icon-position": "left",
+		},
+		{
+			root: {
+				class: [
+					"flex",
+					"flex-row",
+					"flex-nowrap",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			full: true,
+			"icon-position": "right",
+		},
+		{
+			root: {
+				class: [
+					"flex",
+					"flex-row",
+					"flex-nowrap",
+					"justify-between",
+				],
+			},
+		},
+	)
 	//
 	.match("display", "block", {
 		root: {
@@ -289,6 +344,7 @@ export const LinkToCls = contract(PicoCls.contract)
 		theme: "light",
 		display: "unset",
 		full: false,
+		"icon-position": "left",
 	})
 	.cls();
 
