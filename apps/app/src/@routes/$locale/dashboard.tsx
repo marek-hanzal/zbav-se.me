@@ -77,6 +77,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Tile
 						icon={SellerIcon}
 						textTitle={"I want to sell (label)"}
+						textMessage={"I want to sell (message)"}
 						height={"fit"}
 						layout={"vertical-centered"}
 					/>
@@ -97,6 +98,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Tile
 						icon={BuyerIcon}
 						textTitle={"I want to buy (label)"}
+						textMessage={"I want to buy (message)"}
 						height={"fit"}
 						layout={"vertical-centered"}
 					/>

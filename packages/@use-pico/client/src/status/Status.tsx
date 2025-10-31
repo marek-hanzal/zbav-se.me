@@ -92,11 +92,13 @@ export const Status: FC<Status.Props> = ({
 						size="xl"
 						font="bold"
 						display="block"
+						wrap={"wrap"}
 						{...titleProps}
 					/>
 					<Tx
 						label={textMessage}
 						display="block"
+						wrap={"wrap"}
 						{...messageProps}
 					/>
 				</div>

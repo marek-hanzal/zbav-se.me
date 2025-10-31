@@ -6,10 +6,10 @@ import {
 import {
 	ArrowLeftIcon,
 	Container,
+	Icon,
 	LinkTo,
 	SpinnerIcon,
 	UserIcon,
-	useStopEvent,
 } from "@use-pico/client";
 import { PostIcon, PublicIcon, ShopIcon, TitleContainer } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
@@ -23,7 +23,9 @@ export const Route = createFileRoute("/$locale/seller/")({
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
 				await router.invalidate();
-				return navigate({
+			},
+			async onSuccess() {
+				await navigate({
 					to: "/$locale/dashboard",
 					params: {
 						locale,
@@ -31,25 +33,20 @@ export const Route = createFileRoute("/$locale/seller/")({
 				});
 			},
 		});
-		const stop = useStopEvent();
 
 		return (
 			<TitleContainer
 				textTitle={"Seller home (title)"}
 				left={
-					<LinkTo
+					<Icon
 						icon={
 							userExPatchMutation.isPending
 								? SpinnerIcon
 								: ArrowLeftIcon
 						}
-						to={"/$locale/dashboard"}
-						params={{
-							locale,
-						}}
 						tone={"secondary"}
-						onClick={(e) => {
-							stop(e);
+						size={"sm"}
+						onClick={() => {
 							userExPatchMutation.mutate({
 								side: null,
 							});

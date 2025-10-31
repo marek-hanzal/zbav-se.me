@@ -4,13 +4,14 @@ import {
 	ArrowRightIcon,
 	Button,
 	Container,
+	EditIcon,
 	LinkTo,
 	SnapperNav,
 	Status,
 	useScrollTo,
 	useSnapperNav,
 } from "@use-pico/client";
-import { FeedIcon, SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
+import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
 import { useEffect, useId, useRef } from "react";
 import z from "zod";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
@@ -147,7 +148,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 
 						{feedCountQuery.data.filter >= feedCountLimit ? null : (
 							<Status
-								icon={FeedIcon}
+								icon={EditIcon}
 								iconProps={{
 									size: "4xl",
 								}}

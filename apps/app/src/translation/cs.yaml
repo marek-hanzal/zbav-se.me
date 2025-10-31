@@ -114,6 +114,9 @@
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
     ref: Next - price (button)
     value: Cena
+4f3885321d39082d377d54a2de1e45a2618a3821847c68a3a2c66def:
+    ref: I want to sell (message)
+    value: Vytvářej inzeráty, koukni, jak se jim daří a další nástroje pro prodejce.
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
     ref: currency
     value: currency
@@ -158,7 +161,7 @@
     value: Vymysli název
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
     ref: User profile (label)
-    value: Tvůj profil
+    value: Já
 6ebda19c4bb7b7ce06704892a9a18c9d655f820d4d1c6807d2abb8d3:
     ref: Next - location (button)
     value: Poloha
@@ -228,7 +231,7 @@
     value: Předchozí
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
-    value: Nabídky
+    value: Inzeráty
 904e1dfdd115698ca60d626134dd92d5f3362df3cd4bcf8fde0501de:
     ref: any
     value: any
@@ -243,7 +246,7 @@
     value: Hotovo 🙂!
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
-    value: Vytvořit inzerát
+    value: Chci prodat
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
     ref: Submit (title)
     value: Vše připraveno
@@ -373,6 +376,9 @@ ad2b3af7d8b3977729ea269069627a1c0fd5cbe7c6b05d4e66056b20:
 ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
     ref: Export settings (title)
     value: Export settings (title)
+adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
+    ref: I want to buy (message)
+    value: Nastav si inzeráty, které tě zajímají, koukni do tašky, co máš uloženo a další nástroje pro nákup.
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
     ref: Listing expire at (label)
     value: Automatické ukončení
@@ -525,7 +531,7 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     value: Zpět domů
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
     ref: Bag (label)
-    value: Nákupní taška
+    value: Co mě zaujalo
 fefe53a52244985c40772ce1aa20453aeb6c8f2b505f89ce2c65e4e3:
     ref: Vendor (hint)
     value: Vendor (hint)
