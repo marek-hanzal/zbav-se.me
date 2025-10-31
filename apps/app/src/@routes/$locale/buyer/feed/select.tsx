@@ -59,6 +59,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 				page: 0,
 				size: feedCountLimit,
 			},
+			sort: [
+				{
+					value: "updatedAt",
+					sort: "asc",
+				},
+			],
 		});
 
 		const feedCountQuery = withFeedCountQuery.useSuspenseQuery({});

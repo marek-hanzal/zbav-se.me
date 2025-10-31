@@ -11,6 +11,9 @@ export const FeedSchema = z
 		userId: z.string().openapi({
 			description: "ID of the user who created the feed",
 		}),
+		locationId: z.string().nullish().openapi({
+			description: "ID of the location associated with the feed",
+		}),
 		//
 		name: z.string().openapi({
 			description: "Name of the feed",

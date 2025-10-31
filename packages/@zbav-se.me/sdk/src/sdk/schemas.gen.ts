@@ -1100,6 +1100,9 @@ export const sFeedDto = {
         id: {
             type: 'string'
         },
+        locationId: {
+            type: ['string', 'null']
+        },
         name: {
             type: 'string'
         },
@@ -1136,6 +1139,9 @@ export const sFeedCreate = {
             type: 'string',
             minLength: 1
         },
+        locationId: {
+            type: 'string'
+        },
         filter: {
             '$ref': '#/components/schemas/ListingFilter'
         },
@@ -1163,6 +1169,9 @@ export const sFeedPatch = {
             type: 'string',
             minLength: 1
         },
+        locationId: {
+            type: ['string', 'null']
+        },
         filter: {
             allOf: [
                 {
@@ -1176,6 +1185,14 @@ export const sFeedPatch = {
             items: {
                 '$ref': '#/components/schemas/ListingSort'
             }
+        },
+        meta: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/ListingMeta'
+                },
+                {}
+            ]
         }
     },
     required: ['id']

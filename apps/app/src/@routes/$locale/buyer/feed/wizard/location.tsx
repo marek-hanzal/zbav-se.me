@@ -39,6 +39,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 						}}
 						search={{
 							...state,
+							locationId,
 							meta: {
 								...state.meta,
 								latLon,

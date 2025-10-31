@@ -56,7 +56,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { name, filter, sort, meta } = c.req.valid("json");
+			const { name, locationId, filter, sort, meta } =
+				c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
@@ -67,6 +68,7 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					.values({
 						id,
 						userId: user.id,
+						locationId,
 						name,
 						filter: JSON.stringify(filter) as any,
 						sort: JSON.stringify(sort) as any,
@@ -148,7 +150,8 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 			],
 		}),
 		async (c) => {
-			const { id, name, filter, sort } = c.req.valid("json");
+			const { id, name, locationId, filter, meta, sort } =
+				c.req.valid("json");
 			const user = c.get("user");
 			const now = new Date();
 
@@ -157,8 +160,10 @@ export const withFeedApi: Routes.Fn = ({ session }) => {
 					.updateTable("feed")
 					.set({
 						name,
+						locationId,
 						filter: JSON.stringify(filter) as any,
 						sort: JSON.stringify(sort) as any,
+						meta: JSON.stringify(meta) as any,
 						updatedAt: now,
 					})
 					.where("id", "=", id)
