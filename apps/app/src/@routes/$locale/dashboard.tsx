@@ -7,7 +7,6 @@ import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";
 
 export const Route = createFileRoute("/$locale/dashboard")({
-	ssr: false,
 	async beforeLoad({ params: { locale }, context: { user } }) {
 		if (user.side) {
 			match(user.side)
