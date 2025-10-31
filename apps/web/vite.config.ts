@@ -15,19 +15,6 @@ export default defineConfig(({ mode }) => {
 		base: process.env.VITE_WEB_ASSETS,
 		plugins: [
 			tanstackStart({
-				// prerender: {
-				// 	enabled: true,
-				// 	concurrency: 8,
-				// 	crawlLinks: false,
-				// },
-				// pages: locales.flatMap((locale) =>
-				// 	prerender.map((path) => ({
-				// 		path: path.replace(":locale", locale),
-				// 		prerender: {
-				// 			crawlLinks: false,
-				// 		},
-				// 	})),
-				// ),
 				router: {
 					routesDirectory: "./@routes",
 					generatedRouteTree: "./_route.ts",
