@@ -15,9 +15,9 @@ export default defineConfig(({ mode }) => {
 		base: process.env.VITE_APP_ASSETS,
 		plugins: [
 			tanstackStart({
-				// spa: {
-				// 	enabled: true,
-				// },
+				spa: {
+					enabled: true,
+				},
 				router: {
 					routesDirectory: "./@routes",
 					generatedRouteTree: "./_route.ts",
