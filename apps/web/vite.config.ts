@@ -41,6 +41,7 @@ const clientConfig = {
 		tailwindcss(),
 		react({}),
 		wasm(),
+		dynamicImport(),
 	],
 	esbuild: {
 		drop: [
@@ -77,15 +78,15 @@ const clientConfig = {
 	json: {
 		stringify: true,
 	},
-	optimizeDeps: {
-		noDiscovery: true,
-		include: [
-			"react",
-			"react-dom",
-			"zod",
-			"@zbav-se.me/sdk",
-		],
-	},
+	// optimizeDeps: {
+	// 	noDiscovery: true,
+	// 	include: [
+	// 		"react",
+	// 		"react-dom",
+	// 		"zod",
+	// 		"@zbav-se.me/sdk",
+	// 	],
+	// },
 } satisfies UserConfig;
 
 export default defineConfig(({ isSsrBuild, mode }) => {
@@ -104,7 +105,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 				}),
 				paths(),
 				ViteYaml(),
-				dynamicImport(),
 				mode === "production"
 					? nitro({
 							config: {
@@ -116,7 +116,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 			server: {
 				host: true,
 				strictPort: true,
-				port: 3031,
+				port: 3030,
 				allowedHosts: true,
 			},
 			build: {

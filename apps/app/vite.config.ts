@@ -13,6 +13,11 @@ const ssrConfig = {
 	build: {
 		minify: false,
 		sourcemap: false,
+		rollupOptions: {
+			treeshake: {
+				moduleSideEffects: false,
+			},
+		},
 	},
 	ssr: {
 		external: [
@@ -41,6 +46,7 @@ const clientConfig = {
 		tailwindcss(),
 		react({}),
 		wasm(),
+		dynamicImport(),
 	],
 	esbuild: {
 		drop: [
@@ -52,6 +58,9 @@ const clientConfig = {
 		assetsInlineLimit: 0,
 		minify: "esbuild",
 		rollupOptions: {
+			treeshake: {
+				moduleSideEffects: false,
+			},
 			output: {
 				manualChunks(id) {
 					if (id.includes("react")) {
@@ -77,15 +86,14 @@ const clientConfig = {
 	json: {
 		stringify: true,
 	},
-	optimizeDeps: {
-		noDiscovery: true,
-		include: [
-			"react",
-			"react-dom",
-			"zod",
-			"@zbav-se.me/sdk",
-		],
-	},
+	// optimizeDeps: {
+	// 	// noDiscovery: true,
+	// 	include: [
+	// 		"react",
+	// 		"react-dom",
+	// 		"zod",
+	// 	],
+	// },
 } satisfies UserConfig;
 
 export default defineConfig(({ isSsrBuild, mode }) => {
@@ -104,7 +112,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 				}),
 				paths(),
 				ViteYaml(),
-				dynamicImport(),
 				mode === "production"
 					? nitro({
 							config: {
