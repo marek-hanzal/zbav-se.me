@@ -100,6 +100,7 @@ app.use("/api/session/*", async (c, next) => {
 	}
 	return next();
 });
+
 app.use("/api/token/*", async (c, next) => {
 	const [, token] = c.req.header("Authorization")?.split(" ") ?? [];
 
@@ -152,8 +153,8 @@ const withUserRateLimiter = rateLimiter<{
 	message: "Rate limit exceeded. Please try again later.",
 });
 
-app.use("/api/session/*", withUserRateLimiter);
-app.use("/api/token/*", withUserRateLimiter);
+// app.use("/api/session/*", withUserRateLimiter);
+// app.use("/api/token/*", withUserRateLimiter);
 
 //
 
