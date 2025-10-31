@@ -9,6 +9,7 @@ export namespace TitleContainer {
 		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
 		left?: ReactNode;
+		right?: ReactNode;
 		bottom?: ReactNode;
 	}
 }
@@ -18,6 +19,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 	textSubtitle,
 	titleProps,
 	left,
+	right,
 	bottom,
 	children,
 	...props
@@ -29,6 +31,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 					textTitle={textTitle}
 					textSubtitle={textSubtitle}
 					left={left}
+					right={right}
 					{...titleProps}
 				/>
 			) : (

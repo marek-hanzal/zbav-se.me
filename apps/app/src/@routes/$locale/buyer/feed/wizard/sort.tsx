@@ -4,6 +4,7 @@ import {
 	ArrowRightIcon,
 	Badge,
 	Button,
+	CloseIcon,
 	Container,
 	LinkTo,
 	Tx,
@@ -33,6 +34,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 						}}
 						search={{
 							...state,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
 						}}
 						tone={"secondary"}
 					/>

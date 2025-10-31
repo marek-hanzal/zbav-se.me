@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
+	CloseIcon,
 	FormField,
 	LinkTo,
 	Status,
@@ -47,6 +48,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 						}}
 						search={{
 							...state,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
 						}}
 						tone={"secondary"}
 					/>

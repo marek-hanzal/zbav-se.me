@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
+	CloseIcon,
 	LinkTo,
 } from "@use-pico/client";
 import { TitleContainer } from "@zbav-se.me/ui";
@@ -24,6 +25,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
 						to={"/$locale/buyer/feed/select"}
 						params={{
 							locale,

@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	BadgeValue,
 	Button,
+	CloseIcon,
 	Container,
 	ContainerValueList,
 	Data,
@@ -36,6 +37,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer/feed/wizard/name"}
 						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/buyer/feed/select"}
 						params={{
 							locale,
 						}}
@@ -113,6 +124,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer/feed/wizard/name"}
 						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/buyer/feed/select"}
 						params={{
 							locale,
 						}}

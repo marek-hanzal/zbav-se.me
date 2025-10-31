@@ -3,6 +3,7 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	Button,
+	CloseIcon,
 	LinkTo,
 	useSelection,
 } from "@use-pico/client";
@@ -39,6 +40,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 						}}
 						search={{
 							...state,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
 						}}
 						tone={"secondary"}
 					/>
