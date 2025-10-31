@@ -996,6 +996,10 @@ export type tFeedDto = {
      */
     id: string;
     /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string | null;
+    /**
      * Name of the feed
      */
     name: string;
@@ -1012,6 +1016,10 @@ export type tFeedCreate = {
      * Name of the feed
      */
     name: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string;
     filter: tListingFilter;
     sort: Array<tListingSort>;
     meta: tListingMeta;
@@ -1023,11 +1031,16 @@ export type tFeedPatch = {
      * Name of the feed
      */
     name?: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string | null;
     filter?: tListingFilter & unknown;
     /**
      * Sort used to fetch the listings
      */
     sort?: Array<tListingSort>;
+    meta?: tListingMeta & unknown;
 };
 
 /**

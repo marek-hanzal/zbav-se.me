@@ -4,6 +4,7 @@ import z from "zod";
 export const FeedWizardSchema = z.object({
 	...zFeedCreate.partial().shape,
 	locationId: z.string().optional(),
+	id: z.string().optional(),
 });
 
 export type FeedWizardSchema = typeof FeedWizardSchema;

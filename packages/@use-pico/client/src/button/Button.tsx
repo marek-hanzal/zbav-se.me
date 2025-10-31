@@ -9,45 +9,109 @@ import { SpinnerIcon } from "../icon/SpinnerIcon";
 import { Tx } from "../tx/Tx";
 import { ButtonCls } from "./ButtonCls";
 
-export namespace Button {
-	export interface Props
-		extends UiProps<
-			ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>
-		> {
-		wrapperRef?: Ref<HTMLDivElement>;
-		buttonRef?: Ref<HTMLButtonElement>;
-		/**
-		 * Goes through translation; in general buttons should _not_ have
-		 * any complex content, thus the "label" only.
-		 */
-		label?: string;
-		iconEnabled?: Icon.Type;
-		iconDisabled?: Icon.Type;
-		iconLoading?: Icon.Type;
-		iconProps?: Omit<Icon.Props, "icon">;
-		iconPosition?: "left" | "right";
-		loading?: boolean;
-		border?: boolean;
-		full?: boolean;
-		background?: boolean;
-		size?: Cls.VariantOf<ButtonCls, "size">;
-		tone?: Cls.VariantOf<ButtonCls, "tone">;
-		theme?: Cls.VariantOf<ButtonCls, "theme">;
-		round?: Cls.VariantOf<ButtonCls, "round">;
-		truncate?: boolean;
-	}
-}
-
-type ButtonSize = Cls.VariantOf<ButtonCls, "size">;
-
 const ICON_SIZE_MAP: Partial<
-	Record<ButtonSize, Cls.VariantOf<IconCls, "size">>
+	Record<Cls.VariantOf<ButtonCls, "size">, Cls.VariantOf<IconCls, "size">>
 > = {
 	sm: "xs",
 	md: "sm",
 	lg: "md",
 	xl: "lg",
 } as const;
+
+export namespace Button {
+	export interface Props
+		extends UiProps<
+			ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>
+		> {
+		/**
+		 * Ref to the wrapper div element.
+		 */
+		wrapperRef?: Ref<HTMLDivElement>;
+		/**
+		 * Ref to the button element.
+		 */
+		buttonRef?: Ref<HTMLButtonElement>;
+		/**
+		 * Goes through translation; in general buttons should _not_ have
+		 * any complex content, thus the "label" only.
+		 */
+		label?: string;
+		/**
+		 * Icon to display when the button is enabled and not loading.
+		 */
+		iconEnabled?: Icon.Type;
+		/**
+		 * Icon to display when the button is disabled.
+		 * Falls back to `iconEnabled` if not provided.
+		 */
+		iconDisabled?: Icon.Type;
+		/**
+		 * Icon to display when the button is loading.
+		 * @default SpinnerIcon
+		 */
+		iconLoading?: Icon.Type;
+		/**
+		 * Additional props to pass to the icon component.
+		 */
+		iconProps?: Omit<Icon.Props, "icon">;
+		/**
+		 * Position of the icon relative to the label.
+		 * @default "left"
+		 */
+		iconPosition?: "left" | "right";
+		/**
+		 * Whether the button is in a loading state.
+		 * When true, shows the loading icon and prevents interaction.
+		 */
+		loading?: boolean;
+		/**
+		 * Whether to show the border.
+		 * @default true
+		 */
+		border?: boolean;
+		/**
+		 * Whether the button should take full width of its container.
+		 * @default false
+		 */
+		full?: boolean;
+		/**
+		 * Whether to show the background.
+		 * @default true
+		 */
+		background?: boolean;
+		/**
+		 * Size of the button (affects padding and font size).
+		 * @default "md"
+		 */
+		size?: Cls.VariantOf<ButtonCls, "size">;
+		/**
+		 * Color tone of the button (affects background, text, border, and shadow colors).
+		 * @default "primary"
+		 */
+		tone?: Cls.VariantOf<ButtonCls, "tone">;
+		/**
+		 * Theme variant (light or dark).
+		 * @default "light"
+		 */
+		theme?: Cls.VariantOf<ButtonCls, "theme">;
+		/**
+		 * Border radius of the button.
+		 * @default "default"
+		 */
+		round?: Cls.VariantOf<ButtonCls, "round">;
+		/**
+		 * Whether to truncate text that overflows the button width.
+		 * @default false
+		 */
+		truncate?: boolean;
+		/**
+		 * Absolute positioning for snapping the button to corners of a parent container.
+		 * Requires the parent element to have relative positioning.
+		 * @default "unset"
+		 */
+		snapTo?: Cls.VariantOf<ButtonCls, "snap-to">;
+	}
+}
 
 export const Button: FC<Button.Props> = ({
 	ui,
@@ -68,6 +132,7 @@ export const Button: FC<Button.Props> = ({
 	background,
 	full,
 	truncate,
+	snapTo,
 	//
 	cls = ButtonCls,
 	tweak,
@@ -96,6 +161,7 @@ export const Button: FC<Button.Props> = ({
 				background,
 				full,
 				truncate,
+				"snap-to": snapTo,
 			},
 		},
 	);

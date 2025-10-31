@@ -1146,6 +1146,10 @@ export const zFeedDto = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the feed'
     }),
+    locationId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -1168,6 +1172,9 @@ export const zFeedCreate = z.object({
     name: z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
+    locationId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the location associated with the feed'
+    })),
     filter: zListingFilter,
     sort: z.array(zListingSort),
     meta: zListingMeta
@@ -1180,12 +1187,19 @@ export const zFeedPatch = z.object({
     name: z.optional(z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
     })),
+    locationId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     filter: z.optional(zListingFilter.and(z.unknown().register(z.globalRegistry, {
         description: 'Filter used to fetch the listings'
     }))),
     sort: z.optional(z.array(zListingSort).register(z.globalRegistry, {
         description: 'Sort used to fetch the listings'
-    }))
+    })),
+    meta: z.optional(zListingMeta.and(z.unknown().register(z.globalRegistry, {
+        description: 'Metadata used to fetch the listings (e.g. location)'
+    })))
 });
 
 export type zFeedPatch = z.infer<typeof zFeedPatch>;

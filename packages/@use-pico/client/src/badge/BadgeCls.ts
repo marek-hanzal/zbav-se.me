@@ -27,6 +27,7 @@ export const BadgeCls = contract(PicoCls.contract)
 	.variant("snap-to", [
 		"unset",
 		"top-left",
+		"top-center",
 		"top-right",
 		"bottom-left",
 		"bottom-right",
@@ -388,6 +389,16 @@ export const BadgeCls = contract(PicoCls.contract)
 				"absolute",
 				"top-2",
 				"right-2",
+			],
+		},
+	})
+	.match("snap-to", "top-center", {
+		root: {
+			class: [
+				"absolute",
+				"top-2",
+				"left-1/2",
+				"-translate-x-1/2",
 			],
 		},
 	})

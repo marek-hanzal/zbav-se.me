@@ -1,4 +1,12 @@
-import { Badge, Icon, PriceInline, Tx, Typo } from "@use-pico/client";
+import {
+	ArrowLeftIcon,
+	Badge,
+	Icon,
+	LinkTo,
+	PriceInline,
+	Tx,
+	Typo,
+} from "@use-pico/client";
 import { tvc, VariantProvider } from "@use-pico/cls";
 import type { tGalleryDto, tListingDto } from "@zbav-se.me/sdk";
 import { ThemeCls } from "@zbav-se.me/ui";
@@ -32,12 +40,43 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					className={"w-full h-full object-cover"}
 				/>
 
+				<div
+					className={
+						"absolute top-2 left-2 flex flex-row gap-2 items-center"
+					}
+				>
+					<LinkTo
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
+						}}
+					>
+						<Badge
+							tone={"secondary"}
+							size={"lg"}
+							round={"full"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"p-2",
+											"opacity-65",
+										],
+									},
+								},
+							}}
+						>
+							<Icon icon={ArrowLeftIcon} />
+						</Badge>
+					</LinkTo>
+				</div>
+
 				<Badge
 					tone={"secondary"}
 					theme={"dark"}
 					size={"lg"}
-					snapTo={"top-left"}
 					round={"md"}
+					snapTo={"top-center"}
 					tweak={{
 						slot: {
 							root: {
@@ -63,8 +102,8 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 				<Badge
 					tone={"secondary"}
 					size={"lg"}
-					snapTo={"top-right"}
 					round={"full"}
+					snapTo={"top-right"}
 					tweak={{
 						slot: {
 							root: {

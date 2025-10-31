@@ -9,7 +9,7 @@ import {
 	Spinner,
 	Status,
 } from "@use-pico/client";
-import { tvc, useCls } from "@use-pico/cls";
+import { useCls } from "@use-pico/cls";
 import { ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
@@ -71,25 +71,31 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 		]);
 
 		return (
-			<div
-				className={tvc([
-					"relative",
-					"overflow-hidden",
-				])}
+			<Container
+				data-ui="Feed-root"
+				height={"fit"}
 			>
 				<InfiniteData
 					result={listingQuery}
 					renderLoading={() => (
-						<Spinner
-							tone="secondary"
-							theme={"dark"}
-						/>
+						<Container
+							ui="Feed-Spinner"
+							layout={"vertical-centered"}
+							items={"center"}
+							height={"fit"}
+						>
+							<Spinner
+								tone="secondary"
+								theme={"dark"}
+							/>
+						</Container>
 					)}
 					renderFetching={() => <Spinner />}
 					renderSuccess={({ data: { pages } }) => {
 						if (pages.length === 0) {
 							return (
 								<Status
+									ui="Feed-Status-empty"
 									key={`${feedId}-no-listings`}
 									icon={"icon-[streamline--sad-face-remix]"}
 									textTitle={"No listings (title)"}
@@ -114,6 +120,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 					{({ content }) => {
 						return (
 							<Container
+								ui="Feed-Container"
 								key={feedId}
 								ref={containerRef}
 								layout={"vertical-full"}
@@ -197,7 +204,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 						},
 					})}
 				/>
-			</div>
+			</Container>
 		);
 	},
 });
