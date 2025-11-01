@@ -1,4 +1,5 @@
 export { useDoubleTap } from "./useDoubleTap";
+export { useEvent } from "./useEvent";
 export { useHighlightRectangle } from "./useHighlightRectangle";
 export { useInViewport } from "./useInViewport";
 export { useMergeRefs } from "./useMergeRefs";
@@ -6,8 +7,6 @@ export { useScrollTo } from "./useScrollTo";
 export { useSelection } from "./useSelection";
 export { useSetUnset } from "./useSetUnset";
 export { useSnapperNav } from "./useSnapperNav";
-export { useStableCallback } from "./useStableCallback";
-export { useStableMemo } from "./useStableMemo";
 export { useStopEvent } from "./useStopEvent";
 export { useToken } from "./useToken";
 export { useTokenOf } from "./useTokenOf";

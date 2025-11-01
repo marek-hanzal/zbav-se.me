@@ -40,6 +40,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 								<div className={"flex flex-col gap-2 px-4"}>
 									<div>
 										<PriceInline
+											locale={locale}
 											price={data.price}
 											currency={data.currency}
 										/>

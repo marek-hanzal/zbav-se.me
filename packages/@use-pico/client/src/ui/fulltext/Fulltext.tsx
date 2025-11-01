@@ -1,5 +1,6 @@
 import { useCls } from "@use-pico/cls";
-import { type StateType, translator } from "@use-pico/common";
+import { translator } from "@use-pico/common/translator";
+import type { StateType } from "@use-pico/common/type";
 import { type FC, type Ref, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useMergeRefs } from "../../hook/useMergeRefs";

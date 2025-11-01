@@ -6,7 +6,7 @@ import { Data } from "@use-pico/client/ui/data";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import { SearchIcon, SpinnerContainer } from "@zbav-se.me/ui";
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";
 import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";

@@ -1,4 +1,4 @@
-import { genId } from "@use-pico/common";
+import { genId } from "@use-pico/common/gen-id";
 import type { Migration } from "kysely";
 import categoriesCsData from "./0001-category/categories.cs.json";
 

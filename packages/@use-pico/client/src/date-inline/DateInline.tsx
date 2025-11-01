@@ -1,29 +1,27 @@
-import { type IDateInput, iso2locale } from "@use-pico/common";
+import { iso2locale } from "@use-pico/common/iso2locale";
+import type { DateInput } from "@use-pico/common/type";
 import { DateTime, type DateTimeFormatOptions } from "luxon";
-import type { FC, Ref } from "react";
+import type { FC } from "react";
+import { Typo } from "../ui/typo";
 
 export namespace DateInline {
-	export interface Props {
-		ref?: Ref<HTMLSpanElement>;
-		date?: IDateInput;
-		fallback?: IDateInput;
+	export interface Props extends Omit<Typo.Props, "label"> {
+		date?: DateInput;
+		fallback?: DateInput;
 		options?: DateTimeFormatOptions;
 	}
 }
 
 export const DateInline: FC<DateInline.Props> = ({
-	ref,
 	date,
 	fallback,
 	options = DateTime.DATE_MED,
 	...props
 }) => {
 	return (
-		<span
-			ref={ref}
+		<Typo
+			label={iso2locale(date, fallback, options)}
 			{...props}
-		>
-			{iso2locale(date, fallback, options)}
-		</span>
+		/>
 	);
 };

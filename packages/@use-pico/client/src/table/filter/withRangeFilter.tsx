@@ -1,9 +1,6 @@
-import {
-	type DeepKeys,
-	type EntitySchema,
-	pathOf,
-	type withQuerySchema,
-} from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
+import type { DeepKeys } from "@use-pico/common/type";
+import pathOf from "object-path";
 import type { Table } from "../Table";
 import { RangeFilter } from "./RangeFilter";
 
@@ -41,10 +38,9 @@ export const withRangeFilter = <
 			});
 		},
 		is({ state: { value } }) {
-			return (
-				pathOf(value || {}).get(lte) !== undefined ||
-				pathOf(value || {}).get(gte) !== undefined
-			);
+			const path = pathOf(value || {});
+
+			return path.get(lte) !== undefined || path.get(gte) !== undefined;
 		},
 		component({ data, state }) {
 			return (

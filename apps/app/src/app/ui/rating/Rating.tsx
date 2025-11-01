@@ -2,7 +2,7 @@ import type { useSelection } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { useCls, VariantProvider } from "@use-pico/cls";
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import { ThemeCls, TypoIcon } from "@zbav-se.me/ui";
 import { type FC, type Ref, useId, useMemo } from "react";
 import { RatingCls } from "~/app/ui/rating/RatingCls";

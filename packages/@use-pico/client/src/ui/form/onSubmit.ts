@@ -1,11 +1,5 @@
-import {
-	cleanOf,
-	ErrorSchema,
-	mapEmptyToNull,
-	onAxiosSchemaError,
-	type ShapeSchema,
-	withErrors,
-} from "@use-pico/common";
+import { cleanOf } from "@use-pico/common/clean-of";
+import { mapEmptyToNull } from "@use-pico/common/map";
 import { toast as coolToast } from "react-hot-toast";
 import type { z } from "zod";
 import type { withToastPromiseTx } from "../../toast/withToastPromiseTx";
@@ -13,7 +7,7 @@ import type { Form } from "./Form";
 
 export namespace onSubmit {
 	export namespace Map {
-		export interface Props<TShapeSchema extends ShapeSchema> {
+		export interface Props<TShapeSchema extends z.ZodObject> {
 			/**
 			 * Values from the form
 			 */
@@ -28,15 +22,14 @@ export namespace onSubmit {
 			cleanup(): any;
 		}
 
-		export type Fn<TShapeSchema extends ShapeSchema> = (
+		export type Fn<TShapeSchema extends z.ZodObject> = (
 			props: Map.Props<TShapeSchema>,
 		) => Promise<any>;
 	}
 
-	export interface Props<TShapeSchema extends ShapeSchema> {
+	export interface Props<TShapeSchema extends z.ZodObject> {
 		mutation: Form.Props.Mutation<TShapeSchema>;
 		toast?: withToastPromiseTx.Text;
-		onError?(error: string): void;
 		/**
 		 * Map form values to mutation request values (output of this goes directly into mutation).
 		 *
@@ -46,10 +39,9 @@ export namespace onSubmit {
 	}
 }
 
-export const onSubmit = <TShapeSchema extends ShapeSchema>({
+export const onSubmit = <TShapeSchema extends z.ZodObject>({
 	mutation,
 	toast,
-	onError,
 	map = ({ cleanup }) => {
 		return cleanup();
 	},
@@ -67,26 +59,6 @@ export const onSubmit = <TShapeSchema extends ShapeSchema>({
 							return cleanOf(mapEmptyToNull(value));
 						},
 					}),
-					{
-						onError(error) {
-							withErrors({
-								error,
-								errors: [
-									onAxiosSchemaError({
-										error,
-										schema: ErrorSchema,
-										onError: ({ data }) => {
-											onError?.(data.message);
-										},
-									}),
-								],
-								onError(error) {
-									console.log("Error", error);
-									onError?.(error.message);
-								},
-							});
-						},
-					},
 				)
 				.catch(() => {
 					//

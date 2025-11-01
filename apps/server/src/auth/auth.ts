@@ -1,4 +1,4 @@
-import { genId } from "@use-pico/common";
+import { genId } from "@use-pico/common/gen-id";
 import { betterAuth } from "better-auth";
 import { anonymous, customSession, openAPI } from "better-auth/plugins";
 import { passkey } from "better-auth/plugins/passkey";

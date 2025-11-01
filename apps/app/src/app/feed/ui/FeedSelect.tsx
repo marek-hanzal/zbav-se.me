@@ -6,7 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { toHumanNumber } from "@use-pico/common";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeedDto } from "@zbav-se.me/sdk";
 import { FeedIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";
@@ -99,7 +99,7 @@ export const FeedSelect: FC<FeedSelect.Props> = ({
 							<>
 								<Tx label={"Number of listings (label)"} />
 								<Typo
-									label={toHumanNumber({
+									label={toLocaleNumber({
 										locale,
 										number: listingCountQuery.data.filter,
 									})}

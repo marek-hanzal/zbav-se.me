@@ -2,7 +2,7 @@ import type {
 	CursorSchema,
 	EntitySchema,
 	withQuerySchema,
-} from "@use-pico/common";
+} from "@use-pico/common/schema";
 import { type FC, useContext, useState } from "react";
 import { useSelection } from "../hook/useSelection";
 import { ModalContent } from "../modal/ModalContent";

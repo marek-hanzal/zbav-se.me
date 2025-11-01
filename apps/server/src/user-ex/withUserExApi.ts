@@ -1,5 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { genId } from "@use-pico/common";
+import { genId } from "@use-pico/common/gen-id";
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withSessionHono } from "../hono/withSessionHono";

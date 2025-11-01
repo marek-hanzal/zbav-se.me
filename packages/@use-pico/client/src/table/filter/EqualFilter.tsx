@@ -1,10 +1,5 @@
-import type {
-	DeepKeys,
-	DeepValue,
-	EntitySchema,
-	StateType,
-	withQuerySchema,
-} from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
+import type { DeepKeys, DeepValue, StateType } from "@use-pico/common/type";
 import { Action } from "../../action/Action";
 import { FilterApplyIcon } from "../../icon/FilterApplyIcon";
 

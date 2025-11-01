@@ -1,5 +1,6 @@
 import { type Cls, tvc } from "@use-pico/cls";
-import { type withQuerySchema, withSort } from "@use-pico/common";
+import type { withQuerySchema } from "@use-pico/common/schema";
+import { withSort } from "@use-pico/common/sort";
 import { Action } from "../action/Action";
 import type { ActionCls } from "../action/ActionCls";
 import { AscIcon } from "../icon/AscIcon";

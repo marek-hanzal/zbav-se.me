@@ -13,7 +13,9 @@ import {
 	useTransitionStyles,
 } from "@floating-ui/react";
 import { type Cls, useCls } from "@use-pico/cls";
-import { type Entity, type EntitySchema, translator } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
+import type { Entity } from "@use-pico/common/type";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
 import { Action } from "../../action/Action";
 import { CloseIcon } from "../../icon/CloseIcon";

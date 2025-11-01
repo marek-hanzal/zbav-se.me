@@ -1,4 +1,4 @@
-import { genId } from "@use-pico/common";
+import { genId } from "@use-pico/common/gen-id";
 import { SignJWT } from "jose";
 import type z from "zod";
 import type { PayloadSchema } from "./PayloadSchema";

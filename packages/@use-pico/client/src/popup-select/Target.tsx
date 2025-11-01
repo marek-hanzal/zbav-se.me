@@ -1,4 +1,4 @@
-import type { EntitySchema, withQuerySchema } from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
 import type { ReactNode, Ref } from "react";
 import type { useSelection } from "../hook/useSelection";
 import { Icon } from "../icon/Icon";

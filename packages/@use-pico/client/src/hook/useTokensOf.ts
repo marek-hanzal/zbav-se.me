@@ -1,4 +1,4 @@
-import { diffOf } from "@use-pico/common";
+import { diffOf } from "@use-pico/common/diff-of";
 import type { TokenType } from "../type/TokenType";
 
 export namespace useTokenOf {

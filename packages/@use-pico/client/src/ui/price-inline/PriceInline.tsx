@@ -1,8 +1,9 @@
-import { toHumanNumber, translator } from "@use-pico/common";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { translator } from "@use-pico/common/translator";
 import type { FC } from "react";
 
 export namespace PriceInline {
-	export interface Props extends Omit<toHumanNumber.Props, "number"> {
+	export interface Props extends Omit<toLocaleNumber.Props, "number"> {
 		price: number | null | undefined;
 		withVat?: boolean | null | undefined;
 	}
@@ -23,7 +24,7 @@ export const PriceInline: FC<PriceInline.Props> = ({
 		return (
 			<div className={"flex flex-row gap-2 items-center"}>
 				<div>
-					{toHumanNumber({
+					{toLocaleNumber({
 						style,
 						currencyDisplay,
 						currencySign,
@@ -43,7 +44,7 @@ export const PriceInline: FC<PriceInline.Props> = ({
 		);
 	}
 
-	return toHumanNumber({
+	return toLocaleNumber({
 		style,
 		currencyDisplay,
 		currencySign,

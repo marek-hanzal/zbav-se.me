@@ -1,4 +1,4 @@
-import { translator } from "@use-pico/common";
+import { translator } from "@use-pico/common/translator";
 import type { FC, ReactNode } from "react";
 import { Typo } from "../typo/Typo";
 

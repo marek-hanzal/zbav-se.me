@@ -9,7 +9,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { linkTo } from "@use-pico/common";
+import { linkTo } from "@use-pico/common/link-to";
 import { DashboardIcon, LockIcon, Sheet } from "@zbav-se.me/ui";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 

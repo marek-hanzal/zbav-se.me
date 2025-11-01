@@ -1,4 +1,5 @@
-import type { DeepKeys, EntitySchema, withQuerySchema } from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
+import type { DeepKeys } from "@use-pico/common/type";
 import { withEqualFilter } from "../filter/withEqualFilter";
 import { withRangeFilter } from "../filter/withRangeFilter";
 import type { Table } from "../Table";

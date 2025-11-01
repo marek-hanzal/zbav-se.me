@@ -3,7 +3,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { toHumanNumber } from "@use-pico/common";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeedDto } from "@zbav-se.me/sdk";
 import type { FC } from "react";
 import { withListingCountQuery } from "~/app/listing/query/withListingCountQuery";
@@ -90,7 +90,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 				>
 					<Tx label={"Number of listings (label)"} />
 					<Typo
-						label={toHumanNumber({
+						label={toLocaleNumber({
 							locale,
 							number: listingCountQuery.data.filter,
 						})}

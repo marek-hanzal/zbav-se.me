@@ -1,8 +1,5 @@
-import type {
-	CursorSchema,
-	StateType,
-	withQuerySchema,
-} from "@use-pico/common";
+import type { CursorSchema, withQuerySchema } from "@use-pico/common/schema";
+import type { StateType } from "@use-pico/common/type";
 import type { Fulltext } from "../ui/fulltext/Fulltext";
 
 export const NavigationState = {

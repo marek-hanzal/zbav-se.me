@@ -8,7 +8,7 @@ import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategoryDto } from "@zbav-se.me/sdk";
 import { SearchIcon, SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";
 import type { FC } from "react";

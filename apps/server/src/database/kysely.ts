@@ -1,4 +1,4 @@
-import { withDatabase } from "@use-pico/common";
+import { withDatabase } from "@use-pico/common/database";
 import { runAuthMigration } from "../auth/runAuthMigration";
 import type { Database } from "./Database";
 import { dialect } from "./dialect";

@@ -10,7 +10,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
-import { linkTo, translator } from "@use-pico/common";
+import { linkTo } from "@use-pico/common/link-to";
+import { translator } from "@use-pico/common/translator";
 import {
 	CheckIcon,
 	Fade,

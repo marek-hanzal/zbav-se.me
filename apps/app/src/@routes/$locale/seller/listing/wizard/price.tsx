@@ -3,7 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { toHumanNumber } from "@use-pico/common";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 					price
 						? price === "0"
 							? "Price - free (title)"
-							: toHumanNumber({
+							: toLocaleNumber({
 									number: parseFloat(price),
 									locale,
 									currency:

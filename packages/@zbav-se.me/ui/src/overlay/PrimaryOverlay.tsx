@@ -1,4 +1,4 @@
-import { Overlay } from "@use-pico/client";
+import { Overlay } from "@use-pico/client/ui/overlay";
 import type { FC } from "react";
 
 export namespace PrimaryOverlay {

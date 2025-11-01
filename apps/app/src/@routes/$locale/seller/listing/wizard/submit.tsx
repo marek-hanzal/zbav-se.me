@@ -245,6 +245,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									/>
 
 									<PriceInline
+										locale={locale}
 										price={valid.data.price}
 										currency={valid.data.currency}
 									/>

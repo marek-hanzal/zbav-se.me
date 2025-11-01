@@ -2,7 +2,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@use-pico/client/ui/button";
-import { genId, linkTo } from "@use-pico/common";
+import { genId } from "@use-pico/common/gen-id";
+import { linkTo } from "@use-pico/common/link-to";
 import {
 	apiCategoryCollection,
 	apiListingCreate,

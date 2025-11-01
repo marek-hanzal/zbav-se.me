@@ -1,5 +1,5 @@
 import { useCls } from "@use-pico/cls";
-import type { Entity } from "@use-pico/common";
+import type { Entity } from "@use-pico/common/type";
 import type { FC, Ref } from "react";
 import { Attr } from "../attr/Attr";
 import { InlineContext } from "../inline/InlineContext";

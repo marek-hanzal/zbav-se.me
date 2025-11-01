@@ -1,5 +1,5 @@
 import { useCls } from "@use-pico/cls";
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode, Ref } from "react";
 import { Action } from "../action/Action";
 import { ActionMenuIcon } from "../icon/ActionMenuIcon";

@@ -10,7 +10,7 @@ import {
 	useQueryClient,
 	useSuspenseQuery,
 } from "@tanstack/react-query";
-import { cleanOf } from "@use-pico/common";
+import { cleanOf } from "@use-pico/common/clean-of";
 import type { withInvalidator } from "../invalidator/withInvalidator";
 
 export namespace withQuery {

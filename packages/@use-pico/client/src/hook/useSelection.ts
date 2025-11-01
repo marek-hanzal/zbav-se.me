@@ -1,4 +1,4 @@
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import { useCallback, useMemo, useRef, useState } from "react";
 
 export namespace useSelection {

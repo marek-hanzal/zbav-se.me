@@ -1,5 +1,5 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { translator } from "@use-pico/common";
+import { translator } from "@use-pico/common/translator";
 
 export const Route = createFileRoute("/$locale")({
 	async loader({ params: { locale } }) {

@@ -7,7 +7,7 @@ import {
 } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { CategorySelection } from "~/app/category/ui/CategorySelection";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";

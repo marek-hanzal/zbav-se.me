@@ -1,8 +1,5 @@
-import {
-	type EntitySchema,
-	pathOf,
-	type withQuerySchema,
-} from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
+import pathOf from "object-path";
 import { useId } from "react";
 import type { Table } from "../Table";
 
@@ -31,6 +28,7 @@ export const useRow = <
 	TData,
 	TContext
 > => {
+	const path = pathOf(data);
 	const id = useId();
 
 	return {
@@ -40,7 +38,7 @@ export const useRow = <
 			return {
 				column,
 				data,
-				value: pathOf(data).get(column.name),
+				value: path.get(column.name),
 				context,
 			} satisfies Table.Cell<TQuery, TData, any, TContext>;
 		}),

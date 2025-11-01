@@ -1,4 +1,4 @@
-import { clamp } from "@use-pico/common";
+import { clamp } from "@use-pico/common/clamp";
 import {
 	type RefObject,
 	useCallback,

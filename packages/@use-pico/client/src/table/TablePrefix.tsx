@@ -2,7 +2,7 @@ import type {
 	CountSchema,
 	EntitySchema,
 	withQuerySchema,
-} from "@use-pico/common";
+} from "@use-pico/common/schema";
 import type { Cursor } from "../cursor/Cursor";
 import type { useSelection } from "../hook/useSelection";
 import type { withQuery } from "../query/withQuery";

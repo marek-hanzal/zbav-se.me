@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common";
+import { OrderSchema } from "@use-pico/common/schema";
 
 export const UploadSortSchema = z
 	.object({

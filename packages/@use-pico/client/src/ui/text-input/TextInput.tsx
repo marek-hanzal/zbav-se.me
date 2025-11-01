@@ -1,4 +1,4 @@
-import { translator } from "@use-pico/common";
+import { translator } from "@use-pico/common/translator";
 import type { FC, InputHTMLAttributes } from "react";
 
 export namespace TextInput {

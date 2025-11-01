@@ -1,4 +1,4 @@
-import { linkTo } from "@use-pico/common";
+import { linkTo } from "@use-pico/common/link-to";
 import JsFileDownloader from "js-file-downloader";
 import { type FC, useRef, useState, useTransition } from "react";
 import toast from "react-hot-toast";

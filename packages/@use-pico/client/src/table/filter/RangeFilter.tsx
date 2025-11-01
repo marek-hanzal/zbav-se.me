@@ -1,10 +1,6 @@
-import {
-	type DeepKeys,
-	type DeepValue,
-	pathOf,
-	type StateType,
-	type withQuerySchema,
-} from "@use-pico/common";
+import type { withQuerySchema } from "@use-pico/common/schema";
+import type { DeepKeys, DeepValue, StateType } from "@use-pico/common/type";
+import pathOf from "object-path";
 import { Action } from "../../action/Action";
 import { FilterRemoveIcon } from "../../icon/FilterRemoveIcon";
 import { GteIcon } from "../../icon/GteIcon";
@@ -25,8 +21,9 @@ export const RangeFilter = <TFilter extends withQuerySchema.Query>({
 	state,
 	value,
 }: RangeFilter.Props<TFilter>) => {
-	const isLte = pathOf(state.value || {}).get(lte) !== undefined;
-	const isGte = pathOf(state.value || {}).get(gte) !== undefined;
+	const path = pathOf(state.value || {});
+	const isLte = path.get(lte) !== undefined;
+	const isGte = path.get(gte) !== undefined;
 
 	return (
 		<div className={"flex flex-row gap-2"}>

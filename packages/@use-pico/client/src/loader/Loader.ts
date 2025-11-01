@@ -1,5 +1,5 @@
 import type { QueryClient } from "@tanstack/react-query";
-import type { CursorSchema, OrderSchema } from "@use-pico/common";
+import type { CursorSchema, OrderSchema } from "@use-pico/common/schema";
 import type { z } from "zod";
 
 export namespace Loader {

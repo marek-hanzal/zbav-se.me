@@ -1,10 +1,7 @@
 import { useCls } from "@use-pico/cls";
-import {
-	type CountSchema,
-	type CursorSchema,
-	cursorOf,
-	type StateType,
-} from "@use-pico/common";
+import { cursorOf } from "@use-pico/common/cursor-of";
+import type { CountSchema, CursorSchema } from "@use-pico/common/schema";
+import type { StateType } from "@use-pico/common/type";
 import { type FC, type Ref, useMemo } from "react";
 import { DotsIcon } from "../icon/DotsIcon";
 import { Icon } from "../icon/Icon";

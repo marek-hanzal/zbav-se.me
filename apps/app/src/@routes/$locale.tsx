@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
-import { linkTo, translator } from "@use-pico/common";
+import { linkTo } from "@use-pico/common/link-to";
+import { translator } from "@use-pico/common/translator";
 import { PrimaryOverlay } from "@zbav-se.me/ui";
 import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
 

@@ -1,5 +1,5 @@
 import { useCls } from "@use-pico/cls";
-import type { EntitySchema, withQuerySchema } from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
 import type { FC, ReactNode, Ref } from "react";
 import { match, P } from "ts-pattern";
 import { EmptyResultIcon } from "../icon/EmptyResultIcon";

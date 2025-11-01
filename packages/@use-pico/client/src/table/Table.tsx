@@ -1,12 +1,10 @@
 import { type ClassName, tvc, useCls } from "@use-pico/cls";
 import type {
 	CountSchema,
-	DeepKeys,
-	DeepValue,
 	EntitySchema,
-	StateType,
 	withQuerySchema,
-} from "@use-pico/common";
+} from "@use-pico/common/schema";
+import type { DeepKeys, DeepValue, StateType } from "@use-pico/common/type";
 import type { FC, ReactNode } from "react";
 import type { Cursor as CoolCursor } from "../cursor/Cursor";
 import type { useSelection } from "../hook/useSelection";

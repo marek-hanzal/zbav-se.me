@@ -1,4 +1,4 @@
-import type { EntitySchema } from "@use-pico/common";
+import type { EntitySchema } from "@use-pico/common/schema";
 import type { FC, ReactNode, Ref } from "react";
 import { Badge } from "../ui/badge/Badge";
 import { Tx } from "../ui/tx/Tx";

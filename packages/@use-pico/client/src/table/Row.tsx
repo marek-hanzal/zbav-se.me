@@ -1,5 +1,5 @@
 import { tvc } from "@use-pico/cls";
-import type { EntitySchema, withQuerySchema } from "@use-pico/common";
+import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
 import type { FC } from "react";
 import type { useSelection } from "../hook/useSelection";
 import { Icon } from "../icon/Icon";
