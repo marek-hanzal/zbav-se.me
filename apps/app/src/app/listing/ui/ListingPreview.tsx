@@ -1,10 +1,6 @@
-import {
-	ArrowLeftIcon,
-	Badge,
-	Icon,
-	LinkTo,
-	PriceInline,
-} from "@use-pico/client";
+import { ArrowLeftIcon, Icon, PriceInline } from "@use-pico/client";
+import { Badge } from "@use-pico/client/ui/badge";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc, VariantProvider } from "@use-pico/cls";

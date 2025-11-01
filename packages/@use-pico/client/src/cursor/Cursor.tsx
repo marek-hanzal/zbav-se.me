@@ -6,9 +6,9 @@ import {
 	type StateType,
 } from "@use-pico/common";
 import { type FC, type Ref, useMemo } from "react";
-import { Badge } from "../badge/Badge";
 import { DotsIcon } from "../icon/DotsIcon";
 import { Icon } from "../icon/Icon";
+import { Badge } from "../ui/badge/Badge";
 import { Typo } from "../ui/typo/Typo";
 import { CursorCls } from "./CursorCls";
 import { Pages } from "./Pages";

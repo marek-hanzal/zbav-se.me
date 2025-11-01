@@ -1,12 +1,12 @@
 import { useCls } from "@use-pico/cls";
 import { type IssueSchema, withIssueType } from "@use-pico/common";
 import type { FC } from "react";
-import { Badge } from "../badge/Badge";
 import { ErrorIcon } from "../icon/ErrorIcon";
 import { Icon } from "../icon/Icon";
 import { InfoIcon } from "../icon/InfoIcon";
 import { WarningIcon } from "../icon/WarningIcon";
 import { More } from "../more/More";
+import { Badge } from "../ui/badge/Badge";
 import { Tx } from "../ui/tx/Tx";
 import { IssuesCls } from "./IssuesCls";
 

@@ -3,14 +3,9 @@ import {
 	useNavigate,
 	useRouter,
 } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	Icon,
-	LinkTo,
-	SpinnerIcon,
-	UserIcon,
-} from "@use-pico/client";
+import { ArrowLeftIcon, Icon, SpinnerIcon, UserIcon } from "@use-pico/client";
 import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PostIcon, PublicIcon, ShopIcon, TitleContainer } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";

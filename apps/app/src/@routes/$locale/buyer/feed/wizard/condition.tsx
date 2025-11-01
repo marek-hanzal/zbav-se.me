@@ -3,10 +3,10 @@ import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	CloseIcon,
-	LinkTo,
 	useSelection,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import { Rating } from "~/app/ui/rating/Rating";

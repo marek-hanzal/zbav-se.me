@@ -6,13 +6,13 @@ import {
 } from "@tanstack/react-router";
 import {
 	FormField,
-	LinkTo,
 	SnapperNav,
 	UserIcon,
 	useSnapperNav,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";

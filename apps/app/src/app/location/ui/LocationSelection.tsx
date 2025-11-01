@@ -1,4 +1,5 @@
-import { Badge, Data, Fulltext } from "@use-pico/client";
+import { Data, Fulltext } from "@use-pico/client";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";

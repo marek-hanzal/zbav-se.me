@@ -1,6 +1,6 @@
 import type { Cls } from "@use-pico/cls";
 import type { FC } from "react";
-import { Tx } from "../ui/tx/Tx";
+import { Tx } from "../tx/Tx";
 import { Badge } from "./Badge";
 import type { BadgeCls } from "./BadgeCls";
 

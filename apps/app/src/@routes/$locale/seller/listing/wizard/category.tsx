@@ -4,12 +4,12 @@ import {
 	ArrowRightIcon,
 	Data,
 	Fulltext,
-	LinkTo,
 	useScrollTo,
 	useSelection,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { EntitySchema } from "@use-pico/common";

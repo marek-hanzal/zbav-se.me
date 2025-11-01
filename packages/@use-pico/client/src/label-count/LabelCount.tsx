@@ -1,7 +1,7 @@
 import { useCls } from "@use-pico/cls";
 import { toHumanNumber } from "@use-pico/common";
 import type { FC, ReactNode, Ref } from "react";
-import { Badge } from "../badge/Badge";
+import { Badge } from "../ui/badge/Badge";
 import { LabelCountCls } from "./LabelCountCls";
 
 export namespace LabelCount {

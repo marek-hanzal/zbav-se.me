@@ -1,8 +1,8 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
 import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { AnchorHTMLAttributes, ComponentProps, FC, Ref } from "react";
-import { PicoCls } from "../cls/PicoCls";
-import { Icon } from "../icon/Icon";
+import { PicoCls } from "../../cls/PicoCls";
+import { Icon } from "../../icon/Icon";
 import { LinkToCls } from "./LinkToCls";
 
 interface BaseLinkToProps

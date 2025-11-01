@@ -1,8 +1,8 @@
 import { translator } from "@use-pico/common";
 import type { FC, ReactNode } from "react";
-import { Badge } from "../badge/Badge";
 import { ErrorIcon } from "../icon/ErrorIcon";
 import { More } from "../more/More";
+import { Badge } from "../ui/badge/Badge";
 import { Tx } from "../ui/tx/Tx";
 
 export namespace FormError {

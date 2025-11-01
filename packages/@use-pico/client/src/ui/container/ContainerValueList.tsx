@@ -1,6 +1,6 @@
 import type { EntitySchema } from "@use-pico/common";
 import type { ReactNode } from "react";
-import { Badge } from "../../badge/Badge";
+import { Badge } from "../badge/Badge";
 import { Tx } from "../tx/Tx";
 import { Container } from "./Container";
 
