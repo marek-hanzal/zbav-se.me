@@ -1,4 +1,4 @@
-import { Fade as CoolFade } from "@use-pico/client";
+import { Fade as CoolFade } from "@use-pico/client/ui/fade";
 import type { FC } from "react";
 
 export namespace Fade {

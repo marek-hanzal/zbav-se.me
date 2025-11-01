@@ -74,8 +74,6 @@ export { Preview } from "./preview/Preview";
 export { PreviewCls } from "./preview/PreviewCls";
 export { assignRef } from "./ref/assignRef";
 export { mergeRefs } from "./ref/mergeRefs";
-export { Fade } from "./scrollable/Fade";
-export { FadeCls } from "./scrollable/FadeCls";
 export { Section } from "./section/Section";
 export { Select } from "./select/Select";
 export { SnapperNav } from "./snapper/SnapperNav";
