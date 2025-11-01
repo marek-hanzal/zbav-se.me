@@ -3,9 +3,10 @@ import {
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import { FormField, LinkTo, Tx, UserIcon } from "@use-pico/client";
+import { FormField, LinkTo, UserIcon } from "@use-pico/client";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo, translator } from "@use-pico/common";
 import { CheckIcon, Sheet, ThemeCls } from "@zbav-se.me/ui";

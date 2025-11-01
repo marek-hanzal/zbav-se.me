@@ -6,7 +6,7 @@ import { SelectionOffIcon } from "../icon/SelectionOffIcon";
 import { SelectionOnIcon } from "../icon/SelectionOnIcon";
 import type { useSelection } from "../selection/useSelection";
 import type { withQuery } from "../source/withQuery";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 import type { PopupSelect } from "./PopupSelect";
 import type { PopupSelectCls } from "./PopupSelectCls";
 

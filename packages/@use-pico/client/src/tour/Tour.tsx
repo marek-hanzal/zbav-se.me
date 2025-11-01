@@ -14,8 +14,8 @@ import { useInViewport } from "../hook/useInViewport";
 import { ArrowLeftIcon } from "../icon/ArrowLeftIcon";
 import { ArrowRightIcon } from "../icon/ArrowRightIcon";
 import { CloseIcon } from "../icon/CloseIcon";
-import { Typo } from "../typo/Typo";
 import { Button } from "../ui/button/Button";
+import { Typo } from "../ui/typo/Typo";
 import { Content } from "./Content";
 import { TourCls } from "./TourCls";
 

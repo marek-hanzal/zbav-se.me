@@ -4,9 +4,9 @@ import {
 	Icon,
 	LinkTo,
 	PriceInline,
-	Tx,
-	Typo,
 } from "@use-pico/client";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { tvc, VariantProvider } from "@use-pico/cls";
 import type { tGalleryDto, tListingDto } from "@zbav-se.me/sdk";
 import { ThemeCls } from "@zbav-se.me/ui";

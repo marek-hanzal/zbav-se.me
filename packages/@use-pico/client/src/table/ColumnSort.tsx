@@ -6,7 +6,7 @@ import { AscIcon } from "../icon/AscIcon";
 import { DescIcon } from "../icon/DescIcon";
 import { SortIcon } from "../icon/SortIcon";
 import { Tooltip } from "../tooltip/Tooltip";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 import type { Table } from "./Table";
 
 export namespace ColumnSort {

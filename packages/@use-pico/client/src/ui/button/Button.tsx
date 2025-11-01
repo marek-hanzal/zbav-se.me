@@ -6,7 +6,7 @@ import type { UiProps } from "../../component/UiProps";
 import { Icon } from "../../icon/Icon";
 import type { IconCls } from "../../icon/IconCls";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
-import { Tx } from "../../tx/Tx";
+import { Tx } from "../tx/Tx";
 import { ButtonCls } from "./ButtonCls";
 
 const ICON_SIZE_MAP: Partial<

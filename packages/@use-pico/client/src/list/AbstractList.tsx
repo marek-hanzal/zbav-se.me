@@ -6,7 +6,7 @@ import { EmptyResultIcon } from "../icon/EmptyResultIcon";
 import { ErrorIcon } from "../icon/ErrorIcon";
 import { SpinnerIcon } from "../icon/SpinnerIcon";
 import type { withQuery } from "../source/withQuery";
-import { Status } from "../ui/status";
+import { Status } from "../ui/status/Status";
 import { AbstractListBody } from "./AbstractListBody";
 import { AbstractListCls } from "./AbstractListCls";
 

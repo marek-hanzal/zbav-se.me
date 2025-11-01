@@ -1,5 +1,5 @@
 import type { FC, PropsWithChildren } from "react";
-import { Status } from "../ui/status";
+import { Status } from "../ui/status/Status";
 import { TokenInline } from "./TokenInline";
 import type { TokenType } from "./TokenType";
 import { useToken } from "./useToken";

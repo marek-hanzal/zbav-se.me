@@ -1,6 +1,6 @@
 import type { Entity } from "@use-pico/common";
 import type { FC, Ref } from "react";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 
 export namespace TokenInline {
 	export interface Props

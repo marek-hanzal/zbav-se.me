@@ -1,5 +1,5 @@
-import { Tx } from "@use-pico/client";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { CheckIcon, Sheet, ThemeCls, TypoIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";

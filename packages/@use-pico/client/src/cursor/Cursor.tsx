@@ -9,7 +9,7 @@ import { type FC, type Ref, useMemo } from "react";
 import { Badge } from "../badge/Badge";
 import { DotsIcon } from "../icon/DotsIcon";
 import { Icon } from "../icon/Icon";
-import { Typo } from "../typo/Typo";
+import { Typo } from "../ui/typo/Typo";
 import { CursorCls } from "./CursorCls";
 import { Pages } from "./Pages";
 import { SizeSelect } from "./SizeSelect";

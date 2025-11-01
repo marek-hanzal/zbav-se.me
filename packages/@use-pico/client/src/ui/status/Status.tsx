@@ -4,8 +4,8 @@ import { PicoCls } from "../../cls/PicoCls";
 import type { UiProps } from "../../component/UiProps";
 import { Icon } from "../../icon/Icon";
 import type { IconCls } from "../../icon/IconCls";
-import { Tx } from "../../tx/Tx";
-import type { Typo } from "../../typo/Typo";
+import { Tx } from "../tx/Tx";
+import type { Typo } from "../typo/Typo";
 import { StatusCls } from "./StatusCls";
 
 export namespace Status {

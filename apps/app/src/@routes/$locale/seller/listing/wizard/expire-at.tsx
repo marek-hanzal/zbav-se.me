@@ -1,13 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	LinkTo,
-	Tx,
-	Typo,
-} from "@use-pico/client";
+import { ArrowLeftIcon, ArrowRightIcon, LinkTo } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import { tListingExpire } from "@zbav-se.me/sdk";
 import { ThemeCls, TitleContainer } from "@zbav-se.me/ui";

@@ -1,8 +1,8 @@
 import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, type Ref, useContext } from "react";
 import { InlineContext } from "../inline/InlineContext";
-import { Typo } from "../typo/Typo";
-import type { TypoCls } from "../typo/TypoCls";
+import { Typo } from "../ui/typo/Typo";
+import type { TypoCls } from "../ui/typo/TypoCls";
 import { AttrCls } from "./AttrCls";
 
 export namespace Attr {

@@ -1,11 +1,6 @@
-import {
-	ArrowRightIcon,
-	Badge,
-	EditIcon,
-	LinkTo,
-	Tx,
-	Typo,
-} from "@use-pico/client";
+import { ArrowRightIcon, Badge, EditIcon, LinkTo } from "@use-pico/client";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { toHumanNumber } from "@use-pico/common";
 import type { tFeedDto } from "@zbav-se.me/sdk";
 import type { FC } from "react";

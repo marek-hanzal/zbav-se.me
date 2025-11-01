@@ -5,7 +5,7 @@ import { Action } from "../action/Action";
 import { ArrowRightIcon } from "../icon/ArrowRightIcon";
 import { CloseIcon } from "../icon/CloseIcon";
 import { Icon } from "../icon/Icon";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 import { TransferCls } from "./TransferCls";
 
 export namespace Transfer {

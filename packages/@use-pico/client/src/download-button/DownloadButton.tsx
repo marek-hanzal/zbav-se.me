@@ -4,8 +4,8 @@ import { type FC, useRef, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { DownloadIcon } from "../icon/DownloadIcon";
 import { Progress } from "../progress/Progress";
-import { Tx } from "../tx/Tx";
 import { Button } from "../ui/button/Button";
+import { Tx } from "../ui/tx/Tx";
 
 export namespace DownloadButton {
 	export interface Props extends Button.Props {

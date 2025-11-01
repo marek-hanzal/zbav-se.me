@@ -3,7 +3,7 @@ import type { FC, ReactNode } from "react";
 import { Badge } from "../badge/Badge";
 import { ErrorIcon } from "../icon/ErrorIcon";
 import { More } from "../more/More";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 
 export namespace FormError {
 	export type Type =

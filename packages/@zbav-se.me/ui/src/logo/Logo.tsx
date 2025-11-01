@@ -1,4 +1,4 @@
-import { Tx } from "@use-pico/client";
+import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 

@@ -8,12 +8,12 @@ import {
 	LinkTo,
 	PriceInline,
 	SpinnerIcon,
-	Tx,
-	Typo,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { type Cls, VariantProvider } from "@use-pico/cls";
 import { zListingCreate } from "@zbav-se.me/sdk";
 import { SendPackageIcon, ThemeCls, TitleContainer } from "@zbav-se.me/ui";

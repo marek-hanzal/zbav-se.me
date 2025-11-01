@@ -1,5 +1,6 @@
-import { Badge, Icon, Tx } from "@use-pico/client";
+import { Badge, Icon } from "@use-pico/client";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeedQuery } from "@zbav-se.me/sdk";
 import { FeedIcon } from "@zbav-se.me/ui";
 import { type FC, useId } from "react";

@@ -1,4 +1,4 @@
-import { Typo } from "@use-pico/client";
+import { Typo } from "@use-pico/client/ui/typo";
 import { useCls } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
 import type { FC } from "react";

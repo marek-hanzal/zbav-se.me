@@ -1,5 +1,5 @@
 import type { ReactElement } from "react";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 
 export namespace withToastPromiseTx {
 	export interface Text {

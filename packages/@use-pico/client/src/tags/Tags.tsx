@@ -1,7 +1,7 @@
 import type { EntitySchema } from "@use-pico/common";
 import type { FC, ReactNode, Ref } from "react";
 import { Badge } from "../badge/Badge";
-import { Tx } from "../tx/Tx";
+import { Tx } from "../ui/tx/Tx";
 
 export namespace Tags {
 	export interface Data extends EntitySchema.Type {

@@ -6,8 +6,8 @@ import { LoaderIcon } from "../icon/LoaderIcon";
 import { Modal } from "../modal/Modal";
 import { ModalFooter } from "../modal/ModalFooter";
 import type { Transfer } from "../transfer/Transfer";
-import { Tx } from "../tx/Tx";
 import { Button } from "../ui/button/Button";
+import { Tx } from "../ui/tx/Tx";
 
 export namespace ExportButton {
 	export type ExportSchema<TItem extends EntitySchema.Type> = Schema<TItem>;

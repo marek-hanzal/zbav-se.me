@@ -1,5 +1,7 @@
-import { Badge, Icon, Tx, Typo } from "@use-pico/client";
+import { Badge, Icon } from "@use-pico/client";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
 import { BackspaceIcon, ClearIcon } from "@zbav-se.me/ui";
 import type { FC, RefObject } from "react";
