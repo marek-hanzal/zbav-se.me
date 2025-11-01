@@ -1,6 +1,7 @@
 export { useDoubleTap } from "./useDoubleTap";
 export { useHighlightRectangle } from "./useHighlightRectangle";
 export { useInViewport } from "./useInViewport";
+export { useMergeRefs } from "./useMergeRefs";
 export { useScrollTo } from "./useScrollTo";
 export { useSelection } from "./useSelection";
 export { useSetUnset } from "./useSetUnset";

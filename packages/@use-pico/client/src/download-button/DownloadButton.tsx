@@ -3,8 +3,8 @@ import JsFileDownloader from "js-file-downloader";
 import { type FC, useRef, useState, useTransition } from "react";
 import toast from "react-hot-toast";
 import { DownloadIcon } from "../icon/DownloadIcon";
-import { Progress } from "../progress/Progress";
 import { Button } from "../ui/button/Button";
+import { Progress } from "../ui/progress/Progress";
 import { Tx } from "../ui/tx/Tx";
 
 export namespace DownloadButton {

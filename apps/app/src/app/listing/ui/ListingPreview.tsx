@@ -1,7 +1,7 @@
-import { PriceInline } from "@use-pico/client";
 import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc, VariantProvider } from "@use-pico/cls";

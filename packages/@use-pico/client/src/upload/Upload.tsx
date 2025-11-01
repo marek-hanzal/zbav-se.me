@@ -1,5 +1,5 @@
 import type { FC, Ref } from "react";
-import { Progress } from "../progress/Progress";
+import { Progress } from "../ui/progress/Progress";
 import { useUpload } from "./useUpload";
 
 /**

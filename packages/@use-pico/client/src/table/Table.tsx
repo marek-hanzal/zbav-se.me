@@ -9,11 +9,11 @@ import type {
 } from "@use-pico/common";
 import type { FC, ReactNode } from "react";
 import type { Cursor as CoolCursor } from "../cursor/Cursor";
-import type { Fulltext as CoolFulltext } from "../fulltext/Fulltext";
 import type { useSelection } from "../hook/useSelection";
 import { AbstractList } from "../list/AbstractList";
 import { AbstractListCls } from "../list/AbstractListCls";
 import type { withQuery } from "../source/withQuery";
+import type { Fulltext as CoolFulltext } from "../ui/fulltext/Fulltext";
 import { useGrid } from "./hook/useGrid";
 import { useVisibleColumns } from "./hook/useVisibleColumns";
 import { Row } from "./Row";

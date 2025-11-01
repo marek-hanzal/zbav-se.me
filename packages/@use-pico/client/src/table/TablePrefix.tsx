@@ -4,9 +4,9 @@ import type {
 	withQuerySchema,
 } from "@use-pico/common";
 import type { Cursor } from "../cursor/Cursor";
-import { Fulltext } from "../fulltext/Fulltext";
 import type { useSelection } from "../hook/useSelection";
 import type { withQuery } from "../source/withQuery";
+import { Fulltext } from "../ui/fulltext/Fulltext";
 import type { Table } from "./Table";
 import { TableCursor } from "./TableCursor";
 

@@ -3,7 +3,7 @@ import type {
 	StateType,
 	withQuerySchema,
 } from "@use-pico/common";
-import type { Fulltext } from "../fulltext/Fulltext";
+import type { Fulltext } from "../ui/fulltext/Fulltext";
 
 export const NavigationState = {
 	filter(

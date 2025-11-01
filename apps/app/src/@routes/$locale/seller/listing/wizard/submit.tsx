@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PriceInline } from "@use-pico/client";
 import { ArrowLeftIcon, ErrorIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { Badge, type BadgeCls, BadgeValue } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";

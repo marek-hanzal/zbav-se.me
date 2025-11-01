@@ -2,8 +2,8 @@ import { useCls } from "@use-pico/cls";
 import { type StateType, translator } from "@use-pico/common";
 import { type FC, type Ref, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { Icon } from "../icon/Icon";
-import { useMergeRefs } from "../ref/useMergeRefs";
+import { useMergeRefs } from "../../hook/useMergeRefs";
+import { Icon } from "../../icon/Icon";
 import { FulltextCls } from "./FulltextCls";
 
 export namespace Fulltext {

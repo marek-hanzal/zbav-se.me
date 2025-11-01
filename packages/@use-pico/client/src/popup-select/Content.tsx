@@ -4,12 +4,12 @@ import type {
 	withQuerySchema,
 } from "@use-pico/common";
 import { type FC, useContext, useState } from "react";
-import type { Fulltext } from "../fulltext/Fulltext";
 import { useSelection } from "../hook/useSelection";
 import { ModalContent } from "../modal/ModalContent";
 import { ModalContext } from "../modal/ModalContext";
 import { ModalFooter } from "../modal/ModalFooter";
 import type { Table } from "../table/Table";
+import type { Fulltext } from "../ui/fulltext/Fulltext";
 
 export namespace Content {
 	export interface Props<
