@@ -1,4 +1,4 @@
-import { Container } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import type { FC } from "react";
 
 export namespace FlowContainer {

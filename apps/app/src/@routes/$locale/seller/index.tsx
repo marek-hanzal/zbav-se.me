@@ -5,12 +5,12 @@ import {
 } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
-	Container,
 	Icon,
 	LinkTo,
 	SpinnerIcon,
 	UserIcon,
 } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { PostIcon, PublicIcon, ShopIcon, TitleContainer } from "@zbav-se.me/ui";
 import { Tile } from "~/app/ui/dashboard/Tile";
 import { withUserExPatchMutation } from "~/app/user/mutation/withUserExPatchMutation";

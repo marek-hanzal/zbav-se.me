@@ -1,7 +1,7 @@
 import type { linkTo } from "@use-pico/common";
 import { type FC, useCallback, useEffect, useState } from "react";
-import { Button } from "../button/Button";
 import { TrashIcon } from "../icon/TrashIcon";
+import { Button } from "../ui/button/Button";
 import { Upload } from "../upload/Upload";
 import type { useUpload } from "../upload/useUpload";
 import { JustDropZone } from "./JustDropZone";

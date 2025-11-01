@@ -1,8 +1,8 @@
 import { tvc } from "@use-pico/cls";
 import { type FC, useContext } from "react";
-import { Button } from "../button/Button";
 import { BackIcon } from "../icon/BackIcon";
 import { ConfirmIcon } from "../icon/ConfirmIcon";
+import { Button } from "../ui/button/Button";
 import { ModalContext } from "./ModalContext";
 
 export namespace ModalFooter {

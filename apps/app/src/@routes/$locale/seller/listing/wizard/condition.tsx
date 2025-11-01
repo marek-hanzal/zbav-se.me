@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
-	Button,
-	Container,
 	LinkTo,
 	useSelection,
 } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { Rating } from "~/app/ui/rating/Rating";

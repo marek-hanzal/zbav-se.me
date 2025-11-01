@@ -2,10 +2,10 @@ import { linkTo } from "@use-pico/common";
 import JsFileDownloader from "js-file-downloader";
 import { type FC, useRef, useState, useTransition } from "react";
 import toast from "react-hot-toast";
-import { Button } from "../button/Button";
 import { DownloadIcon } from "../icon/DownloadIcon";
 import { Progress } from "../progress/Progress";
 import { Tx } from "../tx/Tx";
+import { Button } from "../ui/button/Button";
 
 export namespace DownloadButton {
 	export interface Props extends Button.Props {

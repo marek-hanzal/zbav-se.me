@@ -58,6 +58,9 @@
 	"exports": {
 		".": {
 			"import": "./src/index.ts"
+		},
+		"./ui/*": {
+			"import": "./src/ui/*/index.ts"
 		}
 	},
 	"license": "MIT",

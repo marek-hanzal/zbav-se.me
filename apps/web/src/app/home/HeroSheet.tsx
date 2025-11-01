@@ -1,12 +1,7 @@
 import { useParams } from "@tanstack/react-router";
-import {
-	Button,
-	Container,
-	LinkTo,
-	type LinkToCls,
-	Status,
-	UserIcon,
-} from "@use-pico/client";
+import { LinkTo, type LinkToCls, Status, UserIcon } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { type Cls, tvc } from "@use-pico/cls";
 import { Logo, Sheet, UnlockIcon } from "@zbav-se.me/ui";
 import type { FC } from "react";

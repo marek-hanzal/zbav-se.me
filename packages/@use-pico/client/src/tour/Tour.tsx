@@ -8,7 +8,6 @@ import {
 	useState,
 } from "react";
 import { Action } from "../action/Action";
-import { Button } from "../button/Button";
 import { Highlighter } from "../highlighter/Highlighter";
 import { useHighlightRectangle } from "../hook/useHighlightRectangle";
 import { useInViewport } from "../hook/useInViewport";
@@ -16,6 +15,7 @@ import { ArrowLeftIcon } from "../icon/ArrowLeftIcon";
 import { ArrowRightIcon } from "../icon/ArrowRightIcon";
 import { CloseIcon } from "../icon/CloseIcon";
 import { Typo } from "../typo/Typo";
+import { Button } from "../ui/button/Button";
 import { Content } from "./Content";
 import { TourCls } from "./TourCls";
 

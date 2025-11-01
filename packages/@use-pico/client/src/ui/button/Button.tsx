@@ -1,12 +1,12 @@
 import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { ButtonHTMLAttributes, FC, Ref } from "react";
 import { useMemo } from "react";
-import { PicoCls } from "../cls/PicoCls";
-import type { UiProps } from "../component/UiProps";
-import { Icon } from "../icon/Icon";
-import type { IconCls } from "../icon/IconCls";
-import { SpinnerIcon } from "../icon/SpinnerIcon";
-import { Tx } from "../tx/Tx";
+import { PicoCls } from "../../cls/PicoCls";
+import type { UiProps } from "../../component/UiProps";
+import { Icon } from "../../icon/Icon";
+import type { IconCls } from "../../icon/IconCls";
+import { SpinnerIcon } from "../../icon/SpinnerIcon";
+import { Tx } from "../../tx/Tx";
 import { ButtonCls } from "./ButtonCls";
 
 const ICON_SIZE_MAP: Partial<

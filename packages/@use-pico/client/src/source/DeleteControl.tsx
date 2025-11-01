@@ -2,11 +2,11 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCls } from "@use-pico/cls";
 import { type FC, type ReactNode, type Ref, useContext } from "react";
 import toast from "react-hot-toast";
-import { Button } from "../button/Button";
 import { BackIcon } from "../icon/BackIcon";
 import { TrashIcon } from "../icon/TrashIcon";
 import { ModalContext } from "../modal/ModalContext";
 import { withToastPromiseTx } from "../toast/withToastPromiseTx";
+import { Button } from "../ui/button/Button";
 import { DeleteControlCls } from "./DeleteControlCls";
 import { withInvalidator } from "./withInvalidator";
 

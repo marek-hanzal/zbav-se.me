@@ -1,4 +1,5 @@
-import { Container, Tx } from "@use-pico/client";
+import { Tx } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import type { FC, ReactNode, Ref } from "react";
 
 export namespace Title {

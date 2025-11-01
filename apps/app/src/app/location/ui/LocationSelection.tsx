@@ -1,4 +1,6 @@
-import { Badge, Button, Container, Data, Fulltext, Tx } from "@use-pico/client";
+import { Badge, Data, Fulltext, Tx } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import type { tLocationDto } from "@zbav-se.me/sdk";
 import { SpinnerContainer } from "@zbav-se.me/ui";
 import { type FC, type RefObject, useState } from "react";

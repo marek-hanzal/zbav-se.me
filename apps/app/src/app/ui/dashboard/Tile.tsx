@@ -1,4 +1,5 @@
-import { Container, type Icon, Status } from "@use-pico/client";
+import { type Icon, Status } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
 import type { FC } from "react";

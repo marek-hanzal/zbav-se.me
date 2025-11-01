@@ -5,8 +5,6 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import {
-	Button,
-	Container,
 	FormField,
 	LinkTo,
 	SnapperNav,
@@ -15,6 +13,8 @@ import {
 	UserIcon,
 	useSnapperNav,
 } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo, translator } from "@use-pico/common";
 import {

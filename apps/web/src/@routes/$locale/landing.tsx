@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, SnapperNav, useSnapperNav } from "@use-pico/client";
+import { SnapperNav, useSnapperNav } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { VariantProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui";
-import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
-import { SecondaryOverlay } from "@zbav-se.me/ui/src/overlay/SecondaryOverlay";
+import { Fade, SecondaryOverlay, ThemeCls } from "@zbav-se.me/ui";
 import { useRef } from "react";
 import { AboutSheet } from "~/app/home/AboutSheet";
 import { ContactSheet } from "~/app/home/ContactSheet";

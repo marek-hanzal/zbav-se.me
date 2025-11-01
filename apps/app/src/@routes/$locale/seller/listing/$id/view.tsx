@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, Data, LinkTo, PriceInline } from "@use-pico/client";
+import { Data, LinkTo, PriceInline } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { Sheet } from "@zbav-se.me/ui";
 import { withListingFetchQuery } from "~/app/listing/query/withListingFetchQuery";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";

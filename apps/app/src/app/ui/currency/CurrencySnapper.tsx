@@ -1,4 +1,5 @@
-import { Badge, Container, useSnapperNav } from "@use-pico/client";
+import { Badge, useSnapperNav } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { withCurrencyList } from "@use-pico/common";
 import { type FC, memo, useEffect, useId, useMemo, useRef } from "react";
 

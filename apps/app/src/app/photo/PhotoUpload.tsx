@@ -1,10 +1,5 @@
-import {
-	Container,
-	Data,
-	Progress,
-	SpinnerIcon,
-	Status,
-} from "@use-pico/client";
+import { Data, Progress, SpinnerIcon, Status } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { PhotoIcon, Sheet } from "@zbav-se.me/ui";
 import {
 	type ChangeEvent,

@@ -2,13 +2,13 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
-	Button,
 	CloseIcon,
 	FormField,
 	LinkTo,
 	Status,
 	TextInput,
 } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";

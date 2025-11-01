@@ -4,7 +4,9 @@ import {
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import { Button, Container, LinkTo, Status, UserIcon } from "@use-pico/client";
+import { LinkTo, Status, UserIcon } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { linkTo } from "@use-pico/common";
 import { DashboardIcon, LockIcon, Sheet } from "@zbav-se.me/ui";
 import { withSignOutMutation } from "~/app/auth/withSignOutMutation";

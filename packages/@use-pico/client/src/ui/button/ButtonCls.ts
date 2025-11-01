@@ -1,5 +1,5 @@
 import { type Cls, contract } from "@use-pico/cls";
-import { PicoCls } from "../cls/PicoCls";
+import { PicoCls } from "../../cls/PicoCls";
 
 export const ButtonCls = contract(PicoCls.contract)
 	.slots([

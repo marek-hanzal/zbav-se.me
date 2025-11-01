@@ -1,5 +1,6 @@
 import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
-import { Container, LinkTo, type LinkToCls } from "@use-pico/client";
+import { LinkTo, type LinkToCls } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import type { Cls } from "@use-pico/cls";
 import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui";
 import { match } from "ts-pattern";

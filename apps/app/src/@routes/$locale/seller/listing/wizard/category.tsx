@@ -2,8 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
-	Button,
-	Container,
 	Data,
 	Fulltext,
 	LinkTo,
@@ -12,6 +10,8 @@ import {
 	useScrollTo,
 	useSelection,
 } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common";
 import type { tCategoryDto } from "@zbav-se.me/sdk";
 import { SearchIcon, SpinnerContainer, TitleContainer } from "@zbav-se.me/ui";

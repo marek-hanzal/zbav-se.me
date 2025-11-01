@@ -2,10 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	BadgeValue,
-	Button,
 	CloseIcon,
-	Container,
-	ContainerValueList,
 	Data,
 	LinkTo,
 	SpinnerIcon,
@@ -13,6 +10,8 @@ import {
 	Tx,
 	Typo,
 } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { VariantProvider } from "@use-pico/cls";
 import type { tFeedCreate, tFeedPatch } from "@zbav-se.me/sdk";
 import { SendPackageIcon, ThemeCls, TitleContainer } from "@zbav-se.me/ui";

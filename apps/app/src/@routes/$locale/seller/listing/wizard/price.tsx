@@ -1,11 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	Button,
-	Container,
-	LinkTo,
-} from "@use-pico/client";
+import { ArrowLeftIcon, ArrowRightIcon, LinkTo } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { toHumanNumber } from "@use-pico/common";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container, Typo } from "@use-pico/client";
+import { Typo } from "@use-pico/client";
+import { Container } from "@use-pico/client/ui/container";
 import { useCls, VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui";
 

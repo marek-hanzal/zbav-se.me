@@ -1,5 +1,6 @@
 import type { useSelection } from "@use-pico/client";
-import { Button, Tx } from "@use-pico/client";
+import { Tx } from "@use-pico/client";
+import { Button } from "@use-pico/client/ui/button";
 import { useCls, VariantProvider } from "@use-pico/cls";
 import type { EntitySchema } from "@use-pico/common";
 import { ThemeCls, TypoIcon } from "@zbav-se.me/ui";
