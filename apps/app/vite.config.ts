@@ -52,11 +52,11 @@ export default defineConfig(({ mode }) => {
 			target: "esnext",
 			assetsDir: "assets",
 			assetsInlineLimit: 0,
-			minify: "esbuild",
+			minify: "terser",
 			sourcemap: false,
 			manifest: false,
 			rollupOptions: {
-				treeshake: "smallest",
+				treeshake: "smallest",                
 				output: {
 					manualChunks(id) {
 						if (id.includes("react")) {

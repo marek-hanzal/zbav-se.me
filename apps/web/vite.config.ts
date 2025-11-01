@@ -52,31 +52,31 @@ export default defineConfig(({ mode }) => {
 			target: "esnext",
 			assetsDir: "assets",
 			assetsInlineLimit: 0,
-			minify: "esbuild",
+			minify: "terser",
 			sourcemap: false,
 			manifest: false,
 			rollupOptions: {
-				treeshake: 'smallest',
-				// 	output: {
-				// 		manualChunks(id) {
-				// 			if (id.includes("react")) {
-				// 				return "react";
-				// 			}
-				// 			if (id.includes("@tanstack/")) {
-				// 				return "tanstack";
-				// 			}
-				// 			if (id.includes("zod")) {
-				// 				return "zod";
-				// 			}
-				// 			if (id.includes("@zbav-se.me/")) {
-				// 				return "zbav-se-me";
-				// 			}
-				// 			if (id.includes("@use-pico/")) {
-				// 				return "use-pico";
-				// 			}
-				// 			return "vendor";
-				// 		},
-				// 	},
+				treeshake: "smallest",
+				output: {
+					manualChunks(id) {
+						if (id.includes("react")) {
+							return "react";
+						}
+						if (id.includes("@tanstack/")) {
+							return "tanstack";
+						}
+						if (id.includes("zod")) {
+							return "zod";
+						}
+						if (id.includes("@zbav-se.me/")) {
+							return "zbav-se-me";
+						}
+						if (id.includes("@use-pico/")) {
+							return "use-pico";
+						}
+						return "vendor";
+					},
+				},
 			},
 		},
 		json: {
