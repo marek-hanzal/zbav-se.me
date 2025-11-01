@@ -65,6 +65,18 @@ export default defineConfig(({ mode }) => {
 						if (id.includes("zod")) {
 							return "zod";
 						}
+						if (id.includes("gsap")) {
+							return "gsap";
+						}
+						if (id.includes("js-sha256")) {
+							return "js-sha256";
+						}
+						if (id.includes("luxon")) {
+							return "luxon";
+						}
+						if (id.includes("@paralleldrive")) {
+							return "paralleldrive";
+						}
 						if (id.includes("@zbav-se.me/")) {
 							return "zbav-se-me";
 						}
