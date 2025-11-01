@@ -55,29 +55,29 @@ export default defineConfig(({ mode }) => {
 			minify: "esbuild",
 			sourcemap: false,
 			manifest: false,
-			// rollupOptions: {
-			// 	treeshake: true,
-			// 	output: {
-			// 		manualChunks(id) {
-			// 			if (id.includes("react")) {
-			// 				return "react";
-			// 			}
-			// 			if (id.includes("@tanstack/")) {
-			// 				return "tanstack";
-			// 			}
-			// 			if (id.includes("zod")) {
-			// 				return "zod";
-			// 			}
-			// 			if (id.includes("@zbav-se.me/")) {
-			// 				return "zbav-se-me";
-			// 			}
-			// 			if (id.includes("@use-pico/")) {
-			// 				return "use-pico";
-			// 			}
-			// 			return "vendor";
-			// 		},
-			// 	},
-			// },
+			rollupOptions: {
+				treeshake: 'smallest',
+				// 	output: {
+				// 		manualChunks(id) {
+				// 			if (id.includes("react")) {
+				// 				return "react";
+				// 			}
+				// 			if (id.includes("@tanstack/")) {
+				// 				return "tanstack";
+				// 			}
+				// 			if (id.includes("zod")) {
+				// 				return "zod";
+				// 			}
+				// 			if (id.includes("@zbav-se.me/")) {
+				// 				return "zbav-se-me";
+				// 			}
+				// 			if (id.includes("@use-pico/")) {
+				// 				return "use-pico";
+				// 			}
+				// 			return "vendor";
+				// 		},
+				// 	},
+			},
 		},
 		json: {
 			stringify: true,
