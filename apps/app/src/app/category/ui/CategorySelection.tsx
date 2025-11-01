@@ -1,13 +1,13 @@
 import {
 	Data,
 	Fulltext,
-	Status,
 	Typo,
 	useScrollTo,
 	type useSelection,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import type { EntitySchema } from "@use-pico/common";
 import { SearchIcon, SpinnerContainer } from "@zbav-se.me/ui";
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";

@@ -1,6 +1,6 @@
 import { type Cls, useCls } from "@use-pico/cls";
 import type { FC, HTMLAttributes, Ref } from "react";
-import type { UiProps } from "../component/UiProps";
+import type { UiProps } from "../../component/UiProps";
 import { SheetCls } from "./SheetCls";
 
 export namespace Sheet {

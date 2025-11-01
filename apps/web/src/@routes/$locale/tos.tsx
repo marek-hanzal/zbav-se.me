@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Sheet, Status } from "@use-pico/client";
+import { Sheet } from "@use-pico/client/ui/sheet";
+import { Status } from "@use-pico/client/ui/status";
 
 export const Route = createFileRoute("/$locale/tos")({
 	component() {

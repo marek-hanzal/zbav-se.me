@@ -1,16 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	InfiniteData,
-	LinkTo,
-	Sheet,
-	Spinner,
-	Status,
-} from "@use-pico/client";
+import { ArrowLeftIcon, InfiniteData, LinkTo, Spinner } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import { useCls } from "@use-pico/cls";
-import { ThemeCls, useAnim } from "@zbav-se.me/ui";
+import { Sheet, ThemeCls, useAnim } from "@zbav-se.me/ui";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useEffect, useId, useRef } from "react";
 import { useDebouncedCallback } from "use-debounce";

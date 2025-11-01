@@ -1,7 +1,8 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { ErrorIcon, Spinner, Status } from "@use-pico/client";
+import { ErrorIcon, Spinner } from "@use-pico/client";
 import type { ReactNode } from "react";
 import { match } from "ts-pattern";
+import { Status } from "../ui/status";
 
 const DefaultError = () => (
 	<div className="Data-error grid place-content-center">

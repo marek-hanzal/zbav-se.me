@@ -1,4 +1,4 @@
-import { Sheet as CoolSheet } from "@use-pico/client";
+import { Sheet as CoolSheet } from "@use-pico/client/ui/sheet";
 import type { FC } from "react";
 
 export namespace Sheet {

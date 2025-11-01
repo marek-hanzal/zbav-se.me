@@ -1,4 +1,5 @@
-import { Status, Tx } from "@use-pico/client";
+import { Tx } from "@use-pico/client";
+import { Status } from "@use-pico/client/ui/status";
 import { VariantProvider } from "@use-pico/cls";
 import {
 	BuyerIcon,

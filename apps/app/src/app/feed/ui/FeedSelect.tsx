@@ -3,13 +3,13 @@ import {
 	ArrowRightIcon,
 	EditIcon,
 	LinkTo,
-	Status,
 	TrashIcon,
 	Tx,
 	Typo,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import { toHumanNumber } from "@use-pico/common";
 import type { tFeedDto } from "@zbav-se.me/sdk";
 import { FeedIcon } from "@zbav-se.me/ui";

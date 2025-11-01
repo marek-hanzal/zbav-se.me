@@ -8,13 +8,13 @@ import {
 	FormField,
 	LinkTo,
 	SnapperNav,
-	Status,
 	Tx,
 	UserIcon,
 	useSnapperNav,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo, translator } from "@use-pico/common";
 import {

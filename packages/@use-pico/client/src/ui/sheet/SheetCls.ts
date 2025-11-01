@@ -1,6 +1,6 @@
 import type { Cls } from "@use-pico/cls";
 import { contract } from "@use-pico/cls";
-import { PicoCls } from "../cls/PicoCls";
+import { PicoCls } from "../../cls/PicoCls";
 
 export const SheetCls = contract(PicoCls.contract)
 	.slots([

@@ -4,12 +4,12 @@ import {
 	ArrowRightIcon,
 	FormField,
 	LinkTo,
-	Status,
 	TextInput,
 	Tx,
 } from "@use-pico/client";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";

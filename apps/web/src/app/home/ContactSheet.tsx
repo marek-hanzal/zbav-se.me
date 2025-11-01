@@ -1,4 +1,5 @@
-import { Status, Typo } from "@use-pico/client";
+import { Typo } from "@use-pico/client";
+import { Status } from "@use-pico/client/ui/status";
 import { Sheet } from "@zbav-se.me/ui";
 import type { FC } from "react";
 

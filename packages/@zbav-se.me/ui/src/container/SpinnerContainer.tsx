@@ -1,5 +1,6 @@
-import { SpinnerIcon, Status } from "@use-pico/client";
+import { SpinnerIcon } from "@use-pico/client";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";
 import { PrimaryOverlay } from "../overlay/PrimaryOverlay";
 
