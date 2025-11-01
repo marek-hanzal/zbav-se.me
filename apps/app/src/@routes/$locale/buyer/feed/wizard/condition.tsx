@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSelection } from "@use-pico/client";
+import { useSelection } from "@use-pico/client/hook";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,

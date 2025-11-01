@@ -1,9 +1,9 @@
 import { useCls } from "@use-pico/cls";
 import type { EntitySchema, withQuerySchema } from "@use-pico/common";
 import { type FC, type ReactNode, useId } from "react";
+import type { useSelection } from "../hook/useSelection";
 import type { Icon } from "../icon/Icon";
 import { Modal } from "../modal/Modal";
-import type { useSelection } from "../selection/useSelection";
 import type { withQuery } from "../source/withQuery";
 import type { Table } from "../table/Table";
 import { Content } from "./Content";

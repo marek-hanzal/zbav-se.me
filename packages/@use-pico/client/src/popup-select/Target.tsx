@@ -1,10 +1,10 @@
 import type { EntitySchema, withQuerySchema } from "@use-pico/common";
 import type { ReactNode, Ref } from "react";
+import type { useSelection } from "../hook/useSelection";
 import { Icon } from "../icon/Icon";
 import { LoaderIcon } from "../icon/LoaderIcon";
 import { SelectionOffIcon } from "../icon/SelectionOffIcon";
 import { SelectionOnIcon } from "../icon/SelectionOnIcon";
-import type { useSelection } from "../selection/useSelection";
 import type { withQuery } from "../source/withQuery";
 import { Tx } from "../ui/tx/Tx";
 import type { PopupSelect } from "./PopupSelect";

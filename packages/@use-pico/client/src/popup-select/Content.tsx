@@ -5,10 +5,10 @@ import type {
 } from "@use-pico/common";
 import { type FC, useContext, useState } from "react";
 import type { Fulltext } from "../fulltext/Fulltext";
+import { useSelection } from "../hook/useSelection";
 import { ModalContent } from "../modal/ModalContent";
 import { ModalContext } from "../modal/ModalContext";
 import { ModalFooter } from "../modal/ModalFooter";
-import { useSelection } from "../selection/useSelection";
 import type { Table } from "../table/Table";
 
 export namespace Content {

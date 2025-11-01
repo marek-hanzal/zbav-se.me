@@ -1,7 +1,7 @@
 import type { CountSchema, withQuerySchema } from "@use-pico/common";
 import { Cursor as CoolCursor } from "../cursor/Cursor";
-import { Data } from "../data/Data";
 import type { withQuery } from "../source/withQuery";
+import { Data } from "../ui/data/Data";
 
 export namespace TableCursor {
 	export interface Props<TQuery extends withQuerySchema.Query> {

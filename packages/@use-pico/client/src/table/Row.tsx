@@ -1,10 +1,10 @@
 import { tvc } from "@use-pico/cls";
 import type { EntitySchema, withQuerySchema } from "@use-pico/common";
 import type { FC } from "react";
+import type { useSelection } from "../hook/useSelection";
 import { Icon } from "../icon/Icon";
 import { SelectionOffIcon } from "../icon/SelectionOffIcon";
 import { SelectionOnIcon } from "../icon/SelectionOnIcon";
-import type { useSelection } from "../selection/useSelection";
 import { Cell } from "./Cell";
 import { useRow } from "./hook/useRow";
 import type { Table } from "./Table";

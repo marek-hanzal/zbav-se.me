@@ -1,11 +1,9 @@
-import {
-	Data,
-	Fulltext,
-	useScrollTo,
-	type useSelection,
-} from "@use-pico/client";
+import { Fulltext } from "@use-pico/client";
+import type { useSelection } from "@use-pico/client/hook";
+import { useScrollTo } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Data } from "@use-pico/client/ui/data";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { EntitySchema } from "@use-pico/common";

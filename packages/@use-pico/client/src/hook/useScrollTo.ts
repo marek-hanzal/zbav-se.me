@@ -37,7 +37,9 @@ export function useScrollTo(containerRef: RefObject<HTMLElement | null>) {
 			// Query inside the container only
 			const nodes = container.querySelectorAll<HTMLElement>(selector);
 			const target = nodes.item(index);
-			if (!target) return;
+			if (!target) {
+				return;
+			}
 
 			const viewportW = container.clientWidth;
 			const viewportH = container.clientHeight;
@@ -55,8 +57,12 @@ export function useScrollTo(containerRef: RefObject<HTMLElement | null>) {
 			let top = targetTopAbs + tRect.height / 2 - viewportH / 2;
 
 			// Apply optional offset per axis
-			if (axis !== "y") left += offset;
-			if (axis !== "x") top += offset;
+			if (axis !== "y") {
+				left += offset;
+			}
+			if (axis !== "x") {
+				top += offset;
+			}
 
 			// Clamp to container bounds
 			const maxLeft = Math.max(0, container.scrollWidth - viewportW);

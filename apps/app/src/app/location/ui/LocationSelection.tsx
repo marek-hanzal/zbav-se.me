@@ -1,7 +1,8 @@
-import { Data, Fulltext } from "@use-pico/client";
+import { Fulltext } from "@use-pico/client";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Data } from "@use-pico/client/ui/data";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tLocationDto } from "@zbav-se.me/sdk";
 import { SpinnerContainer } from "@zbav-se.me/ui";

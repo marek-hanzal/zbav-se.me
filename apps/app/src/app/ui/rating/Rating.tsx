@@ -1,4 +1,4 @@
-import type { useSelection } from "@use-pico/client";
+import type { useSelection } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Tx } from "@use-pico/client/ui/tx";
 import { useCls, VariantProvider } from "@use-pico/cls";
