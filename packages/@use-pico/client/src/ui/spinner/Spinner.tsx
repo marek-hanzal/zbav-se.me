@@ -1,5 +1,5 @@
-import { Icon } from "../icon/Icon";
-import { SpinnerIcon } from "../icon/SpinnerIcon";
+import { Icon } from "../../icon/Icon";
+import { SpinnerIcon } from "../../icon/SpinnerIcon";
 
 export namespace Spinner {
 	export interface Props extends Icon.PropsEx {

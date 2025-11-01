@@ -150,7 +150,6 @@ export { useSnapperNav } from "./snapper/useSnapperNav";
 export { DeleteControl } from "./source/DeleteControl";
 export { withMutation } from "./source/withMutation";
 export { withQuery } from "./source/withQuery";
-export { Spinner } from "./spinner/Spinner";
 export { TranslationSources } from "./TranslationSources";
 export { RangeFilter } from "./table/filter/RangeFilter";
 export { withEqualFilter } from "./table/filter/withEqualFilter";

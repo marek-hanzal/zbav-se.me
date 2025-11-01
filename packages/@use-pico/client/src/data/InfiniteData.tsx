@@ -2,7 +2,7 @@ import type { UseInfiniteQueryResult } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { match } from "ts-pattern";
 import { ErrorIcon } from "../icon/ErrorIcon";
-import { Spinner } from "../spinner/Spinner";
+import { Spinner } from "../ui/spinner/Spinner";
 import { Status } from "../ui/status";
 
 const DefaultError = () => (

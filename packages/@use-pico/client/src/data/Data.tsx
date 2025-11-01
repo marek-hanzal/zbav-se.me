@@ -1,7 +1,8 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { ErrorIcon, Spinner } from "@use-pico/client";
+import { ErrorIcon } from "@use-pico/client";
 import type { ReactNode } from "react";
 import { match } from "ts-pattern";
+import { Spinner } from "../ui/spinner/Spinner";
 import { Status } from "../ui/status";
 
 const DefaultError = () => (
