@@ -56,25 +56,21 @@ export default defineConfig(({ mode }) => {
 			sourcemap: false,
 			manifest: false,
 			rollupOptions: {
-				treeshake: "smallest",                
+				treeshake: "smallest",
 				output: {
 					manualChunks(id) {
-						// if (id.includes("react")) {
-						// 	return "react";
-						// }
-						// if (id.includes("@tanstack/")) {
-						// 	return "tanstack";
-						// }
-						// if (id.includes("zod")) {
-						// 	return "zod";
-						// }
+						if (id.includes("@tanstack/")) {
+							return "tanstack";
+						}
+						if (id.includes("zod")) {
+							return "zod";
+						}
 						if (id.includes("@zbav-se.me/")) {
 							return "zbav-se-me";
 						}
 						if (id.includes("@use-pico/")) {
 							return "use-pico";
 						}
-						// return "vendor";
 					},
 				},
 			},
