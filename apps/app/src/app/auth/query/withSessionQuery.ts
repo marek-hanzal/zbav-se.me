@@ -1,4 +1,4 @@
-import { withQuery } from "@use-pico/client";
+import { withQuery } from "@use-pico/client/query";
 import { getSessionFn } from "~/app/auth/getSessionFn";
 
 export const withSessionQuery = withQuery<

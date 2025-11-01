@@ -1,5 +1,5 @@
 import { type Ref, useMemo } from "react";
-import { mergeRefs } from "../ref/mergeRefs";
+import { mergeRefs } from "../utils/mergeRefs";
 
 export function useMergeRefs<T>(refs: (Ref<T> | undefined)[]): Ref<T> {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're ok here, don't cry.

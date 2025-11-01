@@ -1,4 +1,4 @@
-import { withQuery } from "@use-pico/client";
+import { withQuery } from "@use-pico/client/query";
 import { apiFeedCount, type tCount, type tFeedQuery } from "@zbav-se.me/sdk";
 
 export const withFeedCountQuery = withQuery<tFeedQuery, tCount>({

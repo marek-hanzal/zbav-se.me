@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client";
+import { withMutation } from "@use-pico/client/mutation";
 import { genId } from "@use-pico/common";
 import {
 	apiS3Presign,

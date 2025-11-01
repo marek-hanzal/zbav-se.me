@@ -1,12 +1,12 @@
 import fs from "node:fs";
 import { print, project, query } from "@phenomnomnominal/tsquery";
 import {
-	diffOf,
-	keyOf,
 	Timer,
 	type TranslationSchema,
 	type TranslationSource,
 } from "@use-pico/common";
+import { diffOf } from "@use-pico/common/diff-of";
+import { keyOf } from "@use-pico/common/key-of";
 import cliProgress from "cli-progress";
 import { parse, stringify } from "yaml";
 

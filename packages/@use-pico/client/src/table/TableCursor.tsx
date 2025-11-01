@@ -1,6 +1,6 @@
 import type { CountSchema, withQuerySchema } from "@use-pico/common";
 import { Cursor as CoolCursor } from "../cursor/Cursor";
-import type { withQuery } from "../source/withQuery";
+import type { withQuery } from "../query/withQuery";
 import { Data } from "../ui/data/Data";
 
 export namespace TableCursor {

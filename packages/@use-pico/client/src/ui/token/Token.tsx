@@ -1,8 +1,8 @@
 import type { FC, PropsWithChildren } from "react";
-import { Status } from "../ui/status/Status";
+import { useToken } from "../../hook/useToken";
+import type { TokenType } from "../../type/TokenType";
+import { Status } from "../status/Status";
 import { TokenInline } from "./TokenInline";
-import type { TokenType } from "./TokenType";
-import { useToken } from "./useToken";
 
 /**
  * Renders children if the user has the required token.

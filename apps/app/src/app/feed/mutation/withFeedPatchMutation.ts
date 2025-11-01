@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client";
+import { withMutation } from "@use-pico/client/mutation";
 import { apiFeedPatch, type tFeedDto, type tFeedPatch } from "@zbav-se.me/sdk";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
 

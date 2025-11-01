@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client";
+import { withMutation } from "@use-pico/client/mutation";
 import {
 	apiS3Presign,
 	type tS3PreSignRequest,

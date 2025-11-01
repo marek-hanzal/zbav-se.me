@@ -12,7 +12,7 @@ import type { Cursor as CoolCursor } from "../cursor/Cursor";
 import type { useSelection } from "../hook/useSelection";
 import { AbstractList } from "../list/AbstractList";
 import { AbstractListCls } from "../list/AbstractListCls";
-import type { withQuery } from "../source/withQuery";
+import type { withQuery } from "../query/withQuery";
 import type { Fulltext as CoolFulltext } from "../ui/fulltext/Fulltext";
 import { useGrid } from "./hook/useGrid";
 import { useVisibleColumns } from "./hook/useVisibleColumns";

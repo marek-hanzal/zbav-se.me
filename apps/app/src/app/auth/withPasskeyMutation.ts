@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client";
+import { withMutation } from "@use-pico/client/mutation";
 import { authClient } from "~/app/auth/authClient";
 
 export const withPasskeyMutation = withMutation<string, boolean>({

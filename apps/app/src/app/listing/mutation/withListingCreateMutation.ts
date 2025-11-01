@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client";
+import { withMutation } from "@use-pico/client/mutation";
 import {
 	apiListingCreate,
 	type tListingCreate,

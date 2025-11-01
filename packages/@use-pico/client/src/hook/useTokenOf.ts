@@ -1,5 +1,5 @@
 import { diffOf } from "@use-pico/common";
-import type { TokenType } from "./TokenType";
+import type { TokenType } from "../type/TokenType";
 
 export namespace useTokenOf {
 	export interface Props {
@@ -9,11 +9,11 @@ export namespace useTokenOf {
 }
 
 /**
- * Check if the user has the required token(s).
+ * Check if the user has any of the token(s).
  *
  * @group hooks
  */
-export const useTokensOf = ({
+export const useTokenOf = ({
 	tokens,
 	source,
 }: useTokenOf.Props): TokenType.Result => {
@@ -31,12 +31,12 @@ export const useTokensOf = ({
 	/**
 	 * Returns true, when the user has all the required tokens.
 	 */
-	return diff.length
+	return diff.length < tokens.length
 		? {
-				success: false,
-				missing: diff,
+				success: true,
 			}
 		: {
-				success: true,
+				success: false,
+				missing: tokens,
 			};
 };

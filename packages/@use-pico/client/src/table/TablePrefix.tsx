@@ -5,7 +5,7 @@ import type {
 } from "@use-pico/common";
 import type { Cursor } from "../cursor/Cursor";
 import type { useSelection } from "../hook/useSelection";
-import type { withQuery } from "../source/withQuery";
+import type { withQuery } from "../query/withQuery";
 import { Fulltext } from "../ui/fulltext/Fulltext";
 import type { Table } from "./Table";
 import { TableCursor } from "./TableCursor";

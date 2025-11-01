@@ -4,7 +4,7 @@ import { type FC, type ReactNode, useId } from "react";
 import type { useSelection } from "../hook/useSelection";
 import type { Icon } from "../icon/Icon";
 import { Modal } from "../modal/Modal";
-import type { withQuery } from "../source/withQuery";
+import type { withQuery } from "../query/withQuery";
 import type { Table } from "../table/Table";
 import { Content } from "./Content";
 import { PopupSelectCls } from "./PopupSelectCls";

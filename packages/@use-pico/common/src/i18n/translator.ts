@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { keyOf } from "../toolbox/keyOf";
+import { keyOf } from "../key-of/keyOf";
 import type { TranslationListSchema } from "./TranslationListSchema";
 
 export namespace translator {

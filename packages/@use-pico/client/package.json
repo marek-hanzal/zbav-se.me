@@ -62,14 +62,8 @@
 		"./ui/*": {
 			"import": "./src/ui/*/index.ts"
 		},
-		"./icon": {
-			"import": "./src/icon/index.ts"
-		},
-		"./hook": {
-			"import": "./src/hook/index.ts"
-		},
-		"./cls": {
-			"import": "./src/cls/index.ts"
+		"./*": {
+			"import": "./src/*/index.ts"
 		}
 	},
 	"license": "MIT",

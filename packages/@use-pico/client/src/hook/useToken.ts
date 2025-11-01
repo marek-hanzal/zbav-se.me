@@ -1,4 +1,4 @@
-import type { TokenType } from "./TokenType";
+import type { TokenType } from "../type/TokenType";
 import { useTokenOf } from "./useTokenOf";
 import { useTokensOf } from "./useTokensOf";
 

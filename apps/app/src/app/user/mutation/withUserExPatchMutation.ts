@@ -1,4 +1,4 @@
-import { withMutation } from "@use-pico/client";
+import { withMutation } from "@use-pico/client/mutation";
 import type { tUserPatch } from "@zbav-se.me/sdk";
 import { apiUserExPatch } from "@zbav-se.me/sdk";
 import { withSessionQuery } from "~/app/auth/query/withSessionQuery";

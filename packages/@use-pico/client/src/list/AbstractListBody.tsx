@@ -1,5 +1,5 @@
 import type { EntitySchema, withQuerySchema } from "@use-pico/common";
-import type { withQuery } from "../source/withQuery";
+import type { withQuery } from "../query/withQuery";
 import type { AbstractList } from "./AbstractList";
 import type { AbstractListCls } from "./AbstractListCls";
 

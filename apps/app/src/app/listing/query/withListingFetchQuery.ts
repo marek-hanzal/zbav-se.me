@@ -1,4 +1,4 @@
-import { withQuery } from "@use-pico/client";
+import { withQuery } from "@use-pico/client/query";
 import {
 	apiListingFetch,
 	type tListingDto,

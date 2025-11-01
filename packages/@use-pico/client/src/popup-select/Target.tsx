@@ -5,7 +5,7 @@ import { Icon } from "../icon/Icon";
 import { LoaderIcon } from "../icon/LoaderIcon";
 import { SelectionOffIcon } from "../icon/SelectionOffIcon";
 import { SelectionOnIcon } from "../icon/SelectionOnIcon";
-import type { withQuery } from "../source/withQuery";
+import type { withQuery } from "../query/withQuery";
 import { Tx } from "../ui/tx/Tx";
 import type { PopupSelect } from "./PopupSelect";
 import type { PopupSelectCls } from "./PopupSelectCls";

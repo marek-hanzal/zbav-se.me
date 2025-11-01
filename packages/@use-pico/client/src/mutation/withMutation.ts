@@ -7,7 +7,7 @@ import {
 	useMutation,
 	useQueryClient,
 } from "@tanstack/react-query";
-import { withInvalidator } from "./withInvalidator";
+import { withInvalidator } from "../invalidator/withInvalidator";
 
 export namespace withMutation {
 	export interface Meta {
