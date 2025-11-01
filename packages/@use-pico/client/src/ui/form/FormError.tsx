@@ -1,9 +1,9 @@
 import { translator } from "@use-pico/common";
 import type { FC, ReactNode } from "react";
-import { ErrorIcon } from "../icon/ErrorIcon";
-import { More } from "../more/More";
-import { Badge } from "../ui/badge/Badge";
-import { Tx } from "../ui/tx/Tx";
+import { ErrorIcon } from "../../icon/ErrorIcon";
+import { More } from "../../more/More";
+import { Badge } from "../badge/Badge";
+import { Tx } from "../tx/Tx";
 
 export namespace FormError {
 	export type Type =

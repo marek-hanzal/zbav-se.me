@@ -3,17 +3,21 @@ import {
 	useNavigate,
 	useParams,
 } from "@tanstack/react-router";
-import { FormField } from "@use-pico/client";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
+import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo, translator } from "@use-pico/common";
-import { CheckIcon, Sheet, ThemeCls } from "@zbav-se.me/ui";
-import { Fade } from "@zbav-se.me/ui/src/fade/Fade";
-import { PrimaryOverlay } from "@zbav-se.me/ui/src/overlay/PrimaryOverlay";
+import {
+	CheckIcon,
+	Fade,
+	PrimaryOverlay,
+	Sheet,
+	ThemeCls,
+} from "@zbav-se.me/ui";
 import { useRef } from "react";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";

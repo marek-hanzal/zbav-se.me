@@ -1,5 +1,8 @@
 import { createFormHook, createFormHookContexts } from "@tanstack/react-form";
-import { BoolInput, Select, SubmitButton, TextInput } from "@use-pico/client";
+import { BoolInput } from "@use-pico/client/ui/bool-input";
+import { Select } from "@use-pico/client/ui/select";
+import { SubmitButton } from "@use-pico/client/ui/submit-button";
+import { TextInput } from "@use-pico/client/ui/text-input";
 
 const { fieldContext, formContext } = createFormHookContexts();
 

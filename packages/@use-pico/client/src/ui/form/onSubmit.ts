@@ -8,7 +8,7 @@ import {
 } from "@use-pico/common";
 import { toast as coolToast } from "react-hot-toast";
 import type { z } from "zod";
-import type { withToastPromiseTx } from "../toast/withToastPromiseTx";
+import type { withToastPromiseTx } from "../../toast/withToastPromiseTx";
 import type { Form } from "./Form";
 
 export namespace onSubmit {

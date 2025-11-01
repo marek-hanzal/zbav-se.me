@@ -5,6 +5,7 @@ export { useMergeRefs } from "./useMergeRefs";
 export { useScrollTo } from "./useScrollTo";
 export { useSelection } from "./useSelection";
 export { useSetUnset } from "./useSetUnset";
+export { useSnapperNav } from "./useSnapperNav";
 export { useStableCallback } from "./useStableCallback";
 export { useStableMemo } from "./useStableMemo";
 export { useStopEvent } from "./useStopEvent";

@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import type { FC } from "react";
 import { readSheetNames } from "read-excel-file";
-import { Select } from "../select/Select";
+import { Select } from "../ui/select/Select";
 
 export namespace SheetSelect {
 	export interface SheetType {

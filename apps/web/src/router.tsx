@@ -1,8 +1,7 @@
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
-import { Logo, Sheet } from "@zbav-se.me/ui";
-import { PrimaryOverlay } from "@zbav-se.me/ui/src/overlay/PrimaryOverlay";
+import { Logo, PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
 import { routeTree } from "~/_route";
 
 export function getRouter() {

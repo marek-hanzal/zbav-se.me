@@ -1,4 +1,4 @@
-import { useSnapperNav } from "@use-pico/client";
+import { useSnapperNav } from "@use-pico/client/hook";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { withCurrencyList } from "@use-pico/common";

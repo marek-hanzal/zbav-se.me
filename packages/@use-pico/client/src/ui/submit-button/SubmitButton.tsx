@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Button } from "../../ui/button/Button";
+import { Button } from "../button/Button";
 
 export namespace SubmitButton {
 	export interface Props extends Button.Props {

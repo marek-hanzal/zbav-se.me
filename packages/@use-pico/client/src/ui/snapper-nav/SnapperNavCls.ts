@@ -1,6 +1,6 @@
-import { PicoCls } from "@use-pico/client";
 import type { Cls } from "@use-pico/cls";
 import { contract } from "@use-pico/cls";
+import { PicoCls } from "../../cls/PicoCls";
 
 export const SnapperNavCls = contract(PicoCls.contract)
 	.tokens([

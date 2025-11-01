@@ -1,12 +1,12 @@
 import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, type Ref, useCallback, useId, useMemo } from "react";
-import type { UiProps } from "../component/UiProps";
-import { useDoubleTap } from "../hook/useDoubleTap";
-import { DotIcon } from "../icon/DotIcon";
-import { Icon } from "../icon/Icon";
-import type { IconCls } from "../icon/IconCls";
+import type { UiProps } from "../../component/UiProps";
+import { useDoubleTap } from "../../hook/useDoubleTap";
+import type { useSnapperNav } from "../../hook/useSnapperNav";
+import { DotIcon } from "../../icon/DotIcon";
+import { Icon } from "../../icon/Icon";
+import type { IconCls } from "../../icon/IconCls";
 import { SnapperNavCls } from "./SnapperNavCls";
-import type { useSnapperNav } from "./useSnapperNav";
 
 export namespace SnapperNav {
 	export namespace IconProps {

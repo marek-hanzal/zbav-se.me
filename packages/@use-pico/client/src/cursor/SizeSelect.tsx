@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { Select } from "../select/Select";
+import { Select } from "../ui/select/Select";
 
 export namespace SizeSelect {
 	export interface SizeType {

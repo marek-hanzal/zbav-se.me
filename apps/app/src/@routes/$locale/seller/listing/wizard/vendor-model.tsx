@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FormField, TextInput } from "@use-pico/client";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { TextInput } from "@use-pico/client/ui/text-input";
 import { Tx } from "@use-pico/client/ui/tx";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";

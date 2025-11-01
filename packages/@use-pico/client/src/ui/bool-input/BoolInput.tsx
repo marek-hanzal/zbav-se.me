@@ -1,6 +1,6 @@
 import { useCls } from "@use-pico/cls";
 import type { FC, InputHTMLAttributes, ReactNode, Ref } from "react";
-import { Badge } from "../ui/badge/Badge";
+import { Badge } from "../badge/Badge";
 import { BoolInputCls } from "./BoolInputCls";
 
 export namespace BoolInput {

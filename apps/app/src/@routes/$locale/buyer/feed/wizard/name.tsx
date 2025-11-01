@@ -1,13 +1,14 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { FormField, TextInput } from "@use-pico/client";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { TextInput } from "@use-pico/client/ui/text-input";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";

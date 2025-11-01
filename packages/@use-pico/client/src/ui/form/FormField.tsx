@@ -1,7 +1,7 @@
 import { useCls } from "@use-pico/cls";
 import type { FC, ReactNode, Ref } from "react";
 import { useId } from "react";
-import { Typo } from "../ui/typo/Typo";
+import { Typo } from "../typo/Typo";
 import { FormError } from "./FormError";
 import { FormFieldCls } from "./FormFieldCls";
 

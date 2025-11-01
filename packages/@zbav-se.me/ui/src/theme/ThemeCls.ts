@@ -1,4 +1,4 @@
-import { PicoCls } from "@use-pico/client";
+import { PicoCls } from "@use-pico/client/cls";
 import { contract } from "@use-pico/cls";
 
 export const ThemeCls = contract(PicoCls.contract)

@@ -67,6 +67,9 @@
 		},
 		"./hook": {
 			"import": "./src/hook/index.ts"
+		},
+		"./cls": {
+			"import": "./src/cls/index.ts"
 		}
 	},
 	"license": "MIT",

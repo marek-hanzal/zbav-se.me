@@ -15,10 +15,10 @@ import {
 import { type Cls, useCls } from "@use-pico/cls";
 import { type Entity, type EntitySchema, translator } from "@use-pico/common";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
-import { Action } from "../action/Action";
+import { Action } from "../../action/Action";
+import { CloseIcon } from "../../icon/CloseIcon";
+import { Icon } from "../../icon/Icon";
 import { FormField } from "../form/FormField";
-import { CloseIcon } from "../icon/CloseIcon";
-import { Icon } from "../icon/Icon";
 import { SelectCls } from "./SelectCls";
 
 export namespace Select {
