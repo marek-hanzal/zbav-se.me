@@ -14,18 +14,6 @@ const ssrConfig = {
 		minify: false,
 		sourcemap: false,
 	},
-	ssr: {
-		external: [
-			"@zbav-se.me/sdk",
-		],
-		noExternal: [
-			"@tanstack/*",
-		],
-	},
-	optimizeDeps: {
-		noDiscovery: true,
-		include: [],
-	},
 } satisfies UserConfig;
 
 const clientConfig = {
@@ -42,6 +30,7 @@ const clientConfig = {
 		react({}),
 		wasm(),
 		dynamicImport(),
+		ViteYaml(),
 	],
 	esbuild: {
 		drop: [
@@ -95,7 +84,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 					},
 				}),
 				paths(),
-				ViteYaml(),
 				mode === "production"
 					? nitro({
 							config: {
