@@ -1,4 +1,5 @@
-import { Data, Progress, SpinnerIcon } from "@use-pico/client";
+import { Data, Progress } from "@use-pico/client";
+import { SpinnerIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { PhotoIcon, Sheet } from "@zbav-se.me/ui";

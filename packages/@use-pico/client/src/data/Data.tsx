@@ -1,7 +1,7 @@
 import type { UseQueryResult } from "@tanstack/react-query";
-import { ErrorIcon } from "@use-pico/client";
 import type { ReactNode } from "react";
 import { match } from "ts-pattern";
+import { ErrorIcon } from "../icon/ErrorIcon";
 import { Spinner } from "../ui/spinner/Spinner";
 import { Status } from "../ui/status/Status";
 

@@ -1,4 +1,4 @@
-import type { Icon } from "@use-pico/client";
+import type { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { VariantProvider } from "@use-pico/cls";

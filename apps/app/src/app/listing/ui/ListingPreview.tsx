@@ -1,4 +1,5 @@
-import { ArrowLeftIcon, Icon, PriceInline } from "@use-pico/client";
+import { PriceInline } from "@use-pico/client";
+import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";

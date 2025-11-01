@@ -1,4 +1,4 @@
-import { SpinnerIcon } from "@use-pico/client";
+import { SpinnerIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";

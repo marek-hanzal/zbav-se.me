@@ -1,5 +1,5 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client";
+import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui";

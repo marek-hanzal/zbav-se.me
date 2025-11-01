@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSelection } from "@use-pico/client";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	CloseIcon,
-	useSelection,
-} from "@use-pico/client";
+} from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common";

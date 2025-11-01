@@ -3,7 +3,12 @@ import {
 	useNavigate,
 	useRouter,
 } from "@tanstack/react-router";
-import { ArrowLeftIcon, Icon, SpinnerIcon, UserIcon } from "@use-pico/client";
+import {
+	ArrowLeftIcon,
+	Icon,
+	SpinnerIcon,
+	UserIcon,
+} from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { BagIcon, FeedIcon, ShopIcon, TitleContainer } from "@zbav-se.me/ui";

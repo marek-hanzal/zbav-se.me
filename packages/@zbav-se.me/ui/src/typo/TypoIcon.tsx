@@ -1,4 +1,4 @@
-import { Icon } from "@use-pico/client";
+import { Icon } from "@use-pico/client/icon";
 import { type Cls, useCls } from "@use-pico/cls";
 import type { FC, HTMLAttributes } from "react";
 import { TypoIconCls } from "./TypoIconCls";

@@ -1,6 +1,6 @@
-import { Icon } from "@use-pico/client";
 import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
+import { Icon } from "../icon/Icon";
 
 export namespace TourButton {
 	export interface Props {

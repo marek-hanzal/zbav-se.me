@@ -1,11 +1,10 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { FormField, TextInput } from "@use-pico/client";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	CloseIcon,
-	FormField,
-	TextInput,
-} from "@use-pico/client";
+} from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";

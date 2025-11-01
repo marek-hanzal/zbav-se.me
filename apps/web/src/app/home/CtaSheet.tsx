@@ -1,5 +1,5 @@
 import { useParams } from "@tanstack/react-router";
-import { UserIcon } from "@use-pico/client";
+import { UserIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";

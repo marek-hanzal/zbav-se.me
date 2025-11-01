@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, InfiniteData } from "@use-pico/client";
+import { InfiniteData } from "@use-pico/client";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";

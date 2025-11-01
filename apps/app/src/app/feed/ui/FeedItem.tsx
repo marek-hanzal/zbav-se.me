@@ -1,4 +1,4 @@
-import { ArrowRightIcon, EditIcon } from "@use-pico/client";
+import { ArrowRightIcon, EditIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";

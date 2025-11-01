@@ -1,4 +1,4 @@
-import type { Icon } from "@use-pico/client";
+import type { Icon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { anim, useAnim } from "@zbav-se.me/ui";
 import { type FC, useRef } from "react";

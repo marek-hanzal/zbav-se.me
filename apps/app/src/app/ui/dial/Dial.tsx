@@ -1,4 +1,4 @@
-import { Icon } from "@use-pico/client";
+import { Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
