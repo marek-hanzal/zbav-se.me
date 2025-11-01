@@ -51,8 +51,8 @@ export default defineConfig(({ mode }) => {
 		build: {
 			target: "esnext",
 			assetsDir: "assets",
-			assetsInlineLimit: 0,
-			minify: "esbuild",
+			// assetsInlineLimit: 0,
+			// minify: "esbuild",
 			// sourcemap: false,
 			// manifest: false,
 			// rollupOptions: {
@@ -79,8 +79,8 @@ export default defineConfig(({ mode }) => {
 			// 	},
 			// },
 		},
-		json: {
-			stringify: true,
-		},
+		// json: {
+		// 	stringify: true,
+		// },
 	};
 });
