@@ -13,7 +13,7 @@ import paths from "vite-tsconfig-paths";
 export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,
-		base: process.env.VITE_APP_ASSETS,
+		base: process.env.VITE_WEB_ASSETS,
 		plugins: [
 			tanstackStart({
 				router: {
