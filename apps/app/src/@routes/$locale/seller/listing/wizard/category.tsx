@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useScrollTo, useSelection } from "@use-pico/client/hook";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	CloseIcon,
+} from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
@@ -126,6 +130,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 							icon={ArrowLeftIcon}
 							to={"/$locale/seller/listing/wizard/photos"}
 							search={state}
+							params={{
+								locale,
+							}}
+							tone={"secondary"}
+						/>
+					}
+					right={
+						<LinkTo
+							icon={CloseIcon}
+							to={"/$locale/seller"}
 							params={{
 								locale,
 							}}

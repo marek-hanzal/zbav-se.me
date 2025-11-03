@@ -1,5 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ErrorIcon, SpinnerIcon } from "@use-pico/client/icon";
+import {
+	ArrowLeftIcon,
+	CloseIcon,
+	ErrorIcon,
+	SpinnerIcon,
+} from "@use-pico/client/icon";
 import { Badge, type BadgeCls, BadgeValue } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -33,6 +38,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/vendor-model"}
 						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}
@@ -107,6 +122,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/vendor-model"}
 						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}

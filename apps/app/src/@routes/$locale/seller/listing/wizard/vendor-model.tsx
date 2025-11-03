@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
+	CloseIcon,
+} from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
@@ -30,6 +34,16 @@ export const Route = createFileRoute(
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/expire-at"}
 						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
+				}
+				right={
+					<LinkTo
+						icon={CloseIcon}
+						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}

@@ -1,12 +1,12 @@
 import { ArrowRightIcon, EditIcon, TrashIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { Button } from "@use-pico/client/ui/button";
+import { ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeedDto } from "@zbav-se.me/sdk";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { withFeedDeleteMutation } from "~/app/feed/mutation/withFeedDeleteMutation";
 import { withListingCountQuery } from "~/app/listing/query/withListingCountQuery";
 
@@ -21,13 +21,8 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 	const listingCountQuery = withListingCountQuery.useSuspenseQuery({
 		filter: feed.filter,
 	});
-	const [isConfirm, setIsConfirm] = useState(false);
 
-	const deleteMutation = withFeedDeleteMutation.useMutation({
-		async onPostMutation() {
-			setIsConfirm(false);
-		},
-	});
+	const deleteMutation = withFeedDeleteMutation.useMutation();
 
 	return (
 		<Badge
@@ -72,27 +67,24 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 				}
 			>
 				<div className="flex flex-row gap-2 items-center">
-					<Button
+					<ConfirmButton
 						iconEnabled={TrashIcon}
-						tone={isConfirm ? "danger" : "secondary"}
+						size={"sm"}
 						disabled={deleteMutation.isPending}
 						loading={deleteMutation.isPending}
-						onClick={() => {
-							if (!isConfirm) {
-								setIsConfirm(true);
-								setTimeout(() => {
-									setIsConfirm(false);
-								}, 3000);
-								return;
-							}
-
-							deleteMutation.mutate({
-								where: {
-									id: feed.id,
-								},
-							});
+						buttonProps={{
+							tone: "secondary",
 						}}
-						size={"sm"}
+						confirmProps={{
+							tone: "danger",
+							onClick() {
+								deleteMutation.mutate({
+									where: {
+										id: feed.id,
+									},
+								});
+							},
+						}}
 					/>
 
 					<LinkTo
