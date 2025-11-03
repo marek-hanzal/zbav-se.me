@@ -75,6 +75,8 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					<Button
 						iconEnabled={TrashIcon}
 						tone={isConfirm ? "danger" : "secondary"}
+						disabled={deleteMutation.isPending}
+						loading={deleteMutation.isPending}
 						onClick={() => {
 							if (!isConfirm) {
 								setIsConfirm(true);
