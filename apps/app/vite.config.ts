@@ -1,6 +1,7 @@
 import ViteYaml from "@modyfi/vite-plugin-yaml";
 import tailwindcss from "@tailwindcss/vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
+import { assetSizePlugin } from "@use-pico/vite-asset-size";
 import react from "@vitejs/plugin-react";
 import { nitro } from "nitro/vite";
 import { defineConfig } from "vite";
@@ -9,7 +10,7 @@ import { qrcode } from "vite-plugin-qrcode";
 import wasm from "vite-plugin-wasm";
 import paths from "vite-tsconfig-paths";
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ isSsrBuild, mode }) => {
 	return {
 		clearScreen: false,
 		base: process.env.VITE_APP_ASSETS,
@@ -27,6 +28,9 @@ export default defineConfig(({ mode }) => {
 			wasm(),
 			dynamicImport(),
 			ViteYaml(),
+			assetSizePlugin({
+				ssr: !!isSsrBuild,
+			}),
 			mode === "production"
 				? nitro({
 						config: {

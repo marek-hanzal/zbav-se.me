@@ -3,14 +3,12 @@ import * as path from "node:path";
 
 type Row = {
 	stamp: string; // ISO timestamp
-	target: "vercel_total";
 	files: number; // number of regular files
 	bytes: number; // total size in bytes
 };
 
 const CONFIG = {
 	root: ".vercel",
-	reportCsv: "bundle.size.csv",
 	reportNdjson: "bundle.size.ndjson",
 } as const;
 
@@ -67,25 +65,15 @@ function nowIso() {
 	return new Date().toISOString();
 }
 
-function toCsvRow(r: Row): string {
-	return `${r.stamp},${r.target},${r.files},${r.bytes}`;
-}
-
 async function ensureReportFiles() {
-	const header = `stamp,target,files,bytes
-`;
-	if (!(await exists(CONFIG.reportCsv))) {
-		await fs.writeFile(CONFIG.reportCsv, header, "utf8");
-	}
 	if (!(await exists(CONFIG.reportNdjson))) {
 		await fs.writeFile(CONFIG.reportNdjson, "", "utf8");
 	}
 }
 
 function fmt(n: number) {
-	const kb = (n / 1024).toFixed(2);
 	const mb = (n / (1024 * 1024)).toFixed(2);
-	return `${n} B (${kb} kB | ${mb} MB)`;
+	return `${mb} MB`;
 }
 
 async function main() {
@@ -97,18 +85,11 @@ async function main() {
 	const { files, bytes } = await countAllBytes(CONFIG.root);
 	const row: Row = {
 		stamp: nowIso(),
-		target: "vercel_total",
 		files,
 		bytes,
 	};
 
 	await ensureReportFiles();
-	await fs.appendFile(
-		CONFIG.reportCsv,
-		`${toCsvRow(row)}
-`,
-		"utf8",
-	);
 	await fs.appendFile(
 		CONFIG.reportNdjson,
 		`${JSON.stringify(row)}
@@ -116,7 +97,7 @@ async function main() {
 		"utf8",
 	);
 
-	console.log(`VERCEL_TOTAL – files=${files} size=${fmt(bytes)}`);
+	console.log(`\t Bundle size – files=${files} size=${fmt(bytes)}`);
 }
 
 main().catch((e) => {
