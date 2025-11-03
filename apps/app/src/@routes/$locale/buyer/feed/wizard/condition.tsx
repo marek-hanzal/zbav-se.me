@@ -5,7 +5,7 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -44,16 +44,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 						tone={"secondary"}
 					/>
 				}
-				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/buyer/feed/select"}
-						params={{
-							locale,
-						}}
-						tone={"secondary"}
-					/>
-				}
+	component() {
+		const { locale } = Route.useParams();
+		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 				bottom={
 					<LinkTo
 						to={"/$locale/buyer/feed/wizard/name"}
