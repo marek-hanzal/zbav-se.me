@@ -4,7 +4,7 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const [price, setPrice] = useState(state.price);
 
 		return (
@@ -52,13 +53,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 					/>
 				}
 				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/seller"}
-						params={{
-							locale,
-						}}
+					<ConfirmButton
+						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/seller",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
 					/>
 				}
 				bottom={

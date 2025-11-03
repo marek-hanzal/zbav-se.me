@@ -5,7 +5,7 @@ import {
 	CloseIcon,
 } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -19,6 +19,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const sortKeyId = useId();
 		const [sort, setSort] = useState<tListingSort[]>(state.sort ?? []);
 
@@ -39,13 +40,20 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 					/>
 				}
 				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/buyer/feed/select"}
-						params={{
-							locale,
-						}}
+					<ConfirmButton
+						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/buyer/feed/select",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
 					/>
 				}
 				bottom={

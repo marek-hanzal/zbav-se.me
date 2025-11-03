@@ -5,7 +5,7 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
@@ -83,6 +83,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 		component() {
 			const { locale } = Route.useParams();
 			const state = Route.useSearch();
+			const navigate = Route.useNavigate();
 			const [fulltext, setFulltext] = useState<Fulltext.Value>();
 			const selection = useSelection<EntitySchema.Type>({
 				mode: "single",
@@ -137,13 +138,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 						/>
 					}
 					right={
-						<LinkTo
-							icon={CloseIcon}
-							to={"/$locale/seller"}
-							params={{
-								locale,
-							}}
+						<ConfirmButton
+							iconEnabled={CloseIcon}
 							tone={"secondary"}
+							confirmProps={{
+								tone: "danger",
+								onClick: () => {
+									navigate({
+										to: "/$locale/seller",
+										params: {
+											locale,
+										},
+									});
+								},
+							}}
 						/>
 					}
 					bottom={

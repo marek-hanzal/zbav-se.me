@@ -4,7 +4,7 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -53,13 +53,20 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 					/>
 				}
 				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/buyer/feed/select"}
-						params={{
-							locale,
-						}}
+					<ConfirmButton
+						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/buyer/feed/select",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
 					/>
 				}
 				bottom={

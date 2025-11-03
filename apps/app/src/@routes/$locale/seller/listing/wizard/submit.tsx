@@ -6,7 +6,7 @@ import {
 	SpinnerIcon,
 } from "@use-pico/client/icon";
 import { Badge, type BadgeCls, BadgeValue } from "@use-pico/client/ui/badge";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -28,6 +28,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 	pendingComponent() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 
 		return (
 			<TitleContainer
@@ -45,13 +46,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 					/>
 				}
 				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/seller"}
-						params={{
-							locale,
-						}}
+					<ConfirmButton
+						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/seller",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
 					/>
 				}
 			>
@@ -129,13 +137,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 					/>
 				}
 				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/seller"}
-						params={{
-							locale,
-						}}
+					<ConfirmButton
+						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/seller",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
 					/>
 				}
 				bottom={

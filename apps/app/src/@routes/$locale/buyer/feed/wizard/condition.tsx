@@ -16,6 +16,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "multi",
@@ -44,10 +45,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 						tone={"secondary"}
 					/>
 				}
-	component() {
-		const { locale } = Route.useParams();
-		const state = Route.useSearch();
-		const navigate = Route.useNavigate();
+				right={
+					<ConfirmButton
+						iconEnabled={CloseIcon}
+						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/buyer/feed/select",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
+					/>
+				}
 				bottom={
 					<LinkTo
 						to={"/$locale/buyer/feed/wizard/name"}

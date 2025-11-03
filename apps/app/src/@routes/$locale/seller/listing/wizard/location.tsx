@@ -4,7 +4,7 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui";
 import { useState } from "react";
@@ -20,6 +20,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 			});
 			const { locale } = Route.useParams();
 			const state = Route.useSearch();
+			const navigate = Route.useNavigate();
 			const [locationId, setLocationId] = useState(
 				state.locationId ?? user?.locationId ?? undefined,
 			);
@@ -39,13 +40,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 						/>
 					}
 					right={
-						<LinkTo
-							icon={CloseIcon}
-							to={"/$locale/seller"}
-							params={{
-								locale,
-							}}
+						<ConfirmButton
+							iconEnabled={CloseIcon}
 							tone={"secondary"}
+							confirmProps={{
+								tone: "danger",
+								onClick: () => {
+									navigate({
+										to: "/$locale/seller",
+										params: {
+											locale,
+										},
+									});
+								},
+							}}
 						/>
 					}
 					bottom={

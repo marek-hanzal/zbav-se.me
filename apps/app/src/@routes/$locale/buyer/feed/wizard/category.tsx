@@ -5,7 +5,7 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { TitleContainer } from "@zbav-se.me/ui";
@@ -17,6 +17,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const selection = useSelection<EntitySchema.Type>({
 			mode: "multi",
 			initial: state.filter?.categoryIdIn?.map((id) => ({
@@ -43,13 +44,20 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 					/>
 				}
 				right={
-					<LinkTo
-						icon={CloseIcon}
-						to={"/$locale/buyer/feed/select"}
-						params={{
-							locale,
-						}}
+					<ConfirmButton
+						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/buyer/feed/select",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
 					/>
 				}
 				bottom={
