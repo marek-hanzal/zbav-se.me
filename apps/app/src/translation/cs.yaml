@@ -21,24 +21,15 @@
 105f9db532252d19c7f7a9a715149260c9f30793a4793d6e3b7125e2:
     ref: Category search (placeholder)
     value: Jaké kategorie hledáš?
-1345bf9e64d99f8fa9a1cdb1067c859499aa7c04ef20ac9a94478b11:
-    ref: Missing required token(s). (title)
-    value: Missing required token(s). (title)
 14c26d2816c7d80dbb0d3d6314d8229e7c3eb85ea3089c55c570051a:
     ref: Condition (title)
     value: Stav
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
     ref: Feed condition not selected
     value: Jakýkoli stav
-18c943793066d65cfe44c4066e39c5205f5bfc0b675f6b05abb872ed:
-    ref: Loading...
-    value: Loading...
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
     ref: Listing photos (label)
     value: Počet fotek
-1b163f7a517fd4d7d84d7ac05f4afe6158ea8e941335589a2337ec6c:
-    ref: File downloaded...
-    value: File downloaded...
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
     ref: Logo motto (label)
     value: Prostě to pošli dál
@@ -54,24 +45,12 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
-282447aea716ad0adce959ef2fa721688cf8614506ecdfd8c1dcf052:
-    ref: No tags (label)
-    value: No tags (label)
-2893c5e3aa27d9e9f20c82e0b9921c385df9e15828fc420f45dc5c67:
-    ref: Please wait...
-    value: Momentík...
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
-2d689c403dd9e47ae096063c5197f1a33ce1dd2908da65f871a536a2:
-    ref: Something went wrong.
-    value: Something went wrong.
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
     value: Stáří
-38347572d8aa1607a788bf890a6e9f83c334d06fc92987ae1535b1f5:
-    ref: Missing any token(s). (title)
-    value: Missing any token(s). (title)
 3909c87c4b736847773096b6ead06fff8cfcab8426b86024493883bd:
     ref: Select item
     value: Select item
@@ -96,9 +75,6 @@
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
-420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
-    ref: Cancel (button)
-    value: Cancel (button)
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
     ref: Listing category (label)
     value: Kategorie
@@ -114,6 +90,9 @@
 4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
     ref: Next - feed category (button)
     value: Kategorie
+4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
+    ref: Create new feed (button)
+    value: Jdeme na to!
 4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
     ref: Next - feed submit (button)
     value: Kontrola
@@ -132,12 +111,6 @@
 51e32dd04b48037c02d74b18780fa11ad5f4c9c2694a95cc953d7260:
     ref: Model (hint)
     value: Model (hint)
-52a90ac39b40af333717a0e6d596cd865a4c7f56f760374bb86082ba:
-    ref: Missing any token(s). (message)
-    value: Missing any token(s). (message)
-568d3ece0540fd580d2c48b7bb3b48905a52a204db6726a452b29659:
-    ref: Invalid on/off value
-    value: Invalid on/off value
 5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
     ref: Listing photos (title)
     value: Fotky
@@ -156,12 +129,6 @@
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
     ref: Feed category (label)
     value: Kategorie
-5cd4cffcbafbe0a40563538352c1a593909e57b10bb8d9ad5f9b3d2a:
-    ref: Delete (button)
-    value: Delete (button)
-5d6bb45eb861bb2a56b96924c18424e8a1c7fd31df44492a6d6f9da3:
-    ref: primary
-    value: primary
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Stáří
@@ -180,9 +147,6 @@
 6f0c381fe28fafb75e2b708bfeefe7fefab6fb361cec10afd13b2374:
     ref: Next - age (button)
     value: Stáří
-70d7fb9cb6ce7775c5f9e1f890e6b248e538277a973f1aa95a36c0f2:
-    ref: Clear files
-    value: Clear files
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
@@ -195,9 +159,6 @@
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
     value: Umístění
-77b049e75c767c4ca346dd05d7a42c39c3479ac4f6dfaeaaa6efc1da:
-    ref: There is nothing to see right now.
-    value: There is nothing to see right now.
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
     ref: Create new feed (title)
     value: Vytvoř si další nabídku
@@ -218,18 +179,12 @@
     value:
         To je prozatím vše - zkuste jiné nastavení filtrů nebo prozkoumat další
         možnosti vyhledávání!
-816c08b99b10a24bccbaf9ed3be66e93498a5ca8967792f35b425fa2:
-    ref: Close (label)
-    value: Close (label)
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
     ref: No listings (title)
     value: Kde nic, tu nic. Ale všechno bude, všechno bude!
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
-891fe47dd650cc5e7c3864f9cb807b951df70b334f3c076fe50fda11:
-    ref: Missing required token(s). (message)
-    value: Missing required token(s). (message)
 89ce43e549ae96ce623508874d063e27e0a12b2bcece4e86069598b3:
     ref: Feed - location security (hint)
     value: >
@@ -244,27 +199,15 @@
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
     ref: Listing - upload photo (placeholder)
     value: Ťuknutím vyfoť nebo vyber z galerie
-8b0b8e783e38a83fa0dc240e394fea4775eb230fa42c6ce6ffeafd07:
-    ref: Previous (tour)
-    value: Předchozí
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
     ref: Feed location (label)
     value: Lokalita
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
     value: Inzeráty
-904e1dfdd115698ca60d626134dd92d5f3362df3cd4bcf8fde0501de:
-    ref: any
-    value: any
 96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
     ref: Invalid/missing fields
     value: Invalid/missing fields
-9787305b076729a8818974ec91c90b96e1bbeee3a189994587c92ff5:
-    ref: Nothing here
-    value: Nothing here
-981cc164d88c502839617bc66786dd1986fbb81419eaa16b78e92c17:
-    ref: Finish (tour)
-    value: Hotovo 🙂!
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
     value: Chci prodat
@@ -370,21 +313,12 @@ Listing common sort value price - unused:
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
-a26e2f454b3953f2d2b295fcdae89f2bd7b4a6a145918f37d91e31c8:
-    ref: Unsorted, sort by asc
-    value: Unsorted, sort by asc
-a421acdb6005685abf3ab655b39bd5a6fd36b74ffb42026ddc48fc6b:
-    ref: Cannot resolve iso date time
-    value: Cannot resolve iso date time
-a5eb219baee2d44fbeb2efb0fefefa8cca868c985927a2010eca1bd0:
-    ref: Sorted by asc, sort by desc; keeps column sorted in selected order
-    value: Sorted by asc, sort by desc; keeps column sorted in selected order
+a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
+    ref: Create your first feed to get started (description)
+    value: Nastav si přesně, co tě zajímá a jaké inzeráty se ti mají zobrazovat.
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
     ref: Number of listings (label)
     value: "Počet inzerátů:"
-aa80a4c2a4ed1bd468230b1916d6f7c9be107686ced25497842014e8:
-    ref: Sorted by desc, sort by asc; keeps column sorted in selected order
-    value: Sorted by desc, sort by asc; keeps column sorted in selected order
 ab3fd8cf2260b65a0e2a09d81c4512ad025f5524b2947e16306349f5:
     ref: Vendor (placeholder)
     value: Vendor (placeholder)
@@ -394,9 +328,6 @@ abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
 ad2b3af7d8b3977729ea269069627a1c0fd5cbe7c6b05d4e66056b20:
     ref: Listing vendor & model (label)
     value: Listing vendor & model (label)
-ada656378ad55508bb4133baf81d6678f544d15199ed57c1e9ebe146:
-    ref: Export settings (title)
-    value: Export settings (title)
 adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
     ref: I want to buy (message)
     value:
@@ -408,9 +339,6 @@ adf2aa857314fdeb3999fc88ca3b16372a4af1a07a6c3b32f1b82e3a:
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
     ref: Listing expire at (label)
     value: Automatické ukončení
-af8f35d688a6936914f62e095e58125cd5fa4407d8c0343bc7fdeb7d:
-    ref: Drag 'n' drop a file here
-    value: Drag 'n' drop a file here
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
@@ -423,15 +351,9 @@ b2c5e1ab63bde746cb442d3c4bd5a84ae037df7adac301ea412f5316:
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
     ref: Sign out
     value: Odhlásit se
-b35f0b66df0dbbf3c51b1281ea17e7a0ddeeb96392e89d8bc588b27d:
-    ref: No more items (label)
-    value: No more items (label)
-b4fcc48516f0b04ca6bc78304c96366505e47360ff63bfc8b3a27f7b:
-    ref: Select items (label)
-    value: Select items (label)
-b83f73c562eea84b9ed3076da04cc1ab2fdbeb3f2a701a61159a27d6:
-    ref: Downloading file...
-    value: Downloading file...
+b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
+    ref: Create first feed (title)
+    value: Vytvoř si své nabídky!
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty
@@ -441,9 +363,6 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
 badc5b78cb713413bf87d581fc96eecd594bcf82de763ad73cdf01f0:
     ref: No listings found (message)
     value: No listings found (message)
-bcb2263af0ec3c192d55f37db91b702dfb64cd249372992287291fe9:
-    ref: Export (button)
-    value: Export (button)
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     ref:
         Missing identity for an Entity (id). I'm sorry, but I cannot provide better
@@ -456,15 +375,6 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Nastav cenu
-c6d6c21e5b7c3b5b0ec93d104717a2f368ba366ba10e877aff9845a8:
-    ref: Input is not Luxon DateTime!
-    value: Input is not Luxon DateTime!
-c95e944a39e5b6a9a072b4c07dc12974f66ba22d82760cecfe27f54e:
-    ref: Remove sorting
-    value: Remove sorting
-c9c476d23927e4f88653018dc6c592a90dc2282ccc040acce5961294:
-    ref: Cannot download the file...
-    value: Cannot download the file...
 cb639f5715f5ab643f96fc184a220ee1283d44463f90d822f495b6e1:
     ref: Vendor & Model (title)
     value: Vendor & Model (title)
@@ -507,9 +417,6 @@ da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: Loading... (toast)
-dd8ddfd7304520a53abf36011a40a37e9cc33e52eadf58d169a4a4b0:
-    ref: fetching
-    value: fetching
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
     ref: "0"
     value: "0"
@@ -528,36 +435,18 @@ e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
     ref: Next - feed condition (button)
     value: Stavy
-e9c24bfbf06755877d0fa51f062bc6e0475f722e432ce78224fb77d5:
-    ref: Select item (label)
-    value: Select item (label)
-eb5d54aae38a00b696cf911a94fa9c80c907af0699c5e1124a4534fa:
-    ref: Next (tour)
-    value: Další
-ecc602947a2a601b6c9f099ca41d26c7f3910eff377fac630e5e43d2:
-    ref: danger
-    value: danger
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat
 f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
     ref: Feed submit (title)
     value: Vše připraveno!
-f217d43a8e0691733607cb65880602959cc6347ea3c7eb1502813156:
-    ref: Error
-    value: Error
 f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
     ref: No listings found (label)
     value: Tad nic nenajdeš 😭
-f92c5bcd27dd6e6537d9b4eaaac63558d27e759c58675fef5f4f992c:
-    ref: Confirm selection (label)
-    value: Confirm selection (label)
 fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
     ref: Feed condition (label)
     value: Stavy
-faa4e679ee1a04be7c1c4ae4ffa5fbcf0cceeec28ee9b985303c6d82:
-    ref: loading
-    value: loading
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů

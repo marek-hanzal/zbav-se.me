@@ -1,6 +1,8 @@
-import { Icon } from "@use-pico/client/icon";
+import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeedQuery } from "@zbav-se.me/sdk";
 import { FeedIcon } from "@zbav-se.me/ui";
@@ -40,7 +42,7 @@ export const FeedList: FC<FeedList.Props> = ({
 			gap={"md"}
 			height={"fit"}
 		>
-			{shouldShowCreateButton ? (
+			{shouldShowCreateButton && feedCountQuery.data.filter > 0 ? (
 				<Badge
 					tone={"primary"}
 					theme={isLimitReached ? "light" : "dark"}
@@ -77,6 +79,32 @@ export const FeedList: FC<FeedList.Props> = ({
 						font={"bold"}
 					/>
 				</Badge>
+			) : null}
+
+			{shouldShowCreateButton && feedCountQuery.data.filter === 0 ? (
+				<Container
+					layout={"vertical-centered"}
+					items={"center"}
+				>
+					<Status
+						icon={FeedIcon}
+						textTitle={"Create first feed (title)"}
+						textMessage={
+							"Create your first feed to get started (description)"
+						}
+						action={
+							<Button
+								iconEnabled={ArrowRightIcon}
+								iconPosition={"right"}
+								onClick={onClickCreate}
+								label={"Create new feed (button)"}
+								tone={"primary"}
+								theme={"dark"}
+								size={"xl"}
+							/>
+						}
+					/>
+				</Container>
 			) : null}
 
 			{feedCollectionQuery.data.data.map((feed) => {

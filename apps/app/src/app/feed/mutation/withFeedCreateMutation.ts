@@ -5,6 +5,7 @@ import {
 	type tFeedDto,
 } from "@zbav-se.me/sdk";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
+import { withFeedCountQuery } from "~/app/feed/query/withFeedCountQuery";
 
 export const withFeedCreateMutation = withMutation<tFeedCreate, tFeedDto>({
 	keys(variables) {
@@ -21,6 +22,7 @@ export const withFeedCreateMutation = withMutation<tFeedCreate, tFeedDto>({
 		}).then((res) => res.data);
 	},
 	invalidate: [
+		withFeedCountQuery,
 		withFeedCollectionQuery,
 	],
 });
