@@ -2,7 +2,9 @@
 	"$schema": "https://turborepo.org/schema.json",
 	"envMode": "loose",
 	"globalDependencies": [
-		"tsconfig.json"
+		"tsconfig.json",
+		"bun.lock",
+		"package.json"
 	],
 	"tasks": {
 		"dev": {
@@ -28,14 +30,16 @@
 			],
 			"inputs": [
 				"src/**",
-				"package.json",
-				"rollup.config.*"
+				"vite.config.ts",
+				"tsconfig.json",
+				"tailwind.config.ts",
+				"nitro.config.ts"
 			],
 			"outputs": [
-				"dist/**",
-				"build/**"
+				".vercel/output/**"
 			],
-			"cache": false
+			"outputLogs": "new-only",
+			"cache": true
 		},
 		"translations": {
 			"inputs": [
