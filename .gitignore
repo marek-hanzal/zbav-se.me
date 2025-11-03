@@ -5,6 +5,7 @@
 .vscode/chrome-debug-profile
 *.log
 lib
+dist
 node_modules
 temp
 tsconfig.tsbuildinfo
