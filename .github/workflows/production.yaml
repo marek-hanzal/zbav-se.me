@@ -548,7 +548,8 @@ jobs:
         name: Run migrations
         runs-on: ubuntu-latest
         environment: production
-        needs: [vercel-server]
+        needs:
+            [vercel-env-web, vercel-env-app, vercel-env-server, vercel-server]
         steps:
             - name: Trigger migrations endpoint
               run: |
