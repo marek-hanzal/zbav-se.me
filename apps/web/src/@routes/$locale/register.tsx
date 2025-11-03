@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
+import { FormField, onSubmit } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -50,12 +50,9 @@ export const Route = createFileRoute("/$locale/register")({
 				password: "",
 				confirmPassword: "",
 			},
-			async onSubmit({ value }) {
-				return registerMutation.mutateAsync({
-					email: value.email,
-					password: value.password,
-				});
-			},
+			onSubmit: onSubmit({
+				mutation: registerMutation,
+			}),
 		});
 
 		const scrollerRef = useRef<HTMLDivElement>(null);

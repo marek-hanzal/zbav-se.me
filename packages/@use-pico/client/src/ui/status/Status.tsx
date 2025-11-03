@@ -1,9 +1,9 @@
 import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { FC, PropsWithChildren, ReactNode, Ref } from "react";
 import { PicoCls } from "../../cls/PicoCls";
-import type { UiProps } from "../../component/UiProps";
 import { Icon } from "../../icon/Icon";
 import type { IconCls } from "../../icon/IconCls";
+import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
 import type { Typo } from "../typo/Typo";
 import { StatusCls } from "./StatusCls";

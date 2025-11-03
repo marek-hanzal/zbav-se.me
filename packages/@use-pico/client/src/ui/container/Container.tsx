@@ -1,6 +1,6 @@
 import { type Cls, useCls } from "@use-pico/cls";
 import type { ComponentProps, FC, PropsWithChildren, Ref } from "react";
-import type { UiProps } from "../../component/UiProps";
+import type { UiProps } from "../../type/UiProps";
 import { ContainerCls } from "./ContainerCls";
 
 export namespace Container {

@@ -93,10 +93,10 @@ export const withQuerySchema = <
 	sort,
 }: withQuerySchema.Props<TFilterSchema, TSort>) => {
 	return z.object({
-		cursor: CursorSchema.nullish(),
-		filter: z.nullish(filter),
-		where: z.nullish(filter),
-		sort: z.nullish(
+		cursor: CursorSchema.optional(),
+		filter: z.optional(filter),
+		where: z.optional(filter),
+		sort: z.optional(
 			z.array(
 				z.object({
 					value: sort.length > 0 ? z.enum(sort) : z.never(),

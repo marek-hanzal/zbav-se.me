@@ -1,6 +1,6 @@
 import { type Cls, tvc, useCls } from "@use-pico/cls";
 import type { FC } from "react";
-import type { UiProps } from "../../component/UiProps";
+import type { UiProps } from "../../type/UiProps";
 import { OverlayCls } from "./OverlayCls";
 
 export namespace Overlay {

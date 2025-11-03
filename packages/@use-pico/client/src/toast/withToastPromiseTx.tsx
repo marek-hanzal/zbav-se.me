@@ -9,7 +9,7 @@ export namespace withToastPromiseTx {
 	}
 }
 
-export const withToastPromiseTx = (key?: string): withToastPromiseTx.Text => {
+export const withToastPromiseTx2 = (key?: string): withToastPromiseTx.Text => {
 	return (
 		key
 			? {

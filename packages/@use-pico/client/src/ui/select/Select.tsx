@@ -17,9 +17,9 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { Entity } from "@use-pico/common/type";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
-import { Action } from "../../action/Action";
 import { CloseIcon } from "../../icon/CloseIcon";
 import { Icon } from "../../icon/Icon";
+import { Action } from "../action/Action";
 import { FormField } from "../form/FormField";
 import { SelectCls } from "./SelectCls";
 
