@@ -59,8 +59,18 @@ export default defineConfig(({ mode }) => {
 				treeshake: "smallest",
 				output: {
 					manualChunks(id) {
-						if (id.includes("@tanstack/")) {
-							return "tanstack";
+						// Vendor packages - check most specific first
+						if (
+							id.includes("node_modules/react/") &&
+							!id.includes("react-dom")
+						) {
+							return "react";
+						}
+						if (id.includes("react-dom")) {
+							return "react-dom";
+						}
+						if (id.includes("@tanstack/react-form")) {
+							return "tanstack-form";
 						}
 						if (id.includes("zod")) {
 							return "zod";
@@ -82,6 +92,34 @@ export default defineConfig(({ mode }) => {
 						}
 						if (id.includes("@use-pico/")) {
 							return "use-pico";
+						}
+						if (id.includes("axios")) {
+							return "axios";
+						}
+						if (id.includes("better-auth")) {
+							return "better-auth";
+						}
+						if (id.includes("ts-pattern")) {
+							return "ts-pattern";
+						}
+						if (id.includes("p-queue")) {
+							return "p-queue";
+						}
+						if (id.includes("use-debounce")) {
+							return "use-debounce";
+						}
+						if (id.includes("zustand")) {
+							return "zustand";
+						}
+						if (id.includes("@escapace")) {
+							return "escapace";
+						}
+						if (
+							id.includes("node_modules/") &&
+							!id.includes("src/") &&
+							!id.includes("tanstack/")
+						) {
+							return "vendor";
 						}
 					},
 				},
