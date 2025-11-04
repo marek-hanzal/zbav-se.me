@@ -1,1 +1,0 @@
-export { withCollection } from "./withCollection";
