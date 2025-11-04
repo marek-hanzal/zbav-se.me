@@ -5,6 +5,7 @@ import { secureHeaders } from "hono/secure-headers";
 import { AppEnv } from "./AppEnv";
 import { auth } from "./auth/auth";
 import { withCategoryApi } from "./category/withCategoryApi";
+import { withCorsApi } from "./cors/withCorsApi";
 import { database } from "./database/kysely";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
@@ -165,9 +166,10 @@ app.on(
 );
 //
 const routes: Routes = {
-	session: withSessionHono(),
-	token: withTokenHono(),
-	public: withHono(),
+	root: app,
+	publicHono: withHono(),
+	sessionHono: withSessionHono(),
+	tokenHono: withTokenHono(),
 };
 
 withCategoryApi(routes);
@@ -181,70 +183,18 @@ withS3Api(routes);
 withJanitorApi(routes);
 withUserExApi(routes);
 withFeedApi(routes);
-
-app.options("/api/cors-proxy", (c) => {
-	c.header("Access-Control-Allow-Origin", "*");
-	c.header("Access-Control-Allow-Methods", "GET, OPTIONS");
-	c.header("Access-Control-Allow-Headers", "Content-Type");
-	return c.body(null, 204);
-});
-
-app.get("/api/cors-proxy", async (c) => {
-	const urlParam = c.req.query("url");
-	if (!urlParam) {
-		return c.text("Missing ?url=", 400);
-	}
-
-	let target: URL;
-	try {
-		target = new URL(urlParam);
-	} catch {
-		return c.text("Invalid URL", 400);
-	}
-
-	const upstream = await fetch(target.toString(), {
-		method: "GET",
-		redirect: "follow",
-	});
-
-	if (!upstream.ok) {
-		return c.text(`Upstream ${upstream.status}`, 502);
-	}
-
-	const headers = new Headers();
-	headers.set("Access-Control-Allow-Origin", "*");
-	headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-	headers.set(
-		"Access-Control-Expose-Headers",
-		"Content-Type, Content-Length, ETag, Cache-Control",
-	);
-	headers.set("Cache-Control", "public, max-age=60");
-
-	const contentType = upstream.headers.get("content-type");
-	if (contentType) {
-		headers.set("Content-Type", contentType);
-	}
-	const contentLength = upstream.headers.get("content-length");
-	if (contentLength) {
-		headers.set("Content-Length", contentLength);
-	}
-
-	return new Response(upstream.body, {
-		status: 200,
-		headers,
-	});
-});
+withCorsApi(routes);
 
 //
 
 const sessionRoutes = withSessionHono();
-sessionRoutes.route("/session", routes.session);
+sessionRoutes.route("/session", routes.sessionHono);
 
 const tokenRoutes = withTokenHono();
-tokenRoutes.route("/token", routes.token);
+tokenRoutes.route("/token", routes.tokenHono);
 
 const publicRoutes = withHono();
-publicRoutes.route("/public", routes.public);
+publicRoutes.route("/public", routes.publicHono);
 
 app.route("/api", sessionRoutes);
 app.route("/api", tokenRoutes);

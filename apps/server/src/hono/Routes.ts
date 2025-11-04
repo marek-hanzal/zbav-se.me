@@ -7,7 +7,8 @@ export namespace Routes {
 }
 
 export interface Routes {
-	public: withHono;
-	session: withSessionHono;
-	token: withTokenHono;
+	root: withHono;
+	publicHono: withHono;
+	sessionHono: withSessionHono;
+	tokenHono: withTokenHono;
 }

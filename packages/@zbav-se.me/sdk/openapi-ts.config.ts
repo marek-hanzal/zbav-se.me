@@ -1,85 +1,186 @@
 import { defineConfig } from "@hey-api/openapi-ts";
 
-export default defineConfig({
-	input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
-	output: {
-		path: "src/sdk",
-		format: "biome",
-		lint: "biome",
-	},
-	plugins: [
-		{
-			name: "@hey-api/client-fetch",
-			exportFromIndex: true,
-			baseUrl: false,
-			runtimeConfigPath: "../client.config",
+export default defineConfig([
+	{
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
+		output: {
+			path: "src/session",
+			format: "biome",
+			lint: "biome",
 		},
-		{
-			name: "zod",
-			requests: {
-				types: {
-					infer: {
-						name: "z{{name}}Request",
-					},
+		parser: {
+			filters: {
+				tags: {
+					include: [
+						"session",
+					],
 				},
 			},
-			responses: {
-				types: {
-					infer: {
-						name: "z{{name}}Response",
+		},
+		plugins: [
+			{
+				name: "@hey-api/client-fetch",
+				exportFromIndex: true,
+				baseUrl: false,
+				runtimeConfigPath: "../session.client.config",
+			},
+			{
+				name: "zod",
+				requests: {
+					types: {
+						infer: {
+							name: "z{{name}}Request",
+						},
 					},
 				},
-			},
-			metadata: true,
-			definitions: {
-				types: {
-					infer: {
-						name: "z{{name}}",
+				responses: {
+					types: {
+						infer: {
+							name: "z{{name}}Response",
+						},
 					},
 				},
+				metadata: true,
+				definitions: {
+					types: {
+						infer: {
+							name: "z{{name}}",
+						},
+					},
+				},
+				comments: true,
+				compatibilityVersion: 4,
+				dates: {
+					local: false,
+					offset: false,
+				},
+				types: {
+					infer: {
+						case: "preserve",
+					},
+				},
+				exportFromIndex: true,
 			},
-			comments: true,
-			compatibilityVersion: 4,
-			dates: {
-				local: false,
-				offset: false,
-			},
-			types: {
-				infer: {
+			{
+				name: "@hey-api/typescript",
+				validator: true,
+				case: "camelCase",
+				requests: {
+					name: "t{{name}}Request",
+				},
+				responses: {
+					name: "t{{name}}Response",
+				},
+				definitions: {
+					name: "t{{name}}",
+				},
+				enums: {
 					case: "preserve",
+					mode: "javascript",
 				},
 			},
-			exportFromIndex: true,
-		},
-		{
-			name: "@hey-api/typescript",
-			validator: true,
-			case: "camelCase",
-			requests: {
-				name: "t{{name}}Request",
+			{
+				name: "@hey-api/schemas",
+				type: "form",
+				nameBuilder: "s{{name}}",
+				exportFromIndex: true,
 			},
-			responses: {
-				name: "t{{name}}Response",
+			{
+				name: "@hey-api/sdk",
+				validator: true,
+				exportFromIndex: true,
 			},
-			definitions: {
-				name: "t{{name}}",
-			},
-			enums: {
-				case: "preserve",
-				mode: "javascript",
-				// constantsIgnoreNull,
+		],
+	},
+	{
+		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
+		output: {
+			path: "src/public",
+			format: "biome",
+			lint: "biome",
+		},
+		parser: {
+			filters: {
+				tags: {
+					include: [
+						"public",
+					],
+				},
 			},
 		},
-		{
-			name: "@hey-api/schemas",
-			type: "form",
-			nameBuilder: "s{{name}}",
-			exportFromIndex: true,
-		},
-		{
-			name: "@hey-api/sdk",
-			validator: true,
-			exportFromIndex: true,
-		},
-	],
-});
+		plugins: [
+			{
+				name: "@hey-api/client-fetch",
+				exportFromIndex: true,
+				baseUrl: false,
+				runtimeConfigPath: "../public.client.config",
+			},
+			{
+				name: "zod",
+				requests: {
+					types: {
+						infer: {
+							name: "z{{name}}Request",
+						},
+					},
+				},
+				responses: {
+					types: {
+						infer: {
+							name: "z{{name}}Response",
+						},
+					},
+				},
+				metadata: true,
+				definitions: {
+					types: {
+						infer: {
+							name: "z{{name}}",
+						},
+					},
+				},
+				comments: true,
+				compatibilityVersion: 4,
+				dates: {
+					local: false,
+					offset: false,
+				},
+				types: {
+					infer: {
+						case: "preserve",
+					},
+				},
+				exportFromIndex: true,
+			},
+			{
+				name: "@hey-api/typescript",
+				validator: true,
+				case: "camelCase",
+				requests: {
+					name: "t{{name}}Request",
+				},
+				responses: {
+					name: "t{{name}}Response",
+				},
+				definitions: {
+					name: "t{{name}}",
+				},
+				enums: {
+					case: "preserve",
+					mode: "javascript",
+				},
+			},
+			{
+				name: "@hey-api/schemas",
+				type: "form",
+				nameBuilder: "s{{name}}",
+				exportFromIndex: true,
+			},
+			{
+				name: "@hey-api/sdk",
+				validator: true,
+				exportFromIndex: true,
+			},
+		],
+	},
+]);
