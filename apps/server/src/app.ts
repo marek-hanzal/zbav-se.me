@@ -3,27 +3,15 @@ import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
 import { AppEnv } from "./AppEnv";
+import { withPublicApi } from "./api/public/withPublicApi";
+import { withRootApi } from "./api/root/withRootApi";
+import { withSessionApi } from "./api/session/withSessionApi";
 import { auth } from "./auth/auth";
-import { withCategoryApi } from "./category/withCategoryApi";
-import { withCorsApi } from "./cors/withCorsApi";
-import { database } from "./database/kysely";
-import { withFeedApi } from "./feed/withFeedApi";
-import { withGalleryApi } from "./gallery/withGalleryApi";
-import { withHealthApi } from "./health/withHealthApi";
 import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withTokenHono } from "./hono/withTokenHono";
-import { withJanitorApi } from "./janitor/withJanitorApi";
-import { PayloadSchema } from "./jwt/PayloadSchema";
-import { verify } from "./jwt/verify";
-import { withListingApi } from "./listing/withListingApi";
-import { withLocationApi } from "./location/withLocationApi";
-import { withMigrationApi } from "./migration/withMigrationApi";
 import { withOpenApi } from "./open-api/withOpenApi";
-import { withS3Api } from "./s3/withS3Api";
-import { withUploadApi } from "./upload/withUploadApi";
-import { withUserExApi } from "./user-ex/withUserExApi";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -65,72 +53,6 @@ app.use(
 		maxSize: 1024 * 50,
 	}),
 );
-app.use(async (c, next) => {
-	try {
-		const session = await auth.api.getSession({
-			headers: c.req.raw.headers,
-		});
-		if (!session) {
-			c.set("user", null);
-			c.set("session", null);
-			return next();
-		}
-		c.set("user", session.user);
-		c.set("session", session.session);
-		return next();
-	} catch {
-		c.set("user", null);
-		c.set("session", null);
-		return next();
-	}
-});
-
-app.use("/api/session/*", async (c, next) => {
-	const session = c.get("session");
-	const user = c.get("user");
-	if (!session || !user) {
-		return c.json(
-			{
-				error: "Shooooo! Shooo!",
-			},
-			401,
-		);
-	}
-	return next();
-});
-
-app.use("/api/token/*", async (c, next) => {
-	const [, token] = c.req.header("Authorization")?.split(" ") ?? [];
-
-	if (!token) {
-		return c.json(
-			{
-				error: "Shooooo! Shooo!",
-			},
-			401,
-		);
-	}
-
-	const { payload } = await verify(token, {
-		issuer: AppEnv.VITE_SERVER_API,
-		secret: AppEnv.SERVER_JWT_SECRET,
-		scope: c.req.path,
-		schema: PayloadSchema,
-	});
-
-	c.set(
-		"user",
-		await database.kysely
-			.selectFrom("user")
-			.where("id", "=", payload.userId)
-			.selectAll()
-			.executeTakeFirstOrThrow(),
-	);
-
-	return next();
-});
-
-//
 
 // const withUserRateLimiter = rateLimiter<{
 // 	Variables: {
@@ -164,7 +86,9 @@ app.on(
 	"/api/auth/*",
 	(c) => auth.handler(c.req.raw),
 );
+
 //
+
 const routes: Routes = {
 	root: app,
 	publicHono: withHono(),
@@ -172,42 +96,8 @@ const routes: Routes = {
 	tokenHono: withTokenHono(),
 };
 
-withCategoryApi(routes);
-withListingApi(routes);
-withGalleryApi(routes);
-withUploadApi(routes);
-withLocationApi(routes);
-withHealthApi(routes);
-withMigrationApi(routes);
-withS3Api(routes);
-withJanitorApi(routes);
-withUserExApi(routes);
-withFeedApi(routes);
-withCorsApi(routes);
-
-//
-
-const sessionRoutes = withSessionHono();
-sessionRoutes.route("/session", routes.sessionHono);
-
-const tokenRoutes = withTokenHono();
-tokenRoutes.route("/token", routes.tokenHono);
-
-const publicRoutes = withHono();
-publicRoutes.route("/public", routes.publicHono);
-
-app.route("/api", sessionRoutes);
-app.route("/api", tokenRoutes);
-app.route("/api", publicRoutes);
-//
-app.get("/origin", (c) =>
-	c.json({
-		origin: [
-			AppEnv.VITE_WEB_ORIGIN,
-			AppEnv.VITE_APP_ORIGIN,
-		],
-	}),
-);
-//
+withSessionApi(routes);
+withPublicApi(routes);
+withRootApi(routes);
 
 export default app;
