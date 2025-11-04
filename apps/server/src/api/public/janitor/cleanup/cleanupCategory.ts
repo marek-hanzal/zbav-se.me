@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
+import type { CleanupSchema } from "../../api/public/janitor/dto/CleanupDtoSchema";
 import { database } from "../../database/kysely";
-import type { CleanupSchema } from "../schema/CleanupSchema";
 
 export async function cleanupCategory(): Promise<CleanupSchema.Type> {
 	const cutoffDate = DateTime.now()

@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const CleanupSchema = z
+export const CleanupDtoSchema = z
 	.object({
 		type: z.string().openapi({
 			description: "Type of cleanup operation performed",
@@ -12,12 +12,12 @@ export const CleanupSchema = z
 			description: "Number of items that were deleted",
 		}),
 	})
-	.openapi("Cleanup", {
+	.openapi("CleanupDto", {
 		description: "Results from a cleanup operation",
 	});
 
-export type CleanupSchema = typeof CleanupSchema;
+export type CleanupDtoSchema = typeof CleanupDtoSchema;
 
-export namespace CleanupSchema {
-	export type Type = z.infer<CleanupSchema>;
+export namespace CleanupDtoSchema {
+	export type Type = z.infer<CleanupDtoSchema>;
 }

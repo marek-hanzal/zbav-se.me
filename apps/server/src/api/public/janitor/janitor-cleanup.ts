@@ -1,8 +1,8 @@
-import { createRoute } from "@hono/zod-openapi";
-import type { Routes } from "../../hono/Routes";
-import { ErrorDtoSchema } from "../../schema/ErrorDtoSchema";
-import { cleanup } from "../cleanup/cleanup";
-import { CleanupResponseSchema } from "../schema/CleanupResponseSchema";
+import { createRoute, z } from "@hono/zod-openapi";
+import type { Routes } from "../../../hono/Routes";
+import { ErrorDtoSchema } from "../../../schema/ErrorDtoSchema";
+import { cleanup } from "./cleanup/cleanup";
+import { CleanupDtoSchema } from "./dto/CleanupDtoSchema";
 
 export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 	publicHono.openapi(
@@ -15,7 +15,7 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: CleanupResponseSchema,
+							schema: z.array(CleanupDtoSchema),
 						},
 					},
 					description: "When cleanup is done",
@@ -38,7 +38,7 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 				return c.json(
 					(await Promise.all(
 						cleanup.map((fn) => fn()),
-					)) satisfies CleanupResponseSchema.Type,
+					)) satisfies CleanupDtoSchema.Type[],
 					200,
 				);
 			} catch (e) {

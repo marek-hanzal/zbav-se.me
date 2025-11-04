@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
 import { AppEnv } from "../../AppEnv";
+import type { CleanupSchema } from "../../api/public/janitor/dto/CleanupDtoSchema";
 import { database } from "../../database/kysely";
 import { s3 } from "../../s3";
-import type { CleanupSchema } from "../schema/CleanupSchema";
 
 export async function cleanupUpload(): Promise<CleanupSchema.Type> {
 	const limit = 512;
