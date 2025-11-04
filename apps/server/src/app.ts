@@ -2,21 +2,20 @@ import { bodyLimit } from "hono/body-limit";
 import { cors } from "hono/cors";
 import { requestId } from "hono/request-id";
 import { secureHeaders } from "hono/secure-headers";
+import { withPublicApi } from "./@public/withPublicApi";
+import { withRootApi } from "./@root/withRootApi";
+import { withSessionApi } from "./@session/withSessionApi";
+import { withTokenApi } from "./@token/withTokenApi";
 import { AppEnv } from "./AppEnv";
-import { withPublicApi } from "./api/public/withPublicApi";
-import { withRootApi } from "./api/root/withRootApi";
-import { withSessionApi } from "./api/session/withSessionApi";
-import { auth } from "./auth/auth";
 import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withTokenHono } from "./hono/withTokenHono";
-import { withOpenApi } from "./open-api/withOpenApi";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
  */
-const app = withOpenApi(withHono());
+const app = withHono();
 
 //
 app.use(requestId());
@@ -78,17 +77,6 @@ app.use(
 
 //
 
-app.on(
-	[
-		"POST",
-		"GET",
-	],
-	"/api/auth/*",
-	(c) => auth.handler(c.req.raw),
-);
-
-//
-
 const routes: Routes = {
 	root: app,
 	publicHono: withHono(),
@@ -96,8 +84,9 @@ const routes: Routes = {
 	tokenHono: withTokenHono(),
 };
 
-withSessionApi(routes);
-withPublicApi(routes);
 withRootApi(routes);
+withPublicApi(routes);
+withSessionApi(routes);
+withTokenApi(routes);
 
 export default app;

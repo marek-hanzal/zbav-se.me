@@ -1,23 +1,23 @@
+import type { CategoryDbSchema } from "../@session/category/schema/CategoryDbSchema";
+import type { CategoryMissDbSchema } from "../@session/category/schema/CategoryMissDbSchema";
+import type { CategorySpotlightDbSchema } from "../@session/category/schema/CategorySpotlightDbSchema";
+import type { FeedDbSchema } from "../@session/feed/schema/FeedDbSchema";
+import type { GalleryDbSchema } from "../@session/gallery/schema/GalleryDbSchema";
+import type { ListingDbSchema } from "../@session/listing/schema/ListingDbSchema";
+import type { LocationDbSchema } from "../@session/location/schema/LocationDbSchema";
+import type { UploadDbSchema } from "../@session/upload/schema/UploadDbSchema";
+import type { UserExDbSchema } from "../@session/user-ex/schema/UserExDbSchema";
 import type { auth } from "../auth/auth";
-import type { CategoryMissSchema } from "../category/schema/CategoryMissSchema";
-import type { CategorySchema } from "../category/schema/CategorySchema";
-import type { CategorySpotlightSchema } from "../category/schema/CategorySpotlightSchema";
-import type { FeedSchema } from "../feed/schema/FeedSchema";
-import type { GallerySchema } from "../gallery/schema/GallerySchema";
-import type { ListingSchema } from "../listing/schema/ListingSchema";
-import type { LocationSchema } from "../location/schema/LocationSchema";
-import type { UploadSchema } from "../upload/schema/UploadSchema";
-import type { UserExSchema } from "../user-ex/schema/UserExSchema";
 
 export interface Database {
-	category: CategorySchema.Type;
-	category_miss: CategoryMissSchema.Type;
-	category_spotlight: CategorySpotlightSchema.Type;
-	feed: FeedSchema.Type;
-	listing: ListingSchema.Type;
-	location: LocationSchema.Type;
-	gallery: GallerySchema.Type;
-	upload: UploadSchema.Type;
+	category: CategoryDbSchema.Type;
+	category_miss: CategoryMissDbSchema.Type;
+	category_spotlight: CategorySpotlightDbSchema.Type;
+	feed: FeedDbSchema.Type;
+	listing: ListingDbSchema.Type;
+	location: LocationDbSchema.Type;
+	gallery: GalleryDbSchema.Type;
+	upload: UploadDbSchema.Type;
 	user: typeof auth.$Infer.Session.user;
-	user_ex: UserExSchema.Type;
+	user_ex: UserExDbSchema.Type;
 }

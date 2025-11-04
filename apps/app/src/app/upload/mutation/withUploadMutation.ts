@@ -1,11 +1,6 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { genId } from "@use-pico/common/gen-id";
-import {
-	apiS3Presign,
-	apiUploadCreate,
-	type tAllowedContentTypes,
-	type tAllowedExtensions,
-} from "@zbav-se.me/sdk";
+import {} from "@zbav-se.me/sdk/session";
 import axios from "axios";
 
 export namespace withUploadMutation {
