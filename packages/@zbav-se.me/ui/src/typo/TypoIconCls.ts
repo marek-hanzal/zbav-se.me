@@ -1,5 +1,5 @@
 import { type Cls, contract } from "@use-pico/cls";
-import { ThemeCls } from "../theme/ThemeCls";
+import { ThemeCls } from "../cls/ThemeCls";
 
 export const TypoIconCls = contract(ThemeCls.contract)
 	.slots([

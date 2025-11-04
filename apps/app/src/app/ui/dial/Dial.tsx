@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
-import { BackspaceIcon, ClearIcon } from "@zbav-se.me/ui";
+import { BackspaceIcon, ClearIcon } from "@zbav-se.me/ui/icon";
 import type { FC, RefObject } from "react";
 import { Item } from "~/app/ui/dial/Item";
 

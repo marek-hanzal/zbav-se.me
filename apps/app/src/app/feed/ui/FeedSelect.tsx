@@ -8,7 +8,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeedDto } from "@zbav-se.me/sdk";
-import { FeedIcon } from "@zbav-se.me/ui";
+import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { withFeedDeleteMutation } from "~/app/feed/mutation/withFeedDeleteMutation";
 import { withListingCountQuery } from "~/app/listing/query/withListingCountQuery";

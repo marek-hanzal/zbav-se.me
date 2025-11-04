@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Status } from "@use-pico/client/ui/status";
-import { Sheet } from "@zbav-se.me/ui";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 
 export const Route = createFileRoute("/$locale/privacy")({
 	component() {

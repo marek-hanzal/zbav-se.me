@@ -6,7 +6,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc, VariantProvider } from "@use-pico/cls";
 import type { tGalleryDto, tListingDto } from "@zbav-se.me/sdk";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { type FC, memo } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";

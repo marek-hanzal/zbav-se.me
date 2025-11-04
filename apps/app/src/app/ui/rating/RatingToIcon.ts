@@ -5,7 +5,7 @@ import {
 	LetterDIcon,
 	LetterEIcon,
 	LetterFIcon,
-} from "@zbav-se.me/ui";
+} from "@zbav-se.me/ui/icon";
 
 export const RatingToIcon = {
 	1: LetterFIcon,

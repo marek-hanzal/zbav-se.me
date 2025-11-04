@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { Sheet } from "@zbav-se.me/ui";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import { withListingFetchQuery } from "~/app/listing/query/withListingFetchQuery";
 import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 

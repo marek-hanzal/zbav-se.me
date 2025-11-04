@@ -12,7 +12,7 @@ import {
 	tListingExpire,
 	type tUploadDto,
 } from "@zbav-se.me/sdk";
-import { Sheet } from "@zbav-se.me/ui";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import axios from "axios";
 import PQueue from "p-queue";
 import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";

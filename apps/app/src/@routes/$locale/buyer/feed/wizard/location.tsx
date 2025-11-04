@@ -6,7 +6,7 @@ import {
 } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { TitleContainer } from "@zbav-se.me/ui";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import { LocationSelection } from "~/app/location/ui/LocationSelection";

@@ -2,7 +2,7 @@ import type { Icon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { VariantProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 
 export namespace Tile {

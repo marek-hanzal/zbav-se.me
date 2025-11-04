@@ -1,6 +1,6 @@
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
-import { Sheet } from "@zbav-se.me/ui";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
 export const ContactSheet: FC = () => {

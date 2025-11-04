@@ -1,7 +1,10 @@
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
-import { CheckIcon, Sheet, ThemeCls, TypoIcon } from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { CheckIcon } from "@zbav-se.me/ui/icon";
+import { Sheet } from "@zbav-se.me/ui/sheet";
+import { TypoIcon } from "@zbav-se.me/ui/typo";
 import type { FC } from "react";
 
 export const FeaturesSheet: FC = () => {

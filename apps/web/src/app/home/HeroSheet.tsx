@@ -5,7 +5,9 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo, type LinkToCls } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { type Cls, tvc } from "@use-pico/cls";
-import { Logo, Sheet, UnlockIcon } from "@zbav-se.me/ui";
+import { UnlockIcon } from "@zbav-se.me/ui/icon";
+import { Logo } from "@zbav-se.me/ui/logo";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
 export const HeroSheet: FC = () => {

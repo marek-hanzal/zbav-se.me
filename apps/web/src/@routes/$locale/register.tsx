@@ -12,13 +12,11 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { linkTo } from "@use-pico/common/link-to";
 import { translator } from "@use-pico/common/translator";
-import {
-	CheckIcon,
-	Fade,
-	PrimaryOverlay,
-	Sheet,
-	ThemeCls,
-} from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { Fade } from "@zbav-se.me/ui/fade";
+import { CheckIcon } from "@zbav-se.me/ui/icon";
+import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import { useRef } from "react";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";

@@ -1,4 +1,4 @@
-import { anim, useAnim } from "@zbav-se.me/ui";
+import { anim, useAnim } from "@zbav-se.me/ui/gsap";
 import type { RefObject } from "react";
 
 export const useEnterAnim = (rootRef: RefObject<HTMLElement | null>) => {

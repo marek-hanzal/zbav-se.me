@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { tvc } from "@use-pico/cls";
-import { Sheet } from "@zbav-se.me/ui";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
 export const CtaSheet: FC = () => {

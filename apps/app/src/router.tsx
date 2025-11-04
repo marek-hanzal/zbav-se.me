@@ -2,7 +2,9 @@ import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@use-pico/client/ui/container";
-import { Logo, PrimaryOverlay, Sheet } from "@zbav-se.me/ui";
+import { Logo } from "@zbav-se.me/ui/logo";
+import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import { routeTree } from "~/_route";
 
 export async function getRouter() {

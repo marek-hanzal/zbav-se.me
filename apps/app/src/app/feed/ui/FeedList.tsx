@@ -5,7 +5,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeedQuery } from "@zbav-se.me/sdk";
-import { FeedIcon } from "@zbav-se.me/ui";
+import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useId } from "react";
 import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
 import { withFeedCountQuery } from "~/app/feed/query/withFeedCountQuery";

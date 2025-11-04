@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { useCls, VariantProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 
 export const Route = createFileRoute("/cs/tos")({
 	component() {

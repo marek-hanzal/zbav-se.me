@@ -1,6 +1,6 @@
 import { Typo } from "@use-pico/client/ui/typo";
 import { useCls } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";

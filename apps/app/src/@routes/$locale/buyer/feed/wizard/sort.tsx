@@ -10,7 +10,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tListingSort } from "@zbav-se.me/sdk";
-import { TitleContainer } from "@zbav-se.me/ui";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useId, useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 

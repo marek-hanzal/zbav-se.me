@@ -1,5 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
-import { Fade, Sheet } from "@zbav-se.me/ui";
+import { Fade } from "@zbav-se.me/ui/fade";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import { type FC, useRef } from "react";
 import { Markdown } from "~/app/ui/Markdown";
 

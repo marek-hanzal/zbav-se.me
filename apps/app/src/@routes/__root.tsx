@@ -9,7 +9,7 @@ import {
 import { PicoCls } from "@use-pico/client/cls";
 import { Container } from "@use-pico/client/ui/container";
 import { TokenProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { authClient } from "~/app/auth/authClient";
 import styles from "~/assets/style.css?url";
 
