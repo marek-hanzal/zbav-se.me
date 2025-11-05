@@ -3,7 +3,6 @@ import z from "zod";
 
 export const FeedWizardSchema = z.object({
 	...zFeedCreate.partial().shape,
-	locationId: z.string().nullish(),
 	id: z.string().optional(),
 });
 

@@ -208,6 +208,41 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							/>
 						</LinkTo>
 
+						<LinkTo
+							to={"/$locale/buyer/feed/wizard/description-tags"}
+							params={{
+								locale,
+							}}
+							search={state}
+							display={"block"}
+							full
+						>
+							<BadgeValue
+								textLabel={"Feed description (label)"}
+								textValue={
+									state.filter?.description ||
+									"Feed description not filled"
+								}
+							/>
+						</LinkTo>
+
+						<LinkTo
+							to={"/$locale/buyer/feed/wizard/description-tags"}
+							params={{
+								locale,
+							}}
+							search={state}
+							display={"block"}
+							full
+						>
+							<BadgeValue
+								textLabel={"Feed tags (label)"}
+								textValue={
+									state.filter?.tags || "Feed tags not filled"
+								}
+							/>
+						</LinkTo>
+
 						<Data
 							result={locationFetchQuery}
 							renderSuccess={({ data }) => (
@@ -243,7 +278,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 								</LinkTo>
 							)}
 						/>
-
 						<Container height={"auto"}>
 							<LinkTo
 								to={"/$locale/buyer/feed/wizard/sort"}
@@ -271,7 +305,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 								/>
 							</LinkTo>
 						</Container>
-
 						<Data
 							result={categoryCollectionQuery}
 							renderSuccess={({ data }) => (
@@ -339,7 +372,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 								</Container>
 							)}
 						/>
-
 						<Container height={"auto"}>
 							<LinkTo
 								to={"/$locale/buyer/feed/wizard/condition"}

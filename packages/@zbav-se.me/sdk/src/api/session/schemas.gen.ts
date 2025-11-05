@@ -444,12 +444,10 @@ export const sListingWhere = {
             minimum: 0
         },
         description: {
-            type: ['string', 'null'],
-            minLength: 1
+            type: ['string', 'null']
         },
         tags: {
-            type: ['string', 'null'],
-            minLength: 1
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -567,12 +565,10 @@ export const sListingFilter = {
             minimum: 0
         },
         description: {
-            type: ['string', 'null'],
-            minLength: 1
+            type: ['string', 'null']
         },
         tags: {
-            type: ['string', 'null'],
-            minLength: 1
+            type: ['string', 'null']
         }
     }
 } as const;
@@ -854,7 +850,7 @@ export const sListingCreate = {
         },
         tags: {
             type: ['string', 'null'],
-            maxLength: 32
+            maxLength: 42
         },
         uploadIds: {
             type: 'array',

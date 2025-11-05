@@ -498,11 +498,11 @@ export const zListingWhere = z.object({
         z.null()
     ])),
     description: z.optional(z.union([
-        z.string().min(1),
+        z.string(),
         z.null()
     ])),
     tags: z.optional(z.union([
-        z.string().min(1),
+        z.string(),
         z.null()
     ]))
 }).register(z.globalRegistry, {
@@ -566,11 +566,11 @@ export const zListingFilter = z.object({
         z.null()
     ])),
     description: z.optional(z.union([
-        z.string().min(1),
+        z.string(),
         z.null()
     ])),
     tags: z.optional(z.union([
-        z.string().min(1),
+        z.string(),
         z.null()
     ]))
 }).register(z.globalRegistry, {
@@ -874,7 +874,7 @@ export const zListingCreate = z.object({
         z.null()
     ])),
     tags: z.optional(z.union([
-        z.string().max(32),
+        z.string().max(42),
         z.null()
     ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {

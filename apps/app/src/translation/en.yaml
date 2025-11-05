@@ -145,6 +145,9 @@
 710b682ea576decc640d142b398a04cfb28558a0f3c86456ed08daf2:
   ref: Edit (link)
   value: Edit (link)
+76edbc66d6687e7c3191aa736b4fd0533617efed5c3f944157b09b1c:
+  ref: Feed description & tags (hint)
+  value: Feed description & tags (hint)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
@@ -181,6 +184,9 @@
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
   ref: Listing - upload photo (placeholder)
   value: Listing - upload photo (placeholder)
+8cde5f249966541b5d7ee11ccc6d366863185a35892810df779c2ca3:
+  ref: Feed description & tags (title)
+  value: Feed description & tags (title)
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
   ref: Feed location (label)
   value: Feed location (label)
@@ -208,6 +214,9 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
+a234ff52a2018f4d5ccd6ae25cfe559a4ecae96fae54a6fde63c7884:
+  ref: Feed tags (label)
+  value: Feed tags (label)
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
   ref: Invalid data provided (message)
   value: Invalid data provided (message)
@@ -229,6 +238,9 @@ adf2aa857314fdeb3999fc88ca3b16372a4af1a07a6c3b32f1b82e3a:
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
   ref: Listing expire at (label)
   value: Listing expire at (label)
+b19c0ffca88175a2eb6d3f1291141d5d0a67d0b93025333e77bbc1cf:
+  ref: Feed description & Tags (title)
+  value: Feed description & Tags (title)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
@@ -261,6 +273,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c22fcd8917975e5446e683507b54d7c9bdfe22211b1c4634a2072528:
+  ref: Next - Feed description & tags (button)
+  value: Next - Feed description & tags (button)
 c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
   ref: That's all for now (title)
   value: That's all for now (title)
@@ -282,12 +297,18 @@ cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
 cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
   ref: I want to buy (label)
   value: I want to buy (label)
+d228d5bb6534e78dd04255b7fd080b6894f2bb02654c6245b4dab3cf:
+  ref: Feed description (label)
+  value: Feed description (label)
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
   ref: Location not found (badge)
   value: Location not found (badge)
 d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
   ref: Next - expire (button)
   value: Next - expire (button)
+d3254b0bf1bd84e03bd1501a3192ae95c25361e1105115a67f9c9314:
+  ref: Feed tags not filled
+  value: Feed tags not filled
 d4f509fe5ad8f37a110f5d92ab84e5eeffdb6d538f97ef421cb69b54:
   ref: Listing description & tags (label)
   value: Listing description & tags (label)
@@ -333,6 +354,9 @@ f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
 f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
   ref: Feed submit (title)
   value: Feed submit (title)
+f2742e34c7255ce89b95ef5d42eb7646e6baf1dec4a6ba4fe4328034:
+  ref: Feed description not filled
+  value: Feed description not filled
 f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
   ref: No listings found (label)
   value: No listings found (label)
