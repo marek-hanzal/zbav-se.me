@@ -11,15 +11,15 @@
 	},
 	"devDependencies": {
 		"@hey-api/openapi-ts": "0.87.0",
-		"@types/node": "^24.10.0",
+		"@types/node": "24.10.0",
 		"@use-pico/tsconfig": "5.0.0",
-		"typescript": "^5.9.3",
+		"typescript": "5.9.3",
 		"vite": "7.1.12"
 	},
 	"exports": {
-		"./*": {
-			"import": "./src/*/index.ts",
-			"require": "./src/*/index.ts"
+		"./sdk/*": {
+			"import": "./src/sdk/*/index.ts",
+			"require": "./src/sdk/*/index.ts"
 		}
 	}
 }

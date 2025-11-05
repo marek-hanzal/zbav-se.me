@@ -4,7 +4,7 @@ export default defineConfig([
 	{
 		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
 		output: {
-			path: "src/session",
+			path: "src/sdk/session",
 			format: "biome",
 			lint: "biome",
 		},
@@ -95,7 +95,7 @@ export default defineConfig([
 	{
 		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
 		output: {
-			path: "src/public",
+			path: "src/sdk/public",
 			format: "biome",
 			lint: "biome",
 		},

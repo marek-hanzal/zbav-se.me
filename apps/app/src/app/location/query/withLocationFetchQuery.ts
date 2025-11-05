@@ -1,11 +1,14 @@
 import { withQuery } from "@use-pico/client/query";
 import {
 	apiLocationFetch,
-	type tLocationDto,
+	type tApiLocationFetchResponse,
 	type tLocationQuery,
-} from "@zbav-se.me/sdk";
+} from "@zbav-se.me/sdk/session";
 
-export const withLocationFetchQuery = withQuery<tLocationQuery, tLocationDto>({
+export const withLocationFetchQuery = withQuery<
+	tLocationQuery,
+	tApiLocationFetchResponse[200]
+>({
 	keys(data) {
 		return [
 			"location",
