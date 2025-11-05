@@ -339,6 +339,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
     ref: Create first feed (title)
     value: Vytvoř si své nabídky!
+b835e337ebbaf775a40da6e6c5e1b1cb2023984385c1783aa0c448d2:
+    ref: Description & tags (optional)
+    value: Obojí je nepovinné, ale znatelně ti pomůže zviditelnit inzerát.
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty
@@ -437,7 +440,9 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     value: Zpět domů
 fd24d85ad7a2f0f0d2b896163a267a22ddf4a96e3304a6e7e5ab9ab6:
     ref: Description & tags (hint)
-    value: Klíčová slova ti pomůžou snáz inzerát rozeslat zájemcům. Drž se při zemi a moc to nepřeháněj.
+    value:
+        Klíčová slova ti pomůžou snáz inzerát rozeslat zájemcům. Drž se při zemi
+        a moc to nepřeháněj.
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
     ref: Bag (label)
     value: Co mě zaujalo

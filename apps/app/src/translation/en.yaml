@@ -244,6 +244,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
   ref: Create first feed (title)
   value: Create first feed (title)
+b835e337ebbaf775a40da6e6c5e1b1cb2023984385c1783aa0c448d2:
+  ref: Description & tags (optional)
+  value: Description & tags (optional)
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)

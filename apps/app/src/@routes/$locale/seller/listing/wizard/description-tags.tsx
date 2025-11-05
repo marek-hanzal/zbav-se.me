@@ -10,6 +10,7 @@ import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
+import { Tx } from "@use-pico/client/ui/tx";
 import { sListingCreate } from "@zbav-se.me/sdk/api/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
@@ -115,6 +116,18 @@ export const Route = createFileRoute(
 								)}
 							</FormField>
 						}
+						tweak={{
+							slot: {
+								body: {
+									class: [
+										"flex",
+										"flex-col",
+										"gap-8",
+										"items-center",
+									],
+								},
+							},
+						}}
 					>
 						<FormField full>
 							{(props) => (
@@ -129,6 +142,14 @@ export const Route = createFileRoute(
 								/>
 							)}
 						</FormField>
+
+						<Tx
+							label={"Description & tags (optional)"}
+							size={"sm"}
+							tone={"secondary"}
+							display={"block"}
+							wrap={"wrap"}
+						/>
 					</Status>
 				</Container>
 			</TitleContainer>
