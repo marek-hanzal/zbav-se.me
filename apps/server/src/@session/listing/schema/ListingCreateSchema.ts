@@ -22,10 +22,10 @@ export const ListingCreateSchema = z
 		}),
 		currency: CurrencyListSchema,
 		expiresAt: ListingExpireSchema,
-		description: z.string().nullish().openapi({
+		description: z.string().max(42).nullish().openapi({
 			description: "Description of the item",
 		}),
-		tags: z.string().nullish().openapi({
+		tags: z.string().max(42).nullish().openapi({
 			description: "Tags for the item",
 		}),
 		uploadIds: z

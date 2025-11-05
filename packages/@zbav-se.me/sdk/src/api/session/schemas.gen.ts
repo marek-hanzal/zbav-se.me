@@ -849,10 +849,12 @@ export const sListingCreate = {
             '$ref': '#/components/schemas/ListingExpire'
         },
         description: {
-            type: ['string', 'null']
+            type: ['string', 'null'],
+            maxLength: 42
         },
         tags: {
-            type: ['string', 'null']
+            type: ['string', 'null'],
+            maxLength: 32
         },
         uploadIds: {
             type: 'array',

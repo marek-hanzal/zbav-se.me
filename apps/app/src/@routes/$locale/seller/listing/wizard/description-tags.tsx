@@ -10,7 +10,7 @@ import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { Tx } from "@use-pico/client/ui/tx";
+import { sListingCreate } from "@zbav-se.me/sdk/api/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -85,26 +85,17 @@ export const Route = createFileRoute(
 				}
 			>
 				<Container
-					layout={"vertical-flex"}
+					layout={"vertical-centered"}
+					items={"center"}
 					gap={"md"}
 					width={"fit"}
 					height={"auto"}
 				>
 					<Status
-						textTitle={"Description (title)"}
-						textMessage={"Description (hint)"}
+						textTitle={"Description & tags (title)"}
+						textMessage={"Description & tags (hint)"}
 						action={
-							<FormField
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"w-full",
-											],
-										},
-									},
-								}}
-							>
+							<FormField full>
 								{(props) => (
 									<TextInput
 										value={description}
@@ -115,54 +106,30 @@ export const Route = createFileRoute(
 											"Description (placeholder)"
 										}
 										autoFocus={!description}
-										{...props}
-									/>
-								)}
-							</FormField>
-						}
-					/>
-
-					<Status
-						textTitle={"Tags (title)"}
-						textMessage={"Tags (hint)"}
-						action={
-							<FormField
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"w-full",
-											],
-										},
-									},
-								}}
-							>
-								{(props) => (
-									<TextInput
-										value={tags}
-										onChange={(e) =>
-											setTags(e.target.value)
+										maxLength={
+											sListingCreate.properties
+												.description.maxLength
 										}
-										placeholder={"Tags (placeholder)"}
 										{...props}
 									/>
 								)}
 							</FormField>
 						}
-					/>
-
-					{(description || tags) && (
-						<Container
-							layout={"vertical-flex"}
-							gap={"sm"}
-							width={"fit"}
-						>
-							<Tx
-								label={"Optional fields (hint)"}
-								size={"sm"}
-							/>
-						</Container>
-					)}
+					>
+						<FormField full>
+							{(props) => (
+								<TextInput
+									value={tags}
+									onChange={(e) => setTags(e.target.value)}
+									placeholder={"Tags (placeholder)"}
+									maxLength={
+										sListingCreate.properties.tags.maxLength
+									}
+									{...props}
+								/>
+							)}
+						</FormField>
+					</Status>
 				</Container>
 			</TitleContainer>
 		);

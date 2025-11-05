@@ -82,7 +82,7 @@ export const Route = createFileRoute(
 							size={"lg"}
 							full
 							iconPosition={"right"}
-							label={"Next - vendor & model (button)"}
+							label={"Next - description & tags (button)"}
 							disabled={!expiresAt}
 						/>
 					</LinkTo>

@@ -870,11 +870,11 @@ export const zListingCreate = z.object({
     currency: zCurrencyList,
     expiresAt: zListingExpire,
     description: z.optional(z.union([
-        z.string(),
+        z.string().max(42),
         z.null()
     ])),
     tags: z.optional(z.union([
-        z.string(),
+        z.string().max(32),
         z.null()
     ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
