@@ -37,8 +37,8 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 
 		query = query.where((eb) =>
 			eb.or([
-				withLikeEx(eb.ref("l.vendor"), fulltext),
-				withLikeEx(eb.ref("l.model"), fulltext),
+				withLikeEx(eb.ref("l.description"), fulltext),
+				withLikeEx(eb.ref("l.tags"), fulltext),
 				withLikeEx(eb.ref("cat.category"), fulltext),
 				withLikeEx(eb.ref("cat.group"), fulltext),
 			]),
@@ -81,14 +81,14 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		query = query.where("l.categoryId", "in", where.categoryIdIn);
 	}
 
-	if (where.vendor) {
+	if (where.description) {
 		query = query.where((eb) =>
-			withLikeEx(eb.ref("l.vendor"), where.vendor),
+			withLikeEx(eb.ref("l.description"), where.description),
 		);
 	}
 
-	if (where.model) {
-		query = query.where((eb) => withLikeEx(eb.ref("l.model"), where.model));
+	if (where.tags) {
+		query = query.where((eb) => withLikeEx(eb.ref("l.tags"), where.tags));
 	}
 
 	return query;

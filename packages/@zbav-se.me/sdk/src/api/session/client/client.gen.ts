@@ -8,16 +8,16 @@ import type { HttpMethod } from '../core/types.gen';
 import { getValidRequestBody } from '../core/utils.gen';
 import type { Client, Config, RequestOptions } from './types.gen';
 import {
-    buildUrl,
-    createConfig,
-    mergeConfigs,
-    mergeHeaders,
-    setAuthParams,
+  buildUrl,
+  createConfig,
+  mergeConfigs,
+  mergeHeaders,
+  setAuthParams,
 } from './utils.gen';
 
 export const createClient = (config: Config = {}): Client => {
   let _config = mergeConfigs(createConfig(), config);
-    
+
   let instance: AxiosInstance;
 
   if (_config.axios && !('Axios' in _config.axios)) {

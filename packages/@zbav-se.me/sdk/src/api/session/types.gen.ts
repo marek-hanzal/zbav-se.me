@@ -380,13 +380,13 @@ export type tListingWhere = {
      */
     rangeMax?: number | null;
     /**
-     * This filter matches listings with vendor matching the provided value
+     * This filter matches listings with description matching the provided value
      */
-    vendor?: string | null;
+    description?: string | null;
     /**
-     * This filter matches listings with model matching the provided value
+     * This filter matches listings with tags matching the provided value
      */
-    model?: string | null;
+    tags?: string | null;
 };
 
 /**
@@ -491,13 +491,13 @@ export type tListingFilter = {
      */
     rangeMax?: number | null;
     /**
-     * This filter matches listings with vendor matching the provided value
+     * This filter matches listings with description matching the provided value
      */
-    vendor?: string | null;
+    description?: string | null;
     /**
-     * This filter matches listings with model matching the provided value
+     * This filter matches listings with tags matching the provided value
      */
-    model?: string | null;
+    tags?: string | null;
 };
 
 /**
@@ -712,13 +712,13 @@ export type tListing = {
      */
     updatedAt: string;
     /**
-     * Vendor/manufacturer of the item
+     * Description of the item
      */
-    vendor?: string | null;
+    description?: string | null;
     /**
-     * Model of the item
+     * Tags for the item
      */
-    model?: string | null;
+    tags?: string | null;
     location: tLocation;
     category: tCategory;
     /**
@@ -754,13 +754,13 @@ export type tListingCreate = {
     currency: tCurrencyList;
     expiresAt: tListingExpire;
     /**
-     * Vendor/manufacturer of the item
+     * Description of the item
      */
-    vendor?: string | null;
+    description?: string | null;
     /**
-     * Model of the item
+     * Tags for the item
      */
-    model?: string | null;
+    tags?: string | null;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */

@@ -41,7 +41,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/vendor-model"}
+						to={"/$locale/seller/listing/wizard/description-tags"}
 						search={state}
 						params={{
 							locale,
@@ -132,7 +132,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/vendor-model"}
+						to={"/$locale/seller/listing/wizard/description-tags"}
 						search={state}
 						params={{
 							locale,
@@ -328,7 +328,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 
 							<LinkTo
 								to={
-									"/$locale/seller/listing/wizard/vendor-model"
+									"/$locale/seller/listing/wizard/description-tags"
 								}
 								params={{
 									locale,
@@ -339,7 +339,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 							>
 								<Badge tweak={badgeTweak}>
 									<Tx
-										label={"Listing vendor & model (label)"}
+										label={
+											"Listing description & tags (label)"
+										}
 										preset={"label"}
 									/>
 
@@ -350,17 +352,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									>
 										<Tx
 											label={
-												state.vendor
-													? state.vendor
-													: "Vendor (placeholder)"
+												state.description
+													? state.description
+													: "Description (placeholder)"
 											}
 											size={"sm"}
 										/>
 										<Tx
 											label={
-												state.model
-													? state.model
-													: "Model (placeholder)"
+												state.tags
+													? state.tags
+													: "Tags (placeholder)"
 											}
 										/>
 									</div>

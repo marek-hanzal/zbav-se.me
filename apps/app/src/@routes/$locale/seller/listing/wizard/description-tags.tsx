@@ -16,20 +16,21 @@ import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
 export const Route = createFileRoute(
-	"/$locale/seller/listing/wizard/vendor-model",
+	"/$locale/seller/listing/wizard/description-tags",
 )({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [vendor, setVendor] = useState<string>(state.vendor || "");
-		const [model, setModel] = useState<string>(state.model || "");
+		const [description, setDescription] = useState<string>(
+			state.description || "",
+		);
+		const [tags, setTags] = useState<string>(state.tags || "");
 
 		return (
 			<TitleContainer
-				textTitle={"Vendor & Model (title)"}
-				textSubtitle={"Vendor & Model (subtitle)"}
+				textTitle={"Description & Tags (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -66,8 +67,8 @@ export const Route = createFileRoute(
 						}}
 						search={{
 							...state,
-							vendor,
-							model,
+							description,
+							tags,
 						}}
 						full
 					>
@@ -90,8 +91,8 @@ export const Route = createFileRoute(
 					height={"auto"}
 				>
 					<Status
-						textTitle={"Vendor (title)"}
-						textMessage={"Vendor (hint)"}
+						textTitle={"Description (title)"}
+						textMessage={"Description (hint)"}
 						action={
 							<FormField
 								tweak={{
@@ -106,12 +107,14 @@ export const Route = createFileRoute(
 							>
 								{(props) => (
 									<TextInput
-										value={vendor}
+										value={description}
 										onChange={(e) =>
-											setVendor(e.target.value)
+											setDescription(e.target.value)
 										}
-										placeholder={"Vendor (placeholder)"}
-										autoFocus={!vendor}
+										placeholder={
+											"Description (placeholder)"
+										}
+										autoFocus={!description}
 										{...props}
 									/>
 								)}
@@ -120,8 +123,8 @@ export const Route = createFileRoute(
 					/>
 
 					<Status
-						textTitle={"Model (title)"}
-						textMessage={"Model (hint)"}
+						textTitle={"Tags (title)"}
+						textMessage={"Tags (hint)"}
 						action={
 							<FormField
 								tweak={{
@@ -136,11 +139,11 @@ export const Route = createFileRoute(
 							>
 								{(props) => (
 									<TextInput
-										value={model}
+										value={tags}
 										onChange={(e) =>
-											setModel(e.target.value)
+											setTags(e.target.value)
 										}
-										placeholder={"Model (placeholder)"}
+										placeholder={"Tags (placeholder)"}
 										{...props}
 									/>
 								)}
@@ -148,7 +151,7 @@ export const Route = createFileRoute(
 						}
 					/>
 
-					{(vendor || model) && (
+					{(description || tags) && (
 						<Container
 							layout={"vertical-flex"}
 							gap={"sm"}

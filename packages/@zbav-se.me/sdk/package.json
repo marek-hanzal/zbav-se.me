@@ -7,7 +7,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@use-pico/client": "5.0.251",
+		"@use-pico/client": "5.0.252",
 		"@use-pico/common": "5.0.100",
 		"@use-pico/server": "5.0.105",
 		"axios": "1.13.2",

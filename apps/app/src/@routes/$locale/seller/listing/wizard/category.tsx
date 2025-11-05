@@ -201,10 +201,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 								return (
 									<Container
 										ref={containerRef}
+										layout={"vertical-flex"}
 										scroll={"vertical"}
-										layout={"vertical"}
 										gap={"md"}
-										height={"fit"}
 									>
 										{data.data.map((item) => {
 											return (

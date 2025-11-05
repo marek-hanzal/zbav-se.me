@@ -497,11 +497,11 @@ export const zListingWhere = z.object({
         z.number().gte(0),
         z.null()
     ])),
-    vendor: z.optional(z.union([
+    description: z.optional(z.union([
         z.string().min(1),
         z.null()
     ])),
-    model: z.optional(z.union([
+    tags: z.optional(z.union([
         z.string().min(1),
         z.null()
     ]))
@@ -565,11 +565,11 @@ export const zListingFilter = z.object({
         z.number().gte(0),
         z.null()
     ])),
-    vendor: z.optional(z.union([
+    description: z.optional(z.union([
         z.string().min(1),
         z.null()
     ])),
-    model: z.optional(z.union([
+    tags: z.optional(z.union([
         z.string().min(1),
         z.null()
     ]))
@@ -804,11 +804,11 @@ export const zListing = z.object({
     updatedAt: z.string().register(z.globalRegistry, {
         description: 'Last update timestamp'
     }),
-    vendor: z.optional(z.union([
+    description: z.optional(z.union([
         z.string(),
         z.null()
     ])),
-    model: z.optional(z.union([
+    tags: z.optional(z.union([
         z.string(),
         z.null()
     ])),
@@ -869,11 +869,11 @@ export const zListingCreate = z.object({
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
-    vendor: z.optional(z.union([
+    description: z.optional(z.union([
         z.string(),
         z.null()
     ])),
-    model: z.optional(z.union([
+    tags: z.optional(z.union([
         z.string(),
         z.null()
     ])),

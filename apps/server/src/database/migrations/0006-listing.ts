@@ -13,8 +13,8 @@ export const ListingMigration: Migration = {
 			.addColumn("age", "integer", (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
-			.addColumn("vendor", "text")
-			.addColumn("model", "text")
+			.addColumn("description", "text")
+			.addColumn("tags", "text")
 			//
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
@@ -89,28 +89,28 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_[vendor]_idx")
+			.createIndex("listing_[description]_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(vendor)) text_pattern_ops`)
-			.where(() => sql`vendor IS NOT NULL`)
+			.expression(sql`(lower(description)) text_pattern_ops`)
+			.where(() => sql`description IS NOT NULL`)
 			.execute();
 
 		await db.schema
-			.createIndex("listing_[model]_idx")
+			.createIndex("listing_[tags]_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(model)) text_pattern_ops`)
-			.where(() => sql`model IS NOT NULL`)
+			.expression(sql`(lower(tags)) text_pattern_ops`)
+			.where(() => sql`tags IS NOT NULL`)
 			.execute();
 
 		await db.schema
-			.createIndex("listing_[vendor-model]_idx")
+			.createIndex("listing_[description-tags]_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(vendor)) text_pattern_ops`)
-			.expression(sql`(lower(model)) text_pattern_ops`)
-			.where(() => sql`vendor IS NOT NULL AND model IS NOT NULL`)
+			.expression(sql`(lower(description)) text_pattern_ops`)
+			.expression(sql`(lower(tags)) text_pattern_ops`)
+			.where(() => sql`description IS NOT NULL AND tags IS NOT NULL`)
 			.execute();
 	},
 };

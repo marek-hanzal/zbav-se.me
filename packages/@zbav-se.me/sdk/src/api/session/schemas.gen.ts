@@ -443,11 +443,11 @@ export const sListingWhere = {
             type: ['number', 'null'],
             minimum: 0
         },
-        vendor: {
+        description: {
             type: ['string', 'null'],
             minLength: 1
         },
-        model: {
+        tags: {
             type: ['string', 'null'],
             minLength: 1
         }
@@ -566,11 +566,11 @@ export const sListingFilter = {
             type: ['number', 'null'],
             minimum: 0
         },
-        vendor: {
+        description: {
             type: ['string', 'null'],
             minLength: 1
         },
-        model: {
+        tags: {
             type: ['string', 'null'],
             minLength: 1
         }
@@ -802,10 +802,10 @@ export const sListing = {
         updatedAt: {
             type: 'string'
         },
-        vendor: {
+        description: {
             type: ['string', 'null']
         },
-        model: {
+        tags: {
             type: ['string', 'null']
         },
         location: {
@@ -848,10 +848,10 @@ export const sListingCreate = {
         expiresAt: {
             '$ref': '#/components/schemas/ListingExpire'
         },
-        vendor: {
+        description: {
             type: ['string', 'null']
         },
-        model: {
+        tags: {
             type: ['string', 'null']
         },
         uploadIds: {
