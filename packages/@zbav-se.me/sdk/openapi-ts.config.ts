@@ -64,6 +64,7 @@ export default defineConfig([
 			{
 				name: "@hey-api/typescript",
 				validator: true,
+				baseUrl: false,
 				case: "camelCase",
 				requests: {
 					name: "t{{name}}Request",
@@ -155,6 +156,7 @@ export default defineConfig([
 			{
 				name: "@hey-api/typescript",
 				validator: true,
+				baseUrl: false,
 				case: "camelCase",
 				requests: {
 					name: "t{{name}}Request",
