@@ -9,15 +9,19 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
-import type { tFeedCreate, tFeedPatch } from "@zbav-se.me/sdk";
+import type { tFeedCreate, tFeedPatch } from "@zbav-se.me/sdk/api/session";
+import {
+	withFeedCreateMutation,
+	withFeedPatchMutation,
+} from "@zbav-se.me/sdk/mutation";
+import {
+	withCategoryCollectionQuery,
+	withLocationFetchQuery,
+} from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
-import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
-import { withFeedCreateMutation } from "~/app/feed/mutation/withFeedCreateMutation";
-import { withFeedPatchMutation } from "~/app/feed/mutation/withFeedPatchMutation";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
-import { withLocationFetchQuery } from "~/app/location/query/withLocationFetchQuery";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 	validateSearch: FeedWizardSchema,

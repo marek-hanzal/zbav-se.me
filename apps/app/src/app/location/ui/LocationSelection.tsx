@@ -4,10 +4,10 @@ import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tLocationDto } from "@zbav-se.me/sdk";
+import type { tLocation } from "@zbav-se.me/sdk/api/session";
+import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { type FC, type RefObject, useState } from "react";
-import { withLocationAutocompleteQuery } from "~/app/location/query/withLocationAutocompleteQuery";
 
 export namespace LocationSelection {
 	export interface Props {
@@ -15,7 +15,7 @@ export namespace LocationSelection {
 		locale: string;
 		value: string | undefined | null;
 		onChange(value: string): void;
-		onLocation?(value: tLocationDto): void;
+		onLocation?(value: tLocation): void;
 		textHint?: string;
 	}
 }

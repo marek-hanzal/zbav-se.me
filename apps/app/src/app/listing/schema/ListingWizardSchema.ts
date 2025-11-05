@@ -1,4 +1,4 @@
-import { zListingCreate } from "@zbav-se.me/sdk";
+import { zListingCreate } from "@zbav-se.me/sdk/api/session";
 import z from "zod";
 
 export const ListingWizardSchema = z.object({

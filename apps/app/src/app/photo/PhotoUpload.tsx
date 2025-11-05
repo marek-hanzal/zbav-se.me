@@ -3,6 +3,8 @@ import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
+import { withUploadMutation } from "@zbav-se.me/sdk/mutation";
+import { withUploadFetchQuery } from "@zbav-se.me/sdk/query";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import {
@@ -13,8 +15,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";
-import { withUploadFetchQuery } from "~/app/upload/query/withUploadFetchQuery";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;

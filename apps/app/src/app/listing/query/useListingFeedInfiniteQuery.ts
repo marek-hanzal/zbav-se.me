@@ -3,8 +3,7 @@ import {
 	apiListingFeedCollection,
 	type apiListingFeedCollectionError,
 	type tListingCollection,
-} from "@zbav-se.me/sdk";
-
+} from "@zbav-se.me/sdk/api/session";
 export namespace useListingFeedInfiniteQuery {
 	export interface Props {
 		feedId: string;

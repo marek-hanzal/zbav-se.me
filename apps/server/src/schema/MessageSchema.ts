@@ -6,7 +6,7 @@ export const MessageSchema = z
 		message: z.string().openapi({
 			description: "Message",
 		}),
-		type: MessageTypeSchema.default("info"),
+		type: MessageTypeSchema,
 	})
 	.openapi("Message", {
 		description: "General status message",

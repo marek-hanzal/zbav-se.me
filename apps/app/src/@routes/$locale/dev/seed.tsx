@@ -10,12 +10,12 @@ import {
 	apiLocationAutocomplete,
 	tCurrencyList,
 	tListingExpire,
-	type tUploadDto,
-} from "@zbav-se.me/sdk";
+	type tUpload,
+} from "@zbav-se.me/sdk/api/session";
+import { withUploadMutation } from "@zbav-se.me/sdk/mutation";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import axios from "axios";
 import PQueue from "p-queue";
-import { withUploadMutation } from "~/app/upload/mutation/withUploadMutation";
 
 function range(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -122,7 +122,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					concurrency,
 				});
 
-				const uploadIds = await Promise.all<tUploadDto>(
+				const uploadIds = await Promise.all<tUpload>(
 					new Array(photos).fill(0).map(() =>
 						uploadQueue.add(async () => {
 							const blob = await picsum();

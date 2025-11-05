@@ -1,6 +1,9 @@
 import { type InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
-import type { tLatLon } from "@zbav-se.me/sdk";
-import { apiListingCollection, type tListingCollection } from "@zbav-se.me/sdk";
+import type { tLatLon } from "@zbav-se.me/sdk/api/session";
+import {
+	apiListingCollection,
+	type tListingCollection,
+} from "@zbav-se.me/sdk/api/session";
 
 export namespace useListingInfiniteQuery {
 	export interface Props {

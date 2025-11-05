@@ -5,7 +5,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc, VariantProvider } from "@use-pico/cls";
-import type { tGalleryDto, tListingDto } from "@zbav-se.me/sdk";
+import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { type FC, memo } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
@@ -13,7 +13,7 @@ import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace ListingPreview {
 	export interface Props {
-		listing: tListingDto;
+		listing: tListing;
 		locale: string;
 	}
 }
@@ -21,8 +21,8 @@ export namespace ListingPreview {
 export const ListingPreview: FC<ListingPreview.Props> = memo(
 	({ locale, listing }) => {
 		const [hero] = listing.gallery as [
-			tGalleryDto,
-			...tGalleryDto[],
+			tGallery,
+			...tGallery[],
 		];
 
 		return (

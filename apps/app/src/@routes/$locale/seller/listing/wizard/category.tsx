@@ -13,19 +13,19 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { EntitySchema } from "@use-pico/common/schema";
-import type { tCategoryDto } from "@zbav-se.me/sdk";
+import type { tCategory } from "@zbav-se.me/sdk/api/session";
+import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query";
 import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { useEffect, useRef, useState } from "react";
-import { withCategoryCollectionQuery } from "~/app/category/query/withCategoryCollectionQuery";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace CategoryItem {
 	export interface Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
-		item: tCategoryDto;
+		item: tCategory;
 	}
 }
 

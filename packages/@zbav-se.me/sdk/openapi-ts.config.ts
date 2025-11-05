@@ -4,7 +4,7 @@ export default defineConfig([
 	{
 		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
 		output: {
-			path: "src/sdk/session",
+			path: "src/api/session",
 			format: "biome",
 			lint: "biome",
 		},
@@ -19,7 +19,7 @@ export default defineConfig([
 		},
 		plugins: [
 			{
-				name: "@hey-api/client-fetch",
+				name: "@hey-api/client-axios",
 				exportFromIndex: true,
 				baseUrl: false,
 				runtimeConfigPath: "../session.client.config",
@@ -95,7 +95,7 @@ export default defineConfig([
 	{
 		input: `${process.env.VITE_SERVER_API}/v3/api-docs`,
 		output: {
-			path: "src/sdk/public",
+			path: "src/api/public",
 			format: "biome",
 			lint: "biome",
 		},
@@ -110,7 +110,7 @@ export default defineConfig([
 		},
 		plugins: [
 			{
-				name: "@hey-api/client-fetch",
+				name: "@hey-api/client-axios",
 				exportFromIndex: true,
 				baseUrl: false,
 				runtimeConfigPath: "../public.client.config",

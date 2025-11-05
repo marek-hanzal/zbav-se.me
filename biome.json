@@ -15,7 +15,7 @@
 			"!**/.nitro",
 			"!**/.vercel",
 			"!**/.tanstack",
-			"!**/sdk/src"
+			"!**/sdk/src/api"
 		]
 	},
 	"formatter": {

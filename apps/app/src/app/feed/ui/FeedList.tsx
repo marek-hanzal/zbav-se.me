@@ -4,11 +4,13 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tFeedQuery } from "@zbav-se.me/sdk";
+import type { tFeedQuery } from "@zbav-se.me/sdk/api/session";
+import {
+	withFeedCollectionQuery,
+	withFeedCountQuery,
+} from "@zbav-se.me/sdk/query";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useId } from "react";
-import { withFeedCollectionQuery } from "~/app/feed/query/withFeedCollectionQuery";
-import { withFeedCountQuery } from "~/app/feed/query/withFeedCountQuery";
 import { FeedItem } from "~/app/feed/ui/FeedItem";
 
 export namespace FeedList {

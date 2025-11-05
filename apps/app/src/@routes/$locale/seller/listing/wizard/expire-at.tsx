@@ -10,7 +10,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
-import { tListingExpire } from "@zbav-se.me/sdk";
+import { tListingExpire } from "@zbav-se.me/sdk/api/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { DateTime } from "luxon";

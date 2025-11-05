@@ -5,14 +5,14 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tFeedDto } from "@zbav-se.me/sdk";
+import type { tFeed } from "@zbav-se.me/sdk/api/session";
+import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation";
+import { withListingCountQuery } from "@zbav-se.me/sdk/query";
 import type { FC } from "react";
-import { withFeedDeleteMutation } from "~/app/feed/mutation/withFeedDeleteMutation";
-import { withListingCountQuery } from "~/app/listing/query/withListingCountQuery";
 
 export namespace FeedItem {
 	export interface Props {
-		feed: tFeedDto;
+		feed: tFeed;
 		locale: string;
 	}
 }
