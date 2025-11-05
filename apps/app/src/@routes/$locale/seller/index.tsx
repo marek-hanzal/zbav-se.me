@@ -1,8 +1,4 @@
-import {
-	createFileRoute,
-	useNavigate,
-	useRouter,
-} from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import {
 	ArrowLeftIcon,
 	Icon,
@@ -19,14 +15,11 @@ import { Tile } from "~/app/ui/dashboard/Tile";
 export const Route = createFileRoute("/$locale/seller/")({
 	component() {
 		const { locale } = Route.useParams();
-		const navigate = useNavigate();
 		const router = useRouter();
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
-				await router.invalidate({
-					sync: true,
-				});
-				await navigate({
+				router.invalidate();
+				await router.navigate({
 					to: "/$locale/dashboard",
 					params: {
 						locale,
