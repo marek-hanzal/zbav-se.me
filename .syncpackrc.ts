@@ -33,7 +33,7 @@ export default {
 	],
 	semverGroups: [
 		{
-			range: "^",
+			range: "",
 		},
 	],
 } satisfies RcFile;
