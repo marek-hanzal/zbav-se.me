@@ -6,7 +6,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { type tFeedCreate, zFeed } from "@zbav-se.me/sdk/api/session";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { SendPackageIcon } from "@zbav-se.me/ui/icon";
+import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
@@ -108,7 +108,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 				}
 				bottom={
 					<Button
-						iconEnabled={SendPackageIcon}
+						iconEnabled={FeedIcon}
 						label={"Submit - feed (button)"}
 						disabled={isLoading}
 						loading={isLoading}
