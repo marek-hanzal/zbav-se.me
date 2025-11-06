@@ -34,9 +34,6 @@
 1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
   ref: Price (subtitle)
   value: Price (subtitle)
-2354e19a5eb9f7e2da05b8a7649ca0c1b4c1e6e409a3e4ac4eda4133:
-  ref: Description & Tags (title)
-  value: Description & Tags (title)
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
   ref: Back to Dashboard (label)
   value: Back to Dashboard (label)
@@ -49,6 +46,9 @@
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
   ref: zbav-se.me
   value: zbav-se.me
+2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
+  ref: Next - title (button)
+  value: Next - title (button)
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
@@ -67,9 +67,6 @@
 3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
   ref: Feed name (hint)
   value: Enter a name for your feed
-3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
-  ref: Without VAT
-  value: Without VAT
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
@@ -103,9 +100,6 @@
 501b1f4b9d7915a52896fdc8cdbd9be18c239e3b0251f8b34b63ed91:
   ref: Next - feed sort (button)
   value: Next - feed sort (button)
-563cf82f9c7a157200839bedd8ac219fbcf8727857b117482dd5300b:
-  ref: Description (placeholder)
-  value: Description (placeholder)
 5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
   ref: Listing photos (title)
   value: Listing photos (title)
@@ -148,9 +142,6 @@
 710b682ea576decc640d142b398a04cfb28558a0f3c86456ed08daf2:
   ref: Edit (link)
   value: Edit (link)
-76edbc66d6687e7c3191aa736b4fd0533617efed5c3f944157b09b1c:
-  ref: Feed description & tags (hint)
-  value: Feed description & tags (hint)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
@@ -160,9 +151,6 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
   ref: Next - submit (button)
   value: Next - submit (button)
-7b8ccabb2b98ea5b74889ee9234b3e1e20e1e43999c57e59070731c1:
-  ref: Listing tags (label)
-  value: Listing tags (label)
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
@@ -178,9 +166,6 @@
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
   ref: No listings (title)
   value: No listings (title)
-877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
-  ref: With VAT
-  value: With VAT
 89ce43e549ae96ce623508874d063e27e0a12b2bcece4e86069598b3:
   ref: Feed - location security (hint)
   value: Feed - location security (hint)
@@ -190,18 +175,24 @@
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
   ref: Listing - upload photo (placeholder)
   value: Listing - upload photo (placeholder)
-8cde5f249966541b5d7ee11ccc6d366863185a35892810df779c2ca3:
-  ref: Feed description & tags (title)
-  value: Feed description & tags (title)
-8d32d793358da0d934a674486c72adb7ea93a6f000219df32fce5930:
-  ref: No description (placeholder)
-  value: No description (placeholder)
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
   ref: Feed location (label)
   value: Feed location (label)
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
   ref: Feed (label)
   value: Feed (label)
+8df34cd9aaf61420c02f105c0ce8027af49e6377a9ce6314ee13a927:
+  ref: Title (placeholder)
+  value: Title (placeholder)
+8fcb4c8801eccd44ae514d541bd3eadb79b43c7aeed404e507c1ae1a:
+  ref: Listing title (hint)
+  value: Listing title (hint)
+93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
+  ref: Listing title (title)
+  value: Listing title (title)
+93e4f0b9a0dc4d17c33a08d475281a1a736fff83763a516958a1f693:
+  ref: Feed title (title)
+  value: Feed title (title)
 96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
   ref: Invalid/missing fields
   value: Invalid/missing fields
@@ -223,21 +214,18 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
-a234ff52a2018f4d5ccd6ae25cfe559a4ecae96fae54a6fde63c7884:
-  ref: Feed tags (label)
-  value: Feed tags (label)
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
   ref: Invalid data provided (message)
   value: Invalid data provided (message)
 a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
   ref: Create your first feed to get started (description)
   value: Create your first feed to get started (description)
-a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
-  ref: Listing description (label)
-  value: Listing description (label)
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
   ref: Number of listings (label)
   value: Number of listings (label)
+ab09919ef85e731c5139aa702027937092cb44990baa3a2d5613890f:
+  ref: Title (required)
+  value: Title (required)
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
   ref: Success (toast)
   value: Success (toast)
@@ -250,12 +238,12 @@ adf2aa857314fdeb3999fc88ca3b16372a4af1a07a6c3b32f1b82e3a:
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
   ref: Listing expire at (label)
   value: Listing expire at (label)
-b19c0ffca88175a2eb6d3f1291141d5d0a67d0b93025333e77bbc1cf:
-  ref: Feed description & Tags (title)
-  value: Feed description & Tags (title)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
+b209e03b614a6ee9dbbfae08ece97fb6bb2b523c8bbd743c73fbfff2:
+  ref: Next - Feed title (button)
+  value: Next - Feed title (button)
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
   ref: Invalid data provided (title)
   value: Invalid data provided (title)
@@ -268,9 +256,6 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
   ref: Create first feed (title)
   value: Create first feed (title)
-b835e337ebbaf775a40da6e6c5e1b1cb2023984385c1783aa0c448d2:
-  ref: Description & tags (optional)
-  value: Description & tags (optional)
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)
@@ -285,18 +270,15 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
-c22fcd8917975e5446e683507b54d7c9bdfe22211b1c4634a2072528:
-  ref: Next - Feed description & tags (button)
-  value: Next - Feed description & tags (button)
+c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
+  ref: Feed title not filled
+  value: Feed title not filled
 c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
   ref: That's all for now (title)
   value: That's all for now (title)
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
-c66845e854edf6d46cec165ae629489776797cd57114461a06016452:
-  ref: Next - description & tags (button)
-  value: Next - description & tags (button)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
@@ -309,21 +291,24 @@ cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
 cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
   ref: I want to buy (label)
   value: I want to buy (label)
-d228d5bb6534e78dd04255b7fd080b6894f2bb02654c6245b4dab3cf:
-  ref: Feed description (label)
-  value: Feed description (label)
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
   ref: Location not found (badge)
   value: Location not found (badge)
 d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
   ref: Next - expire (button)
   value: Next - expire (button)
-d3254b0bf1bd84e03bd1501a3192ae95c25361e1105115a67f9c9314:
-  ref: Feed tags not filled
-  value: Feed tags not filled
+d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
+  ref: Feed title (label)
+  value: Feed title (label)
+d35116f2f09a312cefe190567f3559fc34d343fac8e359f7370d5947:
+  ref: Title (title)
+  value: Title (title)
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
+  ref: Feed title (hint)
+  value: Feed title (hint)
 d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
   ref: Feed condition (title)
   value: Feed condition (title)
@@ -342,9 +327,6 @@ e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
   ref: Shop (label)
   value: Shop (label)
-e465117269e438b20400f25e861dd9eebc6c5bee4570f34cdd8073fc:
-  ref: Tags (placeholder)
-  value: Tags (placeholder)
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
   ref: Seller home (title)
   value: Seller home (title)
@@ -354,18 +336,12 @@ e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
   ref: Next - feed condition (button)
   value: Next - feed condition (button)
-ea5ab7c3172f6c99db8e81b56c143debef0898612b28663d77926de4:
-  ref: Description & tags (title)
-  value: Description & tags (title)
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
   ref: Submit listing (button)
   value: Submit listing (button)
 f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
   ref: Feed submit (title)
   value: Feed submit (title)
-f2742e34c7255ce89b95ef5d42eb7646e6baf1dec4a6ba4fe4328034:
-  ref: Feed description not filled
-  value: Feed description not filled
 f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
   ref: No listings found (label)
   value: No listings found (label)
@@ -375,15 +351,12 @@ fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
   ref: Back to home (link)
   value: Back to home (link)
-fd24d85ad7a2f0f0d2b896163a267a22ddf4a96e3304a6e7e5ab9ab6:
-  ref: Description & tags (hint)
-  value: Description & tags (hint)
+fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
+  ref: Listing title (label)
+  value: Listing title (label)
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
   ref: Bag (label)
   value: Bag (label)
-ff06b35a218ff61c79127637a1093f6e08b54cfbe899d25648f9af12:
-  ref: No tags (placeholder)
-  value: No tags (placeholder)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
   ref: Next - condition (button)
   value: Next - condition (button)

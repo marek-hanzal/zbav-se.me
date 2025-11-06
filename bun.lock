@@ -23,10 +23,10 @@
         "@tanstack/react-router": "1.134.13",
         "@tanstack/react-router-ssr-query": "1.134.13",
         "@tanstack/react-start": "1.134.13",
-        "@use-pico/client": "5.0.256",
+        "@use-pico/client": "5.0.259",
         "@use-pico/cls": "5.0.75",
-        "@use-pico/common": "5.0.100",
-        "@use-pico/server": "5.0.105",
+        "@use-pico/common": "5.0.103",
+        "@use-pico/server": "5.0.108",
         "@zbav-se.me/common": "0.5.0",
         "@zbav-se.me/sdk": "0.5.0",
         "@zbav-se.me/server": "0.5.0",
@@ -75,7 +75,7 @@
         "@hono/zod-openapi": "1.1.4",
         "@scalar/hono-api-reference": "0.9.23",
         "@upstash/redis": "1.35.6",
-        "@use-pico/common": "5.0.100",
+        "@use-pico/common": "5.0.103",
         "@zbav-se.me/common": "0.5.0",
         "better-auth": "1.3.34",
         "hono": "4.10.4",
@@ -110,10 +110,10 @@
         "@tanstack/react-router": "1.134.13",
         "@tanstack/react-router-ssr-query": "1.134.13",
         "@tanstack/react-start": "1.134.13",
-        "@use-pico/client": "5.0.256",
+        "@use-pico/client": "5.0.259",
         "@use-pico/cls": "5.0.75",
-        "@use-pico/common": "5.0.100",
-        "@use-pico/server": "5.0.105",
+        "@use-pico/common": "5.0.103",
+        "@use-pico/server": "5.0.108",
         "@zbav-se.me/ui": "0.5.0",
         "axios": "1.13.2",
         "better-auth": "1.3.34",
@@ -161,9 +161,9 @@
       "name": "@zbav-se.me/sdk",
       "version": "0.5.0",
       "dependencies": {
-        "@use-pico/client": "5.0.256",
-        "@use-pico/common": "5.0.100",
-        "@use-pico/server": "5.0.105",
+        "@use-pico/client": "5.0.259",
+        "@use-pico/common": "5.0.103",
+        "@use-pico/server": "5.0.108",
         "axios": "1.13.2",
         "zod": "4.1.12",
       },
@@ -181,7 +181,7 @@
       "dependencies": {
         "@gsap/react": "2.1.2",
         "@tanstack/react-form": "1.23.8",
-        "@use-pico/client": "5.0.256",
+        "@use-pico/client": "5.0.259",
         "@use-pico/cls": "5.0.75",
         "gsap": "3.13.0",
         "react": "19.2.0",
@@ -769,13 +769,13 @@
 
     "@upstash/redis": ["@upstash/redis@1.35.6", "", { "dependencies": { "uncrypto": "^0.1.3" } }, "sha512-aSEIGJgJ7XUfTYvhQcQbq835re7e/BXjs8Janq6Pvr6LlmTZnyqwT97RziZLO/8AVUL037RLXqqiQC6kCt+5pA=="],
 
-    "@use-pico/client": ["@use-pico/client@5.0.256", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.38.2", "@lexical/react": "0.38.2", "@lexical/utils": "0.38.2", "@tanstack/react-query": "5.90.7", "@tanstack/react-router": "1.134.13", "@types/luxon": "3.7.1", "@types/object-path": "0.11.4", "@use-pico/cls": "5.0.75", "@use-pico/common": "5.0.100", "axios": "1.13.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.38.2", "luxon": "3.7.2", "object-path": "0.11.8", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "read-excel-file": "6.0.1", "ts-pattern": "5.9.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-+qxClXi/p3PcSY8arK0VSf+duVunmUDVkpmQGQ4bRP0jB63tstUWiRXkiS+kBSULwFjYaoeMG37hvB97VOA2pA=="],
+    "@use-pico/client": ["@use-pico/client@5.0.259", "", { "dependencies": { "@floating-ui/react": "0.27.16", "@lexical/list": "0.38.2", "@lexical/react": "0.38.2", "@lexical/utils": "0.38.2", "@tanstack/react-query": "5.90.7", "@tanstack/react-router": "1.134.13", "@types/luxon": "3.7.1", "@types/object-path": "0.11.4", "@use-pico/cls": "5.0.75", "@use-pico/common": "5.0.103", "axios": "1.13.2", "js-file-downloader": "1.1.25", "kysely": "0.28.8", "lexical": "0.38.2", "luxon": "3.7.2", "object-path": "0.11.8", "react": "19.2.0", "react-dom": "19.2.0", "react-dropzone": "14.3.8", "react-hot-toast": "2.6.0", "react-markdown": "10.1.0", "read-excel-file": "6.0.1", "remark-gfm": "4.0.1", "ts-pattern": "5.9.0", "use-debounce": "10.0.6", "uuid": "13.0.0", "write-excel-file": "2.3.10", "zod": "4.1.12", "zustand": "5.0.8" } }, "sha512-qj8hH4eK46NDyD55a7+iH6h4cu16zV+mhN16l/Ph+6wU0H273RE7HshsJm8megVlv6ZKett4XhuIlMz90vYKKA=="],
 
     "@use-pico/cls": ["@use-pico/cls@5.0.75", "", { "dependencies": { "react": "19.2.0", "tailwind-merge": "3.3.1" } }, "sha512-oukNqAyP0P0aAayg3fd4s678iMxcJ0qFp5nTqtimygBhWzNZYbk1Vf5k0s53aVEmtt4c7oVkcjS26CU93JyFmA=="],
 
-    "@use-pico/common": ["@use-pico/common@5.0.100", "", { "dependencies": { "@apollo/client": "4.0.9", "@graphql-typed-document-node/core": "3.2.0", "@paralleldrive/cuid2": "3.1.0", "@types/is-callable": "1.1.2", "@types/is-empty": "1.2.3", "@types/luxon": "3.7.1", "@types/qs": "6.14.0", "fast-clean": "1.5.2", "flattie": "1.1.1", "is-callable": "1.2.7", "is-empty": "1.2.0", "is-string": "1.1.1", "js-sha256": "0.11.1", "kysely": "0.28.8", "luxon": "3.7.2", "preferred-locale": "2.0.2", "qs": "6.14.0", "zod": "4.1.12" } }, "sha512-97D6ptltVHaCN4Y1a+8r6Ty8ybab4q2duqQH5aYY0xzfblTXl4g2PAcpYsKjwcSOe2JBDFAdizUyMVQCUKIjJg=="],
+    "@use-pico/common": ["@use-pico/common@5.0.103", "", { "dependencies": { "@apollo/client": "4.0.9", "@graphql-typed-document-node/core": "3.2.0", "@paralleldrive/cuid2": "3.1.0", "@types/is-callable": "1.1.2", "@types/is-empty": "1.2.3", "@types/luxon": "3.7.1", "@types/qs": "6.14.0", "fast-clean": "1.5.2", "flattie": "1.1.1", "is-callable": "1.2.7", "is-empty": "1.2.0", "is-string": "1.1.1", "js-sha256": "0.11.1", "kysely": "0.28.8", "luxon": "3.7.2", "preferred-locale": "2.0.2", "qs": "6.14.0", "zod": "4.1.12" } }, "sha512-bUekTFDj881cgdKFZBtA63B+A45SyARgSISJWawWWrrGM39xWvX3Q58GkFPVET2sLBVX/yA3vuiEfDtqEK5b/Q=="],
 
-    "@use-pico/server": ["@use-pico/server@5.0.105", "", { "dependencies": { "@phenomnomnominal/tsquery": "6.1.3", "@types/cli-progress": "3.11.6", "@use-pico/common": "5.0.100", "cli-progress": "3.12.0", "timer-node": "5.0.9", "yaml": "2.8.1" } }, "sha512-fLEJJffsXInzpuRJ2GXaqtzfdET0i1RdhS8MdJEwbhHDHNUHk7oUBPHcDzgYh7e57Ly0JIdHu10/VuUlAg/53Q=="],
+    "@use-pico/server": ["@use-pico/server@5.0.108", "", { "dependencies": { "@phenomnomnominal/tsquery": "6.1.3", "@types/cli-progress": "3.11.6", "@use-pico/common": "5.0.103", "cli-progress": "3.12.0", "timer-node": "5.0.9", "yaml": "2.8.1" } }, "sha512-nB5DyQ4+G4b5oeXW0LBJl8qdd/YAzZ5r+uLzRtkOLFlloevFEYzW0hYQ0rcu1ZVnEIDm3OvWV67xUGaQvQNIKw=="],
 
     "@use-pico/tsconfig": ["@use-pico/tsconfig@5.0.0", "", {}, "sha512-l6rC6r+TzPT5z/QOMR7o2TNYuWehrZEpN5zR/5KW293i0ovErWLTe8e/1VDtyu6ZmXeqUt0YNVmsLdeknOIlew=="],
 

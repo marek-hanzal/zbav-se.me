@@ -8,9 +8,9 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { Tx } from "@use-pico/client/ui/tx";
 import { sListingCreate } from "@zbav-se.me/sdk/api/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
@@ -89,8 +89,8 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 					height={"auto"}
 				>
 					<Status
-						textTitle={"Title (title)"}
-						textMessage={"Title (hint)"}
+						textTitle={"Listing title (title)"}
+						textMessage={"Listing title (hint)"}
 						action={
 							<FormField full>
 								{(props) => (
@@ -114,25 +114,10 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 								)}
 							</FormField>
 						}
-						tweak={{
-							slot: {
-								body: {
-									class: [
-										"flex",
-										"flex-col",
-										"gap-8",
-										"items-center",
-									],
-								},
-							},
-						}}
 					>
-						<Tx
+						<Mx
 							label={"Title (required)"}
-							size={"sm"}
 							tone={"secondary"}
-							display={"block"}
-							wrap={"wrap"}
 						/>
 					</Status>
 				</Container>

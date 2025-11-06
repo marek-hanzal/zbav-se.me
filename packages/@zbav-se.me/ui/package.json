@@ -9,7 +9,7 @@
 	"dependencies": {
 		"@gsap/react": "2.1.2",
 		"@tanstack/react-form": "1.23.8",
-		"@use-pico/client": "5.0.256",
+		"@use-pico/client": "5.0.259",
 		"@use-pico/cls": "5.0.75",
 		"gsap": "3.13.0",
 		"react": "19.2.0",
