@@ -6,5 +6,6 @@ export const PostgresExtensionsMigration: Migration = {
 		await sql`CREATE EXTENSION IF NOT EXISTS unaccent`.execute(db);
 		await sql`CREATE EXTENSION IF NOT EXISTS pg_trgm`.execute(db);
 		await sql`CREATE EXTENSION IF NOT EXISTS postgis`.execute(db);
+		await sql`CREATE EXTENSION IF NOT EXISTS vector`.execute(db);
 	},
 };

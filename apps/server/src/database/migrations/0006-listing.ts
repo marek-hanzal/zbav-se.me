@@ -16,8 +16,9 @@ export const ListingMigration: Migration = {
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			.addColumn("title", "text", (col) => col.notNull())
 			.addColumn("description", "text")
-			//
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
+			.addColumn("embedding", sql`vector(192)`, (col) => col.notNull())
+			//
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
@@ -102,5 +103,9 @@ export const ListingMigration: Migration = {
 			.using("gin")
 			.expression(sql`lower(title) gin_trgm_ops`)
 			.execute();
+
+		await sql`
+                CREATE INDEX "listing_[embedding]_hnsw_cos_idx" ON "listing" USING hnsw ("embedding" vector_cosine_ops)
+              `.execute(db);
 	},
 };
