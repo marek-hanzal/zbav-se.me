@@ -380,13 +380,9 @@ export type tListingWhere = {
      */
     rangeMax?: number | null;
     /**
-     * This filter matches listings with description matching the provided value
+     * This filter matches listings with title matching the provided value
      */
-    description?: string | null;
-    /**
-     * This filter matches listings with tags matching the provided value
-     */
-    tags?: string | null;
+    title?: string | null;
 };
 
 /**
@@ -491,13 +487,9 @@ export type tListingFilter = {
      */
     rangeMax?: number | null;
     /**
-     * This filter matches listings with description matching the provided value
+     * This filter matches listings with title matching the provided value
      */
-    description?: string | null;
-    /**
-     * This filter matches listings with tags matching the provided value
-     */
-    tags?: string | null;
+    title?: string | null;
 };
 
 /**
@@ -712,13 +704,13 @@ export type tListing = {
      */
     updatedAt: string;
     /**
+     * Title of the item
+     */
+    title: string;
+    /**
      * Description of the item
      */
     description?: string | null;
-    /**
-     * Tags for the item
-     */
-    tags?: string | null;
     location: tLocation;
     category: tCategory;
     /**
@@ -754,13 +746,13 @@ export type tListingCreate = {
     currency: tCurrencyList;
     expiresAt: tListingExpire;
     /**
+     * Title of the item
+     */
+    title: string;
+    /**
      * Description of the item
      */
     description?: string | null;
-    /**
-     * Tags for the item
-     */
-    tags?: string | null;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
@@ -963,7 +955,7 @@ export type tFeedCreate = {
     /**
      * ID of the location associated with the feed
      */
-    locationId?: string;
+    locationId?: string | null;
     filter: tListingFilter & unknown;
     sort: Array<tListingSort>;
     meta: tListingMeta & unknown;

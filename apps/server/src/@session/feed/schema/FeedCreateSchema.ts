@@ -8,7 +8,7 @@ export const FeedCreateSchema = z
 		name: z.string().min(1).openapi({
 			description: "Name of the feed",
 		}),
-		locationId: z.string().optional().openapi({
+		locationId: z.string().nullish().openapi({
 			description: "ID of the location associated with the feed",
 		}),
 		filter: ListingFilterSchema,

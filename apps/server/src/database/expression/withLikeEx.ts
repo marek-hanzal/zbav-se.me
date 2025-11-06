@@ -1,9 +1,15 @@
 import type { ReferenceExpression } from "kysely";
 import { sql } from "kysely";
+import { match } from "ts-pattern";
+
+export namespace withLikeEx {
+	export type Mode = "start" | "both";
+}
 
 export function withLikeEx<DB, TB extends keyof DB>(
 	column: ReferenceExpression<DB, TB>,
 	term: string | undefined | null,
+	mode: withLikeEx.Mode = "start",
 ) {
 	const tokens = term
 		?.split(/\s+/g)
@@ -14,10 +20,20 @@ export function withLikeEx<DB, TB extends keyof DB>(
 		return sql<boolean>`true`;
 	}
 
-	const parts = tokens.map(
-		(t) =>
-			sql<boolean>`lower(unaccent(${column})) like ${sql`lower(unaccent(${t})) || '%'`}`,
-	);
+	const parts = match(mode)
+		.with("start", () => {
+			return tokens.map(
+				(token) =>
+					sql<boolean>`lower(unaccent(${column})) like ${sql`lower(unaccent(${token})) || '%'`}`,
+			);
+		})
+		.with("both", () => {
+			return tokens.map(
+				(token) =>
+					sql<boolean>`lower(unaccent(${column})) like '%' || ${sql`lower(unaccent(${token})) || '%'`}`,
+			);
+		})
+		.exhaustive();
 
 	return sql<boolean>`(${sql.join(parts, sql` or `)})`;
 }

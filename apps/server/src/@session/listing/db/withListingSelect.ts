@@ -23,12 +23,12 @@ export const withListingSelect = ({ sort, meta }: withListingSelect.Props) => {
 			"l.condition",
 			"l.createdAt",
 			"l.currency",
+			"l.title",
 			"l.description",
 			"l.expiresAt",
 			"l.id",
 			"l.locationId",
 			"l.price",
-			"l.tags",
 			"l.updatedAt",
 		])
 		.innerJoin("location as loc", "loc.id", "l.locationId")

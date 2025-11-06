@@ -67,13 +67,9 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with range less than or equal to the provided value (meters)",
 		}),
-		description: z.string().nullish().openapi({
+		title: z.string().nullish().openapi({
 			description:
-				"This filter matches listings with description matching the provided value",
-		}),
-		tags: z.string().nullish().openapi({
-			description:
-				"This filter matches listings with tags matching the provided value",
+				"This filter matches listings with title matching the provided value",
 		}),
 	})
 	.openapi("ListingFilter", {

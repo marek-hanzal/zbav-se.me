@@ -7,7 +7,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@use-pico/client": "5.0.254",
+		"@use-pico/client": "5.0.256",
 		"@use-pico/common": "5.0.100",
 		"@use-pico/server": "5.0.105",
 		"axios": "1.13.2",
@@ -18,7 +18,7 @@
 		"@types/node": "24.10.0",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3",
-		"vite": "7.2.0"
+		"vite": "7.2.1"
 	},
 	"exports": {
 		"./api/*": {

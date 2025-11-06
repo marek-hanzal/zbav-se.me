@@ -2,6 +2,7 @@ import { type Migration, sql } from "kysely";
 
 export const ListingMigration: Migration = {
 	async up(db) {
+		// Tabulka + uložený normalizovaný název
 		await db.schema
 			.createTable("listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
@@ -13,8 +14,8 @@ export const ListingMigration: Migration = {
 			.addColumn("age", "integer", (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
+			.addColumn("title", "text", (col) => col.notNull())
 			.addColumn("description", "text")
-			.addColumn("tags", "text")
 			//
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
@@ -89,28 +90,17 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_[description]_idx")
+			.createIndex("listing_[title]_btree_idx")
 			.on("listing")
 			.using("btree")
-			.expression(sql`(lower(description)) text_pattern_ops`)
-			.where(() => sql`description IS NOT NULL`)
+			.expression(sql`lower(title) text_pattern_ops`)
 			.execute();
 
 		await db.schema
-			.createIndex("listing_[tags]_idx")
+			.createIndex("listing_[title]_trgm_idx")
 			.on("listing")
-			.using("btree")
-			.expression(sql`(lower(tags)) text_pattern_ops`)
-			.where(() => sql`tags IS NOT NULL`)
-			.execute();
-
-		await db.schema
-			.createIndex("listing_[description-tags]_idx")
-			.on("listing")
-			.using("btree")
-			.expression(sql`(lower(description)) text_pattern_ops`)
-			.expression(sql`(lower(tags)) text_pattern_ops`)
-			.where(() => sql`description IS NOT NULL AND tags IS NOT NULL`)
+			.using("gin")
+			.expression(sql`lower(title) gin_trgm_ops`)
 			.execute();
 	},
 };

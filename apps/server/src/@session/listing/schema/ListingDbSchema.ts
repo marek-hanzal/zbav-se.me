@@ -37,11 +37,11 @@ export const ListingDbSchema = z.object({
 		description: "Last update timestamp",
 		type: "string",
 	}),
+	title: z.string().openapi({
+		description: "Title of the item",
+	}),
 	description: z.string().nullish().openapi({
 		description: "Description of the item",
-	}),
-	tags: z.string().nullish().openapi({
-		description: "Tags for the item",
 	}),
 });
 

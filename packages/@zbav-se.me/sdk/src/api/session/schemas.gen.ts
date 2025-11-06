@@ -443,10 +443,7 @@ export const sListingWhere = {
             type: ['number', 'null'],
             minimum: 0
         },
-        description: {
-            type: ['string', 'null']
-        },
-        tags: {
+        title: {
             type: ['string', 'null']
         }
     }
@@ -564,10 +561,7 @@ export const sListingFilter = {
             type: ['number', 'null'],
             minimum: 0
         },
-        description: {
-            type: ['string', 'null']
-        },
-        tags: {
+        title: {
             type: ['string', 'null']
         }
     }
@@ -798,10 +792,10 @@ export const sListing = {
         updatedAt: {
             type: 'string'
         },
-        description: {
-            type: ['string', 'null']
+        title: {
+            type: 'string'
         },
-        tags: {
+        description: {
             type: ['string', 'null']
         },
         location: {
@@ -817,7 +811,7 @@ export const sListing = {
             }
         }
     },
-    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'createdAt', 'updatedAt', 'location', 'category', 'gallery']
+    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'createdAt', 'updatedAt', 'title', 'location', 'category', 'gallery']
 } as const;
 
 export const sListingCreate = {
@@ -844,13 +838,13 @@ export const sListingCreate = {
         expiresAt: {
             '$ref': '#/components/schemas/ListingExpire'
         },
-        description: {
-            type: ['string', 'null'],
+        title: {
+            type: 'string',
             maxLength: 42
         },
-        tags: {
+        description: {
             type: ['string', 'null'],
-            maxLength: 42
+            maxLength: 2048
         },
         uploadIds: {
             type: 'array',
@@ -860,7 +854,7 @@ export const sListingCreate = {
             minItems: 1
         }
     },
-    required: ['price', 'condition', 'age', 'locationId', 'categoryId', 'currency', 'expiresAt', 'uploadIds']
+    required: ['price', 'condition', 'age', 'locationId', 'categoryId', 'currency', 'expiresAt', 'title', 'uploadIds']
 } as const;
 
 export const sListingExpire = {
@@ -1112,7 +1106,7 @@ export const sFeedCreate = {
             minLength: 1
         },
         locationId: {
-            type: 'string'
+            type: ['string', 'null']
         },
         filter: {
             allOf: [

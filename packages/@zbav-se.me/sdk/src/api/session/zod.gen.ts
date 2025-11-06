@@ -497,11 +497,7 @@ export const zListingWhere = z.object({
         z.number().gte(0),
         z.null()
     ])),
-    description: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    tags: z.optional(z.union([
+    title: z.optional(z.union([
         z.string(),
         z.null()
     ]))
@@ -565,11 +561,7 @@ export const zListingFilter = z.object({
         z.number().gte(0),
         z.null()
     ])),
-    description: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    tags: z.optional(z.union([
+    title: z.optional(z.union([
         z.string(),
         z.null()
     ]))
@@ -804,11 +796,10 @@ export const zListing = z.object({
     updatedAt: z.string().register(z.globalRegistry, {
         description: 'Last update timestamp'
     }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Title of the item'
+    }),
     description: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    tags: z.optional(z.union([
         z.string(),
         z.null()
     ])),
@@ -869,12 +860,11 @@ export const zListingCreate = z.object({
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
+    title: z.string().max(42).register(z.globalRegistry, {
+        description: 'Title of the item'
+    }),
     description: z.optional(z.union([
-        z.string().max(42),
-        z.null()
-    ])),
-    tags: z.optional(z.union([
-        z.string().max(42),
+        z.string().max(2048),
         z.null()
     ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
@@ -1113,9 +1103,10 @@ export const zFeedCreate = z.object({
     name: z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
-    locationId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'ID of the location associated with the feed'
-    })),
+    locationId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     filter: zListingFilter.and(z.unknown().register(z.globalRegistry, {
         description: 'User-land filters'
     })),

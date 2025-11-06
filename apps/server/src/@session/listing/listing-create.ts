@@ -61,8 +61,8 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 					createdAt: now,
 					updatedAt: now,
 					currency: data.currency,
+					title: data.title,
 					description: data.description,
-					tags: data.tags,
 					expiresAt: match(data.expiresAt)
 						.with("7-days", () =>
 							DateTime.now()
