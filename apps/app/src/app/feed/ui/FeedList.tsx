@@ -84,7 +84,9 @@ export const FeedList: FC<FeedList.Props> = ({
 				})}
 			</Container>
 
-			{shouldShowCreateButton && !isLimitReached ? (
+			{shouldShowCreateButton &&
+			!isLimitReached &&
+			feedCountQuery.data.filter > 0 ? (
 				<Button
 					tone={"primary"}
 					iconEnabled={FeedIcon}
