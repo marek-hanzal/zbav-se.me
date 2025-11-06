@@ -101,6 +101,10 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 										}
 										placeholder={"Title (placeholder)"}
 										autoFocus={!title}
+										minLength={
+											sListingCreate.properties.title
+												.minLength
+										}
 										maxLength={
 											sListingCreate.properties.title
 												.maxLength

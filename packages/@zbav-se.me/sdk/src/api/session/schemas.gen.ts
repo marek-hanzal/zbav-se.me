@@ -840,6 +840,7 @@ export const sListingCreate = {
         },
         title: {
             type: 'string',
+            minLength: 5,
             maxLength: 42
         },
         description: {

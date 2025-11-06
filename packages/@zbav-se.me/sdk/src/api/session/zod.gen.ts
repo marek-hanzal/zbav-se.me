@@ -860,7 +860,7 @@ export const zListingCreate = z.object({
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
-    title: z.string().max(42).register(z.globalRegistry, {
+    title: z.string().min(5).max(42).register(z.globalRegistry, {
         description: 'Title of the item'
     }),
     description: z.optional(z.union([
