@@ -70,15 +70,15 @@
 3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
   ref: Feed name (hint)
   value: Enter a name for your feed
+3f8977ca19869222cc842fff05d482216c60a464b166c605577d1dd1:
+  ref: Detail (link)
+  value: Detail (link)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
-451747ec6aa8bc43cef2a9c911e59b440dc449b2d31301340782e7c8:
-  ref: Edit feed (button)
-  value: Edit feed (button)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -151,9 +151,6 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
-710b682ea576decc640d142b398a04cfb28558a0f3c86456ed08daf2:
-  ref: Edit (link)
-  value: Edit (link)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
@@ -166,6 +163,9 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
+7c7f402c4a2e1e892336c1c38b74606fa733985953f8e03e0aa97d00:
+  ref: Feed - save and close (button)
+  value: Feed - save and close (button)
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
   ref: I want to sell (label)
   value: I want to sell (label)

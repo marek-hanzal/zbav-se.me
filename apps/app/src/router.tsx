@@ -44,6 +44,7 @@ export async function getRouter() {
 			);
 		},
 		defaultPendingMs: 500,
+		scrollRestoration: true,
 	});
 
 	setupRouterSsrQueryIntegration({

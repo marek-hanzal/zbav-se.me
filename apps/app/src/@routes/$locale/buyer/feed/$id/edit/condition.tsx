@@ -1,10 +1,6 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation";
@@ -37,7 +33,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
-					to: "/$locale/buyer/feed/$id/edit/age",
+					to: "/$locale/buyer/feed/$id/edit/view",
 				});
 			},
 		});
@@ -48,7 +44,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/edit/category"}
+						to={"/$locale/buyer/feed/$id/edit/view"}
 						params={{
 							locale,
 							id: feed.id,
@@ -77,8 +73,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 					<Button
 						tone={"secondary"}
 						theme={"dark"}
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
 						label={"Feed - next and save (button)"}
 						size={"lg"}
 						loading={feedPatchMutation.isPending}
@@ -87,7 +81,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 						onClick={() => {
 							if (!change) {
 								navigate({
-									to: "/$locale/buyer/feed/$id/edit/age",
+									to: "/$locale/buyer/feed/$id/edit/view",
 								});
 								return;
 							}

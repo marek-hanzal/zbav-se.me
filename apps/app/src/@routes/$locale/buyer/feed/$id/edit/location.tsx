@@ -1,5 +1,5 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation";
@@ -20,7 +20,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
-					to: "/$locale/buyer/feed/$id/edit/sort",
+					to: "/$locale/buyer/feed/$id/edit/view",
 				});
 			},
 		});
@@ -43,8 +43,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 					<Button
 						tone={"secondary"}
 						theme={"dark"}
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
 						loading={feedPatchMutation.isPending}
 						disabled={feedPatchMutation.isPending}
 						size={"lg"}
@@ -53,7 +51,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 						onClick={() => {
 							if (!change) {
 								navigate({
-									to: "/$locale/buyer/feed/$id/edit/sort",
+									to: "/$locale/buyer/feed/$id/edit/view",
 								});
 								return;
 							}

@@ -1,4 +1,4 @@
-import { ArrowRightIcon, EditIcon, TrashIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, TrashIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -8,6 +8,7 @@ import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeed } from "@zbav-se.me/sdk/api/session";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation";
 import { withListingCountQuery } from "@zbav-se.me/sdk/query";
+import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace FeedItem {
@@ -88,7 +89,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					/>
 
 					<LinkTo
-						icon={EditIcon}
+						icon={FeedIcon}
 						to={"/$locale/buyer/feed/$id/edit/view"}
 						params={{
 							locale,
@@ -96,7 +97,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 						}}
 						tone={"secondary"}
 					>
-						<Tx label={"Edit (link)"} />
+						<Tx label={"Detail (link)"} />
 					</LinkTo>
 				</div>
 

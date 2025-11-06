@@ -1,9 +1,5 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation";
@@ -35,7 +31,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/edit/title"}
+						to={"/$locale/buyer/feed/$id/edit/view"}
 						params={{
 							locale,
 							id: feed.id,
@@ -61,8 +57,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 					<Button
 						tone={"secondary"}
 						theme={"dark"}
-						iconEnabled={ArrowRightIcon}
-						iconPosition={"right"}
 						label={"Feed - next and save (button)"}
 						size={"lg"}
 						loading={feedPatchMutation.isPending}
