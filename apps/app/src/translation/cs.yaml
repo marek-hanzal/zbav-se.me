@@ -377,7 +377,7 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         better message than this :(
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
-    value: Nemáš nic vyplněno
+    value: Všechno
 c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
     ref: That's all for now (title)
     value: To je prozatím vše!
@@ -472,7 +472,7 @@ f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
     value: Tad nic nenajdeš 😭
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
     ref: Feed age not selected
-    value: Nemáš nic vybraného
+    value: Jakékoli
 fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
     ref: Feed condition (label)
     value: Stavy

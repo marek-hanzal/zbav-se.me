@@ -321,6 +321,7 @@ export const ButtonCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"border-none",
+				"shadow-none",
 			],
 		},
 	})
