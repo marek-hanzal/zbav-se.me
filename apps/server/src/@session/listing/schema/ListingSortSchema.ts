@@ -10,6 +10,7 @@ export const ListingSortSchema = z
 			"createdAt",
 			"updatedAt",
 			"expiresAt",
+			// "embedding",
 			"geo",
 		]),
 		sort: OrderSchema,

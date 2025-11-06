@@ -1,80 +1,60 @@
 import { createHash } from "node:crypto";
 
-function simhash64(text: string): bigint {
-	const normalized = text
-		.toLowerCase()
-		.normalize("NFKD")
-		.replace(/\p{Diacritic}+/gu, "")
-		.trim();
+export namespace embedMinHash {
+	export interface Props {
+		value: string;
+		dimensions: number;
+	}
+}
 
-	if (!normalized) return 0n;
-
+function computeBitPattern64(normalizedText: string): Float32Array {
 	const bitWeights = new Int32Array(64);
 	const minGram = 3;
 	const maxGram = 5;
 
 	for (let n = minGram; n <= maxGram; n++) {
-		for (let i = 0; i + n <= normalized.length; i++) {
-			const gram = normalized.slice(i, i + n);
-			const digest = createHash("sha256").update(gram).digest();
-			const hash64 = digest.readBigUInt64BE(0);
+		for (let i = 0; i + n <= normalizedText.length; i++) {
+			const gram = normalizedText.slice(i, i + n);
 
-			for (let bit = 0; bit < 64; bit++) {
-				const isSet = (hash64 >> BigInt(bit)) & 1n;
-				const idx = 63 - bit;
-				// biome-ignore lint/style/noNonNullAssertion: We're OK here
-				bitWeights[idx]! = (bitWeights[idx]! +
-					(isSet === 1n ? 1 : -1)) as number;
+			const digest = createHash("sha256").update(gram).digest();
+			for (let byteIndex = 0; byteIndex < 8; byteIndex++) {
+				// biome-ignore lint/style/noNonNullAssertion: We're OK
+				const byte = digest[byteIndex]!;
+				for (let bit = 0; bit < 8; bit++) {
+					const isSet = (byte & (1 << (7 - bit))) !== 0;
+					const globalBit = byteIndex * 8 + bit;
+					const target = globalBit;
+					// biome-ignore lint/style/noNonNullAssertion: We're OK
+					bitWeights[target]! += isSet ? 1 : -1;
+				}
 			}
 		}
 	}
 
-	let fingerprint = 0n;
-	for (let bit = 0; bit < 64; bit++) {
-		// biome-ignore lint/style/noNonNullAssertion: We're OK here
-		if (bitWeights[bit]! >= 0) {
-			fingerprint |= 1n << BigInt(63 - bit);
-		}
+	const pattern = new Float32Array(64);
+	for (let b = 0; b < 64; b++) {
+		// biome-ignore lint/style/noNonNullAssertion: We're OK
+		pattern[b] = bitWeights[b]! >= 0 ? 1 : -1;
 	}
-	return fingerprint;
+	return pattern;
 }
 
-export namespace embedMinHash {
-	export interface Props {
-		value: string;
-		dimensions?: number;
-	}
-}
-
-export const embedMinHash = ({
-	value,
-	dimensions = 64,
-}: embedMinHash.Props) => {
+export const embedMinHash = ({ value, dimensions }: embedMinHash.Props) => {
 	const output = new Float32Array(dimensions);
 
 	const normalized = value
 		.toLowerCase()
 		.normalize("NFKD")
-		.replace(/\p{Diacritic}+/gu, "")
+		.replace(/[\u0300-\u036f]+/g, "")
 		.trim();
 
-	if (!normalized) {
-		return output;
-	}
+	if (!normalized) return output;
 
-	const fingerprint = simhash64(normalized);
-
-	const pattern = new Float32Array(64);
-	for (let i = 0; i < 64; i++) {
-		const rev = 63 - i;
-		const isSet = ((fingerprint >> BigInt(rev)) & 1n) === 1n;
-		pattern[i] = isSet ? 1 : -1;
-	}
+	const bitPattern = computeBitPattern64(normalized);
 
 	for (let i = 0; i < dimensions; i++) {
-		// biome-ignore lint/style/noNonNullAssertion: We're OK here
-		output[i] = pattern[i % 64]!;
+		// biome-ignore lint/style/noNonNullAssertion: We're OK
+		output[i] = bitPattern[i % 64]!;
 	}
-
 	return output;
 };

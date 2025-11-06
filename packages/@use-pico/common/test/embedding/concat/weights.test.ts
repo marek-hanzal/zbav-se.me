@@ -22,10 +22,12 @@ it("should apply weights correctly", () => {
 	]);
 	// After concatenation and normalization
 	expect(result.length).toBe(4);
-	// First two should be from block1 (weight 2)
-	// Last two should be from block2 (weight 3)
-	expect(result[0]).not.toBe(0);
-	expect(result[1]).not.toBe(0);
-	expect(result[2]).not.toBe(0);
-	expect(result[3]).not.toBe(0);
+	// First two should be from block1 (weight 2): [1, 0] * 2 = [2, 0]
+	// Last two should be from block2 (weight 3): [0, 1] * 3 = [0, 3]
+	// Concatenated: [2, 0, 0, 3]
+	// Normalized: [2/√13, 0, 0, 3/√13]
+	expect(result[0]).not.toBe(0); // 2/√13
+	expect(result[1]).toBe(0); // 0
+	expect(result[2]).toBe(0); // 0
+	expect(result[3]).not.toBe(0); // 3/√13
 });

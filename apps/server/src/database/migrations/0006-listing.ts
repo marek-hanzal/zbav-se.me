@@ -16,7 +16,7 @@ export const ListingMigration: Migration = {
 			.addColumn("title", "text", (col) => col.notNull())
 			.addColumn("description", "text")
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
-			.addColumn("embedding", sql`vector(192)`, (col) => col.notNull())
+			.addColumn("embedding", sql`vector(256)`, (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),

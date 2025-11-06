@@ -20,7 +20,307 @@ import PQueue from "p-queue";
 function range(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+function pick<T>(arr: T[]): T {
+	return arr[Math.floor(Math.random() * arr.length)]!;
+}
+function shuffle<T>(arr: T[]): T[] {
+	const a = arr.slice();
+	for (let i = a.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[a[i], a[j]] = [
+			a[j]!,
+			a[i]!,
+		];
+	}
+	return a;
+}
+function maybe<T>(val: T, p = 0.5): T | undefined {
+	return Math.random() < p ? val : undefined;
+}
 
+/**
+ * TITLE GENERATOR
+ * --------------------------------------------------
+ * We prepare 20+ "sets" of keywords. For each title:
+ *  - choose a set, shuffle order (tests order sensitivity),
+ *  - optionally prepend an action or condition,
+ *  - optionally append attributes (storage, color, year),
+ *  - randomly vary separators/casing/punctuation.
+ */
+const TITLE_SETS: string[][] = [
+	// Phones / tech
+	[
+		"apple",
+		"iphone 13",
+	],
+	[
+		"apple",
+		"iphone 12 pro",
+	],
+	[
+		"apple",
+		"iphone se",
+	],
+	[
+		"samsung",
+		"galaxy s21",
+	],
+	[
+		"samsung",
+		"galaxy a52",
+	],
+	[
+		"xiaomi",
+		"redmi note 10",
+	],
+	[
+		"google",
+		"pixel 7",
+	],
+	[
+		"oneplus",
+		"9 pro",
+	],
+
+	// Laptops / tablets
+	[
+		"macbook",
+		"pro 14",
+	],
+	[
+		"macbook",
+		"air m1",
+	],
+	[
+		"ipad",
+		"pro 11",
+	],
+	[
+		"ipad",
+		"air 5",
+	],
+	[
+		"lenovo",
+		"thinkpad t14",
+	],
+	[
+		"dell",
+		"xps 13",
+	],
+
+	// Audio / wearables
+	[
+		"airpods",
+		"pro 2",
+	],
+	[
+		"sony",
+		"wh-1000xm4",
+	],
+	[
+		"apple",
+		"watch series 8",
+	],
+	[
+		"garmin",
+		"forerunner 255",
+	],
+
+	// Consoles / gaming
+	[
+		"playstation 5",
+		"dualSense",
+	],
+	[
+		"xbox series x",
+		"controller",
+	],
+	[
+		"nintendo switch",
+		"oled",
+	],
+
+	// Cameras / drones
+	[
+		"gopro",
+		"hero 11",
+	],
+	[
+		"dji",
+		"mavic mini 2",
+	],
+	[
+		"canon",
+		"eos 80d",
+	],
+
+	// Fashion / shoes
+	[
+		"nike",
+		"air max 90",
+	],
+	[
+		"adidas",
+		"ultraboost",
+	],
+	[
+		"levis",
+		"501",
+	],
+
+	// Home / tools / misc
+	[
+		"dyson",
+		"v11",
+	],
+	[
+		"ikea",
+		"kallax",
+	],
+	[
+		"bosch",
+		"vrtačka",
+	],
+	[
+		"makita",
+		"šroubovák",
+	],
+	[
+		"trek",
+		"marlin 7",
+	], // bike
+	[
+		"bugaboo",
+		"kočárek",
+	],
+	[
+		"barum",
+		"zimní pneu",
+	],
+	[
+		"lego",
+		"millennium falcon",
+	],
+	[
+		"fender",
+		"stratocaster",
+	],
+];
+
+const ACTIONS = [
+	"prodám",
+	"koupím",
+	"vyměním",
+	"darujem",
+	"rezervace",
+];
+const CONDITIONS = [
+	"nové",
+	"jako nové",
+	"zánovní",
+	"použité",
+	"lehce jeté",
+	"na díly",
+];
+const COLORS = [
+	"černá",
+	"bílá",
+	"stříbrná",
+	"modrá",
+	"zelená",
+	"červená",
+	"fialová",
+];
+const STORAGE = [
+	"32GB",
+	"64GB",
+	"128GB",
+	"256GB",
+	"512GB",
+	"1TB",
+];
+const YEARS = [
+	"2019",
+	"2020",
+	"2021",
+	"2022",
+	"2023",
+	"2024",
+	"2025",
+];
+const SEPARATORS = [
+	" ",
+	" - ",
+	" | ",
+	", ",
+];
+const ENDINGS = [
+	"",
+	"",
+	"",
+	"",
+	".",
+	"!",
+	" (TOP)",
+	" *",
+	" – super stav",
+];
+
+/** optional random casing for one token (tests case-insensitivity of embedding) */
+function tweakCasing(s: string): string {
+	const mode = range(0, 4);
+	switch (mode) {
+		case 0:
+			return s.toLowerCase();
+		case 1:
+			return s.toUpperCase();
+		case 2:
+			// Capitalize each word
+			return s.replace(/\b\w/g, (m) => m.toUpperCase());
+		default:
+			return s;
+	}
+}
+
+function randomTitle(): string {
+	// 1) base keywords from a random set
+	const base = shuffle(pick(TITLE_SETS)).map((t) => tweakCasing(t));
+
+	// 2) optional prefix (action/condition)
+	const prefixBits = [
+		maybe(pick(ACTIONS), 0.35),
+		maybe(pick(CONDITIONS), 0.35),
+	].filter(Boolean) as string[];
+
+	// 3) optional attributes (color/storage/year), randomly 0-2 of them
+	const attrsPool = [
+		maybe(pick(COLORS), 0.4),
+		maybe(pick(STORAGE), 0.5),
+		maybe(pick(YEARS), 0.35),
+	].filter(Boolean) as string[];
+	const attrs = shuffle(attrsPool).slice(0, range(0, 2));
+
+	// 4) assemble segments & choose a separator
+	const sep = pick(SEPARATORS);
+	const parts = [
+		...prefixBits,
+		...base,
+		...attrs,
+	].filter(Boolean);
+	let title = parts.join(sep);
+
+	// 5) tiny chance to reverse the whole string order, tests extreme order sensitivity
+	if (Math.random() < 0.12) {
+		title = parts.reverse().join(sep);
+	}
+
+	// 6) ending punctuation/noise
+	title += pick(ENDINGS);
+
+	return title.trim();
+}
+
+/* ----------------------- PICSUM ----------------------- */
 export async function picsum(): Promise<Blob> {
 	const sig = genId();
 
@@ -61,6 +361,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						},
 					},
 				}).then((res) => res.data);
+
 				const locations = [
 					"Benátky nad Jizerou",
 					"Benešov",
@@ -121,7 +422,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				const uploadQueue = new PQueue({
 					concurrency,
 				});
-
 				const uploadIds = await Promise.all<tUpload>(
 					new Array(photos).fill(0).map(() =>
 						uploadQueue.add(async () => {
@@ -137,7 +437,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				const locationQueue = new PQueue({
 					concurrency,
 				});
-
 				const locationIds = await Promise.all<string>(
 					locations.map((locationName) =>
 						locationQueue.add(async () => {
@@ -171,7 +470,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							price: range(0, 99_999),
 							currency:
 								currencies[range(0, currencies.length - 1)]!,
-							title: `Some title ${genId()}`,
+							title: randomTitle(), // 👈 here
 							expiresAt:
 								tListingExpire[
 									Object.keys(tListingExpire)[
@@ -194,7 +493,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				for (let i = 0; i < limit; i++) {
 					queue.add(createListing);
 				}
-
 				await queue.onIdle();
 			},
 		});
