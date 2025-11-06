@@ -1,5 +1,7 @@
+import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
 import type { Migration } from "kysely";
+import pgvector from "pgvector";
 import categoriesCsData from "./0001-category/categories.cs.json";
 
 export const CategorySeedMigration: Migration = {
@@ -12,7 +14,25 @@ export const CategorySeedMigration: Migration = {
 						({
 							id: genId(),
 							group: category.group,
+							groupVec: pgvector.toSql(
+								embedMinHash({
+									value: category.group,
+									dimensions: 32,
+								}),
+							),
 							category: category.category,
+							categoryVec: pgvector.toSql(
+								embedMinHash({
+									value: category.category,
+									dimensions: 32,
+								}),
+							),
+							categoryGroupVec: pgvector.toSql(
+								embedMinHash({
+									value: `${category.group}-${category.category}`,
+									dimensions: 32,
+								}),
+							),
 							slug: category.slug,
 							sort: index,
 							locale: category.locale,

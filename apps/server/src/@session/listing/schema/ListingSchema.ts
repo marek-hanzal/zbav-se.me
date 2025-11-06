@@ -15,7 +15,10 @@ export const ListingSchema = z
 	})
 	.omit({
 		userId: true,
-		embedding: true,
+		titleVec: true,
+		priceVec: true,
+		conditionVec: true,
+		ageVec: true,
 	})
 	.openapi("Listing");
 
