@@ -1,4 +1,4 @@
-import type { Cls } from "@use-pico/cls";
+import { type Cls, tvc } from "@use-pico/cls";
 import { isString } from "@use-pico/common/is-string";
 import type { FC, ReactNode } from "react";
 import { Tx } from "../tx/Tx";
@@ -20,6 +20,7 @@ export namespace BadgeValue {
 		 * Value text to display in the badge.
 		 */
 		textValue: ReactNode;
+		action?: ReactNode;
 	}
 }
 
@@ -44,6 +45,7 @@ const defaultTweak: Cls.TweaksOf<BadgeCls> = {
 export const BadgeValue: FC<BadgeValue.Props> = ({
 	textLabel,
 	textValue,
+	action,
 	tweak,
 	//
 	...props
@@ -56,10 +58,22 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			]}
 			{...props}
 		>
-			<Tx
-				label={textLabel}
-				preset={"label"}
-			/>
+			<div
+				className={tvc([
+					"flex",
+					"flex-row",
+					"items-center",
+					"justify-between",
+					"w-full",
+				])}
+			>
+				<Tx
+					label={textLabel}
+					preset={"label"}
+				/>
+
+				{action}
+			</div>
 
 			{isString(textValue) ? (
 				<Tx

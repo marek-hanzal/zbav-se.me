@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
-					to: "/$locale/buyer/feed/select",
+					to: "/$locale/buyer/feed/$id/edit/view",
 				});
 			},
 		});
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 						theme={"dark"}
 						iconEnabled={ArrowRightIcon}
 						iconPosition={"right"}
-						label={"Feed edit finish (button)"}
+						label={"Feed - next and save (button)"}
 						size={"lg"}
 						loading={feedPatchMutation.isPending}
 						disabled={
@@ -73,7 +73,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 						onClick={() => {
 							if (!change) {
 								navigate({
-									to: "/$locale/buyer/feed/select",
+									to: "/$locale/buyer/feed/$id/edit/view",
 								});
 								return;
 							}

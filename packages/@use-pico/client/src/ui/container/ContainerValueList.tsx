@@ -22,6 +22,10 @@ export namespace ContainerValueList {
 		 * Function to render each item.
 		 */
 		render: (item: TItem) => ReactNode;
+		/**
+		 * Action element to display next to the title.
+		 */
+		action?: ReactNode;
 	}
 }
 
@@ -30,6 +34,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	textEmpty,
 	items,
 	render,
+	action,
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container height={"auto"}>
@@ -40,8 +45,9 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 						root: {
 							class: [
 								"flex",
-								"flex-col",
-								"items-start",
+								"flex-row",
+								"items-center",
+								"justify-between",
 								"h-fit",
 								"w-full",
 							],
@@ -57,6 +63,8 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 					label={textTitle}
 					preset={"label"}
 				/>
+
+				{action}
 			</Badge>
 
 			<Container

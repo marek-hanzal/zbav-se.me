@@ -122,7 +122,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 					/>
 				}
 			>
-				<FeedContainer feed={zFeed.parse(state)} />
+				<FeedContainer
+					feed={zFeed
+						.omit({
+							id: true,
+						})
+						.parse(state)}
+				/>
 			</TitleContainer>
 		);
 	},

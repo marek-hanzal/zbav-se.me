@@ -10,7 +10,7 @@
 	"dependencies": {
 		"@hono-rate-limiter/redis": "0.1.4",
 		"@hono/zod-openapi": "1.1.4",
-		"@scalar/hono-api-reference": "0.9.23",
+		"@scalar/hono-api-reference": "0.9.24",
 		"@upstash/redis": "1.35.6",
 		"@use-pico/common": "5.0.104",
 		"@zbav-se.me/common": "0.5.0",

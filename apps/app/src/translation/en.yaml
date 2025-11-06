@@ -13,9 +13,6 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
   ref: Upload (title)
   value: Upload (title)
-0aa1048dff4a2f16c3f29e0491ce38c1ce74afce69e97fb801c2d303:
-  ref: Feed name not selected
-  value: Feed name not selected
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -79,6 +76,9 @@
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
+451747ec6aa8bc43cef2a9c911e59b440dc449b2d31301340782e7c8:
+  ref: Edit feed (button)
+  value: Edit feed (button)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -175,9 +175,6 @@
 80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
   ref: No more listings to show (message)
   value: No more listings to show (message)
-8133eb7c54096c7ca235330aa6156646be60d979790c794de0dea8a2:
-  ref: Feed edit finish (button)
-  value: Feed edit finish (button)
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
   ref: No listings (title)
   value: No listings (title)
@@ -315,6 +312,9 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d7f992496335423aba74c57614c83dd4949c4fdc39e6cc905580b45d:
+  ref: Feed detail (title)
+  value: Feed detail (title)
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
   ref: Feed title (hint)
   value: Feed title (hint)
@@ -339,6 +339,9 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
   ref: Shop (label)
   value: Shop (label)
+e590492a612b479610ce9aeb09c55b9eb483968a6a924ff1d9791aa1:
+  ref: Feed - next and save (button)
+  value: Feed - next and save (button)
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
   ref: Seller home (title)
   value: Seller home (title)

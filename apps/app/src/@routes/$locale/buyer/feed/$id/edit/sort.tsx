@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/sort")({
 						iconEnabled={ArrowRightIcon}
 						iconPosition={"right"}
 						size={"lg"}
-						label={"Next - feed category (button)"}
+						label={"Feed - next and save (button)"}
 						loading={feedPatchMutation.isPending}
 						disabled={feedPatchMutation.isPending}
 						full

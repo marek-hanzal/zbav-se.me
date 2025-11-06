@@ -31,9 +31,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/select"}
+						to={"/$locale/buyer/feed/$id/edit/view"}
 						params={{
 							locale,
+							id: feed.id,
 						}}
 						tone={"secondary"}
 					/>
@@ -47,7 +48,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 						loading={feedPatchMutation.isPending}
 						disabled={feedPatchMutation.isPending}
 						size={"lg"}
-						label={"Next - feed sort (button)"}
+						label={"Feed - next and save (button)"}
 						full
 						onClick={() => {
 							if (!change) {

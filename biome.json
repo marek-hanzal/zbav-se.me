@@ -43,7 +43,8 @@
 				"noStaticElementInteractions": "off"
 			},
 			"suspicious": {
-				"noExplicitAny": "off"
+				"noExplicitAny": "off",
+				"noAssignInExpressions": "off"
 			},
 			"security": {
 				"noDangerouslySetInnerHtml": "off"

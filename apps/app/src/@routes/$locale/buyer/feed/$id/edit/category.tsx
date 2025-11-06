@@ -79,7 +79,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 						size={"lg"}
 						loading={feedPatchMutation.isPending}
 						disabled={feedPatchMutation.isPending}
-						label={"Next - feed condition (button)"}
+						label={"Feed - next and save (button)"}
 						full
 						onClick={() => {
 							if (!change) {

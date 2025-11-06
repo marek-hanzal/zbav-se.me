@@ -17,7 +17,11 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
 	...props
 }) => {
 	return (
-		<Container {...props}>
+		<Container
+			layout={"vertical-centered"}
+			items={"center"}
+			{...props}
+		>
 			<Status
 				textTitle={"Feed name (title)"}
 				textMessage={"Feed name (hint)"}
