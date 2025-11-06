@@ -129,7 +129,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 
 								{listingQuery.hasNextPage ||
 								listingQuery.isFetching ? null : (
-									<Sheet>
+									<Sheet round={"unset"}>
 										<Status
 											icon={
 												"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
