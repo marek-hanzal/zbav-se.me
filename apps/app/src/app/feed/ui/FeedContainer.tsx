@@ -143,157 +143,143 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 					)}
 				/>
 
-				<Container height={"auto"}>
-					<ContainerValueList
-						textTitle={"Feed sorting (label)"}
-						textEmpty={"Feed sorting not selected"}
-						items={(feed.sort ?? []).map((sortItem, index) => ({
-							id: `${sortItem.value}-${index}`,
-							...sortItem,
-						}))}
-						render={(sortItem) => (
-							<Tx
-								label={`Listing common sort value ${sortItem.value} - ${sortItem.sort}`}
+				<ContainerValueList
+					textTitle={"Feed sorting (label)"}
+					textEmpty={"Feed sorting not selected"}
+					items={(feed.sort ?? []).map((sortItem, index) => ({
+						id: `${sortItem.value}-${index}`,
+						...sortItem,
+					}))}
+					render={(sortItem) => (
+						<Tx
+							label={`Listing common sort value ${sortItem.value} - ${sortItem.sort}`}
+						/>
+					)}
+					action={
+						feed.id ? (
+							<LinkTo
+								icon={EditIcon}
+								to={"/$locale/buyer/feed/$id/edit/sort"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
 							/>
-						)}
-						action={
-							feed.id ? (
-								<LinkTo
-									icon={EditIcon}
-									to={"/$locale/buyer/feed/$id/edit/sort"}
-									params={{
-										locale,
-										id: feed.id,
-									}}
-								/>
-							) : null
-						}
-					/>
-				</Container>
+						) : null
+					}
+				/>
 
 				<Data
 					result={categoryCollectionQuery}
 					renderSuccess={({ data }) => (
-						<Container height={"auto"}>
-							<ContainerValueList
-								textTitle={"Feed category (label)"}
-								textEmpty={"Feed category not selected"}
-								items={data.data}
-								render={(category) => (
-									<div
-										className={
-											"flex flex-col gap-0.5 items-start"
+						<ContainerValueList
+							textTitle={"Feed category (label)"}
+							textEmpty={"Feed category not selected"}
+							items={data.data}
+							render={(category) => (
+								<div
+									className={
+										"flex flex-col gap-0.5 items-start"
+									}
+								>
+									<Typo
+										label={category.group}
+										size={"xs"}
+									/>
+									<Typo label={category.category} />
+								</div>
+							)}
+							action={
+								feed.id ? (
+									<LinkTo
+										icon={EditIcon}
+										to={
+											"/$locale/buyer/feed/$id/edit/category"
 										}
-									>
-										<Typo
-											label={category.group}
-											size={"xs"}
-										/>
-										<Typo label={category.category} />
-									</div>
-								)}
-								action={
-									feed.id ? (
-										<LinkTo
-											icon={EditIcon}
-											to={
-												"/$locale/buyer/feed/$id/edit/category"
-											}
-											params={{
-												locale,
-												id: feed.id,
-											}}
-										/>
-									) : null
-								}
-							/>
-						</Container>
+										params={{
+											locale,
+											id: feed.id,
+										}}
+									/>
+								) : null
+							}
+						/>
 					)}
 					renderEmpty={() => (
-						<Container height={"auto"}>
-							<ContainerValueList
-								textTitle={"Feed category (label)"}
-								textEmpty={"Feed category not selected"}
-								items={[]}
-								render={() => null}
-								action={
-									feed.id ? (
-										<LinkTo
-											icon={EditIcon}
-											to={
-												"/$locale/buyer/feed/$id/edit/category"
-											}
-											params={{
-												locale,
-												id: feed.id,
-											}}
-										/>
-									) : null
-								}
-							/>
-						</Container>
+						<ContainerValueList
+							textTitle={"Feed category (label)"}
+							textEmpty={"Feed category not selected"}
+							items={[]}
+							render={() => null}
+							action={
+								feed.id ? (
+									<LinkTo
+										icon={EditIcon}
+										to={
+											"/$locale/buyer/feed/$id/edit/category"
+										}
+										params={{
+											locale,
+											id: feed.id,
+										}}
+									/>
+								) : null
+							}
+						/>
 					)}
 				/>
 
-				<Container height={"auto"}>
-					<ContainerValueList
-						textTitle={"Feed condition (label)"}
-						textEmpty={"Feed condition not selected"}
-						items={(feed.filter?.conditionIn ?? []).map(
-							(condition) => ({
-								id: String(condition),
-								condition,
-							}),
-						)}
-						render={(item) => (
-							<Tx
-								label={`Condition - Overall [${item.condition}] (hint)`}
+				<ContainerValueList
+					textTitle={"Feed condition (label)"}
+					textEmpty={"Feed condition not selected"}
+					items={(feed.filter?.conditionIn ?? []).map(
+						(condition) => ({
+							id: String(condition),
+							condition,
+						}),
+					)}
+					render={(item) => (
+						<Tx
+							label={`Condition - Overall [${item.condition}] (hint)`}
+						/>
+					)}
+					action={
+						feed.id ? (
+							<LinkTo
+								icon={EditIcon}
+								to={"/$locale/buyer/feed/$id/edit/condition"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
 							/>
-						)}
-						action={
-							feed.id ? (
-								<LinkTo
-									icon={EditIcon}
-									to={
-										"/$locale/buyer/feed/$id/edit/condition"
-									}
-									params={{
-										locale,
-										id: feed.id,
-									}}
-								/>
-							) : null
-						}
-					/>
-				</Container>
+						) : null
+					}
+				/>
 
-				<Container height={"auto"}>
-					<ContainerValueList
-						textTitle={"Feed age (label)"}
-						textEmpty={"Feed age not selected"}
-						items={(feed.filter?.ageIn ?? []).map((age) => ({
-							id: String(age),
-							age,
-						}))}
-						render={(item) => (
-							<Tx
-								label={`Condition - Age [${item.age}] (hint)`}
+				<ContainerValueList
+					textTitle={"Feed age (label)"}
+					textEmpty={"Feed age not selected"}
+					items={(feed.filter?.ageIn ?? []).map((age) => ({
+						id: String(age),
+						age,
+					}))}
+					render={(item) => (
+						<Tx label={`Condition - Age [${item.age}] (hint)`} />
+					)}
+					action={
+						feed.id ? (
+							<LinkTo
+								icon={EditIcon}
+								to={"/$locale/buyer/feed/$id/edit/age"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
 							/>
-						)}
-						action={
-							feed.id ? (
-								<LinkTo
-									icon={EditIcon}
-									to={"/$locale/buyer/feed/$id/edit/age"}
-									params={{
-										locale,
-										id: feed.id,
-									}}
-								/>
-							) : null
-						}
-					/>
-				</Container>
+						) : null
+					}
+				/>
 			</VariantProvider>
 		</Container>
 	);

@@ -37,7 +37,10 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	action,
 }: ContainerValueList.Props<TItem>) => {
 	return (
-		<Container height={"auto"}>
+		<Container
+			height={"auto"}
+			round={"lg"}
+		>
 			<Badge
 				theme={"light"}
 				tweak={{
@@ -72,6 +75,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				gap={"sm"}
 				square={"sm"}
 				height={"auto"}
+				round={"lg"}
 			>
 				{items.map((item) => (
 					<Badge
