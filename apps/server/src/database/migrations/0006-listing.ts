@@ -2,7 +2,6 @@ import { type Migration, sql } from "kysely";
 
 export const ListingMigration: Migration = {
 	async up(db) {
-		// Tabulka + uložený normalizovaný název
 		await db.schema
 			.createTable("listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())

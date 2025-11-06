@@ -3,15 +3,24 @@ import { embedding } from "../../../src/embedding";
 
 it("should combine multiple embedding blocks", () => {
 	const block1 = {
-		vector: new Float32Array([1, 2]),
+		vector: new Float32Array([
+			1,
+			2,
+		]),
 		weight: 1,
 	};
 	const block2 = {
-		vector: new Float32Array([3, 4]),
+		vector: new Float32Array([
+			3,
+			4,
+		]),
 		weight: 1,
 	};
 	const result = embedding({
-		blocks: [block1, block2],
+		blocks: [
+			block1,
+			block2,
+		],
 	});
 	expect(result.length).toBe(4);
 	const magnitude = Math.sqrt(

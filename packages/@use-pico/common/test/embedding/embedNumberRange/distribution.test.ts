@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: Ssst */
 import { expect, it } from "vitest";
 import { embedNumberRange } from "../../../src/embedding";
 

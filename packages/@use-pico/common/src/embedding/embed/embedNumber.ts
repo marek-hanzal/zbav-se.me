@@ -20,7 +20,7 @@ export const embedNumber = ({
 	order,
 	dimensions,
 	weight,
-}: embedNumber.Props): Float32Array => {
+}: embedNumber.Props): Float32Array<ArrayBuffer> => {
 	const hash = hasher(value.toString());
 	const vector = new Float32Array(dimensions);
 

@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { CurrencyListSchema } from "../../../schema/CurrencyListSchema";
+import { VectorSchema } from "../../../schema/VectorSchema";
 
 export const ListingDbSchema = z.object({
 	id: z.string().openapi({
@@ -42,6 +43,9 @@ export const ListingDbSchema = z.object({
 	}),
 	description: z.string().nullish().openapi({
 		description: "Description of the item",
+	}),
+	embedding: VectorSchema.openapi({
+		description: "Embedding vector for similarity search",
 	}),
 });
 

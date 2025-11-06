@@ -15,6 +15,7 @@ export const ListingSchema = z
 	})
 	.omit({
 		userId: true,
+		embedding: true,
 	})
 	.openapi("Listing");
 

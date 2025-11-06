@@ -20,7 +20,7 @@ export const embedNumberRange = ({
 	max,
 	dimensions,
 	weight,
-}: embedNumberRange.Props): Float32Array => {
+}: embedNumberRange.Props): Float32Array<ArrayBuffer> => {
 	// Clamp value to range
 	const clamped = Math.max(min, Math.min(max, value));
 	// Normalize to [0, 1]

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/style/noNonNullAssertion: Sssht */
 import { expect, it } from "vitest";
 import { unit } from "../../../src/embedding";
 
