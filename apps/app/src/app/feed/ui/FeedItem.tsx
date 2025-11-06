@@ -1,12 +1,10 @@
-import { ArrowRightIcon, TrashIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeed } from "@zbav-se.me/sdk/api/session";
-import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation";
 import { withListingCountQuery } from "@zbav-se.me/sdk/query";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -22,8 +20,6 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 	const listingCountQuery = withListingCountQuery.useSuspenseQuery({
 		filter: feed.filter,
 	});
-
-	const deleteMutation = withFeedDeleteMutation.useMutation();
 
 	return (
 		<Badge
@@ -67,39 +63,17 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					"flex flex-row gap-2 items-center justify-between w-full"
 				}
 			>
-				<div className="flex flex-row gap-2 items-center">
-					<ConfirmButton
-						iconEnabled={TrashIcon}
-						size={"sm"}
-						disabled={deleteMutation.isPending}
-						loading={deleteMutation.isPending}
-						buttonProps={{
-							tone: "secondary",
-						}}
-						confirmProps={{
-							tone: "danger",
-							onClick() {
-								deleteMutation.mutate({
-									where: {
-										id: feed.id,
-									},
-								});
-							},
-						}}
-					/>
-
-					<LinkTo
-						icon={FeedIcon}
-						to={"/$locale/buyer/feed/$id/edit/view"}
-						params={{
-							locale,
-							id: feed.id,
-						}}
-						tone={"secondary"}
-					>
-						<Tx label={"Detail (link)"} />
-					</LinkTo>
-				</div>
+				<LinkTo
+					icon={FeedIcon}
+					to={"/$locale/buyer/feed/$id/edit/view"}
+					params={{
+						locale,
+						id: feed.id,
+					}}
+					tone={"secondary"}
+				>
+					<Tx label={"Detail (link)"} />
+				</LinkTo>
 
 				<Badge
 					tone={"secondary"}
