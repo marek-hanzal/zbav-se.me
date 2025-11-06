@@ -78,6 +78,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/sort")({
 				}
 			>
 				<ListingSortSelect
+					withGeo={!!feed.meta?.latLon}
 					value={sort}
 					onChange={(value) => {
 						setChange(true);

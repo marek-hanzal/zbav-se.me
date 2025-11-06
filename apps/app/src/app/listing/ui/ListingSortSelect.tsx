@@ -7,7 +7,7 @@ import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
 	export interface Props extends Container.Props {
-		withGeo?: boolean;
+		withGeo: boolean | undefined;
 		value: tListingSort[];
 		onChange(sort: (prev: tListingSort[]) => tListingSort[]): void;
 	}

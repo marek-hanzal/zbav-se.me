@@ -77,6 +77,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 				}
 			>
 				<ListingSortSelect
+					withGeo={!!state.meta?.latLon}
 					value={sort}
 					onChange={setSort}
 				/>
