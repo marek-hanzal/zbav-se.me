@@ -6,8 +6,9 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc, VariantProvider } from "@use-pico/cls";
 import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
+import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { type FC, memo } from "react";
+import { type FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
@@ -25,8 +26,131 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 			...tGallery[],
 		];
 
+		const containerRef = useRef<HTMLDivElement>(null);
+		const timerRef = useRef<NodeJS.Timeout | null>(null);
+		const [isInViewport, setIsInViewport] = useState(false);
+
+		const scoreMutation = withListingScoreCreateMutation.useMutation();
+
+		const sendViewScore = useCallback(() => {
+			if (scoreMutation.isPending) {
+				return;
+			}
+
+			const isTabVisible = document.visibilityState === "visible";
+
+			if (!isTabVisible) {
+				return;
+			}
+
+			scoreMutation.mutate({
+				listingId: listing.id,
+				score: 0,
+			});
+		}, [
+			scoreMutation,
+			listing.id,
+		]);
+
+		useEffect(() => {
+			const container = containerRef.current;
+			if (!container) {
+				return;
+			}
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					const [entry] = entries;
+					if (!entry) {
+						return;
+					}
+					if (entry.isIntersecting) {
+						setIsInViewport(true);
+						return;
+					}
+
+					setIsInViewport(false);
+					if (timerRef.current) {
+						clearTimeout(timerRef.current);
+						timerRef.current = null;
+					}
+				},
+				{
+					threshold: 0.5,
+				},
+			);
+
+			observer.observe(container);
+
+			return () => {
+				observer.disconnect();
+				if (timerRef.current) {
+					clearTimeout(timerRef.current);
+				}
+			};
+		}, []);
+
+		useEffect(() => {
+			if (!isInViewport) {
+				return;
+			}
+
+			const isTabVisible = document.visibilityState === "visible";
+			if (!isTabVisible) {
+				return;
+			}
+
+			timerRef.current = setTimeout(() => {
+				sendViewScore();
+			}, 1600);
+
+			return () => {
+				if (timerRef.current) {
+					clearTimeout(timerRef.current);
+					timerRef.current = null;
+				}
+			};
+		}, [
+			isInViewport,
+			sendViewScore,
+		]);
+
+		useEffect(() => {
+			const handleVisibilityChange = () => {
+				if (document.visibilityState === "hidden") {
+					if (timerRef.current) {
+						clearTimeout(timerRef.current);
+						timerRef.current = null;
+					}
+				} else if (
+					document.visibilityState === "visible" &&
+					isInViewport
+				) {
+					timerRef.current = setTimeout(() => {
+						sendViewScore();
+					}, 1600);
+				}
+			};
+
+			document.addEventListener(
+				"visibilitychange",
+				handleVisibilityChange,
+			);
+
+			return () => {
+				document.removeEventListener(
+					"visibilitychange",
+					handleVisibilityChange,
+				);
+			};
+		}, [
+			isInViewport,
+			sendViewScore,
+		]);
+
 		return (
 			<div
+				ref={containerRef}
 				className={tvc([
 					"relative",
 				])}
