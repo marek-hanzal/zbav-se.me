@@ -64,7 +64,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/buyer/feed/wizard/title"}
+						to={"/$locale/buyer/feed/wizard/age"}
 						params={{
 							locale,
 						}}
@@ -82,7 +82,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							label={"Next - Feed title (button)"}
+							label={"Next - Feed age (button)"}
 							size={"lg"}
 							full
 						/>

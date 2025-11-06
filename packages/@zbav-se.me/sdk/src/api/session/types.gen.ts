@@ -359,6 +359,10 @@ export type tListingWhere = {
      * This filter matches listings with age less than or equal to the provided value
      */
     ageMax?: number;
+    /**
+     * This filter matches listings with ages in the provided array
+     */
+    ageIn?: Array<number> | null;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyList;
@@ -466,6 +470,10 @@ export type tListingFilter = {
      * This filter matches listings with age less than or equal to the provided value
      */
     ageMax?: number;
+    /**
+     * This filter matches listings with ages in the provided array
+     */
+    ageIn?: Array<number> | null;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyList;

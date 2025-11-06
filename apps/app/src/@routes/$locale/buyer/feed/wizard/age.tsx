@@ -1,38 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSelection } from "@use-pico/client/hook";
 import {
 	ArrowLeftIcon,
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
-import { TextInput } from "@use-pico/client/ui/text-input";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
+import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
+export const Route = createFileRoute("/$locale/buyer/feed/wizard/age")({
 	validateSearch: FeedWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [title, setTitle] = useState(state.filter?.title || "");
+
+		const selection = useSelection<Rating.RatingItem>({
+			mode: "multi",
+			initial: state.filter?.ageIn?.map((item) => ({
+				id: String(item),
+			})),
+		});
+
+		const ageIn = selection.optional
+			.multi()
+			.map((item) => Number.parseInt(item.id, 10));
 
 		return (
 			<TitleContainer
-				textTitle={"Feed title (title)"}
+				textTitle={"Feed age (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/wizard/age"}
-						search={state}
+						to={"/$locale/buyer/feed/wizard/condition"}
 						params={{
 							locale,
+						}}
+						search={{
+							...state,
 						}}
 						tone={"secondary"}
 					/>
@@ -56,7 +64,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/buyer/feed/wizard/name"}
+						to={"/$locale/buyer/feed/wizard/title"}
 						params={{
 							locale,
 						}}
@@ -64,7 +72,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 							...state,
 							filter: {
 								...state.filter,
-								title,
+								ageIn,
 							},
 						}}
 						full
@@ -74,44 +82,17 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							label={"Next - feed name (button)"}
+							label={"Next - Feed title (button)"}
 							size={"lg"}
 							full
 						/>
 					</LinkTo>
 				}
 			>
-				<Container
-					layout={"vertical-centered"}
-					items={"center"}
-					gap={"md"}
-					width={"fit"}
-					height={"auto"}
-				>
-					<Status
-						textTitle={"Feed title (title)"}
-						action={
-							<FormField full>
-								{(props) => (
-									<TextInput
-										value={title}
-										onChange={(e) =>
-											setTitle(e.target.value)
-										}
-										placeholder={"Feed title (placeholder)"}
-										autoFocus={!title}
-										{...props}
-									/>
-								)}
-							</FormField>
-						}
-					>
-						<Mx
-							label={"Feed title (hint)"}
-							tone={"secondary"}
-						/>
-					</Status>
-				</Container>
+				<Rating
+					textHint={(value) => `Condition - Age [${value}] (hint)`}
+					selection={selection}
+				/>
 			</TitleContainer>
 		);
 	},

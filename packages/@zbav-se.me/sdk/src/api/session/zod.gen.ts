@@ -461,22 +461,26 @@ export const zListingWhere = z.object({
     ])),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
-    conditionMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with condition greater than or equal to the provided value'
     })),
-    conditionMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with condition less than or equal to the provided value'
     })),
     conditionIn: z.optional(z.union([
-        z.array(z.number().gte(0)),
+        z.array(z.number().gte(0).lte(6)),
         z.null()
     ])),
-    ageMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age greater than or equal to the provided value'
     })),
-    ageMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age less than or equal to the provided value'
     })),
+    ageIn: z.optional(z.union([
+        z.array(z.number().gte(0).lte(6)),
+        z.null()
+    ])),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
@@ -525,22 +529,26 @@ export const zListingFilter = z.object({
     ])),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
-    conditionMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with condition greater than or equal to the provided value'
     })),
-    conditionMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with condition less than or equal to the provided value'
     })),
     conditionIn: z.optional(z.union([
-        z.array(z.number().gte(0)),
+        z.array(z.number().gte(0).lte(6)),
         z.null()
     ])),
-    ageMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age greater than or equal to the provided value'
     })),
-    ageMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+    ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age less than or equal to the provided value'
     })),
+    ageIn: z.optional(z.union([
+        z.array(z.number().gte(0).lte(6)),
+        z.null()
+    ])),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),

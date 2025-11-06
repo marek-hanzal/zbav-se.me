@@ -261,6 +261,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 								</LinkTo>
 							)}
 						/>
+
 						<Container height={"auto"}>
 							<LinkTo
 								to={"/$locale/buyer/feed/wizard/sort"}
@@ -288,6 +289,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 								/>
 							</LinkTo>
 						</Container>
+
 						<Data
 							result={categoryCollectionQuery}
 							renderSuccess={({ data }) => (
@@ -355,6 +357,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 								</Container>
 							)}
 						/>
+
 						<Container height={"auto"}>
 							<LinkTo
 								to={"/$locale/buyer/feed/wizard/condition"}
@@ -377,6 +380,34 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 									render={(item) => (
 										<Tx
 											label={`Condition - Overall [${item.condition}] (hint)`}
+										/>
+									)}
+								/>
+							</LinkTo>
+						</Container>
+
+						<Container height={"auto"}>
+							<LinkTo
+								to={"/$locale/buyer/feed/wizard/age"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<ContainerValueList
+									textTitle={"Feed age (label)"}
+									textEmpty={"Feed age not selected"}
+									items={(state.filter?.ageIn ?? []).map(
+										(age) => ({
+											id: String(age),
+											age,
+										}),
+									)}
+									render={(item) => (
+										<Tx
+											label={`Condition - Age [${item.age}] (hint)`}
 										/>
 									)}
 								/>

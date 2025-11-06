@@ -72,6 +72,10 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		query = query.where("l.age", "<=", where.ageMax);
 	}
 
+	if (where.ageIn && where.ageIn.length > 0) {
+		query = query.where("l.age", "in", where.ageIn);
+	}
+
 	if (where.categoryId) {
 		query = query.where("l.categoryId", "=", where.categoryId);
 	}

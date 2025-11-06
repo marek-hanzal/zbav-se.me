@@ -394,26 +394,39 @@ export const sListingWhere = {
         },
         conditionMin: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
         },
         conditionMax: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
         },
         conditionIn: {
             type: ['array', 'null'],
             items: {
                 type: 'number',
-                minimum: 0
+                minimum: 0,
+                maximum: 6
             }
         },
         ageMin: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
         },
         ageMax: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
+        },
+        ageIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'number',
+                minimum: 0,
+                maximum: 6
+            }
         },
         categoryId: {
             '$ref': '#/components/schemas/CategoryId'
@@ -512,26 +525,39 @@ export const sListingFilter = {
         },
         conditionMin: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
         },
         conditionMax: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
         },
         conditionIn: {
             type: ['array', 'null'],
             items: {
                 type: 'number',
-                minimum: 0
+                minimum: 0,
+                maximum: 6
             }
         },
         ageMin: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
         },
         ageMax: {
             type: 'number',
-            minimum: 0
+            minimum: 0,
+            maximum: 6
+        },
+        ageIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'number',
+                minimum: 0,
+                maximum: 6
+            }
         },
         categoryId: {
             '$ref': '#/components/schemas/CategoryId'

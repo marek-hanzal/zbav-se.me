@@ -16,25 +16,29 @@ export const ListingFilterSchema = z
 			type: "PriceMax",
 			description: "Sets the maximum price for the listings",
 		}).optional(),
-		conditionMin: z.number().gte(0).optional().openapi({
+		conditionMin: z.number().gte(0).lte(6).optional().openapi({
 			description:
 				"This filter matches listings with condition greater than or equal to the provided value",
 		}),
-		conditionMax: z.number().gte(0).optional().openapi({
+		conditionMax: z.number().gte(0).lte(6).optional().openapi({
 			description:
 				"This filter matches listings with condition less than or equal to the provided value",
 		}),
-		conditionIn: z.array(z.number().gte(0)).nullish().openapi({
+		conditionIn: z.array(z.number().gte(0).lte(6)).nullish().openapi({
 			description:
 				"This filter matches listings with conditions in the provided array",
 		}),
-		ageMin: z.number().gte(0).optional().openapi({
+		ageMin: z.number().gte(0).lte(6).optional().openapi({
 			description:
 				"This filter matches listings with age greater than or equal to the provided value",
 		}),
-		ageMax: z.number().gte(0).optional().openapi({
+		ageMax: z.number().gte(0).lte(6).optional().openapi({
 			description:
 				"This filter matches listings with age less than or equal to the provided value",
+		}),
+		ageIn: z.array(z.number().gte(0).lte(6)).nullish().openapi({
+			description:
+				"This filter matches listings with ages in the provided array",
 		}),
 		categoryId: CategoryIdSchema({
 			description:
