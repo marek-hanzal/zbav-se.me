@@ -3,6 +3,7 @@ export { withCategoryCountQuery } from "./withCategoryCountQuery";
 export { withCategoryFetchQuery } from "./withCategoryFetchQuery";
 export { withFeedCollectionQuery } from "./withFeedCollectionQuery";
 export { withFeedCountQuery } from "./withFeedCountQuery";
+export { withFeedFetchQuery } from "./withFeedFetchQuery";
 export { withListingCollectionQuery } from "./withListingCollectionQuery";
 export { withListingCountQuery } from "./withListingCountQuery";
 export { withListingFetchQuery } from "./withListingFetchQuery";

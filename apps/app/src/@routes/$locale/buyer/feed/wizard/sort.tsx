@@ -4,15 +4,12 @@ import {
 	ArrowRightIcon,
 	CloseIcon,
 } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingSort } from "@zbav-se.me/sdk/api/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { useId, useState } from "react";
+import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
+import { ListingSortSelect } from "~/app/listing/ui/ListingSortSelect";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 	validateSearch: FeedWizardSchema,
@@ -20,8 +17,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const sortKeyId = useId();
-		const [sort, setSort] = useState<tListingSort[]>(state.sort ?? []);
+		const [sort, setSort] = useState(state.sort ?? []);
 
 		return (
 			<TitleContainer
@@ -80,109 +76,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 					</LinkTo>
 				}
 			>
-				<Container
-					layout={"vertical-flex"}
-					scroll={"vertical"}
-					gap={"sm"}
-					height={"auto"}
-					width={"fit"}
-				>
-					{(
-						(
-							[
-								"age",
-								"price",
-								"condition",
-								state.meta?.latLon ? "geo" : undefined,
-							] satisfies (tListingSort["value"] | undefined)[]
-						).filter(Boolean) as tListingSort["value"][]
-					).map((sortValue) => {
-						const current = sort.find((s) => s.value === sortValue);
-
-						const position = current
-							? sort.findIndex((s) => s.value === sortValue) + 1
-							: undefined;
-
-						return (
-							<Button
-								key={`${sortKeyId}-${sortValue}`}
-								size={"xl"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"justify-start",
-												"text-left",
-											],
-										},
-									},
-								}}
-								full
-								onClick={() => {
-									setSort((prev) => {
-										const idx = prev.findIndex(
-											(s) => s.value === sortValue,
-										);
-
-										if (idx < 0) {
-											return [
-												...prev,
-												{
-													value: sortValue,
-													sort: "asc",
-												} satisfies tListingSort,
-											];
-										}
-
-										const cur = prev[idx];
-
-										if (!cur || cur.value !== sortValue) {
-											return prev;
-										}
-
-										if (cur.sort === "asc") {
-											const next = [
-												...prev,
-											];
-											next[idx] = {
-												value: cur.value,
-												sort: "desc",
-											} satisfies tListingSort;
-											return next;
-										}
-
-										return prev.filter((_, i) => i !== idx);
-									});
-								}}
-							>
-								<div className="flex items-center gap-2">
-									<Badge
-										tone={
-											position ? "primary" : "secondary"
-										}
-										theme={position ? "dark" : "light"}
-										size={"sm"}
-										tweak={{
-											slot: {
-												root: {
-													class: [
-														"py-2",
-														"px-4",
-													],
-												},
-											},
-										}}
-									>
-										{position ?? "-"}
-									</Badge>
-									<Tx
-										label={`Listing common sort value ${sortValue} - ${current?.sort ?? "unused"}`}
-									/>
-								</div>
-							</Button>
-						);
-					})}
-				</Container>
+				<ListingSortSelect
+					value={sort}
+					onChange={setSort}
+				/>
 			</TitleContainer>
 		);
 	},

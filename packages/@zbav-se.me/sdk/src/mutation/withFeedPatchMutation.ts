@@ -5,6 +5,7 @@ import type {
 	tFeedPatch,
 } from "../api/session/types.gen";
 import { withFeedCollectionQuery } from "../query/withFeedCollectionQuery";
+import { withFeedFetchQuery } from "../query/withFeedFetchQuery";
 
 export const withFeedPatchMutation = withMutation<
 	tFeedPatch,
@@ -25,5 +26,6 @@ export const withFeedPatchMutation = withMutation<
 	},
 	invalidate: [
 		withFeedCollectionQuery,
+		withFeedFetchQuery,
 	],
 });

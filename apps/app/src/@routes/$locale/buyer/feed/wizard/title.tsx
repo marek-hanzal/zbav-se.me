@@ -5,15 +5,11 @@ import {
 	CloseIcon,
 } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
-import { TextInput } from "@use-pico/client/ui/text-input";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
+import { FeedTitleContainer } from "~/app/feed/ui/FeedTitleContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 	validateSearch: FeedWizardSchema,
@@ -81,37 +77,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 					</LinkTo>
 				}
 			>
-				<Container
-					layout={"vertical-centered"}
-					items={"center"}
-					gap={"md"}
-					width={"fit"}
-					height={"auto"}
-				>
-					<Status
-						textTitle={"Feed title (title)"}
-						action={
-							<FormField full>
-								{(props) => (
-									<TextInput
-										value={title}
-										onChange={(e) =>
-											setTitle(e.target.value)
-										}
-										placeholder={"Feed title (placeholder)"}
-										autoFocus={!title}
-										{...props}
-									/>
-								)}
-							</FormField>
-						}
-					>
-						<Mx
-							label={"Feed title (hint)"}
-							tone={"secondary"}
-						/>
-					</Status>
-				</Container>
+				<FeedTitleContainer
+					value={title}
+					onChange={setTitle}
+				/>
 			</TitleContainer>
 		);
 	},
