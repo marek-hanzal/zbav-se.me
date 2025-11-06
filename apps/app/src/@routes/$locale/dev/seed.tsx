@@ -8,6 +8,7 @@ import {
 	apiCategoryCollection,
 	apiListingCreate,
 	apiLocationAutocomplete,
+	sListingCreate,
 	tCurrencyList,
 	tListingExpire,
 	type tUpload,
@@ -16,6 +17,8 @@ import { withUploadMutation } from "@zbav-se.me/sdk/mutation";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import axios from "axios";
 import PQueue from "p-queue";
+
+/* ----------------------- UTILITIES ----------------------- */
 
 function range(min: number, max: number): number {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -38,20 +41,28 @@ function maybe<T>(val: T, p = 0.5): T | undefined {
 	return Math.random() < p ? val : undefined;
 }
 
+/* ----------------------- TITLE GENERATOR ----------------------- */
 /**
- * TITLE GENERATOR
- * --------------------------------------------------
- * We prepare 20+ "sets" of keywords. For each title:
- *  - choose a set, shuffle order (tests order sensitivity),
- *  - optionally prepend an action or condition,
- *  - optionally append attributes (storage, color, year),
- *  - randomly vary separators/casing/punctuation.
+ * Strategy:
+ *  - Larger base sets (brand+model / item+variant).
+ *  - Czech marketplace reality: Alza/účtenka/krabice/sleva/odběr/pošta/baterie %...
+ *  - Attributes: color, storage/RAM/SSD, sizes, year, tags, fulfillment.
+ *  - Mild noise: random casing, diacritics removal sometimes, tiny typos, swapped order.
+ *  - Fit to MAX_TITLE_LEN (64) with smart abbreviation & progressive trimming.
  */
+
+const MAX_TITLE_LEN = sListingCreate.properties.title.maxLength;
+
+// Base sets — intentionally broad for combinatorics while staying meaningful
 const TITLE_SETS: string[][] = [
 	// Phones / tech
 	[
 		"apple",
 		"iphone 13",
+	],
+	[
+		"apple",
+		"iphone 13 mini",
 	],
 	[
 		"apple",
@@ -74,30 +85,50 @@ const TITLE_SETS: string[][] = [
 		"redmi note 10",
 	],
 	[
+		"xiaomi",
+		"redmi note 12 pro",
+	],
+	[
 		"google",
 		"pixel 7",
+	],
+	[
+		"google",
+		"pixel 6a",
 	],
 	[
 		"oneplus",
 		"9 pro",
 	],
+	[
+		"oneplus",
+		"nord 2",
+	],
+	[
+		"nothing",
+		"phone (2)",
+	],
+	[
+		"motorola",
+		"edge 40",
+	],
 
 	// Laptops / tablets
 	[
-		"macbook",
-		"pro 14",
+		"apple",
+		"macbook pro 14",
 	],
 	[
-		"macbook",
-		"air m1",
+		"apple",
+		"macbook air m1",
 	],
 	[
-		"ipad",
-		"pro 11",
+		"apple",
+		"ipad pro 11",
 	],
 	[
-		"ipad",
-		"air 5",
+		"apple",
+		"ipad air 5",
 	],
 	[
 		"lenovo",
@@ -107,15 +138,31 @@ const TITLE_SETS: string[][] = [
 		"dell",
 		"xps 13",
 	],
+	[
+		"hp",
+		"omen 16",
+	],
+	[
+		"asus",
+		"rog zephyrus g14",
+	],
+	[
+		"microsoft",
+		"surface pro 7",
+	],
 
 	// Audio / wearables
 	[
-		"airpods",
-		"pro 2",
+		"apple",
+		"airpods pro 2",
 	],
 	[
 		"sony",
 		"wh-1000xm4",
+	],
+	[
+		"sony",
+		"wf-1000xm5",
 	],
 	[
 		"apple",
@@ -125,11 +172,15 @@ const TITLE_SETS: string[][] = [
 		"garmin",
 		"forerunner 255",
 	],
+	[
+		"fitbit",
+		"sense 2",
+	],
 
 	// Consoles / gaming
 	[
 		"playstation 5",
-		"dualSense",
+		"dualsense",
 	],
 	[
 		"xbox series x",
@@ -138,6 +189,14 @@ const TITLE_SETS: string[][] = [
 	[
 		"nintendo switch",
 		"oled",
+	],
+	[
+		"steam",
+		"deck",
+	],
+	[
+		"logitech",
+		"g29",
 	],
 
 	// Cameras / drones
@@ -150,8 +209,16 @@ const TITLE_SETS: string[][] = [
 		"mavic mini 2",
 	],
 	[
+		"dji",
+		"mini 3 pro",
+	],
+	[
 		"canon",
 		"eos 80d",
+	],
+	[
+		"sony",
+		"a6400",
 	],
 
 	// Fashion / shoes
@@ -164,8 +231,16 @@ const TITLE_SETS: string[][] = [
 		"ultraboost",
 	],
 	[
+		"converse",
+		"chuck taylor",
+	],
+	[
 		"levis",
 		"501",
+	],
+	[
+		"the north face",
+		"hoodie",
 	],
 
 	// Home / tools / misc
@@ -188,7 +263,7 @@ const TITLE_SETS: string[][] = [
 	[
 		"trek",
 		"marlin 7",
-	], // bike
+	],
 	[
 		"bugaboo",
 		"kočárek",
@@ -205,6 +280,94 @@ const TITLE_SETS: string[][] = [
 		"fender",
 		"stratocaster",
 	],
+
+	// Appliances / kitchen
+	[
+		"philips",
+		"airfryer",
+	],
+	[
+		"tefal",
+		"pánve set",
+	],
+	[
+		"kitchenaid",
+		"robot",
+	],
+	[
+		"eta",
+		"mixér",
+	],
+	[
+		"bosch",
+		"myčka",
+	],
+
+	// Furniture
+	[
+		"ikea",
+		"hemnes komoda",
+	],
+	[
+		"ikea",
+		"lack stůl",
+	],
+	[
+		"jysk",
+		"matrace",
+	],
+
+	// Sports / outdoor
+	[
+		"specialized",
+		"rockhopper",
+	],
+	[
+		"salomon",
+		"lyže",
+	],
+	[
+		"decathlon",
+		"koloběžka",
+	],
+	[
+		"xiaomi",
+		"electric scooter",
+	],
+
+	// Baby / kids
+	[
+		"cybex",
+		"autosedačka",
+	],
+	[
+		"angelcare",
+		"monitor dechu",
+	],
+	[
+		"stokke",
+		"tripp trapp",
+	],
+
+	// Auto / moto
+	[
+		"alu kola",
+		'17"',
+	],
+	[
+		"zimní pneu",
+		"205/55 r16",
+	],
+
+	// Books / media
+	[
+		"harry potter",
+		"komplet",
+	],
+	[
+		"murakami",
+		"norské dřevo",
+	],
 ];
 
 const ACTIONS = [
@@ -213,7 +376,9 @@ const ACTIONS = [
 	"vyměním",
 	"darujem",
 	"rezervace",
+	"beru objednávky",
 ];
+
 const CONDITIONS = [
 	"nové",
 	"jako nové",
@@ -221,16 +386,28 @@ const CONDITIONS = [
 	"použité",
 	"lehce jeté",
 	"na díly",
+	"rozbaleno",
+	"repas",
+	"plně funkční",
+	"nefunkční",
+	"se zárukou",
+	"bez záruky",
+	"drobná vada",
 ];
+
 const COLORS = [
 	"černá",
 	"bílá",
 	"stříbrná",
+	"šedá",
 	"modrá",
 	"zelená",
 	"červená",
 	"fialová",
+	"zlatá",
+	"grafit",
 ];
+
 const STORAGE = [
 	"32GB",
 	"64GB",
@@ -238,22 +415,71 @@ const STORAGE = [
 	"256GB",
 	"512GB",
 	"1TB",
+	"2TB",
+	"4GB RAM",
+	"8GB RAM",
+	"16GB RAM",
+	"32GB RAM",
+	"256GB SSD",
+	"512GB SSD",
+	"1TB SSD",
 ];
-const YEARS = [
-	"2019",
-	"2020",
-	"2021",
-	"2022",
-	"2023",
-	"2024",
-	"2025",
+
+const YEARS = Array.from(
+	{
+		length: 11,
+	},
+	(_, i) => String(2015 + i),
+); // 2015–2025
+
+const SIZES = [
+	"S",
+	"M",
+	"L",
+	"XL",
+	"XXL",
+	"42",
+	"43",
+	"44",
+	"45",
+	'27"',
+	'32"',
+	'55"',
+	'65"',
+	"90x200",
 ];
+
+const OFFER_TAGS = [
+	"set",
+	"komplet",
+	"balení",
+	"bundle",
+	"dárek",
+	"účtenka",
+	"doklad",
+	"záruka do 2026",
+	"sleva možná",
+	"cena pevná",
+	"dohoda jistá",
+];
+
+const FULFILLMENT = [
+	"osobní odběr",
+	"Zásilkovna",
+	"pošta",
+	"dovoz možný",
+	"preferuji Praha",
+	"Praha",
+	"Brno",
+];
+
 const SEPARATORS = [
 	" ",
 	" - ",
 	" | ",
 	", ",
 ];
+
 const ENDINGS = [
 	"",
 	"",
@@ -264,7 +490,63 @@ const ENDINGS = [
 	" (TOP)",
 	" *",
 	" – super stav",
+	" ✅",
 ];
+
+// Czech marketplace reality bits
+const CZECH_REALITY = [
+	"nevhodný dárek",
+	"koupeno v Alze",
+	"doklad",
+	"účtenka",
+	"bez krabice",
+	"s krabicí",
+	"komplet balení",
+	"přidám obal",
+	"přidám kryt",
+	"nalepené sklo",
+	"TOP stav",
+	"po servisu",
+	"baterie 90%",
+	"baterie 80%",
+	"spolehlivý kus",
+	"sleva možná",
+	"cena pevná",
+	"dohoda jistá",
+	"osobní odběr",
+	"Zásilkovna",
+	"pošta",
+	"preferuji Praha",
+	"Praha",
+	"Brno",
+	"posílám hned",
+	"rychlé jednání",
+	"rezervace",
+];
+
+// Abbreviation map used before hard cut
+const ABBREV_MAP: Record<string, string> = {
+	"osobní odběr": "os. odběr",
+	osobní: "os.",
+	preferuji: "pref.",
+	Zásilkovna: "Zás.",
+	"dohoda jistá": "dohoda",
+	"komplet balení": "kompl. balení",
+	komplet: "kompl.",
+	doklad: "dok.",
+	účtenka: "účt.",
+	záruka: "zár.",
+	"bez krabice": "bez krab.",
+	"s krabicí": "s krab.",
+	"rychlé jednání": "rychl. jednání",
+};
+
+function applyAbbrev(s: string): string {
+	for (const [k, v] of Object.entries(ABBREV_MAP)) {
+		s = s.replace(new RegExp(`\\b${k}\\b`, "gi"), v);
+	}
+	return s;
+}
 
 /** optional random casing for one token (tests case-insensitivity of embedding) */
 function tweakCasing(s: string): string {
@@ -275,49 +557,210 @@ function tweakCasing(s: string): string {
 		case 1:
 			return s.toUpperCase();
 		case 2:
-			// Capitalize each word
 			return s.replace(/\b\w/g, (m) => m.toUpperCase());
 		default:
 			return s;
 	}
 }
 
+/** remove Czech diacritics (quick map; good enough for seeding) */
+function stripDiacritics(s: string): string {
+	const map: Record<string, string> = {
+		á: "a",
+		č: "c",
+		ď: "d",
+		é: "e",
+		ě: "e",
+		í: "i",
+		ň: "n",
+		ó: "o",
+		ř: "r",
+		š: "s",
+		ť: "t",
+		ú: "u",
+		ů: "u",
+		ý: "y",
+		ž: "z",
+		Á: "A",
+		Č: "C",
+		Ď: "D",
+		É: "E",
+		Ě: "E",
+		Í: "I",
+		Ň: "N",
+		Ó: "O",
+		Ř: "R",
+		Š: "S",
+		Ť: "T",
+		Ú: "U",
+		Ů: "U",
+		Ý: "Y",
+		Ž: "Z",
+	};
+	return s.replace(/[^\u0000-\u007E]/g, (c) => map[c] ?? c);
+}
+
+/** tiny typo: glue numbers/letters or tighten dashes a bit */
+function tinyTypo(s: string): string {
+	if (Math.random() < 0.2) {
+		s = s.replace(/\b(iphone)\s+(\d+)/i, "$1$2"); // iPhone13
+	}
+	if (Math.random() < 0.15) {
+		s = s.replace(/\s{2,}/g, " ");
+		s = s.replace(/\s*-\s*/g, "-"); // tighten dashes
+	}
+	return s;
+}
+
 function randomTitle(): string {
-	// 1) base keywords from a random set
-	const base = shuffle(pick(TITLE_SETS)).map((t) => tweakCasing(t));
+	// 1) base keywords
+	const baseSet = shuffle(pick(TITLE_SETS)).map((t) => tweakCasing(t));
+	let [vendor, model] = baseSet;
+	if (Math.random() < 0.12) vendor = "";
+	if (Math.random() < 0.08) model = "";
 
-	// 2) optional prefix (action/condition)
+	let base: string[] =
+		Math.random() < 0.25
+			? [
+					model,
+					vendor,
+				].filter(Boolean)
+			: [
+					vendor,
+					model,
+				].filter(Boolean);
+
+	// 2) optional prefixes
 	const prefixBits = [
-		maybe(pick(ACTIONS), 0.35),
-		maybe(pick(CONDITIONS), 0.35),
+		maybe(pick(ACTIONS), 0.4),
+		maybe(pick(CONDITIONS), 0.45),
 	].filter(Boolean) as string[];
 
-	// 3) optional attributes (color/storage/year), randomly 0-2 of them
+	// 3) attributes (+ Czech reality)
 	const attrsPool = [
-		maybe(pick(COLORS), 0.4),
-		maybe(pick(STORAGE), 0.5),
-		maybe(pick(YEARS), 0.35),
+		maybe(pick(COLORS), 0.35),
+		maybe(pick(STORAGE), 0.55),
+		maybe(pick(SIZES), 0.3),
+		maybe(pick(YEARS), 0.3),
+		maybe(pick(OFFER_TAGS), 0.35),
+		maybe(pick(FULFILLMENT), 0.25),
+		maybe(pick(CZECH_REALITY), 0.55),
 	].filter(Boolean) as string[];
-	const attrs = shuffle(attrsPool).slice(0, range(0, 2));
+	let attrs = shuffle(attrsPool).slice(0, range(1, 3));
 
-	// 4) assemble segments & choose a separator
-	const sep = pick(SEPARATORS);
-	const parts = [
+	// 4) assemble & small noise
+	let sep = pick(SEPARATORS);
+	let parts = [
 		...prefixBits,
 		...base,
 		...attrs,
 	].filter(Boolean);
-	let title = parts.join(sep);
 
-	// 5) tiny chance to reverse the whole string order, tests extreme order sensitivity
-	if (Math.random() < 0.12) {
-		title = parts.reverse().join(sep);
+	if (parts.length > 0 && Math.random() < 0.3) {
+		const idx = range(0, parts.length - 1);
+		parts[idx] = tweakCasing(parts[idx]!);
+	}
+	if (Math.random() < 0.08) parts = parts.reverse();
+
+	let ending = pick(ENDINGS);
+	let title = parts.join(sep);
+	if (Math.random() < 0.18) title = stripDiacritics(title);
+	title = tinyTypo(title);
+	title = (title + ending).trim();
+
+	// 5) fit to MAX_TITLE_LEN with progressive trimming
+	const rebuild = () => (title = (parts.join(sep) + ending).trim());
+
+	// A) try abbreviations
+	if (title.length > MAX_TITLE_LEN) {
+		title = applyAbbrev(title);
 	}
 
-	// 6) ending punctuation/noise
-	title += pick(ENDINGS);
+	// B) drop ending
+	if (title.length > MAX_TITLE_LEN && ending) {
+		ending = "";
+		rebuild();
+		title = applyAbbrev(title);
+	}
 
-	return title.trim();
+	// C) shrink separator
+	if (title.length > MAX_TITLE_LEN && sep !== " ") {
+		sep = " ";
+		rebuild();
+		title = applyAbbrev(title);
+	}
+
+	// D) remove soft attributes first (fulfillment / meta chatter)
+	const isSoft = (t: string) =>
+		/os\.|Zás\.|Zásilkovna|pošta|Praha|Brno|dohoda|dok\.|účt\.|krab/i.test(
+			t,
+		) || /dárek|rezervace|rychl|TOP/i.test(t);
+
+	if (title.length > MAX_TITLE_LEN && attrs.length > 0) {
+		const hard: string[] = [];
+		const soft: string[] = [];
+		for (const a of attrs) (isSoft(a) ? soft : hard).push(a);
+		attrs = [
+			...hard,
+			...soft,
+		]; // soft last → popped first
+		parts = [
+			...prefixBits,
+			...base,
+			...attrs,
+		];
+		rebuild();
+	}
+
+	while (title.length > MAX_TITLE_LEN && attrs.length > 0) {
+		attrs.pop();
+		parts = [
+			...prefixBits,
+			...base,
+			...attrs,
+		];
+		rebuild();
+	}
+
+	// E) trim prefixes (second → first)
+	while (title.length > MAX_TITLE_LEN && prefixBits.length > 1) {
+		prefixBits.pop();
+		parts = [
+			...prefixBits,
+			...base,
+			...attrs,
+		];
+		rebuild();
+	}
+	if (title.length > MAX_TITLE_LEN && prefixBits.length > 0) {
+		prefixBits.pop();
+		parts = [
+			...prefixBits,
+			...base,
+			...attrs,
+		];
+		rebuild();
+	}
+
+	// F) trim base (keep first)
+	if (title.length > MAX_TITLE_LEN && base.length > 1) {
+		base = [
+			base[0]!,
+		];
+		parts = [
+			...prefixBits,
+			...base,
+			...attrs,
+		];
+		rebuild();
+	}
+
+	// G) final hard cut
+	if (title.length > MAX_TITLE_LEN) {
+		title = title.slice(0, MAX_TITLE_LEN).trim();
+	}
+
+	return title;
 }
 
 /* ----------------------- PICSUM ----------------------- */
@@ -343,6 +786,7 @@ export async function picsum(): Promise<Blob> {
 		.then((res) => res.data);
 }
 
+/* ----------------------- ROUTE ----------------------- */
 export const Route = createFileRoute("/$locale/dev/seed")({
 	component() {
 		const uploadMutation = withUploadMutation.useMutation();
@@ -470,7 +914,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							price: range(0, 99_999),
 							currency:
 								currencies[range(0, currencies.length - 1)]!,
-							title: randomTitle(), // 👈 here
+							title: randomTitle(),
 							expiresAt:
 								tListingExpire[
 									Object.keys(tListingExpire)[

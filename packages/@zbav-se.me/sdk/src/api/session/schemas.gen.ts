@@ -812,17 +812,17 @@ export const sListing = {
         expiresAt: {
             type: 'string'
         },
-        createdAt: {
-            type: 'string'
-        },
-        updatedAt: {
-            type: 'string'
-        },
         title: {
             type: 'string'
         },
         description: {
             type: ['string', 'null']
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
         },
         location: {
             '$ref': '#/components/schemas/Location'
@@ -837,7 +837,7 @@ export const sListing = {
             }
         }
     },
-    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'createdAt', 'updatedAt', 'title', 'location', 'category', 'gallery']
+    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery']
 } as const;
 
 export const sListingCreate = {
@@ -867,7 +867,7 @@ export const sListingCreate = {
         title: {
             type: 'string',
             minLength: 5,
-            maxLength: 42
+            maxLength: 72
         },
         description: {
             type: ['string', 'null'],

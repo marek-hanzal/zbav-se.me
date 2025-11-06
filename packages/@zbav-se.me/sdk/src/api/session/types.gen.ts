@@ -704,14 +704,6 @@ export type tListing = {
      */
     expiresAt: string;
     /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    /**
      * Title of the item
      */
     title: string;
@@ -719,6 +711,14 @@ export type tListing = {
      * Description of the item
      */
     description?: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
     location: tLocation;
     category: tCategory;
     /**

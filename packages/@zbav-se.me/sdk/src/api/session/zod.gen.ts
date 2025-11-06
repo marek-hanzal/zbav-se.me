@@ -798,12 +798,6 @@ export const zListing = z.object({
     expiresAt: z.string().register(z.globalRegistry, {
         description: 'Expiration timestamp'
     }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
     title: z.string().register(z.globalRegistry, {
         description: 'Title of the item'
     }),
@@ -811,6 +805,12 @@ export const zListing = z.object({
         z.string(),
         z.null()
     ])),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
     location: zLocation,
     category: zCategory,
     gallery: z.array(zGallery).register(z.globalRegistry, {
@@ -868,7 +868,7 @@ export const zListingCreate = z.object({
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
-    title: z.string().min(5).max(42).register(z.globalRegistry, {
+    title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
     }),
     description: z.optional(z.union([
