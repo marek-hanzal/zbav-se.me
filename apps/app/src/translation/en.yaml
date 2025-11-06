@@ -1,3 +1,6 @@
+004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
+  ref: Feed title (placeholder)
+  value: Feed title (placeholder)
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
@@ -67,6 +70,9 @@
 3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
   ref: Feed name (hint)
   value: Enter a name for your feed
+3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
+  ref: Without VAT
+  value: Without VAT
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
@@ -166,6 +172,9 @@
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
   ref: No listings (title)
   value: No listings (title)
+877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
+  ref: With VAT
+  value: With VAT
 89ce43e549ae96ce623508874d063e27e0a12b2bcece4e86069598b3:
   ref: Feed - location security (hint)
   value: Feed - location security (hint)
@@ -181,12 +190,6 @@
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
   ref: Feed (label)
   value: Feed (label)
-8df34cd9aaf61420c02f105c0ce8027af49e6377a9ce6314ee13a927:
-  ref: Title (placeholder)
-  value: Title (placeholder)
-8fcb4c8801eccd44ae514d541bd3eadb79b43c7aeed404e507c1ae1a:
-  ref: Listing title (hint)
-  value: Listing title (hint)
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -223,9 +226,6 @@ a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
   ref: Number of listings (label)
   value: Number of listings (label)
-ab09919ef85e731c5139aa702027937092cb44990baa3a2d5613890f:
-  ref: Title (required)
-  value: Title (required)
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
   ref: Success (toast)
   value: Success (toast)
@@ -300,9 +300,6 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
   ref: Feed title (label)
   value: Feed title (label)
-d35116f2f09a312cefe190567f3559fc34d343fac8e359f7370d5947:
-  ref: Title (title)
-  value: Title (title)
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
@@ -324,6 +321,9 @@ dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
 e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
   ref: Submit (subtitle)
   value: Submit (subtitle)
+e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
+  ref: Listing title (required)
+  value: Listing title (required)
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
   ref: Shop (label)
   value: Shop (label)
@@ -342,6 +342,9 @@ f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
 f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
   ref: Feed submit (title)
   value: Feed submit (title)
+f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
+  ref: Listing title (placeholder)
+  value: Listing title (placeholder)
 f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
   ref: No listings found (label)
   value: No listings found (label)

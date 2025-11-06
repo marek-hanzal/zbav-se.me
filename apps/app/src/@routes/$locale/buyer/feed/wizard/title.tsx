@@ -8,9 +8,9 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { Tx } from "@use-pico/client/ui/tx";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
@@ -67,7 +67,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 								title,
 							},
 						}}
-						disabled={!title}
 						full
 					>
 						<Button
@@ -78,7 +77,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 							label={"Next - feed name (button)"}
 							size={"lg"}
 							full
-							disabled={!title}
 						/>
 					</LinkTo>
 				}
@@ -92,7 +90,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 				>
 					<Status
 						textTitle={"Feed title (title)"}
-						textMessage={"Feed title (hint)"}
 						action={
 							<FormField full>
 								{(props) => (
@@ -101,32 +98,17 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 										onChange={(e) =>
 											setTitle(e.target.value)
 										}
-										placeholder={"Title (placeholder)"}
+										placeholder={"Feed title (placeholder)"}
 										autoFocus={!title}
 										{...props}
 									/>
 								)}
 							</FormField>
 						}
-						tweak={{
-							slot: {
-								body: {
-									class: [
-										"flex",
-										"flex-col",
-										"gap-8",
-										"items-center",
-									],
-								},
-							},
-						}}
 					>
-						<Tx
-							label={"Title (required)"}
-							size={"sm"}
+						<Mx
+							label={"Feed title (hint)"}
 							tone={"secondary"}
-							display={"block"}
-							wrap={"wrap"}
 						/>
 					</Status>
 				</Container>

@@ -26,7 +26,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 
 		return (
 			<TitleContainer
-				textTitle={"Title (title)"}
+				textTitle={"Listing title (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -90,7 +90,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 				>
 					<Status
 						textTitle={"Listing title (title)"}
-						textMessage={"Listing title (hint)"}
 						action={
 							<FormField full>
 								{(props) => (
@@ -99,7 +98,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 										onChange={(e) =>
 											setTitle(e.target.value)
 										}
-										placeholder={"Title (placeholder)"}
+										placeholder={
+											"Listing title (placeholder)"
+										}
 										autoFocus={!title}
 										minLength={
 											sListingCreate.properties.title
@@ -116,7 +117,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 						}
 					>
 						<Mx
-							label={"Title (required)"}
+							label={"Listing title (required)"}
 							tone={"secondary"}
 						/>
 					</Status>

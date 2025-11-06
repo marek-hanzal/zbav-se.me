@@ -3,6 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
+import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query";
@@ -68,15 +69,14 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 					}}
 				/>
 				{search || value ? null : (
-					<Tx
+					<Mx
 						label={textHint ?? "Location security (hint)"}
-						font={"bold"}
-						size={"lg"}
+						tone={"secondary"}
 						tweak={{
 							slot: {
-								root: {
+								p: {
 									class: [
-										"text-justify",
+										"px-2",
 									],
 								},
 							},
