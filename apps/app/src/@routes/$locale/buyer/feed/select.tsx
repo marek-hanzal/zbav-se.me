@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
@@ -39,7 +39,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	component() {
 		const { locale } = Route.useParams();
 		const search = Route.useSearch();
-		const navigate = useNavigate();
+		const navigate = Route.useNavigate();
 
 		const feedCountLimit = 10;
 
@@ -76,9 +76,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					onClickCreate={() => {
 						navigate({
 							to: "/$locale/buyer/feed/wizard/location",
-							params: {
-								locale,
-							},
 						});
 					}}
 				/>

@@ -1,21 +1,51 @@
 import { useParams } from "@tanstack/react-router";
-import { Container } from "@use-pico/client/ui/container";
+import { BadgeValue } from "@use-pico/client/ui/badge";
+import { Container, ContainerValueList } from "@use-pico/client/ui/container";
+import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/session";
+import {
+	withCategoryCollectionQuery,
+	withLocationFetchQuery,
+} from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 
-export namespace FeedCard {
+export namespace FeedContainer {
 	export interface Props extends Container.Props {
 		feed: tFeed;
 	}
 }
 
-export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
+export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
+
+	const locationFetchQuery = withLocationFetchQuery.useQuery(
+		{
+			where: {
+				id: feed.locationId,
+			},
+		},
+		{
+			enabled: !!feed.locationId,
+		},
+	);
+
+	const categoryCollectionQuery = withCategoryCollectionQuery.useQuery(
+		{
+			where: {
+				idIn: feed.filter?.categoryIdIn,
+			},
+		},
+		{
+			enabled: !!feed.filter?.categoryIdIn?.length,
+		},
+	);
 
 	return (
 		<Container
@@ -34,33 +64,33 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 				}}
 			>
 				<LinkTo
-					to={"/$locale/buyer/feed/wizard/name"}
+					to={"/$locale/buyer/feed/$id/edit/name"}
 					params={{
 						locale,
+						id: feed.id,
 					}}
-					search={state}
 					display={"block"}
 					full
 				>
 					<BadgeValue
 						textLabel={"Feed name (label)"}
-						textValue={state.name ?? "Feed name not selected"}
+						textValue={feed.name}
 					/>
 				</LinkTo>
 
 				<LinkTo
-					to={"/$locale/buyer/feed/wizard/title"}
+					to={"/$locale/buyer/feed/$id/edit/title"}
 					params={{
 						locale,
+						id: feed.id,
 					}}
-					search={state}
 					display={"block"}
 					full
 				>
 					<BadgeValue
 						textLabel={"Feed title (label)"}
 						textValue={
-							state.filter?.title || "Feed title not filled"
+							feed.filter?.title || "Feed title not filled"
 						}
 					/>
 				</LinkTo>
@@ -69,11 +99,11 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 					result={locationFetchQuery}
 					renderSuccess={({ data }) => (
 						<LinkTo
-							to={"/$locale/buyer/feed/wizard/location"}
+							to={"/$locale/buyer/feed/$id/edit/location"}
 							params={{
 								locale,
+								id: feed.id,
 							}}
-							search={state}
 							display={"block"}
 							full
 						>
@@ -85,11 +115,11 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 					)}
 					renderEmpty={() => (
 						<LinkTo
-							to={"/$locale/buyer/feed/wizard/location"}
+							to={"/$locale/buyer/feed/$id/edit/location"}
 							params={{
 								locale,
+								id: feed.id,
 							}}
-							search={state}
 							display={"block"}
 							full
 						>
@@ -103,23 +133,21 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 
 				<Container height={"auto"}>
 					<LinkTo
-						to={"/$locale/buyer/feed/wizard/sort"}
+						to={"/$locale/buyer/feed/$id/edit/sort"}
 						params={{
 							locale,
+							id: feed.id,
 						}}
-						search={state}
 						display={"block"}
 						full
 					>
 						<ContainerValueList
 							textTitle={"Feed sorting (label)"}
 							textEmpty={"Feed sorting not selected"}
-							items={(state.sort ?? []).map(
-								(sortItem, index) => ({
-									id: `${sortItem.value}-${index}`,
-									...sortItem,
-								}),
-							)}
+							items={(feed.sort ?? []).map((sortItem, index) => ({
+								id: `${sortItem.value}-${index}`,
+								...sortItem,
+							}))}
 							render={(sortItem) => (
 								<Tx
 									label={`Listing common sort value ${sortItem.value} - ${sortItem.sort}`}
@@ -134,11 +162,11 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 					renderSuccess={({ data }) => (
 						<Container height={"auto"}>
 							<LinkTo
-								to={"/$locale/buyer/feed/wizard/category"}
+								to={"/$locale/buyer/feed/$id/edit/category"}
 								params={{
 									locale,
+									id: feed.id,
 								}}
-								search={state}
 								display={"block"}
 								full
 							>
@@ -166,11 +194,11 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 					renderEmpty={() => (
 						<Container height={"auto"}>
 							<LinkTo
-								to={"/$locale/buyer/feed/wizard/category"}
+								to={"/$locale/buyer/feed/$id/edit/category"}
 								params={{
 									locale,
+									id: feed.id,
 								}}
-								search={state}
 								display={"block"}
 								full
 							>
@@ -187,18 +215,18 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 
 				<Container height={"auto"}>
 					<LinkTo
-						to={"/$locale/buyer/feed/wizard/condition"}
+						to={"/$locale/buyer/feed/$id/edit/condition"}
 						params={{
 							locale,
+							id: feed.id,
 						}}
-						search={state}
 						display={"block"}
 						full
 					>
 						<ContainerValueList
 							textTitle={"Feed condition (label)"}
 							textEmpty={"Feed condition not selected"}
-							items={(state.filter?.conditionIn ?? []).map(
+							items={(feed.filter?.conditionIn ?? []).map(
 								(condition) => ({
 									id: String(condition),
 									condition,
@@ -215,18 +243,18 @@ export const FeedCard: FC<FeedCard.Props> = ({ feed, ...props }) => {
 
 				<Container height={"auto"}>
 					<LinkTo
-						to={"/$locale/buyer/feed/wizard/age"}
+						to={"/$locale/buyer/feed/$id/edit/age"}
 						params={{
 							locale,
+							id: feed.id,
 						}}
-						search={state}
 						display={"block"}
 						full
 					>
 						<ContainerValueList
 							textTitle={"Feed age (label)"}
 							textEmpty={"Feed age not selected"}
-							items={(state.filter?.ageIn ?? []).map((age) => ({
+							items={(feed.filter?.ageIn ?? []).map((age) => ({
 								id: String(age),
 								age,
 							}))}

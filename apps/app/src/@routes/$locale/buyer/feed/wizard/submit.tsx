@@ -1,27 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, CloseIcon, SpinnerIcon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container, ContainerValueList } from "@use-pico/client/ui/container";
-import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
-import { VariantProvider } from "@use-pico/cls";
-import type { tFeedCreate, tFeedPatch } from "@zbav-se.me/sdk/api/session";
-import {
-	withFeedCreateMutation,
-	withFeedPatchMutation,
-} from "@zbav-se.me/sdk/mutation";
-import {
-	withCategoryCollectionQuery,
-	withLocationFetchQuery,
-} from "@zbav-se.me/sdk/query";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { type tFeedCreate, zFeed } from "@zbav-se.me/sdk/api/session";
+import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
+import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 	validateSearch: FeedWizardSchema,
@@ -72,28 +59,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
 
-		const locationFetchQuery = withLocationFetchQuery.useQuery(
-			{
-				where: {
-					id: state.locationId,
-				},
-			},
-			{
-				enabled: !!state.locationId,
-			},
-		);
-
-		const categoryCollectionQuery = withCategoryCollectionQuery.useQuery(
-			{
-				where: {
-					idIn: state.filter?.categoryIdIn,
-				},
-			},
-			{
-				enabled: !!state.filter?.categoryIdIn?.length,
-			},
-		);
-
 		const feedCreateMutation = withFeedCreateMutation.useMutation({
 			async onPostMutation({ result }) {
 				return navigate({
@@ -108,22 +73,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 			},
 		});
 
-		const feedPatchMutation = withFeedPatchMutation.useMutation({
-			async onPostMutation({ result }) {
-				return navigate({
-					to: "/$locale/buyer/feed/select",
-					params: {
-						locale,
-					},
-					search: {
-						feedId: result.id,
-					},
-				});
-			},
-		});
-
-		const isLoading =
-			feedCreateMutation.isPending || feedPatchMutation.isPending;
+		const isLoading = feedCreateMutation.isPending;
 
 		return (
 			<TitleContainer
@@ -167,17 +117,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 						size={"lg"}
 						full
 						onClick={() => {
-							if (state.id) {
-								feedPatchMutation.mutate(state as tFeedPatch);
-								return;
-							}
-
 							feedCreateMutation.mutate(state as tFeedCreate);
 						}}
 					/>
 				}
 			>
-				
+				<FeedContainer feed={zFeed.parse(state)} />
 			</TitleContainer>
 		);
 	},
