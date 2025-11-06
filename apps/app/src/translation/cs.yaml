@@ -45,6 +45,9 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
+29f070d40b220deb96e6c0c19b11d4ad07de6cd9e55e4933e2f03f80:
+    ref: no
+    value: no
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
@@ -162,6 +165,9 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
+7b8ccabb2b98ea5b74889ee9234b3e1e20e1e43999c57e59070731c1:
+    ref: Listing tags (label)
+    value: Listing tags (label)
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
     ref: Feed name (title)
     value: Vyber si název
@@ -199,6 +205,9 @@
 8cde5f249966541b5d7ee11ccc6d366863185a35892810df779c2ca3:
     ref: Feed description & tags (title)
     value: Hledej podle popisu
+8d32d793358da0d934a674486c72adb7ea93a6f000219df32fce5930:
+    ref: No description (placeholder)
+    value: No description (placeholder)
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
     ref: Feed location (label)
     value: Lokalita
@@ -319,6 +328,9 @@ a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
 a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
     ref: Create your first feed to get started (description)
     value: Nastav si přesně, co tě zajímá a jaké inzeráty se ti mají zobrazovat.
+a67ea5aaab8eb99644b1412ae291882a3d6e0ddefd49b19cc413abaf:
+    ref: Listing description (label)
+    value: Listing description (label)
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
     ref: Number of listings (label)
     value: "Počet inzerátů:"
@@ -408,9 +420,6 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d3254b0bf1bd84e03bd1501a3192ae95c25361e1105115a67f9c9314:
     ref: Feed tags not filled
     value: Nemáš nic vyplněno
-d4f509fe5ad8f37a110f5d92ab84e5eeffdb6d538f97ef421cb69b54:
-    ref: Listing description & tags (label)
-    value: Listing description & tags (label)
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
@@ -473,6 +482,9 @@ fd24d85ad7a2f0f0d2b896163a267a22ddf4a96e3304a6e7e5ab9ab6:
 fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
     ref: Bag (label)
     value: Co mě zaujalo
+ff06b35a218ff61c79127637a1093f6e08b54cfbe899d25648f9af12:
+    ref: No tags (placeholder)
+    value: No tags (placeholder)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav

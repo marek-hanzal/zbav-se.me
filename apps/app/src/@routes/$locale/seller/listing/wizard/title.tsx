@@ -16,22 +16,17 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
-export const Route = createFileRoute(
-	"/$locale/seller/listing/wizard/description-tags",
-)({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [description, setDescription] = useState<string>(
-			state.description || "",
-		);
-		const [tags, setTags] = useState<string>(state.tags || "");
+		const [title, setTitle] = useState<string>(state.title || "");
 
 		return (
 			<TitleContainer
-				textTitle={"Description & Tags (title)"}
+				textTitle={"Title (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -68,9 +63,9 @@ export const Route = createFileRoute(
 						}}
 						search={{
 							...state,
-							description,
-							tags,
+							title,
 						}}
+						disabled={!title}
 						full
 					>
 						<Button
@@ -81,6 +76,7 @@ export const Route = createFileRoute(
 							label={"Next - submit (button)"}
 							size={"lg"}
 							full
+							disabled={!title}
 						/>
 					</LinkTo>
 				}
@@ -93,23 +89,21 @@ export const Route = createFileRoute(
 					height={"auto"}
 				>
 					<Status
-						textTitle={"Description & tags (title)"}
-						textMessage={"Description & tags (hint)"}
+						textTitle={"Title (title)"}
+						textMessage={"Title (hint)"}
 						action={
 							<FormField full>
 								{(props) => (
 									<TextInput
-										value={description}
+										value={title}
 										onChange={(e) =>
-											setDescription(e.target.value)
+											setTitle(e.target.value)
 										}
-										placeholder={
-											"Description (placeholder)"
-										}
-										autoFocus={!description}
+										placeholder={"Title (placeholder)"}
+										autoFocus={!title}
 										maxLength={
-											sListingCreate.properties
-												.description.maxLength
+											sListingCreate.properties.title
+												.maxLength
 										}
 										{...props}
 									/>
@@ -129,22 +123,8 @@ export const Route = createFileRoute(
 							},
 						}}
 					>
-						<FormField full>
-							{(props) => (
-								<TextInput
-									value={tags}
-									onChange={(e) => setTags(e.target.value)}
-									placeholder={"Tags (placeholder)"}
-									maxLength={
-										sListingCreate.properties.tags.maxLength
-									}
-									{...props}
-								/>
-							)}
-						</FormField>
-
 						<Tx
-							label={"Description & tags (optional)"}
+							label={"Title (required)"}
 							size={"sm"}
 							tone={"secondary"}
 							display={"block"}

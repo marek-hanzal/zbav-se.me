@@ -209,7 +209,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 						</LinkTo>
 
 						<LinkTo
-							to={"/$locale/buyer/feed/wizard/description-tags"}
+							to={"/$locale/buyer/feed/wizard/title"}
 							params={{
 								locale,
 							}}
@@ -218,27 +218,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 							full
 						>
 							<BadgeValue
-								textLabel={"Feed description (label)"}
+								textLabel={"Feed title (label)"}
 								textValue={
-									state.filter?.description ||
-									"Feed description not filled"
-								}
-							/>
-						</LinkTo>
-
-						<LinkTo
-							to={"/$locale/buyer/feed/wizard/description-tags"}
-							params={{
-								locale,
-							}}
-							search={state}
-							display={"block"}
-							full
-						>
-							<BadgeValue
-								textLabel={"Feed tags (label)"}
-								textValue={
-									state.filter?.tags || "Feed tags not filled"
+									state.filter?.title ||
+									"Feed title not filled"
 								}
 							/>
 						</LinkTo>

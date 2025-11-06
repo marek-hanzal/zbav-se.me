@@ -10,26 +10,22 @@ import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
+import { Tx } from "@use-pico/client/ui/tx";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 
-export const Route = createFileRoute(
-	"/$locale/buyer/feed/wizard/description-tags",
-)({
+export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 	validateSearch: FeedWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [description, setDescription] = useState(
-			state.filter?.description,
-		);
-		const [tags, setTags] = useState(state.filter?.tags);
+		const [title, setTitle] = useState(state.filter?.title || "");
 
 		return (
 			<TitleContainer
-				textTitle={"Feed description & Tags (title)"}
+				textTitle={"Feed title (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -68,10 +64,10 @@ export const Route = createFileRoute(
 							...state,
 							filter: {
 								...state.filter,
-								description,
-								tags,
+								title,
 							},
 						}}
+						disabled={!title}
 						full
 					>
 						<Button
@@ -82,6 +78,7 @@ export const Route = createFileRoute(
 							label={"Next - feed name (button)"}
 							size={"lg"}
 							full
+							disabled={!title}
 						/>
 					</LinkTo>
 				}
@@ -94,36 +91,43 @@ export const Route = createFileRoute(
 					height={"auto"}
 				>
 					<Status
-						textTitle={"Feed description & tags (title)"}
-						textMessage={"Feed description & tags (hint)"}
+						textTitle={"Feed title (title)"}
+						textMessage={"Feed title (hint)"}
 						action={
 							<FormField full>
 								{(props) => (
 									<TextInput
-										value={description ?? ""}
+										value={title}
 										onChange={(e) =>
-											setDescription(e.target.value)
+											setTitle(e.target.value)
 										}
-										placeholder={
-											"Description (placeholder)"
-										}
-										autoFocus={!description}
+										placeholder={"Title (placeholder)"}
+										autoFocus={!title}
 										{...props}
 									/>
 								)}
 							</FormField>
 						}
+						tweak={{
+							slot: {
+								body: {
+									class: [
+										"flex",
+										"flex-col",
+										"gap-8",
+										"items-center",
+									],
+								},
+							},
+						}}
 					>
-						<FormField full>
-							{(props) => (
-								<TextInput
-									value={tags ?? ""}
-									onChange={(e) => setTags(e.target.value)}
-									placeholder={"Tags (placeholder)"}
-									{...props}
-								/>
-							)}
-						</FormField>
+						<Tx
+							label={"Title (required)"}
+							size={"sm"}
+							tone={"secondary"}
+							display={"block"}
+							wrap={"wrap"}
+						/>
 					</Status>
 				</Container>
 			</TitleContainer>

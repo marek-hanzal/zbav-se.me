@@ -42,7 +42,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/wizard/description-tags"}
+						to={"/$locale/buyer/feed/wizard/title"}
 						params={{
 							locale,
 						}}

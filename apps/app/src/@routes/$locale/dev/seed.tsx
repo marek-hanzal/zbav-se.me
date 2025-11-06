@@ -171,6 +171,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							price: range(0, 99_999),
 							currency:
 								currencies[range(0, currencies.length - 1)]!,
+							title: `Some title ${genId()}`,
 							expiresAt:
 								tListingExpire[
 									Object.keys(tListingExpire)[

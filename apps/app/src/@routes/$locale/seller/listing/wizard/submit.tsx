@@ -5,15 +5,15 @@ import {
 	ErrorIcon,
 	SpinnerIcon,
 } from "@use-pico/client/icon";
-import { Badge, type BadgeCls, BadgeValue } from "@use-pico/client/ui/badge";
+import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { type Cls, VariantProvider } from "@use-pico/cls";
+import { VariantProvider } from "@use-pico/cls";
 import { zListingCreate } from "@zbav-se.me/sdk/api/session";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation";
 import {
@@ -41,7 +41,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/description-tags"}
+						to={"/$locale/seller/listing/wizard/title"}
 						search={state}
 						params={{
 							locale,
@@ -106,25 +106,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 			price: state.price ? parseFloat(state.price) : undefined,
 		});
 
-		const badgeTweak: Cls.TweaksOf<BadgeCls> = {
-			slot: {
-				root: {
-					class: [
-						"flex",
-						"flex-row",
-						"gap-1",
-						"justify-between",
-						"w-full",
-						"h-fit",
-					],
-					token: [
-						"round.md",
-						"square.md",
-					],
-				},
-			},
-		};
-
 		return (
 			<TitleContainer
 				textTitle={"Submit (title)"}
@@ -132,7 +113,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/description-tags"}
+						to={"/$locale/seller/listing/wizard/title"}
 						search={state}
 						params={{
 							locale,
@@ -192,6 +173,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 							}}
 						>
 							<LinkTo
+								to={"/$locale/seller/listing/wizard/title"}
+								params={{
+									locale,
+								}}
+								search={state}
+								display={"block"}
+								full
+							>
+								<BadgeValue
+									textLabel={"Listing title (label)"}
+									textValue={state.title}
+								/>
+							</LinkTo>
+
+							<LinkTo
 								to={"/$locale/seller/listing/wizard/photos"}
 								params={{
 									locale,
@@ -217,30 +213,26 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<Badge tweak={badgeTweak}>
-									<Tx
-										label={"Listing category (label)"}
-										preset={"label"}
-									/>
-
-									<div
-										className={
-											"flex flex-col gap-1 items-end"
-										}
-									>
-										<Typo
-											label={
-												categoryFetchQuery.data.group
+								<ContainerValueList
+									textTitle={"Listing category (label)"}
+									textEmpty={"no"}
+									items={[
+										categoryFetchQuery.data,
+									]}
+									render={(category) => (
+										<div
+											className={
+												"flex flex-col gap-0.5 items-start"
 											}
-											size={"sm"}
-										/>
-										<Typo
-											label={
-												categoryFetchQuery.data.category
-											}
-										/>
-									</div>
-								</Badge>
+										>
+											<Typo
+												label={category.group}
+												size={"xs"}
+											/>
+											<Typo label={category.category} />
+										</div>
+									)}
+								/>
 							</LinkTo>
 
 							<LinkTo
@@ -252,9 +244,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<BadgeValue
-									textLabel={"Listing condition (label)"}
-									textValue={`Condition - Overall [${valid.data.condition}] (hint)`}
+								<ContainerValueList
+									textTitle={"Listing condition (label)"}
+									textEmpty={"no"}
+									items={[
+										{
+											id: "condition",
+											value: valid.data.condition,
+										} as const,
+									]}
+									render={(condition) => (
+										<Tx
+											label={`Condition - Overall [${condition.value}] (hint)`}
+										/>
+									)}
 								/>
 							</LinkTo>
 
@@ -267,9 +270,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<BadgeValue
-									textLabel={"Listing age (label)"}
-									textValue={`Condition - Age [${valid.data.age}] (hint)`}
+								<ContainerValueList
+									textTitle={"Listing age (label)"}
+									textEmpty={"no"}
+									items={[
+										{
+											id: "age",
+											value: valid.data.age,
+										} as const,
+									]}
+									render={(age) => (
+										<Tx
+											label={`Condition - Age [${age.value}] (hint)`}
+										/>
+									)}
 								/>
 							</LinkTo>
 
@@ -282,18 +296,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<Badge tweak={badgeTweak}>
-									<Tx
-										label={"Listing price (label)"}
-										preset={"label"}
-									/>
-
-									<PriceInline
-										locale={locale}
-										price={valid.data.price}
-										currency={valid.data.currency}
-									/>
-								</Badge>
+								<BadgeValue
+									textLabel={"Listing price (label)"}
+									textValue={
+										<PriceInline
+											locale={locale}
+											price={valid.data.price}
+											currency={valid.data.currency}
+										/>
+									}
+								/>
 							</LinkTo>
 
 							<LinkTo
@@ -305,9 +317,15 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<BadgeValue
-									textLabel={"Listing location (label)"}
-									textValue={locationFetchQuery.data.address}
+								<ContainerValueList
+									textTitle={"Listing location (label)"}
+									textEmpty={"no"}
+									items={[
+										locationFetchQuery.data,
+									]}
+									render={(location) => (
+										<Tx label={location.address} />
+									)}
 								/>
 							</LinkTo>
 
@@ -320,53 +338,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<BadgeValue
-									textLabel={"Listing expire at (label)"}
-									textValue={`Expire in ${state.expiresAt}`}
+								<ContainerValueList
+									textTitle={"Listing expire at (label)"}
+									textEmpty={"no"}
+									items={[
+										{
+											id: "expiresAt",
+											value: state.expiresAt,
+										} as const,
+									]}
+									render={(expiresAt) => (
+										<Tx
+											label={`Expire in ${expiresAt.value}`}
+										/>
+									)}
 								/>
-							</LinkTo>
-
-							<LinkTo
-								to={
-									"/$locale/seller/listing/wizard/description-tags"
-								}
-								params={{
-									locale,
-								}}
-								search={state}
-								display={"block"}
-								full
-							>
-								<Badge tweak={badgeTweak}>
-									<Tx
-										label={
-											"Listing description & tags (label)"
-										}
-										preset={"label"}
-									/>
-
-									<div
-										className={
-											"flex flex-col gap-1 items-end"
-										}
-									>
-										<Tx
-											label={
-												state.description
-													? state.description
-													: "Description (placeholder)"
-											}
-											size={"sm"}
-										/>
-										<Tx
-											label={
-												state.tags
-													? state.tags
-													: "Tags (placeholder)"
-											}
-										/>
-									</div>
-								</Badge>
 							</LinkTo>
 						</VariantProvider>
 					</Container>
