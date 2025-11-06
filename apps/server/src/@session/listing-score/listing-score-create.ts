@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
+import { DateTime } from "luxon";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
@@ -34,6 +35,15 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Cannot score your own listing",
 				},
+				429: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description:
+						"Too many requests - please wait between scores",
+				},
 				404: {
 					content: {
 						"application/json": {
@@ -49,6 +59,8 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
+			const LIMIT_MINUTES = 10;
+
 			const data = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
@@ -79,6 +91,32 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 						message: "Cannot score your own listing",
 					},
 					400,
+				);
+			}
+
+			// Check if user has created a score in the last 10 minutes
+			const rateLimit = DateTime.now()
+				.minus({
+					minutes: LIMIT_MINUTES,
+				})
+				.toJSDate();
+
+			const recent = await database.kysely
+				.selectFrom("listing_score")
+				.select("createdAt")
+				.where("userId", "=", user.id)
+				.where("createdAt", ">=", rateLimit)
+				.orderBy("createdAt", "desc")
+				.executeTakeFirst();
+
+			if (recent) {
+				return c.json<MessageSchema.Type, 429>(
+					{
+						type: "error",
+						message:
+							"Too many requests - please wait between scores",
+					},
+					429,
 				);
 			}
 

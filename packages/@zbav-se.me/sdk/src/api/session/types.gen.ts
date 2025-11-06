@@ -1836,6 +1836,10 @@ export type apiListingScoreCreateErrors = {
      * Listing not found
      */
     404: tMessage;
+    /**
+     * Too many requests - please wait between scores
+     */
+    429: tMessage;
 };
 
 export type apiListingScoreCreateError = apiListingScoreCreateErrors[keyof apiListingScoreCreateErrors];
