@@ -2,21 +2,33 @@ import { type Migration, sql } from "kysely";
 
 export const ListingMigration: Migration = {
 	async up(db) {
+		// Ensure pgvector extension (safe if already installed)
+		await sql`CREATE EXTENSION IF NOT EXISTS vector;`.execute(db);
+
 		await db.schema
 			.createTable("listing")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			//
 			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
+			.addColumn("priceVec", sql`vector(1)`)
+			//
 			.addColumn("currency", "text", (col) => col.notNull())
+			//
 			.addColumn("condition", "integer", (col) => col.notNull())
+			.addColumn("conditionVec", sql`vector(1)`)
+			//
 			.addColumn("age", "integer", (col) => col.notNull())
+			.addColumn("ageVec", sql`vector(1)`)
+			//
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
+			//
 			.addColumn("title", "text", (col) => col.notNull())
+			.addColumn("titleVec", sql`vector(64)`)
+			//
 			.addColumn("description", "text")
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
-			.addColumn("embedding", sql`vector(256)`, (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
@@ -103,8 +115,24 @@ export const ListingMigration: Migration = {
 			.expression(sql`lower(title) gin_trgm_ops`)
 			.execute();
 
+		// Vector indexes
+
+		// 1D numeric vectors (price/condition/age): use L2
 		await sql`
-                CREATE INDEX "listing_[embedding]_hnsw_cos_idx" ON "listing" USING hnsw ("embedding" vector_cosine_ops)
-              `.execute(db);
+            CREATE INDEX "listing_[priceVec]_hnsw_l2_idx" ON "listing" USING hnsw ("priceVec" vector_l2_ops);
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "listing_[conditionVec]_hnsw_l2_idx" ON "listing" USING hnsw ("conditionVec" vector_l2_ops);
+        `.execute(db);
+
+		await sql`
+            CREATE INDEX "listing_[ageVec]_hnsw_l2_idx" ON "listing" USING hnsw ("ageVec" vector_l2_ops);
+        `.execute(db);
+
+		// Title vector (e.g., simhash/char-ngrams): cosine
+		await sql`
+            CREATE INDEX "listing_[titleVec]_hnsw_cos_idx" ON "listing" USING hnsw ("titleVec" vector_cosine_ops);
+        `.execute(db);
 	},
 };
