@@ -9,6 +9,8 @@ import { GalleryMigration } from "./0007-gallery";
 import { CategoryMissMigration } from "./0008-category-miss";
 import { UserExMigration } from "./0009-user-ex";
 import { FeedMigration } from "./0010-feed";
+import { ListingCartMigration } from "./0011-listing-cart";
+import { ListingScoreMigration } from "./0012-listing-score";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -22,4 +24,6 @@ export const migrations = {
 	"0008-category-miss": CategoryMissMigration,
 	"0009-user-ex": UserExMigration,
 	"0010-feed": FeedMigration,
+	"0011-listing-cart": ListingCartMigration,
+	"0012-listing-score": ListingScoreMigration,
 } as const;

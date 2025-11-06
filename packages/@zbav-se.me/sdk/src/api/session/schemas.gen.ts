@@ -320,6 +320,293 @@ export const sLocationAutocomplete = {
     required: ['text', 'lang']
 } as const;
 
+export const sListingScoreCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        score: {
+            type: 'integer',
+            minimum: 1,
+            maximum: 10
+        }
+    },
+    required: ['listingId', 'score']
+} as const;
+
+export const sListingScoreCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            '$ref': '#/components/schemas/ListingScoreFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingScoreWhere'
+        }
+    }
+} as const;
+
+export const sListingScoreWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingScoreFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingScoreQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingScoreFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingScoreWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingScoreSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingScoreSort = {
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            enum: ['score', 'createdAt']
+        },
+        sort: {
+            type: ['string', 'null'],
+            enum: ['asc', 'desc']
+        }
+    },
+    required: ['value']
+} as const;
+
+export const sListingScoreCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingScore'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sListingScore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        score: {
+            type: 'integer'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'listingId', 'score', 'createdAt']
+} as const;
+
+export const sListingCartToggle = {
+    type: 'object',
+    properties: {
+        toggle: {
+            type: 'boolean'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: ['toggle', 'listingId']
+} as const;
+
+export const sListingCartCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            '$ref': '#/components/schemas/ListingCartFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingCartWhere'
+        }
+    }
+} as const;
+
+export const sListingCartWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingCartFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingCartQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingCartFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingCartWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingCartSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingCartSort = {
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            enum: ['createdAt']
+        },
+        sort: {
+            type: ['string', 'null'],
+            enum: ['asc', 'desc']
+        }
+    },
+    required: ['value']
+} as const;
+
+export const sListingCartCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingCart'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sListingCart = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'listingId', 'createdAt']
+} as const;
+
 export const sListingCountQuery = {
     type: 'object',
     properties: {

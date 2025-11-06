@@ -3,6 +3,8 @@ import { withCategoryApi } from "./category/withCategoryApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withListingApi } from "./listing/withListingApi";
+import { withListingCartApi } from "./listing-cart/withListingCartApi";
+import { withListingScoreApi } from "./listing-score/withListingScoreApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withS3Api } from "./s3/withS3Api";
 import { withUploadApi } from "./upload/withUploadApi";
@@ -27,6 +29,8 @@ export const withSessionApi: Routes.Fn = (routes) => {
 	withFeedApi(routes);
 	withGalleryApi(routes);
 	withListingApi(routes);
+	withListingCartApi(routes);
+	withListingScoreApi(routes);
 	withLocationApi(routes);
 	withS3Api(routes);
 	withUploadApi(routes);

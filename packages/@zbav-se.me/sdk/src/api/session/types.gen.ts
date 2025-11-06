@@ -292,6 +292,246 @@ export type tLocationAutocomplete = {
 };
 
 /**
+ * Data for creating a new listing score
+ */
+export type tListingScoreCreate = {
+    /**
+     * ID of the listing to score
+     */
+    listingId: string;
+    /**
+     * Score value
+     */
+    score: number;
+};
+
+/**
+ * Query object for listing score count (omits cursor, sort, and meta)
+ */
+export type tListingScoreCountQuery = {
+    filter?: tListingScoreFilter;
+    where?: tListingScoreWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingScoreWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * User-land filters
+ */
+export type tListingScoreFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * Query object for listing score collection
+ */
+export type tListingScoreQuery = {
+    cursor?: tCursor;
+    filter?: tListingScoreFilter;
+    where?: tListingScoreWhere;
+    sort?: Array<tListingScoreSort>;
+};
+
+/**
+ * Sort object for listing score collection
+ */
+export type tListingScoreSort = {
+    value: 'score' | 'createdAt';
+    sort?: 'asc' | 'desc';
+};
+
+/**
+ * Collection of listing scores
+ */
+export type tListingScoreCollection = {
+    data: Array<tListingScore>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+export type tListingScore = {
+    /**
+     * ID of the score
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    /**
+     * Score value
+     */
+    score: number;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Toggle listing in cart
+ */
+export type tListingCartToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from cart
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing cart count (omits cursor, sort, and meta)
+ */
+export type tListingCartCountQuery = {
+    filter?: tListingCartFilter;
+    where?: tListingCartWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingCartWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * User-land filters
+ */
+export type tListingCartFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * Query object for listing cart collection
+ */
+export type tListingCartQuery = {
+    cursor?: tCursor;
+    filter?: tListingCartFilter;
+    where?: tListingCartWhere;
+    sort?: Array<tListingCartSort>;
+};
+
+/**
+ * Sort object for listing cart collection
+ */
+export type tListingCartSort = {
+    value: 'createdAt';
+    sort?: 'asc' | 'desc';
+};
+
+/**
+ * Collection of listing cart items
+ */
+export type tListingCartCollection = {
+    data: Array<tListingCart>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+export type tListingCart = {
+    /**
+     * ID of the cart item
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
  * Query object for listing count (omits cursor, sort, and meta)
  */
 export type tListingCountQuery = {
@@ -1492,6 +1732,120 @@ export type tApiListingCountResponse = {
 };
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
+
+export type tApiListingCartCollectionRequest = {
+    body?: tListingCartQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-cart/collection';
+};
+
+export type tApiListingCartCollectionResponse = {
+    /**
+     * Access collection of listing cart items based on provided query
+     */
+    200: tListingCartCollection;
+};
+
+export type apiListingCartCollectionResponse = tApiListingCartCollectionResponse[keyof tApiListingCartCollectionResponse];
+
+export type tApiListingCartCountRequest = {
+    body?: tListingCartCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-cart/count';
+};
+
+export type tApiListingCartCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingCartCountResponse = tApiListingCartCountResponse[keyof tApiListingCartCountResponse];
+
+export type tApiListingCartToggleRequest = {
+    body?: tListingCartToggle;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-cart/toggle';
+};
+
+export type tApiListingCartToggleResponse = {
+    /**
+     * The cart item was added
+     */
+    201: unknown;
+    /**
+     * The cart item was removed
+     */
+    204: void;
+};
+
+export type apiListingCartToggleResponse = tApiListingCartToggleResponse[keyof tApiListingCartToggleResponse];
+
+export type tApiListingScoreCollectionRequest = {
+    body?: tListingScoreQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-score/collection';
+};
+
+export type tApiListingScoreCollectionResponse = {
+    /**
+     * Access collection of listing scores based on provided query
+     */
+    200: tListingScoreCollection;
+};
+
+export type apiListingScoreCollectionResponse = tApiListingScoreCollectionResponse[keyof tApiListingScoreCollectionResponse];
+
+export type tApiListingScoreCountRequest = {
+    body?: tListingScoreCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-score/count';
+};
+
+export type tApiListingScoreCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingScoreCountResponse = tApiListingScoreCountResponse[keyof tApiListingScoreCountResponse];
+
+export type tApiListingScoreCreateRequest = {
+    /**
+     * Data for creating a new listing score
+     */
+    body?: tListingScoreCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-score/create';
+};
+
+export type apiListingScoreCreateErrors = {
+    /**
+     * Cannot score your own listing
+     */
+    400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+};
+
+export type apiListingScoreCreateError = apiListingScoreCreateErrors[keyof apiListingScoreCreateErrors];
+
+export type tApiListingScoreCreateResponse = {
+    /**
+     * The listing score was created
+     */
+    201: unknown;
+};
 
 export type tApiLocationAutocompleteRequest = {
     /**
