@@ -1,18 +1,14 @@
 import { createRoute } from "@hono/zod-openapi";
-import {
-	embedding,
-	embedNumberRange,
-	embedString,
-} from "@use-pico/common/embedding";
 import { withFetch } from "@use-pico/common/fetch";
 import { genId } from "@use-pico/common/gen-id";
 import { DateTime } from "luxon";
+import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { database } from "../../database/kysely";
-import { hasher } from "../../hasher";
 import type { Routes } from "../../hono/Routes";
 import { withListingQueryBuilder } from "./db/withListingQueryBuilder";
 import { withListingSelect } from "./db/withListingSelect";
+import { embedListing } from "./embedListing";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingSchema } from "./schema/ListingSchema";
 
@@ -54,15 +50,6 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 			const id = genId();
 			const now = new Date();
 
-			const category = await database.kysely
-				.selectFrom("category")
-				.select([
-					"group",
-					"category",
-				])
-				.where("id", "=", data.categoryId)
-				.executeTakeFirstOrThrow();
-
 			await database.kysely
 				.insertInto("listing")
 				.values({
@@ -101,48 +88,9 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 								.toJSDate(),
 						)
 						.exhaustive(),
-					embedding: embedding({
-						blocks: [
-							{
-								vector: embedString({
-									value: category.group,
-									dimensions: 4,
-									weight: 1,
-									hasher,
-								}),
-								weight: 1,
-							},
-							{
-								vector: embedString({
-									value: category.category,
-									dimensions: 4,
-									weight: 1,
-									hasher,
-								}),
-								weight: 0.85,
-							},
-							{
-								vector: embedNumberRange({
-									dimensions: 2,
-									min: 0,
-									max: 6,
-									value: data.age,
-									weight: 1,
-								}),
-								weight: 0.65,
-							},
-							{
-								vector: embedNumberRange({
-									dimensions: 2,
-									min: 0,
-									max: 6,
-									value: data.condition,
-									weight: 1,
-								}),
-								weight: 0.65,
-							},
-						],
-					}),
+					embedding: pgvector.toSql([
+						...(await embedListing(data)),
+					]),
 				})
 				.execute();
 

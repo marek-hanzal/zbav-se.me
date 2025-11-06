@@ -1,3 +1,7 @@
 import { createHasher } from "@use-pico/common/embedding";
 
-export const hasher = await createHasher();
+let instance: Awaited<ReturnType<typeof createHasher>> | null = null;
+
+export const hasher = async () => {
+	return (instance ??= await createHasher());
+};
