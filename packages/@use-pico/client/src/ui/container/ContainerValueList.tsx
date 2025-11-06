@@ -38,8 +38,11 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
+			tone={"primary"}
+			theme={"light"}
 			height={"auto"}
 			round={"lg"}
+			border={"default"}
 		>
 			<Badge
 				theme={"light"}

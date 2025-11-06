@@ -1,9 +1,7 @@
-import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/session";
 import {
 	withFeedCollectionQuery,
@@ -39,50 +37,11 @@ export const FeedList: FC<FeedList.Props> = ({
 
 	return (
 		<Container
-			layout={"vertical-flex"}
-			scroll={"vertical"}
+			layout={isLimitReached ? "vertical" : "vertical-content-footer"}
+			items={"start"}
+			justify={"between"}
 			gap={"md"}
-			height={"fit"}
 		>
-			{shouldShowCreateButton && feedCountQuery.data.filter > 0 ? (
-				<Badge
-					tone={"primary"}
-					theme={isLimitReached ? "light" : "dark"}
-					disabled={isLimitReached}
-					onClick={onClickCreate}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"inline-flex",
-									"flex-row",
-									"gap-2",
-									"w-full",
-									"h-fit",
-									"items-center",
-									"justify-start",
-									"py-2",
-									"px-4",
-								],
-								token: [
-									"round.md",
-								],
-							},
-						},
-					}}
-				>
-					{isLimitReached ? null : <Icon icon={FeedIcon} />}
-					<Tx
-						label={
-							isLimitReached
-								? "Feed limit reached (title)"
-								: "Create new feed (title)"
-						}
-						font={"bold"}
-					/>
-				</Badge>
-			) : null}
-
 			{shouldShowCreateButton && feedCountQuery.data.filter === 0 ? (
 				<Container
 					layout={"vertical-centered"}
@@ -109,15 +68,34 @@ export const FeedList: FC<FeedList.Props> = ({
 				</Container>
 			) : null}
 
-			{feedCollectionQuery.data.data.map((feed) => {
-				return (
-					<FeedItem
-						key={`${feedId}-${feed.id}`}
-						feed={feed}
-						locale={locale}
-					/>
-				);
-			})}
+			<Container
+				layout={"vertical-flex"}
+				scroll={"vertical"}
+				gap={"md"}
+			>
+				{feedCollectionQuery.data.data.map((feed) => {
+					return (
+						<FeedItem
+							key={`${feedId}-${feed.id}`}
+							feed={feed}
+							locale={locale}
+						/>
+					);
+				})}
+			</Container>
+
+			{shouldShowCreateButton && !isLimitReached ? (
+				<Button
+					tone={"primary"}
+					iconEnabled={FeedIcon}
+					theme={"dark"}
+					disabled={isLimitReached}
+					onClick={onClickCreate}
+					label={"Create new feed (title)"}
+					size={"lg"}
+					full
+				/>
+			) : null}
 		</Container>
 	);
 };

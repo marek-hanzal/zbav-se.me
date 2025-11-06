@@ -122,7 +122,17 @@ export const ContainerCls = contract(PicoCls.contract)
 		"lg",
 		"xl",
 	])
+	.bool("disabled")
 	.def()
+	//
+	.match("disabled", true, {
+		root: {
+			class: [
+				"opacity-50",
+				"cursor-not-allowed",
+			],
+		},
+	})
 	// Height
 	.match("height", "fit", {
 		root: {
@@ -1030,6 +1040,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		border: "unset",
 		round: "unset",
 		shadow: "unset",
+		disabled: false,
 	})
 	.cls();
 

@@ -135,6 +135,9 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
     value: Vymysli název
+5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
+    ref: Really delete feed (button)
+    value: Opravdu?
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
     ref: Feed category not selected
     value: Všechny kategorie
@@ -165,9 +168,6 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
     ref: Feed name (title)
     value: Vyber si název
-7c7f402c4a2e1e892336c1c38b74606fa733985953f8e03e0aa97d00:
-    ref: Feed - save and close (button)
-    value: Uložit
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
     ref: I want to sell (label)
     value: Chci prodávat
@@ -182,6 +182,9 @@
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
     ref: No listings (title)
     value: Kde nic, tu nic. Ale všechno bude, všechno bude!
+86fded4e70c3438ddd65c42c33c6c2494acbd968db8b5e9b51104a9c:
+    ref: Delete feed (button)
+    value: Smazat nastavení
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
     ref: With VAT
     value: With VAT
@@ -333,9 +336,6 @@ adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
     value:
         Nastav si inzeráty, které tě zajímají, koukni do tašky, co máš uloženo a
         další nástroje pro nákup.
-adf2aa857314fdeb3999fc88ca3b16372a4af1a07a6c3b32f1b82e3a:
-    ref: Feed limit reached (title)
-    value: Hotovo, víc nejde - uprav si stávající nebo smaž existující nabídku.
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
     ref: Listing expire at (label)
     value: Automatické ukončení

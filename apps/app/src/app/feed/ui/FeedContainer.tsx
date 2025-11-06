@@ -1,14 +1,17 @@
-import { useParams } from "@tanstack/react-router";
-import { EditIcon } from "@use-pico/client/icon";
+import { useNavigate, useParams } from "@tanstack/react-router";
+import { EditIcon, TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
+import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
+import { translator } from "@use-pico/common/translator";
 import type { OptionalId } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/session";
+import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation";
 import {
 	withCategoryCollectionQuery,
 	withLocationFetchQuery,
@@ -26,6 +29,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
+	const navigate = useNavigate();
 
 	const locationFetchQuery = withLocationFetchQuery.useQuery(
 		{
@@ -49,6 +53,17 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 		},
 	);
 
+	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
+		onPostMutation() {
+			return navigate({
+				to: "/$locale/buyer/feed/select",
+				params: {
+					locale,
+				},
+			});
+		},
+	});
+
 	return (
 		<Container
 			layout={"vertical-flex"}
@@ -56,6 +71,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 			gap={"md"}
 			height={"fit"}
 			width={"fit"}
+			disabled={feedDeleteMutation.isPending}
 			{...props}
 		>
 			<VariantProvider
@@ -280,6 +296,33 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 						) : null
 					}
 				/>
+
+				{feed.id ? (
+					<ConfirmButton
+						tone={"danger"}
+						buttonProps={{
+							tone: "danger",
+							label: translator.text("Delete feed (button)"),
+						}}
+						confirmProps={{
+							iconEnabled: TrashIcon,
+							tone: "danger",
+							theme: "dark",
+							label: translator.text(
+								"Really delete feed (button)",
+							),
+							onClick() {
+								feedDeleteMutation.mutate({
+									where: {
+										id: feed.id,
+									},
+								});
+							},
+						}}
+						loading={feedDeleteMutation.isPending}
+						full
+					/>
+				) : null}
 			</VariantProvider>
 		</Container>
 	);

@@ -211,6 +211,13 @@ export namespace Container {
 		shadow?: Cls.VariantOf<ContainerCls, "shadow">;
 
 		/**
+		 * Disabled state of the container.
+		 *
+		 * @default false
+		 */
+		disabled?: Cls.VariantOf<ContainerCls, "disabled">;
+
+		/**
 		 * Props passed to the underlying div element.
 		 *
 		 * Extracted so they won't pollute the container's props.
@@ -240,6 +247,7 @@ export const Container: FC<Container.Props> = ({
 	border,
 	round,
 	shadow,
+	disabled,
 	//
 	cls = ContainerCls,
 	tweak,
@@ -266,6 +274,7 @@ export const Container: FC<Container.Props> = ({
 			shadow,
 			tone,
 			theme,
+			disabled,
 		},
 	});
 
