@@ -302,7 +302,7 @@ export type tListingScoreCreate = {
     /**
      * Predefined score type
      */
-    score: 'listing' | 'view' | 'cart';
+    score: 'listing' | 'ignore' | 'view' | 'cart';
 };
 
 /**
@@ -403,6 +403,10 @@ export type tListingScore = {
      * ID of the listing
      */
     listingId: string;
+    /**
+     * Type of score
+     */
+    type: 'listing' | 'ignore' | 'view' | 'cart';
     /**
      * Score value
      */
@@ -965,6 +969,10 @@ export type tListing = {
      * Array of listing gallery images
      */
     gallery: Array<tGallery>;
+    /**
+     * Whether the user has this listing in the cart
+     */
+    isInCart: boolean;
 };
 
 /**
@@ -1774,11 +1782,7 @@ export type tApiListingCartToggleRequest = {
 
 export type tApiListingCartToggleResponse = {
     /**
-     * The cart item was added
-     */
-    201: unknown;
-    /**
-     * The cart item was removed
+     * Nothing to say, we're just happy
      */
     204: void;
 };

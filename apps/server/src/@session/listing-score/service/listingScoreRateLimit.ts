@@ -3,12 +3,14 @@ import { DateTime } from "luxon";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InfraError } from "../../../error/InfraError";
 import { TooManyRequests } from "../../../error/TooManyRequests";
+import type { ListingScoreTypeSchema } from "../schema/ListingScoreTypeSchema";
 
 export namespace listingScoreRateLimit {
 	export interface Props {
 		database: WithDatabase;
 		userId: string;
 		listingId: string;
+		score: ListingScoreTypeSchema.Type;
 		minutes?: number;
 	}
 }
@@ -17,6 +19,7 @@ export const listingScoreRateLimit = ({
 	database,
 	userId,
 	listingId,
+	score,
 	minutes = 10,
 }: listingScoreRateLimit.Props) => {
 	const rateLimit = DateTime.now()
@@ -32,6 +35,7 @@ export const listingScoreRateLimit = ({
 				.select("createdAt")
 				.where("userId", "=", userId)
 				.where("listingId", "=", listingId)
+				.where("type", "=", score)
 				.where("createdAt", ">=", rateLimit)
 				.orderBy("createdAt", "desc")
 				.executeTakeFirst();

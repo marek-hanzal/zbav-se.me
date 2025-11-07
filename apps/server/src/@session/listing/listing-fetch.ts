@@ -51,18 +51,23 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			const json = c.req.valid("json");
 			const { filter, where, sort, meta } = json;
+			const user = c.get("user");
 
 			const { data, hit } = await withCache({
 				key: {
 					scope: "listing:fetch",
 					version: "1",
-					value: json,
+					value: {
+						userId: user.id,
+						query: json,
+					},
 				},
 				fetch: () =>
 					withFetch({
 						select: withListingSelect({
 							sort,
 							meta,
+							userId: user.id,
 						}),
 						output: ListingSchema,
 						filter,

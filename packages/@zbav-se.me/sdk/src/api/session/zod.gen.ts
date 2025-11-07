@@ -361,6 +361,7 @@ export const zListingScoreCreate = z.object({
     }),
     score: z.enum([
         'listing',
+        'ignore',
         'view',
         'cart'
     ]).register(z.globalRegistry, {
@@ -482,6 +483,14 @@ export const zListingScore = z.object({
     }),
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
+    }),
+    type: z.enum([
+        'listing',
+        'ignore',
+        'view',
+        'cart'
+    ]).register(z.globalRegistry, {
+        description: 'Type of score'
     }),
     score: z.int().register(z.globalRegistry, {
         description: 'Score value'
@@ -1117,6 +1126,9 @@ export const zListing = z.object({
     category: zCategory,
     gallery: z.array(zGallery).register(z.globalRegistry, {
         description: 'Array of listing gallery images'
+    }),
+    isInCart: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user has this listing in the cart'
     })
 });
 
@@ -1890,14 +1902,12 @@ export const zApiListingCartToggleData = z.object({
 
 export type zapiListingCartToggleRequest = z.infer<typeof zApiListingCartToggleData>;
 
-export const zApiListingCartToggleResponse = z.union([
-    z.unknown().register(z.globalRegistry, {
-        description: 'The cart item was added'
-    }),
-    z.void().register(z.globalRegistry, {
-        description: 'The cart item was removed'
-    })
-]);
+/**
+ * Nothing to say, we're just happy
+ */
+export const zApiListingCartToggleResponse = z.void().register(z.globalRegistry, {
+    description: "Nothing to say, we're just happy"
+});
 
 export type zapiListingCartToggleResponse = z.infer<typeof zApiListingCartToggleResponse>;
 

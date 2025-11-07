@@ -47,18 +47,23 @@ export const withListingCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			const json = c.req.valid("json");
 			const { cursor, filter, where, sort, meta } = json;
+			const user = c.get("user");
 
 			const { data, hit } = await withCache({
 				key: {
 					scope: "listing:collection",
 					version: "1",
-					value: json,
+					value: {
+						userId: user.id,
+						query: json,
+					},
 				},
 				fetch: () =>
 					withCollection({
 						select: withListingSelect({
 							sort,
 							meta,
+							userId: user.id,
 						}),
 						output: ListingSchema,
 						cursor: cursor ?? {

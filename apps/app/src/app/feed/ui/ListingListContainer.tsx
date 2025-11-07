@@ -14,7 +14,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 import { type FC, useEffect, useId, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { useListingFeedInfiniteQuery } from "~/app/listing/query/useListingFeedInfiniteQuery";
-import { ListingPreview } from "~/app/listing/ui/ListingPreview";
+import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -178,7 +178,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						.flatMap((p) => p.data)
 						.map((listing) => {
 							return (
-								<ListingPreview
+								<ListingContainer
 									key={`${feedId}-${listing.id}`}
 									listing={listing}
 									locale={locale}

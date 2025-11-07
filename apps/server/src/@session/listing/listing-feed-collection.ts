@@ -68,6 +68,7 @@ export const withListingFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			const { feedId, cursor } = c.req.valid("json");
+			const user = c.get("user");
 			const feed = await withFetch({
 				select: withFeedSelect({
 					sort: [],
@@ -98,6 +99,7 @@ export const withListingFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 						cursor,
 						filter: feed.filter,
 						sort: feed.sort,
+						userId: user.id,
 					},
 				},
 				fetch: () =>
@@ -105,6 +107,7 @@ export const withListingFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 						select: withListingSelect({
 							sort: feed.sort,
 							meta: feed.meta,
+							userId: user.id,
 						}),
 						output: ListingSchema,
 						cursor: cursor ?? {

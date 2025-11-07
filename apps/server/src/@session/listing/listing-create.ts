@@ -132,6 +132,7 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 					select: withListingSelect({
 						sort: [],
 						meta: undefined,
+						userId: user.id,
 					}),
 					output: ListingSchema,
 					where: {

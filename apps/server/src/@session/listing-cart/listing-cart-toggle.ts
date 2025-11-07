@@ -21,11 +21,8 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 				},
 			},
 			responses: {
-				201: {
-					description: "The cart item was added",
-				},
 				204: {
-					description: "The cart item was removed",
+					description: "Nothing to say, we're just happy",
 				},
 			},
 			tags: [
@@ -60,7 +57,7 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 					)
 					.execute();
 
-				return c.body(null, 201);
+				return c.body(null, 204);
 			}
 
 			// Remove from cart

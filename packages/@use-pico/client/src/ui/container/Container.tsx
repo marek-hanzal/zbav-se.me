@@ -190,6 +190,24 @@ export namespace Container {
 		position?: Cls.VariantOf<ContainerCls, "position">;
 
 		/**
+		 * Absolute positioning helper for snapping the container to parent edges.
+		 * Requires the parent element to have relative positioning.
+		 *
+		 * - `"unset"` - No snapping applied
+		 * - `"top-left"` - Snaps to top-left corner
+		 * - `"top-center"` - Snaps to top-center edge
+		 * - `"top-right"` - Snaps to top-right corner
+		 * - `"left-center"` - Snaps to center-left edge
+		 * - `"right-center"` - Snaps to center-right edge
+		 * - `"bottom-left"` - Snaps to bottom-left corner
+		 * - `"bottom-right"` - Snaps to bottom-right corner
+		 * - `"bottom"` - Snaps to full-width bottom edge
+		 *
+		 * @default "unset"
+		 */
+		snapTo?: Cls.VariantOf<ContainerCls, "snap-to">;
+
+		/**
 		 * Border styling using design tokens.
 		 *
 		 * @default "unset"
@@ -244,6 +262,7 @@ export const Container: FC<Container.Props> = ({
 	placeItems,
 	justify,
 	position,
+	snapTo,
 	border,
 	round,
 	shadow,
@@ -269,6 +288,7 @@ export const Container: FC<Container.Props> = ({
 			"place-items": placeItems,
 			justify,
 			position,
+			"snap-to": snapTo,
 			border,
 			round,
 			shadow,

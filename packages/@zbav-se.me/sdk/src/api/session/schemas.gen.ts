@@ -328,7 +328,7 @@ export const sListingScoreCreate = {
         },
         score: {
             type: 'string',
-            enum: ['listing', 'view', 'cart']
+            enum: ['listing', 'ignore', 'view', 'cart']
         }
     },
     required: ['listingId', 'score']
@@ -455,6 +455,10 @@ export const sListingScore = {
         listingId: {
             type: 'string'
         },
+        type: {
+            type: 'string',
+            enum: ['listing', 'ignore', 'view', 'cart']
+        },
         score: {
             type: 'integer'
         },
@@ -462,7 +466,7 @@ export const sListingScore = {
             type: 'string'
         }
     },
-    required: ['id', 'listingId', 'score', 'createdAt']
+    required: ['id', 'listingId', 'type', 'score', 'createdAt']
 } as const;
 
 export const sListingCartToggle = {
@@ -1121,9 +1125,12 @@ export const sListing = {
             items: {
                 '$ref': '#/components/schemas/Gallery'
             }
+        },
+        isInCart: {
+            type: 'boolean'
         }
     },
-    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery']
+    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery', 'isInCart']
 } as const;
 
 export const sListingCreate = {

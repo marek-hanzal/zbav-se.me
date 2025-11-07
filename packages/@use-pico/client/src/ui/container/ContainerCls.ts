@@ -96,6 +96,17 @@ export const ContainerCls = contract(PicoCls.contract)
 		"absolute",
 		"relative",
 	])
+	.variant("snap-to", [
+		"unset",
+		"top-left",
+		"top-center",
+		"top-right",
+		"left-center",
+		"right-center",
+		"bottom-left",
+		"bottom-right",
+		"bottom",
+	])
 	.variant("border", [
 		"unset",
 		"default",
@@ -675,6 +686,84 @@ export const ContainerCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	// Snap-to rules
+	.match("snap-to", "top-left", {
+		root: {
+			class: [
+				"absolute",
+				"top-2",
+				"left-2",
+			],
+		},
+	})
+	.match("snap-to", "top-center", {
+		root: {
+			class: [
+				"absolute",
+				"top-2",
+				"left-1/2",
+				"-translate-x-1/2",
+			],
+		},
+	})
+	.match("snap-to", "top-right", {
+		root: {
+			class: [
+				"absolute",
+				"top-2",
+				"right-2",
+			],
+		},
+	})
+	.match("snap-to", "left-center", {
+		root: {
+			class: [
+				"absolute",
+				"left-2",
+				"top-1/2",
+				"-translate-y-1/2",
+			],
+		},
+	})
+	.match("snap-to", "right-center", {
+		root: {
+			class: [
+				"absolute",
+				"right-2",
+				"top-1/2",
+				"-translate-y-1/2",
+			],
+		},
+	})
+	.match("snap-to", "bottom-left", {
+		root: {
+			class: [
+				"absolute",
+				"bottom-2",
+				"left-2",
+			],
+		},
+	})
+	.match("snap-to", "bottom-right", {
+		root: {
+			class: [
+				"absolute",
+				"bottom-2",
+				"right-2",
+			],
+		},
+	})
+	.match("snap-to", "bottom", {
+		root: {
+			class: [
+				"absolute",
+				"bottom-2",
+				"left-2",
+				"right-2",
+				"w-auto",
+			],
+		},
+	})
 	// Tone + Theme color tokens
 	.rule(
 		{
@@ -1037,6 +1126,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		"place-items": "unset",
 		justify: "unset",
 		position: "unset",
+		"snap-to": "unset",
 		border: "unset",
 		round: "unset",
 		shadow: "unset",

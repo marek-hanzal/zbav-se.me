@@ -1,27 +1,33 @@
 import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { tvc, VariantProvider } from "@use-pico/cls";
+import { VariantProvider } from "@use-pico/cls";
 import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
-import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
+import {
+	withListingCartToggleMutation,
+	withListingScoreCreateMutation,
+} from "@zbav-se.me/sdk/mutation";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { BagIcon } from "@zbav-se.me/ui/icon";
 import { type FC, memo, useCallback, useEffect, useRef } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
-export namespace ListingPreview {
-	export interface Props {
+export namespace ListingContainer {
+	export interface Props extends Container.Props {
 		listing: tListing;
 		locale: string;
 		isVisible: boolean;
 	}
 }
 
-export const ListingPreview: FC<ListingPreview.Props> = memo(
-	({ locale, listing, isVisible }) => {
+export const ListingContainer: FC<ListingContainer.Props> = memo(
+	({ locale, listing, isVisible, tweak, ...props }) => {
 		const [hero] = listing.gallery as [
 			tGallery,
 			...tGallery[],
@@ -39,6 +45,13 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						return 1000 * 60 * 5;
 					}
 					return 250;
+				},
+			});
+
+		const listingCartToggleMutation =
+			withListingCartToggleMutation.useMutation({
+				meta: {
+					mutationId: listing.id,
 				},
 			});
 
@@ -116,13 +129,23 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 		]);
 
 		return (
-			<div
+			<Container
 				data-id={listing.id}
-				className={tvc([
-					"ListingPreview-root",
-					`ListingPreview-${listing.id}`,
-					"relative",
-				])}
+				tweak={[
+					tweak,
+					{
+						slot: {
+							root: {
+								class: [
+									"ListingPreview-root",
+									`ListingPreview-${listing.id}`,
+								],
+							},
+						},
+					},
+				]}
+				position={"relative"}
+				{...props}
 			>
 				<HeroImage
 					src={hero.upload.url}
@@ -130,11 +153,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					className={"w-full h-full object-cover"}
 				/>
 
-				<div
-					className={
-						"absolute top-2 left-2 flex flex-row gap-2 items-center"
-					}
-				>
+				<Container snapTo={"top-left"}>
 					<LinkTo
 						to={"/$locale/buyer/feed/select"}
 						params={{
@@ -159,7 +178,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 							<Icon icon={ArrowLeftIcon} />
 						</Badge>
 					</LinkTo>
-				</div>
+				</Container>
 
 				<Badge
 					tone={"secondary"}
@@ -214,30 +233,35 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					/>
 				</Badge>
 
-				{/* <VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "secondary",
-							theme: "light",
-						}}
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "secondary",
+						theme: "light",
+					}}
+				>
+					<Container
+						height={"unset"}
+						width={"unset"}
+						snapTo={"right-center"}
+						square={"md"}
+						border={"default"}
+						shadow={"default"}
+						round={"lg"}
 					>
-						<Badge
-							size={"lg"}
-							snapTo={"bottom-left"}
-							round={"md"}
-						>
-							<TypoIcon
-								icon={ExpireIcon}
-								iconProps={{
-									size: "xs",
-								}}
-							>
-								{toTimeDiff({
-									time: listing.expiresAt,
-								})}
-							</TypoIcon>
-						</Badge>
-					</VariantProvider> */}
+						<Button
+							iconEnabled={BagIcon}
+							theme={listing.isInCart ? "dark" : "light"}
+							loading={listingCartToggleMutation.isPending}
+							onClick={() =>
+								listingCartToggleMutation.mutate({
+									toggle: !listing.isInCart,
+									listingId: listing.id,
+								})
+							}
+						/>
+					</Container>
+				</VariantProvider>
 
 				<VariantProvider
 					cls={ThemeCls}
@@ -267,7 +291,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 						/>
 					</Badge>
 				</VariantProvider>
-			</div>
+			</Container>
 		);
 	},
 );

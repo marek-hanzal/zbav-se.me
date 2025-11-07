@@ -41,6 +41,7 @@ export const withListingCountApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			const json = c.req.valid("json");
 			const { filter, where } = json;
+			const user = c.get("user");
 
 			const { data, hit } = await withCache({
 				key: {
@@ -51,6 +52,7 @@ export const withListingCountApi: Routes.Fn = ({ sessionHono }) => {
 				fetch: () =>
 					withCount({
 						select: withListingSelect({
+							userId: user.id,
 							sort: undefined,
 							meta: undefined,
 						}),

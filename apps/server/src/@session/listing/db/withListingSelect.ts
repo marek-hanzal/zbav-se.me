@@ -7,6 +7,7 @@ import type { ListingSortSchema } from "../schema/ListingSortSchema";
 
 export namespace withListingSelect {
 	export interface Props {
+		userId: string;
 		sort: ListingSortSchema.Type[] | undefined;
 		meta: ListingMetaSchema.Type | undefined;
 	}
@@ -14,7 +15,11 @@ export namespace withListingSelect {
 	export type Select = ReturnType<typeof withListingSelect>;
 }
 
-export const withListingSelect = ({ sort, meta }: withListingSelect.Props) => {
+export const withListingSelect = ({
+	userId,
+	sort,
+	meta,
+}: withListingSelect.Props) => {
 	const query = database.kysely
 		.selectFrom("listing as l")
 		.select([
@@ -72,6 +77,15 @@ export const withListingSelect = ({ sort, meta }: withListingSelect.Props) => {
 					.whereRef("g.listingId", "=", "l.id")
 					.orderBy("g.sort"),
 			).as("gallery"),
+			eb
+				.exists(
+					eb
+						.selectFrom("listing_cart as lc")
+						.select(sql`1`.as("true"))
+						.whereRef("lc.listingId", "=", "l.id")
+						.where("lc.userId", "=", userId),
+				)
+				.as("isInCart"),
 		]);
 
 	for (const item of sort ?? []) {

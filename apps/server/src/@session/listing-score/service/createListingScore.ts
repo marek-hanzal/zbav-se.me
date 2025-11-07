@@ -62,6 +62,7 @@ export const createListingScore = ({
 				database,
 				userId,
 				listingId,
+				score,
 			});
 		}),
 		Effect.andThen(() => {

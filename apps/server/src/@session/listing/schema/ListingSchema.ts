@@ -12,6 +12,9 @@ export const ListingSchema = z
 		gallery: z.array(GallerySchema).openapi({
 			description: "Array of listing gallery images",
 		}),
+		isInCart: z.boolean().openapi({
+			description: "Whether the user has this listing in the cart",
+		}),
 	})
 	.omit({
 		userId: true,
