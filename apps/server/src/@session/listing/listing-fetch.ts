@@ -72,7 +72,12 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 						output: ListingSchema,
 						filter,
 						where,
-						query: withListingQueryBuilder,
+						query(query) {
+							return withListingQueryBuilder({
+								userId: user.id,
+								...query,
+							});
+						},
 					}),
 			});
 

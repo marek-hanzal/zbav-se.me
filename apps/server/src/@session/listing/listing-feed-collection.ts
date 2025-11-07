@@ -115,7 +115,12 @@ export const withListingFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							size: 10,
 						},
 						filter: feed.filter,
-						query: withListingQueryBuilder,
+						query(query) {
+							return withListingQueryBuilder({
+								userId: user.id,
+								...query,
+							});
+						},
 					}),
 			});
 

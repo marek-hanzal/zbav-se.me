@@ -104,8 +104,7 @@ export const withListingSelect = ({
 						.where("lf.userId", "=", userId),
 				)
 				.as("hasFlag"),
-		])
-		.where("l.userId", "!=", userId);
+		]);
 
 	for (const item of sort ?? []) {
 		if (!item.sort) {

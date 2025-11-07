@@ -4,6 +4,7 @@ import type { withListingSelect } from "./withListingSelect";
 
 export namespace withListingQueryBuilder {
 	export interface Props {
+		userId: string;
 		select: withListingSelect.Select;
 		where?: ListingFilterSchema.Type;
 	}
@@ -16,6 +17,7 @@ export namespace withListingQueryBuilder {
  * Can be used by both list and count queries to ensure consistency
  */
 export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
+	userId,
 	select,
 	where,
 }) => {
@@ -88,6 +90,10 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		query = query.where((eb) =>
 			withLikeEx(eb.ref("l.title"), where.title, "both"),
 		);
+	}
+
+	if (where.withOwn === false) {
+		query = query.where("l.userId", "!=", userId);
 	}
 
 	return query;

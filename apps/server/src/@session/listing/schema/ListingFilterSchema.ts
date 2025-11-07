@@ -75,6 +75,10 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with title matching the provided value",
 		}),
+		withOwn: z.boolean().optional().openapi({
+			description:
+				"This filter matches listings with the user's own listings",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",
