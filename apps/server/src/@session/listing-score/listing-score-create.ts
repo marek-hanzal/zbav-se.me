@@ -5,7 +5,7 @@ import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";
-import { createListingScore } from "./service/createListingScore";
+import { createListingScoreFx } from "./service/createListingScoreFx";
 
 export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -63,7 +63,7 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 			const request = c.req.valid("json");
 
 			return Effect.runPromise(
-				createListingScore({
+				createListingScoreFx({
 					database: database.kysely,
 					userId: c.get("user").id,
 					...request,

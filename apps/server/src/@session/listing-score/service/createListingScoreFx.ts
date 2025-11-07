@@ -15,7 +15,7 @@ const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
 	cart: 15,
 };
 
-export namespace createListingScore {
+export namespace createListingScoreFx {
 	export interface Props {
 		database: WithDatabase;
 		userId: string;
@@ -24,12 +24,12 @@ export namespace createListingScore {
 	}
 }
 
-export const createListingScore = ({
+export const createListingScoreFx = ({
 	database,
 	userId,
 	listingId,
 	score,
-}: createListingScore.Props) => {
+}: createListingScoreFx.Props) => {
 	return Effect.tryPromise({
 		try: () =>
 			database
@@ -132,4 +132,4 @@ export const createListingScore = ({
 	);
 };
 
-export type createListingScore = ReturnType<typeof createListingScore>;
+export type createListingScoreFx = ReturnType<typeof createListingScoreFx>;

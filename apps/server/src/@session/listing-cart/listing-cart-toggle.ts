@@ -1,7 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
+import { Effect } from "effect";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
+import { createListingScoreFx } from "../listing-score/service/createListingScoreFx";
 import { ListingCartToggleSchema } from "./schema/ListingCartToggleSchema";
 
 export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
@@ -57,10 +59,22 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 					)
 					.execute();
 
+				await Effect.runPromise(
+					createListingScoreFx({
+						database: database.kysely,
+						userId: user.id,
+						listingId,
+						score: "cart",
+					}).pipe(
+						Effect.catchTag("TooManyRequests", () => {
+							return Effect.succeed(undefined);
+						}),
+					),
+				);
+
 				return c.body(null, 204);
 			}
 
-			// Remove from cart
 			await database.kysely
 				.deleteFrom("listing_cart")
 				.where("userId", "=", user.id)
