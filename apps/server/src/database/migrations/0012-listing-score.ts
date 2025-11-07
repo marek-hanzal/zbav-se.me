@@ -7,6 +7,7 @@ export const ListingScoreMigration: Migration = {
 			.asEnum([
 				"listing",
 				"ignore",
+				"flag",
 				"view",
 				"cart",
 			])
