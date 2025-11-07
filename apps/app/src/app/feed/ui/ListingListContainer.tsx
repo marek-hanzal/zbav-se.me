@@ -1,4 +1,5 @@
 import { useParams } from "@tanstack/react-router";
+import { useAnim } from "@use-pico/client/gsap";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -9,7 +10,6 @@ import { Status } from "@use-pico/client/ui/status";
 import { useCls } from "@use-pico/cls";
 import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { useAnim } from "@zbav-se.me/ui/gsap";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {

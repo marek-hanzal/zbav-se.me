@@ -11,6 +11,7 @@
 	},
 	"dependencies": {
 		"@floating-ui/react": "0.27.16",
+		"@gsap/react": "2.1.2",
 		"@lexical/list": "0.38.2",
 		"@lexical/react": "0.38.2",
 		"@lexical/utils": "0.38.2",
@@ -21,6 +22,7 @@
 		"@use-pico/cls": "5.0.75",
 		"@use-pico/common": "5.0.104",
 		"axios": "1.13.2",
+		"gsap": "3.13.0",
 		"js-file-downloader": "1.1.25",
 		"kysely": "0.28.8",
 		"lexical": "0.38.2",
@@ -48,7 +50,7 @@
 		"@types/node": "24.10.0",
 		"@types/react": "19.2.2",
 		"@use-pico/tsconfig": "5.0.0",
-		"rollup": "4.52.5",
+		"rollup": "4.53.1",
 		"rollup-plugin-dts": "6.2.3",
 		"typescript": "5.9.3"
 	},

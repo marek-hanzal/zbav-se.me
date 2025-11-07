@@ -1,5 +1,9 @@
 import { withInfiniteQuery } from "@use-pico/client/query";
-import type { tListing, tListingCollection, tListingFilter } from "../api/session";
+import type {
+	tListing,
+	tListingCollection,
+	tListingFilter,
+} from "../api/session";
 import { apiListingFeedCollection } from "../api/session/sdk.gen";
 
 export namespace withListingFeedInfiniteQuery {

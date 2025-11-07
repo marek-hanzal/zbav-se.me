@@ -1,6 +1,6 @@
+import { anim, useAnim } from "@use-pico/client/gsap";
 import type { Icon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { anim, useAnim } from "@zbav-se.me/ui/gsap";
 import { type FC, useRef } from "react";
 
 export namespace Item {
