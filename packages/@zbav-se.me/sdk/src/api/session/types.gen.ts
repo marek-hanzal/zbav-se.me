@@ -885,6 +885,10 @@ export type tListingWhere = {
      * This filter matches listings with title matching the provided value
      */
     title?: string | null;
+    /**
+     * This filter matches listings with the user's own listings
+     */
+    withOwn?: boolean;
 };
 
 /**
@@ -996,6 +1000,10 @@ export type tListingFilter = {
      * This filter matches listings with title matching the provided value
      */
     title?: string | null;
+    /**
+     * This filter matches listings with the user's own listings
+     */
+    withOwn?: boolean;
 };
 
 /**
@@ -1025,19 +1033,8 @@ export type tFeedCollectionRequest = {
      * ID of the feed to collect listings for
      */
     feedId: string;
-    /**
-     * Pagination cursor
-     */
-    cursor?: {
-        /**
-         * Page number (0-indexed)
-         */
-        page: number;
-        /**
-         * Page size
-         */
-        size: number;
-    } | null;
+    where?: tListingFilter & unknown;
+    cursor?: tCursor & unknown;
 };
 
 /**

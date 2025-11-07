@@ -1048,6 +1048,9 @@ export const sListingWhere = {
         },
         title: {
             type: ['string', 'null']
+        },
+        withOwn: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1179,6 +1182,9 @@ export const sListingFilter = {
         },
         title: {
             type: ['string', 'null']
+        },
+        withOwn: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1238,20 +1244,21 @@ export const sFeedCollectionRequest = {
         feedId: {
             type: 'string'
         },
-        cursor: {
-            type: ['object', 'null'],
-            properties: {
-                page: {
-                    type: 'number',
-                    minimum: 0
+        where: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/ListingFilter'
                 },
-                size: {
-                    type: 'number',
-                    minimum: 1,
-                    maximum: 1000
-                }
-            },
-            required: ['page', 'size']
+                {}
+            ]
+        },
+        cursor: {
+            allOf: [
+                {
+                    '$ref': '#/components/schemas/Cursor'
+                },
+                {}
+            ]
         }
     },
     required: ['feedId']

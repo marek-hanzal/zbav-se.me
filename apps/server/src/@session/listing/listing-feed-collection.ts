@@ -67,7 +67,7 @@ export const withListingFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { feedId, cursor } = c.req.valid("json");
+			const { feedId, where, cursor } = c.req.valid("json");
 			const user = c.get("user");
 			const feed = await withFetch({
 				select: withFeedSelect({
@@ -115,6 +115,7 @@ export const withListingFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							size: 10,
 						},
 						filter: feed.filter,
+						where,
 						query(query) {
 							return withListingQueryBuilder({
 								userId: user.id,

@@ -1135,7 +1135,10 @@ export const zListingWhere = z.object({
     title: z.optional(z.union([
         z.string(),
         z.null()
-    ]))
+    ])),
+    withOwn: z.optional(z.boolean().register(z.globalRegistry, {
+        description: "This filter matches listings with the user's own listings"
+    }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -1203,7 +1206,10 @@ export const zListingFilter = z.object({
     title: z.optional(z.union([
         z.string(),
         z.null()
-    ]))
+    ])),
+    withOwn: z.optional(z.boolean().register(z.globalRegistry, {
+        description: "This filter matches listings with the user's own listings"
+    }))
 }).register(z.globalRegistry, {
     description: 'Filter used to fetch the listings'
 });
@@ -1276,17 +1282,12 @@ export const zFeedCollectionRequest = z.object({
     feedId: z.string().register(z.globalRegistry, {
         description: 'ID of the feed to collect listings for'
     }),
-    cursor: z.optional(z.union([
-        z.object({
-            page: z.number().gte(0).register(z.globalRegistry, {
-                description: 'Page number (0-indexed)'
-            }),
-            size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
-                description: 'Page size'
-            })
-        }),
-        z.null()
-    ]))
+    where: z.optional(zListingFilter.and(z.unknown().register(z.globalRegistry, {
+        description: 'Ability to override filters from the feed'
+    }))),
+    cursor: z.optional(zCursor.and(z.unknown().register(z.globalRegistry, {
+        description: 'Pagination cursor'
+    })))
 }).register(z.globalRegistry, {
     description: 'Request to collect listings from a feed'
 });

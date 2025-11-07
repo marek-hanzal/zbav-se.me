@@ -46,6 +46,9 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	const listingQuery = withListingFeedInfiniteQuery({
 		feedId: id,
 		size: 5,
+		where: {
+			withOwn: false,
+		},
 	}).useInfiniteQuery({});
 	const containerRef = useRef<HTMLDivElement>(null);
 	const visiblesRef = useRef<Set<string>>(new Set<string>());
