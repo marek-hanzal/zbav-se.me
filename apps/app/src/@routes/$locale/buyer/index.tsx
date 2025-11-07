@@ -9,7 +9,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { BagIcon, FeedIcon, ShopIcon } from "@zbav-se.me/ui/icon";
+import { CartIcon, FeedIcon, ShopIcon } from "@zbav-se.me/ui/icon";
 import { Tile } from "~/app/ui/dashboard/Tile";
 
 export const Route = createFileRoute("/$locale/buyer/")({
@@ -71,15 +71,15 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/buyer/bag"
+						to="/$locale/buyer/cart"
 						params={{
 							locale,
 						}}
 						full
 					>
 						<Tile
-							icon={BagIcon}
-							textTitle={"Bag (label)"}
+							icon={CartIcon}
+							textTitle={"Cart (label)"}
 						/>
 					</LinkTo>
 

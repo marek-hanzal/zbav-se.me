@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { tvc } from "@use-pico/cls";
 
-export const Route = createFileRoute("/$locale/buyer/bag")({
+export const Route = createFileRoute("/$locale/buyer/cart")({
 	component() {
 		return (
 			<div

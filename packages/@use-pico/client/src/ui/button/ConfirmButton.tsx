@@ -18,6 +18,10 @@ export namespace ConfirmButton {
 		 * @default 3000
 		 */
 		confirmTimeout?: number;
+		/**
+		 * Callback function to reset the confirm state.
+		 */
+		onReset?(): void;
 	}
 }
 
@@ -25,6 +29,7 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 	buttonProps,
 	confirmProps,
 	confirmTimeout = 3000,
+	onReset,
 	...props
 }) => {
 	const [isConfirm, setIsConfirm] = useState(false);
@@ -37,6 +42,7 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 			timeoutRef.current = setTimeout(() => {
 				setIsConfirm(false);
 				timeoutRef.current = null;
+				onReset?.();
 			}, confirmTimeout);
 			return;
 		}
@@ -47,6 +53,7 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 		}
 		confirmProps?.onClick?.(event);
 		setIsConfirm(false);
+		onReset?.();
 	};
 
 	useEffect(() => {

@@ -18,7 +18,7 @@ import { Route as LocaleDashboardRouteImport } from './@routes/$locale/dashboard
 import { Route as LocaleSellerIndexRouteImport } from './@routes/$locale/seller/index'
 import { Route as LocaleBuyerIndexRouteImport } from './@routes/$locale/buyer/index'
 import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
-import { Route as LocaleBuyerBagRouteImport } from './@routes/$locale/buyer/bag'
+import { Route as LocaleBuyerCartRouteImport } from './@routes/$locale/buyer/cart'
 import { Route as LocaleSellerListingMyRouteImport } from './@routes/$locale/seller/listing/my'
 import { Route as LocaleBuyerFeedSelectRouteImport } from './@routes/$locale/buyer/feed/select'
 import { Route as LocaleBuyerFeedIdRouteImport } from './@routes/$locale/buyer/feed/$id'
@@ -95,9 +95,9 @@ const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   path: '/dev/seed',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleBuyerBagRoute = LocaleBuyerBagRouteImport.update({
-  id: '/buyer/bag',
-  path: '/buyer/bag',
+const LocaleBuyerCartRoute = LocaleBuyerCartRouteImport.update({
+  id: '/buyer/cart',
+  path: '/buyer/cart',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleSellerListingMyRoute = LocaleSellerListingMyRouteImport.update({
@@ -284,7 +284,7 @@ export interface FileRoutesByFullPath {
   '/$locale/shop': typeof LocaleShopRoute
   '/$locale/user': typeof LocaleUserRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/buyer/bag': typeof LocaleBuyerBagRoute
+  '/$locale/buyer/cart': typeof LocaleBuyerCartRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/buyer': typeof LocaleBuyerIndexRoute
   '/$locale/seller': typeof LocaleSellerIndexRoute
@@ -325,7 +325,7 @@ export interface FileRoutesByTo {
   '/$locale/shop': typeof LocaleShopRoute
   '/$locale/user': typeof LocaleUserRoute
   '/$locale': typeof LocaleIndexRoute
-  '/$locale/buyer/bag': typeof LocaleBuyerBagRoute
+  '/$locale/buyer/cart': typeof LocaleBuyerCartRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/buyer': typeof LocaleBuyerIndexRoute
   '/$locale/seller': typeof LocaleSellerIndexRoute
@@ -368,7 +368,7 @@ export interface FileRoutesById {
   '/$locale/shop': typeof LocaleShopRoute
   '/$locale/user': typeof LocaleUserRoute
   '/$locale/': typeof LocaleIndexRoute
-  '/$locale/buyer/bag': typeof LocaleBuyerBagRoute
+  '/$locale/buyer/cart': typeof LocaleBuyerCartRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/buyer/': typeof LocaleBuyerIndexRoute
   '/$locale/seller/': typeof LocaleSellerIndexRoute
@@ -412,7 +412,7 @@ export interface FileRouteTypes {
     | '/$locale/shop'
     | '/$locale/user'
     | '/$locale/'
-    | '/$locale/buyer/bag'
+    | '/$locale/buyer/cart'
     | '/$locale/dev/seed'
     | '/$locale/buyer'
     | '/$locale/seller'
@@ -453,7 +453,7 @@ export interface FileRouteTypes {
     | '/$locale/shop'
     | '/$locale/user'
     | '/$locale'
-    | '/$locale/buyer/bag'
+    | '/$locale/buyer/cart'
     | '/$locale/dev/seed'
     | '/$locale/buyer'
     | '/$locale/seller'
@@ -495,7 +495,7 @@ export interface FileRouteTypes {
     | '/$locale/shop'
     | '/$locale/user'
     | '/$locale/'
-    | '/$locale/buyer/bag'
+    | '/$locale/buyer/cart'
     | '/$locale/dev/seed'
     | '/$locale/buyer/'
     | '/$locale/seller/'
@@ -601,11 +601,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleDevSeedRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/bag': {
-      id: '/$locale/buyer/bag'
-      path: '/buyer/bag'
-      fullPath: '/$locale/buyer/bag'
-      preLoaderRoute: typeof LocaleBuyerBagRouteImport
+    '/$locale/buyer/cart': {
+      id: '/$locale/buyer/cart'
+      path: '/buyer/cart'
+      fullPath: '/$locale/buyer/cart'
+      preLoaderRoute: typeof LocaleBuyerCartRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/seller/listing/my': {
@@ -853,7 +853,7 @@ interface LocaleRouteChildren {
   LocaleShopRoute: typeof LocaleShopRoute
   LocaleUserRoute: typeof LocaleUserRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
-  LocaleBuyerBagRoute: typeof LocaleBuyerBagRoute
+  LocaleBuyerCartRoute: typeof LocaleBuyerCartRoute
   LocaleDevSeedRoute: typeof LocaleDevSeedRoute
   LocaleBuyerIndexRoute: typeof LocaleBuyerIndexRoute
   LocaleSellerIndexRoute: typeof LocaleSellerIndexRoute
@@ -885,7 +885,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleShopRoute: LocaleShopRoute,
   LocaleUserRoute: LocaleUserRoute,
   LocaleIndexRoute: LocaleIndexRoute,
-  LocaleBuyerBagRoute: LocaleBuyerBagRoute,
+  LocaleBuyerCartRoute: LocaleBuyerCartRoute,
   LocaleDevSeedRoute: LocaleDevSeedRoute,
   LocaleBuyerIndexRoute: LocaleBuyerIndexRoute,
   LocaleSellerIndexRoute: LocaleSellerIndexRoute,

@@ -1,6 +1,5 @@
 import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -8,16 +7,12 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
-import {
-	withListingCartToggleMutation,
-	withListingIgnoreToggleMutation,
-	withListingScoreCreateMutation,
-} from "@zbav-se.me/sdk/mutation";
+import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
 import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { CancelIcon, CartIcon, FlagIcon } from "@zbav-se.me/ui/icon";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { type FC, memo, useCallback, useEffect, useRef } from "react";
+import { ListingToolbarContainer } from "~/app/listing/ui/ListingToolbarContainer";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
@@ -55,29 +50,6 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 						return 1000 * 60 * 5;
 					}
 					return 250;
-				},
-			});
-
-		const listingCartToggleMutation =
-			withListingCartToggleMutation.useMutation({
-				onSuccess() {
-					patchListing({
-						id: listing.id,
-						isInCart: !listing.isInCart,
-					});
-				},
-				meta: {
-					mutationId: listing.id,
-				},
-			});
-
-		const listingIgnoreToggleMutation =
-			withListingIgnoreToggleMutation.useMutation({
-				onSuccess() {
-					patchListing({
-						id: listing.id,
-						isIgnored: !listing.isIgnored,
-					});
 				},
 			});
 
@@ -286,97 +258,27 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 					/>
 				</Badge>
 
-				<VariantProvider
-					cls={ThemeCls}
-					variant={{
-						tone: "secondary",
-						theme: "light",
+				<ListingToolbarContainer
+					listing={listing}
+					onCartToggle={(toggle) => {
+						patchListing({
+							id: listing.id,
+							isInCart: toggle,
+						});
 					}}
-				>
-					<Container
-						layout={"vertical-flex"}
-						items={"center"}
-						height={"unset"}
-						width={"unset"}
-						snapTo={"right-center"}
-						square={"md"}
-						border={"default"}
-						shadow={"default"}
-						round={"lg"}
-						gap={"md"}
-						tone={"secondary"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"opacity-75",
-										"z-100",
-									],
-								},
-							},
-						}}
-					>
-						<ConfirmButton
-							iconEnabled={CartIcon}
-							tone={"primary"}
-							theme={listing.isInCart ? "dark" : "light"}
-							loading={listingCartToggleMutation.isPending}
-							disabled={listing.isIgnored}
-							confirmProps={{
-								tone: "secondary",
-								theme: "dark",
-								onClick() {
-									listingCartToggleMutation.mutate({
-										toggle: !listing.isInCart,
-										listingId: listing.id,
-									});
-								},
-								size: "lg",
-							}}
-							round={"full"}
-						/>
-
-						<ConfirmButton
-							iconEnabled={CancelIcon}
-							tone={"primary"}
-							theme={listing.isIgnored ? "dark" : "light"}
-							loading={listingIgnoreToggleMutation.isPending}
-							disabled={listing.isInCart}
-							confirmProps={{
-								tone: "secondary",
-								theme: "dark",
-								onClick() {
-									listingIgnoreToggleMutation.mutate({
-										toggle: !listing.isIgnored,
-										listingId: listing.id,
-									});
-								},
-								size: "lg",
-							}}
-							round={"full"}
-						/>
-
-						<ConfirmButton
-							iconEnabled={FlagIcon}
-							tone={"primary"}
-							theme={listing.hasFlag ? "dark" : "light"}
-							loading={listingIgnoreToggleMutation.isPending}
-							disabled={listing.isInCart}
-							confirmProps={{
-								tone: "secondary",
-								theme: "dark",
-								onClick() {
-									listingIgnoreToggleMutation.mutate({
-										toggle: !listing.isIgnored,
-										listingId: listing.id,
-									});
-								},
-								size: "lg",
-							}}
-							round={"full"}
-						/>
-					</Container>
-				</VariantProvider>
+					onIgnoreToggle={(toggle) => {
+						patchListing({
+							id: listing.id,
+							isIgnored: toggle,
+						});
+					}}
+					onFlagToggle={(toggle) => {
+						patchListing({
+							id: listing.id,
+							hasFlag: toggle,
+						});
+					}}
+				/>
 
 				<VariantProvider
 					cls={ThemeCls}
