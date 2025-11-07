@@ -1,39 +1,35 @@
+import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, useId, useRef } from "react";
 import { useAnim } from "../../gsap/gsap";
+import { ToasterCls } from "./ToasterCls";
 import { useToastContext } from "./useToastContext";
 
 export namespace Toaster {
-	export type Position =
-		| "top-right"
-		| "top-center"
-		| "top-left"
-		| "bottom-right"
-		| "bottom-center"
-		| "bottom-left";
-
-	export interface Props {
+	export interface Props extends ToasterCls.Props {
 		/**
 		 * The position of the toaster
 		 */
-		position: Position;
+		position: Cls.VariantOf<ToasterCls, "position">;
 	}
 }
 
-export const Toaster: FC<Toaster.Props> = ({ position }) => {
+export const Toaster: FC<Toaster.Props> = ({
+	position,
+	cls = ToasterCls,
+	tweak,
+}) => {
 	const rootRef = useRef<HTMLDivElement>(null);
+	const toastId = useId();
+
+	const { slots } = useCls(cls, tweak, {
+		variant: {
+			position,
+		},
+	});
 
 	const useToastStore = useToastContext();
 	const $store = useToastStore();
-	const getVisible = useToastStore((store) => store.getVisible);
-	/**
-	 * Promotes the next queued toast into the visible list when space is available.
-	 */
-	const pull = useToastStore((store) => store.pull);
-	/**
-	 * The delay in milliseconds before a toast is removed.
-	 */
-	const delayMs = useToastStore((store) => store.delayMs);
-	const toastId = useId();
+	const durationMs = $store.durationMs;
 
 	useAnim(
 		() => {
@@ -46,13 +42,23 @@ export const Toaster: FC<Toaster.Props> = ({ position }) => {
 	);
 
 	return (
-		<div ref={rootRef}>
-			{getVisible().map((toast) => {
-				return toast.render({
-					store: $store,
-					toastId,
-					toast,
-				});
+		<div
+			ref={rootRef}
+			className={slots.root()}
+		>
+			{$store.getVisible().map((toast) => {
+				return (
+					<div
+						key={`${toastId}-${toast.id}`}
+						className={slots.item()}
+						data-toast-id={toast.id}
+					>
+						{toast.render({
+							store: $store,
+							toast,
+						})}
+					</div>
+				);
 			})}
 		</div>
 	);

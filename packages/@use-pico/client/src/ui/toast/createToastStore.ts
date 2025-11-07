@@ -4,12 +4,18 @@ import type { Toast } from "./Toast";
 export namespace createToastStore {
 	export interface Props {
 		maxCount: number;
-		delayMs: number;
+		gap: number;
+		offset: number;
+		durationMs: number;
 	}
 
 	export interface Store {
 		maxCount: number;
-		delayMs: number;
+		//
+		gap: number;
+		offset: number;
+		//
+		durationMs: number;
 		//
 		toasts: Record<string, Toast>;
 		//
@@ -61,11 +67,17 @@ export namespace createToastStore {
 
 export const createToastStore = ({
 	maxCount,
-	delayMs,
+	gap,
+	offset,
+	durationMs,
 }: createToastStore.Props): createToastStore.Hook => {
 	return create<createToastStore.Store>((set, get) => ({
 		maxCount,
-		delayMs,
+		//
+		gap,
+		offset,
+		//
+		durationMs,
 		//
 		toasts: {},
 		//

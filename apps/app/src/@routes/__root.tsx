@@ -58,9 +58,9 @@ export const Route = createRootRouteWithContext<{
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
 						<ToastProvider
 							maxCount={5}
-							delayMs={2500}
+							durationMs={2500}
 						>
-							<Toaster />
+							<Toaster position="top-center" />
 
 							<Container
 								ui="Root-root"

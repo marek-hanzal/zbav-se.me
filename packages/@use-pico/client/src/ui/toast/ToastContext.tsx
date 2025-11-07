@@ -4,6 +4,8 @@ import { createToastStore } from "./createToastStore";
 export const ToastContext = createContext<createToastStore.Hook>(
 	createToastStore({
 		maxCount: 5,
-		delayMs: 2500,
+		durationMs: 2500,
+		gap: 8,
+		offset: 8,
 	}),
 );

@@ -9,10 +9,6 @@ export namespace Render {
 		 */
 		store: createToastStore.Store;
 		/**
-		 * React useId() for toasts, optional to use
-		 */
-		toastId: string;
-		/**
 		 * The toast itself
 		 */
 		toast: Toast;
