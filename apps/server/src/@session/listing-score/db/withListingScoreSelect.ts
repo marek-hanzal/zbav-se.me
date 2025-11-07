@@ -17,6 +17,7 @@ export const withListingScoreSelect = ({
 		"ls.id",
 		"ls.listingId",
 		"ls.score",
+		"ls.type",
 		"ls.createdAt",
 	]);
 

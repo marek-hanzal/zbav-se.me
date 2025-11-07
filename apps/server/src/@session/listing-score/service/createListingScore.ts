@@ -1,9 +1,11 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InfraError } from "../../../error/InfraError";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
+import type { ListingScoreTypeSchema } from "../schema/ListingScoreTypeSchema";
 import { listingScoreRateLimit } from "./listingScoreRateLimit";
 
 export namespace createListingScore {
@@ -11,7 +13,7 @@ export namespace createListingScore {
 		database: WithDatabase;
 		userId: string;
 		listingId: string;
-		score: number;
+		score: ListingScoreTypeSchema.Type;
 	}
 }
 
@@ -71,7 +73,13 @@ export const createListingScore = ({
 							id: genId(),
 							listingId,
 							userId,
-							score,
+							score: match(score)
+								.with("listing", () => 1)
+								.with("ignore", () => -3)
+								.with("view", () => 5)
+								.with("cart", () => 15)
+								.exhaustive(),
+							type: score,
 							createdAt: new Date(),
 						})
 						.returningAll()

@@ -72,7 +72,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 
 				await listingScoreCreateMutation.mutateAsync({
 					listingId: listing.id,
-					score: 1,
+					score: "listing",
 				});
 			}, 2000);
 		}, [

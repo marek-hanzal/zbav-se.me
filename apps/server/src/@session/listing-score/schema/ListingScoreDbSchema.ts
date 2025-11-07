@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { ListingScoreTypeSchema } from "./ListingScoreTypeSchema";
 
 export const ListingScoreDbSchema = z.object({
 	id: z.string().openapi({
@@ -9,6 +10,9 @@ export const ListingScoreDbSchema = z.object({
 	}),
 	userId: z.string().openapi({
 		description: "ID of the user who created the score",
+	}),
+	type: ListingScoreTypeSchema.openapi({
+		description: "Type of score",
 	}),
 	score: z.number().int().openapi({
 		description: "Score value",

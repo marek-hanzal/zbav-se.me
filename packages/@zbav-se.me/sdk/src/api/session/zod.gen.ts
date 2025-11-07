@@ -359,8 +359,12 @@ export const zListingScoreCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing to score'
     }),
-    score: z.int().gte(1).lte(10).register(z.globalRegistry, {
-        description: 'Score value'
+    score: z.enum([
+        'listing',
+        'view',
+        'cart'
+    ]).register(z.globalRegistry, {
+        description: 'Predefined score type'
     })
 }).register(z.globalRegistry, {
     description: 'Data for creating a new listing score'

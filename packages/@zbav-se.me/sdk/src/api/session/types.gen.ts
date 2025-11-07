@@ -300,9 +300,9 @@ export type tListingScoreCreate = {
      */
     listingId: string;
     /**
-     * Score value
+     * Predefined score type
      */
-    score: number;
+    score: 'listing' | 'view' | 'cart';
 };
 
 /**

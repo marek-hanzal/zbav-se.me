@@ -327,9 +327,8 @@ export const sListingScoreCreate = {
             type: 'string'
         },
         score: {
-            type: 'integer',
-            minimum: 1,
-            maximum: 10
+            type: 'string',
+            enum: ['listing', 'view', 'cart']
         }
     },
     required: ['listingId', 'score']

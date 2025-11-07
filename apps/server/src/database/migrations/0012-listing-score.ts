@@ -1,13 +1,24 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const ListingScoreMigration: Migration = {
 	async up(db) {
+		await db.schema
+			.createType("listing_score_type")
+			.asEnum([
+				"listing",
+				"ignore",
+				"view",
+				"cart",
+			])
+			.execute();
+
 		await db.schema
 			.createTable("listing_score")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("score", "integer", (col) => col.notNull())
+			.addColumn("type", sql`listing_score_type`, (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) =>
 				col.notNull().defaultTo("now()"),
 			)
