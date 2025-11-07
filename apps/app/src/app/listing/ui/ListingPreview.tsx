@@ -29,7 +29,14 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 
 		const listingScoreCreateMutation =
 			withListingScoreCreateMutation.useMutation({
-				retry: false,
+				retry: () =>
+					isVisible && document.visibilityState === "visible",
+				retryDelay(_, error) {
+					if ("type" in error && error.type === "error") {
+						return 1000 * 60 * 5;
+					}
+					return 250;
+				},
 			});
 
 		const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
