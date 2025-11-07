@@ -1,18 +1,10 @@
 import { defineNitroConfig } from "nitropack/config";
-import esbuild from "rollup-plugin-esbuild";
 
 export default defineNitroConfig({
-	rollupConfig: {
-		plugins: [
-			esbuild({
-				exclude: [],
-				include: [
-					/\.([cm]?ts)$/,
-				],
-				target: "es2022",
-				tsconfig: "tsconfig.json",
-			}),
-		],
+	esbuild: {
+		options: {
+			target: "node22",
+		},
 	},
 	vercel: {
 		config: {
