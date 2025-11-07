@@ -59,6 +59,8 @@ export const Route = createRootRouteWithContext<{
 						<ToastProvider
 							maxCount={5}
 							durationMs={2500}
+							gap={8}
+							offset={8}
 						>
 							<Toaster position="top-center" />
 
