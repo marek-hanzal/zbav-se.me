@@ -41,7 +41,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		size: 5,
 	});
 	const containerRef = useRef<HTMLDivElement>(null);
-    const [visibles, setVisibles] = useState<string[]>([]);
+	const visiblesRef = useRef<Set<string>>(new Set<string>());
+	const [visibles, setVisibles] = useState(() => new Set<string>());
 
 	const debouncedFetchNextPage = useDebouncedCallback(
 		(height: number, end: number, position: number) => {
@@ -57,16 +58,14 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		},
 	);
 	const debouncedVisibility = useDebouncedCallback(
-		(elements: HTMLElement[], isVisible: boolean) => {
-			console.log(
-				"debouncedVisibility",
-				elements.map((e) => e.dataset.id),
-				isVisible,
-			);
+		() => {
+			setVisibles(() => {
+				return new Set<string>(visiblesRef.current);
+			});
 		},
 		250,
 		{
-			leading: true,
+			leading: false,
 			trailing: true,
 		},
 	);
@@ -94,6 +93,23 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		},
 	);
 
+	const schedule = (elements: HTMLElement[], isVisible: boolean) => {
+		elements.forEach((element) => {
+			const id = element.dataset.id;
+			if (!id) {
+				return;
+			}
+
+			if (isVisible) {
+				visiblesRef.current.add(id);
+			} else {
+				visiblesRef.current.delete(id);
+			}
+		});
+
+		debouncedVisibility();
+	};
+
 	useAnim(
 		() => {
 			ScrollTrigger.batch(".ListingPreview-root", {
@@ -101,10 +117,16 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				start: "top bottom",
 				end: "bottom top",
 				onEnter(self) {
-					debouncedVisibility(self as HTMLElement[], true);
+					schedule(self as HTMLElement[], true);
+				},
+				onEnterBack(self) {
+					schedule(self as HTMLElement[], true);
 				},
 				onLeave(self) {
-					debouncedVisibility(self as HTMLElement[], false);
+					schedule(self as HTMLElement[], false);
+				},
+				onLeaveBack(self) {
+					schedule(self as HTMLElement[], false);
 				},
 			});
 		},
@@ -166,6 +188,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									key={`${feedId}-${listing.id}`}
 									listing={listing}
 									locale={locale}
+									isVisible={visibles.has(listing.id)}
 								/>
 							);
 						});
