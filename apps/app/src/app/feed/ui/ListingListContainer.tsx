@@ -57,18 +57,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			maxWait: debounceTimeout * 3,
 		},
 	);
-	const debouncedVisibility = useDebouncedCallback(
-		() => {
-			setVisibles(() => {
-				return new Set<string>(visiblesRef.current);
-			});
-		},
-		250,
-		{
-			leading: false,
-			trailing: true,
-		},
-	);
 
 	const scroller = useRef<ScrollTrigger>(null);
 
@@ -107,7 +95,13 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			}
 		});
 
-		debouncedVisibility();
+		/**
+		 * We've to immediately set the visibles set or timeout may trigger false visibility and send score event when
+		 * it should not.
+		 */
+		setVisibles(() => {
+			return new Set<string>(visiblesRef.current);
+		});
 	};
 
 	useAnim(

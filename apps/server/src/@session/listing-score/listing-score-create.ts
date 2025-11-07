@@ -105,6 +105,7 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 				.selectFrom("listing_score")
 				.select("createdAt")
 				.where("userId", "=", user.id)
+				.where("listingId", "=", data.listingId)
 				.where("createdAt", ">=", rateLimit)
 				.orderBy("createdAt", "desc")
 				.executeTakeFirst();
