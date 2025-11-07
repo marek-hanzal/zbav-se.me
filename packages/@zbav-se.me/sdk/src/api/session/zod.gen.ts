@@ -362,6 +362,7 @@ export const zListingScoreCreate = z.object({
     score: z.enum([
         'listing',
         'ignore',
+        'flag',
         'view',
         'cart'
     ]).register(z.globalRegistry, {
@@ -487,6 +488,7 @@ export const zListingScore = z.object({
     type: z.enum([
         'listing',
         'ignore',
+        'flag',
         'view',
         'cart'
     ]).register(z.globalRegistry, {
@@ -515,6 +517,324 @@ export const zListingScoreCollection = z.object({
 });
 
 export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
+
+/**
+ * Toggle flag on listing
+ */
+export const zListingFlagToggle = z.object({
+    toggle: z.boolean().register(z.globalRegistry, {
+        description: 'Whether to add (true) or remove (false) the flag on the listing'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing to toggle'
+    })
+}).register(z.globalRegistry, {
+    description: 'Toggle flag on listing'
+});
+
+export type zListingFlagToggle = z.infer<typeof zListingFlagToggle>;
+
+/**
+ * App-based filters
+ */
+export const zListingFlagCountWhere = z.object({
+    id: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    idIn: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ])),
+    fulltext: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    userId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    listingId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingFlagCountWhere = z.infer<typeof zListingFlagCountWhere>;
+
+/**
+ * User-land filters
+ */
+export const zListingFlagFilter = z.object({
+    id: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    idIn: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ])),
+    fulltext: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    userId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    listingId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
+}).register(z.globalRegistry, {
+    description: 'User-land filters'
+});
+
+export type zListingFlagFilter = z.infer<typeof zListingFlagFilter>;
+
+/**
+ * Query object for listing flag counts
+ */
+export const zListingFlagCountQuery = z.object({
+    filter: z.optional(zListingFlagFilter),
+    where: z.optional(zListingFlagCountWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing flag counts'
+});
+
+export type zListingFlagCountQuery = z.infer<typeof zListingFlagCountQuery>;
+
+/**
+ * Sort object for listing flag collection
+ */
+export const zListingFlagSort = z.object({
+    value: z.enum([
+        'createdAt'
+    ]),
+    sort: z.optional(z.enum([
+        'asc',
+        'desc'
+    ]))
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing flag collection'
+});
+
+export type zListingFlagSort = z.infer<typeof zListingFlagSort>;
+
+/**
+ * App-based filters
+ */
+export const zListingFlagWhere = z.object({
+    id: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    idIn: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ])),
+    fulltext: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    userId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    listingId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingFlagWhere = z.infer<typeof zListingFlagWhere>;
+
+/**
+ * Query object for listing flag collection
+ */
+export const zListingFlagQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingFlagFilter),
+    where: z.optional(zListingFlagWhere),
+    sort: z.optional(z.array(zListingFlagSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing flag collection'
+});
+
+export type zListingFlagQuery = z.infer<typeof zListingFlagQuery>;
+
+export const zListingFlag = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the flag entry'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    })
+});
+
+export type zListingFlag = z.infer<typeof zListingFlag>;
+
+/**
+ * Collection of listing flag items
+ */
+export const zListingFlagCollection = z.object({
+    data: z.array(zListingFlag),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listing flag items'
+});
+
+export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
+
+/**
+ * Toggle listing ignore state
+ */
+export const zListingIgnoreToggle = z.object({
+    toggle: z.boolean().register(z.globalRegistry, {
+        description: 'Whether to add (true) or remove (false) the listing from ignore list'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing to toggle'
+    })
+}).register(z.globalRegistry, {
+    description: 'Toggle listing ignore state'
+});
+
+export type zListingIgnoreToggle = z.infer<typeof zListingIgnoreToggle>;
+
+/**
+ * App-based filters
+ */
+export const zListingIgnoreWhere = z.object({
+    id: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    idIn: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ])),
+    fulltext: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    userId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    listingId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingIgnoreWhere = z.infer<typeof zListingIgnoreWhere>;
+
+/**
+ * User-land filters
+ */
+export const zListingIgnoreFilter = z.object({
+    id: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    idIn: z.optional(z.union([
+        z.array(z.string()),
+        z.null()
+    ])),
+    fulltext: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    userId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    listingId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ]))
+}).register(z.globalRegistry, {
+    description: 'User-land filters'
+});
+
+export type zListingIgnoreFilter = z.infer<typeof zListingIgnoreFilter>;
+
+/**
+ * Query object for listing ignore count (omits cursor, sort, and meta)
+ */
+export const zListingIgnoreCountQuery = z.object({
+    filter: z.optional(zListingIgnoreFilter),
+    where: z.optional(zListingIgnoreWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing ignore count (omits cursor, sort, and meta)'
+});
+
+export type zListingIgnoreCountQuery = z.infer<typeof zListingIgnoreCountQuery>;
+
+/**
+ * Sort object for listing ignore collection
+ */
+export const zListingIgnoreSort = z.object({
+    value: z.enum([
+        'createdAt'
+    ]),
+    sort: z.optional(z.enum([
+        'asc',
+        'desc'
+    ]))
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing ignore collection'
+});
+
+export type zListingIgnoreSort = z.infer<typeof zListingIgnoreSort>;
+
+/**
+ * Query object for listing ignore collection
+ */
+export const zListingIgnoreQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingIgnoreFilter),
+    where: z.optional(zListingIgnoreWhere),
+    sort: z.optional(z.array(zListingIgnoreSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing ignore collection'
+});
+
+export type zListingIgnoreQuery = z.infer<typeof zListingIgnoreQuery>;
+
+export const zListingIgnore = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the ignore entry'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing that was ignored'
+    })
+});
+
+export type zListingIgnore = z.infer<typeof zListingIgnore>;
+
+/**
+ * Collection of listing ignore items
+ */
+export const zListingIgnoreCollection = z.object({
+    data: z.array(zListingIgnore),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listing ignore items'
+});
+
+export type zListingIgnoreCollection = z.infer<typeof zListingIgnoreCollection>;
 
 /**
  * Toggle listing in cart
@@ -1129,6 +1449,12 @@ export const zListing = z.object({
     }),
     isInCart: z.boolean().register(z.globalRegistry, {
         description: 'Whether the user has this listing in the cart'
+    }),
+    isIgnored: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user ignored this listing'
+    }),
+    hasFlag: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user flagged this listing'
     })
 });
 
@@ -1910,6 +2236,100 @@ export const zApiListingCartToggleResponse = z.void().register(z.globalRegistry,
 });
 
 export type zapiListingCartToggleResponse = z.infer<typeof zApiListingCartToggleResponse>;
+
+export const zApiListingIgnoreCollectionData = z.object({
+    body: z.optional(zListingIgnoreQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingIgnoreCollectionRequest = z.infer<typeof zApiListingIgnoreCollectionData>;
+
+/**
+ * Access collection of listing ignore items based on provided query
+ */
+export const zApiListingIgnoreCollectionResponse = zListingIgnoreCollection;
+
+export type zapiListingIgnoreCollectionResponse = z.infer<typeof zApiListingIgnoreCollectionResponse>;
+
+export const zApiListingIgnoreCountData = z.object({
+    body: z.optional(zListingIgnoreCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingIgnoreCountRequest = z.infer<typeof zApiListingIgnoreCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiListingIgnoreCountResponse = zCount;
+
+export type zapiListingIgnoreCountResponse = z.infer<typeof zApiListingIgnoreCountResponse>;
+
+export const zApiListingIgnoreToggleData = z.object({
+    body: z.optional(zListingIgnoreToggle),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingIgnoreToggleRequest = z.infer<typeof zApiListingIgnoreToggleData>;
+
+/**
+ * Nothing to say, we're just happy
+ */
+export const zApiListingIgnoreToggleResponse = z.void().register(z.globalRegistry, {
+    description: "Nothing to say, we're just happy"
+});
+
+export type zapiListingIgnoreToggleResponse = z.infer<typeof zApiListingIgnoreToggleResponse>;
+
+export const zApiListingFlagCollectionData = z.object({
+    body: z.optional(zListingFlagQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingFlagCollectionRequest = z.infer<typeof zApiListingFlagCollectionData>;
+
+/**
+ * Access collection of listing flag items based on provided query
+ */
+export const zApiListingFlagCollectionResponse = zListingFlagCollection;
+
+export type zapiListingFlagCollectionResponse = z.infer<typeof zApiListingFlagCollectionResponse>;
+
+export const zApiListingFlagCountData = z.object({
+    body: z.optional(zListingFlagCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingFlagCountRequest = z.infer<typeof zApiListingFlagCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiListingFlagCountResponse = zCount;
+
+export type zapiListingFlagCountResponse = z.infer<typeof zApiListingFlagCountResponse>;
+
+export const zApiListingFlagToggleData = z.object({
+    body: z.optional(zListingFlagToggle),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingFlagToggleRequest = z.infer<typeof zApiListingFlagToggleData>;
+
+/**
+ * Nothing to say, we're just happy
+ */
+export const zApiListingFlagToggleResponse = z.void().register(z.globalRegistry, {
+    description: "Nothing to say, we're just happy"
+});
+
+export type zapiListingFlagToggleResponse = z.infer<typeof zApiListingFlagToggleResponse>;
 
 export const zApiListingScoreCollectionData = z.object({
     body: z.optional(zListingScoreQuery),

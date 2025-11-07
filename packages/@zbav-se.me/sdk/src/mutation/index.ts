@@ -3,6 +3,8 @@ export { withFeedDeleteMutation } from "./withFeedDeleteMutation";
 export { withFeedPatchMutation } from "./withFeedPatchMutation";
 export { withListingCartToggleMutation } from "./withListingCartToggleMutation";
 export { withListingCreateMutation } from "./withListingCreateMutation";
+export { withListingFlagToggleMutation } from "./withListingFlagToggleMutation";
+export { withListingIgnoreToggleMutation } from "./withListingIgnoreToggleMutation";
 export { withListingScoreCreateMutation } from "./withListingScoreCreateMutation";
 export { withUploadCreateMutation } from "./withUploadCreateMutation";
 export { withUploadMutation } from "./withUploadMutation";

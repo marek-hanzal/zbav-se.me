@@ -13,6 +13,7 @@ const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
 	ignore: -3,
 	view: 5,
 	cart: 15,
+	flag: -15,
 };
 
 export namespace createListingScoreFx {
@@ -79,7 +80,7 @@ export const createListingScoreFx = ({
 					 * Some of the scores may have different implementations.
 					 */
 					return match(score)
-						.with("cart", async (score) => {
+						.with("cart", "flag", async (score) => {
 							const row = await database
 								.selectFrom("listing_score")
 								.selectAll()

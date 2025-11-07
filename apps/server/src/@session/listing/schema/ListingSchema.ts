@@ -15,6 +15,12 @@ export const ListingSchema = z
 		isInCart: z.boolean().openapi({
 			description: "Whether the user has this listing in the cart",
 		}),
+		isIgnored: z.boolean().openapi({
+			description: "Whether the user ignored this listing",
+		}),
+		hasFlag: z.boolean().openapi({
+			description: "Whether the user flagged this listing",
+		}),
 	})
 	.omit({
 		userId: true,

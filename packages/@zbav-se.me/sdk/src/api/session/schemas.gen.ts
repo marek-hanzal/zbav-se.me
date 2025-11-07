@@ -328,7 +328,7 @@ export const sListingScoreCreate = {
         },
         score: {
             type: 'string',
-            enum: ['listing', 'ignore', 'view', 'cart']
+            enum: ['listing', 'ignore', 'flag', 'view', 'cart']
         }
     },
     required: ['listingId', 'score']
@@ -457,7 +457,7 @@ export const sListingScore = {
         },
         type: {
             type: 'string',
-            enum: ['listing', 'ignore', 'view', 'cart']
+            enum: ['listing', 'ignore', 'flag', 'view', 'cart']
         },
         score: {
             type: 'integer'
@@ -467,6 +467,306 @@ export const sListingScore = {
         }
     },
     required: ['id', 'listingId', 'type', 'score', 'createdAt']
+} as const;
+
+export const sListingFlagToggle = {
+    type: 'object',
+    properties: {
+        toggle: {
+            type: 'boolean'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: ['toggle', 'listingId']
+} as const;
+
+export const sListingFlagCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            '$ref': '#/components/schemas/ListingFlagFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingFlagCountWhere'
+        }
+    }
+} as const;
+
+export const sListingFlagCountWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingFlagFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingFlagQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingFlagFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingFlagWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingFlagSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingFlagSort = {
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            enum: ['createdAt']
+        },
+        sort: {
+            type: ['string', 'null'],
+            enum: ['asc', 'desc']
+        }
+    },
+    required: ['value']
+} as const;
+
+export const sListingFlagWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingFlagCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingFlag'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sListingFlag = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'listingId']
+} as const;
+
+export const sListingIgnoreToggle = {
+    type: 'object',
+    properties: {
+        toggle: {
+            type: 'boolean'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: ['toggle', 'listingId']
+} as const;
+
+export const sListingIgnoreCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            '$ref': '#/components/schemas/ListingIgnoreFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingIgnoreWhere'
+        }
+    }
+} as const;
+
+export const sListingIgnoreWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingIgnoreFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: ['string', 'null']
+        },
+        idIn: {
+            type: ['array', 'null'],
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: ['string', 'null']
+        },
+        userId: {
+            type: ['string', 'null']
+        },
+        listingId: {
+            type: ['string', 'null']
+        }
+    }
+} as const;
+
+export const sListingIgnoreQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingIgnoreFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingIgnoreWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingIgnoreSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingIgnoreSort = {
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            enum: ['createdAt']
+        },
+        sort: {
+            type: ['string', 'null'],
+            enum: ['asc', 'desc']
+        }
+    },
+    required: ['value']
+} as const;
+
+export const sListingIgnoreCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingIgnore'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sListingIgnore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'listingId']
 } as const;
 
 export const sListingCartToggle = {
@@ -1128,9 +1428,15 @@ export const sListing = {
         },
         isInCart: {
             type: 'boolean'
+        },
+        isIgnored: {
+            type: 'boolean'
+        },
+        hasFlag: {
+            type: 'boolean'
         }
     },
-    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery', 'isInCart']
+    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery', 'isInCart', 'isIgnored', 'hasFlag']
 } as const;
 
 export const sListingCreate = {

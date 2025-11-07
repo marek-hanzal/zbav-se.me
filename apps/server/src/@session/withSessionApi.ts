@@ -4,6 +4,8 @@ import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withListingApi } from "./listing/withListingApi";
 import { withListingCartApi } from "./listing-cart/withListingCartApi";
+import { withListingFlagApi } from "./listing-flag/withListingFlagApi";
+import { withListingIgnoreApi } from "./listing-ignore/withListingIgnoreApi";
 import { withListingScoreApi } from "./listing-score/withListingScoreApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withS3Api } from "./s3/withS3Api";
@@ -30,6 +32,8 @@ export const withSessionApi: Routes.Fn = (routes) => {
 	withGalleryApi(routes);
 	withListingApi(routes);
 	withListingCartApi(routes);
+	withListingIgnoreApi(routes);
+	withListingFlagApi(routes);
 	withListingScoreApi(routes);
 	withLocationApi(routes);
 	withS3Api(routes);

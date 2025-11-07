@@ -11,6 +11,7 @@ export const ButtonCls = contract(PicoCls.contract)
 	.bool("background")
 	.bool("full")
 	.bool("truncate")
+	.bool("square")
 	.variant("size", [
 		"xs",
 		"sm",
@@ -79,41 +80,151 @@ export const ButtonCls = contract(PicoCls.contract)
 	/**
 	 * Size rules
 	 */
-	.match("size", "xs", {
-		root: {
-			token: [
-				"size.xs",
-			],
+	.rule(
+		{
+			size: "xs",
+			square: false,
 		},
-	})
-	.match("size", "sm", {
-		root: {
-			token: [
-				"size.sm",
-			],
+		{
+			root: {
+				token: [
+					"size.xs",
+				],
+			},
 		},
-	})
-	.match("size", "md", {
-		root: {
-			token: [
-				"size.md",
-			],
+	)
+	.rule(
+		{
+			size: "xs",
+			square: true,
 		},
-	})
-	.match("size", "lg", {
-		root: {
-			token: [
-				"size.lg",
-			],
+		{
+			root: {
+				token: [
+					"icon.xs",
+				],
+				class: [
+					"aspect-square",
+				],
+			},
 		},
-	})
-	.match("size", "xl", {
-		root: {
-			token: [
-				"size.xl",
-			],
+	)
+	.rule(
+		{
+			size: "sm",
+			square: false,
 		},
-	})
+		{
+			root: {
+				token: [
+					"size.sm",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "sm",
+			square: true,
+		},
+		{
+			root: {
+				token: [
+					"icon.sm",
+				],
+				class: [
+					"aspect-square",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "md",
+			square: false,
+		},
+		{
+			root: {
+				token: [
+					"size.md",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "md",
+			square: true,
+		},
+		{
+			root: {
+				token: [
+					"icon.md",
+				],
+				class: [
+					"aspect-square",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "lg",
+			square: false,
+		},
+		{
+			root: {
+				token: [
+					"size.lg",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "lg",
+			square: true,
+		},
+		{
+			root: {
+				token: [
+					"icon.lg",
+				],
+				class: [
+					"aspect-square",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "xl",
+			square: false,
+		},
+		{
+			root: {
+				token: [
+					"size.xl",
+				],
+			},
+		},
+	)
+	.rule(
+		{
+			size: "xl",
+			square: true,
+		},
+		{
+			root: {
+				token: [
+					"icon.xl",
+				],
+				class: [
+					"aspect-square",
+				],
+			},
+		},
+	)
 	/**
 	 * Tone rules - only for actual tone/theme combinations (no "unset")
 	 */
@@ -469,6 +580,7 @@ export const ButtonCls = contract(PicoCls.contract)
 		background: true,
 		round: "default",
 		truncate: false,
+		square: false,
 		"snap-to": "unset",
 	})
 	.cls();

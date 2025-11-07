@@ -11,6 +11,8 @@ import { UserExMigration } from "./0009-user-ex";
 import { FeedMigration } from "./0010-feed";
 import { ListingCartMigration } from "./0011-listing-cart";
 import { ListingScoreMigration } from "./0012-listing-score";
+import { ListingIgnoreMigration } from "./0013-listing-ignore";
+import { ListingFlagMigration } from "./0014-listing-flag";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -26,4 +28,6 @@ export const migrations = {
 	"0010-feed": FeedMigration,
 	"0011-listing-cart": ListingCartMigration,
 	"0012-listing-score": ListingScoreMigration,
+	"0013-listing-ignore": ListingIgnoreMigration,
+	"0014-listing-flag": ListingFlagMigration,
 } as const;

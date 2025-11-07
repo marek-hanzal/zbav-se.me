@@ -4,6 +4,7 @@ export const ListingScoreTypeSchema = z
 	.enum([
 		"listing",
 		"ignore",
+		"flag",
 		"view",
 		"cart",
 	])

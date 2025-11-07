@@ -5,6 +5,8 @@ import type { FeedDbSchema } from "../@session/feed/schema/FeedDbSchema";
 import type { GalleryDbSchema } from "../@session/gallery/schema/GalleryDbSchema";
 import type { ListingDbSchema } from "../@session/listing/schema/ListingDbSchema";
 import type { ListingCartDbSchema } from "../@session/listing-cart/schema/ListingCartDbSchema";
+import type { ListingFlagDbSchema } from "../@session/listing-flag/schema/ListingFlagDbSchema";
+import type { ListingIgnoreDbSchema } from "../@session/listing-ignore/schema/ListingIgnoreDbSchema";
 import type { ListingScoreDbSchema } from "../@session/listing-score/schema/ListingScoreDbSchema";
 import type { LocationDbSchema } from "../@session/location/schema/LocationDbSchema";
 import type { UploadDbSchema } from "../@session/upload/schema/UploadDbSchema";
@@ -18,6 +20,8 @@ export interface Database {
 	feed: FeedDbSchema.Type;
 	listing: ListingDbSchema.Type;
 	listing_cart: ListingCartDbSchema.Type;
+	listing_flag: ListingFlagDbSchema.Type;
+	listing_ignore: ListingIgnoreDbSchema.Type;
 	listing_score: ListingScoreDbSchema.Type;
 	location: LocationDbSchema.Type;
 	gallery: GalleryDbSchema.Type;

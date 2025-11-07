@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { Button } from "@use-pico/client/ui/button";
+import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -10,11 +10,13 @@ import { VariantProvider } from "@use-pico/cls";
 import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
 import {
 	withListingCartToggleMutation,
+	withListingIgnoreToggleMutation,
 	withListingScoreCreateMutation,
 } from "@zbav-se.me/sdk/mutation";
 import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { BagIcon } from "@zbav-se.me/ui/icon";
+import { CancelIcon, CartIcon, FlagIcon } from "@zbav-se.me/ui/icon";
+import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { type FC, memo, useCallback, useEffect, useRef } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
@@ -69,6 +71,16 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 				},
 			});
 
+		const listingIgnoreToggleMutation =
+			withListingIgnoreToggleMutation.useMutation({
+				onSuccess() {
+					patchListing({
+						id: listing.id,
+						isIgnored: !listing.isIgnored,
+					});
+				},
+			});
+
 		const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
 		const clearTimer = useCallback(() => {
@@ -109,7 +121,7 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 		]);
 
 		useEffect(() => {
-			if (isVisible) {
+			if (isVisible && !listing.isIgnored) {
 				arm();
 			} else {
 				clearTimer();
@@ -119,6 +131,7 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 			};
 		}, [
 			isVisible,
+			listing.isIgnored,
 			arm,
 			clearTimer,
 		]);
@@ -161,13 +174,39 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 				position={"relative"}
 				{...props}
 			>
+				{listing.isIgnored ? (
+					<PrimaryOverlay
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"bg-rose-600/50",
+										"opacity-100",
+									],
+								},
+							},
+						}}
+					/>
+				) : null}
+
 				<HeroImage
 					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"w-full h-full object-cover"}
 				/>
 
-				<Container snapTo={"top-left"}>
+				<Container
+					snapTo={"top-left"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"z-100",
+								],
+							},
+						},
+					}}
+				>
 					<LinkTo
 						to={"/$locale/buyer/feed/select"}
 						params={{
@@ -255,6 +294,8 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 					}}
 				>
 					<Container
+						layout={"vertical-flex"}
+						items={"center"}
 						height={"unset"}
 						width={"unset"}
 						snapTo={"right-center"}
@@ -262,17 +303,77 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 						border={"default"}
 						shadow={"default"}
 						round={"lg"}
+						gap={"md"}
+						tone={"secondary"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"opacity-75",
+										"z-100",
+									],
+								},
+							},
+						}}
 					>
-						<Button
-							iconEnabled={BagIcon}
+						<ConfirmButton
+							iconEnabled={CartIcon}
+							tone={"primary"}
 							theme={listing.isInCart ? "dark" : "light"}
 							loading={listingCartToggleMutation.isPending}
-							onClick={() =>
-								listingCartToggleMutation.mutate({
-									toggle: !listing.isInCart,
-									listingId: listing.id,
-								})
-							}
+							disabled={listing.isIgnored}
+							confirmProps={{
+								tone: "secondary",
+								theme: "dark",
+								onClick() {
+									listingCartToggleMutation.mutate({
+										toggle: !listing.isInCart,
+										listingId: listing.id,
+									});
+								},
+								size: "lg",
+							}}
+							round={"full"}
+						/>
+
+						<ConfirmButton
+							iconEnabled={CancelIcon}
+							tone={"primary"}
+							theme={listing.isIgnored ? "dark" : "light"}
+							loading={listingIgnoreToggleMutation.isPending}
+							disabled={listing.isInCart}
+							confirmProps={{
+								tone: "secondary",
+								theme: "dark",
+								onClick() {
+									listingIgnoreToggleMutation.mutate({
+										toggle: !listing.isIgnored,
+										listingId: listing.id,
+									});
+								},
+								size: "lg",
+							}}
+							round={"full"}
+						/>
+
+						<ConfirmButton
+							iconEnabled={FlagIcon}
+							tone={"primary"}
+							theme={listing.hasFlag ? "dark" : "light"}
+							loading={listingIgnoreToggleMutation.isPending}
+							disabled={listing.isInCart}
+							confirmProps={{
+								tone: "secondary",
+								theme: "dark",
+								onClick() {
+									listingIgnoreToggleMutation.mutate({
+										toggle: !listing.isIgnored,
+										listingId: listing.id,
+									});
+								},
+								size: "lg",
+							}}
+							round={"full"}
 						/>
 					</Container>
 				</VariantProvider>

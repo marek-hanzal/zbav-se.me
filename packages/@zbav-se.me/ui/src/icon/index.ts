@@ -1,7 +1,8 @@
 export { AgeIcon } from "./AgeIcon";
 export { BackspaceIcon } from "./BackspaceIcon";
-export { BagIcon } from "./BagIcon";
 export { BuyerIcon } from "./BuyerIcon";
+export { CancelIcon } from "./CancelIcon";
+export { CartIcon } from "./CartIcon";
 export { CategoryIcon } from "./CategoryIcon";
 export { CheckIcon } from "./CheckIcon";
 export { ClearFilterIcon } from "./ClearFilterIcon";
@@ -11,6 +12,7 @@ export { DashboardIcon } from "./DashboardIcon";
 export { EmailIcon } from "./EmailIcon";
 export { ExpireIcon } from "./ExpireIcon";
 export { FeedIcon } from "./FeedIcon";
+export { FlagIcon } from "./FlagIcon";
 export { LetterAIcon } from "./LetterAIcon";
 export { LetterBIcon } from "./LetterBIcon";
 export { LetterCIcon } from "./LetterCIcon";

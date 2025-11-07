@@ -86,6 +86,24 @@ export const withListingSelect = ({
 						.where("lc.userId", "=", userId),
 				)
 				.as("isInCart"),
+			eb
+				.exists(
+					eb
+						.selectFrom("listing_ignore as li")
+						.select(sql`1`.as("true"))
+						.whereRef("li.listingId", "=", "l.id")
+						.where("li.userId", "=", userId),
+				)
+				.as("isIgnored"),
+			eb
+				.exists(
+					eb
+						.selectFrom("listing_flag as lf")
+						.select(sql`1`.as("true"))
+						.whereRef("lf.listingId", "=", "l.id")
+						.where("lf.userId", "=", userId),
+				)
+				.as("hasFlag"),
 		])
 		.where("l.userId", "!=", userId);
 

@@ -105,6 +105,12 @@ export namespace Button {
 		 */
 		truncate?: boolean;
 		/**
+		 * Whether to render the button with equal width and height.
+		 * When not provided, it defaults to true when neither children nor label are present.
+		 * @default false
+		 */
+		square?: boolean;
+		/**
 		 * Absolute positioning for snapping the button to corners of a parent container.
 		 * Requires the parent element to have relative positioning.
 		 * @default "unset"
@@ -132,6 +138,7 @@ export const Button: FC<Button.Props> = ({
 	background,
 	full,
 	truncate,
+	square,
 	snapTo,
 	//
 	cls = ButtonCls,
@@ -161,6 +168,7 @@ export const Button: FC<Button.Props> = ({
 				background,
 				full,
 				truncate,
+				square: square ?? (!children && !label),
 				"snap-to": snapTo,
 			},
 		},

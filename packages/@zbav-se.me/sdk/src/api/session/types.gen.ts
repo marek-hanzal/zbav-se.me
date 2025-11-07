@@ -302,7 +302,7 @@ export type tListingScoreCreate = {
     /**
      * Predefined score type
      */
-    score: 'listing' | 'ignore' | 'view' | 'cart';
+    score: 'listing' | 'ignore' | 'flag' | 'view' | 'cart';
 };
 
 /**
@@ -406,7 +406,7 @@ export type tListingScore = {
     /**
      * Type of score
      */
-    type: 'listing' | 'ignore' | 'view' | 'cart';
+    type: 'listing' | 'ignore' | 'flag' | 'view' | 'cart';
     /**
      * Score value
      */
@@ -415,6 +415,260 @@ export type tListingScore = {
      * Creation timestamp
      */
     createdAt: string;
+};
+
+/**
+ * Toggle flag on listing
+ */
+export type tListingFlagToggle = {
+    /**
+     * Whether to add (true) or remove (false) the flag on the listing
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing flag counts
+ */
+export type tListingFlagCountQuery = {
+    filter?: tListingFlagFilter;
+    where?: tListingFlagCountWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingFlagCountWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * User-land filters
+ */
+export type tListingFlagFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * Query object for listing flag collection
+ */
+export type tListingFlagQuery = {
+    cursor?: tCursor;
+    filter?: tListingFlagFilter;
+    where?: tListingFlagWhere;
+    sort?: Array<tListingFlagSort>;
+};
+
+/**
+ * Sort object for listing flag collection
+ */
+export type tListingFlagSort = {
+    value: 'createdAt';
+    sort?: 'asc' | 'desc';
+};
+
+/**
+ * App-based filters
+ */
+export type tListingFlagWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * Collection of listing flag items
+ */
+export type tListingFlagCollection = {
+    data: Array<tListingFlag>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+export type tListingFlag = {
+    /**
+     * ID of the flag entry
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+};
+
+/**
+ * Toggle listing ignore state
+ */
+export type tListingIgnoreToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from ignore list
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing ignore count (omits cursor, sort, and meta)
+ */
+export type tListingIgnoreCountQuery = {
+    filter?: tListingIgnoreFilter;
+    where?: tListingIgnoreWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingIgnoreWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * User-land filters
+ */
+export type tListingIgnoreFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string | null;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string> | null;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string | null;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string | null;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string | null;
+};
+
+/**
+ * Query object for listing ignore collection
+ */
+export type tListingIgnoreQuery = {
+    cursor?: tCursor;
+    filter?: tListingIgnoreFilter;
+    where?: tListingIgnoreWhere;
+    sort?: Array<tListingIgnoreSort>;
+};
+
+/**
+ * Sort object for listing ignore collection
+ */
+export type tListingIgnoreSort = {
+    value: 'createdAt';
+    sort?: 'asc' | 'desc';
+};
+
+/**
+ * Collection of listing ignore items
+ */
+export type tListingIgnoreCollection = {
+    data: Array<tListingIgnore>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+export type tListingIgnore = {
+    /**
+     * ID of the ignore entry
+     */
+    id: string;
+    /**
+     * ID of the listing that was ignored
+     */
+    listingId: string;
 };
 
 /**
@@ -973,6 +1227,14 @@ export type tListing = {
      * Whether the user has this listing in the cart
      */
     isInCart: boolean;
+    /**
+     * Whether the user ignored this listing
+     */
+    isIgnored: boolean;
+    /**
+     * Whether the user flagged this listing
+     */
+    hasFlag: boolean;
 };
 
 /**
@@ -1788,6 +2050,102 @@ export type tApiListingCartToggleResponse = {
 };
 
 export type apiListingCartToggleResponse = tApiListingCartToggleResponse[keyof tApiListingCartToggleResponse];
+
+export type tApiListingIgnoreCollectionRequest = {
+    body?: tListingIgnoreQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-ignore/collection';
+};
+
+export type tApiListingIgnoreCollectionResponse = {
+    /**
+     * Access collection of listing ignore items based on provided query
+     */
+    200: tListingIgnoreCollection;
+};
+
+export type apiListingIgnoreCollectionResponse = tApiListingIgnoreCollectionResponse[keyof tApiListingIgnoreCollectionResponse];
+
+export type tApiListingIgnoreCountRequest = {
+    body?: tListingIgnoreCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-ignore/count';
+};
+
+export type tApiListingIgnoreCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingIgnoreCountResponse = tApiListingIgnoreCountResponse[keyof tApiListingIgnoreCountResponse];
+
+export type tApiListingIgnoreToggleRequest = {
+    body?: tListingIgnoreToggle;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-ignore/toggle';
+};
+
+export type tApiListingIgnoreToggleResponse = {
+    /**
+     * Nothing to say, we're just happy
+     */
+    204: void;
+};
+
+export type apiListingIgnoreToggleResponse = tApiListingIgnoreToggleResponse[keyof tApiListingIgnoreToggleResponse];
+
+export type tApiListingFlagCollectionRequest = {
+    body?: tListingFlagQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-flag/collection';
+};
+
+export type tApiListingFlagCollectionResponse = {
+    /**
+     * Access collection of listing flag items based on provided query
+     */
+    200: tListingFlagCollection;
+};
+
+export type apiListingFlagCollectionResponse = tApiListingFlagCollectionResponse[keyof tApiListingFlagCollectionResponse];
+
+export type tApiListingFlagCountRequest = {
+    body?: tListingFlagCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-flag/count';
+};
+
+export type tApiListingFlagCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingFlagCountResponse = tApiListingFlagCountResponse[keyof tApiListingFlagCountResponse];
+
+export type tApiListingFlagToggleRequest = {
+    body?: tListingFlagToggle;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-flag/toggle';
+};
+
+export type tApiListingFlagToggleResponse = {
+    /**
+     * Nothing to say, we're just happy
+     */
+    204: void;
+};
+
+export type apiListingFlagToggleResponse = tApiListingFlagToggleResponse[keyof tApiListingFlagToggleResponse];
 
 export type tApiListingScoreCollectionRequest = {
     body?: tListingScoreQuery;
