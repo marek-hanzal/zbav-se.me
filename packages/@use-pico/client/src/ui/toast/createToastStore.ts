@@ -1,5 +1,7 @@
+import type { Cls } from "@use-pico/cls";
 import { create, type StoreApi, type UseBoundStore } from "zustand";
 import type { Toast } from "./Toast";
+import type { ToasterCls } from "./ToasterCls";
 
 export namespace createToastStore {
 	export interface Props {
@@ -48,7 +50,7 @@ export namespace createToastStore {
 		 * Resolves the currently visible toast payloads.
 		 * @returns Ordered collection of visible toast instances.
 		 */
-		getVisible(): Toast[];
+		getVisible(position: Cls.VariantOf<ToasterCls, "position">): Toast[];
 		/**
 		 * Resolves the currently queued toast payloads.
 		 * @returns Ordered collection of queued toast instances.
@@ -95,6 +97,10 @@ export const createToastStore = ({
 		//
 		send(id) {
 			set((state) => {
+				if (state.visible.includes(id) || state.queue.includes(id)) {
+					return state;
+				}
+
 				if (state.visible.length < state.maxCount) {
 					return {
 						visible: [
@@ -139,11 +145,22 @@ export const createToastStore = ({
 			}));
 		},
 		//
-		getVisible() {
+		getVisible(position) {
 			const current = get();
-			return current.visible
+
+			const list = current.visible
 				.map((id) => current.toasts[id])
 				.filter((t) => t !== undefined);
+
+			return (
+				[
+					"bottom-center",
+					"bottom-left",
+					"bottom-right",
+				] as (typeof position)[]
+			).includes(position)
+				? list.reverse()
+				: list;
 		},
 		//
 		getQueue() {

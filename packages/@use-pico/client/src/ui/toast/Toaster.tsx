@@ -46,7 +46,7 @@ export const Toaster: FC<Toaster.Props> = ({
 			ref={rootRef}
 			className={slots.root()}
 		>
-			{$store.getVisible().map((toast) => {
+			{$store.getVisible(position).map((toast) => {
 				return (
 					<div
 						key={`${toastId}-${toast.id}`}
