@@ -4,10 +4,10 @@ import { useToastContext } from "./useToastContext";
 export const useToast = () => {
 	const useToastStore = useToastContext();
 	const $toast = useToastStore((store) => store.toast);
-	const $pull = useToastStore((store) => store.pull);
+	const $send = useToastStore((store) => store.send);
 
 	return (toast: Toast) => {
 		$toast(toast);
-		$pull();
+		$send(toast.id);
 	};
 };

@@ -38,17 +38,11 @@ export namespace createToastStore {
 		 * Promotes the next queued toast into the visible list when space is available.
 		 */
 		pull(): void;
-		//
 		/**
-		 * Removes a toast from the queue without affecting visibility.
-		 * @param id - Identifier of the toast to remove.
+		 * Dismisses a toast by its identifier.
+		 * @param id - Identifier of the toast to dismiss.
 		 */
-		removeFromQueue(id: string): void;
-		/**
-		 * Removes a toast from the visible list without affecting the queue.
-		 * @param id - Identifier of the toast to hide.
-		 */
-		removeFromVisible(id: string): void;
+		dismiss(id: string): void;
 		//
 		/**
 		 * Resolves the currently visible toast payloads.
@@ -91,10 +85,6 @@ export const createToastStore = ({
 						...state.toasts,
 						[toast.id]: toast,
 					},
-					queue: [
-						...state.queue,
-						toast.id,
-					],
 				};
 			});
 		},
@@ -138,14 +128,9 @@ export const createToastStore = ({
 			});
 		},
 		//
-		removeFromQueue(id) {
+		dismiss(id) {
 			set((state) => ({
 				queue: state.queue.filter((t) => t !== id),
-			}));
-		},
-		//
-		removeFromVisible(id) {
-			set((state) => ({
 				visible: state.visible.filter((t) => t !== id),
 			}));
 		},
