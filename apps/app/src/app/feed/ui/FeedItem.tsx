@@ -19,6 +19,9 @@ export namespace FeedItem {
 export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 	const listingCountQuery = withListingCountQuery.useSuspenseQuery({
 		filter: feed.filter,
+		where: {
+			withOwn: false,
+		},
 	});
 
 	return (
