@@ -6,7 +6,9 @@ import { ContainerCls } from "./ContainerCls";
 export namespace Container {
 	export interface Props
 		extends UiProps<
-			ContainerCls.Props<Omit<ComponentProps<"div">, "className">>
+			ContainerCls.Props<
+				Omit<ComponentProps<"div">, "className" | "onChange">
+			>
 		> {
 		ref?: Ref<HTMLDivElement>;
 

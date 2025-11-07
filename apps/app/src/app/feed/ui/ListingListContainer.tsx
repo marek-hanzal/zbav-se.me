@@ -190,6 +190,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							return (
 								<ListingContainer
 									key={`${feedId}-${listing.id}`}
+									feedId={id}
 									listing={listing}
 									locale={locale}
 									isVisible={visibles.has(listing.id)}

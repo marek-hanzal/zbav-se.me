@@ -1,4 +1,5 @@
 import { withInfiniteQuery } from "@use-pico/client/query";
+import type { tListing, tListingCollection } from "../api/session";
 import { apiListingFeedCollection } from "../api/session/sdk.gen";
 
 export namespace withListingFeedInfiniteQuery {
@@ -12,7 +13,7 @@ export const withListingFeedInfiniteQuery = ({
 	feedId,
 	size,
 }: withListingFeedInfiniteQuery.Props) => {
-	return withInfiniteQuery({
+	return withInfiniteQuery<unknown, tListing, tListingCollection>({
 		keys(data) {
 			return [
 				"listing",

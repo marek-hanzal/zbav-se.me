@@ -12,6 +12,7 @@ import {
 	withListingCartToggleMutation,
 	withListingScoreCreateMutation,
 } from "@zbav-se.me/sdk/mutation";
+import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { BagIcon } from "@zbav-se.me/ui/icon";
 import { type FC, memo, useCallback, useEffect, useRef } from "react";
@@ -20,6 +21,7 @@ import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace ListingContainer {
 	export interface Props extends Container.Props {
+		feedId: string;
 		listing: tListing;
 		locale: string;
 		isVisible: boolean;
@@ -27,11 +29,16 @@ export namespace ListingContainer {
 }
 
 export const ListingContainer: FC<ListingContainer.Props> = memo(
-	({ locale, listing, isVisible, tweak, ...props }) => {
+	({ feedId, locale, listing, isVisible, tweak, ...props }) => {
 		const [hero] = listing.gallery as [
 			tGallery,
 			...tGallery[],
 		];
+
+		const patchListing = withListingFeedInfiniteQuery({
+			feedId,
+			size: 5,
+		}).usePatch({});
 
 		const listingScoreCreateMutation =
 			withListingScoreCreateMutation.useMutation({
@@ -51,6 +58,12 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 
 		const listingCartToggleMutation =
 			withListingCartToggleMutation.useMutation({
+				onSuccess() {
+					patchListing({
+						id: listing.id,
+						isInCart: !listing.isInCart,
+					});
+				},
 				meta: {
 					mutationId: listing.id,
 				},
@@ -132,7 +145,7 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 		return (
 			<Container
 				data-id={listing.id}
-                tweak={[
+				tweak={[
 					tweak,
 					{
 						slot: {

@@ -30,7 +30,4 @@ export const withListingCartToggleMutation = withMutation<
 				throw error;
 			});
 	},
-	invalidate: [
-		//
-	],
 });

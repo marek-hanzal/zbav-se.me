@@ -1,10 +1,12 @@
 import {
+	type InfiniteData,
 	type QueryClient,
 	type QueryKey,
 	useInfiniteQuery,
 	useQueryClient,
 } from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
+import type { EntitySchema } from "@use-pico/common/schema";
 
 export namespace withInfiniteQuery {
 	export interface Cursor {
@@ -12,11 +14,16 @@ export namespace withInfiniteQuery {
 		signal: AbortSignal;
 	}
 
-	export interface Collection {
+	export interface Collection<TItem extends EntitySchema.Type> {
+		data: TItem[];
 		more: boolean;
 	}
 
-	export interface Props<TData, TResult extends Collection> {
+	export interface Props<
+		TData,
+		TItem extends EntitySchema.Type,
+		TResult extends Collection<TItem>,
+	> {
 		/**
 		 * Function to generate the query key for React Query.
 		 * @param data - The input data for the query.
@@ -35,15 +42,18 @@ export namespace withInfiniteQuery {
 		initial?: number;
 	}
 
-	export type Api<TData, TResult extends Collection> = ReturnType<
-		typeof withInfiniteQuery<TData, TResult>
-	>;
+	export type Api<
+		TData,
+		TItem extends EntitySchema.Type,
+		TResult extends Collection<TItem>,
+	> = ReturnType<typeof withInfiniteQuery<TData, TItem, TResult>>;
 }
 
 export function withInfiniteQuery<
 	TData,
-	TResult extends withInfiniteQuery.Collection,
->({ keys, queryFn }: withInfiniteQuery.Props<TData, TResult>) {
+	TItem extends EntitySchema.Type,
+	TResult extends withInfiniteQuery.Collection<TItem>,
+>({ keys, queryFn }: withInfiniteQuery.Props<TData, TItem, TResult>) {
 	/**
 	 * Internal key generator function that cleans and formats query keys.
 	 * @param data - Optional input data for the query.
@@ -112,6 +122,67 @@ export function withInfiniteQuery<
 			 */
 			return async () => {
 				return invalidate(queryClient, data);
+			};
+		},
+		useReplace(data: TData) {
+			const queryClient = useQueryClient();
+
+			return (item: TItem) => {
+				return queryClient.setQueryData<InfiniteData<TResult>>(
+					$keys(data),
+					(old) => {
+						if (!old) {
+							return old;
+						}
+
+						return {
+							...old,
+							pages: old.pages.map((page) => {
+								return {
+									...page,
+									data: page.data.map((oldItem) => {
+										return oldItem.id === item.id
+											? item
+											: oldItem;
+									}),
+								};
+							}),
+						};
+					},
+				);
+			};
+		},
+		usePatch(data: TData) {
+			const queryClient = useQueryClient();
+
+			return (item: Partial<TItem> & EntitySchema.Type) => {
+				return queryClient.setQueryData<InfiniteData<TResult>>(
+					$keys(data),
+					(old) => {
+						if (!old) {
+							return old;
+						}
+
+						return {
+							...old,
+							pages: old.pages.map((page) => {
+								return {
+									...page,
+									data: page.data.map((oldItem) => {
+										if (oldItem.id === item.id) {
+											return {
+												...oldItem,
+												...item,
+											};
+										}
+
+										return oldItem;
+									}),
+								};
+							}),
+						};
+					},
+				);
 			};
 		},
 		/**
