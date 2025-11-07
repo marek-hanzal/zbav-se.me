@@ -889,6 +889,10 @@ export type tListingWhere = {
      * This filter matches listings with the user's own listings
      */
     withOwn?: boolean;
+    /**
+     * Include ignored listings
+     */
+    withIgnored?: boolean;
 };
 
 /**
@@ -1004,6 +1008,10 @@ export type tListingFilter = {
      * This filter matches listings with the user's own listings
      */
     withOwn?: boolean;
+    /**
+     * Include ignored listings
+     */
+    withIgnored?: boolean;
 };
 
 /**

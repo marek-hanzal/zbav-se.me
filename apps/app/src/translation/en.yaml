@@ -13,6 +13,9 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
   ref: Upload (title)
   value: Upload (title)
+0c9fd2c1be3e9357f6ce010004cc93f4e2859ef4e62274ab72a0c42f:
+  ref: Cart (label)
+  value: Cart (label)
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -375,9 +378,6 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
   ref: Listing title (label)
   value: Listing title (label)
-fdf9087c24c2da8979a28920ef5ba3c696b0c67002b6b50042a04ad3:
-  ref: Bag (label)
-  value: Bag (label)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
   ref: Next - condition (button)
   value: Next - condition (button)

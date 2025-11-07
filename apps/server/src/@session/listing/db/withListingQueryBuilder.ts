@@ -96,5 +96,18 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		query = query.where("l.userId", "!=", userId);
 	}
 
+	if (where.withIgnored !== true) {
+		query = query.where(({ not, exists, selectFrom }) =>
+			not(
+				exists(
+					selectFrom("listing_ignore as li")
+						.select("li.listingId")
+						.whereRef("li.listingId", "=", "l.id")
+						.where("li.userId", "=", userId),
+				),
+			),
+		);
+	}
+
 	return query;
 };

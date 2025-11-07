@@ -48,6 +48,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		size: 5,
 		where: {
 			withOwn: false,
+			withIgnored: false,
 		},
 	}).useInfiniteQuery({});
 	const containerRef = useRef<HTMLDivElement>(null);

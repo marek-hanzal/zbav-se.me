@@ -79,6 +79,9 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with the user's own listings",
 		}),
+		withIgnored: z.boolean().optional().openapi({
+			description: "Include ignored listings",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",

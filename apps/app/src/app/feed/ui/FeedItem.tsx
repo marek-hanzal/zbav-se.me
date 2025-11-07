@@ -21,6 +21,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 		filter: feed.filter,
 		where: {
 			withOwn: false,
+			withIgnored: false,
 		},
 	});
 

@@ -1051,6 +1051,9 @@ export const sListingWhere = {
         },
         withOwn: {
             type: 'boolean'
+        },
+        withIgnored: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1184,6 +1187,9 @@ export const sListingFilter = {
             type: ['string', 'null']
         },
         withOwn: {
+            type: 'boolean'
+        },
+        withIgnored: {
             type: 'boolean'
         }
     }
