@@ -80,6 +80,10 @@ export const createToastStore = ({
 		//
 		toast(toast) {
 			set((state) => {
+				if (state.toasts[toast.id]) {
+					return state;
+				}
+
 				return {
 					toasts: {
 						...state.toasts,
