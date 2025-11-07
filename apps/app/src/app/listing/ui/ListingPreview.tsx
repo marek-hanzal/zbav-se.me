@@ -33,6 +33,9 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					isVisible && document.visibilityState === "visible",
 				retryDelay(_, error) {
 					if ("type" in error && error.type === "error") {
+						/**
+						 * Delay at least for 5 minutes; backend is hardened, but point is to prevent spamming.
+						 */
 						return 1000 * 60 * 5;
 					}
 					return 250;
@@ -71,7 +74,7 @@ export const ListingPreview: FC<ListingPreview.Props> = memo(
 					listingId: listing.id,
 					score: 1,
 				});
-			}, 1850);
+			}, 2000);
 		}, [
 			isVisible,
 			listing.id,

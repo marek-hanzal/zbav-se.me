@@ -597,7 +597,7 @@ function stripDiacritics(s: string): string {
 		Ý: "Y",
 		Ž: "Z",
 	};
-	return s.replace(/[^\u0000-\u007E]/g, (c) => map[c] ?? c);
+	return s.replace(/\p{Diacritic}+/gu, (c) => map[c] ?? c);
 }
 
 /** tiny typo: glue numbers/letters or tighten dashes a bit */
@@ -619,7 +619,7 @@ function randomTitle(): string {
 	if (Math.random() < 0.12) vendor = "";
 	if (Math.random() < 0.08) model = "";
 
-	let base: string[] =
+	let base: string[] = (
 		Math.random() < 0.25
 			? [
 					model,
@@ -628,7 +628,8 @@ function randomTitle(): string {
 			: [
 					vendor,
 					model,
-				].filter(Boolean);
+				].filter(Boolean)
+	) as string[];
 
 	// 2) optional prefixes
 	const prefixBits = [
