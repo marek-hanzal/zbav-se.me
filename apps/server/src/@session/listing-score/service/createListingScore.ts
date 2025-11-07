@@ -8,6 +8,13 @@ import { NotFoundError } from "../../../error/NotFoundError";
 import type { ListingScoreTypeSchema } from "../schema/ListingScoreTypeSchema";
 import { listingScoreRateLimit } from "./listingScoreRateLimit";
 
+const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
+	listing: 1,
+	ignore: -3,
+	view: 5,
+	cart: 15,
+};
+
 export namespace createListingScore {
 	export interface Props {
 		database: WithDatabase;
@@ -67,45 +74,60 @@ export const createListingScore = ({
 		}),
 		Effect.andThen(() => {
 			return Effect.tryPromise({
-				try: () => {
-					return database
-						.insertInto("listing_score")
-						.values({
-							id: genId(),
-							listingId,
-							userId,
-							score: match(score)
-								.with("listing", () => 1)
-								.with("ignore", () => -3)
-								.with("view", () => 5)
-								.with("cart", () => 15)
-								.exhaustive(),
-							type: score,
-							createdAt: new Date(),
+				try() {
+					/**
+					 * Some of the scores may have different implementations.
+					 */
+					return match(score)
+						.with("cart", async (score) => {
+							const row = await database
+								.selectFrom("listing_score")
+								.selectAll()
+								.where("listingId", "=", listingId)
+								.where("userId", "=", userId)
+								.where("type", "=", score)
+								.executeTakeFirst();
+
+							if (row) {
+								return row;
+							}
+
+							return database
+								.insertInto("listing_score")
+								.values({
+									id: genId(),
+									listingId,
+									userId,
+									score: ScoreList[score],
+									type: score,
+									createdAt: new Date(),
+								})
+								.returningAll()
+								.executeTakeFirst();
 						})
-						.returningAll()
-						.executeTakeFirst();
+						.otherwise(async (score) => {
+							return database
+								.insertInto("listing_score")
+								.values({
+									id: genId(),
+									listingId,
+									userId,
+									score: ScoreList[score],
+									type: score,
+									createdAt: new Date(),
+								})
+								.returningAll()
+								.executeTakeFirst();
+						});
 				},
-				catch: (e) => {
+				catch(e) {
 					return new InfraError({
 						type: "database",
 						message:
 							e instanceof Error ? e.message : "Unknown error",
 					});
 				},
-			}).pipe(
-				Effect.andThen((row) => {
-					if (row) {
-						return Effect.succeed(row);
-					}
-					return Effect.fail(
-						new InfraError({
-							type: "database",
-							message: "Failed to fetch created listing score",
-						}),
-					);
-				}),
-			);
+			});
 		}),
 	);
 };

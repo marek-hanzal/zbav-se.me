@@ -86,7 +86,8 @@ export const withListingSelect = ({
 						.where("lc.userId", "=", userId),
 				)
 				.as("isInCart"),
-		]);
+		])
+		.where("l.userId", "!=", userId);
 
 	for (const item of sort ?? []) {
 		if (!item.sort) {

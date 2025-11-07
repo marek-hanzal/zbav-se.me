@@ -22,17 +22,17 @@ export namespace withQuery {
 	 */
 	export interface Props<TData, TResult> {
 		/**
-		 * Function to fetch/query data based on the input data.
-		 * @param data - The input data for the query.
-		 * @returns A promise resolving to the query result.
-		 */
-		queryFn(data: TData): Promise<TResult>;
-		/**
 		 * Function to generate the query key for React Query.
 		 * @param data - The input data for the query.
 		 * @returns The query key.
 		 */
 		keys(data?: TData): QueryKey;
+		/**
+		 * Function to fetch/query data based on the input data.
+		 * @param data - The input data for the query.
+		 * @returns A promise resolving to the query result.
+		 */
+		queryFn(data: TData): Promise<TResult>;
 	}
 
 	export type PropsEx<TData, TResult> = Omit<

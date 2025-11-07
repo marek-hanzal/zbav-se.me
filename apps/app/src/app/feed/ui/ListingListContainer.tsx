@@ -7,13 +7,20 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
 import { Status } from "@use-pico/client/ui/status";
 import { useCls } from "@use-pico/cls";
+import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { useAnim } from "@zbav-se.me/ui/gsap";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import { type FC, useEffect, useId, useRef, useState } from "react";
+import {
+	type FC,
+	useCallback,
+	useEffect,
+	useId,
+	useRef,
+	useState,
+} from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { useListingFeedInfiniteQuery } from "~/app/listing/query/useListingFeedInfiniteQuery";
 import { ListingContainer } from "~/app/listing/ui/ListingContainer";
 
 export namespace ListingListContainer {
@@ -36,10 +43,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	});
 	const feedId = useId();
 
-	const listingQuery = useListingFeedInfiniteQuery({
+	const listingQuery = withListingFeedInfiniteQuery({
 		feedId: id,
 		size: 5,
-	});
+	}).useInfiniteQuery({});
 	const containerRef = useRef<HTMLDivElement>(null);
 	const visiblesRef = useRef<Set<string>>(new Set<string>());
 	const [visibles, setVisibles] = useState(() => new Set<string>());
@@ -81,28 +88,31 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		},
 	);
 
-	const schedule = (elements: HTMLElement[], isVisible: boolean) => {
-		elements.forEach((element) => {
-			const id = element.dataset.id;
-			if (!id) {
-				return;
-			}
+	const schedule = useCallback(
+		(elements: HTMLElement[], isVisible: boolean) => {
+			elements.forEach((element) => {
+				const id = element.dataset.id;
+				if (!id) {
+					return;
+				}
 
-			if (isVisible) {
-				visiblesRef.current.add(id);
-			} else {
-				visiblesRef.current.delete(id);
-			}
-		});
+				if (isVisible) {
+					visiblesRef.current.add(id);
+				} else {
+					visiblesRef.current.delete(id);
+				}
+			});
 
-		/**
-		 * We've to immediately set the visibles set or timeout may trigger false visibility and send score event when
-		 * it should not.
-		 */
-		setVisibles(() => {
-			return new Set<string>(visiblesRef.current);
-		});
-	};
+			/**
+			 * We've to immediately set the visibles set or timeout may trigger false visibility and send score event when
+			 * it should not.
+			 */
+			setVisibles(() => {
+				return new Set<string>(visiblesRef.current);
+			});
+		},
+		[],
+	);
 
 	useAnim(
 		() => {

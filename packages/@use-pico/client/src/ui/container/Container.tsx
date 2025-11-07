@@ -1,11 +1,13 @@
 import { type Cls, useCls } from "@use-pico/cls";
-import type { ComponentProps, FC, PropsWithChildren, Ref } from "react";
+import type { ComponentProps, FC, Ref } from "react";
 import type { UiProps } from "../../type/UiProps";
 import { ContainerCls } from "./ContainerCls";
 
 export namespace Container {
 	export interface Props
-		extends UiProps<ContainerCls.Props<PropsWithChildren>> {
+		extends UiProps<
+			ContainerCls.Props<Omit<ComponentProps<"div">, "className">>
+		> {
 		ref?: Ref<HTMLDivElement>;
 
 		/**
@@ -234,13 +236,6 @@ export namespace Container {
 		 * @default false
 		 */
 		disabled?: Cls.VariantOf<ContainerCls, "disabled">;
-
-		/**
-		 * Props passed to the underlying div element.
-		 *
-		 * Extracted so they won't pollute the container's props.
-		 */
-		divProps?: Omit<ComponentProps<"div">, "children" | "className">;
 	}
 }
 
@@ -272,7 +267,7 @@ export const Container: FC<Container.Props> = ({
 	tweak,
 	//
 	children,
-	divProps,
+	...props
 }) => {
 	const { slots } = useCls(cls, tweak, {
 		variant: {
@@ -303,7 +298,7 @@ export const Container: FC<Container.Props> = ({
 			ref={ref}
 			data-ui={ui ?? "Container-root"}
 			className={slots.root()}
-			{...divProps}
+			{...props}
 		>
 			{children}
 		</div>

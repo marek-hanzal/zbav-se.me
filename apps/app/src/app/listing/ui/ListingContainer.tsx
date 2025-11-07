@@ -35,8 +35,9 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 
 		const listingScoreCreateMutation =
 			withListingScoreCreateMutation.useMutation({
-				retry: () =>
-					isVisible && document.visibilityState === "visible",
+				retry: () => {
+					return isVisible && document.visibilityState === "visible";
+				},
 				retryDelay(_, error) {
 					if ("type" in error && error.type === "error") {
 						/**
@@ -131,7 +132,7 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 		return (
 			<Container
 				data-id={listing.id}
-				tweak={[
+                tweak={[
 					tweak,
 					{
 						slot: {
