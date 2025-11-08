@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
+import type { MessageSchema } from "../../schema/MessageSchema";
 import { createListingScoreFx } from "../listing-score/service/createListingScoreFx";
 import { ListingCartToggleSchema } from "./schema/ListingCartToggleSchema";
 
@@ -41,6 +42,23 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 				const id = genId();
 				const now = new Date();
 
+				const listing = await database.kysely
+					.selectFrom("listing")
+					.selectAll()
+					.where("id", "=", listingId)
+					.where("userId", "=", user.id)
+					.executeTakeFirst();
+
+				if (listing) {
+					return c.json<MessageSchema.Type, 400>(
+						{
+							type: "error",
+							message: "You cannot add your own listing to cart",
+						},
+						400,
+					);
+				}
+
 				await database.kysely
 					.insertInto("listing_cart")
 					.values({
@@ -66,8 +84,13 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 						listingId,
 						score: "cart",
 					}).pipe(
-						Effect.catchTag("TooManyRequests", () => {
-							return Effect.succeed(undefined);
+						Effect.catchTags({
+							TooManyRequests: () => {
+								return Effect.succeed(undefined);
+							},
+							InvalidRequestError: () => {
+								return Effect.succeed(undefined);
+							},
 						}),
 					),
 				);

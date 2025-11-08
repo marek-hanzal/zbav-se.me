@@ -3,6 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { createListingScoreFx } from "../listing-score/service/createListingScoreFx";
 import { ListingIgnoreToggleSchema } from "./schema/ListingIgnoreToggleSchema";
 
@@ -26,6 +27,14 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 				204: {
 					description: "Nothing to say, we're just happy",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 			},
 			tags: [
 				"listing-ignore",
@@ -40,6 +49,23 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 			if (toggle) {
 				const id = genId();
 				const now = new Date();
+
+				const listing = await database.kysely
+					.selectFrom("listing")
+					.selectAll()
+					.where("id", "=", listingId)
+					.where("userId", "=", user.id)
+					.executeTakeFirst();
+
+				if (listing) {
+					return c.json<MessageSchema.Type, 400>(
+						{
+							type: "error",
+							message: "You cannot ignore your own listing",
+						},
+						400,
+					);
+				}
 
 				await database.kysely
 					.insertInto("listing_ignore")
@@ -66,8 +92,13 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 						listingId,
 						score: "ignore",
 					}).pipe(
-						Effect.catchTag("TooManyRequests", () => {
-							return Effect.succeed(undefined);
+						Effect.catchTags({
+							TooManyRequests: () => {
+								return Effect.succeed(undefined);
+							},
+							InvalidRequestError: () => {
+								return Effect.succeed(undefined);
+							},
 						}),
 					),
 				);
