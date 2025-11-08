@@ -41,9 +41,9 @@ export const Title: FC<Title.Props> = ({
 		>
 			<div
 				data-ui="Title-title"
-				className="inline-flex flex-col gap-0 items-start justify-center"
+				className="inline-flex flex-col gap-0 items-start justify-center min-w-0"
 			>
-				<div className="inline-flex flex-row gap-1 items-center justify-center">
+				<div className="inline-flex flex-row gap-1 items-center justify-center min-w-0 max-w-full">
 					{left ? (
 						<div className="flex flex-row items-center justify-center">
 							{left}
@@ -53,6 +53,7 @@ export const Title: FC<Title.Props> = ({
 						label={textTitle}
 						font={"bold"}
 						size={"xl"}
+						truncate
 					/>
 				</div>
 

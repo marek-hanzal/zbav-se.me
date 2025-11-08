@@ -62,7 +62,7 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/buyer/feed/$id/list/$listingId/view"}
+				to={"/$locale/buyer/feed/$id/listing/$listingId/view"}
 				params={{
 					locale,
 					id: feedId,
