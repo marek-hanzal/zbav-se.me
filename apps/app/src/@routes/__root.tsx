@@ -8,9 +8,9 @@ import {
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client/cls";
 import { Container } from "@use-pico/client/ui/container";
-import { Toaster, ToastProvider } from "@use-pico/client/ui/toast";
 import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { Toaster } from "sonner";
 import type { authClient } from "~/app/auth/authClient";
 import styles from "~/assets/style.css?url";
 
@@ -56,29 +56,24 @@ export const Route = createRootRouteWithContext<{
 
 				<body>
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
-						<ToastProvider
-							maxCount={10}
-							durationMs={2500}
-						>
-							<Toaster position="top-center" />
+						<Toaster position={"bottom-center"} />
 
-							<Container
-								ui="Root-root"
-								height="viewport"
-								width="viewport"
-								tweak={{
-									slot: {
-										root: {
-											token: [
-												"tone.primary.dark.bg",
-											],
-										},
+						<Container
+							ui="Root-root"
+							height="viewport"
+							width="viewport"
+							tweak={{
+								slot: {
+									root: {
+										token: [
+											"tone.primary.dark.bg",
+										],
 									},
-								}}
-							>
-								<Outlet />
-							</Container>
-						</ToastProvider>
+								},
+							}}
+						>
+							<Outlet />
+						</Container>
 					</TokenProvider>
 
 					<Scripts />

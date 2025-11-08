@@ -21,10 +21,6 @@ export const ToasterCls = contract(PicoCls.contract)
 				"pointer-events-none",
 				"fixed",
 				"z-[500]",
-				"flex",
-				"flex-col",
-				"gap-2",
-				"p-4",
 			],
 		},
 		item: {
