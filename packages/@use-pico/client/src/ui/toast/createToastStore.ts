@@ -19,10 +19,10 @@ export namespace createToastStore {
 		//
 		durationMs: number;
 		//
-		toasts: Record<string, Toast>;
+		toasts: Toast[];
 		//
-		visible: string[];
-		queue: string[];
+		visible: Toast[];
+		queue: Toast[];
 		//
 		/**
 		 * Registers or updates a toast instance within the store.
@@ -75,29 +75,27 @@ export const createToastStore = ({
 		//
 		durationMs,
 		//
-		toasts: {},
+		toasts: [],
 		//
 		visible: [],
 		queue: [],
 		//
 		toast(toast) {
 			set((state) => {
-				if (state.toasts[toast.id]) {
-					return state;
-				}
-
 				return {
-					toasts: {
+					toasts: [
 						...state.toasts,
-						[toast.id]: toast,
-					},
+						toast,
+					],
 				};
 			});
 		},
 		//
 		send(id) {
 			set((state) => {
-				if (state.visible.includes(id) || state.queue.includes(id)) {
+				const toast = state.toasts.findLast((t) => t.id === id);
+
+				if (!toast) {
 					return state;
 				}
 
@@ -105,14 +103,14 @@ export const createToastStore = ({
 					return {
 						visible: [
 							...state.visible,
-							id,
+							toast,
 						],
 					};
 				}
 				return {
 					queue: [
 						...state.queue,
-						id,
+						toast,
 					],
 				};
 			});
@@ -140,17 +138,14 @@ export const createToastStore = ({
 		//
 		dismiss(id) {
 			set((state) => ({
-				queue: state.queue.filter((t) => t !== id),
-				visible: state.visible.filter((t) => t !== id),
+				toasts: state.toasts.filter((t) => t.id !== id),
+				queue: state.queue.filter((t) => t.id !== id),
+				visible: state.visible.filter((t) => t.id !== id),
 			}));
 		},
 		//
 		getVisible(position) {
 			const current = get();
-
-			const list = current.visible
-				.map((id) => current.toasts[id])
-				.filter((t) => t !== undefined);
 
 			return (
 				[
@@ -159,15 +154,12 @@ export const createToastStore = ({
 					"bottom-right",
 				] as (typeof position)[]
 			).includes(position)
-				? list.reverse()
-				: list;
+				? current.visible.reverse()
+				: current.visible;
 		},
 		//
 		getQueue() {
-			const current = get();
-			return current.queue
-				.map((id) => current.toasts[id])
-				.filter((t) => t !== undefined);
+			return get().queue;
 		},
 	}));
 };

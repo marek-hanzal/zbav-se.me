@@ -1,6 +1,6 @@
 import { type Cls, useCls } from "@use-pico/cls";
-import { type FC, useId, useRef } from "react";
-import { useAnim } from "../../gsap/gsap";
+import { type FC, useId, useMemo, useRef } from "react";
+import { anim, useAnim } from "../../gsap/gsap";
 import { ToasterCls } from "./ToasterCls";
 import { useToastContext } from "./useToastContext";
 
@@ -31,25 +31,65 @@ export const Toaster: FC<Toaster.Props> = ({
 	const $store = useToastStore();
 	const durationMs = $store.durationMs;
 
+	const isBottom = useMemo(
+		() =>
+			[
+				"bottom-left",
+				"bottom-center",
+				"bottom-right",
+			].includes(String(position)),
+		[
+			position,
+		],
+	);
+
+	const visibleKey = useMemo(() => {
+		return $store
+			.getVisible(position)
+			.map((toast) => toast.id)
+			.join("-");
+	}, [
+		$store,
+		position,
+	]);
+
 	useAnim(
 		() => {
-			//
+			anim.fromTo(
+				".Toaster-Item",
+				{
+					opacity: 0,
+					y: isBottom ? 12 : -12,
+				},
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.22,
+					ease: "power2.out",
+					clearProps: "transform",
+					stagger: 0.06,
+				},
+			);
 		},
 		{
 			scope: rootRef,
-			dependencies: [],
+			dependencies: [
+				visibleKey,
+			],
 		},
 	);
+
+	// TODO - move to portal!
 
 	return (
 		<div
 			ref={rootRef}
 			className={slots.root()}
 		>
-			{$store.getVisible(position).map((toast) => {
+			{$store.getVisible(position).map((toast, i) => {
 				return (
 					<div
-						key={`${toastId}-${toast.id}`}
+						key={`${toastId}-${toast.id}-${i}`}
 						className={slots.item()}
 						data-toast-id={toast.id}
 					>

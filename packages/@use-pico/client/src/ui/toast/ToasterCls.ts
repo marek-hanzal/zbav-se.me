@@ -29,7 +29,9 @@ export const ToasterCls = contract(PicoCls.contract)
 		},
 		item: {
 			class: [
+				"Toaster-Item",
 				"pointer-events-auto",
+				"opacity-0",
 			],
 		},
 	})
