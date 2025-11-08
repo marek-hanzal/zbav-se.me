@@ -1,10 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
-import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
-import { toast } from "sonner";
 import z from "zod";
 import { FeedList } from "~/app/feed/ui/FeedList";
 
@@ -60,14 +57,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					/>
 				}
 			>
-				<Button
-					onClick={() => {
-						toast("Just go fuck yourself");
-					}}
-				>
-					test
-				</Button>
-
 				<FeedList
 					query={{
 						cursor: {

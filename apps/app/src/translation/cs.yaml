@@ -114,6 +114,9 @@
 501b1f4b9d7915a52896fdc8cdbd9be18c239e3b0251f8b34b63ed91:
     ref: Next - feed sort (button)
     value: Nastavení řazení
+508db448927e219e075aaea16d106cb569b057ce5a0b44588ef428e0:
+    ref: Second tap to add to cart (toast)
+    value: Druhým kliknutím potvrď přidání do košíku
 5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
     ref: Listing photos (title)
     value: Fotky
@@ -141,6 +144,9 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
+6810972e1b5c962b2d6bba8f1d42faf0373fc4a6f038a0d748551d62:
+    ref: Listing added to your cart (toast)
+    value: Inzerát byl úspěšně přidán do tvého košíku.
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
     ref: Feed category not selected
     value: Všechny kategorie
@@ -159,6 +165,9 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
+72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
+    ref: Listing unflagged (toast)
+    value: Úspěšně jsi zrušil nahlášení inzerátu.
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
     value: Umístění
@@ -331,6 +340,9 @@ a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
     ref: Number of listings (label)
     value: "Počet inzerátů:"
+aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
+    ref: Listing flagged (toast)
+    value: Inzerát byl úspěšně nahlášen a bude zkontrolován.
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
     ref: Success (toast)
     value: Success (toast)
@@ -435,6 +447,9 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
     ref: "0"
     value: "0"
+e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
+    ref: Listing removed from your cart (toast)
+    value: Inzerát byl úspěšně odebrán z tvého košíku.
 e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
     ref: Submit (subtitle)
     value: Zkontrolujte inzerát před odesláním
@@ -473,18 +488,29 @@ f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
 f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
     ref: No listings found (label)
     value: Tad nic nenajdeš 😭
+f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
+    ref: Second tap to unflag listing (toast)
+    value: Druhým kliknutím zruš nahlášení inzerátu
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
     ref: Feed age not selected
     value: Jakékoli
 fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
     ref: Feed condition (label)
     value: Stavy
+facd0a879d16c3a70cca1e0454dadf75ea57307c5476c066805b5542:
+    ref: Second tap to flag listing (toast)
+    value:
+        Druhým kliknutím nahlaš inzerát, pokud obsahuje nevhodný obsah nebo je
+        jinak závadný.
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Popis inzerátu
+fe633b89a7442d13ce7a77b20e737f97621b035d39f11fd18378be56:
+    ref: Second tap to remove from cart (toast)
+    value: Druhým kliknutím potvrď odebrání z košíku
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav
