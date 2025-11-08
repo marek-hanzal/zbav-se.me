@@ -55,7 +55,8 @@ export async function getRouter() {
 			storage:
 				typeof window !== "undefined" ? window.sessionStorage : null,
 		}),
-		maxAge: 30 * 60 * 1000,
+		// maxAge: 30 * 60_1000,
+		maxAge: 0,
 	});
 
 	setupRouterSsrQueryIntegration({

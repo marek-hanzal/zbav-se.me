@@ -4,9 +4,7 @@ import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Spinner } from "@use-pico/client/ui/spinner";
 import { Status } from "@use-pico/client/ui/status";
 import { withListingFeedCollectionQuery } from "@zbav-se.me/sdk/query";
 import { Sheet } from "@zbav-se.me/ui/sheet";
@@ -24,19 +22,24 @@ import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
 		/**
+		 * Feed id listing is part of
+		 */
+		id: string;
+		/**
 		 * Listing ID to scroll to
 		 */
 		scrollToListingId?: string;
 		/**
-		 * Feed id listing is part of
+		 * Limit max. number of listings to fetch.
 		 */
-		id: string;
+		limit: number;
 	}
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
-	id,
 	scrollToListingId,
+	id,
+	limit,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -46,12 +49,12 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	const listingQuery = withListingFeedCollectionQuery({
 		feedId: id,
-		size: 200,
+		size: limit,
 		where: {
 			withOwn: false,
 			withIgnored: false,
 		},
-	}).useQuery(
+	}).useSuspenseQuery(
 		{},
 		{
 			staleTime: 60_000 * 30,
@@ -136,95 +139,59 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			height={"fit"}
 			{...props}
 		>
-			<Data
-				result={listingQuery}
-				renderLoading={() => (
-					<Container
-						ui="Feed-Spinner"
-						layout={"vertical-centered"}
-						items={"center"}
-						height={"fit"}
-					>
-						<Spinner
-							tone="secondary"
-							theme={"dark"}
-						/>
-					</Container>
-				)}
-				renderFetching={() => <Spinner />}
-				renderSuccess={({ data: { data } }) => {
-					if (data.length === 0) {
-						return (
-							<Status
-								ui="Feed-Status-empty"
-								key={`${feedId}-no-listings`}
-								icon={"icon-[streamline--sad-face-remix]"}
-								textTitle={"No listings (title)"}
-								textMessage={"No listings found (message)"}
-							/>
-						);
-					}
-
-					return data.map((listing) => {
-						return (
-							<ListingHeroContainer
-								key={`${feedId}-${listing.id}`}
-								feedId={id}
-								listing={listing}
-								locale={locale}
-								isVisible={visibles.has(listing.id)}
-							/>
-						);
-					});
-				}}
+			<Container
+				ui="Feed-Container"
+				key={feedId}
+				ref={containerRef}
+				layout={"vertical-full"}
+				snap={"vertical-start"}
 			>
-				{({ content }) => {
-					return (
-						<Container
-							ui="Feed-Container"
-							key={feedId}
-							ref={containerRef}
-							layout={"vertical-full"}
-							snap={"vertical-start"}
-						>
-							{content}
+				{listingQuery.data.data.length === 0 ? (
+					<Status
+						ui="Feed-Status-empty"
+						key={`${feedId}-no-listings`}
+						icon={"icon-[streamline--sad-face-remix]"}
+						textTitle={"No listings (title)"}
+						textMessage={"No listings found (message)"}
+					/>
+				) : null}
 
-							{listingQuery.isFetching ||
-							listingQuery.data?.data?.length ? null : (
-								<Sheet round={"unset"}>
-									<Status
-										icon={
-											"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
-										}
-										textTitle={"That's all for now (title)"}
-										textMessage={
-											"No more listings to show (message)"
-										}
-										action={
-											<LinkTo
-												to={
-													"/$locale/buyer/feed/select"
-												}
-												params={{
-													locale,
-												}}
-											>
-												<Button
-													iconEnabled={ArrowLeftIcon}
-													tone={"secondary"}
-													label={
-														"Back to home (link)"
-													}
-												/>
-											</LinkTo>
-										}
-									/>
-								</Sheet>
-							)}
-						</Container>
+				{listingQuery.data.data.map((listing) => {
+					return (
+						<ListingHeroContainer
+							key={`${feedId}-${listing.id}`}
+							feedId={id}
+							listing={listing}
+							locale={locale}
+							isVisible={visibles.has(listing.id)}
+						/>
 					);
-				}}
-			</Data>
+				})}
+
+				<Sheet round={"unset"}>
+					<Status
+						icon={
+							"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
+						}
+						textTitle={"That's all for now (title)"}
+						textMessage={"No more listings to show (message)"}
+						action={
+							<LinkTo
+								to={"/$locale/buyer/feed/select"}
+								params={{
+									locale,
+								}}
+							>
+								<Button
+									iconEnabled={ArrowLeftIcon}
+									tone={"secondary"}
+									label={"Back to home (link)"}
+								/>
+							</LinkTo>
+						}
+					/>
+				</Sheet>
+			</Container>
 		</Container>
 	);
 };

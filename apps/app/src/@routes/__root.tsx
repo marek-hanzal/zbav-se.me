@@ -69,7 +69,7 @@ export const Route = createRootRouteWithContext<{
 								slot: {
 									root: {
 										token: [
-											"tone.primary.dark.bg",
+											"tone.primary.light.bg",
 										],
 									},
 								},

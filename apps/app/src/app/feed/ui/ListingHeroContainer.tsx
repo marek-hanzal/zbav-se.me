@@ -16,7 +16,7 @@ import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
 import { withListingFeedCollectionQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
-import { type FC, memo, useCallback, useEffect, useRef } from "react";
+import { type FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { ListingToolbarContainer } from "~/app/listing/ui/ListingToolbarContainer";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
@@ -155,6 +155,8 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 				};
 			};
 
+		const [hasToolbar, setHasToolbar] = useState(false);
+
 		return (
 			<Container
 				data-id={listing.id}
@@ -190,9 +192,46 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 				) : null}
 
 				<HeroImage
-					src={isVisible ? hero.upload.url : undefined}
+					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"w-full h-full object-cover"}
+					visible={isVisible}
+					onLoad={() => setHasToolbar(true)}
+					errorStatusProps={{
+						action: (
+							<ListingToolbarContainer
+								snapTo={"unset"}
+								feedId={feedId}
+								listing={listing}
+								onIgnoreToggle={(toggle) => {
+									patchListingQuery(
+										patchListing({
+											id: listing.id,
+											isIgnored: toggle,
+										}),
+									);
+								}}
+								onFlagToggle={(toggle) => {
+									patchListingQuery(
+										patchListing({
+											id: listing.id,
+											hasFlag: toggle,
+										}),
+									);
+								}}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"flex-row",
+												"flex-row-reverse",
+											],
+										},
+									},
+								}}
+							/>
+						),
+					}}
 				/>
 
 				<Container
@@ -206,6 +245,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 							},
 						},
 					}}
+					height={"content"}
 				>
 					<LinkTo
 						to={"/$locale/buyer/feed/select"}
@@ -286,34 +326,36 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 					/>
 				</Badge>
 
-				<ListingToolbarContainer
-					feedId={feedId}
-					listing={listing}
-					onCartToggle={(toggle) => {
-						patchListingQuery(
-							patchListing({
-								id: listing.id,
-								isInCart: toggle,
-							}),
-						);
-					}}
-					onIgnoreToggle={(toggle) => {
-						patchListingQuery(
-							patchListing({
-								id: listing.id,
-								isIgnored: toggle,
-							}),
-						);
-					}}
-					onFlagToggle={(toggle) => {
-						patchListingQuery(
-							patchListing({
-								id: listing.id,
-								hasFlag: toggle,
-							}),
-						);
-					}}
-				/>
+				{hasToolbar ? (
+					<ListingToolbarContainer
+						feedId={feedId}
+						listing={listing}
+						onCartToggle={(toggle) => {
+							patchListingQuery(
+								patchListing({
+									id: listing.id,
+									isInCart: toggle,
+								}),
+							);
+						}}
+						onIgnoreToggle={(toggle) => {
+							patchListingQuery(
+								patchListing({
+									id: listing.id,
+									isIgnored: toggle,
+								}),
+							);
+						}}
+						onFlagToggle={(toggle) => {
+							patchListingQuery(
+								patchListing({
+									id: listing.id,
+									hasFlag: toggle,
+								}),
+							);
+						}}
+					/>
+				) : null}
 
 				<VariantProvider
 					cls={ThemeCls}

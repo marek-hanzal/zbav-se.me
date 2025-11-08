@@ -13,7 +13,7 @@ export namespace ListingToolbarContainer {
 	export interface Props extends Container.Props {
 		feedId: string;
 		listing: zListing;
-		onCartToggle(toggle: boolean): void;
+		onCartToggle?(toggle: boolean): void;
 		onIgnoreToggle(toggle: boolean): void;
 		onFlagToggle(toggle: boolean): void;
 	}
@@ -25,6 +25,7 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 	onCartToggle,
 	onIgnoreToggle,
 	onFlagToggle,
+	tweak,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -49,16 +50,19 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 			gap={"lg"}
 			tone={"secondary"}
 			theme={"light"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"opacity-80",
-							"z-100",
-						],
+			tweak={[
+				tweak,
+				{
+					slot: {
+						root: {
+							class: [
+								"opacity-80",
+								"z-100",
+							],
+						},
 					},
 				},
-			}}
+			]}
 			{...props}
 		>
 			<LinkTo
@@ -78,29 +82,31 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				/>
 			</LinkTo>
 
-			<ListingCartButton
-				listingId={listing.id}
-				isInCart={listing.isInCart}
-				onSuccess={onCartToggle}
-				disabled={
-					listing.hasFlag ||
-					listing.isIgnored ||
-					(action && action !== "cart")
-				}
-				buttonProps={{
-					onClick() {
-						setIsAction("cart");
-					},
-				}}
-				confirmProps={{
-					onClick() {
+			{onCartToggle ? (
+				<ListingCartButton
+					listingId={listing.id}
+					isInCart={listing.isInCart}
+					onSuccess={onCartToggle}
+					disabled={
+						listing.hasFlag ||
+						listing.isIgnored ||
+						(action && action !== "cart")
+					}
+					buttonProps={{
+						onClick() {
+							setIsAction("cart");
+						},
+					}}
+					confirmProps={{
+						onClick() {
+							setIsAction(undefined);
+						},
+					}}
+					onReset={() => {
 						setIsAction(undefined);
-					},
-				}}
-				onReset={() => {
-					setIsAction(undefined);
-				}}
-			/>
+					}}
+				/>
+			) : null}
 
 			<ListingIgnoreButton
 				listingId={listing.id}

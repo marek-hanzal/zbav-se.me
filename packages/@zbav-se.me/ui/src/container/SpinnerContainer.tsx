@@ -7,11 +7,13 @@ import { PrimaryOverlay } from "../overlay/PrimaryOverlay";
 export namespace SpinnerContainer {
 	export interface Props extends Container.Props {
 		disableOverlay?: boolean;
+		statusProps?: Status.Props;
 	}
 }
 
 export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 	disableOverlay = false,
+	statusProps,
 	...props
 }) => {
 	return (
@@ -31,6 +33,7 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 				iconProps={{
 					size: "2xl",
 				}}
+				{...statusProps}
 			/>
 		</Container>
 	);
