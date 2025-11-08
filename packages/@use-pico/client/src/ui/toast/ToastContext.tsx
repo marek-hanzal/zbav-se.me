@@ -5,7 +5,5 @@ export const ToastContext = createContext<createToastStore.Hook>(
 	createToastStore({
 		maxCount: 5,
 		durationMs: 2500,
-		gap: 8,
-		offset: 8,
 	}),
 );

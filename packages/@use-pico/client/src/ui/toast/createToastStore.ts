@@ -6,16 +6,11 @@ import type { ToasterCls } from "./ToasterCls";
 export namespace createToastStore {
 	export interface Props {
 		maxCount: number;
-		gap: number;
-		offset: number;
 		durationMs: number;
 	}
 
 	export interface Store {
 		maxCount: number;
-		//
-		gap: number;
-		offset: number;
 		//
 		durationMs: number;
 		//
@@ -63,15 +58,10 @@ export namespace createToastStore {
 
 export const createToastStore = ({
 	maxCount,
-	gap,
-	offset,
 	durationMs,
 }: createToastStore.Props): createToastStore.Hook => {
 	return create<createToastStore.Store>((set, get) => ({
 		maxCount,
-		//
-		gap,
-		offset,
 		//
 		durationMs,
 		//
