@@ -43,7 +43,7 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				slot: {
 					root: {
 						class: [
-							"opacity-75",
+							"opacity-80",
 							"z-100",
 						],
 					},

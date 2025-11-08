@@ -39,6 +39,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 			theme={isInCart ? "dark" : "light"}
 			loading={listingCartToggleMutation.isPending}
 			buttonProps={{
+				size: "lg",
 				...buttonProps,
 				onClick(event) {
 					if (isInCart) {
