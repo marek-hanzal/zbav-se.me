@@ -53,6 +53,7 @@ export const ToastItem: FC<ToastItem.Props> = ({ slots, position, toast }) => {
 				.to(rootRef.current, {
 					delay: durationMs / 1000,
 					opacity: 0,
+					y: isBottom ? -12 : 12,
 					duration: 0.75,
 					ease: "power2.out",
 					clearProps: "transform",

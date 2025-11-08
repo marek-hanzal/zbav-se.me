@@ -19,10 +19,10 @@ export namespace createToastStore {
 		//
 		durationMs: number;
 		//
-		toasts: Toast[];
+		toasts: Record<string, Toast>;
 		//
-		visible: Toast[];
-		queue: Toast[];
+		visible: string[];
+		queue: string[];
 		//
 		/**
 		 * Registers or updates a toast instance within the store.
@@ -75,26 +75,33 @@ export const createToastStore = ({
 		//
 		durationMs,
 		//
-		toasts: [],
+		toasts: {},
 		//
 		visible: [],
 		queue: [],
 		//
 		toast(toast) {
 			set((state) => {
+				if (state.toasts[toast.id]) {
+					return state;
+				}
+
 				return {
-					toasts: [
+					toasts: {
 						...state.toasts,
-						toast,
-					],
+						[toast.id]: toast,
+					},
 				};
 			});
 		},
 		//
 		send(id) {
 			set((state) => {
-				const toast = state.toasts.findLast((t) => t.id === id);
+				if (state.visible.includes(id) || state.queue.includes(id)) {
+					return state;
+				}
 
+				const toast = state.toasts[id];
 				if (!toast) {
 					return state;
 				}
@@ -103,14 +110,15 @@ export const createToastStore = ({
 					return {
 						visible: [
 							...state.visible,
-							toast,
+							toast.id,
 						],
 					};
 				}
+
 				return {
 					queue: [
 						...state.queue,
-						toast,
+						toast.id,
 					],
 				};
 			});
@@ -138,20 +146,12 @@ export const createToastStore = ({
 		//
 		dismiss(id) {
 			set((state) => {
-				const removeFirst = (arr: Toast[]) => {
-					const i = arr.findIndex((t) => t.id === id);
-					if (i < 0) {
-						return arr;
-					}
-					const next = arr.slice();
-					next.splice(i, 1);
-					return next;
-				};
+				const { [id]: _, ...toasts } = state.toasts;
 
 				return {
-					visible: removeFirst(state.visible),
-					queue: removeFirst(state.queue),
-					toasts: removeFirst(state.toasts),
+					visible: state.visible.filter((t) => t !== id),
+					queue: state.queue.filter((t) => t !== id),
+					toasts,
 				};
 			});
 		},
@@ -160,18 +160,26 @@ export const createToastStore = ({
 			const current = get();
 
 			return (
-				[
-					"bottom-center",
-					"bottom-left",
-					"bottom-right",
-				] as (typeof position)[]
-			).includes(position)
-				? current.visible.reverse()
-				: current.visible;
+				(
+					[
+						"bottom-center",
+						"bottom-left",
+						"bottom-right",
+					] as (typeof position)[]
+				).includes(position)
+					? current.visible.reverse()
+					: current.visible
+			)
+				.map((id) => current.toasts[id])
+				.filter((t) => t !== undefined);
 		},
 		//
 		getQueue() {
-			return get().queue;
+			const current = get();
+
+			return current.queue
+				.map((id) => current.toasts[id])
+				.filter((t) => t !== undefined);
 		},
 	}));
 };
