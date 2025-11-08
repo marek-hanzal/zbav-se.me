@@ -1,4 +1,6 @@
+import { createAsyncStoragePersister } from "@tanstack/query-async-storage-persister";
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
+import { persistQueryClient } from "@tanstack/react-query-persist-client";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@use-pico/client/ui/container";
@@ -45,6 +47,15 @@ export async function getRouter() {
 		},
 		defaultPendingMs: 500,
 		scrollRestoration: true,
+	});
+
+	persistQueryClient({
+		queryClient,
+		persister: createAsyncStoragePersister({
+			storage:
+				typeof window !== "undefined" ? window.sessionStorage : null,
+		}),
+		maxAge: 30 * 60 * 1000,
 	});
 
 	setupRouterSsrQueryIntegration({
