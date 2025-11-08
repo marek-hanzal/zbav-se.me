@@ -2,22 +2,34 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { genId } from "@use-pico/common/gen-id";
 import { linkTo } from "@use-pico/common/link-to";
 import { list, object, rangedom } from "@use-pico/common/rangedom";
 import {
 	apiCategoryCollection,
+	apiListingCartToggle,
+	apiListingCollection,
 	apiListingCreate,
+	apiListingFlagToggle,
+	apiListingIgnoreToggle,
 	apiLocationAutocomplete,
+	type tCategory,
 	tCurrencyList,
 	tListingExpire,
+	type tListingSort,
 } from "@zbav-se.me/sdk/api/session";
-import { withUploadMutation } from "@zbav-se.me/sdk/mutation";
+import {
+	withListingScoreCreateMutation,
+	withUploadMutation,
+} from "@zbav-se.me/sdk/mutation";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import axios from "axios";
 import PQueue from "p-queue";
+import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
+import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import locations from "./location.json";
+import titles from "./titles.json";
 
 export async function picsum(): Promise<Blob> {
 	const sig = genId();
@@ -43,27 +55,32 @@ export async function picsum(): Promise<Blob> {
 
 export namespace seedListings {
 	export interface Props {
-		categoryIds: string[];
+		categories: tCategory[];
 		locationIds: string[];
 		uploadIds: string[];
 	}
 }
 
 const seedListings = async ({
-	categoryIds,
+	categories,
 	locationIds,
 	uploadIds,
 }: seedListings.Props) => {
 	const currencies = Object.values(tCurrencyList);
-	return apiListingCreate({
+	const category = list(categories);
+	const title = titles[category.slug as keyof typeof titles] ?? [
+		"Random Title",
+	];
+
+	const listing = await apiListingCreate({
 		throwOnError: true,
 		body: {
 			age: rangedom(1, 6),
 			condition: rangedom(1, 6),
-			categoryId: list(categoryIds),
+			categoryId: category.id,
 			price: rangedom(0, 99_999),
 			currency: list(currencies),
-			title: "andomTitle()",
+			title: list(title),
 			expiresAt: object(tListingExpire),
 			locationId: list(locationIds),
 			uploadIds: [
@@ -71,6 +88,8 @@ const seedListings = async ({
 			],
 		},
 	}).then((res) => res.data);
+
+	return listing;
 };
 
 export const Route = createFileRoute("/$locale/dev/seed")({
@@ -84,7 +103,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 		);
 	},
 	async loader({ context: { queryClient } }) {
-		const categoryIds = await apiCategoryCollection({
+		const categories = await apiCategoryCollection({
 			throwOnError: true,
 			body: {
 				cursor: {
@@ -92,10 +111,10 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					size: 512,
 				},
 			},
-		}).then((res) => res.data.data.map((category) => category.id));
+		}).then((res) => res.data.data);
 
 		const locationQueue = new PQueue({
-			concurrency: 8,
+			concurrency: 12,
 		});
 
 		const locationIds = await Promise.all<string | undefined>(
@@ -131,21 +150,21 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 		);
 
 		return {
-			categoryIds,
+			categories,
 			locationIds,
 			uploadIds,
 		};
 	},
 	component() {
-		const { categoryIds, locationIds, uploadIds } = Route.useLoaderData();
+		const { categories, locationIds, uploadIds } = Route.useLoaderData();
 
 		const seedMutation = useMutation({
 			mutationKey: [
 				"seed",
 			],
 			async mutationFn() {
-				const concurrency = 4;
-				const limit = 5_000;
+				const concurrency = 12;
+				const limit = 500;
 
 				const queue = new PQueue({
 					concurrency,
@@ -154,7 +173,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				for (let i = 0; i < limit; i++) {
 					queue.add(async () => {
 						return seedListings({
-							categoryIds,
+							categories,
 							locationIds,
 							uploadIds,
 						});
@@ -164,28 +183,352 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			},
 		});
 
-		return (
-			<Sheet>
-				<Button
-					onClick={() => seedMutation.mutate()}
-					disabled={seedMutation.isPending}
-					loading={seedMutation.isPending}
-					tweak={{
-						slot: {
-							wrapper: {
-								class: [
-									"mx-auto",
-								],
-							},
+		const registerMutation = withRegisterMutation.useMutation();
+		const registerUsersMutation = useMutation({
+			async mutationFn() {
+				const concurrency = 4;
+				const alphabet = Array.from(
+					{
+						length: 26,
+					},
+					(_, index) =>
+						String.fromCharCode("a".charCodeAt(0) + index),
+				);
+
+				const queue = new PQueue({
+					concurrency,
+				});
+
+				for (const letter of alphabet) {
+					queue.add(() =>
+						registerMutation.mutateAsync({
+							email: `${letter}@x32.cz`,
+							password: "12345678",
+						}),
+					);
+				}
+
+				await queue.onIdle();
+			},
+		});
+
+		const signInMutation = withEmailSignInMutation.useMutation();
+
+		const listingScoreMutation =
+			withListingScoreCreateMutation.useMutation();
+
+		const seedScoresMutation = useMutation({
+			async mutationFn() {
+				const sort = list([
+					{
+						value: "age",
+						sort: "desc",
+					},
+					{
+						value: "price",
+						sort: "desc",
+					},
+					{
+						value: "condition",
+						sort: "desc",
+					},
+					{
+						value: "createdAt",
+						sort: "desc",
+					},
+					{
+						value: "updatedAt",
+						sort: "desc",
+					},
+					{
+						value: "age",
+						sort: "asc",
+					},
+					{
+						value: "price",
+						sort: "asc",
+					},
+					{
+						value: "condition",
+						sort: "asc",
+					},
+					{
+						value: "createdAt",
+						sort: "asc",
+					},
+					{
+						value: "updatedAt",
+						sort: "asc",
+					},
+				] satisfies tListingSort[]);
+
+				const listings = await apiListingCollection({
+					throwOnError: true,
+					body: {
+						cursor: {
+							page: 0,
+							size: 1000,
 						},
-					}}
-					tone={"secondary"}
-					theme={"dark"}
-					size={"xl"}
-				>
-					Seed
-				</Button>
-			</Sheet>
+						sort: [
+							sort,
+						],
+					},
+				}).then((res) => res.data.data);
+
+				const queue = new PQueue({
+					concurrency: 12,
+				});
+
+				for (const listing of listings) {
+					Math.random() > 0.5 &&
+						queue.add(async () => {
+							return listingScoreMutation.mutateAsync({
+								listingId: listing.id,
+								score: "listing",
+							});
+						});
+
+					Math.random() > 0.2 &&
+						queue.add(async () => {
+							return listingScoreMutation.mutateAsync({
+								listingId: listing.id,
+								score: "view",
+							});
+						});
+
+					Math.random() > 0.07 &&
+						queue.add(async () => {
+							return listingScoreMutation.mutateAsync({
+								listingId: listing.id,
+								score: "flag",
+							});
+						});
+
+					Math.random() > 0.175 &&
+						queue.add(async () => {
+							return listingScoreMutation.mutateAsync({
+								listingId: listing.id,
+								score: "cart",
+							});
+						});
+
+					Math.random() > 0.25 &&
+						queue.add(async () => {
+							return listingScoreMutation.mutateAsync({
+								listingId: listing.id,
+								score: "ignore",
+							});
+						});
+				}
+
+				await queue.onIdle();
+			},
+		});
+
+		const seedCartFlagIgnoreMutation = useMutation({
+			async mutationFn() {
+				const sort = list([
+					{
+						value: "age",
+						sort: "desc",
+					},
+					{
+						value: "price",
+						sort: "desc",
+					},
+					{
+						value: "condition",
+						sort: "desc",
+					},
+					{
+						value: "createdAt",
+						sort: "desc",
+					},
+					{
+						value: "updatedAt",
+						sort: "desc",
+					},
+					{
+						value: "age",
+						sort: "asc",
+					},
+					{
+						value: "price",
+						sort: "asc",
+					},
+					{
+						value: "condition",
+						sort: "asc",
+					},
+					{
+						value: "createdAt",
+						sort: "asc",
+					},
+					{
+						value: "updatedAt",
+						sort: "asc",
+					},
+				] satisfies tListingSort[]);
+
+				const listings = await apiListingCollection({
+					throwOnError: true,
+					body: {
+						cursor: {
+							page: 0,
+							size: 1000,
+						},
+						sort: [
+							sort,
+						],
+					},
+				}).then((res) => res.data.data);
+
+				const queue = new PQueue({
+					concurrency: 12,
+				});
+
+				for (const listing of listings) {
+					Math.random() > 0.07 &&
+						queue.add(async () => {
+							return apiListingFlagToggle({
+								body: {
+									listingId: listing.id,
+									toggle: true,
+								},
+							});
+						});
+
+					Math.random() > 0.175 &&
+						queue.add(async () => {
+							return apiListingCartToggle({
+								body: {
+									listingId: listing.id,
+									toggle: true,
+								},
+							});
+						});
+
+					Math.random() > 0.25 &&
+						queue.add(async () => {
+							return apiListingIgnoreToggle({
+								body: {
+									listingId: listing.id,
+									toggle: true,
+								},
+							});
+						});
+				}
+
+				await queue.onIdle();
+			},
+		});
+
+		return (
+			<Container
+				layout={"vertical-centered"}
+				items={"center"}
+				gap={"md"}
+				tone={"secondary"}
+				theme={"light"}
+			>
+				<div className={"space-y-2"}>
+					<Button
+						loading={registerUsersMutation.isPending}
+						onClick={() => {
+							registerUsersMutation.mutate();
+						}}
+						tone={"secondary"}
+						theme={"dark"}
+						size={"xl"}
+						full
+					>
+						Prepare users
+					</Button>
+
+					<Button
+						loading={signInMutation.isPending}
+						onClick={() => {
+							const letter = String.fromCharCode(
+								"a".charCodeAt(0) + rangedom(0, 25),
+							);
+
+							signInMutation.mutate({
+								email: `${letter}@x32.cz`,
+								password: "12345678",
+							});
+						}}
+						tone={"secondary"}
+						theme={"dark"}
+						size={"xl"}
+						full
+					>
+						Random user
+					</Button>
+
+					<Button
+						onClick={() => seedMutation.mutate()}
+						disabled={seedMutation.isPending}
+						loading={seedMutation.isPending}
+						tweak={{
+							slot: {
+								wrapper: {
+									class: [
+										"mx-auto",
+									],
+								},
+							},
+						}}
+						tone={"secondary"}
+						theme={"dark"}
+						size={"xl"}
+						full
+					>
+						Seed Listings
+					</Button>
+
+					<Button
+						onClick={() => seedScoresMutation.mutate()}
+						disabled={seedScoresMutation.isPending}
+						loading={seedScoresMutation.isPending}
+						tweak={{
+							slot: {
+								wrapper: {
+									class: [
+										"mx-auto",
+									],
+								},
+							},
+						}}
+						tone={"secondary"}
+						theme={"dark"}
+						size={"xl"}
+						full
+					>
+						Seed scores
+					</Button>
+
+					<Button
+						onClick={() => seedScoresMutation.mutate()}
+						disabled={seedScoresMutation.isPending}
+						loading={seedScoresMutation.isPending}
+						tweak={{
+							slot: {
+								wrapper: {
+									class: [
+										"mx-auto",
+									],
+								},
+							},
+						}}
+						tone={"secondary"}
+						theme={"dark"}
+						size={"xl"}
+						full
+					>
+						Seed cart/flag/ignore
+					</Button>
+				</div>
+			</Container>
 		);
 	},
 });
