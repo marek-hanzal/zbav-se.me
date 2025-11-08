@@ -6,7 +6,7 @@ export default defineNitroConfig({
 			target: "node22",
 		},
 	},
-    vercel: {
+	vercel: {
 		config: {
 			crons: [
 				{
