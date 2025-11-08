@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
@@ -55,11 +56,13 @@ export const Route = createFileRoute(
 				}
 				textTitle={"Listing detail (title)"}
 			>
-				<Container
-					scroll={"vertical"}
-					height={"fit"}
-				>
-					<ListingDetailContainer listing={listingQuery.data} />
+				<Container scroll={"vertical"}>
+					<ListingDetailContainer
+						feedId={id}
+						listing={listingQuery.data}
+					>
+						<Button>toolbar</Button>
+					</ListingDetailContainer>
 				</Container>
 			</TitleContainer>
 		);

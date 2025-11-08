@@ -50,6 +50,8 @@ import { Route as LocaleBuyerFeedIdEditConditionRouteImport } from './@routes/$l
 import { Route as LocaleBuyerFeedIdEditCategoryRouteImport } from './@routes/$locale/buyer/feed/$id/edit/category'
 import { Route as LocaleBuyerFeedIdEditAgeRouteImport } from './@routes/$locale/buyer/feed/$id/edit/age'
 import { Route as LocaleBuyerFeedIdListingListingIdViewRouteImport } from './@routes/$locale/buyer/feed/$id/listing/$listingId/view'
+import { Route as LocaleBuyerFeedIdListingListingIdSellerRouteImport } from './@routes/$locale/buyer/feed/$id/listing/$listingId/seller'
+import { Route as LocaleBuyerFeedIdListingListingIdScoreRouteImport } from './@routes/$locale/buyer/feed/$id/listing/$listingId/score'
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -283,6 +285,18 @@ const LocaleBuyerFeedIdListingListingIdViewRoute =
     path: '/listing/$listingId/view',
     getParentRoute: () => LocaleBuyerFeedIdRoute,
   } as any)
+const LocaleBuyerFeedIdListingListingIdSellerRoute =
+  LocaleBuyerFeedIdListingListingIdSellerRouteImport.update({
+    id: '/listing/$listingId/seller',
+    path: '/listing/$listingId/seller',
+    getParentRoute: () => LocaleBuyerFeedIdRoute,
+  } as any)
+const LocaleBuyerFeedIdListingListingIdScoreRoute =
+  LocaleBuyerFeedIdListingListingIdScoreRouteImport.update({
+    id: '/listing/$listingId/score',
+    path: '/listing/$listingId/score',
+    getParentRoute: () => LocaleBuyerFeedIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -325,6 +339,8 @@ export interface FileRoutesByFullPath {
   '/$locale/buyer/feed/$id/edit/sort': typeof LocaleBuyerFeedIdEditSortRoute
   '/$locale/buyer/feed/$id/edit/title': typeof LocaleBuyerFeedIdEditTitleRoute
   '/$locale/buyer/feed/$id/edit/view': typeof LocaleBuyerFeedIdEditViewRoute
+  '/$locale/buyer/feed/$id/listing/$listingId/score': typeof LocaleBuyerFeedIdListingListingIdScoreRoute
+  '/$locale/buyer/feed/$id/listing/$listingId/seller': typeof LocaleBuyerFeedIdListingListingIdSellerRoute
   '/$locale/buyer/feed/$id/listing/$listingId/view': typeof LocaleBuyerFeedIdListingListingIdViewRoute
 }
 export interface FileRoutesByTo {
@@ -367,6 +383,8 @@ export interface FileRoutesByTo {
   '/$locale/buyer/feed/$id/edit/sort': typeof LocaleBuyerFeedIdEditSortRoute
   '/$locale/buyer/feed/$id/edit/title': typeof LocaleBuyerFeedIdEditTitleRoute
   '/$locale/buyer/feed/$id/edit/view': typeof LocaleBuyerFeedIdEditViewRoute
+  '/$locale/buyer/feed/$id/listing/$listingId/score': typeof LocaleBuyerFeedIdListingListingIdScoreRoute
+  '/$locale/buyer/feed/$id/listing/$listingId/seller': typeof LocaleBuyerFeedIdListingListingIdSellerRoute
   '/$locale/buyer/feed/$id/listing/$listingId/view': typeof LocaleBuyerFeedIdListingListingIdViewRoute
 }
 export interface FileRoutesById {
@@ -411,6 +429,8 @@ export interface FileRoutesById {
   '/$locale/buyer/feed/$id/edit/sort': typeof LocaleBuyerFeedIdEditSortRoute
   '/$locale/buyer/feed/$id/edit/title': typeof LocaleBuyerFeedIdEditTitleRoute
   '/$locale/buyer/feed/$id/edit/view': typeof LocaleBuyerFeedIdEditViewRoute
+  '/$locale/buyer/feed/$id/listing/$listingId/score': typeof LocaleBuyerFeedIdListingListingIdScoreRoute
+  '/$locale/buyer/feed/$id/listing/$listingId/seller': typeof LocaleBuyerFeedIdListingListingIdSellerRoute
   '/$locale/buyer/feed/$id/listing/$listingId/view': typeof LocaleBuyerFeedIdListingListingIdViewRoute
 }
 export interface FileRouteTypes {
@@ -456,6 +476,8 @@ export interface FileRouteTypes {
     | '/$locale/buyer/feed/$id/edit/sort'
     | '/$locale/buyer/feed/$id/edit/title'
     | '/$locale/buyer/feed/$id/edit/view'
+    | '/$locale/buyer/feed/$id/listing/$listingId/score'
+    | '/$locale/buyer/feed/$id/listing/$listingId/seller'
     | '/$locale/buyer/feed/$id/listing/$listingId/view'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -498,6 +520,8 @@ export interface FileRouteTypes {
     | '/$locale/buyer/feed/$id/edit/sort'
     | '/$locale/buyer/feed/$id/edit/title'
     | '/$locale/buyer/feed/$id/edit/view'
+    | '/$locale/buyer/feed/$id/listing/$listingId/score'
+    | '/$locale/buyer/feed/$id/listing/$listingId/seller'
     | '/$locale/buyer/feed/$id/listing/$listingId/view'
   id:
     | '__root__'
@@ -541,6 +565,8 @@ export interface FileRouteTypes {
     | '/$locale/buyer/feed/$id/edit/sort'
     | '/$locale/buyer/feed/$id/edit/title'
     | '/$locale/buyer/feed/$id/edit/view'
+    | '/$locale/buyer/feed/$id/listing/$listingId/score'
+    | '/$locale/buyer/feed/$id/listing/$listingId/seller'
     | '/$locale/buyer/feed/$id/listing/$listingId/view'
   fileRoutesById: FileRoutesById
 }
@@ -838,6 +864,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerFeedIdListingListingIdViewRouteImport
       parentRoute: typeof LocaleBuyerFeedIdRoute
     }
+    '/$locale/buyer/feed/$id/listing/$listingId/seller': {
+      id: '/$locale/buyer/feed/$id/listing/$listingId/seller'
+      path: '/listing/$listingId/seller'
+      fullPath: '/$locale/buyer/feed/$id/listing/$listingId/seller'
+      preLoaderRoute: typeof LocaleBuyerFeedIdListingListingIdSellerRouteImport
+      parentRoute: typeof LocaleBuyerFeedIdRoute
+    }
+    '/$locale/buyer/feed/$id/listing/$listingId/score': {
+      id: '/$locale/buyer/feed/$id/listing/$listingId/score'
+      path: '/listing/$listingId/score'
+      fullPath: '/$locale/buyer/feed/$id/listing/$listingId/score'
+      preLoaderRoute: typeof LocaleBuyerFeedIdListingListingIdScoreRouteImport
+      parentRoute: typeof LocaleBuyerFeedIdRoute
+    }
   }
 }
 
@@ -851,6 +891,8 @@ interface LocaleBuyerFeedIdRouteChildren {
   LocaleBuyerFeedIdEditSortRoute: typeof LocaleBuyerFeedIdEditSortRoute
   LocaleBuyerFeedIdEditTitleRoute: typeof LocaleBuyerFeedIdEditTitleRoute
   LocaleBuyerFeedIdEditViewRoute: typeof LocaleBuyerFeedIdEditViewRoute
+  LocaleBuyerFeedIdListingListingIdScoreRoute: typeof LocaleBuyerFeedIdListingListingIdScoreRoute
+  LocaleBuyerFeedIdListingListingIdSellerRoute: typeof LocaleBuyerFeedIdListingListingIdSellerRoute
   LocaleBuyerFeedIdListingListingIdViewRoute: typeof LocaleBuyerFeedIdListingListingIdViewRoute
 }
 
@@ -864,6 +906,10 @@ const LocaleBuyerFeedIdRouteChildren: LocaleBuyerFeedIdRouteChildren = {
   LocaleBuyerFeedIdEditSortRoute: LocaleBuyerFeedIdEditSortRoute,
   LocaleBuyerFeedIdEditTitleRoute: LocaleBuyerFeedIdEditTitleRoute,
   LocaleBuyerFeedIdEditViewRoute: LocaleBuyerFeedIdEditViewRoute,
+  LocaleBuyerFeedIdListingListingIdScoreRoute:
+    LocaleBuyerFeedIdListingListingIdScoreRoute,
+  LocaleBuyerFeedIdListingListingIdSellerRoute:
+    LocaleBuyerFeedIdListingListingIdSellerRoute,
   LocaleBuyerFeedIdListingListingIdViewRoute:
     LocaleBuyerFeedIdListingListingIdViewRoute,
 }

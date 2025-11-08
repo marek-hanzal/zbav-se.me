@@ -1,6 +1,8 @@
 import { useParams } from "@tanstack/react-router";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
@@ -9,12 +11,15 @@ import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingDetailContainer {
 	export interface Props extends Container.Props {
+		feedId: string;
 		listing: tListing;
 	}
 }
 
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
+	feedId,
 	listing,
+	children,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -67,6 +72,40 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			/>
 
 			<BadgeValue
+				textLabel={"Listing seller hint (label)"}
+				textValue={"- skore + link -"}
+				action={
+					<LinkTo
+						icon={ArrowRightIcon}
+						to={"/$locale/buyer/feed/$id/listing/$listingId/seller"}
+						params={{
+							locale,
+							id: feedId,
+							listingId: listing.id,
+						}}
+						tone={"primary"}
+					/>
+				}
+			/>
+
+			<BadgeValue
+				textLabel={"Listing score hint (label)"}
+				textValue={"- skore + link -"}
+				action={
+					<LinkTo
+						icon={ArrowRightIcon}
+						to={"/$locale/buyer/feed/$id/listing/$listingId/score"}
+						params={{
+							locale,
+							id: feedId,
+							listingId: listing.id,
+						}}
+						tone={"primary"}
+					/>
+				}
+			/>
+
+			<BadgeValue
 				textLabel={"Listing location (label)"}
 				textValue={listing.location.address}
 				textValueProps={{
@@ -95,6 +134,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					return <CategoryInline category={item} />;
 				}}
 			/>
+
+			{children}
 		</Container>
 	);
 };

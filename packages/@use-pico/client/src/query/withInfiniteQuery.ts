@@ -83,7 +83,10 @@ export function withInfiniteQuery<
 		 * @returns The cleaned query key.
 		 */
 		keys: $keys,
-		useInfiniteQuery(data: TData, options?: withInfiniteQuery.Options) {
+		useInfiniteQuery(
+			data: TData,
+			{ initial = 0, ...options }: withInfiniteQuery.Options = {},
+		) {
 			return useInfiniteQuery({
 				queryKey: $keys(data),
 				queryFn({ pageParam, signal }) {
@@ -93,7 +96,7 @@ export function withInfiniteQuery<
 						...data,
 					});
 				},
-				initialPageParam: 0,
+				initialPageParam: initial,
 				getNextPageParam: (lastPage, _pages, lastPageParam) => {
 					return lastPage.more ? lastPageParam + 1 : undefined;
 				},
