@@ -137,11 +137,23 @@ export const createToastStore = ({
 		},
 		//
 		dismiss(id) {
-			set((state) => ({
-				toasts: state.toasts.filter((t) => t.id !== id),
-				queue: state.queue.filter((t) => t.id !== id),
-				visible: state.visible.filter((t) => t.id !== id),
-			}));
+			set((state) => {
+				const removeFirst = (arr: Toast[]) => {
+					const i = arr.findIndex((t) => t.id === id);
+					if (i < 0) {
+						return arr;
+					}
+					const next = arr.slice();
+					next.splice(i, 1);
+					return next;
+				};
+
+				return {
+					visible: removeFirst(state.visible),
+					queue: removeFirst(state.queue),
+					toasts: removeFirst(state.toasts),
+				};
+			});
 		},
 		//
 		getVisible(position) {

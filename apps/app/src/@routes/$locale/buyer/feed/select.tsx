@@ -4,6 +4,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { useToast } from "@use-pico/client/ui/toast";
+import { genId } from "@use-pico/common/gen-id";
 import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { FeedList } from "~/app/feed/ui/FeedList";
@@ -65,7 +66,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 				<Button
 					onClick={() => {
 						toast({
-							id: "123",
+							id: genId(),
 							render() {
 								return <Badge>Hovno!</Badge>;
 							},
