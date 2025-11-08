@@ -10,6 +10,7 @@ import {
 	apiCategoryCollection,
 	apiListingCartToggle,
 	apiListingCollection,
+	apiListingCount,
 	apiListingCreate,
 	apiListingFlagToggle,
 	apiListingIgnoreToggle,
@@ -217,70 +218,84 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 		const listingScoreMutation =
 			withListingScoreCreateMutation.useMutation();
 
+		const fetchRandomListings = async () => {
+			const sort = list([
+				{
+					value: "age",
+					sort: "desc",
+				},
+				{
+					value: "price",
+					sort: "desc",
+				},
+				{
+					value: "condition",
+					sort: "desc",
+				},
+				{
+					value: "createdAt",
+					sort: "desc",
+				},
+				{
+					value: "updatedAt",
+					sort: "desc",
+				},
+				{
+					value: "age",
+					sort: "asc",
+				},
+				{
+					value: "price",
+					sort: "asc",
+				},
+				{
+					value: "condition",
+					sort: "asc",
+				},
+				{
+					value: "createdAt",
+					sort: "asc",
+				},
+				{
+					value: "updatedAt",
+					sort: "asc",
+				},
+			] satisfies tListingSort[]);
+
+			const count = await apiListingCount({
+				throwOnError: true,
+				body: {},
+			}).then((res) => res.data.total);
+
+			const size = rangedom(100, 1000);
+			const maxPage = Math.max(
+				0,
+				Math.floor(Math.max(count - 1, 0) / size),
+			);
+			const page = maxPage === 0 ? 0 : rangedom(0, maxPage);
+
+			return apiListingCollection({
+				throwOnError: true,
+				body: {
+					cursor: {
+						page,
+						size,
+					},
+					sort: [
+						sort,
+					],
+				},
+			}).then((res) => res.data.data);
+		};
+
 		const seedScoresMutation = useMutation({
 			async mutationFn() {
-				const sort = list([
-					{
-						value: "age",
-						sort: "desc",
-					},
-					{
-						value: "price",
-						sort: "desc",
-					},
-					{
-						value: "condition",
-						sort: "desc",
-					},
-					{
-						value: "createdAt",
-						sort: "desc",
-					},
-					{
-						value: "updatedAt",
-						sort: "desc",
-					},
-					{
-						value: "age",
-						sort: "asc",
-					},
-					{
-						value: "price",
-						sort: "asc",
-					},
-					{
-						value: "condition",
-						sort: "asc",
-					},
-					{
-						value: "createdAt",
-						sort: "asc",
-					},
-					{
-						value: "updatedAt",
-						sort: "asc",
-					},
-				] satisfies tListingSort[]);
-
-				const listings = await apiListingCollection({
-					throwOnError: true,
-					body: {
-						cursor: {
-							page: 0,
-							size: 1000,
-						},
-						sort: [
-							sort,
-						],
-					},
-				}).then((res) => res.data.data);
-
 				const queue = new PQueue({
 					concurrency: 12,
 				});
 
-				for (const listing of listings) {
-					Math.random() > 0.5 &&
+				for (const listing of await fetchRandomListings()) {
+					Math.random() < 0.5 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
@@ -288,7 +303,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							});
 						});
 
-					Math.random() > 0.2 &&
+					Math.random() < 0.2 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
@@ -296,7 +311,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							});
 						});
 
-					Math.random() > 0.07 &&
+					Math.random() < 0.07 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
@@ -304,7 +319,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							});
 						});
 
-					Math.random() > 0.175 &&
+					Math.random() < 0.175 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
@@ -312,7 +327,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							});
 						});
 
-					Math.random() > 0.25 &&
+					Math.random() < 0.25 &&
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
@@ -327,68 +342,12 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 		const seedCartFlagIgnoreMutation = useMutation({
 			async mutationFn() {
-				const sort = list([
-					{
-						value: "age",
-						sort: "desc",
-					},
-					{
-						value: "price",
-						sort: "desc",
-					},
-					{
-						value: "condition",
-						sort: "desc",
-					},
-					{
-						value: "createdAt",
-						sort: "desc",
-					},
-					{
-						value: "updatedAt",
-						sort: "desc",
-					},
-					{
-						value: "age",
-						sort: "asc",
-					},
-					{
-						value: "price",
-						sort: "asc",
-					},
-					{
-						value: "condition",
-						sort: "asc",
-					},
-					{
-						value: "createdAt",
-						sort: "asc",
-					},
-					{
-						value: "updatedAt",
-						sort: "asc",
-					},
-				] satisfies tListingSort[]);
-
-				const listings = await apiListingCollection({
-					throwOnError: true,
-					body: {
-						cursor: {
-							page: 0,
-							size: 1000,
-						},
-						sort: [
-							sort,
-						],
-					},
-				}).then((res) => res.data.data);
-
 				const queue = new PQueue({
 					concurrency: 12,
 				});
 
-				for (const listing of listings) {
-					Math.random() > 0.07 &&
+				for (const listing of await fetchRandomListings()) {
+					Math.random() < 0.07 &&
 						queue.add(async () => {
 							return apiListingFlagToggle({
 								body: {
@@ -398,7 +357,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							});
 						});
 
-					Math.random() > 0.175 &&
+					Math.random() < 0.175 &&
 						queue.add(async () => {
 							return apiListingCartToggle({
 								body: {
@@ -408,7 +367,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 							});
 						});
 
-					Math.random() > 0.25 &&
+					Math.random() < 0.25 &&
 						queue.add(async () => {
 							return apiListingIgnoreToggle({
 								body: {
@@ -508,9 +467,9 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					</Button>
 
 					<Button
-						onClick={() => seedScoresMutation.mutate()}
-						disabled={seedScoresMutation.isPending}
-						loading={seedScoresMutation.isPending}
+						onClick={() => seedCartFlagIgnoreMutation.mutate()}
+						disabled={seedCartFlagIgnoreMutation.isPending}
+						loading={seedCartFlagIgnoreMutation.isPending}
 						tweak={{
 							slot: {
 								wrapper: {
