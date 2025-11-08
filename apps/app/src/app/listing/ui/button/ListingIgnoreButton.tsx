@@ -66,9 +66,10 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				},
 			}}
 			confirmProps={{
-				tone: confirmProps?.tone ?? "secondary",
-				theme: confirmProps?.theme ?? "dark",
-				size: confirmProps?.size ?? "lg",
+				tone: "secondary",
+				theme: "dark",
+				size: "xl",
+				...confirmProps,
 				onClick() {
 					toast.promise(
 						listingIgnoreToggleMutation.mutateAsync({
