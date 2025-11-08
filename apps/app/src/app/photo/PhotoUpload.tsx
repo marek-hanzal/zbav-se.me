@@ -57,11 +57,16 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 		async onPreMutation() {
 			setProgress(0);
 
-			setUpload(undefined, {
-				where: {
-					id: current,
+			setUpload(
+				() => {
+					return undefined;
 				},
-			});
+				{
+					where: {
+						id: current,
+					},
+				},
+			);
 		},
 		async onPostMutation({ result }) {
 			setUpload(result, {

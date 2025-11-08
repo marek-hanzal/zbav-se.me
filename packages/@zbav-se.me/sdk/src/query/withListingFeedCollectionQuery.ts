@@ -1,12 +1,8 @@
-import { withInfiniteQuery } from "@use-pico/client/query";
-import type {
-	tListing,
-	tListingCollection,
-	tListingFilter,
-} from "../api/session";
+import { withQuery } from "@use-pico/client/query";
+import type { tListingFilter } from "../api/session";
 import { apiListingFeedCollection } from "../api/session/sdk.gen";
 
-export namespace withListingFeedInfiniteQuery {
+export namespace withListingFeedCollectionQuery {
 	export interface Props {
 		feedId: string;
 		size: number;
@@ -14,17 +10,17 @@ export namespace withListingFeedInfiniteQuery {
 	}
 }
 
-export const withListingFeedInfiniteQuery = ({
+export const withListingFeedCollectionQuery = ({
 	feedId,
 	size,
 	where,
-}: withListingFeedInfiniteQuery.Props) => {
-	return withInfiniteQuery<unknown, tListing, tListingCollection>({
+}: withListingFeedCollectionQuery.Props) => {
+	return withQuery({
 		keys(data) {
 			return [
 				"listing",
 				"feed",
-				"infinite",
+				"collection",
 				{
 					feedId,
 					size,
@@ -32,18 +28,17 @@ export const withListingFeedInfiniteQuery = ({
 				data,
 			];
 		},
-		async queryFn({ page, signal }) {
+		async queryFn() {
 			return apiListingFeedCollection({
 				body: {
 					feedId,
 					cursor: {
-						page,
+						page: 0,
 						size,
 					},
 					where,
 				},
 				throwOnError: true,
-				signal,
 			}).then((res) => res.data);
 		},
 	});

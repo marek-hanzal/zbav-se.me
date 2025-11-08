@@ -4,13 +4,11 @@ import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { InfiniteData } from "@use-pico/client/ui/data";
+import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
 import { Status } from "@use-pico/client/ui/status";
-import { useCls } from "@use-pico/cls";
-import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { withListingFeedCollectionQuery } from "@zbav-se.me/sdk/query";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {
@@ -21,7 +19,6 @@ import {
 	useRef,
 	useState,
 } from "react";
-import { useDebouncedCallback } from "use-debounce";
 import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -42,25 +39,22 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToListingId,
 	...props
 }) => {
-	const debounceTimeout = 150;
-	const { slots } = useCls(ThemeCls);
 	const { locale } = useParams({
 		from: "/$locale",
 	});
 	const feedId = useId();
 
-	const listingQuery = withListingFeedInfiniteQuery({
+	const listingQuery = withListingFeedCollectionQuery({
 		feedId: id,
-		size: 5,
+		size: 200,
 		where: {
 			withOwn: false,
 			withIgnored: false,
 		},
-	}).useInfiniteQuery(
+	}).useQuery(
 		{},
 		{
 			staleTime: 60_000 * 30,
-			initialPageParam: 0,
 			refetchInterval: 60_000,
 			refetchOnWindowFocus: true,
 		},
@@ -68,43 +62,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const visiblesRef = useRef<Set<string>>(new Set<string>());
 	const [visibles, setVisibles] = useState(() => new Set<string>());
-
-	const debouncedFetchNextPage = useDebouncedCallback(
-		(height: number, end: number, position: number) => {
-			const trigger = end - height * 2.25;
-
-			if (listingQuery.hasNextPage && position >= trigger) {
-				listingQuery.fetchNextPage();
-			}
-		},
-		debounceTimeout,
-		{
-			maxWait: debounceTimeout * 3,
-		},
-	);
-
-	const scroller = useRef<ScrollTrigger>(null);
-
-	useAnim(
-		() => {
-			scroller.current = ScrollTrigger.create({
-				scroller: containerRef.current,
-				start: 0,
-				end: "max",
-				onUpdate(self) {
-					debouncedFetchNextPage(
-						containerRef.current?.clientHeight ?? 0,
-						self.end,
-						self.scroll(),
-					);
-				},
-			});
-		},
-		{
-			scope: containerRef,
-			dependencies: [],
-		},
-	);
 
 	const schedule = useCallback(
 		(elements: HTMLElement[], isVisible: boolean) => {
@@ -160,13 +117,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		},
 	);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
-	useEffect(() => {
-		scroller.current?.refresh();
-	}, [
-		listingQuery.data,
-	]);
-
 	const scrollTo = useScrollTo(containerRef);
 
 	useEffect(() => {
@@ -186,7 +136,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			height={"fit"}
 			{...props}
 		>
-			<InfiniteData
+			<Data
 				result={listingQuery}
 				renderLoading={() => (
 					<Container
@@ -202,8 +152,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					</Container>
 				)}
 				renderFetching={() => <Spinner />}
-				renderSuccess={({ data: { pages } }) => {
-					if (pages.length === 0) {
+				renderSuccess={({ data: { data } }) => {
+					if (data.length === 0) {
 						return (
 							<Status
 								ui="Feed-Status-empty"
@@ -215,19 +165,17 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						);
 					}
 
-					return pages
-						.flatMap((p) => p.data)
-						.map((listing) => {
-							return (
-								<ListingHeroContainer
-									key={`${feedId}-${listing.id}`}
-									feedId={id}
-									listing={listing}
-									locale={locale}
-									isVisible={visibles.has(listing.id)}
-								/>
-							);
-						});
+					return data.map((listing) => {
+						return (
+							<ListingHeroContainer
+								key={`${feedId}-${listing.id}`}
+								feedId={id}
+								listing={listing}
+								locale={locale}
+								isVisible={visibles.has(listing.id)}
+							/>
+						);
+					});
 				}}
 			>
 				{({ content }) => {
@@ -241,8 +189,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						>
 							{content}
 
-							{listingQuery.hasNextPage ||
-							listingQuery.isFetching ? null : (
+							{listingQuery.isFetching ||
+							listingQuery.data?.data?.length ? null : (
 								<Sheet round={"unset"}>
 									<Status
 										icon={
@@ -276,45 +224,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						</Container>
 					);
 				}}
-			</InfiniteData>
-
-			<div
-				className={slots.default({
-					slot: {
-						default: {
-							class: [
-								"absolute",
-								"-bottom-[5%]",
-								"-left-8",
-								"-right-8",
-								"h-[30%]",
-								"pointer-events-none",
-								"transition-[opacity,blur]",
-								"bg-linear-to-b",
-								"duration-750",
-								"backdrop-saturate-150",
-								"ease-out",
-								"border-12",
-								"border-white/30",
-								"mask-[linear-gradient(to_bottom,transparent,black_92px,black)]",
-								listingQuery.isFetchingNextPage
-									? [
-											"opacity-100",
-											"blur-xs",
-										]
-									: [
-											"opacity-0",
-											"blur-0",
-										],
-							],
-							token: [
-								"tone.primary.light.from",
-								"tone.primary.light.to",
-							],
-						},
-					},
-				})}
-			/>
+			</Data>
 		</Container>
 	);
 };

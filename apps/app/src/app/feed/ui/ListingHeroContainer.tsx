@@ -6,9 +6,14 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
-import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
+import type { EntitySchema } from "@use-pico/common/schema";
+import type {
+	tGallery,
+	tListing,
+	tListingCollection,
+} from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
-import { withListingFeedInfiniteQuery } from "@zbav-se.me/sdk/query";
+import { withListingFeedCollectionQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { type FC, memo, useCallback, useEffect, useRef } from "react";
@@ -32,10 +37,10 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 			...tGallery[],
 		];
 
-		const patchListing = withListingFeedInfiniteQuery({
+		const patchListingQuery = withListingFeedCollectionQuery({
 			feedId,
 			size: 5,
-		}).usePatch({});
+		}).useSet();
 
 		const listingScoreCreateMutation =
 			withListingScoreCreateMutation.useMutation({
@@ -127,6 +132,29 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 			clearTimer,
 		]);
 
+		const patchListing =
+			(patch: Partial<tListing> & EntitySchema.Type) =>
+			(
+				prev: tListingCollection | undefined,
+			): tListingCollection | undefined => {
+				if (!prev) {
+					return prev;
+				}
+
+				return {
+					...prev,
+					data: prev.data.map((item) => {
+						if (item.id === listing.id) {
+							return {
+								...item,
+								...patch,
+							};
+						}
+						return item;
+					}),
+				};
+			};
+
 		return (
 			<Container
 				data-id={listing.id}
@@ -162,7 +190,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 				) : null}
 
 				<HeroImage
-					src={hero.upload.url}
+					src={isVisible ? hero.upload.url : undefined}
 					alt={`Hero image for listing ${listing.id}`}
 					className={"w-full h-full object-cover"}
 				/>
@@ -262,22 +290,28 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 					feedId={feedId}
 					listing={listing}
 					onCartToggle={(toggle) => {
-						patchListing({
-							id: listing.id,
-							isInCart: toggle,
-						});
+						patchListingQuery(
+							patchListing({
+								id: listing.id,
+								isInCart: toggle,
+							}),
+						);
 					}}
 					onIgnoreToggle={(toggle) => {
-						patchListing({
-							id: listing.id,
-							isIgnored: toggle,
-						});
+						patchListingQuery(
+							patchListing({
+								id: listing.id,
+								isIgnored: toggle,
+							}),
+						);
 					}}
 					onFlagToggle={(toggle) => {
-						patchListing({
-							id: listing.id,
-							hasFlag: toggle,
-						});
+						patchListingQuery(
+							patchListing({
+								id: listing.id,
+								hasFlag: toggle,
+							}),
+						);
 					}}
 				/>
 
