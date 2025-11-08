@@ -1,4 +1,4 @@
-import { defineNitroConfig } from "nitropack/config";
+import { defineNitroConfig } from "nitro/config";
 
 export default defineNitroConfig({
 	esbuild: {
@@ -6,7 +6,7 @@ export default defineNitroConfig({
 			target: "node22",
 		},
 	},
-	vercel: {
+    vercel: {
 		config: {
 			crons: [
 				{
