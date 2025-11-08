@@ -25,13 +25,14 @@ export namespace ListingHeroContainer {
 	export interface Props extends Container.Props {
 		feedId: string;
 		listing: tListing;
+		limit: number;
 		locale: string;
 		isVisible: boolean;
 	}
 }
 
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
-	({ feedId, locale, listing, isVisible, tweak, ...props }) => {
+	({ feedId, locale, listing, limit, isVisible, tweak, ...props }) => {
 		const [hero] = listing.gallery as [
 			tGallery,
 			...tGallery[],
@@ -39,7 +40,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 
 		const patchListingQuery = withListingFeedCollectionQuery({
 			feedId,
-			size: 5,
+			size: limit,
+			where: {
+				withOwn: false,
+				withIgnored: false,
+			},
 		}).useSet();
 
 		const listingScoreCreateMutation =

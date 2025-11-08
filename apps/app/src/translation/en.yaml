@@ -313,9 +313,6 @@ ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
-badc5b78cb713413bf87d581fc96eecd594bcf82de763ad73cdf01f0:
-  ref: No listings found (message)
-  value: No listings found (message)
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
   ref: Missing identity for an Entity (id). I'm sorry, but I cannot provide better
     message than this :(
@@ -387,6 +384,9 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
   ref: "0"
   value: "0"
+e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
+  ref: Listing removed from your cart (toast)
+  value: Listing removed from your cart (toast)
 e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
   ref: Submit (subtitle)
   value: Submit (subtitle)

@@ -82,7 +82,9 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								"Listing added to your cart (toast)",
+								isInCart
+									? "Listing removed from your cart (toast)"
+									: "Listing added to your cart (toast)",
 							),
 							error: translator.text(
 								"Error adding listing to cart (toast)",

@@ -152,29 +152,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						key={`${feedId}-no-listings`}
 						icon={"icon-[streamline--sad-face-remix]"}
 						textTitle={"No listings (title)"}
-						textMessage={"No listings found (message)"}
-					/>
-				) : null}
-
-				{listingQuery.data.data.map((listing) => {
-					return (
-						<ListingHeroContainer
-							key={`${feedId}-${listing.id}`}
-							feedId={id}
-							listing={listing}
-							locale={locale}
-							isVisible={visibles.has(listing.id)}
-						/>
-					);
-				})}
-
-				<Sheet round={"unset"}>
-					<Status
-						icon={
-							"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
-						}
-						textTitle={"That's all for now (title)"}
-						textMessage={"No more listings to show (message)"}
 						action={
 							<LinkTo
 								to={"/$locale/buyer/feed/select"}
@@ -190,7 +167,46 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							</LinkTo>
 						}
 					/>
-				</Sheet>
+				) : null}
+
+				{listingQuery.data.data.map((listing) => {
+					return (
+						<ListingHeroContainer
+							key={`${feedId}-${listing.id}`}
+							feedId={id}
+							limit={limit}
+							listing={listing}
+							locale={locale}
+							isVisible={visibles.has(listing.id)}
+						/>
+					);
+				})}
+
+				{listingQuery.data.data.length > 0 ? (
+					<Sheet round={"unset"}>
+						<Status
+							icon={
+								"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
+							}
+							textTitle={"That's all for now (title)"}
+							textMessage={"No more listings to show (message)"}
+							action={
+								<LinkTo
+									to={"/$locale/buyer/feed/select"}
+									params={{
+										locale,
+									}}
+								>
+									<Button
+										iconEnabled={ArrowLeftIcon}
+										tone={"secondary"}
+										label={"Back to home (link)"}
+									/>
+								</LinkTo>
+							}
+						/>
+					</Sheet>
+				) : null}
 			</Container>
 		</Container>
 	);
