@@ -5,6 +5,7 @@ import { apiS3Presign, apiUploadCreate } from "../api/session/sdk.gen";
 import type {
 	tAllowedContentTypes,
 	tAllowedExtensions,
+	tUpload,
 } from "../api/session/types.gen";
 
 export namespace withUploadMutation {
@@ -16,7 +17,10 @@ export namespace withUploadMutation {
 	}
 }
 
-export const withUploadMutation = withMutation<withUploadMutation.Props, any>({
+export const withUploadMutation = withMutation<
+	withUploadMutation.Props,
+	tUpload
+>({
 	keys(variables) {
 		return [
 			"upload",

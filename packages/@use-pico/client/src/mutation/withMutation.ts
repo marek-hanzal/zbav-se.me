@@ -187,9 +187,12 @@ export function withMutation<TVariables, TResult>({
 		 *
 		 * @param queryClient
 		 * @param variables
-		 * @returns
+		 * @returns The result of the mutation.
 		 */
-		async mutate(queryClient: QueryClient, variables: TVariables) {
+		async mutate(
+			queryClient: QueryClient,
+			variables: TVariables,
+		): Promise<TResult> {
 			const data = await mutationFn(variables);
 			clearCache(queryClient);
 			await invalidate(queryClient);
