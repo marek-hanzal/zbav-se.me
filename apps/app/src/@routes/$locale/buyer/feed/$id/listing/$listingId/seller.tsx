@@ -23,7 +23,7 @@ export const Route = createFileRoute(
 						tone={"secondary"}
 					/>
 				}
-				textTitle={"Listing - Seller info (title"}
+				textTitle={"Listing - Seller info (title)"}
 			>
 				Seller info
 			</TitleContainer>

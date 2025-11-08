@@ -54,6 +54,9 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
+26bf011c1df847de349ef1ca0e52367fcb0b66002ce30651a188f965:
+    ref: Listing - Seller info (title)
+    value: Informace o prodejci
 29f070d40b220deb96e6c0c19b11d4ad07de6cd9e55e4933e2f03f80:
     ref: no
     value: no
@@ -99,6 +102,9 @@
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
     ref: Price - free (title)
     value: Zdarma
+4b8762ea82eb33c9d7ffd85b86a590872c56b65e0ea84a1fbc82240b:
+    ref: Listing - Score info (title)
+    value: Metriky inzerátu
 4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
     ref: Next - feed category (button)
     value: Kategorie
@@ -384,6 +390,9 @@ b2c5e1ab63bde746cb442d3c4bd5a84ae037df7adac301ea412f5316:
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
     ref: Sign out
     value: Odhlásit se
+b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
+    ref: "- skore + link -"
+    value: "- skore + link -"
 b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
     ref: Create first feed (title)
     value: Vytvoř si své nabídky!
@@ -491,6 +500,9 @@ e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
 e590492a612b479610ce9aeb09c55b9eb483968a6a924ff1d9791aa1:
     ref: Feed - next and save (button)
     value: Uložit
+e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
+    ref: Listing score hint (label)
+    value: Metriky inzerátu
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
     ref: Seller home (title)
     value: Chci prodávat
@@ -515,6 +527,9 @@ f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
 f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
     ref: Second tap to unflag listing (toast)
     value: Druhým kliknutím zruš nahlášení inzerátu
+f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
+    ref: Listing seller hint (label)
+    value: Informace o prodejci
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
     ref: Feed age not selected
     value: Jakékoli
