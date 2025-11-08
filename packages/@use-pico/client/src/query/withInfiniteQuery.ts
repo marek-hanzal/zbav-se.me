@@ -1,7 +1,9 @@
 import {
+	type DefaultError,
 	type InfiniteData,
 	type QueryClient,
 	type QueryKey,
+	type UndefinedInitialDataInfiniteOptions,
 	useInfiniteQuery,
 	useQueryClient,
 } from "@tanstack/react-query";
@@ -38,9 +40,21 @@ export namespace withInfiniteQuery {
 		queryFn(data: TData & Cursor): Promise<TResult>;
 	}
 
-	export interface Options {
-		initial?: number;
-	}
+	export type Options<
+		TItem extends EntitySchema.Type,
+		TResult extends Collection<TItem>,
+		TSelect = InfiniteData<TResult>,
+		TQueryKey extends QueryKey = QueryKey,
+	> = Omit<
+		UndefinedInitialDataInfiniteOptions<
+			TResult,
+			DefaultError,
+			TSelect,
+			TQueryKey,
+			number
+		>,
+		"queryKey" | "queryFn" | "getNextPageParam"
+	>;
 
 	export type Api<
 		TData,
@@ -85,7 +99,7 @@ export function withInfiniteQuery<
 		keys: $keys,
 		useInfiniteQuery(
 			data: TData,
-			{ initial = 0, ...options }: withInfiniteQuery.Options = {},
+			options: withInfiniteQuery.Options<TItem, TResult>,
 		) {
 			return useInfiniteQuery({
 				queryKey: $keys(data),
@@ -96,7 +110,6 @@ export function withInfiniteQuery<
 						...data,
 					});
 				},
-				initialPageParam: initial,
 				getNextPageParam: (lastPage, _pages, lastPageParam) => {
 					return lastPage.more ? lastPageParam + 1 : undefined;
 				},

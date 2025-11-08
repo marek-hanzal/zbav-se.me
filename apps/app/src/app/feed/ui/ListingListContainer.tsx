@@ -56,7 +56,15 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			withOwn: false,
 			withIgnored: false,
 		},
-	}).useInfiniteQuery({});
+	}).useInfiniteQuery(
+		{},
+		{
+			staleTime: 60_000 * 30,
+			initialPageParam: 0,
+			refetchInterval: 60_000,
+			refetchOnWindowFocus: true,
+		},
+	);
 	const containerRef = useRef<HTMLDivElement>(null);
 	const visiblesRef = useRef<Set<string>>(new Set<string>());
 	const [visibles, setVisibles] = useState(() => new Set<string>());
