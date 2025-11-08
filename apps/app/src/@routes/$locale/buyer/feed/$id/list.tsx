@@ -13,7 +13,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			<SpinnerContainer
 				statusProps={{
 					textTitle: translator.text("Preparing feed (title)"),
-					textMessage: translator.text("Preparing feed (message)"),
 				}}
 			/>
 		);
