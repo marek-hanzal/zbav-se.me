@@ -1,6 +1,9 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
     ref: Feed title (placeholder)
     value: Např. "iPhone" nebo "Bosh"
+01b47fb4a4df0bd1d39599b06eefe5b2c4961d5eac0ad2e9630ec980:
+    ref: Listing unignored (toast)
+    value: Ignorace inzerátu byla úspěšně zrušena.
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
     ref: Feed age (title)
     value: Stáří
@@ -102,6 +105,9 @@
 4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
     ref: Next - feed submit (button)
     value: Kontrola
+4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
+    ref: Second tap to unignore listing (toast)
+    value: Druhým kliknutím zruš ignoraci inzerátu
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
     ref: Next - price (button)
     value: Cena
@@ -337,6 +343,9 @@ a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
 a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
     ref: Create your first feed to get started (description)
     value: Nastav si přesně, co tě zajímá a jaké inzeráty se ti mají zobrazovat.
+a7a95d03a84a9282e129c3a27bf77f9f0e8b749d22e277260b64c4b4:
+    ref: Second tap to ignore listing (toast)
+    value: Druhým kliknutím ignoruj inzerát
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
     ref: Number of listings (label)
     value: "Počet inzerátů:"
@@ -346,6 +355,9 @@ aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
 abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
     ref: Success (toast)
     value: Success (toast)
+ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
+    ref: Listing ignored (toast)
+    value: Inzerát úspěšně ignorován - až se příště vrátíš, už tu nebude.
 adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
     ref: I want to buy (message)
     value:
@@ -500,7 +512,7 @@ fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
 facd0a879d16c3a70cca1e0454dadf75ea57307c5476c066805b5542:
     ref: Second tap to flag listing (toast)
     value:
-        Druhým kliknutím nahlaš inzerát, pokud obsahuje nevhodný obsah nebo je
+        Druhým kliknutím nahlas inzerát, pokud obsahuje nevhodný obsah nebo je
         jinak závadný.
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
