@@ -19,6 +19,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 	onSuccess,
 	confirmProps,
 	buttonProps,
+	onReset,
 	...props
 }) => {
 	const listingIgnoreToggleMutation =
@@ -71,7 +72,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				theme: "dark",
 				size: "xl",
 				...confirmProps,
-				onClick() {
+				onClick(e) {
 					toast.promise(
 						listingIgnoreToggleMutation.mutateAsync({
 							toggle: !isIgnored,
@@ -90,7 +91,12 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 							id: "listing-ignore-button",
 						},
 					);
+					confirmProps?.onClick?.(e);
 				},
+			}}
+			onReset={() => {
+				toast.dismiss("listing-ignore-button");
+				onReset?.();
 			}}
 			round={"full"}
 			{...props}

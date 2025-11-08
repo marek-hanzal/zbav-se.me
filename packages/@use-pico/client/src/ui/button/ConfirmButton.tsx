@@ -33,29 +33,26 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 	...props
 }) => {
 	const [isConfirm, setIsConfirm] = useState(false);
-	const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+	const timeoutRef = useRef<NodeJS.Timeout | undefined>(undefined);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (!isConfirm) {
 			buttonProps?.onClick?.(event);
 			setIsConfirm(true);
 			timeoutRef.current = setTimeout(() => {
-				if (!isConfirm) {
-					setIsConfirm(false);
-					timeoutRef.current = null;
-					onReset?.();
-				}
+				setIsConfirm(false);
+				timeoutRef.current = undefined;
+				onReset?.();
 			}, confirmTimeout);
 			return;
 		}
 
-		if (timeoutRef.current) {
-			clearTimeout(timeoutRef.current);
-			timeoutRef.current = null;
-		}
-		confirmProps?.onClick?.(event);
+		clearTimeout(timeoutRef.current);
+		timeoutRef.current = undefined;
+
 		setIsConfirm(false);
-		onReset?.();
+
+		confirmProps?.onClick?.(event);
 	};
 
 	useEffect(() => {

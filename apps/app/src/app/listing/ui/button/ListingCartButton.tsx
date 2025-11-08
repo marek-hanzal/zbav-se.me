@@ -19,6 +19,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 	onSuccess,
 	buttonProps,
 	confirmProps,
+	onReset,
 	...props
 }) => {
 	const listingCartToggleMutation = withListingCartToggleMutation.useMutation(
@@ -72,7 +73,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 				theme: "dark",
 				size: "xl",
 				...confirmProps,
-				onClick() {
+				onClick(e) {
 					toast.promise(
 						listingCartToggleMutation.mutateAsync({
 							toggle: !isInCart,
@@ -89,9 +90,14 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 							id: "listing-cart-button",
 						},
 					);
+					confirmProps?.onClick?.(e);
 				},
 			}}
 			round={"full"}
+			onReset={() => {
+				toast.dismiss("listing-cart-button");
+				onReset?.();
+			}}
 			{...props}
 		/>
 	);

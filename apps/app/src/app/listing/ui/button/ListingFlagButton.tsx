@@ -19,6 +19,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 	onSuccess,
 	buttonProps,
 	confirmProps,
+	onReset,
 	...props
 }) => {
 	const listingFlagToggleMutation = withListingFlagToggleMutation.useMutation(
@@ -71,7 +72,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 				theme: "dark",
 				size: "xl",
 				...confirmProps,
-				onClick() {
+				onClick(e) {
 					toast.promise(
 						listingFlagToggleMutation.mutateAsync({
 							toggle: !hasFlag,
@@ -90,9 +91,14 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 							id: "listing-flag-button",
 						},
 					);
+					confirmProps?.onClick?.(e);
 				},
 			}}
 			round={"full"}
+			onReset={() => {
+				toast.dismiss("listing-flag-button");
+				onReset?.();
+			}}
 			{...props}
 		/>
 	);

@@ -55,13 +55,24 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				listingId={listing.id}
 				isInCart={listing.isInCart}
 				onSuccess={onCartToggle}
-				disabled={listing.isIgnored || (action && action !== "cart")}
+				disabled={
+					listing.hasFlag ||
+					listing.isIgnored ||
+					(action && action !== "cart")
+				}
 				buttonProps={{
 					onClick() {
 						setIsAction("cart");
 					},
 				}}
-				onReset={() => setIsAction(undefined)}
+				confirmProps={{
+					onClick() {
+						setIsAction(undefined);
+					},
+				}}
+				onReset={() => {
+					setIsAction(undefined);
+				}}
 			/>
 
 			<ListingIgnoreButton
@@ -74,7 +85,14 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 						setIsAction("ignore");
 					},
 				}}
-				onReset={() => setIsAction(undefined)}
+				confirmProps={{
+					onClick() {
+						setIsAction(undefined);
+					},
+				}}
+				onReset={() => {
+					setIsAction(undefined);
+				}}
 			/>
 
 			<ListingFlagButton
@@ -87,7 +105,14 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 						setIsAction("flag");
 					},
 				}}
-				onReset={() => setIsAction(undefined)}
+				confirmProps={{
+					onClick() {
+						setIsAction(undefined);
+					},
+				}}
+				onReset={() => {
+					setIsAction(undefined);
+				}}
 			/>
 		</Container>
 	);
