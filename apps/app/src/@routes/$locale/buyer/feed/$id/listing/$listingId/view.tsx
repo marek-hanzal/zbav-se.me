@@ -12,7 +12,7 @@ export const Route = createFileRoute(
 	"/$locale/buyer/feed/$id/listing/$listingId/view",
 )({
 	pendingComponent() {
-		const { locale, id } = Route.useParams();
+		const { locale, id, listingId } = Route.useParams();
 
 		return (
 			<TitleContainer
@@ -23,6 +23,9 @@ export const Route = createFileRoute(
 						params={{
 							locale,
 							id,
+						}}
+						search={{
+							scrollToListingId: listingId,
 						}}
 						tone={"secondary"}
 					/>
@@ -50,6 +53,9 @@ export const Route = createFileRoute(
 						params={{
 							locale,
 							id,
+						}}
+						search={{
+							scrollToListingId: listingId,
 						}}
 						tone={"secondary"}
 					/>

@@ -1,5 +1,6 @@
 import { useParams } from "@tanstack/react-router";
 import { useAnim } from "@use-pico/client/gsap";
+import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -26,6 +27,10 @@ import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
 		/**
+		 * Listing ID to scroll to
+		 */
+		scrollToListingId?: string;
+		/**
 		 * Feed id listing is part of
 		 */
 		id: string;
@@ -34,6 +39,7 @@ export namespace ListingListContainer {
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	id,
+	scrollToListingId,
 	...props
 }) => {
 	const debounceTimeout = 150;
@@ -151,6 +157,19 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		scroller.current?.refresh();
 	}, [
 		listingQuery.data,
+	]);
+
+	const scrollTo = useScrollTo(containerRef);
+
+	useEffect(() => {
+		if (scrollToListingId) {
+			scrollTo(`.ListingPreview-${scrollToListingId}`, {
+				behavior: "instant",
+			});
+		}
+	}, [
+		scrollToListingId,
+		scrollTo,
 	]);
 
 	return (
