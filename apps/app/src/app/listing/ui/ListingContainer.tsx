@@ -259,6 +259,7 @@ export const ListingContainer: FC<ListingContainer.Props> = memo(
 				</Badge>
 
 				<ListingToolbarContainer
+					feedId={feedId}
 					listing={listing}
 					onCartToggle={(toggle) => {
 						patchListing({

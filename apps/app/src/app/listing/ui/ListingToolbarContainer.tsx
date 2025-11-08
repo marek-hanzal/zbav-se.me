@@ -1,4 +1,8 @@
+import { useParams } from "@tanstack/react-router";
+import { ArrowRightIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { zListing } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
 import { ListingCartButton } from "./button/ListingCartButton";
@@ -7,6 +11,7 @@ import { ListingIgnoreButton } from "./button/ListingIgnoreButton";
 
 export namespace ListingToolbarContainer {
 	export interface Props extends Container.Props {
+		feedId: string;
 		listing: zListing;
 		onCartToggle(toggle: boolean): void;
 		onIgnoreToggle(toggle: boolean): void;
@@ -15,12 +20,17 @@ export namespace ListingToolbarContainer {
 }
 
 export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
+	feedId,
 	listing,
 	onCartToggle,
 	onIgnoreToggle,
 	onFlagToggle,
 	...props
 }) => {
+	const { locale } = useParams({
+		from: "/$locale",
+	});
+
 	const [action, setIsAction] = useState<
 		"cart" | "ignore" | "flag" | undefined
 	>(undefined);
@@ -51,6 +61,23 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 			}}
 			{...props}
 		>
+			<LinkTo
+				to={"/$locale/buyer/feed/$id/list/$listingId/view"}
+				params={{
+					locale,
+					id: feedId,
+					listingId: listing.id,
+				}}
+			>
+				<Button
+					iconEnabled={ArrowRightIcon}
+					tone={"primary"}
+					theme={"light"}
+					size={"xl"}
+					round={"full"}
+				/>
+			</LinkTo>
+
 			<ListingCartButton
 				listingId={listing.id}
 				isInCart={listing.isInCart}

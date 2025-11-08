@@ -58,6 +58,9 @@
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
   ref: Next - title (button)
   value: Next - title (button)
+2edb606e2d60f98c857354944c5b5b054d0ae6b6a9ec09327651a944:
+  ref: Error ignoring listing (toast)
+  value: Error ignoring listing (toast)
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
@@ -250,6 +253,9 @@ a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
 a7a95d03a84a9282e129c3a27bf77f9f0e8b749d22e277260b64c4b4:
   ref: Second tap to ignore listing (toast)
   value: Second tap to ignore listing (toast)
+a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
+  ref: Your cart (title)
+  value: Your cart (title)
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
   ref: Number of listings (label)
   value: Number of listings (label)
@@ -309,6 +315,9 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
+c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
+  ref: Error flagging listing (toast)
+  value: Error flagging listing (toast)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
