@@ -21,7 +21,7 @@ import {
 	useState,
 } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { ListingContainer } from "~/app/listing/ui/ListingContainer";
+import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -192,7 +192,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						.flatMap((p) => p.data)
 						.map((listing) => {
 							return (
-								<ListingContainer
+								<ListingHeroContainer
 									key={`${feedId}-${listing.id}`}
 									feedId={id}
 									listing={listing}

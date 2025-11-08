@@ -12,7 +12,6 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import { zListingCreate } from "@zbav-se.me/sdk/api/session";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation";
@@ -23,6 +22,7 @@ import {
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
+import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { countryToCurrency } from "~/locales";
 
@@ -220,17 +220,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 										categoryFetchQuery.data,
 									]}
 									render={(category) => (
-										<div
-											className={
-												"flex flex-col gap-0.5 items-start"
-											}
-										>
-											<Typo
-												label={category.group}
-												size={"xs"}
-											/>
-											<Typo label={category.category} />
-										</div>
+										<CategoryInline category={category} />
 									)}
 								/>
 							</LinkTo>

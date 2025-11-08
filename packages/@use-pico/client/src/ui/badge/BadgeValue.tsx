@@ -20,6 +20,7 @@ export namespace BadgeValue {
 		 * Value text to display in the badge.
 		 */
 		textValue: ReactNode;
+		textValueProps?: Tx.PropsEx;
 		action?: ReactNode;
 	}
 }
@@ -45,6 +46,7 @@ const defaultTweak: Cls.TweaksOf<BadgeCls> = {
 export const BadgeValue: FC<BadgeValue.Props> = ({
 	textLabel,
 	textValue,
+	textValueProps,
 	action,
 	tweak,
 	//
@@ -79,6 +81,8 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 				<Tx
 					label={textValue}
 					truncate
+					tone={"secondary"}
+					{...textValueProps}
 				/>
 			) : (
 				textValue

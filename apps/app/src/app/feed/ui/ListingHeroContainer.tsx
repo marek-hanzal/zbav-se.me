@@ -16,7 +16,7 @@ import { ListingToolbarContainer } from "~/app/listing/ui/ListingToolbarContaine
 import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
-export namespace ListingContainer {
+export namespace ListingHeroContainer {
 	export interface Props extends Container.Props {
 		feedId: string;
 		listing: tListing;
@@ -25,7 +25,7 @@ export namespace ListingContainer {
 	}
 }
 
-export const ListingContainer: FC<ListingContainer.Props> = memo(
+export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 	({ feedId, locale, listing, isVisible, tweak, ...props }) => {
 		const [hero] = listing.gallery as [
 			tGallery,

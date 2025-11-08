@@ -32,6 +32,7 @@ export const Markdown: FC<Markdown.Props> = ({
 			}}
 		>
 			<ReactMarkdown
+				skipHtml
 				remarkPlugins={[
 					remarkGfm,
 				]}

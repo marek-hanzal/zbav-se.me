@@ -1,6 +1,9 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
   ref: Feed title (placeholder)
   value: Feed title (placeholder)
+0184d94d2c9ea9ce0efa09c215dca0810b5af1c3ccc2e15091ea2252:
+  ref: narrowSymbol
+  value: narrowSymbol
 01b47fb4a4df0bd1d39599b06eefe5b2c4961d5eac0ad2e9630ec980:
   ref: Listing unignored (toast)
   value: Listing unignored (toast)
@@ -333,6 +336,9 @@ cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
 cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
   ref: I want to buy (label)
   value: I want to buy (label)
+d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f:
+  ref: ""
+  value: ""
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
   ref: Location not found (badge)
   value: Location not found (badge)
@@ -342,6 +348,9 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
   ref: Feed title (label)
   value: Feed title (label)
+d34f82524280082cefa6d9bcf5d2a6b10f418dffd078c804aafcfa74:
+  ref: Listing detail (title)
+  value: Listing detail (title)
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
