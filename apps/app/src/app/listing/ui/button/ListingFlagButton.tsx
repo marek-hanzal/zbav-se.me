@@ -19,20 +19,12 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 	onSuccess,
 	confirmProps,
 	buttonProps,
-	onReset,
 	...props
 }) => {
 	const listingFlagToggleMutation = withListingFlagToggleMutation.useMutation(
 		{
 			onSuccess() {
 				onSuccess(!hasFlag);
-				toast.success(
-					translator.text(
-						hasFlag
-							? "Listing unflagged (toast)"
-							: "Listing flagged (toast)",
-					),
-				);
 			},
 			meta: {
 				mutationId: listingId,
@@ -79,16 +71,25 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 				theme: confirmProps?.theme ?? "dark",
 				size: confirmProps?.size ?? "lg",
 				onClick() {
-					toast.dismiss("listing-flag-button");
-					listingFlagToggleMutation.mutate({
-						toggle: !hasFlag,
-						listingId,
-					});
+					toast.promise(
+						listingFlagToggleMutation.mutateAsync({
+							toggle: !hasFlag,
+							listingId,
+						}),
+						{
+							loading: translator.text("Loading... (toast)"),
+							success: translator.text(
+								hasFlag
+									? "Listing unflagged (toast)"
+									: "Listing flagged (toast)",
+							),
+							error: translator.text(
+								"Error flagging listing (toast)",
+							),
+							id: "listing-flag-button",
+						},
+					);
 				},
-			}}
-			onReset={() => {
-				onReset?.();
-				toast.dismiss("listing-flag-button");
 			}}
 			round={"full"}
 			{...props}

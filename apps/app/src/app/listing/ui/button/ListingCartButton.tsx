@@ -18,20 +18,12 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 	isInCart,
 	onSuccess,
 	buttonProps,
-	onReset,
 	...props
 }) => {
 	const listingCartToggleMutation = withListingCartToggleMutation.useMutation(
 		{
 			onSuccess() {
 				onSuccess(!isInCart);
-				toast.success(
-					translator.text(
-						isInCart
-							? "Listing removed from your cart (toast)"
-							: "Listing added to your cart (toast)",
-					),
-				);
 			},
 			meta: {
 				mutationId: listingId,
@@ -77,17 +69,24 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 				tone: "secondary",
 				theme: "dark",
 				onClick() {
-					toast.dismiss("listing-cart-button");
-					listingCartToggleMutation.mutate({
-						toggle: !isInCart,
-						listingId,
-					});
+					toast.promise(
+						listingCartToggleMutation.mutateAsync({
+							toggle: !isInCart,
+							listingId,
+						}),
+						{
+							loading: translator.text("Loading... (toast)"),
+							success: translator.text(
+								"Listing added to your cart (toast)",
+							),
+							error: translator.text(
+								"Error adding listing to cart (toast)",
+							),
+							id: "listing-cart-button",
+						},
+					);
 				},
 				size: "lg",
-			}}
-			onReset={() => {
-				onReset?.();
-				toast.dismiss("listing-cart-button");
 			}}
 			round={"full"}
 			{...props}

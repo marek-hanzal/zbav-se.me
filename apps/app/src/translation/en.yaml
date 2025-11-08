@@ -67,9 +67,6 @@
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
-3b9b4be744020203adc5a5aeca81a821b1bda652d33bc4b043aa796b:
-  ref: Error (toast)
-  value: Error (toast)
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
@@ -259,9 +256,6 @@ aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
 aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
   ref: Listing flagged (toast)
   value: Listing flagged (toast)
-abcfdda5d6985517d677dc843ccdb96a3b74a2e708e82fbc8076dcf8:
-  ref: Success (toast)
-  value: Success (toast)
 ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
   ref: Listing ignored (toast)
   value: Listing ignored (toast)
@@ -318,6 +312,9 @@ c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
+cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
+  ref: Error adding listing to cart (toast)
+  value: Error adding listing to cart (toast)
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
   ref: Upload - disabled (placeholder)
   value: Upload - disabled (placeholder)
@@ -357,9 +354,6 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
   ref: "0"
   value: "0"
-e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
-  ref: Listing removed from your cart (toast)
-  value: Listing removed from your cart (toast)
 e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
   ref: Submit (subtitle)
   value: Submit (subtitle)

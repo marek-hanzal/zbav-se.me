@@ -40,9 +40,11 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 			buttonProps?.onClick?.(event);
 			setIsConfirm(true);
 			timeoutRef.current = setTimeout(() => {
-				setIsConfirm(false);
-				timeoutRef.current = null;
-				onReset?.();
+				if (!isConfirm) {
+					setIsConfirm(false);
+					timeoutRef.current = null;
+					onReset?.();
+				}
 			}, confirmTimeout);
 			return;
 		}

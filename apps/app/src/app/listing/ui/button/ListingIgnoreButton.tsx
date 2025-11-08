@@ -19,20 +19,12 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 	onSuccess,
 	confirmProps,
 	buttonProps,
-	onReset,
 	...props
 }) => {
 	const listingIgnoreToggleMutation =
 		withListingIgnoreToggleMutation.useMutation({
 			onSuccess() {
 				onSuccess(!isIgnored);
-				toast.success(
-					translator.text(
-						isIgnored
-							? "Listing unignored (toast)"
-							: "Listing ignored (toast)",
-					),
-				);
 			},
 			meta: {
 				mutationId: listingId,
@@ -78,15 +70,25 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				theme: confirmProps?.theme ?? "dark",
 				size: confirmProps?.size ?? "lg",
 				onClick() {
-					listingIgnoreToggleMutation.mutate({
-						toggle: !isIgnored,
-						listingId,
-					});
+					toast.promise(
+						listingIgnoreToggleMutation.mutateAsync({
+							toggle: !isIgnored,
+							listingId,
+						}),
+						{
+							loading: translator.text("Loading... (toast)"),
+							success: translator.text(
+								isIgnored
+									? "Listing unignored (toast)"
+									: "Listing ignored (toast)",
+							),
+							error: translator.text(
+								"Error ignoring listing (toast)",
+							),
+							id: "listing-ignore-button",
+						},
+					);
 				},
-			}}
-			onReset={() => {
-				onReset?.();
-				toast.dismiss("listing-ignore-button");
 			}}
 			round={"full"}
 			{...props}
