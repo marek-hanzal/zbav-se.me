@@ -1,5 +1,4 @@
 import type { UseMutationResult } from "@tanstack/react-query";
-import type { withToastPromiseTx } from "../../toast/withToastPromiseTx";
 import type { FormCls } from "./FormCls";
 
 export namespace Form {
@@ -17,6 +16,5 @@ export namespace Form {
 		 */
 		mutation: Props.Mutation<TValues>;
 		defaultValues?: Partial<TValues>;
-		toast?: withToastPromiseTx.Text;
 	}
 }
