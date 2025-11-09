@@ -5,6 +5,7 @@ import type {
 	tApiListingCartToggleResponse,
 	tListingCartToggle,
 } from "../api/session/types.gen";
+import { withListingScoreQuery } from "../query/withListingScoreQuery";
 
 export const withListingCartToggleMutation = withMutation<
 	tListingCartToggle,
@@ -30,4 +31,7 @@ export const withListingCartToggleMutation = withMutation<
 				throw error;
 			});
 	},
+    invalidate: [
+        withListingScoreQuery,
+    ],
 });

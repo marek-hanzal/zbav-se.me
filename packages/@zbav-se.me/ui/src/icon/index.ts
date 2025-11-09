@@ -27,6 +27,7 @@ export { PostIcon } from "./PostIcon";
 export { PriceIcon } from "./PriceIcon";
 export { PublicIcon } from "./PublicIcon";
 export { QuestionIcon } from "./QuestionIcon";
+export { ScoreIcon } from "./ScoreIcon";
 export { SearchIcon } from "./SearchIcon";
 export { SellerIcon } from "./SellerIcon";
 export { SendPackageIcon } from "./SendPackageIcon";

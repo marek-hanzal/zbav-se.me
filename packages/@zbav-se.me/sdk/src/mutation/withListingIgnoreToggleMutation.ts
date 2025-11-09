@@ -5,6 +5,7 @@ import type {
 	tApiListingIgnoreToggleResponse,
 	tListingIgnoreToggle,
 } from "../api/session/types.gen";
+import { withListingScoreQuery } from "../query/withListingScoreQuery";
 
 export const withListingIgnoreToggleMutation = withMutation<
 	tListingIgnoreToggle,
@@ -30,4 +31,7 @@ export const withListingIgnoreToggleMutation = withMutation<
 				throw error;
 			});
 	},
+	invalidate: [
+		withListingScoreQuery,
+	],
 });

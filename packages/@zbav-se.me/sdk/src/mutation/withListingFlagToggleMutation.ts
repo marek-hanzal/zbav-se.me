@@ -5,6 +5,7 @@ import type {
 	tApiListingFlagToggleResponse,
 	tListingFlagToggle,
 } from "../api/session/types.gen";
+import { withListingScoreQuery } from "../query/withListingScoreQuery";
 
 export const withListingFlagToggleMutation = withMutation<
 	tListingFlagToggle,
@@ -30,4 +31,7 @@ export const withListingFlagToggleMutation = withMutation<
 				throw error;
 			});
 	},
+    invalidate: [
+        withListingScoreQuery,
+    ],
 });

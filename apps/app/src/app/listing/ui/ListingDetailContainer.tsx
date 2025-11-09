@@ -5,6 +5,7 @@ import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
+import { withListingScoreQuery } from "@zbav-se.me/sdk/query";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { HeroImage } from "~/app/ui/img/HeroImage";
@@ -29,6 +30,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		tGallery,
 		...tGallery[],
 	];
+
+	const listingScoreQuery = withListingScoreQuery.useSuspenseQuery(
+		listing.id,
+	);
 
 	return (
 		<Container
@@ -73,7 +78,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 			<BadgeValue
 				textLabel={"Listing score hint (label)"}
-				textValue={"- skore + link -"}
+				textValue={toLocaleNumber({
+					locale,
+					number: listingScoreQuery.data.score,
+				})}
 				action={
 					<LinkTo
 						icon={ArrowRightIcon}

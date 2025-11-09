@@ -1,7 +1,9 @@
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingScore } from "@zbav-se.me/sdk/api/session";
+import { ScoreIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace ScoreContainer {
@@ -22,6 +24,11 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
 			gap={"md"}
 			{...props}
 		>
+			<Status
+				icon={ScoreIcon}
+				textTitle={"Listing Score - intro (title)"}
+			/>
+
 			{listingScore.score ? (
 				<BadgeValue
 					textLabel={"Listing Score - Raw score (label)"}

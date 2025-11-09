@@ -39,6 +39,9 @@
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
     ref: Listing photos (label)
     value: Počet fotek
+1a0e6c8c893bcf826c111d3947487374f61d2c8bf3de37c5b01fa8a6:
+    ref: Listing Score - intro (title)
+    value: Pár zajímavých čísel o inzerátu
 1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
     ref: Listing Score - Flag (label)
     value: Počet nahlášení
@@ -544,7 +547,7 @@ e590492a612b479610ce9aeb09c55b9eb483968a6a924ff1d9791aa1:
     value: Uložit
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
     ref: Listing score hint (label)
-    value: Metriky inzerátu
+    value: Hodnocení inzerátu
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
     ref: Seller home (title)
     value: Chci prodávat
