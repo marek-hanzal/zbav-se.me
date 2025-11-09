@@ -1,5 +1,6 @@
 import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
 import type { FC, HTMLAttributes, Ref } from "react";
+import type { UiProps } from "../../type/UiProps";
 import { BadgeCls } from "./BadgeCls";
 
 /**
@@ -9,7 +10,7 @@ import { BadgeCls } from "./BadgeCls";
  */
 export namespace Badge {
 	export interface Props
-		extends BadgeCls.Props<HTMLAttributes<HTMLDivElement>> {
+		extends UiProps<BadgeCls.Props<HTMLAttributes<HTMLDivElement>>> {
 		/**
 		 * Ref to the root div element.
 		 */
@@ -43,6 +44,7 @@ export namespace Badge {
 }
 
 export const Badge: FC<Badge.Props> = ({
+	ui,
 	ref,
 	//
 	disabled,
@@ -72,7 +74,7 @@ export const Badge: FC<Badge.Props> = ({
 	return (
 		<div
 			ref={ref}
-			data-ui="Badge-root"
+			data-ui={ui ?? "Badge-root"}
 			className={slots.root()}
 			{...props}
 		>

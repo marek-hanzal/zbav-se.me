@@ -1815,6 +1815,41 @@ export const sFeedCreate = {
     required: ['name', 'filter', 'sort', 'meta']
 } as const;
 
+export const sCategoryCartCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/CategoryCart'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sCategoryCart = {
+    allOf: [
+        {
+            '$ref': '#/components/schemas/Category'
+        },
+        {
+            type: 'object',
+            properties: {
+                listingCount: {
+                    type: ['integer', 'null'],
+                    minimum: 0,
+                    example: 3
+                }
+            },
+            required: ['listingCount']
+        }
+    ]
+} as const;
+
 export const sCount = {
     type: 'object',
     properties: {

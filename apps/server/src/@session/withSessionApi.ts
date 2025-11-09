@@ -1,5 +1,6 @@
 import type { Routes } from "../hono/Routes";
 import { withCategoryApi } from "./category/withCategoryApi";
+import { withCategoryCartApi } from "./category-cart/withCategoryCartApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withListingApi } from "./listing/withListingApi";
@@ -28,6 +29,7 @@ export const withSessionApi: Routes.Fn = (routes) => {
 	});
 
 	withCategoryApi(routes);
+	withCategoryCartApi(routes);
 	withFeedApi(routes);
 	withGalleryApi(routes);
 	withListingApi(routes);

@@ -69,7 +69,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			);
 		},
 		async onPostMutation({ result }) {
-			setUpload(result, {
+			setUpload(() => result, {
 				where: {
 					id: result.id,
 				},

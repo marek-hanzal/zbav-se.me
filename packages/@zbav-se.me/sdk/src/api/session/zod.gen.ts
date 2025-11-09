@@ -1824,6 +1824,32 @@ export const zFeedCreate = z.object({
 export type zFeedCreate = z.infer<typeof zFeedCreate>;
 
 /**
+ * Category data transfer object extended with listing count for cart summaries
+ */
+export const zCategoryCart = zCategory.and(z.object({
+    listingCount: z.union([
+        z.int().gte(0),
+        z.null()
+    ])
+}));
+
+export type zCategoryCart = z.infer<typeof zCategoryCart>;
+
+/**
+ * Collection of categories represented in the user's cart
+ */
+export const zCategoryCartCollection = z.object({
+    data: z.array(zCategoryCart),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: "Collection of categories represented in the user's cart"
+});
+
+export type zCategoryCartCollection = z.infer<typeof zCategoryCartCollection>;
+
+/**
  * Complex count of items based on provided query.
  */
 export const zCount = z.object({
@@ -2036,6 +2062,21 @@ export type zapiCategoryCountRequest = z.infer<typeof zApiCategoryCountData>;
 export const zApiCategoryCountResponse = zCount;
 
 export type zapiCategoryCountResponse = z.infer<typeof zApiCategoryCountResponse>;
+
+export const zApiCategoryCartCollectionData = z.object({
+    body: z.optional(zCategoryQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiCategoryCartCollectionRequest = z.infer<typeof zApiCategoryCartCollectionData>;
+
+/**
+ * Access categories for listings stored in the user's cart
+ */
+export const zApiCategoryCartCollectionResponse = zCategoryCartCollection;
+
+export type zapiCategoryCartCollectionResponse = z.infer<typeof zApiCategoryCartCollectionResponse>;
 
 export const zApiFeedCreateData = z.object({
     body: z.optional(zFeedCreate),

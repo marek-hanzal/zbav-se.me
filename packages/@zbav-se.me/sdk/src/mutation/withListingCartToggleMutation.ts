@@ -31,7 +31,7 @@ export const withListingCartToggleMutation = withMutation<
 				throw error;
 			});
 	},
-    invalidate: [
-        withListingScoreQuery,
-    ],
+	invalidate: [
+		withListingScoreQuery,
+	],
 });

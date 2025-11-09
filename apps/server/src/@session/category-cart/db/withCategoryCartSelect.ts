@@ -1,0 +1,60 @@
+import { sql } from "kysely";
+import { match } from "ts-pattern";
+import { database } from "../../../database/kysely";
+import type { CategoryCartSortSchema } from "../schema/CategoryCartSortSchema";
+
+export namespace withCategoryCartSelect {
+	export interface Props {
+		userId: string;
+		sort?: CategoryCartSortSchema.Type[];
+	}
+	export type Select = ReturnType<typeof withCategoryCartSelect>;
+}
+
+export const withCategoryCartSelect = ({
+	userId,
+	sort,
+}: withCategoryCartSelect.Props) => {
+	let query = database.kysely
+		.selectFrom("category as c")
+		.innerJoin(
+			database.kysely
+				.selectFrom("listing_cart as lc")
+				.innerJoin("listing as l", "l.id", "lc.listingId")
+				.select([
+					"l.categoryId as categoryId",
+					sql<number>`count(*)::int`.as("listingCount"),
+				])
+				.where("lc.userId", "=", userId)
+				.groupBy("l.categoryId")
+				.as("cnt"),
+			"cnt.categoryId",
+			"c.id",
+		)
+		.select([
+			"c.id",
+			"c.group",
+			"c.category",
+			"c.slug",
+			"c.sort",
+			"c.locale",
+			"cnt.listingCount",
+		]);
+
+	for (const sortItem of sort ?? []) {
+		if (!sortItem.sort) {
+			continue;
+		}
+
+		const { sort, value } = sortItem;
+
+		query = match(value)
+			.with("group", () => query.orderBy("c.group", sort))
+			.with("category", () => query.orderBy("c.category", sort))
+			.with("sort", () => query.orderBy("c.sort", sort))
+			.with("listingCount", () => query.orderBy("cnt.listingCount", sort))
+			.exhaustive();
+	}
+
+	return query;
+};

@@ -31,7 +31,7 @@ export const withListingFlagToggleMutation = withMutation<
 				throw error;
 			});
 	},
-    invalidate: [
-        withListingScoreQuery,
-    ],
+	invalidate: [
+		withListingScoreQuery,
+	],
 });

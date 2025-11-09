@@ -71,7 +71,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/buyer/cart"
+						to="/$locale/buyer/cart/list"
 						params={{
 							locale,
 						}}

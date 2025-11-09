@@ -1533,6 +1533,27 @@ export type tFeedCreate = {
 };
 
 /**
+ * Collection of categories represented in the user's cart
+ */
+export type tCategoryCartCollection = {
+    data: Array<tCategoryCart>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Category data transfer object extended with listing count for cart summaries
+ */
+export type tCategoryCart = tCategory & {
+    /**
+     * Number of listings saved in this category
+     */
+    listingCount: number | null;
+};
+
+/**
  * Complex count of items based on provided query.
  */
 export type tCount = {
@@ -1731,6 +1752,22 @@ export type tApiCategoryCountResponse = {
 };
 
 export type apiCategoryCountResponse = tApiCategoryCountResponse[keyof tApiCategoryCountResponse];
+
+export type tApiCategoryCartCollectionRequest = {
+    body?: tCategoryQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/category-cart/collection';
+};
+
+export type tApiCategoryCartCollectionResponse = {
+    /**
+     * Access categories for listings stored in the user's cart
+     */
+    200: tCategoryCartCollection;
+};
+
+export type apiCategoryCartCollectionResponse = tApiCategoryCartCollectionResponse[keyof tApiCategoryCartCollectionResponse];
 
 export type tApiFeedCreateRequest = {
     /**

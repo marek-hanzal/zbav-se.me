@@ -54,6 +54,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 }) => {
 	return (
 		<Badge
+			ui={"BadgeValue-root"}
 			tweak={[
 				defaultTweak,
 				tweak,
