@@ -135,7 +135,6 @@ jobs:
                   KEYS: ${{ env.WEB_ENV_KEYS }}
               run: |
                   set -euo pipefail
-                  # iterate line-by-line; skip empty/comment lines
                   while IFS= read -r KEY; do
                     [ -z "${KEY// }" ] && continue
                     case "$KEY" in \#*) continue ;; esac
@@ -167,7 +166,6 @@ jobs:
                   KEYS: ${{ env.APP_ENV_KEYS }}
               run: |
                   set -euo pipefail
-                  # iterate line-by-line; skip empty/comment lines
                   while IFS= read -r KEY; do
                     [ -z "${KEY// }" ] && continue
                     case "$KEY" in \#*) continue ;; esac
@@ -241,40 +239,50 @@ jobs:
             - name: Build
               run: bun run build
 
-            - name: Upload artifact (web prebuilt)
-              uses: actions/upload-artifact@v4
+            # --- místo upload-artifact uložíme výstupy do cache (klíč na run_id) ---
+            - name: Cache save (web prebuilt)
+              uses: actions/cache/save@v4
               with:
-                  name: web
                   path: apps/web/.vercel/output
-                  include-hidden-files: true
-                  retention-days: 1
+                  key: web-${{ github.run_id }}
 
-            - name: Upload artifact (app prebuilt)
-              uses: actions/upload-artifact@v4
+            - name: Cache save (app prebuilt)
+              uses: actions/cache/save@v4
               with:
-                  name: app
                   path: apps/app/.vercel/output
-                  include-hidden-files: true
-                  retention-days: 1
+                  key: app-${{ github.run_id }}
 
-            - name: Upload artifact (server prebuilt)
-              uses: actions/upload-artifact@v4
+            - name: Cache save (server prebuilt)
+              uses: actions/cache/save@v4
               with:
-                  name: server
                   path: apps/server/.vercel/output
-                  include-hidden-files: true
-                  retention-days: 1
+                  key: server-${{ github.run_id }}
 
-            - name: Upload artifact (bundle sizes)
-              uses: actions/upload-artifact@v4
+    vercel-server:
+        name: Deploy server to Vercel
+        runs-on: ubuntu-latest
+        environment: production
+        needs: [build]
+        steps:
+            - name: Cache restore (server prebuilt)
+              uses: actions/cache/restore@v4
               with:
-                  name: bundle-sizes
-                  path: |
-                      apps/app/asset.size.ndjson
-                      apps/web/asset.size.ndjson
-                      apps/server/bundle.size.ndjson
-                  if-no-files-found: ignore
-                  retention-days: 1
+                  path: apps/server/.vercel/output
+                  key: server-${{ github.run_id }}
+                  fail-on-cache-miss: true
+
+            - name: Setup Bun
+              uses: oven-sh/setup-bun@v2
+
+            - name: Deploy to Vercel (server)
+              working-directory: apps/server
+              env:
+                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
+              run: |
+                  bunx -y vercel@latest deploy \
+                    --prebuilt \
+                    --prod --yes \
+                    --token "$VERCEL_TOKEN"
 
     vercel-web:
         name: Deploy web to Vercel
@@ -282,10 +290,12 @@ jobs:
         environment: production
         needs: [build, vercel-server]
         steps:
-            - uses: actions/download-artifact@v4
+            - name: Cache restore (web prebuilt)
+              uses: actions/cache/restore@v4
               with:
-                  name: web
                   path: apps/web/.vercel/output
+                  key: web-${{ github.run_id }}
+                  fail-on-cache-miss: true
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
@@ -310,10 +320,12 @@ jobs:
         environment: production
         needs: [build, vercel-server]
         steps:
-            - uses: actions/download-artifact@v4
+            - name: Cache restore (app prebuilt)
+              uses: actions/cache/restore@v4
               with:
-                  name: app
                   path: apps/app/.vercel/output
+                  key: app-${{ github.run_id }}
+                  fail-on-cache-miss: true
 
             - name: Setup Bun
               uses: oven-sh/setup-bun@v2
@@ -332,40 +344,18 @@ jobs:
                     --prod --yes \
                     --token "$VERCEL_TOKEN"
 
-    vercel-server:
-        name: Deploy server to Vercel
-        runs-on: ubuntu-latest
-        environment: production
-        needs: [build]
-        steps:
-            - uses: actions/download-artifact@v4
-              with:
-                  name: server
-                  path: apps/server/.vercel/output
-
-            - name: Setup Bun
-              uses: oven-sh/setup-bun@v2
-
-            - name: Deploy to Vercel (server)
-              working-directory: apps/server
-              env:
-                  VERCEL_PROJECT_ID: ${{ env.VERCEL_SERVER_PROJECT_ID }}
-              run: |
-                  bunx -y vercel@latest deploy \
-                    --prebuilt \
-                    --prod --yes \
-                    --token "$VERCEL_TOKEN"
-
     bunny-cdn-web:
         name: Update CDN (web)
         runs-on: ubuntu-latest
         environment: production
         needs: [build, vercel-server]
         steps:
-            - uses: actions/download-artifact@v4
+            - name: Cache restore (web prebuilt)
+              uses: actions/cache/restore@v4
               with:
-                  name: web
                   path: apps/web/.vercel/output
+                  key: web-${{ github.run_id }}
+                  fail-on-cache-miss: true
 
             - name: Prepare rclone config
               run: |
@@ -426,10 +416,12 @@ jobs:
         environment: production
         needs: [build, vercel-server]
         steps:
-            - uses: actions/download-artifact@v4
+            - name: Cache restore (app prebuilt)
+              uses: actions/cache/restore@v4
               with:
-                  name: app
                   path: apps/app/.vercel/output
+                  key: app-${{ github.run_id }}
+                  fail-on-cache-miss: true
 
             - name: Prepare rclone config
               run: |
