@@ -58,7 +58,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		{},
 		{
 			staleTime: 60_000 * 30,
-			refetchInterval: 60_000,
 			refetchOnWindowFocus: true,
 		},
 	);
