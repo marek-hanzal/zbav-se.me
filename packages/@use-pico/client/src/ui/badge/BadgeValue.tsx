@@ -72,6 +72,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 				<Tx
 					label={textLabel}
 					preset={"label"}
+					size={"md"}
 				/>
 
 				{action}
@@ -82,6 +83,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 					label={textValue}
 					truncate
 					tone={"secondary"}
+					size={"xl"}
 					{...textValueProps}
 				/>
 			) : (

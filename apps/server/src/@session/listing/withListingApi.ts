@@ -4,6 +4,7 @@ import { withListingCountApi } from "./listing-count";
 import { withListingCreateApi } from "./listing-create";
 import { withListingFeedCollectionApi } from "./listing-feed-collection";
 import { withListingFetchApi } from "./listing-fetch";
+import { withListingScoreFetchApi } from "./listing-score";
 
 export const withListingApi: Routes.Fn = (routes) => {
 	withListingCreateApi(routes);
@@ -11,4 +12,5 @@ export const withListingApi: Routes.Fn = (routes) => {
 	withListingFetchApi(routes);
 	withListingCollectionApi(routes);
 	withListingCountApi(routes);
+	withListingScoreFetchApi(routes);
 };

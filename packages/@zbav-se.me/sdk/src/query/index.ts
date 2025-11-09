@@ -8,6 +8,7 @@ export { withListingCollectionQuery } from "./withListingCollectionQuery";
 export { withListingCountQuery } from "./withListingCountQuery";
 export { withListingFeedCollectionQuery } from "./withListingFeedCollectionQuery";
 export { withListingFetchQuery } from "./withListingFetchQuery";
+export { withListingScoreQuery } from "./withListingScoreQuery";
 export { withLocationAutocompleteQuery } from "./withLocationAutocompleteQuery";
 export { withLocationFetchQuery } from "./withLocationFetchQuery";
 export { withUploadFetchQuery } from "./withUploadFetchQuery";

@@ -72,12 +72,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			/>
 
 			<BadgeValue
-				textLabel={"Listing seller hint (label)"}
+				textLabel={"Listing score hint (label)"}
 				textValue={"- skore + link -"}
 				action={
 					<LinkTo
 						icon={ArrowRightIcon}
-						to={"/$locale/buyer/feed/$id/listing/$listingId/seller"}
+						to={"/$locale/buyer/feed/$id/listing/$listingId/score"}
 						params={{
 							locale,
 							id: feedId,
@@ -89,12 +89,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			/>
 
 			<BadgeValue
-				textLabel={"Listing score hint (label)"}
+				textLabel={"Listing seller hint (label)"}
 				textValue={"- skore + link -"}
 				action={
 					<LinkTo
 						icon={ArrowRightIcon}
-						to={"/$locale/buyer/feed/$id/listing/$listingId/score"}
+						to={"/$locale/buyer/feed/$id/listing/$listingId/seller"}
 						params={{
 							locale,
 							id: feedId,

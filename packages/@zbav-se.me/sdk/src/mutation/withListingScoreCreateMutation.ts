@@ -5,6 +5,7 @@ import type {
 	tApiListingScoreCreateResponse,
 	tListingScoreCreate,
 } from "../api/session/types.gen";
+import { withListingScoreQuery } from "../query";
 
 export const withListingScoreCreateMutation = withMutation<
 	tListingScoreCreate,
@@ -30,4 +31,7 @@ export const withListingScoreCreateMutation = withMutation<
 				throw e;
 			});
 	},
+	invalidate: [
+		withListingScoreQuery,
+	],
 });

@@ -4,8 +4,10 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
+import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { useEffect } from "react";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
 
 export const Route = createFileRoute(
@@ -43,6 +45,20 @@ export const Route = createFileRoute(
 				id: listingId,
 			},
 		});
+
+		const listingScoreCreateMutation =
+			withListingScoreCreateMutation.useMutation();
+
+		useEffect(() => {
+			const timeoutId = setTimeout(() => {
+				listingScoreCreateMutation.mutate({
+					listingId,
+					score: "view",
+				});
+			}, 2_500);
+
+			return () => clearTimeout(timeoutId);
+		}, []);
 
 		return (
 			<TitleContainer

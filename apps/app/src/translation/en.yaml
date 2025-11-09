@@ -37,6 +37,9 @@
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
   ref: Listing photos (label)
   value: Listing photos (label)
+1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
+  ref: Listing Score - Flag (label)
+  value: Listing Score - Flag (label)
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
@@ -46,6 +49,9 @@
 1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
   ref: Price (subtitle)
   value: Price (subtitle)
+1e3d85c7c23a71840d9beb99b3e899a3f42d37c190376c17982f5ffa:
+  ref: Listing Score - Raw score - no value (label)
+  value: Listing Score - Raw score - no value (label)
 24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
   ref: Back to Dashboard (label)
   value: Back to Dashboard (label)
@@ -70,6 +76,9 @@
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
+37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
+  ref: Listing Score - Feed views (label)
+  value: Listing Score - Feed views (label)
 3b25f85d532657d509b12da1d687a994f0da387a55ede88e53ffc704:
   ref: Listing price (label)
   value: Listing price (label)
@@ -88,18 +97,30 @@
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
+409c34bae22e46f8c65e792531457dca3c54190439f8a4e1cca1a3d3:
+  ref: Listing Score - Feed views - no value (label)
+  value: Listing Score - Feed views - no value (label)
+40e303be86527f9bd9a2ff0c64ae95d0376262257c76a19e4c60121f:
+  ref: Listing Score - Cart (label)
+  value: Listing Score - Cart (label)
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
+45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
+  ref: Listing Score - Views (label)
+  value: Listing Score - Views (label)
 45f38d57f03d10600b22e4b266ffbcf96453703c411de26c2e945233:
   ref: Next - feed name (button)
   value: Next
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
   ref: Price - free (title)
   value: Price - free (title)
+4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
+  ref: Listing Score - Raw score (label)
+  value: Listing Score - Raw score (label)
 4b8762ea82eb33c9d7ffd85b86a590872c56b65e0ea84a1fbc82240b:
   ref: Listing - Score info (title)
   value: Listing - Score info (title)
@@ -157,6 +178,9 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
+63b7339dbc11bd2ed8261905a9dfd6355cd7752429f212f0d1ccafb3:
+  ref: Listing Score - Cart - no value (label)
+  value: Listing Score - Cart - no value (label)
 6810972e1b5c962b2d6bba8f1d42faf0373fc4a6f038a0d748551d62:
   ref: Listing added to your cart (toast)
   value: Listing added to your cart (toast)
@@ -181,6 +205,9 @@
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
   ref: Listing unflagged (toast)
   value: Listing unflagged (toast)
+7366837155197535cc250b08bb01af26af2c7e9d0bb3de6327b1f150:
+  ref: Listing Score - Views - no value (label)
+  value: Listing Score - Views - no value (label)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
@@ -307,12 +334,21 @@ b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
 b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
   ref: Feed age (label)
   value: Feed age (label)
+b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
+  ref: Listing Score - Ignore (label)
+  value: Listing Score - Ignore (label)
+b8fe81073164a598978b3692d0332bccff635f6946c9a8dd409323fc:
+  ref: Listing Score - Ignore - no value (label)
+  value: Listing Score - Ignore - no value (label)
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
+bd37dcaef82ca084b52f531c8665ed9ebd91809eae1b430693aa3c00:
+  ref: Listing Score - Flag - no value (label)
+  value: Listing Score - Flag - no value (label)
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
   ref: Missing identity for an Entity (id). I'm sorry, but I cannot provide better
     message than this :(

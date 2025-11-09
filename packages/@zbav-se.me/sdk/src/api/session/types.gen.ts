@@ -387,34 +387,82 @@ export type tListingScoreSort = {
  * Collection of listing scores
  */
 export type tListingScoreCollection = {
-    data: Array<tListingScore>;
+    data: Array<tListingScore & {
+        /**
+         * ID of the score
+         */
+        id: string;
+        /**
+         * ID of the listing
+         */
+        listingId: string;
+        /**
+         * Type of score
+         */
+        type: 'listing' | 'ignore' | 'flag' | 'view' | 'cart';
+        /**
+         * Score value
+         */
+        score: number;
+        /**
+         * Creation timestamp
+         */
+        createdAt: string;
+    }>;
     /**
      * Whether there are more items to fetch
      */
     more: boolean;
 };
 
+/**
+ * Contains various scores/metrics of the listing
+ */
 export type tListingScore = {
     /**
-     * ID of the score
+     * Number of views from the feed (low attention score)
      */
-    id: string;
+    listing: number | null;
     /**
-     * ID of the listing
+     * Overall score gained from listing interactions
      */
-    listingId: string;
+    listingScore: number | null;
     /**
-     * Type of score
+     * Number of views from the listing
      */
-    type: 'listing' | 'ignore' | 'flag' | 'view' | 'cart';
+    views: number | null;
     /**
-     * Score value
+     * Overall score gained from views
      */
-    score: number;
+    viewsScore: number | null;
     /**
-     * Creation timestamp
+     * Number of items added to the cart
      */
-    createdAt: string;
+    cart: number | null;
+    /**
+     * Overall score gained from cart interactions
+     */
+    cartScore: number | null;
+    /**
+     * Number of items ignored
+     */
+    ignore: number | null;
+    /**
+     * Overall score gained from ignore interactions
+     */
+    ignoreScore: number | null;
+    /**
+     * Number of items flagged
+     */
+    flag: number | null;
+    /**
+     * Overall score gained from flag interactions
+     */
+    flagScore: number | null;
+    /**
+     * Raw score of the listing
+     */
+    score: number | null;
 };
 
 /**
@@ -2008,6 +2056,36 @@ export type tApiListingCountResponse = {
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
 
+export type tApiListingScoreRequest = {
+    body?: never;
+    path: {
+        /**
+         * Listing identifier
+         */
+        id: string;
+    };
+    query?: never;
+    url: '/api/session/listing/{id}/score';
+};
+
+export type apiListingScoreErrors = {
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+};
+
+export type apiListingScoreError = apiListingScoreErrors[keyof apiListingScoreErrors];
+
+export type tApiListingScoreResponse = {
+    /**
+     * Listing score for the provided identifier
+     */
+    200: tListingScore;
+};
+
+export type apiListingScoreResponse = tApiListingScoreResponse[keyof tApiListingScoreResponse];
+
 export type tApiListingCartCollectionRequest = {
     body?: tListingCartQuery;
     path?: never;
@@ -2095,6 +2173,15 @@ export type tApiListingIgnoreToggleRequest = {
     url: '/api/session/listing-ignore/toggle';
 };
 
+export type apiListingIgnoreToggleErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
+};
+
+export type apiListingIgnoreToggleError = apiListingIgnoreToggleErrors[keyof apiListingIgnoreToggleErrors];
+
 export type tApiListingIgnoreToggleResponse = {
     /**
      * Nothing to say, we're just happy
@@ -2142,6 +2229,15 @@ export type tApiListingFlagToggleRequest = {
     query?: never;
     url: '/api/session/listing-flag/toggle';
 };
+
+export type apiListingFlagToggleErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
+};
+
+export type apiListingFlagToggleError = apiListingFlagToggleErrors[keyof apiListingFlagToggleErrors];
 
 export type tApiListingFlagToggleResponse = {
     /**

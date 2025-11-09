@@ -436,7 +436,32 @@ export const sListingScoreCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingScore'
+                allOf: [
+                    {
+                        '$ref': '#/components/schemas/ListingScore'
+                    },
+                    {
+                        properties: {
+                            id: {
+                                type: 'string'
+                            },
+                            listingId: {
+                                type: 'string'
+                            },
+                            type: {
+                                type: 'string',
+                                enum: ['listing', 'ignore', 'flag', 'view', 'cart']
+                            },
+                            score: {
+                                type: 'integer'
+                            },
+                            createdAt: {
+                                type: 'string'
+                            }
+                        },
+                        required: ['id', 'listingId', 'type', 'score', 'createdAt']
+                    }
+                ]
             }
         },
         more: {
@@ -449,24 +474,41 @@ export const sListingScoreCollection = {
 export const sListingScore = {
     type: 'object',
     properties: {
-        id: {
-            type: 'string'
+        listing: {
+            type: ['number', 'null']
         },
-        listingId: {
-            type: 'string'
+        listingScore: {
+            type: ['number', 'null']
         },
-        type: {
-            type: 'string',
-            enum: ['listing', 'ignore', 'flag', 'view', 'cart']
+        views: {
+            type: ['number', 'null']
+        },
+        viewsScore: {
+            type: ['number', 'null']
+        },
+        cart: {
+            type: ['number', 'null']
+        },
+        cartScore: {
+            type: ['number', 'null']
+        },
+        ignore: {
+            type: ['number', 'null']
+        },
+        ignoreScore: {
+            type: ['number', 'null']
+        },
+        flag: {
+            type: ['number', 'null']
+        },
+        flagScore: {
+            type: ['number', 'null']
         },
         score: {
-            type: 'integer'
-        },
-        createdAt: {
-            type: 'string'
+            type: ['number', 'null']
         }
     },
-    required: ['id', 'listingId', 'type', 'score', 'createdAt']
+    required: ['listing', 'listingScore', 'views', 'viewsScore', 'cart', 'cartScore', 'ignore', 'ignoreScore', 'flag', 'flagScore', 'score']
 } as const;
 
 export const sListingFlagToggle = {

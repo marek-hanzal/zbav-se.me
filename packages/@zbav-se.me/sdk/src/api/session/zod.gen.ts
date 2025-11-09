@@ -478,28 +478,56 @@ export const zListingScoreQuery = z.object({
 
 export type zListingScoreQuery = z.infer<typeof zListingScoreQuery>;
 
+/**
+ * Contains various scores/metrics of the listing
+ */
 export const zListingScore = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the score'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    type: z.enum([
-        'listing',
-        'ignore',
-        'flag',
-        'view',
-        'cart'
-    ]).register(z.globalRegistry, {
-        description: 'Type of score'
-    }),
-    score: z.int().register(z.globalRegistry, {
-        description: 'Score value'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    })
+    listing: z.union([
+        z.number(),
+        z.null()
+    ]),
+    listingScore: z.union([
+        z.number(),
+        z.null()
+    ]),
+    views: z.union([
+        z.number(),
+        z.null()
+    ]),
+    viewsScore: z.union([
+        z.number(),
+        z.null()
+    ]),
+    cart: z.union([
+        z.number(),
+        z.null()
+    ]),
+    cartScore: z.union([
+        z.number(),
+        z.null()
+    ]),
+    ignore: z.union([
+        z.number(),
+        z.null()
+    ]),
+    ignoreScore: z.union([
+        z.number(),
+        z.null()
+    ]),
+    flag: z.union([
+        z.number(),
+        z.null()
+    ]),
+    flagScore: z.union([
+        z.number(),
+        z.null()
+    ]),
+    score: z.union([
+        z.number(),
+        z.null()
+    ])
+}).register(z.globalRegistry, {
+    description: 'Contains various scores/metrics of the listing'
 });
 
 export type zListingScore = z.infer<typeof zListingScore>;
@@ -508,7 +536,29 @@ export type zListingScore = z.infer<typeof zListingScore>;
  * Collection of listing scores
  */
 export const zListingScoreCollection = z.object({
-    data: z.array(zListingScore),
+    data: z.array(zListingScore.and(z.object({
+        id: z.string().register(z.globalRegistry, {
+            description: 'ID of the score'
+        }),
+        listingId: z.string().register(z.globalRegistry, {
+            description: 'ID of the listing'
+        }),
+        type: z.enum([
+            'listing',
+            'ignore',
+            'flag',
+            'view',
+            'cart'
+        ]).register(z.globalRegistry, {
+            description: 'Type of score'
+        }),
+        score: z.int().register(z.globalRegistry, {
+            description: 'Score value'
+        }),
+        createdAt: z.string().register(z.globalRegistry, {
+            description: 'Creation timestamp'
+        })
+    }))),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -2196,6 +2246,25 @@ export type zapiListingCountRequest = z.infer<typeof zApiListingCountData>;
 export const zApiListingCountResponse = zCount;
 
 export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
+
+export const zApiListingScoreData = z.object({
+    body: z.optional(z.never()),
+    path: z.object({
+        id: z.string().register(z.globalRegistry, {
+            description: 'Listing identifier'
+        })
+    }),
+    query: z.optional(z.never())
+});
+
+export type zapiListingScoreRequest = z.infer<typeof zApiListingScoreData>;
+
+/**
+ * Listing score for the provided identifier
+ */
+export const zApiListingScoreResponse = zListingScore;
+
+export type zapiListingScoreResponse = z.infer<typeof zApiListingScoreResponse>;
 
 export const zApiListingCartCollectionData = z.object({
     body: z.optional(zListingCartQuery),
