@@ -247,6 +247,7 @@ jobs:
                   name: web
                   path: apps/web/.vercel/output
                   include-hidden-files: true
+                  retention-days: 1
 
             - name: Upload artifact (app prebuilt)
               uses: actions/upload-artifact@v4
@@ -254,6 +255,7 @@ jobs:
                   name: app
                   path: apps/app/.vercel/output
                   include-hidden-files: true
+                  retention-days: 1
 
             - name: Upload artifact (server prebuilt)
               uses: actions/upload-artifact@v4
@@ -261,6 +263,7 @@ jobs:
                   name: server
                   path: apps/server/.vercel/output
                   include-hidden-files: true
+                  retention-days: 1
 
             - name: Upload artifact (bundle sizes)
               uses: actions/upload-artifact@v4
@@ -271,6 +274,7 @@ jobs:
                       apps/web/asset.size.ndjson
                       apps/server/bundle.size.ndjson
                   if-no-files-found: ignore
+                  retention-days: 1
 
     vercel-web:
         name: Deploy web to Vercel
