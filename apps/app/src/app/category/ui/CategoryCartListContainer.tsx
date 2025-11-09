@@ -3,6 +3,7 @@ import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Typo } from "@use-pico/client/ui/typo";
 import type { tCategoryCart } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
@@ -24,7 +25,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 	return (
 		<Container
 			layout={"vertical-flex"}
-			gap={"md"}
+			gap={"sm"}
 			{...props}
 		>
 			{categoryCartList.map((category) => (
@@ -63,7 +64,14 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 					>
 						<CategoryInline category={category} />
 
-						<Icon icon={ArrowRightIcon} />
+						<div className="inline-flex flex-row gap-2 items-center">
+							<Typo
+								label={`${category.listingCount}x`}
+								font={"bold"}
+							/>
+
+							<Icon icon={ArrowRightIcon} />
+						</div>
 					</Badge>
 				</LinkTo>
 			))}
