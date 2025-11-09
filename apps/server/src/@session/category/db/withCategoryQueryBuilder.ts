@@ -3,33 +3,37 @@ import type { CategoryFilterSchema } from "../schema/CategoryFilterSchema";
 import type { withCategorySelect } from "./withCategorySelect";
 
 export namespace withCategoryQueryBuilder {
-	export interface Props {
-		select: withCategorySelect.Select;
+	export interface Props<TSelect extends withCategorySelect.Select> {
+		select: TSelect;
 		where?: CategoryFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withCategorySelect.Select;
+	export type Callback<TSelect extends withCategorySelect.Select> = (
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
 /**
  * Standalone query builder that applies all filters from CategoryQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
+export const withCategoryQueryBuilder = <
+	TSelect extends withCategorySelect.Select,
+>({
 	select,
 	where,
-}) => {
+}: withCategoryQueryBuilder.Props<TSelect>) => {
 	if (!where) {
 		return select;
 	}
-	let query = select;
+	let query: typeof select = select;
 
 	if (where.id) {
-		query = query.where("c.id", "=", where.id);
+		query = query.where("c.id", "=", where.id) as typeof select;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("c.id", "in", where.idIn);
+		query = query.where("c.id", "in", where.idIn) as typeof select;
 	}
 
 	if (where.fulltext) {
@@ -52,25 +56,27 @@ export const withCategoryQueryBuilder: withCategoryQueryBuilder.Callback = ({
 						),
 				),
 			]),
-		);
+		) as typeof select;
 	}
 
 	if (where.group) {
-		query = query.where((eb) => withLikeEx(eb.ref("c.group"), where.group));
+		query = query.where((eb) =>
+			withLikeEx(eb.ref("c.group"), where.group),
+		) as typeof select;
 	}
 
 	if (where.category) {
 		query = query.where((eb) =>
 			withLikeEx(eb.ref("c.category"), where.category),
-		);
+		) as typeof select;
 	}
 
 	if (where.locale) {
-		query = query.where("c.locale", "=", where.locale);
+		query = query.where("c.locale", "=", where.locale) as typeof select;
 	}
 
 	if (where.localeIn?.length) {
-		query = query.where("c.locale", "in", where.localeIn);
+		query = query.where("c.locale", "in", where.localeIn) as typeof select;
 	}
 
 	return query;

@@ -1533,70 +1533,20 @@ export type tFeedCreate = {
 };
 
 /**
- * Collection of categories represented in the user's cart
+ * Query object for category cart collection
  */
-export type tCategoryCartCollection = {
-    data: Array<tCategoryCart>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Category data transfer object extended with listing count for cart summaries
- */
-export type tCategoryCart = tCategory & {
-    /**
-     * Number of listings saved in this category
-     */
-    listingCount: number | null;
-};
-
-/**
- * Complex count of items based on provided query.
- */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-};
-
-/**
- * Collection of categories
- */
-export type tCategoryCollection = {
-    data: Array<tCategory>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Query object for category collection
- */
-export type tCategoryQuery = {
+export type tCategoryCartQuery = {
     cursor?: tCursor;
     filter?: tCategoryFilter;
     where?: tCategoryWhere;
-    sort?: Array<tCategorySort>;
+    sort?: Array<tCategoryCartSort>;
 };
 
 /**
- * Sort object for category collection
+ * Sort object for category cart collection
  */
-export type tCategorySort = {
-    value: 'group' | 'category' | 'sort';
+export type tCategoryCartSort = {
+    value: 'group' | 'category' | 'sort' | 'listingCount';
     sort?: 'asc' | 'desc';
 };
 
@@ -1666,6 +1616,98 @@ export type tCategoryFilter = {
      * This filter matches categories with locales in the provided array
      */
     localeIn?: Array<string> | null;
+};
+
+/**
+ * Collection of categories represented in the user's cart
+ */
+export type tCategoryCartCollection = {
+    data: Array<tCategoryCart>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Category data transfer object extended with listing count for cart summaries
+ */
+export type tCategoryCart = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
+    /**
+     * Number of listings saved in this category
+     */
+    listingCount: number;
+};
+
+/**
+ * Complex count of items based on provided query.
+ */
+export type tCount = {
+    /**
+     * Count of items based on provided where query.
+     */
+    where: number;
+    /**
+     * Count of items based on provided filter query.
+     */
+    filter: number;
+    /**
+     * Total count of items (no filters applied).
+     */
+    total: number;
+};
+
+/**
+ * Collection of categories
+ */
+export type tCategoryCollection = {
+    data: Array<tCategory>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Query object for category collection
+ */
+export type tCategoryQuery = {
+    cursor?: tCursor;
+    filter?: tCategoryFilter;
+    where?: tCategoryWhere;
+    sort?: Array<tCategorySort>;
+};
+
+/**
+ * Sort object for category collection
+ */
+export type tCategorySort = {
+    value: 'group' | 'category' | 'sort';
+    sort?: 'asc' | 'desc';
 };
 
 /**
@@ -1754,7 +1796,7 @@ export type tApiCategoryCountResponse = {
 export type apiCategoryCountResponse = tApiCategoryCountResponse[keyof tApiCategoryCountResponse];
 
 export type tApiCategoryCartCollectionRequest = {
-    body?: tCategoryQuery;
+    body?: tCategoryCartQuery;
     path?: never;
     query?: never;
     url: '/api/session/category-cart/collection';

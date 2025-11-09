@@ -38,8 +38,8 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				},
 				sort: [
 					{
-						value: "sort",
-						sort: "asc",
+						value: "listingCount",
+						sort: "desc",
 					},
 				],
 				cursor: {

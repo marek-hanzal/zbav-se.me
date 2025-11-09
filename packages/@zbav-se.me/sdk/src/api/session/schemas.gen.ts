@@ -1815,74 +1815,7 @@ export const sFeedCreate = {
     required: ['name', 'filter', 'sort', 'meta']
 } as const;
 
-export const sCategoryCartCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/CategoryCart'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: ['data', 'more']
-} as const;
-
-export const sCategoryCart = {
-    allOf: [
-        {
-            '$ref': '#/components/schemas/Category'
-        },
-        {
-            type: 'object',
-            properties: {
-                listingCount: {
-                    type: ['integer', 'null'],
-                    minimum: 0,
-                    example: 3
-                }
-            },
-            required: ['listingCount']
-        }
-    ]
-} as const;
-
-export const sCount = {
-    type: 'object',
-    properties: {
-        where: {
-            type: 'number'
-        },
-        filter: {
-            type: 'number'
-        },
-        total: {
-            type: 'number'
-        }
-    },
-    required: ['where', 'filter', 'total']
-} as const;
-
-export const sCategoryCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/Category'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: ['data', 'more']
-} as const;
-
-export const sCategoryQuery = {
+export const sCategoryCartQuery = {
     type: 'object',
     properties: {
         cursor: {
@@ -1897,18 +1830,18 @@ export const sCategoryQuery = {
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/CategorySort'
+                '$ref': '#/components/schemas/CategoryCartSort'
             }
         }
     }
 } as const;
 
-export const sCategorySort = {
+export const sCategoryCartSort = {
     type: 'object',
     properties: {
         value: {
             type: 'string',
-            enum: ['group', 'category', 'sort']
+            enum: ['group', 'category', 'sort', 'listingCount']
         },
         sort: {
             type: ['string', 'null'],
@@ -1982,6 +1915,119 @@ export const sCategoryFilter = {
             }
         }
     }
+} as const;
+
+export const sCategoryCartCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/CategoryCart'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sCategoryCart = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        locale: {
+            type: 'string'
+        },
+        listingCount: {
+            type: 'integer',
+            example: 3
+        }
+    },
+    required: ['id', 'group', 'category', 'slug', 'sort', 'locale', 'listingCount']
+} as const;
+
+export const sCount = {
+    type: 'object',
+    properties: {
+        where: {
+            type: 'number'
+        },
+        filter: {
+            type: 'number'
+        },
+        total: {
+            type: 'number'
+        }
+    },
+    required: ['where', 'filter', 'total']
+} as const;
+
+export const sCategoryCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/Category'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sCategoryQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/CategoryFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/CategoryWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/CategorySort'
+            }
+        }
+    }
+} as const;
+
+export const sCategorySort = {
+    type: 'object',
+    properties: {
+        value: {
+            type: 'string',
+            enum: ['group', 'category', 'sort']
+        },
+        sort: {
+            type: ['string', 'null'],
+            enum: ['asc', 'desc']
+        }
+    },
+    required: ['value']
 } as const;
 
 export const sMessage = {
