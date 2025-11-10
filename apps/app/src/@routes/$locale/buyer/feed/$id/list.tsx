@@ -23,7 +23,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 
 		return (
 			<ListingListContainer
-				id={id}
+				feedId={id}
 				limit={200}
 				scrollToListingId={scrollToListingId}
 			/>

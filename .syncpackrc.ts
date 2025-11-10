@@ -33,6 +33,19 @@ export default {
 	],
 	semverGroups: [
 		{
+			dependencies: [
+				"@use-pico/client",
+				"@use-pico/common",
+				"@use-pico/server",
+			],
+			dependencyTypes: [
+				"dependencies",
+				"devDependencies",
+				"peerDependencies",
+			],
+			range: "workspace:",
+		},
+		{
 			range: "",
 		},
 	],

@@ -20,7 +20,7 @@
 		"@types/luxon": "3.7.1",
 		"@types/object-path": "0.11.4",
 		"@use-pico/cls": "5.0.76",
-		"@use-pico/common": "5.0.104",
+		"@use-pico/common": "workspace:*",
 		"axios": "1.13.2",
 		"gsap": "3.13.0",
 		"js-file-downloader": "1.1.25",

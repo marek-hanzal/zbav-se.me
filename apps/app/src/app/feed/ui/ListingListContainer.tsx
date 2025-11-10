@@ -24,7 +24,7 @@ export namespace ListingListContainer {
 		/**
 		 * Feed id listing is part of
 		 */
-		id: string;
+		feedId: string;
 		/**
 		 * Listing ID to scroll to
 		 */
@@ -38,17 +38,17 @@ export namespace ListingListContainer {
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToListingId,
-	id,
+	feedId,
 	limit,
 	...props
 }) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
-	const feedId = useId();
+	const listingId = useId();
 
 	const listingQuery = withListingFeedCollectionQuery({
-		feedId: id,
+		feedId: feedId,
 		size: limit,
 		where: {
 			withOwn: false,
@@ -140,7 +140,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		>
 			<Container
 				ui="Feed-Container"
-				key={feedId}
+				key={listingId}
 				ref={containerRef}
 				layout={"vertical-full"}
 				snap={"vertical-start"}
@@ -148,7 +148,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				{listingQuery.data.data.length === 0 ? (
 					<Status
 						ui="Feed-Status-empty"
-						key={`${feedId}-no-listings`}
+						key={`${listingId}-no-listings`}
 						icon={"icon-[streamline--sad-face-remix]"}
 						textTitle={"No listings (title)"}
 						action={
@@ -171,8 +171,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				{listingQuery.data.data.map((listing) => {
 					return (
 						<ListingHeroContainer
-							key={`${feedId}-${listing.id}`}
-							feedId={id}
+							key={`${listingId}-${listing.id}`}
+							feedId={feedId}
 							limit={limit}
 							listing={listing}
 							locale={locale}
