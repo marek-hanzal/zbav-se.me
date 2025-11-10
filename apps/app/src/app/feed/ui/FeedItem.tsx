@@ -18,7 +18,7 @@ export namespace FeedItem {
 
 export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 	const query: tListingQuery = {
-		filter: feed.filter,
+		...feed,
 		where: {
 			withOwn: false,
 			withIgnored: false,
