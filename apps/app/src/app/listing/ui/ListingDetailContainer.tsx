@@ -12,13 +12,11 @@ import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingDetailContainer {
 	export interface Props extends Container.Props {
-		feedId: string;
 		listing: tListing;
 	}
 }
 
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
-	feedId,
 	listing,
 	children,
 	...props
@@ -85,11 +83,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				action={
 					<LinkTo
 						icon={ArrowRightIcon}
-						to={"/$locale/buyer/feed/$id/listing/$listingId/score"}
+						to={"/$locale/buyer/listing/$id/score"}
 						params={{
 							locale,
-							id: feedId,
-							listingId: listing.id,
+							id: listing.id,
 						}}
 						tone={"primary"}
 					/>
@@ -102,11 +99,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				action={
 					<LinkTo
 						icon={ArrowRightIcon}
-						to={"/$locale/buyer/feed/$id/listing/$listingId/seller"}
+						to={"/$locale/buyer/listing/$id/seller"}
 						params={{
 							locale,
-							id: feedId,
-							listingId: listing.id,
+							id: listing.id,
 						}}
 						tone={"primary"}
 					/>

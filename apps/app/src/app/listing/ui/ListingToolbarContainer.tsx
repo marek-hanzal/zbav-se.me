@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { zListing } from "@zbav-se.me/sdk/api/session";
+import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
 import { ListingCartButton } from "../../feed/ui/button/ListingCartButton";
 import { ListingFlagButton } from "../../feed/ui/button/ListingFlagButton";
@@ -11,7 +11,7 @@ import { ListingIgnoreButton } from "../../feed/ui/button/ListingIgnoreButton";
 
 export namespace ListingToolbarContainer {
 	export interface Props extends Container.Props {
-		feedId: string;
+		query: tListingQuery;
 		listing: zListing;
 		onCartToggle?(toggle: boolean): void;
 		onIgnoreToggle(toggle: boolean): void;
@@ -20,7 +20,7 @@ export namespace ListingToolbarContainer {
 }
 
 export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
-	feedId,
+	query,
 	listing,
 	onCartToggle,
 	onIgnoreToggle,
@@ -66,11 +66,10 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/buyer/feed/$id/listing/$listingId/view"}
+				to={"/$locale/buyer/listing/$id/view"}
 				params={{
 					locale,
-					id: feedId,
-					listingId: listing.id,
+					id: listing.id,
 				}}
 			>
 				<Button

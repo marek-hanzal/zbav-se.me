@@ -6,25 +6,21 @@ import { withListingScoreQuery } from "@zbav-se.me/sdk/query";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ScoreContainer } from "~/app/listing/ui/ScoreContainer";
 
-export const Route = createFileRoute(
-	"/$locale/buyer/feed/$id/listing/$listingId/score",
-)({
+export const Route = createFileRoute("/$locale/buyer/listing/$id/score")({
 	component() {
-		const { locale, id, listingId } = Route.useParams();
+		const { locale, id } = Route.useParams();
 
-		const listingScoreQuery =
-			withListingScoreQuery.useSuspenseQuery(listingId);
+		const listingScoreQuery = withListingScoreQuery.useSuspenseQuery(id);
 
 		return (
 			<TitleContainer
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/listing/$listingId/view"}
+						to={"/$locale/buyer/listing/$id/view"}
 						params={{
 							locale,
 							id,
-							listingId,
 						}}
 						tone={"secondary"}
 					/>

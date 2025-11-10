@@ -11,9 +11,10 @@ import type {
 	tGallery,
 	tListing,
 	tListingCollection,
+	tListingQuery,
 } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
-import { withListingFeedCollectionQuery } from "@zbav-se.me/sdk/query";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { type FC, memo, useCallback, useEffect, useRef, useState } from "react";
@@ -23,29 +24,21 @@ import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace ListingHeroContainer {
 	export interface Props extends Container.Props {
-		feedId: string;
+		query: tListingQuery;
 		listing: tListing;
-		limit: number;
 		locale: string;
 		isVisible: boolean;
 	}
 }
 
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
-	({ feedId, locale, listing, limit, isVisible, tweak, ...props }) => {
+	({ query, locale, listing, isVisible, tweak, ...props }) => {
 		const [hero] = listing.gallery as [
 			tGallery,
 			...tGallery[],
 		];
 
-		const patchListingQuery = withListingFeedCollectionQuery({
-			feedId,
-			size: limit,
-			where: {
-				withOwn: false,
-				withIgnored: false,
-			},
-		}).useSet();
+		const setListingCollection = withListingCollectionQuery.useSet();
 
 		const listingScoreCreateMutation =
 			withListingScoreCreateMutation.useMutation({
@@ -206,22 +199,24 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 						action: (
 							<ListingToolbarContainer
 								snapTo={"unset"}
-								feedId={feedId}
+								query={query}
 								listing={listing}
 								onIgnoreToggle={(toggle) => {
-									patchListingQuery(
+									setListingCollection(
 										patchListing({
 											id: listing.id,
 											isIgnored: toggle,
 										}),
+										query,
 									);
 								}}
 								onFlagToggle={(toggle) => {
-									patchListingQuery(
+									setListingCollection(
 										patchListing({
 											id: listing.id,
 											hasFlag: toggle,
 										}),
+										query,
 									);
 								}}
 								tweak={{
@@ -333,30 +328,33 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 
 				{hasToolbar ? (
 					<ListingToolbarContainer
-						feedId={feedId}
+						query={query}
 						listing={listing}
 						onCartToggle={(toggle) => {
-							patchListingQuery(
+							setListingCollection(
 								patchListing({
 									id: listing.id,
 									isInCart: toggle,
 								}),
+								query,
 							);
 						}}
 						onIgnoreToggle={(toggle) => {
-							patchListingQuery(
+							setListingCollection(
 								patchListing({
 									id: listing.id,
 									isIgnored: toggle,
 								}),
+								query,
 							);
 						}}
 						onFlagToggle={(toggle) => {
-							patchListingQuery(
+							setListingCollection(
 								patchListing({
 									id: listing.id,
 									hasFlag: toggle,
 								}),
+								query,
 							);
 						}}
 					/>

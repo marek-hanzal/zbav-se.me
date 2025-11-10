@@ -6,7 +6,8 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { withListingFeedCollectionQuery } from "@zbav-se.me/sdk/query";
+import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {
@@ -21,25 +22,17 @@ import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
-		/**
-		 * Feed id listing is part of
-		 */
-		feedId: string;
+		query: tListingQuery;
 		/**
 		 * Listing ID to scroll to
 		 */
 		scrollToListingId?: string;
-		/**
-		 * Limit max. number of listings to fetch.
-		 */
-		limit: number;
 	}
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
+	query,
 	scrollToListingId,
-	feedId,
-	limit,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -47,20 +40,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	});
 	const listingId = useId();
 
-	const listingQuery = withListingFeedCollectionQuery({
-		feedId: feedId,
-		size: limit,
-		where: {
-			withOwn: false,
-			withIgnored: false,
-		},
-	}).useSuspenseQuery(
-		{},
-		{
-			staleTime: 60_000 * 30,
-			refetchOnWindowFocus: true,
-		},
-	);
+	const listingQuery = withListingCollectionQuery.useSuspenseQuery(query, {
+		staleTime: 60_000 * 30,
+		refetchOnWindowFocus: true,
+	});
 	const containerRef = useRef<HTMLDivElement>(null);
 	const visiblesRef = useRef<Set<string>>(new Set<string>());
 	const [visibles, setVisibles] = useState(() => new Set<string>());
@@ -172,8 +155,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					return (
 						<ListingHeroContainer
 							key={`${listingId}-${listing.id}`}
-							feedId={feedId}
-							limit={limit}
+							query={query}
 							listing={listing}
 							locale={locale}
 							isVisible={visibles.has(listing.id)}

@@ -108,7 +108,7 @@ export function withQuery<TData, TResult>({
 	 * @param data - Optional input data for the query.
 	 * @returns The cleaned query key.
 	 */
-	const $keys = (data?: TData) => {
+	const $keys = (data: TData | undefined) => {
 		return cleanOf(keys(data)) as QueryKey;
 	};
 
@@ -270,7 +270,7 @@ export function withQuery<TData, TResult>({
 			 */
 			return (
 				value: (value: TResult | undefined) => TResult | undefined,
-				data?: TData,
+				data: TData | undefined,
 			) => {
 				queryClient.setQueryData($keys(data), value);
 			};

@@ -10,24 +10,21 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useEffect } from "react";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
 
-export const Route = createFileRoute(
-	"/$locale/buyer/feed/$id/listing/$listingId/view",
-)({
+export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 	pendingComponent() {
-		const { locale, id, listingId } = Route.useParams();
+		const { locale, id } = Route.useParams();
 
 		return (
 			<TitleContainer
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/list"}
+						to={"/$locale/buyer/listing/list"}
 						params={{
 							locale,
-							id,
 						}}
 						search={{
-							scrollToListingId: listingId,
+							scrollToListingId: id,
 						}}
 						tone={"secondary"}
 					/>
@@ -39,10 +36,10 @@ export const Route = createFileRoute(
 		);
 	},
 	component() {
-		const { locale, id, listingId } = Route.useParams();
+		const { locale, id } = Route.useParams();
 		const listingQuery = withListingFetchQuery.useSuspenseQuery({
 			where: {
-				id: listingId,
+				id,
 			},
 		});
 
@@ -52,7 +49,7 @@ export const Route = createFileRoute(
 		useEffect(() => {
 			const timeoutId = setTimeout(() => {
 				listingScoreCreateMutation.mutate({
-					listingId,
+					listingId: id,
 					score: "view",
 				});
 			}, 2_500);
@@ -65,13 +62,12 @@ export const Route = createFileRoute(
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/list"}
+						to={"/$locale/buyer/listing/list"}
 						params={{
 							locale,
-							id,
 						}}
 						search={{
-							scrollToListingId: listingId,
+							scrollToListingId: id,
 						}}
 						tone={"secondary"}
 					/>
