@@ -1,6 +1,6 @@
 {
 	"name": "@zbav-se.me/sdk",
-	"version": "0.5.0",
+	"version": "workspace:*",
 	"type": "module",
 	"scripts": {
 		"sdk": "openapi-ts",

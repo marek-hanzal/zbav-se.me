@@ -1,7 +1,7 @@
 {
 	"name": "@zbav-se.me/ui",
 	"description": "Common UI components used in the zbav-se.me project",
-	"version": "0.5.0",
+	"version": "workspace:*",
 	"type": "module",
 	"scripts": {
 		"typecheck": "tsc --noEmit"

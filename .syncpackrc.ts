@@ -31,20 +31,18 @@ export default {
 		"trustedDependencies",
 		"keywords",
 	],
-	semverGroups: [
+	versionGroups: [
 		{
+			packages: [
+				"**",
+			],
 			dependencies: [
-				"@use-pico/client",
-				"@use-pico/common",
-				"@use-pico/server",
+				"$LOCAL",
 			],
-			dependencyTypes: [
-				"dependencies",
-				"devDependencies",
-				"peerDependencies",
-			],
-			range: "workspace:",
+			pinVersion: "workspace:*",
 		},
+	],
+	semverGroups: [
 		{
 			range: "",
 		},

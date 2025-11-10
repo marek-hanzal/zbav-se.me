@@ -1,6 +1,7 @@
 {
 	"name": "marek-hanzal/zbav-se.me",
 	"description": "Simple but clever c2c marketplace",
+	"version": "workspace:*",
 	"scripts": {
 		"dev": "dotenv -c development -- turbo run dev --parallel",
 		"build": "dotenv -c development -- turbo run build --parallel",
