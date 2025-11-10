@@ -2,13 +2,16 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { zListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreQuery } from "@zbav-se.me/sdk/query";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ScoreContainer } from "~/app/listing/ui/ScoreContainer";
 
 export const Route = createFileRoute("/$locale/buyer/listing/$id/score")({
+	validateSearch: zListingQuery,
 	component() {
 		const { locale, id } = Route.useParams();
+		const query = Route.useSearch();
 
 		const listingScoreQuery = withListingScoreQuery.useSuspenseQuery(id);
 
@@ -22,6 +25,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/score")({
 							locale,
 							id,
 						}}
+						search={query}
 						tone={"secondary"}
 					/>
 				}
