@@ -72,7 +72,11 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 						userId: user.id,
 						locationId,
 						name,
-						filter: JSON.stringify(filter) as any,
+						filter: JSON.stringify({
+							...filter,
+							withOwn: false,
+							withIgnored: false,
+						}) as any,
 						sort: JSON.stringify(sort) as any,
 						meta: JSON.stringify(meta) as any,
 						createdAt: now,
