@@ -4,7 +4,11 @@ import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tGallery, tListing } from "@zbav-se.me/sdk/api/session";
+import type {
+	tGallery,
+	tListing,
+	tListingQuery,
+} from "@zbav-se.me/sdk/api/session";
 import { withListingScoreQuery } from "@zbav-se.me/sdk/query";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
@@ -12,11 +16,13 @@ import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingDetailContainer {
 	export interface Props extends Container.Props {
+		query: tListingQuery;
 		listing: tListing;
 	}
 }
 
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
+	query,
 	listing,
 	children,
 	...props
@@ -88,6 +94,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							locale,
 							id: listing.id,
 						}}
+						search={query}
 						tone={"primary"}
 					/>
 				}
@@ -104,6 +111,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							locale,
 							id: listing.id,
 						}}
+						search={query}
 						tone={"primary"}
 					/>
 				}

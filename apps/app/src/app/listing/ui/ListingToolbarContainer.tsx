@@ -71,6 +71,7 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 					locale,
 					id: listing.id,
 				}}
+				search={query}
 			>
 				<Button
 					iconEnabled={ArrowRightIcon}
