@@ -18,11 +18,9 @@ export namespace FeedItem {
 
 export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 	const query: tListingQuery = {
-		...feed,
-		where: {
-			withOwn: false,
-			withIgnored: false,
-		},
+		...feed.filter,
+		...feed.sort,
+		...feed.meta,
 	};
 
 	const listingCountQuery = withListingCountQuery.useSuspenseQuery(query);
