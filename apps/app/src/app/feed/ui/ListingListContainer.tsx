@@ -17,6 +17,7 @@ export namespace ListingListContainer {
 		 * Listing ID to scroll to
 		 */
 		scrollToListingId?: string;
+		empty?: ReactNode;
 		appendix?: ReactNode;
 	}
 }
@@ -24,6 +25,7 @@ export namespace ListingListContainer {
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	query,
 	scrollToListingId,
+	empty,
 	appendix,
 	...props
 }) => {
@@ -58,28 +60,30 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			snap={"vertical-start"}
 			{...props}
 		>
-			{listingQuery.data.data.length === 0 ? (
-				<Status
-					ui="ListingList-empty"
-					key={`${listingId}-no-listings`}
-					icon={"icon-[streamline--sad-face-remix]"}
-					textTitle={"No listings (title)"}
-					action={
-						<LinkTo
-							to={"/$locale/buyer/feed/select"}
-							params={{
-								locale,
-							}}
-						>
-							<Button
-								iconEnabled={ArrowLeftIcon}
-								tone={"secondary"}
-								label={"Back to home (link)"}
-							/>
-						</LinkTo>
-					}
-				/>
-			) : null}
+			{listingQuery.data.data.length === 0
+				? (empty ?? (
+						<Status
+							ui="ListingList-empty"
+							key={`${listingId}-no-listings`}
+							icon={"icon-[streamline--sad-face-remix]"}
+							textTitle={"No listings (title)"}
+							action={
+								<LinkTo
+									to={"/$locale/buyer/feed/select"}
+									params={{
+										locale,
+									}}
+								>
+									<Button
+										iconEnabled={ArrowLeftIcon}
+										tone={"secondary"}
+										label={"Back to home (link)"}
+									/>
+								</LinkTo>
+							}
+						/>
+					))
+				: null}
 
 			{listingQuery.data.data.map((listing) => {
 				return (

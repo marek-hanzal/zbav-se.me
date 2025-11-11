@@ -27,6 +27,9 @@
     value:
         Nikdy nezadávej svou přesnou adresu, jelikož inzeráty jsou veřejné. Můžeš
         např. napsat jenom název města, vesnice, čtvrť a pod.
+0f25aecf3dc16ad45bb4abf1dd685e545d61829586dc5b143ff86248:
+    ref: Empty cart category (title)
+    value: Tady ti už nic nezbylo
 105f9db532252d19c7f7a9a715149260c9f30793a4793d6e3b7125e2:
     ref: Category search (placeholder)
     value: Jaké kategorie hledáš?
@@ -78,6 +81,9 @@
 2af48baae0e3a9ac9acf8ba4d1cb9527bd0ac47fd431f91b99b2dfd3:
     ref: Go to feed (button)
     value: Přejít k nabídkám
+2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
+    ref: Go to home (link)
+    value: Zpět domů
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
     ref: Next - title (button)
     value: Next - title (button)
@@ -222,6 +228,9 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
+717f3c4d260f248fadc7650d90fd53fbb1a0722fb4d164f401d1a8cf:
+    ref: Empty cart - category and cart (title)
+    value: V košíku už ti nic nezbylo
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
     ref: Listing unflagged (toast)
     value: Úspěšně jsi zrušil nahlášení inzerátu.
