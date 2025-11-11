@@ -1,5 +1,6 @@
 export { useDocumentVisibility } from "./useDocumentVisibility";
 export { useDoubleTap } from "./useDoubleTap";
+export { useElementVisibility } from "./useElementVisibility";
 export { useEvent } from "./useEvent";
 export { useHighlightRectangle } from "./useHighlightRectangle";
 export { useInViewport } from "./useInViewport";

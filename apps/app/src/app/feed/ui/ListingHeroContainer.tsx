@@ -1,5 +1,7 @@
-import { useAnim } from "@use-pico/client/gsap";
-import { useDocumentVisibility } from "@use-pico/client/hook";
+import {
+	useDocumentVisibility,
+	useElementVisibility,
+} from "@use-pico/client/hook";
 import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
@@ -19,7 +21,6 @@ import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
-import ScrollTrigger from "gsap/ScrollTrigger";
 import {
 	type FC,
 	type RefObject,
@@ -57,49 +58,12 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	const rootRef = useRef<HTMLDivElement>(null);
 
 	const [visible, setVisible] = useState(false);
-	const [ready, setReady] = useState(false);
 
-	useEffect(() => {
-		if (!containerRef.current || !rootRef.current) {
-			return;
-		}
-		setReady(true);
-	}, [
-		containerRef,
-	]);
-
-	useAnim(
-		() => {
-			if (!rootRef.current || !containerRef.current) {
-				return;
-			}
-
-			ScrollTrigger.create({
-				trigger: rootRef.current,
-				scroller: containerRef.current,
-				start: "top bottom",
-				end: "bottom top",
-				onEnter() {
-					setVisible(true);
-				},
-				onEnterBack() {
-					setVisible(true);
-				},
-				onLeave() {
-					setVisible(false);
-				},
-				onLeaveBack() {
-					setVisible(false);
-				},
-			});
-		},
-		{
-			scope: containerRef.current ?? undefined,
-			dependencies: [
-				ready,
-			],
-		},
-	);
+	useElementVisibility({
+		scrollerRef: containerRef,
+		triggerRef: rootRef,
+		setVisible,
+	});
 
 	const setListingCollection = withListingCollectionQuery.useSet();
 
