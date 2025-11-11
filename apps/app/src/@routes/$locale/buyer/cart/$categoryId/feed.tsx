@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -58,6 +59,32 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 					],
 				}}
 				scrollToListingId={scrollToListingId}
+				back={
+					<LinkTo
+						to={"/$locale/buyer/cart/list"}
+						params={{
+							locale,
+						}}
+					>
+						<Badge
+							tone={"secondary"}
+							size={"lg"}
+							round={"full"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"p-2",
+											"opacity-65",
+										],
+									},
+								},
+							}}
+						>
+							<Icon icon={ArrowLeftIcon} />
+						</Badge>
+					</LinkTo>
+				}
 				empty={
 					listingCartCountQuery.data.filter === 0 ? (
 						<Status

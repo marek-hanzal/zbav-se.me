@@ -25,6 +25,7 @@ import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import {
 	type FC,
+	type ReactNode,
 	type RefObject,
 	useCallback,
 	useEffect,
@@ -43,6 +44,7 @@ export namespace ListingHeroContainer {
 		query: tListingQuery;
 		listing: tListing;
 		tools?: ListingHeroContainer.Tools[];
+		back?: ReactNode;
 	}
 }
 
@@ -55,6 +57,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		"ignore",
 		"flag",
 	],
+	back,
 	tweak,
 	...props
 }) => {
@@ -263,30 +266,34 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				}}
 				height={"content"}
 			>
-				<LinkTo
-					to={"/$locale/buyer/feed/select"}
-					params={{
-						locale,
-					}}
-				>
-					<Badge
-						tone={"secondary"}
-						size={"lg"}
-						round={"full"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"p-2",
-										"opacity-65",
-									],
-								},
-							},
+				{back ? (
+					back
+				) : (
+					<LinkTo
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
 						}}
 					>
-						<Icon icon={ArrowLeftIcon} />
-					</Badge>
-				</LinkTo>
+						<Badge
+							tone={"secondary"}
+							size={"lg"}
+							round={"full"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"p-2",
+											"opacity-65",
+										],
+									},
+								},
+							}}
+						>
+							<Icon icon={ArrowLeftIcon} />
+						</Badge>
+					</LinkTo>
+				)}
 			</Container>
 
 			<Badge

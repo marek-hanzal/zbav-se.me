@@ -20,6 +20,7 @@ export namespace ListingListContainer {
 		empty?: ReactNode;
 		appendix?: ReactNode;
 		tools?: ListingHeroContainer.Tools[];
+		back?: ReactNode;
 	}
 }
 
@@ -29,6 +30,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	empty,
 	appendix,
 	tools,
+	back,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -95,6 +97,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						query={query}
 						listing={listing}
 						tools={tools}
+						back={back}
 					/>
 				);
 			})}
