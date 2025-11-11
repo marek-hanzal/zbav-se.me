@@ -16,7 +16,7 @@
 		"@zbav-se.me/common": "workspace:*",
 		"better-auth": "1.3.34",
 		"effect": "3.19.3",
-		"hono": "4.10.4",
+		"hono": "4.10.5",
 		"hono-rate-limiter": "0.4.2",
 		"jose": "6.1.1",
 		"kysely": "0.28.8",

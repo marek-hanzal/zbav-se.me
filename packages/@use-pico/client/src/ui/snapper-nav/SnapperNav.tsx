@@ -150,7 +150,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		return (
 			<>
 				<Icon
-					feedId={firstId}
 					key={firstId}
 					onDoubleClick={snapperNav.api.start}
 					onClick={snapperNav.api.prev}
@@ -183,7 +182,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
-							feedId={page.id}
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
@@ -214,7 +212,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					);
 				})}
 				<Icon
-					feedId={lastId}
 					key={lastId}
 					onClick={snapperNav.api.next}
 					onDoubleClick={snapperNav.api.end}
@@ -259,7 +256,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
-							feedId={page.id}
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
