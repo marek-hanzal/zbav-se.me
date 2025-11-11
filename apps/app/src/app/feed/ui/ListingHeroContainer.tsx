@@ -20,6 +20,7 @@ import type {
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import {
 	type FC,
@@ -197,6 +198,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				alt={`Hero image for listing ${listing.id}`}
 				className={"w-full h-full object-cover"}
 				visible={visible}
+				invisible={<SpinnerContainer />}
 				onLoad={() => setHasToolbar(true)}
 				errorStatusProps={{
 					action: (
