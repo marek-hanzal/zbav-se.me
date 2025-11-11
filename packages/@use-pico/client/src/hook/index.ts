@@ -1,3 +1,4 @@
+export { useDocumentVisibility } from "./useDocumentVisibility";
 export { useDoubleTap } from "./useDoubleTap";
 export { useEvent } from "./useEvent";
 export { useHighlightRectangle } from "./useHighlightRectangle";

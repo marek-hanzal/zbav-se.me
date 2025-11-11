@@ -1,5 +1,4 @@
 import { useParams } from "@tanstack/react-router";
-import { useAnim } from "@use-pico/client/gsap";
 import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -9,15 +8,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { Sheet } from "@zbav-se.me/ui/sheet";
-import ScrollTrigger from "gsap/ScrollTrigger";
-import {
-	type FC,
-	useCallback,
-	useEffect,
-	useId,
-	useRef,
-	useState,
-} from "react";
+import { type FC, useEffect, useId, useRef } from "react";
 import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -45,63 +36,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		refetchOnWindowFocus: true,
 	});
 	const containerRef = useRef<HTMLDivElement>(null);
-	const visiblesRef = useRef<Set<string>>(new Set<string>());
-	const [visibles, setVisibles] = useState(() => new Set<string>());
-
-	const schedule = useCallback(
-		(elements: HTMLElement[], isVisible: boolean) => {
-			elements.forEach((element) => {
-				const id = element.dataset.id;
-				if (!id) {
-					return;
-				}
-
-				if (isVisible) {
-					visiblesRef.current.add(id);
-				} else {
-					visiblesRef.current.delete(id);
-				}
-			});
-
-			/**
-			 * We've to immediately set the visibles set or timeout may trigger false visibility and send score event when
-			 * it should not.
-			 */
-			setVisibles(() => {
-				return new Set<string>(visiblesRef.current);
-			});
-		},
-		[],
-	);
-
-	useAnim(
-		() => {
-			ScrollTrigger.batch(".ListingPreview-root", {
-				scroller: containerRef.current,
-				start: "top bottom",
-				end: "bottom top",
-				onEnter(self) {
-					schedule(self as HTMLElement[], true);
-				},
-				onEnterBack(self) {
-					schedule(self as HTMLElement[], true);
-				},
-				onLeave(self) {
-					schedule(self as HTMLElement[], false);
-				},
-				onLeaveBack(self) {
-					schedule(self as HTMLElement[], false);
-				},
-			});
-		},
-		{
-			scope: containerRef,
-			dependencies: [
-				listingQuery.data,
-			],
-		},
-	);
-
 	const scrollTo = useScrollTo(containerRef);
 
 	useEffect(() => {
@@ -117,23 +51,55 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	return (
 		<Container
+			ref={containerRef}
 			ui="Feed-root"
-			height={"fit"}
+			layout={"vertical-full"}
+			snap={"vertical-start"}
 			{...props}
 		>
-			<Container
-				ui="Feed-Container"
-				key={listingId}
-				ref={containerRef}
-				layout={"vertical-full"}
-				snap={"vertical-start"}
-			>
-				{listingQuery.data.data.length === 0 ? (
+			{listingQuery.data.data.length === 0 ? (
+				<Status
+					ui="ListingList-empty"
+					key={`${listingId}-no-listings`}
+					icon={"icon-[streamline--sad-face-remix]"}
+					textTitle={"No listings (title)"}
+					action={
+						<LinkTo
+							to={"/$locale/buyer/feed/select"}
+							params={{
+								locale,
+							}}
+						>
+							<Button
+								iconEnabled={ArrowLeftIcon}
+								tone={"secondary"}
+								label={"Back to home (link)"}
+							/>
+						</LinkTo>
+					}
+				/>
+			) : null}
+
+			{listingQuery.data.data.map((listing) => {
+				return (
+					<ListingHeroContainer
+						key={`${listingId}-${listing.id}`}
+						containerRef={containerRef}
+						query={query}
+						listing={listing}
+						locale={locale}
+					/>
+				);
+			})}
+
+			{listingQuery.data.data.length > 0 ? (
+				<Sheet round={"unset"}>
 					<Status
-						ui="Feed-Status-empty"
-						key={`${listingId}-no-listings`}
-						icon={"icon-[streamline--sad-face-remix]"}
-						textTitle={"No listings (title)"}
+						icon={
+							"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
+						}
+						textTitle={"That's all for now (title)"}
+						textMessage={"No more listings to show (message)"}
 						action={
 							<LinkTo
 								to={"/$locale/buyer/feed/select"}
@@ -149,46 +115,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							</LinkTo>
 						}
 					/>
-				) : null}
-
-				{listingQuery.data.data.map((listing) => {
-					return (
-						<ListingHeroContainer
-							key={`${listingId}-${listing.id}`}
-							query={query}
-							listing={listing}
-							locale={locale}
-							isVisible={visibles.has(listing.id)}
-						/>
-					);
-				})}
-
-				{listingQuery.data.data.length > 0 ? (
-					<Sheet round={"unset"}>
-						<Status
-							icon={
-								"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
-							}
-							textTitle={"That's all for now (title)"}
-							textMessage={"No more listings to show (message)"}
-							action={
-								<LinkTo
-									to={"/$locale/buyer/feed/select"}
-									params={{
-										locale,
-									}}
-								>
-									<Button
-										iconEnabled={ArrowLeftIcon}
-										tone={"secondary"}
-										label={"Back to home (link)"}
-									/>
-								</LinkTo>
-							}
-						/>
-					</Sheet>
-				) : null}
-			</Container>
+				</Sheet>
+			) : null}
 		</Container>
 	);
 };
