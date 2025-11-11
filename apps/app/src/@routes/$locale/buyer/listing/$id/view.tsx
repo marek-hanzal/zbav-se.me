@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
@@ -10,6 +9,7 @@ import { withListingFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useEffect } from "react";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
+import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 	validateSearch: zListingQuery,
@@ -85,7 +85,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 						query={query}
 						listing={listingQuery.data}
 					>
-						<Button>toolbar</Button>
+						<ListingDetailMenu listing={listingQuery.data} />
 					</ListingDetailContainer>
 				</Container>
 			</TitleContainer>

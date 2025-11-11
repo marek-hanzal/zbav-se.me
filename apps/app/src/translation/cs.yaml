@@ -63,6 +63,9 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
+268f13190a629bd137dc802766a623af5fbbde39d57e2b4197131304:
+    ref: Nothing in cart yet (button)
+    value: Máš prázdný košík
 26bf011c1df847de349ef1ca0e52367fcb0b66002ce30651a188f965:
     ref: Listing - Seller info (title)
     value: Informace o prodejci
@@ -72,6 +75,9 @@
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
+2af48baae0e3a9ac9acf8ba4d1cb9527bd0ac47fd431f91b99b2dfd3:
+    ref: Go to feed (button)
+    value: Přejít k nabídkám
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
     ref: Next - title (button)
     value: Next - title (button)
@@ -201,6 +207,9 @@
 6f0c381fe28fafb75e2b708bfeefe7fefab6fb361cec10afd13b2374:
     ref: Next - age (button)
     value: Stáří
+704d700a9718605765b79e0b4f7c01628e9662830e560a3e08cec0cf:
+    ref: Your cart is empty - no feed (title)
+    value: Vytvoř si nabídku pro zobrazení inzerátů
 7091771a9dbd5b2bffb8b548f897776b359c5242f076ac937685580a:
     ref: Next - Feed age (button)
     value: Stáří
@@ -225,6 +234,9 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
     ref: Feed name (title)
     value: Vyber si název
+7e472530689c600917abb98ada2c43213c4477f22ac6cde0c7acfa8e:
+    ref: Add to cart (button)
+    value: Přidat do košíku
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
     ref: I want to sell (label)
     value: Chci prodávat
@@ -388,6 +400,11 @@ a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
 a7a95d03a84a9282e129c3a27bf77f9f0e8b749d22e277260b64c4b4:
     ref: Second tap to ignore listing (toast)
     value: Druhým kliknutím ignoruj inzerát
+a94a3441be22610442865891781e2d0943dd42a886646f3f93c4dc06:
+    ref: Your cart is empty - no feed (message)
+    value: |
+        Pro přidání inzerátů do košíku si vytvoř nabídku, ve které se ti zobrazí
+        inzeráty, které tě zajímají. Tam si pak nějaký můžeš přidat do košíku.
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
     ref: Your cart (title)
     value: Tvůj košík
@@ -435,6 +452,11 @@ b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
 b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
     ref: Listing Score - Ignore (label)
     value: Počet ignorací inzerátu
+b8bae7ce48064a4e0a2cb39f242622ece9bb3c7b040bdbddbbb57060:
+    ref: Your cart is empty - feed (message)
+    value: |
+        Zatím v košíku nic nemáš - koukni do nabídek a z nich si pak
+        něco přidej!
 b8fe81073164a598978b3692d0332bccff635f6946c9a8dd409323fc:
     ref: Listing Score - Ignore - no value (label)
     value: Čerstvý inzerát
@@ -444,6 +466,9 @@ ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     ref: Location search (placeholder)
     value: Napiš město, kraj, co tě napadne
+bb2826b23a357a691367f19c4467302f374041ded8c9a75b8abe866c:
+    ref: Your cart is empty - feed (title)
+    value: Hoď si něco do košíku v nabídkách
 bd37dcaef82ca084b52f531c8665ed9ebd91809eae1b430693aa3c00:
     ref: Listing Score - Flag - no value (label)
     value: Čerstvý inzerát
@@ -453,6 +478,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
+bf14eea343ed184a8fe9160210305d3bbacfce9413efb44d366635dd:
+    ref: Remove from cart (button)
+    value: Odebrat z košíku
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
     value: Všechno
@@ -522,12 +550,18 @@ da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
     ref: Loading... (toast)
     value: ...rozjímám, momentík prosím...
+dc8a5604f1b9115b53ec4d872f7412328bb63401b0d48651c5e8cbac:
+    ref: Preparing cart feed (title)
+    value: Připravuji košík...
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
     ref: "0"
     value: "0"
 e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
     ref: Listing removed from your cart (toast)
     value: Inzerát byl úspěšně odebrán z košíku.
+e2599c3b9d828a48f101d8e9d763a3fa348b11675f80809790e980a7:
+    ref: Go to cart (button)
+    value: Přejít do košíku
 e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
     ref: Submit (subtitle)
     value: Zkontrolujte inzerát před odesláním
@@ -566,9 +600,9 @@ f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
 f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
     ref: Listing title (placeholder)
     value: Např. "iPhone 14 Pro Max, 256GB, černá"
-f3a1d3a16d19de857a187c07a5927e1b99afb7bd2c6b43d617d3b947:
-    ref: No listings found (label)
-    value: Tad nic nenajdeš 😭
+f40aebfe8ac1d83e7b93e069db67a2a93e47c887cab40eb726e6dc1f:
+    ref: Go to feed wizard (button)
+    value: Vytvořit nabídku
 f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
     ref: Second tap to unflag listing (toast)
     value: Druhým kliknutím zruš nahlášení inzerátu

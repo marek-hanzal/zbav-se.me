@@ -5,6 +5,7 @@ export { withCategoryFetchQuery } from "./withCategoryFetchQuery";
 export { withFeedCollectionQuery } from "./withFeedCollectionQuery";
 export { withFeedCountQuery } from "./withFeedCountQuery";
 export { withFeedFetchQuery } from "./withFeedFetchQuery";
+export { withListingCartCountQuery } from "./withListingCartCountQuery";
 export { withListingCollectionQuery } from "./withListingCollectionQuery";
 export { withListingCountQuery } from "./withListingCountQuery";
 export { withListingFetchQuery } from "./withListingFetchQuery";
