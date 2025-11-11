@@ -9,6 +9,7 @@ export { ClearFilterIcon } from "./ClearFilterIcon";
 export { ClearIcon } from "./ClearIcon";
 export { ConditionIcon } from "./ConditionIcon";
 export { DashboardIcon } from "./DashboardIcon";
+export { DeadEndIcon } from "./DeadEndIcon";
 export { EmailIcon } from "./EmailIcon";
 export { ExpireIcon } from "./ExpireIcon";
 export { FeedIcon } from "./FeedIcon";

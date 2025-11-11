@@ -1072,6 +1072,9 @@ export const sListingWhere = {
         },
         withIgnored: {
             type: 'boolean'
+        },
+        inCart: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1201,6 +1204,9 @@ export const sListingFilter = {
             type: 'boolean'
         },
         withIgnored: {
+            type: 'boolean'
+        },
+        inCart: {
             type: 'boolean'
         }
     }

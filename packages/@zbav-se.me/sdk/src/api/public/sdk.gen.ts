@@ -24,13 +24,9 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  */
 export const apiHealth = <ThrowOnError extends boolean = false>(options?: Options<tApiHealthRequest, ThrowOnError>) => {
     return (options?.client ?? client).get<tApiHealthResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiHealthData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiHealthData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiHealthResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
         url: '/api/public/health',
         ...options
     });

@@ -90,6 +90,9 @@ export const ListingFilterSchema = z
 		withIgnored: z.boolean().optional().openapi({
 			description: "Include ignored listings",
 		}),
+		inCart: z.boolean().optional().openapi({
+			description: "Show listing that are in the user's cart",
+		}),
 	})
 	.openapi("ListingFilter", {
 		description: "User-land filters",

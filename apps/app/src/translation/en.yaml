@@ -172,6 +172,9 @@
 591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
   ref: Logout (description)
   value: Logout (description)
+59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
+  ref: Go to feed (link)
+  value: Go to feed (link)
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
@@ -187,6 +190,9 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
+5fa006f1c7ffd0d4762ce60de46e8e4cd93835200eba2aaf0c6ba6ef:
+  ref: That's all for now - cart (title)
+  value: That's all for now - cart (title)
 63b7339dbc11bd2ed8261905a9dfd6355cd7752429f212f0d1ccafb3:
   ref: Listing Score - Cart - no value (label)
   value: Listing Score - Cart - no value (label)
@@ -373,6 +379,9 @@ bb2826b23a357a691367f19c4467302f374041ded8c9a75b8abe866c:
 bd37dcaef82ca084b52f531c8665ed9ebd91809eae1b430693aa3c00:
   ref: Listing Score - Flag - no value (label)
   value: Listing Score - Flag - no value (label)
+bd4c51483b9569475fa4f392deecd1f59492bf9e37050db9a96a80b4:
+  ref: Back to cart (link)
+  value: Back to cart (link)
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
   ref: Missing identity for an Entity (id). I'm sorry, but I cannot provide better
     message than this :(
@@ -516,6 +525,9 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 fe633b89a7442d13ce7a77b20e737f97621b035d39f11fd18378be56:
   ref: Second tap to remove from cart (toast)
   value: Second tap to remove from cart (toast)
+ff197626edbd1fc74cd98027a66223dbad02ff75c217da7af38d83a1:
+  ref: No more listings to show - cart (message)
+  value: No more listings to show - cart (message)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
   ref: Next - condition (button)
   value: Next - condition (button)

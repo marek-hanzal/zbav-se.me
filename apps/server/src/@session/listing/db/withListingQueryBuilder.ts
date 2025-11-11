@@ -109,5 +109,16 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		);
 	}
 
+	if (where.inCart === true) {
+		query = query.where(({ exists, selectFrom }) =>
+			exists(
+				selectFrom("listing_cart as lc")
+					.select("lc.listingId")
+					.whereRef("lc.listingId", "=", "l.id")
+					.where("lc.userId", "=", userId),
+			),
+		);
+	}
+
 	return query;
 };

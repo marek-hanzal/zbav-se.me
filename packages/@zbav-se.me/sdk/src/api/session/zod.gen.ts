@@ -1164,6 +1164,9 @@ export const zListingWhere = z.object({
     })),
     withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Include ignored listings'
+    })),
+    inCart: z.optional(z.boolean().register(z.globalRegistry, {
+        description: "Show listing that are in the user's cart"
     }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -1228,6 +1231,9 @@ export const zListingFilter = z.object({
     })),
     withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Include ignored listings'
+    })),
+    inCart: z.optional(z.boolean().register(z.globalRegistry, {
+        description: "Show listing that are in the user's cart"
     }))
 }).register(z.globalRegistry, {
     description: 'User-land filters'

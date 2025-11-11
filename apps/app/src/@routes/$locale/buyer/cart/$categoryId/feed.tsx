@@ -1,6 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
+import { DeadEndIcon } from "@zbav-se.me/ui/icon";
+import { Sheet } from "@zbav-se.me/ui/sheet";
 import z from "zod";
 import { ListingListContainer } from "~/app/feed/ui/ListingListContainer";
 
@@ -18,6 +24,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 		);
 	},
 	component() {
+		const { locale } = Route.useParams();
 		const { scrollToListingId } = Route.useSearch();
 		const { categoryId } = Route.useParams();
 
@@ -26,6 +33,8 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 				query={{
 					where: {
 						categoryId,
+						inCart: true,
+						withIgnored: false,
 					},
 					/**
 					 * Cursor is hardcoded, so only first 200 listings are fetched.
@@ -42,6 +51,55 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 					],
 				}}
 				scrollToListingId={scrollToListingId}
+				appendix={
+					<Sheet round={"unset"}>
+						<Status
+							icon={DeadEndIcon}
+							textTitle={"That's all for now - cart (title)"}
+							textMessage={
+								"No more listings to show - cart (message)"
+							}
+							action={
+								<div
+									className={
+										"flex flex-col gap-2 items-center justify-center w-full"
+									}
+								>
+									<LinkTo
+										to={"/$locale/buyer/cart/list"}
+										params={{
+											locale,
+										}}
+										full
+									>
+										<Button
+											iconEnabled={ArrowLeftIcon}
+											tone={"secondary"}
+											label={"Back to cart (link)"}
+											full
+										/>
+									</LinkTo>
+
+									<LinkTo
+										to={"/$locale/buyer/feed/select"}
+										params={{
+											locale,
+										}}
+										full
+									>
+										<Button
+											iconEnabled={ArrowRightIcon}
+											iconPosition={"right"}
+											tone={"secondary"}
+											label={"Go to feed (link)"}
+											full
+										/>
+									</LinkTo>
+								</div>
+							}
+						/>
+					</Sheet>
+				}
 			/>
 		);
 	},

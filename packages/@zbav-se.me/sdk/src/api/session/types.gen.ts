@@ -1037,6 +1037,10 @@ export type tListingWhere = {
      * Include ignored listings
      */
     withIgnored?: boolean;
+    /**
+     * Show listing that are in the user's cart
+     */
+    inCart?: boolean;
 };
 
 /**
@@ -1156,6 +1160,10 @@ export type tListingFilter = {
      * Include ignored listings
      */
     withIgnored?: boolean;
+    /**
+     * Show listing that are in the user's cart
+     */
+    inCart?: boolean;
 };
 
 /**

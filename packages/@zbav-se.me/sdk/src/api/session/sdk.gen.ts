@@ -24,13 +24,9 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  */
 export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryFetchRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiCategoryFetchResponse, apiCategoryFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiCategoryFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiCategoryFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiCategoryFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiCategoryFetchResponse.parseAsync(data),
         url: '/api/session/category/fetch',
         ...options,
         headers: {
@@ -45,13 +41,9 @@ export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?:
  */
 export const apiCategoryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiCategoryCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiCategoryCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiCategoryCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiCategoryCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiCategoryCollectionResponse.parseAsync(data),
         url: '/api/session/category/collection',
         ...options,
         headers: {
@@ -66,13 +58,9 @@ export const apiCategoryCollection = <ThrowOnError extends boolean = false>(opti
  */
 export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiCategoryCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiCategoryCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiCategoryCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiCategoryCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiCategoryCountResponse.parseAsync(data),
         url: '/api/session/category/count',
         ...options,
         headers: {
@@ -87,13 +75,9 @@ export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?:
  */
 export const apiCategoryCartCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCartCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiCategoryCartCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiCategoryCartCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiCategoryCartCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiCategoryCartCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiCategoryCartCollectionResponse.parseAsync(data),
         url: '/api/session/category-cart/collection',
         ...options,
         headers: {
@@ -108,13 +92,9 @@ export const apiCategoryCartCollection = <ThrowOnError extends boolean = false>(
  */
 export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCreateRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiFeedCreateResponse, apiFeedCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiFeedCreateData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiFeedCreateData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiFeedCreateResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiFeedCreateResponse.parseAsync(data),
         url: '/api/session/feed/create',
         ...options,
         headers: {
@@ -129,13 +109,9 @@ export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Op
  */
 export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedPatchRequest, ThrowOnError>) => {
     return (options?.client ?? client).patch<tApiFeedPatchResponse, apiFeedPatchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiFeedPatchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiFeedPatchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiFeedPatchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiFeedPatchResponse.parseAsync(data),
         url: '/api/session/feed/patch',
         ...options,
         headers: {
@@ -150,13 +126,9 @@ export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Opt
  */
 export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFetchRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiFeedFetchResponse, apiFeedFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiFeedFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiFeedFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiFeedFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiFeedFetchResponse.parseAsync(data),
         url: '/api/session/feed/fetch',
         ...options,
         headers: {
@@ -171,13 +143,9 @@ export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Opt
  */
 export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiFeedCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiFeedCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiFeedCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiFeedCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiFeedCollectionResponse.parseAsync(data),
         url: '/api/session/feed/collection',
         ...options,
         headers: {
@@ -192,13 +160,9 @@ export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?
  */
 export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiFeedCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiFeedCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiFeedCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiFeedCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiFeedCountResponse.parseAsync(data),
         url: '/api/session/feed/count',
         ...options,
         headers: {
@@ -213,13 +177,9 @@ export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Opt
  */
 export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedDeleteRequest, ThrowOnError>) => {
     return (options?.client ?? client).delete<tApiFeedDeleteResponse, apiFeedDeleteErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiFeedDeleteData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiFeedDeleteData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiFeedDeleteResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiFeedDeleteResponse.parseAsync(data),
         url: '/api/session/feed/delete',
         ...options,
         headers: {
@@ -234,13 +194,9 @@ export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Op
  */
 export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryFetchRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiGalleryFetchResponse, apiGalleryFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiGalleryFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiGalleryFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiGalleryFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiGalleryFetchResponse.parseAsync(data),
         url: '/api/session/gallery/fetch',
         ...options,
         headers: {
@@ -255,13 +211,9 @@ export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiGalleryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiGalleryCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiGalleryCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiGalleryCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiGalleryCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiGalleryCollectionResponse.parseAsync(data),
         url: '/api/session/gallery/collection',
         ...options,
         headers: {
@@ -276,13 +228,9 @@ export const apiGalleryCollection = <ThrowOnError extends boolean = false>(optio
  */
 export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiGalleryCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiGalleryCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiGalleryCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiGalleryCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiGalleryCountResponse.parseAsync(data),
         url: '/api/session/gallery/count',
         ...options,
         headers: {
@@ -297,13 +245,9 @@ export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiListingCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCreateRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingCreateResponse, apiListingCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingCreateData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingCreateData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingCreateResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingCreateResponse.parseAsync(data),
         url: '/api/session/listing/create',
         ...options,
         headers: {
@@ -318,13 +262,9 @@ export const apiListingCreate = <ThrowOnError extends boolean = false>(options?:
  */
 export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingFetchResponse, apiListingFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
         url: '/api/session/listing/fetch',
         ...options,
         headers: {
@@ -339,13 +279,9 @@ export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
         url: '/api/session/listing/collection',
         ...options,
         headers: {
@@ -360,13 +296,9 @@ export const apiListingCollection = <ThrowOnError extends boolean = false>(optio
  */
 export const apiListingCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
         url: '/api/session/listing/count',
         ...options,
         headers: {
@@ -381,13 +313,9 @@ export const apiListingCount = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiListingMetricsFetch = <ThrowOnError extends boolean = false>(options: Options<tApiListingMetricsFetchRequest, ThrowOnError>) => {
     return (options.client ?? client).get<tApiListingMetricsFetchResponse, apiListingMetricsFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingMetricsFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingMetricsFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingMetricsFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingMetricsFetchResponse.parseAsync(data),
         url: '/api/session/listing/{id}/metrics',
         ...options
     });
@@ -398,13 +326,9 @@ export const apiListingMetricsFetch = <ThrowOnError extends boolean = false>(opt
  */
 export const apiListingCartCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingCartCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingCartCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingCartCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingCartCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingCartCollectionResponse.parseAsync(data),
         url: '/api/session/listing-cart/collection',
         ...options,
         headers: {
@@ -419,13 +343,9 @@ export const apiListingCartCollection = <ThrowOnError extends boolean = false>(o
  */
 export const apiListingCartCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingCartCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingCartCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingCartCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingCartCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingCartCountResponse.parseAsync(data),
         url: '/api/session/listing-cart/count',
         ...options,
         headers: {
@@ -440,12 +360,8 @@ export const apiListingCartCount = <ThrowOnError extends boolean = false>(option
  */
 export const apiListingCartToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartToggleRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingCartToggleResponse, apiListingCartToggleErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingCartToggleData.parseAsync(data);
-        },
-        responseValidator: async (data) => {
-            return await zApiListingCartToggleResponse.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingCartToggleData.parseAsync(data),
+        responseValidator: async (data) => await zApiListingCartToggleResponse.parseAsync(data),
         url: '/api/session/listing-cart/toggle',
         ...options,
         headers: {
@@ -460,13 +376,9 @@ export const apiListingCartToggle = <ThrowOnError extends boolean = false>(optio
  */
 export const apiListingIgnoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingIgnoreCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingIgnoreCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingIgnoreCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingIgnoreCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingIgnoreCollectionResponse.parseAsync(data),
         url: '/api/session/listing-ignore/collection',
         ...options,
         headers: {
@@ -481,13 +393,9 @@ export const apiListingIgnoreCollection = <ThrowOnError extends boolean = false>
  */
 export const apiListingIgnoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingIgnoreCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingIgnoreCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingIgnoreCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingIgnoreCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingIgnoreCountResponse.parseAsync(data),
         url: '/api/session/listing-ignore/count',
         ...options,
         headers: {
@@ -502,12 +410,8 @@ export const apiListingIgnoreCount = <ThrowOnError extends boolean = false>(opti
  */
 export const apiListingIgnoreToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreToggleRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingIgnoreToggleResponse, apiListingIgnoreToggleErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingIgnoreToggleData.parseAsync(data);
-        },
-        responseValidator: async (data) => {
-            return await zApiListingIgnoreToggleResponse.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingIgnoreToggleData.parseAsync(data),
+        responseValidator: async (data) => await zApiListingIgnoreToggleResponse.parseAsync(data),
         url: '/api/session/listing-ignore/toggle',
         ...options,
         headers: {
@@ -522,13 +426,9 @@ export const apiListingIgnoreToggle = <ThrowOnError extends boolean = false>(opt
  */
 export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingFlagCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingFlagCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingFlagCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingFlagCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingFlagCollectionResponse.parseAsync(data),
         url: '/api/session/listing-flag/collection',
         ...options,
         headers: {
@@ -543,13 +443,9 @@ export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(o
  */
 export const apiListingFlagCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingFlagCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingFlagCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingFlagCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingFlagCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingFlagCountResponse.parseAsync(data),
         url: '/api/session/listing-flag/count',
         ...options,
         headers: {
@@ -564,12 +460,8 @@ export const apiListingFlagCount = <ThrowOnError extends boolean = false>(option
  */
 export const apiListingFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagToggleRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingFlagToggleResponse, apiListingFlagToggleErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingFlagToggleData.parseAsync(data);
-        },
-        responseValidator: async (data) => {
-            return await zApiListingFlagToggleResponse.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingFlagToggleData.parseAsync(data),
+        responseValidator: async (data) => await zApiListingFlagToggleResponse.parseAsync(data),
         url: '/api/session/listing-flag/toggle',
         ...options,
         headers: {
@@ -584,13 +476,9 @@ export const apiListingFlagToggle = <ThrowOnError extends boolean = false>(optio
  */
 export const apiListingScoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingScoreCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingScoreCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingScoreCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingScoreCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingScoreCollectionResponse.parseAsync(data),
         url: '/api/session/listing-score/collection',
         ...options,
         headers: {
@@ -605,13 +493,9 @@ export const apiListingScoreCollection = <ThrowOnError extends boolean = false>(
  */
 export const apiListingScoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingScoreCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingScoreCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingScoreCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingScoreCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiListingScoreCountResponse.parseAsync(data),
         url: '/api/session/listing-score/count',
         ...options,
         headers: {
@@ -626,9 +510,7 @@ export const apiListingScoreCount = <ThrowOnError extends boolean = false>(optio
  */
 export const apiListingScoreCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCreateRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiListingScoreCreateResponse, apiListingScoreCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingScoreCreateData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiListingScoreCreateData.parseAsync(data),
         url: '/api/session/listing-score/create',
         ...options,
         headers: {
@@ -643,13 +525,9 @@ export const apiListingScoreCreate = <ThrowOnError extends boolean = false>(opti
  */
 export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiLocationAutocompleteResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiLocationAutocompleteData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiLocationAutocompleteData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiLocationAutocompleteResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiLocationAutocompleteResponse.parseAsync(data),
         url: '/api/session/location/autocomplete',
         ...options,
         headers: {
@@ -664,13 +542,9 @@ export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(op
  */
 export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationFetchRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiLocationFetchResponse, apiLocationFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiLocationFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiLocationFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiLocationFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiLocationFetchResponse.parseAsync(data),
         url: '/api/session/location/fetch',
         ...options,
         headers: {
@@ -685,13 +559,9 @@ export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?:
  */
 export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Options<tApiS3PresignRequest, ThrowOnError>) => {
     return (options.client ?? client).post<tApiS3PresignResponse, apiS3PresignErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiS3PresignData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiS3PresignData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiS3PresignResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiS3PresignResponse.parseAsync(data),
         url: '/api/session/s3/pre-sign',
         ...options,
         headers: {
@@ -706,13 +576,9 @@ export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Opti
  */
 export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCreateRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiUploadCreateResponse, apiUploadCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiUploadCreateData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiUploadCreateData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiUploadCreateResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiUploadCreateResponse.parseAsync(data),
         url: '/api/session/upload/create',
         ...options,
         headers: {
@@ -727,13 +593,9 @@ export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: 
  */
 export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiUploadFetchData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiUploadFetchResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
         url: '/api/session/upload/fetch',
         ...options,
         headers: {
@@ -748,13 +610,9 @@ export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: O
  */
 export const apiUploadCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCollectionRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiUploadCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiUploadCollectionData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiUploadCollectionData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiUploadCollectionResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiUploadCollectionResponse.parseAsync(data),
         url: '/api/session/upload/collection',
         ...options,
         headers: {
@@ -769,13 +627,9 @@ export const apiUploadCollection = <ThrowOnError extends boolean = false>(option
  */
 export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCountRequest, ThrowOnError>) => {
     return (options?.client ?? client).post<tApiUploadCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiUploadCountData.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiUploadCountData.parseAsync(data),
         responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiUploadCountResponse.parseAsync(data);
-        },
+        responseValidator: async (data) => await zApiUploadCountResponse.parseAsync(data),
         url: '/api/session/upload/count',
         ...options,
         headers: {
@@ -790,12 +644,8 @@ export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: O
  */
 export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiUserExPatchRequest, ThrowOnError>) => {
     return (options?.client ?? client).patch<tApiUserExPatchResponse, apiUserExPatchErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiUserExPatchData.parseAsync(data);
-        },
-        responseValidator: async (data) => {
-            return await zApiUserExPatchResponse.parseAsync(data);
-        },
+        requestValidator: async (data) => await zApiUserExPatchData.parseAsync(data),
+        responseValidator: async (data) => await zApiUserExPatchResponse.parseAsync(data),
         url: '/api/session/user-ex',
         ...options,
         headers: {

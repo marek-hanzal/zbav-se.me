@@ -7,8 +7,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import { Sheet } from "@zbav-se.me/ui/sheet";
-import { type FC, useEffect, useId, useRef } from "react";
+import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
 import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -18,12 +17,14 @@ export namespace ListingListContainer {
 		 * Listing ID to scroll to
 		 */
 		scrollToListingId?: string;
+		appendix?: ReactNode;
 	}
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	query,
 	scrollToListingId,
+	appendix,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -91,31 +92,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				);
 			})}
 
-			{listingQuery.data.data.length > 0 ? (
-				<Sheet round={"unset"}>
-					<Status
-						icon={
-							"icon-[streamline-ultimate--road-sign-hairpin-turn-left]"
-						}
-						textTitle={"That's all for now (title)"}
-						textMessage={"No more listings to show (message)"}
-						action={
-							<LinkTo
-								to={"/$locale/buyer/feed/select"}
-								params={{
-									locale,
-								}}
-							>
-								<Button
-									iconEnabled={ArrowLeftIcon}
-									tone={"secondary"}
-									label={"Back to home (link)"}
-								/>
-							</LinkTo>
-						}
-					/>
-				</Sheet>
-			) : null}
+			{listingQuery.data.data.length > 0 ? appendix : null}
 		</Container>
 	);
 };
