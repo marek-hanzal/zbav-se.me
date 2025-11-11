@@ -1,13 +1,17 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common/schema";
+import { OrderSchema } from "../../../schema/OrderSchema";
 
 export const FeedSortSchema = z
 	.object({
-		value: z.enum([
-			"createdAt",
-			"updatedAt",
-		]),
-		sort: OrderSchema,
+		field: z
+			.enum([
+				"createdAt",
+				"updatedAt",
+			])
+			.openapi("FeedSortField", {
+				description: "Field of the feed sort",
+			}),
+		direction: OrderSchema,
 	})
 	.openapi("FeedSort", {
 		description: "Sort object for feed collection",

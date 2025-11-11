@@ -107,33 +107,34 @@ export const withListingSelect = ({
 		]);
 
 	for (const item of sort ?? []) {
-		if (!item.sort) {
-			return query;
-		}
-		const { sort, value } = item;
+		return match(item.field)
+			.with("price", () => query.orderBy("l.price", item.direction))
+			.with("condition", () =>
+				query.orderBy("l.condition", item.direction),
+			)
+			.with("age", () => query.orderBy("l.age", item.direction))
+			.with("createdAt", () =>
+				query.orderBy("l.createdAt", item.direction),
+			)
+			.with("updatedAt", () =>
+				query.orderBy("l.updatedAt", item.direction),
+			)
+			.with("expiresAt", () =>
+				query.orderBy("l.expiresAt", item.direction),
+			)
+			.with("geo", () => {
+				if (!meta?.latLon) {
+					return query;
+				}
+				const { lon, lat } = meta.latLon;
 
-		return (
-			match(value)
-				.with("price", () => query.orderBy("l.price", sort))
-				.with("condition", () => query.orderBy("l.condition", sort))
-				.with("age", () => query.orderBy("l.age", sort))
-				.with("createdAt", () => query.orderBy("l.createdAt", sort))
-				.with("updatedAt", () => query.orderBy("l.updatedAt", sort))
-				.with("expiresAt", () => query.orderBy("l.expiresAt", sort))
-				// .with("embedding", () => query.orderBy("l.expiresAt", sort))
-				.with("geo", () => {
-					if (!meta?.latLon) {
-						return query;
-					}
-					const { lon, lat } = meta.latLon;
-
-					return query.orderBy(
-						(eb) =>
-							sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)`,
-					);
-				})
-				.exhaustive()
-		);
+				return query.orderBy(
+					(eb) =>
+						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)`,
+					item.direction,
+				);
+			})
+			.exhaustive();
 	}
 
 	return query;

@@ -13,8 +13,8 @@ import type {
 	tListingCollection,
 	tListingQuery,
 } from "@zbav-se.me/sdk/api/session";
-import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation";
-import { withListingCollectionQuery } from "@zbav-se.me/sdk/query";
+import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { type FC, memo, useCallback, useEffect, useRef, useState } from "react";

@@ -15,14 +15,11 @@ export const withUploadSelect = ({ sort }: withUploadSelect.Props = {}) => {
 		"u.url",
 	]);
 
-	for (const sortItem of sort ?? []) {
-		if (!sortItem.sort) {
-			continue;
-		}
-		const { sort, value } = sortItem;
-
-		query = match(value)
-			.with("createdAt", () => query.orderBy("u.createdAt", sort))
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("createdAt", () =>
+				query.orderBy("u.createdAt", item.direction),
+			)
 			.exhaustive();
 	}
 

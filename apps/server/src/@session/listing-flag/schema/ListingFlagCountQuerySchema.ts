@@ -9,7 +9,7 @@ export const ListingFlagCountQuerySchema = z
 		}).optional(),
 	})
 	.openapi("ListingFlagCountQuery", {
-		description: "Query object for listing flag counts",
+		description: "Query object for listing flag count",
 	});
 
 export type ListingFlagCountQuerySchema = typeof ListingFlagCountQuerySchema;

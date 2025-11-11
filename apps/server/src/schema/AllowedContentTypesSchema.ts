@@ -12,8 +12,7 @@ const AllowedContentTypes = [
 export const AllowedContentTypesSchema = z
 	.enum(AllowedContentTypes)
 	.openapi("AllowedContentTypes", {
-		description: "Browser-provided Content-Type used for PUT upload.",
-		example: "image/webp",
+		description: "Allowed content types",
 	});
 
 export type AllowedContentTypesSchema = typeof AllowedContentTypesSchema;

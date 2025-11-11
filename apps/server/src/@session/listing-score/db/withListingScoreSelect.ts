@@ -22,14 +22,11 @@ export const withListingScoreSelect = ({
 	]);
 
 	for (const item of sort ?? []) {
-		if (!item.sort) {
-			return query;
-		}
-		const { sort, value } = item;
-
-		return match(value)
-			.with("score", () => query.orderBy("ls.score", sort))
-			.with("createdAt", () => query.orderBy("ls.createdAt", sort))
+		return match(item.field)
+			.with("score", () => query.orderBy("ls.score", item.direction))
+			.with("createdAt", () =>
+				query.orderBy("ls.createdAt", item.direction),
+			)
 			.exhaustive();
 	}
 

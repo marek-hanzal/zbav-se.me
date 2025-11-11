@@ -3,5 +3,4 @@
 export type * from './types.gen';
 export * from './client.gen';
 export * from './zod.gen';
-export * from './schemas.gen';
 export * from './sdk.gen';

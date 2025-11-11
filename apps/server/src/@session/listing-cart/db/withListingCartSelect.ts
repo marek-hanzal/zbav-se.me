@@ -20,13 +20,10 @@ export const withListingCartSelect = ({
 	]);
 
 	for (const item of sort ?? []) {
-		if (!item.sort) {
-			return query;
-		}
-		const { sort, value } = item;
-
-		return match(value)
-			.with("createdAt", () => query.orderBy("lc.createdAt", sort))
+		return match(item.field)
+			.with("createdAt", () =>
+				query.orderBy("lc.createdAt", item.direction),
+			)
 			.exhaustive();
 	}
 

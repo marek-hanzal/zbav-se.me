@@ -16,7 +16,7 @@ export const CountSchema = z
 		}),
 	})
 	.openapi("Count", {
-		description: "Complex count of items based on provided query.",
+		description: "Count data",
 	});
 
 export type CountSchema = typeof CountSchema;

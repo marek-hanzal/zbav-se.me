@@ -1,13 +1,17 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common/schema";
+import { OrderSchema } from "../../../schema/OrderSchema";
 
 export const GallerySortSchema = z
 	.object({
-		value: z.enum([
-			"sort",
-			"createdAt",
-		]),
-		sort: OrderSchema,
+		field: z
+			.enum([
+				"sort",
+				"createdAt",
+			])
+			.openapi("GallerySortField", {
+				description: "Field of the gallery sort",
+			}),
+		direction: OrderSchema,
 	})
 	.openapi("GallerySort", {
 		description: "Sort object for gallery collection",

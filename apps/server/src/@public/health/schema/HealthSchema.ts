@@ -1,14 +1,10 @@
 import { z } from "@hono/zod-openapi";
 
-export const HealthSchema = z
-	.object({
-		status: z.boolean().openapi({
-			description: "Health status",
-		}),
-	})
-	.openapi("Health", {
-		description: "Health check response",
-	});
+export const HealthSchema = z.object({
+	status: z.boolean().openapi({
+		description: "Health status",
+	}),
+});
 
 export type HealthSchema = typeof HealthSchema;
 

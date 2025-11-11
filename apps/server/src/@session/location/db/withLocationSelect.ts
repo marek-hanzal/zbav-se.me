@@ -33,17 +33,14 @@ export const withLocationSelect = ({
 		"l.lon",
 	]);
 
-	for (const sortItem of sort ?? []) {
-		if (!sortItem.sort) {
-			continue;
-		}
-		const { sort: key, value } = sortItem;
-
-		query = match(value)
-			.with("confidence", () => query.orderBy("l.confidence", key))
-			.with("query", () => query.orderBy("l.query", key))
-			.with("country", () => query.orderBy("l.country", key))
-			.with("address", () => query.orderBy("l.address", key))
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("confidence", () =>
+				query.orderBy("l.confidence", item.direction),
+			)
+			.with("query", () => query.orderBy("l.query", item.direction))
+			.with("country", () => query.orderBy("l.country", item.direction))
+			.with("address", () => query.orderBy("l.address", item.direction))
 			.exhaustive();
 	}
 

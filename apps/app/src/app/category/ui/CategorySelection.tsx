@@ -7,7 +7,7 @@ import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query";
+import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { type FC, type RefObject, useEffect, useRef, useState } from "react";
@@ -39,8 +39,8 @@ export const CategorySelection: FC<CategorySelection.Props> = ({
 		},
 		sort: [
 			{
-				value: "sort",
-				sort: "asc",
+				field: "sort",
+				direction: "asc",
 			},
 		],
 	});

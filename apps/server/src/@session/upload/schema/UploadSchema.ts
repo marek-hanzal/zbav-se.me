@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UploadDbSchema } from "./UploadDbSchema";
+import { UploadDbSchema } from "../../../app/upload/schema/UploadDbSchema";
 
 export const UploadSchema = z
 	.object({
@@ -10,7 +10,7 @@ export const UploadSchema = z
 		createdAt: true,
 	})
 	.openapi("Upload", {
-		description: "Upload data transfer object",
+		description: "Upload file metadata",
 	});
 
 export type UploadSchema = typeof UploadSchema;

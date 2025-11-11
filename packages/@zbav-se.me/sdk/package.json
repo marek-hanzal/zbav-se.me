@@ -25,9 +25,13 @@
 			"import": "./src/api/*/index.ts",
 			"require": "./src/api/*/index.ts"
 		},
-		"./*": {
-			"import": "./src/*/index.ts",
-			"require": "./src/*/index.ts"
+		"./mutation/*": {
+			"import": "./src/mutation/*/index.ts",
+			"require": "./src/mutation/*/index.ts"
+		},
+		"./query/*": {
+			"import": "./src/query/*/index.ts",
+			"require": "./src/query/*/index.ts"
 		}
 	}
 }

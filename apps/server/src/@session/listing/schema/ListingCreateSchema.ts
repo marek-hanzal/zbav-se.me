@@ -25,7 +25,7 @@ export const ListingCreateSchema = z
 		title: z.string().min(5).max(72).openapi({
 			description: "Title of the item",
 		}),
-		description: z.string().max(2048).nullish().openapi({
+		description: z.string().max(2048).optional().openapi({
 			description: "Description of the item",
 		}),
 		uploadIds: z
@@ -37,11 +37,11 @@ export const ListingCreateSchema = z
 			}),
 	})
 	.openapi("ListingCreate", {
-		description: "Data required to create a new listing",
+		description: "Data for creating a new listing",
 	});
 
 export type ListingCreateSchema = typeof ListingCreateSchema;
 
 export namespace ListingCreateSchema {
-	export type Type = z.infer<typeof ListingCreateSchema>;
+	export type Type = z.infer<ListingCreateSchema>;
 }

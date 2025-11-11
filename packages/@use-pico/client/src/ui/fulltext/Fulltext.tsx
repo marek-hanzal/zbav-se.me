@@ -8,7 +8,7 @@ import { Icon } from "../../icon/Icon";
 import { FulltextCls } from "./FulltextCls";
 
 export namespace Fulltext {
-	export type Value = string | undefined | null;
+	export type Value = string | undefined;
 	export type State = StateType<Value>;
 	export type OnFulltext = (text: Value) => void;
 

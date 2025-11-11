@@ -3,21 +3,21 @@
 import { z } from 'zod';
 
 /**
- * User side - whether they are a seller or buyer
+ * Side of the user
  */
 export const zUserSide = z.enum([
     'seller',
     'buyer'
 ]).register(z.globalRegistry, {
-    description: 'User side - whether they are a seller or buyer'
+    description: 'Side of the user'
 });
 
 export type zUserSide = z.infer<typeof zUserSide>;
 
 /**
- * Schema for patching user extended information
+ * Data for patching a user ex
  */
-export const zUserPatch = z.object({
+export const zUserExPatch = z.object({
     locationId: z.optional(z.union([
         z.string(),
         z.null()
@@ -27,13 +27,13 @@ export const zUserPatch = z.object({
         z.null()
     ]))
 }).register(z.globalRegistry, {
-    description: 'Schema for patching user extended information'
+    description: 'Data for patching a user ex'
 });
 
-export type zUserPatch = z.infer<typeof zUserPatch>;
+export type zUserExPatch = z.infer<typeof zUserExPatch>;
 
 /**
- * Upload data transfer object
+ * Upload file metadata
  */
 export const zUpload = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -43,7 +43,7 @@ export const zUpload = z.object({
         description: 'Public URL to the uploaded file'
     })
 }).register(z.globalRegistry, {
-    description: 'Upload data transfer object'
+    description: 'Upload file metadata'
 });
 
 export type zUpload = z.infer<typeof zUpload>;
@@ -63,18 +63,36 @@ export const zUploadCollection = z.object({
 export type zUploadCollection = z.infer<typeof zUploadCollection>;
 
 /**
- * Sort object for upload collection
+ * Order
+ */
+export const zOrder = z.enum([
+    'asc',
+    'desc'
+]).register(z.globalRegistry, {
+    description: 'Order'
+});
+
+export type zOrder = z.infer<typeof zOrder>;
+
+/**
+ * Field for uploading a file
+ */
+export const zUploadSortField = z.enum([
+    'createdAt'
+]).register(z.globalRegistry, {
+    description: 'Field for uploading a file'
+});
+
+export type zUploadSortField = z.infer<typeof zUploadSortField>;
+
+/**
+ * Data for uploading a file
  */
 export const zUploadSort = z.object({
-    value: z.enum([
-        'createdAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zUploadSortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
-    description: 'Sort object for upload collection'
+    description: 'Data for uploading a file'
 });
 
 export type zUploadSort = z.infer<typeof zUploadSort>;
@@ -83,18 +101,15 @@ export type zUploadSort = z.infer<typeof zUploadSort>;
  * App-based filters
  */
 export const zUploadWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -102,23 +117,20 @@ export const zUploadWhere = z.object({
 export type zUploadWhere = z.infer<typeof zUploadWhere>;
 
 /**
- * User-land filters for upload items
+ * Data for uploading a file
  */
 export const zUploadFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    }))
 }).register(z.globalRegistry, {
-    description: 'User-land filters for upload items'
+    description: 'Data for uploading a file'
 });
 
 export type zUploadFilter = z.infer<typeof zUploadFilter>;
@@ -140,7 +152,7 @@ export const zCursor = z.object({
 export type zCursor = z.infer<typeof zCursor>;
 
 /**
- * Query object for upload collection
+ * Data for uploading a file
  */
 export const zUploadQuery = z.object({
     cursor: z.optional(zCursor),
@@ -148,7 +160,7 @@ export const zUploadQuery = z.object({
     where: z.optional(zUploadWhere),
     sort: z.optional(z.array(zUploadSort))
 }).register(z.globalRegistry, {
-    description: 'Query object for upload collection'
+    description: 'Data for uploading a file'
 });
 
 export type zUploadQuery = z.infer<typeof zUploadQuery>;
@@ -167,7 +179,7 @@ export const zUploadCreate = z.object({
 export type zUploadCreate = z.infer<typeof zUploadCreate>;
 
 /**
- * Browser-provided Content-Type used for PUT upload.
+ * Allowed content types
  */
 export const zAllowedContentTypes = z.enum([
     'image/jpeg',
@@ -177,13 +189,13 @@ export const zAllowedContentTypes = z.enum([
     'image/heic',
     'image/heif'
 ]).register(z.globalRegistry, {
-    description: 'Browser-provided Content-Type used for PUT upload.'
+    description: 'Allowed content types'
 });
 
 export type zAllowedContentTypes = z.infer<typeof zAllowedContentTypes>;
 
 /**
- * File extension. Must be one of the allowed extensions.
+ * Allowed extensions
  */
 export const zAllowedExtensions = z.enum([
     'webp',
@@ -194,46 +206,33 @@ export const zAllowedExtensions = z.enum([
     'heic',
     'heif'
 ]).register(z.globalRegistry, {
-    description: 'File extension. Must be one of the allowed extensions.'
+    description: 'Allowed extensions'
 });
 
 export type zAllowedExtensions = z.infer<typeof zAllowedExtensions>;
 
-export const zS3PreSignRequest = z.object({
-    path: z.string().min(3).register(z.globalRegistry, {
-        description: "Object path. After stripping leading '/', must start with `<userId>/`"
-    }),
-    extension: zAllowedExtensions,
-    contentType: zAllowedContentTypes
+/**
+ * Field for location sort
+ */
+export const zLocationSortField = z.enum([
+    'confidence',
+    'query',
+    'country',
+    'address'
+]).register(z.globalRegistry, {
+    description: 'Field for location sort'
 });
 
-export type zS3PreSignRequest = z.infer<typeof zS3PreSignRequest>;
-
-export const zS3PreSignResponse = z.object({
-    url: z.url(),
-    cdn: z.string().register(z.globalRegistry, {
-        description: 'CDN url where the file lives'
-    })
-});
-
-export type zS3PreSignResponse = z.infer<typeof zS3PreSignResponse>;
+export type zLocationSortField = z.infer<typeof zLocationSortField>;
 
 /**
- * Sort object for location collection
+ * Data for location sort
  */
 export const zLocationSort = z.object({
-    value: z.enum([
-        'confidence',
-        'query',
-        'country',
-        'address'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zLocationSortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
-    description: 'Sort object for location collection'
+    description: 'Data for location sort'
 });
 
 export type zLocationSort = z.infer<typeof zLocationSort>;
@@ -242,38 +241,30 @@ export type zLocationSort = z.infer<typeof zLocationSort>;
  * App-based filters
  */
 export const zLocationWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    query: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    lang: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    country: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    code: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    confidenceMin: z.optional(z.union([
-        z.number(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    query: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact query that was used to get the location'
+    })),
+    lang: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact language that was used to get the location'
+    })),
+    country: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact country of the location'
+    })),
+    code: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact country code of the location'
+    })),
+    confidenceMin: z.optional(z.number().register(z.globalRegistry, {
+        description: 'This filter matches locations with confidence greater than or equal to the provided value'
+    }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -281,49 +272,41 @@ export const zLocationWhere = z.object({
 export type zLocationWhere = z.infer<typeof zLocationWhere>;
 
 /**
- * User-land filters
+ * Data for location filter
  */
 export const zLocationFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    query: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    lang: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    country: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    code: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    confidenceMin: z.optional(z.union([
-        z.number(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    query: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact query that was used to get the location'
+    })),
+    lang: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact language that was used to get the location'
+    })),
+    country: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact country of the location'
+    })),
+    code: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact country code of the location'
+    })),
+    confidenceMin: z.optional(z.number().register(z.globalRegistry, {
+        description: 'This filter matches locations with confidence greater than or equal to the provided value'
+    }))
 }).register(z.globalRegistry, {
-    description: 'User-land filters'
+    description: 'Data for location filter'
 });
 
 export type zLocationFilter = z.infer<typeof zLocationFilter>;
 
 /**
- * Query object for location collection
+ * Data for location query
  */
 export const zLocationQuery = z.object({
     cursor: z.optional(zCursor),
@@ -331,13 +314,13 @@ export const zLocationQuery = z.object({
     where: z.optional(zLocationWhere),
     sort: z.optional(z.array(zLocationSort))
 }).register(z.globalRegistry, {
-    description: 'Query object for location collection'
+    description: 'Data for location query'
 });
 
 export type zLocationQuery = z.infer<typeof zLocationQuery>;
 
 /**
- * Request body for location autocomplete
+ * Data for location autocomplete
  */
 export const zLocationAutocomplete = z.object({
     text: z.string().min(3).register(z.globalRegistry, {
@@ -347,10 +330,25 @@ export const zLocationAutocomplete = z.object({
         description: 'The language code for the location search'
     })
 }).register(z.globalRegistry, {
-    description: 'Request body for location autocomplete'
+    description: 'Data for location autocomplete'
 });
 
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
+
+/**
+ * Type of listing score
+ */
+export const zListingScoreType = z.enum([
+    'listing',
+    'ignore',
+    'flag',
+    'view',
+    'cart'
+]).register(z.globalRegistry, {
+    description: 'Type of listing score'
+});
+
+export type zListingScoreType = z.infer<typeof zListingScoreType>;
 
 /**
  * Data for creating a new listing score
@@ -359,15 +357,7 @@ export const zListingScoreCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing to score'
     }),
-    score: z.enum([
-        'listing',
-        'ignore',
-        'flag',
-        'view',
-        'cart'
-    ]).register(z.globalRegistry, {
-        description: 'Predefined score type'
-    })
+    score: zListingScoreType
 }).register(z.globalRegistry, {
     description: 'Data for creating a new listing score'
 });
@@ -378,26 +368,21 @@ export type zListingScoreCreate = z.infer<typeof zListingScoreCreate>;
  * App-based filters
  */
 export const zListingScoreWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -405,59 +390,60 @@ export const zListingScoreWhere = z.object({
 export type zListingScoreWhere = z.infer<typeof zListingScoreWhere>;
 
 /**
- * User-land filters
+ * Filter object for listing score collection
  */
 export const zListingScoreFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
 }).register(z.globalRegistry, {
-    description: 'User-land filters'
+    description: 'Filter object for listing score collection'
 });
 
 export type zListingScoreFilter = z.infer<typeof zListingScoreFilter>;
 
 /**
- * Query object for listing score count (omits cursor, sort, and meta)
+ * Query object for listing score count
  */
 export const zListingScoreCountQuery = z.object({
     filter: z.optional(zListingScoreFilter),
     where: z.optional(zListingScoreWhere)
 }).register(z.globalRegistry, {
-    description: 'Query object for listing score count (omits cursor, sort, and meta)'
+    description: 'Query object for listing score count'
 });
 
 export type zListingScoreCountQuery = z.infer<typeof zListingScoreCountQuery>;
 
 /**
+ * Field of the listing score sort
+ */
+export const zListingScoreSortField = z.enum([
+    'score',
+    'createdAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing score sort'
+});
+
+export type zListingScoreSortField = z.infer<typeof zListingScoreSortField>;
+
+/**
  * Sort object for listing score collection
  */
 export const zListingScoreSort = z.object({
-    value: z.enum([
-        'score',
-        'createdAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zListingScoreSortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
     description: 'Sort object for listing score collection'
 });
@@ -479,9 +465,509 @@ export const zListingScoreQuery = z.object({
 export type zListingScoreQuery = z.infer<typeof zListingScoreQuery>;
 
 /**
- * Contains various scores/metrics of the listing
+ * Listing score data
  */
 export const zListingScore = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the score'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    }),
+    type: zListingScoreType,
+    score: z.int().register(z.globalRegistry, {
+        description: 'Score value'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing score data'
+});
+
+export type zListingScore = z.infer<typeof zListingScore>;
+
+/**
+ * Collection of listing scores
+ */
+export const zListingScoreCollection = z.object({
+    data: z.array(zListingScore),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listing scores'
+});
+
+export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
+
+/**
+ * Data for toggling a flag on a listing
+ */
+export const zListingFlagToggle = z.object({
+    toggle: z.boolean().register(z.globalRegistry, {
+        description: 'Whether to add (true) or remove (false) the flag on the listing'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing to toggle'
+    })
+}).register(z.globalRegistry, {
+    description: 'Data for toggling a flag on a listing'
+});
+
+export type zListingFlagToggle = z.infer<typeof zListingFlagToggle>;
+
+/**
+ * App-based filters
+ */
+export const zListingFlagCountWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingFlagCountWhere = z.infer<typeof zListingFlagCountWhere>;
+
+/**
+ * Filter object for listing flag collection
+ */
+export const zListingFlagFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for listing flag collection'
+});
+
+export type zListingFlagFilter = z.infer<typeof zListingFlagFilter>;
+
+/**
+ * Query object for listing flag count
+ */
+export const zListingFlagCountQuery = z.object({
+    filter: z.optional(zListingFlagFilter),
+    where: z.optional(zListingFlagCountWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing flag count'
+});
+
+export type zListingFlagCountQuery = z.infer<typeof zListingFlagCountQuery>;
+
+/**
+ * Field of the listing flag sort
+ */
+export const zListingFlagSortField = z.enum([
+    'createdAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing flag sort'
+});
+
+export type zListingFlagSortField = z.infer<typeof zListingFlagSortField>;
+
+/**
+ * Sort object for listing flag collection
+ */
+export const zListingFlagSort = z.object({
+    field: zListingFlagSortField,
+    direction: zOrder
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing flag collection'
+});
+
+export type zListingFlagSort = z.infer<typeof zListingFlagSort>;
+
+/**
+ * App-based filters
+ */
+export const zListingFlagWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingFlagWhere = z.infer<typeof zListingFlagWhere>;
+
+/**
+ * Query object for listing flag collection
+ */
+export const zListingFlagQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingFlagFilter),
+    where: z.optional(zListingFlagWhere),
+    sort: z.optional(z.array(zListingFlagSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing flag collection'
+});
+
+export type zListingFlagQuery = z.infer<typeof zListingFlagQuery>;
+
+/**
+ * Listing flag data
+ */
+export const zListingFlag = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the flag entry'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing flag data'
+});
+
+export type zListingFlag = z.infer<typeof zListingFlag>;
+
+/**
+ * Collection of listing flag items
+ */
+export const zListingFlagCollection = z.object({
+    data: z.array(zListingFlag),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listing flag items'
+});
+
+export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
+
+/**
+ * Data for toggling a listing in ignore list
+ */
+export const zListingIgnoreToggle = z.object({
+    toggle: z.boolean().register(z.globalRegistry, {
+        description: 'Whether to add (true) or remove (false) the listing from ignore list'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing to toggle'
+    })
+}).register(z.globalRegistry, {
+    description: 'Data for toggling a listing in ignore list'
+});
+
+export type zListingIgnoreToggle = z.infer<typeof zListingIgnoreToggle>;
+
+/**
+ * App-based filters
+ */
+export const zListingIgnoreWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingIgnoreWhere = z.infer<typeof zListingIgnoreWhere>;
+
+/**
+ * Filter object for listing ignore collection
+ */
+export const zListingIgnoreFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for listing ignore collection'
+});
+
+export type zListingIgnoreFilter = z.infer<typeof zListingIgnoreFilter>;
+
+/**
+ * Query object for listing ignore count
+ */
+export const zListingIgnoreCountQuery = z.object({
+    filter: z.optional(zListingIgnoreFilter),
+    where: z.optional(zListingIgnoreWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing ignore count'
+});
+
+export type zListingIgnoreCountQuery = z.infer<typeof zListingIgnoreCountQuery>;
+
+/**
+ * Field of the listing ignore sort
+ */
+export const zListingIgnoreSortField = z.enum([
+    'createdAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing ignore sort'
+});
+
+export type zListingIgnoreSortField = z.infer<typeof zListingIgnoreSortField>;
+
+/**
+ * Sort object for listing ignore collection
+ */
+export const zListingIgnoreSort = z.object({
+    field: zListingIgnoreSortField,
+    direction: zOrder
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing ignore collection'
+});
+
+export type zListingIgnoreSort = z.infer<typeof zListingIgnoreSort>;
+
+/**
+ * Query object for listing ignore collection
+ */
+export const zListingIgnoreQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingIgnoreFilter),
+    where: z.optional(zListingIgnoreWhere),
+    sort: z.optional(z.array(zListingIgnoreSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing ignore collection'
+});
+
+export type zListingIgnoreQuery = z.infer<typeof zListingIgnoreQuery>;
+
+/**
+ * Listing ignore data
+ */
+export const zListingIgnore = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the ignore entry'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing that was ignored'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing ignore data'
+});
+
+export type zListingIgnore = z.infer<typeof zListingIgnore>;
+
+/**
+ * Collection of listing ignore items
+ */
+export const zListingIgnoreCollection = z.object({
+    data: z.array(zListingIgnore),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listing ignore items'
+});
+
+export type zListingIgnoreCollection = z.infer<typeof zListingIgnoreCollection>;
+
+/**
+ * Data for toggling a listing in cart
+ */
+export const zListingCartToggle = z.object({
+    toggle: z.boolean().register(z.globalRegistry, {
+        description: 'Whether to add (true) or remove (false) the listing from cart'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing to toggle'
+    })
+}).register(z.globalRegistry, {
+    description: 'Data for toggling a listing in cart'
+});
+
+export type zListingCartToggle = z.infer<typeof zListingCartToggle>;
+
+/**
+ * App-based filters
+ */
+export const zListingCartWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingCartWhere = z.infer<typeof zListingCartWhere>;
+
+/**
+ * Filter object for listing cart collection
+ */
+export const zListingCartFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for listing cart collection'
+});
+
+export type zListingCartFilter = z.infer<typeof zListingCartFilter>;
+
+/**
+ * Query object for listing cart count
+ */
+export const zListingCartCountQuery = z.object({
+    filter: z.optional(zListingCartFilter),
+    where: z.optional(zListingCartWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing cart count'
+});
+
+export type zListingCartCountQuery = z.infer<typeof zListingCartCountQuery>;
+
+/**
+ * Field of the listing cart sort
+ */
+export const zListingCartSortField = z.enum([
+    'createdAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing cart sort'
+});
+
+export type zListingCartSortField = z.infer<typeof zListingCartSortField>;
+
+/**
+ * Sort object for listing cart collection
+ */
+export const zListingCartSort = z.object({
+    field: zListingCartSortField,
+    direction: zOrder
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing cart collection'
+});
+
+export type zListingCartSort = z.infer<typeof zListingCartSort>;
+
+/**
+ * Query object for listing cart collection
+ */
+export const zListingCartQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingCartFilter),
+    where: z.optional(zListingCartWhere),
+    sort: z.optional(z.array(zListingCartSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for listing cart collection'
+});
+
+export type zListingCartQuery = z.infer<typeof zListingCartQuery>;
+
+/**
+ * Listing cart data
+ */
+export const zListingCart = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the cart item'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing cart data'
+});
+
+export type zListingCart = z.infer<typeof zListingCart>;
+
+/**
+ * Collection of listing cart items
+ */
+export const zListingCartCollection = z.object({
+    data: z.array(zListingCart),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listing cart items'
+});
+
+export type zListingCartCollection = z.infer<typeof zListingCartCollection>;
+
+/**
+ * Score data for the listing
+ */
+export const zListingMetrics = z.object({
     listing: z.union([
         z.number(),
         z.null()
@@ -527,511 +1013,10 @@ export const zListingScore = z.object({
         z.null()
     ])
 }).register(z.globalRegistry, {
-    description: 'Contains various scores/metrics of the listing'
+    description: 'Score data for the listing'
 });
 
-export type zListingScore = z.infer<typeof zListingScore>;
-
-/**
- * Collection of listing scores
- */
-export const zListingScoreCollection = z.object({
-    data: z.array(zListingScore.and(z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the score'
-        }),
-        listingId: z.string().register(z.globalRegistry, {
-            description: 'ID of the listing'
-        }),
-        type: z.enum([
-            'listing',
-            'ignore',
-            'flag',
-            'view',
-            'cart'
-        ]).register(z.globalRegistry, {
-            description: 'Type of score'
-        }),
-        score: z.int().register(z.globalRegistry, {
-            description: 'Score value'
-        }),
-        createdAt: z.string().register(z.globalRegistry, {
-            description: 'Creation timestamp'
-        })
-    }))),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing scores'
-});
-
-export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
-
-/**
- * Toggle flag on listing
- */
-export const zListingFlagToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the flag on the listing'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Toggle flag on listing'
-});
-
-export type zListingFlagToggle = z.infer<typeof zListingFlagToggle>;
-
-/**
- * App-based filters
- */
-export const zListingFlagCountWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingFlagCountWhere = z.infer<typeof zListingFlagCountWhere>;
-
-/**
- * User-land filters
- */
-export const zListingFlagFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'User-land filters'
-});
-
-export type zListingFlagFilter = z.infer<typeof zListingFlagFilter>;
-
-/**
- * Query object for listing flag counts
- */
-export const zListingFlagCountQuery = z.object({
-    filter: z.optional(zListingFlagFilter),
-    where: z.optional(zListingFlagCountWhere)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing flag counts'
-});
-
-export type zListingFlagCountQuery = z.infer<typeof zListingFlagCountQuery>;
-
-/**
- * Sort object for listing flag collection
- */
-export const zListingFlagSort = z.object({
-    value: z.enum([
-        'createdAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing flag collection'
-});
-
-export type zListingFlagSort = z.infer<typeof zListingFlagSort>;
-
-/**
- * App-based filters
- */
-export const zListingFlagWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingFlagWhere = z.infer<typeof zListingFlagWhere>;
-
-/**
- * Query object for listing flag collection
- */
-export const zListingFlagQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingFlagFilter),
-    where: z.optional(zListingFlagWhere),
-    sort: z.optional(z.array(zListingFlagSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing flag collection'
-});
-
-export type zListingFlagQuery = z.infer<typeof zListingFlagQuery>;
-
-export const zListingFlag = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the flag entry'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    })
-});
-
-export type zListingFlag = z.infer<typeof zListingFlag>;
-
-/**
- * Collection of listing flag items
- */
-export const zListingFlagCollection = z.object({
-    data: z.array(zListingFlag),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing flag items'
-});
-
-export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
-
-/**
- * Toggle listing ignore state
- */
-export const zListingIgnoreToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the listing from ignore list'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Toggle listing ignore state'
-});
-
-export type zListingIgnoreToggle = z.infer<typeof zListingIgnoreToggle>;
-
-/**
- * App-based filters
- */
-export const zListingIgnoreWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingIgnoreWhere = z.infer<typeof zListingIgnoreWhere>;
-
-/**
- * User-land filters
- */
-export const zListingIgnoreFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'User-land filters'
-});
-
-export type zListingIgnoreFilter = z.infer<typeof zListingIgnoreFilter>;
-
-/**
- * Query object for listing ignore count (omits cursor, sort, and meta)
- */
-export const zListingIgnoreCountQuery = z.object({
-    filter: z.optional(zListingIgnoreFilter),
-    where: z.optional(zListingIgnoreWhere)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing ignore count (omits cursor, sort, and meta)'
-});
-
-export type zListingIgnoreCountQuery = z.infer<typeof zListingIgnoreCountQuery>;
-
-/**
- * Sort object for listing ignore collection
- */
-export const zListingIgnoreSort = z.object({
-    value: z.enum([
-        'createdAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing ignore collection'
-});
-
-export type zListingIgnoreSort = z.infer<typeof zListingIgnoreSort>;
-
-/**
- * Query object for listing ignore collection
- */
-export const zListingIgnoreQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingIgnoreFilter),
-    where: z.optional(zListingIgnoreWhere),
-    sort: z.optional(z.array(zListingIgnoreSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing ignore collection'
-});
-
-export type zListingIgnoreQuery = z.infer<typeof zListingIgnoreQuery>;
-
-export const zListingIgnore = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the ignore entry'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing that was ignored'
-    })
-});
-
-export type zListingIgnore = z.infer<typeof zListingIgnore>;
-
-/**
- * Collection of listing ignore items
- */
-export const zListingIgnoreCollection = z.object({
-    data: z.array(zListingIgnore),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing ignore items'
-});
-
-export type zListingIgnoreCollection = z.infer<typeof zListingIgnoreCollection>;
-
-/**
- * Toggle listing in cart
- */
-export const zListingCartToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the listing from cart'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Toggle listing in cart'
-});
-
-export type zListingCartToggle = z.infer<typeof zListingCartToggle>;
-
-/**
- * App-based filters
- */
-export const zListingCartWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingCartWhere = z.infer<typeof zListingCartWhere>;
-
-/**
- * User-land filters
- */
-export const zListingCartFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
-}).register(z.globalRegistry, {
-    description: 'User-land filters'
-});
-
-export type zListingCartFilter = z.infer<typeof zListingCartFilter>;
-
-/**
- * Query object for listing cart count (omits cursor, sort, and meta)
- */
-export const zListingCartCountQuery = z.object({
-    filter: z.optional(zListingCartFilter),
-    where: z.optional(zListingCartWhere)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing cart count (omits cursor, sort, and meta)'
-});
-
-export type zListingCartCountQuery = z.infer<typeof zListingCartCountQuery>;
-
-/**
- * Sort object for listing cart collection
- */
-export const zListingCartSort = z.object({
-    value: z.enum([
-        'createdAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing cart collection'
-});
-
-export type zListingCartSort = z.infer<typeof zListingCartSort>;
-
-/**
- * Query object for listing cart collection
- */
-export const zListingCartQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingCartFilter),
-    where: z.optional(zListingCartWhere),
-    sort: z.optional(z.array(zListingCartSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing cart collection'
-});
-
-export type zListingCartQuery = z.infer<typeof zListingCartQuery>;
-
-export const zListingCart = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the cart item'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    })
-});
-
-export type zListingCart = z.infer<typeof zListingCart>;
-
-/**
- * Collection of listing cart items
- */
-export const zListingCartCollection = z.object({
-    data: z.array(zListingCart),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing cart items'
-});
-
-export type zListingCartCollection = z.infer<typeof zListingCartCollection>;
+export type zListingMetrics = z.infer<typeof zListingMetrics>;
 
 /**
  * Latitude and longitude coordinates
@@ -1050,18 +1035,18 @@ export const zLatLon = z.object({
 export type zLatLon = z.infer<typeof zLatLon>;
 
 /**
- * Metadata used to fetch the listings (e.g. location)
+ * Meta data for listing collection
  */
 export const zListingMeta = z.object({
     latLon: z.optional(zLatLon)
 }).register(z.globalRegistry, {
-    description: 'Metadata used to fetch the listings (e.g. location)'
+    description: 'Meta data for listing collection'
 });
 
 export type zListingMeta = z.infer<typeof zListingMeta>;
 
 /**
- * Currency code (ISO 4217)
+ * List of available currencies
  */
 export const zCurrencyList = z.enum([
     'CZK',
@@ -1072,7 +1057,7 @@ export const zCurrencyList = z.enum([
     'HUF',
     'CHF'
 ]).register(z.globalRegistry, {
-    description: 'Currency code (ISO 4217)'
+    description: 'List of available currencies'
 });
 
 export type zCurrencyList = z.infer<typeof zCurrencyList>;
@@ -1087,24 +1072,22 @@ export const zCurrencyIn = z.array(zCurrencyList).register(z.globalRegistry, {
 export type zCurrencyIn = z.infer<typeof zCurrencyIn>;
 
 /**
- * This filter matches listings with the exact category ID
- */
-export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
-    description: 'This filter matches listings with the exact category ID'
-});
-
-export type zCategoryId = z.infer<typeof zCategoryId>;
-
-/**
  * Filter listings based on the provided category IDs
  */
-export const zCategoryIdIn = z.array(zCategoryId.and(z.unknown().register(z.globalRegistry, {
-    description: 'ID of the category'
-}))).register(z.globalRegistry, {
+export const zCategoryIdIn = z.array(z.string().min(1)).register(z.globalRegistry, {
     description: 'Filter listings based on the provided category IDs'
 });
 
 export type zCategoryIdIn = z.infer<typeof zCategoryIdIn>;
+
+/**
+ * ID of the category
+ */
+export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
+    description: 'ID of the category'
+});
+
+export type zCategoryId = z.infer<typeof zCategoryId>;
 
 /**
  * Sets the maximum price for the listings
@@ -1128,18 +1111,15 @@ export type zPriceMin = z.infer<typeof zPriceMin>;
  * App-based filters
  */
 export const zListingWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
     conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
@@ -1148,44 +1128,37 @@ export const zListingWhere = z.object({
     conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with condition less than or equal to the provided value'
     })),
-    conditionIn: z.optional(z.union([
-        z.array(z.number().gte(0).lte(6)),
-        z.null()
-    ])),
+    conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with conditions in the provided array'
+    })),
     ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age greater than or equal to the provided value'
     })),
     ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age less than or equal to the provided value'
     })),
-    ageIn: z.optional(z.union([
-        z.array(z.number().gte(0).lte(6)),
-        z.null()
-    ])),
+    ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with ages in the provided array'
+    })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
     currencyIn: z.optional(zCurrencyIn),
-    expiresAtBefore: z.optional(z.union([
-        z.iso.date(),
-        z.null()
-    ])),
-    expiresAtAfter: z.optional(z.union([
-        z.iso.date(),
-        z.null()
-    ])),
-    rangeMin: z.optional(z.union([
-        z.number().gte(0),
-        z.null()
-    ])),
-    rangeMax: z.optional(z.union([
-        z.number().gte(0),
-        z.null()
-    ])),
-    title: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
+    expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire before the provided date'
+    })),
+    expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire after the provided date'
+    })),
+    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
+    })),
+    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
+    })),
+    title: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings with title matching the provided value'
+    })),
     withOwn: z.optional(z.boolean().register(z.globalRegistry, {
         description: "This filter matches listings with the user's own listings"
     })),
@@ -1199,21 +1172,18 @@ export const zListingWhere = z.object({
 export type zListingWhere = z.infer<typeof zListingWhere>;
 
 /**
- * Filter used to fetch the listings
+ * User-land filters
  */
 export const zListingFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
     conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
@@ -1222,44 +1192,37 @@ export const zListingFilter = z.object({
     conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with condition less than or equal to the provided value'
     })),
-    conditionIn: z.optional(z.union([
-        z.array(z.number().gte(0).lte(6)),
-        z.null()
-    ])),
+    conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with conditions in the provided array'
+    })),
     ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age greater than or equal to the provided value'
     })),
     ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
         description: 'This filter matches listings with age less than or equal to the provided value'
     })),
-    ageIn: z.optional(z.union([
-        z.array(z.number().gte(0).lte(6)),
-        z.null()
-    ])),
+    ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with ages in the provided array'
+    })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
     currencyIn: z.optional(zCurrencyIn),
-    expiresAtBefore: z.optional(z.union([
-        z.iso.date(),
-        z.null()
-    ])),
-    expiresAtAfter: z.optional(z.union([
-        z.iso.date(),
-        z.null()
-    ])),
-    rangeMin: z.optional(z.union([
-        z.number().gte(0),
-        z.null()
-    ])),
-    rangeMax: z.optional(z.union([
-        z.number().gte(0),
-        z.null()
-    ])),
-    title: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
+    expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire before the provided date'
+    })),
+    expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire after the provided date'
+    })),
+    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
+    })),
+    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
+    })),
+    title: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings with title matching the provided value'
+    })),
     withOwn: z.optional(z.boolean().register(z.globalRegistry, {
         description: "This filter matches listings with the user's own listings"
     })),
@@ -1267,88 +1230,23 @@ export const zListingFilter = z.object({
         description: 'Include ignored listings'
     }))
 }).register(z.globalRegistry, {
-    description: 'Filter used to fetch the listings'
+    description: 'User-land filters'
 });
 
 export type zListingFilter = z.infer<typeof zListingFilter>;
 
 /**
- * Query object for listing count (omits cursor, sort, and meta)
+ * Query object for listing count
  */
 export const zListingCountQuery = z.object({
-    filter: z.optional(zListingFilter.and(z.unknown().register(z.globalRegistry, {
-        description: 'User-land filters'
-    }))),
+    filter: z.optional(zListingFilter),
     where: z.optional(zListingWhere),
-    meta: z.optional(zListingMeta.and(z.unknown().register(z.globalRegistry, {
-        description: 'Metadata for a listing (query)'
-    })))
+    meta: z.optional(zListingMeta)
 }).register(z.globalRegistry, {
-    description: 'Query object for listing count (omits cursor, sort, and meta)'
+    description: 'Query object for listing count'
 });
 
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
-
-/**
- * Sort object for listing collection
- */
-export const zListingSort = z.object({
-    value: z.enum([
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'geo'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing collection'
-});
-
-export type zListingSort = z.infer<typeof zListingSort>;
-
-/**
- * Query object for listing collection
- */
-export const zListingQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingFilter.and(z.unknown().register(z.globalRegistry, {
-        description: 'User-land filters'
-    }))),
-    where: z.optional(zListingWhere),
-    sort: z.optional(z.array(zListingSort)),
-    meta: z.optional(zListingMeta.and(z.unknown().register(z.globalRegistry, {
-        description: 'Metadata for a listing (query)'
-    })))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing collection'
-});
-
-export type zListingQuery = z.infer<typeof zListingQuery>;
-
-/**
- * Request to collect listings from a feed
- */
-export const zFeedCollectionRequest = z.object({
-    feedId: z.string().register(z.globalRegistry, {
-        description: 'ID of the feed to collect listings for'
-    }),
-    where: z.optional(zListingFilter.and(z.unknown().register(z.globalRegistry, {
-        description: 'Ability to override filters from the feed'
-    }))),
-    cursor: z.optional(zCursor.and(z.unknown().register(z.globalRegistry, {
-        description: 'Pagination cursor'
-    })))
-}).register(z.globalRegistry, {
-    description: 'Request to collect listings from a feed'
-});
-
-export type zFeedCollectionRequest = z.infer<typeof zFeedCollectionRequest>;
 
 /**
  * Gallery data
@@ -1374,7 +1272,7 @@ export const zGallery = z.object({
 export type zGallery = z.infer<typeof zGallery>;
 
 /**
- * Category data transfer object
+ * Category data
  */
 export const zCategory = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -1396,13 +1294,13 @@ export const zCategory = z.object({
         description: 'Locale/language of the category'
     })
 }).register(z.globalRegistry, {
-    description: 'Category data transfer object'
+    description: 'Category data'
 });
 
 export type zCategory = z.infer<typeof zCategory>;
 
 /**
- * Location data transfer object
+ * Location data
  */
 export const zLocation = z.object({
     id: z.string(),
@@ -1458,11 +1356,14 @@ export const zLocation = z.object({
         description: 'Longitude of the location'
     })
 }).register(z.globalRegistry, {
-    description: 'Location data transfer object'
+    description: 'Location data'
 });
 
 export type zLocation = z.infer<typeof zLocation>;
 
+/**
+ * Listing data
+ */
 export const zListing = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
@@ -1513,6 +1414,8 @@ export const zListing = z.object({
     hasFlag: z.boolean().register(z.globalRegistry, {
         description: 'Whether the user flagged this listing'
     })
+}).register(z.globalRegistry, {
+    description: 'Listing data'
 });
 
 export type zListing = z.infer<typeof zListing>;
@@ -1532,20 +1435,64 @@ export const zListingCollection = z.object({
 export type zListingCollection = z.infer<typeof zListingCollection>;
 
 /**
- * Expiration period for the listing
+ * Field of the listing sort
+ */
+export const zListingSortField = z.enum([
+    'price',
+    'condition',
+    'age',
+    'createdAt',
+    'updatedAt',
+    'expiresAt',
+    'geo'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing sort'
+});
+
+export type zListingSortField = z.infer<typeof zListingSortField>;
+
+/**
+ * Sort object for listing collection
+ */
+export const zListingSort = z.object({
+    field: zListingSortField,
+    direction: zOrder
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing collection'
+});
+
+export type zListingSort = z.infer<typeof zListingSort>;
+
+/**
+ * Query object for listing collection
+ */
+export const zListingQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    sort: z.optional(z.array(zListingSort)),
+    meta: z.optional(zListingMeta)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing collection'
+});
+
+export type zListingQuery = z.infer<typeof zListingQuery>;
+
+/**
+ * Expiration time of the listing
  */
 export const zListingExpire = z.enum([
     '7-days',
     '14-days',
     '1-month'
 ]).register(z.globalRegistry, {
-    description: 'Expiration period for the listing'
+    description: 'Expiration time of the listing'
 });
 
 export type zListingExpire = z.infer<typeof zListingExpire>;
 
 /**
- * Data required to create a new listing
+ * Data for creating a new listing
  */
 export const zListingCreate = z.object({
     price: z.number().register(z.globalRegistry, {
@@ -1568,15 +1515,14 @@ export const zListingCreate = z.object({
     title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
     }),
-    description: z.optional(z.union([
-        z.string().max(2048),
-        z.null()
-    ])),
+    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
+        description: 'Description of the item'
+    })),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })
 }).register(z.globalRegistry, {
-    description: 'Data required to create a new listing'
+    description: 'Data for creating a new listing'
 });
 
 export type zListingCreate = z.infer<typeof zListingCreate>;
@@ -1596,17 +1542,23 @@ export const zGalleryCollection = z.object({
 export type zGalleryCollection = z.infer<typeof zGalleryCollection>;
 
 /**
+ * Field of the gallery sort
+ */
+export const zGallerySortField = z.enum([
+    'sort',
+    'createdAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the gallery sort'
+});
+
+export type zGallerySortField = z.infer<typeof zGallerySortField>;
+
+/**
  * Sort object for gallery collection
  */
 export const zGallerySort = z.object({
-    value: z.enum([
-        'sort',
-        'createdAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zGallerySortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
     description: 'Sort object for gallery collection'
 });
@@ -1617,26 +1569,21 @@ export type zGallerySort = z.infer<typeof zGallerySort>;
  * App-based filters
  */
 export const zGalleryWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Exact user id'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Exact listing id'
+    }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -1644,31 +1591,26 @@ export const zGalleryWhere = z.object({
 export type zGalleryWhere = z.infer<typeof zGalleryWhere>;
 
 /**
- * User-land filters for gallery items
+ * Filter object for gallery collection
  */
 export const zGalleryFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    listingId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Exact user id'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Exact listing id'
+    }))
 }).register(z.globalRegistry, {
-    description: 'User-land filters for gallery items'
+    description: 'Filter object for gallery collection'
 });
 
 export type zGalleryFilter = z.infer<typeof zGalleryFilter>;
@@ -1688,7 +1630,7 @@ export const zGalleryQuery = z.object({
 export type zGalleryQuery = z.infer<typeof zGalleryQuery>;
 
 /**
- * Feed data transfer object
+ * Feed data
  */
 export const zFeed = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -1702,12 +1644,10 @@ export const zFeed = z.object({
         description: 'Name of the feed'
     }),
     filter: z.optional(zListingFilter),
-    sort: z.optional(z.array(zListingSort).register(z.globalRegistry, {
-        description: 'Filter used to fetch the listings'
-    })),
+    sort: z.optional(z.array(zListingSort)),
     meta: z.optional(zListingMeta)
 }).register(z.globalRegistry, {
-    description: 'Feed data transfer object'
+    description: 'Feed data'
 });
 
 export type zFeed = z.infer<typeof zFeed>;
@@ -1727,17 +1667,23 @@ export const zFeedCollection = z.object({
 export type zFeedCollection = z.infer<typeof zFeedCollection>;
 
 /**
+ * Field of the feed sort
+ */
+export const zFeedSortField = z.enum([
+    'createdAt',
+    'updatedAt'
+]).register(z.globalRegistry, {
+    description: 'Field of the feed sort'
+});
+
+export type zFeedSortField = z.infer<typeof zFeedSortField>;
+
+/**
  * Sort object for feed collection
  */
 export const zFeedSort = z.object({
-    value: z.enum([
-        'createdAt',
-        'updatedAt'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zFeedSortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
     description: 'Sort object for feed collection'
 });
@@ -1745,27 +1691,45 @@ export const zFeedSort = z.object({
 export type zFeedSort = z.infer<typeof zFeedSort>;
 
 /**
- * User-land filters for feed items
+ * App-based filters
+ */
+export const zFeedWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Exact user id'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zFeedWhere = z.infer<typeof zFeedWhere>;
+
+/**
+ * Filter object for feed collection
  */
 export const zFeedFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    userId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Exact user id'
+    }))
 }).register(z.globalRegistry, {
-    description: 'User-land filters for feed items'
+    description: 'Filter object for feed collection'
 });
 
 export type zFeedFilter = z.infer<typeof zFeedFilter>;
@@ -1776,9 +1740,7 @@ export type zFeedFilter = z.infer<typeof zFeedFilter>;
 export const zFeedQuery = z.object({
     cursor: z.optional(zCursor),
     filter: z.optional(zFeedFilter),
-    where: z.optional(zFeedFilter.and(z.unknown().register(z.globalRegistry, {
-        description: 'App-based filters'
-    }))),
+    where: z.optional(zFeedWhere),
     sort: z.optional(z.array(zFeedSort))
 }).register(z.globalRegistry, {
     description: 'Query object for feed collection'
@@ -1786,6 +1748,9 @@ export const zFeedQuery = z.object({
 
 export type zFeedQuery = z.infer<typeof zFeedQuery>;
 
+/**
+ * Data for updating an existing feed
+ */
 export const zFeedPatch = z.object({
     id: z.string().min(1),
     name: z.optional(z.string().min(1).register(z.globalRegistry, {
@@ -1796,14 +1761,17 @@ export const zFeedPatch = z.object({
         z.null()
     ])),
     filter: z.optional(zListingFilter),
-    sort: z.optional(z.array(zListingSort).register(z.globalRegistry, {
-        description: 'Sort used to fetch the listings'
-    })),
+    sort: z.optional(z.array(zListingSort)),
     meta: z.optional(zListingMeta)
+}).register(z.globalRegistry, {
+    description: 'Data for updating an existing feed'
 });
 
 export type zFeedPatch = z.infer<typeof zFeedPatch>;
 
+/**
+ * Data for creating a new feed
+ */
 export const zFeedCreate = z.object({
     name: z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
@@ -1812,31 +1780,35 @@ export const zFeedCreate = z.object({
         z.string(),
         z.null()
     ])),
-    filter: zListingFilter.and(z.unknown().register(z.globalRegistry, {
-        description: 'User-land filters'
-    })),
+    filter: zListingFilter,
     sort: z.array(zListingSort),
-    meta: zListingMeta.and(z.unknown().register(z.globalRegistry, {
-        description: 'Metadata for a listing (query)'
-    }))
+    meta: zListingMeta
+}).register(z.globalRegistry, {
+    description: 'Data for creating a new feed'
 });
 
 export type zFeedCreate = z.infer<typeof zFeedCreate>;
 
 /**
+ * Field of the category cart sort
+ */
+export const zCategoryCartSortField = z.enum([
+    'group',
+    'category',
+    'sort',
+    'listingCount'
+]).register(z.globalRegistry, {
+    description: 'Field of the category cart sort'
+});
+
+export type zCategoryCartSortField = z.infer<typeof zCategoryCartSortField>;
+
+/**
  * Sort object for category cart collection
  */
 export const zCategoryCartSort = z.object({
-    value: z.enum([
-        'group',
-        'category',
-        'sort',
-        'listingCount'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zCategoryCartSortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
     description: 'Sort object for category cart collection'
 });
@@ -1847,34 +1819,27 @@ export type zCategoryCartSort = z.infer<typeof zCategoryCartSort>;
  * App-based filters
  */
 export const zCategoryWhere = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    group: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    category: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    locale: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    localeIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    group: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact group of the category'
+    })),
+    category: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact category name'
+    })),
+    locale: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact locale of the category'
+    })),
+    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches categories with locales in the provided array'
+    }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -1882,39 +1847,32 @@ export const zCategoryWhere = z.object({
 export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
 
 /**
- * User-land filters
+ * Filter object for category collection
  */
 export const zCategoryFilter = z.object({
-    id: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    idIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ])),
-    fulltext: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    group: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    category: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    locale: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    localeIn: z.optional(z.union([
-        z.array(z.string()),
-        z.null()
-    ]))
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    group: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact group of the category'
+    })),
+    category: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact category name'
+    })),
+    locale: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact locale of the category'
+    })),
+    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches categories with locales in the provided array'
+    }))
 }).register(z.globalRegistry, {
-    description: 'User-land filters'
+    description: 'Filter object for category collection'
 });
 
 export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
@@ -1934,7 +1892,7 @@ export const zCategoryCartQuery = z.object({
 export type zCategoryCartQuery = z.infer<typeof zCategoryCartQuery>;
 
 /**
- * Category data transfer object extended with listing count for cart summaries
+ * Category cart data
  */
 export const zCategoryCart = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -1959,7 +1917,7 @@ export const zCategoryCart = z.object({
         description: 'Number of listings saved in this category'
     })
 }).register(z.globalRegistry, {
-    description: 'Category data transfer object extended with listing count for cart summaries'
+    description: 'Category cart data'
 });
 
 export type zCategoryCart = z.infer<typeof zCategoryCart>;
@@ -1979,7 +1937,7 @@ export const zCategoryCartCollection = z.object({
 export type zCategoryCartCollection = z.infer<typeof zCategoryCartCollection>;
 
 /**
- * Complex count of items based on provided query.
+ * Count data
  */
 export const zCount = z.object({
     where: z.number().register(z.globalRegistry, {
@@ -1992,7 +1950,7 @@ export const zCount = z.object({
         description: 'Total count of items (no filters applied).'
     })
 }).register(z.globalRegistry, {
-    description: 'Complex count of items based on provided query.'
+    description: 'Count data'
 });
 
 export type zCount = z.infer<typeof zCount>;
@@ -2012,18 +1970,24 @@ export const zCategoryCollection = z.object({
 export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
 
 /**
+ * Field of the category sort
+ */
+export const zCategorySortField = z.enum([
+    'group',
+    'category',
+    'sort'
+]).register(z.globalRegistry, {
+    description: 'Field of the category sort'
+});
+
+export type zCategorySortField = z.infer<typeof zCategorySortField>;
+
+/**
  * Sort object for category collection
  */
 export const zCategorySort = z.object({
-    value: z.enum([
-        'group',
-        'category',
-        'sort'
-    ]),
-    sort: z.optional(z.enum([
-        'asc',
-        'desc'
-    ]))
+    field: zCategorySortField,
+    direction: zOrder
 }).register(z.globalRegistry, {
     description: 'Sort object for category collection'
 });
@@ -2031,7 +1995,7 @@ export const zCategorySort = z.object({
 export type zCategorySort = z.infer<typeof zCategorySort>;
 
 /**
- * Query object for category collection
+ * Category query parameters
  */
 export const zCategoryQuery = z.object({
     cursor: z.optional(zCursor),
@@ -2039,7 +2003,7 @@ export const zCategoryQuery = z.object({
     where: z.optional(zCategoryWhere),
     sort: z.optional(z.array(zCategorySort))
 }).register(z.globalRegistry, {
-    description: 'Query object for category collection'
+    description: 'Category query parameters'
 });
 
 export type zCategoryQuery = z.infer<typeof zCategoryQuery>;
@@ -2058,7 +2022,7 @@ export const zMessageType = z.enum([
 export type zMessageType = z.infer<typeof zMessageType>;
 
 /**
- * General status message
+ * Message data
  */
 export const zMessage = z.object({
     message: z.string().register(z.globalRegistry, {
@@ -2066,7 +2030,7 @@ export const zMessage = z.object({
     }),
     type: zMessageType
 }).register(z.globalRegistry, {
-    description: 'General status message'
+    description: 'Message data'
 });
 
 export type zMessage = z.infer<typeof zMessage>;
@@ -2281,21 +2245,6 @@ export const zApiListingCreateResponse = zListing;
 
 export type zapiListingCreateResponse = z.infer<typeof zApiListingCreateResponse>;
 
-export const zApiListingFeedCollectionData = z.object({
-    body: z.optional(zFeedCollectionRequest),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingFeedCollectionRequest = z.infer<typeof zApiListingFeedCollectionData>;
-
-/**
- * Access collection of listings based on a feed definition
- */
-export const zApiListingFeedCollectionResponse = zListingCollection;
-
-export type zapiListingFeedCollectionResponse = z.infer<typeof zApiListingFeedCollectionResponse>;
-
 export const zApiListingFetchData = z.object({
     body: z.optional(zListingQuery),
     path: z.optional(z.never()),
@@ -2341,7 +2290,7 @@ export const zApiListingCountResponse = zCount;
 
 export type zapiListingCountResponse = z.infer<typeof zApiListingCountResponse>;
 
-export const zApiListingScoreData = z.object({
+export const zApiListingMetricsFetchData = z.object({
     body: z.optional(z.never()),
     path: z.object({
         id: z.string().register(z.globalRegistry, {
@@ -2351,14 +2300,14 @@ export const zApiListingScoreData = z.object({
     query: z.optional(z.never())
 });
 
-export type zapiListingScoreRequest = z.infer<typeof zApiListingScoreData>;
+export type zapiListingMetricsFetchRequest = z.infer<typeof zApiListingMetricsFetchData>;
 
 /**
  * Listing score for the provided identifier
  */
-export const zApiListingScoreResponse = zListingScore;
+export const zApiListingMetricsFetchResponse = zListingMetrics;
 
-export type zapiListingScoreResponse = z.infer<typeof zApiListingScoreResponse>;
+export type zapiListingMetricsFetchResponse = z.infer<typeof zApiListingMetricsFetchResponse>;
 
 export const zApiListingCartCollectionData = z.object({
     body: z.optional(zListingCartQuery),
@@ -2574,7 +2523,13 @@ export const zApiLocationFetchResponse = zLocation;
 export type zapiLocationFetchResponse = z.infer<typeof zApiLocationFetchResponse>;
 
 export const zApiS3PresignData = z.object({
-    body: zS3PreSignRequest,
+    body: z.object({
+        path: z.string().min(3).register(z.globalRegistry, {
+            description: "Object path. After stripping leading '/', must start with `<userId>/`"
+        }),
+        extension: zAllowedExtensions,
+        contentType: zAllowedContentTypes
+    }),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
@@ -2584,7 +2539,14 @@ export type zapiS3PresignRequest = z.infer<typeof zApiS3PresignData>;
 /**
  * Pre-signed URL generated successfully.
  */
-export const zApiS3PresignResponse = zS3PreSignResponse;
+export const zApiS3PresignResponse = z.object({
+    url: z.url(),
+    cdn: z.string().register(z.globalRegistry, {
+        description: 'CDN url where the file lives'
+    })
+}).register(z.globalRegistry, {
+    description: 'Pre-signed URL generated successfully.'
+});
 
 export type zapiS3PresignResponse = z.infer<typeof zApiS3PresignResponse>;
 
@@ -2649,7 +2611,7 @@ export const zApiUploadCountResponse = zCount;
 export type zapiUploadCountResponse = z.infer<typeof zApiUploadCountResponse>;
 
 export const zApiUserExPatchData = z.object({
-    body: z.optional(zUserPatch),
+    body: z.optional(zUserExPatch),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });

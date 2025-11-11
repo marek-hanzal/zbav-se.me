@@ -4,15 +4,15 @@ import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
 export const GalleryFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
-		userId: z.string().nullish().openapi({
+		userId: z.string().optional().openapi({
 			description: "Exact user id",
 		}),
-		listingId: z.string().nullish().openapi({
+		listingId: z.string().optional().openapi({
 			description: "Exact listing id",
 		}),
 	})
 	.openapi("GalleryFilter", {
-		description: "User-land filters for gallery items",
+		description: "Filter object for gallery collection",
 	});
 
 export type GalleryFilterSchema = typeof GalleryFilterSchema;

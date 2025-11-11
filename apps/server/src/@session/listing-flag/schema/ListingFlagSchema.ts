@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFlagDbSchema } from "./ListingFlagDbSchema";
+import { ListingFlagDbSchema } from "../../../app/listing-flag/schema/ListingFlagDbSchema";
 
 export const ListingFlagSchema = z
 	.object({
@@ -9,7 +9,9 @@ export const ListingFlagSchema = z
 		userId: true,
 		createdAt: true,
 	})
-	.openapi("ListingFlag");
+	.openapi("ListingFlag", {
+		description: "Listing flag data",
+	});
 
 export type ListingFlagSchema = typeof ListingFlagSchema;
 

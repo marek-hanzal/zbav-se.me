@@ -2,7 +2,10 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingSort } from "@zbav-se.me/sdk/api/session";
+import type {
+	tListingSort,
+	tListingSortField,
+} from "@zbav-se.me/sdk/api/session";
 import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
@@ -37,13 +40,13 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 						"price",
 						"condition",
 						withGeo ? "geo" : undefined,
-					] satisfies (tListingSort["value"] | undefined)[]
-				).filter(Boolean) as tListingSort["value"][]
+					] satisfies (tListingSortField | undefined)[]
+				).filter(Boolean) as tListingSortField[]
 			).map((sortValue) => {
-				const current = value.find((s) => s.value === sortValue);
+				const current = value.find((s) => s.field === sortValue);
 
 				const position = current
-					? value.findIndex((s) => s.value === sortValue) + 1
+					? value.findIndex((s) => s.field === sortValue) + 1
 					: undefined;
 
 				return (
@@ -64,32 +67,32 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 						onClick={() => {
 							onChange((prev) => {
 								const idx = prev.findIndex(
-									(s) => s.value === sortValue,
+									(s) => s.field === sortValue,
 								);
 
 								if (idx < 0) {
 									return [
 										...prev,
 										{
-											value: sortValue,
-											sort: "asc",
+											field: sortValue,
+											direction: "asc",
 										} satisfies tListingSort,
 									];
 								}
 
 								const cur = prev[idx];
 
-								if (!cur || cur.value !== sortValue) {
+								if (!cur || cur.field !== sortValue) {
 									return prev;
 								}
 
-								if (cur.sort === "asc") {
+								if (cur.direction === "asc") {
 									const next = [
 										...prev,
 									];
 									next[idx] = {
-										value: cur.value,
-										sort: "desc",
+										field: cur.field,
+										direction: "desc",
 									} satisfies tListingSort;
 									return next;
 								}
@@ -118,7 +121,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 							</Badge>
 
 							<Tx
-								label={`Listing common sort value ${sortValue} - ${current?.sort ?? "unused"}`}
+								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
 							/>
 						</div>
 					</Button>

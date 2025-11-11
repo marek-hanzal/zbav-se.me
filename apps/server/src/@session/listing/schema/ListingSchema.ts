@@ -1,8 +1,8 @@
 import { z } from "@hono/zod-openapi";
+import { ListingDbSchema } from "../../../app/listing/schema/ListingDbSchema";
 import { CategorySchema } from "../../category/schema/CategorySchema";
 import { GallerySchema } from "../../gallery/schema/GallerySchema";
 import { LocationSchema } from "../../location/schema/LocationSchema";
-import { ListingDbSchema } from "./ListingDbSchema";
 
 export const ListingSchema = z
 	.object({
@@ -29,7 +29,9 @@ export const ListingSchema = z
 		conditionVec: true,
 		ageVec: true,
 	})
-	.openapi("Listing");
+	.openapi("Listing", {
+		description: "Listing data",
+	});
 
 export type ListingSchema = typeof ListingSchema;
 

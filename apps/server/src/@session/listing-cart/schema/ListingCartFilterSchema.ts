@@ -4,15 +4,15 @@ import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
 export const ListingCartFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
-		userId: z.string().nullish().openapi({
+		userId: z.string().optional().openapi({
 			description: "This filter matches the exact userId",
 		}),
-		listingId: z.string().nullish().openapi({
+		listingId: z.string().optional().openapi({
 			description: "This filter matches the exact listingId",
 		}),
 	})
 	.openapi("ListingCartFilter", {
-		description: "User-land filters",
+		description: "Filter object for listing cart collection",
 	});
 
 export type ListingCartFilterSchema = typeof ListingCartFilterSchema;

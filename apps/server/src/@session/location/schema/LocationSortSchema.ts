@@ -1,18 +1,22 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common/schema";
+import { OrderSchema } from "../../../schema/OrderSchema";
 
 export const LocationSortSchema = z
 	.object({
-		value: z.enum([
-			"confidence",
-			"query",
-			"country",
-			"address",
-		]),
-		sort: OrderSchema,
+		field: z
+			.enum([
+				"confidence",
+				"query",
+				"country",
+				"address",
+			])
+			.openapi("LocationSortField", {
+				description: "Field for location sort",
+			}),
+		direction: OrderSchema,
 	})
 	.openapi("LocationSort", {
-		description: "Sort object for location collection",
+		description: "Data for location sort",
 	});
 
 export type LocationSortSchema = typeof LocationSortSchema;

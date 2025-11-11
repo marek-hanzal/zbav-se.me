@@ -14,7 +14,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
-import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query";
+import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -107,8 +107,8 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				},
 				sort: [
 					{
-						value: "sort",
-						sort: "asc",
+						field: "sort",
+						direction: "asc",
 					},
 				],
 			});

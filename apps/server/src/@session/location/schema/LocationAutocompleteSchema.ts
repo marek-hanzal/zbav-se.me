@@ -10,11 +10,11 @@ export const LocationAutocompleteSchema = z
 		}),
 	})
 	.openapi("LocationAutocomplete", {
-		description: "Request body for location autocomplete",
+		description: "Data for location autocomplete",
 	});
 
 export type LocationAutocompleteSchema = typeof LocationAutocompleteSchema;
 
 export namespace LocationAutocompleteSchema {
-	export type Type = z.infer<typeof LocationAutocompleteSchema>;
+	export type Type = z.infer<LocationAutocompleteSchema>;
 }

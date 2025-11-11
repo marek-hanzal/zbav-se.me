@@ -1,11 +1,11 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
+import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InfraError } from "../../../error/InfraError";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
-import type { ListingScoreTypeSchema } from "../schema/ListingScoreTypeSchema";
 import { listingScoreRateLimit } from "./listingScoreRateLimit";
 
 const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingIgnoreDbSchema } from "./ListingIgnoreDbSchema";
+import { ListingIgnoreDbSchema } from "../../../app/listing-ignore/schema/ListingIgnoreDbSchema";
 
 export const ListingIgnoreSchema = z
 	.object({
@@ -9,7 +9,9 @@ export const ListingIgnoreSchema = z
 		userId: true,
 		createdAt: true,
 	})
-	.openapi("ListingIgnore");
+	.openapi("ListingIgnore", {
+		description: "Listing ignore data",
+	});
 
 export type ListingIgnoreSchema = typeof ListingIgnoreSchema;
 

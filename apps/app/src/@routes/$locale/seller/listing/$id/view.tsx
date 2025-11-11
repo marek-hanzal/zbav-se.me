@@ -6,7 +6,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import {
 	withListingFetchQuery,
 	withLocationFetchQuery,
-} from "@zbav-se.me/sdk/query";
+} from "@zbav-se.me/sdk/query/session";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 
 export const Route = createFileRoute("/$locale/seller/listing/$id/view")({

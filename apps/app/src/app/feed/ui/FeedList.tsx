@@ -6,7 +6,7 @@ import type { tFeedQuery } from "@zbav-se.me/sdk/api/session";
 import {
 	withFeedCollectionQuery,
 	withFeedCountQuery,
-} from "@zbav-se.me/sdk/query";
+} from "@zbav-se.me/sdk/query/session";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useId } from "react";
 import { FeedItem } from "~/app/feed/ui/FeedItem";

@@ -11,7 +11,7 @@ export const ListingFlagToggleSchema = z
 		}),
 	})
 	.openapi("ListingFlagToggle", {
-		description: "Toggle flag on listing",
+		description: "Data for toggling a flag on a listing",
 	});
 
 export type ListingFlagToggleSchema = typeof ListingFlagToggleSchema;

@@ -11,8 +11,7 @@ export const CurrencyListSchema = z
 		"CHF",
 	])
 	.openapi("CurrencyList", {
-		description: "Currency code (ISO 4217)",
-		example: "USD",
+		description: "List of available currencies",
 	});
 
 export type CurrencyListSchema = typeof CurrencyListSchema;

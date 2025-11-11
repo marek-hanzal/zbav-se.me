@@ -13,7 +13,7 @@ export const UploadQuerySchema = z
 		sort: UploadSortSchema.array().optional(),
 	})
 	.openapi("UploadQuery", {
-		description: "Query object for upload collection",
+		description: "Data for uploading a file",
 	});
 
 export type UploadQuerySchema = typeof UploadQuerySchema;

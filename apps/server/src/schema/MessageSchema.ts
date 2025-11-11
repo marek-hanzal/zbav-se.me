@@ -9,7 +9,7 @@ export const MessageSchema = z
 		type: MessageTypeSchema,
 	})
 	.openapi("Message", {
-		description: "General status message",
+		description: "Message data",
 	});
 
 export type MessageSchema = typeof MessageSchema;

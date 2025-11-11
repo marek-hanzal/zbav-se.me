@@ -7,11 +7,11 @@ export const ListingExpireSchema = z
 		"1-month",
 	])
 	.openapi("ListingExpire", {
-		description: "Expiration period for the listing",
+		description: "Expiration time of the listing",
 	});
 
 export type ListingExpireSchema = typeof ListingExpireSchema;
 
 export namespace ListingExpireSchema {
-	export type Type = z.infer<typeof ListingExpireSchema>;
+	export type Type = z.infer<ListingExpireSchema>;
 }

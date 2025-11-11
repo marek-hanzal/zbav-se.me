@@ -13,8 +13,7 @@ const AllowedExtensions = [
 export const AllowedExtensionsSchema = z
 	.enum(AllowedExtensions)
 	.openapi("AllowedExtensions", {
-		description: "File extension. Must be one of the allowed extensions.",
-		example: "webp",
+		description: "Allowed extensions",
 	});
 
 export type AllowedExtensionsSchema = typeof AllowedExtensionsSchema;

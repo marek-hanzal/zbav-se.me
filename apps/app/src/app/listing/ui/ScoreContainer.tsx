@@ -2,20 +2,20 @@ import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tListingScore } from "@zbav-se.me/sdk/api/session";
+import type { tListingMetrics } from "@zbav-se.me/sdk/api/session";
 import { ScoreIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace ScoreContainer {
 	export interface Props extends Container.Props {
 		locale: string;
-		listingScore: tListingScore;
+		listingMetrics: tListingMetrics;
 	}
 }
 
 export const ScoreContainer: FC<ScoreContainer.Props> = ({
 	locale,
-	listingScore,
+	listingMetrics,
 	...props
 }) => {
 	return (
@@ -29,17 +29,17 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
 				textTitle={"Listing Score - intro (title)"}
 			/>
 
-			{listingScore.score ? (
+			{listingMetrics.score ? (
 				<BadgeValue
 					textLabel={"Listing Score - Raw score (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingScore.score,
+						number: listingMetrics.score,
 					})}
 				/>
 			) : null}
 
-			{listingScore.score ? null : (
+			{listingMetrics.score ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Raw score (label)"}
 					textValue={"Listing Score - Raw score - no value (label)"}
@@ -50,17 +50,17 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
                 Views (active score)
             */}
 
-			{listingScore.views ? (
+			{listingMetrics.views ? (
 				<BadgeValue
 					textLabel={"Listing Score - Views (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingScore.views,
+						number: listingMetrics.views,
 					})}
 				/>
 			) : null}
 
-			{listingScore.views ? null : (
+			{listingMetrics.views ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Views (label)"}
 					textValue={"Listing Score - Views - no value (label)"}
@@ -71,17 +71,17 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
                 Feed views (passive score)
             */}
 
-			{listingScore.listing ? (
+			{listingMetrics.listing ? (
 				<BadgeValue
 					textLabel={"Listing Score - Feed views (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingScore.listing,
+						number: listingMetrics.listing,
 					})}
 				/>
 			) : null}
 
-			{listingScore.listing ? null : (
+			{listingMetrics.listing ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Feed views (label)"}
 					textValue={"Listing Score - Feed views - no value (label)"}
@@ -92,17 +92,17 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
                 Cart interactions
             */}
 
-			{listingScore.cart ? (
+			{listingMetrics.cart ? (
 				<BadgeValue
 					textLabel={"Listing Score - Cart (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingScore.cart,
+						number: listingMetrics.cart,
 					})}
 				/>
 			) : null}
 
-			{listingScore.cart ? null : (
+			{listingMetrics.cart ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Cart (label)"}
 					textValue={"Listing Score - Cart - no value (label)"}
@@ -113,17 +113,17 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
                 Ignore interactions
             */}
 
-			{listingScore.ignore ? (
+			{listingMetrics.ignore ? (
 				<BadgeValue
 					textLabel={"Listing Score - Ignore (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingScore.ignore,
+						number: listingMetrics.ignore,
 					})}
 				/>
 			) : null}
 
-			{listingScore.ignore ? null : (
+			{listingMetrics.ignore ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Ignore (label)"}
 					textValue={"Listing Score - Ignore - no value (label)"}
@@ -134,17 +134,17 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({
                 Flag interactions
             */}
 
-			{listingScore.flag ? (
+			{listingMetrics.flag ? (
 				<BadgeValue
 					textLabel={"Listing Score - Flag (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingScore.flag,
+						number: listingMetrics.flag,
 					})}
 				/>
 			) : null}
 
-			{listingScore.flag ? null : (
+			{listingMetrics.flag ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Flag (label)"}
 					textValue={"Listing Score - Flag - no value (label)"}

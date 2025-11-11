@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryFetchErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFetchErrors, apiFeedPatchErrors, apiGalleryFetchErrors, apiListingFeedCollectionErrors, apiListingFetchErrors, apiListingFlagToggleErrors, apiListingIgnoreToggleErrors, apiListingScoreCreateErrors, apiListingScoreErrors, apiLocationFetchErrors, apiS3PresignErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiCategoryCartCollectionRequest, tApiCategoryCartCollectionResponse, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiListingCartCollectionRequest, tApiListingCartCollectionResponse, tApiListingCartCountRequest, tApiListingCartCountResponse, tApiListingCartToggleRequest, tApiListingCartToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFeedCollectionRequest, tApiListingFeedCollectionResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingFlagCollectionRequest, tApiListingFlagCollectionResponse, tApiListingFlagCountRequest, tApiListingFlagCountResponse, tApiListingFlagToggleRequest, tApiListingFlagToggleResponse, tApiListingIgnoreCollectionRequest, tApiListingIgnoreCollectionResponse, tApiListingIgnoreCountRequest, tApiListingIgnoreCountResponse, tApiListingIgnoreToggleRequest, tApiListingIgnoreToggleResponse, tApiListingScoreCollectionRequest, tApiListingScoreCollectionResponse, tApiListingScoreCountRequest, tApiListingScoreCountResponse, tApiListingScoreCreateRequest, tApiListingScoreCreateResponse, tApiListingScoreRequest, tApiListingScoreResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
-import { zApiCategoryCartCollectionData, zApiCategoryCartCollectionResponse, zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiListingCartCollectionData, zApiListingCartCollectionResponse, zApiListingCartCountData, zApiListingCartCountResponse, zApiListingCartToggleData, zApiListingCartToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingFeedCollectionData, zApiListingFeedCollectionResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingFlagCollectionData, zApiListingFlagCollectionResponse, zApiListingFlagCountData, zApiListingFlagCountResponse, zApiListingFlagToggleData, zApiListingFlagToggleResponse, zApiListingIgnoreCollectionData, zApiListingIgnoreCollectionResponse, zApiListingIgnoreCountData, zApiListingIgnoreCountResponse, zApiListingIgnoreToggleData, zApiListingIgnoreToggleResponse, zApiListingScoreCollectionData, zApiListingScoreCollectionResponse, zApiListingScoreCountData, zApiListingScoreCountResponse, zApiListingScoreCreateData, zApiListingScoreData, zApiListingScoreResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiUploadCollectionData, zApiUploadCollectionResponse, zApiUploadCountData, zApiUploadCountResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
+import type { apiCategoryFetchErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFetchErrors, apiFeedPatchErrors, apiGalleryFetchErrors, apiListingFetchErrors, apiListingFlagToggleErrors, apiListingIgnoreToggleErrors, apiListingMetricsFetchErrors, apiListingScoreCreateErrors, apiLocationFetchErrors, apiS3PresignErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiCategoryCartCollectionRequest, tApiCategoryCartCollectionResponse, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiListingCartCollectionRequest, tApiListingCartCollectionResponse, tApiListingCartCountRequest, tApiListingCartCountResponse, tApiListingCartToggleRequest, tApiListingCartToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingFlagCollectionRequest, tApiListingFlagCollectionResponse, tApiListingFlagCountRequest, tApiListingFlagCountResponse, tApiListingFlagToggleRequest, tApiListingFlagToggleResponse, tApiListingIgnoreCollectionRequest, tApiListingIgnoreCollectionResponse, tApiListingIgnoreCountRequest, tApiListingIgnoreCountResponse, tApiListingIgnoreToggleRequest, tApiListingIgnoreToggleResponse, tApiListingMetricsFetchRequest, tApiListingMetricsFetchResponse, tApiListingScoreCollectionRequest, tApiListingScoreCollectionResponse, tApiListingScoreCountRequest, tApiListingScoreCountResponse, tApiListingScoreCreateRequest, tApiListingScoreCreateResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
+import { zApiCategoryCartCollectionData, zApiCategoryCartCollectionResponse, zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiListingCartCollectionData, zApiListingCartCollectionResponse, zApiListingCartCountData, zApiListingCartCountResponse, zApiListingCartToggleData, zApiListingCartToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingFlagCollectionData, zApiListingFlagCollectionResponse, zApiListingFlagCountData, zApiListingFlagCountResponse, zApiListingFlagToggleData, zApiListingFlagToggleResponse, zApiListingIgnoreCollectionData, zApiListingIgnoreCollectionResponse, zApiListingIgnoreCountData, zApiListingIgnoreCountResponse, zApiListingIgnoreToggleData, zApiListingIgnoreToggleResponse, zApiListingMetricsFetchData, zApiListingMetricsFetchResponse, zApiListingScoreCollectionData, zApiListingScoreCollectionResponse, zApiListingScoreCountData, zApiListingScoreCountResponse, zApiListingScoreCreateData, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiUploadCollectionData, zApiUploadCollectionResponse, zApiUploadCountData, zApiUploadCountResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -314,27 +314,6 @@ export const apiListingCreate = <ThrowOnError extends boolean = false>(options?:
 };
 
 /**
- * Returns listings based on filter/sort stored in a feed (by id)
- */
-export const apiListingFeedCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFeedCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingFeedCollectionResponse, apiListingFeedCollectionErrors, ThrowOnError>({
-        requestValidator: async (data) => {
-            return await zApiListingFeedCollectionData.parseAsync(data);
-        },
-        responseType: 'json',
-        responseValidator: async (data) => {
-            return await zApiListingFeedCollectionResponse.parseAsync(data);
-        },
-        url: '/api/session/listing/feed/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
-
-/**
  * Return a listing based on the provided query
  */
 export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => {
@@ -400,16 +379,16 @@ export const apiListingCount = <ThrowOnError extends boolean = false>(options?: 
 /**
  * Return score for a listing
  */
-export const apiListingScore = <ThrowOnError extends boolean = false>(options: Options<tApiListingScoreRequest, ThrowOnError>) => {
-    return (options.client ?? client).get<tApiListingScoreResponse, apiListingScoreErrors, ThrowOnError>({
+export const apiListingMetricsFetch = <ThrowOnError extends boolean = false>(options: Options<tApiListingMetricsFetchRequest, ThrowOnError>) => {
+    return (options.client ?? client).get<tApiListingMetricsFetchResponse, apiListingMetricsFetchErrors, ThrowOnError>({
         requestValidator: async (data) => {
-            return await zApiListingScoreData.parseAsync(data);
+            return await zApiListingMetricsFetchData.parseAsync(data);
         },
         responseType: 'json',
         responseValidator: async (data) => {
-            return await zApiListingScoreResponse.parseAsync(data);
+            return await zApiListingMetricsFetchResponse.parseAsync(data);
         },
-        url: '/api/session/listing/{id}/score',
+        url: '/api/session/listing/{id}/metrics',
         ...options
     });
 };

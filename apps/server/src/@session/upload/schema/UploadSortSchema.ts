@@ -1,15 +1,19 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common/schema";
+import { OrderSchema } from "../../../schema/OrderSchema";
 
 export const UploadSortSchema = z
 	.object({
-		value: z.enum([
-			"createdAt",
-		]),
-		sort: OrderSchema,
+		field: z
+			.enum([
+				"createdAt",
+			])
+			.openapi("UploadSortField", {
+				description: "Field for uploading a file",
+			}),
+		direction: OrderSchema,
 	})
 	.openapi("UploadSort", {
-		description: "Sort object for upload collection",
+		description: "Data for uploading a file",
 	});
 
 export type UploadSortSchema = typeof UploadSortSchema;

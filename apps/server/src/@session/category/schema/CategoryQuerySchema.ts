@@ -13,11 +13,11 @@ export const CategoryQuerySchema = z
 		sort: CategorySortSchema.array().optional(),
 	})
 	.openapi("CategoryQuery", {
-		description: "Query object for category collection",
+		description: "Category query parameters",
 	});
 
 export type CategoryQuerySchema = typeof CategoryQuerySchema;
 
 export namespace CategoryQuerySchema {
-	export type Type = z.infer<typeof CategoryQuerySchema>;
+	export type Type = z.infer<CategoryQuerySchema>;
 }

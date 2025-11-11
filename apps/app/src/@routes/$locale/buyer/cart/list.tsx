@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
-import { withCategoryCartCollectionQuery } from "@zbav-se.me/sdk/query";
+import { withCategoryCartCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { CategoryCartListContainer } from "~/app/category/ui/CategoryCartListContainer";
 
@@ -38,8 +38,8 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				},
 				sort: [
 					{
-						value: "listingCount",
-						sort: "desc",
+						field: "listingCount",
+						direction: "desc",
 					},
 				],
 				cursor: {

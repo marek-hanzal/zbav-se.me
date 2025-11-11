@@ -3,14 +3,15 @@ import { CursorSchema } from "../../../schema/CursorSchema";
 import { ListingFilterSchema } from "./ListingFilterSchema";
 import { ListingMetaSchema } from "./ListingMetaSchema";
 import { ListingSortSchema } from "./ListingSortSchema";
+import { ListingWhereSchema } from "./ListingWhereSchema";
 
 export const ListingQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: ListingFilterSchema.optional(),
-		where: ListingFilterSchema.openapi("ListingWhere", {
+		where: ListingWhereSchema.optional().openapi("ListingWhere", {
 			description: "App-based filters",
-		}).optional(),
+		}),
 		sort: ListingSortSchema.array().optional(),
 		meta: ListingMetaSchema.optional(),
 	})

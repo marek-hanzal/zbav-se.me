@@ -41,18 +41,14 @@ export const withCategoryCartSelect = ({
 			"cnt.listingCount",
 		]);
 
-	for (const sortItem of sort ?? []) {
-		if (!sortItem.sort) {
-			continue;
-		}
-
-		const { sort, value } = sortItem;
-
-		query = match(value)
-			.with("group", () => query.orderBy("c.group", sort))
-			.with("category", () => query.orderBy("c.category", sort))
-			.with("sort", () => query.orderBy("c.sort", sort))
-			.with("listingCount", () => query.orderBy("cnt.listingCount", sort))
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("group", () => query.orderBy("c.group", item.direction))
+			.with("category", () => query.orderBy("c.category", item.direction))
+			.with("sort", () => query.orderBy("c.sort", item.direction))
+			.with("listingCount", () =>
+				query.orderBy("cnt.listingCount", item.direction),
+			)
 			.exhaustive();
 	}
 

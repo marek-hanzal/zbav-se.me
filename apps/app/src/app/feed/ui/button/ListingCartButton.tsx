@@ -1,6 +1,6 @@
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation";
+import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/session";
 import { CartIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/session";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id")({
 	async loader({ params: { id }, context: { queryClient } }) {

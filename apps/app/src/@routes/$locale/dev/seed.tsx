@@ -23,7 +23,7 @@ import {
 import {
 	withListingScoreCreateMutation,
 	withUploadMutation,
-} from "@zbav-se.me/sdk/mutation";
+} from "@zbav-se.me/sdk/mutation/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import axios from "axios";
 import PQueue from "p-queue";
@@ -221,44 +221,44 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 		const fetchRandomListings = async () => {
 			const sort = list([
 				{
-					value: "age",
-					sort: "desc",
+					field: "age",
+					direction: "desc",
 				},
 				{
-					value: "price",
-					sort: "desc",
+					field: "price",
+					direction: "desc",
 				},
 				{
-					value: "condition",
-					sort: "desc",
+					field: "condition",
+					direction: "desc",
 				},
 				{
-					value: "createdAt",
-					sort: "desc",
+					field: "createdAt",
+					direction: "desc",
 				},
 				{
-					value: "updatedAt",
-					sort: "desc",
+					field: "updatedAt",
+					direction: "desc",
 				},
 				{
-					value: "age",
-					sort: "asc",
+					field: "age",
+					direction: "asc",
 				},
 				{
-					value: "price",
-					sort: "asc",
+					field: "price",
+					direction: "asc",
 				},
 				{
-					value: "condition",
-					sort: "asc",
+					field: "condition",
+					direction: "asc",
 				},
 				{
-					value: "createdAt",
-					sort: "asc",
+					field: "createdAt",
+					direction: "asc",
 				},
 				{
-					value: "updatedAt",
-					sort: "asc",
+					field: "updatedAt",
+					direction: "asc",
 				},
 			] satisfies tListingSort[]);
 

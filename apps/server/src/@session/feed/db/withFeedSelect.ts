@@ -20,15 +20,14 @@ export const withFeedSelect = ({ sort }: withFeedSelect.Props) => {
 		"f.meta",
 	]);
 
-	for (const sortItem of sort ?? []) {
-		if (!sortItem.sort) {
-			continue;
-		}
-		const { sort: key, value } = sortItem;
-
-		query = match(value)
-			.with("createdAt", () => query.orderBy("f.createdAt", key))
-			.with("updatedAt", () => query.orderBy("f.updatedAt", key))
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("createdAt", () =>
+				query.orderBy("f.createdAt", item.direction),
+			)
+			.with("updatedAt", () =>
+				query.orderBy("f.updatedAt", item.direction),
+			)
 			.exhaustive();
 	}
 

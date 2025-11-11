@@ -11,7 +11,7 @@ export const ListingIgnoreToggleSchema = z
 		}),
 	})
 	.openapi("ListingIgnoreToggle", {
-		description: "Toggle listing ignore state",
+		description: "Data for toggling a listing in ignore list",
 	});
 
 export type ListingIgnoreToggleSchema = typeof ListingIgnoreToggleSchema;

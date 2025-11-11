@@ -7,7 +7,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
-import { withListingCollectionQuery } from "@zbav-se.me/sdk/query";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import {

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingScoreDbSchema } from "./ListingScoreDbSchema";
+import { ListingScoreDbSchema } from "../../../app/listing-score/schema/ListingScoreDbSchema";
 
 export const ListingScoreSchema = z
 	.object({
@@ -8,7 +8,9 @@ export const ListingScoreSchema = z
 	.omit({
 		userId: true,
 	})
-	.openapi("ListingScore");
+	.openapi("ListingScore", {
+		description: "Listing score data",
+	});
 
 export type ListingScoreSchema = typeof ListingScoreSchema;
 

@@ -11,7 +11,7 @@ export const ListingCartToggleSchema = z
 		}),
 	})
 	.openapi("ListingCartToggle", {
-		description: "Toggle listing in cart",
+		description: "Data for toggling a listing in cart",
 	});
 
 export type ListingCartToggleSchema = typeof ListingCartToggleSchema;

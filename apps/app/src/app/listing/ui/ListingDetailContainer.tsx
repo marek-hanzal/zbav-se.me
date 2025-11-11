@@ -9,7 +9,7 @@ import type {
 	tListing,
 	tListingQuery,
 } from "@zbav-se.me/sdk/api/session";
-import { withListingScoreQuery } from "@zbav-se.me/sdk/query";
+import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { HeroImage } from "~/app/ui/img/HeroImage";
@@ -35,7 +35,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		...tGallery[],
 	];
 
-	const listingScoreQuery = withListingScoreQuery.useSuspenseQuery(
+	const listingMetricsQuery = withListingMetricsFetchQuery.useSuspenseQuery(
 		listing.id,
 	);
 
@@ -84,7 +84,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				textLabel={"Listing score hint (label)"}
 				textValue={toLocaleNumber({
 					locale,
-					number: listingScoreQuery.data.score,
+					number: listingMetricsQuery.data.score,
 				})}
 				action={
 					<LinkTo

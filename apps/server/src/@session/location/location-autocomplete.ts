@@ -4,11 +4,11 @@ import { linkTo } from "@use-pico/common/link-to";
 import { withList } from "@use-pico/common/list";
 import { sql } from "kysely";
 import { AppEnv } from "../../AppEnv";
+import type { LocationDbSchema } from "../../app/location/schema/LocationDbSchema";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { withLocationSelect } from "./db/withLocationSelect";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
-import type { LocationDbSchema } from "./schema/LocationDbSchema";
 import { LocationSchema } from "./schema/LocationSchema";
 
 /**

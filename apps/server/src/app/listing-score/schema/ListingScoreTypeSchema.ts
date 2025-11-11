@@ -1,0 +1,19 @@
+import { z } from "@hono/zod-openapi";
+
+export const ListingScoreTypeSchema = z
+	.enum([
+		"listing",
+		"ignore",
+		"flag",
+		"view",
+		"cart",
+	])
+	.openapi("ListingScoreType", {
+		description: "Type of listing score",
+	});
+
+export type ListingScoreTypeSchema = typeof ListingScoreTypeSchema;
+
+export namespace ListingScoreTypeSchema {
+	export type Type = z.infer<ListingScoreTypeSchema>;
+}

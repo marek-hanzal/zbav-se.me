@@ -2,7 +2,7 @@ import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo, type LinkToCls } from "@use-pico/client/ui/link-to";
 import type { Cls } from "@use-pico/cls";
-import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation";
+import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/session";
 import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import { match } from "ts-pattern";
 import { Tile } from "~/app/ui/dashboard/Tile";

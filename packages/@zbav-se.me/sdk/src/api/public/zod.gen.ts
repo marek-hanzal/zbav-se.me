@@ -2,19 +2,6 @@
 
 import { z } from 'zod';
 
-/**
- * Health check response
- */
-export const zHealth = z.object({
-    status: z.boolean().register(z.globalRegistry, {
-        description: 'Health status'
-    })
-}).register(z.globalRegistry, {
-    description: 'Health check response'
-});
-
-export type zHealth = z.infer<typeof zHealth>;
-
 export const zApiHealthData = z.object({
     body: z.optional(z.never()),
     path: z.optional(z.never()),
@@ -26,6 +13,12 @@ export type zapiHealthRequest = z.infer<typeof zApiHealthData>;
 /**
  * Just health check
  */
-export const zApiHealthResponse = zHealth;
+export const zApiHealthResponse = z.object({
+    status: z.boolean().register(z.globalRegistry, {
+        description: 'Health status'
+    })
+}).register(z.globalRegistry, {
+    description: 'Just health check'
+});
 
 export type zapiHealthResponse = z.infer<typeof zApiHealthResponse>;

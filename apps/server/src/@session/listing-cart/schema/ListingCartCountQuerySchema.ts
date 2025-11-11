@@ -5,8 +5,7 @@ export const ListingCartCountQuerySchema = ListingCartQuerySchema.pick({
 	filter: true,
 	where: true,
 }).openapi("ListingCartCountQuery", {
-	description:
-		"Query object for listing cart count (omits cursor, sort, and meta)",
+	description: "Query object for listing cart count",
 });
 
 export type ListingCartCountQuerySchema = typeof ListingCartCountQuerySchema;

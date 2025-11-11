@@ -4,7 +4,7 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { type tFeedCreate, zFeed } from "@zbav-se.me/sdk/api/session";
-import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation";
+import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";

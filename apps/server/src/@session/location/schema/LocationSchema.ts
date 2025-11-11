@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { LocationDbSchema } from "./LocationDbSchema";
+import { LocationDbSchema } from "../../../app/location/schema/LocationDbSchema";
 
 export const LocationSchema = z
 	.object({
@@ -9,7 +9,7 @@ export const LocationSchema = z
 		geo: true,
 	})
 	.openapi("Location", {
-		description: "Location data transfer object",
+		description: "Location data",
 	});
 
 export type LocationSchema = typeof LocationSchema;

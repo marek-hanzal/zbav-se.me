@@ -4,16 +4,6 @@ export type clientOptions = {
     baseURL: 'http://obsidian-ii.local:3032' | (string & {});
 };
 
-/**
- * Health check response
- */
-export type tHealth = {
-    /**
-     * Health status
-     */
-    status: boolean;
-};
-
 export type tApiHealthRequest = {
     body?: never;
     path?: never;
@@ -25,7 +15,12 @@ export type tApiHealthResponse = {
     /**
      * Just health check
      */
-    200: tHealth;
+    200: {
+        /**
+         * Health status
+         */
+        status: boolean;
+    };
 };
 
 export type apiHealthResponse = tApiHealthResponse[keyof tApiHealthResponse];

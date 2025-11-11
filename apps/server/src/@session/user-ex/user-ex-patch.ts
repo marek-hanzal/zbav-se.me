@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { UserPatchSchema } from "./schema/UserPatchSchema";
+import { UserExPatchSchema } from "./schema/UserExPatchSchema";
 
 export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -16,7 +16,7 @@ export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: UserPatchSchema,
+							schema: UserExPatchSchema,
 						},
 					},
 					description: "User extended information to update",

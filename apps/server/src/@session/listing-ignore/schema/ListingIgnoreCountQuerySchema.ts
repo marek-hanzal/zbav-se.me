@@ -5,8 +5,7 @@ export const ListingIgnoreCountQuerySchema = ListingIgnoreQuerySchema.pick({
 	filter: true,
 	where: true,
 }).openapi("ListingIgnoreCountQuery", {
-	description:
-		"Query object for listing ignore count (omits cursor, sort, and meta)",
+	description: "Query object for listing ignore count",
 });
 
 export type ListingIgnoreCountQuerySchema =

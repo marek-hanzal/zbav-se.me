@@ -4,22 +4,22 @@ import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
 export const CategoryFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
-		group: z.string().nullish().openapi({
+		group: z.string().optional().openapi({
 			description: "This filter matches the exact group of the category",
 		}),
-		category: z.string().nullish().openapi({
+		category: z.string().optional().openapi({
 			description: "This filter matches the exact category name",
 		}),
-		locale: z.string().nullish().openapi({
+		locale: z.string().optional().openapi({
 			description: "This filter matches the exact locale of the category",
 		}),
-		localeIn: z.array(z.string()).nullish().openapi({
+		localeIn: z.array(z.string()).optional().openapi({
 			description:
 				"This filter matches categories with locales in the provided array",
 		}),
 	})
 	.openapi("CategoryFilter", {
-		description: "User-land filters",
+		description: "Filter object for category collection",
 	});
 
 export type CategoryFilterSchema = typeof CategoryFilterSchema;

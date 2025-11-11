@@ -6,7 +6,7 @@ import { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query";
+import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { type FC, type RefObject, useState } from "react";
 

@@ -6,7 +6,7 @@ export const UploadFilterSchema = z
 		...DefaultFilterSchema.shape,
 	})
 	.openapi("UploadFilter", {
-		description: "User-land filters for upload items",
+		description: "Data for uploading a file",
 	});
 
 export type UploadFilterSchema = typeof UploadFilterSchema;

@@ -13,5 +13,5 @@ export const UploadCreateSchema = z
 export type UploadCreateSchema = typeof UploadCreateSchema;
 
 export namespace UploadCreateSchema {
-	export type Type = z.infer<typeof UploadCreateSchema>;
+	export type Type = z.infer<UploadCreateSchema>;
 }

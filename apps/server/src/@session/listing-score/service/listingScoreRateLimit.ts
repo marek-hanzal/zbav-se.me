@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InfraError } from "../../../error/InfraError";
 import { TooManyRequests } from "../../../error/TooManyRequests";
-import type { ListingScoreTypeSchema } from "../schema/ListingScoreTypeSchema";
 
 export namespace listingScoreRateLimit {
 	export interface Props {

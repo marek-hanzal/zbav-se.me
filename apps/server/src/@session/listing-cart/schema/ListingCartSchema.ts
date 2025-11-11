@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingCartDbSchema } from "./ListingCartDbSchema";
+import { ListingCartDbSchema } from "../../../app/listing-cart/schema/ListingCartDbSchema";
 
 export const ListingCartSchema = z
 	.object({
@@ -8,7 +8,9 @@ export const ListingCartSchema = z
 	.omit({
 		userId: true,
 	})
-	.openapi("ListingCart");
+	.openapi("ListingCart", {
+		description: "Listing cart data",
+	});
 
 export type ListingCartSchema = typeof ListingCartSchema;
 

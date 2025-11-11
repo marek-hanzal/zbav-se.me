@@ -12,17 +12,13 @@ export const FeedPatchSchema = z
 		locationId: z.string().nullish().openapi({
 			description: "ID of the location associated with the feed",
 		}),
-		filter: ListingFilterSchema.optional().openapi({
-			description: "Filter used to fetch the listings",
-		}),
-		sort: ListingSortSchema.array().optional().openapi({
-			description: "Sort used to fetch the listings",
-		}),
-		meta: ListingMetaSchema.optional().openapi({
-			description: "Metadata used to fetch the listings (e.g. location)",
-		}),
+		filter: ListingFilterSchema.optional(),
+		sort: ListingSortSchema.array().optional(),
+		meta: ListingMetaSchema.optional(),
 	})
-	.openapi("FeedPatch");
+	.openapi("FeedPatch", {
+		description: "Data for updating an existing feed",
+	});
 
 export type FeedPatchSchema = typeof FeedPatchSchema;
 

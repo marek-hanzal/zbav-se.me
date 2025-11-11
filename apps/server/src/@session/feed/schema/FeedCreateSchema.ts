@@ -15,7 +15,9 @@ export const FeedCreateSchema = z
 		sort: ListingSortSchema.array(),
 		meta: ListingMetaSchema,
 	})
-	.openapi("FeedCreate");
+	.openapi("FeedCreate", {
+		description: "Data for creating a new feed",
+	});
 
 export type FeedCreateSchema = typeof FeedCreateSchema;
 

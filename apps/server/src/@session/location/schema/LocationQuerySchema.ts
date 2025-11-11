@@ -13,7 +13,7 @@ export const LocationQuerySchema = z
 		sort: LocationSortSchema.array().optional(),
 	})
 	.openapi("LocationQuery", {
-		description: "Query object for location collection",
+		description: "Data for location query",
 	});
 
 export type LocationQuerySchema = typeof LocationQuerySchema;

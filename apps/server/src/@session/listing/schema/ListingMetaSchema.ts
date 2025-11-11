@@ -6,7 +6,7 @@ export const ListingMetaSchema = z
 		latLon: LatLonSchema.optional(),
 	})
 	.openapi("ListingMeta", {
-		description: "Metadata for a listing (query)",
+		description: "Meta data for listing collection",
 	});
 
 export type ListingMetaSchema = typeof ListingMetaSchema;

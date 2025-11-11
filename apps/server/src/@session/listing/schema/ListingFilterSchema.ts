@@ -2,8 +2,6 @@ import { z } from "@hono/zod-openapi";
 import { CurrencyListSchema } from "../../../schema/CurrencyListSchema";
 import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
 import { PriceSchema } from "../../../schema/PriceSchema";
-import { CategoryIdInSchema } from "../../category/schema/CategoryIdInSchema";
-import { CategoryIdSchema } from "../../category/schema/CategoryIdSchema";
 
 export const ListingFilterSchema = z
 	.object({
@@ -24,7 +22,7 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with condition less than or equal to the provided value",
 		}),
-		conditionIn: z.array(z.number().gte(0).lte(6)).nullish().openapi({
+		conditionIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
 			description:
 				"This filter matches listings with conditions in the provided array",
 		}),
@@ -36,17 +34,25 @@ export const ListingFilterSchema = z
 			description:
 				"This filter matches listings with age less than or equal to the provided value",
 		}),
-		ageIn: z.array(z.number().gte(0).lte(6)).nullish().openapi({
+		ageIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
 			description:
 				"This filter matches listings with ages in the provided array",
 		}),
-		categoryId: CategoryIdSchema({
-			description:
-				"This filter matches listings with the exact category ID",
-		}).optional(),
-		categoryIdIn: CategoryIdInSchema({
-			description: "Filter listings based on the provided category IDs",
-		}).optional(),
+		categoryId: z
+			.string()
+			.min(1, "Category ID is required")
+			.optional()
+			.openapi("CategoryId", {
+				description: "ID of the category",
+			}),
+		categoryIdIn: z
+			.array(z.string().min(1, "Category ID is required"))
+			.optional()
+			.openapi("CategoryIdIn", {
+				description:
+					"Filter listings based on the provided category IDs",
+			})
+			.optional(),
 		currency: CurrencyListSchema.optional(),
 		currencyIn: z
 			.array(CurrencyListSchema)
@@ -55,23 +61,25 @@ export const ListingFilterSchema = z
 				description:
 					"This filter matches listings with currency codes in the provided array",
 			}),
-		expiresAtBefore: z.coerce.date().nullish().openapi({
+		expiresAtBefore: z.coerce.date().optional().openapi({
 			description:
 				"This filter matches listings that expire before the provided date",
+			type: "string",
 		}),
-		expiresAtAfter: z.coerce.date().nullish().openapi({
+		expiresAtAfter: z.coerce.date().optional().openapi({
 			description:
 				"This filter matches listings that expire after the provided date",
+			type: "string",
 		}),
-		rangeMin: z.number().gte(0).nullish().openapi({
+		rangeMin: z.number().gte(0).optional().openapi({
 			description:
 				"This filter matches listings with range greater than or equal to the provided value (meters)",
 		}),
-		rangeMax: z.number().gte(0).nullish().openapi({
+		rangeMax: z.number().gte(0).optional().openapi({
 			description:
 				"This filter matches listings with range less than or equal to the provided value (meters)",
 		}),
-		title: z.string().nullish().openapi({
+		title: z.string().optional().openapi({
 			description:
 				"This filter matches listings with title matching the provided value",
 		}),

@@ -7,9 +7,9 @@ export const FeedQuerySchema = z
 	.object({
 		cursor: CursorSchema.optional(),
 		filter: FeedFilterSchema.optional(),
-		where: FeedFilterSchema.openapi({
+		where: FeedFilterSchema.optional().openapi("FeedWhere", {
 			description: "App-based filters",
-		}).optional(),
+		}),
 		sort: FeedSortSchema.array().optional(),
 	})
 	.openapi("FeedQuery", {

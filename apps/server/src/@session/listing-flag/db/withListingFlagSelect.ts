@@ -19,13 +19,10 @@ export const withListingFlagSelect = ({
 	]);
 
 	for (const item of sort ?? []) {
-		if (!item.sort) {
-			return query;
-		}
-		const { sort, value } = item;
-
-		return match(value)
-			.with("createdAt", () => query.orderBy("lf.createdAt", sort))
+		return match(item.field)
+			.with("createdAt", () =>
+				query.orderBy("lf.createdAt", item.direction),
+			)
 			.exhaustive();
 	}
 

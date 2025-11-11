@@ -11,11 +11,11 @@ import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { OptionalId } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/session";
-import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation";
+import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/session";
 import {
 	withCategoryCollectionQuery,
 	withLocationFetchQuery,
-} from "@zbav-se.me/sdk/query";
+} from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 
@@ -34,7 +34,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 	const locationFetchQuery = withLocationFetchQuery.useQuery(
 		{
 			where: {
-				id: feed.locationId,
+				id: feed.locationId ?? undefined,
 			},
 		},
 		{
@@ -45,7 +45,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 	const categoryCollectionQuery = withCategoryCollectionQuery.useQuery(
 		{
 			where: {
-				idIn: feed.filter?.categoryIdIn,
+				idIn: feed.filter?.categoryIdIn ?? undefined,
 			},
 		},
 		{
@@ -163,12 +163,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 					textTitle={"Feed sorting (label)"}
 					textEmpty={"Feed sorting not selected"}
 					items={(feed.sort ?? []).map((sortItem, index) => ({
-						id: `${sortItem.value}-${index}`,
+						id: `${sortItem.field}-${index}`,
 						...sortItem,
 					}))}
 					render={(sortItem) => (
 						<Tx
-							label={`Listing common sort value ${sortItem.value} - ${sortItem.sort}`}
+							label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
 						/>
 					)}
 					action={

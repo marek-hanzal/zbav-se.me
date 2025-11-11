@@ -5,9 +5,9 @@ export type clientOptions = {
 };
 
 /**
- * Schema for patching user extended information
+ * Data for patching a user ex
  */
-export type tUserPatch = {
+export type tUserExPatch = {
     /**
      * Default location for the user - used for listings & listing sorting
      */
@@ -16,7 +16,7 @@ export type tUserPatch = {
 };
 
 /**
- * User side - whether they are a seller or buyer
+ * Side of the user
  */
 export const tUserSide = {
     seller: 'seller',
@@ -24,7 +24,7 @@ export const tUserSide = {
 } as const;
 
 /**
- * User side - whether they are a seller or buyer
+ * Side of the user
  */
 export type tUserSide = typeof tUserSide[keyof typeof tUserSide];
 
@@ -40,7 +40,7 @@ export type tUploadCollection = {
 };
 
 /**
- * Upload data transfer object
+ * Upload file metadata
  */
 export type tUpload = {
     /**
@@ -54,7 +54,7 @@ export type tUpload = {
 };
 
 /**
- * Query object for upload collection
+ * Data for uploading a file
  */
 export type tUploadQuery = {
     cursor?: tCursor;
@@ -64,11 +64,36 @@ export type tUploadQuery = {
 };
 
 /**
- * Sort object for upload collection
+ * Order
+ */
+export const tOrder = {
+    asc: 'asc',
+    desc: 'desc'
+} as const;
+
+/**
+ * Order
+ */
+export type tOrder = typeof tOrder[keyof typeof tOrder];
+
+/**
+ * Field for uploading a file
+ */
+export const tUploadSortField = {
+    createdAt: 'createdAt'
+} as const;
+
+/**
+ * Field for uploading a file
+ */
+export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortField];
+
+/**
+ * Data for uploading a file
  */
 export type tUploadSort = {
-    value: 'createdAt';
-    sort?: 'asc' | 'desc';
+    field: tUploadSortField;
+    direction: tOrder;
 };
 
 /**
@@ -78,33 +103,33 @@ export type tUploadWhere = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
 };
 
 /**
- * User-land filters for upload items
+ * Data for uploading a file
  */
 export type tUploadFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
 };
 
 /**
@@ -131,17 +156,8 @@ export type tUploadCreate = {
     url: string;
 };
 
-export type tS3PreSignRequest = {
-    /**
-     * Object path. After stripping leading '/', must start with `<userId>/`
-     */
-    path: string;
-    extension: tAllowedExtensions;
-    contentType: tAllowedContentTypes;
-};
-
 /**
- * Browser-provided Content-Type used for PUT upload.
+ * Allowed content types
  */
 export const tAllowedContentTypes = {
     'image/jpeg': 'image/jpeg',
@@ -153,12 +169,12 @@ export const tAllowedContentTypes = {
 } as const;
 
 /**
- * Browser-provided Content-Type used for PUT upload.
+ * Allowed content types
  */
 export type tAllowedContentTypes = typeof tAllowedContentTypes[keyof typeof tAllowedContentTypes];
 
 /**
- * File extension. Must be one of the allowed extensions.
+ * Allowed extensions
  */
 export const tAllowedExtensions = {
     webp: 'webp',
@@ -171,20 +187,12 @@ export const tAllowedExtensions = {
 } as const;
 
 /**
- * File extension. Must be one of the allowed extensions.
+ * Allowed extensions
  */
 export type tAllowedExtensions = typeof tAllowedExtensions[keyof typeof tAllowedExtensions];
 
-export type tS3PreSignResponse = {
-    url: string;
-    /**
-     * CDN url where the file lives
-     */
-    cdn: string;
-};
-
 /**
- * Query object for location collection
+ * Data for location query
  */
 export type tLocationQuery = {
     cursor?: tCursor;
@@ -194,11 +202,26 @@ export type tLocationQuery = {
 };
 
 /**
- * Sort object for location collection
+ * Field for location sort
+ */
+export const tLocationSortField = {
+    confidence: 'confidence',
+    query: 'query',
+    country: 'country',
+    address: 'address'
+} as const;
+
+/**
+ * Field for location sort
+ */
+export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocationSortField];
+
+/**
+ * Data for location sort
  */
 export type tLocationSort = {
-    value: 'confidence' | 'query' | 'country' | 'address';
-    sort?: 'asc' | 'desc';
+    field: tLocationSortField;
+    direction: tOrder;
 };
 
 /**
@@ -208,77 +231,77 @@ export type tLocationWhere = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * This filter matches the exact query that was used to get the location
      */
-    query?: string | null;
+    query?: string;
     /**
      * This filter matches the exact language that was used to get the location
      */
-    lang?: string | null;
+    lang?: string;
     /**
      * This filter matches the exact country of the location
      */
-    country?: string | null;
+    country?: string;
     /**
      * This filter matches the exact country code of the location
      */
-    code?: string | null;
+    code?: string;
     /**
      * This filter matches locations with confidence greater than or equal to the provided value
      */
-    confidenceMin?: number | null;
+    confidenceMin?: number;
 };
 
 /**
- * User-land filters
+ * Data for location filter
  */
 export type tLocationFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * This filter matches the exact query that was used to get the location
      */
-    query?: string | null;
+    query?: string;
     /**
      * This filter matches the exact language that was used to get the location
      */
-    lang?: string | null;
+    lang?: string;
     /**
      * This filter matches the exact country of the location
      */
-    country?: string | null;
+    country?: string;
     /**
      * This filter matches the exact country code of the location
      */
-    code?: string | null;
+    code?: string;
     /**
      * This filter matches locations with confidence greater than or equal to the provided value
      */
-    confidenceMin?: number | null;
+    confidenceMin?: number;
 };
 
 /**
- * Request body for location autocomplete
+ * Data for location autocomplete
  */
 export type tLocationAutocomplete = {
     /**
@@ -299,14 +322,27 @@ export type tListingScoreCreate = {
      * ID of the listing to score
      */
     listingId: string;
-    /**
-     * Predefined score type
-     */
-    score: 'listing' | 'ignore' | 'flag' | 'view' | 'cart';
+    score: tListingScoreType;
 };
 
 /**
- * Query object for listing score count (omits cursor, sort, and meta)
+ * Type of listing score
+ */
+export const tListingScoreType = {
+    listing: 'listing',
+    ignore: 'ignore',
+    flag: 'flag',
+    view: 'view',
+    cart: 'cart'
+} as const;
+
+/**
+ * Type of listing score
+ */
+export type tListingScoreType = typeof tListingScoreType[keyof typeof tListingScoreType];
+
+/**
+ * Query object for listing score count
  */
 export type tListingScoreCountQuery = {
     filter?: tListingScoreFilter;
@@ -320,49 +356,49 @@ export type tListingScoreWhere = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * This filter matches the exact userId
      */
-    userId?: string | null;
+    userId?: string;
     /**
      * This filter matches the exact listingId
      */
-    listingId?: string | null;
+    listingId?: string;
 };
 
 /**
- * User-land filters
+ * Filter object for listing score collection
  */
 export type tListingScoreFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * This filter matches the exact userId
      */
-    userId?: string | null;
+    userId?: string;
     /**
      * This filter matches the exact listingId
      */
-    listingId?: string | null;
+    listingId?: string;
 };
 
 /**
@@ -376,39 +412,31 @@ export type tListingScoreQuery = {
 };
 
 /**
+ * Field of the listing score sort
+ */
+export const tListingScoreSortField = {
+    score: 'score',
+    createdAt: 'createdAt'
+} as const;
+
+/**
+ * Field of the listing score sort
+ */
+export type tListingScoreSortField = typeof tListingScoreSortField[keyof typeof tListingScoreSortField];
+
+/**
  * Sort object for listing score collection
  */
 export type tListingScoreSort = {
-    value: 'score' | 'createdAt';
-    sort?: 'asc' | 'desc';
+    field: tListingScoreSortField;
+    direction: tOrder;
 };
 
 /**
  * Collection of listing scores
  */
 export type tListingScoreCollection = {
-    data: Array<tListingScore & {
-        /**
-         * ID of the score
-         */
-        id: string;
-        /**
-         * ID of the listing
-         */
-        listingId: string;
-        /**
-         * Type of score
-         */
-        type: 'listing' | 'ignore' | 'flag' | 'view' | 'cart';
-        /**
-         * Score value
-         */
-        score: number;
-        /**
-         * Creation timestamp
-         */
-        createdAt: string;
-    }>;
+    data: Array<tListingScore>;
     /**
      * Whether there are more items to fetch
      */
@@ -416,9 +444,449 @@ export type tListingScoreCollection = {
 };
 
 /**
- * Contains various scores/metrics of the listing
+ * Listing score data
  */
 export type tListingScore = {
+    /**
+     * ID of the score
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    type: tListingScoreType;
+    /**
+     * Score value
+     */
+    score: number;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Data for toggling a flag on a listing
+ */
+export type tListingFlagToggle = {
+    /**
+     * Whether to add (true) or remove (false) the flag on the listing
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing flag count
+ */
+export type tListingFlagCountQuery = {
+    filter?: tListingFlagFilter;
+    where?: tListingFlagCountWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingFlagCountWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for listing flag collection
+ */
+export type tListingFlagFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for listing flag collection
+ */
+export type tListingFlagQuery = {
+    cursor?: tCursor;
+    filter?: tListingFlagFilter;
+    where?: tListingFlagWhere;
+    sort?: Array<tListingFlagSort>;
+};
+
+/**
+ * Field of the listing flag sort
+ */
+export const tListingFlagSortField = {
+    createdAt: 'createdAt'
+} as const;
+
+/**
+ * Field of the listing flag sort
+ */
+export type tListingFlagSortField = typeof tListingFlagSortField[keyof typeof tListingFlagSortField];
+
+/**
+ * Sort object for listing flag collection
+ */
+export type tListingFlagSort = {
+    field: tListingFlagSortField;
+    direction: tOrder;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingFlagWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Collection of listing flag items
+ */
+export type tListingFlagCollection = {
+    data: Array<tListingFlag>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing flag data
+ */
+export type tListingFlag = {
+    /**
+     * ID of the flag entry
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+};
+
+/**
+ * Data for toggling a listing in ignore list
+ */
+export type tListingIgnoreToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from ignore list
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing ignore count
+ */
+export type tListingIgnoreCountQuery = {
+    filter?: tListingIgnoreFilter;
+    where?: tListingIgnoreWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingIgnoreWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for listing ignore collection
+ */
+export type tListingIgnoreFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for listing ignore collection
+ */
+export type tListingIgnoreQuery = {
+    cursor?: tCursor;
+    filter?: tListingIgnoreFilter;
+    where?: tListingIgnoreWhere;
+    sort?: Array<tListingIgnoreSort>;
+};
+
+/**
+ * Field of the listing ignore sort
+ */
+export const tListingIgnoreSortField = {
+    createdAt: 'createdAt'
+} as const;
+
+/**
+ * Field of the listing ignore sort
+ */
+export type tListingIgnoreSortField = typeof tListingIgnoreSortField[keyof typeof tListingIgnoreSortField];
+
+/**
+ * Sort object for listing ignore collection
+ */
+export type tListingIgnoreSort = {
+    field: tListingIgnoreSortField;
+    direction: tOrder;
+};
+
+/**
+ * Collection of listing ignore items
+ */
+export type tListingIgnoreCollection = {
+    data: Array<tListingIgnore>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing ignore data
+ */
+export type tListingIgnore = {
+    /**
+     * ID of the ignore entry
+     */
+    id: string;
+    /**
+     * ID of the listing that was ignored
+     */
+    listingId: string;
+};
+
+/**
+ * Data for toggling a listing in cart
+ */
+export type tListingCartToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from cart
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing cart count
+ */
+export type tListingCartCountQuery = {
+    filter?: tListingCartFilter;
+    where?: tListingCartWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingCartWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for listing cart collection
+ */
+export type tListingCartFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for listing cart collection
+ */
+export type tListingCartQuery = {
+    cursor?: tCursor;
+    filter?: tListingCartFilter;
+    where?: tListingCartWhere;
+    sort?: Array<tListingCartSort>;
+};
+
+/**
+ * Field of the listing cart sort
+ */
+export const tListingCartSortField = {
+    createdAt: 'createdAt'
+} as const;
+
+/**
+ * Field of the listing cart sort
+ */
+export type tListingCartSortField = typeof tListingCartSortField[keyof typeof tListingCartSortField];
+
+/**
+ * Sort object for listing cart collection
+ */
+export type tListingCartSort = {
+    field: tListingCartSortField;
+    direction: tOrder;
+};
+
+/**
+ * Collection of listing cart items
+ */
+export type tListingCartCollection = {
+    data: Array<tListingCart>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing cart data
+ */
+export type tListingCart = {
+    /**
+     * ID of the cart item
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Score data for the listing
+ */
+export type tListingMetrics = {
     /**
      * Number of views from the feed (low attention score)
      */
@@ -466,384 +934,12 @@ export type tListingScore = {
 };
 
 /**
- * Toggle flag on listing
- */
-export type tListingFlagToggle = {
-    /**
-     * Whether to add (true) or remove (false) the flag on the listing
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for listing flag counts
- */
-export type tListingFlagCountQuery = {
-    filter?: tListingFlagFilter;
-    where?: tListingFlagCountWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingFlagCountWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * User-land filters
- */
-export type tListingFlagFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * Query object for listing flag collection
- */
-export type tListingFlagQuery = {
-    cursor?: tCursor;
-    filter?: tListingFlagFilter;
-    where?: tListingFlagWhere;
-    sort?: Array<tListingFlagSort>;
-};
-
-/**
- * Sort object for listing flag collection
- */
-export type tListingFlagSort = {
-    value: 'createdAt';
-    sort?: 'asc' | 'desc';
-};
-
-/**
- * App-based filters
- */
-export type tListingFlagWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * Collection of listing flag items
- */
-export type tListingFlagCollection = {
-    data: Array<tListingFlag>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-export type tListingFlag = {
-    /**
-     * ID of the flag entry
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-};
-
-/**
- * Toggle listing ignore state
- */
-export type tListingIgnoreToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from ignore list
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for listing ignore count (omits cursor, sort, and meta)
- */
-export type tListingIgnoreCountQuery = {
-    filter?: tListingIgnoreFilter;
-    where?: tListingIgnoreWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingIgnoreWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * User-land filters
- */
-export type tListingIgnoreFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * Query object for listing ignore collection
- */
-export type tListingIgnoreQuery = {
-    cursor?: tCursor;
-    filter?: tListingIgnoreFilter;
-    where?: tListingIgnoreWhere;
-    sort?: Array<tListingIgnoreSort>;
-};
-
-/**
- * Sort object for listing ignore collection
- */
-export type tListingIgnoreSort = {
-    value: 'createdAt';
-    sort?: 'asc' | 'desc';
-};
-
-/**
- * Collection of listing ignore items
- */
-export type tListingIgnoreCollection = {
-    data: Array<tListingIgnore>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-export type tListingIgnore = {
-    /**
-     * ID of the ignore entry
-     */
-    id: string;
-    /**
-     * ID of the listing that was ignored
-     */
-    listingId: string;
-};
-
-/**
- * Toggle listing in cart
- */
-export type tListingCartToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from cart
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for listing cart count (omits cursor, sort, and meta)
- */
-export type tListingCartCountQuery = {
-    filter?: tListingCartFilter;
-    where?: tListingCartWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingCartWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * User-land filters
- */
-export type tListingCartFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string | null;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string> | null;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string | null;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string | null;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string | null;
-};
-
-/**
- * Query object for listing cart collection
- */
-export type tListingCartQuery = {
-    cursor?: tCursor;
-    filter?: tListingCartFilter;
-    where?: tListingCartWhere;
-    sort?: Array<tListingCartSort>;
-};
-
-/**
- * Sort object for listing cart collection
- */
-export type tListingCartSort = {
-    value: 'createdAt';
-    sort?: 'asc' | 'desc';
-};
-
-/**
- * Collection of listing cart items
- */
-export type tListingCartCollection = {
-    data: Array<tListingCart>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-export type tListingCart = {
-    /**
-     * ID of the cart item
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Query object for listing count (omits cursor, sort, and meta)
+ * Query object for listing count
  */
 export type tListingCountQuery = {
-    filter?: tListingFilter & unknown;
+    filter?: tListingFilter;
     where?: tListingWhere;
-    meta?: tListingMeta & unknown;
+    meta?: tListingMeta;
 };
 
 /**
@@ -861,7 +957,7 @@ export type tLatLon = {
 };
 
 /**
- * Metadata used to fetch the listings (e.g. location)
+ * Meta data for listing collection
  */
 export type tListingMeta = {
     latLon?: tLatLon;
@@ -874,15 +970,15 @@ export type tListingWhere = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     priceMin?: tPriceMin;
     priceMax?: tPriceMax;
     /**
@@ -896,7 +992,7 @@ export type tListingWhere = {
     /**
      * This filter matches listings with conditions in the provided array
      */
-    conditionIn?: Array<number> | null;
+    conditionIn?: Array<number>;
     /**
      * This filter matches listings with age greater than or equal to the provided value
      */
@@ -908,7 +1004,7 @@ export type tListingWhere = {
     /**
      * This filter matches listings with ages in the provided array
      */
-    ageIn?: Array<number> | null;
+    ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyList;
@@ -916,23 +1012,23 @@ export type tListingWhere = {
     /**
      * This filter matches listings that expire before the provided date
      */
-    expiresAtBefore?: string | null;
+    expiresAtBefore?: string;
     /**
      * This filter matches listings that expire after the provided date
      */
-    expiresAtAfter?: string | null;
+    expiresAtAfter?: string;
     /**
      * This filter matches listings with range greater than or equal to the provided value (meters)
      */
-    rangeMin?: number | null;
+    rangeMin?: number;
     /**
      * This filter matches listings with range less than or equal to the provided value (meters)
      */
-    rangeMax?: number | null;
+    rangeMax?: number;
     /**
      * This filter matches listings with title matching the provided value
      */
-    title?: string | null;
+    title?: string;
     /**
      * This filter matches listings with the user's own listings
      */
@@ -949,7 +1045,7 @@ export type tListingWhere = {
 export type tCurrencyIn = Array<tCurrencyList>;
 
 /**
- * Currency code (ISO 4217)
+ * List of available currencies
  */
 export const tCurrencyList = {
     CZK: 'CZK',
@@ -962,17 +1058,17 @@ export const tCurrencyList = {
 } as const;
 
 /**
- * Currency code (ISO 4217)
+ * List of available currencies
  */
 export type tCurrencyList = typeof tCurrencyList[keyof typeof tCurrencyList];
 
 /**
  * Filter listings based on the provided category IDs
  */
-export type tCategoryIdIn = Array<tCategoryId & unknown>;
+export type tCategoryIdIn = Array<string>;
 
 /**
- * This filter matches listings with the exact category ID
+ * ID of the category
  */
 export type tCategoryId = string;
 
@@ -987,21 +1083,21 @@ export type tPriceMax = number;
 export type tPriceMin = number;
 
 /**
- * Filter used to fetch the listings
+ * User-land filters
  */
 export type tListingFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     priceMin?: tPriceMin;
     priceMax?: tPriceMax;
     /**
@@ -1015,7 +1111,7 @@ export type tListingFilter = {
     /**
      * This filter matches listings with conditions in the provided array
      */
-    conditionIn?: Array<number> | null;
+    conditionIn?: Array<number>;
     /**
      * This filter matches listings with age greater than or equal to the provided value
      */
@@ -1027,7 +1123,7 @@ export type tListingFilter = {
     /**
      * This filter matches listings with ages in the provided array
      */
-    ageIn?: Array<number> | null;
+    ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
     currency?: tCurrencyList;
@@ -1035,23 +1131,23 @@ export type tListingFilter = {
     /**
      * This filter matches listings that expire before the provided date
      */
-    expiresAtBefore?: string | null;
+    expiresAtBefore?: string;
     /**
      * This filter matches listings that expire after the provided date
      */
-    expiresAtAfter?: string | null;
+    expiresAtAfter?: string;
     /**
      * This filter matches listings with range greater than or equal to the provided value (meters)
      */
-    rangeMin?: number | null;
+    rangeMin?: number;
     /**
      * This filter matches listings with range less than or equal to the provided value (meters)
      */
-    rangeMax?: number | null;
+    rangeMax?: number;
     /**
      * This filter matches listings with title matching the provided value
      */
-    title?: string | null;
+    title?: string;
     /**
      * This filter matches listings with the user's own listings
      */
@@ -1060,37 +1156,6 @@ export type tListingFilter = {
      * Include ignored listings
      */
     withIgnored?: boolean;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor;
-    filter?: tListingFilter & unknown;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta & unknown;
-};
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    value: 'price' | 'condition' | 'age' | 'createdAt' | 'updatedAt' | 'expiresAt' | 'geo';
-    sort?: 'asc' | 'desc';
-};
-
-/**
- * Request to collect listings from a feed
- */
-export type tFeedCollectionRequest = {
-    /**
-     * ID of the feed to collect listings for
-     */
-    feedId: string;
-    where?: tListingFilter & unknown;
-    cursor?: tCursor & unknown;
 };
 
 /**
@@ -1128,7 +1193,7 @@ export type tGallery = {
 };
 
 /**
- * Category data transfer object
+ * Category data
  */
 export type tCategory = {
     /**
@@ -1158,7 +1223,7 @@ export type tCategory = {
 };
 
 /**
- * Location data transfer object
+ * Location data
  */
 export type tLocation = {
     id: string;
@@ -1224,6 +1289,9 @@ export type tLocation = {
     lon: number;
 };
 
+/**
+ * Listing data
+ */
 export type tListing = {
     /**
      * ID of the listing
@@ -1291,7 +1359,44 @@ export type tListing = {
 };
 
 /**
- * Data required to create a new listing
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
+
+/**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrder;
+};
+
+/**
+ * Data for creating a new listing
  */
 export type tListingCreate = {
     /**
@@ -1323,7 +1428,7 @@ export type tListingCreate = {
     /**
      * Description of the item
      */
-    description?: string | null;
+    description?: string;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
@@ -1331,7 +1436,7 @@ export type tListingCreate = {
 };
 
 /**
- * Expiration period for the listing
+ * Expiration time of the listing
  */
 export const tListingExpire = {
     '7-days': '7-days',
@@ -1340,7 +1445,7 @@ export const tListingExpire = {
 } as const;
 
 /**
- * Expiration period for the listing
+ * Expiration time of the listing
  */
 export type tListingExpire = typeof tListingExpire[keyof typeof tListingExpire];
 
@@ -1366,11 +1471,24 @@ export type tGalleryQuery = {
 };
 
 /**
+ * Field of the gallery sort
+ */
+export const tGallerySortField = {
+    sort: 'sort',
+    createdAt: 'createdAt'
+} as const;
+
+/**
+ * Field of the gallery sort
+ */
+export type tGallerySortField = typeof tGallerySortField[keyof typeof tGallerySortField];
+
+/**
  * Sort object for gallery collection
  */
 export type tGallerySort = {
-    value: 'sort' | 'createdAt';
-    sort?: 'asc' | 'desc';
+    field: tGallerySortField;
+    direction: tOrder;
 };
 
 /**
@@ -1380,49 +1498,49 @@ export type tGalleryWhere = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * Exact user id
      */
-    userId?: string | null;
+    userId?: string;
     /**
      * Exact listing id
      */
-    listingId?: string | null;
+    listingId?: string;
 };
 
 /**
- * User-land filters for gallery items
+ * Filter object for gallery collection
  */
 export type tGalleryFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * Exact user id
      */
-    userId?: string | null;
+    userId?: string;
     /**
      * Exact listing id
      */
-    listingId?: string | null;
+    listingId?: string;
 };
 
 /**
@@ -1437,7 +1555,7 @@ export type tFeedCollection = {
 };
 
 /**
- * Feed data transfer object
+ * Feed data
  */
 export type tFeed = {
     /**
@@ -1453,9 +1571,6 @@ export type tFeed = {
      */
     name: string;
     filter?: tListingFilter;
-    /**
-     * Filter used to fetch the listings
-     */
     sort?: Array<tListingSort>;
     meta?: tListingMeta;
 };
@@ -1466,40 +1581,78 @@ export type tFeed = {
 export type tFeedQuery = {
     cursor?: tCursor;
     filter?: tFeedFilter;
-    where?: tFeedFilter & unknown;
+    where?: tFeedWhere;
     sort?: Array<tFeedSort>;
 };
+
+/**
+ * Field of the feed sort
+ */
+export const tFeedSortField = {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+} as const;
+
+/**
+ * Field of the feed sort
+ */
+export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
 
 /**
  * Sort object for feed collection
  */
 export type tFeedSort = {
-    value: 'createdAt' | 'updatedAt';
-    sort?: 'asc' | 'desc';
+    field: tFeedSortField;
+    direction: tOrder;
 };
 
 /**
- * User-land filters for feed items
+ * App-based filters
+ */
+export type tFeedWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Exact user id
+     */
+    userId?: string;
+};
+
+/**
+ * Filter object for feed collection
  */
 export type tFeedFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * Exact user id
      */
-    userId?: string | null;
+    userId?: string;
 };
 
+/**
+ * Data for updating an existing feed
+ */
 export type tFeedPatch = {
     id: string;
     /**
@@ -1511,13 +1664,13 @@ export type tFeedPatch = {
      */
     locationId?: string | null;
     filter?: tListingFilter;
-    /**
-     * Sort used to fetch the listings
-     */
     sort?: Array<tListingSort>;
     meta?: tListingMeta;
 };
 
+/**
+ * Data for creating a new feed
+ */
 export type tFeedCreate = {
     /**
      * Name of the feed
@@ -1527,9 +1680,9 @@ export type tFeedCreate = {
      * ID of the location associated with the feed
      */
     locationId?: string | null;
-    filter: tListingFilter & unknown;
+    filter: tListingFilter;
     sort: Array<tListingSort>;
-    meta: tListingMeta & unknown;
+    meta: tListingMeta;
 };
 
 /**
@@ -1543,11 +1696,26 @@ export type tCategoryCartQuery = {
 };
 
 /**
+ * Field of the category cart sort
+ */
+export const tCategoryCartSortField = {
+    group: 'group',
+    category: 'category',
+    sort: 'sort',
+    listingCount: 'listingCount'
+} as const;
+
+/**
+ * Field of the category cart sort
+ */
+export type tCategoryCartSortField = typeof tCategoryCartSortField[keyof typeof tCategoryCartSortField];
+
+/**
  * Sort object for category cart collection
  */
 export type tCategoryCartSort = {
-    value: 'group' | 'category' | 'sort' | 'listingCount';
-    sort?: 'asc' | 'desc';
+    field: tCategoryCartSortField;
+    direction: tOrder;
 };
 
 /**
@@ -1557,65 +1725,65 @@ export type tCategoryWhere = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * This filter matches the exact group of the category
      */
-    group?: string | null;
+    group?: string;
     /**
      * This filter matches the exact category name
      */
-    category?: string | null;
+    category?: string;
     /**
      * This filter matches the exact locale of the category
      */
-    locale?: string | null;
+    locale?: string;
     /**
      * This filter matches categories with locales in the provided array
      */
-    localeIn?: Array<string> | null;
+    localeIn?: Array<string>;
 };
 
 /**
- * User-land filters
+ * Filter object for category collection
  */
 export type tCategoryFilter = {
     /**
      * This filter matches the exact id
      */
-    id?: string | null;
+    id?: string;
     /**
      * This filter matches the ids
      */
-    idIn?: Array<string> | null;
+    idIn?: Array<string>;
     /**
      * Runs fulltext on the collection/query.
      */
-    fulltext?: string | null;
+    fulltext?: string;
     /**
      * This filter matches the exact group of the category
      */
-    group?: string | null;
+    group?: string;
     /**
      * This filter matches the exact category name
      */
-    category?: string | null;
+    category?: string;
     /**
      * This filter matches the exact locale of the category
      */
-    locale?: string | null;
+    locale?: string;
     /**
      * This filter matches categories with locales in the provided array
      */
-    localeIn?: Array<string> | null;
+    localeIn?: Array<string>;
 };
 
 /**
@@ -1630,7 +1798,7 @@ export type tCategoryCartCollection = {
 };
 
 /**
- * Category data transfer object extended with listing count for cart summaries
+ * Category cart data
  */
 export type tCategoryCart = {
     /**
@@ -1664,7 +1832,7 @@ export type tCategoryCart = {
 };
 
 /**
- * Complex count of items based on provided query.
+ * Count data
  */
 export type tCount = {
     /**
@@ -1693,7 +1861,7 @@ export type tCategoryCollection = {
 };
 
 /**
- * Query object for category collection
+ * Category query parameters
  */
 export type tCategoryQuery = {
     cursor?: tCursor;
@@ -1703,15 +1871,29 @@ export type tCategoryQuery = {
 };
 
 /**
+ * Field of the category sort
+ */
+export const tCategorySortField = {
+    group: 'group',
+    category: 'category',
+    sort: 'sort'
+} as const;
+
+/**
+ * Field of the category sort
+ */
+export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
+
+/**
  * Sort object for category collection
  */
 export type tCategorySort = {
-    value: 'group' | 'category' | 'sort';
-    sort?: 'asc' | 'desc';
+    field: tCategorySortField;
+    direction: tOrder;
 };
 
 /**
- * General status message
+ * Message data
  */
 export type tMessage = {
     /**
@@ -2046,35 +2228,6 @@ export type tApiListingCreateResponse = {
 
 export type apiListingCreateResponse = tApiListingCreateResponse[keyof tApiListingCreateResponse];
 
-export type tApiListingFeedCollectionRequest = {
-    body?: tFeedCollectionRequest;
-    path?: never;
-    query?: never;
-    url: '/api/session/listing/feed/collection';
-};
-
-export type apiListingFeedCollectionErrors = {
-    /**
-     * Feed not found
-     */
-    404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingFeedCollectionError = apiListingFeedCollectionErrors[keyof apiListingFeedCollectionErrors];
-
-export type tApiListingFeedCollectionResponse = {
-    /**
-     * Access collection of listings based on a feed definition
-     */
-    200: tListingCollection;
-};
-
-export type apiListingFeedCollectionResponse = tApiListingFeedCollectionResponse[keyof tApiListingFeedCollectionResponse];
-
 export type tApiListingFetchRequest = {
     /**
      * Query object for listing fetch
@@ -2135,7 +2288,7 @@ export type tApiListingCountResponse = {
 
 export type apiListingCountResponse = tApiListingCountResponse[keyof tApiListingCountResponse];
 
-export type tApiListingScoreRequest = {
+export type tApiListingMetricsFetchRequest = {
     body?: never;
     path: {
         /**
@@ -2144,26 +2297,26 @@ export type tApiListingScoreRequest = {
         id: string;
     };
     query?: never;
-    url: '/api/session/listing/{id}/score';
+    url: '/api/session/listing/{id}/metrics';
 };
 
-export type apiListingScoreErrors = {
+export type apiListingMetricsFetchErrors = {
     /**
      * Listing not found
      */
     404: tMessage;
 };
 
-export type apiListingScoreError = apiListingScoreErrors[keyof apiListingScoreErrors];
+export type apiListingMetricsFetchError = apiListingMetricsFetchErrors[keyof apiListingMetricsFetchErrors];
 
-export type tApiListingScoreResponse = {
+export type tApiListingMetricsFetchResponse = {
     /**
      * Listing score for the provided identifier
      */
-    200: tListingScore;
+    200: tListingMetrics;
 };
 
-export type apiListingScoreResponse = tApiListingScoreResponse[keyof tApiListingScoreResponse];
+export type apiListingMetricsFetchResponse = tApiListingMetricsFetchResponse[keyof tApiListingMetricsFetchResponse];
 
 export type tApiListingCartCollectionRequest = {
     body?: tListingCartQuery;
@@ -2445,7 +2598,14 @@ export type tApiLocationFetchResponse = {
 export type apiLocationFetchResponse = tApiLocationFetchResponse[keyof tApiLocationFetchResponse];
 
 export type tApiS3PresignRequest = {
-    body: tS3PreSignRequest;
+    body: {
+        /**
+         * Object path. After stripping leading '/', must start with `<userId>/`
+         */
+        path: string;
+        extension: tAllowedExtensions;
+        contentType: tAllowedContentTypes;
+    };
     path?: never;
     query?: never;
     url: '/api/session/s3/pre-sign';
@@ -2464,7 +2624,13 @@ export type tApiS3PresignResponse = {
     /**
      * Pre-signed URL generated successfully.
      */
-    200: tS3PreSignResponse;
+    200: {
+        url: string;
+        /**
+         * CDN url where the file lives
+         */
+        cdn: string;
+    };
 };
 
 export type apiS3PresignResponse = tApiS3PresignResponse[keyof tApiS3PresignResponse];
@@ -2565,7 +2731,7 @@ export type tApiUserExPatchRequest = {
     /**
      * User extended information to update
      */
-    body?: tUserPatch;
+    body?: tUserExPatch;
     path?: never;
     query?: never;
     url: '/api/session/user-ex';

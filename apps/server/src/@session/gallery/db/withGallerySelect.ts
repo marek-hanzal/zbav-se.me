@@ -25,15 +25,12 @@ export const withGallerySelect = ({ sort }: withGallerySelect.Props = {}) => {
 			).as("upload"),
 	]);
 
-	for (const sortItem of sort ?? []) {
-		if (!sortItem.sort) {
-			continue;
-		}
-		const { sort: key, value } = sortItem;
-
-		query = match(value)
-			.with("sort", () => query.orderBy("g.sort", key))
-			.with("createdAt", () => query.orderBy("g.createdAt", key))
+	for (const item of sort ?? []) {
+		query = match(item.field)
+			.with("sort", () => query.orderBy("g.sort", item.direction))
+			.with("createdAt", () =>
+				query.orderBy("g.createdAt", item.direction),
+			)
 			.exhaustive();
 	}
 

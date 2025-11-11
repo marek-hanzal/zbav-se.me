@@ -6,8 +6,7 @@ export const ListingCountQuerySchema = ListingQuerySchema.pick({
 	where: true,
 	meta: true,
 }).openapi("ListingCountQuery", {
-	description:
-		"Query object for listing count (omits cursor, sort, and meta)",
+	description: "Query object for listing count",
 });
 
 export type ListingCountQuerySchema = typeof ListingCountQuerySchema;

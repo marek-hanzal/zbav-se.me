@@ -11,8 +11,7 @@ export const CategoryCartSchema = z
 		}),
 	})
 	.openapi("CategoryCart", {
-		description:
-			"Category data transfer object extended with listing count for cart summaries",
+		description: "Category cart data",
 	});
 
 export type CategoryCartSchema = typeof CategoryCartSchema;

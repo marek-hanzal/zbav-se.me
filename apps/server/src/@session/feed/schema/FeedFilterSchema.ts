@@ -4,12 +4,12 @@ import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
 export const FeedFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
-		userId: z.string().nullish().openapi({
+		userId: z.string().optional().openapi({
 			description: "Exact user id",
 		}),
 	})
 	.openapi("FeedFilter", {
-		description: "User-land filters for feed items",
+		description: "Filter object for feed collection",
 	});
 
 export type FeedFilterSchema = typeof FeedFilterSchema;

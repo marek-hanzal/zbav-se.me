@@ -1,16 +1,16 @@
-import type { CategoryDbSchema } from "../@session/category/schema/CategoryDbSchema";
-import type { CategoryMissDbSchema } from "../@session/category/schema/CategoryMissDbSchema";
-import type { CategorySpotlightDbSchema } from "../@session/category/schema/CategorySpotlightDbSchema";
-import type { FeedDbSchema } from "../@session/feed/schema/FeedDbSchema";
-import type { GalleryDbSchema } from "../@session/gallery/schema/GalleryDbSchema";
-import type { ListingDbSchema } from "../@session/listing/schema/ListingDbSchema";
-import type { ListingCartDbSchema } from "../@session/listing-cart/schema/ListingCartDbSchema";
-import type { ListingFlagDbSchema } from "../@session/listing-flag/schema/ListingFlagDbSchema";
-import type { ListingIgnoreDbSchema } from "../@session/listing-ignore/schema/ListingIgnoreDbSchema";
-import type { ListingScoreDbSchema } from "../@session/listing-score/schema/ListingScoreDbSchema";
-import type { LocationDbSchema } from "../@session/location/schema/LocationDbSchema";
-import type { UploadDbSchema } from "../@session/upload/schema/UploadDbSchema";
-import type { UserExDbSchema } from "../@session/user-ex/schema/UserExDbSchema";
+import type { CategoryDbSchema } from "../app/category/schema/CategoryDbSchema";
+import type { CategorySpotlightDbSchema } from "../app/category/schema/CategorySpotlightDbSchema";
+import type { CategoryMissDbSchema } from "../app/category-miss/schema/CategoryMissDbSchema";
+import type { FeedDbSchema } from "../app/feed/schema/FeedDbSchema";
+import type { GalleryDbSchema } from "../app/gallery/schema/GalleryDbSchema";
+import type { ListingDbSchema } from "../app/listing/schema/ListingDbSchema";
+import type { ListingCartDbSchema } from "../app/listing-cart/schema/ListingCartDbSchema";
+import type { ListingFlagDbSchema } from "../app/listing-flag/schema/ListingFlagDbSchema";
+import type { ListingIgnoreDbSchema } from "../app/listing-ignore/schema/ListingIgnoreDbSchema";
+import type { ListingScoreDbSchema } from "../app/listing-score/schema/ListingScoreDbSchema";
+import type { LocationDbSchema } from "../app/location/schema/LocationDbSchema";
+import type { UploadDbSchema } from "../app/upload/schema/UploadDbSchema";
+import type { UserExDbSchema } from "../app/user-ex/schema/UserExDbSchema";
 import type { auth } from "../auth/auth";
 
 export interface Database {

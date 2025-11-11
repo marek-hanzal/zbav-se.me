@@ -12,3 +12,9 @@ export const CursorSchema = z
 	.openapi("Cursor", {
 		description: "Cursor for pagination",
 	});
+
+export type CursorSchema = typeof CursorSchema;
+
+export namespace CursorSchema {
+	export type Type = z.infer<CursorSchema>;
+}

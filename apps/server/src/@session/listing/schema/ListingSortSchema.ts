@@ -1,18 +1,22 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "@use-pico/common/schema";
+import { OrderSchema } from "../../../schema/OrderSchema";
 
 export const ListingSortSchema = z
 	.object({
-		value: z.enum([
-			"price",
-			"condition",
-			"age",
-			"createdAt",
-			"updatedAt",
-			"expiresAt",
-			"geo",
-		]),
-		sort: OrderSchema,
+		field: z
+			.enum([
+				"price",
+				"condition",
+				"age",
+				"createdAt",
+				"updatedAt",
+				"expiresAt",
+				"geo",
+			])
+			.openapi("ListingSortField", {
+				description: "Field of the listing sort",
+			}),
+		direction: OrderSchema,
 	})
 	.openapi("ListingSort", {
 		description: "Sort object for listing collection",
