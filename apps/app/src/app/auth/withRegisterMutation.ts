@@ -11,7 +11,8 @@ export namespace withRegisterMutation {
 
 export const withRegisterMutation = withMutation<
 	withRegisterMutation.Props,
-	ReturnType<typeof authClient.signUp.email>
+	ReturnType<typeof authClient.signUp.email>,
+	unknown
 >({
 	keys(variables) {
 		return [

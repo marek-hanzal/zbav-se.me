@@ -6,7 +6,7 @@ export namespace Form {
 		export type Mutation<
 			TValues extends object,
 			TOutput = any,
-		> = UseMutationResult<TOutput, Error, TValues>;
+		> = UseMutationResult<TOutput, any, TValues>;
 	}
 
 	export interface Props<TValues extends object> extends FormCls.Props {

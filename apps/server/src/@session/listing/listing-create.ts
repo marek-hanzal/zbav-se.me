@@ -7,11 +7,11 @@ import pgvector from "pgvector";
 import { match } from "ts-pattern";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withListingQueryBuilder } from "./db/withListingQueryBuilder";
 import { withListingSelect } from "./db/withListingSelect";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingSchema } from "./schema/ListingSchema";
-import { MessageSchema } from "../../schema/MessageSchema";
 
 export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(

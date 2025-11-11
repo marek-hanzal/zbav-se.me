@@ -1,3 +1,4 @@
+import { useParams } from "@tanstack/react-router";
 import {
 	useDocumentVisibility,
 	useElementVisibility,
@@ -39,18 +40,20 @@ export namespace ListingHeroContainer {
 		containerRef: RefObject<HTMLDivElement | null>;
 		query: tListingQuery;
 		listing: tListing;
-		locale: string;
 	}
 }
 
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	containerRef,
 	query,
-	locale,
 	listing,
 	tweak,
 	...props
 }) => {
+	const { locale } = useParams({
+		from: "/$locale",
+	});
+
 	const [hero] = listing.gallery as [
 		tGallery,
 		...tGallery[],

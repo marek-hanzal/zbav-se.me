@@ -87,7 +87,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						containerRef={containerRef}
 						query={query}
 						listing={listing}
-						locale={locale}
 					/>
 				);
 			})}

@@ -10,7 +10,8 @@ export namespace withEmailSignInMutation {
 
 export const withEmailSignInMutation = withMutation<
 	withEmailSignInMutation.Props,
-	any
+	ReturnType<typeof authClient.signIn.email>,
+	unknown
 >({
 	keys(variables) {
 		return [
