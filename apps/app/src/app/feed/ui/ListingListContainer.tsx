@@ -19,6 +19,7 @@ export namespace ListingListContainer {
 		scrollToListingId?: string;
 		empty?: ReactNode;
 		appendix?: ReactNode;
+		tools?: ListingHeroContainer.Tools[];
 	}
 }
 
@@ -27,6 +28,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToListingId,
 	empty,
 	appendix,
+	tools,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -92,6 +94,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						containerRef={containerRef}
 						query={query}
 						listing={listing}
+						tools={tools}
 					/>
 				);
 			})}

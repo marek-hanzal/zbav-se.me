@@ -34,6 +34,9 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 
 		return (
 			<ListingListContainer
+				tools={[
+					"cart",
+				]}
 				query={{
 					where: {
 						categoryId,

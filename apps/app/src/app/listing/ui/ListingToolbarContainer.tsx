@@ -14,8 +14,8 @@ export namespace ListingToolbarContainer {
 		query: tListingQuery;
 		listing: zListing;
 		onCartToggle?(toggle: boolean): void;
-		onIgnoreToggle(toggle: boolean): void;
-		onFlagToggle(toggle: boolean): void;
+		onIgnoreToggle?(toggle: boolean): void;
+		onFlagToggle?(toggle: boolean): void;
 	}
 }
 
@@ -108,45 +108,51 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				/>
 			) : null}
 
-			<ListingIgnoreButton
-				listingId={listing.id}
-				isIgnored={listing.isIgnored}
-				disabled={listing.isInCart || (action && action !== "ignore")}
-				onSuccess={onIgnoreToggle}
-				buttonProps={{
-					onClick() {
-						setIsAction("ignore");
-					},
-				}}
-				confirmProps={{
-					onClick() {
+			{onIgnoreToggle ? (
+				<ListingIgnoreButton
+					listingId={listing.id}
+					isIgnored={listing.isIgnored}
+					disabled={
+						listing.isInCart || (action && action !== "ignore")
+					}
+					onSuccess={onIgnoreToggle}
+					buttonProps={{
+						onClick() {
+							setIsAction("ignore");
+						},
+					}}
+					confirmProps={{
+						onClick() {
+							setIsAction(undefined);
+						},
+					}}
+					onReset={() => {
 						setIsAction(undefined);
-					},
-				}}
-				onReset={() => {
-					setIsAction(undefined);
-				}}
-			/>
+					}}
+				/>
+			) : null}
 
-			<ListingFlagButton
-				listingId={listing.id}
-				hasFlag={listing.hasFlag}
-				disabled={listing.isInCart || (action && action !== "flag")}
-				onSuccess={onFlagToggle}
-				buttonProps={{
-					onClick() {
-						setIsAction("flag");
-					},
-				}}
-				confirmProps={{
-					onClick() {
+			{onFlagToggle ? (
+				<ListingFlagButton
+					listingId={listing.id}
+					hasFlag={listing.hasFlag}
+					disabled={listing.isInCart || (action && action !== "flag")}
+					onSuccess={onFlagToggle}
+					buttonProps={{
+						onClick() {
+							setIsAction("flag");
+						},
+					}}
+					confirmProps={{
+						onClick() {
+							setIsAction(undefined);
+						},
+					}}
+					onReset={() => {
 						setIsAction(undefined);
-					},
-				}}
-				onReset={() => {
-					setIsAction(undefined);
-				}}
-			/>
+					}}
+				/>
+			) : null}
 		</Container>
 	);
 };

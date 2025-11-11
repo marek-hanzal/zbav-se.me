@@ -36,10 +36,13 @@ import { HeroImage } from "~/app/ui/img/HeroImage";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace ListingHeroContainer {
+	export type Tools = "cart" | "ignore" | "flag";
+
 	export interface Props extends Container.Props {
 		containerRef: RefObject<HTMLDivElement | null>;
 		query: tListingQuery;
 		listing: tListing;
+		tools?: ListingHeroContainer.Tools[];
 	}
 }
 
@@ -47,6 +50,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	containerRef,
 	query,
 	listing,
+	tools = [
+		"cart",
+		"ignore",
+		"flag",
+	],
 	tweak,
 	...props
 }) => {
@@ -334,33 +342,45 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				<ListingToolbarContainer
 					query={query}
 					listing={listing}
-					onCartToggle={(toggle) => {
-						setListingCollection(
-							patch({
-								id: listing.id,
-								isInCart: toggle,
-							}),
-							query,
-						);
-					}}
-					onIgnoreToggle={(toggle) => {
-						setListingCollection(
-							patch({
-								id: listing.id,
-								isIgnored: toggle,
-							}),
-							query,
-						);
-					}}
-					onFlagToggle={(toggle) => {
-						setListingCollection(
-							patch({
-								id: listing.id,
-								hasFlag: toggle,
-							}),
-							query,
-						);
-					}}
+					onCartToggle={
+						tools.includes("cart")
+							? (toggle) => {
+									setListingCollection(
+										patch({
+											id: listing.id,
+											isInCart: toggle,
+										}),
+										query,
+									);
+								}
+							: undefined
+					}
+					onIgnoreToggle={
+						tools.includes("ignore")
+							? (toggle) => {
+									setListingCollection(
+										patch({
+											id: listing.id,
+											isIgnored: toggle,
+										}),
+										query,
+									);
+								}
+							: undefined
+					}
+					onFlagToggle={
+						tools.includes("flag")
+							? (toggle) => {
+									setListingCollection(
+										patch({
+											id: listing.id,
+											hasFlag: toggle,
+										}),
+										query,
+									);
+								}
+							: undefined
+					}
 				/>
 			) : null}
 
