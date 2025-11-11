@@ -3,7 +3,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
-import type { MessageSchema } from "../../schema/MessageSchema";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { createListingScoreFx } from "../listing-score/service/createListingScoreFx";
 import { ListingCartToggleSchema } from "./schema/ListingCartToggleSchema";
 
@@ -26,6 +26,14 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 			responses: {
 				204: {
 					description: "Nothing to say, we're just happy",
+				},
+				400: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "You cannot add your own listing to cart",
 				},
 			},
 			tags: [

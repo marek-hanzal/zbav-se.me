@@ -74,8 +74,13 @@ export namespace withMutation {
 		dropCache?: boolean;
 	}
 
-	export type UseOptions<TVariables, TResult, TContext = unknown> = Omit<
-		UseMutationOptions<TResult, Error, TVariables, TContext>,
+	export type UseOptions<
+		TVariables,
+		TResult,
+		TError,
+		TContext = unknown,
+	> = Omit<
+		UseMutationOptions<TResult, TError, TVariables, TContext>,
 		"mutationFn" | "mutationKey"
 	> & {
 		meta?: Meta;
@@ -111,7 +116,7 @@ export namespace withMutation {
  *   - useInvalidate: A hook returning a function that runs all invalidators with the current QueryClient.
  *   - invalidate: A function to run all invalidators with a provided QueryClient (for non-hook usage).
  */
-export function withMutation<TVariables, TResult>({
+export function withMutation<TVariables, TResult, TError>({
 	mutationFn,
 	keys,
 	invalidate: $invalidate = [],
@@ -142,13 +147,18 @@ export function withMutation<TVariables, TResult>({
 		 * @returns The result of the mutation hook.
 		 */
 		useMutation<TContext = unknown>(
-			options?: withMutation.UseOptions<TVariables, TResult, TContext>,
-		): UseMutationResult<TResult, Error, TVariables, TContext> {
+			options?: withMutation.UseOptions<
+				TVariables,
+				TResult,
+				TError,
+				TContext
+			>,
+		): UseMutationResult<TResult, TError, TVariables, TContext> {
 			const { onPreMutation, onPostMutation, ...$options } =
 				options ?? {};
 			const queryClient = useQueryClient();
 
-			return useMutation<TResult, Error, TVariables, TContext>({
+			return useMutation<TResult, TError, TVariables, TContext>({
 				mutationKey: keys(),
 				async mutationFn(variables) {
 					clearCache(queryClient);

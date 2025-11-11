@@ -1,13 +1,16 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
 import { apiListingCreate } from "../../api/session/sdk.gen";
 import type {
+	apiListingCreateError,
 	tApiListingCreateResponse,
 	tListingCreate,
 } from "../../api/session/types.gen";
 
 export const withListingCreateMutation = withMutation<
 	tListingCreate,
-	tApiListingCreateResponse[201]
+	tApiListingCreateResponse[201],
+	apiListingCreateError
 >({
 	keys() {
 		return [
@@ -16,9 +19,10 @@ export const withListingCreateMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiListingCreate({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
+		return withApi(
+			apiListingCreate({
+				body,
+			}),
+		);
 	},
 });

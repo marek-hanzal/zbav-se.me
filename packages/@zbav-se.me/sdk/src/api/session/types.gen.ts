@@ -2219,6 +2219,15 @@ export type tApiListingCreateRequest = {
     url: '/api/session/listing/create';
 };
 
+export type apiListingCreateErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingCreateError = apiListingCreateErrors[keyof apiListingCreateErrors];
+
 export type tApiListingCreateResponse = {
     /**
      * The created listing
@@ -2356,6 +2365,15 @@ export type tApiListingCartToggleRequest = {
     query?: never;
     url: '/api/session/listing-cart/toggle';
 };
+
+export type apiListingCartToggleErrors = {
+    /**
+     * You cannot add your own listing to cart
+     */
+    400: tMessage;
+};
+
+export type apiListingCartToggleError = apiListingCartToggleErrors[keyof apiListingCartToggleErrors];
 
 export type tApiListingCartToggleResponse = {
     /**

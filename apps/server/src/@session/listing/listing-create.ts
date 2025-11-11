@@ -11,6 +11,7 @@ import { withListingQueryBuilder } from "./db/withListingQueryBuilder";
 import { withListingSelect } from "./db/withListingSelect";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingSchema } from "./schema/ListingSchema";
+import { MessageSchema } from "../../schema/MessageSchema";
 
 export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -37,6 +38,14 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 						},
 					},
 					description: "The created listing",
+				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
 				},
 			},
 			tags: [

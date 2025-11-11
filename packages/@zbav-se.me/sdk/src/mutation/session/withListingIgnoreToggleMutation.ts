@@ -1,7 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { AxiosError } from "axios";
+import { withApi } from "@use-pico/common/api";
 import { apiListingIgnoreToggle } from "../../api/session/sdk.gen";
 import type {
+	apiListingIgnoreToggleError,
 	tApiListingIgnoreToggleResponse,
 	tListingIgnoreToggle,
 } from "../../api/session/types.gen";
@@ -9,7 +10,8 @@ import { withListingMetricsFetchQuery } from "../../query/session/withListingMet
 
 export const withListingIgnoreToggleMutation = withMutation<
 	tListingIgnoreToggle,
-	tApiListingIgnoreToggleResponse[204]
+	tApiListingIgnoreToggleResponse[204],
+	apiListingIgnoreToggleError
 >({
 	keys(variables) {
 		return [
@@ -19,17 +21,11 @@ export const withListingIgnoreToggleMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiListingIgnoreToggle({
-			body,
-			throwOnError: true,
-		})
-			.then((res) => res.data)
-			.catch((error) => {
-				if (error instanceof AxiosError) {
-					throw error.response?.data;
-				}
-				throw error;
-			});
+		return withApi(
+			apiListingIgnoreToggle({
+				body,
+			}),
+		);
 	},
 	invalidate: [
 		withListingMetricsFetchQuery,

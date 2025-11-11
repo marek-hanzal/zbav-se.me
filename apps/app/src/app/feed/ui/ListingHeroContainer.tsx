@@ -45,14 +45,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = memo(
 				retry: () => {
 					return isVisible && document.visibilityState === "visible";
 				},
-				retryDelay(_, error) {
-					if ("type" in error && error.type === "error") {
-						/**
-						 * Delay at least for 5 minutes; backend is hardened, but point is to prevent spamming.
-						 */
-						return 1000 * 60 * 5;
+				retryDelay(count) {
+					if (count >= 3) {
+						return 0;
 					}
-					return 250;
+					return 1000 * 60 * 5;
 				},
 			});
 

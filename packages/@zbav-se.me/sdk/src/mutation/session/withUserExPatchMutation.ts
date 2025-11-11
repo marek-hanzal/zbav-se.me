@@ -1,13 +1,16 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
 import { apiUserExPatch } from "../../api/session/sdk.gen";
 import type {
+	apiUserExPatchError,
 	tApiUserExPatchResponse,
 	tUserExPatch,
 } from "../../api/session/types.gen";
 
 export const withUserExPatchMutation = withMutation<
 	tUserExPatch,
-	tApiUserExPatchResponse[204]
+	tApiUserExPatchResponse[204],
+	apiUserExPatchError
 >({
 	keys(data) {
 		return [
@@ -17,9 +20,10 @@ export const withUserExPatchMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiUserExPatch({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
+		return withApi(
+			apiUserExPatch({
+				body,
+			}),
+		);
 	},
 });

@@ -1,8 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
 import { genId } from "@use-pico/common/gen-id";
 import axios from "axios";
 import { apiS3Presign, apiUploadCreate } from "../../api/session/sdk.gen";
 import type {
+	apiS3PresignError,
+	apiUploadCreateError,
 	tAllowedContentTypes,
 	tAllowedExtensions,
 	tUpload,
@@ -19,7 +22,8 @@ export namespace withUploadMutation {
 
 export const withUploadMutation = withMutation<
 	withUploadMutation.Props,
-	tUpload
+	tUpload,
+	apiS3PresignError | apiUploadCreateError
 >({
 	keys(variables) {
 		return [
@@ -36,14 +40,15 @@ export const withUploadMutation = withMutation<
 				? name.slice(dot + 1).toLowerCase()
 				: "unknown";
 
-		const presign = await apiS3Presign({
-			throwOnError: true,
-			body: {
-				path: path ?? genId(),
-				extension: extension as tAllowedExtensions,
-				contentType,
-			},
-		}).then((res) => res.data);
+		const presign = await withApi(
+			apiS3Presign({
+				body: {
+					path: path ?? genId(),
+					extension: extension as tAllowedExtensions,
+					contentType,
+				},
+			}),
+		);
 
 		await axios.put(presign.url, blob, {
 			headers: {
@@ -54,11 +59,12 @@ export const withUploadMutation = withMutation<
 			},
 		});
 
-		return apiUploadCreate({
-			throwOnError: true,
-			body: {
-				url: presign.cdn,
-			},
-		}).then((res) => res.data);
+		return withApi(
+			apiUploadCreate({
+				body: {
+					url: presign.cdn,
+				},
+			}),
+		);
 	},
 });

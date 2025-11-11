@@ -1,6 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
 import { apiFeedDelete } from "../../api/session/sdk.gen";
 import type {
+	apiFeedDeleteError,
 	tApiFeedDeleteResponse,
 	tFeedQuery,
 } from "../../api/session/types.gen";
@@ -9,7 +11,8 @@ import { withFeedCountQuery } from "../../query/session/withFeedCountQuery";
 
 export const withFeedDeleteMutation = withMutation<
 	tFeedQuery,
-	tApiFeedDeleteResponse[200]
+	tApiFeedDeleteResponse[200],
+	apiFeedDeleteError
 >({
 	keys(variables) {
 		return [
@@ -19,10 +22,11 @@ export const withFeedDeleteMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiFeedDelete({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
+		return withApi(
+			apiFeedDelete({
+				body,
+			}),
+		);
 	},
 	invalidate: [
 		withFeedCountQuery,

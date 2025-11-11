@@ -1,7 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
-import { AxiosError } from "axios";
+import { withApi } from "@use-pico/common/api";
 import { apiListingFlagToggle } from "../../api/session/sdk.gen";
 import type {
+	apiListingFlagToggleError,
 	tApiListingFlagToggleResponse,
 	tListingFlagToggle,
 } from "../../api/session/types.gen";
@@ -9,7 +10,8 @@ import { withListingMetricsFetchQuery } from "../../query/session/withListingMet
 
 export const withListingFlagToggleMutation = withMutation<
 	tListingFlagToggle,
-	tApiListingFlagToggleResponse[204]
+	tApiListingFlagToggleResponse[204],
+	apiListingFlagToggleError
 >({
 	keys(variables) {
 		return [
@@ -19,17 +21,11 @@ export const withListingFlagToggleMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiListingFlagToggle({
-			body,
-			throwOnError: true,
-		})
-			.then((res) => res.data)
-			.catch((error) => {
-				if (error instanceof AxiosError) {
-					throw error.response?.data;
-				}
-				throw error;
-			});
+		return withApi(
+			apiListingFlagToggle({
+				body,
+			}),
+		);
 	},
 	invalidate: [
 		withListingMetricsFetchQuery,

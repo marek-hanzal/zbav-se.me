@@ -1,6 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
 import { apiListingScoreCreate } from "../../api/session/sdk.gen";
 import type {
+	apiListingScoreCreateError,
 	tApiListingScoreCreateResponse,
 	tListingScoreCreate,
 } from "../../api/session/types.gen";
@@ -8,7 +10,8 @@ import { withListingMetricsFetchQuery } from "../../query/session/withListingMet
 
 export const withListingScoreCreateMutation = withMutation<
 	tListingScoreCreate,
-	tApiListingScoreCreateResponse[201]
+	tApiListingScoreCreateResponse[201],
+	apiListingScoreCreateError
 >({
 	keys(variables) {
 		return [
@@ -18,10 +21,11 @@ export const withListingScoreCreateMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiListingScoreCreate({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
+		return withApi(
+			apiListingScoreCreate({
+				body,
+			}),
+		);
 	},
 	invalidate: [
 		withListingMetricsFetchQuery,

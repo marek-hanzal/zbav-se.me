@@ -1,6 +1,8 @@
 import { withMutation } from "@use-pico/client/mutation";
+import { withApi } from "@use-pico/common/api";
 import { apiFeedCreate } from "../../api/session/sdk.gen";
 import type {
+	apiFeedCreateError,
 	tApiFeedCreateResponse,
 	tFeedCreate,
 } from "../../api/session/types.gen";
@@ -9,7 +11,8 @@ import { withFeedCountQuery } from "../../query/session/withFeedCountQuery";
 
 export const withFeedCreateMutation = withMutation<
 	tFeedCreate,
-	tApiFeedCreateResponse[201]
+	tApiFeedCreateResponse[201],
+	apiFeedCreateError
 >({
 	keys(variables) {
 		return [
@@ -19,10 +22,11 @@ export const withFeedCreateMutation = withMutation<
 		];
 	},
 	async mutationFn(body) {
-		return apiFeedCreate({
-			body,
-			throwOnError: true,
-		}).then((res) => res.data);
+		return withApi(
+			apiFeedCreate({
+				body,
+			}),
+		);
 	},
 	invalidate: [
 		withFeedCountQuery,
