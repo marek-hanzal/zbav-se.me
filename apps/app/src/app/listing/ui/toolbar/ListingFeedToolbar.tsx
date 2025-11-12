@@ -35,7 +35,7 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 	});
 
 	const [action, setIsAction] = useState<
-		"cart" | "ignore" | "flag" | undefined
+		ListingFeedToolbar.Tools | undefined
 	>(undefined);
 
 	return (
