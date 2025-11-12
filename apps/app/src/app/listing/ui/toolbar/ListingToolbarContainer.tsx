@@ -3,28 +3,37 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/session";
-import { type FC, useState } from "react";
-import { ListingCartButton } from "../../feed/ui/button/ListingCartButton";
-import { ListingFlagButton } from "../../feed/ui/button/ListingFlagButton";
-import { ListingIgnoreButton } from "../../feed/ui/button/ListingIgnoreButton";
+import type { EntitySchema } from "@use-pico/common/schema";
+import type {
+	tListing,
+	tListingCollection,
+	tListingQuery,
+	zListing,
+} from "@zbav-se.me/sdk/api/session";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
+import { type FC, useCallback, useState } from "react";
+import { ListingCartButton } from "./button/ListingCartButton";
+import { ListingFlagButton } from "./button/ListingFlagButton";
+import { ListingIgnoreButton } from "./button/ListingIgnoreButton";
 
 export namespace ListingToolbarContainer {
+	export type Tools = "cart" | "ignore" | "flag";
+
 	export interface Props extends Container.Props {
-		query: tListingQuery;
+		query: tListingQuery | undefined;
 		listing: zListing;
-		onCartToggle?(toggle: boolean): void;
-		onIgnoreToggle?(toggle: boolean): void;
-		onFlagToggle?(toggle: boolean): void;
+		tools?: Tools[];
 	}
 }
 
 export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 	query,
 	listing,
-	onCartToggle,
-	onIgnoreToggle,
-	onFlagToggle,
+	tools = [
+		"cart",
+		"ignore",
+		"flag",
+	],
 	tweak,
 	...props
 }) => {
@@ -35,6 +44,35 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 	const [action, setIsAction] = useState<
 		"cart" | "ignore" | "flag" | undefined
 	>(undefined);
+
+	const setListingCollection = withListingCollectionQuery.useSet();
+
+	const patch = useCallback(
+		(patch: Partial<tListing> & EntitySchema.Type) =>
+			(
+				prev: tListingCollection | undefined,
+			): tListingCollection | undefined => {
+				if (!prev) {
+					return prev;
+				}
+
+				return {
+					...prev,
+					data: prev.data.map((item) => {
+						if (item.id === listing.id) {
+							return {
+								...item,
+								...patch,
+							};
+						}
+						return item;
+					}),
+				};
+			},
+		[
+			listing.id,
+		],
+	);
 
 	return (
 		<Container
@@ -82,11 +120,19 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				/>
 			</LinkTo>
 
-			{onCartToggle ? (
+			{tools.includes("cart") ? (
 				<ListingCartButton
 					listingId={listing.id}
 					isInCart={listing.isInCart}
-					onSuccess={onCartToggle}
+					onSuccess={(isIgnored) => {
+						setListingCollection(
+							patch({
+								id: listing.id,
+								isIgnored,
+							}),
+							query,
+						);
+					}}
 					disabled={
 						listing.hasFlag ||
 						listing.isIgnored ||
@@ -108,14 +154,22 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				/>
 			) : null}
 
-			{onIgnoreToggle ? (
+			{tools.includes("ignore") ? (
 				<ListingIgnoreButton
 					listingId={listing.id}
 					isIgnored={listing.isIgnored}
 					disabled={
 						listing.isInCart || (action && action !== "ignore")
 					}
-					onSuccess={onIgnoreToggle}
+					onSuccess={(isIgnored) => {
+						setListingCollection(
+							patch({
+								id: listing.id,
+								isIgnored,
+							}),
+							query,
+						);
+					}}
 					buttonProps={{
 						onClick() {
 							setIsAction("ignore");
@@ -132,12 +186,20 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 				/>
 			) : null}
 
-			{onFlagToggle ? (
+			{tools.includes("flag") ? (
 				<ListingFlagButton
 					listingId={listing.id}
 					hasFlag={listing.hasFlag}
 					disabled={listing.isInCart || (action && action !== "flag")}
-					onSuccess={onFlagToggle}
+					onSuccess={(hasFlag) => {
+						setListingCollection(
+							patch({
+								id: listing.id,
+								hasFlag,
+							}),
+							query,
+						);
+					}}
 					buttonProps={{
 						onClick() {
 							setIsAction("flag");

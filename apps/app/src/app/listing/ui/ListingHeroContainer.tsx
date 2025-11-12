@@ -1,0 +1,223 @@
+import {
+	useDocumentVisibility,
+	useElementVisibility,
+} from "@use-pico/client/hook";
+import { Container } from "@use-pico/client/ui/container";
+import type {
+	tGallery,
+	tListing,
+	tListingQuery,
+} from "@zbav-se.me/sdk/api/session";
+import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
+import { SpinnerContainer } from "@zbav-se.me/ui/container";
+import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
+import {
+	type FC,
+	type ReactNode,
+	type RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
+import { HeroImage } from "~/app/ui/img/HeroImage";
+
+export namespace ListingHeroContainer {
+	export namespace Toolbar {
+		export interface Props {
+			isImageError: boolean;
+			query: tListingQuery;
+			listing: tListing;
+		}
+
+		export type Render = (props: Props) => ReactNode;
+	}
+
+	export namespace Overlay {
+		export interface Props {
+			query: tListingQuery;
+			listing: tListing;
+		}
+
+		export type Render = (props: Props) => ReactNode;
+	}
+
+	/**
+	 * Props for `ListingHeroContainer`.
+	 */
+	export interface Props extends Container.Props {
+		/**
+		 * Ref to the scroll container observing visibility of the hero.
+		 */
+		containerRef: RefObject<HTMLDivElement | null>;
+		/**
+		 * Active listing query used for local cache updates.
+		 */
+		query: tListingQuery;
+		/**
+		 * Listing entity shown inside the hero preview.
+		 */
+		listing: tListing;
+		toolbar: Toolbar.Render;
+		overlay: Overlay.Render;
+	}
+}
+
+/**
+ * Listing hero is a preview card for a single listing, typically rendered inside feed or listing lists while keeping actions reachable.
+ *
+ * @param props Component props extending `Container.Props`.
+ */
+export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
+	containerRef,
+	query,
+	listing,
+	toolbar,
+	overlay,
+	tweak,
+	...props
+}) => {
+	const [hero] = listing.gallery as [
+		tGallery,
+		...tGallery[],
+	];
+
+	const rootRef = useRef<HTMLDivElement>(null);
+
+	const [visible, setVisible] = useState(false);
+
+	useElementVisibility({
+		scrollerRef: containerRef,
+		triggerRef: rootRef,
+		setVisible,
+	});
+
+	const listingScoreCreateMutation =
+		withListingScoreCreateMutation.useMutation({
+			retry: () => {
+				return visible && document.visibilityState === "visible";
+			},
+			retryDelay(count) {
+				if (count >= 3) {
+					return 0;
+				}
+				return 1000 * 60 * 5;
+			},
+		});
+
+	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+	const clearTimer = useCallback(() => {
+		if (timerRef.current) {
+			clearTimeout(timerRef.current);
+			timerRef.current = null;
+		}
+	}, []);
+
+	const arm = useCallback(() => {
+		if (document.visibilityState !== "visible") {
+			return;
+		}
+
+		if (
+			!visible ||
+			timerRef.current ||
+			listingScoreCreateMutation.isPending
+		) {
+			return;
+		}
+
+		timerRef.current = setTimeout(async () => {
+			timerRef.current = null;
+			if (!visible || document.visibilityState !== "visible") {
+				return;
+			}
+
+			await listingScoreCreateMutation.mutateAsync({
+				listingId: listing.id,
+				score: "listing",
+			});
+		}, 2000);
+	}, [
+		visible,
+		listing.id,
+		listingScoreCreateMutation,
+	]);
+
+	useEffect(() => {
+		if (visible && !listing.isIgnored) {
+			arm();
+		} else {
+			clearTimer();
+		}
+		return () => {
+			clearTimer();
+		};
+	}, [
+		visible,
+		listing.isIgnored,
+		arm,
+		clearTimer,
+	]);
+
+	useDocumentVisibility({
+		onVisible: arm,
+		onHidden: clearTimer,
+	});
+
+	const [hasToolbar, setHasToolbar] = useState(false);
+
+	return (
+		<Container
+			ref={rootRef}
+			data-id={listing.id}
+			ui={"ListingPreview-root"}
+			position={"relative"}
+			{...props}
+		>
+			{listing.isIgnored ? (
+				<PrimaryOverlay
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"bg-rose-600/50",
+									"opacity-100",
+								],
+							},
+						},
+					}}
+				/>
+			) : null}
+
+			{overlay({
+				query,
+				listing,
+			})}
+
+			<HeroImage
+				src={hero.upload.url}
+				alt={`Hero image for listing ${listing.id}`}
+				className={"w-full h-full object-cover"}
+				visible={visible}
+				invisible={<SpinnerContainer />}
+				onLoad={() => setHasToolbar(true)}
+				errorStatusProps={{
+					action: toolbar({
+						isImageError: true,
+						query,
+						listing,
+					}),
+				}}
+			/>
+
+			{hasToolbar
+				? toolbar({
+						isImageError: false,
+						query,
+						listing,
+					})
+				: null}
+		</Container>
+	);
+};

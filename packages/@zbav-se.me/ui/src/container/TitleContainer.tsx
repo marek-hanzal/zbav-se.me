@@ -1,10 +1,10 @@
+import { Container } from "@use-pico/client/ui/container";
 import type { FC, ReactNode } from "react";
 import { Title } from "../title/Title";
 import { BottomContainer } from "./BottomContainer";
-import { FlowContainer } from "./FlowContainer";
 
 export namespace TitleContainer {
-	export interface Props extends FlowContainer.Props {
+	export interface Props extends Container.Props {
 		textTitle?: string;
 		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
@@ -25,7 +25,15 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 	...props
 }) => {
 	return (
-		<FlowContainer {...props}>
+		<Container
+			layout={"vertical-header-content-footer"}
+			tone={"secondary"}
+			theme={"light"}
+			square={"md"}
+			gap={"xs"}
+			position={"relative"}
+			{...props}
+		>
 			{textTitle ? (
 				<Title
 					textTitle={textTitle}
@@ -41,6 +49,6 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 			{children}
 
 			{bottom ? <BottomContainer>{bottom}</BottomContainer> : null}
-		</FlowContainer>
+		</Container>
 	);
 };

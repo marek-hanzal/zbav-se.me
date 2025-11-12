@@ -8,7 +8,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
-import { ListingHeroContainer } from "~/app/feed/ui/ListingHeroContainer";
+import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -19,8 +19,8 @@ export namespace ListingListContainer {
 		scrollToListingId?: string;
 		empty?: ReactNode;
 		appendix?: ReactNode;
-		tools?: ListingHeroContainer.Tools[];
-		back?: ReactNode;
+		toolbar: ListingHeroContainer.Toolbar.Render;
+		overlay: ListingHeroContainer.Overlay.Render;
 	}
 }
 
@@ -29,8 +29,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToListingId,
 	empty,
 	appendix,
-	tools,
-	back,
+	toolbar,
+	overlay,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -96,8 +96,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						containerRef={containerRef}
 						query={query}
 						listing={listing}
-						tools={tools}
-						back={back}
+						toolbar={toolbar}
+						overlay={overlay}
 					/>
 				);
 			})}
