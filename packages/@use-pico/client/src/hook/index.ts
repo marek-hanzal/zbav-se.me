@@ -5,6 +5,7 @@ export { useEvent } from "./useEvent";
 export { useHighlightRectangle } from "./useHighlightRectangle";
 export { useInViewport } from "./useInViewport";
 export { useMergeRefs } from "./useMergeRefs";
+export { usePatchCollection } from "./usePatchCollection";
 export { useScrollTo } from "./useScrollTo";
 export { useSelection } from "./useSelection";
 export { useSetUnset } from "./useSetUnset";

@@ -1,34 +1,53 @@
+import { usePatchCollection } from "@use-pico/client/hook";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
+import type {
+	tListing,
+	tListingCollection,
+	tListingQuery,
+} from "@zbav-se.me/sdk/api/session";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/session";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { CartIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";
 
 export namespace ListingCartButton {
 	export interface Props extends ConfirmButton.Props {
-		listingId: string;
-		isInCart: boolean;
-		onSuccess(toggle: boolean): void;
+		listing: tListing;
+		query: tListingQuery | undefined;
+		onSuccess?(toggle: boolean): void;
 	}
 }
 
 export const ListingCartButton: FC<ListingCartButton.Props> = ({
-	listingId,
-	isInCart,
+	listing,
+	query,
 	onSuccess,
 	buttonProps,
 	confirmProps,
 	onReset,
+	disabled = false,
 	...props
 }) => {
+	const setListingCollection = withListingCollectionQuery.useSet();
+
+	const patch = usePatchCollection<tListingCollection>(listing);
+
 	const listingCartToggleMutation = withListingCartToggleMutation.useMutation(
 		{
 			onSuccess() {
-				onSuccess(!isInCart);
+				onSuccess?.(!listing.isInCart);
+				setListingCollection(
+					patch({
+						id: listing.id,
+						isInCart: !listing.isInCart,
+					}),
+					query,
+				);
 			},
 			meta: {
-				mutationId: listingId,
+				mutationId: listing.id,
 			},
 		},
 	);
@@ -37,13 +56,14 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 		<ConfirmButton
 			iconEnabled={CartIcon}
 			tone={"primary"}
-			theme={isInCart ? "dark" : "light"}
+			theme={listing.isInCart ? "dark" : "light"}
 			loading={listingCartToggleMutation.isPending}
+			disabled={listing.hasFlag || listing.isIgnored || disabled}
 			buttonProps={{
 				size: "lg",
 				...buttonProps,
 				onClick(event) {
-					if (isInCart) {
+					if (listing.isInCart) {
 						toast.warning(
 							translator.text(
 								"Second tap to remove from cart (toast)",
@@ -54,7 +74,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 						);
 					}
 
-					if (!isInCart) {
+					if (!listing.isInCart) {
 						toast.info(
 							translator.text(
 								"Second tap to add to cart (toast)",
@@ -76,13 +96,13 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 				onClick(e) {
 					toast.promise(
 						listingCartToggleMutation.mutateAsync({
-							toggle: !isInCart,
-							listingId,
+							toggle: !listing.isInCart,
+							listingId: listing.id,
 						}),
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								isInCart
+								listing.isInCart
 									? "Listing removed from your cart (toast)"
 									: "Listing added to your cart (toast)",
 							),

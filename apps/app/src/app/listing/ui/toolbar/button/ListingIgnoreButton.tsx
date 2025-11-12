@@ -1,34 +1,53 @@
+import { usePatchCollection } from "@use-pico/client/hook";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
+import type {
+	tListing,
+	tListingCollection,
+	tListingQuery,
+} from "@zbav-se.me/sdk/api/session";
 import { withListingIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/session";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";
 
 export namespace ListingIgnoreButton {
 	export interface Props extends ConfirmButton.Props {
-		listingId: string;
-		isIgnored: boolean;
-		onSuccess(toggle: boolean): void;
+		listing: tListing;
+		query: tListingQuery | undefined;
+		onSuccess?(toggle: boolean): void;
 	}
 }
 
 export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
-	listingId,
-	isIgnored,
+	listing,
+	query,
 	onSuccess,
 	confirmProps,
 	buttonProps,
 	onReset,
+	disabled = false,
 	...props
 }) => {
+	const setListingCollection = withListingCollectionQuery.useSet();
+
+	const patch = usePatchCollection<tListingCollection>(listing);
+
 	const listingIgnoreToggleMutation =
 		withListingIgnoreToggleMutation.useMutation({
 			onSuccess() {
-				onSuccess(!isIgnored);
+				onSuccess?.(!listing.isIgnored);
+				setListingCollection(
+					patch({
+						id: listing.id,
+						isIgnored: !listing.isIgnored,
+					}),
+					query,
+				);
 			},
 			meta: {
-				mutationId: listingId,
+				mutationId: listing.id,
 			},
 		});
 
@@ -36,13 +55,14 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 		<ConfirmButton
 			iconEnabled={CancelIcon}
 			tone={"primary"}
-			theme={isIgnored ? "dark" : "light"}
+			theme={listing.isIgnored ? "dark" : "light"}
 			loading={listingIgnoreToggleMutation.isPending}
+			disabled={listing.isInCart || disabled}
 			buttonProps={{
 				size: "lg",
 				...buttonProps,
 				onClick(event) {
-					if (isIgnored) {
+					if (listing.isIgnored) {
 						toast.info(
 							translator.text(
 								"Second tap to unignore listing (toast)",
@@ -53,7 +73,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 						);
 					}
 
-					if (!isIgnored) {
+					if (!listing.isIgnored) {
 						toast.info(
 							translator.text(
 								"Second tap to ignore listing (toast)",
@@ -75,13 +95,13 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				onClick(e) {
 					toast.promise(
 						listingIgnoreToggleMutation.mutateAsync({
-							toggle: !isIgnored,
-							listingId,
+							toggle: !listing.isIgnored,
+							listingId: listing.id,
 						}),
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								isIgnored
+								listing.isIgnored
 									? "Listing unignored (toast)"
 									: "Listing ignored (toast)",
 							),
