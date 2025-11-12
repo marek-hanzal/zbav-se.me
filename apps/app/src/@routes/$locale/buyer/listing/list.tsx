@@ -11,7 +11,7 @@ import { Sheet } from "@zbav-se.me/ui/sheet";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
-import { ListingToolbarContainer } from "~/app/listing/ui/toolbar/ListingToolbarContainer";
+import { ListingFeedToolbar } from "~/app/listing/ui/toolbar/ListingFeedToolbar";
 import { BadgeLeft } from "~/app/ui/badge/BadgeLeft";
 
 export const Route = createFileRoute("/$locale/buyer/listing/list")({
@@ -50,7 +50,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 						<FeedListingOverlay listing={listing} />
 					)}
 					toolbar={({ query, listing }) => (
-						<ListingToolbarContainer
+						<ListingFeedToolbar
 							query={query}
 							listing={listing}
 						/>

@@ -11,10 +11,10 @@ import { Sheet } from "@zbav-se.me/ui/sheet";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
-import { ListingToolbarContainer } from "~/app/listing/ui/toolbar/ListingToolbarContainer";
+import { CartFeedToolbar } from "~/app/listing/ui/toolbar/CartFeedToolbar";
 import { BadgeLeft } from "~/app/ui/badge/BadgeLeft";
 
-export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
+export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 	validateSearch: z.object({
 		scrollToListingId: z.string().optional(),
 	}),
@@ -30,7 +30,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 	component() {
 		const { locale } = Route.useParams();
 		const { scrollToListingId } = Route.useSearch();
-		const { categoryId } = Route.useParams();
+		const { id } = Route.useParams();
 
 		const listingCartCountQuery =
 			withListingCartCountQuery.useSuspenseQuery({});
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 						<FeedListingOverlay listing={listing} />
 					)}
 					toolbar={({ query, listing }) => (
-						<ListingToolbarContainer
+						<CartFeedToolbar
 							query={query}
 							listing={listing}
 							tools={[
@@ -63,7 +63,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$categoryId/feed")({
 					)}
 					query={{
 						where: {
-							categoryId,
+							categoryId: id,
 							inCart: true,
 							withIgnored: false,
 						},

@@ -37,10 +37,10 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 			{categoryCartList.map((category) => (
 				<LinkTo
 					key={category.id}
-					to={"/$locale/buyer/cart/$categoryId/feed"}
+					to={"/$locale/buyer/cart/category/$id/feed"}
 					params={{
 						locale,
-						categoryId: category.id,
+						id: category.id,
 					}}
 					display={"block"}
 					tone={"primary"}

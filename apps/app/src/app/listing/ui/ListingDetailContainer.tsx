@@ -9,15 +9,17 @@ import type {
 	tListing,
 	tListingQuery,
 } from "@zbav-se.me/sdk/api/session";
+import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/session";
-import type { FC } from "react";
+import { type FC, useEffect } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingDetailContainer {
 	export interface Props extends Container.Props {
-		query: tListingQuery;
+		query: tListingQuery | undefined;
 		listing: tListing;
+		withScore: boolean;
 	}
 }
 
@@ -25,6 +27,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	query,
 	listing,
 	children,
+	withScore,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -38,6 +41,28 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	const listingMetricsQuery = withListingMetricsFetchQuery.useSuspenseQuery(
 		listing.id,
 	);
+
+	const listingScoreCreateMutation =
+		withListingScoreCreateMutation.useMutation();
+
+	useEffect(() => {
+		if (!withScore) {
+			return;
+		}
+
+		const timeoutId = setTimeout(() => {
+			listingScoreCreateMutation.mutate({
+				listingId: listing.id,
+				score: "view",
+			});
+		}, 2_500);
+
+		return () => clearTimeout(timeoutId);
+	}, [
+		withScore,
+		listing.id,
+		listingScoreCreateMutation,
+	]);
 
 	return (
 		<Container

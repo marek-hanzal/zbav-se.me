@@ -3,30 +3,32 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
-import { zListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import z from "zod";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
 import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
-export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
-	validateSearch: zListingQuery,
+export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
+	validateSearch: z.object({
+		categoryId: z.string(),
+	}),
 	pendingComponent() {
 		const { locale, id } = Route.useParams();
-		const query = Route.useSearch();
+		const { categoryId } = Route.useSearch();
 
 		return (
 			<TitleContainer
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/listing/list"}
+						to={"/$locale/buyer/cart/category/$id/feed"}
 						params={{
 							locale,
+							id: categoryId,
 						}}
 						search={{
 							scrollToListingId: id,
-							query,
 						}}
 						tone={"secondary"}
 					/>
@@ -39,7 +41,8 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 	},
 	component() {
 		const { locale, id } = Route.useParams();
-		const query = Route.useSearch();
+		const { categoryId } = Route.useSearch();
+
 		const listingQuery = withListingFetchQuery.useSuspenseQuery({
 			where: {
 				id,
@@ -51,13 +54,13 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/listing/list"}
+						to={"/$locale/buyer/cart/category/$id/feed"}
 						params={{
 							locale,
+							id: categoryId,
 						}}
 						search={{
 							scrollToListingId: id,
-							query,
 						}}
 						tone={"secondary"}
 					/>
@@ -66,7 +69,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 			>
 				<Container scroll={"vertical"}>
 					<ListingDetailContainer
-						query={query}
+						query={undefined}
 						listing={listingQuery.data}
 						withScore
 					>

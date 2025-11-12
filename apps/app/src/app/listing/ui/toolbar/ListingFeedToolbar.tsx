@@ -1,25 +1,25 @@
 import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/session";
 import { type FC, useState } from "react";
-import { ListingCartButton } from "./button/ListingCartButton";
-import { ListingFlagButton } from "./button/ListingFlagButton";
-import { ListingIgnoreButton } from "./button/ListingIgnoreButton";
+import { ToolbarContainer } from "~/app/ui/toolbar/ToolbarContainer";
+import { ListingCartButton } from "../button/ListingCartButton";
+import { ListingFlagButton } from "../button/ListingFlagButton";
+import { ListingIgnoreButton } from "../button/ListingIgnoreButton";
 
-export namespace ListingToolbarContainer {
+export namespace ListingFeedToolbar {
 	export type Tools = "cart" | "ignore" | "flag";
 
-	export interface Props extends Container.Props {
+	export interface Props extends ToolbarContainer.Props {
 		query: tListingQuery | undefined;
 		listing: zListing;
 		tools?: Tools[];
 	}
 }
 
-export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
+export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 	query,
 	listing,
 	tools = [
@@ -39,34 +39,7 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 	>(undefined);
 
 	return (
-		<Container
-			layout={"vertical-flex"}
-			items={"center"}
-			height={"unset"}
-			width={"unset"}
-			snapTo={"right-center"}
-			square={"md"}
-			border={"default"}
-			shadow={"default"}
-			round={"full"}
-			gap={"lg"}
-			tone={"secondary"}
-			theme={"light"}
-			tweak={[
-				tweak,
-				{
-					slot: {
-						root: {
-							class: [
-								"opacity-80",
-								"z-100",
-							],
-						},
-					},
-				},
-			]}
-			{...props}
-		>
+		<ToolbarContainer {...props}>
 			<LinkTo
 				to={"/$locale/buyer/listing/$id/view"}
 				params={{
@@ -146,6 +119,6 @@ export const ListingToolbarContainer: FC<ListingToolbarContainer.Props> = ({
 					}}
 				/>
 			) : null}
-		</Container>
+		</ToolbarContainer>
 	);
 };
