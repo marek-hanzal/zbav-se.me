@@ -121,7 +121,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								ref={ref as Ref<HTMLDivElement> | undefined}
 								className={tvc([
 									"snap-y",
-									"snap-proximity",
+									"snap-mandatory",
 									"touch-pan-y",
 									"overscroll-contain",
 									"[-webkit-overflow-scrolling:touch]",
