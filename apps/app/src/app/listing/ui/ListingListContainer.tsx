@@ -9,7 +9,14 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
-import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
+import {
+	type FC,
+	type ReactNode,
+	type Ref,
+	useEffect,
+	useId,
+	useRef,
+} from "react";
 import { Virtuoso } from "react-virtuoso";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
@@ -97,11 +104,13 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					ScrollSeekPlaceholder() {
 						return <SpinnerContainer height={"viewport"} />;
 					},
-					List({ ref, context: __, ...props }) {
+					Scroller({ ref, context: __, ...props }) {
 						return (
 							<div
-								ref={ref}
-								className={"snap-y snap-mandatory"}
+								ref={ref as Ref<HTMLDivElement> | undefined}
+								className={
+									"snap-y snap-mandatory overscroll-contain"
+								}
 								{...props}
 							/>
 						);
@@ -113,6 +122,16 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								{...props}
 							/>
 						);
+					},
+					Footer() {
+						return listingQuery.data.data.length > 0 ? (
+							<Container
+								ui="ListingList-appendix"
+								height={"viewport"}
+							>
+								{appendix}
+							</Container>
+						) : null;
 					},
 				}}
 				increaseViewportBy={{
@@ -142,8 +161,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					);
 				}}
 			/>
-
-			{listingQuery.data.data.length > 0 ? appendix : null}
 		</Container>
 	);
 };
