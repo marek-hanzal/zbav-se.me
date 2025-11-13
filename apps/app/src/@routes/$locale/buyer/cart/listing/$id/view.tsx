@@ -5,17 +5,15 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import z from "zod";
+import { CategoryIdQuerySchema } from "~/app/category/schema/CategoryIdQuerySchema";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
 import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
-	validateSearch: z.object({
-		categoryId: z.string(),
-	}),
+	validateSearch: CategoryIdQuerySchema,
 	pendingComponent() {
 		const { locale, id } = Route.useParams();
-		const { categoryId } = Route.useSearch();
+		const query = Route.useSearch();
 
 		return (
 			<TitleContainer
@@ -25,7 +23,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 						to={"/$locale/buyer/cart/category/$id/feed"}
 						params={{
 							locale,
-							id: categoryId,
+							id: query.categoryId,
 						}}
 						search={{
 							scrollToListingId: id,
@@ -41,7 +39,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 	},
 	component() {
 		const { locale, id } = Route.useParams();
-		const { categoryId } = Route.useSearch();
+		const query = Route.useSearch();
 
 		const listingQuery = withListingFetchQuery.useSuspenseQuery({
 			where: {
@@ -57,7 +55,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 						to={"/$locale/buyer/cart/category/$id/feed"}
 						params={{
 							locale,
-							id: categoryId,
+							id: query.categoryId,
 						}}
 						search={{
 							scrollToListingId: id,
@@ -72,6 +70,34 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 						query={undefined}
 						listing={listingQuery.data}
 						withScore
+						renderScoreBadge={({ children }) => (
+							<LinkTo
+								to={"/$locale/buyer/cart/listing/$id/score"}
+								params={{
+									id,
+									locale,
+								}}
+								search={query}
+								tone="primary"
+								full
+							>
+								{children}
+							</LinkTo>
+						)}
+						renderSellerBadge={({ children }) => (
+							<LinkTo
+								to={"/$locale/buyer/cart/listing/$id/seller"}
+								params={{
+									id,
+									locale,
+								}}
+								search={query}
+								tone="primary"
+								full
+							>
+								{children}
+							</LinkTo>
+						)}
 					>
 						<ListingDetailMenu listing={listingQuery.data} />
 					</ListingDetailContainer>

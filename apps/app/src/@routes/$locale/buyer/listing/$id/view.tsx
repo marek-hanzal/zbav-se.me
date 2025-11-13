@@ -69,6 +69,34 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 						query={query}
 						listing={listingQuery.data}
 						withScore
+						renderScoreBadge={({ children }) => (
+							<LinkTo
+								to={"/$locale/buyer/listing/$id/score"}
+								params={{
+									id,
+									locale,
+								}}
+								search={query}
+								tone="primary"
+								full
+							>
+								{children}
+							</LinkTo>
+						)}
+						renderSellerBadge={({ children }) => (
+							<LinkTo
+								to={"/$locale/buyer/listing/$id/seller"}
+								params={{
+									id,
+									locale,
+								}}
+								search={query}
+								tone="primary"
+								full
+							>
+								{children}
+							</LinkTo>
+						)}
 					>
 						<ListingDetailMenu listing={listingQuery.data} />
 					</ListingDetailContainer>

@@ -1,8 +1,7 @@
 import { useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type {
 	tGallery,
@@ -11,15 +10,33 @@ import type {
 } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/session";
-import { type FC, useEffect } from "react";
+import { type FC, type PropsWithChildren, useEffect } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingDetailContainer {
+	export namespace ScoreBadge {
+		export interface Props extends PropsWithChildren {
+			listing: tListing;
+		}
+
+		export type Render = (props: Props) => React.ReactNode;
+	}
+
+	export namespace SellerBadge {
+		export interface Props extends PropsWithChildren {
+			listing: tListing;
+		}
+
+		export type Render = (props: Props) => React.ReactNode;
+	}
+
 	export interface Props extends Container.Props {
 		query: tListingQuery | undefined;
 		listing: tListing;
 		withScore: boolean;
+		renderScoreBadge: ScoreBadge.Render;
+		renderSellerBadge: SellerBadge.Render;
 	}
 }
 
@@ -28,6 +45,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	listing,
 	children,
 	withScore,
+	renderScoreBadge,
+	renderSellerBadge,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -105,42 +124,30 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				})}
 			/>
 
-			<BadgeValue
-				textLabel={"Listing score hint (label)"}
-				textValue={toLocaleNumber({
-					locale,
-					number: listingMetricsQuery.data.score,
-				})}
-				action={
-					<LinkTo
-						icon={ArrowRightIcon}
-						to={"/$locale/buyer/listing/$id/score"}
-						params={{
+			{renderScoreBadge?.({
+				listing,
+				children: (
+					<BadgeValue
+						textLabel={"Listing score hint (label)"}
+						textValue={toLocaleNumber({
 							locale,
-							id: listing.id,
-						}}
-						search={query}
-						tone={"primary"}
+							number: listingMetricsQuery.data.score,
+						})}
+						action={<Icon icon={ArrowRightIcon} />}
 					/>
-				}
-			/>
+				),
+			})}
 
-			<BadgeValue
-				textLabel={"Listing seller hint (label)"}
-				textValue={"- skore + link -"}
-				action={
-					<LinkTo
-						icon={ArrowRightIcon}
-						to={"/$locale/buyer/listing/$id/seller"}
-						params={{
-							locale,
-							id: listing.id,
-						}}
-						search={query}
-						tone={"primary"}
+			{renderSellerBadge({
+				listing,
+				children: (
+					<BadgeValue
+						textLabel={"Listing seller hint (label)"}
+						textValue={"- skore + link -"}
+						action={<Icon icon={ArrowRightIcon} />}
 					/>
-				}
-			/>
+				),
+			})}
 
 			<BadgeValue
 				textLabel={"Listing location (label)"}
