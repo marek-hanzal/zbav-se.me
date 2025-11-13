@@ -119,7 +119,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							<div
 								ref={ref as Ref<HTMLDivElement> | undefined}
 								className={
-									"snap-y snap-mandatory overscroll-contain"
+									"snap-y snap-proximity overscroll-contain"
 								}
 								{...props}
 							/>
