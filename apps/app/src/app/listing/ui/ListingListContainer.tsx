@@ -99,7 +99,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 			<Virtuoso
 				data={listingQuery.data.data}
-				overscan={2}
+				overscan={5}
 				components={{
 					ScrollSeekPlaceholder() {
 						return <SpinnerContainer height={"viewport"} />;
@@ -133,10 +133,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							</Container>
 						) : null;
 					},
-				}}
-				increaseViewportBy={{
-					top: 100,
-					bottom: 100,
 				}}
 				scrollSeekConfiguration={{
 					enter(velocity) {
