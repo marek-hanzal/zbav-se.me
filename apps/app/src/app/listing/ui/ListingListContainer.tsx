@@ -128,7 +128,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					Item({ item: _, context: __, ...props }) {
 						return (
 							<div
-								className={"snap-start"}
+								className={"snap-center"}
 								{...props}
 							/>
 						);
