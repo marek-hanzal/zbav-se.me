@@ -1,6 +1,7 @@
 import {
 	useDocumentVisibility,
 	useElementVisibility,
+	useMergeRefs,
 } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type {
@@ -69,6 +70,7 @@ export namespace ListingHeroContainer {
  * @param props Component props extending `Container.Props`.
  */
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
+	ref,
 	containerRef,
 	query,
 	listing,
@@ -83,6 +85,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	];
 
 	const rootRef = useRef<HTMLDivElement>(null);
+
+	const mergeRef = useMergeRefs([
+		rootRef,
+		ref,
+	]);
 
 	const [visible, setVisible] = useState(false);
 
@@ -169,7 +176,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 
 	return (
 		<Container
-			ref={rootRef}
+			ref={mergeRef}
 			data-id={listing.id}
 			ui={"ListingPreview-root"}
 			position={"relative"}
