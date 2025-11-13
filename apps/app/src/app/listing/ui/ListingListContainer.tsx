@@ -5,6 +5,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
@@ -118,9 +119,14 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						return (
 							<div
 								ref={ref as Ref<HTMLDivElement> | undefined}
-								className={
-									"snap-y snap-proximity overscroll-contain"
-								}
+								className={tvc([
+									"snap-y",
+									"snap-proximity",
+									"touch-pan-y",
+									"overscroll-contain",
+									"[-webkit-overflow-scrolling:touch]",
+									"[overflow-anchor:none]",
+								])}
 								{...props}
 							/>
 						);
@@ -128,7 +134,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					Item({ item: _, context: __, ...props }) {
 						return (
 							<div
-								className={"snap-center"}
+								className={"snap-center snap-always"}
 								{...props}
 							/>
 						);
