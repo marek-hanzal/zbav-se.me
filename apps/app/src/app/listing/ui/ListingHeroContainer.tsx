@@ -1,8 +1,4 @@
-import {
-	useDocumentVisibility,
-	useElementVisibility,
-	useMergeRefs,
-} from "@use-pico/client/hook";
+import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type {
 	tGallery,
@@ -61,6 +57,7 @@ export namespace ListingHeroContainer {
 		listing: tListing;
 		toolbar: Toolbar.Render;
 		overlay: Overlay.Render;
+		visible: boolean;
 	}
 }
 
@@ -76,6 +73,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	listing,
 	toolbar,
 	overlay,
+	visible,
 	tweak,
 	...props
 }) => {
@@ -90,14 +88,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		rootRef,
 		ref,
 	]);
-
-	const [visible, setVisible] = useState(false);
-
-	useElementVisibility({
-		scrollerRef: containerRef,
-		triggerRef: rootRef,
-		setVisible,
-	});
 
 	const listingScoreCreateMutation =
 		withListingScoreCreateMutation.useMutation({
@@ -178,7 +168,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		<Container
 			ref={mergeRef}
 			data-id={listing.id}
-			ui={"ListingPreview-root"}
+			ui={"ListingHero-root"}
 			position={"relative"}
 			{...props}
 		>
@@ -203,11 +193,12 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 			})}
 
 			<HeroImage
+				ui={"ListingHero-image"}
 				src={hero.upload.url}
 				alt={`Hero image for listing ${listing.id}`}
 				className={"w-full h-full object-cover"}
 				visible={visible}
-				invisible={<SpinnerContainer />}
+				invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
 				onLoad={() => setHasToolbar(true)}
 				errorStatusProps={{
 					action: toolbar({

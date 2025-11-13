@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtuoso is a nested component */
 import { useParams } from "@tanstack/react-router";
 import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
@@ -7,7 +8,9 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
+import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
+import { Virtuoso } from "react-virtuoso";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -59,9 +62,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	return (
 		<Container
 			ref={containerRef}
-			ui="Feed-root"
-			layout={"vertical-full"}
-			snap={"vertical-start"}
+			ui="ListingList-root"
 			{...props}
 		>
 			{listingQuery.data.data.length === 0
@@ -89,18 +90,58 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					))
 				: null}
 
-			{listingQuery.data.data.map((listing) => {
-				return (
-					<ListingHeroContainer
-						key={`${listingId}-${listing.id}`}
-						containerRef={containerRef}
-						query={query}
-						listing={listing}
-						toolbar={toolbar}
-						overlay={overlay}
-					/>
-				);
-			})}
+			<Virtuoso
+				data={listingQuery.data.data}
+				overscan={2}
+				components={{
+					ScrollSeekPlaceholder() {
+						return <SpinnerContainer height={"viewport"} />;
+					},
+					List({ ref, context: __, ...props }) {
+						return (
+							<div
+								ref={ref}
+								className={"snap-y snap-mandatory"}
+								{...props}
+							/>
+						);
+					},
+					Item({ item: _, context: __, ...props }) {
+						return (
+							<div
+								className={"snap-start"}
+								{...props}
+							/>
+						);
+					},
+				}}
+				increaseViewportBy={{
+					top: 100,
+					bottom: 100,
+				}}
+				scrollSeekConfiguration={{
+					enter(velocity) {
+						return Math.abs(velocity) > 650;
+					},
+					exit(velocity) {
+						return Math.abs(velocity) < 50;
+					},
+				}}
+				itemContent={(_, listing) => {
+					return (
+						<ListingHeroContainer
+							key={`${listingId}-${listing.id}`}
+							containerRef={containerRef}
+							query={query}
+							listing={listing}
+							toolbar={toolbar}
+							overlay={overlay}
+							visible
+							height={"viewport"}
+						/>
+					);
+				}}
+			/>
 
 			{listingQuery.data.data.length > 0 ? appendix : null}
 		</Container>

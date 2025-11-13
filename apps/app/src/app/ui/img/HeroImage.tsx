@@ -1,6 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
+import type { UiProps } from "node_modules/@use-pico/client/src/type/UiProps";
 import {
 	type FC,
 	type ImgHTMLAttributes,
@@ -10,7 +11,8 @@ import {
 import { match } from "ts-pattern";
 
 export namespace HeroImage {
-	export interface Props extends ImgHTMLAttributes<HTMLImageElement> {
+	export interface Props
+		extends UiProps<ImgHTMLAttributes<HTMLImageElement>> {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
@@ -18,6 +20,7 @@ export namespace HeroImage {
 }
 
 export const HeroImage: FC<HeroImage.Props> = ({
+	ui,
 	visible = true,
 	errorStatusProps,
 	invisible,
@@ -37,6 +40,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
+				data-ui={ui ?? "HeroImage-root"}
 				loading={"eager"}
 				fetchPriority={"high"}
 				decoding={"async"}
@@ -63,6 +67,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 
 			{state === "error" ? (
 				<Container
+					data-ui={"HeroImage-error"}
 					layout={"vertical-centered"}
 					tone={"primary"}
 					theme={"light"}
