@@ -144,6 +144,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							<Container
 								ui="ListingList-appendix"
 								height={"viewport"}
+								className={tvc([
+									"snap-center",
+									"snap-always",
+								])}
 							>
 								{appendix}
 							</Container>

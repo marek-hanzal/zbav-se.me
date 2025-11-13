@@ -6,9 +6,7 @@ import { ContainerCls } from "./ContainerCls";
 export namespace Container {
 	export interface Props
 		extends UiProps<
-			ContainerCls.Props<
-				Omit<ComponentProps<"div">, "className" | "onChange">
-			>
+			ContainerCls.Props<Omit<ComponentProps<"div">, "onChange">>
 		> {
 		ref?: Ref<HTMLDivElement>;
 
@@ -238,6 +236,10 @@ export namespace Container {
 		 * @default false
 		 */
 		disabled?: Cls.VariantOf<ContainerCls, "disabled">;
+		/**
+		 * Additional className to apply to the container.
+		 */
+		className?: string;
 	}
 }
 
@@ -264,6 +266,7 @@ export const Container: FC<Container.Props> = ({
 	round,
 	shadow,
 	disabled,
+	className,
 	//
 	cls = ContainerCls,
 	tweak,
@@ -271,29 +274,40 @@ export const Container: FC<Container.Props> = ({
 	children,
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			height,
-			width,
-			layout,
-			scroll,
-			snap,
-			lock,
-			square,
-			gap,
-			items,
-			"place-items": placeItems,
-			justify,
-			position,
-			"snap-to": snapTo,
-			border,
-			round,
-			shadow,
-			tone,
-			theme,
-			disabled,
+	const { slots } = useCls(
+		cls,
+		{
+			slot: {
+				root: {
+					class: className,
+				},
+			},
 		},
-	});
+		tweak,
+		{
+			variant: {
+				height,
+				width,
+				layout,
+				scroll,
+				snap,
+				lock,
+				square,
+				gap,
+				items,
+				"place-items": placeItems,
+				justify,
+				position,
+				"snap-to": snapTo,
+				border,
+				round,
+				shadow,
+				tone,
+				theme,
+				disabled,
+			},
+		},
+	);
 
 	return (
 		<div
