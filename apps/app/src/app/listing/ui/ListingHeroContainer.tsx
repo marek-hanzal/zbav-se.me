@@ -22,7 +22,6 @@ import { HeroImage } from "~/app/ui/img/HeroImage";
 export namespace ListingHeroContainer {
 	export namespace Toolbar {
 		export interface Props {
-			isImageError: boolean;
 			query: tListingQuery;
 			listing: tListing;
 		}
@@ -56,6 +55,7 @@ export namespace ListingHeroContainer {
 		 */
 		listing: tListing;
 		toolbar: Toolbar.Render;
+		imageErrorToolbar: Toolbar.Render;
 		overlay: Overlay.Render;
 		visible: boolean;
 	}
@@ -72,6 +72,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	query,
 	listing,
 	toolbar,
+	imageErrorToolbar,
 	overlay,
 	visible,
 	tweak,
@@ -201,8 +202,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
 				onLoad={() => setHasToolbar(true)}
 				errorStatusProps={{
-					action: toolbar({
-						isImageError: true,
+					action: imageErrorToolbar({
 						query,
 						listing,
 					}),
@@ -211,7 +211,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 
 			{hasToolbar
 				? toolbar({
-						isImageError: false,
 						query,
 						listing,
 					})

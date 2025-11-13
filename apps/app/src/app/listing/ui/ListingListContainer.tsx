@@ -30,6 +30,7 @@ export namespace ListingListContainer {
 		empty?: ReactNode;
 		appendix?: ReactNode;
 		toolbar: ListingHeroContainer.Toolbar.Render;
+		imageErrorToolbar: ListingHeroContainer.Toolbar.Render;
 		overlay: ListingHeroContainer.Overlay.Render;
 	}
 }
@@ -40,6 +41,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	empty,
 	appendix,
 	toolbar,
+	imageErrorToolbar,
 	overlay,
 	...props
 }) => {
@@ -150,6 +152,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							query={query}
 							listing={listing}
 							toolbar={toolbar}
+							imageErrorToolbar={imageErrorToolbar}
 							overlay={overlay}
 							visible
 							height={"viewport"}

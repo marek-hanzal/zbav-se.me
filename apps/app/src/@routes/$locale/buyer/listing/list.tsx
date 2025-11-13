@@ -55,6 +55,19 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 							listing={listing}
 						/>
 					)}
+					imageErrorToolbar={({ query, listing }) => (
+						<ListingFeedToolbar
+							query={query}
+							listing={listing}
+							snapTo={"unset"}
+							horizontal
+							flip
+							tools={[
+								"flag",
+								"ignore",
+							]}
+						/>
+					)}
 					query={{
 						...query,
 						/**

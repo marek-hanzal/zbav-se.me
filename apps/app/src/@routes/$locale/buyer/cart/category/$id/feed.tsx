@@ -61,6 +61,15 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 							]}
 						/>
 					)}
+					imageErrorToolbar={({ query, listing }) => (
+						<CartFeedToolbar
+							query={query}
+							listing={listing}
+							snapTo={"unset"}
+							horizontal
+							flip
+						/>
+					)}
 					query={{
 						where: {
 							categoryId: id,

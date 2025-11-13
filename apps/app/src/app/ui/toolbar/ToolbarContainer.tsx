@@ -1,12 +1,19 @@
-import { Container } from "@use-pico/client/ui/container";
+import { Container, ContainerCls } from "@use-pico/client/ui/container";
 import type { FC } from "react";
+import { ToolbarContainerCls } from "~/app/ui/toolbar/ToolbarContainerCls";
 
 export namespace ToolbarContainer {
-	export interface Props extends Container.Props {}
+	export interface Props extends ToolbarContainerCls.Props<Container.Props> {
+		horizontal?: boolean;
+		flip?: boolean;
+	}
 }
 
 export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
+	horizontal = false,
+	flip = false,
 	tweak,
+	cls = ToolbarContainerCls,
 	...props
 }) => {
 	return (
@@ -23,8 +30,14 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 			gap={"lg"}
 			tone={"secondary"}
 			theme={"light"}
-			tweak={[
+			tweak={ContainerCls.tweak([
 				tweak,
+				{
+					variant: {
+						horizontal,
+						flip,
+					},
+				},
 				{
 					slot: {
 						root: {
@@ -35,7 +48,8 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 						},
 					},
 				},
-			]}
+			])}
+			cls={ContainerCls.use(cls)}
 			{...props}
 		/>
 	);
