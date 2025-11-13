@@ -8,7 +8,14 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
-import { type FC, type ReactNode, type Ref, useId, useMemo } from "react";
+import {
+	type FC,
+	type ReactNode,
+	type Ref,
+	useId,
+	useMemo,
+	useState,
+} from "react";
 import { Virtuoso } from "react-virtuoso";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
@@ -58,6 +65,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		listingQuery.data.data,
 	]);
 
+	const [ready, setReady] = useState(false);
+
 	return (
 		<Container
 			ui="ListingList-root"
@@ -90,10 +99,16 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 			<Virtuoso
 				data={listingQuery.data.data}
-				overscan={5}
+				overscan={2}
 				initialTopMostItemIndex={{
 					index: initialIndex,
 					behavior: "auto",
+				}}
+				context={{
+					ready,
+				}}
+				rangeChanged={() => {
+					setReady(true);
 				}}
 				components={{
 					ScrollSeekPlaceholder() {
@@ -118,8 +133,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							/>
 						);
 					},
-					Footer() {
-						return listingQuery.data.data.length > 0 ? (
+					Footer({ context: { ready } }) {
+						return ready && listingQuery.data.data.length > 0 ? (
 							<Container
 								ui="ListingList-appendix"
 								height={"viewport"}
