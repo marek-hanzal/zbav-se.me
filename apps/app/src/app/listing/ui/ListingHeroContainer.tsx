@@ -11,7 +11,6 @@ import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import {
 	type FC,
 	type ReactNode,
-	type RefObject,
 	useCallback,
 	useEffect,
 	useRef,
@@ -43,10 +42,6 @@ export namespace ListingHeroContainer {
 	 */
 	export interface Props extends Container.Props {
 		/**
-		 * Ref to the scroll container observing visibility of the hero.
-		 */
-		containerRef: RefObject<HTMLDivElement | null>;
-		/**
 		 * Active listing query used for local cache updates.
 		 */
 		query: tListingQuery;
@@ -68,7 +63,6 @@ export namespace ListingHeroContainer {
  */
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	ref,
-	containerRef,
 	query,
 	listing,
 	toolbar,

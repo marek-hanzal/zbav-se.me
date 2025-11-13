@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtuoso is a nested component */
 import { useParams } from "@tanstack/react-router";
-import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -9,14 +8,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
-import {
-	type FC,
-	type ReactNode,
-	type Ref,
-	useEffect,
-	useId,
-	useRef,
-} from "react";
+import { type FC, type ReactNode, type Ref, useId, useMemo } from "react";
 import { Virtuoso } from "react-virtuoso";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
@@ -54,23 +46,20 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		staleTime: 60_000 * 30,
 		refetchOnWindowFocus: true,
 	});
-	const containerRef = useRef<HTMLDivElement>(null);
-	const scrollTo = useScrollTo(containerRef);
 
-	useEffect(() => {
-		if (scrollToListingId) {
-			scrollTo(`.ListingPreview-${scrollToListingId}`, {
-				behavior: "instant",
-			});
-		}
+	const initialIndex = useMemo(() => {
+		return scrollToListingId
+			? listingQuery.data.data.findIndex(
+					(listing) => listing.id === scrollToListingId,
+				)
+			: 0;
 	}, [
 		scrollToListingId,
-		scrollTo,
+		listingQuery.data.data,
 	]);
 
 	return (
 		<Container
-			ref={containerRef}
 			ui="ListingList-root"
 			{...props}
 		>
@@ -102,6 +91,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			<Virtuoso
 				data={listingQuery.data.data}
 				overscan={5}
+				initialTopMostItemIndex={{
+					index: initialIndex,
+					behavior: "auto",
+				}}
 				components={{
 					ScrollSeekPlaceholder() {
 						return <SpinnerContainer height={"viewport"} />;
@@ -148,7 +141,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					return (
 						<ListingHeroContainer
 							key={`${listingId}-${listing.id}`}
-							containerRef={containerRef}
 							query={query}
 							listing={listing}
 							toolbar={toolbar}
