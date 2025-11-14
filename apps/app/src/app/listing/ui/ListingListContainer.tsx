@@ -121,7 +121,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							visibility={{
 								scrollerRef: containerRef,
 							}}
-							delay={1000}
+							delay={200}
 							placeholder={(props) => (
 								<SpinnerContainer
 									ui="ListingList-spinner"

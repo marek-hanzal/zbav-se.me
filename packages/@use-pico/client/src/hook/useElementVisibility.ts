@@ -56,8 +56,6 @@ export function useElementVisibility({
 				return;
 			}
 
-			console.log("useAnim");
-
 			ScrollTrigger.create({
 				trigger: triggerRef.current,
 				scroller: scrollerRef.current,
