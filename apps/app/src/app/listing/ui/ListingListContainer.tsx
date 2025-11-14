@@ -109,7 +109,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				? listingQuery.data.data.map((listing) => (
 						<VisibleContainer
 							key={`${listingIdPrefix}-${listing.id}`}
-                            scrollerRef={containerRef}
+							scrollerRef={containerRef}
 							useProximity
 							delay={0}
 							placeholder={(props) => (

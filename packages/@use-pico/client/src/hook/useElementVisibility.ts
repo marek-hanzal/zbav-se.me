@@ -8,7 +8,8 @@ export namespace useElementVisibility {
 	}
 
 	export interface Proximity extends ScrollTrigger.StaticVars {
-		setProximity(proximity: boolean): void;
+		setTop?(proximity: boolean): void;
+		setBottom?(proximity: boolean): void;
 	}
 
 	/**
@@ -97,9 +98,8 @@ export function useElementVisibility({
 
 			if (proximity) {
 				const {
-					setProximity,
-					start = "top bottom+=100%",
-					end = "bottom top-=100%",
+					setTop,
+					setBottom,
 					onEnter,
 					onEnterBack,
 					onLeave,
@@ -107,29 +107,63 @@ export function useElementVisibility({
 					...proximityProps
 				} = proximity;
 
-				ScrollTrigger.create({
-					trigger: triggerRef.current,
-					scroller: scrollerRef.current,
-					start,
-					end,
-					...proximityProps,
-					onEnter(props) {
-						setProximity(true);
-						onEnter?.(props);
-					},
-					onEnterBack(props) {
-						setProximity(true);
-						onEnterBack?.(props);
-					},
-					onLeave(props) {
-						setProximity(false);
-						onLeave?.(props);
-					},
-					onLeaveBack(props) {
-						setProximity(false);
-						onLeaveBack?.(props);
-					},
-				});
+				if (setTop) {
+					/**
+					 * Top proximity trigger
+					 */
+					ScrollTrigger.create({
+						trigger: triggerRef.current,
+						scroller: scrollerRef.current,
+						start: "top+=100% bottom",
+						end: "bottom+=100% top",
+						...proximityProps,
+						onEnter(props) {
+							setTop(true);
+							onEnter?.(props);
+						},
+						onEnterBack(props) {
+							setTop(true);
+							onEnterBack?.(props);
+						},
+						onLeave(props) {
+							setTop(false);
+							onLeave?.(props);
+						},
+						onLeaveBack(props) {
+							setTop(false);
+							onLeaveBack?.(props);
+						},
+					});
+				}
+
+				/**
+				 * Bottom proximity trigger
+				 */
+				if (setBottom) {
+					ScrollTrigger.create({
+						trigger: triggerRef.current,
+						scroller: scrollerRef.current,
+						start: "top-=100% bottom",
+						end: "bottom-=100% top",
+						...proximityProps,
+						onEnter(props) {
+							setBottom(true);
+							onEnter?.(props);
+						},
+						onEnterBack(props) {
+							setBottom(true);
+							onEnterBack?.(props);
+						},
+						onLeave(props) {
+							setBottom(false);
+							onLeave?.(props);
+						},
+						onLeaveBack(props) {
+							setBottom(false);
+							onLeaveBack?.(props);
+						},
+					});
+				}
 			}
 		},
 		{

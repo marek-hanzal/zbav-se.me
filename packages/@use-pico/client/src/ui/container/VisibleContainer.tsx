@@ -1,4 +1,12 @@
-import { type FC, type ReactNode, type RefObject, useCallback, useRef, useState } from "react";
+import {
+	type FC,
+	type ReactNode,
+	type RefObject,
+	useCallback,
+	useEffect,
+	useRef,
+	useState,
+} from "react";
 import { useElementVisibility } from "../../hook";
 import { Container } from "./Container";
 
@@ -50,19 +58,35 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	placeholder,
 	...props
 }) => {
+	const triggerRef = useRef<HTMLDivElement>(null);
+	//
 	const [visible, setVisible] = useState(false);
 	const visibleRef = useRef(false);
-	const timerRef = useRef<NodeJS.Timeout>(undefined);
-	const triggerRef = useRef<HTMLDivElement>(null);
+	const visibleTimerRef = useRef<NodeJS.Timeout>(undefined);
+	//
+	const [topProximity, setTopProximity] = useState(false);
+	const topProximityRef = useRef(false);
+	const topProximityTimerRef = useRef<NodeJS.Timeout>(undefined);
+	//
+	const [bottomProximity, setBottomProximity] = useState(false);
+	const bottomProximityRef = useRef(false);
+	const bottomProximityTimerRef = useRef<NodeJS.Timeout>(undefined);
+
+	const isVisible = visible || topProximity || bottomProximity;
 
 	const setState = useCallback(
-		(state: boolean) => {
-			visibleRef.current = state;
+		(
+			state: boolean,
+			timerRef: RefObject<NodeJS.Timeout | undefined>,
+			ref: RefObject<boolean>,
+			set: (value: boolean) => void,
+		) => {
+			ref.current = state;
 
 			clearTimeout(timerRef.current);
 
 			timerRef.current = setTimeout(() => {
-				setVisible(state);
+				set(state);
 				timerRef.current = undefined;
 			}, delay);
 		},
@@ -71,21 +95,41 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 		],
 	);
 
+	useEffect(() => {
+		return () => {
+			clearTimeout(visibleTimerRef.current);
+			clearTimeout(topProximityTimerRef.current);
+			clearTimeout(bottomProximityTimerRef.current);
+		};
+	}, []);
+
 	useElementVisibility({
 		scrollerRef,
 		triggerRef,
 		visibility: {
-			setVisible: setState,
+			setVisible(state) {
+				setState(state, visibleTimerRef, visibleRef, setVisible);
+			},
 			...visibility,
 		},
 		proximity: useProximity
 			? {
-					setProximity: setState,
+					setTop: (state) => {
+						setState(state, topProximityTimerRef, topProximityRef, setTopProximity);
+					},
+					setBottom: (state) => {
+						setState(
+							state,
+							bottomProximityTimerRef,
+							bottomProximityRef,
+							setBottomProximity,
+						);
+					},
 				}
 			: undefined,
 	});
 
-	if (!visible) {
+	if (!isVisible) {
 		return placeholder({
 			ref: triggerRef,
 		});
