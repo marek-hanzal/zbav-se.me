@@ -154,6 +154,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							<Container
 								ui="ListingList-appendix"
 								height={"viewport"}
+								className="snap-end snap-always"
 							>
 								{appendix}
 							</Container>
