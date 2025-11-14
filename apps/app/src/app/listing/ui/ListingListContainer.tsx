@@ -8,7 +8,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import { type FC, forwardRef, type ReactNode, useEffect, useId, useMemo } from "react";
+import { type FC, type ReactNode, useId } from "react";
 import { List, useListRef } from "react-window";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
@@ -47,85 +47,42 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		refetchOnWindowFocus: true,
 	});
 
-	const listings = listingQuery.data.data;
-	const hasAppendix = Boolean(appendix);
-	const itemCount = listings.length + (hasAppendix ? 1 : 0);
-
-	const initialIndex = useMemo(() => {
-		if (!scrollToListingId) {
-			return 0;
-		}
-
-		const idx = listings.findIndex((listing) => {
-			return listing.id === scrollToListingId;
-		});
-
-		return idx >= 0 ? idx : 0;
-	}, [
-		scrollToListingId,
-		listings,
-	]);
-
 	const listRef = useListRef(null);
 
-	useEffect(() => {
-		if (!scrollToListingId || !listRef.current) {
-			return;
-		}
+	// useEffect(() => {
+	// 	if (!scrollToListingId || !listRef.current) {
+	// 		return;
+	// 	}
 
-		const idx = listings.findIndex((listing) => {
-			return listing.id === scrollToListingId;
-		});
+	// 	const idx = listings.findIndex((listing) => {
+	// 		return listing.id === scrollToListingId;
+	// 	});
 
-		if (idx < 0) {
-			return;
-		}
+	// 	if (idx < 0) {
+	// 		return;
+	// 	}
 
-		listRef.current.scrollToRow({
-			index: idx,
-			align: "start",
-			behavior: "instant",
-		});
-	}, [
-		listRef.current,
-		listings,
-		scrollToListingId,
-	]);
+	// 	listRef.current.scrollToRow({
+	// 		index: idx,
+	// 		align: "start",
+	// 		behavior: "instant",
+	// 	});
+	// }, [
+	// 	listRef.current,
+	// 	listings,
+	// 	scrollToListingId,
+	// ]);
 
-	const hasNoListings = listings.length === 0;
-
-	const OuterElement = useMemo(
-		() =>
-			forwardRef<HTMLDivElement, React.HTMLProps<HTMLDivElement>>(({ className, ...outerProps }, ref) => {
-				return (
-					<div
-						ref={ref}
-						data-ui="ListingList-scroller"
-						className={tvc([
-							"h-dvh",
-							"overflow-y-auto",
-							"overscroll-contain",
-							"[overflow-anchor:none]",
-							"[-webkit-overflow-scrolling:touch]",
-							"touch-pan-y",
-							"snap-y",
-							"snap-mandatory",
-							className,
-						])}
-						{...outerProps}
-					/>
-				);
-			}),
-		[],
-	);
+	const hasListings = listingQuery.data.data.length > 0;
 
 	return (
 		<Container
 			ui="ListingList-root"
 			{...props}
 		>
-			{hasNoListings
-				? (empty ?? (
+			{hasListings
+				? null
+				: (empty ?? (
 						<Status
 							ui="ListingList-empty"
 							key={`${listingIdPrefix}-no-listings`}
@@ -146,18 +103,27 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								</LinkTo>
 							}
 						/>
-					))
-				: null}
+					))}
 
-			{hasNoListings ? null : (
+			{hasListings ? (
 				<List
 					listRef={listRef}
-					className={"h-dvh"}
+					data-ui="ListingList-scroller"
+					className={tvc([
+						"h-dvh",
+						"overscroll-contain",
+						"[overflow-anchor:none]",
+						"[-webkit-overflow-scrolling:touch]",
+						"touch-pan-y",
+						"snap-y",
+						"snap-mandatory",
+					])}
 					rowHeight={"100%"}
 					rowCount={listingQuery.data.data.length}
 					rowProps={{
-						listings,
+						listings: listingQuery.data.data,
 					}}
+					overscanCount={1}
 					rowComponent={({ listings, index, style }) => {
 						const listing = listings[index];
 						if (!listing) {
@@ -165,35 +131,31 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						}
 
 						return (
-							<div
+							<ListingHeroContainer
+								key={`${listingIdPrefix}-${listing.id}`}
+								query={query}
+								listing={listing}
+								toolbar={toolbar}
+								imageErrorToolbar={imageErrorToolbar}
+								overlay={overlay}
+								visible
+								height={"viewport"}
 								style={style}
 								className={tvc([
 									"w-full",
 									"snap-start",
 									"snap-always",
 								])}
-							>
-								<ListingHeroContainer
-									key={`${listingIdPrefix}-${listing.id}`}
-									query={query}
-									listing={listing}
-									toolbar={toolbar}
-									imageErrorToolbar={imageErrorToolbar}
-									overlay={overlay}
-									visible
-									height={"viewport"}
-								/>
-							</div>
+							/>
 						);
 					}}
 				/>
-			)}
+			) : null}
 
 			{appendix ? (
 				<Container
 					ui="ListingList-appendix"
 					height={"viewport"}
-					// style={style}
 					className={tvc([
 						"w-full",
 						"snap-start",
