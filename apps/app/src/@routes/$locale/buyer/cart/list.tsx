@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
 import { withCategoryCartCollectionQuery } from "@zbav-se.me/sdk/query/session";
@@ -61,9 +62,11 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				}
 				textTitle={"Your cart (title)"}
 			>
-				<CategoryCartListContainer
-					categoryCartList={categoryCartCollectionQuery.data.data}
-				/>
+				<Container scroll={"vertical"}>
+					<CategoryCartListContainer
+						categoryCartList={categoryCartCollectionQuery.data.data}
+					/>
+				</Container>
 			</TitleContainer>
 		);
 	},

@@ -85,6 +85,9 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
   ref: Go to home (link)
   value: Go to home (link)
+2cf7d683bdd6eadcc25497c243dfa1e5e7d076f4b752f146e25ea129:
+  ref: Transactions (title)
+  value: Transactions (title)
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
   ref: Next - title (button)
   value: Next - title (button)
@@ -286,6 +289,9 @@
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
   ref: Listing - upload photo (placeholder)
   value: Listing - upload photo (placeholder)
+8c00fb88a09730194dd045f089bbea7de140bf5478b6e0626ba8b28d:
+  ref: Transactions (label)
+  value: Transactions (label)
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
   ref: Feed location (label)
   value: Feed location (label)

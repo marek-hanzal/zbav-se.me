@@ -1,8 +1,7 @@
-import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { ArrowLeftIcon, Icon, SpinnerIcon, UserIcon } from "@use-pico/client/icon";
+import { createFileRoute } from "@tanstack/react-router";
+import { ArrowLeftIcon, UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { PostIcon, PublicIcon, ShopIcon } from "@zbav-se.me/ui/icon";
 import { Tile } from "~/app/ui/dashboard/Tile";
@@ -10,32 +9,19 @@ import { Tile } from "~/app/ui/dashboard/Tile";
 export const Route = createFileRoute("/$locale/seller/")({
 	component() {
 		const { locale } = Route.useParams();
-		const router = useRouter();
-		const userExPatchMutation = withUserExPatchMutation.useMutation({
-			async onPostMutation() {
-				router.invalidate();
-				await router.navigate({
-					to: "/$locale/dashboard",
-					params: {
-						locale,
-					},
-				});
-			},
-		});
 
 		return (
 			<TitleContainer
 				textTitle={"Seller home (title)"}
 				left={
-					<Icon
-						icon={userExPatchMutation.isPending ? SpinnerIcon : ArrowLeftIcon}
-						tone={"secondary"}
-						size={"sm"}
-						onClick={() => {
-							userExPatchMutation.mutate({
-								side: null,
-							});
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to="/$locale/change-side/$side"
+						params={{
+							locale,
+							side: "none",
 						}}
+						tone={"secondary"}
 					/>
 				}
 			>
@@ -57,8 +43,8 @@ export const Route = createFileRoute("/$locale/seller/")({
 						full
 					>
 						<Tile
-							icon={PostIcon}
-							textTitle={"Create listing (label)"}
+							iconEnabled={PostIcon}
+							label={"Create listing (label)"}
 						/>
 					</LinkTo>
 
@@ -70,8 +56,8 @@ export const Route = createFileRoute("/$locale/seller/")({
 						full
 					>
 						<Tile
-							icon={PublicIcon}
-							textTitle={"My listings (label)"}
+							iconEnabled={PublicIcon}
+							label={"My listings (label)"}
 						/>
 					</LinkTo>
 
@@ -83,8 +69,8 @@ export const Route = createFileRoute("/$locale/seller/")({
 						full
 					>
 						<Tile
-							icon={ShopIcon}
-							textTitle={"Shop (label)"}
+							iconEnabled={ShopIcon}
+							label={"Shop (label)"}
 						/>
 					</LinkTo>
 
@@ -96,8 +82,8 @@ export const Route = createFileRoute("/$locale/seller/")({
 						full
 					>
 						<Tile
-							icon={UserIcon}
-							textTitle={"User profile (label)"}
+							iconEnabled={UserIcon}
+							label={"User profile (label)"}
 						/>
 					</LinkTo>
 				</Container>

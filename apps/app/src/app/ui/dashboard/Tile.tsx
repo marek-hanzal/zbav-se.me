@@ -1,62 +1,33 @@
-import type { Icon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
-import { VariantProvider } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { Button } from "@use-pico/client/ui/button";
 import type { FC } from "react";
 
 export namespace Tile {
-	export interface Props extends Container.Props {
-		icon: Icon.Type;
-		iconProps?: Icon.PropsEx;
-		textTitle?: string;
-		textMessage?: string;
-		statusProps?: Omit<Status.Props, "textTitle" | "textMessage">;
+	export interface Props extends Button.Props {
+		//
 	}
 }
 
-export const Tile: FC<Tile.Props> = ({
-	icon,
-	iconProps,
-	textTitle,
-	textMessage,
-	statusProps,
-	tone = "primary",
-	theme = "light",
-	...props
-}) => {
+export const Tile: FC<Tile.Props> = ({ tweak, ...props }) => {
 	return (
-		<Container
-			tone={tone}
-			theme={theme}
-			border={"default"}
-			shadow={"default"}
-			round={"lg"}
-			height={"auto"}
-			// layout={"vertical-content-footer"}
+		<Button
+			tone={"primary"}
+			theme={"light"}
+			size={"xl"}
+			iconPosition={"right"}
+			tweak={[
+				{
+					slot: {
+						root: {
+							class: [
+								"justify-between",
+							],
+						},
+					},
+				},
+				tweak,
+			]}
+			full
 			{...props}
-		>
-			<VariantProvider
-				cls={ThemeCls}
-				variant={{
-					tone,
-					theme,
-				}}
-			>
-				<Status
-					icon={icon}
-					iconProps={iconProps}
-					textTitle={textTitle}
-					textMessage={textMessage}
-					titleProps={{
-						size: "xl",
-					}}
-					messageProps={{
-						size: "sm",
-					}}
-					{...statusProps}
-				/>
-			</VariantProvider>
-		</Container>
+		/>
 	);
 };

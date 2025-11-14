@@ -1,10 +1,14 @@
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, redirect, useNavigate, useRouter } from "@tanstack/react-router";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo, type LinkToCls } from "@use-pico/client/ui/link-to";
 import type { Cls } from "@use-pico/cls";
+import { linkTo } from "@use-pico/common/link-to";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/session";
-import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui/icon";
+import { BuyerIcon, LockIcon, SellerIcon } from "@zbav-se.me/ui/icon";
+import { Logo } from "@zbav-se.me/ui/logo";
 import { match } from "ts-pattern";
+import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 import { Tile } from "~/app/ui/dashboard/Tile";
 
 export const Route = createFileRoute("/$locale/dashboard")({
@@ -35,6 +39,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 	component() {
 		const { locale } = Route.useParams();
 		const router = useRouter();
+		const navigate = useNavigate();
 		const linkTweak: Cls.TweaksOf<LinkToCls> = {
 			slot: {
 				root: {
@@ -46,16 +51,29 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				},
 			},
 		};
+
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation() {
 				return router.invalidate();
+			},
+		});
+		const signOutMutation = withSignOutMutation.useMutation({
+			async onPostMutation() {
+				return navigate({
+					href: linkTo({
+						base: import.meta.env.VITE_WEB_ORIGIN,
+						href: "/:locale/landing",
+						query: {
+							locale,
+						},
+					}),
+				});
 			},
 		});
 
 		return (
 			<Container
 				layout={"vertical"}
-				scroll={"vertical"}
 				gap={"lg"}
 				height={"fit"}
 				items={"center"}
@@ -63,47 +81,72 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				theme={"light"}
 				square={"xl"}
 			>
-				<LinkTo
-					to="/$locale/seller"
-					params={{
-						locale,
-					}}
-					tweak={linkTweak}
-					onClick={() =>
-						userExPatchMutation.mutate({
-							side: "seller",
-						})
-					}
+				<Container
+					layout={"vertical-flex"}
+					gap={"xl"}
+					height={"content"}
 				>
-					<Tile
-						icon={SellerIcon}
-						textTitle={"I want to sell (label)"}
-						textMessage={"I want to sell (message)"}
-						height={"fit"}
-						layout={"vertical-centered"}
-					/>
-				</LinkTo>
+					<Logo />
 
-				<LinkTo
-					to="/$locale/buyer"
-					params={{
-						locale,
-					}}
-					tweak={linkTweak}
-					onClick={() =>
-						userExPatchMutation.mutate({
-							side: "buyer",
-						})
-					}
-				>
-					<Tile
-						icon={BuyerIcon}
-						textTitle={"I want to buy (label)"}
-						textMessage={"I want to buy (message)"}
-						height={"fit"}
-						layout={"vertical-centered"}
+					<LinkTo
+						to="/$locale/seller"
+						params={{
+							locale,
+						}}
+						tweak={linkTweak}
+						onClick={() =>
+							userExPatchMutation.mutate({
+								side: "seller",
+							})
+						}
+					>
+						<Tile
+							iconEnabled={SellerIcon}
+							label={"I want to sell (label)"}
+							size={"xl"}
+						/>
+					</LinkTo>
+
+					<LinkTo
+						to="/$locale/buyer"
+						params={{
+							locale,
+						}}
+						tweak={linkTweak}
+						onClick={() =>
+							userExPatchMutation.mutate({
+								side: "buyer",
+							})
+						}
+					>
+						<Tile
+							iconEnabled={BuyerIcon}
+							label={"I want to buy (label)"}
+							size={"xl"}
+						/>
+					</LinkTo>
+
+					<Button
+						iconEnabled={LockIcon}
+						onClick={() => signOutMutation.mutate({})}
+						disabled={signOutMutation.isPending}
+						loading={signOutMutation.isPending}
+						tone={"secondary"}
+						theme={"light"}
+						label={"Sign out"}
+						size={"lg"}
+						tweak={{
+							slot: {
+								wrapper: {
+									class: [
+										"py-12",
+										"mx-auto",
+									],
+								},
+							},
+						}}
 					/>
-				</LinkTo>
+				</Container>
 			</Container>
 		);
 	},

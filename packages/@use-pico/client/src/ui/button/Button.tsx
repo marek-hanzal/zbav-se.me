@@ -13,9 +13,9 @@ const ICON_SIZE_MAP: Partial<
 	Record<Cls.VariantOf<ButtonCls, "size">, Cls.VariantOf<IconCls, "size">>
 > = {
 	sm: "xs",
-	md: "sm",
-	lg: "md",
-	xl: "lg",
+	md: "xs",
+	lg: "sm",
+	xl: "md",
 } as const;
 
 export namespace Button {
