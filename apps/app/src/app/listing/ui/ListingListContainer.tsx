@@ -6,6 +6,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
@@ -101,6 +102,13 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			ui="ListingList-root"
 			layout={"vertical-full"}
 			snap={"vertical-start"}
+			className={tvc([
+				"isolate",
+				"overflow-x-clip",
+				"overscroll-contain",
+				"contain-strict",
+				"will-change-scroll",
+			])}
 			{...props}
 		>
 			{hasListings ? null : emptySlot}
@@ -111,7 +119,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							key={`${listingIdPrefix}-${listing.id}`}
 							scrollerRef={containerRef}
 							useProximity
-							delay={0}
+							delay={200}
 							placeholder={(props) => (
 								<SpinnerContainer
 									ui="ListingList-spinner"
@@ -119,6 +127,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									{...props}
 								/>
 							)}
+							className={tvc([
+								"[content-visibility:auto]",
+								"[contain-intrinsic-size:100dvh]",
+							])}
 						>
 							<ListingHeroContainer
 								query={query}

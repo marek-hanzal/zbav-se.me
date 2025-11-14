@@ -54,6 +54,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 			loading={listingFlagToggleMutation.isPending}
 			disabled={listing.isInCart || listing.isIgnored || disabled}
 			buttonProps={{
+				size: "xl",
 				...buttonProps,
 				onClick(event) {
 					if (listing.hasFlag) {

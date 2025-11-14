@@ -54,7 +54,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 			loading={listingIgnoreToggleMutation.isPending}
 			disabled={listing.isInCart || disabled}
 			buttonProps={{
-				size: "lg",
+				size: "xl",
 				...buttonProps,
 				onClick(event) {
 					if (listing.isIgnored) {
