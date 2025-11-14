@@ -7,6 +7,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { VisibilityProvider } from "../../context/VisibilityProvider";
 import { useElementVisibility } from "../../hook";
 import { Container } from "./Container";
 
@@ -136,9 +137,15 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	}
 
 	return (
-		<Container
-			ref={triggerRef}
-			{...props}
-		/>
+		<VisibilityProvider
+			defaultVisible={visible}
+			defaultTopProximity={topProximity}
+			defaultBottomProximity={bottomProximity}
+		>
+			<Container
+				ref={triggerRef}
+				{...props}
+			/>
+		</VisibilityProvider>
 	);
 };

@@ -1,3 +1,4 @@
+import { useVisibilityContext } from "@use-pico/client/context";
 import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/session";
@@ -41,7 +42,6 @@ export namespace ListingHeroContainer {
 		toolbar: Toolbar.Render;
 		imageErrorToolbar: Toolbar.Render;
 		overlay: Overlay.Render;
-		visible?: boolean;
 	}
 }
 
@@ -57,7 +57,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	toolbar,
 	imageErrorToolbar,
 	overlay,
-	visible = true,
 	tweak,
 	...props
 }) => {
@@ -72,6 +71,9 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		rootRef,
 		ref,
 	]);
+
+	const useVisibilityStore = useVisibilityContext();
+	const visible = useVisibilityStore((store) => store.visible);
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation({
 		retry: () => {

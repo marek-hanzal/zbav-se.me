@@ -73,7 +73,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 						 */
 						cursor: {
 							page: 0,
-							size: 200,
+							size: 1000,
 						},
 					}}
 					scrollToListingId={scrollToListingId}
