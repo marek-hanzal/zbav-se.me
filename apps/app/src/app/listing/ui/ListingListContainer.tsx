@@ -124,6 +124,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								<SpinnerContainer
 									ui="ListingList-spinner"
 									data-id={listing.id}
+									disableOverlay
 									{...props}
 								/>
 							)}

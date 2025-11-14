@@ -18,12 +18,10 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 }) => {
 	return (
 		<Container
-			square={"md"}
-			tone={"secondary"}
-			theme={"light"}
-			position={"relative"}
 			layout={"vertical-centered"}
 			items={"center"}
+			border={"unset"}
+			shadow={"unset"}
 			{...props}
 		>
 			{disableOverlay ? null : <PrimaryOverlay />}
