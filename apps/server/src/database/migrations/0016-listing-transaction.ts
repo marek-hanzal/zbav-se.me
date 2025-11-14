@@ -1,13 +1,45 @@
-import type { Migration } from "kysely";
+import { type Migration, sql } from "kysely";
 
 export const ListingTransactionMigration: Migration = {
 	async up(db) {
 		await db.schema
+			.createType("listing_transaction_status")
+			.asEnum([
+				"request",
+				"accepted",
+				"rejected",
+				"success",
+				"closed",
+				"expired",
+			])
+			.execute();
+
+		await db.schema
+			.createType("listing_transaction_side")
+			.asEnum([
+				"seller",
+				"buyer",
+				"transaction",
+				"system",
+				"unknown",
+			])
+			.execute();
+
+		await db.schema
 			.createTable("listing_transaction")
+            //
+			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			//
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
+			//
+			.addColumn("status", sql`listing_transaction_status`, (col) => col.notNull())
+			.addColumn("side", sql`listing_transaction_side`, (col) => col.notNull())
+			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
+			//
 			.addForeignKeyConstraint(
 				"listing_transaction_[userId]_fk",
 				[

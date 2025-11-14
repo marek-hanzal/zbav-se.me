@@ -15,6 +15,7 @@ import { ListingIgnoreMigration } from "./0013-listing-ignore";
 import { ListingFlagMigration } from "./0014-listing-flag";
 import { UserScoreMigration } from "./0015-user-score";
 import { ListingTransactionMigration } from "./0016-listing-transaction";
+import { ListingTransactionLogMigration } from "./0017-listing-transaction-log";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -34,4 +35,5 @@ export const migrations = {
 	"0014-listing-flag": ListingFlagMigration,
 	"0015-user-score": UserScoreMigration,
 	"0016-listing-transaction": ListingTransactionMigration,
+	"0017-listing-transaction-log": ListingTransactionLogMigration,
 } as const;
