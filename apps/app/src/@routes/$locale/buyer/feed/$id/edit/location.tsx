@@ -20,7 +20,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
-					to: "/$locale/buyer/feed/$id/edit/view",
+					to: "/$locale/buyer/feed/$id/view",
 				});
 			},
 		});
@@ -31,7 +31,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/edit/view"}
+						to={"/$locale/buyer/feed/$id/view"}
 						params={{
 							locale,
 							id: feed.id,
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 						onClick={() => {
 							if (!change) {
 								navigate({
-									to: "/$locale/buyer/feed/$id/edit/view",
+									to: "/$locale/buyer/feed/$id/view",
 								});
 								return;
 							}

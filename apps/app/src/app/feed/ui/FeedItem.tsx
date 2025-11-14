@@ -71,7 +71,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 			>
 				<LinkTo
 					icon={FeedIcon}
-					to={"/$locale/buyer/feed/$id/edit/view"}
+					to={"/$locale/buyer/feed/$id/view"}
 					params={{
 						locale,
 						id: feed.id,

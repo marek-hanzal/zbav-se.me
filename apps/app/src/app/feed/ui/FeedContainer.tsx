@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "@tanstack/react-router";
-import { EditIcon, TrashIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, EditIcon, TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -298,30 +298,47 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				/>
 
 				{feed.id ? (
-					<ConfirmButton
-						tone={"danger"}
-						buttonProps={{
-							tone: "danger",
-							label: translator.text("Delete feed (button)"),
-						}}
-						confirmProps={{
-							iconEnabled: TrashIcon,
-							tone: "danger",
-							theme: "dark",
-							label: translator.text(
-								"Really delete feed (button)",
-							),
-							onClick() {
-								feedDeleteMutation.mutate({
-									where: {
-										id: feed.id,
-									},
-								});
-							},
-						}}
-						loading={feedDeleteMutation.isPending}
-						full
-					/>
+					<>
+						<LinkTo
+							to={"/$locale/buyer/feed/$id/view"}
+							params={{
+								locale,
+								id: feed.id,
+							}}
+							full
+						>
+							<Button
+								iconEnabled={ArrowRightIcon}
+								iconPosition={"right"}
+								label={"View feed (button)"}
+							/>
+						</LinkTo>
+
+						<ConfirmButton
+							tone={"danger"}
+							buttonProps={{
+								tone: "danger",
+								label: translator.text("Delete feed (button)"),
+							}}
+							confirmProps={{
+								iconEnabled: TrashIcon,
+								tone: "danger",
+								theme: "dark",
+								label: translator.text(
+									"Really delete feed (button)",
+								),
+								onClick() {
+									feedDeleteMutation.mutate({
+										where: {
+											id: feed.id,
+										},
+									});
+								},
+							}}
+							loading={feedDeleteMutation.isPending}
+							full
+						/>
+					</>
 				) : null}
 			</VariantProvider>
 		</Container>
