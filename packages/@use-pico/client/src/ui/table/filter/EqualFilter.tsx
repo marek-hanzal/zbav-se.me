@@ -11,7 +11,10 @@ export namespace EqualFilter {
 	}
 }
 
-export const EqualFilter = <TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query>({
+export const EqualFilter = <
+	TData extends EntitySchema.Type,
+	TFilter extends withQuerySchema.Query,
+>({
 	state,
 	path,
 	value,

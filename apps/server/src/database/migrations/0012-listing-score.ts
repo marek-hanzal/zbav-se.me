@@ -45,10 +45,22 @@ export const ListingScoreMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema.createIndex("listing_score_[listingId]_idx").on("listing_score").column("listingId").execute();
+		await db.schema
+			.createIndex("listing_score_[listingId]_idx")
+			.on("listing_score")
+			.column("listingId")
+			.execute();
 
-		await db.schema.createIndex("listing_score_[userId]_idx").on("listing_score").column("userId").execute();
+		await db.schema
+			.createIndex("listing_score_[userId]_idx")
+			.on("listing_score")
+			.column("userId")
+			.execute();
 
-		await db.schema.createIndex("listing_score_[createdAt]_idx").on("listing_score").column("createdAt").execute();
+		await db.schema
+			.createIndex("listing_score_[createdAt]_idx")
+			.on("listing_score")
+			.column("createdAt")
+			.execute();
 	},
 };

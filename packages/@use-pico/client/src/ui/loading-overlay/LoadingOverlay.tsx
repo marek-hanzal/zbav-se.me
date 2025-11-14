@@ -11,7 +11,12 @@ export namespace LoadingOverlay {
 	}
 }
 
-export const LoadingOverlay: FC<LoadingOverlay.Props> = ({ ref, show = true, cls = LoadingOverlayCls, tweak }) => {
+export const LoadingOverlay: FC<LoadingOverlay.Props> = ({
+	ref,
+	show = true,
+	cls = LoadingOverlayCls,
+	tweak,
+}) => {
 	const { slots } = useCls(cls, tweak, {
 		variant: {
 			show,

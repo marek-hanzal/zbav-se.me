@@ -12,7 +12,13 @@ export namespace Fade {
 	}
 }
 
-export const Fade: FC<Fade.Props> = ({ height = 48, fade = height * 2, cls = FadeCls, tweak, scrollableRef }) => {
+export const Fade: FC<Fade.Props> = ({
+	height = 48,
+	fade = height * 2,
+	cls = FadeCls,
+	tweak,
+	scrollableRef,
+}) => {
 	const { slots } = useCls(cls, tweak);
 
 	const topFadeRef = useRef<HTMLDivElement>(null);

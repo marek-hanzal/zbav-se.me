@@ -14,7 +14,10 @@ export namespace withListingScoreQueryBuilder {
  * Standalone query builder that applies all filters from ListingScoreQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingScoreQueryBuilder: withListingScoreQueryBuilder.Callback = ({ select, where }) => {
+export const withListingScoreQueryBuilder: withListingScoreQueryBuilder.Callback = ({
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

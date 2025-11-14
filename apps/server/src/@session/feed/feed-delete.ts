@@ -80,7 +80,11 @@ export const withFeedDeleteApi: Routes.Fn = ({ sessionHono }) => {
 						return null;
 					}
 
-					await trx.deleteFrom("feed").where("id", "=", feed.id).where("userId", "=", user.id).execute();
+					await trx
+						.deleteFrom("feed")
+						.where("id", "=", feed.id)
+						.where("userId", "=", user.id)
+						.execute();
 
 					return feed;
 				});

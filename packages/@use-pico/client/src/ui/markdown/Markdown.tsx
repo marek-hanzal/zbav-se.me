@@ -13,7 +13,13 @@ export namespace Markdown {
 	}
 }
 
-export const Markdown: FC<Markdown.Props> = ({ tone, theme, cls = MarkdownCls, tweak, ...props }) => {
+export const Markdown: FC<Markdown.Props> = ({
+	tone,
+	theme,
+	cls = MarkdownCls,
+	tweak,
+	...props
+}) => {
 	const { slots } = useCls(cls, tweak);
 
 	return (

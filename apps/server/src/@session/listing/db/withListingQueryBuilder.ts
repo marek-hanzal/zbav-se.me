@@ -16,7 +16,11 @@ export namespace withListingQueryBuilder {
  * Standalone query builder that applies all filters from ListingQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({ userId, select, where }) => {
+export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
+	userId,
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

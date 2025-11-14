@@ -28,7 +28,14 @@ export function useSetUnset<T>(props: useSetUnset.Props<T>): [
 	T | null | undefined,
 	useSetUnset.Transition,
 ] {
-	const { value, onMount, onTransitionSet, onTransitionUnset, onTransitionNone, onTransitionChange } = props;
+	const {
+		value,
+		onMount,
+		onTransitionSet,
+		onTransitionUnset,
+		onTransitionNone,
+		onTransitionChange,
+	} = props;
 
 	const prevRef = useRef<T | null | undefined>(value);
 	const mountedRef = useRef(false);

@@ -1,4 +1,9 @@
-import { createLink, type LinkComponent, type UseMatchRouteOptions, useMatchRoute } from "@tanstack/react-router";
+import {
+	createLink,
+	type LinkComponent,
+	type UseMatchRouteOptions,
+	useMatchRoute,
+} from "@tanstack/react-router";
 import { type Cls, useCls } from "@use-pico/cls";
 import type { AnchorHTMLAttributes, FC, Ref } from "react";
 import { Icon } from "../../icon/Icon";

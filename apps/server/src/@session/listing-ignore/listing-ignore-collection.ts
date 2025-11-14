@@ -35,7 +35,8 @@ export const withListingIgnoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description: "Access collection of listing ignore items based on provided query",
+					description:
+						"Access collection of listing ignore items based on provided query",
 				},
 			},
 			tags: [

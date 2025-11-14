@@ -75,7 +75,9 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 						iconPosition={"right"}
 						disabled={listingCartCount.data.filter === 0}
 						label={
-							listingCartCount.data.filter > 0 ? "Go to cart (button)" : "Nothing in cart yet (button)"
+							listingCartCount.data.filter > 0
+								? "Go to cart (button)"
+								: "Nothing in cart yet (button)"
 						}
 						size={"xl"}
 						full

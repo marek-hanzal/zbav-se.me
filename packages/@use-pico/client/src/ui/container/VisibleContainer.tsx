@@ -1,4 +1,4 @@
-import { type FC, type ReactNode, type RefObject, useRef, useState } from "react";
+import { type FC, type ReactNode, type RefObject, useCallback, useRef, useState } from "react";
 import { useElementVisibility } from "../../hook";
 import { Container } from "./Container";
 
@@ -16,15 +16,20 @@ export namespace VisibleContainer {
 	 * becomes visible within the viewport.
 	 */
 	export interface Props extends Container.Props {
+		scrollerRef: RefObject<HTMLElement | null>;
 		/**
 		 * Visibility configuration passed to `useElementVisibility`, except for the
 		 * `setVisible` callback which this component manages internally.
 		 */
-		visibility: Omit<useElementVisibility.Props, "setVisible" | "triggerRef">;
+		visibility?: Omit<useElementVisibility.Visibility, "setVisible">;
 		/**
 		 * React node displayed while the container itself remains hidden.
 		 */
 		placeholder: Placeholder.Render;
+		/**
+		 * If true, content container will render earlier (in the proximity of the scrollable viewport).
+		 */
+		useProximity?: boolean;
 		/**
 		 * Optional delay in milliseconds before the visibility state update is
 		 * applied; defaults to `200ms`.
@@ -38,7 +43,9 @@ export namespace VisibleContainer {
  * viewport, replacing the placeholder once the criteria are met.
  */
 export const VisibleContainer: FC<VisibleContainer.Props> = ({
+	scrollerRef,
 	visibility,
+	useProximity = false,
 	delay = 200,
 	placeholder,
 	...props
@@ -48,19 +55,34 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	const timerRef = useRef<NodeJS.Timeout>(undefined);
 	const triggerRef = useRef<HTMLDivElement>(null);
 
-	useElementVisibility({
-		...visibility,
-		triggerRef,
-		setVisible(visible) {
-			visibleRef.current = visible;
+	const setState = useCallback(
+		(state: boolean) => {
+			visibleRef.current = state;
 
 			clearTimeout(timerRef.current);
 
 			timerRef.current = setTimeout(() => {
-				setVisible(visibleRef.current);
+				setVisible(state);
 				timerRef.current = undefined;
 			}, delay);
 		},
+		[
+			delay,
+		],
+	);
+
+	useElementVisibility({
+		scrollerRef,
+		triggerRef,
+		visibility: {
+			setVisible: setState,
+			...visibility,
+		},
+		proximity: useProximity
+			? {
+					setProximity: setState,
+				}
+			: undefined,
 	});
 
 	if (!visible) {

@@ -44,10 +44,22 @@ export const UserScoreMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema.createIndex("user_score_[fromUserId]_idx").on("user_score").column("fromUserId").execute();
+		await db.schema
+			.createIndex("user_score_[fromUserId]_idx")
+			.on("user_score")
+			.column("fromUserId")
+			.execute();
 
-		await db.schema.createIndex("user_score_[toUserId]_idx").on("user_score").column("toUserId").execute();
+		await db.schema
+			.createIndex("user_score_[toUserId]_idx")
+			.on("user_score")
+			.column("toUserId")
+			.execute();
 
-		await db.schema.createIndex("user_score_[createdAt]_idx").on("user_score").column("createdAt").execute();
+		await db.schema
+			.createIndex("user_score_[createdAt]_idx")
+			.on("user_score")
+			.column("createdAt")
+			.execute();
 	},
 };

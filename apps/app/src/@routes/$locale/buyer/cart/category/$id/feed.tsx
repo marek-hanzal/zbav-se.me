@@ -156,7 +156,11 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 								textTitle={"That's all for now - cart (title)"}
 								textMessage={"No more listings to show - cart (message)"}
 								action={
-									<div className={"flex flex-col gap-2 items-center justify-center w-full"}>
+									<div
+										className={
+											"flex flex-col gap-2 items-center justify-center w-full"
+										}
+									>
 										<LinkTo
 											to={"/$locale/buyer/cart/list"}
 											params={{

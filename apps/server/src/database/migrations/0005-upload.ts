@@ -23,6 +23,10 @@ export const UploadMigration: Migration = {
 
 		await db.schema.createIndex("upload_[userId]_idx").on("upload").column("userId").execute();
 
-		await db.schema.createIndex("upload_[createdAt]_idx").on("upload").column("createdAt").execute();
+		await db.schema
+			.createIndex("upload_[createdAt]_idx")
+			.on("upload")
+			.column("createdAt")
+			.execute();
 	},
 };

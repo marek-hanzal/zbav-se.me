@@ -15,19 +15,23 @@ export const ListingFilterSchema = z
 			description: "Sets the maximum price for the listings",
 		}).optional(),
 		conditionMin: z.number().gte(0).lte(6).optional().openapi({
-			description: "This filter matches listings with condition greater than or equal to the provided value",
+			description:
+				"This filter matches listings with condition greater than or equal to the provided value",
 		}),
 		conditionMax: z.number().gte(0).lte(6).optional().openapi({
-			description: "This filter matches listings with condition less than or equal to the provided value",
+			description:
+				"This filter matches listings with condition less than or equal to the provided value",
 		}),
 		conditionIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
 			description: "This filter matches listings with conditions in the provided array",
 		}),
 		ageMin: z.number().gte(0).lte(6).optional().openapi({
-			description: "This filter matches listings with age greater than or equal to the provided value",
+			description:
+				"This filter matches listings with age greater than or equal to the provided value",
 		}),
 		ageMax: z.number().gte(0).lte(6).optional().openapi({
-			description: "This filter matches listings with age less than or equal to the provided value",
+			description:
+				"This filter matches listings with age less than or equal to the provided value",
 		}),
 		ageIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
 			description: "This filter matches listings with ages in the provided array",
@@ -55,10 +59,12 @@ export const ListingFilterSchema = z
 			type: "string",
 		}),
 		rangeMin: z.number().gte(0).optional().openapi({
-			description: "This filter matches listings with range greater than or equal to the provided value (meters)",
+			description:
+				"This filter matches listings with range greater than or equal to the provided value (meters)",
 		}),
 		rangeMax: z.number().gte(0).optional().openapi({
-			description: "This filter matches listings with range less than or equal to the provided value (meters)",
+			description:
+				"This filter matches listings with range less than or equal to the provided value (meters)",
 		}),
 		title: z.string().optional().openapi({
 			description: "This filter matches listings with title matching the provided value",

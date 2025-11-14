@@ -160,7 +160,9 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 						...sortItem,
 					}))}
 					render={(sortItem) => (
-						<Tx label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`} />
+						<Tx
+							label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
+						/>
 					)}
 					action={
 						feed.id ? (
@@ -235,7 +237,9 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 						id: String(condition),
 						condition,
 					}))}
-					render={(item) => <Tx label={`Condition - Overall [${item.condition}] (hint)`} />}
+					render={(item) => (
+						<Tx label={`Condition - Overall [${item.condition}] (hint)`} />
+					)}
 					action={
 						feed.id ? (
 							<LinkTo

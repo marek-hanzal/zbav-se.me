@@ -12,7 +12,10 @@ export namespace useVisibleColumns {
 	}
 }
 
-export const useVisibleColumns = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type>({
+export const useVisibleColumns = <
+	TQuery extends withQuerySchema.Query,
+	TData extends EntitySchema.Type,
+>({
 	columns,
 	visible = [],
 	hidden = [],

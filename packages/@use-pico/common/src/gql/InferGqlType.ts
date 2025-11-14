@@ -11,13 +11,12 @@ export type InferGqlType<TDoc extends TypedDocumentNode<any, any>> = TDoc extend
 	: never;
 
 export namespace InferGqlType {
-	export type Data<TDoc extends TypedDocumentNode<any, any>> = TDoc extends TypedDocumentNode<infer TData, any>
+	export type Data<TDoc extends TypedDocumentNode<any, any>> = TDoc extends TypedDocumentNode<
+		infer TData,
+		any
+	>
 		? TData
 		: never;
-	export type Variables<TDoc extends TypedDocumentNode<any, any>> = TDoc extends TypedDocumentNode<
-		any,
-		infer TVariables
-	>
-		? TVariables
-		: never;
+	export type Variables<TDoc extends TypedDocumentNode<any, any>> =
+		TDoc extends TypedDocumentNode<any, infer TVariables> ? TVariables : never;
 }

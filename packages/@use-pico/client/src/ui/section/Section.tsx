@@ -12,7 +12,14 @@ export namespace Section {
 	}
 }
 
-export const Section: FC<Section.Props> = ({ ref, icon, title, cls = SectionCls, tweak, children }) => {
+export const Section: FC<Section.Props> = ({
+	ref,
+	icon,
+	title,
+	cls = SectionCls,
+	tweak,
+	children,
+}) => {
 	const { slots } = useCls(cls, tweak);
 
 	return (

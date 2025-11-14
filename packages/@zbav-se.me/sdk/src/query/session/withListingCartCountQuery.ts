@@ -1,8 +1,14 @@
 import { withQuery } from "@use-pico/client/query";
 import { apiListingCartCount } from "../../api/session/sdk.gen";
-import type { tApiListingCartCountResponse, tListingCartCountQuery } from "../../api/session/types.gen";
+import type {
+	tApiListingCartCountResponse,
+	tListingCartCountQuery,
+} from "../../api/session/types.gen";
 
-export const withListingCartCountQuery = withQuery<tListingCartCountQuery, tApiListingCartCountResponse[200]>({
+export const withListingCartCountQuery = withQuery<
+	tListingCartCountQuery,
+	tApiListingCartCountResponse[200]
+>({
 	keys(data) {
 		return [
 			"listing-cart",

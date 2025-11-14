@@ -18,7 +18,10 @@ export namespace CategoryCartListContainer {
 	}
 }
 
-export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({ categoryCartList, ...props }) => {
+export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
+	categoryCartList,
+	...props
+}) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});

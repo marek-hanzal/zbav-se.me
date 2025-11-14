@@ -8,7 +8,9 @@ export const mapEmptyToUndefined = <T extends Record<string, unknown>>(object: T
 			if (value === "") {
 				(acc as Record<string, unknown>)[key] = undefined;
 			} else if (isObject(value)) {
-				(acc as Record<string, unknown>)[key] = mapEmptyToUndefined(value as Record<string, unknown>);
+				(acc as Record<string, unknown>)[key] = mapEmptyToUndefined(
+					value as Record<string, unknown>,
+				);
 			} else {
 				(acc as Record<string, unknown>)[key] = value;
 			}

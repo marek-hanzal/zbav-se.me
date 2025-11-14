@@ -7,7 +7,14 @@ import { withUploadMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";
-import { type ChangeEvent, type FC, type KeyboardEvent, useCallback, useRef, useState } from "react";
+import {
+	type ChangeEvent,
+	type FC,
+	type KeyboardEvent,
+	useCallback,
+	useRef,
+	useState,
+} from "react";
 
 export namespace PhotoUpload {
 	export type Value = string | undefined;
@@ -20,7 +27,14 @@ export namespace PhotoUpload {
 	}
 }
 
-export const PhotoUpload: FC<PhotoUpload.Props> = ({ camera = false, value, onChange, tweak, disabled, ...props }) => {
+export const PhotoUpload: FC<PhotoUpload.Props> = ({
+	camera = false,
+	value,
+	onChange,
+	tweak,
+	disabled,
+	...props
+}) => {
 	const [current, setCurrent] = useState<string | undefined>(value);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const containerRef = useRef<HTMLDivElement>(null);

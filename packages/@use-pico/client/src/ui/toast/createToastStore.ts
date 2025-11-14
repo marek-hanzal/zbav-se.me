@@ -56,7 +56,10 @@ export namespace createToastStore {
 	export type Hook = UseBoundStore<StoreApi<Store>>;
 }
 
-export const createToastStore = ({ maxCount, durationMs }: createToastStore.Props): createToastStore.Hook => {
+export const createToastStore = ({
+	maxCount,
+	durationMs,
+}: createToastStore.Props): createToastStore.Hook => {
 	return create<createToastStore.Store>((set, get) => ({
 		maxCount,
 		//

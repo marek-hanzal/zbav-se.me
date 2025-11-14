@@ -85,7 +85,9 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								listing.hasFlag ? "Listing unflagged (toast)" : "Listing flagged (toast)",
+								listing.hasFlag
+									? "Listing unflagged (toast)"
+									: "Listing flagged (toast)",
 							),
 							error: translator.text("Error flagging listing (toast)"),
 							id: "listing-flag-button",

@@ -139,9 +139,13 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 	const renderLimiter = useCallback(() => {
 		const leftIcon: Icon.Type =
-			orientation === "vertical" ? "icon-[rivet-icons--chevron-up]" : "icon-[rivet-icons--chevron-left]";
+			orientation === "vertical"
+				? "icon-[rivet-icons--chevron-up]"
+				: "icon-[rivet-icons--chevron-left]";
 		const rightIcon: Icon.Type =
-			orientation === "vertical" ? "icon-[rivet-icons--chevron-down]" : "icon-[rivet-icons--chevron-right]";
+			orientation === "vertical"
+				? "icon-[rivet-icons--chevron-down]"
+				: "icon-[rivet-icons--chevron-right]";
 
 		return (
 			<>
@@ -262,7 +266,9 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 									root: {
 										class: [
 											"pointer-events-auto select-none transition cursor-pointer",
-											isActive ? "scale-125 opacity-100" : "opacity-60 hover:opacity-90",
+											isActive
+												? "scale-125 opacity-100"
+												: "opacity-60 hover:opacity-90",
 										],
 									},
 								},

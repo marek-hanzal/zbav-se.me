@@ -43,8 +43,16 @@ export const FeedMigration: Migration = {
 
 		await db.schema.createIndex("feed_[userId]_idx").on("feed").column("userId").execute();
 
-		await db.schema.createIndex("feed_[updatedAt]_idx").on("feed").column("updatedAt").execute();
+		await db.schema
+			.createIndex("feed_[updatedAt]_idx")
+			.on("feed")
+			.column("updatedAt")
+			.execute();
 
-		await db.schema.createIndex("feed_[locationId]_idx").on("feed").column("locationId").execute();
+		await db.schema
+			.createIndex("feed_[locationId]_idx")
+			.on("feed")
+			.column("locationId")
+			.execute();
 	},
 };

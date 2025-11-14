@@ -25,7 +25,9 @@ export namespace Table {
 				state: State<TQuery>;
 			}
 
-			export type Fn<TQuery extends withQuerySchema.Query> = (props: Props<TQuery>) => boolean;
+			export type Fn<TQuery extends withQuerySchema.Query> = (
+				props: Props<TQuery>,
+			) => boolean;
 		}
 
 		export namespace reset {
@@ -44,7 +46,9 @@ export namespace Table {
 				state: State<TQuery>;
 			}
 
-			export type Component<TData, TQuery extends withQuerySchema.Query> = FC<Props<TData, TQuery>>;
+			export type Component<TData, TQuery extends withQuerySchema.Query> = FC<
+				Props<TData, TQuery>
+			>;
 		}
 
 		export interface Props<TData, TQuery extends withQuerySchema.Query> {
@@ -81,11 +85,17 @@ export namespace Table {
 				context: TContext;
 			}
 
-			export type Component<TData extends EntitySchema.Type, TContext = any> = FC<Header.Props<TData, TContext>>;
+			export type Component<TData extends EntitySchema.Type, TContext = any> = FC<
+				Header.Props<TData, TContext>
+			>;
 		}
 
 		export namespace Render {
-			export interface Props<TData extends EntitySchema.Type, TKey extends DeepKeys<TData>, TContext = any> {
+			export interface Props<
+				TData extends EntitySchema.Type,
+				TKey extends DeepKeys<TData>,
+				TContext = any,
+			> {
 				/**
 				 * Table row data.
 				 */
@@ -97,9 +107,11 @@ export namespace Table {
 				context: TContext;
 			}
 
-			export type Component<TData extends EntitySchema.Type, TKey extends DeepKeys<TData>, TContext = any> = FC<
-				Render.Props<TData, TKey, TContext>
-			>;
+			export type Component<
+				TData extends EntitySchema.Type,
+				TKey extends DeepKeys<TData>,
+				TContext = any,
+			> = FC<Render.Props<TData, TKey, TContext>>;
 		}
 
 		/**
@@ -150,11 +162,17 @@ export namespace Table {
 				context: TContext;
 			}
 
-			export type Fn<TData extends EntitySchema.Type, TContext = any> = (props: Props<TData, TContext>) => void;
+			export type Fn<TData extends EntitySchema.Type, TContext = any> = (
+				props: Props<TData, TContext>,
+			) => void;
 		}
 	}
 
-	export interface Row<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
+	export interface Row<
+		TQuery extends withQuerySchema.Query,
+		TData extends EntitySchema.Type,
+		TContext = any,
+	> {
 		id: string;
 		data: TData;
 		cells: Cell<TQuery, TData, any, TContext>[];
@@ -162,15 +180,21 @@ export namespace Table {
 	}
 
 	export namespace Toolbar {
-		export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
+		export interface Props<
+			TQuery extends withQuerySchema.Query,
+			TData extends EntitySchema.Type,
+			TContext = any,
+		> {
 			context: TContext;
 			selection: useSelection.Selection<TData> | undefined;
 			filter: Filter.State<TQuery> | undefined;
 		}
 
-		export type RenderFn<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> = (
-			props: Props<TQuery, TData, TContext>,
-		) => ReactNode;
+		export type RenderFn<
+			TQuery extends withQuerySchema.Query,
+			TData extends EntitySchema.Type,
+			TContext = any,
+		> = (props: Props<TQuery, TData, TContext>) => ReactNode;
 	}
 
 	export namespace Action {
@@ -207,8 +231,11 @@ export namespace Table {
 		export type Fn = (props: Props) => string;
 	}
 
-	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>
-		extends TableCls.Props<AbstractList.PropsEx<TQuery, TData>> {
+	export interface Props<
+		TQuery extends withQuerySchema.Query,
+		TData extends EntitySchema.Type,
+		TContext = any,
+	> extends TableCls.Props<AbstractList.PropsEx<TQuery, TData>> {
 		/**
 		 * All the columns defined in the table.
 		 *
@@ -285,13 +312,21 @@ export namespace Table {
 		actionRow?: Action.Row.RenderFn<TData, TContext>;
 	}
 
-	export type PropsEx<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> = Omit<
+	export type PropsEx<
+		TQuery extends withQuerySchema.Query,
+		TData extends EntitySchema.Type,
+		TContext = any,
+	> = Omit<
 		Props<TQuery, TData, TContext>,
 		"columns" | "withQuery" | "withCountQuery" | "context"
 	>;
 }
 
-export const Table = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
+export const Table = <
+	TQuery extends withQuerySchema.Query,
+	TData extends EntitySchema.Type,
+	TContext = any,
+>({
 	columns,
 	visible,
 	hidden = [],

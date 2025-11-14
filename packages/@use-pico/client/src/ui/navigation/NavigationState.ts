@@ -95,7 +95,9 @@ export const NavigationState = {
 	sort(
 		value: withQuerySchema.Query<any, any>["sort"] | undefined,
 		navigate: (props: {
-			search: (props: { sort: withQuerySchema.Query<any, any>["sort"] | undefined | null }) => any;
+			search: (props: {
+				sort: withQuerySchema.Query<any, any>["sort"] | undefined | null;
+			}) => any;
 			replace?: boolean;
 		}) => void,
 	): StateType<withQuerySchema.Query<any, any>["sort"] | undefined> {

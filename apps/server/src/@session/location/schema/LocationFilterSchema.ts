@@ -17,7 +17,8 @@ export const LocationFilterSchema = z
 			description: "This filter matches the exact country code of the location",
 		}),
 		confidenceMin: z.number().optional().openapi({
-			description: "This filter matches locations with confidence greater than or equal to the provided value",
+			description:
+				"This filter matches locations with confidence greater than or equal to the provided value",
 		}),
 	})
 	.openapi("LocationFilter", {

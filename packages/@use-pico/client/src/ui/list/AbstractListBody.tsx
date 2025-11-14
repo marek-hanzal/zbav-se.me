@@ -16,7 +16,10 @@ export namespace AbstractListBody {
 	}
 }
 
-export const AbstractListBody = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({
+export const AbstractListBody = <
+	TQuery extends withQuerySchema.Query,
+	TItem extends EntitySchema.Type,
+>({
 	withQuery,
 	query,
 	slots,

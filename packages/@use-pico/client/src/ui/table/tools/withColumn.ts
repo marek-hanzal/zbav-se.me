@@ -10,7 +10,9 @@ export const withColumn = <
 	TContext = unknown,
 >() => {
 	return {
-		create<TKey extends DeepKeys<TData>>(props: Table.Column.Props<TQuery, TData, TKey, TContext>) {
+		create<TKey extends DeepKeys<TData>>(
+			props: Table.Column.Props<TQuery, TData, TKey, TContext>,
+		) {
 			return props;
 		},
 		filter: {

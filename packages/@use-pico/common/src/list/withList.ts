@@ -7,7 +7,10 @@ import type { EnsureSelectOutputSchema } from "../source/EnsureSelectOutputSchem
 
 export namespace withList {
 	export namespace Query {
-		export interface Props<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> {
+		export interface Props<
+			TSelect extends SelectQueryBuilder<any, any, any>,
+			TFilter extends FilterSchema.Type,
+		> {
 			select: TSelect;
 			where?: TFilter;
 		}

@@ -158,10 +158,14 @@ export const Route = createFileRoute("/$locale/login")({
 													<field.TextInput
 														type={"email"}
 														autoComplete={"email webauthn"}
-														placeholder={translator.text("Enter your email")}
+														placeholder={translator.text(
+															"Enter your email",
+														)}
 														value={field.state.value ?? ""}
 														onBlur={field.handleBlur}
-														onChange={(e) => field.handleChange(e.target.value)}
+														onChange={(e) =>
+															field.handleChange(e.target.value)
+														}
 														{...props}
 													/>
 												)}
@@ -182,9 +186,13 @@ export const Route = createFileRoute("/$locale/login")({
 														type={"password"}
 														autoComplete={"current-password webauthn"}
 														value={field.state.value ?? ""}
-														onChange={(e) => field.handleChange(e.target.value)}
+														onChange={(e) =>
+															field.handleChange(e.target.value)
+														}
 														onBlur={field.handleBlur}
-														placeholder={translator.text("Enter your password")}
+														placeholder={translator.text(
+															"Enter your password",
+														)}
 														{...props}
 													/>
 												)}

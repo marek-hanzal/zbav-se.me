@@ -20,7 +20,10 @@ const symbolOf = (locale: string, code: string): string => {
 	return nf.formatToParts(1).find((p) => p.type === "currency")?.value ?? code;
 };
 
-export const withCurrencyList = ({ locale, available }: withCurrencyList.Props): withCurrencyList.Info[] => {
+export const withCurrencyList = ({
+	locale,
+	available,
+}: withCurrencyList.Props): withCurrencyList.Info[] => {
 	const codes = Intl.supportedValuesOf("currency");
 	const name = new Intl.DisplayNames(locale, {
 		type: "currency",

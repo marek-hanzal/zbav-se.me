@@ -149,7 +149,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"Nejsme kupující ani prodávající – poskytujeme pouze prostor a nástroje."}
+					label={
+						"Nejsme kupující ani prodávající – poskytujeme pouze prostor a nástroje."
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -226,7 +228,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"  - Služba je určena osobám 15+ (v souladu s českým GDPR pro on‑line služby)."}
+					label={
+						"  - Služba je určena osobám 15+ (v souladu s českým GDPR pro on‑line služby)."
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -249,7 +253,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Z bezpečnostních důvodů můžeme účet dočasně omezit (např. při podezření na zneužití)."}
+					label={
+						"• Z bezpečnostních důvodů můžeme účet dočasně omezit (např. při podezření na zneužití)."
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -272,7 +278,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Smíš nahrávat fotky a popisy k inzerátům a používat službu obvyklým způsobem."}
+					label={
+						"• Smíš nahrávat fotky a popisy k inzerátům a používat službu obvyklým způsobem."
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -477,7 +485,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Vyhrazujeme si právo měnit, pozastavit nebo ukončit službu nebo její části."}
+					label={
+						"• Vyhrazujeme si právo měnit, pozastavit nebo ukončit službu nebo její části."
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -509,7 +519,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Nic z výše uvedeného nevylučuje odpovědnost, kterou podle práva vyloučit nelze."}
+					label={
+						"• Nic z výše uvedeného nevylučuje odpovědnost, kterou podle práva vyloučit nelze."
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -664,7 +676,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Vrácení peněz: kredit nejde vyplatit v penězích, převést na jiný účet ani úročit"}
+					label={
+						"• Vrácení peněz: kredit nejde vyplatit v penězích, převést na jiný účet ani úročit"
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -680,7 +694,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Změny: nabídku funkcí a ceny můžeme upravit s předchozím upozorněním v aplikaci"}
+					label={
+						"• Změny: nabídku funkcí a ceny můžeme upravit s předchozím upozorněním v aplikaci"
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -732,7 +748,9 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Nastavení držíme střídmé, cílem je nespamovat a připomínat se co nejméně"}
+					label={
+						"• Nastavení držíme střídmé, cílem je nespamovat a připomínat se co nejméně"
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
@@ -818,14 +836,18 @@ export const Route = createFileRoute("/cs/tos")({
 				/>
 
 				<Typo
-					label={"• Back‑end běží na Vercelu + Neon, obrázky na Bunny, adresy napovídá Geoapify"}
+					label={
+						"• Back‑end běží na Vercelu + Neon, obrázky na Bunny, adresy napovídá Geoapify"
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}
 				/>
 
 				<Typo
-					label={"• Věk: 15+ pro používání; prodej 18+ (nebo 15–17 se souhlasem/zastoupením rodiče)"}
+					label={
+						"• Věk: 15+ pro používání; prodej 18+ (nebo 15–17 se souhlasem/zastoupením rodiče)"
+					}
 					display={"block"}
 					size={"md"}
 					text={"left"}

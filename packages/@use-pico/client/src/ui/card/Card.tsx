@@ -39,7 +39,8 @@ export namespace Card {
 	 *
 	 * @template TSchema Entity schema used to render the card.
 	 */
-	export interface Props<TValues extends Record<string, any>> extends CardCls.Props<Entity.Type<TValues>> {
+	export interface Props<TValues extends Record<string, any>>
+		extends CardCls.Props<Entity.Type<TValues>> {
 		ref?: Ref<HTMLDivElement>;
 		/**
 		 * Items to render in the card using specified schema.

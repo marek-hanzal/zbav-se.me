@@ -16,7 +16,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [locationId, setLocationId] = useState(state.locationId ?? user?.locationId ?? undefined);
+		const [locationId, setLocationId] = useState(
+			state.locationId ?? user?.locationId ?? undefined,
+		);
 
 		return (
 			<TitleContainer

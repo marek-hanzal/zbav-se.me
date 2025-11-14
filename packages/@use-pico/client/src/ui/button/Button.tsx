@@ -9,7 +9,9 @@ import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
 import { ButtonCls } from "./ButtonCls";
 
-const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, Cls.VariantOf<IconCls, "size">>> = {
+const ICON_SIZE_MAP: Partial<
+	Record<Cls.VariantOf<ButtonCls, "size">, Cls.VariantOf<IconCls, "size">>
+> = {
 	sm: "xs",
 	md: "sm",
 	lg: "md",
@@ -17,7 +19,8 @@ const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, Cls.Varian
 } as const;
 
 export namespace Button {
-	export interface Props extends UiProps<ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>> {
+	export interface Props
+		extends UiProps<ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>> {
 		/**
 		 * Ref to the wrapper div element.
 		 */

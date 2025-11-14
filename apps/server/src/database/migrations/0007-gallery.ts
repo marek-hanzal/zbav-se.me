@@ -45,10 +45,22 @@ export const GalleryMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema.createIndex("gallery_[userId]_idx").on("gallery").column("userId").execute();
+		await db.schema
+			.createIndex("gallery_[userId]_idx")
+			.on("gallery")
+			.column("userId")
+			.execute();
 
-		await db.schema.createIndex("gallery_[listingId]_idx").on("gallery").column("listingId").execute();
+		await db.schema
+			.createIndex("gallery_[listingId]_idx")
+			.on("gallery")
+			.column("listingId")
+			.execute();
 
-		await db.schema.createIndex("gallery_[createdAt]_idx").on("gallery").column("createdAt").execute();
+		await db.schema
+			.createIndex("gallery_[createdAt]_idx")
+			.on("gallery")
+			.column("createdAt")
+			.execute();
 	},
 };

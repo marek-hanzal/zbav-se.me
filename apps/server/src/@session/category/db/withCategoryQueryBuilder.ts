@@ -8,7 +8,9 @@ export namespace withCategoryQueryBuilder {
 		where?: CategoryFilterSchema.Type;
 	}
 
-	export type Callback<TSelect extends withCategorySelect.Select> = (props: Props<TSelect>) => TSelect;
+	export type Callback<TSelect extends withCategorySelect.Select> = (
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
 /**
@@ -55,7 +57,9 @@ export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Sele
 	}
 
 	if (where.category) {
-		query = query.where((eb) => withLikeEx(eb.ref("c.category"), where.category)) as typeof select;
+		query = query.where((eb) =>
+			withLikeEx(eb.ref("c.category"), where.category),
+		) as typeof select;
 	}
 
 	if (where.locale) {

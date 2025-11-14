@@ -23,7 +23,8 @@ export function withLikeEx<DB, TB extends keyof DB>(
 	const parts = match(mode)
 		.with("start", () => {
 			return tokens.map(
-				(token) => sql<boolean>`lower(unaccent(${column})) like ${sql`lower(unaccent(${token})) || '%'`}`,
+				(token) =>
+					sql<boolean>`lower(unaccent(${column})) like ${sql`lower(unaccent(${token})) || '%'`}`,
 			);
 		})
 		.with("both", () => {

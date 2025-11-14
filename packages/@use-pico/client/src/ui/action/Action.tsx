@@ -37,7 +37,8 @@ export namespace Action {
 	/**
 	 * Properties for the Action component.
 	 */
-	export interface Props extends ActionCls.Props<Omit<HTMLAttributes<HTMLDivElement>, "children">> {
+	export interface Props
+		extends ActionCls.Props<Omit<HTMLAttributes<HTMLDivElement>, "children">> {
 		ref?: Ref<HTMLDivElement>;
 		/** Icon to display when the action is enabled and not loading */
 		iconEnabled?: Icon.Type;

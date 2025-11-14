@@ -37,7 +37,9 @@ export const Title: FC<Title.Props> = ({ ref, textTitle, textSubtitle, right, le
 				className="inline-flex flex-col gap-0 items-start justify-center min-w-0"
 			>
 				<div className="inline-flex flex-row gap-1 items-center justify-center min-w-0 max-w-full">
-					{left ? <div className="flex flex-row items-center justify-center">{left}</div> : null}
+					{left ? (
+						<div className="flex flex-row items-center justify-center">{left}</div>
+					) : null}
 					<Tx
 						label={textTitle}
 						font={"bold"}

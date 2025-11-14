@@ -37,7 +37,10 @@ export namespace Float {
 		 */
 		closeOnClick?: boolean;
 		delay?: number;
-		float?: Omit<UseFloatingOptions, "middleware" | "whileElementsMounted" | "open" | "onOpenChange">;
+		float?: Omit<
+			UseFloatingOptions,
+			"middleware" | "whileElementsMounted" | "open" | "onOpenChange"
+		>;
 		/**
 		 * Whether to show a backdrop overlay when float is open
 		 */

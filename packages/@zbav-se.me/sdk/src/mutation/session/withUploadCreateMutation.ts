@@ -1,7 +1,11 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
 import { apiUploadCreate } from "../../api/session/sdk.gen";
-import type { apiUploadCreateError, tApiUploadCreateResponse, tUploadCreate } from "../../api/session/types.gen";
+import type {
+	apiUploadCreateError,
+	tApiUploadCreateResponse,
+	tUploadCreate,
+} from "../../api/session/types.gen";
 
 export const withUploadCreateMutation = withMutation<
 	tUploadCreate,

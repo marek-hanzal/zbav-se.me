@@ -140,14 +140,15 @@ export namespace AbstractList {
 		renderPostfix?: Postfix.Render;
 	}
 
-	export type PropsEx<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> = Omit<
-		Props<TQuery, TItem>,
-		"renderItem"
-	>;
+	export type PropsEx<
+		TQuery extends withQuerySchema.Query,
+		TItem extends EntitySchema.Type,
+	> = Omit<Props<TQuery, TItem>, "renderItem">;
 
-	export type Component<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> = FC<
-		Props<TQuery, TItem>
-	>;
+	export type Component<
+		TQuery extends withQuerySchema.Query,
+		TItem extends EntitySchema.Type,
+	> = FC<Props<TQuery, TItem>>;
 }
 
 /**
@@ -158,7 +159,10 @@ export namespace AbstractList {
  *
  * You can use even this component, just it's a bit low-level.
  */
-export const AbstractList = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({
+export const AbstractList = <
+	TQuery extends withQuerySchema.Query,
+	TItem extends EntitySchema.Type,
+>({
 	ref,
 	withQuery,
 	query,

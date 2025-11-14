@@ -24,7 +24,8 @@ import { Mx } from "../mx/Mx";
 import { SelectCls } from "./SelectCls";
 
 export namespace Select {
-	export interface Props<TItem extends EntitySchema.Type> extends SelectCls.Props<FormField.Props> {
+	export interface Props<TItem extends EntitySchema.Type>
+		extends SelectCls.Props<FormField.Props> {
 		items: TItem[];
 		icon?: string;
 		defaultValue?: string;

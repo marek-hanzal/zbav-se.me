@@ -13,7 +13,10 @@ export namespace withCategoryMissQueryBuilder {
 /**
  * Query builder for CategoryMiss operations
  */
-export const withCategoryMissQueryBuilder: withCategoryMissQueryBuilder.Callback = ({ select, where }) => {
+export const withCategoryMissQueryBuilder: withCategoryMissQueryBuilder.Callback = ({
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

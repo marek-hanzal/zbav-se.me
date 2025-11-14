@@ -13,7 +13,12 @@ export namespace ListingSortSelect {
 	}
 }
 
-export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, value, onChange, ...props }) => {
+export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
+	withGeo,
+	value,
+	onChange,
+	...props
+}) => {
 	const sortKeyId = useId();
 
 	return (
@@ -37,7 +42,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, value,
 			).map((sortValue) => {
 				const current = value.find((s) => s.field === sortValue);
 
-				const position = current ? value.findIndex((s) => s.field === sortValue) + 1 : undefined;
+				const position = current
+					? value.findIndex((s) => s.field === sortValue) + 1
+					: undefined;
 
 				return (
 					<Button
@@ -108,7 +115,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, value,
 								{position ?? "-"}
 							</Badge>
 
-							<Tx label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`} />
+							<Tx
+								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
+							/>
 						</div>
 					</Button>
 				);

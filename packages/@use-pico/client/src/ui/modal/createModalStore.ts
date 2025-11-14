@@ -15,7 +15,9 @@ export namespace createModalStore {
 	export type Hook = UseBoundStore<StoreApi<Store>>;
 }
 
-export const createModalStore = ({ defaultOpen = false }: createModalStore.Props): createModalStore.Hook => {
+export const createModalStore = ({
+	defaultOpen = false,
+}: createModalStore.Props): createModalStore.Hook => {
 	return create<createModalStore.Store>((set) => ({
 		isOpen: defaultOpen,
 		open() {

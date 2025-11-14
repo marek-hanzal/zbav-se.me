@@ -14,7 +14,10 @@ export namespace withListingFlagQueryBuilder {
  * Standalone query builder that applies all filters from ListingFlagQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingFlagQueryBuilder: withListingFlagQueryBuilder.Callback = ({ select, where }) => {
+export const withListingFlagQueryBuilder: withListingFlagQueryBuilder.Callback = ({
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

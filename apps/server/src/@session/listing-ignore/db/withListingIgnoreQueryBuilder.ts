@@ -14,7 +14,10 @@ export namespace withListingIgnoreQueryBuilder {
  * Standalone query builder that applies all filters from ListingIgnoreQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingIgnoreQueryBuilder: withListingIgnoreQueryBuilder.Callback = ({ select, where }) => {
+export const withListingIgnoreQueryBuilder: withListingIgnoreQueryBuilder.Callback = ({
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

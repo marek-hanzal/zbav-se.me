@@ -42,7 +42,10 @@ export namespace withQuery {
 	 *
 	 * @template TResult - Result type returned by the query function.
 	 */
-	export type QueryOptions<TResult> = OmitKeyof<UseQueryOptions<TResult, Error>, "queryKey" | "queryFn">;
+	export type QueryOptions<TResult> = OmitKeyof<
+		UseQueryOptions<TResult, Error>,
+		"queryKey" | "queryFn"
+	>;
 
 	/**
 	 * Typed public facing API for query operations.
@@ -150,7 +153,10 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query.
 		 */
-		useQuery(data: TData, opts?: withQuery.QueryOptions<TResult>): UseQueryResult<TResult, Error> {
+		useQuery(
+			data: TData,
+			opts?: withQuery.QueryOptions<TResult>,
+		): UseQueryResult<TResult, Error> {
 			return useQuery(options(data, opts));
 		},
 		/**
@@ -159,7 +165,10 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query (suspense-enabled).
 		 */
-		useSuspenseQuery(data: TData, opts?: withQuery.QueryOptions<TResult>): UseSuspenseQueryResult<TResult, Error> {
+		useSuspenseQuery(
+			data: TData,
+			opts?: withQuery.QueryOptions<TResult>,
+		): UseSuspenseQueryResult<TResult, Error> {
 			return useSuspenseQuery(options(data, opts));
 		},
 		/**
@@ -219,7 +228,11 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * @param data - The input data for the query.
 		 * @returns Promise that resolves when prefetching is complete.
 		 */
-		async prefetch(queryClient: QueryClient, data: TData, opts?: withQuery.QueryOptions<TResult>) {
+		async prefetch(
+			queryClient: QueryClient,
+			data: TData,
+			opts?: withQuery.QueryOptions<TResult>,
+		) {
 			await queryClient.prefetchQuery(options(data, opts));
 		},
 		/**
@@ -229,7 +242,11 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * @param opts - Optional query options to pass to queryOptions.
 		 * @returns Resolves with the query data.
 		 */
-		async ensure(queryClient: QueryClient, data: TData, opts?: withQuery.QueryOptions<TResult>) {
+		async ensure(
+			queryClient: QueryClient,
+			data: TData,
+			opts?: withQuery.QueryOptions<TResult>,
+		) {
 			return queryClient.ensureQueryData(options(data, opts));
 		},
 		/**
@@ -243,7 +260,10 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 			 * @param value - The value to set in the cache.
 			 * @param data - Optional input data for the query.
 			 */
-			return (value: (value: TResult | undefined) => TResult | undefined, data: TData | undefined) => {
+			return (
+				value: (value: TResult | undefined) => TResult | undefined,
+				data: TData | undefined,
+			) => {
 				queryClient.setQueryData($keys(data), value);
 			};
 		},

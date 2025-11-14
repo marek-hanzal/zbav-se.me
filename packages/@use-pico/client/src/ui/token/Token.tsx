@@ -25,7 +25,13 @@ export namespace Token {
 	}
 }
 
-export const Token: FC<Token.Props> = ({ tokens, source, mode = "any", error = true, children }) => {
+export const Token: FC<Token.Props> = ({
+	tokens,
+	source,
+	mode = "any",
+	error = true,
+	children,
+}) => {
 	const result = useToken({
 		tokens,
 		source,
@@ -38,16 +44,22 @@ export const Token: FC<Token.Props> = ({ tokens, source, mode = "any", error = t
 					<Status
 						icon={"icon-[ph--lock]"}
 						textTitle={
-							mode === "any" ? "Missing any token(s). (title)" : "Missing required token(s). (title)"
+							mode === "any"
+								? "Missing any token(s). (title)"
+								: "Missing required token(s). (title)"
 						}
 						textMessage={
-							mode === "any" ? "Missing any token(s). (message)" : "Missing required token(s). (message)"
+							mode === "any"
+								? "Missing any token(s). (message)"
+								: "Missing required token(s). (message)"
 						}
 					>
 						{!result.success && (
 							<div
 								data-ui="Token-root-error"
-								className={"flex flex-col items-center gap-2 border-t border-slate-200 p-4 mt-4"}
+								className={
+									"flex flex-col items-center gap-2 border-t border-slate-200 p-4 mt-4"
+								}
 							>
 								{result.missing.map((token) => (
 									<div

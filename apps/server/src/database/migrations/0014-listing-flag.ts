@@ -36,10 +36,22 @@ export const ListingFlagMigration: Migration = {
 			])
 			.execute();
 
-		await db.schema.createIndex("listing_flag_[userId]_idx").on("listing_flag").column("userId").execute();
+		await db.schema
+			.createIndex("listing_flag_[userId]_idx")
+			.on("listing_flag")
+			.column("userId")
+			.execute();
 
-		await db.schema.createIndex("listing_flag_[listingId]_idx").on("listing_flag").column("listingId").execute();
+		await db.schema
+			.createIndex("listing_flag_[listingId]_idx")
+			.on("listing_flag")
+			.column("listingId")
+			.execute();
 
-		await db.schema.createIndex("listing_flag_[createdAt]_idx").on("listing_flag").column("createdAt").execute();
+		await db.schema
+			.createIndex("listing_flag_[createdAt]_idx")
+			.on("listing_flag")
+			.column("createdAt")
+			.execute();
 	},
 };

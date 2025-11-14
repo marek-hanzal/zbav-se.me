@@ -36,7 +36,11 @@ export const ListingIgnoreMigration: Migration = {
 			])
 			.execute();
 
-		await db.schema.createIndex("listing_ignore_[userId]_idx").on("listing_ignore").column("userId").execute();
+		await db.schema
+			.createIndex("listing_ignore_[userId]_idx")
+			.on("listing_ignore")
+			.column("userId")
+			.execute();
 
 		await db.schema
 			.createIndex("listing_ignore_[listingId]_idx")

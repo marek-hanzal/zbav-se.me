@@ -17,7 +17,10 @@ export namespace withEqualFilter {
 	}
 }
 
-export const withEqualFilter = <TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query>({
+export const withEqualFilter = <
+	TData extends EntitySchema.Type,
+	TFilter extends withQuerySchema.Query,
+>({
 	value,
 	from,
 }: withEqualFilter.Props<TData, TFilter>): Table.Filter.Props<TData, TFilter> => {

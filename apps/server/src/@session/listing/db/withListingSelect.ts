@@ -36,13 +36,21 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select((eb) => [
 			jsonObjectFrom(
-				eb.selectFrom("location as loc").selectAll("loc").whereRef("loc.id", "=", "l.locationId").limit(1),
+				eb
+					.selectFrom("location as loc")
+					.selectAll("loc")
+					.whereRef("loc.id", "=", "l.locationId")
+					.limit(1),
 			)
 				.$notNull()
 				.as("location"),
 
 			jsonObjectFrom(
-				eb.selectFrom("category as cat").selectAll("cat").whereRef("cat.id", "=", "l.categoryId").limit(1),
+				eb
+					.selectFrom("category as cat")
+					.selectAll("cat")
+					.whereRef("cat.id", "=", "l.categoryId")
+					.limit(1),
 			)
 				.$notNull()
 				.as("category"),
@@ -53,7 +61,11 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 					.selectAll("g")
 					.select((eb) =>
 						jsonObjectFrom(
-							eb.selectFrom("upload as u").selectAll("u").whereRef("u.id", "=", "g.uploadId").limit(1),
+							eb
+								.selectFrom("upload as u")
+								.selectAll("u")
+								.whereRef("u.id", "=", "g.uploadId")
+								.limit(1),
 						)
 							.$notNull()
 							.as("upload"),

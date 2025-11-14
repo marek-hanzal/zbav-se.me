@@ -66,10 +66,14 @@ export function useSnapperNav({
 		onSnap?.(index);
 	});
 
-	const emitSnapDebounced = useDebouncedCallback((index: number) => emitSnap(index), onSnapDebounce, {
-		maxWait: onSnapDebounce,
-		trailing: true,
-	});
+	const emitSnapDebounced = useDebouncedCallback(
+		(index: number) => emitSnap(index),
+		onSnapDebounce,
+		{
+			maxWait: onSnapDebounce,
+			trailing: true,
+		},
+	);
 
 	useEffect(
 		() => () => emitSnapDebounced.cancel(),
@@ -81,7 +85,8 @@ export function useSnapperNav({
 	// --- helpers ---------------------------------------------------------------
 
 	const getChildSize = useCallback(
-		(element: HTMLElement) => Math.max(1, isVertical ? element.clientHeight : element.clientWidth),
+		(element: HTMLElement) =>
+			Math.max(1, isVertical ? element.clientHeight : element.clientWidth),
 		[
 			isVertical,
 		],
@@ -176,7 +181,8 @@ export function useSnapperNav({
 				if (!directChild) return;
 
 				const { pageSize } = readMetrics();
-				const raw = (isVertical ? directChild.offsetTop : directChild.offsetLeft) / pageSize;
+				const raw =
+					(isVertical ? directChild.offsetTop : directChild.offsetLeft) / pageSize;
 				pageIndex = clamp(Math.round(raw), 0, totalCount - 1);
 			}
 

@@ -11,7 +11,10 @@ export namespace mapper {
 	>;
 }
 
-export const mapper = <A extends object, B extends object>(input: A, mapper: mapper.MapperFn<A, B>): Merge<A, B> => {
+export const mapper = <A extends object, B extends object>(
+	input: A,
+	mapper: mapper.MapperFn<A, B>,
+): Merge<A, B> => {
 	const result = {
 		...input,
 	} as Record<string, unknown>;

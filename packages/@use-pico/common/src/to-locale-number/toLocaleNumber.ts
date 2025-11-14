@@ -6,7 +6,12 @@ export namespace toLocaleNumber {
 	}
 }
 
-export function toLocaleNumber({ locale, number, empty = "-", ...props }: toLocaleNumber.Props): string {
+export function toLocaleNumber({
+	locale,
+	number,
+	empty = "-",
+	...props
+}: toLocaleNumber.Props): string {
 	if (number === null || number === undefined) {
 		return empty;
 	}

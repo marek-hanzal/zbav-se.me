@@ -6,7 +6,10 @@ import type { EnsureSelectOutputSchema } from "../source/EnsureSelectOutputSchem
 
 export namespace withFetch {
 	export namespace Query {
-		export interface Props<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> {
+		export interface Props<
+			TSelect extends SelectQueryBuilder<any, any, any>,
+			TFilter extends FilterSchema.Type,
+		> {
 			select: TSelect;
 			where?: TFilter;
 		}
@@ -43,7 +46,9 @@ export const withFetch = async <
 	output,
 	filter,
 	where,
-}: withFetch.Props<TSelect, TFilter, TOutputSchema>): Promise<z.infer<TOutputSchema> | undefined> => {
+}: withFetch.Props<TSelect, TFilter, TOutputSchema>): Promise<
+	z.infer<TOutputSchema> | undefined
+> => {
 	const result = await query({
 		select: query({
 			select,

@@ -61,7 +61,9 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				}
 				textTitle={"Your cart (title)"}
 			>
-				<CategoryCartListContainer categoryCartList={categoryCartCollectionQuery.data.data} />
+				<CategoryCartListContainer
+					categoryCartList={categoryCartCollectionQuery.data.data}
+				/>
 			</TitleContainer>
 		);
 	},

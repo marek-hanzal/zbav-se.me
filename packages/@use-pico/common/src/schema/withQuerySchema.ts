@@ -14,9 +14,10 @@ export namespace withQuerySchema {
 		TSort extends string = string,
 	> = ReturnType<typeof withQuerySchema<TFilterSchema, TSort>>;
 
-	export type Query<TFilterSchema extends FilterSchema = FilterSchema, TSort extends string = string> = z.infer<
-		QuerySchema<TFilterSchema, TSort>
-	>;
+	export type Query<
+		TFilterSchema extends FilterSchema = FilterSchema,
+		TSort extends string = string,
+	> = z.infer<QuerySchema<TFilterSchema, TSort>>;
 
 	/**
 	 * Extracts all available sort keys from a Query type.

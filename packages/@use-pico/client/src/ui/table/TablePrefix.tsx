@@ -7,7 +7,11 @@ import type { Table } from "./Table";
 import { TableCursor } from "./TableCursor";
 
 export namespace TablePrefix {
-	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
+	export interface Props<
+		TQuery extends withQuerySchema.Query,
+		TData extends EntitySchema.Type,
+		TContext = any,
+	> {
 		query: TQuery;
 		fulltext: Fulltext.State | undefined;
 		cursor: Cursor.State | undefined;
@@ -20,7 +24,11 @@ export namespace TablePrefix {
 	}
 }
 
-export const TablePrefix = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
+export const TablePrefix = <
+	TQuery extends withQuerySchema.Query,
+	TData extends EntitySchema.Type,
+	TContext = any,
+>({
 	query,
 	fulltext,
 	cursor,
@@ -36,7 +44,9 @@ export const TablePrefix = <TQuery extends withQuerySchema.Query, TData extends 
 			data-ui="TablePrefix-root"
 			className={"grid grid-cols-3 gap-4 items-center"}
 		>
-			<div className={"inline-flex items-center gap-2"}>{fulltext ? <Fulltext state={fulltext} /> : null}</div>
+			<div className={"inline-flex items-center gap-2"}>
+				{fulltext ? <Fulltext state={fulltext} /> : null}
+			</div>
 
 			<div>
 				<div className={"flex flex-row items-center gap-2"}>

@@ -1,7 +1,8 @@
 import type { IsTuple } from "./IsTuple";
 
 export namespace DeepKeys {
-	export type Prefix<T, TPrefix, TDepth extends any[]> = TPrefix extends keyof T & (number | string)
+	export type Prefix<T, TPrefix, TDepth extends any[]> = TPrefix extends keyof T &
+		(number | string)
 		? `${TPrefix}.${DeepKeys<
 				T[TPrefix],
 				[
@@ -12,7 +13,10 @@ export namespace DeepKeys {
 				string}`
 		: never;
 
-	export type AllowedIndexes<Tuple extends readonly any[], Keys extends number = never> = Tuple extends readonly []
+	export type AllowedIndexes<
+		Tuple extends readonly any[],
+		Keys extends number = never,
+	> = Tuple extends readonly []
 		? Keys
 		: Tuple extends readonly [
 					infer _,

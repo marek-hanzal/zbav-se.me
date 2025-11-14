@@ -32,7 +32,14 @@ export namespace tx {
 	}
 }
 
-export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\.d)\.tsx?$/, sources }: tx.Props) => {
+export const tx = ({
+	packages,
+	output,
+	locales,
+	format = "yaml",
+	filter = /(?<!\.d)\.tsx?$/,
+	sources,
+}: tx.Props) => {
 	const translations: tx.Translations = {};
 	const sourceStats = new Map<string, string[]>();
 
@@ -63,7 +70,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 	if (sources.jsx.length > 0) {
 		console.log("  📌 JSX Components:");
 		for (const { name, attr } of sources.jsx) {
-			console.log(`     <${colors.cyan}${name}${colors.reset} ${colors.green}${attr}${colors.reset}="..." />`);
+			console.log(
+				`     <${colors.cyan}${name}${colors.reset} ${colors.green}${attr}${colors.reset}="..." />`,
+			);
 			sourceStats.set(`jsx:${name}.${attr}`, []);
 		}
 		console.log();
@@ -81,7 +90,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 	if (sources.objects.length > 0) {
 		console.log("  📌 Object Methods:");
 		for (const { object, name } of sources.objects) {
-			console.log(`     ${colors.cyan}${object}${colors.reset}.${colors.blue}${name}${colors.reset}("...")`);
+			console.log(
+				`     ${colors.cyan}${object}${colors.reset}.${colors.blue}${name}${colors.reset}("...")`,
+			);
 			sourceStats.set(`object:${object}.${name}`, []);
 		}
 		console.log();
@@ -135,7 +146,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 	}));
 
 	packages.forEach((path) => {
-		const sourceFiles = project(`${path}/tsconfig.json`).filter((source) => filter.test(source.fileName));
+		const sourceFiles = project(`${path}/tsconfig.json`).filter((source) =>
+			filter.test(source.fileName),
+		);
 		const total = sourceFiles.length;
 
 		console.log(`\n📦 Package: ${colors.cyan}${path}${colors.reset}`);
@@ -210,7 +223,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 	if (sources.jsx.length > 0) {
 		console.log("  JSX Components:");
 		// Calculate max width for alignment
-		const maxWidth = Math.max(...sources.jsx.map(({ name, attr }) => `<${name} ${attr}="..." />`.length));
+		const maxWidth = Math.max(
+			...sources.jsx.map(({ name, attr }) => `<${name} ${attr}="..." />`.length),
+		);
 
 		for (const { name, attr } of sources.jsx) {
 			const translations = sourceStats.get(`jsx:${name}.${attr}`) || [];
@@ -220,7 +235,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 			const padding = " ".repeat(maxWidth - plainText.length);
 
 			if (count === 0) {
-				console.log(`     ${colors.dim}${plainText}${padding} → ${count} ${suffix}${colors.reset}`);
+				console.log(
+					`     ${colors.dim}${plainText}${padding} → ${count} ${suffix}${colors.reset}`,
+				);
 			} else {
 				const coloredText = `<${colors.cyan}${name}${colors.reset} ${colors.green}${attr}${colors.reset}="..." />`;
 				console.log(
@@ -254,7 +271,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 			const padding = " ".repeat(maxWidth - plainText.length);
 
 			if (count === 0) {
-				console.log(`     ${colors.dim}${plainText}${padding} → ${count} ${suffix}${colors.reset}`);
+				console.log(
+					`     ${colors.dim}${plainText}${padding} → ${count} ${suffix}${colors.reset}`,
+				);
 			} else {
 				const coloredText = `${colors.blue}${name}${colors.reset}("...")`;
 				console.log(
@@ -278,7 +297,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 	if (sources.objects.length > 0) {
 		console.log("  Object Methods:");
 		// Calculate max width for alignment
-		const maxWidth = Math.max(...sources.objects.map(({ object, name }) => `${object}.${name}("...")`.length));
+		const maxWidth = Math.max(
+			...sources.objects.map(({ object, name }) => `${object}.${name}("...")`.length),
+		);
 
 		for (const { object, name } of sources.objects) {
 			const translations = sourceStats.get(`object:${object}.${name}`) || [];
@@ -288,7 +309,9 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 			const padding = " ".repeat(maxWidth - plainText.length);
 
 			if (count === 0) {
-				console.log(`     ${colors.dim}${plainText}${padding} → ${count} ${suffix}${colors.reset}`);
+				console.log(
+					`     ${colors.dim}${plainText}${padding} → ${count} ${suffix}${colors.reset}`,
+				);
 			} else {
 				const coloredText = `${colors.cyan}${object}${colors.reset}.${colors.blue}${name}${colors.reset}("...")`;
 				console.log(
@@ -321,7 +344,10 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 			const fileContent = fs.readFileSync(target, {
 				encoding: "utf-8",
 			});
-			current = (format === "json" ? JSON.parse(fileContent) : parse(fileContent)) as Record<string, any>;
+			current = (format === "json" ? JSON.parse(fileContent) : parse(fileContent)) as Record<
+				string,
+				any
+			>;
 		} catch (_) {
 			// Noop
 		}
@@ -343,7 +369,10 @@ export const tx = ({ packages, output, locales, format = "yaml", filter = /(?<!\
 			}).sort(),
 		);
 
-		const content = format === "json" ? JSON.stringify(Object.fromEntries(sorted), null, 2) : stringify(sorted);
+		const content =
+			format === "json"
+				? JSON.stringify(Object.fromEntries(sorted), null, 2)
+				: stringify(sorted);
 
 		fs.writeFileSync(target, content, {
 			encoding: "utf-8",

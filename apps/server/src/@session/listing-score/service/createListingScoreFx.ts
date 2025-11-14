@@ -25,9 +25,19 @@ export namespace createListingScoreFx {
 	}
 }
 
-export const createListingScoreFx = ({ database, userId, listingId, score }: createListingScoreFx.Props) => {
+export const createListingScoreFx = ({
+	database,
+	userId,
+	listingId,
+	score,
+}: createListingScoreFx.Props) => {
 	return Effect.tryPromise({
-		try: () => database.selectFrom("listing").select("userId").where("id", "=", listingId).executeTakeFirst(),
+		try: () =>
+			database
+				.selectFrom("listing")
+				.select("userId")
+				.where("id", "=", listingId)
+				.executeTakeFirst(),
 		catch: (e) => {
 			return new InfraError({
 				type: "database",

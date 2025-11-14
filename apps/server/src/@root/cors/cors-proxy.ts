@@ -33,7 +33,10 @@ export const withCorsProxyApi: Routes.Fn = ({ root }) => {
 		const headers = new Headers();
 		headers.set("Access-Control-Allow-Origin", "*");
 		headers.set("Access-Control-Allow-Methods", "GET, OPTIONS");
-		headers.set("Access-Control-Expose-Headers", "Content-Type, Content-Length, ETag, Cache-Control");
+		headers.set(
+			"Access-Control-Expose-Headers",
+			"Content-Type, Content-Length, ETag, Cache-Control",
+		);
 		headers.set("Cache-Control", "public, max-age=60");
 
 		const contentType = upstream.headers.get("content-type");

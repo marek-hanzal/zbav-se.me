@@ -1,5 +1,11 @@
 import { expect, it } from "vitest";
-import { createHasher, embedding, embedNumber, embedNumberRange, embedString } from "../../../src/embedding";
+import {
+	createHasher,
+	embedding,
+	embedNumber,
+	embedNumberRange,
+	embedString,
+} from "../../../src/embedding";
 
 it("should combine different embedding types", async () => {
 	const hasher = await createHasher();

@@ -14,7 +14,8 @@ export namespace Icon {
 	/**
 	 * Props for `Icon` component.
 	 */
-	export interface Props extends IconCls.Props<Omit<HTMLAttributes<HTMLDivElement>, "className">> {
+	export interface Props
+		extends IconCls.Props<Omit<HTMLAttributes<HTMLDivElement>, "className">> {
 		ref?: Ref<HTMLDivElement>;
 		/**
 		 * `Iconify` icon name.
@@ -35,7 +36,17 @@ export namespace Icon {
 	export type PropsEx = Omit<Props, "icon"> & Partial<Pick<Props, "icon">>;
 }
 
-export const Icon: FC<Icon.Props> = ({ ref, icon, size, tone, theme, disabled, cls = IconCls, tweak, ...props }) => {
+export const Icon: FC<Icon.Props> = ({
+	ref,
+	icon,
+	size,
+	tone,
+	theme,
+	disabled,
+	cls = IconCls,
+	tweak,
+	...props
+}) => {
 	const { slots } = useCls(cls, tweak, {
 		variant: {
 			size,

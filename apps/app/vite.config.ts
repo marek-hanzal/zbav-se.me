@@ -118,7 +118,11 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						if (id.includes("@escapace")) {
 							return "escapace";
 						}
-						if (id.includes("node_modules/") && !id.includes("src/") && !id.includes("tanstack/")) {
+						if (
+							id.includes("node_modules/") &&
+							!id.includes("src/") &&
+							!id.includes("tanstack/")
+						) {
 							return "vendor";
 						}
 					},

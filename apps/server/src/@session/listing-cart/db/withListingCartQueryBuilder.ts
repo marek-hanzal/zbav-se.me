@@ -14,7 +14,10 @@ export namespace withListingCartQueryBuilder {
  * Standalone query builder that applies all filters from ListingCartQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingCartQueryBuilder: withListingCartQueryBuilder.Callback = ({ select, where }) => {
+export const withListingCartQueryBuilder: withListingCartQueryBuilder.Callback = ({
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

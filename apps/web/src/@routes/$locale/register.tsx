@@ -96,12 +96,16 @@ export const Route = createFileRoute("/$locale/register")({
 
 												if (!value) {
 													return {
-														message: translator.text("Email is required"),
+														message:
+															translator.text("Email is required"),
 													};
 												}
 												if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
 													return {
-														message: translator.text("Invalid email address"),
+														message:
+															translator.text(
+																"Invalid email address",
+															),
 													};
 												}
 												return undefined;
@@ -119,9 +123,13 @@ export const Route = createFileRoute("/$locale/register")({
 													<field.TextInput
 														type={"email"}
 														value={field.state.value}
-														onChange={(e) => field.handleChange(e.target.value)}
+														onChange={(e) =>
+															field.handleChange(e.target.value)
+														}
 														onBlur={field.handleBlur}
-														placeholder={translator.text("Enter your email")}
+														placeholder={translator.text(
+															"Enter your email",
+														)}
 														{...props}
 													/>
 												)}
@@ -157,9 +165,13 @@ export const Route = createFileRoute("/$locale/register")({
 													<field.TextInput
 														type={"password"}
 														value={field.state.value}
-														onChange={(e) => field.handleChange(e.target.value)}
+														onChange={(e) =>
+															field.handleChange(e.target.value)
+														}
 														onBlur={field.handleBlur}
-														placeholder={translator.text("Enter your password")}
+														placeholder={translator.text(
+															"Enter your password",
+														)}
 														{...props}
 													/>
 												)}
@@ -174,11 +186,15 @@ export const Route = createFileRoute("/$locale/register")({
 												"password",
 											],
 											onBlur({ value, fieldApi }) {
-												const password = fieldApi.form.getFieldValue("password");
+												const password =
+													fieldApi.form.getFieldValue("password");
 
 												if (value !== password) {
 													return {
-														message: translator.text("Passwords do not match"),
+														message:
+															translator.text(
+																"Passwords do not match",
+															),
 													};
 												}
 
@@ -197,9 +213,13 @@ export const Route = createFileRoute("/$locale/register")({
 													<field.TextInput
 														type={"password"}
 														value={field.state.value}
-														onChange={(e) => field.handleChange(e.target.value)}
+														onChange={(e) =>
+															field.handleChange(e.target.value)
+														}
 														onBlur={field.handleBlur}
-														placeholder={translator.text("Confirm your password")}
+														placeholder={translator.text(
+															"Confirm your password",
+														)}
 														{...props}
 													/>
 												)}

@@ -12,7 +12,14 @@ export namespace TitlePreview {
 	}
 }
 
-export const TitlePreview: FC<TitlePreview.Props> = ({ ref, icon, title, subtitle, cls = TitlePreviewCls, tweak }) => {
+export const TitlePreview: FC<TitlePreview.Props> = ({
+	ref,
+	icon,
+	title,
+	subtitle,
+	cls = TitlePreviewCls,
+	tweak,
+}) => {
 	const { slots } = useCls(cls, tweak, {
 		variant: {
 			withSubtitle: Boolean(subtitle),

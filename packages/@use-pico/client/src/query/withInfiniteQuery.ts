@@ -21,7 +21,11 @@ export namespace withInfiniteQuery {
 		more: boolean;
 	}
 
-	export interface Props<TData, TItem extends EntitySchema.Type, TResult extends Collection<TItem>> {
+	export interface Props<
+		TData,
+		TItem extends EntitySchema.Type,
+		TResult extends Collection<TItem>,
+	> {
 		/**
 		 * Function to generate the query key for React Query.
 		 * @param data - The input data for the query.
@@ -46,9 +50,11 @@ export namespace withInfiniteQuery {
 		"queryKey" | "queryFn" | "getNextPageParam"
 	>;
 
-	export type Api<TData, TItem extends EntitySchema.Type, TResult extends Collection<TItem>> = ReturnType<
-		typeof withInfiniteQuery<TData, TItem, TResult>
-	>;
+	export type Api<
+		TData,
+		TItem extends EntitySchema.Type,
+		TResult extends Collection<TItem>,
+	> = ReturnType<typeof withInfiniteQuery<TData, TItem, TResult>>;
 }
 
 export function withInfiniteQuery<

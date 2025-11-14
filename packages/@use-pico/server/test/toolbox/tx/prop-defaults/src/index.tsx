@@ -15,7 +15,10 @@ export const Tx: FC<TxProps> = ({ label, size = "Default size" }) => {
 	return null;
 };
 
-export const Status: FC<StatusProps> = ({ textTitle = "Default title", textMessage = "Default message" }) => {
+export const Status: FC<StatusProps> = ({
+	textTitle = "Default title",
+	textMessage = "Default message",
+}) => {
 	return null;
 };
 

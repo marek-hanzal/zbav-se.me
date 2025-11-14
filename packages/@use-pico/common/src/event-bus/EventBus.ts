@@ -1,6 +1,9 @@
 export namespace EventBus {
 	export type Handler<T = unknown> = (event: T) => void;
-	export type WildcardHandler<T = Record<string, unknown>> = (type: keyof T, event: T[keyof T]) => void;
+	export type WildcardHandler<T = Record<string, unknown>> = (
+		type: keyof T,
+		event: T[keyof T],
+	) => void;
 
 	export type EventHandlerList<T = unknown> = Handler<T>[];
 	export type WildCardEventHandlerList<T = Record<string, unknown>> = WildcardHandler<T>[];
@@ -49,8 +52,12 @@ export interface EventBus<TEvents extends object> {
 	emit<Key extends keyof TEvents>(type: undefined extends TEvents[Key] ? Key : never): void;
 }
 
-export function EventBus<TEvents extends object>(all?: EventBus.EventHandlerMap<TEvents>): EventBus<TEvents> {
-	type GenericEventHandler = EventBus.Handler<TEvents[keyof TEvents]> | EventBus.WildcardHandler<TEvents>;
+export function EventBus<TEvents extends object>(
+	all?: EventBus.EventHandlerMap<TEvents>,
+): EventBus<TEvents> {
+	type GenericEventHandler =
+		| EventBus.Handler<TEvents[keyof TEvents]>
+		| EventBus.WildcardHandler<TEvents>;
 
 	all ||= new Map();
 
@@ -81,9 +88,11 @@ export function EventBus<TEvents extends object>(all?: EventBus.EventHandlerMap<
 		emit<Key extends keyof TEvents>(type: Key, event?: TEvents[Key]) {
 			let handlers = all.get(type);
 			if (handlers && event) {
-				(handlers as EventBus.EventHandlerList<TEvents[keyof TEvents]>).slice().forEach((h) => {
-					h(event);
-				});
+				(handlers as EventBus.EventHandlerList<TEvents[keyof TEvents]>)
+					.slice()
+					.forEach((h) => {
+						h(event);
+					});
 			}
 			handlers = all.get("*");
 			if (handlers && event) {

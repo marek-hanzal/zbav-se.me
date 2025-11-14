@@ -67,15 +67,35 @@ export const ListingMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema.createIndex("listing_[userId]_idx").on("listing").column("userId").execute();
+		await db.schema
+			.createIndex("listing_[userId]_idx")
+			.on("listing")
+			.column("userId")
+			.execute();
 
-		await db.schema.createIndex("listing_[locationId]_idx").on("listing").column("locationId").execute();
+		await db.schema
+			.createIndex("listing_[locationId]_idx")
+			.on("listing")
+			.column("locationId")
+			.execute();
 
-		await db.schema.createIndex("listing_[categoryId]_idx").on("listing").column("categoryId").execute();
+		await db.schema
+			.createIndex("listing_[categoryId]_idx")
+			.on("listing")
+			.column("categoryId")
+			.execute();
 
-		await db.schema.createIndex("listing_[createdAt]_idx").on("listing").column("createdAt").execute();
+		await db.schema
+			.createIndex("listing_[createdAt]_idx")
+			.on("listing")
+			.column("createdAt")
+			.execute();
 
-		await db.schema.createIndex("listing_[expiresAt]_idx").on("listing").column("expiresAt").execute();
+		await db.schema
+			.createIndex("listing_[expiresAt]_idx")
+			.on("listing")
+			.column("expiresAt")
+			.execute();
 
 		await db.schema
 			.createIndex("listing_[title]_btree_idx")

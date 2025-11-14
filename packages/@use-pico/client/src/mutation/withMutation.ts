@@ -89,7 +89,10 @@ export namespace withMutation {
 		onPostMutation?: PostMutation.Fn<TVariables, TResult>;
 	};
 
-	export type PropsEx<TVariables, TResult> = Omit<Props<TVariables, TResult>, "mutationFn" | "keys" | "invalidate">;
+	export type PropsEx<TVariables, TResult> = Omit<
+		Props<TVariables, TResult>,
+		"mutationFn" | "keys" | "invalidate"
+	>;
 }
 
 /**
@@ -168,7 +171,8 @@ export function withMutation<TVariables, TResult, TError>({
 			const count = useIsMutating({
 				mutationKey: keys(),
 				predicate: mutationId
-					? ({ options: { meta } }) => (meta as withMutation.Meta)?.mutationId === mutationId
+					? ({ options: { meta } }) =>
+							(meta as withMutation.Meta)?.mutationId === mutationId
 					: undefined,
 			});
 

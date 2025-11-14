@@ -78,7 +78,8 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 	children = DefaultContent,
 }: Data.Props<TResult>) => {
 	/** Treat undefined/null OR empty arrays as "empty". */
-	const isEmptyData = (data: unknown) => data == null || (Array.isArray(data) && data.length === 0);
+	const isEmptyData = (data: unknown) =>
+		data == null || (Array.isArray(data) && data.length === 0);
 
 	return children({
 		content: match(result)

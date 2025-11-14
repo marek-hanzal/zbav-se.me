@@ -12,7 +12,9 @@ export namespace usePatchCollection {
 	}
 }
 
-export const usePatchCollection = <TCollection extends usePatchCollection.Collection<EntitySchema.Type>>(
+export const usePatchCollection = <
+	TCollection extends usePatchCollection.Collection<EntitySchema.Type>,
+>(
 	values: TCollection["data"][number],
 ): usePatchCollection.Patch.Fn<TCollection> => {
 	return (patch) => (prev) => {

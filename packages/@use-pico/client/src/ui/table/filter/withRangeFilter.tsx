@@ -15,7 +15,10 @@ export namespace withRangeFilter {
 	}
 }
 
-export const withRangeFilter = <TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query>({
+export const withRangeFilter = <
+	TData extends EntitySchema.Type,
+	TFilter extends withQuerySchema.Query,
+>({
 	path,
 	lte,
 	gte,

@@ -118,7 +118,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 											];
 											next[slot] = uploadId;
 
-											const compact: string[] = next.filter((f): f is string => !!f);
+											const compact: string[] = next.filter(
+												(f): f is string => !!f,
+											);
 
 											return compact;
 										});

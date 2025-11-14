@@ -229,7 +229,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 										} as const,
 									]}
 									render={(condition) => (
-										<Tx label={`Condition - Overall [${condition.value}] (hint)`} />
+										<Tx
+											label={`Condition - Overall [${condition.value}] (hint)`}
+										/>
 									)}
 								/>
 							</LinkTo>
@@ -252,7 +254,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 											value: valid.data.age,
 										} as const,
 									]}
-									render={(age) => <Tx label={`Condition - Age [${age.value}] (hint)`} />}
+									render={(age) => (
+										<Tx label={`Condition - Age [${age.value}] (hint)`} />
+									)}
 								/>
 							</LinkTo>
 
@@ -314,7 +318,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 											value: state.expiresAt,
 										} as const,
 									]}
-									render={(expiresAt) => <Tx label={`Expire in ${expiresAt.value}`} />}
+									render={(expiresAt) => (
+										<Tx label={`Expire in ${expiresAt.value}`} />
+									)}
 								/>
 							</LinkTo>
 						</VariantProvider>

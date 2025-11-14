@@ -4,14 +4,22 @@ import type { Table } from "./Table";
 import type { TableCls } from "./TableCls";
 
 export namespace Cell {
-	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
+	export interface Props<
+		TQuery extends withQuerySchema.Query,
+		TData extends EntitySchema.Type,
+		TContext = any,
+	> {
 		cell: Table.Cell<TQuery, TData, any, TContext>;
 		filter: Table.Filter.State<TQuery> | undefined;
 		slots: TableCls.Slots;
 	}
 }
 
-export const Cell = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
+export const Cell = <
+	TQuery extends withQuerySchema.Query,
+	TData extends EntitySchema.Type,
+	TContext = any,
+>({
 	cell: { column, data, value, context },
 	filter,
 	slots,

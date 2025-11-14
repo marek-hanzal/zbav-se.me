@@ -17,7 +17,9 @@ export namespace PopupSelect {
 				entity: TItem;
 			}
 
-			export type Render<TItem extends EntitySchema.Type> = (props: Props<TItem>) => ReactNode;
+			export type Render<TItem extends EntitySchema.Type> = (
+				props: Props<TItem>,
+			) => ReactNode;
 		}
 
 		export namespace Multi {
@@ -25,7 +27,9 @@ export namespace PopupSelect {
 				entities: TItem[];
 			}
 
-			export type Render<TItem extends EntitySchema.Type> = (props: Props<TItem>) => ReactNode;
+			export type Render<TItem extends EntitySchema.Type> = (
+				props: Props<TItem>,
+			) => ReactNode;
 		}
 	}
 
@@ -59,10 +63,10 @@ export namespace PopupSelect {
 		selection: useSelection.Selection<TItem>;
 	}
 
-	export type PropsEx<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> = Omit<
-		Props<TQuery, TItem>,
-		"withQuery" | "table" | "renderSingle" | "renderMulti"
-	>;
+	export type PropsEx<
+		TQuery extends withQuerySchema.Query,
+		TItem extends EntitySchema.Type,
+	> = Omit<Props<TQuery, TItem>, "withQuery" | "table" | "renderSingle" | "renderMulti">;
 }
 
 export const PopupSelect = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({

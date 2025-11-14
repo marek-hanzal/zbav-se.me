@@ -13,7 +13,9 @@ export namespace More {
 			entity: TValues;
 		}
 
-		export type Render<TValues extends EntitySchema.Type> = (props: Props<TValues>) => ReactNode;
+		export type Render<TValues extends EntitySchema.Type> = (
+			props: Props<TValues>,
+		) => ReactNode;
 	}
 
 	export interface Props<TValues extends EntitySchema.Type> extends MoreCls.Props {
@@ -38,7 +40,10 @@ export namespace More {
 		limit?: number;
 	}
 
-	export type PropsEx<TValues extends EntitySchema.Type> = Omit<Props<TValues>, "items" | "renderInline">;
+	export type PropsEx<TValues extends EntitySchema.Type> = Omit<
+		Props<TValues>,
+		"items" | "renderInline"
+	>;
 }
 
 export const More = <TValues extends EntitySchema.Type>({

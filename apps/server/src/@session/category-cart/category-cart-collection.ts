@@ -31,7 +31,8 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							schema: withCollectionSchema({
 								schema: CategoryCartSchema,
 								type: "CategoryCartCollection",
-								description: "Collection of categories represented in the user's cart",
+								description:
+									"Collection of categories represented in the user's cart",
 							}),
 						},
 					},
