@@ -38,4 +38,5 @@ export { StarEmptyIcon } from "./StarEmptyIcon";
 export { StarIcon } from "./StarIcon";
 export { SubmitIcon } from "./SubmitIcon";
 export { TagIcon } from "./TagIcon";
+export { TransactionIcon } from "./TransactionIcon";
 export { UnlockIcon } from "./UnlockIcon";

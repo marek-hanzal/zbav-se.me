@@ -8,7 +8,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/session";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { CartIcon } from "@zbav-se.me/ui/icon";
+import { CartIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace ListingDetailMenu {
@@ -46,6 +46,22 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 					theme: "light",
 				}}
 			>
+				{true ? (
+					<Button
+						label={"Start transaction (button)"}
+						iconEnabled={TransactionIcon}
+						disabled={listingCartToggle.isPending}
+						loading={listingCartToggle.isPending}
+						tone={"primary"}
+						theme={"dark"}
+						onClick={() => {
+							// transaciton start
+						}}
+						size={"xl"}
+						full
+					/>
+				) : null}
+
 				<Button
 					label={listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"}
 					iconEnabled={CartIcon}
