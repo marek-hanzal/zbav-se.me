@@ -8,7 +8,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import { type FC, forwardRef, type ReactNode, useId, useMemo } from "react";
+import { type FC, forwardRef, type ReactNode, useEffect, useId, useMemo } from "react";
 import { List, useListRef } from "react-window";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
@@ -67,6 +67,30 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	]);
 
 	const listRef = useListRef(null);
+
+	useEffect(() => {
+		if (!scrollToListingId || !listRef.current) {
+			return;
+		}
+
+		const idx = listings.findIndex((listing) => {
+			return listing.id === scrollToListingId;
+		});
+
+		if (idx < 0) {
+			return;
+		}
+
+		listRef.current.scrollToRow({
+			index: idx,
+			align: "start",
+			behavior: "instant",
+		});
+	}, [
+		listRef.current,
+		listings,
+		scrollToListingId,
+	]);
 
 	const hasNoListings = listings.length === 0;
 
