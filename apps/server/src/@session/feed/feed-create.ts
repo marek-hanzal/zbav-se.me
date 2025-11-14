@@ -58,7 +58,7 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { name, locationId, filter, sort, meta } = c.req.valid("json");
+			const { name, locationId, query } = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();
@@ -71,13 +71,7 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 						userId: user.id,
 						locationId,
 						name,
-						filter: JSON.stringify({
-							...filter,
-							withOwn: false,
-							withIgnored: false,
-						}) as any,
-						sort: JSON.stringify(sort) as any,
-						meta: JSON.stringify(meta) as any,
+						query: JSON.stringify(query) as any,
 						createdAt: now,
 						updatedAt: now,
 					})

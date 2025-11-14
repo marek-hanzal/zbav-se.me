@@ -57,7 +57,7 @@ export const withFeedPatchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { id, name, locationId, filter, meta, sort } = c.req.valid("json");
+			const { id, name, locationId, query } = c.req.valid("json");
 			const user = c.get("user");
 			const now = new Date();
 
@@ -67,9 +67,7 @@ export const withFeedPatchApi: Routes.Fn = ({ sessionHono }) => {
 					.set({
 						name,
 						locationId,
-						filter: JSON.stringify(filter) as any,
-						sort: JSON.stringify(sort) as any,
-						meta: JSON.stringify(meta) as any,
+						query: query ? (JSON.stringify(query) as any) : null,
 						updatedAt: now,
 					})
 					.where("id", "=", id)

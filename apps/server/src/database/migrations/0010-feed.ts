@@ -8,9 +8,7 @@ export const FeedMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("locationId", "text")
 			.addColumn("name", "text", (col) => col.notNull())
-			.addColumn("filter", "jsonb", (col) => col.notNull())
-			.addColumn("sort", "jsonb", (col) => col.notNull())
-			.addColumn("meta", "jsonb", (col) => col.notNull())
+			.addColumn("query", "jsonb", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(

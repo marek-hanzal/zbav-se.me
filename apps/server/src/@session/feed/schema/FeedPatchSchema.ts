@@ -1,7 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFilterSchema } from "../../listing/schema/ListingFilterSchema";
-import { ListingMetaSchema } from "../../listing/schema/ListingMetaSchema";
-import { ListingSortSchema } from "../../listing/schema/ListingSortSchema";
+import { FeedQuerySchema } from "./FeedQuerySchema";
 
 export const FeedPatchSchema = z
 	.object({
@@ -12,9 +10,15 @@ export const FeedPatchSchema = z
 		locationId: z.string().nullish().openapi({
 			description: "ID of the location associated with the feed",
 		}),
-		filter: ListingFilterSchema.optional(),
-		sort: ListingSortSchema.array().optional(),
-		meta: ListingMetaSchema.optional(),
+		query: z
+			.union([
+				FeedQuerySchema,
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Query configuration for the feed (listing)",
+			}),
 	})
 	.openapi("FeedPatch", {
 		description: "Data for updating an existing feed",

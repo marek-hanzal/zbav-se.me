@@ -1,7 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFilterSchema } from "../../../@session/listing/schema/ListingFilterSchema";
-import { ListingMetaSchema } from "../../../@session/listing/schema/ListingMetaSchema";
-import { ListingSortSchema } from "../../../@session/listing/schema/ListingSortSchema";
+import { FeedQuerySchema } from "../../../@session/feed/schema/FeedQuerySchema";
 
 export const FeedDbSchema = z.object({
 	id: z.string().openapi({
@@ -17,9 +15,7 @@ export const FeedDbSchema = z.object({
 	name: z.string().openapi({
 		description: "Name of the feed",
 	}),
-	filter: ListingFilterSchema.optional(),
-	sort: ListingSortSchema.array().optional(),
-	meta: ListingMetaSchema.optional(),
+	query: FeedQuerySchema,
 	//
 	createdAt: z.coerce.date().openapi({
 		description: "Creation timestamp",

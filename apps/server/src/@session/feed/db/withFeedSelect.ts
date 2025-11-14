@@ -15,9 +15,7 @@ export const withFeedSelect = ({ sort }: withFeedSelect.Props) => {
 		"f.id",
 		"f.locationId",
 		"f.name",
-		"f.filter",
-		"f.sort",
-		"f.meta",
+		"f.query",
 	]);
 
 	for (const item of sort ?? []) {
