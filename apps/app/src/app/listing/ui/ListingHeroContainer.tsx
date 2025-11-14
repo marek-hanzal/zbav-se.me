@@ -41,7 +41,6 @@ export namespace ListingHeroContainer {
 		toolbar: Toolbar.Render;
 		imageErrorToolbar: Toolbar.Render;
 		overlay: Overlay.Render;
-		visible: boolean;
 	}
 }
 
@@ -57,7 +56,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	toolbar,
 	imageErrorToolbar,
 	overlay,
-	visible,
 	tweak,
 	...props
 }) => {
@@ -65,6 +63,8 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		tGallery,
 		...tGallery[],
 	];
+
+	const visible = true;
 
 	const rootRef = useRef<HTMLDivElement>(null);
 

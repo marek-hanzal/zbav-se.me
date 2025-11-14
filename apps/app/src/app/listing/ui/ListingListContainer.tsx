@@ -2,14 +2,13 @@
 import { useParams } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import { type FC, type ReactNode, useId } from "react";
-import { List, useListRef } from "react-window";
+import { SpinnerContainer } from "@zbav-se.me/ui/container";
+import { type FC, type ReactNode, useId, useMemo, useRef } from "react";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -47,7 +46,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		refetchOnWindowFocus: true,
 	});
 
-	const listRef = useListRef(null);
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	// useEffect(() => {
 	// 	if (!scrollToListingId || !listRef.current) {
@@ -75,96 +74,73 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	const hasListings = listingQuery.data.data.length > 0;
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We don't care about changing "empty" props
+	const emptySlot = useMemo(() => {
+		return (
+			empty ?? (
+				<Status
+					ui="ListingList-empty"
+					key={`${listingIdPrefix}-no-listings`}
+					icon={"icon-[streamline--sad-face-remix]"}
+					textTitle={"No listings (title)"}
+					action={
+						<LinkTo
+							to={"/$locale/buyer/feed/select"}
+							params={{
+								locale,
+							}}
+						>
+							<Button
+								iconEnabled={ArrowLeftIcon}
+								tone={"secondary"}
+								label={"Back to home (link)"}
+							/>
+						</LinkTo>
+					}
+				/>
+			)
+		);
+	}, [
+		locale,
+	]);
+
 	return (
 		<Container
+			ref={containerRef}
 			ui="ListingList-root"
+			layout={"vertical-full"}
+			snap={"vertical-start"}
 			{...props}
 		>
+			{hasListings ? null : emptySlot}
+
 			{hasListings
-				? null
-				: (empty ?? (
-						<Status
-							ui="ListingList-empty"
-							key={`${listingIdPrefix}-no-listings`}
-							icon={"icon-[streamline--sad-face-remix]"}
-							textTitle={"No listings (title)"}
-							action={
-								<LinkTo
-									to={"/$locale/buyer/feed/select"}
-									params={{
-										locale,
-									}}
-								>
-									<Button
-										iconEnabled={ArrowLeftIcon}
-										tone={"secondary"}
-										label={"Back to home (link)"}
-									/>
-								</LinkTo>
-							}
-						/>
-					))}
-
-			{hasListings ? (
-				<List
-					listRef={listRef}
-					data-ui="ListingList-scroller"
-					className={tvc([
-						"h-dvh",
-						"overscroll-contain",
-						"[overflow-anchor:none]",
-						"[-webkit-overflow-scrolling:touch]",
-						"touch-pan-y",
-						"snap-y",
-						"snap-mandatory",
-					])}
-					rowHeight={"100%"}
-					rowCount={listingQuery.data.data.length}
-					rowProps={{
-						listings: listingQuery.data.data,
-					}}
-					overscanCount={1}
-					rowComponent={({ listings, index, style }) => {
-						const listing = listings[index];
-						if (!listing) {
-							return <div />;
-						}
-
-						return (
+				? listingQuery.data.data.map((listing) => (
+						<VisibleContainer
+							key={`${listingIdPrefix}-${listing.id}`}
+							visibility={{
+								scrollerRef: containerRef,
+							}}
+							delay={1000}
+							placeholder={(props) => (
+								<SpinnerContainer
+									ui="ListingList-spinner"
+									{...props}
+								/>
+							)}
+						>
 							<ListingHeroContainer
-								key={`${listingIdPrefix}-${listing.id}`}
 								query={query}
 								listing={listing}
 								toolbar={toolbar}
 								imageErrorToolbar={imageErrorToolbar}
 								overlay={overlay}
-								visible
-								height={"viewport"}
-								style={style}
-								className={tvc([
-									"w-full",
-									"snap-start",
-									"snap-always",
-								])}
 							/>
-						);
-					}}
-				/>
-			) : null}
+						</VisibleContainer>
+					))
+				: null}
 
-			{appendix ? (
-				<Container
-					ui="ListingList-appendix"
-					height={"viewport"}
-					className={tvc([
-						"w-full",
-						"snap-start",
-						"snap-always",
-					])}
-				>
-					{appendix}
-				</Container>
-			) : null}
+			{appendix}
 		</Container>
 	);
 };

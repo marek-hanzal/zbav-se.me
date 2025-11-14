@@ -86,7 +86,9 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								listing.isIgnored ? "Listing unignored (toast)" : "Listing ignored (toast)",
+								listing.isIgnored
+									? "Listing unignored (toast)"
+									: "Listing ignored (toast)",
 							),
 							error: translator.text("Error ignoring listing (toast)"),
 							id: "listing-ignore-button",
