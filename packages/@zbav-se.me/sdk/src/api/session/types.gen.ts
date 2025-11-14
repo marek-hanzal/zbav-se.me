@@ -467,6 +467,176 @@ export type tListingScore = {
 };
 
 /**
+ * Data for creating a new listing transaction
+ */
+export type tListingTransactionCreate = {
+    /**
+     * ID of the listing to start a transaction for
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing transaction collection
+ */
+export type tListingTransactionQuery = {
+    cursor?: tCursor;
+    filter?: tListingTransactionFilter;
+    where?: tListingTransactionWhere;
+    sort?: Array<tListingTransactionSort>;
+};
+
+/**
+ * Field of the listing transaction sort
+ */
+export const tListingTransactionSortField = {
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt'
+} as const;
+
+/**
+ * Field of the listing transaction sort
+ */
+export type tListingTransactionSortField = typeof tListingTransactionSortField[keyof typeof tListingTransactionSortField];
+
+/**
+ * Sort object for listing transaction collection
+ */
+export type tListingTransactionSort = {
+    field: tListingTransactionSortField;
+    direction: tOrder;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingTransactionWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tListingTransactionStatus;
+    side?: tListingTransactionSide;
+};
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tListingTransactionSide = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tListingTransactionSide = typeof tListingTransactionSide[keyof typeof tListingTransactionSide];
+
+/**
+ * Current status of the listing transaction
+ */
+export const tListingTransactionStatus = {
+    request: 'request',
+    accepted: 'accepted',
+    rejected: 'rejected',
+    success: 'success',
+    closed: 'closed',
+    expired: 'expired'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tListingTransactionStatus = typeof tListingTransactionStatus[keyof typeof tListingTransactionStatus];
+
+/**
+ * Filter object for listing transaction collection
+ */
+export type tListingTransactionFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+    status?: tListingTransactionStatus;
+    side?: tListingTransactionSide;
+};
+
+/**
+ * Collection of listing transactions
+ */
+export type tListingTransactionCollection = {
+    data: Array<tListingTransaction>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing transaction data
+ */
+export type tListingTransaction = {
+    /**
+     * ID of the transaction
+     */
+    id: string;
+    /**
+     * ID of the related listing
+     */
+    listingId: string;
+    status: tListingTransactionStatus;
+    side: tListingTransactionSide;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+};
+
+/**
  * Data for toggling a flag on a listing
  */
 export type tListingFlagToggle = {
@@ -2502,6 +2672,52 @@ export type tApiListingFlagToggleResponse = {
 };
 
 export type apiListingFlagToggleResponse = tApiListingFlagToggleResponse[keyof tApiListingFlagToggleResponse];
+
+export type tApiListingTransactionCollectionRequest = {
+    body?: tListingTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-transaction/collection';
+};
+
+export type tApiListingTransactionCollectionResponse = {
+    /**
+     * Access collection of listing transactions based on provided query
+     */
+    200: tListingTransactionCollection;
+};
+
+export type apiListingTransactionCollectionResponse = tApiListingTransactionCollectionResponse[keyof tApiListingTransactionCollectionResponse];
+
+export type tApiListingTransactionCreateRequest = {
+    /**
+     * Data for creating a new listing transaction
+     */
+    body?: tListingTransactionCreate;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-transaction/create';
+};
+
+export type apiListingTransactionCreateErrors = {
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Failed to create transaction
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionCreateError = apiListingTransactionCreateErrors[keyof apiListingTransactionCreateErrors];
+
+export type tApiListingTransactionCreateResponse = {
+    /**
+     * The listing transaction was created
+     */
+    201: unknown;
+};
 
 export type tApiListingScoreCollectionRequest = {
     body?: tListingScoreQuery;

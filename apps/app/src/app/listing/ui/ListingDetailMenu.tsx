@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import { useNavigate, useParams } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -8,8 +8,9 @@ import type { tListing } from "@zbav-se.me/sdk/api/session";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { CartIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { CartIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
 
 export namespace ListingDetailMenu {
 	export interface Props extends Container.Props {
@@ -21,6 +22,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 	const { locale } = useParams({
 		from: "/$locale",
 	});
+	const navigate = useNavigate();
 
 	const listingCartCount = withListingCartCountQuery.useSuspenseQuery({});
 
@@ -48,18 +50,16 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 			>
 				{/** biome-ignore lint/correctness/noConstantCondition: <explanation> */}
 				{true ? (
-					<Button
-						label={"Start transaction (button)"}
-						iconEnabled={TransactionIcon}
-						disabled={listingCartToggle.isPending}
-						loading={listingCartToggle.isPending}
-						tone={"primary"}
-						theme={"dark"}
-						onClick={() => {
-							// transaciton start
+					<ListingTransactionCreateButton
+						listing={listing}
+						onPostMutation={() => {
+							return navigate({
+								to: "/$locale/buyer/transaction/list",
+								params: {
+									locale,
+								},
+							});
 						}}
-						size={"xl"}
-						full
 					/>
 				) : null}
 

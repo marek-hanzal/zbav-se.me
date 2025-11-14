@@ -19,9 +19,6 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
   ref: Upload (title)
   value: Upload (title)
-0c9fd2c1be3e9357f6ce010004cc93f4e2859ef4e62274ab72a0c42f:
-  ref: Cart (label)
-  value: Cart (label)
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -154,15 +151,15 @@
 4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
   ref: Next - feed submit (button)
   value: Next - feed submit (button)
+4df609ad7c71de7afb6404a01aca110553102d31c815f4f6969ea9bd:
+  ref: No transactions found (title)
+  value: No transactions found (title)
 4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
   ref: Second tap to unignore listing (toast)
   value: Second tap to unignore listing (toast)
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
   ref: Next - price (button)
   value: Next - price (button)
-4f3885321d39082d377d54a2de1e45a2618a3821847c68a3a2c66def:
-  ref: I want to sell (message)
-  value: I want to sell (message)
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
   ref: currency
   value: currency
@@ -214,9 +211,6 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
-6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
-  ref: User profile (label)
-  value: User profile (label)
 6ebda19c4bb7b7ce06704892a9a18c9d655f820d4d1c6807d2abb8d3:
   ref: Next - location (button)
   value: Next - location (button)
@@ -259,9 +253,6 @@
 7e472530689c600917abb98ada2c43213c4477f22ac6cde0c7acfa8e:
   ref: Add to cart (button)
   value: Add to cart (button)
-7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
-  ref: I want to sell (label)
-  value: I want to sell (label)
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
   ref: unused
   value: unused
@@ -289,15 +280,9 @@
 89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
   ref: Listing - upload photo (placeholder)
   value: Listing - upload photo (placeholder)
-8c00fb88a09730194dd045f089bbea7de140bf5478b6e0626ba8b28d:
-  ref: Transactions (label)
-  value: Transactions (label)
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
   ref: Feed location (label)
   value: Feed location (label)
-8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
-  ref: Feed (label)
-  value: Feed (label)
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -307,9 +292,6 @@
 96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
   ref: Invalid/missing fields
   value: Invalid/missing fields
-98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
-  ref: Create listing (label)
-  value: Create listing (label)
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
   ref: Submit (title)
   value: Submit (title)
@@ -349,9 +331,6 @@ aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
 ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
   ref: Listing ignored (toast)
   value: Listing ignored (toast)
-adf13536166dfdbd18457a466b4ee4300cea92a22d19e264c8da97cf:
-  ref: I want to buy (message)
-  value: I want to buy (message)
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
   ref: Listing expire at (label)
   value: Listing expire at (label)
@@ -388,9 +367,6 @@ b8bae7ce48064a4e0a2cb39f242622ece9bb3c7b040bdbddbbb57060:
 b8fe81073164a598978b3692d0332bccff635f6946c9a8dd409323fc:
   ref: Listing Score - Ignore - no value (label)
   value: Listing Score - Ignore - no value (label)
-ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
-  ref: My listings (label)
-  value: My listings (label)
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
@@ -438,9 +414,6 @@ ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
 cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
   ref: Submit - feed (button)
   value: Submit - feed (button)
-cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
-  ref: I want to buy (label)
-  value: I want to buy (label)
 d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f:
   ref: ""
   value: ""
@@ -459,6 +432,9 @@ d34f82524280082cefa6d9bcf5d2a6b10f418dffd078c804aafcfa74:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
+  ref: Feed selection (button)
+  value: Feed selection (button)
 d7f992496335423aba74c57614c83dd4949c4fdc39e6cc905580b45d:
   ref: Feed detail (title)
   value: Feed detail (title)
@@ -492,9 +468,6 @@ e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)
-e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
-  ref: Shop (label)
-  value: Shop (label)
 e590492a612b479610ce9aeb09c55b9eb483968a6a924ff1d9791aa1:
   ref: Feed - next and save (button)
   value: Feed - next and save (button)
@@ -522,6 +495,9 @@ f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
 f40aebfe8ac1d83e7b93e069db67a2a93e47c887cab40eb726e6dc1f:
   ref: Go to feed wizard (button)
   value: Go to feed wizard (button)
+f5513d5f7d579cdb6e7850c2fad5c44887f60cbb050953936cd717a7:
+  ref: No transactions found (message)
+  value: No transactions found (message)
 f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
   ref: Second tap to unflag listing (toast)
   value: Second tap to unflag listing (toast)

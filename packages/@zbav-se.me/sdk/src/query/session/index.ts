@@ -10,6 +10,7 @@ export { withListingCollectionQuery } from "./withListingCollectionQuery";
 export { withListingCountQuery } from "./withListingCountQuery";
 export { withListingFetchQuery } from "./withListingFetchQuery";
 export { withListingMetricsFetchQuery } from "./withListingMetricsFetchQuery";
+export { withListingTransactionCollectionQuery } from "./withListingTransactionCollectionQuery";
 export { withLocationAutocompleteQuery } from "./withLocationAutocompleteQuery";
 export { withLocationFetchQuery } from "./withLocationFetchQuery";
 export { withUploadFetchQuery } from "./withUploadFetchQuery";

@@ -450,6 +450,169 @@ export const sListingScore = {
     required: ['id', 'listingId', 'type', 'score', 'createdAt']
 } as const;
 
+export const sListingTransactionCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: ['listingId']
+} as const;
+
+export const sListingTransactionQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingTransactionFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingTransactionWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingTransactionSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingTransactionSortField = {
+    type: 'string',
+    enum: ['createdAt', 'updatedAt', 'expiresAt']
+} as const;
+
+export const sListingTransactionSort = {
+    type: 'object',
+    properties: {
+        field: {
+            '$ref': '#/components/schemas/ListingTransactionSortField'
+        },
+        direction: {
+            '$ref': '#/components/schemas/Order'
+        }
+    },
+    required: ['field', 'direction']
+} as const;
+
+export const sListingTransactionWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            '$ref': '#/components/schemas/ListingTransactionSide'
+        }
+    }
+} as const;
+
+export const sListingTransactionSide = {
+    type: 'string',
+    enum: ['seller', 'buyer', 'transaction', 'system', 'unknown']
+} as const;
+
+export const sListingTransactionStatus = {
+    type: 'string',
+    enum: ['request', 'accepted', 'rejected', 'success', 'closed', 'expired']
+} as const;
+
+export const sListingTransactionFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            '$ref': '#/components/schemas/ListingTransactionSide'
+        }
+    }
+} as const;
+
+export const sListingTransactionCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingTransaction'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sListingTransaction = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        status: {
+            '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            '$ref': '#/components/schemas/ListingTransactionSide'
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        expiresAt: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'listingId', 'status', 'side', 'createdAt', 'updatedAt', 'expiresAt']
+} as const;
+
 export const sListingFlagToggle = {
     type: 'object',
     properties: {
