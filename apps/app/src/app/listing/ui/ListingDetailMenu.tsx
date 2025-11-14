@@ -46,6 +46,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 					theme: "light",
 				}}
 			>
+				{/** biome-ignore lint/correctness/noConstantCondition: <explanation> */}
 				{true ? (
 					<Button
 						label={"Start transaction (button)"}

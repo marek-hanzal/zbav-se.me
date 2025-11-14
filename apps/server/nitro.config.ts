@@ -6,16 +6,16 @@ export default defineNitroConfig({
 			target: "node22",
 		},
 	},
-	vercel: {
-		config: {
-			crons: [
-				{
-					path: "/api/public/janitor/cleanup",
-					schedule: "0 0 * * *",
-				},
-			],
-		},
-	},
+	// vercel: {
+	// 	config: {
+	// 		crons: [
+	// 			{
+	// 				path: "/api/public/janitor/cleanup",
+	// 				schedule: "0 0 * * *",
+	// 			},
+	// 		],
+	// 	},
+	// },
 	compatibilityDate: "latest",
 	preset: "vercel",
 	srcDir: "src",

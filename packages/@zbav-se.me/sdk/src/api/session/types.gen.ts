@@ -1367,43 +1367,6 @@ export type tListing = {
 };
 
 /**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
-};
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    direction: tOrder;
-};
-
-/**
  * Data for creating a new listing
  */
 export type tListingCreate = {
@@ -1563,6 +1526,43 @@ export type tFeedCollection = {
 };
 
 /**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrder;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
+
+/**
  * Feed data
  */
 export type tFeed = {
@@ -1578,9 +1578,7 @@ export type tFeed = {
      * Name of the feed
      */
     name: string;
-    filter?: tListingFilter;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
+    query: tListingQuery;
 };
 
 /**
@@ -1671,9 +1669,10 @@ export type tFeedPatch = {
      * ID of the location associated with the feed
      */
     locationId?: string | null;
-    filter?: tListingFilter;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
+    /**
+     * Query configuration for the feed (listing)
+     */
+    query?: tListingQuery | null;
 };
 
 /**
@@ -1688,9 +1687,7 @@ export type tFeedCreate = {
      * ID of the location associated with the feed
      */
     locationId?: string | null;
-    filter: tListingFilter;
-    sort: Array<tListingSort>;
-    meta: tListingMeta;
+    query: tListingQuery;
 };
 
 /**

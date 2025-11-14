@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/title")({
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
 		const [change, setChange] = useState(false);
-		const [title, setTitle] = useState(feed.filter?.title || "");
+		const [title, setTitle] = useState(feed.query?.filter?.title || "");
 
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
@@ -72,9 +72,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/title")({
 
 							feedPatchMutation.mutate({
 								id: feed.id,
-								filter: {
-									...feed.filter,
-									title,
+								query: {
+									...feed.query,
+									filter: {
+										...feed.query?.filter,
+										title,
+									},
 								},
 							});
 						}}

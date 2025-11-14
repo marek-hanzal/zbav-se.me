@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/age")({
 
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "multi",
-			initial: state.filter?.ageIn?.map((item) => ({
+			initial: state.query?.filter?.ageIn?.map((item) => ({
 				id: String(item),
 			})),
 		});
@@ -33,9 +33,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/age")({
 						params={{
 							locale,
 						}}
-						search={{
-							...state,
-						}}
+						search={state}
 						tone={"secondary"}
 					/>
 				}
@@ -64,9 +62,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/age")({
 						}}
 						search={{
 							...state,
-							filter: {
-								...state.filter,
-								ageIn,
+							query: {
+								...state.query,
+								filter: {
+									...state.query?.filter,
+									ageIn,
+								},
 							},
 						}}
 						full

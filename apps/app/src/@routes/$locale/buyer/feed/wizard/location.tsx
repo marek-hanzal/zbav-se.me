@@ -13,7 +13,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const [locationId, setLocationId] = useState(state?.locationId);
-		const [latLon, setLatLon] = useState(state.meta?.latLon);
+		const [latLon, setLatLon] = useState(state.query?.meta?.latLon);
 
 		return (
 			<TitleContainer
@@ -37,9 +37,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 						search={{
 							...state,
 							locationId,
-							meta: {
-								...state.meta,
-								latLon,
+							query: {
+								...state.query,
+								meta: {
+									...state.query?.meta,
+									latLon,
+								},
 							},
 						}}
 						full

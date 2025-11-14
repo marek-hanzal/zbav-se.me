@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 		const navigate = Route.useNavigate();
 		const selection = useSelection<EntitySchema.Type>({
 			mode: "multi",
-			initial: state.filter?.categoryIdIn?.map((id) => ({
+			initial: state.query?.filter?.categoryIdIn?.map((id) => ({
 				id,
 			})),
 		});
@@ -33,9 +33,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 						params={{
 							locale,
 						}}
-						search={{
-							...state,
-						}}
+						search={state}
 						tone={"secondary"}
 					/>
 				}
@@ -64,9 +62,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 						}}
 						search={{
 							...state,
-							filter: {
-								...state.filter,
-								categoryIdIn: categoryIds,
+							query: {
+								...state.query,
+								filter: {
+									...state.query?.filter,
+									categoryIdIn: categoryIds,
+								},
 							},
 						}}
 						full

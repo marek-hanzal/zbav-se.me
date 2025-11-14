@@ -42,11 +42,11 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 	const categoryCollectionQuery = withCategoryCollectionQuery.useQuery(
 		{
 			where: {
-				idIn: feed.filter?.categoryIdIn ?? undefined,
+				idIn: feed.query?.filter?.categoryIdIn ?? undefined,
 			},
 		},
 		{
-			enabled: !!feed.filter?.categoryIdIn?.length,
+			enabled: !!feed.query?.filter?.categoryIdIn?.length,
 		},
 	);
 
@@ -97,7 +97,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 
 				<BadgeValue
 					textLabel={"Feed title (label)"}
-					textValue={feed.filter?.title || "Feed title not filled"}
+					textValue={feed.query?.filter?.title || "Feed title not filled"}
 					action={
 						feed.id ? (
 							<LinkTo
@@ -155,7 +155,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				<ContainerValueList
 					textTitle={"Feed sorting (label)"}
 					textEmpty={"Feed sorting not selected"}
-					items={(feed.sort ?? []).map((sortItem, index) => ({
+					items={(feed.query?.sort ?? []).map((sortItem, index) => ({
 						id: `${sortItem.field}-${index}`,
 						...sortItem,
 					}))}
@@ -233,7 +233,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				<ContainerValueList
 					textTitle={"Feed condition (label)"}
 					textEmpty={"Feed condition not selected"}
-					items={(feed.filter?.conditionIn ?? []).map((condition) => ({
+					items={(feed.query?.filter?.conditionIn ?? []).map((condition) => ({
 						id: String(condition),
 						condition,
 					}))}
@@ -257,7 +257,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				<ContainerValueList
 					textTitle={"Feed age (label)"}
 					textEmpty={"Feed age not selected"}
-					items={(feed.filter?.ageIn ?? []).map((age) => ({
+					items={(feed.query?.filter?.ageIn ?? []).map((age) => ({
 						id: String(age),
 						age,
 					}))}
@@ -284,11 +284,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								locale,
 							}}
 							search={{
-								query: {
-									filter: feed.filter,
-									sort: feed.sort,
-									meta: feed.meta,
-								},
+								query: feed.query,
 							}}
 							full
 						>

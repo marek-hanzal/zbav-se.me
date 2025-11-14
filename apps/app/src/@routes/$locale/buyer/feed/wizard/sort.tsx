@@ -13,7 +13,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [sort, setSort] = useState(state.sort ?? []);
+		const [sort, setSort] = useState(state.query?.sort ?? []);
 
 		return (
 			<TitleContainer
@@ -25,9 +25,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 						params={{
 							locale,
 						}}
-						search={{
-							...state,
-						}}
+						search={state}
 						tone={"secondary"}
 					/>
 				}
@@ -56,7 +54,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 						}}
 						search={{
 							...state,
-							sort,
+							query: {
+								...state.query,
+								sort,
+							},
 						}}
 						full
 					>
@@ -73,7 +74,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 				}
 			>
 				<ListingSortSelect
-					withGeo={!!state.meta?.latLon}
+					withGeo={!!state.query?.meta?.latLon}
 					value={sort}
 					onChange={setSort}
 				/>

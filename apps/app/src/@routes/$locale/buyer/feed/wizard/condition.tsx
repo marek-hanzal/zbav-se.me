@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "multi",
-			initial: state.filter?.conditionIn?.map((item) => ({
+			initial: state.query?.filter?.conditionIn?.map((item) => ({
 				id: String(item),
 			})),
 		});
@@ -33,9 +33,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 						params={{
 							locale,
 						}}
-						search={{
-							...state,
-						}}
+						search={state}
 						tone={"secondary"}
 					/>
 				}
@@ -64,9 +62,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 						}}
 						search={{
 							...state,
-							filter: {
-								...state.filter,
-								conditionIn,
+							query: {
+								...state.query,
+								filter: {
+									...state.query?.filter,
+									conditionIn,
+								},
 							},
 						}}
 						full

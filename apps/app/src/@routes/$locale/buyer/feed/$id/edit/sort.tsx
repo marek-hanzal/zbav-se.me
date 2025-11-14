@@ -15,7 +15,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/sort")({
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
 		const [change, setChange] = useState(false);
-		const [sort, setSort] = useState(feed.sort ?? []);
+		const [sort, setSort] = useState(feed.query?.sort ?? []);
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
@@ -71,14 +71,17 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/sort")({
 
 							feedPatchMutation.mutate({
 								id: feed.id,
-								sort,
+								query: {
+									...feed.query,
+									sort,
+								},
 							});
 						}}
 					/>
 				}
 			>
 				<ListingSortSelect
-					withGeo={!!feed.meta?.latLon}
+					withGeo={!!feed.query?.meta?.latLon}
 					value={sort}
 					onChange={(value) => {
 						setChange(true);

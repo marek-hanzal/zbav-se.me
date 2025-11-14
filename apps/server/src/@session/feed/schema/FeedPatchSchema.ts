@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { FeedQuerySchema } from "./FeedQuerySchema";
+import { ListingQuerySchema } from "../../listing/schema/ListingQuerySchema";
 
 export const FeedPatchSchema = z
 	.object({
@@ -12,7 +12,7 @@ export const FeedPatchSchema = z
 		}),
 		query: z
 			.union([
-				FeedQuerySchema,
+				ListingQuerySchema,
 				z.null(),
 			])
 			.optional()

@@ -1394,48 +1394,6 @@ export const sListing = {
     required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery', 'isInCart', 'isIgnored', 'hasFlag']
 } as const;
 
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            '$ref': '#/components/schemas/Cursor'
-        },
-        filter: {
-            '$ref': '#/components/schemas/ListingFilter'
-        },
-        where: {
-            '$ref': '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            '$ref': '#/components/schemas/ListingMeta'
-        }
-    }
-} as const;
-
-export const sListingSortField = {
-    type: 'string',
-    enum: ['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt', 'geo']
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            '$ref': '#/components/schemas/ListingSortField'
-        },
-        direction: {
-            '$ref': '#/components/schemas/Order'
-        }
-    },
-    required: ['field', 'direction']
-} as const;
-
 export const sListingCreate = {
     type: 'object',
     properties: {
@@ -1604,6 +1562,48 @@ export const sFeedCollection = {
     required: ['data', 'more']
 } as const;
 
+export const sListingSortField = {
+    type: 'string',
+    enum: ['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt', 'geo']
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            '$ref': '#/components/schemas/ListingSortField'
+        },
+        direction: {
+            '$ref': '#/components/schemas/Order'
+        }
+    },
+    required: ['field', 'direction']
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingSort'
+            }
+        },
+        meta: {
+            '$ref': '#/components/schemas/ListingMeta'
+        }
+    }
+} as const;
+
 export const sFeed = {
     type: 'object',
     properties: {
@@ -1616,20 +1616,11 @@ export const sFeed = {
         name: {
             type: 'string'
         },
-        filter: {
-            '$ref': '#/components/schemas/ListingFilter'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            '$ref': '#/components/schemas/ListingMeta'
+        query: {
+            '$ref': '#/components/schemas/ListingQuery'
         }
     },
-    required: ['id', 'name']
+    required: ['id', 'name', 'query']
 } as const;
 
 export const sFeedQuery = {
@@ -1727,17 +1718,18 @@ export const sFeedPatch = {
         locationId: {
             type: ['string', 'null']
         },
-        filter: {
-            '$ref': '#/components/schemas/ListingFilter'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            '$ref': '#/components/schemas/ListingMeta'
+        query: {
+            anyOf: [
+                {
+                    '$ref': '#/components/schemas/ListingQuery'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: ['id']
@@ -1753,20 +1745,11 @@ export const sFeedCreate = {
         locationId: {
             type: ['string', 'null']
         },
-        filter: {
-            '$ref': '#/components/schemas/ListingFilter'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                '$ref': '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            '$ref': '#/components/schemas/ListingMeta'
+        query: {
+            '$ref': '#/components/schemas/ListingQuery'
         }
     },
-    required: ['name', 'filter', 'sort', 'meta']
+    required: ['name', 'query']
 } as const;
 
 export const sCategoryCartQuery = {

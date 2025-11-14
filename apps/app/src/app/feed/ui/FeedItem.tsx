@@ -4,7 +4,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tFeed, tListingQuery } from "@zbav-se.me/sdk/api/session";
+import type { tFeed } from "@zbav-se.me/sdk/api/session";
 import { withListingCountQuery } from "@zbav-se.me/sdk/query/session";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -17,13 +17,7 @@ export namespace FeedItem {
 }
 
 export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
-	const query: tListingQuery = {
-		filter: feed.filter,
-		sort: feed.sort,
-		meta: feed.meta,
-	};
-
-	const listingCountQuery = withListingCountQuery.useSuspenseQuery(query);
+	const listingCountQuery = withListingCountQuery.useSuspenseQuery(feed.query);
 
 	return (
 		<Badge
@@ -52,7 +46,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					locale,
 				}}
 				search={{
-					query,
+					query: feed.query,
 				}}
 				iconPosition={"right"}
 				full

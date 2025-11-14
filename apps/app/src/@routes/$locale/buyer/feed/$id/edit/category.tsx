@@ -20,7 +20,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 
 		const selection = useSelection<EntitySchema.Type>({
 			mode: "multi",
-			initial: feed.filter?.categoryIdIn?.map((id) => ({
+			initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
 				id,
 			})),
 			onMulti() {
@@ -85,9 +85,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 
 							feedPatchMutation.mutate({
 								id: feed.id,
-								filter: {
-									...feed.filter,
-									categoryIdIn: categoryIds,
+								query: {
+									...feed.query,
+									filter: {
+										...feed.query?.filter,
+										categoryIdIn: categoryIds,
+									},
 								},
 							});
 						}}

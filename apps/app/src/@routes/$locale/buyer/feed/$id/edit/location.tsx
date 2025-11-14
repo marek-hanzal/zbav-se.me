@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 		const navigate = Route.useNavigate();
 		const [change, setChange] = useState(false);
 		const [locationId, setLocationId] = useState(feed.locationId);
-		const [latLon, setLatLon] = useState(feed.meta?.latLon);
+		const [latLon, setLatLon] = useState(feed.query?.meta?.latLon);
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
@@ -59,9 +59,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 							feedPatchMutation.mutate({
 								id: feed.id,
 								locationId,
-								meta: {
-									...feed.meta,
-									latLon,
+								query: {
+									...feed.query,
+									meta: {
+										...feed.query?.meta,
+										latLon,
+									},
 								},
 							});
 						}}

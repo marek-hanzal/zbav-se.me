@@ -13,7 +13,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [title, setTitle] = useState(state.filter?.title || "");
+		const [title, setTitle] = useState(state.query?.filter?.title || "");
 
 		return (
 			<TitleContainer
@@ -54,9 +54,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 						}}
 						search={{
 							...state,
-							filter: {
-								...state.filter,
-								title,
+							query: {
+								...state.query,
+								filter: {
+									...state.query?.filter,
+									title,
+								},
 							},
 						}}
 						full

@@ -18,7 +18,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 		const [change, setChange] = useState(false);
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "multi",
-			initial: feed.filter?.conditionIn?.map((item) => ({
+			initial: feed.query?.filter?.conditionIn?.map((item) => ({
 				id: String(item),
 			})),
 			onMulti() {
@@ -86,9 +86,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 
 							feedPatchMutation.mutate({
 								id: feed.id,
-								filter: {
-									...feed.filter,
-									conditionIn,
+								query: {
+									...feed.query,
+									filter: {
+										...feed.query?.filter,
+										conditionIn,
+									},
 								},
 							});
 						}}

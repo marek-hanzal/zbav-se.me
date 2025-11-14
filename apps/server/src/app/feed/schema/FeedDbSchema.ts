@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { FeedQuerySchema } from "../../../@session/feed/schema/FeedQuerySchema";
+import { ListingQuerySchema } from "../../../@session/listing/schema/ListingQuerySchema";
 
 export const FeedDbSchema = z.object({
 	id: z.string().openapi({
@@ -15,7 +15,7 @@ export const FeedDbSchema = z.object({
 	name: z.string().openapi({
 		description: "Name of the feed",
 	}),
-	query: FeedQuerySchema,
+	query: ListingQuerySchema,
 	//
 	createdAt: z.coerce.date().openapi({
 		description: "Creation timestamp",

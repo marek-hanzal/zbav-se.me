@@ -15,10 +15,10 @@ export type zapiHealthRequest = z.infer<typeof zApiHealthData>;
  */
 export const zApiHealthResponse = z.object({
     status: z.boolean().register(z.globalRegistry, {
-        description: 'Health status'
+        description: "Health status"
     })
 }).register(z.globalRegistry, {
-    description: 'Just health check'
+    description: "Just health check"
 });
 
 export type zapiHealthResponse = z.infer<typeof zApiHealthResponse>;
