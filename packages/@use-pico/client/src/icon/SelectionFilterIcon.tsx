@@ -1,2 +1,1 @@
-export const SelectionFilterIcon =
-	"icon-[material-symbols--move-selection-left-rounded]";
+export const SelectionFilterIcon = "icon-[material-symbols--move-selection-left-rounded]";

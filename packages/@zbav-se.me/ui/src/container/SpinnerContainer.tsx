@@ -11,11 +11,7 @@ export namespace SpinnerContainer {
 	}
 }
 
-export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
-	disableOverlay = false,
-	statusProps,
-	...props
-}) => {
+export const SpinnerContainer: FC<SpinnerContainer.Props> = ({ disableOverlay = false, statusProps, ...props }) => {
 	return (
 		<Container
 			square={"md"}

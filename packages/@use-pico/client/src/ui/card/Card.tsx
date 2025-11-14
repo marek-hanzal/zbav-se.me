@@ -29,8 +29,7 @@ import { CardCls } from "./CardCls";
  * ```
  */
 export namespace Card {
-	export interface Item<TValues extends Record<string, any>>
-		extends Omit<Attr.Props, "value"> {
+	export interface Item<TValues extends Record<string, any>> extends Omit<Attr.Props, "value"> {
 		id: string;
 		render: FC<Entity.Type<TValues>>;
 	}
@@ -40,8 +39,7 @@ export namespace Card {
 	 *
 	 * @template TSchema Entity schema used to render the card.
 	 */
-	export interface Props<TValues extends Record<string, any>>
-		extends CardCls.Props<Entity.Type<TValues>> {
+	export interface Props<TValues extends Record<string, any>> extends CardCls.Props<Entity.Type<TValues>> {
 		ref?: Ref<HTMLDivElement>;
 		/**
 		 * Items to render in the card using specified schema.
@@ -57,10 +55,7 @@ export namespace Card {
 	 *
 	 * @template TValues Values used to render the card.
 	 */
-	export type PropsEx<TValues extends Record<string, any>> = Omit<
-		Props<TValues>,
-		"items"
-	>;
+	export type PropsEx<TValues extends Record<string, any>> = Omit<Props<TValues>, "items">;
 }
 
 export const Card = <TValues extends Record<string, any>>({

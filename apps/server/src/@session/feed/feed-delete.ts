@@ -13,8 +13,7 @@ export const withFeedDeleteApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "delete",
 			path: "/feed/delete",
-			description:
-				"Delete a feed item based on the provided query (user-specific)",
+			description: "Delete a feed item based on the provided query (user-specific)",
 			operationId: "apiFeedDelete",
 			request: {
 				body: {
@@ -63,34 +62,28 @@ export const withFeedDeleteApi: Routes.Fn = ({ sessionHono }) => {
 			const { filter, where } = json;
 
 			try {
-				const feed = await database.kysely
-					.transaction()
-					.execute(async (trx) => {
-						const feed = await withFetch({
-							select: withFeedSelect({
-								sort: [],
-							}),
-							output: FeedSchema,
-							filter,
-							where: {
-								...where,
-								userId: user.id,
-							},
-							query: withFeedQueryBuilder,
-						});
-
-						if (!feed) {
-							return null;
-						}
-
-						await trx
-							.deleteFrom("feed")
-							.where("id", "=", feed.id)
-							.where("userId", "=", user.id)
-							.execute();
-
-						return feed;
+				const feed = await database.kysely.transaction().execute(async (trx) => {
+					const feed = await withFetch({
+						select: withFeedSelect({
+							sort: [],
+						}),
+						output: FeedSchema,
+						filter,
+						where: {
+							...where,
+							userId: user.id,
+						},
+						query: withFeedQueryBuilder,
 					});
+
+					if (!feed) {
+						return null;
+					}
+
+					await trx.deleteFrom("feed").where("id", "=", feed.id).where("userId", "=", user.id).execute();
+
+					return feed;
+				});
 
 				if (!feed) {
 					return c.json<MessageSchema.Type, 404>(

@@ -7,9 +7,7 @@ export const ListingFlagMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
+			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
 				"listing_flag_[userId]_fk",
 				[
@@ -38,22 +36,10 @@ export const ListingFlagMigration: Migration = {
 			])
 			.execute();
 
-		await db.schema
-			.createIndex("listing_flag_[userId]_idx")
-			.on("listing_flag")
-			.column("userId")
-			.execute();
+		await db.schema.createIndex("listing_flag_[userId]_idx").on("listing_flag").column("userId").execute();
 
-		await db.schema
-			.createIndex("listing_flag_[listingId]_idx")
-			.on("listing_flag")
-			.column("listingId")
-			.execute();
+		await db.schema.createIndex("listing_flag_[listingId]_idx").on("listing_flag").column("listingId").execute();
 
-		await db.schema
-			.createIndex("listing_flag_[createdAt]_idx")
-			.on("listing_flag")
-			.column("createdAt")
-			.execute();
+		await db.schema.createIndex("listing_flag_[createdAt]_idx").on("listing_flag").column("createdAt").execute();
 	},
 };

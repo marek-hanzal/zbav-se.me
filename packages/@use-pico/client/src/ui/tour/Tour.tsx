@@ -1,12 +1,6 @@
 import type { Placement } from "@floating-ui/react";
 import { useCls } from "@use-pico/cls";
-import {
-	type FC,
-	type ReactNode,
-	useCallback,
-	useEffect,
-	useState,
-} from "react";
+import { type FC, type ReactNode, useCallback, useEffect, useState } from "react";
 import { useHighlightRectangle } from "../../hook/useHighlightRectangle";
 import { useInViewport } from "../../hook/useInViewport";
 import { ArrowLeftIcon } from "../../icon/ArrowLeftIcon";
@@ -151,11 +145,7 @@ const DefaultDescription: Tour.Description.RenderFn = ({ description }) => {
 	);
 };
 
-const DefaultProgress: Tour.Progress.RenderFn = ({
-	progress,
-	percent,
-	total,
-}) => {
+const DefaultProgress: Tour.Progress.RenderFn = ({ progress, percent, total }) => {
 	return (
 		<Typo
 			label={`${progress} / ${total} (${percent.toFixed(0)}%)`}
@@ -225,9 +215,7 @@ export const Tour: FC<Tour.Props> = ({
 
 	const currentStep = steps[currentStepIndex];
 
-	const { targetElement, boundingRectangle } = useHighlightRectangle(
-		currentStep?.selector,
-	);
+	const { targetElement, boundingRectangle } = useHighlightRectangle(currentStep?.selector);
 
 	const targetInView = useInViewport(targetElement, {
 		threshold: 1,
@@ -260,8 +248,7 @@ export const Tour: FC<Tour.Props> = ({
 	]);
 
 	const goToNext = useCallback(() => {
-		if (currentStepIndex < steps.length - 1)
-			setCurrentStepIndex((i) => i + 1);
+		if (currentStepIndex < steps.length - 1) setCurrentStepIndex((i) => i + 1);
 		else {
 			handleClose();
 		}
@@ -341,9 +328,7 @@ export const Tour: FC<Tour.Props> = ({
 									isLast,
 									progress: currentStepIndex + 1,
 									total: steps.length,
-									percent:
-										(100 / steps.length) *
-										(currentStepIndex + 1),
+									percent: (100 / steps.length) * (currentStepIndex + 1),
 								})}
 
 								{renderClose({

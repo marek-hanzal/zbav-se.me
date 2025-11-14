@@ -12,8 +12,7 @@ export const withListingCartCountApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-cart/count",
-			description:
-				"Returns count of listing cart items based on provided query",
+			description: "Returns count of listing cart items based on provided query",
 			operationId: "apiListingCartCount",
 			request: {
 				body: {

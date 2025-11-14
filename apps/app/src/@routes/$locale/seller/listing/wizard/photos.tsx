@@ -16,9 +16,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const [uploadIds, setUploadIds] = useState<string[]>(
-			state.uploadIds ?? [],
-		);
+		const [uploadIds, setUploadIds] = useState<string[]>(state.uploadIds ?? []);
 
 		/**
 		 * TODO Resolve photo limit from the user's tokens/plan/whatever
@@ -115,16 +113,12 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 									value={uploadIds[slot]}
 									onChange={(uploadId) => {
 										setUploadIds((prev) => {
-											const next: (string | undefined)[] =
-												[
-													...prev,
-												];
+											const next: (string | undefined)[] = [
+												...prev,
+											];
 											next[slot] = uploadId;
 
-											const compact: string[] =
-												next.filter(
-													(f): f is string => !!f,
-												);
+											const compact: string[] = next.filter((f): f is string => !!f);
 
 											return compact;
 										});

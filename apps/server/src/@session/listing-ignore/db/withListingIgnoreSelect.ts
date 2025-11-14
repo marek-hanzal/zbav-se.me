@@ -10,9 +10,7 @@ export namespace withListingIgnoreSelect {
 	export type Select = ReturnType<typeof withListingIgnoreSelect>;
 }
 
-export const withListingIgnoreSelect = ({
-	sort,
-}: withListingIgnoreSelect.Props) => {
+export const withListingIgnoreSelect = ({ sort }: withListingIgnoreSelect.Props) => {
 	const query = database.kysely.selectFrom("listing_ignore as li").select([
 		"li.id",
 		"li.listingId",
@@ -20,9 +18,7 @@ export const withListingIgnoreSelect = ({
 
 	for (const item of sort ?? []) {
 		return match(item.field)
-			.with("createdAt", () =>
-				query.orderBy("li.createdAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("li.createdAt", item.direction))
 			.exhaustive();
 	}
 

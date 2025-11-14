@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -32,10 +28,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 							: toLocaleNumber({
 									number: parseFloat(price),
 									locale,
-									currency:
-										countryToCurrency[
-											locale as countryToCurrency.Key
-										],
+									currency: countryToCurrency[locale as countryToCurrency.Key],
 									style: "currency",
 									trailingZeroDisplay: "stripIfInteger",
 								})

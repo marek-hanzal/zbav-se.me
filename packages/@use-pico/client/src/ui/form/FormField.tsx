@@ -76,11 +76,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 					className={slots.header()}
 				>
 					{label || meta?.errors?.length ? (
-						<div
-							className={
-								"flex flex-row items-end justify-between"
-							}
-						>
+						<div className={"flex flex-row items-end justify-between"}>
 							{label ? (
 								<Typo
 									size={"md"}
@@ -90,9 +86,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 							) : (
 								<div />
 							)}
-							{meta?.errors?.length ? (
-								<FormError meta={meta} />
-							) : null}
+							{meta?.errors?.length ? <FormError meta={meta} /> : null}
 						</div>
 					) : null}
 					{hint ? (

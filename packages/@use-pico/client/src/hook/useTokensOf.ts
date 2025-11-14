@@ -13,10 +13,7 @@ export namespace useTokenOf {
  *
  * @group hooks
  */
-export const useTokensOf = ({
-	tokens,
-	source,
-}: useTokenOf.Props): TokenType.Result => {
+export const useTokensOf = ({ tokens, source }: useTokenOf.Props): TokenType.Result => {
 	const diff = diffOf(
 		/**
 		 * Required tokens.

@@ -5,10 +5,7 @@ import type { Table } from "../Table";
 import { RangeFilter } from "./RangeFilter";
 
 export namespace withRangeFilter {
-	export interface Props<
-		TData extends EntitySchema.Type,
-		TFilter extends withQuerySchema.Query,
-	> {
+	export interface Props<TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query> {
 		/**
 		 * Path in data property to filter on.
 		 */
@@ -18,17 +15,11 @@ export namespace withRangeFilter {
 	}
 }
 
-export const withRangeFilter = <
-	TData extends EntitySchema.Type,
-	TFilter extends withQuerySchema.Query,
->({
+export const withRangeFilter = <TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query>({
 	path,
 	lte,
 	gte,
-}: withRangeFilter.Props<TData, TFilter>): Table.Filter.Props<
-	TData,
-	TFilter
-> => {
+}: withRangeFilter.Props<TData, TFilter>): Table.Filter.Props<TData, TFilter> => {
 	return {
 		reset({ state }) {
 			state.set({

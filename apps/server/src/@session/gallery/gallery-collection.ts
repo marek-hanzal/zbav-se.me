@@ -34,8 +34,7 @@ export const withGalleryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of gallery items based on provided query",
+					description: "Access collection of gallery items based on provided query",
 				},
 			},
 			tags: [

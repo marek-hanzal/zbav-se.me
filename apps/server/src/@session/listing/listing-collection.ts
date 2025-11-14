@@ -35,8 +35,7 @@ export const withListingCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of listings based on provided query",
+					description: "Access collection of listings based on provided query",
 				},
 			},
 			tags: [

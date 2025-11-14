@@ -4,30 +4,18 @@ import { useId } from "react";
 import type { Table } from "../Table";
 
 export namespace useRow {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
 		data: TData;
 		visible: Table.Column.Props<TQuery, TData, any, TContext>[];
 		context: TContext;
 	}
 }
 
-export const useRow = <
-	TQuery extends withQuerySchema.Query,
-	TData extends EntitySchema.Type,
-	TContext = any,
->({
+export const useRow = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
 	data,
 	visible,
 	context,
-}: useRow.Props<TQuery, TData, TContext>): Table.Row<
-	TQuery,
-	TData,
-	TContext
-> => {
+}: useRow.Props<TQuery, TData, TContext>): Table.Row<TQuery, TData, TContext> => {
 	const path = pathOf(data);
 	const id = useId();
 

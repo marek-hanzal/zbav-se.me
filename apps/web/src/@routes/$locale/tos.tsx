@@ -8,9 +8,7 @@ export const Route = createFileRoute("/$locale/tos")({
 			<Sheet>
 				<Status
 					textTitle={"ToS not available in this language (title)"}
-					textMessage={
-						"ToS not available in this language (description)"
-					}
+					textMessage={"ToS not available in this language (description)"}
 				/>
 			</Sheet>
 		);

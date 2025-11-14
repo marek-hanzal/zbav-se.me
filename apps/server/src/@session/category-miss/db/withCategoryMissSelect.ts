@@ -9,22 +9,14 @@ export namespace withCategoryMissSelect {
 	export type Select = ReturnType<typeof withCategoryMissSelect>;
 }
 
-export const withCategoryMissSelect = ({
-	sort,
-}: withCategoryMissSelect.Props = {}) => {
-	let query = database.kysely
-		.selectFrom("category_miss as cm")
-		.selectAll("cm");
+export const withCategoryMissSelect = ({ sort }: withCategoryMissSelect.Props = {}) => {
+	let query = database.kysely.selectFrom("category_miss as cm").selectAll("cm");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("category", () =>
-				query.orderBy("cm.category", item.direction),
-			)
+			.with("category", () => query.orderBy("cm.category", item.direction))
 			.with("count", () => query.orderBy("cm.count", item.direction))
-			.with("updatedAt", () =>
-				query.orderBy("cm.updatedAt", item.direction),
-			)
+			.with("updatedAt", () => query.orderBy("cm.updatedAt", item.direction))
 			.exhaustive();
 	}
 

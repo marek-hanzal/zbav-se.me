@@ -9,13 +9,7 @@ export namespace Menu {
 	}
 }
 
-export const Menu: FC<Menu.Props> = ({
-	ref,
-	vertical = false,
-	cls = MenuCls,
-	tweak,
-	children,
-}) => {
+export const Menu: FC<Menu.Props> = ({ ref, vertical = false, cls = MenuCls, tweak, children }) => {
 	const { slots } = useCls(cls, tweak, {
 		variant: {
 			vertical,

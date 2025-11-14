@@ -42,8 +42,7 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 							schema: MessageSchema,
 						},
 					},
-					description:
-						"Too many requests - please wait between scores",
+					description: "Too many requests - please wait between scores",
 				},
 				404: {
 					content: {

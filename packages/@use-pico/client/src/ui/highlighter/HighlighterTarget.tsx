@@ -9,10 +9,7 @@ export namespace HighlighterTarget {
 	}
 }
 
-export const HighlighterTarget: FC<HighlighterTarget.Props> = ({
-	selector,
-	...props
-}) => {
+export const HighlighterTarget: FC<HighlighterTarget.Props> = ({ selector, ...props }) => {
 	const [rect, setRect] = useState<Highlighter.Rect | undefined>(undefined);
 
 	useEffect(() => {

@@ -32,8 +32,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: CategorySchema,
 						},
 					},
-					description:
-						"Return a category based on the provided query",
+					description: "Return a category based on the provided query",
 				},
 				404: {
 					content: {

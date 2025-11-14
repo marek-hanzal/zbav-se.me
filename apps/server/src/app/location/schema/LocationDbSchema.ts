@@ -51,8 +51,7 @@ export const LocationDbSchema = z.object({
 		type: "number",
 	}),
 	geo: z.string().openapi({
-		description:
-			"Encoded PostGIS geometry of the location (auto-generated from lat/lon)",
+		description: "Encoded PostGIS geometry of the location (auto-generated from lat/lon)",
 		readOnly: true,
 	}),
 });

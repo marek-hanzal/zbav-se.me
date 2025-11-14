@@ -61,9 +61,7 @@ export namespace Data {
 		result: TResult;
 		renderSuccess: SuccessComponent.RenderFn<NonNullable<TResult["data"]>>;
 		renderLoading?: LoadingComponent.RenderFn;
-		renderFetching?: FetchingComponent.RenderFn<
-			NonNullable<TResult["data"]>
-		>;
+		renderFetching?: FetchingComponent.RenderFn<NonNullable<TResult["data"]>>;
 		renderError?: ErrorComponent.RenderFn;
 		renderEmpty?: EmptyComponent.RenderFn;
 		children?: Content.RenderFn;
@@ -80,8 +78,7 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 	children = DefaultContent,
 }: Data.Props<TResult>) => {
 	/** Treat undefined/null OR empty arrays as "empty". */
-	const isEmptyData = (data: unknown) =>
-		data == null || (Array.isArray(data) && data.length === 0);
+	const isEmptyData = (data: unknown) => data == null || (Array.isArray(data) && data.length === 0);
 
 	return children({
 		content: match(result)
@@ -104,16 +101,12 @@ export const Data = <TResult extends UseQueryResult<any, Error>>({
 			)
 			// 3) Disabled query (enabled: false) with no data -> treat as "empty"
 			.when(
-				(r) =>
-					r.status === "pending" &&
-					r.fetchStatus === "idle" &&
-					r.data == null,
+				(r) => r.status === "pending" && r.fetchStatus === "idle" && r.data == null,
 				() => renderEmpty(),
 			)
 			// 4) Initial load (no data yet) and actively fetching -> loading
 			.when(
-				(r) =>
-					r.isLoading && r.fetchStatus !== "idle" && r.data == null,
+				(r) => r.isLoading && r.fetchStatus !== "idle" && r.data == null,
 				() => renderLoading(),
 			)
 			// 5) Success: decide between empty vs success-with-data

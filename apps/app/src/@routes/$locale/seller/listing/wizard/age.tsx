@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -96,9 +92,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 					width={"fit"}
 				>
 					<Rating
-						textHint={(value) =>
-							`Condition - Age [${value}] (hint)`
-						}
+						textHint={(value) => `Condition - Age [${value}] (hint)`}
 						selection={selection}
 					/>
 				</Container>

@@ -32,8 +32,7 @@ export const withFeedFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: FeedSchema,
 						},
 					},
-					description:
-						"Return a feed item based on the provided query",
+					description: "Return a feed item based on the provided query",
 				},
 				404: {
 					content: {

@@ -58,8 +58,7 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { name, locationId, filter, sort, meta } =
-				c.req.valid("json");
+			const { name, locationId, filter, sort, meta } = c.req.valid("json");
 			const user = c.get("user");
 			const id = genId();
 			const now = new Date();

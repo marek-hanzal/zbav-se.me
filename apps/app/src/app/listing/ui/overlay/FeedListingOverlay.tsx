@@ -16,9 +16,7 @@ export namespace FeedListingOverlay {
 	}
 }
 
-export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({
-	listing,
-}) => {
+export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ listing }) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
@@ -69,9 +67,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({
 					},
 				}}
 			>
-				<Icon
-					icon={RatingToIcon[listing.condition as RatingToIcon.Value]}
-				/>
+				<Icon icon={RatingToIcon[listing.condition as RatingToIcon.Value]} />
 			</Badge>
 
 			<VariantProvider

@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -25,9 +21,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 			})),
 		});
 
-		const conditionIn = selection.optional
-			.multi()
-			.map((item) => Number.parseInt(item.id, 10));
+		const conditionIn = selection.optional.multi().map((item) => Number.parseInt(item.id, 10));
 
 		return (
 			<TitleContainer
@@ -90,9 +84,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 				}
 			>
 				<Rating
-					textHint={(value) =>
-						`Condition - Overall [${value}] (hint)`
-					}
+					textHint={(value) => `Condition - Overall [${value}] (hint)`}
 					selection={selection}
 				/>
 			</TitleContainer>

@@ -1,18 +1,13 @@
 export namespace EventBus {
 	export type Handler<T = unknown> = (event: T) => void;
-	export type WildcardHandler<T = Record<string, unknown>> = (
-		type: keyof T,
-		event: T[keyof T],
-	) => void;
+	export type WildcardHandler<T = Record<string, unknown>> = (type: keyof T, event: T[keyof T]) => void;
 
 	export type EventHandlerList<T = unknown> = Handler<T>[];
-	export type WildCardEventHandlerList<T = Record<string, unknown>> =
-		WildcardHandler<T>[];
+	export type WildCardEventHandlerList<T = Record<string, unknown>> = WildcardHandler<T>[];
 
 	export type EventHandlerMap<TEvents extends object> = Map<
 		keyof TEvents | "*",
-		| EventHandlerList<TEvents[keyof TEvents]>
-		| WildCardEventHandlerList<TEvents>
+		EventHandlerList<TEvents[keyof TEvents]> | WildCardEventHandlerList<TEvents>
 	>;
 }
 
@@ -27,10 +22,7 @@ export interface EventBus<TEvents extends object> {
 	 * @param {Function} handler Function to call in response to given event
 	 * @memberOf mitt
 	 */
-	on<Key extends keyof TEvents>(
-		type: Key,
-		handler: EventBus.Handler<TEvents[Key]>,
-	): void;
+	on<Key extends keyof TEvents>(type: Key, handler: EventBus.Handler<TEvents[Key]>): void;
 	on(type: "*", handler: EventBus.WildcardHandler<TEvents>): void;
 
 	/**
@@ -40,10 +32,7 @@ export interface EventBus<TEvents extends object> {
 	 * @param {Function} [handler] Handler function to remove
 	 * @memberOf mitt
 	 */
-	off<Key extends keyof TEvents>(
-		type: Key,
-		handler?: EventBus.Handler<TEvents[Key]>,
-	): void;
+	off<Key extends keyof TEvents>(type: Key, handler?: EventBus.Handler<TEvents[Key]>): void;
 	off(type: "*", handler: EventBus.WildcardHandler<TEvents>): void;
 
 	/**
@@ -57,17 +46,11 @@ export interface EventBus<TEvents extends object> {
 	 * @memberOf mitt
 	 */
 	emit<Key extends keyof TEvents>(type: Key, event: TEvents[Key]): void;
-	emit<Key extends keyof TEvents>(
-		type: undefined extends TEvents[Key] ? Key : never,
-	): void;
+	emit<Key extends keyof TEvents>(type: undefined extends TEvents[Key] ? Key : never): void;
 }
 
-export function EventBus<TEvents extends object>(
-	all?: EventBus.EventHandlerMap<TEvents>,
-): EventBus<TEvents> {
-	type GenericEventHandler =
-		| EventBus.Handler<TEvents[keyof TEvents]>
-		| EventBus.WildcardHandler<TEvents>;
+export function EventBus<TEvents extends object>(all?: EventBus.EventHandlerMap<TEvents>): EventBus<TEvents> {
+	type GenericEventHandler = EventBus.Handler<TEvents[keyof TEvents]> | EventBus.WildcardHandler<TEvents>;
 
 	all ||= new Map();
 
@@ -84,10 +67,7 @@ export function EventBus<TEvents extends object>(
 			}
 		},
 
-		off<Key extends keyof TEvents>(
-			type: Key,
-			handler?: GenericEventHandler,
-		) {
+		off<Key extends keyof TEvents>(type: Key, handler?: GenericEventHandler) {
 			const handlers: GenericEventHandler[] | undefined = all.get(type);
 			if (handlers) {
 				if (handler) {
@@ -101,19 +81,15 @@ export function EventBus<TEvents extends object>(
 		emit<Key extends keyof TEvents>(type: Key, event?: TEvents[Key]) {
 			let handlers = all.get(type);
 			if (handlers && event) {
-				(handlers as EventBus.EventHandlerList<TEvents[keyof TEvents]>)
-					.slice()
-					.forEach((h) => {
-						h(event);
-					});
+				(handlers as EventBus.EventHandlerList<TEvents[keyof TEvents]>).slice().forEach((h) => {
+					h(event);
+				});
 			}
 			handlers = all.get("*");
 			if (handlers && event) {
-				(handlers as EventBus.WildCardEventHandlerList<TEvents>)
-					.slice()
-					.forEach((h) => {
-						h(type, event);
-					});
+				(handlers as EventBus.WildCardEventHandlerList<TEvents>).slice().forEach((h) => {
+					h(type, event);
+				});
 			}
 		},
 	};

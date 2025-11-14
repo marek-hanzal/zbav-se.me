@@ -9,9 +9,7 @@ export const GalleryMigration: Migration = {
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("sort", "integer", (col) => col.notNull())
 			.addColumn("uploadId", "text", (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
+			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
 				"gallery_[userId]_fk",
 				[
@@ -47,22 +45,10 @@ export const GalleryMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema
-			.createIndex("gallery_[userId]_idx")
-			.on("gallery")
-			.column("userId")
-			.execute();
+		await db.schema.createIndex("gallery_[userId]_idx").on("gallery").column("userId").execute();
 
-		await db.schema
-			.createIndex("gallery_[listingId]_idx")
-			.on("gallery")
-			.column("listingId")
-			.execute();
+		await db.schema.createIndex("gallery_[listingId]_idx").on("gallery").column("listingId").execute();
 
-		await db.schema
-			.createIndex("gallery_[createdAt]_idx")
-			.on("gallery")
-			.column("createdAt")
-			.execute();
+		await db.schema.createIndex("gallery_[createdAt]_idx").on("gallery").column("createdAt").execute();
 	},
 };

@@ -20,11 +20,7 @@ export namespace CategorySelection {
 	}
 }
 
-export const CategorySelection: FC<CategorySelection.Props> = ({
-	ref,
-	locale,
-	selection,
-}) => {
+export const CategorySelection: FC<CategorySelection.Props> = ({ ref, locale, selection }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
 	const scrollRef = useRef<HTMLDivElement>(null);
 	const scrollTo = useScrollTo(scrollRef);

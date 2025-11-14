@@ -39,14 +39,8 @@ export const Highlighter: FC<Highlighter.Props> = ({
 				style={
 					rect
 						? {
-								top: Math.max(
-									0,
-									Math.floor(rect.top - padding),
-								),
-								left: Math.max(
-									0,
-									Math.floor(rect.left - padding),
-								),
+								top: Math.max(0, Math.floor(rect.top - padding)),
+								left: Math.max(0, Math.floor(rect.left - padding)),
 								width: Math.ceil(rect.width + padding * 2),
 								height: Math.ceil(rect.height + padding * 2),
 							}

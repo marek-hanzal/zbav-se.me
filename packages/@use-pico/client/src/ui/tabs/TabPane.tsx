@@ -9,12 +9,7 @@ export namespace TabPane {
 	}
 }
 
-export const TabPane: FC<TabPane.Props> = ({
-	tab,
-	cls = TabPaneCls,
-	tweak,
-	children,
-}) => {
+export const TabPane: FC<TabPane.Props> = ({ tab, cls = TabPaneCls, tweak, children }) => {
 	const useStore = useContext(TabsContext);
 	const hidden = useStore((state) => state.hidden);
 	const currentTab = useStore((state) => state.tab);

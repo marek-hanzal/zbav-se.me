@@ -7,10 +7,7 @@ import type { EnsureSelectOutputSchema } from "../source/EnsureSelectOutputSchem
 
 export namespace withList {
 	export namespace Query {
-		export interface Props<
-			TSelect extends SelectQueryBuilder<any, any, any>,
-			TFilter extends FilterSchema.Type,
-		> {
+		export interface Props<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> {
 			select: TSelect;
 			where?: TFilter;
 		}
@@ -38,9 +35,7 @@ export namespace withList {
 		TSelect extends SelectQueryBuilder<any, any, any>,
 		TFilter extends FilterSchema.Type,
 		TOutputSchema extends z.ZodSchema,
-	> = (
-		props: Props<TSelect, TFilter, TOutputSchema>,
-	) => Promise<InferResult<TSelect>>;
+	> = (props: Props<TSelect, TFilter, TOutputSchema>) => Promise<InferResult<TSelect>>;
 }
 
 export const withList = async <
@@ -54,16 +49,12 @@ export const withList = async <
 	filter,
 	where,
 	cursor,
-}: withList.Props<TSelect, TFilter, TOutputSchema>): Promise<
-	z.infer<TOutputSchema>[]
-> => {
+}: withList.Props<TSelect, TFilter, TOutputSchema>): Promise<z.infer<TOutputSchema>[]> => {
 	const limit = (select: SelectQueryBuilder<any, any, any>): TSelect => {
 		let $select = select;
 
 		if (cursor) {
-			$select = select
-				.limit(cursor.size)
-				.offset(cursor.page * cursor.size);
+			$select = select.limit(cursor.size).offset(cursor.page * cursor.size);
 		}
 
 		return $select as TSelect;

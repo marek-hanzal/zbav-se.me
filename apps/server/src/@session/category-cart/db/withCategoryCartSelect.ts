@@ -11,10 +11,7 @@ export namespace withCategoryCartSelect {
 	export type Select = ReturnType<typeof withCategoryCartSelect>;
 }
 
-export const withCategoryCartSelect = ({
-	userId,
-	sort,
-}: withCategoryCartSelect.Props) => {
+export const withCategoryCartSelect = ({ userId, sort }: withCategoryCartSelect.Props) => {
 	let query = database.kysely
 		.selectFrom("category as c")
 		.innerJoin(
@@ -46,9 +43,7 @@ export const withCategoryCartSelect = ({
 			.with("group", () => query.orderBy("c.group", item.direction))
 			.with("category", () => query.orderBy("c.category", item.direction))
 			.with("sort", () => query.orderBy("c.sort", item.direction))
-			.with("listingCount", () =>
-				query.orderBy("cnt.listingCount", item.direction),
-			)
+			.with("listingCount", () => query.orderBy("cnt.listingCount", item.direction))
 			.exhaustive();
 	}
 

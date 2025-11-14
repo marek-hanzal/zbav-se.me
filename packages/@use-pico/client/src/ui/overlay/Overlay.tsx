@@ -12,15 +12,7 @@ export namespace Overlay {
 	}
 }
 
-export const Overlay: FC<Overlay.Props> = ({
-	ui,
-	opacity,
-	type,
-	accentFrom,
-	accentTo,
-	cls = OverlayCls,
-	tweak,
-}) => {
+export const Overlay: FC<Overlay.Props> = ({ ui, opacity, type, accentFrom, accentTo, cls = OverlayCls, tweak }) => {
 	const { slots } = useCls(cls, tweak, {
 		variant: {
 			"accent-from": accentFrom,

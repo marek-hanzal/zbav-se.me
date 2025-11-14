@@ -15,12 +15,7 @@ import {
 	useTransitionStyles,
 } from "@floating-ui/react";
 import { useCls } from "@use-pico/cls";
-import {
-	type FC,
-	type PropsWithChildren,
-	type ReactNode,
-	useState,
-} from "react";
+import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { FloatCls } from "./FloatCls";
 import { FloatContext } from "./FloatContext";
 
@@ -42,10 +37,7 @@ export namespace Float {
 		 */
 		closeOnClick?: boolean;
 		delay?: number;
-		float?: Omit<
-			UseFloatingOptions,
-			"middleware" | "whileElementsMounted" | "open" | "onOpenChange"
-		>;
+		float?: Omit<UseFloatingOptions, "middleware" | "whileElementsMounted" | "open" | "onOpenChange">;
 		/**
 		 * Whether to show a backdrop overlay when float is open
 		 */

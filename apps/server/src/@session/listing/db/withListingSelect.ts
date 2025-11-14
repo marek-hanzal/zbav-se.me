@@ -15,11 +15,7 @@ export namespace withListingSelect {
 	export type Select = ReturnType<typeof withListingSelect>;
 }
 
-export const withListingSelect = ({
-	userId,
-	sort,
-	meta,
-}: withListingSelect.Props) => {
+export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Props) => {
 	const query = database.kysely
 		.selectFrom("listing as l")
 		.select([
@@ -40,21 +36,13 @@ export const withListingSelect = ({
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select((eb) => [
 			jsonObjectFrom(
-				eb
-					.selectFrom("location as loc")
-					.selectAll("loc")
-					.whereRef("loc.id", "=", "l.locationId")
-					.limit(1),
+				eb.selectFrom("location as loc").selectAll("loc").whereRef("loc.id", "=", "l.locationId").limit(1),
 			)
 				.$notNull()
 				.as("location"),
 
 			jsonObjectFrom(
-				eb
-					.selectFrom("category as cat")
-					.selectAll("cat")
-					.whereRef("cat.id", "=", "l.categoryId")
-					.limit(1),
+				eb.selectFrom("category as cat").selectAll("cat").whereRef("cat.id", "=", "l.categoryId").limit(1),
 			)
 				.$notNull()
 				.as("category"),
@@ -65,11 +53,7 @@ export const withListingSelect = ({
 					.selectAll("g")
 					.select((eb) =>
 						jsonObjectFrom(
-							eb
-								.selectFrom("upload as u")
-								.selectAll("u")
-								.whereRef("u.id", "=", "g.uploadId")
-								.limit(1),
+							eb.selectFrom("upload as u").selectAll("u").whereRef("u.id", "=", "g.uploadId").limit(1),
 						)
 							.$notNull()
 							.as("upload"),
@@ -109,19 +93,11 @@ export const withListingSelect = ({
 	for (const item of sort ?? []) {
 		return match(item.field)
 			.with("price", () => query.orderBy("l.price", item.direction))
-			.with("condition", () =>
-				query.orderBy("l.condition", item.direction),
-			)
+			.with("condition", () => query.orderBy("l.condition", item.direction))
 			.with("age", () => query.orderBy("l.age", item.direction))
-			.with("createdAt", () =>
-				query.orderBy("l.createdAt", item.direction),
-			)
-			.with("updatedAt", () =>
-				query.orderBy("l.updatedAt", item.direction),
-			)
-			.with("expiresAt", () =>
-				query.orderBy("l.expiresAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("l.createdAt", item.direction))
+			.with("updatedAt", () => query.orderBy("l.updatedAt", item.direction))
+			.with("expiresAt", () => query.orderBy("l.expiresAt", item.direction))
 			.with("geo", () => {
 				if (!meta?.latLon) {
 					return query;

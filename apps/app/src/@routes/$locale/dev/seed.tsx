@@ -20,10 +20,7 @@ import {
 	tListingExpire,
 	type tListingSort,
 } from "@zbav-se.me/sdk/api/session";
-import {
-	withListingScoreCreateMutation,
-	withUploadMutation,
-} from "@zbav-se.me/sdk/mutation/session";
+import { withListingScoreCreateMutation, withUploadMutation } from "@zbav-se.me/sdk/mutation/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import axios from "axios";
 import PQueue from "p-queue";
@@ -62,11 +59,7 @@ export namespace seedListings {
 	}
 }
 
-const seedListings = async ({
-	categories,
-	locationIds,
-	uploadIds,
-}: seedListings.Props) => {
+const seedListings = async ({ categories, locationIds, uploadIds }: seedListings.Props) => {
 	const currencies = Object.values(tCurrencyList);
 	const category = list(categories);
 	const title = titles[category.slug as keyof typeof titles] ?? [
@@ -192,8 +185,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					{
 						length: 26,
 					},
-					(_, index) =>
-						String.fromCharCode("a".charCodeAt(0) + index),
+					(_, index) => String.fromCharCode("a".charCodeAt(0) + index),
 				);
 
 				const queue = new PQueue({
@@ -215,8 +207,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 		const signInMutation = withEmailSignInMutation.useMutation();
 
-		const listingScoreMutation =
-			withListingScoreCreateMutation.useMutation();
+		const listingScoreMutation = withListingScoreCreateMutation.useMutation();
 
 		const fetchRandomListings = async () => {
 			const sort = list([
@@ -268,10 +259,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			}).then((res) => res.data.total);
 
 			const size = rangedom(100, 1000);
-			const maxPage = Math.max(
-				0,
-				Math.floor(Math.max(count - 1, 0) / size),
-			);
+			const maxPage = Math.max(0, Math.floor(Math.max(count - 1, 0) / size));
 			const page = maxPage === 0 ? 0 : rangedom(0, maxPage);
 
 			return apiListingCollection({
@@ -407,9 +395,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					<Button
 						loading={signInMutation.isPending}
 						onClick={() => {
-							const letter = String.fromCharCode(
-								"a".charCodeAt(0) + rangedom(0, 25),
-							);
+							const letter = String.fromCharCode("a".charCodeAt(0) + rangedom(0, 25));
 
 							signInMutation.mutate({
 								email: `${letter}@x32.cz`,

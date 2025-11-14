@@ -61,17 +61,9 @@ export namespace cursorOf {
  * Generates a pagination cursor with boundary pages and sibling pages around the current page.
  * Returns start, middle, and end page arrays in 1-based numbering.
  */
-export function cursorOf({
-	page,
-	total,
-	siblings = 2,
-	boundary = 1,
-}: cursorOf.Props): cursorOf.Pages {
+export function cursorOf({ page, total, siblings = 2, boundary = 1 }: cursorOf.Props): cursorOf.Pages {
 	const validTotal = Math.max(0, total);
-	const clampedPage = Math.max(
-		0,
-		Math.min(page, validTotal > 0 ? validTotal - 1 : 0),
-	);
+	const clampedPage = Math.max(0, Math.min(page, validTotal > 0 ? validTotal - 1 : 0));
 
 	if (validTotal === 0) {
 		return {

@@ -10,10 +10,7 @@ export namespace withUploadQueryBuilder {
 	export type Callback = (props: Props) => withUploadSelect.Select;
 }
 
-export const withUploadQueryBuilder: withUploadQueryBuilder.Callback = ({
-	select,
-	where,
-}) => {
+export const withUploadQueryBuilder: withUploadQueryBuilder.Callback = ({ select, where }) => {
 	if (!where) {
 		return select;
 	}

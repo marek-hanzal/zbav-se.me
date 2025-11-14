@@ -5,8 +5,7 @@ import { Modal } from "../modal/Modal";
 import { ActionModalCls } from "./ActionModalCls";
 
 export namespace ActionModal {
-	export interface Props
-		extends ActionModalCls.Props<Omit<Modal.Props, "target">> {
+	export interface Props extends ActionModalCls.Props<Omit<Modal.Props, "target">> {
 		iconProps?: Icon.Props;
 		label: ReactNode;
 		disabled?: boolean;

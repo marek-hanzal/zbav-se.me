@@ -15,77 +15,56 @@ export const ListingFilterSchema = z
 			description: "Sets the maximum price for the listings",
 		}).optional(),
 		conditionMin: z.number().gte(0).lte(6).optional().openapi({
-			description:
-				"This filter matches listings with condition greater than or equal to the provided value",
+			description: "This filter matches listings with condition greater than or equal to the provided value",
 		}),
 		conditionMax: z.number().gte(0).lte(6).optional().openapi({
-			description:
-				"This filter matches listings with condition less than or equal to the provided value",
+			description: "This filter matches listings with condition less than or equal to the provided value",
 		}),
 		conditionIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
-			description:
-				"This filter matches listings with conditions in the provided array",
+			description: "This filter matches listings with conditions in the provided array",
 		}),
 		ageMin: z.number().gte(0).lte(6).optional().openapi({
-			description:
-				"This filter matches listings with age greater than or equal to the provided value",
+			description: "This filter matches listings with age greater than or equal to the provided value",
 		}),
 		ageMax: z.number().gte(0).lte(6).optional().openapi({
-			description:
-				"This filter matches listings with age less than or equal to the provided value",
+			description: "This filter matches listings with age less than or equal to the provided value",
 		}),
 		ageIn: z.array(z.number().gte(0).lte(6)).optional().openapi({
-			description:
-				"This filter matches listings with ages in the provided array",
+			description: "This filter matches listings with ages in the provided array",
 		}),
-		categoryId: z
-			.string()
-			.min(1, "Category ID is required")
-			.optional()
-			.openapi("CategoryId", {
-				description: "ID of the category",
-			}),
+		categoryId: z.string().min(1, "Category ID is required").optional().openapi("CategoryId", {
+			description: "ID of the category",
+		}),
 		categoryIdIn: z
 			.array(z.string().min(1, "Category ID is required"))
 			.optional()
 			.openapi("CategoryIdIn", {
-				description:
-					"Filter listings based on the provided category IDs",
+				description: "Filter listings based on the provided category IDs",
 			})
 			.optional(),
 		currency: CurrencyListSchema.optional(),
-		currencyIn: z
-			.array(CurrencyListSchema)
-			.optional()
-			.openapi("CurrencyIn", {
-				description:
-					"This filter matches listings with currency codes in the provided array",
-			}),
+		currencyIn: z.array(CurrencyListSchema).optional().openapi("CurrencyIn", {
+			description: "This filter matches listings with currency codes in the provided array",
+		}),
 		expiresAtBefore: z.coerce.date().optional().openapi({
-			description:
-				"This filter matches listings that expire before the provided date",
+			description: "This filter matches listings that expire before the provided date",
 			type: "string",
 		}),
 		expiresAtAfter: z.coerce.date().optional().openapi({
-			description:
-				"This filter matches listings that expire after the provided date",
+			description: "This filter matches listings that expire after the provided date",
 			type: "string",
 		}),
 		rangeMin: z.number().gte(0).optional().openapi({
-			description:
-				"This filter matches listings with range greater than or equal to the provided value (meters)",
+			description: "This filter matches listings with range greater than or equal to the provided value (meters)",
 		}),
 		rangeMax: z.number().gte(0).optional().openapi({
-			description:
-				"This filter matches listings with range less than or equal to the provided value (meters)",
+			description: "This filter matches listings with range less than or equal to the provided value (meters)",
 		}),
 		title: z.string().optional().openapi({
-			description:
-				"This filter matches listings with title matching the provided value",
+			description: "This filter matches listings with title matching the provided value",
 		}),
 		withOwn: z.boolean().optional().openapi({
-			description:
-				"This filter matches listings with the user's own listings",
+			description: "This filter matches listings with the user's own listings",
 		}),
 		withIgnored: z.boolean().optional().openapi({
 			description: "Include ignored listings",

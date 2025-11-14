@@ -35,12 +35,7 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 		}),
 		async (c) => {
 			try {
-				return c.json(
-					(await Promise.all(
-						cleanup.map((fn) => fn()),
-					)) satisfies CleanupSchema.Type[],
-					200,
-				);
+				return c.json((await Promise.all(cleanup.map((fn) => fn()))) satisfies CleanupSchema.Type[], 200);
 			} catch (e) {
 				console.error(e);
 				return c.json<MessageSchema.Type, 500>(

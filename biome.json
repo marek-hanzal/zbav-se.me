@@ -27,7 +27,8 @@
 		"expand": "always",
 		"formatWithErrors": false,
 		"lineEnding": "lf",
-		"indentWidth": 4
+		"indentWidth": 4,
+		"lineWidth": 120
 	},
 	"linter": {
 		"enabled": true,

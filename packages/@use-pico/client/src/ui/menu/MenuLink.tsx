@@ -1,16 +1,10 @@
-import {
-	createLink,
-	type LinkComponent,
-	type UseMatchRouteOptions,
-	useMatchRoute,
-} from "@tanstack/react-router";
+import { createLink, type LinkComponent, type UseMatchRouteOptions, useMatchRoute } from "@tanstack/react-router";
 import { type Cls, useCls } from "@use-pico/cls";
 import type { AnchorHTMLAttributes, FC, Ref } from "react";
 import { Icon } from "../../icon/Icon";
 import { MenuLinkCls } from "./MenuLinkCls";
 
-interface BaseMenuLinkProps
-	extends MenuLinkCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
+interface BaseMenuLinkProps extends MenuLinkCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
 	ref?: Ref<HTMLAnchorElement>;
 	icon?: Icon.Type;
 	active?: boolean;
@@ -60,10 +54,7 @@ const BaseMenuLink: FC<BaseMenuLinkProps> = ({
 
 const CreateMenuLink = createLink(BaseMenuLink);
 
-export const MenuLink: LinkComponent<typeof BaseMenuLink> = ({
-	match = [],
-	...props
-}) => {
+export const MenuLink: LinkComponent<typeof BaseMenuLink> = ({ match = [], ...props }) => {
 	return (
 		<CreateMenuLink
 			preload={"intent"}

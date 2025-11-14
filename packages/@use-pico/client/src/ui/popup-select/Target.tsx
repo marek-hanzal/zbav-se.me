@@ -11,10 +11,7 @@ import type { PopupSelect } from "./PopupSelect";
 import type { PopupSelectCls } from "./PopupSelectCls";
 
 export namespace Target {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TItem extends EntitySchema.Type,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> {
 		ref?: Ref<HTMLLabelElement>;
 		modalId: string;
 		slots: PopupSelectCls.Slots;
@@ -30,10 +27,7 @@ export namespace Target {
 	}
 }
 
-export const Target = <
-	TQuery extends withQuerySchema.Query,
-	TItem extends EntitySchema.Type,
->({
+export const Target = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({
 	ref,
 	modalId,
 	slots,

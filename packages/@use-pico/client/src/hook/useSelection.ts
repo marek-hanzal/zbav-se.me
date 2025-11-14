@@ -122,8 +122,7 @@ export function useSelection<T extends EntitySchema.Type>({
 	const apply = useCallback(
 		(next: T[]) => {
 			const cleaned = dedupeById(next);
-			const normalized =
-				mode === "single" ? cleaned.slice(0, 1) : cleaned;
+			const normalized = mode === "single" ? cleaned.slice(0, 1) : cleaned;
 			setSelection(normalized);
 			dispatch(normalized);
 		},
@@ -277,10 +276,7 @@ export function useSelection<T extends EntitySchema.Type>({
 	]);
 
 	const optionalSingle = useCallback(
-		(): T | undefined =>
-			mode === "single" && selection.length === 1
-				? selection[0]
-				: undefined,
+		(): T | undefined => (mode === "single" && selection.length === 1 ? selection[0] : undefined),
 		[
 			mode,
 			selection,
@@ -288,10 +284,7 @@ export function useSelection<T extends EntitySchema.Type>({
 	);
 
 	const optionalSingleId = useCallback(
-		(): string | undefined =>
-			mode === "single" && selection.length === 1
-				? selection[0]?.id
-				: undefined,
+		(): string | undefined => (mode === "single" && selection.length === 1 ? selection[0]?.id : undefined),
 		[
 			mode,
 			selection,
@@ -312,16 +305,14 @@ export function useSelection<T extends EntitySchema.Type>({
 	);
 
 	const some = useCallback(
-		(items: T[]): boolean =>
-			items.some((item) => selection.some((sel) => sel.id === item.id)),
+		(items: T[]): boolean => items.some((item) => selection.some((sel) => sel.id === item.id)),
 		[
 			selection,
 		],
 	);
 
 	const every = useCallback(
-		(items: T[]): boolean =>
-			items.every((item) => selection.some((sel) => sel.id === item.id)),
+		(items: T[]): boolean => items.every((item) => selection.some((sel) => sel.id === item.id)),
 		[
 			selection,
 		],

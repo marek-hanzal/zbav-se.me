@@ -13,8 +13,7 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/category-cart/collection",
-			description:
-				"Returns categories for listings saved in the current user's cart",
+			description: "Returns categories for listings saved in the current user's cart",
 			operationId: "apiCategoryCartCollection",
 			request: {
 				body: {
@@ -32,13 +31,11 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							schema: withCollectionSchema({
 								schema: CategoryCartSchema,
 								type: "CategoryCartCollection",
-								description:
-									"Collection of categories represented in the user's cart",
+								description: "Collection of categories represented in the user's cart",
 							}),
 						},
 					},
-					description:
-						"Access categories for listings stored in the user's cart",
+					description: "Access categories for listings stored in the user's cart",
 				},
 			},
 			tags: [
@@ -78,14 +75,11 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 				},
 			});
 
-			return c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(
-				data,
-				{
-					headers: {
-						"X-Cached": hit ? "true" : "false",
-					},
+			return c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
 				},
-			);
+			});
 		},
 	);
 };

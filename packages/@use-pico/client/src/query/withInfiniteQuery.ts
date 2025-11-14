@@ -21,11 +21,7 @@ export namespace withInfiniteQuery {
 		more: boolean;
 	}
 
-	export interface Props<
-		TData,
-		TItem extends EntitySchema.Type,
-		TResult extends Collection<TItem>,
-	> {
+	export interface Props<TData, TItem extends EntitySchema.Type, TResult extends Collection<TItem>> {
 		/**
 		 * Function to generate the query key for React Query.
 		 * @param data - The input data for the query.
@@ -46,21 +42,13 @@ export namespace withInfiniteQuery {
 		TSelect = InfiniteData<TResult>,
 		TQueryKey extends QueryKey = QueryKey,
 	> = Omit<
-		UndefinedInitialDataInfiniteOptions<
-			TResult,
-			DefaultError,
-			TSelect,
-			TQueryKey,
-			number
-		>,
+		UndefinedInitialDataInfiniteOptions<TResult, DefaultError, TSelect, TQueryKey, number>,
 		"queryKey" | "queryFn" | "getNextPageParam"
 	>;
 
-	export type Api<
-		TData,
-		TItem extends EntitySchema.Type,
-		TResult extends Collection<TItem>,
-	> = ReturnType<typeof withInfiniteQuery<TData, TItem, TResult>>;
+	export type Api<TData, TItem extends EntitySchema.Type, TResult extends Collection<TItem>> = ReturnType<
+		typeof withInfiniteQuery<TData, TItem, TResult>
+	>;
 }
 
 export function withInfiniteQuery<
@@ -97,10 +85,7 @@ export function withInfiniteQuery<
 		 * @returns The cleaned query key.
 		 */
 		keys: $keys,
-		useInfiniteQuery(
-			data: TData,
-			options: withInfiniteQuery.Options<TItem, TResult>,
-		) {
+		useInfiniteQuery(data: TData, options: withInfiniteQuery.Options<TItem, TResult>) {
 			return useInfiniteQuery({
 				queryKey: $keys(data),
 				queryFn({ pageParam, signal }) {
@@ -144,61 +129,53 @@ export function withInfiniteQuery<
 			const queryClient = useQueryClient();
 
 			return (item: TItem) => {
-				return queryClient.setQueryData<InfiniteData<TResult>>(
-					$keys(data),
-					(old) => {
-						if (!old) {
-							return old;
-						}
+				return queryClient.setQueryData<InfiniteData<TResult>>($keys(data), (old) => {
+					if (!old) {
+						return old;
+					}
 
-						return {
-							...old,
-							pages: old.pages.map((page) => {
-								return {
-									...page,
-									data: page.data.map((oldItem) => {
-										return oldItem.id === item.id
-											? item
-											: oldItem;
-									}),
-								};
-							}),
-						};
-					},
-				);
+					return {
+						...old,
+						pages: old.pages.map((page) => {
+							return {
+								...page,
+								data: page.data.map((oldItem) => {
+									return oldItem.id === item.id ? item : oldItem;
+								}),
+							};
+						}),
+					};
+				});
 			};
 		},
 		usePatch(data: TData) {
 			const queryClient = useQueryClient();
 
 			return (item: Partial<TItem> & EntitySchema.Type) => {
-				return queryClient.setQueryData<InfiniteData<TResult>>(
-					$keys(data),
-					(old) => {
-						if (!old) {
-							return old;
-						}
+				return queryClient.setQueryData<InfiniteData<TResult>>($keys(data), (old) => {
+					if (!old) {
+						return old;
+					}
 
-						return {
-							...old,
-							pages: old.pages.map((page) => {
-								return {
-									...page,
-									data: page.data.map((oldItem) => {
-										if (oldItem.id === item.id) {
-											return {
-												...oldItem,
-												...item,
-											};
-										}
+					return {
+						...old,
+						pages: old.pages.map((page) => {
+							return {
+								...page,
+								data: page.data.map((oldItem) => {
+									if (oldItem.id === item.id) {
+										return {
+											...oldItem,
+											...item,
+										};
+									}
 
-										return oldItem;
-									}),
-								};
-							}),
-						};
-					},
-				);
+									return oldItem;
+								}),
+							};
+						}),
+					};
+				});
 			};
 		},
 		/**

@@ -8,8 +8,6 @@ it("should normalize a vector to unit length", () => {
 		4,
 	]);
 	const normalized = unit(vector);
-	const magnitude = Math.sqrt(
-		normalized[0]! * normalized[0]! + normalized[1]! * normalized[1]!,
-	);
+	const magnitude = Math.sqrt(normalized[0]! * normalized[0]! + normalized[1]! * normalized[1]!);
 	expect(magnitude).toBeCloseTo(1, 5);
 });

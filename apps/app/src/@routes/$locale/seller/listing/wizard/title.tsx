@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
@@ -95,21 +91,11 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 								{(props) => (
 									<TextInput
 										value={title}
-										onChange={(e) =>
-											setTitle(e.target.value)
-										}
-										placeholder={
-											"Listing title (placeholder)"
-										}
+										onChange={(e) => setTitle(e.target.value)}
+										placeholder={"Listing title (placeholder)"}
 										autoFocus={!title}
-										minLength={
-											sListingCreate.properties.title
-												.minLength
-										}
-										maxLength={
-											sListingCreate.properties.title
-												.maxLength
-										}
+										minLength={sListingCreate.properties.title.minLength}
+										maxLength={sListingCreate.properties.title.maxLength}
 										{...props}
 									/>
 								)}

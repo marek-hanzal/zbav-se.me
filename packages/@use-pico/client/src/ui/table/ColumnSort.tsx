@@ -17,10 +17,7 @@ export namespace ColumnSort {
 	}
 }
 
-export const ColumnSort = <TQuery extends withQuerySchema.Query>({
-	state,
-	sort,
-}: ColumnSort.Props<TQuery>) => {
+export const ColumnSort = <TQuery extends withQuerySchema.Query>({ state, sort }: ColumnSort.Props<TQuery>) => {
 	const type = state.value?.find(({ value }) => value === sort.value);
 
 	const actionSize: Cls.VariantOf<ActionCls, "size"> = "xs";
@@ -54,10 +51,7 @@ export const ColumnSort = <TQuery extends withQuerySchema.Query>({
 							tweak={{
 								variant: {
 									...actionVariant,
-									tone:
-										type?.sort === "asc"
-											? "secondary"
-											: actionVariant.tone,
+									tone: type?.sort === "asc" ? "secondary" : actionVariant.tone,
 								},
 							}}
 							{...props}
@@ -65,11 +59,7 @@ export const ColumnSort = <TQuery extends withQuerySchema.Query>({
 					)}
 				>
 					{type?.sort === "asc" ? (
-						<Tx
-							label={
-								"Sorted by asc, sort by desc; keeps column sorted in selected order"
-							}
-						/>
+						<Tx label={"Sorted by asc, sort by desc; keeps column sorted in selected order"} />
 					) : (
 						<Tx label={"Unsorted, sort by asc"} />
 					)}
@@ -91,21 +81,14 @@ export const ColumnSort = <TQuery extends withQuerySchema.Query>({
 							tweak={{
 								variant: {
 									...actionVariant,
-									tone:
-										type?.sort === "desc"
-											? "secondary"
-											: actionVariant.tone,
+									tone: type?.sort === "desc" ? "secondary" : actionVariant.tone,
 								},
 							}}
 							{...props}
 						/>
 					)}
 				>
-					<Tx
-						label={
-							"Sorted by desc, sort by asc; keeps column sorted in selected order"
-						}
-					/>
+					<Tx label={"Sorted by desc, sort by asc; keeps column sorted in selected order"} />
 				</Tooltip>
 			) : null}
 			<Tooltip
@@ -123,10 +106,7 @@ export const ColumnSort = <TQuery extends withQuerySchema.Query>({
 						tweak={{
 							variant: {
 								...actionVariant,
-								tone:
-									type?.sort === undefined
-										? "secondary"
-										: actionVariant.tone,
+								tone: type?.sort === undefined ? "secondary" : actionVariant.tone,
 							},
 						}}
 						{...props}

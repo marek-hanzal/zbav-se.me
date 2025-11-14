@@ -4,8 +4,7 @@ import { UserSideSchema } from "../../../app/user-ex/schema/UserSideSchema";
 export const UserExPatchSchema = z
 	.object({
 		locationId: z.string().nullish().openapi({
-			description:
-				"Default location for the user - used for listings & listing sorting",
+			description: "Default location for the user - used for listings & listing sorting",
 		}),
 		side: z
 			.union([

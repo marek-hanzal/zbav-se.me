@@ -10,9 +10,7 @@ export namespace withListingScoreSelect {
 	export type Select = ReturnType<typeof withListingScoreSelect>;
 }
 
-export const withListingScoreSelect = ({
-	sort,
-}: withListingScoreSelect.Props) => {
+export const withListingScoreSelect = ({ sort }: withListingScoreSelect.Props) => {
 	const query = database.kysely.selectFrom("listing_score as ls").select([
 		"ls.id",
 		"ls.listingId",
@@ -24,9 +22,7 @@ export const withListingScoreSelect = ({
 	for (const item of sort ?? []) {
 		return match(item.field)
 			.with("score", () => query.orderBy("ls.score", item.direction))
-			.with("createdAt", () =>
-				query.orderBy("ls.createdAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("ls.createdAt", item.direction))
 			.exhaustive();
 	}
 

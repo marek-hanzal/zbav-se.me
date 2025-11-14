@@ -7,12 +7,8 @@ export const Route = createFileRoute("/$locale/privacy")({
 		return (
 			<Sheet>
 				<Status
-					textTitle={
-						"Privacy policy not available in this language (title)"
-					}
-					textMessage={
-						"Privacy policy not available in this language (description)"
-					}
+					textTitle={"Privacy policy not available in this language (title)"}
+					textMessage={"Privacy policy not available in this language (description)"}
 				/>
 			</Sheet>
 		);

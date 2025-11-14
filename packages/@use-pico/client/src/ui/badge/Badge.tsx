@@ -9,8 +9,7 @@ import { BadgeCls } from "./BadgeCls";
  * @group ui
  */
 export namespace Badge {
-	export interface Props
-		extends UiProps<BadgeCls.Props<HTMLAttributes<HTMLDivElement>>> {
+	export interface Props extends UiProps<BadgeCls.Props<HTMLAttributes<HTMLDivElement>>> {
 		/**
 		 * Ref to the root div element.
 		 */

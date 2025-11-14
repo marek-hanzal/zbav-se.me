@@ -12,10 +12,7 @@ export namespace withCollection {
 	}
 
 	export namespace Query {
-		export interface Props<
-			TSelect extends SelectQueryBuilder<any, any, any>,
-			TFilter extends FilterSchema.Type,
-		> {
+		export interface Props<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> {
 			select: TSelect;
 			where?: TFilter;
 		}
@@ -43,9 +40,7 @@ export namespace withCollection {
 		TSelect extends SelectQueryBuilder<any, any, any>,
 		TFilter extends FilterSchema.Type,
 		TOutputSchema extends z.ZodSchema,
-	> = (
-		props: Props<TSelect, TFilter, TOutputSchema>,
-	) => Promise<Result<z.infer<TOutputSchema>>>;
+	> = (props: Props<TSelect, TFilter, TOutputSchema>) => Promise<Result<z.infer<TOutputSchema>>>;
 }
 
 export const withCollection = async <
@@ -59,9 +54,7 @@ export const withCollection = async <
 	filter,
 	where,
 	cursor,
-}: withCollection.Props<TSelect, TFilter, TOutputSchema>): Promise<
-	withCollection.Result<z.infer<TOutputSchema>>
-> => {
+}: withCollection.Props<TSelect, TFilter, TOutputSchema>): Promise<withCollection.Result<z.infer<TOutputSchema>>> => {
 	const results = tryZodError(
 		z.array(output as TOutputSchema),
 		await query({

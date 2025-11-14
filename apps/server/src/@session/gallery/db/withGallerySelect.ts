@@ -17,20 +17,13 @@ export const withGallerySelect = ({ sort }: withGallerySelect.Props = {}) => {
 		"g.listingId",
 		"g.uploadId",
 		"g.sort",
-		(eb) =>
-			jsonObjectFrom(
-				withUploadSelect()
-					.whereRef("u.id", "=", eb.ref("g.uploadId"))
-					.limit(1),
-			).as("upload"),
+		(eb) => jsonObjectFrom(withUploadSelect().whereRef("u.id", "=", eb.ref("g.uploadId")).limit(1)).as("upload"),
 	]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
 			.with("sort", () => query.orderBy("g.sort", item.direction))
-			.with("createdAt", () =>
-				query.orderBy("g.createdAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("g.createdAt", item.direction))
 			.exhaustive();
 	}
 

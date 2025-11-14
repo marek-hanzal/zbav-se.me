@@ -4,10 +4,8 @@ import { AllowedExtensionsSchema } from "../../../schema/AllowedExtensionsSchema
 
 export const S3PreSignRequestSchema = z.object({
 	path: z.string().min(3).openapi({
-		example:
-			"/123e4567-e89b-12d3-a456-426614174000/listings/abc/gallery/photo.webp",
-		description:
-			"Object path. After stripping leading '/', must start with `<userId>/`",
+		example: "/123e4567-e89b-12d3-a456-426614174000/listings/abc/gallery/photo.webp",
+		description: "Object path. After stripping leading '/', must start with `<userId>/`",
 	}),
 	extension: AllowedExtensionsSchema,
 	contentType: AllowedContentTypesSchema,

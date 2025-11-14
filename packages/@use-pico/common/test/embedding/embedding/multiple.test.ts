@@ -23,8 +23,6 @@ it("should combine multiple embedding blocks", () => {
 		],
 	});
 	expect(result.length).toBe(4);
-	const magnitude = Math.sqrt(
-		Array.from(result).reduce((sum, v) => sum + v * v, 0),
-	);
+	const magnitude = Math.sqrt(Array.from(result).reduce((sum, v) => sum + v * v, 0));
 	expect(magnitude).toBeCloseTo(1, 5);
 });

@@ -13,8 +13,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/score")({
 		const { locale, id } = Route.useParams();
 		const query = Route.useSearch();
 
-		const listingMetricsQuery =
-			withListingMetricsFetchQuery.useSuspenseQuery(id);
+		const listingMetricsQuery = withListingMetricsFetchQuery.useSuspenseQuery(id);
 
 		return (
 			<TitleContainer

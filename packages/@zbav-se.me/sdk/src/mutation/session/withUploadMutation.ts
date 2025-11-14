@@ -35,10 +35,7 @@ export const withUploadMutation = withMutation<
 		const contentType = blob.type as tAllowedContentTypes;
 
 		const dot = name.lastIndexOf(".");
-		const extension =
-			dot !== -1 && dot < name.length - 1
-				? name.slice(dot + 1).toLowerCase()
-				: "unknown";
+		const extension = dot !== -1 && dot < name.length - 1 ? name.slice(dot + 1).toLowerCase() : "unknown";
 
 		const presign = await withApi(
 			apiS3Presign({

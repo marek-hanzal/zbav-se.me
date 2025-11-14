@@ -18,10 +18,7 @@ export namespace CategoryCartListContainer {
 	}
 }
 
-export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
-	categoryCartList,
-	...props
-}) => {
+export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({ categoryCartList, ...props }) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
@@ -117,9 +114,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 							icon={FeedIcon}
 							tone={"primary"}
 							textTitle={"Your cart is empty - no feed (title)"}
-							textMessage={
-								"Your cart is empty - no feed (message)"
-							}
+							textMessage={"Your cart is empty - no feed (message)"}
 							action={
 								<LinkTo
 									to={"/$locale/buyer/feed/wizard/location"}

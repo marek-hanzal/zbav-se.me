@@ -4,10 +4,7 @@ import type { FilterSchema } from "./FilterSchema";
 import { OrderSchema } from "./OrderSchema";
 
 export namespace withQuerySchema {
-	export interface Props<
-		TFilterSchema extends FilterSchema,
-		TSort extends string,
-	> {
+	export interface Props<TFilterSchema extends FilterSchema, TSort extends string> {
 		filter: TFilterSchema;
 		sort: TSort[];
 	}
@@ -17,10 +14,9 @@ export namespace withQuerySchema {
 		TSort extends string = string,
 	> = ReturnType<typeof withQuerySchema<TFilterSchema, TSort>>;
 
-	export type Query<
-		TFilterSchema extends FilterSchema = FilterSchema,
-		TSort extends string = string,
-	> = z.infer<QuerySchema<TFilterSchema, TSort>>;
+	export type Query<TFilterSchema extends FilterSchema = FilterSchema, TSort extends string = string> = z.infer<
+		QuerySchema<TFilterSchema, TSort>
+	>;
 
 	/**
 	 * Extracts all available sort keys from a Query type.
@@ -34,9 +30,7 @@ export namespace withQuerySchema {
 	 * type SortKeys = withQuerySchema.SortKeys<MyQuery>; // "name" | "age"
 	 * ```
 	 */
-	export type SortKeys<TQuery extends Query> = NonNullable<
-		TQuery["sort"]
-	>[number]["value"];
+	export type SortKeys<TQuery extends Query> = NonNullable<TQuery["sort"]>[number]["value"];
 }
 
 /**
@@ -85,10 +79,7 @@ export namespace withQuerySchema {
  * // }
  * ```
  */
-export const withQuerySchema = <
-	TFilterSchema extends FilterSchema,
-	TSort extends string,
->({
+export const withQuerySchema = <TFilterSchema extends FilterSchema, TSort extends string>({
 	filter,
 	sort,
 }: withQuerySchema.Props<TFilterSchema, TSort>) => {

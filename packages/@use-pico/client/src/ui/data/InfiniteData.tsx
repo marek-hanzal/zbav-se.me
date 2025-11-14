@@ -63,9 +63,7 @@ export namespace InfiniteData {
 		renderSuccess: SuccessComponent.RenderFn<NonNullable<TResult["data"]>>;
 		renderLoading?: LoadingComponent.RenderFn;
 		renderFetching?: FetchingComponent.RenderFn<TResult["data"]>;
-		renderFetchingWithData?: FetchingWithDataComponent.RenderFn<
-			NonNullable<TResult["data"]>
-		>;
+		renderFetchingWithData?: FetchingWithDataComponent.RenderFn<NonNullable<TResult["data"]>>;
 		renderError?: ErrorComponent.RenderFn;
 		children?: Content.RenderFn;
 	}

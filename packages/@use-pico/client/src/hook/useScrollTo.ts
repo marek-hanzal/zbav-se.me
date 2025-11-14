@@ -22,12 +22,7 @@ export namespace useScrollTo {
 export function useScrollTo(containerRef: RefObject<HTMLElement | null>) {
 	const scrollTo = useCallback(
 		(selector: string, opts: useScrollTo.Options = {}) => {
-			const {
-				index = 0,
-				behavior = "smooth",
-				axis = "y",
-				offset = 0,
-			} = opts;
+			const { index = 0, behavior = "smooth", axis = "y", offset = 0 } = opts;
 
 			const container = containerRef.current;
 			if (!container || !selector) {
@@ -48,8 +43,7 @@ export function useScrollTo(containerRef: RefObject<HTMLElement | null>) {
 			const tRect = target.getBoundingClientRect();
 
 			// Position of target relative to container's scroll origin
-			const targetLeftAbs =
-				container.scrollLeft + (tRect.left - cRect.left);
+			const targetLeftAbs = container.scrollLeft + (tRect.left - cRect.left);
 			const targetTopAbs = container.scrollTop + (tRect.top - cRect.top);
 
 			// Desired center positions

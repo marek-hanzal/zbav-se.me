@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useScrollTo, useSelection } from "@use-pico/client/hook";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
@@ -78,170 +74,164 @@ const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 	);
 };
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
-	{
-		validateSearch: ListingWizardSchema,
-		component() {
-			const { locale } = Route.useParams();
-			const state = Route.useSearch();
-			const navigate = Route.useNavigate();
-			const [fulltext, setFulltext] = useState<Fulltext.Value>();
-			const selection = useSelection<EntitySchema.Type>({
-				mode: "single",
-				initial: state.categoryId
-					? [
-							{
-								id: state.categoryId,
-							},
-						]
-					: undefined,
-			});
-			const categoryQuery = withCategoryCollectionQuery.useQuery({
-				filter: {
-					locale,
-					fulltext,
+export const Route = createFileRoute("/$locale/seller/listing/wizard/category")({
+	validateSearch: ListingWizardSchema,
+	component() {
+		const { locale } = Route.useParams();
+		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
+		const [fulltext, setFulltext] = useState<Fulltext.Value>();
+		const selection = useSelection<EntitySchema.Type>({
+			mode: "single",
+			initial: state.categoryId
+				? [
+						{
+							id: state.categoryId,
+						},
+					]
+				: undefined,
+		});
+		const categoryQuery = withCategoryCollectionQuery.useQuery({
+			filter: {
+				locale,
+				fulltext,
+			},
+			cursor: {
+				page: 0,
+				size: 256,
+			},
+			sort: [
+				{
+					field: "sort",
+					direction: "asc",
 				},
-				cursor: {
-					page: 0,
-					size: 256,
-				},
-				sort: [
-					{
-						field: "sort",
-						direction: "asc",
-					},
-				],
-			});
-			const containerRef = useRef<HTMLDivElement>(null);
-			const scrollTo = useScrollTo(containerRef);
+			],
+		});
+		const containerRef = useRef<HTMLDivElement>(null);
+		const scrollTo = useScrollTo(containerRef);
 
-			useEffect(() => {
-				if (state.categoryId) {
-					scrollTo(`.CategoryItem-${state.categoryId}`);
+		useEffect(() => {
+			if (state.categoryId) {
+				scrollTo(`.CategoryItem-${state.categoryId}`);
+			}
+		}, [
+			categoryQuery.data,
+		]);
+
+		return (
+			<TitleContainer
+				ui="Category-root"
+				textTitle={"Listing category (title)"}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/seller/listing/wizard/photos"}
+						search={state}
+						params={{
+							locale,
+						}}
+						tone={"secondary"}
+					/>
 				}
-			}, [
-				categoryQuery.data,
-			]);
-
-			return (
-				<TitleContainer
-					ui="Category-root"
-					textTitle={"Listing category (title)"}
-					left={
-						<LinkTo
-							icon={ArrowLeftIcon}
-							to={"/$locale/seller/listing/wizard/photos"}
-							search={state}
-							params={{
-								locale,
-							}}
-							tone={"secondary"}
-						/>
-					}
-					right={
-						<ConfirmButton
-							iconEnabled={CloseIcon}
-							tone={"secondary"}
-							confirmProps={{
-								tone: "danger",
-								onClick: () => {
-									navigate({
-										to: "/$locale/seller",
-										params: {
-											locale,
-										},
-									});
-								},
-							}}
-						/>
-					}
-					bottom={
-						<LinkTo
-							to={"/$locale/seller/listing/wizard/condition"}
-							params={{
-								locale,
-							}}
-							search={{
-								...state,
-								categoryId: selection.optional.singleId(),
-							}}
-							disabled={!selection.hasAny}
-							full
-						>
-							<Button
-								tone={"secondary"}
-								theme={"dark"}
-								iconEnabled={ArrowRightIcon}
-								iconPosition={"right"}
-								label={"Next - condition (button)"}
-								disabled={!selection.hasAny}
-								size={"lg"}
-								full
-							/>
-						</LinkTo>
-					}
-				>
-					<Container
-						layout={"vertical-header-content"}
-						gap={"md"}
-						height={"fit"}
+				right={
+					<ConfirmButton
+						iconEnabled={CloseIcon}
+						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/seller",
+									params: {
+										locale,
+									},
+								});
+							},
+						}}
+					/>
+				}
+				bottom={
+					<LinkTo
+						to={"/$locale/seller/listing/wizard/condition"}
+						params={{
+							locale,
+						}}
+						search={{
+							...state,
+							categoryId: selection.optional.singleId(),
+						}}
+						disabled={!selection.hasAny}
+						full
 					>
-						<div className={"min-h-0"}>
-							<Fulltext
-								state={{
-									value: fulltext,
-									set: setFulltext,
-								}}
-							/>
-						</div>
-
-						<Data
-							result={categoryQuery}
-							renderSuccess={({ data }) => {
-								return (
-									<Container
-										ref={containerRef}
-										layout={"vertical-flex"}
-										scroll={"vertical"}
-										gap={"md"}
-									>
-										{data.data.map((item) => {
-											return (
-												<CategoryItem
-													key={item.id}
-													selection={selection}
-													item={item}
-												/>
-											);
-										})}
-									</Container>
-								);
-							}}
-							renderLoading={() => {
-								return (
-									<SpinnerContainer
-										disableOverlay
-										height={"fit"}
-									/>
-								);
-							}}
-							renderEmpty={() => {
-								return (
-									<Status
-										icon={SearchIcon}
-										textTitle={
-											"No categories found (title)"
-										}
-										textMessage={
-											"No categories found (message)"
-										}
-									/>
-								);
+						<Button
+							tone={"secondary"}
+							theme={"dark"}
+							iconEnabled={ArrowRightIcon}
+							iconPosition={"right"}
+							label={"Next - condition (button)"}
+							disabled={!selection.hasAny}
+							size={"lg"}
+							full
+						/>
+					</LinkTo>
+				}
+			>
+				<Container
+					layout={"vertical-header-content"}
+					gap={"md"}
+					height={"fit"}
+				>
+					<div className={"min-h-0"}>
+						<Fulltext
+							state={{
+								value: fulltext,
+								set: setFulltext,
 							}}
 						/>
-					</Container>
-				</TitleContainer>
-			);
-		},
+					</div>
+
+					<Data
+						result={categoryQuery}
+						renderSuccess={({ data }) => {
+							return (
+								<Container
+									ref={containerRef}
+									layout={"vertical-flex"}
+									scroll={"vertical"}
+									gap={"md"}
+								>
+									{data.data.map((item) => {
+										return (
+											<CategoryItem
+												key={item.id}
+												selection={selection}
+												item={item}
+											/>
+										);
+									})}
+								</Container>
+							);
+						}}
+						renderLoading={() => {
+							return (
+								<SpinnerContainer
+									disableOverlay
+									height={"fit"}
+								/>
+							);
+						}}
+						renderEmpty={() => {
+							return (
+								<Status
+									icon={SearchIcon}
+									textTitle={"No categories found (title)"}
+									textMessage={"No categories found (message)"}
+								/>
+							);
+						}}
+					/>
+				</Container>
+			</TitleContainer>
+		);
 	},
-);
+});

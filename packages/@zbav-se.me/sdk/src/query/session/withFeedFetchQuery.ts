@@ -1,14 +1,8 @@
 import { withQuery } from "@use-pico/client/query";
 import { apiFeedFetch } from "../../api/session/sdk.gen";
-import type {
-	tApiFeedFetchResponse,
-	tFeedQuery,
-} from "../../api/session/types.gen";
+import type { tApiFeedFetchResponse, tFeedQuery } from "../../api/session/types.gen";
 
-export const withFeedFetchQuery = withQuery<
-	tFeedQuery,
-	tApiFeedFetchResponse[200]
->({
+export const withFeedFetchQuery = withQuery<tFeedQuery, tApiFeedFetchResponse[200]>({
 	keys(data) {
 		return [
 			"feed",

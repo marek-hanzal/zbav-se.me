@@ -15,9 +15,7 @@ const selection = {
 };
 
 export const example1 = () => {
-	return translator.text(
-		selection.optional.single()?.title ?? "Default object method text",
-	);
+	return translator.text(selection.optional.single()?.title ?? "Default object method text");
 };
 
 export const example2 = () => {

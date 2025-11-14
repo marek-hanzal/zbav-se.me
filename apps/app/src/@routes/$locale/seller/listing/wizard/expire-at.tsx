@@ -1,9 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -18,17 +14,13 @@ import { useId, useState } from "react";
 import { match } from "ts-pattern";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
-export const Route = createFileRoute(
-	"/$locale/seller/listing/wizard/expire-at",
-)({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [expiresAt, setExpiresAt] = useState<tListingExpire | undefined>(
-			state.expiresAt,
-		);
+		const [expiresAt, setExpiresAt] = useState<tListingExpire | undefined>(state.expiresAt);
 		const expireId = useId();
 
 		return (
@@ -101,8 +93,7 @@ export const Route = createFileRoute(
 								cls={ThemeCls}
 								variant={{
 									tone: "primary",
-									theme:
-										expiresAt === expire ? "dark" : "light",
+									theme: expiresAt === expire ? "dark" : "light",
 								}}
 							>
 								<Button

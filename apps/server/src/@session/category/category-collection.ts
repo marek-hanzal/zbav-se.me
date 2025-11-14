@@ -38,8 +38,7 @@ export const withCategoryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of categories based on provided query",
+					description: "Access collection of categories based on provided query",
 				},
 			},
 			tags: [
@@ -73,10 +72,7 @@ export const withCategoryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					}),
 			});
 
-			if (
-				data.data.length === 0 &&
-				(where?.fulltext || filter?.fulltext)
-			) {
+			if (data.data.length === 0 && (where?.fulltext || filter?.fulltext)) {
 				const fulltext = filter?.fulltext || where?.fulltext;
 				if (fulltext && fulltext.length >= 4) {
 					try {
@@ -105,14 +101,11 @@ export const withCategoryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 				}
 			}
 
-			return c.json<withCollectionSchema.Type<CategorySchema>, 200>(
-				data,
-				{
-					headers: {
-						"X-Cached": hit ? "true" : "false",
-					},
+			return c.json<withCollectionSchema.Type<CategorySchema>, 200>(data, {
+				headers: {
+					"X-Cached": hit ? "true" : "false",
 				},
-			);
+			});
 		},
 	);
 };

@@ -14,8 +14,6 @@ it("should handle single block", () => {
 		block,
 	]);
 	expect(result.length).toBe(3);
-	const magnitude = Math.sqrt(
-		Array.from(result).reduce((sum, v) => sum + v * v, 0),
-	);
+	const magnitude = Math.sqrt(Array.from(result).reduce((sum, v) => sum + v * v, 0));
 	expect(magnitude).toBeCloseTo(1, 5);
 });

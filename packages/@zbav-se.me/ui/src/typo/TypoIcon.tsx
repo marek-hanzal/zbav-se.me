@@ -4,8 +4,7 @@ import type { FC, HTMLAttributes } from "react";
 import { TypoIconCls } from "./TypoIconCls";
 
 export namespace TypoIcon {
-	export interface Props
-		extends TypoIconCls.Props<HTMLAttributes<HTMLDivElement>> {
+	export interface Props extends TypoIconCls.Props<HTMLAttributes<HTMLDivElement>> {
 		icon: Icon.Type;
 		iconProps?: Icon.PropsEx;
 		justify?: Cls.VariantOf<TypoIconCls, "justify">;

@@ -18,9 +18,7 @@ import { WhatSheet } from "~/app/home/WhatSheet";
 export const Route = createFileRoute("/$locale/landing")({
 	async loader({ params: { locale } }) {
 		return {
-			about: await import(`../../@md/about/${locale}.md?raw`).then(
-				(m) => m.default,
-			),
+			about: await import(`../../@md/about/${locale}.md?raw`).then((m) => m.default),
 		};
 	},
 	component() {

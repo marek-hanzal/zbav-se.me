@@ -1,11 +1,7 @@
 import { usePatchCollection } from "@use-pico/client/hook";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import type {
-	tListing,
-	tListingCollection,
-	tListingQuery,
-} from "@zbav-se.me/sdk/api/session";
+import type { tListing, tListingCollection, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
@@ -34,22 +30,21 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 
 	const patch = usePatchCollection<tListingCollection>(listing);
 
-	const listingIgnoreToggleMutation =
-		withListingIgnoreToggleMutation.useMutation({
-			onSuccess() {
-				onSuccess?.(!listing.isIgnored);
-				setListingCollection(
-					patch({
-						id: listing.id,
-						isIgnored: !listing.isIgnored,
-					}),
-					query,
-				);
-			},
-			meta: {
-				mutationId: listing.id,
-			},
-		});
+	const listingIgnoreToggleMutation = withListingIgnoreToggleMutation.useMutation({
+		onSuccess() {
+			onSuccess?.(!listing.isIgnored);
+			setListingCollection(
+				patch({
+					id: listing.id,
+					isIgnored: !listing.isIgnored,
+				}),
+				query,
+			);
+		},
+		meta: {
+			mutationId: listing.id,
+		},
+	});
 
 	return (
 		<ConfirmButton
@@ -63,25 +58,15 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				...buttonProps,
 				onClick(event) {
 					if (listing.isIgnored) {
-						toast.info(
-							translator.text(
-								"Second tap to unignore listing (toast)",
-							),
-							{
-								id: "listing-ignore-button",
-							},
-						);
+						toast.info(translator.text("Second tap to unignore listing (toast)"), {
+							id: "listing-ignore-button",
+						});
 					}
 
 					if (!listing.isIgnored) {
-						toast.info(
-							translator.text(
-								"Second tap to ignore listing (toast)",
-							),
-							{
-								id: "listing-ignore-button",
-							},
-						);
+						toast.info(translator.text("Second tap to ignore listing (toast)"), {
+							id: "listing-ignore-button",
+						});
 					}
 
 					buttonProps?.onClick?.(event);
@@ -101,13 +86,9 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								listing.isIgnored
-									? "Listing unignored (toast)"
-									: "Listing ignored (toast)",
+								listing.isIgnored ? "Listing unignored (toast)" : "Listing ignored (toast)",
 							),
-							error: translator.text(
-								"Error ignoring listing (toast)",
-							),
+							error: translator.text("Error ignoring listing (toast)"),
 							id: "listing-ignore-button",
 						},
 					);

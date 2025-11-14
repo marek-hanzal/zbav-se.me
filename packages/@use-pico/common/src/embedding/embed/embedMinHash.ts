@@ -25,10 +25,7 @@ const hashFeature = (s: string): bigint => {
 	return mix64(h);
 };
 
-export const embedMinHash = ({
-	value,
-	dimensions = 64,
-}: embedMinHash.Props): number[] => {
+export const embedMinHash = ({ value, dimensions = 64 }: embedMinHash.Props): number[] => {
 	const out = new Float32Array(dimensions);
 
 	const norm = value

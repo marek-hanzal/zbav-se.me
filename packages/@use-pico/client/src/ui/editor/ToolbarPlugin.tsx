@@ -165,10 +165,7 @@ export const ToolbarPlugin: FC<ToolbarPlugin.Props> = ({ onSave }) => {
 					iconEnabled={"icon-[material-symbols--format-underlined]"}
 					iconDisabled={"icon-[material-symbols--format-underlined]"}
 					onClick={() => {
-						editor.dispatchCommand(
-							FORMAT_TEXT_COMMAND,
-							"underline",
-						);
+						editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
 					}}
 					tweak={{
 						variant: {
@@ -177,17 +174,10 @@ export const ToolbarPlugin: FC<ToolbarPlugin.Props> = ({ onSave }) => {
 					}}
 				/>
 				<Action
-					iconEnabled={
-						"icon-[material-symbols--format-strikethrough]"
-					}
-					iconDisabled={
-						"icon-[material-symbols--format-strikethrough]"
-					}
+					iconEnabled={"icon-[material-symbols--format-strikethrough]"}
+					iconDisabled={"icon-[material-symbols--format-strikethrough]"}
 					onClick={() => {
-						editor.dispatchCommand(
-							FORMAT_TEXT_COMMAND,
-							"strikethrough",
-						);
+						editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough");
 					}}
 					tweak={{
 						variant: {
@@ -214,10 +204,7 @@ export const ToolbarPlugin: FC<ToolbarPlugin.Props> = ({ onSave }) => {
 				<Action
 					iconEnabled={"icon-[material-symbols--format-align-center]"}
 					onClick={() => {
-						editor.dispatchCommand(
-							FORMAT_ELEMENT_COMMAND,
-							"center",
-						);
+						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
 					}}
 				/>
 				<Action
@@ -227,14 +214,9 @@ export const ToolbarPlugin: FC<ToolbarPlugin.Props> = ({ onSave }) => {
 					}}
 				/>
 				<Action
-					iconEnabled={
-						"icon-[material-symbols--format-align-justify]"
-					}
+					iconEnabled={"icon-[material-symbols--format-align-justify]"}
 					onClick={() => {
-						editor.dispatchCommand(
-							FORMAT_ELEMENT_COMMAND,
-							"justify",
-						);
+						editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "justify");
 					}}
 				/>
 			</div>

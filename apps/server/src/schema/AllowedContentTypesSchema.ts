@@ -9,11 +9,9 @@ const AllowedContentTypes = [
 	"image/heif",
 ] as const;
 
-export const AllowedContentTypesSchema = z
-	.enum(AllowedContentTypes)
-	.openapi("AllowedContentTypes", {
-		description: "Allowed content types",
-	});
+export const AllowedContentTypesSchema = z.enum(AllowedContentTypes).openapi("AllowedContentTypes", {
+	description: "Allowed content types",
+});
 
 export type AllowedContentTypesSchema = typeof AllowedContentTypesSchema;
 

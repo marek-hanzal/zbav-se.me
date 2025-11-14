@@ -9,14 +9,10 @@ export namespace withApi {
 		data: undefined;
 	}
 
-	export type Request<TData, TError> = Promise<
-		Success<TData> | Error<TError>
-	>;
+	export type Request<TData, TError> = Promise<Success<TData> | Error<TError>>;
 }
 
-export const withApi = async <TData, TError>(
-	request: withApi.Request<TData, TError>,
-) => {
+export const withApi = async <TData, TError>(request: withApi.Request<TData, TError>) => {
 	const res = await request;
 
 	if (res.data !== undefined) {

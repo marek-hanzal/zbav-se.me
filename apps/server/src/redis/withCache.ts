@@ -7,10 +7,7 @@ export namespace withCache {
 	}
 }
 
-export const withCache = async <TResult>({
-	key: _,
-	fetch,
-}: withCache.Props<TResult>) => {
+export const withCache = async <TResult>({ key: _, fetch }: withCache.Props<TResult>) => {
 	// const cachedKey = genKey(key);
 
 	// const cached = await redis.get<TResult>(cachedKey);

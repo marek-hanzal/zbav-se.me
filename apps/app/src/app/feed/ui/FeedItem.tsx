@@ -64,11 +64,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 				/>
 			</LinkTo>
 
-			<div
-				className={
-					"flex flex-row gap-2 items-center justify-between w-full"
-				}
-			>
+			<div className={"flex flex-row gap-2 items-center justify-between w-full"}>
 				<LinkTo
 					icon={FeedIcon}
 					to={"/$locale/buyer/feed/$id/view"}

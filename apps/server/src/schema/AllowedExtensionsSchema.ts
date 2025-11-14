@@ -10,11 +10,9 @@ const AllowedExtensions = [
 	"heif",
 ] as const;
 
-export const AllowedExtensionsSchema = z
-	.enum(AllowedExtensions)
-	.openapi("AllowedExtensions", {
-		description: "Allowed extensions",
-	});
+export const AllowedExtensionsSchema = z.enum(AllowedExtensions).openapi("AllowedExtensions", {
+	description: "Allowed extensions",
+});
 
 export type AllowedExtensionsSchema = typeof AllowedExtensionsSchema;
 

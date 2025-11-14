@@ -19,9 +19,7 @@ export const UserScoreMigration: Migration = {
 			.addColumn("toUserId", "text", (col) => col.notNull())
 			.addColumn("score", "integer", (col) => col.notNull())
 			.addColumn("type", sql`user_score_type`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
+			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
 				"user_score_[fromUserId]_fk",
 				[
@@ -46,22 +44,10 @@ export const UserScoreMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema
-			.createIndex("user_score_[fromUserId]_idx")
-			.on("user_score")
-			.column("fromUserId")
-			.execute();
+		await db.schema.createIndex("user_score_[fromUserId]_idx").on("user_score").column("fromUserId").execute();
 
-		await db.schema
-			.createIndex("user_score_[toUserId]_idx")
-			.on("user_score")
-			.column("toUserId")
-			.execute();
+		await db.schema.createIndex("user_score_[toUserId]_idx").on("user_score").column("toUserId").execute();
 
-		await db.schema
-			.createIndex("user_score_[createdAt]_idx")
-			.on("user_score")
-			.column("createdAt")
-			.execute();
+		await db.schema.createIndex("user_score_[createdAt]_idx").on("user_score").column("createdAt").execute();
 	},
 };

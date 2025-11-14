@@ -4,20 +4,14 @@ import { FilterApplyIcon } from "../../../icon/FilterApplyIcon";
 import { Action } from "../../action/Action";
 
 export namespace EqualFilter {
-	export interface Props<
-		TData extends EntitySchema.Type,
-		TFilter extends withQuerySchema.Query,
-	> {
+	export interface Props<TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query> {
 		state: StateType<TFilter["filter"]>;
 		path: DeepKeys<TFilter["filter"]>;
 		value: DeepValue<TData, DeepKeys<TFilter["filter"]>>;
 	}
 }
 
-export const EqualFilter = <
-	TData extends EntitySchema.Type,
-	TFilter extends withQuerySchema.Query,
->({
+export const EqualFilter = <TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query>({
 	state,
 	path,
 	value,

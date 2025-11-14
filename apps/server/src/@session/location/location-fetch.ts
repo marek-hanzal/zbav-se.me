@@ -32,8 +32,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: LocationSchema,
 						},
 					},
-					description:
-						"Return a location based on the provided query",
+					description: "Return a location based on the provided query",
 				},
 				404: {
 					content: {

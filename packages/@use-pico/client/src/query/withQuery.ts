@@ -35,20 +35,14 @@ export namespace withQuery {
 		queryFn(data: TData): Promise<TResult>;
 	}
 
-	export type PropsEx<TData, TResult> = Omit<
-		Props<TData, TResult>,
-		"queryFn" | "keys"
-	>;
+	export type PropsEx<TData, TResult> = Omit<Props<TData, TResult>, "queryFn" | "keys">;
 
 	/**
 	 * Query options type excluding queryKey and queryFn (which are handled internally).
 	 *
 	 * @template TResult - Result type returned by the query function.
 	 */
-	export type QueryOptions<TResult> = OmitKeyof<
-		UseQueryOptions<TResult, Error>,
-		"queryKey" | "queryFn"
-	>;
+	export type QueryOptions<TResult> = OmitKeyof<UseQueryOptions<TResult, Error>, "queryKey" | "queryFn">;
 
 	/**
 	 * Typed public facing API for query operations.
@@ -84,9 +78,7 @@ export namespace withQuery {
 	 * the application. The implementation is pure TanStack Query, providing full
 	 * compatibility with all TanStack Query features and behaviors.
 	 */
-	export type Api<TData, TResult> = ReturnType<
-		typeof withQuery<TData, TResult>
-	>;
+	export type Api<TData, TResult> = ReturnType<typeof withQuery<TData, TResult>>;
 }
 
 /**
@@ -99,10 +91,7 @@ export namespace withQuery {
  * @param props - Query configuration and helpers.
  * @returns Query helpers and hooks.
  */
-export function withQuery<TData, TResult>({
-	queryFn,
-	keys,
-}: withQuery.Props<TData, TResult>) {
+export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TData, TResult>) {
 	/**
 	 * Internal key generator function that cleans and formats query keys.
 	 * @param data - Optional input data for the query.
@@ -161,10 +150,7 @@ export function withQuery<TData, TResult>({
 		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query.
 		 */
-		useQuery(
-			data: TData,
-			opts?: withQuery.QueryOptions<TResult>,
-		): UseQueryResult<TResult, Error> {
+		useQuery(data: TData, opts?: withQuery.QueryOptions<TResult>): UseQueryResult<TResult, Error> {
 			return useQuery(options(data, opts));
 		},
 		/**
@@ -173,10 +159,7 @@ export function withQuery<TData, TResult>({
 		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query (suspense-enabled).
 		 */
-		useSuspenseQuery(
-			data: TData,
-			opts?: withQuery.QueryOptions<TResult>,
-		): UseSuspenseQueryResult<TResult, Error> {
+		useSuspenseQuery(data: TData, opts?: withQuery.QueryOptions<TResult>): UseSuspenseQueryResult<TResult, Error> {
 			return useSuspenseQuery(options(data, opts));
 		},
 		/**
@@ -236,11 +219,7 @@ export function withQuery<TData, TResult>({
 		 * @param data - The input data for the query.
 		 * @returns Promise that resolves when prefetching is complete.
 		 */
-		async prefetch(
-			queryClient: QueryClient,
-			data: TData,
-			opts?: withQuery.QueryOptions<TResult>,
-		) {
+		async prefetch(queryClient: QueryClient, data: TData, opts?: withQuery.QueryOptions<TResult>) {
 			await queryClient.prefetchQuery(options(data, opts));
 		},
 		/**
@@ -250,11 +229,7 @@ export function withQuery<TData, TResult>({
 		 * @param opts - Optional query options to pass to queryOptions.
 		 * @returns Resolves with the query data.
 		 */
-		async ensure(
-			queryClient: QueryClient,
-			data: TData,
-			opts?: withQuery.QueryOptions<TResult>,
-		) {
+		async ensure(queryClient: QueryClient, data: TData, opts?: withQuery.QueryOptions<TResult>) {
 			return queryClient.ensureQueryData(options(data, opts));
 		},
 		/**
@@ -268,10 +243,7 @@ export function withQuery<TData, TResult>({
 			 * @param value - The value to set in the cache.
 			 * @param data - Optional input data for the query.
 			 */
-			return (
-				value: (value: TResult | undefined) => TResult | undefined,
-				data: TData | undefined,
-			) => {
+			return (value: (value: TResult | undefined) => TResult | undefined, data: TData | undefined) => {
 				queryClient.setQueryData($keys(data), value);
 			};
 		},

@@ -9,9 +9,5 @@ export namespace ToastProvider {
 }
 
 export const ToastProvider = ({ children, ...props }: ToastProvider.Props) => {
-	return (
-		<ToastContext.Provider value={createToastStore(props)}>
-			{children}
-		</ToastContext.Provider>
-	);
+	return <ToastContext.Provider value={createToastStore(props)}>{children}</ToastContext.Provider>;
 };

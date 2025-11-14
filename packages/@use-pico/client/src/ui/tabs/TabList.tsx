@@ -8,12 +8,7 @@ export namespace TabList {
 	}
 }
 
-export const TabList: FC<TabList.Props> = ({
-	right,
-	cls = TabListCls,
-	tweak,
-	children,
-}) => {
+export const TabList: FC<TabList.Props> = ({ right, cls = TabListCls, tweak, children }) => {
 	const { slots } = useCls(cls, tweak);
 
 	return (

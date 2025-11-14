@@ -72,118 +72,43 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ sessionHono }) => {
 				.selectFrom("listing_score as ls")
 				.where("ls.listingId", "=", id)
 				.select((eb) => [
+					eb.fn.sum<number>(eb.case().when("ls.type", "=", "listing").then(1).else(0).end()).as("listing"),
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "listing")
-								.then(1)
-								.else(0)
-								.end(),
-						)
-						.as("listing"),
-					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "listing")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "listing").then(eb.ref("ls.score")).else(0).end())
 						.as("listingScore"),
 					//
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "view")
-								.then(1)
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "view").then(1).else(0).end())
 						.as("views"),
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "view")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "view").then(eb.ref("ls.score")).else(0).end())
 						.as("viewsScore"),
 					//
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "cart")
-								.then(1)
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "cart").then(1).else(0).end())
 						.as("cart"),
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "cart")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "cart").then(eb.ref("ls.score")).else(0).end())
 						.as("cartScore"),
 					//
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "ignore")
-								.then(1)
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "ignore").then(1).else(0).end())
 						.as("ignore"),
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "ignore")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "ignore").then(eb.ref("ls.score")).else(0).end())
 						.as("ignoreScore"),
 					//
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "flag")
-								.then(1)
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "flag").then(1).else(0).end())
 						.as("flag"),
 					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "flag")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
+						.sum<number>(eb.case().when("ls.type", "=", "flag").then(eb.ref("ls.score")).else(0).end())
 						.as("flagScore"),
 					eb.fn.sum<number>("ls.score").as("score"),
 				])
 				.executeTakeFirst();
 
-			return c.json<ListingMetricsSchema.Type, 200>(
-				ListingMetricsSchema.parse(score),
-				200,
-			);
+			return c.json<ListingMetricsSchema.Type, 200>(ListingMetricsSchema.parse(score), 200);
 		},
 	);
 };

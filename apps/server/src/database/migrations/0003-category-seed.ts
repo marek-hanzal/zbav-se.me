@@ -51,10 +51,7 @@ export const CategorySeedMigration: Migration = {
 		});
 
 		const spotlightData = categoriesCsData
-			.filter(
-				(category) =>
-					category.spotlight && category.spotlight.length > 0,
-			)
+			.filter((category) => category.spotlight && category.spotlight.length > 0)
 			.flatMap((category) => {
 				const categoryId = categoryMap.get(category.slug);
 				if (!categoryId) {
@@ -71,10 +68,7 @@ export const CategorySeedMigration: Migration = {
 			});
 
 		if (spotlightData.length > 0) {
-			await db
-				.insertInto("category_spotlight")
-				.values(spotlightData)
-				.execute();
+			await db.insertInto("category_spotlight").values(spotlightData).execute();
 		}
 	},
 };

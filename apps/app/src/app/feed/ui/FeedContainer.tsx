@@ -12,10 +12,7 @@ import { translator } from "@use-pico/common/translator";
 import type { OptionalId } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/session";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/session";
-import {
-	withCategoryCollectionQuery,
-	withLocationFetchQuery,
-} from "@zbav-se.me/sdk/query/session";
+import { withCategoryCollectionQuery, withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 
@@ -125,9 +122,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								feed.id ? (
 									<LinkTo
 										icon={EditIcon}
-										to={
-											"/$locale/buyer/feed/$id/edit/location"
-										}
+										to={"/$locale/buyer/feed/$id/edit/location"}
 										params={{
 											locale,
 											id: feed.id,
@@ -145,9 +140,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								feed.id ? (
 									<LinkTo
 										icon={EditIcon}
-										to={
-											"/$locale/buyer/feed/$id/edit/location"
-										}
+										to={"/$locale/buyer/feed/$id/edit/location"}
 										params={{
 											locale,
 											id: feed.id,
@@ -167,9 +160,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 						...sortItem,
 					}))}
 					render={(sortItem) => (
-						<Tx
-							label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
-						/>
+						<Tx label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`} />
 					)}
 					action={
 						feed.id ? (
@@ -193,11 +184,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 							textEmpty={"Feed category not selected"}
 							items={data.data}
 							render={(category) => (
-								<div
-									className={
-										"flex flex-col gap-0.5 items-start"
-									}
-								>
+								<div className={"flex flex-col gap-0.5 items-start"}>
 									<Typo
 										label={category.group}
 										size={"xs"}
@@ -209,9 +196,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								feed.id ? (
 									<LinkTo
 										icon={EditIcon}
-										to={
-											"/$locale/buyer/feed/$id/edit/category"
-										}
+										to={"/$locale/buyer/feed/$id/edit/category"}
 										params={{
 											locale,
 											id: feed.id,
@@ -231,9 +216,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								feed.id ? (
 									<LinkTo
 										icon={EditIcon}
-										to={
-											"/$locale/buyer/feed/$id/edit/category"
-										}
+										to={"/$locale/buyer/feed/$id/edit/category"}
 										params={{
 											locale,
 											id: feed.id,
@@ -248,17 +231,11 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				<ContainerValueList
 					textTitle={"Feed condition (label)"}
 					textEmpty={"Feed condition not selected"}
-					items={(feed.filter?.conditionIn ?? []).map(
-						(condition) => ({
-							id: String(condition),
-							condition,
-						}),
-					)}
-					render={(item) => (
-						<Tx
-							label={`Condition - Overall [${item.condition}] (hint)`}
-						/>
-					)}
+					items={(feed.filter?.conditionIn ?? []).map((condition) => ({
+						id: String(condition),
+						condition,
+					}))}
+					render={(item) => <Tx label={`Condition - Overall [${item.condition}] (hint)`} />}
 					action={
 						feed.id ? (
 							<LinkTo
@@ -280,9 +257,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 						id: String(age),
 						age,
 					}))}
-					render={(item) => (
-						<Tx label={`Condition - Age [${item.age}] (hint)`} />
-					)}
+					render={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
 					action={
 						feed.id ? (
 							<LinkTo
@@ -332,9 +307,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								iconEnabled: TrashIcon,
 								tone: "danger",
 								theme: "dark",
-								label: translator.text(
-									"Really delete feed (button)",
-								),
+								label: translator.text("Really delete feed (button)"),
 								onClick() {
 									feedDeleteMutation.mutate({
 										where: {

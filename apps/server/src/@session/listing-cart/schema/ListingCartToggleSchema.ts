@@ -3,8 +3,7 @@ import { z } from "@hono/zod-openapi";
 export const ListingCartToggleSchema = z
 	.object({
 		toggle: z.boolean().openapi({
-			description:
-				"Whether to add (true) or remove (false) the listing from cart",
+			description: "Whether to add (true) or remove (false) the listing from cart",
 		}),
 		listingId: z.string().openapi({
 			description: "ID of the listing to toggle",

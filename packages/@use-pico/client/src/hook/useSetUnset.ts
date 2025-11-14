@@ -28,19 +28,11 @@ export function useSetUnset<T>(props: useSetUnset.Props<T>): [
 	T | null | undefined,
 	useSetUnset.Transition,
 ] {
-	const {
-		value,
-		onMount,
-		onTransitionSet,
-		onTransitionUnset,
-		onTransitionNone,
-		onTransitionChange,
-	} = props;
+	const { value, onMount, onTransitionSet, onTransitionUnset, onTransitionNone, onTransitionChange } = props;
 
 	const prevRef = useRef<T | null | undefined>(value);
 	const mountedRef = useRef(false);
-	const [transition, setTransition] =
-		useState<useSetUnset.Transition>("mount");
+	const [transition, setTransition] = useState<useSetUnset.Transition>("mount");
 
 	// Mount-only effect
 	// biome-ignore lint/correctness/useExhaustiveDependencies: onMount is intentionally excluded

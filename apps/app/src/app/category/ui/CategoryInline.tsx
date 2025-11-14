@@ -10,11 +10,7 @@ export namespace CategoryInline {
 	}
 }
 
-export const CategoryInline: FC<CategoryInline.Props> = ({
-	category,
-	textGroupProps,
-	textCategoryProps,
-}) => {
+export const CategoryInline: FC<CategoryInline.Props> = ({ category, textGroupProps, textCategoryProps }) => {
 	return (
 		<div className={"flex flex-col gap-0.5 items-start"}>
 			<Typo

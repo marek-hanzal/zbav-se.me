@@ -10,13 +10,7 @@ import {
 	useFloating,
 } from "@floating-ui/react";
 import { useCls } from "@use-pico/cls";
-import {
-	type FC,
-	type PropsWithChildren,
-	useEffect,
-	useMemo,
-	useRef,
-} from "react";
+import { type FC, type PropsWithChildren, useEffect, useMemo, useRef } from "react";
 import { ContentCls } from "./ContentCls";
 
 export namespace Content {
@@ -74,10 +68,7 @@ export const Content: FC<Content.Props> = ({
 					]
 				: [
 						floatingOffset(({ rects }) => {
-							return (
-								-rects.reference.height / 2 -
-								rects.floating.height / 2
-							);
+							return -rects.reference.height / 2 - rects.floating.height / 2;
 						}),
 						...common,
 					],

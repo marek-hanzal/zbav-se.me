@@ -4,10 +4,7 @@ import { useMemo } from "react";
 import type { Table } from "../Table";
 
 export namespace useVisibleColumns {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type> {
 		columns: Table.Column.Props<TQuery, TData, any, any>[];
 		visible: DeepKeys<TData>[] | undefined;
 		hidden: DeepKeys<TData>[] | undefined;
@@ -15,10 +12,7 @@ export namespace useVisibleColumns {
 	}
 }
 
-export const useVisibleColumns = <
-	TQuery extends withQuerySchema.Query,
-	TData extends EntitySchema.Type,
->({
+export const useVisibleColumns = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type>({
 	columns,
 	visible = [],
 	hidden = [],

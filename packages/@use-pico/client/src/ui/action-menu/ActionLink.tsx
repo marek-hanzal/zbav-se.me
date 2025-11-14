@@ -4,8 +4,7 @@ import type { AnchorHTMLAttributes, FC, Ref } from "react";
 import { Icon } from "../../icon/Icon";
 import { ActionLinkCls } from "./ActionLinkCls";
 
-interface BaseActionLinkProps
-	extends ActionLinkCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
+interface BaseActionLinkProps extends ActionLinkCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
 	ref?: Ref<HTMLAnchorElement>;
 	icon?: Icon.Type;
 	iconProps?: Icon.Props;

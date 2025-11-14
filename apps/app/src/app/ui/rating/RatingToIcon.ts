@@ -1,11 +1,4 @@
-import {
-	LetterAIcon,
-	LetterBIcon,
-	LetterCIcon,
-	LetterDIcon,
-	LetterEIcon,
-	LetterFIcon,
-} from "@zbav-se.me/ui/icon";
+import { LetterAIcon, LetterBIcon, LetterCIcon, LetterDIcon, LetterEIcon, LetterFIcon } from "@zbav-se.me/ui/icon";
 
 export const RatingToIcon = {
 	1: LetterFIcon,

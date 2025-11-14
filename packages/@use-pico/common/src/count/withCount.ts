@@ -4,19 +4,13 @@ import type { FilterSchema } from "../schema/FilterSchema";
 
 export namespace withCount {
 	export namespace Query {
-		export interface Props<
-			TSelect extends SelectQueryBuilder<any, any, any>,
-			TFilter extends FilterSchema.Type,
-		> {
+		export interface Props<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> {
 			select: TSelect;
 			where?: TFilter;
 		}
 	}
 
-	export interface Props<
-		TSelect extends SelectQueryBuilder<any, any, any>,
-		TFilter extends FilterSchema.Type,
-	> {
+	export interface Props<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> {
 		select: TSelect;
 		query?(props: Query.Props<TSelect, TFilter>): TSelect;
 
@@ -24,16 +18,12 @@ export namespace withCount {
 		where?: TFilter;
 	}
 
-	export type Callback<
-		TSelect extends SelectQueryBuilder<any, any, any>,
-		TFilter extends FilterSchema.Type,
-	> = (props: Props<TSelect, TFilter>) => Promise<any>;
+	export type Callback<TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type> = (
+		props: Props<TSelect, TFilter>,
+	) => Promise<any>;
 }
 
-export const withCount = async <
-	TSelect extends SelectQueryBuilder<any, any, any>,
-	TFilter extends FilterSchema.Type,
->({
+export const withCount = async <TSelect extends SelectQueryBuilder<any, any, any>, TFilter extends FilterSchema.Type>({
 	select,
 	query = () => select,
 	filter,

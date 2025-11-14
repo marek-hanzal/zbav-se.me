@@ -10,10 +10,7 @@ export namespace withLocationSelect {
 	export type Select = ReturnType<typeof withLocationSelect>;
 }
 
-export const withLocationSelect = ({
-	sort,
-	source,
-}: withLocationSelect.Props) => {
+export const withLocationSelect = ({ sort, source }: withLocationSelect.Props) => {
 	let query = source.selectFrom("location as l").select([
 		"l.id",
 		"l.query",
@@ -35,9 +32,7 @@ export const withLocationSelect = ({
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("confidence", () =>
-				query.orderBy("l.confidence", item.direction),
-			)
+			.with("confidence", () => query.orderBy("l.confidence", item.direction))
 			.with("query", () => query.orderBy("l.query", item.direction))
 			.with("country", () => query.orderBy("l.country", item.direction))
 			.with("address", () => query.orderBy("l.address", item.direction))

@@ -34,8 +34,7 @@ export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of upload items based on provided query",
+					description: "Access collection of upload items based on provided query",
 				},
 			},
 			tags: [

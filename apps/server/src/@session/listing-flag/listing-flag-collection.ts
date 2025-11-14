@@ -13,8 +13,7 @@ export const withListingFlagCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-flag/collection",
-			description:
-				"Returns listing flag items based on provided parameters",
+			description: "Returns listing flag items based on provided parameters",
 			operationId: "apiListingFlagCollection",
 			request: {
 				body: {
@@ -36,8 +35,7 @@ export const withListingFlagCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of listing flag items based on provided query",
+					description: "Access collection of listing flag items based on provided query",
 				},
 			},
 			tags: [

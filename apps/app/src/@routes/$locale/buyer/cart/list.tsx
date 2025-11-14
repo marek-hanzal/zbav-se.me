@@ -31,22 +31,21 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 	component() {
 		const { locale } = Route.useParams();
 
-		const categoryCartCollectionQuery =
-			withCategoryCartCollectionQuery.useSuspenseQuery({
-				filter: {
-					locale,
+		const categoryCartCollectionQuery = withCategoryCartCollectionQuery.useSuspenseQuery({
+			filter: {
+				locale,
+			},
+			sort: [
+				{
+					field: "listingCount",
+					direction: "desc",
 				},
-				sort: [
-					{
-						field: "listingCount",
-						direction: "desc",
-					},
-				],
-				cursor: {
-					page: 0,
-					size: 256,
-				},
-			});
+			],
+			cursor: {
+				page: 0,
+				size: 256,
+			},
+		});
 
 		return (
 			<TitleContainer
@@ -62,9 +61,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				}
 				textTitle={"Your cart (title)"}
 			>
-				<CategoryCartListContainer
-					categoryCartList={categoryCartCollectionQuery.data.data}
-				/>
+				<CategoryCartListContainer categoryCartList={categoryCartCollectionQuery.data.data} />
 			</TitleContainer>
 		);
 	},

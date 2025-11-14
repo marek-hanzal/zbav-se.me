@@ -2,10 +2,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type {
-	tListingSort,
-	tListingSortField,
-} from "@zbav-se.me/sdk/api/session";
+import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/session";
 import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
@@ -16,12 +13,7 @@ export namespace ListingSortSelect {
 	}
 }
 
-export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
-	withGeo,
-	value,
-	onChange,
-	...props
-}) => {
+export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, value, onChange, ...props }) => {
 	const sortKeyId = useId();
 
 	return (
@@ -45,9 +37,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 			).map((sortValue) => {
 				const current = value.find((s) => s.field === sortValue);
 
-				const position = current
-					? value.findIndex((s) => s.field === sortValue) + 1
-					: undefined;
+				const position = current ? value.findIndex((s) => s.field === sortValue) + 1 : undefined;
 
 				return (
 					<Button
@@ -66,9 +56,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 						full
 						onClick={() => {
 							onChange((prev) => {
-								const idx = prev.findIndex(
-									(s) => s.field === sortValue,
-								);
+								const idx = prev.findIndex((s) => s.field === sortValue);
 
 								if (idx < 0) {
 									return [
@@ -120,9 +108,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 								{position ?? "-"}
 							</Badge>
 
-							<Tx
-								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
-							/>
+							<Tx label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`} />
 						</div>
 					</Button>
 				);

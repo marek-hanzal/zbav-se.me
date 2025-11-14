@@ -3,11 +3,7 @@ import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type {
-	tGallery,
-	tListing,
-	tListingQuery,
-} from "@zbav-se.me/sdk/api/session";
+import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { type FC, type PropsWithChildren, useEffect } from "react";
@@ -57,12 +53,9 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		...tGallery[],
 	];
 
-	const listingMetricsQuery = withListingMetricsFetchQuery.useSuspenseQuery(
-		listing.id,
-	);
+	const listingMetricsQuery = withListingMetricsFetchQuery.useSuspenseQuery(listing.id);
 
-	const listingScoreCreateMutation =
-		withListingScoreCreateMutation.useMutation();
+	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation();
 
 	useEffect(() => {
 		if (!withScore) {

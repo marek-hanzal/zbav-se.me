@@ -21,15 +21,9 @@ export function useInViewport(
 		}
 		const intersectionObserver = new IntersectionObserver(
 			(entries) => {
-				const entry =
-					entries.find((e) => e.target === element) ?? entries[0];
+				const entry = entries.find((e) => e.target === element) ?? entries[0];
 
-				setInView(
-					Boolean(
-						entry?.isIntersecting &&
-							entry.intersectionRatio >= threshold,
-					),
-				);
+				setInView(Boolean(entry?.isIntersecting && entry.intersectionRatio >= threshold));
 			},
 			{
 				root: null,

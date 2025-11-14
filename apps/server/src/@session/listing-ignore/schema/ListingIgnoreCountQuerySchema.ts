@@ -8,8 +8,7 @@ export const ListingIgnoreCountQuerySchema = ListingIgnoreQuerySchema.pick({
 	description: "Query object for listing ignore count",
 });
 
-export type ListingIgnoreCountQuerySchema =
-	typeof ListingIgnoreCountQuerySchema;
+export type ListingIgnoreCountQuerySchema = typeof ListingIgnoreCountQuerySchema;
 
 export namespace ListingIgnoreCountQuerySchema {
 	export type Type = z.infer<ListingIgnoreCountQuerySchema>;

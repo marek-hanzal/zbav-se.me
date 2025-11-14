@@ -17,10 +17,7 @@ export namespace ListingDetailMenu {
 	}
 }
 
-export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
-	listing,
-	...props
-}) => {
+export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...props }) => {
 	const { locale } = useParams({
 		from: "/$locale",
 	});
@@ -50,11 +47,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 				}}
 			>
 				<Button
-					label={
-						listing.isInCart
-							? "Remove from cart (button)"
-							: "Add to cart (button)"
-					}
+					label={listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"}
 					iconEnabled={CartIcon}
 					disabled={listingCartToggle.isPending}
 					loading={listingCartToggle.isPending}
@@ -78,17 +71,11 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 					full
 				>
 					<Button
-						iconEnabled={
-							listingCartCount.data.filter > 0
-								? ArrowRightIcon
-								: undefined
-						}
+						iconEnabled={listingCartCount.data.filter > 0 ? ArrowRightIcon : undefined}
 						iconPosition={"right"}
 						disabled={listingCartCount.data.filter === 0}
 						label={
-							listingCartCount.data.filter > 0
-								? "Go to cart (button)"
-								: "Nothing in cart yet (button)"
+							listingCartCount.data.filter > 0 ? "Go to cart (button)" : "Nothing in cart yet (button)"
 						}
 						size={"xl"}
 						full

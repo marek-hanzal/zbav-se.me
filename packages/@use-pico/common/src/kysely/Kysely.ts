@@ -2,15 +2,11 @@ import { type Expression, type RawBuilder, sql } from "kysely";
 
 export const Kysely = {
 	jsonObject(fields: Record<string, Expression<any>>): RawBuilder<string> {
-		const jsonParts = sql.join(
-			Object.entries(fields).map(([key, value]) => sql`${key}, ${value}`),
-		);
+		const jsonParts = sql.join(Object.entries(fields).map(([key, value]) => sql`${key}, ${value}`));
 
 		return sql<string>`json_object(${jsonParts})`;
 	},
-	jsonGroupArray(
-		fields: Record<string, Expression<any>>,
-	): RawBuilder<string> {
+	jsonGroupArray(fields: Record<string, Expression<any>>): RawBuilder<string> {
 		return sql<string>`json_group_array(${Kysely.jsonObject(fields)})`;
 	},
 } as const;

@@ -10,9 +10,7 @@ export namespace withListingCartSelect {
 	export type Select = ReturnType<typeof withListingCartSelect>;
 }
 
-export const withListingCartSelect = ({
-	sort,
-}: withListingCartSelect.Props) => {
+export const withListingCartSelect = ({ sort }: withListingCartSelect.Props) => {
 	const query = database.kysely.selectFrom("listing_cart as lc").select([
 		"lc.id",
 		"lc.listingId",
@@ -21,9 +19,7 @@ export const withListingCartSelect = ({
 
 	for (const item of sort ?? []) {
 		return match(item.field)
-			.with("createdAt", () =>
-				query.orderBy("lc.createdAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("lc.createdAt", item.direction))
 			.exhaustive();
 	}
 

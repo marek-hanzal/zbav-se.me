@@ -9,8 +9,7 @@ export const UserExDbSchema = z.object({
 		description: "ID of the user (foreign key)",
 	}),
 	locationId: z.string().nullish().openapi({
-		description:
-			"Default location for the user - user for listings & listing sorting",
+		description: "Default location for the user - user for listings & listing sorting",
 	}),
 	side: z
 		.union([

@@ -20,11 +20,7 @@ export namespace Tabs {
 	}
 }
 
-export const Tabs: FC<Tabs.Props> = ({
-	defaultTab,
-	defaultHidden = [],
-	children,
-}) => {
+export const Tabs: FC<Tabs.Props> = ({ defaultTab, defaultHidden = [], children }) => {
 	const store = useMemo(
 		() =>
 			createTabsStore({

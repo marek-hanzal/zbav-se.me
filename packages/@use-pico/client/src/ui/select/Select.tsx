@@ -24,8 +24,7 @@ import { Mx } from "../mx/Mx";
 import { SelectCls } from "./SelectCls";
 
 export namespace Select {
-	export interface Props<TItem extends EntitySchema.Type>
-		extends SelectCls.Props<FormField.Props> {
+	export interface Props<TItem extends EntitySchema.Type> extends SelectCls.Props<FormField.Props> {
 		items: TItem[];
 		icon?: string;
 		defaultValue?: string;
@@ -49,9 +48,7 @@ export namespace Select {
 		onChange?(e: any): void;
 	}
 
-	export type PropsEx<TItem extends EntitySchema.Type> = Partial<
-		Props<TItem>
-	>;
+	export type PropsEx<TItem extends EntitySchema.Type> = Partial<Props<TItem>>;
 }
 
 /**
@@ -124,12 +121,11 @@ export const Select = <TItem extends EntitySchema.Type>({
 		loop: true,
 	});
 
-	const { getReferenceProps, getFloatingProps, getItemProps } =
-		useInteractions([
-			dismiss,
-			listNav,
-			click,
-		]);
+	const { getReferenceProps, getFloatingProps, getItemProps } = useInteractions([
+		dismiss,
+		listNav,
+		click,
+	]);
 	const { isMounted, styles } = useTransitionStyles(context);
 
 	const handleSelect = (index: number) => {
@@ -177,11 +173,7 @@ export const Select = <TItem extends EntitySchema.Type>({
 								},
 							}}
 						/>
-						{item ? (
-							<Render entity={item} />
-						) : (
-							textSelect || <Mx label="Select item" />
-						)}
+						{item ? <Render entity={item} /> : textSelect || <Mx label="Select item" />}
 						<div className={"flex flex-row gap-2 items-center"}>
 							{allowClear ? (
 								<Action
@@ -242,14 +234,11 @@ export const Select = <TItem extends EntitySchema.Type>({
 											ref={(node) => {
 												listRef.current[i] = node;
 											}}
-											tabIndex={
-												i === activeIndex ? 0 : -1
-											}
+											tabIndex={i === activeIndex ? 0 : -1}
 											data-ui="Select-item"
 											className={slots.item({
 												variant: {
-													selected:
-														i === selectedIndex,
+													selected: i === selectedIndex,
 													active: i === activeIndex,
 												},
 											})}
@@ -263,10 +252,7 @@ export const Select = <TItem extends EntitySchema.Type>({
 														handleSelect(i);
 													}
 
-													if (
-														event.key === " " &&
-														!isTypingRef.current
-													) {
+													if (event.key === " " && !isTypingRef.current) {
 														event.preventDefault();
 														handleSelect(i);
 													}
@@ -276,9 +262,7 @@ export const Select = <TItem extends EntitySchema.Type>({
 											<Render entity={value} />
 											{i === selectedIndex && (
 												<Icon
-													icon={
-														"icon-[basil--check-outline]"
-													}
+													icon={"icon-[basil--check-outline]"}
 													size={"md"}
 												/>
 											)}

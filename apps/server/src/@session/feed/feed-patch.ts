@@ -57,8 +57,7 @@ export const withFeedPatchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { id, name, locationId, filter, meta, sort } =
-				c.req.valid("json");
+			const { id, name, locationId, filter, meta, sort } = c.req.valid("json");
 			const user = c.get("user");
 			const now = new Date();
 

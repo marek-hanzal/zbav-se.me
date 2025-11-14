@@ -1,11 +1,7 @@
 import { usePatchCollection } from "@use-pico/client/hook";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import type {
-	tListing,
-	tListingCollection,
-	tListingQuery,
-} from "@zbav-se.me/sdk/api/session";
+import type { tListing, tListingCollection, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { CartIcon } from "@zbav-se.me/ui/icon";
@@ -34,23 +30,21 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 
 	const patch = usePatchCollection<tListingCollection>(listing);
 
-	const listingCartToggleMutation = withListingCartToggleMutation.useMutation(
-		{
-			onSuccess() {
-				onSuccess?.(!listing.isInCart);
-				setListingCollection(
-					patch({
-						id: listing.id,
-						isInCart: !listing.isInCart,
-					}),
-					query,
-				);
-			},
-			meta: {
-				mutationId: listing.id,
-			},
+	const listingCartToggleMutation = withListingCartToggleMutation.useMutation({
+		onSuccess() {
+			onSuccess?.(!listing.isInCart);
+			setListingCollection(
+				patch({
+					id: listing.id,
+					isInCart: !listing.isInCart,
+				}),
+				query,
+			);
 		},
-	);
+		meta: {
+			mutationId: listing.id,
+		},
+	});
 
 	return (
 		<ConfirmButton
@@ -64,25 +58,15 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 				...buttonProps,
 				onClick(event) {
 					if (listing.isInCart) {
-						toast.warning(
-							translator.text(
-								"Second tap to remove from cart (toast)",
-							),
-							{
-								id: "listing-cart-button",
-							},
-						);
+						toast.warning(translator.text("Second tap to remove from cart (toast)"), {
+							id: "listing-cart-button",
+						});
 					}
 
 					if (!listing.isInCart) {
-						toast.info(
-							translator.text(
-								"Second tap to add to cart (toast)",
-							),
-							{
-								id: "listing-cart-button",
-							},
-						);
+						toast.info(translator.text("Second tap to add to cart (toast)"), {
+							id: "listing-cart-button",
+						});
 					}
 
 					buttonProps?.onClick?.(event);
@@ -106,9 +90,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 									? "Listing removed from your cart (toast)"
 									: "Listing added to your cart (toast)",
 							),
-							error: translator.text(
-								"Error adding listing to cart (toast)",
-							),
+							error: translator.text("Error adding listing to cart (toast)"),
 							id: "listing-cart-button",
 						},
 					);

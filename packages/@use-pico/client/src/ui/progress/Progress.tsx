@@ -11,13 +11,7 @@ export namespace Progress {
 	}
 }
 
-export const Progress: FC<Progress.Props> = ({
-	value,
-	size,
-	tone,
-	theme,
-	tweak = {},
-}) => {
+export const Progress: FC<Progress.Props> = ({ value, size, tone, theme, tweak = {} }) => {
 	const { slots } = useCls(ProgressCls, tweak, {
 		variant: {
 			size,

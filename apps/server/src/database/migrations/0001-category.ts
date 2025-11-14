@@ -19,14 +19,11 @@ export const CategoryMigration: Migration = {
 				"slug",
 				"locale",
 			])
-			.addUniqueConstraint(
-				"category_[locale-group-category]_unique_idx",
-				[
-					"locale",
-					"group",
-					"category",
-				],
-			)
+			.addUniqueConstraint("category_[locale-group-category]_unique_idx", [
+				"locale",
+				"group",
+				"category",
+			])
 			.execute();
 
 		await sql`

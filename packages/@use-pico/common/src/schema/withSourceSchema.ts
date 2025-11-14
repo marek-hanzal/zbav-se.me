@@ -66,11 +66,11 @@ export const withSourceSchema = <
 	entity,
 	filter,
 	sort,
-}: withSourceSchema.Props<
+}: withSourceSchema.Props<TEntitySchema, TFilterSchema, TSortSchema>): withSourceSchema.Instance<
 	TEntitySchema,
 	TFilterSchema,
 	TSortSchema
->): withSourceSchema.Instance<TEntitySchema, TFilterSchema, TSortSchema> => {
+> => {
 	return {
 		entity,
 		"~entity": proxy,

@@ -20,14 +20,11 @@ export const CategorySpotlightMigration: Migration = {
 				],
 				(builder) => builder.onDelete("cascade"),
 			)
-			.addUniqueConstraint(
-				"category_spotlight_[categoryId-locale-text]_unique_idx",
-				[
-					"categoryId",
-					"locale",
-					"text",
-				],
-			)
+			.addUniqueConstraint("category_spotlight_[categoryId-locale-text]_unique_idx", [
+				"categoryId",
+				"locale",
+				"text",
+			])
 			.execute();
 
 		await db.schema

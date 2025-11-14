@@ -15,11 +15,7 @@ export namespace useToken {
 	}
 }
 
-export const useToken = ({
-	tokens,
-	source,
-	mode = "any",
-}: useToken.Props): TokenType.Result => {
+export const useToken = ({ tokens, source, mode = "any" }: useToken.Props): TokenType.Result => {
 	const required = useTokensOf({
 		tokens,
 		source,

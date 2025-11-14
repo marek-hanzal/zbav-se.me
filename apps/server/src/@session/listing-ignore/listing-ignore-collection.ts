@@ -13,8 +13,7 @@ export const withListingIgnoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-ignore/collection",
-			description:
-				"Returns listing ignore items based on provided parameters",
+			description: "Returns listing ignore items based on provided parameters",
 			operationId: "apiListingIgnoreCollection",
 			request: {
 				body: {
@@ -32,13 +31,11 @@ export const withListingIgnoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							schema: withCollectionSchema({
 								schema: ListingIgnoreSchema,
 								type: "ListingIgnoreCollection",
-								description:
-									"Collection of listing ignore items",
+								description: "Collection of listing ignore items",
 							}),
 						},
 					},
-					description:
-						"Access collection of listing ignore items based on provided query",
+					description: "Access collection of listing ignore items based on provided query",
 				},
 			},
 			tags: [

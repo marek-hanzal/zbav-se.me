@@ -20,8 +20,6 @@ it("should return normalized vector", () => {
 		block1,
 		block2,
 	]);
-	const magnitude = Math.sqrt(
-		Array.from(result).reduce((sum, v) => sum + v * v, 0),
-	);
+	const magnitude = Math.sqrt(Array.from(result).reduce((sum, v) => sum + v * v, 0));
 	expect(magnitude).toBeCloseTo(1, 5);
 });

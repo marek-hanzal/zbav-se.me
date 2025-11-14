@@ -1,8 +1,5 @@
 import type { Placement } from "@floating-ui/react";
-import {
-	type UseMatchRouteOptions,
-	useMatchRoute,
-} from "@tanstack/react-router";
+import { type UseMatchRouteOptions, useMatchRoute } from "@tanstack/react-router";
 import { type Cls, useCls } from "@use-pico/cls";
 import type { FC, PropsWithChildren, ReactNode } from "react";
 import { Icon } from "../../icon/Icon";

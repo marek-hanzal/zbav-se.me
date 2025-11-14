@@ -8,16 +8,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import {
-	type FC,
-	type ReactNode,
-	useEffect,
-	useId,
-	useMemo,
-	useRef,
-} from "react";
-import type { VirtualizerHandle } from "virtua";
-import { Virtualizer } from "virtua";
+import { type FC, type ReactNode, useId } from "react";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -48,66 +39,45 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	const { locale } = useParams({
 		from: "/$locale",
 	});
-	const listingId = useId();
+	const listingIdPrefix = useId();
 
 	const listingQuery = withListingCollectionQuery.useSuspenseQuery(query, {
 		staleTime: 60_000 * 30,
 		refetchOnWindowFocus: true,
 	});
 
-	const initialIndex = useMemo(() => {
-		if (!scrollToListingId) {
-			return 0;
-		}
+	// useLayoutEffect(() => {
+	// 	if (!scrollToListingId) {
+	// 		return;
+	// 	}
 
-		const idx = listingQuery.data.data.findIndex((listing) => {
-			return listing.id === scrollToListingId;
-		});
+	// 	if (!listingQuery.data.data.length) {
+	// 		return;
+	// 	}
 
-		return idx >= 0 ? idx : 0;
-	}, [
-		scrollToListingId,
-		listingQuery.data,
-	]);
+	// 	const index = listingQuery.data.data.findIndex((listing) => {
+	// 		return listing.id === scrollToListingId;
+	// 	});
 
-	const scrollerRef = useRef<HTMLDivElement | null>(null);
-	const virtualizerRef = useRef<VirtualizerHandle | null>(null);
-
-	useEffect(() => {
-		if (!scrollToListingId) {
-			return;
-		}
-
-		if (!virtualizerRef.current) {
-			return;
-		}
-
-		const index = listingQuery.data.data.findIndex((listing) => {
-			return listing.id === scrollToListingId;
-		});
-
-		if (index < 0) {
-			return;
-		}
-
-		virtualizerRef.current.scrollToIndex(index, {
-			align: "start",
-		});
-	}, [
-		scrollToListingId,
-		listingQuery.data.data,
-	]);
+	// 	if (index < 0) {
+	// 		return;
+	// 	}
+	// }, [
+	// 	scrollToListingId,
+	// 	listingQuery.data.data,
+	// ]);
 
 	return (
 		<Container
 			ui="ListingList-root"
 			{...props}
 		>
-			{listingQuery.data.data.length === 0
-				? (empty ?? (
+			{listingQuery.data.data.length
+				? null
+				: (empty ?? (
 						<Status
 							ui="ListingList-empty"
-							key={`${listingId}-no-listings`}
+							key={`${listingIdPrefix}-no-listings`}
 							icon={"icon-[streamline--sad-face-remix]"}
 							textTitle={"No listings (title)"}
 							action={
@@ -125,61 +95,47 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								</LinkTo>
 							}
 						/>
-					))
-				: null}
+					))}
 
-			{listingQuery.data.data.length > 0 ? (
+			{listingQuery.data.data.length ? (
 				<div
-					ref={scrollerRef}
 					data-ui="ListingList-scroller"
 					className={tvc([
-						"relative",
-						"h-screen",
+						"h-dvh",
 						"overflow-y-auto",
+						"overscroll-contain",
+						"[overflow-anchor:none]",
+						"[-webkit-overflow-scrolling:touch]",
+						"touch-pan-y",
 						"snap-y",
 						"snap-mandatory",
-						"touch-pan-y",
-						"overscroll-contain",
-						"[-webkit-overflow-scrolling:touch]",
-						"[overflow-anchor:none]",
 					])}
 				>
-					<Virtualizer
-						ref={virtualizerRef}
-						data={listingQuery.data.data}
-						scrollRef={scrollerRef}
-						// Rough equivalent of Virtuoso overscan, in pixels
-						// bufferSize={200}
-						// Keep snapping smooth while scrolling
-						onScrollEnd={() => {
-							// Hook for any future snapping / analytics needs
-						}}
-						as="div"
-						item="div"
-					>
-						{(listing) => {
-							return (
-								<div className="snap-start snap-always">
-									<ListingHeroContainer
-										key={`${listingId}-${listing.id}`}
-										query={query}
-										listing={listing}
-										toolbar={toolbar}
-										imageErrorToolbar={imageErrorToolbar}
-										overlay={overlay}
-										visible
-										height={"viewport"}
-									/>
-								</div>
-							);
-						}}
-					</Virtualizer>
+					{listingQuery.data.data.map((listing) => {
+						return (
+							<ListingHeroContainer
+								key={`${listingIdPrefix}-${listing.id}`}
+								query={query}
+								listing={listing}
+								toolbar={toolbar}
+								imageErrorToolbar={imageErrorToolbar}
+								overlay={overlay}
+								visible
+								height={"viewport"}
+								className={tvc([
+									"w-full",
+									"snap-start",
+									"snap-always",
+								])}
+							/>
+						);
+					})}
 
 					{appendix ? (
 						<Container
 							ui="ListingList-appendix"
 							height={"viewport"}
-							className="snap-end snap-always"
+							className="snap-start snap-always"
 						>
 							{appendix}
 						</Container>

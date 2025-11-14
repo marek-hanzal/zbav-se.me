@@ -1,10 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	CloseIcon,
-	ErrorIcon,
-	SpinnerIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, CloseIcon, ErrorIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
@@ -15,10 +10,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { zListingCreate } from "@zbav-se.me/sdk/api/session";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/session";
-import {
-	withCategoryFetchQuery,
-	withLocationFetchQuery,
-} from "@zbav-se.me/sdk/query/session";
+import { withCategoryFetchQuery, withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
@@ -142,17 +134,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 					<Button
 						iconEnabled={SendPackageIcon}
 						label={"Submit listing (button)"}
-						disabled={
-							createListingMutation.isPending || !valid.success
-						}
+						disabled={createListingMutation.isPending || !valid.success}
 						loading={createListingMutation.isPending}
 						tone={"primary"}
 						theme={"dark"}
 						size={"lg"}
 						full
 						onClick={() => {
-							valid.success &&
-								createListingMutation.mutate(valid.data);
+							valid.success && createListingMutation.mutate(valid.data);
 						}}
 					/>
 				}
@@ -198,9 +187,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 							>
 								<BadgeValue
 									textLabel={"Listing photos (label)"}
-									textValue={String(
-										valid.data.uploadIds.length,
-									)}
+									textValue={String(valid.data.uploadIds.length)}
 								/>
 							</LinkTo>
 
@@ -219,9 +206,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									items={[
 										categoryFetchQuery.data,
 									]}
-									render={(category) => (
-										<CategoryInline category={category} />
-									)}
+									render={(category) => <CategoryInline category={category} />}
 								/>
 							</LinkTo>
 
@@ -244,9 +229,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 										} as const,
 									]}
 									render={(condition) => (
-										<Tx
-											label={`Condition - Overall [${condition.value}] (hint)`}
-										/>
+										<Tx label={`Condition - Overall [${condition.value}] (hint)`} />
 									)}
 								/>
 							</LinkTo>
@@ -269,11 +252,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 											value: valid.data.age,
 										} as const,
 									]}
-									render={(age) => (
-										<Tx
-											label={`Condition - Age [${age.value}] (hint)`}
-										/>
-									)}
+									render={(age) => <Tx label={`Condition - Age [${age.value}] (hint)`} />}
 								/>
 							</LinkTo>
 
@@ -313,9 +292,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									items={[
 										locationFetchQuery.data,
 									]}
-									render={(location) => (
-										<Tx label={location.address} />
-									)}
+									render={(location) => <Tx label={location.address} />}
 								/>
 							</LinkTo>
 
@@ -337,11 +314,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 											value: state.expiresAt,
 										} as const,
 									]}
-									render={(expiresAt) => (
-										<Tx
-											label={`Expire in ${expiresAt.value}`}
-										/>
-									)}
+									render={(expiresAt) => <Tx label={`Expire in ${expiresAt.value}`} />}
 								/>
 							</LinkTo>
 						</VariantProvider>

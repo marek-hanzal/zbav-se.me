@@ -1,7 +1,4 @@
-export const omit = <
-	TValue extends Record<string, any>,
-	TKeys extends keyof TValue,
->(
+export const omit = <TValue extends Record<string, any>, TKeys extends keyof TValue>(
 	value: TValue | undefined,
 	omit: TKeys[],
 ): Omit<TValue, TKeys> | undefined => {

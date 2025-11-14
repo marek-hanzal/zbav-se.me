@@ -26,9 +26,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 			},
 		});
 
-		const conditionIn = selection.optional
-			.multi()
-			.map((item) => Number.parseInt(item.id, 10));
+		const conditionIn = selection.optional.multi().map((item) => Number.parseInt(item.id, 10));
 
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
@@ -98,9 +96,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 				}
 			>
 				<Rating
-					textHint={(value) =>
-						`Condition - Overall [${value}] (hint)`
-					}
+					textHint={(value) => `Condition - Overall [${value}] (hint)`}
 					selection={selection}
 				/>
 			</TitleContainer>

@@ -1,10 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
-import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
-	CloseIcon,
-} from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -12,9 +8,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { Rating } from "~/app/ui/rating/Rating";
 
-export const Route = createFileRoute(
-	"/$locale/seller/listing/wizard/condition",
-)({
+export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
@@ -98,9 +92,7 @@ export const Route = createFileRoute(
 					width={"fit"}
 				>
 					<Rating
-						textHint={(value) =>
-							`Condition - Overall [${value}] (hint)`
-						}
+						textHint={(value) => `Condition - Overall [${value}] (hint)`}
 						selection={selection}
 					/>
 				</Container>

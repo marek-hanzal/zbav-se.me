@@ -60,11 +60,7 @@ export const withS3PresignApi: Routes.Fn = ({ sessionHono }) => {
 			try {
 				return c.json<S3PreSignResponseSchema.Type, 200>(
 					{
-						url: await s3.presignedPutObject(
-							AppEnv.SERVER_S3_BUCKET,
-							key,
-							60 * 30,
-						),
+						url: await s3.presignedPutObject(AppEnv.SERVER_S3_BUCKET, key, 60 * 30),
 						cdn: linkTo({
 							base: AppEnv.SERVER_CONTENT_CDN,
 							href: `/${key}`,

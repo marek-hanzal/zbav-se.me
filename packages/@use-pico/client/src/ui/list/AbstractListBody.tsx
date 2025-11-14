@@ -4,10 +4,7 @@ import type { AbstractList } from "./AbstractList";
 import type { AbstractListCls } from "./AbstractListCls";
 
 export namespace AbstractListBody {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TItem extends EntitySchema.Type,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> {
 		withQuery: withQuery.Api<TQuery, TItem[]>;
 		query: TQuery;
 		slots: AbstractListCls.Slots;
@@ -19,10 +16,7 @@ export namespace AbstractListBody {
 	}
 }
 
-export const AbstractListBody = <
-	TQuery extends withQuerySchema.Query,
-	TItem extends EntitySchema.Type,
->({
+export const AbstractListBody = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({
 	withQuery,
 	query,
 	slots,
@@ -32,8 +26,7 @@ export const AbstractListBody = <
 	renderEmpty,
 	renderError,
 }: AbstractListBody.Props<TQuery, TItem>) => {
-	const { isSuccess, isLoading, isFetching, isError, data } =
-		withQuery.useQuery(query);
+	const { isSuccess, isLoading, isFetching, isError, data } = withQuery.useQuery(query);
 
 	return (
 		<div

@@ -11,10 +11,7 @@ export namespace useDoubleTap {
  * Hook for handling double tap events on mobile devices.
  * Uses touch events to detect double taps with a configurable delay.
  */
-export const useDoubleTap = ({
-	onDoubleTap,
-	delay = 300,
-}: useDoubleTap.Props) => {
+export const useDoubleTap = ({ onDoubleTap, delay = 300 }: useDoubleTap.Props) => {
 	const lastTapRef = useRef<number>(0);
 
 	const handleTouchStart = useCallback(

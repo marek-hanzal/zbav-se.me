@@ -13,11 +13,7 @@ export namespace Toaster {
 	}
 }
 
-export const Toaster: FC<Toaster.Props> = ({
-	position,
-	cls = ToasterCls,
-	tweak,
-}) => {
+export const Toaster: FC<Toaster.Props> = ({ position, cls = ToasterCls, tweak }) => {
 	const rootRef = useRef<HTMLDivElement>(null);
 	const toastId = useId();
 

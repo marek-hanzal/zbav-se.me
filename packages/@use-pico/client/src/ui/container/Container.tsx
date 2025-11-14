@@ -4,10 +4,7 @@ import type { UiProps } from "../../type/UiProps";
 import { ContainerCls } from "./ContainerCls";
 
 export namespace Container {
-	export interface Props
-		extends UiProps<
-			ContainerCls.Props<Omit<ComponentProps<"div">, "onChange">>
-		> {
+	export interface Props extends UiProps<ContainerCls.Props<Omit<ComponentProps<"div">, "onChange">>> {
 		ref?: Ref<HTMLDivElement>;
 
 		/**

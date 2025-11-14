@@ -13,11 +13,7 @@ export namespace ScoreContainer {
 	}
 }
 
-export const ScoreContainer: FC<ScoreContainer.Props> = ({
-	locale,
-	listingMetrics,
-	...props
-}) => {
+export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetrics, ...props }) => {
 	return (
 		<Container
 			layout={"vertical-flex"}

@@ -21,13 +21,7 @@ export namespace Cursor {
 	}
 }
 
-export const Cursor: FC<Cursor.Props> = ({
-	ref,
-	state,
-	count,
-	cls = CursorCls,
-	tweak,
-}) => {
+export const Cursor: FC<Cursor.Props> = ({ ref, state, count, cls = CursorCls, tweak }) => {
 	const $cursor = useMemo(
 		() =>
 			cursorOf({
@@ -110,8 +104,7 @@ export const Cursor: FC<Cursor.Props> = ({
 					) : null}
 
 					{state.value.page < $cursor.total - 3 &&
-					(($cursor.pages && $cursor.end) ||
-						($cursor.start && $cursor.end)) ? (
+					(($cursor.pages && $cursor.end) || ($cursor.start && $cursor.end)) ? (
 						<Icon
 							icon={DotsIcon}
 							size={"xs"}

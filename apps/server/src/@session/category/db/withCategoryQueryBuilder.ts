@@ -8,18 +8,14 @@ export namespace withCategoryQueryBuilder {
 		where?: CategoryFilterSchema.Type;
 	}
 
-	export type Callback<TSelect extends withCategorySelect.Select> = (
-		props: Props<TSelect>,
-	) => TSelect;
+	export type Callback<TSelect extends withCategorySelect.Select> = (props: Props<TSelect>) => TSelect;
 }
 
 /**
  * Standalone query builder that applies all filters from CategoryQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withCategoryQueryBuilder = <
-	TSelect extends withCategorySelect.Select,
->({
+export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Select>({
 	select,
 	where,
 }: withCategoryQueryBuilder.Props<TSelect>) => {
@@ -48,27 +44,18 @@ export const withCategoryQueryBuilder = <
 						.selectFrom("category_spotlight")
 						.select("category_spotlight.categoryId")
 						.whereRef("category_spotlight.categoryId", "=", "c.id")
-						.where((eb) =>
-							withLikeEx(
-								eb.ref("category_spotlight.text"),
-								fulltext,
-							),
-						),
+						.where((eb) => withLikeEx(eb.ref("category_spotlight.text"), fulltext)),
 				),
 			]),
 		) as typeof select;
 	}
 
 	if (where.group) {
-		query = query.where((eb) =>
-			withLikeEx(eb.ref("c.group"), where.group),
-		) as typeof select;
+		query = query.where((eb) => withLikeEx(eb.ref("c.group"), where.group)) as typeof select;
 	}
 
 	if (where.category) {
-		query = query.where((eb) =>
-			withLikeEx(eb.ref("c.category"), where.category),
-		) as typeof select;
+		query = query.where((eb) => withLikeEx(eb.ref("c.category"), where.category)) as typeof select;
 	}
 
 	if (where.locale) {

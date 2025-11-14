@@ -139,26 +139,12 @@ export const Modal: FC<Modal.Props> = ({
 											"select-none",
 										])}
 									>
-										<div
-											className={tvc(
-												"flex",
-												"flex-row",
-												"items-center",
-												"gap-2",
-												"pr-4",
-											)}
-										>
+										<div className={tvc("flex", "flex-row", "items-center", "gap-2", "pr-4")}>
 											<Icon
 												icon={icon}
 												size={"sm"}
 											/>
-											<div
-												className={tvc(
-													"text-lg",
-													"font-semibold",
-													"text-slate-700",
-												)}
-											>
+											<div className={tvc("text-lg", "font-semibold", "text-slate-700")}>
 												{textTitle}
 											</div>
 										</div>

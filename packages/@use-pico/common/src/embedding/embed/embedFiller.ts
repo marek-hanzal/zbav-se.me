@@ -5,8 +5,6 @@ export namespace embedFiller {
 }
 
 /** Returns a zero-filled Float32Array of the given length. */
-export const embedFiller = ({
-	dimensions,
-}: embedFiller.Props): Float32Array => {
+export const embedFiller = ({ dimensions }: embedFiller.Props): Float32Array => {
 	return new Float32Array(dimensions);
 };

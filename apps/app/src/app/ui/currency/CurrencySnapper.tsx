@@ -14,14 +14,7 @@ export namespace CurrencySnapper {
 }
 
 export const CurrencySnapper: FC<CurrencySnapper.Props> = memo(
-	({
-		locale,
-		defaultCurrency,
-		availableCurrencies,
-		onChange,
-		tweak,
-		...props
-	}) => {
+	({ locale, defaultCurrency, availableCurrencies, onChange, tweak, ...props }) => {
 		const containerRef = useRef<HTMLDivElement>(null);
 		const currencyId = useId();
 		const currencyList = useMemo(() => {

@@ -12,8 +12,7 @@ export const withListingIgnoreCountApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-ignore/count",
-			description:
-				"Returns count of listing ignore items based on provided query",
+			description: "Returns count of listing ignore items based on provided query",
 			operationId: "apiListingIgnoreCount",
 			request: {
 				body: {

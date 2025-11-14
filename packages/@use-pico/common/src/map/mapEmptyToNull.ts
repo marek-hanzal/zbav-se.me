@@ -1,8 +1,6 @@
 import { isObject } from "../is-object/isObject";
 
-export const mapEmptyToNull = <TObject extends object>(
-	object: TObject,
-): TObject => {
+export const mapEmptyToNull = <TObject extends object>(object: TObject): TObject => {
 	return Object.keys(object).reduce<any>((acc, key) => {
 		acc[key] =
 			object[key as keyof TObject] === ""

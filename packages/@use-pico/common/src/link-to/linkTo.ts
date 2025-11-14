@@ -10,12 +10,8 @@ type UrlCatConfiguration = Partial<
 >;
 
 function join(part1: string, separator: string, part2: string): string {
-	const p1 = part1.endsWith(separator)
-		? part1.slice(0, -separator.length)
-		: part1;
-	const p2 = part2.startsWith(separator)
-		? part2.slice(separator.length)
-		: part2;
+	const p1 = part1.endsWith(separator) ? part1.slice(0, -separator.length) : part1;
+	const p2 = part2.startsWith(separator) ? part2.slice(separator.length) : part2;
 	return p1 === "" || p2 === "" ? p1 + p2 : p1 + separator + p2;
 }
 
@@ -94,11 +90,7 @@ function query(params: ParamMap, config?: UrlCatConfiguration): string {
 	return qs.stringify(params, qsConfiguration);
 }
 
-function joinFullUrl(
-	renderedPath: string,
-	baseUrl: string,
-	pathAndQuery: string,
-): string {
+function joinFullUrl(renderedPath: string, baseUrl: string, pathAndQuery: string): string {
 	if (renderedPath.length) {
 		return join(baseUrl, "/", pathAndQuery);
 	} else {

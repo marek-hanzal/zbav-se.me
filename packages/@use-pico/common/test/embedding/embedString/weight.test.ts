@@ -16,12 +16,8 @@ it("should apply weight correctly", async () => {
 		weight: 2,
 	});
 	// Both should be normalized to unit length
-	const mag1 = Math.sqrt(
-		Array.from(vector1).reduce((sum, v) => sum + v * v, 0),
-	);
-	const mag2 = Math.sqrt(
-		Array.from(vector2).reduce((sum, v) => sum + v * v, 0),
-	);
+	const mag1 = Math.sqrt(Array.from(vector1).reduce((sum, v) => sum + v * v, 0));
+	const mag2 = Math.sqrt(Array.from(vector2).reduce((sum, v) => sum + v * v, 0));
 	expect(mag1).toBeCloseTo(1, 5);
 	expect(mag2).toBeCloseTo(1, 5);
 });

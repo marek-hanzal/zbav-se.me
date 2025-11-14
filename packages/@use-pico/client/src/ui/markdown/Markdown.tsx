@@ -7,20 +7,13 @@ import { PicoCls } from "../../cls";
 import { MarkdownCls } from "./MarkdownCls";
 
 export namespace Markdown {
-	export interface Props
-		extends MarkdownCls.Props<ComponentProps<typeof ReactMarkdown>> {
+	export interface Props extends MarkdownCls.Props<ComponentProps<typeof ReactMarkdown>> {
 		tone?: Cls.VariantOf<PicoCls, "tone">;
 		theme?: Cls.VariantOf<PicoCls, "theme">;
 	}
 }
 
-export const Markdown: FC<Markdown.Props> = ({
-	tone,
-	theme,
-	cls = MarkdownCls,
-	tweak,
-	...props
-}) => {
+export const Markdown: FC<Markdown.Props> = ({ tone, theme, cls = MarkdownCls, tweak, ...props }) => {
 	const { slots } = useCls(cls, tweak);
 
 	return (
@@ -98,11 +91,7 @@ export const Markdown: FC<Markdown.Props> = ({
 						);
 					},
 					blockquote({ children }) {
-						return (
-							<blockquote className={slots.blockquote()}>
-								{children}
-							</blockquote>
-						);
+						return <blockquote className={slots.blockquote()}>{children}</blockquote>;
 					},
 					em({ children }) {
 						return (

@@ -1,9 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import {
-	createFileRoute,
-	useNavigate,
-	useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
 import { useSnapperNav } from "@use-pico/client/hook";
 import { UserIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -161,24 +157,11 @@ export const Route = createFileRoute("/$locale/login")({
 												{(props) => (
 													<field.TextInput
 														type={"email"}
-														autoComplete={
-															"email webauthn"
-														}
-														placeholder={translator.text(
-															"Enter your email",
-														)}
-														value={
-															field.state.value ??
-															""
-														}
-														onBlur={
-															field.handleBlur
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
+														autoComplete={"email webauthn"}
+														placeholder={translator.text("Enter your email")}
+														value={field.state.value ?? ""}
+														onBlur={field.handleBlur}
+														onChange={(e) => field.handleChange(e.target.value)}
 														{...props}
 													/>
 												)}
@@ -191,32 +174,17 @@ export const Route = createFileRoute("/$locale/login")({
 											<FormField
 												id={field.name}
 												name={field.name}
-												label={
-													<Tx label={"Password"} />
-												}
+												label={<Tx label={"Password"} />}
 												meta={field.state.meta}
 											>
 												{(props) => (
 													<field.TextInput
 														type={"password"}
-														autoComplete={
-															"current-password webauthn"
-														}
-														value={
-															field.state.value ??
-															""
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
-														onBlur={
-															field.handleBlur
-														}
-														placeholder={translator.text(
-															"Enter your password",
-														)}
+														autoComplete={"current-password webauthn"}
+														value={field.state.value ?? ""}
+														onChange={(e) => field.handleChange(e.target.value)}
+														onBlur={field.handleBlur}
+														placeholder={translator.text("Enter your password")}
 														{...props}
 													/>
 												)}
@@ -225,13 +193,8 @@ export const Route = createFileRoute("/$locale/login")({
 									</form.AppField>
 
 									{signInMutation.isError && (
-										<div
-											className={
-												"rounded-md bg-red-50 p-3 text-red-700"
-											}
-										>
-											{signInMutation.error instanceof
-											Error ? (
+										<div className={"rounded-md bg-red-50 p-3 text-red-700"}>
+											{signInMutation.error instanceof Error ? (
 												signInMutation.error.message
 											) : (
 												<Tx label={"Login failed"} />
@@ -259,9 +222,7 @@ export const Route = createFileRoute("/$locale/login")({
 											{signInMutation.isPending ? (
 												<Tx label={"Please wait..."} />
 											) : (
-												<Tx
-													label={"Sign in (button)"}
-												/>
+												<Tx label={"Sign in (button)"} />
 											)}
 										</form.SubmitButton>
 

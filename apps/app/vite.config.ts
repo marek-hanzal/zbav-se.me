@@ -64,10 +64,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 				output: {
 					manualChunks(id) {
 						// Vendor packages - check most specific first
-						if (
-							id.includes("node_modules/react/") &&
-							!id.includes("react-dom")
-						) {
+						if (id.includes("node_modules/react/") && !id.includes("react-dom")) {
 							return "react";
 						}
 						if (id.includes("react-dom")) {
@@ -121,11 +118,7 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						if (id.includes("@escapace")) {
 							return "escapace";
 						}
-						if (
-							id.includes("node_modules/") &&
-							!id.includes("src/") &&
-							!id.includes("tanstack/")
-						) {
+						if (id.includes("node_modules/") && !id.includes("src/") && !id.includes("tanstack/")) {
 							return "vendor";
 						}
 					},

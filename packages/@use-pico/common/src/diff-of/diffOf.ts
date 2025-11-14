@@ -18,5 +18,4 @@ export namespace diffOf {
  * diffOf(['a', 'b', 'c'], ['b']) // Returns ['a', 'c']
  * ```
  */
-export const diffOf = (alfa: diffOf.Type, beta: diffOf.Type): diffOf.Type =>
-	alfa.filter((x) => !beta.includes(x));
+export const diffOf = (alfa: diffOf.Type, beta: diffOf.Type): diffOf.Type => alfa.filter((x) => !beta.includes(x));

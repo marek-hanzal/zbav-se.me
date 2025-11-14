@@ -10,9 +10,7 @@ export namespace withListingFlagSelect {
 	export type Select = ReturnType<typeof withListingFlagSelect>;
 }
 
-export const withListingFlagSelect = ({
-	sort,
-}: withListingFlagSelect.Props) => {
+export const withListingFlagSelect = ({ sort }: withListingFlagSelect.Props) => {
 	const query = database.kysely.selectFrom("listing_flag as lf").select([
 		"lf.id",
 		"lf.listingId",
@@ -20,9 +18,7 @@ export const withListingFlagSelect = ({
 
 	for (const item of sort ?? []) {
 		return match(item.field)
-			.with("createdAt", () =>
-				query.orderBy("lf.createdAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("lf.createdAt", item.direction))
 			.exhaustive();
 	}
 

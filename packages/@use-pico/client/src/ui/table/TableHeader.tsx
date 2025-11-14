@@ -13,11 +13,7 @@ import type { Table } from "./Table";
 import type { TableCls } from "./TableCls";
 
 export namespace TableHeader {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
 		data: TData[];
 		visible: Table.Column.Props<TQuery, TData, any, TContext>[];
 		grid: string;
@@ -31,18 +27,12 @@ export namespace TableHeader {
 		controlsHidden: Table.Controls[];
 	}
 
-	export type Component<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> = FC<Props<TQuery, TData, TContext>>;
+	export type Component<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> = FC<
+		Props<TQuery, TData, TContext>
+	>;
 }
 
-export const TableHeader = <
-	TQuery extends withQuerySchema.Query,
-	TData extends EntitySchema.Type,
-	TContext = any,
->({
+export const TableHeader = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
 	data,
 	context,
 	visible,
@@ -60,11 +50,7 @@ export const TableHeader = <
 
 	const onSelectAll = () => {
 		if (isAll) {
-			selection?.set(
-				selection.selection.filter(
-					({ id }) => !data.some((item) => item.id === id),
-				),
-			);
+			selection?.set(selection.selection.filter(({ id }) => !data.some((item) => item.id === id)));
 
 			return;
 		}
@@ -98,24 +84,10 @@ export const TableHeader = <
 					gridTemplateColumns: grid,
 				}}
 			>
-				<div
-					className={tvc(
-						"flex",
-						"flex-row",
-						"items-center",
-						"justify-between",
-						"gap-2",
-					)}
-				>
+				<div className={tvc("flex", "flex-row", "items-center", "justify-between", "gap-2")}>
 					{selection ? (
 						<Icon
-							icon={
-								isAll
-									? SelectionOnIcon
-									: isAny
-										? SelectionAnyIcon
-										: SelectionOffIcon
-							}
+							icon={isAll ? SelectionOnIcon : isAny ? SelectionAnyIcon : SelectionOffIcon}
 							disabled={selection.mode === "single"}
 							size="sm"
 							tweak={{

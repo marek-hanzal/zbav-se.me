@@ -1,9 +1,5 @@
 import { type ClassName, tvc, useCls } from "@use-pico/cls";
-import type {
-	CountSchema,
-	EntitySchema,
-	withQuerySchema,
-} from "@use-pico/common/schema";
+import type { CountSchema, EntitySchema, withQuerySchema } from "@use-pico/common/schema";
 import type { DeepKeys, DeepValue, StateType } from "@use-pico/common/type";
 import type { FC, ReactNode } from "react";
 import type { useSelection } from "../../hook/useSelection";
@@ -22,18 +18,14 @@ import { TablePrefix } from "./TablePrefix";
 
 export namespace Table {
 	export namespace Filter {
-		export type State<TQuery extends withQuerySchema.Query> = StateType<
-			TQuery["filter"]
-		>;
+		export type State<TQuery extends withQuerySchema.Query> = StateType<TQuery["filter"]>;
 
 		export namespace is {
 			export interface Props<TQuery extends withQuerySchema.Query> {
 				state: State<TQuery>;
 			}
 
-			export type Fn<TQuery extends withQuerySchema.Query> = (
-				props: Props<TQuery>,
-			) => boolean;
+			export type Fn<TQuery extends withQuerySchema.Query> = (props: Props<TQuery>) => boolean;
 		}
 
 		export namespace reset {
@@ -41,26 +33,18 @@ export namespace Table {
 				state: State<TQuery>;
 			}
 
-			export type Fn<TQuery extends withQuerySchema.Query> = (
-				props: Props<TQuery>,
-			) => void;
+			export type Fn<TQuery extends withQuerySchema.Query> = (props: Props<TQuery>) => void;
 		}
 
 		export namespace component {
-			export interface Props<
-				TData,
-				TQuery extends withQuerySchema.Query,
-			> {
+			export interface Props<TData, TQuery extends withQuerySchema.Query> {
 				data: TData;
 				is: is.Fn<TQuery>;
 				reset: reset.Fn<TQuery>;
 				state: State<TQuery>;
 			}
 
-			export type Component<
-				TData,
-				TQuery extends withQuerySchema.Query,
-			> = FC<Props<TData, TQuery>>;
+			export type Component<TData, TQuery extends withQuerySchema.Query> = FC<Props<TData, TQuery>>;
 		}
 
 		export interface Props<TData, TQuery extends withQuerySchema.Query> {
@@ -80,9 +64,7 @@ export namespace Table {
 	}
 
 	export namespace Sort {
-		export type State<TQuery extends withQuerySchema.Query> = StateType<
-			TQuery["sort"]
-		>;
+		export type State<TQuery extends withQuerySchema.Query> = StateType<TQuery["sort"]>;
 
 		export interface Props<TQuery extends withQuerySchema.Query> {
 			value: withQuerySchema.SortKeys<TQuery>;
@@ -94,26 +76,16 @@ export namespace Table {
 		export type Size = number | "auto";
 
 		export namespace Header {
-			export interface Props<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> {
+			export interface Props<TData extends EntitySchema.Type, TContext = any> {
 				data: TData[];
 				context: TContext;
 			}
 
-			export type Component<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> = FC<Header.Props<TData, TContext>>;
+			export type Component<TData extends EntitySchema.Type, TContext = any> = FC<Header.Props<TData, TContext>>;
 		}
 
 		export namespace Render {
-			export interface Props<
-				TData extends EntitySchema.Type,
-				TKey extends DeepKeys<TData>,
-				TContext = any,
-			> {
+			export interface Props<TData extends EntitySchema.Type, TKey extends DeepKeys<TData>, TContext = any> {
 				/**
 				 * Table row data.
 				 */
@@ -125,11 +97,9 @@ export namespace Table {
 				context: TContext;
 			}
 
-			export type Component<
-				TData extends EntitySchema.Type,
-				TKey extends DeepKeys<TData>,
-				TContext = any,
-			> = FC<Render.Props<TData, TKey, TContext>>;
+			export type Component<TData extends EntitySchema.Type, TKey extends DeepKeys<TData>, TContext = any> = FC<
+				Render.Props<TData, TKey, TContext>
+			>;
 		}
 
 		/**
@@ -164,10 +134,7 @@ export namespace Table {
 
 	export namespace Row {
 		export namespace Cls {
-			export interface Props<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> {
+			export interface Props<TData extends EntitySchema.Type, TContext = any> {
 				data: TData;
 				context: TContext;
 			}
@@ -178,25 +145,16 @@ export namespace Table {
 		}
 
 		export namespace DblClick {
-			export interface Props<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> {
+			export interface Props<TData extends EntitySchema.Type, TContext = any> {
 				data: TData;
 				context: TContext;
 			}
 
-			export type Fn<TData extends EntitySchema.Type, TContext = any> = (
-				props: Props<TData, TContext>,
-			) => void;
+			export type Fn<TData extends EntitySchema.Type, TContext = any> = (props: Props<TData, TContext>) => void;
 		}
 	}
 
-	export interface Row<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> {
+	export interface Row<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
 		id: string;
 		data: TData;
 		cells: Cell<TQuery, TData, any, TContext>[];
@@ -204,52 +162,38 @@ export namespace Table {
 	}
 
 	export namespace Toolbar {
-		export interface Props<
-			TQuery extends withQuerySchema.Query,
-			TData extends EntitySchema.Type,
-			TContext = any,
-		> {
+		export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
 			context: TContext;
 			selection: useSelection.Selection<TData> | undefined;
 			filter: Filter.State<TQuery> | undefined;
 		}
 
-		export type RenderFn<
-			TQuery extends withQuerySchema.Query,
-			TData extends EntitySchema.Type,
-			TContext = any,
-		> = (props: Props<TQuery, TData, TContext>) => ReactNode;
+		export type RenderFn<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> = (
+			props: Props<TQuery, TData, TContext>,
+		) => ReactNode;
 	}
 
 	export namespace Action {
 		export namespace Table {
-			export interface Props<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> {
+			export interface Props<TData extends EntitySchema.Type, TContext = any> {
 				data: TData[];
 				context: TContext;
 			}
 
-			export type RenderFn<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> = (props: Props<TData, TContext>) => ReactNode;
+			export type RenderFn<TData extends EntitySchema.Type, TContext = any> = (
+				props: Props<TData, TContext>,
+			) => ReactNode;
 		}
 
 		export namespace Row {
-			export interface Props<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> {
+			export interface Props<TData extends EntitySchema.Type, TContext = any> {
 				data: TData;
 				context: TContext;
 			}
 
-			export type RenderFn<
-				TData extends EntitySchema.Type,
-				TContext = any,
-			> = (props: Props<TData, TContext>) => ReactNode;
+			export type RenderFn<TData extends EntitySchema.Type, TContext = any> = (
+				props: Props<TData, TContext>,
+			) => ReactNode;
 		}
 	}
 
@@ -263,11 +207,8 @@ export namespace Table {
 		export type Fn = (props: Props) => string;
 	}
 
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> extends TableCls.Props<AbstractList.PropsEx<TQuery, TData>> {
+	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>
+		extends TableCls.Props<AbstractList.PropsEx<TQuery, TData>> {
 		/**
 		 * All the columns defined in the table.
 		 *
@@ -344,21 +285,13 @@ export namespace Table {
 		actionRow?: Action.Row.RenderFn<TData, TContext>;
 	}
 
-	export type PropsEx<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> = Omit<
+	export type PropsEx<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> = Omit<
 		Props<TQuery, TData, TContext>,
 		"columns" | "withQuery" | "withCountQuery" | "context"
 	>;
 }
 
-export const Table = <
-	TQuery extends withQuerySchema.Query,
-	TData extends EntitySchema.Type,
-	TContext = any,
->({
+export const Table = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
 	columns,
 	visible,
 	hidden = [],
@@ -452,13 +385,7 @@ export const Table = <
 				return (
 					<div
 						data-ui="Table-postfix"
-						className={tvc(
-							"flex",
-							"flex-row",
-							"items-center",
-							"justify-end",
-							"gap-2",
-						)}
+						className={tvc("flex", "flex-row", "items-center", "justify-end", "gap-2")}
 					>
 						<div />
 						{cursor && withCountQuery ? (

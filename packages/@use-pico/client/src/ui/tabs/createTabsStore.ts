@@ -15,10 +15,7 @@ export namespace createTabsStore {
 	export type Store = UseBoundStore<StoreApi<Instance>>;
 }
 
-export const createTabsStore = ({
-	tab,
-	hidden,
-}: createTabsStore.Props): createTabsStore.Store => {
+export const createTabsStore = ({ tab, hidden }: createTabsStore.Props): createTabsStore.Store => {
 	return create((set) => ({
 		tab,
 		hidden,

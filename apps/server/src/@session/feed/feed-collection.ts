@@ -35,8 +35,7 @@ export const withFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of feed items based on provided query",
+					description: "Access collection of feed items based on provided query",
 				},
 			},
 			tags: [

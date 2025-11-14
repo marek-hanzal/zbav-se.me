@@ -10,8 +10,8 @@ export interface IGqlClient {
 		variables: V,
 	): Promise<T>;
 
-	mutation<
-		T = unknown,
-		V extends IGqlClient.Variables = IGqlClient.Variables,
-	>(document: TypedDocumentNode<T, V>, variables: V): Promise<T>;
+	mutation<T = unknown, V extends IGqlClient.Variables = IGqlClient.Variables>(
+		document: TypedDocumentNode<T, V>,
+		variables: V,
+	): Promise<T>;
 }

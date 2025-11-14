@@ -17,12 +17,8 @@ const ServerDatabaseSchema = z.object({
 });
 
 const ServerOriginSchema = z.object({
-	VITE_WEB_ORIGIN: z
-		.string()
-		.min(1, "Web domain ORIGIN is required (used for CORS and auth)"),
-	VITE_APP_ORIGIN: z
-		.string()
-		.min(1, "App domain ORIGIN is required (used for CORS and auth)"),
+	VITE_WEB_ORIGIN: z.string().min(1, "Web domain ORIGIN is required (used for CORS and auth)"),
+	VITE_APP_ORIGIN: z.string().min(1, "App domain ORIGIN is required (used for CORS and auth)"),
 });
 
 const AppEnvSchema = z.object({
@@ -31,9 +27,7 @@ const AppEnvSchema = z.object({
 	//
 	SERVER_CONTENT_CDN: z.string().min(1, "Content CDN is required"),
 	//
-	SERVER_BETTER_AUTH_SECRET: z
-		.string()
-		.min(1, "Better Auth secret is required"),
+	SERVER_BETTER_AUTH_SECRET: z.string().min(1, "Better Auth secret is required"),
 	//
 	SERVER_JWT_SECRET: z.string().min(1, "JWT secret is required"),
 	SERVER_GEOAPIFY_TOKEN: z.string().min(1, "Geoapify API key is required"),

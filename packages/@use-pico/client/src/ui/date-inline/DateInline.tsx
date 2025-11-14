@@ -12,12 +12,7 @@ export namespace DateInline {
 	}
 }
 
-export const DateInline: FC<DateInline.Props> = ({
-	date,
-	fallback,
-	options = DateTime.DATE_MED,
-	...props
-}) => {
+export const DateInline: FC<DateInline.Props> = ({ date, fallback, options = DateTime.DATE_MED, ...props }) => {
 	return (
 		<Typo
 			label={iso2locale(date, fallback, options)}

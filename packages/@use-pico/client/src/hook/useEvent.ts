@@ -10,20 +10,13 @@ export namespace useEvent {
 	}
 }
 
-export const useEvent = <TEvents extends object>({
-	eventBus,
-	event,
-	callback,
-	deps = [],
-}: useEvent.Props<TEvents>) => {
+export const useEvent = <TEvents extends object>({ eventBus, event, callback, deps = [] }: useEvent.Props<TEvents>) => {
 	useEffect(() => {
 		console.info(`[useEvent]\tSubscribing event [${event as string}]`);
 		eventBus.on(event, callback);
 
 		return () => {
-			console.info(
-				`[useEvent]\tUnsubscribing from event [${event as string}]`,
-			);
+			console.info(`[useEvent]\tUnsubscribing from event [${event as string}]`);
 			eventBus.off(event, callback);
 		};
 	}, [

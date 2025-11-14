@@ -11,12 +11,8 @@ export const FeedMigration: Migration = {
 			.addColumn("filter", "jsonb", (col) => col.notNull())
 			.addColumn("sort", "jsonb", (col) => col.notNull())
 			.addColumn("meta", "jsonb", (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
-			.addColumn("updatedAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
+			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
 				"feed_[userId]_fk",
 				[
@@ -45,22 +41,10 @@ export const FeedMigration: Migration = {
 			])
 			.execute();
 
-		await db.schema
-			.createIndex("feed_[userId]_idx")
-			.on("feed")
-			.column("userId")
-			.execute();
+		await db.schema.createIndex("feed_[userId]_idx").on("feed").column("userId").execute();
 
-		await db.schema
-			.createIndex("feed_[updatedAt]_idx")
-			.on("feed")
-			.column("updatedAt")
-			.execute();
+		await db.schema.createIndex("feed_[updatedAt]_idx").on("feed").column("updatedAt").execute();
 
-		await db.schema
-			.createIndex("feed_[locationId]_idx")
-			.on("feed")
-			.column("locationId")
-			.execute();
+		await db.schema.createIndex("feed_[locationId]_idx").on("feed").column("locationId").execute();
 	},
 };

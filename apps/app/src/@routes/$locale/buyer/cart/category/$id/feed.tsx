@@ -32,8 +32,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 		const { scrollToListingId } = Route.useSearch();
 		const { id } = Route.useParams();
 
-		const listingCartCountQuery =
-			withListingCartCountQuery.useSuspenseQuery({});
+		const listingCartCountQuery = withListingCartCountQuery.useSuspenseQuery({});
 
 		return (
 			<FlowContainer
@@ -49,9 +48,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 				}
 			>
 				<ListingListContainer
-					overlay={({ listing }) => (
-						<FeedListingOverlay listing={listing} />
-					)}
+					overlay={({ listing }) => <FeedListingOverlay listing={listing} />}
 					toolbar={({ query, listing }) => (
 						<CartFeedToolbar
 							query={query}
@@ -95,9 +92,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 						listingCartCountQuery.data.filter === 0 ? (
 							<Status
 								icon={DeadEndIcon}
-								textTitle={
-									"Empty cart - category and cart (title)"
-								}
+								textTitle={"Empty cart - category and cart (title)"}
 								action={
 									<div className="flex flex-col gap-2 items-center justify-center w-full">
 										<LinkTo
@@ -159,15 +154,9 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 							<Status
 								icon={DeadEndIcon}
 								textTitle={"That's all for now - cart (title)"}
-								textMessage={
-									"No more listings to show - cart (message)"
-								}
+								textMessage={"No more listings to show - cart (message)"}
 								action={
-									<div
-										className={
-											"flex flex-col gap-2 items-center justify-center w-full"
-										}
-									>
+									<div className={"flex flex-col gap-2 items-center justify-center w-full"}>
 										<LinkTo
 											to={"/$locale/buyer/cart/list"}
 											params={{

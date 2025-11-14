@@ -57,9 +57,7 @@ export namespace AbstractList {
 			items: TItem[];
 		}
 
-		export type Render<TItem extends EntitySchema.Type> = (
-			props: Props<TItem>,
-		) => ReactNode;
+		export type Render<TItem extends EntitySchema.Type> = (props: Props<TItem>) => ReactNode;
 	}
 
 	export namespace Item {
@@ -74,9 +72,7 @@ export namespace AbstractList {
 			items: TItem[];
 		}
 
-		export type Render<TItem extends EntitySchema.Type> = (
-			props: Props<TItem>,
-		) => ReactNode;
+		export type Render<TItem extends EntitySchema.Type> = (props: Props<TItem>) => ReactNode;
 	}
 
 	/**
@@ -91,9 +87,7 @@ export namespace AbstractList {
 			items: TItem[];
 		}
 
-		export type Render<TItem extends EntitySchema.Type> = (
-			props: Props<TItem>,
-		) => ReactNode;
+		export type Render<TItem extends EntitySchema.Type> = (props: Props<TItem>) => ReactNode;
 	}
 
 	export namespace Postfix {
@@ -102,10 +96,8 @@ export namespace AbstractList {
 		export type Render = (props: Props) => ReactNode;
 	}
 
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TItem extends EntitySchema.Type,
-	> extends AbstractListCls.Props {
+	export interface Props<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>
+		extends AbstractListCls.Props {
 		ref?: Ref<HTMLDivElement>;
 		/**
 		 * Query used to fetch data using the request prop.
@@ -148,15 +140,14 @@ export namespace AbstractList {
 		renderPostfix?: Postfix.Render;
 	}
 
-	export type PropsEx<
-		TQuery extends withQuerySchema.Query,
-		TItem extends EntitySchema.Type,
-	> = Omit<Props<TQuery, TItem>, "renderItem">;
+	export type PropsEx<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> = Omit<
+		Props<TQuery, TItem>,
+		"renderItem"
+	>;
 
-	export type Component<
-		TQuery extends withQuerySchema.Query,
-		TItem extends EntitySchema.Type,
-	> = FC<Props<TQuery, TItem>>;
+	export type Component<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> = FC<
+		Props<TQuery, TItem>
+	>;
 }
 
 /**
@@ -167,10 +158,7 @@ export namespace AbstractList {
  *
  * You can use even this component, just it's a bit low-level.
  */
-export const AbstractList = <
-	TQuery extends withQuerySchema.Query,
-	TItem extends EntitySchema.Type,
->({
+export const AbstractList = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({
 	ref,
 	withQuery,
 	query,

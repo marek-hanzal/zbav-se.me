@@ -1,10 +1,5 @@
 import { expect, it } from "vitest";
-import {
-	createHasher,
-	embedNumber,
-	embedNumberRange,
-	embedString,
-} from "../../../../src/embedding";
+import { createHasher, embedNumber, embedNumberRange, embedString } from "../../../../src/embedding";
 import { similarity } from "../../../../src/similarity";
 
 const THRESHOLD = 0.6;

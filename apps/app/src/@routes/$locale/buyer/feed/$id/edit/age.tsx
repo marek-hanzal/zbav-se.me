@@ -26,9 +26,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 			},
 		});
 
-		const ageIn = selection.optional
-			.multi()
-			.map((item) => Number.parseInt(item.id, 10));
+		const ageIn = selection.optional.multi().map((item) => Number.parseInt(item.id, 10));
 
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {

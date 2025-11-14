@@ -15,14 +15,7 @@ export namespace Pages {
 	}
 }
 
-export const Pages: FC<Pages.Props> = ({
-	ref,
-	pages,
-	page,
-	onPage,
-	cls = PagesCls,
-	tweak,
-}) => {
+export const Pages: FC<Pages.Props> = ({ ref, pages, page, onPage, cls = PagesCls, tweak }) => {
 	const { slots } = useCls(cls, tweak);
 
 	return (

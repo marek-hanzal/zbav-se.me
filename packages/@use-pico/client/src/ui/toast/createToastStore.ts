@@ -56,10 +56,7 @@ export namespace createToastStore {
 	export type Hook = UseBoundStore<StoreApi<Store>>;
 }
 
-export const createToastStore = ({
-	maxCount,
-	durationMs,
-}: createToastStore.Props): createToastStore.Hook => {
+export const createToastStore = ({ maxCount, durationMs }: createToastStore.Props): createToastStore.Hook => {
 	return create<createToastStore.Store>((set, get) => ({
 		maxCount,
 		//
@@ -116,10 +113,7 @@ export const createToastStore = ({
 		//
 		pull() {
 			set((state) => {
-				if (
-					state.queue.length > 0 &&
-					state.visible.length < state.maxCount
-				) {
+				if (state.queue.length > 0 && state.visible.length < state.maxCount) {
 					return {
 						visible: [
 							...state.visible,
@@ -167,9 +161,7 @@ export const createToastStore = ({
 		getQueue() {
 			const current = get();
 
-			return current.queue
-				.map((id) => current.toasts[id])
-				.filter((t) => t !== undefined);
+			return current.queue.map((id) => current.toasts[id]).filter((t) => t !== undefined);
 		},
 	}));
 };

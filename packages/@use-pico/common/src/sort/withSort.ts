@@ -79,9 +79,7 @@ export const withSort = ({ value, state, by }: withSort.Props) => {
 	const currentItems = state.value ?? [];
 
 	// Find the index of the current column in the sort array
-	const existingIndex = currentItems.findIndex(
-		(item) => item.value === value,
-	);
+	const existingIndex = currentItems.findIndex((item) => item.value === value);
 
 	// If no sort direction specified, remove the column from its current position
 	if (!by) {

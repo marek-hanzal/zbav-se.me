@@ -13,34 +13,33 @@ export namespace withCategoryMissQueryBuilder {
 /**
  * Query builder for CategoryMiss operations
  */
-export const withCategoryMissQueryBuilder: withCategoryMissQueryBuilder.Callback =
-	({ select, where }) => {
-		if (!where) {
-			return select;
-		}
+export const withCategoryMissQueryBuilder: withCategoryMissQueryBuilder.Callback = ({ select, where }) => {
+	if (!where) {
+		return select;
+	}
 
-		let query = select;
+	let query = select;
 
-		if (where?.id) {
-			query = query.where("cm.id", "=", where.id);
-		}
+	if (where?.id) {
+		query = query.where("cm.id", "=", where.id);
+	}
 
-		if (where.idIn && where.idIn.length > 0) {
-			query = query.where("cm.id", "in", where.idIn);
-		}
+	if (where.idIn && where.idIn.length > 0) {
+		query = query.where("cm.id", "in", where.idIn);
+	}
 
-		if (where?.fulltext) {
-			const fulltext = where.fulltext;
-			query = query.where((eb) =>
-				eb.or([
-					eb("cm.category", "ilike", `%${fulltext}%`),
-				]),
-			);
-		}
+	if (where?.fulltext) {
+		const fulltext = where.fulltext;
+		query = query.where((eb) =>
+			eb.or([
+				eb("cm.category", "ilike", `%${fulltext}%`),
+			]),
+		);
+	}
 
-		if (where?.category) {
-			query = query.where("cm.category", "=", where.category);
-		}
+	if (where?.category) {
+		query = query.where("cm.category", "=", where.category);
+	}
 
-		return query;
-	};
+	return query;
+};

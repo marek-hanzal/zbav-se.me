@@ -1,2 +1,1 @@
-export const SelectionUnfilterIcon =
-	"icon-[material-symbols--move-selection-left-outline-rounded]";
+export const SelectionUnfilterIcon = "icon-[material-symbols--move-selection-left-outline-rounded]";

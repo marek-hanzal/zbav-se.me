@@ -1,8 +1,4 @@
-import {
-	createFileRoute,
-	useNavigate,
-	useParams,
-} from "@tanstack/react-router";
+import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField, onSubmit } from "@use-pico/client/ui/form";
@@ -94,30 +90,18 @@ export const Route = createFileRoute("/$locale/register")({
 										name={"email"}
 										validators={{
 											onBlur({ value, fieldApi }) {
-												if (
-													!fieldApi.state.meta.isDirty
-												) {
+												if (!fieldApi.state.meta.isDirty) {
 													return undefined;
 												}
 
 												if (!value) {
 													return {
-														message:
-															translator.text(
-																"Email is required",
-															),
+														message: translator.text("Email is required"),
 													};
 												}
-												if (
-													!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
-														value,
-													)
-												) {
+												if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
 													return {
-														message:
-															translator.text(
-																"Invalid email address",
-															),
+														message: translator.text("Invalid email address"),
 													};
 												}
 												return undefined;
@@ -134,20 +118,10 @@ export const Route = createFileRoute("/$locale/register")({
 												{(props) => (
 													<field.TextInput
 														type={"email"}
-														value={
-															field.state.value
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
-														onBlur={
-															field.handleBlur
-														}
-														placeholder={translator.text(
-															"Enter your email",
-														)}
+														value={field.state.value}
+														onChange={(e) => field.handleChange(e.target.value)}
+														onBlur={field.handleBlur}
+														placeholder={translator.text("Enter your email")}
 														{...props}
 													/>
 												)}
@@ -159,21 +133,15 @@ export const Route = createFileRoute("/$locale/register")({
 										name={"password"}
 										validators={{
 											onBlur({ value, fieldApi }) {
-												if (
-													!fieldApi.state.meta.isDirty
-												) {
+												if (!fieldApi.state.meta.isDirty) {
 													return undefined;
 												}
 
-												if (
-													!value ||
-													value.length < 8
-												) {
+												if (!value || value.length < 8) {
 													return {
-														message:
-															translator.text(
-																"Password must be at least 8 characters",
-															),
+														message: translator.text(
+															"Password must be at least 8 characters",
+														),
 													};
 												}
 												return undefined;
@@ -182,28 +150,16 @@ export const Route = createFileRoute("/$locale/register")({
 									>
 										{(field) => (
 											<FormField
-												label={
-													<Tx label={"Password"} />
-												}
+												label={<Tx label={"Password"} />}
 												meta={field.state.meta}
 											>
 												{(props) => (
 													<field.TextInput
 														type={"password"}
-														value={
-															field.state.value
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
-														onBlur={
-															field.handleBlur
-														}
-														placeholder={translator.text(
-															"Enter your password",
-														)}
+														value={field.state.value}
+														onChange={(e) => field.handleChange(e.target.value)}
+														onBlur={field.handleBlur}
+														placeholder={translator.text("Enter your password")}
 														{...props}
 													/>
 												)}
@@ -218,17 +174,11 @@ export const Route = createFileRoute("/$locale/register")({
 												"password",
 											],
 											onBlur({ value, fieldApi }) {
-												const password =
-													fieldApi.form.getFieldValue(
-														"password",
-													);
+												const password = fieldApi.form.getFieldValue("password");
 
 												if (value !== password) {
 													return {
-														message:
-															translator.text(
-																"Passwords do not match",
-															),
+														message: translator.text("Passwords do not match"),
 													};
 												}
 
@@ -240,32 +190,16 @@ export const Route = createFileRoute("/$locale/register")({
 											<FormField
 												id={field.name}
 												name={field.name}
-												label={
-													<Tx
-														label={
-															"Confirm Password"
-														}
-													/>
-												}
+												label={<Tx label={"Confirm Password"} />}
 												meta={field.state.meta}
 											>
 												{(props) => (
 													<field.TextInput
 														type={"password"}
-														value={
-															field.state.value
-														}
-														onChange={(e) =>
-															field.handleChange(
-																e.target.value,
-															)
-														}
-														onBlur={
-															field.handleBlur
-														}
-														placeholder={translator.text(
-															"Confirm your password",
-														)}
+														value={field.state.value}
+														onChange={(e) => field.handleChange(e.target.value)}
+														onBlur={field.handleBlur}
+														placeholder={translator.text("Confirm your password")}
 														{...props}
 													/>
 												)}
@@ -280,15 +214,11 @@ export const Route = createFileRoute("/$locale/register")({
 										width={"fit"}
 									>
 										<form.SubmitButton
-											iconEnabled={
-												"icon-[eos-icons--system-re-registered]"
-											}
+											iconEnabled={"icon-[eos-icons--system-re-registered]"}
 											iconProps={{
 												size: "sm",
 											}}
-											disabled={
-												registerMutation.isPending
-											}
+											disabled={registerMutation.isPending}
 											tone={"primary"}
 											theme={"dark"}
 											size={"lg"}
@@ -313,9 +243,7 @@ export const Route = createFileRoute("/$locale/register")({
 										</LinkTo>
 									</Container>
 
-									<div
-										className={"flex flex-col gap-2 w-full"}
-									>
+									<div className={"flex flex-col gap-2 w-full"}>
 										<Tx
 											label={"Agreement with (label)"}
 											size={"sm"}

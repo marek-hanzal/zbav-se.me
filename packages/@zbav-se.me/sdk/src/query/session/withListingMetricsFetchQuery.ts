@@ -2,10 +2,7 @@ import { withQuery } from "@use-pico/client/query";
 import { apiListingMetricsFetch } from "../../api/session/sdk.gen";
 import type { tApiListingMetricsFetchResponse } from "../../api/session/types.gen";
 
-export const withListingMetricsFetchQuery = withQuery<
-	string,
-	tApiListingMetricsFetchResponse[200]
->({
+export const withListingMetricsFetchQuery = withQuery<string, tApiListingMetricsFetchResponse[200]>({
 	keys(variables) {
 		return [
 			"listing",

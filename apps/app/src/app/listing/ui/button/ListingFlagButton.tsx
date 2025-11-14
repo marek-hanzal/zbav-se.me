@@ -1,11 +1,7 @@
 import { usePatchCollection } from "@use-pico/client/hook";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import type {
-	tListing,
-	tListingCollection,
-	tListingQuery,
-} from "@zbav-se.me/sdk/api/session";
+import type { tListing, tListingCollection, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingFlagToggleMutation } from "@zbav-se.me/sdk/mutation/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
@@ -34,23 +30,21 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 
 	const patch = usePatchCollection<tListingCollection>(listing);
 
-	const listingFlagToggleMutation = withListingFlagToggleMutation.useMutation(
-		{
-			onSuccess() {
-				onSuccess?.(!listing.hasFlag);
-				setListingCollection(
-					patch({
-						id: listing.id,
-						hasFlag: !listing.hasFlag,
-					}),
-					query,
-				);
-			},
-			meta: {
-				mutationId: listing.id,
-			},
+	const listingFlagToggleMutation = withListingFlagToggleMutation.useMutation({
+		onSuccess() {
+			onSuccess?.(!listing.hasFlag);
+			setListingCollection(
+				patch({
+					id: listing.id,
+					hasFlag: !listing.hasFlag,
+				}),
+				query,
+			);
 		},
-	);
+		meta: {
+			mutationId: listing.id,
+		},
+	});
 
 	return (
 		<ConfirmButton
@@ -63,25 +57,15 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 				...buttonProps,
 				onClick(event) {
 					if (listing.hasFlag) {
-						toast.info(
-							translator.text(
-								"Second tap to unflag listing (toast)",
-							),
-							{
-								id: "listing-flag-button",
-							},
-						);
+						toast.info(translator.text("Second tap to unflag listing (toast)"), {
+							id: "listing-flag-button",
+						});
 					}
 
 					if (!listing.hasFlag) {
-						toast.warning(
-							translator.text(
-								"Second tap to flag listing (toast)",
-							),
-							{
-								id: "listing-flag-button",
-							},
-						);
+						toast.warning(translator.text("Second tap to flag listing (toast)"), {
+							id: "listing-flag-button",
+						});
 					}
 
 					buttonProps?.onClick?.(event);
@@ -101,13 +85,9 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 						{
 							loading: translator.text("Loading... (toast)"),
 							success: translator.text(
-								listing.hasFlag
-									? "Listing unflagged (toast)"
-									: "Listing flagged (toast)",
+								listing.hasFlag ? "Listing unflagged (toast)" : "Listing flagged (toast)",
 							),
-							error: translator.text(
-								"Error flagging listing (toast)",
-							),
+							error: translator.text("Error flagging listing (toast)"),
 							id: "listing-flag-button",
 						},
 					);

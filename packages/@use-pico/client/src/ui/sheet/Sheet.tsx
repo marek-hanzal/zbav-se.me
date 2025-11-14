@@ -4,8 +4,7 @@ import type { UiProps } from "../../type/UiProps";
 import { SheetCls } from "./SheetCls";
 
 export namespace Sheet {
-	export interface Props
-		extends UiProps<SheetCls.Props<HTMLAttributes<HTMLDivElement>>> {
+	export interface Props extends UiProps<SheetCls.Props<HTMLAttributes<HTMLDivElement>>> {
 		ref?: Ref<HTMLDivElement>;
 		disabled?: boolean;
 		tone?: Cls.VariantOf<SheetCls, "tone">;

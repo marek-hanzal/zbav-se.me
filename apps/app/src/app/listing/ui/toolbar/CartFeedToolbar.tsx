@@ -30,9 +30,7 @@ export const CartFeedToolbar: FC<CartFeedToolbar.Props> = ({
 		from: "/$locale",
 	});
 
-	const [action, setIsAction] = useState<CartFeedToolbar.Tools | undefined>(
-		undefined,
-	);
+	const [action, setIsAction] = useState<CartFeedToolbar.Tools | undefined>(undefined);
 
 	return (
 		<ToolbarContainer {...props}>

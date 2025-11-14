@@ -32,8 +32,7 @@ export const Route = createFileRoute("/$locale")({
 	async loader({ params: { locale }, context: { user } }) {
 		try {
 			return {
-				translations: (await import(`../translation/${locale}.yaml`))
-					.default,
+				translations: (await import(`../translation/${locale}.yaml`)).default,
 				user,
 			} as const;
 		} catch {

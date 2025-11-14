@@ -22,12 +22,8 @@ export const withFeedSelect = ({ sort }: withFeedSelect.Props) => {
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () =>
-				query.orderBy("f.createdAt", item.direction),
-			)
-			.with("updatedAt", () =>
-				query.orderBy("f.updatedAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("f.createdAt", item.direction))
+			.with("updatedAt", () => query.orderBy("f.updatedAt", item.direction))
 			.exhaustive();
 	}
 

@@ -1,8 +1,4 @@
-import type {
-	CursorSchema,
-	EntitySchema,
-	withQuerySchema,
-} from "@use-pico/common/schema";
+import type { CursorSchema, EntitySchema, withQuerySchema } from "@use-pico/common/schema";
 import { type FC, useContext, useState } from "react";
 import { useSelection } from "../../hook/useSelection";
 import type { Fulltext } from "../fulltext/Fulltext";
@@ -12,10 +8,7 @@ import { ModalFooter } from "../modal/ModalFooter";
 import type { Table } from "../table/Table";
 
 export namespace Content {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TItem extends EntitySchema.Type,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type> {
 		query: Omit<TQuery, "filter" | "cursor"> | undefined;
 		table: FC<Table.PropsEx<TQuery, TItem>>;
 		selection: useSelection.Selection<TItem>;
@@ -23,10 +16,7 @@ export namespace Content {
 	}
 }
 
-export const Content = <
-	TQuery extends withQuerySchema.Query,
-	TItem extends EntitySchema.Type,
->({
+export const Content = <TQuery extends withQuerySchema.Query, TItem extends EntitySchema.Type>({
 	query,
 	table: Table,
 	selection,

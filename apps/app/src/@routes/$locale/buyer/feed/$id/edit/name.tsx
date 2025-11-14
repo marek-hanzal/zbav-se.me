@@ -60,9 +60,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 						label={"Feed - next and save (button)"}
 						size={"lg"}
 						loading={feedPatchMutation.isPending}
-						disabled={
-							name.length === 0 || feedPatchMutation.isPending
-						}
+						disabled={name.length === 0 || feedPatchMutation.isPending}
 						full
 						onClick={() => {
 							if (!change) {

@@ -13,8 +13,7 @@ export const withListingCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-cart/collection",
-			description:
-				"Returns listing cart items based on provided parameters",
+			description: "Returns listing cart items based on provided parameters",
 			operationId: "apiListingCartCollection",
 			request: {
 				body: {
@@ -36,8 +35,7 @@ export const withListingCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of listing cart items based on provided query",
+					description: "Access collection of listing cart items based on provided query",
 				},
 			},
 			tags: [

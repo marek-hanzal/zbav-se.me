@@ -6,9 +6,7 @@ export namespace withCollectionSchema {
 		description: string;
 	};
 
-	export type Type<T extends z.ZodTypeAny> = z.infer<
-		ReturnType<typeof withCollectionSchema<T>>
-	>;
+	export type Type<T extends z.ZodTypeAny> = z.infer<ReturnType<typeof withCollectionSchema<T>>>;
 }
 
 /**

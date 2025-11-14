@@ -11,11 +11,7 @@ export namespace FeedNameContainer {
 	}
 }
 
-export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
-	value,
-	onChange,
-	...props
-}) => {
+export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange, ...props }) => {
 	return (
 		<Container
 			layout={"vertical-centered"}

@@ -11,8 +11,7 @@ export const withUploadCountApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/upload/count",
-			description:
-				"Returns count of upload items based on provided query",
+			description: "Returns count of upload items based on provided query",
 			operationId: "apiUploadCount",
 			request: {
 				body: {

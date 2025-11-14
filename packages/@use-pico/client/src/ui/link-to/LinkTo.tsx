@@ -5,8 +5,7 @@ import { PicoCls } from "../../cls/PicoCls";
 import { Icon } from "../../icon/Icon";
 import { LinkToCls } from "./LinkToCls";
 
-interface BaseLinkToProps
-	extends LinkToCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
+interface BaseLinkToProps extends LinkToCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
 	/**
 	 * Ref to the anchor element.
 	 */

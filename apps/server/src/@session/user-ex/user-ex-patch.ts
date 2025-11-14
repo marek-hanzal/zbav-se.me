@@ -24,8 +24,7 @@ export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 			},
 			responses: {
 				204: {
-					description:
-						"User extended information updated successfully",
+					description: "User extended information updated successfully",
 				},
 				500: {
 					content: {

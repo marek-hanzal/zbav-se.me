@@ -9,8 +9,6 @@ it("should return normalized vector", () => {
 		dimensions: 7,
 		weight: 1,
 	});
-	const magnitude = Math.sqrt(
-		Array.from(vector).reduce((sum, v) => sum + v * v, 0),
-	);
+	const magnitude = Math.sqrt(Array.from(vector).reduce((sum, v) => sum + v * v, 0));
 	expect(magnitude).toBeCloseTo(1, 5);
 });

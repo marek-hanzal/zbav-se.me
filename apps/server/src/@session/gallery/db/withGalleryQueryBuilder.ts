@@ -10,10 +10,7 @@ export namespace withGalleryQueryBuilder {
 	export type Callback = (props: Props) => withGallerySelect.Select;
 }
 
-export const withGalleryQueryBuilder: withGalleryQueryBuilder.Callback = ({
-	select,
-	where,
-}) => {
+export const withGalleryQueryBuilder: withGalleryQueryBuilder.Callback = ({ select, where }) => {
 	if (!where) {
 		return select;
 	}

@@ -17,9 +17,7 @@ export const withUploadSelect = ({ sort }: withUploadSelect.Props = {}) => {
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () =>
-				query.orderBy("u.createdAt", item.direction),
-			)
+			.with("createdAt", () => query.orderBy("u.createdAt", item.direction))
 			.exhaustive();
 	}
 

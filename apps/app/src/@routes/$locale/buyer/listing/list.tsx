@@ -46,9 +46,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 				}
 			>
 				<ListingListContainer
-					overlay={({ listing }) => (
-						<FeedListingOverlay listing={listing} />
-					)}
+					overlay={({ listing }) => <FeedListingOverlay listing={listing} />}
 					toolbar={({ query, listing }) => (
 						<ListingFeedToolbar
 							query={query}
@@ -84,9 +82,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 							<Status
 								icon={DeadEndIcon}
 								textTitle={"That's all for now (title)"}
-								textMessage={
-									"No more listings to show (message)"
-								}
+								textMessage={"No more listings to show (message)"}
 								action={
 									<LinkTo
 										to={"/$locale/buyer/feed/select"}

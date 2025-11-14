@@ -1,11 +1,5 @@
 import { expect, it } from "vitest";
-import {
-	createHasher,
-	embedding,
-	embedNumber,
-	embedNumberRange,
-	embedString,
-} from "../../../src/embedding";
+import { createHasher, embedding, embedNumber, embedNumberRange, embedString } from "../../../src/embedding";
 
 it("should combine different embedding types", async () => {
 	const hasher = await createHasher();
@@ -48,8 +42,6 @@ it("should combine different embedding types", async () => {
 	});
 
 	expect(combined.length).toBe(22); // 7 + 10 + 5
-	const magnitude = Math.sqrt(
-		Array.from(combined).reduce((sum, v) => sum + v * v, 0),
-	);
+	const magnitude = Math.sqrt(Array.from(combined).reduce((sum, v) => sum + v * v, 0));
 	expect(magnitude).toBeCloseTo(1, 5);
 });

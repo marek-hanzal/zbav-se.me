@@ -1,9 +1,6 @@
 import { ListItemNode, ListNode } from "@lexical/list";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
-import {
-	type InitialConfigType,
-	LexicalComposer,
-} from "@lexical/react/LexicalComposer";
+import { type InitialConfigType, LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import { LexicalErrorBoundary } from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
@@ -40,10 +37,7 @@ export const Editor: FC<Editor.Props> = ({
 		namespace,
 		editable,
 		editorState(editor) {
-			content &&
-				editor.setEditorState(
-					editor.parseEditorState(content.editorState),
-				);
+			content && editor.setEditorState(editor.parseEditorState(content.editorState));
 		},
 		onError() {
 			//

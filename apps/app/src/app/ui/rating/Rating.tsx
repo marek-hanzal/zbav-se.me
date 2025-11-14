@@ -34,22 +34,13 @@ function withRatingItems(limit = 6): Rating.RatingItem[] {
 	);
 }
 
-export const Rating: FC<Rating.Props> = ({
-	ref,
-	textHint,
-	selection,
-	cls = RatingCls,
-	tweak,
-}) => {
+export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = RatingCls, tweak }) => {
 	const limit = 6;
 	const { slots } = useCls(cls, tweak);
 
 	const itemId = useId();
 
-	const ratingItems = useMemo<Rating.RatingItem[]>(
-		() => withRatingItems(limit),
-		[],
-	);
+	const ratingItems = useMemo<Rating.RatingItem[]>(() => withRatingItems(limit), []);
 
 	return (
 		<Container scroll={"vertical"}>

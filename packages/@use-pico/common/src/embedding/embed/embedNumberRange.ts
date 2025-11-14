@@ -7,11 +7,7 @@ export namespace embedNumberRange {
 }
 
 /** Linear range embedding for pgvector L2 (1D). */
-export const embedNumberRange = ({
-	value,
-	min,
-	max,
-}: embedNumberRange.Props): number[] => {
+export const embedNumberRange = ({ value, min, max }: embedNumberRange.Props): number[] => {
 	return [
 		Math.min(1, Math.max(0, (value - min) / (max - min))),
 	];

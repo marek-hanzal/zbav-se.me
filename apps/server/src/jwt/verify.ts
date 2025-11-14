@@ -18,13 +18,7 @@ export namespace verify {
 
 export async function verify<TSchema extends PayloadSchema>(
 	token: string,
-	{
-		schema,
-		issuer,
-		secret,
-		audience = "token",
-		scope,
-	}: verify.Props<TSchema>,
+	{ schema, issuer, secret, audience = "token", scope }: verify.Props<TSchema>,
 ): Promise<verify.Result<TSchema>> {
 	const secretKey = new TextEncoder().encode(secret);
 

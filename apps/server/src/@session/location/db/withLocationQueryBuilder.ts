@@ -15,10 +15,7 @@ export namespace withLocationQueryBuilder {
  * Standalone query builder that applies all filters from LocationQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({
-	select,
-	where,
-}) => {
+export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({ select, where }) => {
 	if (!where) {
 		return select;
 	}

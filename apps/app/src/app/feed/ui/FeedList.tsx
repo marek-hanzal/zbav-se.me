@@ -3,10 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/session";
-import {
-	withFeedCollectionQuery,
-	withFeedCountQuery,
-} from "@zbav-se.me/sdk/query/session";
+import { withFeedCollectionQuery, withFeedCountQuery } from "@zbav-se.me/sdk/query/session";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useId } from "react";
 import { FeedItem } from "~/app/feed/ui/FeedItem";
@@ -50,9 +47,7 @@ export const FeedList: FC<FeedList.Props> = ({
 					<Status
 						icon={FeedIcon}
 						textTitle={"Create first feed (title)"}
-						textMessage={
-							"Create your first feed to get started (description)"
-						}
+						textMessage={"Create your first feed to get started (description)"}
 						action={
 							<Button
 								iconEnabled={ArrowRightIcon}
@@ -84,9 +79,7 @@ export const FeedList: FC<FeedList.Props> = ({
 				})}
 			</Container>
 
-			{shouldShowCreateButton &&
-			!isLimitReached &&
-			feedCountQuery.data.filter > 0 ? (
+			{shouldShowCreateButton && !isLimitReached && feedCountQuery.data.filter > 0 ? (
 				<Button
 					tone={"primary"}
 					iconEnabled={FeedIcon}

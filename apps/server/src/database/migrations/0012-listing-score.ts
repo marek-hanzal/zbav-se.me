@@ -20,9 +20,7 @@ export const ListingScoreMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("score", "integer", (col) => col.notNull())
 			.addColumn("type", sql`listing_score_type`, (col) => col.notNull())
-			.addColumn("createdAt", "timestamp", (col) =>
-				col.notNull().defaultTo("now()"),
-			)
+			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
 				"listing_score_[listingId]_fk",
 				[
@@ -47,22 +45,10 @@ export const ListingScoreMigration: Migration = {
 			)
 			.execute();
 
-		await db.schema
-			.createIndex("listing_score_[listingId]_idx")
-			.on("listing_score")
-			.column("listingId")
-			.execute();
+		await db.schema.createIndex("listing_score_[listingId]_idx").on("listing_score").column("listingId").execute();
 
-		await db.schema
-			.createIndex("listing_score_[userId]_idx")
-			.on("listing_score")
-			.column("userId")
-			.execute();
+		await db.schema.createIndex("listing_score_[userId]_idx").on("listing_score").column("userId").execute();
 
-		await db.schema
-			.createIndex("listing_score_[createdAt]_idx")
-			.on("listing_score")
-			.column("createdAt")
-			.execute();
+		await db.schema.createIndex("listing_score_[createdAt]_idx").on("listing_score").column("createdAt").execute();
 	},
 };

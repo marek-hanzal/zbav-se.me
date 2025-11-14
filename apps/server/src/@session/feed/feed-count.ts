@@ -12,8 +12,7 @@ export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/feed/count",
-			description:
-				"Returns count of feed items based on provided query (user-specific)",
+			description: "Returns count of feed items based on provided query (user-specific)",
 			operationId: "apiFeedCount",
 			request: {
 				body: {

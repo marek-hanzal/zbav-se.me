@@ -31,8 +31,7 @@ export const withUploadFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: UploadSchema,
 						},
 					},
-					description:
-						"Return an upload item based on the provided query",
+					description: "Return an upload item based on the provided query",
 				},
 				404: {
 					content: {

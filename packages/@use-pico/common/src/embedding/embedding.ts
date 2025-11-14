@@ -10,8 +10,6 @@ export namespace embedding {
 	}
 }
 
-export const embedding = ({
-	blocks,
-}: embedding.Props): Float32Array<ArrayBuffer> => {
+export const embedding = ({ blocks }: embedding.Props): Float32Array<ArrayBuffer> => {
 	return new Float32Array(concat(blocks));
 };

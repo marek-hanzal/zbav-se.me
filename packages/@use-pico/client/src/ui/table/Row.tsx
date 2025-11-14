@@ -11,11 +11,7 @@ import type { Table } from "./Table";
 import type { TableCls } from "./TableCls";
 
 export namespace Row {
-	export interface Props<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> {
+	export interface Props<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> {
 		item: TData;
 		visibleColumns: Table.Column.Props<TQuery, TData, any, TContext>[];
 		selection: useSelection.Selection<TData> | undefined;
@@ -33,18 +29,12 @@ export namespace Row {
 		onDoubleClick?(props: { data: TData; context: TContext }): void;
 	}
 
-	export type Component<
-		TQuery extends withQuerySchema.Query,
-		TData extends EntitySchema.Type,
-		TContext = any,
-	> = FC<Props<TQuery, TData, TContext>>;
+	export type Component<TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any> = FC<
+		Props<TQuery, TData, TContext>
+	>;
 }
 
-export const Row = <
-	TQuery extends withQuerySchema.Query,
-	TData extends EntitySchema.Type,
-	TContext = any,
->({
+export const Row = <TQuery extends withQuerySchema.Query, TData extends EntitySchema.Type, TContext = any>({
 	item,
 	visibleColumns,
 	selection,

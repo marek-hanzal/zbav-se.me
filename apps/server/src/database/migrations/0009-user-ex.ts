@@ -43,10 +43,6 @@ export const UserExMigration: Migration = {
 			])
 			.execute();
 
-		await db.schema
-			.createIndex("user_ex_[locationId]_idx")
-			.on("user_ex")
-			.column("locationId")
-			.execute();
+		await db.schema.createIndex("user_ex_[locationId]_idx").on("user_ex").column("locationId").execute();
 	},
 };

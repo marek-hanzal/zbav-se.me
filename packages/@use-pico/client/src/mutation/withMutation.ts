@@ -34,9 +34,7 @@ export namespace withMutation {
 		/**
 		 * Result of the callback is unused
 		 */
-		export type Fn<TVariables, TResult> = (
-			props: Props<TVariables, TResult>,
-		) => Promise<any>;
+		export type Fn<TVariables, TResult> = (props: Props<TVariables, TResult>) => Promise<any>;
 	}
 
 	/**
@@ -74,12 +72,7 @@ export namespace withMutation {
 		dropCache?: boolean;
 	}
 
-	export type UseOptions<
-		TVariables,
-		TResult,
-		TError,
-		TContext = unknown,
-	> = Omit<
+	export type UseOptions<TVariables, TResult, TError, TContext = unknown> = Omit<
 		UseMutationOptions<TResult, TError, TVariables, TContext>,
 		"mutationFn" | "mutationKey"
 	> & {
@@ -96,10 +89,7 @@ export namespace withMutation {
 		onPostMutation?: PostMutation.Fn<TVariables, TResult>;
 	};
 
-	export type PropsEx<TVariables, TResult> = Omit<
-		Props<TVariables, TResult>,
-		"mutationFn" | "keys" | "invalidate"
-	>;
+	export type PropsEx<TVariables, TResult> = Omit<Props<TVariables, TResult>, "mutationFn" | "keys" | "invalidate">;
 }
 
 /**
@@ -147,15 +137,9 @@ export function withMutation<TVariables, TResult, TError>({
 		 * @returns The result of the mutation hook.
 		 */
 		useMutation<TContext = unknown>(
-			options?: withMutation.UseOptions<
-				TVariables,
-				TResult,
-				TError,
-				TContext
-			>,
+			options?: withMutation.UseOptions<TVariables, TResult, TError, TContext>,
 		): UseMutationResult<TResult, TError, TVariables, TContext> {
-			const { onPreMutation, onPostMutation, ...$options } =
-				options ?? {};
+			const { onPreMutation, onPostMutation, ...$options } = options ?? {};
 			const queryClient = useQueryClient();
 
 			return useMutation<TResult, TError, TVariables, TContext>({
@@ -184,9 +168,7 @@ export function withMutation<TVariables, TResult, TError>({
 			const count = useIsMutating({
 				mutationKey: keys(),
 				predicate: mutationId
-					? ({ options: { meta } }) =>
-							(meta as withMutation.Meta)?.mutationId ===
-							mutationId
+					? ({ options: { meta } }) => (meta as withMutation.Meta)?.mutationId === mutationId
 					: undefined,
 			});
 
@@ -199,10 +181,7 @@ export function withMutation<TVariables, TResult, TError>({
 		 * @param variables
 		 * @returns The result of the mutation.
 		 */
-		async mutate(
-			queryClient: QueryClient,
-			variables: TVariables,
-		): Promise<TResult> {
+		async mutate(queryClient: QueryClient, variables: TVariables): Promise<TResult> {
 			const data = await mutationFn(variables);
 			clearCache(queryClient);
 			await invalidate(queryClient);

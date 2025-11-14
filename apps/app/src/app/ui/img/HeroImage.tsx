@@ -2,17 +2,11 @@ import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import type { UiProps } from "node_modules/@use-pico/client/src/type/UiProps";
-import {
-	type FC,
-	type ImgHTMLAttributes,
-	type ReactNode,
-	useState,
-} from "react";
+import { type FC, type ImgHTMLAttributes, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
 
 export namespace HeroImage {
-	export interface Props
-		extends UiProps<ImgHTMLAttributes<HTMLImageElement>> {
+	export interface Props extends UiProps<ImgHTMLAttributes<HTMLImageElement>> {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
@@ -28,9 +22,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	onError,
 	...props
 }) => {
-	const [state, setState] = useState<"loading" | "loaded" | "error">(
-		"loading",
-	);
+	const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
 	if (!visible) {
 		return invisible;

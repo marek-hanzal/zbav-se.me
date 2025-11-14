@@ -12,8 +12,7 @@ export const withListingFlagCountApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-flag/count",
-			description:
-				"Returns count of listing flag items based on provided query",
+			description: "Returns count of listing flag items based on provided query",
 			operationId: "apiListingFlagCount",
 			request: {
 				body: {

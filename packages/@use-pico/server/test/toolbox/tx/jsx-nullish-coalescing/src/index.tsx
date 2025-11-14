@@ -21,13 +21,7 @@ const selection = {
 };
 
 export const Component1 = () => {
-	return (
-		<Component
-			title={
-				selection.optional.single()?.name ?? "Listing category (title)"
-			}
-		/>
-	);
+	return <Component title={selection.optional.single()?.name ?? "Listing category (title)"} />;
 };
 
 export const Component2 = () => {

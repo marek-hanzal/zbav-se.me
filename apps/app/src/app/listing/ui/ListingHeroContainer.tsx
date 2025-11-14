@@ -1,21 +1,10 @@
 import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import type {
-	tGallery,
-	tListing,
-	tListingQuery,
-} from "@zbav-se.me/sdk/api/session";
+import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
-import {
-	type FC,
-	type ReactNode,
-	useCallback,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import { type FC, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingHeroContainer {
@@ -84,18 +73,17 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		ref,
 	]);
 
-	const listingScoreCreateMutation =
-		withListingScoreCreateMutation.useMutation({
-			retry: () => {
-				return visible && document.visibilityState === "visible";
-			},
-			retryDelay(count) {
-				if (count >= 3) {
-					return 0;
-				}
-				return 1000 * 60 * 5;
-			},
-		});
+	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation({
+		retry: () => {
+			return visible && document.visibilityState === "visible";
+		},
+		retryDelay(count) {
+			if (count >= 3) {
+				return 0;
+			}
+			return 1000 * 60 * 5;
+		},
+	});
 
 	const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -111,11 +99,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 			return;
 		}
 
-		if (
-			!visible ||
-			timerRef.current ||
-			listingScoreCreateMutation.isPending
-		) {
+		if (!visible || timerRef.current || listingScoreCreateMutation.isPending) {
 			return;
 		}
 

@@ -5,10 +5,7 @@ import type { Table } from "../Table";
 import { EqualFilter } from "./EqualFilter";
 
 export namespace withEqualFilter {
-	export interface Props<
-		TData extends EntitySchema.Type,
-		TFilter extends withQuerySchema.Query,
-	> {
+	export interface Props<TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query> {
 		/**
 		 * Which filter value we're about to filter by
 		 */
@@ -20,16 +17,10 @@ export namespace withEqualFilter {
 	}
 }
 
-export const withEqualFilter = <
-	TData extends EntitySchema.Type,
-	TFilter extends withQuerySchema.Query,
->({
+export const withEqualFilter = <TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query>({
 	value,
 	from,
-}: withEqualFilter.Props<TData, TFilter>): Table.Filter.Props<
-	TData,
-	TFilter
-> => {
+}: withEqualFilter.Props<TData, TFilter>): Table.Filter.Props<TData, TFilter> => {
 	return {
 		reset({ state }) {
 			state.set({

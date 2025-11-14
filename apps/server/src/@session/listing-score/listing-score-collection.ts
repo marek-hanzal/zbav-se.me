@@ -35,8 +35,7 @@ export const withListingScoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 							}),
 						},
 					},
-					description:
-						"Access collection of listing scores based on provided query",
+					description: "Access collection of listing scores based on provided query",
 				},
 			},
 			tags: [

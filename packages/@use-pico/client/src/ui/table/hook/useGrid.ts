@@ -21,20 +21,10 @@ export namespace useGrid {
 	}
 }
 
-export const useGrid = ({
-	visible,
-	actionWidth = "auto",
-	selection,
-	actionTable,
-	actionRow,
-}: useGrid.Props) => {
+export const useGrid = ({ visible, actionWidth = "auto", selection, actionTable, actionRow }: useGrid.Props) => {
 	// biome-ignore lint/correctness/useExhaustiveDependencies: Those values are defaults, so they won't change until the table is re-mounted.
 	return useMemo(() => {
-		const grid = visible
-			.map((col) =>
-				!col.size || col.size === "auto" ? "1fr" : `${col.size}rem`,
-			)
-			.join(" ");
+		const grid = visible.map((col) => (!col.size || col.size === "auto" ? "1fr" : `${col.size}rem`)).join(" ");
 
 		if (selection || actionTable || actionRow) {
 			return `${actionWidth} ${grid}`;

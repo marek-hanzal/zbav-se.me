@@ -5,8 +5,7 @@ import { LoaderIcon } from "../../icon/LoaderIcon";
 import { ActionClickCls } from "./ActionClickCls";
 
 export namespace ActionClick {
-	export interface Props
-		extends ActionClickCls.Props<HTMLAttributes<HTMLDivElement>> {
+	export interface Props extends ActionClickCls.Props<HTMLAttributes<HTMLDivElement>> {
 		icon?: Icon.Type;
 		iconProps?: Icon.Props;
 		loading?: boolean;

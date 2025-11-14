@@ -4,13 +4,7 @@ import { TypoCls } from "./TypoCls";
 
 export namespace Typo {
 	export type Value = ReactNode;
-	export type Preset =
-		| "none"
-		| "header"
-		| "subheader"
-		| "label"
-		| "paragraph"
-		| "blockquote";
+	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
 
 	export interface Props extends TypoCls.Props {
 		ref?: Ref<HTMLDivElement>;

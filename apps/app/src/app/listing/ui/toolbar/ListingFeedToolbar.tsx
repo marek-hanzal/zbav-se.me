@@ -34,9 +34,7 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 		from: "/$locale",
 	});
 
-	const [action, setIsAction] = useState<
-		ListingFeedToolbar.Tools | undefined
-	>(undefined);
+	const [action, setIsAction] = useState<ListingFeedToolbar.Tools | undefined>(undefined);
 
 	return (
 		<ToolbarContainer {...props}>

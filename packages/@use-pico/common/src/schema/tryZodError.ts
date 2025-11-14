@@ -1,9 +1,6 @@
 import { z } from "zod";
 
-export const tryZodError = <TSchema extends z.ZodType>(
-	schema: TSchema,
-	data: unknown,
-) => {
+export const tryZodError = <TSchema extends z.ZodType>(schema: TSchema, data: unknown) => {
 	try {
 		return schema.parse(data);
 	} catch (error) {

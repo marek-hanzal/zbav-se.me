@@ -58,9 +58,7 @@ export function useSnapperNav({
 	const isVertical = orientation === "vertical";
 	const clampedThreshold = clamp(threshold, 0, 1);
 
-	const [current, setCurrent] = useState(() =>
-		clamp(defaultIndex, 0, totalCount - 1),
-	);
+	const [current, setCurrent] = useState(() => clamp(defaultIndex, 0, totalCount - 1));
 	const currentRef = useRef(current);
 	currentRef.current = current;
 
@@ -68,14 +66,10 @@ export function useSnapperNav({
 		onSnap?.(index);
 	});
 
-	const emitSnapDebounced = useDebouncedCallback(
-		(index: number) => emitSnap(index),
-		onSnapDebounce,
-		{
-			maxWait: onSnapDebounce,
-			trailing: true,
-		},
-	);
+	const emitSnapDebounced = useDebouncedCallback((index: number) => emitSnap(index), onSnapDebounce, {
+		maxWait: onSnapDebounce,
+		trailing: true,
+	});
 
 	useEffect(
 		() => () => emitSnapDebounced.cancel(),
@@ -87,19 +81,14 @@ export function useSnapperNav({
 	// --- helpers ---------------------------------------------------------------
 
 	const getChildSize = useCallback(
-		(element: HTMLElement) =>
-			Math.max(
-				1,
-				isVertical ? element.clientHeight : element.clientWidth,
-			),
+		(element: HTMLElement) => Math.max(1, isVertical ? element.clientHeight : element.clientWidth),
 		[
 			isVertical,
 		],
 	);
 
 	const getChildOffset = useCallback(
-		(element: HTMLElement) =>
-			isVertical ? element.offsetTop : element.offsetLeft,
+		(element: HTMLElement) => (isVertical ? element.offsetTop : element.offsetLeft),
 		[
 			isVertical,
 		],
@@ -121,14 +110,8 @@ export function useSnapperNav({
 			};
 
 		const position = isVertical ? host.scrollTop : host.scrollLeft;
-		const totalSize = Math.max(
-			1,
-			isVertical ? host.scrollHeight : host.scrollWidth,
-		);
-		const clientSize = Math.max(
-			1,
-			isVertical ? host.clientHeight : host.clientWidth,
-		);
+		const totalSize = Math.max(1, isVertical ? host.scrollHeight : host.scrollWidth);
+		const clientSize = Math.max(1, isVertical ? host.clientHeight : host.clientWidth);
 
 		let pageSize = clientSize;
 
@@ -137,10 +120,7 @@ export function useSnapperNav({
 		const second = children.item(1);
 
 		const firstSize = first ? getChildSize(first) : clientSize;
-		const stride =
-			first && second
-				? getChildOffset(second) - getChildOffset(first)
-				: 0;
+		const stride = first && second ? getChildOffset(second) - getChildOffset(first) : 0;
 
 		pageSize = Math.max(1, stride > 0 ? stride : firstSize);
 
@@ -171,8 +151,7 @@ export function useSnapperNav({
 			const host = containerRef.current;
 			if (!host || !node) return null;
 			let cursor: Element | null = node;
-			while (cursor && cursor.parentElement !== host)
-				cursor = cursor.parentElement;
+			while (cursor && cursor.parentElement !== host) cursor = cursor.parentElement;
 			if (!cursor || cursor.parentElement !== host) return null;
 			return cursor as HTMLElement;
 		},
@@ -184,10 +163,7 @@ export function useSnapperNav({
 	// --- navigation API --------------------------------------------------------
 
 	const snapTo = useCallback(
-		(
-			target: useSnapperNav.SnapTarget,
-			behavior: ScrollBehavior = "smooth",
-		) => {
+		(target: useSnapperNav.SnapTarget, behavior: ScrollBehavior = "smooth") => {
 			const host = containerRef.current;
 			if (!host) return;
 
@@ -200,10 +176,7 @@ export function useSnapperNav({
 				if (!directChild) return;
 
 				const { pageSize } = readMetrics();
-				const raw =
-					(isVertical
-						? directChild.offsetTop
-						: directChild.offsetLeft) / pageSize;
+				const raw = (isVertical ? directChild.offsetTop : directChild.offsetLeft) / pageSize;
 				pageIndex = clamp(Math.round(raw), 0, totalCount - 1);
 			}
 

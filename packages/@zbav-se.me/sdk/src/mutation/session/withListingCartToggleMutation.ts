@@ -6,10 +6,7 @@ import type {
 	tApiListingCartToggleResponse,
 	tListingCartToggle,
 } from "../../api/session/types.gen";
-import {
-	withListingCollectionQuery,
-	withListingFetchQuery,
-} from "../../query/session";
+import { withListingCollectionQuery, withListingFetchQuery } from "../../query/session";
 import { withCategoryCartCollectionQuery } from "../../query/session/withCategoryCartCollectionQuery";
 import { withListingCartCountQuery } from "../../query/session/withListingCartCountQuery";
 import { withListingMetricsFetchQuery } from "../../query/session/withListingMetricsFetchQuery";

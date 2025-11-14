@@ -14,10 +14,7 @@ export namespace withFeedQueryBuilder {
  * Standalone query builder that applies all filters from FeedQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withFeedQueryBuilder: withFeedQueryBuilder.Callback = ({
-	select,
-	where,
-}) => {
+export const withFeedQueryBuilder: withFeedQueryBuilder.Callback = ({ select, where }) => {
 	let query = select;
 
 	if (where?.id) {

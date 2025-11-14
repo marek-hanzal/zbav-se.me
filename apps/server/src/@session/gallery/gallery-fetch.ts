@@ -31,8 +31,7 @@ export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: GallerySchema,
 						},
 					},
-					description:
-						"Return a gallery item based on the provided query",
+					description: "Return a gallery item based on the provided query",
 				},
 				404: {
 					content: {

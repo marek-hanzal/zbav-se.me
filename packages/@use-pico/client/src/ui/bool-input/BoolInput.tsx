@@ -5,12 +5,7 @@ import { BoolInputCls } from "./BoolInputCls";
 
 export namespace BoolInput {
 	export interface Props
-		extends BoolInputCls.Props<
-			Omit<
-				InputHTMLAttributes<HTMLInputElement>,
-				"value" | "onChange" | "type"
-			>
-		> {
+		extends BoolInputCls.Props<Omit<InputHTMLAttributes<HTMLInputElement>, "value" | "onChange" | "type">> {
 		ref?: Ref<HTMLInputElement>;
 		value: boolean | undefined | null;
 		onChange(value: boolean): void;

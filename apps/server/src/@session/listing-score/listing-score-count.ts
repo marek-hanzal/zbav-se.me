@@ -12,8 +12,7 @@ export const withListingScoreCountApi: Routes.Fn = ({ sessionHono }) => {
 		createRoute({
 			method: "post",
 			path: "/listing-score/count",
-			description:
-				"Returns count of listing scores based on provided query",
+			description: "Returns count of listing scores based on provided query",
 			operationId: "apiListingScoreCount",
 			request: {
 				body: {

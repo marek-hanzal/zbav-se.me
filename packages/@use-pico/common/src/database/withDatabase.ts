@@ -2,8 +2,7 @@ import { type Dialect, Kysely, type MigrationProvider, Migrator } from "kysely";
 import type { Database } from "./Database";
 
 export namespace withDatabase {
-	export interface Props
-		extends Partial<Pick<MigrationProvider, "getMigrations">> {
+	export interface Props extends Partial<Pick<MigrationProvider, "getMigrations">> {
 		dialect: Dialect;
 		/**
 		 * Called before the migration is executed.
@@ -52,15 +51,11 @@ export const withDatabase = <TDatabase>({
 			results?.forEach((result) => {
 				switch (result.status) {
 					case "Success":
-						console.log(
-							`Migration "${result.migrationName}" executed successfully`,
-						);
+						console.log(`Migration "${result.migrationName}" executed successfully`);
 						break;
 
 					case "Error":
-						console.error(
-							`Migration "${result.migrationName}" failed`,
-						);
+						console.error(`Migration "${result.migrationName}" failed`);
 						break;
 				}
 			});

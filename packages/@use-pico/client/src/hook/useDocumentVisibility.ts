@@ -7,10 +7,7 @@ export namespace useDocumentVisibility {
 	}
 }
 
-export const useDocumentVisibility = ({
-	onVisible,
-	onHidden,
-}: useDocumentVisibility.Props) => {
+export const useDocumentVisibility = ({ onVisible, onHidden }: useDocumentVisibility.Props) => {
 	useEffect(() => {
 		const onVisibilityState = () => {
 			if (document.visibilityState !== "visible") {
@@ -22,8 +19,7 @@ export const useDocumentVisibility = ({
 
 		document.addEventListener("visibilitychange", onVisibilityState);
 
-		return () =>
-			document.removeEventListener("visibilitychange", onVisibilityState);
+		return () => document.removeEventListener("visibilitychange", onVisibilityState);
 	}, [
 		onVisible,
 		onHidden,
