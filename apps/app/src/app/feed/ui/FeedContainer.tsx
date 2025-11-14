@@ -300,10 +300,16 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				{feed.id ? (
 					<>
 						<LinkTo
-							to={"/$locale/buyer/feed/$id/view"}
+							to={"/$locale/buyer/listing/list"}
 							params={{
 								locale,
-								id: feed.id,
+							}}
+							search={{
+								query: {
+									filter: feed.filter,
+									sort: feed.sort,
+									meta: feed.meta,
+								},
 							}}
 							full
 						>
@@ -311,11 +317,13 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 								iconEnabled={ArrowRightIcon}
 								iconPosition={"right"}
 								label={"View feed (button)"}
+								size={"xl"}
 							/>
 						</LinkTo>
 
 						<ConfirmButton
 							tone={"danger"}
+							iconEnabled={TrashIcon}
 							buttonProps={{
 								tone: "danger",
 								label: translator.text("Delete feed (button)"),
@@ -337,6 +345,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 							}}
 							loading={feedDeleteMutation.isPending}
 							full
+							size={"lg"}
 						/>
 					</>
 				) : null}
