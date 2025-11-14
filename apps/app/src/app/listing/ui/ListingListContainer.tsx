@@ -119,6 +119,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						return (
 							<div
 								ref={ref as Ref<HTMLDivElement> | undefined}
+								data-ui="ListingList-scroller"
 								className={tvc([
 									"snap-y",
 									"snap-mandatory",
@@ -131,10 +132,19 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							/>
 						);
 					},
+					List({ ref, context: _, ...props }) {
+						return (
+							<div
+								ref={ref as Ref<HTMLDivElement> | undefined}
+								data-ui="ListingList-itemList"
+								{...props}
+							/>
+						);
+					},
 					Item({ item: _, context: __, ...props }) {
 						return (
 							<div
-								className={"snap-center snap-always"}
+								className={"snap-start snap-always"}
 								{...props}
 							/>
 						);
@@ -144,10 +154,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							<Container
 								ui="ListingList-appendix"
 								height={"viewport"}
-								className={tvc([
-									"snap-center",
-									"snap-always",
-								])}
 							>
 								{appendix}
 							</Container>
