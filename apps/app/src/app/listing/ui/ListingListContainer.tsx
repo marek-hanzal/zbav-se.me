@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtuoso is a nested component */
+// /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtual list component */
 import { useParams } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -8,16 +8,16 @@ import { Status } from "@use-pico/client/ui/status";
 import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import {
 	type FC,
 	type ReactNode,
-	type Ref,
+	useEffect,
 	useId,
 	useMemo,
-	useState,
+	useRef,
 } from "react";
-import { Virtuoso } from "react-virtuoso";
+import type { VirtualizerHandle } from "virtua";
+import { Virtualizer } from "virtua";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -56,17 +56,47 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	});
 
 	const initialIndex = useMemo(() => {
-		return scrollToListingId
-			? listingQuery.data.data.findIndex(
-					(listing) => listing.id === scrollToListingId,
-				)
-			: 0;
+		if (!scrollToListingId) {
+			return 0;
+		}
+
+		const idx = listingQuery.data.data.findIndex((listing) => {
+			return listing.id === scrollToListingId;
+		});
+
+		return idx >= 0 ? idx : 0;
+	}, [
+		scrollToListingId,
+		listingQuery.data,
+	]);
+
+	const scrollerRef = useRef<HTMLDivElement | null>(null);
+	const virtualizerRef = useRef<VirtualizerHandle | null>(null);
+
+	useEffect(() => {
+		if (!scrollToListingId) {
+			return;
+		}
+
+		if (!virtualizerRef.current) {
+			return;
+		}
+
+		const index = listingQuery.data.data.findIndex((listing) => {
+			return listing.id === scrollToListingId;
+		});
+
+		if (index < 0) {
+			return;
+		}
+
+		virtualizerRef.current.scrollToIndex(index, {
+			align: "start",
+		});
 	}, [
 		scrollToListingId,
 		listingQuery.data.data,
 	]);
-
-	const [ready, setReady] = useState(false);
 
 	return (
 		<Container
@@ -98,92 +128,64 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					))
 				: null}
 
-			<Virtuoso
-				data={listingQuery.data.data}
-				overscan={2}
-				initialTopMostItemIndex={{
-					index: initialIndex,
-					behavior: "auto",
-				}}
-				context={{
-					ready,
-				}}
-				rangeChanged={() => {
-					setReady(true);
-				}}
-				components={{
-					ScrollSeekPlaceholder() {
-						return <SpinnerContainer height={"viewport"} />;
-					},
-					Scroller({ ref, context: __, ...props }) {
-						return (
-							<div
-								ref={ref as Ref<HTMLDivElement> | undefined}
-								data-ui="ListingList-scroller"
-								className={tvc([
-									"snap-y",
-									"snap-mandatory",
-									"touch-pan-y",
-									"overscroll-contain",
-									"[-webkit-overflow-scrolling:touch]",
-									"[overflow-anchor:none]",
-								])}
-								{...props}
-							/>
-						);
-					},
-					List({ ref, context: _, ...props }) {
-						return (
-							<div
-								ref={ref as Ref<HTMLDivElement> | undefined}
-								data-ui="ListingList-itemList"
-								{...props}
-							/>
-						);
-					},
-					Item({ item: _, context: __, ...props }) {
-						return (
-							<div
-								className={"snap-start snap-always"}
-								{...props}
-							/>
-						);
-					},
-					Footer({ context: { ready } }) {
-						return ready && listingQuery.data.data.length > 0 ? (
-							<Container
-								ui="ListingList-appendix"
-								height={"viewport"}
-								className="snap-end snap-always"
-							>
-								{appendix}
-							</Container>
-						) : null;
-					},
-				}}
-				scrollSeekConfiguration={{
-					enter(velocity) {
-						return Math.abs(velocity) > 650;
-					},
-					exit(velocity) {
-						return Math.abs(velocity) < 50;
-					},
-				}}
-				itemContent={(_, listing) => {
-					return (
-						<ListingHeroContainer
-							key={`${listingId}-${listing.id}`}
-							query={query}
-							listing={listing}
-							toolbar={toolbar}
-							imageErrorToolbar={imageErrorToolbar}
-							overlay={overlay}
-							visible
+			{listingQuery.data.data.length > 0 ? (
+				<div
+					ref={scrollerRef}
+					data-ui="ListingList-scroller"
+					className={tvc([
+						"relative",
+						"h-screen",
+						"overflow-y-auto",
+						"snap-y",
+						"snap-mandatory",
+						"touch-pan-y",
+						"overscroll-contain",
+						"[-webkit-overflow-scrolling:touch]",
+						"[overflow-anchor:none]",
+					])}
+				>
+					<Virtualizer
+						ref={virtualizerRef}
+						data={listingQuery.data.data}
+						scrollRef={scrollerRef}
+						// Rough equivalent of Virtuoso overscan, in pixels
+						// bufferSize={200}
+						// Keep snapping smooth while scrolling
+						onScrollEnd={() => {
+							// Hook for any future snapping / analytics needs
+						}}
+						as="div"
+						item="div"
+					>
+						{(listing) => {
+							return (
+								<div className="snap-start snap-always">
+									<ListingHeroContainer
+										key={`${listingId}-${listing.id}`}
+										query={query}
+										listing={listing}
+										toolbar={toolbar}
+										imageErrorToolbar={imageErrorToolbar}
+										overlay={overlay}
+										visible
+										height={"viewport"}
+									/>
+								</div>
+							);
+						}}
+					</Virtualizer>
+
+					{appendix ? (
+						<Container
+							ui="ListingList-appendix"
 							height={"viewport"}
-						/>
-					);
-				}}
-			/>
+							className="snap-end snap-always"
+						>
+							{appendix}
+						</Container>
+					) : null}
+				</div>
+			) : null}
 		</Container>
 	);
 };
