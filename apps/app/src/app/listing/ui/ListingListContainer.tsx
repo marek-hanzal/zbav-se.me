@@ -1,5 +1,6 @@
 // /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtual list component */
 import { useParams } from "@tanstack/react-router";
+import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, VisibleContainer } from "@use-pico/client/ui/container";
@@ -8,7 +9,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
-import { type FC, type ReactNode, useId, useMemo, useRef } from "react";
+import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -48,31 +49,21 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
-	// useEffect(() => {
-	// 	if (!scrollToListingId || !listRef.current) {
-	// 		return;
-	// 	}
-
-	// 	const idx = listings.findIndex((listing) => {
-	// 		return listing.id === scrollToListingId;
-	// 	});
-
-	// 	if (idx < 0) {
-	// 		return;
-	// 	}
-
-	// 	listRef.current.scrollToRow({
-	// 		index: idx,
-	// 		align: "start",
-	// 		behavior: "instant",
-	// 	});
-	// }, [
-	// 	listRef.current,
-	// 	listings,
-	// 	scrollToListingId,
-	// ]);
+	const scrollTo = useScrollTo(containerRef);
 
 	const hasListings = listingQuery.data.data.length > 0;
+
+	useEffect(() => {
+		if (!scrollToListingId || !containerRef.current) {
+			return;
+		}
+		scrollTo(`[data-id="${scrollToListingId}"]`, {
+			behavior: "instant",
+		});
+	}, [
+		scrollToListingId,
+		scrollTo,
+	]);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We don't care about changing "empty" props
 	const emptySlot = useMemo(() => {
@@ -121,10 +112,11 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							visibility={{
 								scrollerRef: containerRef,
 							}}
-							delay={200}
+							delay={0}
 							placeholder={(props) => (
 								<SpinnerContainer
 									ui="ListingList-spinner"
+									data-id={listing.id}
 									{...props}
 								/>
 							)}
