@@ -9,7 +9,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	validateSearch: z.object({
 		feedId: z.string().optional(),
 	}),
-	ssr: false,
 	pendingComponent() {
 		const { locale } = Route.useParams();
 

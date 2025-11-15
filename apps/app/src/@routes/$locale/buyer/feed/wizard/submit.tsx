@@ -12,7 +12,6 @@ import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 	validateSearch: FeedWizardSchema,
-	ssr: false,
 	pendingComponent() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();

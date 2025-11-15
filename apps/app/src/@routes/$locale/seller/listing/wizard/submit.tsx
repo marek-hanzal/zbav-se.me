@@ -20,7 +20,6 @@ import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 	validateSearch: ListingWizardSchema,
-	ssr: false,
 	pendingComponent() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
