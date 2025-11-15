@@ -477,6 +477,18 @@ export const sListingTransactionQuery = {
             items: {
                 '$ref': '#/components/schemas/ListingTransactionSort'
             }
+        },
+        meta: {
+            '$ref': '#/components/schemas/ListingTransactionMeta'
+        }
+    }
+} as const;
+
+export const sListingTransactionMeta = {
+    type: 'object',
+    properties: {
+        side: {
+            '$ref': '#/components/schemas/UserSide'
         }
     }
 } as const;

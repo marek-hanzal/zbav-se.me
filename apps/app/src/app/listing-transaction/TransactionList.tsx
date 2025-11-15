@@ -22,6 +22,9 @@ export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) =
 					direction: "desc",
 				},
 			],
+			meta: {
+				side,
+			},
 		});
 
 	return (

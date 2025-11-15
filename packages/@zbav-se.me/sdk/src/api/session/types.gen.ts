@@ -484,6 +484,14 @@ export type tListingTransactionQuery = {
     filter?: tListingTransactionFilter;
     where?: tListingTransactionWhere;
     sort?: Array<tListingTransactionSort>;
+    meta?: tListingTransactionMeta;
+};
+
+/**
+ * Meta data for listing transaction collection
+ */
+export type tListingTransactionMeta = {
+    side?: tUserSide;
 };
 
 /**

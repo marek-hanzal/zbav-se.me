@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { CursorSchema } from "../../../schema/CursorSchema";
 import { ListingTransactionFilterSchema } from "./ListingTransactionFilterSchema";
+import { ListingTransactionMetaSchema } from "./ListingTransactionMetaSchema";
 import { ListingTransactionSortSchema } from "./ListingTransactionSortSchema";
 
 export const ListingTransactionQuerySchema = z
@@ -11,6 +12,7 @@ export const ListingTransactionQuerySchema = z
 			description: "App-based filters",
 		}).optional(),
 		sort: ListingTransactionSortSchema.array().optional(),
+		meta: ListingTransactionMetaSchema.optional(),
 	})
 	.openapi("ListingTransactionQuery", {
 		description: "Query object for listing transaction collection",

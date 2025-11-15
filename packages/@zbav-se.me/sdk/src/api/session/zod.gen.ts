@@ -515,6 +515,17 @@ export const zListingTransactionCreate = z.object({
 export type zListingTransactionCreate = z.infer<typeof zListingTransactionCreate>;
 
 /**
+ * Meta data for listing transaction collection
+ */
+export const zListingTransactionMeta = z.object({
+    side: z.optional(zUserSide)
+}).register(z.globalRegistry, {
+    description: "Meta data for listing transaction collection"
+});
+
+export type zListingTransactionMeta = z.infer<typeof zListingTransactionMeta>;
+
+/**
  * Field of the listing transaction sort
  */
 export const zListingTransactionSortField = z.enum([
@@ -631,7 +642,8 @@ export const zListingTransactionQuery = z.object({
     cursor: z.optional(zCursor),
     filter: z.optional(zListingTransactionFilter),
     where: z.optional(zListingTransactionWhere),
-    sort: z.optional(z.array(zListingTransactionSort))
+    sort: z.optional(z.array(zListingTransactionSort)),
+    meta: z.optional(zListingTransactionMeta)
 }).register(z.globalRegistry, {
     description: "Query object for listing transaction collection"
 });

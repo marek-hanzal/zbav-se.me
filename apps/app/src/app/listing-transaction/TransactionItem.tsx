@@ -5,6 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { tListingTransaction, tUserSide } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
+import { match } from "ts-pattern";
 import { TransactionStatusIcon } from "~/app/listing-transaction/TransactionStatusIcon";
 import { TransactionStatusInline } from "~/app/listing-transaction/TransactionStatusInline";
 
@@ -52,7 +53,14 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			<LinkTo
 				icon={ArrowRightIcon}
 				iconPosition={"right"}
-				to={"/$locale/buyer/transaction/$id/view"}
+				to={match(side)
+					.with("buyer", () => {
+						return "/$locale/buyer/transaction/$id/view" as const;
+					})
+					.with("seller", () => {
+						return "/$locale/seller/transaction/$id/view" as const;
+					})
+					.exhaustive()}
 				params={{
 					locale,
 					id: listingTransaction.id,

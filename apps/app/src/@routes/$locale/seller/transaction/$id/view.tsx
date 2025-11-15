@@ -8,27 +8,27 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { TransactionStatusIcon } from "~/app/listing-transaction/TransactionStatusIcon";
 import { TransactionStatusInline } from "~/app/listing-transaction/TransactionStatusInline";
 
-export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
+export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 	component() {
 		const { locale, id } = Route.useParams();
+
 		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery({
 			where: {
 				id,
 			},
 			meta: {
-				side: "buyer",
+				side: "seller",
 			},
 		});
 		const listingTransaction = listingTransactionFetchQuery.data;
 
 		return (
 			<TitleContainer
-				textTitle={"Transaction detail (title)"}
-				textSubtitle={listingTransaction.title}
+				textTitle="Transaction detail (title)"
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/transaction/list"}
+						to={"/$locale/seller/transaction/list"}
 						params={{
 							locale,
 						}}
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 						/>
 
 						<TransactionStatusInline
-							side={"buyer"}
+							side={"seller"}
 							size={"xl"}
 							transactionStatus={listingTransaction.status}
 						/>

@@ -47,7 +47,7 @@ export const withListingTransactionCollectionApi: Routes.Fn = ({ sessionHono }) 
 		async (c) => {
 			const json = c.req.valid("json");
 			const user = c.get("user");
-			const { cursor, filter, where, sort } = json;
+			const { cursor, filter, where, sort, meta } = json;
 
 			const userWhere = {
 				...where,
@@ -75,7 +75,12 @@ export const withListingTransactionCollectionApi: Routes.Fn = ({ sessionHono }) 
 						},
 						filter,
 						where: userWhere,
-						query: withListingTransactionQueryBuilder,
+						query(query) {
+							return withListingTransactionQueryBuilder({
+								meta,
+								...query,
+							});
+						},
 					}),
 			});
 
