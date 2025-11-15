@@ -1,64 +1,53 @@
-import { useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
+import type { tUserSide } from "@zbav-se.me/sdk/api/session";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/session";
-import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
+import { match } from "ts-pattern";
+import { BuyerEmptyList } from "~/app/listing-transaction/buyer/BuyerEmptyList";
+import { SellerEmptyList } from "~/app/listing-transaction/seller/SellerEmptyList";
+import { TransactionItem } from "~/app/listing-transaction/TransactionItem";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {
-		//
+		side: tUserSide;
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({ ...props }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
-	const listingTransactionCollection = withListingTransactionCollectionQuery.useSuspenseQuery({
-		sort: [
-			{
-				field: "updatedAt",
-				direction: "desc",
-			},
-		],
-	});
+export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) => {
+	const listingTransactionCollectionQuery =
+		withListingTransactionCollectionQuery.useSuspenseQuery({
+			sort: [
+				{
+					field: "updatedAt",
+					direction: "desc",
+				},
+			],
+		});
 
 	return (
-		<Container {...props}>
-			{listingTransactionCollection.data.data.length > 0 ? "list" : null}
+		<Container
+			ui="TransactionList-root"
+			{...props}
+		>
+			{listingTransactionCollectionQuery.data.data.length > 0
+				? listingTransactionCollectionQuery.data.data.map((item) => (
+						<TransactionItem
+							key={item.id}
+							side={side}
+							listingTransaction={item}
+						/>
+					))
+				: null}
 
-			{listingTransactionCollection.data.data.length > 0 ? null : (
+			{listingTransactionCollectionQuery.data.data.length > 0 ? null : (
 				<Container
 					layout={"vertical-centered"}
 					items={"center"}
 				>
-					<Status
-						icon={TransactionIcon}
-						textTitle={"No transactions found (title)"}
-						textMessage={"No transactions found (message)"}
-						action={
-							<LinkTo
-								to={"/$locale/buyer/feed/select"}
-								params={{
-									locale,
-								}}
-							>
-								<Button
-									iconEnabled={ArrowRightIcon}
-									iconPosition={"right"}
-									label={"Feed selection (button)"}
-									size={"xl"}
-									tone={"primary"}
-									theme={"dark"}
-								/>
-							</LinkTo>
-						}
-					/>
+					{match(side)
+						.with("buyer", () => <BuyerEmptyList />)
+						.with("seller", () => <SellerEmptyList />)
+						.exhaustive()}
 				</Container>
 			)}
 		</Container>

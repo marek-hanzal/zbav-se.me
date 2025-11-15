@@ -658,6 +658,9 @@ export const zListingTransaction = z.object({
     }),
     expiresAt: z.string().register(z.globalRegistry, {
         description: "Expiration timestamp"
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: "Listing transaction title"
     })
 }).register(z.globalRegistry, {
     description: "Listing transaction data"
@@ -1345,6 +1348,9 @@ export const zListingWhere = z.object({
     })),
     inCart: z.optional(z.boolean().register(z.globalRegistry, {
         description: "Show listing that are in the user's cart"
+    })),
+    transaction: z.optional(z.boolean().register(z.globalRegistry, {
+        description: "Show listings that are in the user's transaction"
     }))
 }).register(z.globalRegistry, {
     description: "App-based filters"
@@ -1412,6 +1418,9 @@ export const zListingFilter = z.object({
     })),
     inCart: z.optional(z.boolean().register(z.globalRegistry, {
         description: "Show listing that are in the user's cart"
+    })),
+    transaction: z.optional(z.boolean().register(z.globalRegistry, {
+        description: "Show listings that are in the user's transaction"
     }))
 }).register(z.globalRegistry, {
     description: "User-land filters"
@@ -1779,7 +1788,8 @@ export const zListingSortField = z.enum([
     'createdAt',
     'updatedAt',
     'expiresAt',
-    'geo'
+    'geo',
+    'transaction'
 ]).register(z.globalRegistry, {
     description: "Field of the listing sort"
 });
@@ -2653,6 +2663,21 @@ export const zApiListingTransactionCreateData = z.object({
 });
 
 export type zapiListingTransactionCreateRequest = z.infer<typeof zApiListingTransactionCreateData>;
+
+export const zApiListingTransactionFetchData = z.object({
+    body: z.optional(zListingTransactionQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingTransactionFetchRequest = z.infer<typeof zApiListingTransactionFetchData>;
+
+/**
+ * Listing transaction matching provided query
+ */
+export const zApiListingTransactionFetchResponse = zListingTransaction;
+
+export type zapiListingTransactionFetchResponse = z.infer<typeof zApiListingTransactionFetchResponse>;
 
 export const zApiListingScoreCollectionData = z.object({
     body: z.optional(zListingScoreQuery),

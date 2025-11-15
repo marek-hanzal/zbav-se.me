@@ -634,6 +634,10 @@ export type tListingTransaction = {
      * Expiration timestamp
      */
     expiresAt: string;
+    /**
+     * Listing transaction title
+     */
+    title: string;
 };
 
 /**
@@ -1211,6 +1215,10 @@ export type tListingWhere = {
      * Show listing that are in the user's cart
      */
     inCart?: boolean;
+    /**
+     * Show listings that are in the user's transaction
+     */
+    transaction?: boolean;
 };
 
 /**
@@ -1334,6 +1342,10 @@ export type tListingFilter = {
      * Show listing that are in the user's cart
      */
     inCart?: boolean;
+    /**
+     * Show listings that are in the user's transaction
+     */
+    transaction?: boolean;
 };
 
 /**
@@ -1705,7 +1717,8 @@ export const tListingSortField = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt',
-    geo: 'geo'
+    geo: 'geo',
+    transaction: 'transaction'
 } as const;
 
 /**
@@ -2718,6 +2731,34 @@ export type tApiListingTransactionCreateResponse = {
      */
     201: unknown;
 };
+
+export type tApiListingTransactionFetchRequest = {
+    /**
+     * Query object for listing transaction fetch
+     */
+    body?: tListingTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-transaction/fetch';
+};
+
+export type apiListingTransactionFetchErrors = {
+    /**
+     * Listing transaction not found
+     */
+    404: tMessage;
+};
+
+export type apiListingTransactionFetchError = apiListingTransactionFetchErrors[keyof apiListingTransactionFetchErrors];
+
+export type tApiListingTransactionFetchResponse = {
+    /**
+     * Listing transaction matching provided query
+     */
+    200: tListingTransaction;
+};
+
+export type apiListingTransactionFetchResponse = tApiListingTransactionFetchResponse[keyof tApiListingTransactionFetchResponse];
 
 export type tApiListingScoreCollectionRequest = {
     body?: tListingScoreQuery;

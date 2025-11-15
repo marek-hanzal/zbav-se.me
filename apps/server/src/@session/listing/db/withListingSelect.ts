@@ -16,8 +16,22 @@ export namespace withListingSelect {
 }
 
 export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Props) => {
-	const query = database.kysely
+	let query = database.kysely
 		.selectFrom("listing as l")
+		.leftJoin(
+			(eb) =>
+				eb
+					.selectFrom("listing_transaction as lt")
+					.select((eb) => [
+						"lt.listingId",
+						eb.fn.max("lt.updatedAt").as("transactionUpdatedAt"),
+					])
+					.groupBy("lt.listingId")
+					.as("ltx"),
+			(join) => join.onRef("ltx.listingId", "=", "l.id"),
+		)
+		.innerJoin("location as loc", "loc.id", "l.locationId")
+		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select([
 			"l.age",
 			"l.categoryId",
@@ -32,8 +46,6 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 			"l.price",
 			"l.updatedAt",
 		])
-		.innerJoin("location as loc", "loc.id", "l.locationId")
-		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select((eb) => [
 			jsonObjectFrom(
 				eb
@@ -73,6 +85,7 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 					.whereRef("g.listingId", "=", "l.id")
 					.orderBy("g.sort"),
 			).as("gallery"),
+
 			eb
 				.exists(
 					eb
@@ -82,6 +95,7 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 						.where("lc.userId", "=", userId),
 				)
 				.as("isInCart"),
+
 			eb
 				.exists(
 					eb
@@ -91,6 +105,7 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 						.where("li.userId", "=", userId),
 				)
 				.as("isIgnored"),
+
 			eb
 				.exists(
 					eb
@@ -103,7 +118,7 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 		]);
 
 	for (const item of sort ?? []) {
-		return match(item.field)
+		query = match(item.field)
 			.with("price", () => query.orderBy("l.price", item.direction))
 			.with("condition", () => query.orderBy("l.condition", item.direction))
 			.with("age", () => query.orderBy("l.age", item.direction))
@@ -118,10 +133,13 @@ export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Prop
 
 				return query.orderBy(
 					(eb) =>
-						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(lon)}, ${eb.val(lat)}), 4326)`,
+						sql`${eb.ref("loc.geo")} <-> ST_SetSRID(ST_MakePoint(${eb.val(
+							lon,
+						)}, ${eb.val(lat)}), 4326)`,
 					item.direction,
 				);
 			})
+			.with("transaction", () => query.orderBy("ltx.transactionUpdatedAt", item.direction))
 			.exhaustive();
 	}
 

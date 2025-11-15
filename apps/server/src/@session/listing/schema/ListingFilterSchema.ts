@@ -69,6 +69,7 @@ export const ListingFilterSchema = z
 		title: z.string().optional().openapi({
 			description: "This filter matches listings with title matching the provided value",
 		}),
+		//
 		withOwn: z.boolean().optional().openapi({
 			description: "This filter matches listings with the user's own listings",
 		}),
@@ -77,6 +78,10 @@ export const ListingFilterSchema = z
 		}),
 		inCart: z.boolean().optional().openapi({
 			description: "Show listing that are in the user's cart",
+		}),
+		//
+		transaction: z.boolean().optional().openapi({
+			description: "Show listings that are in the user's transaction",
 		}),
 	})
 	.openapi("ListingFilter", {

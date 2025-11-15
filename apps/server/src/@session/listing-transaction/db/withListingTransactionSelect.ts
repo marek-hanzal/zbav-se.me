@@ -11,15 +11,19 @@ export namespace withListingTransactionSelect {
 }
 
 export const withListingTransactionSelect = ({ sort }: withListingTransactionSelect.Props) => {
-	const query = database.kysely.selectFrom("listing_transaction as lt").select([
-		"lt.id",
-		"lt.listingId",
-		"lt.status",
-		"lt.side",
-		"lt.createdAt",
-		"lt.updatedAt",
-		"lt.expiresAt",
-	]);
+	const query = database.kysely
+		.selectFrom("listing_transaction as lt")
+		.innerJoin("listing as l", "lt.listingId", "l.id")
+		.select([
+			"lt.id",
+			"lt.listingId",
+			"lt.status",
+			"lt.side",
+			"lt.createdAt",
+			"lt.updatedAt",
+			"lt.expiresAt",
+			"l.title",
+		]);
 
 	for (const item of sort ?? []) {
 		return match(item.field)

@@ -4,6 +4,9 @@ import { ListingTransactionDbSchema } from "../../../app/listing-transaction/sch
 export const ListingTransactionSchema = z
 	.object({
 		...ListingTransactionDbSchema.shape,
+		title: z.string().openapi({
+			description: "Listing transaction title",
+		}),
 	})
 	.omit({
 		userId: true,

@@ -39,6 +39,10 @@ export namespace Badge {
 		 * Requires the parent element to have relative positioning.
 		 */
 		snapTo?: Cls.VariantOf<BadgeCls, "snap-to">;
+		/**
+		 * Stretch badge to full width.
+		 */
+		full?: boolean;
 	}
 }
 
@@ -52,6 +56,7 @@ export const Badge: FC<Badge.Props> = ({
 	tone,
 	theme,
 	snapTo,
+	full,
 	//
 	cls = BadgeCls,
 	tweak,
@@ -67,6 +72,7 @@ export const Badge: FC<Badge.Props> = ({
 			tone,
 			theme,
 			"snap-to": snapTo,
+			full,
 		},
 	});
 

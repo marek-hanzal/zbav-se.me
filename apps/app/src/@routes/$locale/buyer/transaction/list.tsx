@@ -22,7 +22,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 					/>
 				}
 			>
-				<TransactionList />
+				<TransactionList side={"buyer"} />
 			</TitleContainer>
 		);
 	},

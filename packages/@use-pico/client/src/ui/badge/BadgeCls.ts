@@ -8,6 +8,7 @@ export const BadgeCls = contract(PicoCls.contract)
 	])
 	.bool("disabled")
 	.bool("border")
+	.bool("full")
 	.variant("size", [
 		"xs",
 		"sm",
@@ -287,6 +288,13 @@ export const BadgeCls = contract(PicoCls.contract)
 			],
 		},
 	})
+	.match("full", true, {
+		root: {
+			class: [
+				"w-full",
+			],
+		},
+	})
 	// Disabled
 	.match("disabled", true, {
 		root: {
@@ -436,6 +444,7 @@ export const BadgeCls = contract(PicoCls.contract)
 		theme: "light",
 		disabled: false,
 		border: true,
+		full: false,
 		size: "md",
 		round: "full",
 		"snap-to": "unset",

@@ -608,9 +608,12 @@ export const sListingTransaction = {
         },
         expiresAt: {
             type: 'string'
+        },
+        title: {
+            type: 'string'
         }
     },
-    required: ['id', 'listingId', 'status', 'side', 'createdAt', 'updatedAt', 'expiresAt']
+    required: ['id', 'listingId', 'status', 'side', 'createdAt', 'updatedAt', 'expiresAt', 'title']
 } as const;
 
 export const sListingFlagToggle = {
@@ -1238,6 +1241,9 @@ export const sListingWhere = {
         },
         inCart: {
             type: 'boolean'
+        },
+        transaction: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -1370,6 +1376,9 @@ export const sListingFilter = {
             type: 'boolean'
         },
         inCart: {
+            type: 'boolean'
+        },
+        transaction: {
             type: 'boolean'
         }
     }
@@ -1727,7 +1736,7 @@ export const sFeedCollection = {
 
 export const sListingSortField = {
     type: 'string',
-    enum: ['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt', 'geo']
+    enum: ['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt', 'geo', 'transaction']
 } as const;
 
 export const sListingSort = {

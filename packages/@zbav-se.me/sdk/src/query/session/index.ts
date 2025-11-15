@@ -11,6 +11,7 @@ export { withListingCountQuery } from "./withListingCountQuery";
 export { withListingFetchQuery } from "./withListingFetchQuery";
 export { withListingMetricsFetchQuery } from "./withListingMetricsFetchQuery";
 export { withListingTransactionCollectionQuery } from "./withListingTransactionCollectionQuery";
+export { withListingTransactionFetchQuery } from "./withListingTransactionFetchQuery";
 export { withLocationAutocompleteQuery } from "./withLocationAutocompleteQuery";
 export { withLocationFetchQuery } from "./withLocationFetchQuery";
 export { withUploadFetchQuery } from "./withUploadFetchQuery";

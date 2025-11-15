@@ -1,0 +1,83 @@
+import { useParams } from "@tanstack/react-router";
+import { ArrowRightIcon } from "@use-pico/client/icon";
+import { Badge } from "@use-pico/client/ui/badge";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Typo } from "@use-pico/client/ui/typo";
+import type { tListingTransaction, tUserSide } from "@zbav-se.me/sdk/api/session";
+import type { FC } from "react";
+import { TransactionStatusIcon } from "~/app/listing-transaction/TransactionStatusIcon";
+import { TransactionStatusInline } from "~/app/listing-transaction/TransactionStatusInline";
+
+export namespace TransactionItem {
+	export interface Props extends Badge.Props {
+		side: tUserSide;
+		listingTransaction: tListingTransaction;
+	}
+}
+
+export const TransactionItem: FC<TransactionItem.Props> = ({
+	side,
+	listingTransaction,
+	tweak,
+	...props
+}) => {
+	const { locale } = useParams({
+		from: "/$locale",
+	});
+
+	return (
+		<Badge
+			size={"xl"}
+			tweak={[
+				tweak,
+				{
+					slot: {
+						root: {
+							class: [
+								"flex",
+								"flex-col",
+								"gap-2",
+								"h-fit",
+								"w-full",
+								"p-4",
+								"items-start",
+							],
+						},
+					},
+				},
+			]}
+			round={"md"}
+			{...props}
+		>
+			<LinkTo
+				icon={ArrowRightIcon}
+				iconPosition={"right"}
+				to={"/$locale/buyer/transaction/$id/view"}
+				params={{
+					locale,
+					id: listingTransaction.id,
+				}}
+				full
+			>
+				<Typo
+					label={listingTransaction.title}
+					truncate
+					size={"md"}
+				/>
+			</LinkTo>
+
+			<div className={"flex flex-row gap-2 items-center justify-between w-full"}>
+				<TransactionStatusIcon
+					transactionStatus={listingTransaction.status}
+					size={"sm"}
+				/>
+
+				<TransactionStatusInline
+					side={side}
+					size={"md"}
+					transactionStatus={listingTransaction.status}
+				/>
+			</div>
+		</Badge>
+	);
+};
