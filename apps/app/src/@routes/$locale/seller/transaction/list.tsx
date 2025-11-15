@@ -23,6 +23,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 			>
 				pica, vole
 			</TitleContainer>
-		)
+		);
 	},
 });

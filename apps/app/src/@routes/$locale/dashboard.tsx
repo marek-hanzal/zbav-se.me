@@ -1,8 +1,6 @@
-import { createFileRoute, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo, type LinkToCls } from "@use-pico/client/ui/link-to";
-import type { Cls } from "@use-pico/cls";
-import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/session";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { match } from "ts-pattern";
@@ -36,24 +34,6 @@ export const Route = createFileRoute("/$locale/dashboard")({
 	},
 	component() {
 		const { locale } = Route.useParams();
-		const router = useRouter();
-		const linkTweak: Cls.TweaksOf<LinkToCls> = {
-			slot: {
-				root: {
-					class: [
-						"block",
-						"h-[100%]",
-						"w-full",
-					],
-				},
-			},
-		};
-
-		const userExPatchMutation = withUserExPatchMutation.useMutation({
-			async onPostMutation() {
-				return router.invalidate();
-			},
-		});
 
 		return (
 			<Container
@@ -73,16 +53,12 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					<Logo />
 
 					<LinkTo
-						to="/$locale/seller"
+						to="/$locale/change-side/$side"
 						params={{
 							locale,
+							side: "seller",
 						}}
-						tweak={linkTweak}
-						onClick={() =>
-							userExPatchMutation.mutate({
-								side: "seller",
-							})
-						}
+						full
 					>
 						<Tile
 							iconEnabled={SellerIcon}
@@ -92,16 +68,12 @@ export const Route = createFileRoute("/$locale/dashboard")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/buyer"
+						to="/$locale/change-side/$side"
 						params={{
 							locale,
+							side: "buyer",
 						}}
-						tweak={linkTweak}
-						onClick={() =>
-							userExPatchMutation.mutate({
-								side: "buyer",
-							})
-						}
+						full
 					>
 						<Tile
 							iconEnabled={BuyerIcon}

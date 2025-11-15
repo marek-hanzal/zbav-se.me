@@ -5,7 +5,7 @@ import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { withSessionQuery } from "~/app/auth/query/withSessionQuery";
 
 export const Route = createFileRoute("/$locale")({
-	ssr: false,
+	// ssr: false,
 	async beforeLoad({ params: { locale }, context: { queryClient } }) {
 		const { data } = await withSessionQuery.ensure(queryClient, undefined, {
 			staleTime: 0,

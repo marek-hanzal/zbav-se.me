@@ -27,7 +27,7 @@ export const ListingTransactionMigration: Migration = {
 
 		await db.schema
 			.createTable("listing_transaction")
-            //
+			//
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
