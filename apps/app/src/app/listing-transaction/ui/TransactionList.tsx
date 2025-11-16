@@ -3,9 +3,9 @@ import type { tUserSide } from "@zbav-se.me/sdk/api/session";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { BuyerEmptyList } from "~/app/listing-transaction/buyer/BuyerEmptyList";
-import { SellerEmptyList } from "~/app/listing-transaction/seller/SellerEmptyList";
-import { TransactionItem } from "~/app/listing-transaction/TransactionItem";
+import { BuyerEmptyList } from "~/app/listing-transaction/ui/buyer/BuyerEmptyList";
+import { SellerEmptyList } from "~/app/listing-transaction/ui/seller/SellerEmptyList";
+import { TransactionItem } from "~/app/listing-transaction/ui/TransactionItem";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props {

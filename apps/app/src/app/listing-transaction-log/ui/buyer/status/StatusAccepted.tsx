@@ -1,25 +1,24 @@
 import { Container } from "@use-pico/client/ui/container";
+import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 
-export namespace TransactionLogItem {
+export namespace StatusAccepted {
 	export interface Props extends Container.Props {
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
 
-export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
+export const StatusAccepted: FC<StatusAccepted.Props> = ({
 	listingTransactionLog,
 	tweak,
 	...props
 }) => {
 	return (
 		<Container
-			tweak={[
-				tweak,
-			]}
+			tweak={tweak}
 			{...props}
 		>
-			pica
+			accpeted
 		</Container>
 	);
 };

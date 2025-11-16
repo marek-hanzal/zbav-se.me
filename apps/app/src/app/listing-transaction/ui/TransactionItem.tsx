@@ -6,8 +6,8 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { tListingTransaction, tUserSide } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionStatusIcon } from "~/app/listing-transaction/TransactionStatusIcon";
-import { TransactionStatusInline } from "~/app/listing-transaction/TransactionStatusInline";
+import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
+import { TransactionStatusInline } from "~/app/listing-transaction/ui/TransactionStatusInline";
 
 export namespace TransactionItem {
 	export interface Props extends Badge.Props {

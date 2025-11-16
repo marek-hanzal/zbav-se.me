@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
-import { TransactionList } from "~/app/listing-transaction/TransactionList";
+import { TransactionList } from "~/app/listing-transaction/ui/TransactionList";
 
 export const Route = createFileRoute("/$locale/seller/transaction/list")({
 	pendingComponent() {

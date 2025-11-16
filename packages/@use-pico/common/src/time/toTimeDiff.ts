@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 
 export namespace toTimeDiff {
 	export interface Props {
+		locale: string;
 		time: string;
 		/**
 		 * ISO date time
@@ -10,7 +11,7 @@ export namespace toTimeDiff {
 	}
 }
 
-export const toTimeDiff = ({ time, source }: toTimeDiff.Props): string => {
+export const toTimeDiff = ({ locale, time, source }: toTimeDiff.Props): string => {
 	const now = source ? DateTime.fromISO(source) : DateTime.now();
 	const target = DateTime.fromISO(time);
 
@@ -20,6 +21,7 @@ export const toTimeDiff = ({ time, source }: toTimeDiff.Props): string => {
 	}
 
 	return target.toRelative({
+		locale,
 		base: now,
 		style: "long",
 	});
