@@ -1,6 +1,7 @@
 import type { Container } from "@use-pico/client/ui/container";
 import type {
 	tListingTransactionLog,
+	tListingTransactionSide,
 	tListingTransactionStatus,
 	tUserSide,
 } from "@zbav-se.me/sdk/api/session";
@@ -14,11 +15,7 @@ import { StatusClosed as BuyerSellerStatusClosed } from "~/app/listing-transacti
 import { StatusRejected as BuyerSellerStatusRejected } from "~/app/listing-transaction-log/ui/buyer/seller/StatusRejected";
 import { StatusRequest as BuyerSellerStatusRequest } from "~/app/listing-transaction-log/ui/buyer/seller/StatusRequest";
 import { StatusSuccess as BuyerSellerStatusSuccess } from "~/app/listing-transaction-log/ui/buyer/seller/StatusSuccess";
-import {
-	StatusEvent as CommonStatusEvent,
-	type StatusEvent,
-} from "~/app/listing-transaction-log/ui/common/StatusEvent";
-import { StatusAccepted as SellerBuyerStatusAccepted } from "~/app/listing-transaction-log/ui/seller/buyer/StatusAccepted";
+import { StatusEvent as CommonStatusEvent } from "~/app/listing-transaction-log/ui/common/StatusEvent";
 import { StatusRejected as SellerBuyerStatusRejected } from "~/app/listing-transaction-log/ui/seller/buyer/StatusRejected";
 import { StatusRequest as SellerBuyerStatusRequest } from "~/app/listing-transaction-log/ui/seller/buyer/StatusRequest";
 import { StatusSuccess as SellerBuyerStatusSuccess } from "~/app/listing-transaction-log/ui/seller/buyer/StatusSuccess";
@@ -41,7 +38,6 @@ const StatusComponents = {
 
 	// seller viewing, buyer acted
 	"seller.buyer.request": SellerBuyerStatusRequest,
-	"seller.buyer.accepted": SellerBuyerStatusAccepted,
 	"seller.buyer.rejected": SellerBuyerStatusRejected,
 	"seller.buyer.success": SellerBuyerStatusSuccess,
 
@@ -71,128 +67,208 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 	listingTransactionLog,
 	...props
 }) => {
-	const statusEventProps: StatusEvent.Props = {
-		listingTransactionLog,
-		side,
-		...props,
-	};
-
 	/**
 	 * For who this item is for?
 	 *
 	 * Current user - either buyer or seller
 	 */
-	const key = match(side)
-		.with("buyer", () => {
-			/**
-			 * Who submitted this transaction item?
-			 */
-			return match(listingTransactionLog.side)
-				.with("buyer", () => {
-					return match<tListingTransactionStatus, StatusComponentKey>(
-						listingTransactionLog.status,
-					)
-						.with("request", () => {
-							return "buyer.buyer.request";
-						})
-						.with("accepted", () => {
-							return "invalid";
-						})
-						.with("rejected", () => {
-							return "buyer.buyer.rejected";
-						})
-						.with("success", () => {
-							return "buyer.buyer.success";
-						})
-						.with("closed", "expired", () => {
-							return "common";
-						})
-						.exhaustive();
-				})
-				.with("seller", () => {
-					return match<tListingTransactionStatus, StatusComponentKey>(
-						listingTransactionLog.status,
-					)
-						.with("request", () => {
-							return "buyer.seller.request";
-						})
-						.with("accepted", () => {
-							return "buyer.seller.accepted";
-						})
-						.with("rejected", () => {
-							return "buyer.seller.rejected";
-						})
-						.with("success", () => {
-							return "buyer.seller.success";
-						})
-						.with("closed", () => {
-							return "buyer.seller.closed";
-						})
-						.with("expired", () => {
-							return "common";
-						})
-						.exhaustive();
-				})
-				.with("transaction", "system", "unknown", () => {
-					return "common";
-				})
-				.exhaustive();
-		})
-		.with("seller", () => {
-			/**
-			 * Who submitted this transaction item?
-			 */
-			return match(listingTransactionLog.side)
-				.with("buyer", () => {
-					return match<tListingTransactionStatus, StatusComponentKey>(
-						listingTransactionLog.status,
-					)
-						.with("request", () => {
-							return "seller.buyer.request";
-						})
-						.with("accepted", () => {
-							return "seller.buyer.accepted";
-						})
-						.with("rejected", () => {
-							return "seller.buyer.rejected";
-						})
-						.with("success", () => {
-							return "seller.buyer.success";
-						})
-						.with("closed", "expired", () => {
-							return "common";
-						})
-						.exhaustive();
-				})
-				.with("seller", () => {
-					return match<tListingTransactionStatus, StatusComponentKey>(
-						listingTransactionLog.status,
-					)
-						.with("request", () => {
-							return "invalid";
-						})
-						.with("accepted", () => {
-							return "seller.seller.accepted";
-						})
-						.with("rejected", () => {
-							return "seller.seller.rejected";
-						})
-						.with("success", () => {
-							return "seller.seller.success";
-						})
-						.with("closed", "expired", () => {
-							return "common";
-						})
-						.exhaustive();
-				})
-				.with("transaction", "system", "unknown", () => {
-					return "common";
-				})
-				.exhaustive();
-		})
-		.exhaustive() as StatusComponentKey;
+	const key = match<
+		[
+			tUserSide,
+			tListingTransactionSide,
+			tListingTransactionStatus,
+		],
+		StatusComponentKey
+	>([
+		side,
+		listingTransactionLog.side,
+		listingTransactionLog.status,
+	])
+		// Buyer -> Buyer
+		.with(
+			[
+				"buyer",
+				"buyer",
+				"request",
+			],
+			() => {
+				return "buyer.buyer.request";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"buyer",
+				"accepted",
+			],
+			() => {
+				return "invalid";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"buyer",
+				"rejected",
+			],
+			() => {
+				return "buyer.buyer.rejected";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"buyer",
+				"success",
+			],
+			() => {
+				return "buyer.buyer.success";
+			},
+		)
+		// Buyer -> Seller
+		.with(
+			[
+				"buyer",
+				"seller",
+				"request",
+			],
+			() => {
+				return "invalid";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"seller",
+				"accepted",
+			],
+			() => {
+				return "buyer.seller.accepted";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"seller",
+				"rejected",
+			],
+			() => {
+				return "buyer.seller.rejected";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"seller",
+				"success",
+			],
+			() => {
+				return "buyer.seller.success";
+			},
+		)
+		.with(
+			[
+				"buyer",
+				"seller",
+				"closed",
+			],
+			() => {
+				return "buyer.seller.closed";
+			},
+		)
+		// Seller -> Buyer
+		.with(
+			[
+				"seller",
+				"buyer",
+				"request",
+			],
+			() => {
+				return "seller.buyer.request";
+			},
+		)
+		.with(
+			[
+				"seller",
+				"buyer",
+				"accepted",
+			],
+			() => {
+				return "invalid";
+			},
+		)
+		.with(
+			[
+				"seller",
+				"buyer",
+				"rejected",
+			],
+			() => {
+				return "seller.buyer.rejected";
+			},
+		)
+		.with(
+			[
+				"seller",
+				"buyer",
+				"success",
+			],
+			() => {
+				return "seller.buyer.success";
+			},
+		)
+		// Seller -> Seller
+		.with(
+			[
+				"seller",
+				"seller",
+				"request",
+			],
+			() => {
+				return "invalid";
+			},
+		)
+		.with(
+			[
+				"seller",
+				"seller",
+				"accepted",
+			],
+			() => {
+				return "seller.seller.accepted";
+			},
+		)
+		.with(
+			[
+				"seller",
+				"seller",
+				"rejected",
+			],
+			() => {
+				return "seller.seller.rejected";
+			},
+		)
+		.with(
+			[
+				"seller",
+				"seller",
+				"success",
+			],
+			() => {
+				return "seller.seller.success";
+			},
+		)
+		.otherwise(() => {
+			return "common";
+		});
 
 	const Component = StatusComponents[key];
 
-	return <Component {...statusEventProps} />;
+	return (
+		<Component
+			listingTransactionLog={listingTransactionLog}
+			side={side}
+			{...props}
+		/>
+	);
 };

@@ -1,7 +1,8 @@
 import { useParams } from "@tanstack/react-router";
-import { Badge } from "@use-pico/client/ui/badge";
+import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
+import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionLog, tUserSide } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
@@ -37,10 +38,9 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 								"inline-flex",
 								"flex-col",
 								"gap-2",
-								match(listingTransactionLog.side)
+								match(side)
 									.with("buyer", () => "items-end")
 									.with("seller", () => "items-start")
-									.with("transaction", "system", "unknown", () => "items-center")
 									.exhaustive(),
 							],
 						},
@@ -82,7 +82,10 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 						},
 					},
 				}}
-				tone={"primary"}
+				tone={match<tUserSide, Cls.VariantOf<BadgeCls, "tone">>(side)
+					.with("buyer", () => "primary")
+					.with("seller", () => "link")
+					.exhaustive()}
 			>
 				<TransactionStatusIcon
 					size={"sm"}
