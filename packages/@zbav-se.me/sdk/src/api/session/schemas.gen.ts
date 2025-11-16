@@ -450,6 +450,147 @@ export const sListingScore = {
     required: ['id', 'listingId', 'type', 'score', 'createdAt']
 } as const;
 
+export const sListingTransactionLogQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            '$ref': '#/components/schemas/Cursor'
+        },
+        filter: {
+            '$ref': '#/components/schemas/ListingTransactionLogFilter'
+        },
+        where: {
+            '$ref': '#/components/schemas/ListingTransactionLogWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingTransactionLogSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingTransactionLogSortField = {
+    type: 'string',
+    enum: ['createdAt']
+} as const;
+
+export const sListingTransactionLogSort = {
+    type: 'object',
+    properties: {
+        field: {
+            '$ref': '#/components/schemas/ListingTransactionLogSortField'
+        },
+        direction: {
+            '$ref': '#/components/schemas/Order'
+        }
+    },
+    required: ['field', 'direction']
+} as const;
+
+export const sListingTransactionLogWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        status: {
+            '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            '$ref': '#/components/schemas/ListingTransactionSide'
+        }
+    }
+} as const;
+
+export const sListingTransactionSide = {
+    type: 'string',
+    enum: ['seller', 'buyer', 'transaction', 'system', 'unknown']
+} as const;
+
+export const sListingTransactionStatus = {
+    type: 'string',
+    enum: ['request', 'accepted', 'rejected', 'success', 'closed', 'expired']
+} as const;
+
+export const sListingTransactionLogFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        status: {
+            '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            '$ref': '#/components/schemas/ListingTransactionSide'
+        }
+    }
+} as const;
+
+export const sListingTransactionLogCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingTransactionLog'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: ['data', 'more']
+} as const;
+
+export const sListingTransactionLog = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        status: {
+            '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            '$ref': '#/components/schemas/ListingTransactionSide'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: ['id', 'listingTransactionId', 'status', 'side', 'createdAt']
+} as const;
+
 export const sListingTransactionCreate = {
     type: 'object',
     properties: {
@@ -539,16 +680,6 @@ export const sListingTransactionWhere = {
             '$ref': '#/components/schemas/ListingTransactionSide'
         }
     }
-} as const;
-
-export const sListingTransactionSide = {
-    type: 'string',
-    enum: ['seller', 'buyer', 'transaction', 'system', 'unknown']
-} as const;
-
-export const sListingTransactionStatus = {
-    type: 'string',
-    enum: ['request', 'accepted', 'rejected', 'success', 'closed', 'expired']
 } as const;
 
 export const sListingTransactionFilter = {

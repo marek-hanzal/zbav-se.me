@@ -52,6 +52,7 @@ import { Route as LocaleBuyerFeedWizardConditionRouteImport } from './@routes/$l
 import { Route as LocaleBuyerFeedWizardCategoryRouteImport } from './@routes/$locale/buyer/feed/wizard/category'
 import { Route as LocaleBuyerFeedWizardAgeRouteImport } from './@routes/$locale/buyer/feed/wizard/age'
 import { Route as LocaleBuyerFeedIdViewRouteImport } from './@routes/$locale/buyer/feed/$id/view'
+import { Route as LocaleSellerTransactionIdBuyerInfoRouteImport } from './@routes/$locale/seller/transaction/$id/buyer/info'
 import { Route as LocaleBuyerFeedIdEditTitleRouteImport } from './@routes/$locale/buyer/feed/$id/edit/title'
 import { Route as LocaleBuyerFeedIdEditSortRouteImport } from './@routes/$locale/buyer/feed/$id/edit/sort'
 import { Route as LocaleBuyerFeedIdEditNameRouteImport } from './@routes/$locale/buyer/feed/$id/edit/name'
@@ -307,6 +308,12 @@ const LocaleBuyerFeedIdViewRoute = LocaleBuyerFeedIdViewRouteImport.update({
   path: '/view',
   getParentRoute: () => LocaleBuyerFeedIdRoute,
 } as any)
+const LocaleSellerTransactionIdBuyerInfoRoute =
+  LocaleSellerTransactionIdBuyerInfoRouteImport.update({
+    id: '/buyer/info',
+    path: '/buyer/info',
+    getParentRoute: () => LocaleSellerTransactionIdRoute,
+  } as any)
 const LocaleBuyerFeedIdEditTitleRoute =
   LocaleBuyerFeedIdEditTitleRouteImport.update({
     id: '/edit/title',
@@ -429,6 +436,7 @@ export interface FileRoutesByFullPath {
   '/$locale/buyer/feed/$id/edit/name': typeof LocaleBuyerFeedIdEditNameRoute
   '/$locale/buyer/feed/$id/edit/sort': typeof LocaleBuyerFeedIdEditSortRoute
   '/$locale/buyer/feed/$id/edit/title': typeof LocaleBuyerFeedIdEditTitleRoute
+  '/$locale/seller/transaction/$id/buyer/info': typeof LocaleSellerTransactionIdBuyerInfoRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -484,6 +492,7 @@ export interface FileRoutesByTo {
   '/$locale/buyer/feed/$id/edit/name': typeof LocaleBuyerFeedIdEditNameRoute
   '/$locale/buyer/feed/$id/edit/sort': typeof LocaleBuyerFeedIdEditSortRoute
   '/$locale/buyer/feed/$id/edit/title': typeof LocaleBuyerFeedIdEditTitleRoute
+  '/$locale/seller/transaction/$id/buyer/info': typeof LocaleSellerTransactionIdBuyerInfoRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -541,6 +550,7 @@ export interface FileRoutesById {
   '/$locale/buyer/feed/$id/edit/name': typeof LocaleBuyerFeedIdEditNameRoute
   '/$locale/buyer/feed/$id/edit/sort': typeof LocaleBuyerFeedIdEditSortRoute
   '/$locale/buyer/feed/$id/edit/title': typeof LocaleBuyerFeedIdEditTitleRoute
+  '/$locale/seller/transaction/$id/buyer/info': typeof LocaleSellerTransactionIdBuyerInfoRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -599,6 +609,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/feed/$id/edit/name'
     | '/$locale/buyer/feed/$id/edit/sort'
     | '/$locale/buyer/feed/$id/edit/title'
+    | '/$locale/seller/transaction/$id/buyer/info'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -654,6 +665,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/feed/$id/edit/name'
     | '/$locale/buyer/feed/$id/edit/sort'
     | '/$locale/buyer/feed/$id/edit/title'
+    | '/$locale/seller/transaction/$id/buyer/info'
   id:
     | '__root__'
     | '/'
@@ -710,6 +722,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/feed/$id/edit/name'
     | '/$locale/buyer/feed/$id/edit/sort'
     | '/$locale/buyer/feed/$id/edit/title'
+    | '/$locale/seller/transaction/$id/buyer/info'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -1020,6 +1033,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerFeedIdViewRouteImport
       parentRoute: typeof LocaleBuyerFeedIdRoute
     }
+    '/$locale/seller/transaction/$id/buyer/info': {
+      id: '/$locale/seller/transaction/$id/buyer/info'
+      path: '/buyer/info'
+      fullPath: '/$locale/seller/transaction/$id/buyer/info'
+      preLoaderRoute: typeof LocaleSellerTransactionIdBuyerInfoRouteImport
+      parentRoute: typeof LocaleSellerTransactionIdRoute
+    }
     '/$locale/buyer/feed/$id/edit/title': {
       id: '/$locale/buyer/feed/$id/edit/title'
       path: '/edit/title'
@@ -1141,11 +1161,14 @@ const LocaleBuyerTransactionIdRouteWithChildren =
 
 interface LocaleSellerTransactionIdRouteChildren {
   LocaleSellerTransactionIdViewRoute: typeof LocaleSellerTransactionIdViewRoute
+  LocaleSellerTransactionIdBuyerInfoRoute: typeof LocaleSellerTransactionIdBuyerInfoRoute
 }
 
 const LocaleSellerTransactionIdRouteChildren: LocaleSellerTransactionIdRouteChildren =
   {
     LocaleSellerTransactionIdViewRoute: LocaleSellerTransactionIdViewRoute,
+    LocaleSellerTransactionIdBuyerInfoRoute:
+      LocaleSellerTransactionIdBuyerInfoRoute,
   }
 
 const LocaleSellerTransactionIdRouteWithChildren =

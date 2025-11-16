@@ -11,13 +11,13 @@ export namespace withListingIgnoreSelect {
 }
 
 export const withListingIgnoreSelect = ({ sort }: withListingIgnoreSelect.Props) => {
-	const query = database.kysely.selectFrom("listing_ignore as li").select([
+	let query = database.kysely.selectFrom("listing_ignore as li").select([
 		"li.id",
 		"li.listingId",
 	]);
 
 	for (const item of sort ?? []) {
-		return match(item.field)
+		query = match(item.field)
 			.with("createdAt", () => query.orderBy("li.createdAt", item.direction))
 			.exhaustive();
 	}

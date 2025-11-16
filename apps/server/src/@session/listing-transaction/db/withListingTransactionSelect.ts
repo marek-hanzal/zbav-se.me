@@ -11,7 +11,7 @@ export namespace withListingTransactionSelect {
 }
 
 export const withListingTransactionSelect = ({ sort }: withListingTransactionSelect.Props) => {
-	const query = database.kysely
+	let query = database.kysely
 		.selectFrom("listing_transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")
 		.select([
@@ -26,7 +26,7 @@ export const withListingTransactionSelect = ({ sort }: withListingTransactionSel
 		]);
 
 	for (const item of sort ?? []) {
-		return match(item.field)
+		query = match(item.field)
 			.with("createdAt", () => query.orderBy("lt.createdAt", item.direction))
 			.with("updatedAt", () => query.orderBy("lt.updatedAt", item.direction))
 			.with("expiresAt", () => query.orderBy("lt.expiresAt", item.direction))

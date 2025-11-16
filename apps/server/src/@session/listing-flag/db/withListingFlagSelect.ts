@@ -11,13 +11,13 @@ export namespace withListingFlagSelect {
 }
 
 export const withListingFlagSelect = ({ sort }: withListingFlagSelect.Props) => {
-	const query = database.kysely.selectFrom("listing_flag as lf").select([
+	let query = database.kysely.selectFrom("listing_flag as lf").select([
 		"lf.id",
 		"lf.listingId",
 	]);
 
 	for (const item of sort ?? []) {
-		return match(item.field)
+		query = match(item.field)
 			.with("createdAt", () => query.orderBy("lf.createdAt", item.direction))
 			.exhaustive();
 	}

@@ -9,6 +9,7 @@ import { withListingFlagApi } from "./listing-flag/withListingFlagApi";
 import { withListingIgnoreApi } from "./listing-ignore/withListingIgnoreApi";
 import { withListingScoreApi } from "./listing-score/withListingScoreApi";
 import { withListingTransactionApi } from "./listing-transaction/withListingTransactionApi";
+import { withListingTransactionLogApi } from "./listing-transaction-log/withListingTransactionLogApi";
 import { withLocationApi } from "./location/withLocationApi";
 import { withS3Api } from "./s3/withS3Api";
 import { withUploadApi } from "./upload/withUploadApi";
@@ -38,6 +39,7 @@ export const withSessionApi: Routes.Fn = (routes) => {
 	withListingIgnoreApi(routes);
 	withListingFlagApi(routes);
 	withListingTransactionApi(routes);
+	withListingTransactionLogApi(routes);
 	withListingScoreApi(routes);
 	withLocationApi(routes);
 	withS3Api(routes);

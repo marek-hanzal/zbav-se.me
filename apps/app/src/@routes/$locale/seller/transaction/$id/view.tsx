@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { toTimeDiff } from "@use-pico/common/time";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
@@ -25,6 +26,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 		return (
 			<TitleContainer
 				textTitle="Transaction detail (title)"
+				textSubtitle={listingTransaction.title}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -42,6 +44,10 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 						round={"md"}
 						full
 					>
+						{toTimeDiff({
+							time: listingTransaction.updatedAt,
+						})}
+
 						<TransactionStatusIcon
 							transactionStatus={listingTransaction.status}
 							size={"sm"}
