@@ -1,0 +1,13 @@
+import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/session";
+import type { FC } from "react";
+import { StatusEvent } from "../../common/StatusEvent";
+
+export namespace StatusSuccess {
+	export interface Props extends StatusEvent.Props {
+		listingTransactionLog: tListingTransactionLog;
+	}
+}
+
+export const StatusSuccess: FC<StatusSuccess.Props> = (props) => {
+	return <StatusEvent {...props} />;
+};

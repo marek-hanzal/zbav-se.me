@@ -3,19 +3,21 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransactionLog, tUserSide } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
 import { TransactionStatusInline } from "~/app/listing-transaction/ui/TransactionStatusInline";
 
-export namespace StatusRequest {
+export namespace StatusEvent {
 	export interface Props extends Container.Props {
+		side: tUserSide;
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
 
-export const StatusRequest: FC<StatusRequest.Props> = ({
+export const StatusEvent: FC<StatusEvent.Props> = ({
+	side,
 	listingTransactionLog,
 	tweak,
 	...props
@@ -88,7 +90,7 @@ export const StatusRequest: FC<StatusRequest.Props> = ({
 				/>
 
 				<TransactionStatusInline
-					side={"buyer"}
+					side={side}
 					transactionStatus={listingTransactionLog.status}
 					size={"lg"}
 				/>
