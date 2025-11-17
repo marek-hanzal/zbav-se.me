@@ -59,87 +59,72 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const request = c.req.valid("json");
+			return Effect.gen(function* () {
+				const request = c.req.valid("json");
 
-			return Effect.runPromise(
-				createListingScoreFx({
+				yield* createListingScoreFx({
 					database: database.kysely,
 					userId: c.get("user").id,
 					...request,
-				}).pipe(
-					Effect.matchEffect({
-						onSuccess() {
-							return Effect.succeed(c.body(null, 201));
-						},
-						onFailure: (e) =>
-							match(e)
-								.with(
-									{
-										_tag: "InfraError",
-									},
-									(e) => {
-										return Effect.succeed(
-											c.json<MessageSchema.Type>(
-												{
-													type: "error",
-													message: e.message,
-												},
-												500,
-											),
-										);
-									},
-								)
-								.with(
-									{
-										_tag: "InvalidRequestError",
-									},
-									(e) => {
-										return Effect.succeed(
-											c.json<MessageSchema.Type>(
-												{
-													type: "error",
-													message: e.message,
-												},
-												400,
-											),
-										);
-									},
-								)
-								.with(
-									{
-										_tag: "NotFoundError",
-									},
-									(e) => {
-										return Effect.succeed(
-											c.json<MessageSchema.Type>(
-												{
-													type: "error",
-													message: e.message,
-												},
-												404,
-											),
-										);
-									},
-								)
-								.with(
-									{
-										_tag: "TooManyRequests",
-									},
-									(e) => {
-										return Effect.succeed(
-											c.json<MessageSchema.Type>(
-												{
-													type: "error",
-													message: e.message,
-												},
-												429,
-											),
-										);
-									},
-								)
-								.exhaustive(),
-					}),
-				),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess() {
+						return Effect.succeed(c.body(null, 201));
+					},
+					onFailure: (e) =>
+						match(e)
+							.with(
+								{
+									_tag: "InvalidRequestError",
+								},
+								(e) => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											400,
+										),
+									);
+								},
+							)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								(e) => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										),
+									);
+								},
+							)
+							.with(
+								{
+									_tag: "TooManyRequests",
+								},
+								(e) => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											429,
+										),
+									);
+								},
+							)
+							.exhaustive(),
+				}),
+				Effect.runPromise,
 			);
 		},
 	);

@@ -61,6 +61,9 @@
 1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
   ref: Logout (title)
   value: Logout (title)
+1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
+  ref: Buyer info (title)
+  value: Buyer info (title)
 1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
   ref: Price (subtitle)
   value: Price (subtitle)
@@ -211,6 +214,9 @@
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
   ref: Field errors (title)
   value: Field errors (title)
+5acf9318c3159040f4bbccb62a16c675285b6054ad32a78ff7b6249f:
+  ref: Buyer detail (link)
+  value: Buyer detail (link)
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
   ref: Feed category (label)
   value: Feed category (label)

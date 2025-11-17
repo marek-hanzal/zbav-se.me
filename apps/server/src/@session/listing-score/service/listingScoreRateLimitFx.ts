@@ -2,10 +2,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
 import type { WithDatabase } from "../../../database/WithDatabase";
-import { InfraError } from "../../../error/InfraError";
 import { TooManyRequests } from "../../../error/TooManyRequests";
 
-export namespace listingScoreRateLimit {
+export namespace listingScoreRateLimitFx {
 	export interface Props {
 		database: WithDatabase;
 		userId: string;
@@ -15,46 +14,44 @@ export namespace listingScoreRateLimit {
 	}
 }
 
-export const listingScoreRateLimit = ({
+export const listingScoreRateLimitFx = ({
 	database,
 	userId,
 	listingId,
 	score,
 	minutes = 10,
-}: listingScoreRateLimit.Props) => {
-	const rateLimit = DateTime.now()
-		.minus({
-			minutes,
-		})
-		.toJSDate();
-
-	return Effect.tryPromise({
-		try: () => {
+}: listingScoreRateLimitFx.Props) => {
+	return Effect.gen(function* () {
+		const listingScore = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("listing_score")
 				.select("createdAt")
 				.where("userId", "=", userId)
 				.where("listingId", "=", listingId)
 				.where("type", "=", score)
-				.where("createdAt", ">=", rateLimit)
+				.where(
+					"createdAt",
+					">=",
+					DateTime.now()
+						.minus({
+							minutes,
+						})
+						.toJSDate(),
+				)
 				.orderBy("createdAt", "desc")
 				.executeTakeFirst();
-		},
-		catch: (e) => {
-			return new InfraError({
-				type: "database",
-				message: e instanceof Error ? e.message : "Unknown error",
-			});
-		},
-	}).pipe(
-		Effect.filterOrFail(
-			(row) => !row,
-			() => {
-				return new TooManyRequests({
+		});
+
+		if (listingScore) {
+			return yield* Effect.fail(
+				new TooManyRequests({
 					message: "You have already scored this listing",
-				});
-			},
-		),
-		Effect.asVoid,
-	);
+				}),
+			);
+		}
+
+		return yield* Effect.void;
+	});
 };
+
+export type listingScoreRateLimitFx = ReturnType<typeof listingScoreRateLimitFx>;

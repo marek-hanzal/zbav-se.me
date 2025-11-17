@@ -1,21 +1,23 @@
 import { createRoute } from "@hono/zod-openapi";
 import { withFetch } from "@use-pico/common/fetch";
+import { Effect } from "effect";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withListingTransactionQueryBuilder } from "./db/withListingTransactionQueryBuilder";
 import { withListingTransactionSelect } from "./db/withListingTransactionSelect";
 import { ListingTransactionQuerySchema } from "./schema/ListingTransactionQuerySchema";
 import { ListingTransactionSchema } from "./schema/ListingTransactionSchema";
-import { Effect } from "effect";
+import { ListingTransactionSellerInfoSchema } from "./schema/ListingTransactionSellerInfoSchema";
+import { getListingTransactionSellerInfoFx } from "./service/getListingTransactionSellerInfoFx";
 
-export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
+export const withListingTransactionSellerInfoApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-transaction/fetch",
-			description: "Return a listing transaction based on the provided query",
-			operationId: "apiListingTransactionFetch",
+			path: "/listing-transaction/seller-info",
+			description:
+				"Return seller info for a listing transaction. Requires access to the transaction.",
+			operationId: "apiListingTransactionSellerInfo",
 			request: {
 				body: {
 					content: {
@@ -23,17 +25,17 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: ListingTransactionQuerySchema,
 						},
 					},
-					description: "Query object for listing transaction fetch",
+					description: "Query object for listing transaction access validation",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: ListingTransactionSchema,
+							schema: ListingTransactionSellerInfoSchema,
 						},
 					},
-					description: "Listing transaction matching provided query",
+					description: "Seller info",
 				},
 				404: {
 					content: {
@@ -41,7 +43,7 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 							schema: MessageSchema,
 						},
 					},
-					description: "Listing transaction not found",
+					description: "Listing transaction not found or not accessible",
 				},
 			},
 			tags: [
@@ -54,35 +56,25 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 			const { filter, where, sort, meta } = json;
 			const user = c.get("user");
 
-            const userWhere = {
+			const userWhere = {
 				...where,
 				userId: user.id,
 			};
 
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-transaction:fetch",
-					version: "1",
-					value: {
-						userId: user.id,
-						query: json,
-					},
+			// Access validation only: ensure the user can see the listing-transaction
+			const data = await withFetch({
+				select: withListingTransactionSelect({
+					sort,
+				}),
+				output: ListingTransactionSchema,
+				filter,
+				where: userWhere,
+				query(query) {
+					return withListingTransactionQueryBuilder({
+						meta,
+						...query,
+					});
 				},
-				fetch: () =>
-					withFetch({
-						select: withListingTransactionSelect({
-							sort,
-						}),
-						output: ListingTransactionSchema,
-						filter,
-						where: userWhere,
-						query(query) {
-							return withListingTransactionQueryBuilder({
-								meta,
-								...query,
-							});
-						},
-					}),
 			});
 
 			if (!data) {
@@ -95,12 +87,13 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 				);
 			}
 
-			return c.json<ListingTransactionSchema.Type, 200>(data, {
-				status: 200,
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+			const result = await Effect.runPromise(
+				getListingTransactionSellerInfoFx({
+					transactionId: data.id,
+					userId: user.id,
+				}),
+			);
+			return c.json<ListingTransactionSellerInfoSchema.Type, 200>(result, 200);
 		},
 	);
 };

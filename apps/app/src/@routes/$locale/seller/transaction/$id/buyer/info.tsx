@@ -18,6 +18,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info
 							locale,
 							id,
 						}}
+						tone={"secondary"}
 					/>
 				}
 			>

@@ -21,6 +21,7 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 	side,
 	listingTransactionLog,
 	tweak,
+	children,
 	...props
 }) => {
 	const { locale } = useParams({
@@ -98,6 +99,8 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 					size={"lg"}
 				/>
 			</Badge>
+
+			{children}
 		</Container>
 	);
 };

@@ -1,10 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
-import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
 import type { WithDatabase } from "../../../database/WithDatabase";
-import { InfraError } from "../../../error/InfraError";
 import { NotFoundError } from "../../../error/NotFoundError";
 
 export namespace createListingTransactionFx {
@@ -21,21 +18,15 @@ export const createListingTransactionFx = ({
 	listingId,
 }: createListingTransactionFx.Props) => {
 	return Effect.gen(function* () {
-		const listing = yield* Effect.tryPromise({
-			try: () =>
-				database
-					.selectFrom("listing")
-					.select([
-						"id",
-						"userId",
-					])
-					.where("id", "=", listingId)
-					.executeTakeFirst(),
-			catch: (error) =>
-				new InfraError({
-					type: "database",
-					message: error instanceof Error ? error.message : "Unknown error",
-				}),
+		const listing = yield* Effect.promise(async () => {
+			return database
+				.selectFrom("listing")
+				.select([
+					"id",
+					"userId",
+				])
+				.where("id", "=", listingId)
+				.executeTakeFirst();
 		});
 
 		if (!listing) {
@@ -48,8 +39,6 @@ export const createListingTransactionFx = ({
 			);
 		}
 
-		const side: ListingTransactionSideSchema.Type = "buyer";
-		const status: ListingTransactionStatusSchema.Type = "request";
 		const now = DateTime.now();
 		const expiresAt = now.plus({
 			days: 3,
@@ -57,46 +46,35 @@ export const createListingTransactionFx = ({
 		const nowDate = now.toJSDate();
 		const expiresAtDate = expiresAt.toJSDate();
 
-		const transaction = yield* Effect.tryPromise({
-			try: () =>
-				database
-					.insertInto("listing_transaction")
-					.values({
-						id: genId(),
-						userId,
-						listingId,
-						status,
-						side,
-						createdAt: nowDate,
-						updatedAt: nowDate,
-						expiresAt: expiresAtDate,
-					})
-					.returningAll()
-					.executeTakeFirstOrThrow(),
-			catch: (error) =>
-				new InfraError({
-					type: "database",
-					message: error instanceof Error ? error.message : "Unknown error",
-				}),
+		const transaction = yield* Effect.promise(async () => {
+			return database
+				.insertInto("listing_transaction")
+				.values({
+					id: genId(),
+					userId,
+					listingId,
+					side: "buyer",
+					status: "request",
+					createdAt: nowDate,
+					updatedAt: nowDate,
+					expiresAt: expiresAtDate,
+				})
+				.returningAll()
+				.executeTakeFirstOrThrow();
 		});
 
-		yield* Effect.tryPromise({
-			try: () =>
-				database
-					.insertInto("listing_transaction_log")
-					.values({
-						id: genId(),
-						listingTransactionId: transaction.id,
-						status,
-						side,
-						createdAt: nowDate,
-					})
-					.execute(),
-			catch: (error) =>
-				new InfraError({
-					type: "database",
-					message: error instanceof Error ? error.message : "Unknown error",
-				}),
+		yield* Effect.promise(async () => {
+			return database
+				.insertInto("listing_transaction_log")
+				.values({
+					id: genId(),
+					listingTransactionId: transaction.id,
+					side: "buyer",
+					status: "request",
+					createdAt: nowDate,
+				})
+				.returningAll()
+				.executeTakeFirstOrThrow();
 		});
 
 		return transaction;
