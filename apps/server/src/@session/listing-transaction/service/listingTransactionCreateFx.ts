@@ -3,8 +3,9 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { listingTransactionLogCreateFx } from "../../listing-transaction-log/service/listingTransactionLogCreateFx";
 
-export namespace createListingTransactionFx {
+export namespace listingTransactionCreateFx {
 	export interface Props {
 		database: WithDatabase;
 		userId: string;
@@ -12,11 +13,11 @@ export namespace createListingTransactionFx {
 	}
 }
 
-export const createListingTransactionFx = ({
+export const listingTransactionCreateFx = ({
 	database,
 	userId,
 	listingId,
-}: createListingTransactionFx.Props) => {
+}: listingTransactionCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const listing = yield* Effect.promise(async () => {
 			return database
@@ -63,22 +64,16 @@ export const createListingTransactionFx = ({
 				.executeTakeFirstOrThrow();
 		});
 
-		yield* Effect.promise(async () => {
-			return database
-				.insertInto("listing_transaction_log")
-				.values({
-					id: genId(),
-					listingTransactionId: transaction.id,
-					side: "buyer",
-					status: "request",
-					createdAt: nowDate,
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
+		yield* listingTransactionLogCreateFx({
+			database,
+			listingTransactionId: transaction.id,
+			side: "buyer",
+			status: "request",
+			createdAt: nowDate,
 		});
 
 		return transaction;
 	});
 };
 
-export type createListingTransactionFx = ReturnType<typeof createListingTransactionFx>;
+export type listingTransactionCreateFx = ReturnType<typeof listingTransactionCreateFx>;

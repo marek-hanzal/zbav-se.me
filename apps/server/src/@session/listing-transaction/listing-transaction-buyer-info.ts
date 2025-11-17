@@ -5,8 +5,8 @@ import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingTransactionBuyerInfoSchema } from "./schema/ListingTransactionBuyerInfoSchema";
 import { ListingTransactionQuerySchema } from "./schema/ListingTransactionQuerySchema";
-import { fetchListingTransactionFx } from "./service/fetchListingTransactionFx";
-import { getListingTransactionBuyerInfoFx } from "./service/getListingTransactionBuyerInfoFx";
+import { listingTransactionFetchFx } from "./service/listingTransactionFetchFx";
+import { listingTransactionGetBuyerInfoFx } from "./service/listingTransactionGetBuyerInfoFx";
 
 export const withListingTransactionBuyerInfoApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -54,12 +54,12 @@ export const withListingTransactionBuyerInfoApi: Routes.Fn = ({ sessionHono }) =
 				const query = c.req.valid("json");
 				const user = c.get("user");
 
-				const transaction = yield* fetchListingTransactionFx({
+				const transaction = yield* listingTransactionFetchFx({
 					query,
 					userId: user.id,
 				});
 
-				return yield* getListingTransactionBuyerInfoFx({
+				return yield* listingTransactionGetBuyerInfoFx({
 					transactionId: transaction.id,
 					userId: user.id,
 				});

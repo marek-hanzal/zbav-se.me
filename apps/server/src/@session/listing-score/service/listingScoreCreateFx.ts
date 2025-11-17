@@ -15,7 +15,7 @@ const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
 	flag: -15,
 };
 
-export namespace createListingScoreFx {
+export namespace listingScoreCreateFx {
 	export interface Props {
 		database: WithDatabase;
 		userId: string;
@@ -24,12 +24,12 @@ export namespace createListingScoreFx {
 	}
 }
 
-export const createListingScoreFx = ({
+export const listingScoreCreateFx = ({
 	database,
 	userId,
 	listingId,
 	score,
-}: createListingScoreFx.Props) => {
+}: listingScoreCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const listing = yield* Effect.promise(async () => {
 			return database
@@ -64,7 +64,7 @@ export const createListingScoreFx = ({
 			score,
 		});
 
-		yield* Effect.promise(async () => {
+		return yield* Effect.promise(async () => {
 			/**
 			 * Some of the scores may have different implementations.
 			 */
@@ -113,4 +113,4 @@ export const createListingScoreFx = ({
 	});
 };
 
-export type createListingScoreFx = ReturnType<typeof createListingScoreFx>;
+export type listingScoreCreateFx = ReturnType<typeof listingScoreCreateFx>;

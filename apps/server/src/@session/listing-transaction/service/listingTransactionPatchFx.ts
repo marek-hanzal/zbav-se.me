@@ -1,4 +1,3 @@
-import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
@@ -6,8 +5,9 @@ import type { ListingTransactionStatusSchema } from "../../../app/listing-transa
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { listingTransactionLogCreateFx } from "../../listing-transaction-log/service/listingTransactionLogCreateFx";
 
-export namespace patchListingTransactionFx {
+export namespace listingTransactionPatchFx {
 	export interface Props {
 		database: WithDatabase;
 		transactionId: string;
@@ -17,13 +17,13 @@ export namespace patchListingTransactionFx {
 	}
 }
 
-export const patchListingTransactionFx = ({
+export const listingTransactionPatchFx = ({
 	database,
 	transactionId,
 	userId,
 	status,
 	side,
-}: patchListingTransactionFx.Props) => {
+}: listingTransactionPatchFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* Effect.promise(async () => {
 			return database
@@ -82,22 +82,16 @@ export const patchListingTransactionFx = ({
 				.executeTakeFirstOrThrow();
 		});
 
-		yield* Effect.promise(async () => {
-			return database
-				.insertInto("listing_transaction_log")
-				.values({
-					id: genId(),
-					listingTransactionId: transactionId,
-					status: nextStatus,
-					side: nextSide,
-					createdAt: now.toJSDate(),
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
+		yield* listingTransactionLogCreateFx({
+			database,
+			listingTransactionId: transactionId,
+			status: nextStatus,
+			side: nextSide,
+			createdAt: now.toJSDate(),
 		});
 
 		return updated;
 	});
 };
 
-export type patchListingTransactionFx = ReturnType<typeof patchListingTransactionFx>;
+export type listingTransactionPatchFx = ReturnType<typeof listingTransactionPatchFx>;

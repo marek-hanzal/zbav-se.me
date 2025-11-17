@@ -4,7 +4,7 @@ import { Effect } from "effect";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { createListingScoreFx } from "../listing-score/service/createListingScoreFx";
+import { listingScoreCreateFx } from "../listing-score/service/listingScoreCreateFx";
 import { ListingFlagToggleSchema } from "./schema/ListingFlagToggleSchema";
 
 export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
@@ -86,7 +86,7 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 					.execute();
 
 				await Effect.runPromise(
-					createListingScoreFx({
+					listingScoreCreateFx({
 						database: database.kysely,
 						userId: user.id,
 						listingId,

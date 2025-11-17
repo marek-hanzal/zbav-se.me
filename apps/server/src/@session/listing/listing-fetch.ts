@@ -1,12 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withListingQueryBuilder } from "./db/withListingQueryBuilder";
-import { withListingSelect } from "./db/withListingSelect";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
 import { ListingSchema } from "./schema/ListingSchema";
+import { listingFetchFx } from "./service/listingFetchFx";
 
 export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -49,53 +48,39 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const { filter, where, sort, meta } = json;
-			const user = c.get("user");
+			return Effect.gen(function* () {
+				const query = c.req.valid("json");
+				const user = c.get("user");
 
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing:fetch",
-					version: "1",
-					value: {
-						userId: user.id,
-						query: json,
+				return yield* listingFetchFx({
+					userId: user.id,
+					query,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(listing) {
+						return Effect.succeed(c.json<ListingSchema.Type, 200>(listing, 200));
 					},
-				},
-				fetch: () =>
-					withFetch({
-						select: withListingSelect({
-							sort,
-							meta,
-							userId: user.id,
-						}),
-						output: ListingSchema,
-						filter,
-						where,
-						query(query) {
-							return withListingQueryBuilder({
-								userId: user.id,
-								...query,
-							});
-						},
-					}),
-			});
-
-			if (!data) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Listing not found",
+					onFailure(e) {
+						return match(e)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type, 404>({
+											type: "error",
+											message: e.message,
+										}),
+									);
+								},
+							)
+							.exhaustive();
 					},
-					404,
-				);
-			}
-			return c.json<ListingSchema.Type, 200>(data, {
-				status: 200,
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

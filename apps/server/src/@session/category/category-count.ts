@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCount } from "@use-pico/common/count";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { CountSchema } from "../../schema/CountSchema";
-import { withCategoryQueryBuilder } from "./db/withCategoryQueryBuilder";
-import { withCategorySelect } from "./db/withCategorySelect";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
+import { categoryCountFx } from "./service/categoryCountFx";
 
 export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -32,6 +32,14 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Return counts based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"category",
@@ -39,30 +47,34 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const { filter, where } = json;
+			return Effect.gen(function* () {
+				return yield* categoryCountFx({
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(count) {
+						return Effect.succeed(c.json<CountSchema.Type, 200>(count, 200));
+					},
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			const { data, hit } = await withCache({
-				key: {
-					scope: "category:count",
-					version: "1",
-					value: json,
-				},
-				fetch: () =>
-					withCount({
-						select: withCategorySelect(),
-						filter,
-						where,
-						query: withCategoryQueryBuilder,
-					}),
-			});
-
-			return c.json<CountSchema.Type, 200>(data, {
-				status: 200,
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

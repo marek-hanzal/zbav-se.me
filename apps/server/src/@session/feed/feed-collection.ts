@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withFeedQueryBuilder } from "./db/withFeedQueryBuilder";
-import { withFeedSelect } from "./db/withFeedSelect";
 import { FeedQuerySchema } from "./schema/FeedQuerySchema";
 import { FeedSchema } from "./schema/FeedSchema";
+import { feedCollectionFx } from "./service/feedCollectionFx";
 
 export const withFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -37,6 +37,14 @@ export const withFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Access collection of feed items based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"feed",
@@ -44,44 +52,40 @@ export const withFeedCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { cursor, filter, where, sort } = json;
+			return Effect.gen(function* () {
+				const json = c.req.valid("json");
+				const user = c.get("user");
 
-			const { data, hit } = await withCache({
-				key: {
-					scope: "feed:collection",
-					version: "1",
-					value: {
-						...json,
-						userId: user.id,
+				return yield* feedCollectionFx({
+					userId: user.id,
+					query: json,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(collection) {
+						return Effect.succeed(
+							c.json<withCollectionSchema.Type<FeedSchema>, 200>(collection, 200),
+						);
 					},
-				},
-				fetch: () =>
-					withCollection({
-						select: withFeedSelect({
-							sort,
-						}),
-						output: FeedSchema,
-						cursor: cursor ?? {
-							page: 0,
-							size: 10,
-						},
-						filter,
-						where: {
-							...where,
-							userId: user.id,
-						},
-						query: withFeedQueryBuilder,
-					}),
-			});
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			return c.json<withCollectionSchema.Type<FeedSchema>, 200>(data, {
-				status: 200,
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

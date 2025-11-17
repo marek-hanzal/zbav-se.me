@@ -5,7 +5,7 @@ import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingTransactionCreateSchema } from "./schema/ListingTransactionCreateSchema";
-import { createListingTransactionFx } from "./service/createListingTransactionFx";
+import { listingTransactionCreateFx } from "./service/listingTransactionCreateFx";
 
 export const withListingTransactionCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -44,13 +44,10 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const json = c.req.valid("json");
-				const user = c.get("user");
-
-				return yield* createListingTransactionFx({
+				return yield* listingTransactionCreateFx({
 					database: database.kysely,
-					userId: user.id,
-					...json,
+					userId: c.get("user").id,
+					...c.req.valid("json"),
 				});
 			}).pipe(
 				Effect.matchEffect({

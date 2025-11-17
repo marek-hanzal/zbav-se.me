@@ -5,7 +5,7 @@ import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";
-import { createListingScoreFx } from "./service/createListingScoreFx";
+import { listingScoreCreateFx } from "./service/listingScoreCreateFx";
 
 export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -60,12 +60,10 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const request = c.req.valid("json");
-
-				yield* createListingScoreFx({
+				return yield* listingScoreCreateFx({
 					database: database.kysely,
 					userId: c.get("user").id,
-					...request,
+					...c.req.valid("json"),
 				});
 			}).pipe(
 				Effect.matchEffect({

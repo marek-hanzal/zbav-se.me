@@ -1,12 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withFeedQueryBuilder } from "./db/withFeedQueryBuilder";
-import { withFeedSelect } from "./db/withFeedSelect";
 import { FeedQuerySchema } from "./schema/FeedQuerySchema";
 import { FeedSchema } from "./schema/FeedSchema";
+import { feedFetchFx } from "./service/feedFetchFx";
 
 export const withFeedFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -49,49 +48,39 @@ export const withFeedFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { filter, where, sort } = json;
+			return Effect.gen(function* () {
+				const query = c.req.valid("json");
+				const user = c.get("user");
 
-			const { data, hit } = await withCache({
-				key: {
-					scope: "feed:fetch",
-					version: "1",
-					value: {
-						...json,
-						userId: user.id,
+				return yield* feedFetchFx({
+					userId: user.id,
+					query,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(feed) {
+						return Effect.succeed(c.json<FeedSchema.Type, 200>(feed, 200));
 					},
-				},
-				fetch: () =>
-					withFetch({
-						select: withFeedSelect({
-							sort,
-						}),
-						output: FeedSchema,
-						filter,
-						where: {
-							...where,
-							userId: user.id,
-						},
-						query: withFeedQueryBuilder,
-					}),
-			});
-
-			if (!data) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Feed item not found",
+					onFailure(e) {
+						return match(e)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type, 404>({
+											type: "error",
+											message: e.message,
+										}),
+									);
+								},
+							)
+							.exhaustive();
 					},
-					404,
-				);
-			}
-			return c.json<FeedSchema.Type, 200>(data, {
-				status: 200,
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

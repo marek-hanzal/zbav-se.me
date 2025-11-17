@@ -1,13 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
-import { genId } from "@use-pico/common/gen-id";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withFeedQueryBuilder } from "./db/withFeedQueryBuilder";
-import { withFeedSelect } from "./db/withFeedSelect";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
 import { FeedSchema } from "./schema/FeedSchema";
+import { feedCreateFx } from "./service/feedCreateFx";
 
 export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -43,14 +42,6 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Feed not found after creation",
 				},
-				500: {
-					content: {
-						"application/json": {
-							schema: MessageSchema,
-						},
-					},
-					description: "Internal server error",
-				},
 			},
 			tags: [
 				"feed",
@@ -58,57 +49,37 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { name, locationId, query } = c.req.valid("json");
-			const user = c.get("user");
-			const id = genId();
-			const now = new Date();
-
-			try {
-				await database.kysely
-					.insertInto("feed")
-					.values({
-						id,
-						userId: user.id,
-						locationId,
-						name,
-						query: JSON.stringify(query) as any,
-						createdAt: now,
-						updatedAt: now,
-					})
-					.execute();
-
-				const feed = await withFetch({
-					select: withFeedSelect({
-						sort: [],
-					}),
-					output: FeedSchema,
-					where: {
-						id,
-					},
-					query: withFeedQueryBuilder,
+			return Effect.gen(function* () {
+				return yield* feedCreateFx({
+					database: database.kysely,
+					userId: c.get("user").id,
+					data: c.req.valid("json"),
 				});
-
-				if (!feed) {
-					return c.json<MessageSchema.Type, 404>(
-						{
-							type: "error",
-							message: "Feed not found",
-						},
-						404,
-					);
-				}
-
-				return c.json<FeedSchema.Type, 201>(feed, 201);
-			} catch (error) {
-				console.error(error);
-				return c.json<MessageSchema.Type, 500>(
-					{
-						type: "error",
-						message: "Failed to create feed",
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(feed) {
+						return Effect.succeed(c.json<FeedSchema.Type, 201>(feed, 201));
 					},
-					500,
-				);
-			}
+					onFailure(e) {
+						return match(e)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type, 404>({
+											type: "error",
+											message: e.message,
+										}),
+									);
+								},
+							)
+							.exhaustive();
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

@@ -5,7 +5,7 @@ import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingTransactionQuerySchema } from "./schema/ListingTransactionQuerySchema";
 import { ListingTransactionSchema } from "./schema/ListingTransactionSchema";
-import { fetchListingTransactionFx } from "./service/fetchListingTransactionFx";
+import { listingTransactionFetchFx } from "./service/listingTransactionFetchFx";
 
 export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -49,12 +49,9 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const json = c.req.valid("json");
-				const user = c.get("user");
-
-				return yield* fetchListingTransactionFx({
-					userId: user.id,
-					query: json,
+				return yield* listingTransactionFetchFx({
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
 				});
 			}).pipe(
 				Effect.matchEffect({

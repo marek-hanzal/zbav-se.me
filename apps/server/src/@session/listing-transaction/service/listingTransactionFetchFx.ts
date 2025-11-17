@@ -6,14 +6,14 @@ import { withListingTransactionSelect } from "../db/withListingTransactionSelect
 import type { ListingTransactionQuerySchema } from "../schema/ListingTransactionQuerySchema";
 import { ListingTransactionSchema } from "../schema/ListingTransactionSchema";
 
-export namespace fetchListingTransactionFx {
+export namespace listingTransactionFetchFx {
 	export interface Props {
 		userId: string;
 		query: Omit<ListingTransactionQuerySchema.Type, "cursor">;
 	}
 }
 
-export const fetchListingTransactionFx = ({ userId, query }: fetchListingTransactionFx.Props) => {
+export const listingTransactionFetchFx = ({ userId, query }: listingTransactionFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const data = yield* Effect.promise(async () => {
 			const { filter, where, sort, meta } = query;
@@ -50,3 +50,5 @@ export const fetchListingTransactionFx = ({ userId, query }: fetchListingTransac
 		return data;
 	});
 };
+
+export type listingTransactionFetchFx = ReturnType<typeof listingTransactionFetchFx>;

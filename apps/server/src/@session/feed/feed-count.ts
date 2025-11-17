@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCount } from "@use-pico/common/count";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { CountSchema } from "../../schema/CountSchema";
-import { withFeedQueryBuilder } from "./db/withFeedQueryBuilder";
-import { withFeedSelect } from "./db/withFeedSelect";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { FeedQuerySchema } from "./schema/FeedQuerySchema";
+import { feedCountFx } from "./service/feedCountFx";
 
 export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -32,6 +32,14 @@ export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Return counts based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"feed",
@@ -39,38 +47,38 @@ export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { filter, where } = json;
+			return Effect.gen(function* () {
+				const json = c.req.valid("json");
+				const user = c.get("user");
 
-			const { data, hit } = await withCache({
-				key: {
-					scope: "feed:count",
-					version: "1",
-					value: {
-						...json,
-						userId: user.id,
+				return yield* feedCountFx({
+					userId: user.id,
+					query: json,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(count) {
+						return Effect.succeed(c.json<CountSchema.Type, 200>(count, 200));
 					},
-				},
-				fetch: () =>
-					withCount({
-						select: withFeedSelect({
-							sort: [],
-						}),
-						filter,
-						where: {
-							...where,
-							userId: user.id,
-						},
-						query: withFeedQueryBuilder,
-					}),
-			});
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			return c.json<CountSchema.Type, 200>(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };
