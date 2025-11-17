@@ -1,13 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withListingTransactionQueryBuilder } from "./db/withListingTransactionQueryBuilder";
-import { withListingTransactionSelect } from "./db/withListingTransactionSelect";
 import { ListingTransactionQuerySchema } from "./schema/ListingTransactionQuerySchema";
-import { ListingTransactionSchema } from "./schema/ListingTransactionSchema";
 import { ListingTransactionSellerInfoSchema } from "./schema/ListingTransactionSellerInfoSchema";
+import { fetchListingTransactionFx } from "./service/fetchListingTransactionFx";
 import { getListingTransactionSellerInfoFx } from "./service/getListingTransactionSellerInfoFx";
 
 export const withListingTransactionSellerInfoApi: Routes.Fn = ({ sessionHono }) => {
@@ -52,48 +50,46 @@ export const withListingTransactionSellerInfoApi: Routes.Fn = ({ sessionHono }) 
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const { filter, where, sort, meta } = json;
-			const user = c.get("user");
+			return Effect.gen(function* () {
+				const query = c.req.valid("json");
+				const user = c.get("user");
 
-			const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			// Access validation only: ensure the user can see the listing-transaction
-			const data = await withFetch({
-				select: withListingTransactionSelect({
-					sort,
-				}),
-				output: ListingTransactionSchema,
-				filter,
-				where: userWhere,
-				query(query) {
-					return withListingTransactionQueryBuilder({
-						meta,
-						...query,
-					});
-				},
-			});
-
-			if (!data) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Listing transaction not found",
-					},
-					404,
-				);
-			}
-
-			const result = await Effect.runPromise(
-				getListingTransactionSellerInfoFx({
-					transactionId: data.id,
+				const transaction = yield* fetchListingTransactionFx({
+					query,
 					userId: user.id,
+				});
+
+				return yield* getListingTransactionSellerInfoFx({
+					transactionId: transaction.id,
+					userId: user.id,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(info) {
+						return Effect.succeed(
+							c.json<ListingTransactionSellerInfoSchema.Type, 200>(info, 200),
+						);
+					},
+					onFailure(e) {
+						return match(e)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type, 404>({
+											type: "error",
+											message: e.message,
+										}),
+									);
+								},
+							)
+							.exhaustive();
+					},
 				}),
+				Effect.runPromise,
 			);
-			return c.json<ListingTransactionSellerInfoSchema.Type, 200>(result, 200);
 		},
 	);
 };

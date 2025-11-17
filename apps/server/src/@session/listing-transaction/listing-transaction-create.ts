@@ -36,14 +36,6 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Listing not found",
 				},
-				500: {
-					content: {
-						"application/json": {
-							schema: MessageSchema,
-						},
-					},
-					description: "Failed to create transaction",
-				},
 			},
 			tags: [
 				"listing-transaction",
@@ -51,53 +43,42 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const request = c.req.valid("json");
+			return Effect.gen(function* () {
+				const json = c.req.valid("json");
+				const user = c.get("user");
 
-			return Effect.runPromise(
-				createListingTransactionFx({
+				return yield* createListingTransactionFx({
 					database: database.kysely,
-					userId: c.get("user").id,
-					...request,
-				}).pipe(
-					Effect.matchEffect({
-						onSuccess() {
-							return Effect.succeed(c.body(null, 201));
-						},
-						onFailure: (e) =>
-							match(e)
-								.with(
-									{
-										_tag: "InfraError",
-									},
-									(error) =>
-										Effect.succeed(
-											c.json<MessageSchema.Type>(
-												{
-													type: "error",
-													message: error.message,
-												},
-												500,
-											),
+					userId: user.id,
+					...json,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess() {
+						return Effect.succeed(c.body(null, 201));
+					},
+					onFailure(e) {
+						return match(e)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
 										),
-								)
-								.with(
-									{
-										_tag: "NotFoundError",
-									},
-									(error) =>
-										Effect.succeed(
-											c.json<MessageSchema.Type>(
-												{
-													type: "error",
-													message: error.message,
-												},
-												404,
-											),
-										),
-								)
-								.exhaustive(),
-					}),
-				),
+									);
+								},
+							)
+							.exhaustive();
+					},
+				}),
+				Effect.runPromise,
 			);
 		},
 	);

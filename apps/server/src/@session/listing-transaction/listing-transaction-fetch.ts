@@ -1,13 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withListingTransactionQueryBuilder } from "./db/withListingTransactionQueryBuilder";
-import { withListingTransactionSelect } from "./db/withListingTransactionSelect";
 import { ListingTransactionQuerySchema } from "./schema/ListingTransactionQuerySchema";
 import { ListingTransactionSchema } from "./schema/ListingTransactionSchema";
-import { Effect } from "effect";
+import { fetchListingTransactionFx } from "./service/fetchListingTransactionFx";
 
 export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -50,57 +48,46 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const { filter, where, sort, meta } = json;
-			const user = c.get("user");
+			return Effect.gen(function* () {
+				const json = c.req.valid("json");
+				const user = c.get("user");
 
-            const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-transaction:fetch",
-					version: "1",
-					value: {
-						userId: user.id,
-						query: json,
+				return yield* fetchListingTransactionFx({
+					userId: user.id,
+					query: json,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(listingTransaction) {
+						return Effect.succeed(
+							c.json<ListingTransactionSchema.Type, 200>(listingTransaction, {
+								status: 200,
+							}),
+						);
 					},
-				},
-				fetch: () =>
-					withFetch({
-						select: withListingTransactionSelect({
-							sort,
-						}),
-						output: ListingTransactionSchema,
-						filter,
-						where: userWhere,
-						query(query) {
-							return withListingTransactionQueryBuilder({
-								meta,
-								...query,
-							});
-						},
-					}),
-			});
-
-			if (!data) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Listing transaction not found",
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						return match(e)
+							.with(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return Effect.succeed(
+										c.json<MessageSchema.Type, 404>({
+											type: "error",
+											message: e.message,
+										}),
+									);
+								},
+							)
+							.exhaustive();
 					},
-					404,
-				);
-			}
-
-			return c.json<ListingTransactionSchema.Type, 200>(data, {
-				status: 200,
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };
