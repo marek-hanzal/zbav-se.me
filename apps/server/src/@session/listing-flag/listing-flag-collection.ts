@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withListingFlagQueryBuilder } from "./db/withListingFlagQueryBuilder";
-import { withListingFlagSelect } from "./db/withListingFlagSelect";
 import { ListingFlagQuerySchema } from "./schema/ListingFlagQuerySchema";
 import { ListingFlagSchema } from "./schema/ListingFlagSchema";
+import { listingFlagCollectionFx } from "./service/listingFlagCollectionFx";
 
 export const withListingFlagCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -37,6 +37,14 @@ export const withListingFlagCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Access collection of listing flag items based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-flag",
@@ -44,46 +52,41 @@ export const withListingFlagCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { cursor, filter, where, sort } = json;
-
-			// Always filter by current user
-			const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-flag:collection",
-					version: "1",
-					value: {
-						...json,
-						where: userWhere,
+			return Effect.gen(function* () {
+				return yield* listingFlagCollectionFx({
+					database: c.get("database"),
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(collection) {
+						return Effect.succeed(
+							c.json<withCollectionSchema.Type<ListingFlagSchema>, 200>(
+								collection,
+								200,
+							),
+						);
 					},
-				},
-				fetch: () =>
-					withCollection({
-						select: withListingFlagSelect({
-							sort,
-						}),
-						output: ListingFlagSchema,
-						cursor: cursor ?? {
-							page: 0,
-							size: 10,
-						},
-						filter,
-						where: userWhere,
-						query: withListingFlagQueryBuilder,
-					}),
-			});
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

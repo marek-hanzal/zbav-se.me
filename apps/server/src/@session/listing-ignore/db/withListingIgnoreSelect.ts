@@ -1,17 +1,18 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { ListingIgnoreSortSchema } from "../schema/ListingIgnoreSortSchema";
 
 export namespace withListingIgnoreSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: ListingIgnoreSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withListingIgnoreSelect>;
 }
 
-export const withListingIgnoreSelect = ({ sort }: withListingIgnoreSelect.Props) => {
-	let query = database.kysely.selectFrom("listing_ignore as li").select([
+export const withListingIgnoreSelect = ({ database, sort }: withListingIgnoreSelect.Props) => {
+	let query = database.selectFrom("listing_ignore as li").select([
 		"li.id",
 		"li.listingId",
 	]);

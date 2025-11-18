@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withListingIgnoreQueryBuilder } from "./db/withListingIgnoreQueryBuilder";
-import { withListingIgnoreSelect } from "./db/withListingIgnoreSelect";
 import { ListingIgnoreQuerySchema } from "./schema/ListingIgnoreQuerySchema";
 import { ListingIgnoreSchema } from "./schema/ListingIgnoreSchema";
+import { listingIgnoreCollectionFx } from "./service/listingIgnoreCollectionFx";
 
 export const withListingIgnoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -38,6 +38,14 @@ export const withListingIgnoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					description:
 						"Access collection of listing ignore items based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-ignore",
@@ -45,46 +53,41 @@ export const withListingIgnoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { cursor, filter, where, sort } = json;
-
-			// Always filter by current user
-			const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-ignore:collection",
-					version: "1",
-					value: {
-						...json,
-						where: userWhere,
+			return Effect.gen(function* () {
+				return yield* listingIgnoreCollectionFx({
+					database: c.get("database"),
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(collection) {
+						return Effect.succeed(
+							c.json<withCollectionSchema.Type<ListingIgnoreSchema>, 200>(
+								collection,
+								200,
+							),
+						);
 					},
-				},
-				fetch: () =>
-					withCollection({
-						select: withListingIgnoreSelect({
-							sort,
-						}),
-						output: ListingIgnoreSchema,
-						cursor: cursor ?? {
-							page: 0,
-							size: 10,
-						},
-						filter,
-						where: userWhere,
-						query: withListingIgnoreQueryBuilder,
-					}),
-			});
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

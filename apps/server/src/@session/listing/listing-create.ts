@@ -1,16 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { embedMinHash, embedNumberRange } from "@use-pico/common/embedding";
-import { withFetch } from "@use-pico/common/fetch";
-import { genId } from "@use-pico/common/gen-id";
-import { DateTime } from "luxon";
-import pgvector from "pgvector";
+import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withListingQueryBuilder } from "./db/withListingQueryBuilder";
-import { withListingSelect } from "./db/withListingSelect";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingSchema } from "./schema/ListingSchema";
+import { listingCreateFx } from "./service/listingCreateFx";
 
 export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -38,13 +33,13 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "The created listing",
 				},
-				500: {
+				404: {
 					content: {
 						"application/json": {
 							schema: MessageSchema,
 						},
 					},
-					description: "Internal server error",
+					description: "Listing not found after creation",
 				},
 			},
 			tags: [
@@ -53,111 +48,39 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const data = c.req.valid("json");
-			const user = c.get("user");
-			const id = genId();
-			const now = new Date();
-
-			await c
-				.get("database")
-				.insertInto("listing")
-				.values({
-					id,
-					userId: user.id,
-					price: data.price,
-					priceVec: pgvector.toSql([
-						data.price,
-					]),
-					condition: data.condition,
-					conditionVec: pgvector.toSql(
-						embedNumberRange({
-							min: 0,
-							max: 6,
-							value: data.condition,
-						}),
-					),
-					age: data.age,
-					ageVec: pgvector.toSql(
-						embedNumberRange({
-							min: 0,
-							max: 6,
-							value: data.age,
-						}),
-					),
-					locationId: data.locationId,
-					categoryId: data.categoryId,
-					createdAt: now,
-					updatedAt: now,
-					currency: data.currency,
-					title: data.title,
-					titleVec: pgvector.toSql(
-						embedMinHash({
-							value: data.title,
-						}),
-					),
-					description: data.description,
-					expiresAt: match(data.expiresAt)
-						.with("7-days", () =>
-							DateTime.now()
-								.plus({
-									days: 7,
-								})
-								.toJSDate(),
-						)
-						.with("14-days", () =>
-							DateTime.now()
-								.plus({
-									days: 14,
-								})
-								.toJSDate(),
-						)
-						.with("1-month", () =>
-							DateTime.now()
-								.plus({
-									months: 1,
-								})
-								.toJSDate(),
-						)
-						.exhaustive(),
-				})
-				.execute();
-
-			await c
-				.get("database")
-				.insertInto("gallery")
-				.values(
-					data.uploadIds.map((uploadId, index) => ({
-						id: genId(),
-						userId: user.id,
-						createdAt: now,
-						listingId: id,
-						uploadId,
-						sort: index,
-					})),
-				)
-				.execute();
-
-			return c.json(
-				await withFetch({
-					select: withListingSelect({
-						database: c.get("database"),
-						sort: [],
-						meta: undefined,
-						userId: user.id,
-					}),
-					output: ListingSchema,
-					where: {
-						id,
-						withOwn: true,
+			return Effect.gen(function* () {
+				return yield* listingCreateFx({
+					database: c.get("database"),
+					userId: c.get("user").id,
+					data: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(listing) {
+						return Effect.succeed(c.json<ListingSchema.Type, 201>(listing, 201));
 					},
-					query(query) {
-						return withListingQueryBuilder({
-							userId: user.id,
-							...query,
-						});
+					onFailure(e) {
+						return Effect.succeed(
+							match(e)
+								.with(
+									{
+										_tag: "NotFoundError",
+									},
+									() => {
+										return c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										);
+									},
+								)
+								.exhaustive(),
+						);
 					},
 				}),
-				201,
+				Effect.runPromise,
 			);
 		},
 	);

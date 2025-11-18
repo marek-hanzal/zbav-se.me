@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCount } from "@use-pico/common/count";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { CountSchema } from "../../schema/CountSchema";
-import { withListingCartQueryBuilder } from "./db/withListingCartQueryBuilder";
-import { withListingCartSelect } from "./db/withListingCartSelect";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingCartCountQuerySchema } from "./schema/ListingCartCountQuerySchema";
+import { listingCartCountFx } from "./service/listingCartCountFx";
 
 export const withListingCartCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -32,6 +32,14 @@ export const withListingCartCountApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Return counts based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-cart",
@@ -39,41 +47,36 @@ export const withListingCartCountApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { filter, where } = json;
-
-			// Always filter by current user
-			const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-cart:count",
-					version: "1",
-					value: {
-						...json,
-						where: userWhere,
+			return Effect.gen(function* () {
+				return yield* listingCartCountFx({
+					database: c.get("database"),
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(count) {
+						return Effect.succeed(c.json<CountSchema.Type, 200>(count, 200));
 					},
-				},
-				fetch: () =>
-					withCount({
-						select: withListingCartSelect({
-							sort: undefined,
-						}),
-						filter,
-						where: userWhere,
-						query: withListingCartQueryBuilder,
-					}),
-			});
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

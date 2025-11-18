@@ -1,5 +1,6 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { withListingQueryBuilder } from "../db/withListingQueryBuilder";
 import { withListingSelect } from "../db/withListingSelect";
@@ -8,18 +9,20 @@ import { ListingSchema } from "../schema/ListingSchema";
 
 export namespace listingFetchFx {
 	export interface Props {
+		database: WithDatabase;
 		userId: string;
 		query: Omit<ListingQuerySchema.Type, "cursor">;
 	}
 }
 
-export const listingFetchFx = ({ userId, query }: listingFetchFx.Props) => {
+export const listingFetchFx = ({ database, userId, query }: listingFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const data = yield* Effect.promise(async () => {
 			const { filter, where, sort, meta } = query;
 
 			return withFetch({
 				select: withListingSelect({
+					database,
 					sort,
 					meta,
 					userId,
@@ -37,13 +40,11 @@ export const listingFetchFx = ({ userId, query }: listingFetchFx.Props) => {
 		});
 
 		if (!data) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "listing",
-					resourceId: "(query)",
-					message: "Listing not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "listing",
+				resourceId: "(query)",
+				message: "Listing not found",
+			});
 		}
 
 		return data;

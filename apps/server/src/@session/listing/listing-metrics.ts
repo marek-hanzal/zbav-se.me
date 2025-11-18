@@ -1,7 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingMetricsSchema } from "./schema/ListingMetricsSchema";
+import { listingMetricsFx } from "./service/listingMetricsFx";
 
 const ListingMetricsPAramsSchema = z
 	.object({
@@ -47,108 +50,39 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { id } = c.req.valid("param");
-
-			const count = await c
-				.get("database")
-				.selectFrom("listing_score as ls")
-				.select((eb) => [
-					eb.fn.count<number>("ls.id").as("count"),
-				])
-				.where("ls.listingId", "=", id)
-				.executeTakeFirstOrThrow();
-
-			if (Number(count.count) === 0) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						message: "Listing has no score yet",
-						type: "error",
+			return Effect.gen(function* () {
+				return yield* listingMetricsFx({
+					database: c.get("database"),
+					listingId: c.req.valid("param").id,
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(metrics) {
+						return Effect.succeed(c.json<ListingMetricsSchema.Type, 200>(metrics, 200));
 					},
-					404,
-				);
-			}
-
-			const score = await c
-				.get("database")
-				.selectFrom("listing_score as ls")
-				.where("ls.listingId", "=", id)
-				.select((eb) => [
-					eb.fn
-						.sum<number>(
-							eb.case().when("ls.type", "=", "listing").then(1).else(0).end(),
-						)
-						.as("listing"),
-					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "listing")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
-						.as("listingScore"),
-					//
-					eb.fn
-						.sum<number>(eb.case().when("ls.type", "=", "view").then(1).else(0).end())
-						.as("views"),
-					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "view")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
-						.as("viewsScore"),
-					//
-					eb.fn
-						.sum<number>(eb.case().when("ls.type", "=", "cart").then(1).else(0).end())
-						.as("cart"),
-					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "cart")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
-						.as("cartScore"),
-					//
-					eb.fn
-						.sum<number>(eb.case().when("ls.type", "=", "ignore").then(1).else(0).end())
-						.as("ignore"),
-					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "ignore")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
-						.as("ignoreScore"),
-					//
-					eb.fn
-						.sum<number>(eb.case().when("ls.type", "=", "flag").then(1).else(0).end())
-						.as("flag"),
-					eb.fn
-						.sum<number>(
-							eb
-								.case()
-								.when("ls.type", "=", "flag")
-								.then(eb.ref("ls.score"))
-								.else(0)
-								.end(),
-						)
-						.as("flagScore"),
-					eb.fn.sum<number>("ls.score").as("score"),
-				])
-				.executeTakeFirst();
-
-			return c.json<ListingMetricsSchema.Type, 200>(ListingMetricsSchema.parse(score), 200);
+					onFailure(e) {
+						return Effect.succeed(
+							match(e)
+								.with(
+									{
+										_tag: "NotFoundError",
+									},
+									() => {
+										return c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										);
+									},
+								)
+								.exhaustive(),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

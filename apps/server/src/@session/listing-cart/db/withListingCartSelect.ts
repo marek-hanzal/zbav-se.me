@@ -1,17 +1,18 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { ListingCartSortSchema } from "../schema/ListingCartSortSchema";
 
 export namespace withListingCartSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: ListingCartSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withListingCartSelect>;
 }
 
-export const withListingCartSelect = ({ sort }: withListingCartSelect.Props) => {
-	let query = database.kysely.selectFrom("listing_cart as lc").select([
+export const withListingCartSelect = ({ database, sort }: withListingCartSelect.Props) => {
+	let query = database.selectFrom("listing_cart as lc").select([
 		"lc.id",
 		"lc.listingId",
 		"lc.createdAt",

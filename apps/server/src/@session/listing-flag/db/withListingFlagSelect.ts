@@ -1,17 +1,18 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { ListingFlagSortSchema } from "../schema/ListingFlagSortSchema";
 
 export namespace withListingFlagSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: ListingFlagSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withListingFlagSelect>;
 }
 
-export const withListingFlagSelect = ({ sort }: withListingFlagSelect.Props) => {
-	let query = database.kysely.selectFrom("listing_flag as lf").select([
+export const withListingFlagSelect = ({ database, sort }: withListingFlagSelect.Props) => {
+	let query = database.selectFrom("listing_flag as lf").select([
 		"lf.id",
 		"lf.listingId",
 	]);

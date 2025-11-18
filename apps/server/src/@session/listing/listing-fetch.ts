@@ -49,12 +49,10 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const query = c.req.valid("json");
-				const user = c.get("user");
-
 				return yield* listingFetchFx({
-					userId: user.id,
-					query,
+					database: c.get("database"),
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
 				});
 			}).pipe(
 				Effect.matchEffect({
