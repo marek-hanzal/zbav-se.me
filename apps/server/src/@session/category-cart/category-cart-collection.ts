@@ -1,12 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withCategoryQueryBuilder } from "../category/db/withCategoryQueryBuilder";
-import { withCategoryCartSelect } from "./db/withCategoryCartSelect";
 import { CategoryCartQuerySchema } from "./schema/CategoryCartQuerySchema";
 import { CategoryCartSchema } from "./schema/CategoryCartSchema";
+import { categoryCartCollectionFx } from "./service/categoryCartCollectionFx";
 
 export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -38,6 +39,14 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Access categories for listings stored in the user's cart",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"category-cart",
@@ -45,42 +54,41 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { cursor, filter, where, sort } = json;
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "category-cart:collection",
-					version: "1",
-					value: {
-						...json,
-						userId: user.id,
+			return Effect.gen(function* () {
+				return yield* categoryCartCollectionFx({
+					database: database.kysely,
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(collection) {
+						return Effect.succeed(
+							c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(
+								collection,
+								200,
+							),
+						);
 					},
-				},
-				fetch: () => {
-					return withCollection({
-						select: withCategoryCartSelect({
-							sort,
-							userId: user.id,
-						}),
-						output: CategoryCartSchema,
-						cursor: cursor ?? {
-							page: 0,
-							size: 10,
-						},
-						filter,
-						where,
-						query: withCategoryQueryBuilder,
-					});
-				},
-			});
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
 
-			return c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

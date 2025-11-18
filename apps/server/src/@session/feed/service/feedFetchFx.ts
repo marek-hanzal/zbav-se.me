@@ -1,5 +1,6 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
 import { withFeedSelect } from "../db/withFeedSelect";
@@ -8,18 +9,20 @@ import { FeedSchema } from "../schema/FeedSchema";
 
 export namespace feedFetchFx {
 	export interface Props {
+		database: WithDatabase;
 		userId: string;
 		query: Omit<FeedQuerySchema.Type, "cursor">;
 	}
 }
 
-export const feedFetchFx = ({ userId, query }: feedFetchFx.Props) => {
+export const feedFetchFx = ({ database, userId, query }: feedFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const data = yield* Effect.promise(async () => {
 			const { filter, where, sort } = query;
 
 			return withFetch({
 				select: withFeedSelect({
+					database,
 					sort,
 				}),
 				output: FeedSchema,

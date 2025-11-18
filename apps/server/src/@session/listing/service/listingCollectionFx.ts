@@ -1,5 +1,6 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import { withListingQueryBuilder } from "../db/withListingQueryBuilder";
 import { withListingSelect } from "../db/withListingSelect";
 import type { ListingQuerySchema } from "../schema/ListingQuerySchema";
@@ -7,12 +8,14 @@ import { ListingSchema } from "../schema/ListingSchema";
 
 export namespace listingCollectionFx {
 	export interface Props {
+		database: WithDatabase;
 		userId: string;
 		query: ListingQuerySchema.Type;
 	}
 }
 
 export const listingCollectionFx = ({
+	database,
 	userId,
 	query: { cursor, filter, where, sort, meta },
 }: listingCollectionFx.Props) => {
@@ -20,6 +23,7 @@ export const listingCollectionFx = ({
 		return yield* Effect.promise(async () => {
 			return withCollection({
 				select: withListingSelect({
+					database,
 					sort,
 					meta,
 					userId,

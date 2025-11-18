@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withGalleryQueryBuilder } from "./db/withGalleryQueryBuilder";
-import { withGallerySelect } from "./db/withGallerySelect";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
+import { galleryFetchFx } from "./service/galleryFetchFx";
 
 export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -48,29 +49,39 @@ export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { filter, where, sort } = c.req.valid("json");
-
-			const result = await withFetch({
-				select: withGallerySelect({
-					sort,
-				}),
-				output: GallerySchema,
-				filter,
-				where,
-				query: withGalleryQueryBuilder,
-			});
-
-			if (!result) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Gallery item not found",
+			return Effect.gen(function* () {
+				return yield* galleryFetchFx({
+					database: database.kysely,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(gallery) {
+						return Effect.succeed(c.json<GallerySchema.Type, 200>(gallery, 200));
 					},
-					404,
-				);
-			}
-
-			return c.json<GallerySchema.Type, 200>(result, 200);
+					onFailure(e) {
+						return Effect.succeed(
+							match(e)
+								.with(
+									{
+										_tag: "NotFoundError",
+									},
+									() => {
+										return c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										);
+									},
+								)
+								.exhaustive(),
+						);
+					},
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

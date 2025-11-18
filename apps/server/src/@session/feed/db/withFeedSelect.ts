@@ -1,17 +1,18 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { FeedSortSchema } from "../schema/FeedSortSchema";
 
 export namespace withFeedSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: FeedSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withFeedSelect>;
 }
 
-export const withFeedSelect = ({ sort }: withFeedSelect.Props) => {
-	let query = database.kysely.selectFrom("feed as f").select([
+export const withFeedSelect = ({ database, sort }: withFeedSelect.Props) => {
+	let query = database.selectFrom("feed as f").select([
 		"f.id",
 		"f.locationId",
 		"f.name",

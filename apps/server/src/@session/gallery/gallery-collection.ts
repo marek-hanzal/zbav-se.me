@@ -1,11 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withGalleryQueryBuilder } from "./db/withGalleryQueryBuilder";
-import { withGallerySelect } from "./db/withGallerySelect";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
+import { galleryCollectionFx } from "./service/galleryCollectionFx";
 
 export const withGalleryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -36,6 +38,14 @@ export const withGalleryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Access collection of gallery items based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"gallery",
@@ -43,22 +53,36 @@ export const withGalleryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { cursor, filter, where, sort } = c.req.valid("json");
-			return c.json<withCollectionSchema.Type<GallerySchema>, 200>(
-				await withCollection({
-					select: withGallerySelect({
-						sort,
-					}),
-					output: GallerySchema,
-					cursor: cursor ?? {
-						page: 0,
-						size: 10,
+			return Effect.gen(function* () {
+				return yield* galleryCollectionFx({
+					database: database.kysely,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(collection) {
+						return Effect.succeed(
+							c.json<withCollectionSchema.Type<GallerySchema>, 200>(collection, 200),
+						);
 					},
-					filter,
-					where,
-					query: withGalleryQueryBuilder,
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
+
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
 				}),
-				200,
+				Effect.runPromise,
 			);
 		},
 	);

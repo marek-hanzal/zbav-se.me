@@ -1,21 +1,26 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { CategoryCartSortSchema } from "../schema/CategoryCartSortSchema";
 
 export namespace withCategoryCartSelect {
 	export interface Props {
+		database: WithDatabase;
 		userId: string;
 		sort?: CategoryCartSortSchema.Type[];
 	}
 	export type Select = ReturnType<typeof withCategoryCartSelect>;
 }
 
-export const withCategoryCartSelect = ({ userId, sort }: withCategoryCartSelect.Props) => {
-	let query = database.kysely
+export const withCategoryCartSelect = ({
+	database,
+	userId,
+	sort,
+}: withCategoryCartSelect.Props) => {
+	let query = database
 		.selectFrom("category as c")
 		.innerJoin(
-			database.kysely
+			database
 				.selectFrom("listing_cart as lc")
 				.innerJoin("listing as l", "l.id", "lc.listingId")
 				.select([

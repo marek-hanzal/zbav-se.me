@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { withCollection } from "@use-pico/common/collection";
+import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
 import { withUploadQueryBuilder } from "./db/withUploadQueryBuilder";
@@ -47,6 +48,7 @@ export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			return c.json(
 				await withCollection({
 					select: withUploadSelect({
+						database: database.kysely,
 						sort,
 					}),
 					output: UploadSchema,

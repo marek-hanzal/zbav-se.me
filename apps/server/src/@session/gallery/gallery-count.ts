@@ -1,10 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCount } from "@use-pico/common/count";
+import { Effect } from "effect";
+import { match } from "ts-pattern";
+import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
-import { withGalleryQueryBuilder } from "./db/withGalleryQueryBuilder";
-import { withGallerySelect } from "./db/withGallerySelect";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
+import { galleryCountFx } from "./service/galleryCountFx";
 
 export const withGalleryCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -31,6 +33,14 @@ export const withGalleryCountApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Return counts based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"gallery",
@@ -38,15 +48,34 @@ export const withGalleryCountApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { filter, where } = c.req.valid("json");
-			return c.json<CountSchema.Type, 200>(
-				await withCount({
-					select: withGallerySelect(),
-					filter,
-					where,
-					query: withGalleryQueryBuilder,
+			return Effect.gen(function* () {
+				return yield* galleryCountFx({
+					database: database.kysely,
+					query: c.req.valid("json"),
+				});
+			}).pipe(
+				Effect.matchEffect({
+					onSuccess(count) {
+						return Effect.succeed(c.json<CountSchema.Type, 200>(count, 200));
+					},
+					onFailure(e) {
+						/**
+						 * This just holds type exhaustive match for errors if any comes up.
+						 */
+						match(e).exhaustive();
+
+						return Effect.succeed(
+							c.json<MessageSchema.Type, 500>(
+								{
+									type: "error",
+									message: "This should not happen",
+								},
+								500,
+							),
+						);
+					},
 				}),
-				200,
+				Effect.runPromise,
 			);
 		},
 	);

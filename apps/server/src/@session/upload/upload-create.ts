@@ -85,7 +85,9 @@ export const withUploadCreateApi: Routes.Fn = ({ sessionHono }) => {
 				.execute();
 
 			const upload = await withFetch({
-				select: withUploadSelect(),
+				select: withUploadSelect({
+					database: database.kysely,
+				}),
 				output: UploadSchema,
 				where: {
 					id,

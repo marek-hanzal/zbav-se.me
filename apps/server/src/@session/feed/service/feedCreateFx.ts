@@ -19,9 +19,10 @@ export const feedCreateFx = ({
 }: feedCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const id = genId();
-		const now = new Date();
 
 		yield* Effect.promise(async () => {
+			const now = new Date();
+
 			return database
 				.insertInto("feed")
 				.values({
@@ -33,10 +34,12 @@ export const feedCreateFx = ({
 					createdAt: now,
 					updatedAt: now,
 				})
-				.execute();
+				.returningAll()
+				.executeTakeFirstOrThrow();
 		});
 
 		return yield* feedFetchFx({
+			database,
 			userId,
 			query: {
 				where: {

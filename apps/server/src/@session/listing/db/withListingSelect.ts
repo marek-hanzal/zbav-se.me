@@ -1,12 +1,13 @@
 import { sql } from "kysely";
 import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
 import type { ListingSortSchema } from "../schema/ListingSortSchema";
 
 export namespace withListingSelect {
 	export interface Props {
+		database: WithDatabase;
 		userId: string;
 		sort: ListingSortSchema.Type[] | undefined;
 		meta: ListingMetaSchema.Type | undefined;
@@ -15,8 +16,8 @@ export namespace withListingSelect {
 	export type Select = ReturnType<typeof withListingSelect>;
 }
 
-export const withListingSelect = ({ userId, sort, meta }: withListingSelect.Props) => {
-	let query = database.kysely
+export const withListingSelect = ({ database, userId, sort, meta }: withListingSelect.Props) => {
+	let query = database
 		.selectFrom("listing as l")
 		.leftJoin(
 			(eb) =>
