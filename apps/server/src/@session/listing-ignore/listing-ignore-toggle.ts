@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { listingScoreCreateFx } from "../listing-score/service/listingScoreCreateFx";
@@ -50,7 +49,8 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 				const id = genId();
 				const now = new Date();
 
-				const listing = await database.kysely
+				const listing = await c
+					.get("database")
 					.selectFrom("listing")
 					.selectAll()
 					.where("id", "=", listingId)
@@ -67,7 +67,8 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 					);
 				}
 
-				await database.kysely
+				await c
+					.get("database")
 					.insertInto("listing_ignore")
 					.values({
 						id,
@@ -87,7 +88,7 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 
 				await Effect.runPromise(
 					listingScoreCreateFx({
-						database: database.kysely,
+						database: c.get("database"),
 						userId: user.id,
 						listingId,
 						score: "ignore",
@@ -106,7 +107,8 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 				return c.body(null, 204);
 			}
 
-			await database.kysely
+			await c
+				.get("database")
 				.deleteFrom("listing_ignore")
 				.where("userId", "=", user.id)
 				.where("listingId", "=", listingId)

@@ -1,5 +1,4 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingMetricsSchema } from "./schema/ListingMetricsSchema";
@@ -50,7 +49,8 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			const { id } = c.req.valid("param");
 
-			const count = await database.kysely
+			const count = await c
+				.get("database")
 				.selectFrom("listing_score as ls")
 				.select((eb) => [
 					eb.fn.count<number>("ls.id").as("count"),
@@ -68,7 +68,8 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ sessionHono }) => {
 				);
 			}
 
-			const score = await database.kysely
+			const score = await c
+				.get("database")
 				.selectFrom("listing_score as ls")
 				.where("ls.listingId", "=", id)
 				.select((eb) => [

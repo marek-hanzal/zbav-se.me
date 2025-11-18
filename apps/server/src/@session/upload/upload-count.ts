@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
 import { withCount } from "@use-pico/common/count";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
 import { withUploadQueryBuilder } from "./db/withUploadQueryBuilder";
@@ -43,7 +42,7 @@ export const withUploadCountApi: Routes.Fn = ({ sessionHono }) => {
 			return c.json(
 				await withCount({
 					select: withUploadSelect({
-						database: database.kysely,
+						database: c.get("database"),
 					}),
 					filter,
 					where,

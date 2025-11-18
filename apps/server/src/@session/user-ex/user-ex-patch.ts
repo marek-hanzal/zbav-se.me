@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
 import { genId } from "@use-pico/common/gen-id";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { UserExPatchSchema } from "./schema/UserExPatchSchema";
@@ -45,7 +44,7 @@ export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 			const { locationId, side } = json;
 
 			try {
-				await database.kysely.transaction().execute(async (trx) => {
+				await c.get("database").transaction().execute(async (trx) => {
 					try {
 						const userEx = await trx
 							.selectFrom("user_ex")

@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
 import { withFetch } from "@use-pico/common/fetch";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withUploadQueryBuilder } from "./db/withUploadQueryBuilder";
@@ -53,7 +52,7 @@ export const withUploadFetchApi: Routes.Fn = ({ sessionHono }) => {
 
 			const result = await withFetch({
 				select: withUploadSelect({
-					database: database.kysely,
+					database: c.get("database"),
 					sort,
 				}),
 				output: UploadSchema,

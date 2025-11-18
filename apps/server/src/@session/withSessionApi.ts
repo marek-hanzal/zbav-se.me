@@ -1,5 +1,6 @@
 import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
+import type { MessageSchema } from "../schema/MessageSchema";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withCategoryCartApi } from "./category-cart/withCategoryCartApi";
 import { withFeedApi } from "./feed/withFeedApi";
@@ -17,22 +18,23 @@ import { withUploadApi } from "./upload/withUploadApi";
 import { withUserExApi } from "./user-ex/withUserExApi";
 
 export const withSessionApi: Routes.Fn = (routes) => {
+	routes.sessionHono.use(async (c, next) => {
+		c.set("database", database.kysely);
+		return next();
+	});
+
 	routes.root.use("/api/session/*", async (c, next) => {
 		const session = c.get("session");
 		const user = c.get("user");
 		if (!session || !user) {
-			return c.json(
+			return c.json<MessageSchema.Type, 401>(
 				{
-					error: "Shooooo! Shooo!",
+					type: "error",
+					message: "Shooooo! Shooo!",
 				},
 				401,
 			);
 		}
-		return next();
-	});
-
-	routes.sessionHono.use("*", async (c, next) => {
-		c.set("database", database.kysely);
 		return next();
 	});
 

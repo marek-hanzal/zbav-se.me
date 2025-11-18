@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
 import { MessageSchema } from "../../schema/MessageSchema";
@@ -53,7 +52,7 @@ export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 				const user = c.get("user");
 
 				return yield* feedCountFx({
-					database: database.kysely,
+					database: c.get("database"),
 					userId: user.id,
 					query: json,
 				});

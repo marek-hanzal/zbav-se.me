@@ -5,7 +5,6 @@ import { genId } from "@use-pico/common/gen-id";
 import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withListingQueryBuilder } from "./db/withListingQueryBuilder";
@@ -59,7 +58,8 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 			const id = genId();
 			const now = new Date();
 
-			await database.kysely
+			await c
+				.get("database")
 				.insertInto("listing")
 				.values({
 					id,
@@ -122,7 +122,8 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 				})
 				.execute();
 
-			await database.kysely
+			await c
+				.get("database")
 				.insertInto("gallery")
 				.values(
 					data.uploadIds.map((uploadId, index) => ({
@@ -139,6 +140,7 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 			return c.json(
 				await withFetch({
 					select: withListingSelect({
+						database: c.get("database"),
 						sort: [],
 						meta: undefined,
 						userId: user.id,

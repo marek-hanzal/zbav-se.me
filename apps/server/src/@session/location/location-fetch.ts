@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
 import { withFetch } from "@use-pico/common/fetch";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withLocationQueryBuilder } from "./db/withLocationQueryBuilder";
@@ -54,7 +53,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 			const result = await withFetch({
 				select: withLocationSelect({
 					sort,
-					source: database.kysely,
+					source: c.get("database"),
 				}),
 				output: LocationSchema,
 				filter,

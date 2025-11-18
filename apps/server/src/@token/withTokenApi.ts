@@ -3,17 +3,24 @@ import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { PayloadSchema } from "../jwt/PayloadSchema";
 import { verify } from "../jwt/verify";
+import type { MessageSchema } from "../schema/MessageSchema";
 
 export const withTokenApi: Routes.Fn = (routes) => {
+	routes.tokenHono.use(async (c, next) => {
+		c.set("database", database.kysely);
+		return next();
+	});
+
 	routes.root.route("/api/token", routes.tokenHono);
 
 	routes.root.use("/api/token/*", async (c, next) => {
 		const [, token] = c.req.header("Authorization")?.split(" ") ?? [];
 
 		if (!token) {
-			return c.json(
+			return c.json<MessageSchema.Type, 401>(
 				{
-					error: "Shooooo! Shooo!",
+					type: "error",
+					message: "Shooooo! Shooo!",
 				},
 				401,
 			);
@@ -38,9 +45,10 @@ export const withTokenApi: Routes.Fn = (routes) => {
 
 			return next();
 		} catch {
-			return c.json(
+			return c.json<MessageSchema.Type, 401>(
 				{
-					error: "Shooooo! Shooo!",
+					type: "error",
+					message: "Shooooo! Shooo!",
 				},
 				401,
 			);

@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
@@ -51,7 +50,7 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return yield* feedCreateFx({
-					database: database.kysely,
+					database: c.get("database"),
 					userId: c.get("user").id,
 					data: c.req.valid("json"),
 				});
