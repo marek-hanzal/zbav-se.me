@@ -3,7 +3,6 @@ import { ArrowRightIcon, EditIcon, TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
-import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -102,44 +101,25 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 					}
 				/>
 
-				<Data
-					result={locationFetchQuery}
-					renderSuccess={({ data }) => (
-						<BadgeValue
-							textLabel={"Feed location (label)"}
-							textValue={data.address}
-							action={
-								feed.id ? (
-									<LinkTo
-										icon={EditIcon}
-										to={"/$locale/buyer/feed/$id/edit/location"}
-										params={{
-											locale,
-											id: feed.id,
-										}}
-									/>
-								) : null
-							}
-						/>
-					)}
-					renderEmpty={() => (
-						<BadgeValue
-							textLabel={"Feed location (label)"}
-							textValue={"Feed location not selected"}
-							action={
-								feed.id ? (
-									<LinkTo
-										icon={EditIcon}
-										to={"/$locale/buyer/feed/$id/edit/location"}
-										params={{
-											locale,
-											id: feed.id,
-										}}
-									/>
-								) : null
-							}
-						/>
-					)}
+				<BadgeValue
+					textLabel={"Feed location (label)"}
+					textValue={
+						feed.locationId
+							? locationFetchQuery.data.address
+							: "Feed location not selected"
+					}
+					action={
+						feed.id ? (
+							<LinkTo
+								icon={EditIcon}
+								to={"/$locale/buyer/feed/$id/edit/location"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
+							/>
+						) : null
+					}
 				/>
 
 				<ContainerValueList
@@ -171,7 +151,11 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				<ContainerValueList
 					textTitle={"Feed category (label)"}
 					textEmpty={"Feed category not selected"}
-					items={categoryCollectionQuery.data.data}
+					items={
+						feed.query?.filter?.categoryIdIn?.length
+							? categoryCollectionQuery.data.data
+							: []
+					}
 					render={(category) => (
 						<div className={"flex flex-col gap-0.5 items-start"}>
 							<Typo
