@@ -18,7 +18,6 @@ export const LinkToCls = contract(PicoCls.contract)
 	.root({
 		root: {
 			class: [
-				"LinkTo-root",
 				"flex",
 				"flex-row",
 				"flex-nowrap",
@@ -29,11 +28,6 @@ export const LinkToCls = contract(PicoCls.contract)
 				"w-fit",
 				"border-transparent",
 				"transition-all",
-			],
-			token: [
-				"round.default",
-				"scale.default",
-				"border.default",
 			],
 		},
 	})

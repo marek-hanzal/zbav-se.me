@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { Rating } from "~/app/ui/rating/Rating";
+import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")({
 	validateSearch: ListingWizardSchema,
@@ -47,6 +47,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
@@ -86,16 +89,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 					</LinkTo>
 				}
 			>
-				<Container
-					scroll={"vertical"}
-					height={"fit"}
-					width={"fit"}
-				>
-					<Rating
-						textHint={(value) => `Condition - Overall [${value}] (hint)`}
-						selection={selection}
-					/>
-				</Container>
+				<ConditionContainer selection={selection} />
 			</TitleContainer>
 		);
 	},

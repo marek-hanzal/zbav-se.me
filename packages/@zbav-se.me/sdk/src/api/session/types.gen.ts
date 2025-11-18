@@ -517,6 +517,7 @@ export type tListingTransactionLogWhere = {
      */
     listingTransactionId?: string;
     status?: tListingTransactionStatus;
+    statusIn?: Array<tListingTransactionStatus>;
     side?: tListingTransactionSide;
 };
 
@@ -574,6 +575,7 @@ export type tListingTransactionLogFilter = {
      */
     listingTransactionId?: string;
     status?: tListingTransactionStatus;
+    statusIn?: Array<tListingTransactionStatus>;
     side?: tListingTransactionSide;
 };
 
@@ -606,6 +608,26 @@ export type tListingTransactionLog = {
      * Creation timestamp
      */
     createdAt: string;
+};
+
+/**
+ * Buyer info for the listing transaction
+ */
+export type tListingTransactionBuyerInfo = {
+    /**
+     * Buyer score
+     */
+    score: number;
+};
+
+/**
+ * Seller info for the listing transaction
+ */
+export type tListingTransactionSellerInfo = {
+    /**
+     * Seller score
+     */
+    score: number;
 };
 
 /**
@@ -2257,6 +2279,15 @@ export type tApiCategoryCollectionRequest = {
     url: '/api/session/category/collection';
 };
 
+export type apiCategoryCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiCategoryCollectionError = apiCategoryCollectionErrors[keyof apiCategoryCollectionErrors];
+
 export type tApiCategoryCollectionResponse = {
     /**
      * Access collection of categories based on provided query
@@ -2272,6 +2303,15 @@ export type tApiCategoryCountRequest = {
     query?: never;
     url: '/api/session/category/count';
 };
+
+export type apiCategoryCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiCategoryCountError = apiCategoryCountErrors[keyof apiCategoryCountErrors];
 
 export type tApiCategoryCountResponse = {
     /**
@@ -2313,10 +2353,6 @@ export type apiFeedCreateErrors = {
      * Feed not found after creation
      */
     404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
 };
 
 export type apiFeedCreateError = apiFeedCreateErrors[keyof apiFeedCreateErrors];
@@ -2345,10 +2381,6 @@ export type apiFeedPatchErrors = {
      * Feed item not found
      */
     404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
 };
 
 export type apiFeedPatchError = apiFeedPatchErrors[keyof apiFeedPatchErrors];
@@ -2397,6 +2429,15 @@ export type tApiFeedCollectionRequest = {
     url: '/api/session/feed/collection';
 };
 
+export type apiFeedCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFeedCollectionError = apiFeedCollectionErrors[keyof apiFeedCollectionErrors];
+
 export type tApiFeedCollectionResponse = {
     /**
      * Access collection of feed items based on provided query
@@ -2412,6 +2453,15 @@ export type tApiFeedCountRequest = {
     query?: never;
     url: '/api/session/feed/count';
 };
+
+export type apiFeedCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFeedCountError = apiFeedCountErrors[keyof apiFeedCountErrors];
 
 export type tApiFeedCountResponse = {
     /**
@@ -2437,10 +2487,6 @@ export type apiFeedDeleteErrors = {
      * Feed item not found
      */
     404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
 };
 
 export type apiFeedDeleteError = apiFeedDeleteErrors[keyof apiFeedDeleteErrors];
@@ -2577,6 +2623,15 @@ export type tApiListingCollectionRequest = {
     url: '/api/session/listing/collection';
 };
 
+export type apiListingCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingCollectionError = apiListingCollectionErrors[keyof apiListingCollectionErrors];
+
 export type tApiListingCollectionResponse = {
     /**
      * Access collection of listings based on provided query
@@ -2592,6 +2647,15 @@ export type tApiListingCountRequest = {
     query?: never;
     url: '/api/session/listing/count';
 };
+
+export type apiListingCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingCountError = apiListingCountErrors[keyof apiListingCountErrors];
 
 export type tApiListingCountResponse = {
     /**
@@ -2676,6 +2740,14 @@ export type apiListingCartToggleErrors = {
      * You cannot add your own listing to cart
      */
     400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Too many requests
+     */
+    429: tMessage;
 };
 
 export type apiListingCartToggleError = apiListingCartToggleErrors[keyof apiListingCartToggleErrors];
@@ -2790,6 +2862,14 @@ export type apiListingFlagToggleErrors = {
      * Invalid request
      */
     400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Too many requests
+     */
+    429: tMessage;
 };
 
 export type apiListingFlagToggleError = apiListingFlagToggleErrors[keyof apiListingFlagToggleErrors];
@@ -2809,6 +2889,15 @@ export type tApiListingTransactionCollectionRequest = {
     query?: never;
     url: '/api/session/listing-transaction/collection';
 };
+
+export type apiListingTransactionCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionCollectionError = apiListingTransactionCollectionErrors[keyof apiListingTransactionCollectionErrors];
 
 export type tApiListingTransactionCollectionResponse = {
     /**
@@ -2834,10 +2923,6 @@ export type apiListingTransactionCreateErrors = {
      * Listing not found
      */
     404: tMessage;
-    /**
-     * Failed to create transaction
-     */
-    500: tMessage;
 };
 
 export type apiListingTransactionCreateError = apiListingTransactionCreateErrors[keyof apiListingTransactionCreateErrors];
@@ -2876,6 +2961,62 @@ export type tApiListingTransactionFetchResponse = {
 };
 
 export type apiListingTransactionFetchResponse = tApiListingTransactionFetchResponse[keyof tApiListingTransactionFetchResponse];
+
+export type tApiListingTransactionSellerInfoRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tListingTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-transaction/seller-info';
+};
+
+export type apiListingTransactionSellerInfoErrors = {
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tMessage;
+};
+
+export type apiListingTransactionSellerInfoError = apiListingTransactionSellerInfoErrors[keyof apiListingTransactionSellerInfoErrors];
+
+export type tApiListingTransactionSellerInfoResponse = {
+    /**
+     * Seller info
+     */
+    200: tListingTransactionSellerInfo;
+};
+
+export type apiListingTransactionSellerInfoResponse = tApiListingTransactionSellerInfoResponse[keyof tApiListingTransactionSellerInfoResponse];
+
+export type tApiListingTransactionBuyerInfoRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tListingTransactionQuery;
+    path?: never;
+    query?: never;
+    url: '/api/session/listing-transaction/buyer-info';
+};
+
+export type apiListingTransactionBuyerInfoErrors = {
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tMessage;
+};
+
+export type apiListingTransactionBuyerInfoError = apiListingTransactionBuyerInfoErrors[keyof apiListingTransactionBuyerInfoErrors];
+
+export type tApiListingTransactionBuyerInfoResponse = {
+    /**
+     * Buyer info
+     */
+    200: tListingTransactionBuyerInfo;
+};
+
+export type apiListingTransactionBuyerInfoResponse = tApiListingTransactionBuyerInfoResponse[keyof tApiListingTransactionBuyerInfoResponse];
 
 export type tApiListingTransactionLogCollectionRequest = {
     body?: tListingTransactionLogQuery;

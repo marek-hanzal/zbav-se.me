@@ -66,19 +66,16 @@ export const ToneRoseCls = contract(PicoCls.contract)
 		"tone.primary.light.border": {
 			class: [
 				"border-rose-200/80",
-				"border-b-rose-300",
 			],
 		},
 		"tone.primary.light.border:hover": {
 			class: [
 				"hover:border-rose-300",
-				"hover:border-b-rose-400",
 			],
 		},
 		"tone.primary.light.border:group-hover": {
 			class: [
 				"group-hover:border-rose-300",
-				"group-hover:border-b-rose-400",
 			],
 		},
 		"tone.primary.light.shadow": {
@@ -161,19 +158,16 @@ export const ToneRoseCls = contract(PicoCls.contract)
 			class: [
 				// jemnější hrana, žádný neon
 				"border-rose-300/80",
-				"border-b-rose-400/90",
 			],
 		},
 		"tone.primary.dark.border:hover": {
 			class: [
 				"hover:border-rose-200/80",
-				"hover:border-b-rose-300/90",
 			],
 		},
 		"tone.primary.dark.border:group-hover": {
 			class: [
 				"group-hover:border-rose-200/80",
-				"group-hover:border-b-rose-300/90",
 			],
 		},
 		"tone.primary.dark.shadow": {
@@ -258,19 +252,16 @@ export const ToneRoseCls = contract(PicoCls.contract)
 		"tone.secondary.light.border": {
 			class: [
 				"border-violet-200/80",
-				"border-b-violet-300",
 			],
 		},
 		"tone.secondary.light.border:hover": {
 			class: [
 				"hover:border-violet-300",
-				"hover:border-b-violet-400",
 			],
 		},
 		"tone.secondary.light.border:group-hover": {
 			class: [
 				"group-hover:border-violet-300",
-				"group-hover:border-b-violet-400",
 			],
 		},
 		"tone.secondary.light.shadow": {
@@ -351,19 +342,16 @@ export const ToneRoseCls = contract(PicoCls.contract)
 		"tone.secondary.dark.border": {
 			class: [
 				"border-violet-300",
-				"border-b-violet-200",
 			],
 		},
 		"tone.secondary.dark.border:hover": {
 			class: [
 				"hover:border-violet-200",
-				"hover:border-b-violet-100",
 			],
 		},
 		"tone.secondary.dark.border:group-hover": {
 			class: [
 				"group-hover:border-violet-200",
-				"group-hover:border-b-violet-100",
 			],
 		},
 		"tone.secondary.dark.shadow": {
@@ -395,7 +383,7 @@ export const ToneRoseCls = contract(PicoCls.contract)
 		},
 		"border.default": {
 			class: [
-				"border-2",
+				"border-3",
 			],
 		},
 		"shadow.default": {
@@ -405,7 +393,7 @@ export const ToneRoseCls = contract(PicoCls.contract)
 		},
 		"round.default": {
 			class: [
-				"rounded-xl",
+				"rounded-lg",
 			],
 		},
 	})

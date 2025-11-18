@@ -2,7 +2,7 @@ import { z } from "@hono/zod-openapi";
 
 export const LocationAutocompleteSchema = z
 	.object({
-		text: z.string().min(3).openapi({
+		text: z.string().openapi({
 			description: "The search text for location autocomplete",
 		}),
 		lang: z.string().min(2).max(8).openapi({

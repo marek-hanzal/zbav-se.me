@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSnapperNav } from "@use-pico/client/hook";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const [uploadIds, setUploadIds] = useState<string[]>(state.uploadIds ?? []);
 
 		/**
@@ -43,6 +44,26 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 						to={"/$locale/seller"}
 						params={{
 							locale,
+						}}
+					/>
+				}
+				right={
+					<ConfirmButton
+						iconEnabled={CloseIcon}
+						iconProps={{
+							size: "md",
+						}}
+						tone={"secondary"}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/seller",
+									params: {
+										locale,
+									},
+								});
+							},
 						}}
 					/>
 				}

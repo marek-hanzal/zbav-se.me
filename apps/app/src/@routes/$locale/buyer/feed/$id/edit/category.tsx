@@ -7,7 +7,7 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { CategorySelection } from "~/app/category/ui/CategorySelection";
+import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 	component() {
@@ -96,9 +96,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 					/>
 				}
 			>
-				<CategorySelection
-					locale={locale}
+				<CategorySelectionContainer
 					selection={selection}
+					categoryId={feed.query?.filter?.categoryId}
 				/>
 			</TitleContainer>
 		);

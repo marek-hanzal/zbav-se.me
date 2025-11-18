@@ -17,7 +17,6 @@ export const ProgressCls = contract(PicoCls.contract)
 	.root({
 		root: {
 			class: [
-				"Progress-root",
 				"h-full",
 				"w-full",
 				"transition-all",
@@ -30,7 +29,6 @@ export const ProgressCls = contract(PicoCls.contract)
 		},
 		progress: {
 			class: [
-				"Progress-progress",
 				"h-full",
 				"leading-none",
 				"transition-all",
@@ -278,5 +276,5 @@ export const ProgressCls = contract(PicoCls.contract)
 export type ProgressCls = typeof ProgressCls;
 
 export namespace ProgressCls {
-	export type Props<P = unknown> = Cls.Props<typeof ProgressCls, P>;
+	export type Props<P = unknown> = Cls.Props<ProgressCls, P>;
 }

@@ -283,8 +283,7 @@ export const sLocationAutocomplete = {
     type: 'object',
     properties: {
         text: {
-            type: 'string',
-            minLength: 3
+            type: 'string'
         },
         lang: {
             type: 'string',
@@ -510,6 +509,12 @@ export const sListingTransactionLogWhere = {
         status: {
             '$ref': '#/components/schemas/ListingTransactionStatus'
         },
+        statusIn: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingTransactionStatus'
+            }
+        },
         side: {
             '$ref': '#/components/schemas/ListingTransactionSide'
         }
@@ -546,6 +551,12 @@ export const sListingTransactionLogFilter = {
         },
         status: {
             '$ref': '#/components/schemas/ListingTransactionStatus'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                '$ref': '#/components/schemas/ListingTransactionStatus'
+            }
         },
         side: {
             '$ref': '#/components/schemas/ListingTransactionSide'
@@ -589,6 +600,28 @@ export const sListingTransactionLog = {
         }
     },
     required: ['id', 'listingTransactionId', 'status', 'side', 'createdAt']
+} as const;
+
+export const sListingTransactionBuyerInfo = {
+    type: 'object',
+    properties: {
+        score: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: ['score']
+} as const;
+
+export const sListingTransactionSellerInfo = {
+    type: 'object',
+    properties: {
+        score: {
+            type: 'number',
+            example: 0
+        }
+    },
+    required: ['score']
 } as const;
 
 export const sListingTransactionCreate = {

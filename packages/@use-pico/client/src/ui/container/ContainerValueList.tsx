@@ -56,9 +56,12 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 								"justify-between",
 								"h-fit",
 								"w-full",
+								"border-t-0",
+								"border-l-0",
+								"border-r-0",
+								"rounded-none",
 							],
 							token: [
-								"round.md",
 								"square.md",
 							],
 						},

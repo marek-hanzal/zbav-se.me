@@ -9,7 +9,8 @@ export namespace BadgeLeft {
 export const BadgeLeft: FC<BadgeLeft.Props> = (props) => {
 	return (
 		<Badge
-			tone={"secondary"}
+			tone={"primary"}
+			theme={"light"}
 			size={"lg"}
 			round={"full"}
 			tweak={{

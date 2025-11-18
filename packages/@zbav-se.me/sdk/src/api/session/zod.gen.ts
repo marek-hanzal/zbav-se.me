@@ -323,7 +323,7 @@ export type zLocationQuery = z.infer<typeof zLocationQuery>;
  * Data for location autocomplete
  */
 export const zLocationAutocomplete = z.object({
-    text: z.string().min(3).register(z.globalRegistry, {
+    text: z.string().register(z.globalRegistry, {
         description: "The search text for location autocomplete"
     }),
     lang: z.string().min(2).max(8).register(z.globalRegistry, {
@@ -572,6 +572,7 @@ export const zListingTransactionLogWhere = z.object({
         description: "This filter matches the exact listingTransactionId"
     })),
     status: z.optional(zListingTransactionStatus),
+    statusIn: z.optional(z.array(zListingTransactionStatus)),
     side: z.optional(zListingTransactionSide)
 }).register(z.globalRegistry, {
     description: "App-based filters"
@@ -596,6 +597,7 @@ export const zListingTransactionLogFilter = z.object({
         description: "This filter matches the exact listingTransactionId"
     })),
     status: z.optional(zListingTransactionStatus),
+    statusIn: z.optional(z.array(zListingTransactionStatus)),
     side: z.optional(zListingTransactionSide)
 }).register(z.globalRegistry, {
     description: "Filter object for listing transaction log collection"
@@ -651,6 +653,32 @@ export const zListingTransactionLogCollection = z.object({
 });
 
 export type zListingTransactionLogCollection = z.infer<typeof zListingTransactionLogCollection>;
+
+/**
+ * Buyer info for the listing transaction
+ */
+export const zListingTransactionBuyerInfo = z.object({
+    score: z.number().register(z.globalRegistry, {
+        description: "Buyer score"
+    })
+}).register(z.globalRegistry, {
+    description: "Buyer info for the listing transaction"
+});
+
+export type zListingTransactionBuyerInfo = z.infer<typeof zListingTransactionBuyerInfo>;
+
+/**
+ * Seller info for the listing transaction
+ */
+export const zListingTransactionSellerInfo = z.object({
+    score: z.number().register(z.globalRegistry, {
+        description: "Seller score"
+    })
+}).register(z.globalRegistry, {
+    description: "Seller info for the listing transaction"
+});
+
+export type zListingTransactionSellerInfo = z.infer<typeof zListingTransactionSellerInfo>;
 
 /**
  * Data for creating a new listing transaction
@@ -2810,6 +2838,36 @@ export type zapiListingTransactionFetchRequest = z.infer<typeof zApiListingTrans
 export const zApiListingTransactionFetchResponse = zListingTransaction;
 
 export type zapiListingTransactionFetchResponse = z.infer<typeof zApiListingTransactionFetchResponse>;
+
+export const zApiListingTransactionSellerInfoData = z.object({
+    body: z.optional(zListingTransactionQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingTransactionSellerInfoRequest = z.infer<typeof zApiListingTransactionSellerInfoData>;
+
+/**
+ * Seller info
+ */
+export const zApiListingTransactionSellerInfoResponse = zListingTransactionSellerInfo;
+
+export type zapiListingTransactionSellerInfoResponse = z.infer<typeof zApiListingTransactionSellerInfoResponse>;
+
+export const zApiListingTransactionBuyerInfoData = z.object({
+    body: z.optional(zListingTransactionQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingTransactionBuyerInfoRequest = z.infer<typeof zApiListingTransactionBuyerInfoData>;
+
+/**
+ * Buyer info
+ */
+export const zApiListingTransactionBuyerInfoResponse = zListingTransactionBuyerInfo;
+
+export type zapiListingTransactionBuyerInfoResponse = z.infer<typeof zApiListingTransactionBuyerInfoResponse>;
 
 export const zApiListingTransactionLogCollectionData = z.object({
     body: z.optional(zListingTransactionLogQuery),

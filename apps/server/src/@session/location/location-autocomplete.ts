@@ -93,6 +93,15 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 			const { text, lang } = c.req.valid("json");
 			const limit = 5;
 
+			if (text.length < 3) {
+				return c.json<LocationSchema.Type[], 200>([], 200, {
+					/**
+					 * Just soft mark that the request is invalid
+					 */
+					"X-Location-Error": "Text too short",
+				});
+			}
+
 			// First check: quick cache lookup without lock (outside transaction)
 			const quickCache = await withList({
 				select: withLocationSelect({

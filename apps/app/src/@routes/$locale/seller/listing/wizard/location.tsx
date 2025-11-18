@@ -38,6 +38,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
@@ -78,7 +81,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 				}
 			>
 				<LocationSelection
-					locale={locale}
 					value={locationId}
 					onChange={setLocationId}
 				/>

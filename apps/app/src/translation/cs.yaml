@@ -27,9 +27,14 @@
     value: Tvůj košík
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
-    value:
-        Nikdy nezadávej svou přesnou adresu, jelikož inzeráty jsou veřejné. Můžeš
-        např. napsat jenom název města, vesnice, čtvrť a pod.
+    value: |
+        **Nikdy** nezadávej svou **přesnou adresu**, jelikož inzeráty jsou veřejné.
+
+
+        Můžeš např. napsat jenom **název města, vesnice, čtvrť** a pod.
+
+
+        _Později si budeš moci v rámci transakce adresu upřesnit, když budeš chtít._
 0f25aecf3dc16ad45bb4abf1dd685e545d61829586dc5b143ff86248:
     ref: Empty cart category (title)
     value: Tady ti už nic nezbylo
@@ -107,7 +112,7 @@
     value: Seznam transakcí
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
     ref: Next - title (button)
-    value: Next - title (button)
+    value: Titulek
 2edb606e2d60f98c857354944c5b5b054d0ae6b6a9ec09327651a944:
     ref: Error ignoring listing (toast)
     value: Error ignoring listing (toast)

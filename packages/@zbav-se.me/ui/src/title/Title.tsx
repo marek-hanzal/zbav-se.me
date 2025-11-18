@@ -26,7 +26,6 @@ export const Title: FC<Title.Props> = ({ ref, textTitle, textSubtitle, right, le
 			<Container
 				ui="Title-root"
 				round={"lg"}
-				square={"md"}
 				tone={"unset"}
 				theme={"unset"}
 				tweak={{
