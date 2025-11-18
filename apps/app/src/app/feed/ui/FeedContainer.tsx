@@ -28,27 +28,17 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 	});
 	const navigate = useNavigate();
 
-	const locationFetchQuery = withLocationFetchQuery.useQuery(
-		{
-			where: {
-				id: feed.locationId ?? undefined,
-			},
+	const locationFetchQuery = withLocationFetchQuery.useSuspenseQuery({
+		where: {
+			id: feed.locationId ?? undefined,
 		},
-		{
-			enabled: !!feed.locationId,
-		},
-	);
+	});
 
-	const categoryCollectionQuery = withCategoryCollectionQuery.useSuspenseQuery(
-		{
-			where: {
-				idIn: feed.query?.filter?.categoryIdIn ?? undefined,
-			},
+	const categoryCollectionQuery = withCategoryCollectionQuery.useSuspenseQuery({
+		where: {
+			idIn: feed.query?.filter?.categoryIdIn,
 		},
-		{
-			enabled: !!feed.query?.filter?.categoryIdIn?.length,
-		},
-	);
+	});
 
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
 		onPostMutation() {
@@ -178,56 +168,31 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 					}
 				/>
 
-				<Data
-					result={categoryCollectionQuery}
-					renderSuccess={({ data }) => (
-						<ContainerValueList
-							textTitle={"Feed category (label)"}
-							textEmpty={"Feed category not selected"}
-							items={data.data}
-							render={(category) => (
-								<div className={"flex flex-col gap-0.5 items-start"}>
-									<Typo
-										label={category.group}
-										size={"xs"}
-									/>
-									<Typo label={category.category} />
-								</div>
-							)}
-							action={
-								feed.id ? (
-									<LinkTo
-										icon={EditIcon}
-										to={"/$locale/buyer/feed/$id/edit/category"}
-										params={{
-											locale,
-											id: feed.id,
-										}}
-									/>
-								) : null
-							}
-						/>
+				<ContainerValueList
+					textTitle={"Feed category (label)"}
+					textEmpty={"Feed category not selected"}
+					items={categoryCollectionQuery.data.data}
+					render={(category) => (
+						<div className={"flex flex-col gap-0.5 items-start"}>
+							<Typo
+								label={category.group}
+								size={"xs"}
+							/>
+							<Typo label={category.category} />
+						</div>
 					)}
-					renderEmpty={() => (
-						<ContainerValueList
-							textTitle={"Feed category (label)"}
-							textEmpty={"Feed category not selected"}
-							items={[]}
-							render={() => null}
-							action={
-								feed.id ? (
-									<LinkTo
-										icon={EditIcon}
-										to={"/$locale/buyer/feed/$id/edit/category"}
-										params={{
-											locale,
-											id: feed.id,
-										}}
-									/>
-								) : null
-							}
-						/>
-					)}
+					action={
+						feed.id ? (
+							<LinkTo
+								icon={EditIcon}
+								to={"/$locale/buyer/feed/$id/edit/category"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
+							/>
+						) : null
+					}
 				/>
 
 				<ContainerValueList

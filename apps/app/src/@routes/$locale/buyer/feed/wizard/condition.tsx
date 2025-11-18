@@ -4,8 +4,9 @@ import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon"
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
-import { Rating } from "~/app/ui/rating/Rating";
+import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 	validateSearch: FeedWizardSchema,
@@ -40,14 +41,14 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
 								navigate({
 									to: "/$locale/buyer/feed/select",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -83,10 +84,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 					</LinkTo>
 				}
 			>
-				<Rating
-					textHint={(value) => `Condition - Overall [${value}] (hint)`}
-					selection={selection}
-				/>
+				<ConditionContainer selection={selection} />
 			</TitleContainer>
 		);
 	},

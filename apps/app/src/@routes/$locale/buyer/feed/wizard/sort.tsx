@@ -32,14 +32,14 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/sort")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
 								navigate({
 									to: "/$locale/buyer/feed/select",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}

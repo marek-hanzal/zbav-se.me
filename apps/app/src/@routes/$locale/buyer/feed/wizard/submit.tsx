@@ -1,57 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, CloseIcon, SpinnerIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
 import { type tFeedCreate, zFeed } from "@zbav-se.me/sdk/api/session";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/session";
-import { TitleContainer } from "@zbav-se.me/ui/container";
+import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
+import { Suspense } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 	validateSearch: FeedWizardSchema,
-	pendingComponent() {
-		const { locale } = Route.useParams();
-		const state = Route.useSearch();
-		const navigate = Route.useNavigate();
-
-		return (
-			<TitleContainer
-				textTitle={"Feed submit (title)"}
-				left={
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/wizard/name"}
-						search={state}
-						params={{
-							locale,
-						}}
-					/>
-				}
-				right={
-					<ConfirmButton
-						iconEnabled={CloseIcon}
-						tone={"secondary"}
-						confirmProps={{
-							tone: "danger",
-							onClick: () => {
-								navigate({
-									to: "/$locale/buyer/feed/select",
-									params: {
-										locale,
-									},
-								});
-							},
-						}}
-					/>
-				}
-			>
-				<Status icon={SpinnerIcon} />
-			</TitleContainer>
-		);
-	},
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
@@ -71,8 +31,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 			},
 		});
 
-		const isLoading = feedCreateMutation.isPending;
-
 		return (
 			<TitleContainer
 				textTitle={"Feed submit (title)"}
@@ -84,21 +42,20 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
 								navigate({
 									to: "/$locale/buyer/feed/select",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -108,8 +65,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 					<Button
 						iconEnabled={FeedIcon}
 						label={"Submit - feed (button)"}
-						disabled={isLoading}
-						loading={isLoading}
+						disabled={feedCreateMutation.isPending}
+						loading={feedCreateMutation.isPending}
 						tone={"primary"}
 						theme={"dark"}
 						size={"lg"}
@@ -120,13 +77,15 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 					/>
 				}
 			>
-				<FeedContainer
-					feed={zFeed
-						.omit({
-							id: true,
-						})
-						.parse(state)}
-				/>
+				<Suspense fallback={<SpinnerContainer />}>
+					<FeedContainer
+						feed={zFeed
+							.omit({
+								id: true,
+							})
+							.parse(state)}
+					/>
+				</Suspense>
 			</TitleContainer>
 		);
 	},

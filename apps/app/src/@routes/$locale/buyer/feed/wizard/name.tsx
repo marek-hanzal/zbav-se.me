@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
-		const navigate = useNavigate();
+		const navigate = Route.useNavigate();
 		const [name, setName] = useState<string>(state.name || "");
 
 		return (
@@ -32,14 +32,14 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
 								navigate({
 									to: "/$locale/buyer/feed/select",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}

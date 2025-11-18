@@ -56,6 +56,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 									class: [
 										"justify-start",
 										"text-left",
+										"py-2",
+										"px-3",
+										"h-fit",
 									],
 								},
 							},
@@ -96,28 +99,31 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 							});
 						}}
 					>
-						<div className="flex items-center gap-2">
-							<Badge
-								tone={position ? "primary" : "secondary"}
-								theme={position ? "dark" : "light"}
-								size={"sm"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"py-2",
-												"px-4",
-											],
-										},
-									},
-								}}
-							>
-								{position ?? "-"}
-							</Badge>
-
+						<div className="flex gap-2 items-center justify-between w-full">
 							<Tx
 								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
+								font={position ? "bold" : "normal"}
 							/>
+
+							{position ? (
+								<Badge
+									tone={"primary"}
+									theme={"dark"}
+									size={"sm"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"py-2",
+													"px-4",
+												],
+											},
+										},
+									}}
+								>
+									{position}
+								</Badge>
+							) : null}
 						</div>
 					</Button>
 				);

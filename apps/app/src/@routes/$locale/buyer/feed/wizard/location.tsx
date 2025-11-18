@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
@@ -12,6 +12,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
+		const navigate = Route.useNavigate();
 		const [locationId, setLocationId] = useState(state?.locationId);
 		const [latLon, setLatLon] = useState(state.query?.meta?.latLon);
 
@@ -24,6 +25,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 						to={"/$locale/buyer/feed/select"}
 						params={{
 							locale,
+						}}
+					/>
+				}
+				right={
+					<ConfirmButton
+						iconEnabled={CloseIcon}
+						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/buyer/feed/select",
+								});
+							},
 						}}
 					/>
 				}
@@ -59,7 +77,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 				}
 			>
 				<LocationSelection
-					locale={locale}
 					value={locationId}
 					onChange={setLocationId}
 					onLocation={({ lon, lat }) =>
