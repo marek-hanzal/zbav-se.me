@@ -62,43 +62,38 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 						return Effect.succeed(c.body(null, 204));
 					},
 					onFailure(e) {
-						/**
-						 * This just holds type exhaustive match for errors if any comes up.
-						 */
-						return match(e)
-							.with(
-								{
-									_tag: "InvalidRequestError",
-								},
-								() => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type, 400>(
+						return Effect.succeed(
+							match(e)
+								.with(
+									{
+										_tag: "InvalidRequestError",
+									},
+									() => {
+										return c.json<MessageSchema.Type, 400>(
 											{
 												type: "error",
 												message: e.message,
 											},
 											400,
-										),
-									);
-								},
-							)
-							.with(
-								{
-									_tag: "NotFoundError",
-								},
-								() => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>(
+										);
+									},
+								)
+								.with(
+									{
+										_tag: "NotFoundError",
+									},
+									() => {
+										return c.json<MessageSchema.Type, 404>(
 											{
 												type: "error",
 												message: e.message,
 											},
 											404,
-										),
-									);
-								},
-							)
-							.exhaustive();
+										);
+									},
+								)
+								.exhaustive(),
+						);
 					},
 				}),
 				Effect.runPromise,

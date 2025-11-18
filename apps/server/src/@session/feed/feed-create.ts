@@ -61,21 +61,24 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 						return Effect.succeed(c.json<FeedSchema.Type, 201>(feed, 201));
 					},
 					onFailure(e) {
-						return match(e)
-							.with(
-								{
-									_tag: "NotFoundError",
-								},
-								() => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>({
-											type: "error",
-											message: e.message,
-										}),
-									);
-								},
-							)
-							.exhaustive();
+						return Effect.succeed(
+							match(e)
+								.with(
+									{
+										_tag: "NotFoundError",
+									},
+									() => {
+										return c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										);
+									},
+								)
+								.exhaustive(),
+						);
 					},
 				}),
 				Effect.runPromise,

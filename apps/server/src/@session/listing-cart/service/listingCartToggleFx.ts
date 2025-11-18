@@ -31,17 +31,21 @@ export const listingCartToggleFx = ({
 			});
 
 			if (!listing) {
-				return yield* new NotFoundError({
-					resource: "listing",
-					resourceId: listingId,
-					message: "Listing not found",
-				});
+				return yield* Effect.fail(
+					new NotFoundError({
+						resource: "listing",
+						resourceId: listingId,
+						message: "Listing not found",
+					}),
+				);
 			}
 
 			if (listing.userId === userId) {
-				return yield* new InvalidRequestError({
-					message: "You cannot add your own listing to cart",
-				});
+				return yield* Effect.fail(
+					new InvalidRequestError({
+						message: "You cannot add your own listing to cart",
+					}),
+				);
 			}
 
 			yield* listingCartCreateFx({

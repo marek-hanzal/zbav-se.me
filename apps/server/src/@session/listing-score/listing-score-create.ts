@@ -70,57 +70,54 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 					onSuccess() {
 						return Effect.succeed(c.body(null, 201));
 					},
-					onFailure: (e) =>
-						match(e)
-							.with(
-								{
-									_tag: "InvalidRequestError",
-								},
-								(e) => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type>(
+					onFailure(e) {
+						return Effect.succeed(
+							match(e)
+								.with(
+									{
+										_tag: "InvalidRequestError",
+									},
+									(e) => {
+										return c.json<MessageSchema.Type, 400>(
 											{
 												type: "error",
 												message: e.message,
 											},
 											400,
-										),
-									);
-								},
-							)
-							.with(
-								{
-									_tag: "NotFoundError",
-								},
-								(e) => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type>(
+										);
+									},
+								)
+								.with(
+									{
+										_tag: "NotFoundError",
+									},
+									(e) => {
+										return c.json<MessageSchema.Type, 404>(
 											{
 												type: "error",
 												message: e.message,
 											},
 											404,
-										),
-									);
-								},
-							)
-							.with(
-								{
-									_tag: "TooManyRequests",
-								},
-								(e) => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type>(
+										);
+									},
+								)
+								.with(
+									{
+										_tag: "TooManyRequests",
+									},
+									(e) => {
+										return c.json<MessageSchema.Type, 429>(
 											{
 												type: "error",
 												message: e.message,
 											},
 											429,
-										),
-									);
-								},
-							)
-							.exhaustive(),
+										);
+									},
+								)
+								.exhaustive(),
+						);
+					},
 				}),
 				Effect.runPromise,
 			);

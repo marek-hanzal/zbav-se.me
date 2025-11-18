@@ -40,17 +40,21 @@ export const listingScoreCreateFx = ({
 		});
 
 		if (!listing) {
-			return yield* new NotFoundError({
-				resource: "listing",
-				resourceId: listingId,
-				message: "Listing not found",
-			});
+			return yield* Effect.fail(
+				new NotFoundError({
+					resource: "listing",
+					resourceId: listingId,
+					message: "Listing not found",
+				}),
+			);
 		}
 
 		if (listing.userId === userId) {
-			return yield* new InvalidRequestError({
-				message: "You cannot score your own listing",
-			});
+			return yield* Effect.fail(
+				new InvalidRequestError({
+					message: "You cannot score your own listing",
+				}),
+			);
 		}
 
 		yield* listingScoreRateLimitFx({

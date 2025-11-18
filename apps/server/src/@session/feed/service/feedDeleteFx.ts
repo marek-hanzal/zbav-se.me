@@ -47,13 +47,11 @@ export const feedDeleteFx = ({ database, userId, query }: feedDeleteFx.Props) =>
 		});
 
 		if (!feed) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "feed",
-					resourceId: "(query)",
-					message: "Feed item not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "feed",
+				resourceId: "(query)",
+				message: "Feed item not found",
+			});
 		}
 
 		return feed;
