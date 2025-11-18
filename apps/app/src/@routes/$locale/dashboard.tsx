@@ -7,47 +7,23 @@ import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 import { Tile } from "~/app/ui/dashboard/Tile";
 
 export const Route = createFileRoute("/$locale/dashboard")({
-	// async beforeLoad({ params: { locale }, context: { user } }) {
-	// 	if (user.side) {
-	// 		match(user.side)
-	// 			.with("seller", () => {
-	// 				throw redirect({
-	// 					to: "/$locale/seller",
-	// 					params: {
-	// 						locale,
-	// 					},
-	// 					statusCode: 302,
-	// 				});
-	// 			})
-	// 			.with("buyer", () => {
-	// 				throw redirect({
-	// 					to: "/$locale/buyer",
-	// 					params: {
-	// 						locale,
-	// 					},
-	// 					statusCode: 302,
-	// 				});
-	// 			})
-	// 			.exhaustive();
-	// 	}
-	// },
 	component() {
 		const { locale } = Route.useParams();
 
 		return (
 			<Container
+				ui="Dashboard-root"
 				layout={"vertical"}
 				gap={"lg"}
 				height={"fit"}
 				items={"center"}
-				tone={"secondary"}
-				theme={"light"}
 				square={"xl"}
 			>
 				<Container
+					ui="Dashboard-container"
 					layout={"vertical-flex"}
-					gap={"xl"}
 					height={"content"}
+					gap={"xl"}
 				>
 					<Logo />
 

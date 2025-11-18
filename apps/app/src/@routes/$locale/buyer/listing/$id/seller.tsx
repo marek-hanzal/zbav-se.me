@@ -21,7 +21,6 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/seller")({
 							id,
 						}}
 						search={query}
-						tone={"secondary"}
 					/>
 				}
 				textTitle={"Listing - Seller info (title)"}

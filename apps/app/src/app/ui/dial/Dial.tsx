@@ -69,7 +69,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 									"w-full",
 								],
 								token: [
-									"round.lg",
+									"round.default",
 									"tone.primary.light.border",
 									"tone.primary.light.shadow",
 								],

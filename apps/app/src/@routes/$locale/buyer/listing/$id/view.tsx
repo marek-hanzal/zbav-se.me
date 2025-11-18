@@ -17,6 +17,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 
 		return (
 			<TitleContainer
+				textTitle={"Listing detail (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -28,10 +29,8 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 							scrollToListingId: id,
 							query,
 						}}
-						tone={"secondary"}
 					/>
 				}
-				textTitle={"Listing detail (title)"}
 			>
 				<Spinner />
 			</TitleContainer>
@@ -48,6 +47,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 
 		return (
 			<TitleContainer
+				textTitle={"Listing detail (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -59,10 +59,8 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 							scrollToListingId: id,
 							query,
 						}}
-						tone={"secondary"}
 					/>
 				}
-				textTitle={"Listing detail (title)"}
 			>
 				<Container scroll={"vertical"}>
 					<ListingDetailContainer

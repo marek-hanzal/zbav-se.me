@@ -65,15 +65,6 @@ export const Route = createRootRouteWithContext<{
 							ui="Root-root"
 							height="viewport"
 							width="viewport"
-							tweak={{
-								slot: {
-									root: {
-										token: [
-											"tone.primary.light.bg",
-										],
-									},
-								},
-							}}
 							className={tvc([
 								"md:mx-auto",
 								"md:w-1/3",

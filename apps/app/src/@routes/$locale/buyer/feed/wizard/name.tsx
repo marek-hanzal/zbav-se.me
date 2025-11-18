@@ -25,10 +25,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/name")({
 						params={{
 							locale,
 						}}
-						search={{
-							...state,
-						}}
-						tone={"secondary"}
+						search={state}
 					/>
 				}
 				right={

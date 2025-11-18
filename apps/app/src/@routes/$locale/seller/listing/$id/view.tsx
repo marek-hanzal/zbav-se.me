@@ -26,11 +26,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 		);
 
 		return (
-			<Container
-				square={"md"}
-				tone={"secondary"}
-				theme={"light"}
-			>
+			<Container square={"md"}>
 				<Sheet>
 					<Data
 						result={listingQuery}

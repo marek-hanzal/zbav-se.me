@@ -48,7 +48,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 				>
 					<Badge
 						ui={"CategoryCartListContainer-badge"}
-						round={"md"}
+						round={"default"}
 						tweak={{
 							slot: {
 								root: {
@@ -61,7 +61,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 										"w-full",
 									],
 									token: [
-										"round.md",
+										"round.default",
 										"square.md",
 									],
 								},

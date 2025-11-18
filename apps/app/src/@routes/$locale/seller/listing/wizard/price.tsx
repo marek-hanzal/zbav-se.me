@@ -20,6 +20,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 
 		return (
 			<TitleContainer
+				ui="Price-root"
 				textTitle={"Price (title)"}
 				textSubtitle={
 					price
@@ -42,7 +43,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={

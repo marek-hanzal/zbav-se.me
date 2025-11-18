@@ -1,9 +1,8 @@
 import { keepPreviousData, QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
+import { Container } from "@use-pico/client/ui/container";
 import { Logo } from "@zbav-se.me/ui/logo";
-import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import { routeTree } from "~/_route";
 
 export function getRouter() {
@@ -23,18 +22,29 @@ export function getRouter() {
 		},
 		defaultPreload: "render",
 		defaultNotFoundComponent() {
-			return <Sheet>4😞4</Sheet>;
+			return (
+				<Container
+					layout="vertical-centered"
+					items={"center"}
+				>
+					<div>4😞4</div>
+				</Container>
+			);
 		},
 		defaultPendingComponent() {
 			return (
-				<Sheet>
-					<PrimaryOverlay />
-
+				<Container
+					layout={"vertical-centered"}
+					items={"center"}
+					tone={"secondary"}
+					theme={"light"}
+				>
 					<Logo />
-				</Sheet>
+				</Container>
 			);
 		},
 		defaultPendingMs: 500,
+		scrollRestoration: true,
 	});
 
 	setupRouterSsrQueryIntegration({

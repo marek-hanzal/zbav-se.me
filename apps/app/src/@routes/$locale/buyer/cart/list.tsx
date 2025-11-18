@@ -13,6 +13,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 
 		return (
 			<TitleContainer
+				textTitle={"Your cart (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -20,10 +21,8 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
-				textTitle={"Your cart (title)"}
 			>
 				<Spinner />
 			</TitleContainer>
@@ -50,6 +49,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 
 		return (
 			<TitleContainer
+				textTitle={"Your cart (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -57,10 +57,8 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
-				textTitle={"Your cart (title)"}
 			>
 				<Container scroll={"vertical"}>
 					<CategoryCartListContainer

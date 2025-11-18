@@ -5,8 +5,6 @@ import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@use-pico/client/ui/container";
 import { Logo } from "@zbav-se.me/ui/logo";
-import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import { routeTree } from "~/_route";
 
 export async function getRouter() {
@@ -27,21 +25,24 @@ export async function getRouter() {
 		},
 		defaultPreload: "intent",
 		defaultNotFoundComponent() {
-			return <Sheet>4😞4</Sheet>;
+			return (
+				<Container
+					layout="vertical-centered"
+					items={"center"}
+				>
+					<div>4😞4</div>
+				</Container>
+			);
 		},
 		defaultPendingComponent() {
 			return (
 				<Container
-					square={"sm"}
-					position={"relative"}
+					layout={"vertical-centered"}
+					items={"center"}
 					tone={"secondary"}
 					theme={"light"}
 				>
-					<PrimaryOverlay />
-
-					<Sheet>
-						<Logo />
-					</Sheet>
+					<Logo />
 				</Container>
 			);
 		},

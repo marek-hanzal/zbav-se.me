@@ -130,7 +130,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={
@@ -213,12 +212,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 							);
 						}}
 						renderLoading={() => {
-							return (
-								<SpinnerContainer
-									disableOverlay
-									height={"fit"}
-								/>
-							);
+							return <SpinnerContainer height={"fit"} />;
 						}}
 						renderEmpty={() => {
 							return (

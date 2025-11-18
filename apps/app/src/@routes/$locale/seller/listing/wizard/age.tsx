@@ -40,7 +40,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={

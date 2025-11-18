@@ -56,7 +56,7 @@ export const CategorySelection: FC<CategorySelection.Props> = ({ ref, locale, se
 			ref={ref}
 			layout={"vertical-header-content"}
 			gap={"md"}
-			round={"lg"}
+			round={"default"}
 		>
 			<Fulltext
 				state={{
@@ -150,12 +150,7 @@ export const CategorySelection: FC<CategorySelection.Props> = ({ ref, locale, se
 					);
 				}}
 				renderLoading={() => {
-					return (
-						<SpinnerContainer
-							disableOverlay
-							height={"fit"}
-						/>
-					);
+					return <SpinnerContainer height={"fit"} />;
 				}}
 				renderEmpty={() => {
 					return (

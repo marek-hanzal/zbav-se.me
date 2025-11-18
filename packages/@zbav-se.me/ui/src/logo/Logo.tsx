@@ -22,6 +22,7 @@ export const Logo: FC = () => {
 				<Tx
 					label={"zbav-se.me"}
 					tone={"primary"}
+					theme={"light"}
 					display={"block"}
 					tweak={{
 						slot: {
@@ -36,6 +37,7 @@ export const Logo: FC = () => {
 				<Tx
 					label={"zbav-se.me"}
 					tone={"secondary"}
+					theme={"light"}
 					display={"block"}
 					tweak={{
 						slot: {

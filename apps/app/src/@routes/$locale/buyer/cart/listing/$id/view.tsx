@@ -28,7 +28,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 						search={{
 							scrollToListingId: id,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				textTitle={"Listing detail (title)"}
@@ -60,7 +59,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 						search={{
 							scrollToListingId: id,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				textTitle={"Listing detail (title)"}

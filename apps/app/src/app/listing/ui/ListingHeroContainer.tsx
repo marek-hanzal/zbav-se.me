@@ -1,10 +1,10 @@
 import { useVisibilityContext } from "@use-pico/client/context";
 import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
+import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
-import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { type FC, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { HeroImage } from "~/app/ui/img/HeroImage";
 
@@ -154,7 +154,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 			{...props}
 		>
 			{listing.isIgnored ? (
-				<PrimaryOverlay
+				<Overlay
 					tweak={{
 						slot: {
 							root: {

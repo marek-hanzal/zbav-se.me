@@ -46,7 +46,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 			ref={ref}
 			layout={"vertical-header-content"}
 			gap={"md"}
-			round={"lg"}
+			round={"default"}
 		>
 			<div className="flex flex-col gap-2 items-center w-full">
 				<Fulltext
@@ -88,12 +88,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 			<Data
 				result={locationAutocompleteQuery}
 				renderLoading={() => {
-					return (
-						<SpinnerContainer
-							disableOverlay
-							height={"fit"}
-						/>
-					);
+					return <SpinnerContainer height={"fit"} />;
 				}}
 				renderSuccess={({ data }) => {
 					return data.map((item) => {
@@ -148,7 +143,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 										],
 										token: [
 											"square.xl",
-											"round.lg",
+											"round.default",
 										],
 									},
 								},

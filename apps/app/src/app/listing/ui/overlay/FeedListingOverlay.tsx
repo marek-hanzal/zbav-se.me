@@ -27,7 +27,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ listing }) =>
 				tone={"secondary"}
 				theme={"dark"}
 				size={"lg"}
-				round={"md"}
+				round={"default"}
 				snapTo={"top-center"}
 				tweak={{
 					slot: {
@@ -79,7 +79,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ listing }) =>
 			>
 				<Badge
 					size={"lg"}
-					round={"md"}
+					round={"default"}
 					snapTo={"bottom"}
 					tweak={{
 						slot: {

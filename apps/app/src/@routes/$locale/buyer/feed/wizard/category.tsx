@@ -34,7 +34,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 							locale,
 						}}
 						search={state}
-						tone={"secondary"}
 					/>
 				}
 				right={

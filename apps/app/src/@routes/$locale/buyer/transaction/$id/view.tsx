@@ -20,11 +20,10 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>
-				<SpinnerContainer disableOverlay />
+				<SpinnerContainer />
 			</TitleContainer>
 		);
 	},
@@ -51,7 +50,6 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>

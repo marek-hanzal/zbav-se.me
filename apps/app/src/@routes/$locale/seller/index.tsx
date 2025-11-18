@@ -13,6 +13,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 
 		return (
 			<TitleContainer
+				ui="Seller-root"
 				textTitle={"Seller home (title)"}
 				left={
 					<LinkTo
@@ -22,19 +23,15 @@ export const Route = createFileRoute("/$locale/seller/")({
 							locale,
 							side: "none",
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>
 				<Container
+					ui="Seller-container"
 					layout={"vertical-flex"}
 					scroll={"vertical"}
 					gap={"sm"}
 					items={"center"}
-					tone={"secondary"}
-					theme={"light"}
-					square={"md"}
-					position={"relative"}
 				>
 					<LinkTo
 						to="/$locale/seller/listing/wizard/photos"
@@ -76,7 +73,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/shop"
+						to="/$locale/seller/shop"
 						params={{
 							locale,
 						}}
@@ -89,7 +86,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/user"
+						to="/$locale/seller/user"
 						params={{
 							locale,
 						}}

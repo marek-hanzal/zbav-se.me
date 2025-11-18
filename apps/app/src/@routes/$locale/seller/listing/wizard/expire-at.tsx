@@ -25,6 +25,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 
 		return (
 			<TitleContainer
+				ui="ExpireAt-root"
 				textTitle={"Expire (title)"}
 				left={
 					<LinkTo
@@ -34,7 +35,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={

@@ -22,7 +22,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 	return (
 		<Badge
 			tone={"primary"}
-			round={"md"}
+			round={"default"}
 			tweak={{
 				slot: {
 					root: {
@@ -75,6 +75,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					tone={"secondary"}
 					theme={"light"}
 					size={"xs"}
+					round={"default"}
 					tweak={{
 						slot: {
 							root: {

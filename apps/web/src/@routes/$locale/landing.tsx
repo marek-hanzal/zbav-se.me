@@ -5,7 +5,6 @@ import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import { VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { Fade } from "@zbav-se.me/ui/fade";
-import { SecondaryOverlay } from "@zbav-se.me/ui/overlay";
 import { useRef } from "react";
 import { AboutSheet } from "~/app/home/AboutSheet";
 import { ContactSheet } from "~/app/home/ContactSheet";
@@ -35,8 +34,6 @@ export const Route = createFileRoute("/$locale/landing")({
 
 		return (
 			<Container>
-				<SecondaryOverlay />
-
 				<Fade scrollableRef={scrollerRef} />
 
 				<SnapperNav

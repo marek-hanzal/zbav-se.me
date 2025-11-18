@@ -27,6 +27,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 
 		return (
 			<TitleContainer
+				ui="Submit-root"
 				textTitle={"Submit (title)"}
 				textSubtitle={"Submit (subtitle)"}
 				left={
@@ -37,7 +38,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={

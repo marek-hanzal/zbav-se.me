@@ -9,6 +9,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info
 
 		return (
 			<TitleContainer
+				ui="BuyerInfo-root"
 				textTitle="Buyer info (title)"
 				left={
 					<LinkTo
@@ -18,7 +19,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info
 							locale,
 							id,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>

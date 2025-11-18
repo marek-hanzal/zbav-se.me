@@ -11,7 +11,6 @@ import { translator } from "@use-pico/common/translator";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
-import { PrimaryOverlay } from "@zbav-se.me/ui/overlay";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import { useRef } from "react";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
@@ -56,8 +55,6 @@ export const Route = createFileRoute("/$locale/register")({
 				tone={"secondary"}
 				theme={"light"}
 			>
-				<PrimaryOverlay />
-
 				<Fade scrollableRef={scrollerRef} />
 
 				<Container

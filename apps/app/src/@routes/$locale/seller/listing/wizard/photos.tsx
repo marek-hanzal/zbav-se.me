@@ -44,7 +44,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				bottom={
@@ -99,7 +98,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 						layout="horizontal-full"
 						snap={"horizontal-start"}
 						gap={"md"}
-						round={"lg"}
+						round={"default"}
 					>
 						{Array.from({
 							length: photoCountLimit,

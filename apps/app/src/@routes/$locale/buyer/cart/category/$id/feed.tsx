@@ -7,7 +7,6 @@ import { translator } from "@use-pico/common/translator";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/session";
 import { FlowContainer, SpinnerContainer } from "@zbav-se.me/ui/container";
 import { BuyerIcon, DeadEndIcon } from "@zbav-se.me/ui/icon";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
@@ -150,51 +149,49 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 						)
 					}
 					appendix={
-						<Sheet round={"unset"}>
-							<Status
-								icon={DeadEndIcon}
-								textTitle={"That's all for now - cart (title)"}
-								textMessage={"No more listings to show - cart (message)"}
-								action={
-									<div
-										className={
-											"flex flex-col gap-2 items-center justify-center w-full"
-										}
+						<Status
+							icon={DeadEndIcon}
+							textTitle={"That's all for now - cart (title)"}
+							textMessage={"No more listings to show - cart (message)"}
+							action={
+								<div
+									className={
+										"flex flex-col gap-2 items-center justify-center w-full"
+									}
+								>
+									<LinkTo
+										to={"/$locale/buyer/cart/list"}
+										params={{
+											locale,
+										}}
+										full
 									>
-										<LinkTo
-											to={"/$locale/buyer/cart/list"}
-											params={{
-												locale,
-											}}
+										<Button
+											iconEnabled={ArrowLeftIcon}
+											tone={"secondary"}
+											label={"Back to cart (link)"}
 											full
-										>
-											<Button
-												iconEnabled={ArrowLeftIcon}
-												tone={"secondary"}
-												label={"Back to cart (link)"}
-												full
-											/>
-										</LinkTo>
+										/>
+									</LinkTo>
 
-										<LinkTo
-											to={"/$locale/buyer/feed/select"}
-											params={{
-												locale,
-											}}
+									<LinkTo
+										to={"/$locale/buyer/feed/select"}
+										params={{
+											locale,
+										}}
+										full
+									>
+										<Button
+											iconEnabled={ArrowRightIcon}
+											iconPosition={"right"}
+											tone={"secondary"}
+											label={"Go to feed (link)"}
 											full
-										>
-											<Button
-												iconEnabled={ArrowRightIcon}
-												iconPosition={"right"}
-												tone={"secondary"}
-												label={"Go to feed (link)"}
-												full
-											/>
-										</LinkTo>
-									</div>
-								}
-							/>
-						</Sheet>
+										/>
+									</LinkTo>
+								</div>
+							}
+						/>
 					}
 				/>
 			</FlowContainer>

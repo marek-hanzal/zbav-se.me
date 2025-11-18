@@ -47,7 +47,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					},
 				},
 			]}
-			round={"md"}
+			round={"default"}
 			{...props}
 		>
 			<LinkTo

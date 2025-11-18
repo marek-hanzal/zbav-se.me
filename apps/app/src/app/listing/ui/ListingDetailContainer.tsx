@@ -88,12 +88,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				theme={"light"}
 				border={"default"}
 				shadow={"default"}
-				round={"md"}
+				round={"default"}
 			>
 				<HeroImage
 					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
-					className={"w-full h-full object-cover rounded-md"}
+					className={"w-full h-full object-cover"}
 				/>
 			</Container>
 

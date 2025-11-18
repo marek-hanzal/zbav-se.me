@@ -26,7 +26,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={

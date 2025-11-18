@@ -71,7 +71,7 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 			/>
 
 			<Badge
-				round={"xl"}
+				round={"default"}
 				tweak={{
 					slot: {
 						root: {

@@ -22,6 +22,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 
 		return (
 			<TitleContainer
+				ui="Title-root"
 				textTitle={"Listing title (title)"}
 				left={
 					<LinkTo
@@ -31,7 +32,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={

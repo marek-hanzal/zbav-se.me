@@ -61,7 +61,7 @@ export const SnapperNavCls = contract(PicoCls.contract)
 			],
 			token: [
 				"square.sm",
-				"round.lg",
+				"round.default",
 			],
 		},
 		items: {

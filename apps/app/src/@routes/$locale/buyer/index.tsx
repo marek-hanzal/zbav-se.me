@@ -22,7 +22,6 @@ export const Route = createFileRoute("/$locale/buyer/")({
 							locale,
 							side: "none",
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>
@@ -31,9 +30,6 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					scroll={"vertical"}
 					gap={"sm"}
 					items={"center"}
-					tone={"secondary"}
-					theme={"light"}
-					square={"md"}
 				>
 					<LinkTo
 						to="/$locale/buyer/feed/select"
@@ -75,7 +71,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/shop"
+						to="/$locale/buyer/shop"
 						params={{
 							locale,
 						}}
@@ -88,7 +84,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					</LinkTo>
 
 					<LinkTo
-						to="/$locale/user"
+						to="/$locale/buyer/user"
 						params={{
 							locale,
 						}}

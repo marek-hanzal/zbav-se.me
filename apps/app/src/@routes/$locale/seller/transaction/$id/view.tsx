@@ -12,6 +12,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 
 		return (
 			<TitleContainer
+				ui="TransactionView-root"
 				textTitle={"Transaction detail (title)"}
 				left={
 					<LinkTo
@@ -20,11 +21,10 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>
-				<SpinnerContainer disableOverlay />
+				<SpinnerContainer />
 			</TitleContainer>
 		);
 	},
@@ -43,6 +43,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 
 		return (
 			<TitleContainer
+				ui="TransactionView-root"
 				textTitle="Transaction detail (title)"
 				textSubtitle={listingTransaction.title}
 				left={
@@ -52,7 +53,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>

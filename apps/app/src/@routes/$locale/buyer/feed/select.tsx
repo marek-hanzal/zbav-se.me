@@ -22,12 +22,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>
 				<SpinnerContainer
-					disableOverlay
 					tone={"unset"}
 					theme={"unset"}
 					square={"unset"}
@@ -52,7 +50,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						params={{
 							locale,
 						}}
-						tone={"secondary"}
 					/>
 				}
 			>

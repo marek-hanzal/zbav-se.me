@@ -49,7 +49,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 							locale,
 							id: feed.id,
 						}}
-						tone={"secondary"}
 					/>
 				}
 				right={
