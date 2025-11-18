@@ -34,9 +34,6 @@
 0f7b72d63c9509f02f16f4ec88b26001fd0e301da50f8abdd1d55711:
   ref: Start transaction (button)
   value: Start transaction (button)
-105f9db532252d19c7f7a9a715149260c9f30793a4793d6e3b7125e2:
-  ref: Category search (placeholder)
-  value: Category search (placeholder)
 1251277d9ed5b1d65b9592d9c9c95ec5e6b943e99fc35e791642150b:
   ref: accepted
   value: accepted
@@ -58,9 +55,6 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
-1bff8fe7f774035d2148bb701f2bbeddf446b77d47f96cbb50aca0a6:
-  ref: Logout (title)
-  value: Logout (title)
 1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
   ref: Buyer info (title)
   value: Buyer info (title)
@@ -70,9 +64,6 @@
 1e3d85c7c23a71840d9beb99b3e899a3f42d37c190376c17982f5ffa:
   ref: Listing Score - Raw score - no value (label)
   value: Listing Score - Raw score - no value (label)
-24a312aabd81365ad554d0aa207e21d11324d426ad91a2ad808af3fa:
-  ref: Back to Dashboard (label)
-  value: Back to Dashboard (label)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
@@ -112,6 +103,9 @@
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
+3142dbbe5e5453a1903742ffb19fe5f58ac8433e5ef3e55dd65bd3f6:
+  ref: Seller - shop (title)
+  value: Seller - shop (title)
 36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
   ref: seller
   value: seller
@@ -193,6 +187,9 @@
 508db448927e219e075aaea16d106cb569b057ce5a0b44588ef428e0:
   ref: Second tap to add to cart (toast)
   value: Second tap to add to cart (toast)
+56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
+  ref: Buyer - shop (title)
+  value: Buyer - shop (title)
 567d286dd4f0b55d57e494895a562b4a3c8f5158446c68ab67a9bbe6:
   ref: Transaction requested (label)
   value: Transaction requested (label)
@@ -205,9 +202,6 @@
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
   ref: Feed name (label)
   value: Feed name (label)
-591f98025ee7ef00dcb5b8f6b0899bb3501b77f3bdc648e0ea03dc7d:
-  ref: Logout (description)
-  value: Logout (description)
 59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
   ref: Go to feed (link)
   value: Go to feed (link)
@@ -373,6 +367,9 @@
 9d96a108b9c86846287f96e8664fd01cd443ac91d6eb92649db0a909:
   ref: Feed select (title)
   value: Feed select (title)
+9dced25fcc591774e6324d19f6e85e64b06b431e2eed98692b12fa8d:
+  ref: User profile (title)
+  value: User profile (title)
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
@@ -558,9 +555,6 @@ e164d6b2893d2c34341349e7efb9ec4735b1e3b2f983a6181d0003fc:
 e2599c3b9d828a48f101d8e9d763a3fa348b11675f80809790e980a7:
   ref: Go to cart (button)
   value: Go to cart (button)
-e2cc108025a3ad03309516d2284e66f229f7b25345314afe9bd0bcd3:
-  ref: Submit (subtitle)
-  value: Submit (subtitle)
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)
@@ -597,6 +591,9 @@ f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
 f40aebfe8ac1d83e7b93e069db67a2a93e47c887cab40eb726e6dc1f:
   ref: Go to feed wizard (button)
   value: Go to feed wizard (button)
+f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
+  ref: My listings (title)
+  value: My listings (title)
 f5513d5f7d579cdb6e7850c2fad5c44887f60cbb050953936cd717a7:
   ref: No transactions found (message)
   value: No transactions found (message)

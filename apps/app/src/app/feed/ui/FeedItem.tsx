@@ -32,8 +32,8 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 							"w-full",
 							"h-fit",
 							"items-start",
-							"py-2",
-							"px-4",
+							"py-1",
+							"px-1",
 						],
 					},
 				},
@@ -41,6 +41,9 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 		>
 			<LinkTo
 				icon={ArrowRightIcon}
+				iconProps={{
+					size: "sm",
+				}}
 				to={"/$locale/buyer/listing/list"}
 				params={{
 					locale,
@@ -74,7 +77,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 				<Badge
 					tone={"secondary"}
 					theme={"light"}
-					size={"xs"}
+					size={"sm"}
 					round={"default"}
 					tweak={{
 						slot: {

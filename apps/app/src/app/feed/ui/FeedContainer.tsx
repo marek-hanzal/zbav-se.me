@@ -39,7 +39,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 		},
 	);
 
-	const categoryCollectionQuery = withCategoryCollectionQuery.useQuery(
+	const categoryCollectionQuery = withCategoryCollectionQuery.useSuspenseQuery(
 		{
 			where: {
 				idIn: feed.query?.filter?.categoryIdIn ?? undefined,

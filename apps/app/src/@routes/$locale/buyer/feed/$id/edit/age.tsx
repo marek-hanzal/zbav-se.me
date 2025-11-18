@@ -6,7 +6,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { Rating } from "~/app/ui/rating/Rating";
+import { AgeContainer } from "~/app/age/ui/AgeContainer";
+import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 	component() {
@@ -94,10 +95,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 					/>
 				}
 			>
-				<Rating
-					textHint={(value) => `Condition - Age [${value}] (hint)`}
-					selection={selection}
-				/>
+				<AgeContainer selection={selection} />
 			</TitleContainer>
 		);
 	},
