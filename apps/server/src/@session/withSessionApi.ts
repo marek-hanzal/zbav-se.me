@@ -1,3 +1,4 @@
+import { database } from "../database/kysely";
 import type { Routes } from "../hono/Routes";
 import { withCategoryApi } from "./category/withCategoryApi";
 import { withCategoryCartApi } from "./category-cart/withCategoryCartApi";
@@ -27,6 +28,11 @@ export const withSessionApi: Routes.Fn = (routes) => {
 				401,
 			);
 		}
+		return next();
+	});
+
+	routes.sessionHono.use("*", async (c, next) => {
+		c.set("database", database.kysely);
 		return next();
 	});
 

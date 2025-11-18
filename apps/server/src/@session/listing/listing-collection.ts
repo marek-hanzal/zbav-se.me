@@ -1,7 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { database } from "../../database/kysely";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
@@ -55,7 +54,7 @@ export const withListingCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return yield* listingCollectionFx({
-					database: database.kysely,
+					database: c.get("database"),
 					userId: c.get("user").id,
 					query: c.req.valid("json"),
 				});
