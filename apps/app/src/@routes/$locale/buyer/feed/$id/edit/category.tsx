@@ -55,6 +55,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
@@ -98,7 +101,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 			>
 				<CategorySelectionContainer
 					selection={selection}
-					categoryId={feed.query?.filter?.categoryId}
+					categoryId={selection.optional.singleId()}
 				/>
 			</TitleContainer>
 		);

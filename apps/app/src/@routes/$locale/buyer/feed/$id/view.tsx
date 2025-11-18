@@ -1,7 +1,8 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { TitleContainer } from "@zbav-se.me/ui/container";
+import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
+import { Suspense } from "react";
 import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/view")({
@@ -24,7 +25,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/view")({
 					/>
 				}
 			>
-				<FeedContainer feed={feed} />
+				<Suspense fallback={<SpinnerContainer />}>
+					<FeedContainer feed={feed} />
+				</Suspense>
 			</TitleContainer>
 		);
 	},

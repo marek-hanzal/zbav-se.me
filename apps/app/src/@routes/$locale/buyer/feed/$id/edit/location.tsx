@@ -1,6 +1,6 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -38,6 +38,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 						}}
 					/>
 				}
+				right={
+					<ConfirmButton
+						iconEnabled={CloseIcon}
+						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
+						confirmProps={{
+							tone: "danger",
+							onClick: () => {
+								navigate({
+									to: "/$locale/buyer/feed/select",
+								});
+							},
+						}}
+					/>
+				}
 				bottom={
 					<Button
 						tone={"secondary"}
@@ -71,7 +88,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 				}
 			>
 				<LocationSelection
-					locale={locale}
 					value={locationId}
 					onChange={setLocationId}
 					onLocation={({ lon, lat }) => {

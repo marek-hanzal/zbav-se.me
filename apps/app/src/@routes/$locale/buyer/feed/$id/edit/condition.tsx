@@ -6,7 +6,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/session";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { Rating } from "~/app/ui/rating/Rating";
+import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 	component() {
@@ -53,14 +54,14 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
 								navigate({
 									to: "/$locale/buyer/feed/select",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -97,10 +98,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 					/>
 				}
 			>
-				<Rating
-					textHint={(value) => `Condition - Overall [${value}] (hint)`}
-					selection={selection}
-				/>
+				<ConditionContainer selection={selection} />
 			</TitleContainer>
 		);
 	},

@@ -54,6 +54,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
+						iconProps={{
+							size: "md",
+						}}
 						confirmProps={{
 							tone: "danger",
 							onClick: () => {
