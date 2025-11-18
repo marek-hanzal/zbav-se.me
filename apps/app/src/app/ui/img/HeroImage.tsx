@@ -1,15 +1,19 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { type Cls, useCls } from "@use-pico/cls";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import type { UiProps } from "node_modules/@use-pico/client/src/type/UiProps";
 import { type FC, type ImgHTMLAttributes, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
+import { HeroImageCls } from "~/app/ui/img/HeroImageCls";
 
 export namespace HeroImage {
-	export interface Props extends UiProps<ImgHTMLAttributes<HTMLImageElement>> {
+	export interface Props
+		extends HeroImageCls.Props<UiProps<ImgHTMLAttributes<HTMLImageElement>>> {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
+		round?: Cls.VariantOf<HeroImageCls, "round">;
 	}
 }
 
@@ -20,8 +24,16 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	invisible,
 	onLoad,
 	onError,
+	round,
+	cls = HeroImageCls,
+	tweak,
 	...props
 }) => {
+	const { slots } = useCls(cls, tweak, {
+		variant: {
+			round,
+		},
+	});
 	const [state, setState] = useState<"loading" | "loaded" | "error">("loading");
 
 	if (!visible) {
@@ -52,6 +64,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 						.with("loaded", () => "block")
 						.exhaustive(),
 				}}
+				className={slots.img()}
 				{...props}
 			/>
 

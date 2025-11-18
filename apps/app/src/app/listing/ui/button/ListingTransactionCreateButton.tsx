@@ -26,8 +26,8 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 			iconEnabled={TransactionIcon}
 			disabled={listingTransactionCreate.isPending}
 			loading={listingTransactionCreate.isPending}
-			tone={"primary"}
-			theme={"dark"}
+			tone={"secondary"}
+			theme={"light"}
 			onClick={() => {
 				listingTransactionCreate.mutate({
 					listingId: listing.id,

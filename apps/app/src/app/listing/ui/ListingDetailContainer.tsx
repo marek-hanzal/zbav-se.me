@@ -1,7 +1,7 @@
 import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { Container, ContainerValueList } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/session";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/session";
@@ -78,99 +78,105 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 	return (
 		<Container
-			layout={"vertical-flex"}
-			gap={"md"}
+			layout={"vertical-content-footer"}
+			gap={"xl"}
+			height={"content"}
 			{...props}
 		>
 			<Container
-				height={"content"}
-				tone={"primary"}
-				theme={"light"}
-				border={"default"}
-				shadow={"default"}
-				round={"default"}
+				layout={"vertical-flex"}
+				gap={"sm"}
 			>
-				<HeroImage
-					src={hero.upload.url}
-					alt={`Hero image for listing ${listing.id}`}
-					className={"w-full h-full object-cover"}
+				<Container
+					height={"content"}
+					tone={"primary"}
+					theme={"light"}
+					border={"default"}
+					shadow={"default"}
+					round={"default"}
+				>
+					<HeroImage
+						round
+						src={hero.upload.url}
+						alt={`Hero image for listing ${listing.id}`}
+					/>
+				</Container>
+
+				<BadgeValue
+					textLabel={"Listing title (label)"}
+					textValue={listing.title}
+					textValueProps={{
+						truncate: false,
+						wrap: "wrap",
+					}}
+				/>
+
+				<BadgeValue
+					textLabel={"Listing price (label)"}
+					textValue={toLocaleNumber({
+						locale,
+						number: listing.price,
+						currency: listing.currency,
+						currencyDisplay: "narrowSymbol",
+						style: "currency",
+					})}
+				/>
+
+				{renderScoreBadge?.({
+					listing,
+					children: (
+						<BadgeValue
+							textLabel={"Listing score hint (label)"}
+							textValue={toLocaleNumber({
+								locale,
+								number: listingMetricsQuery.data.score,
+							})}
+							action={<Icon icon={ArrowRightIcon} />}
+						/>
+					),
+				})}
+
+				{renderSellerBadge({
+					listing,
+					children: (
+						<BadgeValue
+							textLabel={"Listing seller hint (label)"}
+							textValue={"- skore + link -"}
+							action={<Icon icon={ArrowRightIcon} />}
+						/>
+					),
+				})}
+
+				<BadgeValue
+					textLabel={"Listing location (label)"}
+					textValue={listing.location.address}
+					textValueProps={{
+						truncate: false,
+						wrap: "wrap",
+					}}
+				/>
+
+				<BadgeValue
+					textLabel={"Listing condition (label)"}
+					textValue={`Condition - Overall [${listing.condition}] (hint)`}
+				/>
+
+				<BadgeValue
+					textLabel={"Listing age (label)"}
+					textValue={`Condition - Age [${listing.age}] (hint)`}
+				/>
+
+				<BadgeValue
+					textLabel={"Listing category (label)"}
+					textValue={
+						<CategoryInline
+							category={listing.category}
+							tone="secondary"
+							theme="light"
+						/>
+					}
 				/>
 			</Container>
-
-			<BadgeValue
-				textLabel={"Listing title (label)"}
-				textValue={listing.title}
-				textValueProps={{
-					truncate: false,
-					wrap: "wrap",
-				}}
-			/>
-
-			<BadgeValue
-				textLabel={"Listing price (label)"}
-				textValue={toLocaleNumber({
-					locale,
-					number: listing.price,
-					currency: listing.currency,
-					currencyDisplay: "narrowSymbol",
-					style: "currency",
-				})}
-			/>
-
-			{renderScoreBadge?.({
-				listing,
-				children: (
-					<BadgeValue
-						textLabel={"Listing score hint (label)"}
-						textValue={toLocaleNumber({
-							locale,
-							number: listingMetricsQuery.data.score,
-						})}
-						action={<Icon icon={ArrowRightIcon} />}
-					/>
-				),
-			})}
-
-			{renderSellerBadge({
-				listing,
-				children: (
-					<BadgeValue
-						textLabel={"Listing seller hint (label)"}
-						textValue={"- skore + link -"}
-						action={<Icon icon={ArrowRightIcon} />}
-					/>
-				),
-			})}
-
-			<BadgeValue
-				textLabel={"Listing location (label)"}
-				textValue={listing.location.address}
-				textValueProps={{
-					truncate: false,
-					wrap: "wrap",
-				}}
-			/>
-
-			<BadgeValue
-				textLabel={"Listing condition (label)"}
-				textValue={`Condition - Overall [${listing.condition}] (hint)`}
-			/>
-
-			<BadgeValue
-				textLabel={"Listing age (label)"}
-				textValue={`Condition - Age [${listing.age}] (hint)`}
-			/>
-
-			<ContainerValueList
-				textTitle={"Listing category (label)"}
-				textEmpty={""}
-				items={[
-					listing.category,
-				]}
-				render={(item) => {
-					return <CategoryInline category={item} />;
-				}}
-			/>
 
 			{children}
 		</Container>
