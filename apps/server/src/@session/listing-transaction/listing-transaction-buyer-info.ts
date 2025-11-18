@@ -51,11 +51,10 @@ export const withListingTransactionBuyerInfoApi: Routes.Fn = ({ sessionHono }) =
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const query = c.req.valid("json");
 				const user = c.get("user");
 
 				const transaction = yield* listingTransactionFetchFx({
-					query,
+					query: c.req.valid("json"),
 					userId: user.id,
 				});
 
@@ -78,10 +77,13 @@ export const withListingTransactionBuyerInfoApi: Routes.Fn = ({ sessionHono }) =
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>({
-											type: "error",
-											message: e.message,
-										}),
+										c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										),
 									);
 								},
 							)

@@ -35,14 +35,6 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Invalid request",
 				},
-				429: {
-					content: {
-						"application/json": {
-							schema: MessageSchema,
-						},
-					},
-					description: "Too many requests",
-				},
 				404: {
 					content: {
 						"application/json": {
@@ -80,25 +72,12 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 400>({
-											type: "error",
-											message: e.message,
-										}),
-									);
-								},
-							)
-							.with(
-								{
-									_tag: "TooManyRequests",
-								},
-								() => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type>(
+										c.json<MessageSchema.Type, 400>(
 											{
 												type: "error",
 												message: e.message,
 											},
-											429,
+											400,
 										),
 									);
 								},
@@ -109,10 +88,13 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>({
-											type: "error",
-											message: e.message,
-										}),
+										c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										),
 									);
 								},
 							)

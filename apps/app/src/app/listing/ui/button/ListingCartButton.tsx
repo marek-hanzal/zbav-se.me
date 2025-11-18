@@ -31,7 +31,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 	const patch = usePatchCollection<tListingCollection>(listing);
 
 	const listingCartToggleMutation = withListingCartToggleMutation.useMutation({
-		onSuccess() {
+		async onPostMutation() {
 			onSuccess?.(!listing.isInCart);
 			setListingCollection(
 				patch({

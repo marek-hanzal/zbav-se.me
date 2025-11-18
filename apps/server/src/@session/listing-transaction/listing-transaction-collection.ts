@@ -54,12 +54,9 @@ export const withListingTransactionCollectionApi: Routes.Fn = ({ sessionHono }) 
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const json = c.req.valid("json");
-				const user = c.get("user");
-
 				return yield* listingTransactionCollectionFx({
-					userId: user.id,
-					query: json,
+					userId: c.get("user").id,
+					query: c.req.valid("json"),
 				});
 			}).pipe(
 				Effect.matchEffect({

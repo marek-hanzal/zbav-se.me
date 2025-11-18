@@ -40,21 +40,17 @@ export const listingScoreCreateFx = ({
 		});
 
 		if (!listing) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "listing",
-					resourceId: listingId,
-					message: "Listing not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "listing",
+				resourceId: listingId,
+				message: "Listing not found",
+			});
 		}
 
 		if (listing.userId === userId) {
-			return yield* Effect.fail(
-				new InvalidRequestError({
-					message: "You cannot score your own listing",
-				}),
-			);
+			return yield* new InvalidRequestError({
+				message: "You cannot score your own listing",
+			});
 		}
 
 		yield* listingScoreRateLimitFx({
@@ -93,7 +89,7 @@ export const listingScoreCreateFx = ({
 							createdAt: new Date(),
 						})
 						.returningAll()
-						.executeTakeFirst();
+						.executeTakeFirstOrThrow();
 				})
 				.otherwise(async (score) => {
 					return database
@@ -107,7 +103,7 @@ export const listingScoreCreateFx = ({
 							createdAt: new Date(),
 						})
 						.returningAll()
-						.executeTakeFirst();
+						.executeTakeFirstOrThrow();
 				});
 		});
 	});

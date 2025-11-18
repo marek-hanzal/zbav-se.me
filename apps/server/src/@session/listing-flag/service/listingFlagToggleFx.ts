@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
+import { NotFoundError } from "../../../error/NotFoundError";
 import { listingScoreCreateFx } from "../../listing-score/service/listingScoreCreateFx";
 import type { ListingFlagToggleSchema } from "../schema/ListingFlagToggleSchema";
 import { listingFlagCreateFx } from "./listingFlagCreateFx";
@@ -24,13 +25,22 @@ export const listingFlagToggleFx = ({
 			const listing = yield* Effect.promise(async () => {
 				return database
 					.selectFrom("listing")
-					.select("id")
+					.select("userId")
 					.where("id", "=", listingId)
-					.where("userId", "=", userId)
 					.executeTakeFirst();
 			});
 
-			if (listing) {
+			if (!listing) {
+				return yield* Effect.fail(
+					new NotFoundError({
+						resource: "listing",
+						resourceId: listingId,
+						message: "Listing not found",
+					}),
+				);
+			}
+
+			if (listing.userId === userId) {
 				return yield* Effect.fail(
 					new InvalidRequestError({
 						message: "You cannot flag your own listing",
@@ -44,19 +54,23 @@ export const listingFlagToggleFx = ({
 				listingId,
 			});
 
-			return yield* listingScoreCreateFx({
+			yield* listingScoreCreateFx({
 				database,
 				userId,
 				listingId,
 				score: "flag",
-			});
+			}).pipe(Effect.ignore);
+
+			return Effect.void;
 		}
 
-		return yield* listingFlagDeleteFx({
+		yield* listingFlagDeleteFx({
 			database,
 			userId,
 			listingId,
 		});
+
+		return Effect.void;
 	});
 };
 

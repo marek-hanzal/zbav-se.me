@@ -38,13 +38,11 @@ export const listingTransactionFetchFx = ({ userId, query }: listingTransactionF
 		});
 
 		if (!data) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "listing-transaction",
-					resourceId: "(query)",
-					message: "Listing transaction not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "listing-transaction",
+				resourceId: "(query)",
+				message: "Listing transaction not found",
+			});
 		}
 
 		return data;

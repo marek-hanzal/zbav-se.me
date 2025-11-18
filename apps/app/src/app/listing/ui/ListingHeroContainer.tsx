@@ -177,7 +177,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				ui={"ListingHero-image"}
 				src={hero.upload.url}
 				alt={`Hero image for listing ${listing.id}`}
-				className={"w-full h-full object-cover"}
 				visible={visible}
 				invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
 				onLoad={() => setHasToolbar(true)}

@@ -63,9 +63,6 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 						);
 					},
 					onFailure(e) {
-						/**
-						 * This just holds type exhaustive match for errors if any comes up.
-						 */
 						return match(e)
 							.with(
 								{
@@ -73,10 +70,13 @@ export const withListingTransactionFetchApi: Routes.Fn = ({ sessionHono }) => {
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>({
-											type: "error",
-											message: e.message,
-										}),
+										c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										),
 									);
 								},
 							)

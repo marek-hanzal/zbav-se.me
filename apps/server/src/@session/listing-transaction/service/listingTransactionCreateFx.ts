@@ -31,13 +31,11 @@ export const listingTransactionCreateFx = ({
 		});
 
 		if (!listing) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "listing",
-					resourceId: listingId,
-					message: "Listing not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "listing",
+				resourceId: listingId,
+				message: "Listing not found",
+			});
 		}
 
 		const now = DateTime.now();

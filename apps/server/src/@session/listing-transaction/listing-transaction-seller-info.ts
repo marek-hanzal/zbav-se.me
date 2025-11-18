@@ -77,10 +77,13 @@ export const withListingTransactionSellerInfoApi: Routes.Fn = ({ sessionHono }) 
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>({
-											type: "error",
-											message: e.message,
-										}),
+										c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										),
 									);
 								},
 							)

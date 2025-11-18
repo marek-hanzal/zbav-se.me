@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
+import { NotFoundError } from "../../../error/NotFoundError";
 import { listingScoreCreateFx } from "../../listing-score/service/listingScoreCreateFx";
 import type { ListingCartToggleSchema } from "../schema/ListingCartToggleSchema";
 import { listingCartCreateFx } from "./listingCartCreateFx";
@@ -24,18 +25,23 @@ export const listingCartToggleFx = ({
 			const listing = yield* Effect.promise(async () => {
 				return database
 					.selectFrom("listing")
-					.select("id")
+					.select("userId")
 					.where("id", "=", listingId)
-					.where("userId", "=", userId)
 					.executeTakeFirst();
 			});
 
-			if (listing) {
-				return yield* Effect.fail(
-					new InvalidRequestError({
-						message: "You cannot add your own listing to cart",
-					}),
-				);
+			if (!listing) {
+				return yield* new NotFoundError({
+					resource: "listing",
+					resourceId: listingId,
+					message: "Listing not found",
+				});
+			}
+
+			if (listing.userId === userId) {
+				return yield* new InvalidRequestError({
+					message: "You cannot add your own listing to cart",
+				});
 			}
 
 			yield* listingCartCreateFx({
@@ -44,19 +50,23 @@ export const listingCartToggleFx = ({
 				listingId,
 			});
 
-			return yield* listingScoreCreateFx({
+			yield* listingScoreCreateFx({
 				database,
 				userId,
 				listingId,
 				score: "cart",
-			});
+			}).pipe(Effect.ignore);
+
+			return yield* Effect.void;
 		}
 
-		return yield* listingCartDeleteFx({
+		yield* listingCartDeleteFx({
 			database,
 			userId,
 			listingId,
 		});
+
+		return yield* Effect.void;
 	});
 };
 

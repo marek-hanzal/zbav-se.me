@@ -32,7 +32,7 @@ export const listingCartCreateFx = ({
 						createdAt,
 					})
 					.returningAll()
-					.executeTakeFirst();
+					.executeTakeFirstOrThrow();
 			},
 			catch() {
 				return new InvalidRequestError({

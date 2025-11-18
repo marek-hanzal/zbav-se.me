@@ -35,14 +35,6 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "You cannot add your own listing to cart",
 				},
-				429: {
-					content: {
-						"application/json": {
-							schema: MessageSchema,
-						},
-					},
-					description: "Too many requests",
-				},
 				404: {
 					content: {
 						"application/json": {
@@ -70,9 +62,6 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 						return Effect.succeed(c.body(null, 204));
 					},
 					onFailure(e) {
-						/**
-						 * This just holds type exhaustive match for errors if any comes up.
-						 */
 						return match(e)
 							.with(
 								{
@@ -80,25 +69,12 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 400>({
-											type: "error",
-											message: e.message,
-										}),
-									);
-								},
-							)
-							.with(
-								{
-									_tag: "TooManyRequests",
-								},
-								() => {
-									return Effect.succeed(
-										c.json<MessageSchema.Type>(
+										c.json<MessageSchema.Type, 400>(
 											{
 												type: "error",
 												message: e.message,
 											},
-											429,
+											400,
 										),
 									);
 								},
@@ -109,10 +85,13 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 								},
 								() => {
 									return Effect.succeed(
-										c.json<MessageSchema.Type, 404>({
-											type: "error",
-											message: e.message,
-										}),
+										c.json<MessageSchema.Type, 404>(
+											{
+												type: "error",
+												message: e.message,
+											},
+											404,
+										),
 									);
 								},
 							)

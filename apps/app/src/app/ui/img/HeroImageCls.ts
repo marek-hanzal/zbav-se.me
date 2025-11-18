@@ -7,13 +7,17 @@ export const HeroImageCls = contract(ThemeCls.contract)
 	])
 	.bool("round")
 	.def()
-	.match("round", true, {
+	.root({
 		img: {
 			class: [
 				"w-full",
 				"h-full",
 				"object-cover",
 			],
+		},
+	})
+	.match("round", true, {
+		img: {
 			token: [
 				"round.default",
 			],
