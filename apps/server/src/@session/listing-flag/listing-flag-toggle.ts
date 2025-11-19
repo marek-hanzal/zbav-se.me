@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { Effect } from "effect";
-import { match } from "ts-pattern";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingFlagToggleSchema } from "./schema/ListingFlagToggleSchema";
@@ -50,50 +49,48 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return yield* listingFlagToggleFx({
+				yield* listingFlagToggleFx({
 					database: c.get("database"),
 					userId: c.get("user").id,
 					data: c.req.valid("json"),
 				});
+
+				return c.body(null, 204);
 			}).pipe(
-				Effect.matchEffect({
-					onSuccess() {
-						return Effect.succeed(c.body(null, 204));
-					},
-					onFailure(e) {
-						return Effect.succeed(
-							match(e)
-								.with(
-									{
-										_tag: "InvalidRequestError",
-									},
-									() => {
-										return c.json<MessageSchema.Type, 400>(
-											{
-												type: "error",
-												message: e.message,
-											},
-											400,
-										);
-									},
-								)
-								.with(
-									{
-										_tag: "NotFoundError",
-									},
-									() => {
-										return c.json<MessageSchema.Type, 404>(
-											{
-												type: "error",
-												message: e.message,
-											},
-											404,
-										);
-									},
-								)
-								.exhaustive(),
-						);
-					},
+				Effect.catchAll((e) => {
+					return Effect.succeed(
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.exhaustive,
+						),
+					);
 				}),
 				Effect.runPromise,
 			);

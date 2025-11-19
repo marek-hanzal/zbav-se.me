@@ -1,11 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withLocationQueryBuilder } from "./db/withLocationQueryBuilder";
-import { withLocationSelect } from "./db/withLocationSelect";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
+import { locationFetchFx } from "./service/locationFetchFx";
 
 export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -48,30 +47,38 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { filter, where, sort } = c.req.valid("json");
-
-			const result = await withFetch({
-				select: withLocationSelect({
-					sort,
-					source: c.get("database"),
-				}),
-				output: LocationSchema,
-				filter,
-				where,
-				query: withLocationQueryBuilder,
-			});
-
-			if (!result) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Location not found",
-					},
-					404,
+			return Effect.gen(function* () {
+				return c.json<LocationSchema.Type, 200>(
+					yield* locationFetchFx({
+						database: c.get("database"),
+						query: c.req.valid("json"),
+					}),
+					200,
 				);
-			}
-
-			return c.json<LocationSchema.Type, 200>(result, 200);
+			}).pipe(
+				Effect.catchAll((e) => {
+					return Effect.succeed(
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.exhaustive,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

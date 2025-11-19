@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withUploadQueryBuilder } from "./db/withUploadQueryBuilder";
-import { withUploadSelect } from "./db/withUploadSelect";
 import { UploadQuerySchema } from "./schema/UploadQuerySchema";
 import { UploadSchema } from "./schema/UploadSchema";
+import { uploadCollectionFx } from "./service/uploadCollectionFx";
 
 export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -36,6 +36,14 @@ export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Access collection of upload items based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"upload",
@@ -43,22 +51,32 @@ export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { cursor, filter, where, sort } = c.req.valid("json");
-			return c.json(
-				await withCollection({
-					select: withUploadSelect({
+			return Effect.gen(function* () {
+				return c.json<withCollectionSchema.Type<UploadSchema>, 200>(
+					yield* uploadCollectionFx({
 						database: c.get("database"),
-						sort,
+						query: c.req.valid("json"),
 					}),
-					output: UploadSchema,
-					cursor: cursor ?? {
-						page: 0,
-						size: 10,
-					},
-					filter,
-					where,
-					query: withUploadQueryBuilder,
+					200,
+				);
+			}).pipe(
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
+
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "This should not happen",
+							},
+							500,
+						),
+					);
 				}),
+				Effect.runPromise,
 			);
 		},
 	);

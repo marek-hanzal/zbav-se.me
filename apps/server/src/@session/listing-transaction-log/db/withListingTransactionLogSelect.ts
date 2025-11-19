@@ -1,9 +1,10 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { ListingTransactionLogSortSchema } from "../schema/ListingTransactionLogSortSchema";
 
 export namespace withListingTransactionLogSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: ListingTransactionLogSortSchema.Type[] | undefined;
 	}
 
@@ -11,9 +12,10 @@ export namespace withListingTransactionLogSelect {
 }
 
 export const withListingTransactionLogSelect = ({
+	database,
 	sort,
 }: withListingTransactionLogSelect.Props) => {
-	let query = database.kysely.selectFrom("listing_transaction_log as ltl").select([
+	let query = database.selectFrom("listing_transaction_log as ltl").select([
 		"ltl.id",
 		"ltl.listingTransactionId",
 		"ltl.status",

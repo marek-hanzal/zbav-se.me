@@ -1,6 +1,5 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import { Effect } from "effect";
-import { match } from "ts-pattern";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingMetricsSchema } from "./schema/ListingMetricsSchema";
@@ -51,35 +50,34 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return yield* listingMetricsFx({
-					database: c.get("database"),
-					listingId: c.req.valid("param").id,
-				});
+				return c.json<ListingMetricsSchema.Type, 200>(
+					yield* listingMetricsFx({
+						database: c.get("database"),
+						listingId: c.req.valid("param").id,
+					}),
+					200,
+				);
 			}).pipe(
-				Effect.matchEffect({
-					onSuccess(metrics) {
-						return Effect.succeed(c.json<ListingMetricsSchema.Type, 200>(metrics, 200));
-					},
-					onFailure(e) {
-						return Effect.succeed(
-							match(e)
-								.with(
-									{
-										_tag: "NotFoundError",
-									},
-									() => {
-										return c.json<MessageSchema.Type, 404>(
-											{
-												type: "error",
-												message: e.message,
-											},
-											404,
-										);
-									},
-								)
-								.exhaustive(),
-						);
-					},
+				Effect.catchAll((e) => {
+					return Effect.succeed(
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.exhaustive,
+						),
+					);
 				}),
 				Effect.runPromise,
 			);

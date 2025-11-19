@@ -1,11 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCount } from "@use-pico/common/count";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
 import { CountSchema } from "../../schema/CountSchema";
-import { withListingIgnoreQueryBuilder } from "./db/withListingIgnoreQueryBuilder";
-import { withListingIgnoreSelect } from "./db/withListingIgnoreSelect";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingIgnoreCountQuerySchema } from "./schema/ListingIgnoreCountQuerySchema";
+import { listingIgnoreCountFx } from "./service/listingIgnoreCountFx";
 
 export const withListingIgnoreCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -32,6 +31,14 @@ export const withListingIgnoreCountApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Return counts based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-ignore",
@@ -39,41 +46,34 @@ export const withListingIgnoreCountApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { filter, where } = json;
-
-			// Always filter by current user
-			const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-ignore:count",
-					version: "1",
-					value: {
-						...json,
-						where: userWhere,
-					},
-				},
-				fetch: () =>
-					withCount({
-						select: withListingIgnoreSelect({
-							sort: undefined,
-						}),
-						filter,
-						where: userWhere,
-						query: withListingIgnoreQueryBuilder,
+			return Effect.gen(function* () {
+				return c.json<CountSchema.Type, 200>(
+					yield* listingIgnoreCountFx({
+						database: c.get("database"),
+						userId: c.get("user").id,
+						query: c.req.valid("json"),
 					}),
-			});
+					200,
+				);
+			}).pipe(
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "This should not happen",
+							},
+							500,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

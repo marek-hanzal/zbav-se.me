@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { Effect } from "effect";
-import { match } from "ts-pattern";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
 import { MessageSchema } from "../../schema/MessageSchema";
@@ -48,35 +47,30 @@ export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const json = c.req.valid("json");
-				const user = c.get("user");
-
-				return yield* feedCountFx({
-					database: c.get("database"),
-					userId: user.id,
-					query: json,
-				});
+				return c.json<CountSchema.Type, 200>(
+					yield* feedCountFx({
+						database: c.get("database"),
+						userId: c.get("user").id,
+						query: c.req.valid("json"),
+					}),
+					200,
+				);
 			}).pipe(
-				Effect.matchEffect({
-					onSuccess(count) {
-						return Effect.succeed(c.json<CountSchema.Type, 200>(count, 200));
-					},
-					onFailure(e) {
-						/**
-						 * This just holds type exhaustive match for errors if any comes up.
-						 */
-						match(e).exhaustive();
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
 
-						return Effect.succeed(
-							c.json<MessageSchema.Type, 500>(
-								{
-									type: "error",
-									message: "This should not happen",
-								},
-								500,
-							),
-						);
-					},
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "This should not happen",
+							},
+							500,
+						),
+					);
 				}),
 				Effect.runPromise,
 			);

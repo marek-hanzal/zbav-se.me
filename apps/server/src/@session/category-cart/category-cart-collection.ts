@@ -1,6 +1,5 @@
 import { createRoute } from "@hono/zod-openapi";
-import { Effect } from "effect";
-import { match } from "ts-pattern";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
@@ -54,37 +53,30 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return yield* categoryCartCollectionFx({
-					database: c.get("database"),
-					userId: c.get("user").id,
-					query: c.req.valid("json"),
-				});
+				return c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(
+					yield* categoryCartCollectionFx({
+						database: c.get("database"),
+						userId: c.get("user").id,
+						query: c.req.valid("json"),
+					}),
+					200,
+				);
 			}).pipe(
-				Effect.matchEffect({
-					onSuccess(collection) {
-						return Effect.succeed(
-							c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(
-								collection,
-								200,
-							),
-						);
-					},
-					onFailure(e) {
-						/**
-						 * This just holds type exhaustive match for errors if any comes up.
-						 */
-						match(e).exhaustive();
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
 
-						return Effect.succeed(
-							c.json<MessageSchema.Type, 500>(
-								{
-									type: "error",
-									message: "This should not happen",
-								},
-								500,
-							),
-						);
-					},
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "This should not happen",
+							},
+							500,
+						),
+					);
 				}),
 				Effect.runPromise,
 			);

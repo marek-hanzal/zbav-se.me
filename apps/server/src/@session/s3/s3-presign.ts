@@ -1,13 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { genId } from "@use-pico/common/gen-id";
-import { keyOf } from "@use-pico/common/key-of";
-import { linkTo } from "@use-pico/common/link-to";
-import { AppEnv } from "../../AppEnv";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
-import { s3 } from "../../s3";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
+import { s3PreSignFx } from "./service/s3PreSignFx";
 
 export const withS3PresignApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -53,30 +50,34 @@ export const withS3PresignApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			const { path, extension } = c.req.valid("json");
 
-			const user = c.get("user");
-
-			const key = `${keyOf(user.id)}/${path}/${genId()}.${extension}`;
-
-			try {
+			return Effect.gen(function* () {
 				return c.json<S3PreSignResponseSchema.Type, 200>(
-					{
-						url: await s3.presignedPutObject(AppEnv.SERVER_S3_BUCKET, key, 60 * 30),
-						cdn: linkTo({
-							base: AppEnv.SERVER_CONTENT_CDN,
-							href: `/${key}`,
-						}),
-					},
+					yield* s3PreSignFx({
+						userId: c.get("user").id,
+						path,
+						extension,
+					}),
 					200,
 				);
-			} catch {
-				return c.json<MessageSchema.Type, 500>(
-					{
-						type: "error",
-						message: "Failed to generate pre-signed URL",
-					},
-					500,
-				);
-			}
+			}).pipe(
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
+
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "Failed to generate pre-signed URL",
+							},
+							500,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

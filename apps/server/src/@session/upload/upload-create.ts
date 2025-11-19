@@ -1,13 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
-import { genId } from "@use-pico/common/gen-id";
-import { AppEnv } from "../../AppEnv";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withUploadQueryBuilder } from "./db/withUploadQueryBuilder";
-import { withUploadSelect } from "./db/withUploadSelect";
 import { UploadCreateSchema } from "./schema/UploadCreateSchema";
 import { UploadSchema } from "./schema/UploadSchema";
+import { uploadCreateFx } from "./service/uploadCreateFx";
 
 export const withUploadCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -58,54 +55,53 @@ export const withUploadCreateApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const data = c.req.valid("json");
-			const user = c.get("user");
-			const id = genId();
-			const now = new Date();
-
-			if (!data.url.startsWith(AppEnv.SERVER_CONTENT_CDN)) {
-				return c.json<MessageSchema.Type, 400>(
-					{
-						type: "error",
-						message: "Only content from the CDN can be uploaded",
-					},
-					400,
+			return Effect.gen(function* () {
+				return c.json<UploadSchema.Type, 201>(
+					yield* uploadCreateFx({
+						database: c.get("database"),
+						userId: c.get("user").id,
+						data: c.req.valid("json"),
+					}),
+					201,
 				);
-			}
-
-			await c
-				.get("database")
-				.insertInto("upload")
-				.values({
-					id,
-					userId: user.id,
-					url: data.url,
-					createdAt: now,
-				})
-				.execute();
-
-			const upload = await withFetch({
-				select: withUploadSelect({
-					database: c.get("database"),
+			}).pipe(
+				Effect.catchAll((e) => {
+					return Effect.succeed(
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.exhaustive,
+						),
+					);
 				}),
-				output: UploadSchema,
-				where: {
-					id,
-				},
-				query: withUploadQueryBuilder,
-			});
-
-			if (!upload) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Upload not found",
-					},
-					404,
-				);
-			}
-
-			return c.json<UploadSchema.Type, 201>(upload, 201);
+				Effect.runPromise,
+			);
 		},
 	);
 };

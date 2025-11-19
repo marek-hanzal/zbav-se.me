@@ -1,12 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withListingTransactionLogQueryBuilder } from "./db/withListingTransactionLogQueryBuilder";
-import { withListingTransactionLogSelect } from "./db/withListingTransactionLogSelect";
 import { ListingTransactionLogQuerySchema } from "./schema/ListingTransactionLogQuerySchema";
 import { ListingTransactionLogSchema } from "./schema/ListingTransactionLogSchema";
+import { listingTransactionLogCollectionFx } from "./service/listingTransactionLogCollectionFx";
 
 export const withListingTransactionLogCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -38,6 +37,14 @@ export const withListingTransactionLogCollectionApi: Routes.Fn = ({ sessionHono 
 					description:
 						"Access collection of listing transaction log entries based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-transaction-log",
@@ -45,36 +52,33 @@ export const withListingTransactionLogCollectionApi: Routes.Fn = ({ sessionHono 
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const { cursor, filter, where, sort } = json;
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-transaction-log:collection",
-					version: "1",
-					value: json,
-				},
-				fetch: () =>
-					withCollection({
-						select: withListingTransactionLogSelect({
-							sort,
-						}),
-						output: ListingTransactionLogSchema,
-						cursor: cursor ?? {
-							page: 0,
-							size: 10,
-						},
-						filter,
-						where,
-						query: withListingTransactionLogQueryBuilder,
+			return Effect.gen(function* () {
+				return c.json<withCollectionSchema.Type<ListingTransactionLogSchema>, 200>(
+					yield* listingTransactionLogCollectionFx({
+						database: c.get("database"),
+						query: c.req.valid("json"),
 					}),
-			});
+					200,
+				);
+			}).pipe(
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "This should not happen",
+							},
+							500,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

@@ -4,14 +4,14 @@ import type { LocationSortSchema } from "../schema/LocationSortSchema";
 
 export namespace withLocationSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: LocationSortSchema.Type[] | undefined;
-		source: WithDatabase;
 	}
 	export type Select = ReturnType<typeof withLocationSelect>;
 }
 
-export const withLocationSelect = ({ sort, source }: withLocationSelect.Props) => {
-	let query = source.selectFrom("location as l").select([
+export const withLocationSelect = ({ database, sort }: withLocationSelect.Props) => {
+	let query = database.selectFrom("location as l").select([
 		"l.id",
 		"l.query",
 		"l.lang",

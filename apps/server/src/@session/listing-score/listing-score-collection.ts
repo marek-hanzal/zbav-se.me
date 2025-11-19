@@ -1,12 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withCollection } from "@use-pico/common/collection";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
-import { withCache } from "../../redis/withCache";
+import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { withListingScoreQueryBuilder } from "./db/withListingScoreQueryBuilder";
-import { withListingScoreSelect } from "./db/withListingScoreSelect";
 import { ListingScoreQuerySchema } from "./schema/ListingScoreQuerySchema";
 import { ListingScoreSchema } from "./schema/ListingScoreSchema";
+import { listingScoreCollectionFx } from "./service/listingScoreCollectionFx";
 
 export const withListingScoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -37,6 +36,14 @@ export const withListingScoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Access collection of listing scores based on provided query",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-score",
@@ -44,46 +51,34 @@ export const withListingScoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const user = c.get("user");
-			const { cursor, filter, where, sort } = json;
-
-			// Always filter by current user
-			const userWhere = {
-				...where,
-				userId: user.id,
-			};
-
-			const { data, hit } = await withCache({
-				key: {
-					scope: "listing-score:collection",
-					version: "1",
-					value: {
-						...json,
-						where: userWhere,
-					},
-				},
-				fetch: () =>
-					withCollection({
-						select: withListingScoreSelect({
-							sort,
-						}),
-						output: ListingScoreSchema,
-						cursor: cursor ?? {
-							page: 0,
-							size: 10,
-						},
-						filter,
-						where: userWhere,
-						query: withListingScoreQueryBuilder,
+			return Effect.gen(function* () {
+				return c.json<withCollectionSchema.Type<ListingScoreSchema>, 200>(
+					yield* listingScoreCollectionFx({
+						database: c.get("database"),
+						userId: c.get("user").id,
+						query: c.req.valid("json"),
 					}),
-			});
+					200,
+				);
+			}).pipe(
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
 
-			return c.json(data, {
-				headers: {
-					"X-Cached": hit ? "true" : "false",
-				},
-			});
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "This should not happen",
+							},
+							500,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

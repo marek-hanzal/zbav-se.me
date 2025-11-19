@@ -1,11 +1,10 @@
 import { createRoute } from "@hono/zod-openapi";
-import { withFetch } from "@use-pico/common/fetch";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { withUploadQueryBuilder } from "./db/withUploadQueryBuilder";
-import { withUploadSelect } from "./db/withUploadSelect";
 import { UploadQuerySchema } from "./schema/UploadQuerySchema";
 import { UploadSchema } from "./schema/UploadSchema";
+import { uploadFetchFx } from "./service/uploadFetchFx";
 
 export const withUploadFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -48,30 +47,38 @@ export const withUploadFetchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { filter, where, sort } = c.req.valid("json");
-
-			const result = await withFetch({
-				select: withUploadSelect({
-					database: c.get("database"),
-					sort,
-				}),
-				output: UploadSchema,
-				filter,
-				where,
-				query: withUploadQueryBuilder,
-			});
-
-			if (!result) {
-				return c.json<MessageSchema.Type, 404>(
-					{
-						type: "error",
-						message: "Upload not found",
-					},
-					404,
+			return Effect.gen(function* () {
+				return c.json<UploadSchema.Type, 200>(
+					yield* uploadFetchFx({
+						database: c.get("database"),
+						query: c.req.valid("json"),
+					}),
+					200,
 				);
-			}
-
-			return c.json<UploadSchema.Type, 200>(result, 200);
+			}).pipe(
+				Effect.catchAll((e) => {
+					return Effect.succeed(
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.exhaustive,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

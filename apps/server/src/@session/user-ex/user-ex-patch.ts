@@ -1,8 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
-import { genId } from "@use-pico/common/gen-id";
+import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { UserExPatchSchema } from "./schema/UserExPatchSchema";
+import { userExPatchFx } from "./service/userExPatchFx";
 
 export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -40,51 +41,33 @@ export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const json = c.req.valid("json");
-			const { locationId, side } = json;
-
-			try {
-				await c.get("database").transaction().execute(async (trx) => {
-					try {
-						const userEx = await trx
-							.selectFrom("user_ex")
-							.where("userId", "=", c.get("user").id)
-							.selectAll()
-							.executeTakeFirstOrThrow();
-
-						await trx
-							.updateTable("user_ex")
-							.set({
-								...userEx,
-								locationId,
-								side,
-							})
-							.where("id", "=", userEx.id)
-							.execute();
-					} catch {
-						await trx
-							.insertInto("user_ex")
-							.values({
-								id: genId(),
-								userId: c.get("user").id,
-								locationId,
-								side,
-							})
-							.execute();
-					}
+			return Effect.gen(function* () {
+				yield* userExPatchFx({
+					database: c.get("database"),
+					userId: c.get("user").id,
+					data: c.req.valid("json"),
 				});
 
 				return c.body(null, 204);
-			} catch (error) {
-				console.error(error);
-				return c.json<MessageSchema.Type, 500>(
-					{
-						type: "error",
-						message: "Failed to update user extended information",
-					},
-					500,
-				);
-			}
+			}).pipe(
+				Effect.catchAll((e) => {
+					/**
+					 * This just holds type exhaustive match for errors if any comes up.
+					 */
+					Match.value(e).pipe(Match.exhaustive);
+
+					return Effect.succeed(
+						c.json<MessageSchema.Type, 500>(
+							{
+								type: "error",
+								message: "Failed to update user extended information",
+							},
+							500,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };
