@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { AppEnv } from "../../../AppEnv";
-import { UserContextFx } from "../../../auth/UserContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import type { UploadCreateSchema } from "../schema/UploadCreateSchema";

@@ -1,12 +1,15 @@
 import { Context, Effect } from "effect";
 import type { WithDatabase } from "../WithDatabase";
 
+export type DatabaseContext = WithDatabase;
+
 export class DatabaseContextFx extends Context.Tag("DatabaseContextFx")<
 	DatabaseContextFx,
-	WithDatabase
+	DatabaseContext
 >() {
 	//
 }
 
-export const DatabaseContextProvider = (database: WithDatabase) =>
-	Effect.provideService(DatabaseContextFx, database);
+export const DatabaseContextProvider = (database: DatabaseContext) => {
+	return Effect.provideService(DatabaseContextFx, database);
+};

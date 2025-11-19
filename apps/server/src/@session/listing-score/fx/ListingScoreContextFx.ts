@@ -2,13 +2,15 @@ import { Context, Effect } from "effect";
 
 export type ListingScoreType = "listing" | "ignore" | "view" | "cart" | "flag";
 
+export type ListingScoreContext = Record<ListingScoreType, number>;
+
 export class ListingScoreContextFx extends Context.Tag("ListingScoreContextFx")<
 	ListingScoreContextFx,
-	Record<ListingScoreType, number>
+	ListingScoreContext
 >() {
 	//
 }
 
-export const ListingScoreContextProvider = (scores: Record<ListingScoreType, number>) => {
+export const ListingScoreContextProvider = (scores: ListingScoreContext) => {
 	return Effect.provideService(ListingScoreContextFx, scores);
 };

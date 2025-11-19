@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/UserContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 
 export namespace listingTransactionGetBuyerInfoFx {
 	export interface Props {
