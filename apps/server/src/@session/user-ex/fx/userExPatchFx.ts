@@ -12,50 +12,48 @@ export namespace userExPatchFx {
 }
 
 export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
-	return Effect.gen(function* () {
-		return yield* withTransactionFx(
-			Effect.gen(function* () {
-				const database = yield* DatabaseContextFx;
-				const user = yield* UserContextFx;
+	return withTransactionFx(
+		Effect.gen(function* () {
+			const database = yield* DatabaseContextFx;
+			const user = yield* UserContextFx;
 
-				const userEx = yield* Effect.tryPromise(async () => {
-					return database
-						.selectFrom("user_ex")
-						.where("userId", "=", user.id)
-						.selectAll()
-						.executeTakeFirst();
-				});
+			const userEx = yield* Effect.tryPromise(async () => {
+				return database
+					.selectFrom("user_ex")
+					.where("userId", "=", user.id)
+					.selectAll()
+					.executeTakeFirst();
+			});
 
-				if (!userEx) {
-					yield* Effect.tryPromise(async () => {
-						return database
-							.insertInto("user_ex")
-							.values({
-								id: genId(),
-								userId: user.id,
-								...data,
-							})
-							.execute();
-					});
-
-					return yield* Effect.void;
-				}
-
+			if (!userEx) {
 				yield* Effect.tryPromise(async () => {
 					return database
-						.updateTable("user_ex")
-						.set({
-							...userEx,
+						.insertInto("user_ex")
+						.values({
+							id: genId(),
+							userId: user.id,
 							...data,
 						})
-						.where("id", "=", userEx.id)
 						.execute();
 				});
 
 				return yield* Effect.void;
-			}),
-		);
-	});
+			}
+
+			yield* Effect.tryPromise(async () => {
+				return database
+					.updateTable("user_ex")
+					.set({
+						...userEx,
+						...data,
+					})
+					.where("id", "=", userEx.id)
+					.execute();
+			});
+
+			return yield* Effect.void;
+		}),
+	);
 };
 
 export type userExPatchFx = ReturnType<typeof userExPatchFx>;

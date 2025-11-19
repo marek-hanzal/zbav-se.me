@@ -1,6 +1,7 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
+import { withTransactionFx } from "../../../database/fx/withTransactionFx";
+import { UserContextFx } from "../../../auth/UserContextFx";
 import { listingCartFetchFx } from "./listingCartFetchFx";
 
 export namespace listingCartDeleteFx {
@@ -10,29 +11,31 @@ export namespace listingCartDeleteFx {
 }
 
 export const listingCartDeleteFx = ({ listingId }: listingCartDeleteFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+	return withTransactionFx(
+		Effect.gen(function* () {
+			const database = yield* DatabaseContextFx;
+			const user = yield* UserContextFx;
 
-		const cart = yield* listingCartFetchFx({
-			query: {
-				where: {
-					listingId,
-					userId: user.id,
+			const cart = yield* listingCartFetchFx({
+				query: {
+					where: {
+						listingId,
+						userId: user.id,
+					},
 				},
-			},
-		});
+			});
 
-		yield* Effect.tryPromise(async () => {
-			return database
-				.deleteFrom("listing_cart")
-				.where("userId", "=", user.id)
-				.where("listingId", "=", listingId)
-				.execute();
-		});
+			yield* Effect.tryPromise(async () => {
+				return database
+					.deleteFrom("listing_cart")
+					.where("userId", "=", user.id)
+					.where("listingId", "=", listingId)
+					.execute();
+			});
 
-		return cart;
-	});
+			return cart;
+		}),
+	);
 };
 
 export type listingCartDeleteFx = ReturnType<typeof listingCartDeleteFx>;
