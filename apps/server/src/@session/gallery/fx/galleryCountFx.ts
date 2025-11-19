@@ -1,6 +1,6 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withGalleryQueryBuilder } from "../db/withGalleryQueryBuilder";
 import { withGallerySelect } from "../db/withGallerySelect";
 import type { GalleryQuerySchema } from "../schema/GalleryQuerySchema";

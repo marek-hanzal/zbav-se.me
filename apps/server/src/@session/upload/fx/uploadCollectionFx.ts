@@ -1,6 +1,6 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withUploadQueryBuilder } from "../db/withUploadQueryBuilder";
 import { withUploadSelect } from "../db/withUploadSelect";
 import type { UploadQuerySchema } from "../schema/UploadQuerySchema";

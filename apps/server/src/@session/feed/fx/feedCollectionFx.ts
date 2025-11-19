@@ -1,6 +1,6 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
 import { withFeedSelect } from "../db/withFeedSelect";

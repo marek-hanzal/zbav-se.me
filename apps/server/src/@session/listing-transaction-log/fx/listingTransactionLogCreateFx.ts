@@ -2,7 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { listingTransactionLogFetchFx } from "./listingTransactionLogFetchFx";
 
 export namespace listingTransactionLogCreateFx {

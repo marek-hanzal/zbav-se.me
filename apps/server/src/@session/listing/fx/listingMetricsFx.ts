@@ -1,6 +1,6 @@
 import { Effect } from "effect";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { NotFoundError } from "../../../error/NotFoundError";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { ListingMetricsSchema } from "../schema/ListingMetricsSchema";
 
 export namespace listingMetricsFx {

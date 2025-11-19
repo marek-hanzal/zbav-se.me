@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
 import { feedFetchFx } from "./feedFetchFx";

@@ -1,5 +1,5 @@
 import { Context, Effect } from "effect";
-import type { WithDatabase } from "../database/WithDatabase";
+import type { WithDatabase } from "../WithDatabase";
 
 export class DatabaseContextFx extends Context.Tag("DatabaseContextFx")<
 	DatabaseContextFx,

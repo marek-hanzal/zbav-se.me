@@ -1,6 +1,6 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { withListingFlagQueryBuilder } from "../db/withListingFlagQueryBuilder";
 import { withListingFlagSelect } from "../db/withListingFlagSelect";

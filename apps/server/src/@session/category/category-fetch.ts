@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { categoryFetchFx } from "./fx/categoryFetchFx";

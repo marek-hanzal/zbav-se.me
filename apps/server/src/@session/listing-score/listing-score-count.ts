@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";

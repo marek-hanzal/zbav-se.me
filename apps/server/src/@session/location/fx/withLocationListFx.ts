@@ -1,6 +1,6 @@
 import { withList } from "@use-pico/common/list";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withLocationQueryBuilder } from "../db/withLocationQueryBuilder";
 import { withLocationSelect } from "../db/withLocationSelect";
 import type { LocationQuerySchema } from "../schema/LocationQuerySchema";

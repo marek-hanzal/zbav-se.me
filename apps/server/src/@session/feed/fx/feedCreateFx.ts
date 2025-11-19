@@ -1,6 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import type { FeedCreateSchema } from "../schema/FeedCreateSchema";
 import { feedFetchFx } from "./feedFetchFx";

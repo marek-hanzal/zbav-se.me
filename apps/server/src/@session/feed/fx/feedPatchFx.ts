@@ -1,6 +1,6 @@
 import { Effect } from "effect";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { NotFoundError } from "../../../error/NotFoundError";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import type { FeedPatchSchema } from "../schema/FeedPatchSchema";
 import { feedFetchFx } from "./feedFetchFx";

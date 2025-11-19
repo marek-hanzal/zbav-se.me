@@ -2,7 +2,7 @@ import { linkTo } from "@use-pico/common/link-to";
 import { Effect } from "effect";
 import { AppEnv } from "../../../AppEnv";
 
-export namespace withLocationRequest {
+export namespace withLocationRequestFx {
 	/**
 	 * Soft schema from Geoapify (we believe in them - a mistake?)
 	 */
@@ -33,7 +33,7 @@ export namespace withLocationRequest {
 	}
 }
 
-export const withLocationRequest = ({ text, lang, limit = 5 }: withLocationRequest.Props) => {
+export const withLocationRequestFx = ({ text, lang, limit = 5 }: withLocationRequestFx.Props) => {
 	return Effect.gen(function* () {
 		const link = linkTo({
 			base: "https://api.geoapify.com",
@@ -49,7 +49,7 @@ export const withLocationRequest = ({ text, lang, limit = 5 }: withLocationReque
 		const { features } = yield* Effect.tryPromise(async () => {
 			return fetch(link).then((res) => {
 				return res.json() as unknown as {
-					features: withLocationRequest.Feature[];
+					features: withLocationRequestFx.Feature[];
 				};
 			});
 		});
@@ -58,4 +58,4 @@ export const withLocationRequest = ({ text, lang, limit = 5 }: withLocationReque
 	});
 };
 
-export type withLocationRequest = ReturnType<typeof withLocationRequest>;
+export type withLocationRequestFx = ReturnType<typeof withLocationRequestFx>;

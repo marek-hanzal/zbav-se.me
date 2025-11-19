@@ -4,7 +4,7 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { galleryCreateFx } from "../../gallery/fx/galleryCreateFx";
 import type { ListingCreateSchema } from "../schema/ListingCreateSchema";

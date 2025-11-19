@@ -1,6 +1,6 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { categoryMissCreateFx } from "../../category-miss/fx/categoryMissCreateFx";
 import { withCategoryQueryBuilder } from "../db/withCategoryQueryBuilder";
 import { withCategorySelect } from "../db/withCategorySelect";

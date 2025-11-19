@@ -1,8 +1,8 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
+import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { TooManyRequests } from "../../../error/TooManyRequests";
-import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 
 export namespace listingScoreRateLimitFx {
