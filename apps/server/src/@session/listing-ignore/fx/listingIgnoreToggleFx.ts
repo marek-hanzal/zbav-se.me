@@ -17,29 +17,36 @@ export const listingIgnoreToggleFx = ({
 }: listingIgnoreToggleFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
-			if (toggle) {
-				yield* listingCheckIfOwnFx({
-					listingId,
-					errorMessage: "You cannot ignore your own listing",
-				});
-
-				yield* listingIgnoreCreateFx({
-					listingId,
-				});
-
-				yield* listingScoreCreateFx({
-					listingId,
-					score: "ignore",
-				}).pipe(Effect.ignore);
-
-				return Effect.void;
-			}
-
-			yield* listingIgnoreDeleteFx({
+			yield* listingCheckIfOwnFx({
 				listingId,
+				errorMessage: "You cannot ignore your own listing",
 			});
 
-			return Effect.void;
+			yield* Effect.if(toggle, {
+				onTrue() {
+					return Effect.gen(function* () {
+						yield* listingIgnoreCreateFx({
+							listingId,
+						});
+
+						yield* listingScoreCreateFx({
+							listingId,
+							score: "ignore",
+						}).pipe(Effect.ignore);
+
+						return yield* Effect.void;
+					});
+				},
+				onFalse() {
+					return Effect.gen(function* () {
+						yield* listingIgnoreDeleteFx({
+							listingId,
+						});
+
+						return yield* Effect.void;
+					});
+				},
+			});
 		}),
 	);
 };

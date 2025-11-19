@@ -15,29 +15,36 @@ export namespace listingCartToggleFx {
 export const listingCartToggleFx = ({ data: { toggle, listingId } }: listingCartToggleFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
-			if (toggle) {
-				yield* listingCheckIfOwnFx({
-					listingId,
-					errorMessage: "You cannot add your own listing to cart",
-				});
-
-				yield* listingCartCreateFx({
-					listingId,
-				});
-
-				yield* listingScoreCreateFx({
-					listingId,
-					score: "cart",
-				}).pipe(Effect.ignore);
-
-				return yield* Effect.void;
-			}
-
-			yield* listingCartDeleteFx({
+			yield* listingCheckIfOwnFx({
 				listingId,
+				errorMessage: "You cannot add your own listing to cart",
 			});
 
-			return yield* Effect.void;
+			yield* Effect.if(toggle, {
+				onTrue() {
+					return Effect.gen(function* () {
+						yield* listingCartCreateFx({
+							listingId,
+						});
+
+						yield* listingScoreCreateFx({
+							listingId,
+							score: "cart",
+						}).pipe(Effect.ignore);
+
+						return yield* Effect.void;
+					});
+				},
+				onFalse() {
+					return Effect.gen(function* () {
+						yield* listingCartDeleteFx({
+							listingId,
+						});
+
+						return yield* Effect.void;
+					});
+				},
+			});
 		}),
 	);
 };

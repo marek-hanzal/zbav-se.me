@@ -15,29 +15,36 @@ export namespace listingFlagToggleFx {
 export const listingFlagToggleFx = ({ data: { toggle, listingId } }: listingFlagToggleFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
-			if (toggle) {
-				yield* listingCheckIfOwnFx({
-					listingId,
-					errorMessage: "You cannot flag your own listing",
-				});
-
-				yield* listingFlagCreateFx({
-					listingId,
-				});
-
-				yield* listingScoreCreateFx({
-					listingId,
-					score: "flag",
-				}).pipe(Effect.ignore);
-
-				return Effect.void;
-			}
-
-			yield* listingFlagDeleteFx({
+			yield* listingCheckIfOwnFx({
 				listingId,
+				errorMessage: "You cannot flag your own listing",
 			});
 
-			return Effect.void;
+			yield* Effect.if(toggle, {
+				onTrue() {
+					return Effect.gen(function* () {
+						yield* listingFlagCreateFx({
+							listingId,
+						});
+
+						yield* listingScoreCreateFx({
+							listingId,
+							score: "flag",
+						}).pipe(Effect.ignore);
+
+						return yield* Effect.void;
+					});
+				},
+				onFalse() {
+					return Effect.gen(function* () {
+						yield* listingFlagDeleteFx({
+							listingId,
+						});
+
+						return yield* Effect.void;
+					});
+				},
+			});
 		}),
 	);
 };
