@@ -1,5 +1,6 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { withListingFlagQueryBuilder } from "../db/withListingFlagQueryBuilder";
@@ -7,30 +8,26 @@ import { withListingFlagSelect } from "../db/withListingFlagSelect";
 import type { ListingFlagQuerySchema } from "../schema/ListingFlagQuerySchema";
 import { ListingFlagSchema } from "../schema/ListingFlagSchema";
 
-export namespace listingFlagCollectionFx {
+export namespace listingFlagFetchFx {
 	export interface Props {
-		query: ListingFlagQuerySchema.Type;
+		query: Omit<ListingFlagQuerySchema.Type, "cursor">;
 	}
 }
 
-export const listingFlagCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: listingFlagCollectionFx.Props) => {
+export const listingFlagFetchFx = ({ query }: listingFlagFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
+		const data = yield* Effect.tryPromise(async () => {
+			const { filter, where, sort } = query;
+
+			return withFetch({
 				select: withListingFlagSelect({
 					database,
 					sort,
 				}),
 				output: ListingFlagSchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
 				filter,
 				where: {
 					...where,
@@ -39,7 +36,17 @@ export const listingFlagCollectionFx = ({
 				query: withListingFlagQueryBuilder,
 			});
 		});
+
+		if (!data) {
+			return yield* new NotFoundError({
+				resource: "listing-flag",
+				resourceId: "(query)",
+				message: "Listing flag not found",
+			});
+		}
+
+		return data;
 	});
 };
 
-export type listingFlagCollectionFx = ReturnType<typeof listingFlagCollectionFx>;
+export type listingFlagFetchFx = ReturnType<typeof listingFlagFetchFx>;

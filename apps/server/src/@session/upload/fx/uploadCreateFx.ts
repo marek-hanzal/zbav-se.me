@@ -27,7 +27,7 @@ export const uploadCreateFx = ({ data: { url } }: uploadCreateFx.Props) => {
 		const id = genId();
 		const now = new Date();
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("upload")
 				.values({

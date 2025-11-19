@@ -66,13 +66,13 @@ export const locationAutocompleteFx = ({ text, lang, limit = 5 }: locationAutoco
 
 		// TODO We've to cancel transaction as Effect does not throw
 
-		return yield* Effect.promise(() =>
+		return yield* Effect.tryPromise(() =>
 			database.transaction().execute((trx) =>
 				Effect.runPromise(
 					Effect.gen(function* () {
 						const lockId = getLockId(text, lang);
 
-						yield* Effect.promise(() =>
+						yield* Effect.tryPromise(() =>
 							sql`SELECT pg_advisory_xact_lock(${lockId})`.execute(trx),
 						);
 
@@ -134,7 +134,7 @@ export const locationAutocompleteFx = ({ text, lang, limit = 5 }: locationAutoco
 						>[] as LocationDbSchema.Type[];
 
 						if (locations.length > 0) {
-							yield* Effect.promise(() =>
+							yield* Effect.tryPromise(() =>
 								trx
 									.insertInto("location")
 									.values(locations)

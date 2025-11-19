@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
+import { listingTransactionLogFetchFx } from "./listingTransactionLogFetchFx";
 
 export namespace listingTransactionLogCreateFx {
 	export interface Props {
@@ -22,11 +23,13 @@ export const listingTransactionLogCreateFx = ({
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		return yield* Effect.promise(async () => {
+		const id = genId();
+
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("listing_transaction_log")
 				.values({
-					id: genId(),
+					id,
 					listingTransactionId,
 					status,
 					side,
@@ -34,6 +37,14 @@ export const listingTransactionLogCreateFx = ({
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();
+		});
+
+		return yield* listingTransactionLogFetchFx({
+			query: {
+				where: {
+					id,
+				},
+			},
 		});
 	});
 };

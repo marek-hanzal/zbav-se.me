@@ -21,7 +21,7 @@ export const listingIgnoreToggleFx = ({
 		const user = yield* UserContextFx;
 
 		if (toggle) {
-			const listing = yield* Effect.promise(async () => {
+			const listing = yield* Effect.tryPromise(async () => {
 				return database
 					.selectFrom("listing")
 					.select("id")
@@ -40,15 +40,19 @@ export const listingIgnoreToggleFx = ({
 				listingId,
 			});
 
-			return yield* listingScoreCreateFx({
+			yield* listingScoreCreateFx({
 				listingId,
 				score: "ignore",
 			});
+
+			return yield* Effect.void;
 		}
 
-		return yield* listingIgnoreDeleteFx({
+		yield* listingIgnoreDeleteFx({
 			listingId,
 		});
+
+		return yield* Effect.void;
 	});
 };
 

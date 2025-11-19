@@ -17,7 +17,7 @@ export const listingCartCountFx = ({ query: { filter, where } }: listingCartCoun
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withListingCartSelect({
 					database,

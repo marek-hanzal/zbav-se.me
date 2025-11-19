@@ -46,7 +46,7 @@ export const withLocationRequest = ({ text, lang, limit = 5 }: withLocationReque
 			},
 		});
 
-		const { features } = yield* Effect.promise(async () => {
+		const { features } = yield* Effect.tryPromise(async () => {
 			return fetch(link).then((res) => {
 				return res.json() as unknown as {
 					features: withLocationRequest.Feature[];

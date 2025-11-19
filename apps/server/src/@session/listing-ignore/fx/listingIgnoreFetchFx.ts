@@ -3,18 +3,18 @@ import { Effect } from "effect";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
-import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
-import { withFeedSelect } from "../db/withFeedSelect";
-import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
-import { FeedSchema } from "../schema/FeedSchema";
+import { withListingIgnoreQueryBuilder } from "../db/withListingIgnoreQueryBuilder";
+import { withListingIgnoreSelect } from "../db/withListingIgnoreSelect";
+import type { ListingIgnoreQuerySchema } from "../schema/ListingIgnoreQuerySchema";
+import { ListingIgnoreSchema } from "../schema/ListingIgnoreSchema";
 
-export namespace feedFetchFx {
+export namespace listingIgnoreFetchFx {
 	export interface Props {
-		query: Omit<FeedQuerySchema.Type, "cursor">;
+		query: Omit<ListingIgnoreQuerySchema.Type, "cursor">;
 	}
 }
 
-export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
+export const listingIgnoreFetchFx = ({ query }: listingIgnoreFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -23,25 +23,25 @@ export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
 			const { filter, where, sort } = query;
 
 			return withFetch({
-				select: withFeedSelect({
+				select: withListingIgnoreSelect({
 					database,
 					sort,
 				}),
-				output: FeedSchema,
+				output: ListingIgnoreSchema,
 				filter,
 				where: {
 					...where,
 					userId: user.id,
 				},
-				query: withFeedQueryBuilder,
+				query: withListingIgnoreQueryBuilder,
 			});
 		});
 
 		if (!data) {
 			return yield* new NotFoundError({
-				resource: "feed",
+				resource: "listing-ignore",
 				resourceId: "(query)",
-				message: "Feed item not found",
+				message: "Listing ignore not found",
 			});
 		}
 
@@ -49,4 +49,4 @@ export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
 	});
 };
 
-export type feedFetchFx = ReturnType<typeof feedFetchFx>;
+export type listingIgnoreFetchFx = ReturnType<typeof listingIgnoreFetchFx>;

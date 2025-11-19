@@ -41,7 +41,7 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 				"listing-ignore",
 				"session",
 			],
-		}),
+		Match.exhaustive,
 		async (c) => {
 			const data = c.req.valid("json");
 			const user = c.get("user");
@@ -103,7 +103,7 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 							InvalidRequestError: () => {
 								return Effect.succeed(undefined);
 							},
-						}),
+						Match.exhaustive,
 					),
 				);
 

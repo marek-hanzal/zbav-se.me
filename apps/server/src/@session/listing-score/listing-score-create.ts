@@ -4,6 +4,8 @@ import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DefaultListingScore } from "./config/DefaultListingScore";
+import { ListingScoreContextProvider } from "./fx/ListingScoreContextFx";
 import { listingScoreCreateFx } from "./fx/listingScoreCreateFx";
 import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";
 
@@ -66,6 +68,7 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
+				ListingScoreContextProvider(DefaultListingScore),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
@@ -109,6 +112,20 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 											message: e.message,
 										},
 										429,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

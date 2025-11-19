@@ -42,6 +42,14 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Listing not found",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing",
@@ -59,7 +67,7 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
-                //
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
@@ -74,6 +82,20 @@ export const withListingFetchApi: Routes.Fn = ({ sessionHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

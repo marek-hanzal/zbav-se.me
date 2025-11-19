@@ -89,6 +89,20 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 									);
 								},
 							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
 							Match.exhaustive,
 						),
 					);

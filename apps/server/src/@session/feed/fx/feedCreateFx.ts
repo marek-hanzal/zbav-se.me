@@ -18,7 +18,7 @@ export const feedCreateFx = ({ data: { name, locationId, query } }: feedCreateFx
 
 		const id = genId();
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			const now = new Date();
 
 			return database

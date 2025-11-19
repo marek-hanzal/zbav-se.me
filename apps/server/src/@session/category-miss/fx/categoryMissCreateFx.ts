@@ -18,7 +18,7 @@ export const categoryMissCreateFx = ({ fulltext, limit = 4 }: categoryMissCreate
 			return yield* Effect.void;
 		}
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("category_miss")
 				.values({

@@ -15,7 +15,7 @@ export const uploadCountFx = ({ query: { filter, where } }: uploadCountFx.Props)
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withUploadSelect({
 					database,

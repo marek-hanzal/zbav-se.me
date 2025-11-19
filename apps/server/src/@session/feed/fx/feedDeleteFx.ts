@@ -19,7 +19,7 @@ export const feedDeleteFx = ({ query }: feedDeleteFx.Props) => {
 			query,
 		});
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.deleteFrom("feed")
 				.where("id", "=", feed.id)

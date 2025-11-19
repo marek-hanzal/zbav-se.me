@@ -17,7 +17,7 @@ export const listingIgnoreCountFx = ({ query: { filter, where } }: listingIgnore
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withListingIgnoreSelect({
 					database,

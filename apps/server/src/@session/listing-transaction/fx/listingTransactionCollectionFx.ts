@@ -20,7 +20,7 @@ export const listingTransactionCollectionFx = ({
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCollection({
 				select: withListingTransactionSelect({
 					database,

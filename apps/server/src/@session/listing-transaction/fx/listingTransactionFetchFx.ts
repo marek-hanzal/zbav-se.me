@@ -19,7 +19,7 @@ export const listingTransactionFetchFx = ({ query }: listingTransactionFetchFx.P
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const data = yield* Effect.promise(async () => {
+		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort, meta } = query;
 
 			return withFetch({

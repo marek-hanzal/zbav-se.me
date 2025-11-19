@@ -19,7 +19,7 @@ export const listingFetchFx = ({ query }: listingFetchFx.Props) => {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const data = yield* Effect.promise(async () => {
+		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort, meta } = query;
 
 			return withFetch({
@@ -34,7 +34,7 @@ export const listingFetchFx = ({ query }: listingFetchFx.Props) => {
 				where,
 				query(query) {
 					return withListingQueryBuilder({
-                        ...query,
+						...query,
 						userId: user.id,
 					});
 				},

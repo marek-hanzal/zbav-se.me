@@ -7,6 +7,7 @@ import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
+import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
 export namespace listingTransactionPatchFx {
 	export interface Props {
@@ -25,7 +26,7 @@ export const listingTransactionPatchFx = ({
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const transaction = yield* Effect.promise(async () => {
+		const transaction = yield* Effect.tryPromise(async () => {
 			return database
 				.selectFrom("listing_transaction as lt")
 				.innerJoin("listing as l", "l.id", "lt.listingId")
@@ -59,7 +60,7 @@ export const listingTransactionPatchFx = ({
 		const nextSide = side ?? transaction.side;
 		const now = DateTime.now();
 
-		const updated = yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.updateTable("listing_transaction")
 				.set(() => ({
@@ -85,7 +86,13 @@ export const listingTransactionPatchFx = ({
 			createdAt: now.toJSDate(),
 		});
 
-		return updated;
+		return yield* listingTransactionFetchFx({
+			query: {
+				where: {
+					id: transactionId,
+				},
+			},
+		});
 	});
 };
 

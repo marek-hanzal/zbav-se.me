@@ -19,7 +19,7 @@ export const categoryCollectionFx = ({
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		const data = yield* Effect.promise(async () => {
+		const data = yield* Effect.tryPromise(async () => {
 			return withCollection({
 				select: withCategorySelect({
 					database,

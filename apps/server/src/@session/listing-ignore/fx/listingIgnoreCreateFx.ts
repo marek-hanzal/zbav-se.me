@@ -2,6 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
+import { listingIgnoreFetchFx } from "./listingIgnoreFetchFx";
 
 export namespace listingIgnoreCreateFx {
 	export interface Props {
@@ -19,7 +20,7 @@ export const listingIgnoreCreateFx = ({
 		const user = yield* UserContextFx;
 		const id = genId();
 
-		return yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("listing_ignore")
 				.values({
@@ -38,6 +39,14 @@ export const listingIgnoreCreateFx = ({
 				)
 				.returningAll()
 				.executeTakeFirst();
+		});
+
+		return yield* listingIgnoreFetchFx({
+			query: {
+				where: {
+					id,
+				},
+			},
 		});
 	});
 };

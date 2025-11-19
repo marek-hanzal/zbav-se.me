@@ -5,6 +5,7 @@ import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
+import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
 export namespace listingTransactionCreateFx {
 	export interface Props {
@@ -17,7 +18,7 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const listing = yield* Effect.promise(async () => {
+		const listing = yield* Effect.tryPromise(async () => {
 			return database
 				.selectFrom("listing")
 				.select([
@@ -42,12 +43,13 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 		});
 		const nowDate = now.toJSDate();
 		const expiresAtDate = expiresAt.toJSDate();
+		const id = genId();
 
-		const transaction = yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("listing_transaction")
 				.values({
-					id: genId(),
+					id,
 					userId: user.id,
 					listingId,
 					side: "buyer",
@@ -61,13 +63,19 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 		});
 
 		yield* listingTransactionLogCreateFx({
-			listingTransactionId: transaction.id,
+			listingTransactionId: id,
 			side: "buyer",
 			status: "request",
 			createdAt: nowDate,
 		});
 
-		return transaction;
+		return yield* listingTransactionFetchFx({
+			query: {
+				where: {
+					id,
+				},
+			},
+		});
 	});
 };
 

@@ -3,18 +3,18 @@ import { Effect } from "effect";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
-import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
-import { withFeedSelect } from "../db/withFeedSelect";
-import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
-import { FeedSchema } from "../schema/FeedSchema";
+import { withListingCartQueryBuilder } from "../db/withListingCartQueryBuilder";
+import { withListingCartSelect } from "../db/withListingCartSelect";
+import type { ListingCartQuerySchema } from "../schema/ListingCartQuerySchema";
+import { ListingCartSchema } from "../schema/ListingCartSchema";
 
-export namespace feedFetchFx {
+export namespace listingCartFetchFx {
 	export interface Props {
-		query: Omit<FeedQuerySchema.Type, "cursor">;
+		query: Omit<ListingCartQuerySchema.Type, "cursor">;
 	}
 }
 
-export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
+export const listingCartFetchFx = ({ query }: listingCartFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -23,25 +23,25 @@ export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
 			const { filter, where, sort } = query;
 
 			return withFetch({
-				select: withFeedSelect({
+				select: withListingCartSelect({
 					database,
 					sort,
 				}),
-				output: FeedSchema,
+				output: ListingCartSchema,
 				filter,
 				where: {
 					...where,
 					userId: user.id,
 				},
-				query: withFeedQueryBuilder,
+				query: withListingCartQueryBuilder,
 			});
 		});
 
 		if (!data) {
 			return yield* new NotFoundError({
-				resource: "feed",
+				resource: "listing-cart",
 				resourceId: "(query)",
-				message: "Feed item not found",
+				message: "Listing cart not found",
 			});
 		}
 
@@ -49,4 +49,4 @@ export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
 	});
 };
 
-export type feedFetchFx = ReturnType<typeof feedFetchFx>;
+export type listingCartFetchFx = ReturnType<typeof listingCartFetchFx>;

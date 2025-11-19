@@ -1,25 +1,17 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
+import { ListingScoreContextFx, type ListingScoreType } from "./ListingScoreContextFx";
 import { listingScoreRateLimitFx } from "./listingScoreRateLimitFx";
-
-const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
-	listing: 1,
-	ignore: -3,
-	view: 5,
-	cart: 15,
-	flag: -15,
-};
 
 export namespace listingScoreCreateFx {
 	export interface Props {
 		listingId: string;
-		score: ListingScoreTypeSchema.Type;
+		score: ListingScoreType;
 	}
 }
 
@@ -27,8 +19,9 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
+		const scores = yield* ListingScoreContextFx;
 
-		const listing = yield* Effect.promise(async () => {
+		const listing = yield* Effect.tryPromise(async () => {
 			return database
 				.selectFrom("listing")
 				.select("userId")
@@ -55,7 +48,7 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 			score,
 		});
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			/**
 			 * Some of the scores may have different implementations.
 			 */
@@ -79,7 +72,7 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 							id: genId(),
 							listingId,
 							userId: user.id,
-							score: ScoreList[score],
+							score: scores[score],
 							type: score,
 							createdAt: new Date(),
 						})
@@ -93,7 +86,7 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 							id: genId(),
 							listingId,
 							userId: user.id,
-							score: ScoreList[score],
+							score: scores[score],
 							type: score,
 							createdAt: new Date(),
 						})

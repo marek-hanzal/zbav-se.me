@@ -17,7 +17,7 @@ export const categoryCountFx = ({ query }: categoryCountFx.Props) => {
 
 		const { filter, where } = query;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withCategorySelect({
 					database,

@@ -19,7 +19,7 @@ export const listingCountFx = ({ query }: listingCountFx.Props) => {
 
 		const { filter, where } = query;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withListingSelect({
 					database,

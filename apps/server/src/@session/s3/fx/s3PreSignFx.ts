@@ -19,7 +19,7 @@ export const s3PreSignFx = ({ path, extension }: s3PreSignFx.Props) => {
 
 		const key = `${keyOf(user.id)}/${path}/${genId()}.${extension}`;
 
-		const url = yield* Effect.promise(async () => {
+		const url = yield* Effect.tryPromise(async () => {
 			return s3.presignedPutObject(AppEnv.SERVER_S3_BUCKET, key, 60 * 30);
 		});
 

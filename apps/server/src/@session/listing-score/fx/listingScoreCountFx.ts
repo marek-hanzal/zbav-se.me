@@ -17,7 +17,7 @@ export const listingScoreCountFx = ({ query: { filter, where } }: listingScoreCo
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withListingScoreSelect({
 					database,

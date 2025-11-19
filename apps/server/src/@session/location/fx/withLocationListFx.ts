@@ -18,7 +18,7 @@ export const withLocationListFx = ({
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withList({
 				select: withLocationSelect({
 					database,

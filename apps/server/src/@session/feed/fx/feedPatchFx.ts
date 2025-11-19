@@ -18,7 +18,7 @@ export const feedPatchFx = ({ data: { id, name, locationId, query } }: feedPatch
 
 		const now = new Date();
 
-		const result = yield* Effect.promise(async () => {
+		const result = yield* Effect.tryPromise(async () => {
 			return database
 				.updateTable("feed")
 				.set({

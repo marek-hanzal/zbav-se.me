@@ -1,6 +1,7 @@
 import { Effect } from "effect";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
+import { listingFlagFetchFx } from "./listingFlagFetchFx";
 
 export namespace listingFlagDeleteFx {
 	export interface Props {
@@ -13,13 +14,24 @@ export const listingFlagDeleteFx = ({ listingId }: listingFlagDeleteFx.Props) =>
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		yield* Effect.promise(async () => {
+		const flag = yield* listingFlagFetchFx({
+			query: {
+				where: {
+					listingId,
+					userId: user.id,
+				},
+			},
+		});
+
+		yield* Effect.tryPromise(async () => {
 			return database
 				.deleteFrom("listing_flag")
 				.where("userId", "=", user.id)
 				.where("listingId", "=", listingId)
 				.execute();
 		});
+
+		return flag;
 	});
 };
 

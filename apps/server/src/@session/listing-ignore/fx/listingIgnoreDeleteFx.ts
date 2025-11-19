@@ -13,7 +13,7 @@ export const listingIgnoreDeleteFx = ({ listingId }: listingIgnoreDeleteFx.Props
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.deleteFrom("listing_ignore")
 				.where("userId", "=", user.id)

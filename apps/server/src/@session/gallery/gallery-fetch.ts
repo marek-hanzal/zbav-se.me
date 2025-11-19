@@ -41,6 +41,14 @@ export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Gallery item not found",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"gallery",
@@ -72,6 +80,20 @@ export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

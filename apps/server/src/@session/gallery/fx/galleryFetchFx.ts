@@ -17,7 +17,7 @@ export const galleryFetchFx = ({ query }: galleryFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		const data = yield* Effect.promise(async () => {
+		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort } = query;
 
 			return withFetch({

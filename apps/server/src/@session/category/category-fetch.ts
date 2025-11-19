@@ -41,6 +41,14 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Category not found",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"category",
@@ -72,6 +80,20 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
 									);
 								},
 							),

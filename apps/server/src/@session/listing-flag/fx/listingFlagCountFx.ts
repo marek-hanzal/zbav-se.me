@@ -17,7 +17,7 @@ export const listingFlagCountFx = ({ query: { filter, where } }: listingFlagCoun
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withListingFlagSelect({
 					database,

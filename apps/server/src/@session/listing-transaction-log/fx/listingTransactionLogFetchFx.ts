@@ -1,42 +1,47 @@
-import { withCollection } from "@use-pico/common/collection";
+import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { withListingTransactionLogQueryBuilder } from "../db/withListingTransactionLogQueryBuilder";
 import { withListingTransactionLogSelect } from "../db/withListingTransactionLogSelect";
 import type { ListingTransactionLogQuerySchema } from "../schema/ListingTransactionLogQuerySchema";
 import { ListingTransactionLogSchema } from "../schema/ListingTransactionLogSchema";
 
-export namespace listingTransactionLogCollectionFx {
+export namespace listingTransactionLogFetchFx {
 	export interface Props {
-		query: ListingTransactionLogQuerySchema.Type;
+		query: Omit<ListingTransactionLogQuerySchema.Type, "cursor">;
 	}
 }
 
-export const listingTransactionLogCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: listingTransactionLogCollectionFx.Props) => {
+export const listingTransactionLogFetchFx = ({ query }: listingTransactionLogFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		return yield* Effect.tryPromise(async () => {
-			return withCollection({
+		const data = yield* Effect.tryPromise(async () => {
+			const { filter, where, sort } = query;
+
+			return withFetch({
 				select: withListingTransactionLogSelect({
 					database,
 					sort,
 				}),
 				output: ListingTransactionLogSchema,
-				cursor: cursor ?? {
-					page: 0,
-					size: 10,
-				},
 				filter,
 				where,
 				query: withListingTransactionLogQueryBuilder,
 			});
 		});
+
+		if (!data) {
+			return yield* new NotFoundError({
+				resource: "listing-transaction-log",
+				resourceId: "(query)",
+				message: "Listing transaction log not found",
+			});
+		}
+
+		return data;
 	});
 };
 
-export type listingTransactionLogCollectionFx = ReturnType<
-	typeof listingTransactionLogCollectionFx
->;
+export type listingTransactionLogFetchFx = ReturnType<typeof listingTransactionLogFetchFx>;

@@ -15,7 +15,7 @@ export const userExPatchFx = ({ data: { locationId, side } }: userExPatchFx.Prop
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database.transaction().execute(async (trx) => {
 				try {
 					const userEx = await trx

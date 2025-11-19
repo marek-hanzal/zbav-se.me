@@ -22,7 +22,7 @@ export const listingScoreRateLimitFx = ({
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const listingScore = yield* Effect.promise(async () => {
+		const listingScore = yield* Effect.tryPromise(async () => {
 			return database
 				.selectFrom("listing_score")
 				.select("createdAt")

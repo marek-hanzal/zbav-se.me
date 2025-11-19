@@ -13,7 +13,7 @@ export const listingMetricsFx = ({ listingId }: listingMetricsFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
-		const count = yield* Effect.promise(async () => {
+		const count = yield* Effect.tryPromise(async () => {
 			return database
 				.selectFrom("listing_score as ls")
 				.select((eb) => [
@@ -31,7 +31,7 @@ export const listingMetricsFx = ({ listingId }: listingMetricsFx.Props) => {
 			});
 		}
 
-		const score = yield* Effect.promise(async () => {
+		const score = yield* Effect.tryPromise(async () => {
 			return database
 				.selectFrom("listing_score as ls")
 				.where("ls.listingId", "=", listingId)

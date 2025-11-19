@@ -17,7 +17,7 @@ export const feedCountFx = ({ query: { filter, where } }: feedCountFx.Props) => 
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		return yield* Effect.promise(async () => {
+		return yield* Effect.tryPromise(async () => {
 			return withCount({
 				select: withFeedSelect({
 					database,

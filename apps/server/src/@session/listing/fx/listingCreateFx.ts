@@ -24,7 +24,7 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 		const id = genId();
 		const now = new Date();
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("listing")
 				.values({

@@ -20,7 +20,7 @@ export const listingCartToggleFx = ({ data: { toggle, listingId } }: listingCart
 		const user = yield* UserContextFx;
 
 		if (toggle) {
-			const listing = yield* Effect.promise(async () => {
+			const listing = yield* Effect.tryPromise(async () => {
 				return database
 					.selectFrom("listing")
 					.select("userId")

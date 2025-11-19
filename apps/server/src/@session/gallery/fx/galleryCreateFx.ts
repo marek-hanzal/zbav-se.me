@@ -2,6 +2,7 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
+import { galleryFetchFx } from "./galleryFetchFx";
 
 export namespace galleryCreateFx {
 	export interface Props {
@@ -16,13 +17,14 @@ export const galleryCreateFx = ({ listingId, uploadIds }: galleryCreateFx.Props)
 		const user = yield* UserContextFx;
 
 		const now = new Date();
+		const id = genId();
 
-		yield* Effect.promise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("gallery")
 				.values(
 					uploadIds.map((uploadId, index) => ({
-						id: genId(),
+						id,
 						userId: user.id,
 						createdAt: now,
 						listingId,
@@ -31,6 +33,14 @@ export const galleryCreateFx = ({ listingId, uploadIds }: galleryCreateFx.Props)
 					})),
 				)
 				.execute();
+		});
+
+		return yield* galleryFetchFx({
+			query: {
+				where: {
+					id,
+				},
+			},
 		});
 	});
 };

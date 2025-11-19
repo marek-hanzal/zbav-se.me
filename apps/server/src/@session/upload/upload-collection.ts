@@ -63,18 +63,23 @@ export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 				DatabaseContextProvider(c.get("database")),
 				//
 				Effect.catchAll((e) => {
-					/**
-					 * This just holds type exhaustive match for errors if any comes up.
-					 */
-					Match.value(e).pipe(Match.exhaustive);
-
 					return Effect.succeed(
-						c.json<MessageSchema.Type, 500>(
-							{
-								type: "error",
-								message: "This should not happen",
-							},
-							500,
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.exhaustive,
 						),
 					);
 				}),
