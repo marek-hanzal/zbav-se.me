@@ -3,6 +3,7 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { UserContextFx } from "../../../auth/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
+import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
 import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
@@ -14,69 +15,71 @@ export namespace listingTransactionCreateFx {
 }
 
 export const listingTransactionCreateFx = ({ listingId }: listingTransactionCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
+	return withTransactionFx(
+		Effect.gen(function* () {
+			const database = yield* DatabaseContextFx;
+			const user = yield* UserContextFx;
 
-		const listing = yield* Effect.tryPromise(async () => {
-			return database
-				.selectFrom("listing")
-				.select([
-					"id",
-					"userId",
-				])
-				.where("id", "=", listingId)
-				.executeTakeFirst();
-		});
-
-		if (!listing) {
-			return yield* new NotFoundError({
-				resource: "listing",
-				resourceId: listingId,
-				message: "Listing not found",
+			const listing = yield* Effect.tryPromise(async () => {
+				return database
+					.selectFrom("listing")
+					.select([
+						"id",
+						"userId",
+					])
+					.where("id", "=", listingId)
+					.executeTakeFirst();
 			});
-		}
 
-		const now = DateTime.now();
-		const expiresAt = now.plus({
-			days: 3,
-		});
-		const nowDate = now.toJSDate();
-		const expiresAtDate = expiresAt.toJSDate();
-		const id = genId();
+			if (!listing) {
+				return yield* new NotFoundError({
+					resource: "listing",
+					resourceId: listingId,
+					message: "Listing not found",
+				});
+			}
 
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("listing_transaction")
-				.values({
-					id,
-					userId: user.id,
-					listingId,
-					side: "buyer",
-					status: "request",
-					createdAt: nowDate,
-					updatedAt: nowDate,
-					expiresAt: expiresAtDate,
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
-		});
+			const now = DateTime.now();
+			const expiresAt = now.plus({
+				days: 3,
+			});
+			const nowDate = now.toJSDate();
+			const expiresAtDate = expiresAt.toJSDate();
+			const id = genId();
 
-		yield* listingTransactionLogCreateFx({
-			listingTransactionId: id,
-			side: "buyer",
-			status: "request",
-			createdAt: nowDate,
-		});
+			yield* Effect.tryPromise(async () => {
+				return database
+					.insertInto("listing_transaction")
+					.values({
+						id,
+						userId: user.id,
+						listingId,
+						side: "buyer",
+						status: "request",
+						createdAt: nowDate,
+						updatedAt: nowDate,
+						expiresAt: expiresAtDate,
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow();
+			});
 
-		return yield* listingTransactionFetchFx({
-			query: {
-				where: {
-					id,
+			yield* listingTransactionLogCreateFx({
+				listingTransactionId: id,
+				side: "buyer",
+				status: "request",
+				createdAt: nowDate,
+			});
+
+			return yield* listingTransactionFetchFx({
+				query: {
+					where: {
+						id,
+					},
 				},
-			},
-		});
-	});
+			});
+		}),
+	);
 };
 
 export type listingTransactionCreateFx = ReturnType<typeof listingTransactionCreateFx>;

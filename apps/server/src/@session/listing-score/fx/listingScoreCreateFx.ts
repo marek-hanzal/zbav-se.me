@@ -3,8 +3,7 @@ import { Effect } from "effect";
 import { match } from "ts-pattern";
 import { UserContextFx } from "../../../auth/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "../../../error/InvalidRequestError";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { listingCheckIfOwnFx } from "../../listing/fx/listingCheckIfOwnFx";
 import { ListingScoreContextFx, type ListingScoreType } from "./ListingScoreContextFx";
 import { listingScoreRateLimitFx } from "./listingScoreRateLimitFx";
 
@@ -21,27 +20,10 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 		const user = yield* UserContextFx;
 		const scores = yield* ListingScoreContextFx;
 
-		const listing = yield* Effect.tryPromise(async () => {
-			return database
-				.selectFrom("listing")
-				.select("userId")
-				.where("id", "=", listingId)
-				.executeTakeFirst();
+		yield* listingCheckIfOwnFx({
+			listingId,
+			errorMessage: "You cannot score your own listing",
 		});
-
-		if (!listing) {
-			return yield* new NotFoundError({
-				resource: "listing",
-				resourceId: listingId,
-				message: "Listing not found",
-			});
-		}
-
-		if (listing.userId === user.id) {
-			return yield* new InvalidRequestError({
-				message: "You cannot score your own listing",
-			});
-		}
 
 		yield* listingScoreRateLimitFx({
 			listingId,
