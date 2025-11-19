@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
 import { UserContextFx } from "../../../auth/UserContextFx";
+import { ConfigContextFx } from "../../../database/fx/ConfigContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
@@ -27,15 +28,14 @@ export const listingTransactionPatchFx = ({
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
+			const config = yield* ConfigContextFx;
 
 			const transaction = yield* Effect.tryPromise(async () => {
 				return database
 					.selectFrom("listing_transaction as lt")
 					.innerJoin("listing as l", "l.id", "lt.listingId")
 					.select([
-						"lt.id",
 						"lt.userId",
-						"lt.listingId",
 						"lt.status",
 						"lt.side",
 						"l.userId as listingUserId",
@@ -71,7 +71,7 @@ export const listingTransactionPatchFx = ({
 						updatedAt: now.toJSDate(),
 						expiresAt: now
 							.plus({
-								days: 3,
+								days: config.listing.transaction.extend,
 							})
 							.toJSDate(),
 						userId: user.id,

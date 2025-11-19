@@ -5,10 +5,18 @@ export interface ConfigContext {
 	 * Number of days until a listing transaction expires.
 	 * Defaults to 3 days.
 	 */
-	listingTransactionExpiresAt: number;
+	listing: {
+		transaction: {
+			expires: number;
+			extend: number;
+		};
+	};
 }
 
-export class ConfigContextFx extends Context.Tag("ConfigContextFx")<ConfigContextFx, ConfigContext>() {
+export class ConfigContextFx extends Context.Tag("ConfigContextFx")<
+	ConfigContextFx,
+	ConfigContext
+>() {
 	//
 }
 

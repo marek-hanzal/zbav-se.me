@@ -1,7 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { UserContextFx } from "../../../auth/UserContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
+import { ConfigContextFx } from "../../../database/fx/ConfigContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { NotFoundError } from "../../../error/NotFoundError";
@@ -19,13 +20,13 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
+			const config = yield* ConfigContextFx;
 
 			const listing = yield* Effect.tryPromise(async () => {
 				return database
 					.selectFrom("listing")
 					.select([
 						"id",
-						"userId",
 					])
 					.where("id", "=", listingId)
 					.executeTakeFirst();
@@ -39,12 +40,6 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 				});
 			}
 
-			const now = DateTime.now();
-			const expiresAt = now.plus({
-				days: 3,
-			});
-			const nowDate = now.toJSDate();
-			const expiresAtDate = expiresAt.toJSDate();
 			const id = genId();
 
 			yield* Effect.tryPromise(async () => {
@@ -56,9 +51,13 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 						listingId,
 						side: "buyer",
 						status: "request",
-						createdAt: nowDate,
-						updatedAt: nowDate,
-						expiresAt: expiresAtDate,
+						createdAt: DateTime.now().toJSDate(),
+						updatedAt: DateTime.now().toJSDate(),
+						expiresAt: DateTime.now()
+							.plus({
+								days: config.listing.transaction.expires,
+							})
+							.toJSDate(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
@@ -68,7 +67,7 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 				listingTransactionId: id,
 				side: "buyer",
 				status: "request",
-				createdAt: nowDate,
+				createdAt: DateTime.now().toJSDate(),
 			});
 
 			return yield* listingTransactionFetchFx({
