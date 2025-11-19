@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { UserContextProvider } from "../../auth/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { DefaultListingScore } from "./config/DefaultListingScore";
@@ -53,6 +53,14 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 						},
 					},
 					description: "Listing not found",
+				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
 				},
 			},
 			tags: [

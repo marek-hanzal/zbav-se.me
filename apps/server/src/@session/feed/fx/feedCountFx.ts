@@ -1,7 +1,7 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { UserContextFx } from "../../../auth/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { UserContextFx } from "../../../fx/UserContextFx";
 import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
 import { withFeedSelect } from "../db/withFeedSelect";
 import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
@@ -21,7 +21,7 @@ export const feedCountFx = ({ query: { filter, where } }: feedCountFx.Props) => 
 			return withCount({
 				select: withFeedSelect({
 					database,
-					sort: [],
+					sort: undefined,
 				}),
 				filter,
 				where: {

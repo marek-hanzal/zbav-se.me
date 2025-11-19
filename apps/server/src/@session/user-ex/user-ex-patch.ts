@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { UserContextProvider } from "../../auth/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { userExPatchFx } from "./fx/userExPatchFx";

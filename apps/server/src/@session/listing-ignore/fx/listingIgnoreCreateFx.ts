@@ -1,8 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { UserContextFx } from "../../../auth/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { UserContextFx } from "../../../fx/UserContextFx";
-import { listingIgnoreFetchFx } from "./listingIgnoreFetchFx";
+import { InvalidRequestError } from "../../../error/InvalidRequestError";
 
 export namespace listingIgnoreCreateFx {
 	export interface Props {
@@ -20,32 +20,23 @@ export const listingIgnoreCreateFx = ({
 		const user = yield* UserContextFx;
 		const id = genId();
 
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("listing_ignore")
-				.values({
-					id,
-					userId: user.id,
-					listingId,
-					createdAt,
-				})
-				.onConflict((oc) =>
-					oc
-						.columns([
-							"userId",
-							"listingId",
-						])
-						.doNothing(),
-				)
-				.returningAll()
-				.executeTakeFirst();
-		});
-
-		return yield* listingIgnoreFetchFx({
-			query: {
-				where: {
-					id,
-				},
+		return yield* Effect.tryPromise({
+			async try() {
+				return database
+					.insertInto("listing_ignore")
+					.values({
+						id,
+						userId: user.id,
+						listingId,
+						createdAt,
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow();
+			},
+			catch() {
+				return new InvalidRequestError({
+					message: "You have already ignored this listing",
+				});
 			},
 		});
 	});

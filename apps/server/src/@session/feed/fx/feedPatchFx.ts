@@ -1,7 +1,6 @@
 import { Effect } from "effect";
+import { UserContextFx } from "../../../auth/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
-import { UserContextFx } from "../../../fx/UserContextFx";
 import type { FeedPatchSchema } from "../schema/FeedPatchSchema";
 import { feedFetchFx } from "./feedFetchFx";
 
@@ -18,7 +17,7 @@ export const feedPatchFx = ({ data: { id, name, locationId, query } }: feedPatch
 
 		const now = new Date();
 
-		const result = yield* Effect.tryPromise(async () => {
+		yield* Effect.tryPromise(async () => {
 			return database
 				.updateTable("feed")
 				.set({
@@ -31,14 +30,6 @@ export const feedPatchFx = ({ data: { id, name, locationId, query } }: feedPatch
 				.where("userId", "=", user.id)
 				.executeTakeFirst();
 		});
-
-		if (!result.numUpdatedRows) {
-			return yield* new NotFoundError({
-				resource: "feed",
-				resourceId: id,
-				message: "Feed item not found",
-			});
-		}
 
 		return yield* feedFetchFx({
 			query: {
