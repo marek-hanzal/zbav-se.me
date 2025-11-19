@@ -1,6 +1,6 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/UserContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
 import { withFeedSelect } from "../db/withFeedSelect";

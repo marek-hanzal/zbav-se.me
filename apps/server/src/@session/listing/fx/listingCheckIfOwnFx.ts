@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/UserContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
@@ -7,7 +7,7 @@ import { NotFoundError } from "../../../error/NotFoundError";
 export namespace listingCheckIfOwnFx {
 	export interface Props {
 		listingId: string;
-		errorMessage: string;
+		message: string;
 	}
 }
 
@@ -15,10 +15,7 @@ export namespace listingCheckIfOwnFx {
  * Validates that a listing exists and that the current user does not own it.
  * Returns the listing's userId if validation passes.
  */
-export const listingCheckIfOwnFx = ({
-	listingId,
-	errorMessage,
-}: listingCheckIfOwnFx.Props) => {
+export const listingCheckIfOwnFx = ({ listingId, message }: listingCheckIfOwnFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -41,7 +38,7 @@ export const listingCheckIfOwnFx = ({
 
 		if (listing.userId === user.id) {
 			return yield* new InvalidRequestError({
-				message: errorMessage,
+				message,
 			});
 		}
 

@@ -17,7 +17,7 @@ export const listingCartToggleFx = ({ data: { toggle, listingId } }: listingCart
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				listingId,
-				errorMessage: "You cannot add your own listing to cart",
+				message: "You cannot add your own listing to cart",
 			});
 
 			yield* Effect.if(toggle, {
