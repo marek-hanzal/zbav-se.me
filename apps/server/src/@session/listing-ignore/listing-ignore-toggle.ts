@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
-import { genId } from "@use-pico/common/gen-id";
-import { Effect } from "effect";
+import { Effect, Match } from "effect";
 import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { listingScoreCreateFx } from "../listing-score/fx/listingScoreCreateFx";
+import { DefaultListingScore } from "../listing-score/config/DefaultListingScore";
+import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
+import { listingIgnoreToggleFx } from "./fx/listingIgnoreToggleFx";
 import { ListingIgnoreToggleSchema } from "./schema/ListingIgnoreToggleSchema";
 
 export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
@@ -36,88 +37,91 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Invalid request",
 				},
+				404: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Listing not found",
+				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-ignore",
 				"session",
 			],
-		Match.exhaustive,
+		}),
 		async (c) => {
-			const data = c.req.valid("json");
-			const user = c.get("user");
-			const { toggle, listingId } = data;
-
-			if (toggle) {
-				const id = genId();
-				const now = new Date();
-
-				const listing = await c
-					.get("database")
-					.selectFrom("listing")
-					.selectAll()
-					.where("id", "=", listingId)
-					.where("userId", "=", user.id)
-					.executeTakeFirst();
-
-				if (listing) {
-					return c.json<MessageSchema.Type, 400>(
-						{
-							type: "error",
-							message: "You cannot ignore your own listing",
-						},
-						400,
-					);
-				}
-
-				await c
-					.get("database")
-					.insertInto("listing_ignore")
-					.values({
-						id,
-						userId: user.id,
-						listingId,
-						createdAt: now,
-					})
-					.onConflict((oc) =>
-						oc
-							.columns([
-								"userId",
-								"listingId",
-							])
-							.doNothing(),
-					)
-					.execute();
-
-				await Effect.runPromise(
-					listingScoreCreateFx({
-						listingId,
-						score: "ignore",
-					}).pipe(
-						DatabaseContextProvider(c.get("database")),
-						UserContextProvider(user),
-						//
-						Effect.catchTags({
-							TooManyRequests: () => {
-								return Effect.succeed(undefined);
-							},
-							InvalidRequestError: () => {
-								return Effect.succeed(undefined);
-							},
-						Match.exhaustive,
-					),
-				);
+			return Effect.gen(function* () {
+				yield* listingIgnoreToggleFx({
+					data: c.req.valid("json"),
+				});
 
 				return c.body(null, 204);
-			}
-
-			await c
-				.get("database")
-				.deleteFrom("listing_ignore")
-				.where("userId", "=", user.id)
-				.where("listingId", "=", listingId)
-				.execute();
-
-			return c.body(null, 204);
+			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				ListingScoreContextProvider(DefaultListingScore),
+				//
+				Effect.catchAll((e) => {
+					return Effect.succeed(
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "NotFoundError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 404>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "UnknownException",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.exhaustive,
+						),
+					);
+				}),
+				Effect.runPromise,
+			);
 		},
 	);
 };

@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
+import { NotFoundError } from "../../../error/NotFoundError";
 import { DatabaseContextFx } from "../../../fx/DatabaseContextFx";
 import { UserContextFx } from "../../../fx/UserContextFx";
 import { listingScoreCreateFx } from "../../listing-score/fx/listingScoreCreateFx";
@@ -24,13 +25,20 @@ export const listingIgnoreToggleFx = ({
 			const listing = yield* Effect.tryPromise(async () => {
 				return database
 					.selectFrom("listing")
-					.select("id")
+					.select("userId")
 					.where("id", "=", listingId)
-					.where("userId", "=", user.id)
 					.executeTakeFirst();
 			});
 
-			if (listing) {
+			if (!listing) {
+				return yield* new NotFoundError({
+					resource: "listing",
+					resourceId: listingId,
+					message: "Listing not found",
+				});
+			}
+
+			if (listing.userId === user.id) {
 				return yield* new InvalidRequestError({
 					message: "You cannot ignore your own listing",
 				});
@@ -43,16 +51,16 @@ export const listingIgnoreToggleFx = ({
 			yield* listingScoreCreateFx({
 				listingId,
 				score: "ignore",
-			});
+			}).pipe(Effect.ignore);
 
-			return yield* Effect.void;
+			return Effect.void;
 		}
 
 		yield* listingIgnoreDeleteFx({
 			listingId,
 		});
 
-		return yield* Effect.void;
+		return Effect.void;
 	});
 };
 

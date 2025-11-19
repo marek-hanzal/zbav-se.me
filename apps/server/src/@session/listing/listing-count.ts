@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
@@ -55,6 +56,7 @@ export const withListingCountApi: Routes.Fn = ({ sessionHono }) => {
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {

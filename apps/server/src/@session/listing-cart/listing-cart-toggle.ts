@@ -116,6 +116,7 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 									);
 								},
 							),
+							Match.exhaustive,
 						),
 					);
 				}),

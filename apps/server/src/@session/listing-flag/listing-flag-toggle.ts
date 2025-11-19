@@ -4,6 +4,8 @@ import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DefaultListingScore } from "../listing-score/config/DefaultListingScore";
+import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
 import { listingFlagToggleFx } from "./fx/listingFlagToggleFx";
 import { ListingFlagToggleSchema } from "./schema/ListingFlagToggleSchema";
 
@@ -43,6 +45,14 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Listing not found",
 				},
+				500: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Internal server error",
+				},
 			},
 			tags: [
 				"listing-flag",
@@ -59,6 +69,7 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
+				ListingScoreContextProvider(DefaultListingScore),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
