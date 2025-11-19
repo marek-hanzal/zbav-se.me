@@ -1,8 +1,7 @@
 import { Effect } from "effect";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import { NotFoundError } from "../../../error/NotFoundError";
-import { UserContextFx } from "../../../auth/UserContextFx";
 import { listingIgnoreFetchFx } from "./listingIgnoreFetchFx";
 
 export namespace listingIgnoreDeleteFx {

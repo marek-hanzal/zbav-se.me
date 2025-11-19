@@ -17,7 +17,7 @@ export const listingFlagToggleFx = ({ data: { toggle, listingId } }: listingFlag
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				listingId,
-				errorMessage: "You cannot flag your own listing",
+				message: "You cannot flag your own listing",
 			});
 
 			yield* Effect.if(toggle, {

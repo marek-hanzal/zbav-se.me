@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
-import { UserContextFx } from "../../../auth/UserContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { listingCheckIfOwnFx } from "../../listing/fx/listingCheckIfOwnFx";
@@ -24,7 +24,7 @@ export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.
 
 			yield* listingCheckIfOwnFx({
 				listingId,
-				errorMessage: "You cannot score your own listing",
+				message: "You cannot score your own listing",
 			});
 
 			yield* listingScoreRateLimitFx({

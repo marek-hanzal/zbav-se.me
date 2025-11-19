@@ -19,7 +19,7 @@ export const listingIgnoreToggleFx = ({
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
 				listingId,
-				errorMessage: "You cannot ignore your own listing",
+				message: "You cannot ignore your own listing",
 			});
 
 			yield* Effect.if(toggle, {
