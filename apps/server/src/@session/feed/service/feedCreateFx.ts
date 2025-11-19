@@ -1,23 +1,21 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import type { FeedCreateSchema } from "../schema/FeedCreateSchema";
 import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedCreateFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		data: FeedCreateSchema.Type;
 	}
 }
 
-export const feedCreateFx = ({
-	database,
-	userId,
-	data: { name, locationId, query },
-}: feedCreateFx.Props) => {
+export const feedCreateFx = ({ data: { name, locationId, query } }: feedCreateFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const id = genId();
 
 		yield* Effect.promise(async () => {
@@ -27,7 +25,7 @@ export const feedCreateFx = ({
 				.insertInto("feed")
 				.values({
 					id,
-					userId,
+					userId: user.id,
 					locationId,
 					name,
 					query: JSON.stringify(query) as any,
@@ -39,8 +37,6 @@ export const feedCreateFx = ({
 		});
 
 		return yield* feedFetchFx({
-			database,
-			userId,
 			query: {
 				where: {
 					id,

@@ -1,20 +1,22 @@
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 
 export namespace listingFlagDeleteFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		listingId: string;
 	}
 }
 
-export const listingFlagDeleteFx = ({ database, userId, listingId }: listingFlagDeleteFx.Props) => {
+export const listingFlagDeleteFx = ({ listingId }: listingFlagDeleteFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		yield* Effect.promise(async () => {
 			return database
 				.deleteFrom("listing_flag")
-				.where("userId", "=", userId)
+				.where("userId", "=", user.id)
 				.where("listingId", "=", listingId)
 				.execute();
 		});

@@ -2,6 +2,8 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { ListingCartToggleSchema } from "./schema/ListingCartToggleSchema";
 import { listingCartToggleFx } from "./service/listingCartToggleFx";
 
@@ -50,13 +52,14 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				yield* listingCartToggleFx({
-					database: c.get("database"),
-					userId: c.get("user").id,
 					data: c.req.valid("json"),
 				});
 
 				return c.body(null, 204);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

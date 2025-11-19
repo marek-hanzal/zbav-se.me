@@ -1,6 +1,7 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { withListingScoreQueryBuilder } from "../db/withListingScoreQueryBuilder";
 import { withListingScoreSelect } from "../db/withListingScoreSelect";
 import type { ListingScoreQuerySchema } from "../schema/ListingScoreQuerySchema";
@@ -8,18 +9,17 @@ import { ListingScoreSchema } from "../schema/ListingScoreSchema";
 
 export namespace listingScoreCollectionFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: ListingScoreQuerySchema.Type;
 	}
 }
 
 export const listingScoreCollectionFx = ({
-	database,
-	userId,
 	query: { cursor, filter, where, sort },
 }: listingScoreCollectionFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		return yield* Effect.promise(async () => {
 			return withCollection({
 				select: withListingScoreSelect({
@@ -34,7 +34,7 @@ export const listingScoreCollectionFx = ({
 				filter,
 				where: {
 					...where,
-					userId,
+					userId: user.id,
 				},
 				query: withListingScoreQueryBuilder,
 			});

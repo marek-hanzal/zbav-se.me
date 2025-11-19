@@ -1,13 +1,12 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { TooManyRequests } from "../../../error/TooManyRequests";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 
 export namespace listingScoreRateLimitFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		listingId: string;
 		score: ListingScoreTypeSchema.Type;
 		minutes?: number;
@@ -15,18 +14,19 @@ export namespace listingScoreRateLimitFx {
 }
 
 export const listingScoreRateLimitFx = ({
-	database,
-	userId,
 	listingId,
 	score,
 	minutes = 10,
 }: listingScoreRateLimitFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const listingScore = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("listing_score")
 				.select("createdAt")
-				.where("userId", "=", userId)
+				.where("userId", "=", user.id)
 				.where("listingId", "=", listingId)
 				.where("type", "=", score)
 				.where(
@@ -43,11 +43,9 @@ export const listingScoreRateLimitFx = ({
 		});
 
 		if (listingScore) {
-			return yield* Effect.fail(
-				new TooManyRequests({
-					message: "You have already scored this listing",
-				}),
-			);
+			return yield* new TooManyRequests({
+				message: "You have already scored this listing",
+			});
 		}
 
 		return yield* Effect.void;

@@ -45,7 +45,13 @@ export const withLocationQueryBuilder: withLocationQueryBuilder.Callback = ({ se
 	}
 
 	if (where.query) {
-		query = query.where("l.query", "=", where.query);
+		const value = where.query;
+		query = query.where((eb) => {
+			return eb.or([
+				eb("l.id", "=", value),
+				eb("l.query", "ilike", value),
+			]);
+		});
 	}
 
 	if (where.lang) {

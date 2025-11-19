@@ -1,6 +1,7 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
 import { withFeedSelect } from "../db/withFeedSelect";
 import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
@@ -8,18 +9,17 @@ import { FeedSchema } from "../schema/FeedSchema";
 
 export namespace feedCollectionFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: FeedQuerySchema.Type;
 	}
 }
 
 export const feedCollectionFx = ({
-	database,
-	userId,
 	query: { cursor, filter, where, sort },
 }: feedCollectionFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		return yield* Effect.promise(async () => {
 			return withCollection({
 				select: withFeedSelect({
@@ -34,7 +34,7 @@ export const feedCollectionFx = ({
 				filter,
 				where: {
 					...where,
-					userId,
+					userId: user.id,
 				},
 				query: withFeedQueryBuilder,
 			});

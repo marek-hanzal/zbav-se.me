@@ -2,6 +2,8 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";
 import { listingScoreCreateFx } from "./service/listingScoreCreateFx";
 
@@ -58,14 +60,13 @@ export const withListingScoreCreateApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingScoreCreateFx({
-					database: c.get("database"),
-					userId: c.get("user").id,
-					...c.req.valid("json"),
-				});
+				yield* listingScoreCreateFx(c.req.valid("json"));
 
 				return c.body(null, 201);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

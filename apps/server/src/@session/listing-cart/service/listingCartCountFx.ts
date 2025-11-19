@@ -1,24 +1,22 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { withListingCartQueryBuilder } from "../db/withListingCartQueryBuilder";
 import { withListingCartSelect } from "../db/withListingCartSelect";
 import type { ListingCartCountQuerySchema } from "../schema/ListingCartCountQuerySchema";
 
 export namespace listingCartCountFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: ListingCartCountQuerySchema.Type;
 	}
 }
 
-export const listingCartCountFx = ({
-	database,
-	userId,
-	query: { filter, where },
-}: listingCartCountFx.Props) => {
+export const listingCartCountFx = ({ query: { filter, where } }: listingCartCountFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		return yield* Effect.promise(async () => {
 			return withCount({
 				select: withListingCartSelect({
@@ -28,7 +26,7 @@ export const listingCartCountFx = ({
 				filter,
 				where: {
 					...where,
-					userId,
+					userId: user.id,
 				},
 				query: withListingCartQueryBuilder,
 			});

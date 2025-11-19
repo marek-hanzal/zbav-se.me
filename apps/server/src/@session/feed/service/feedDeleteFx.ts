@@ -1,21 +1,21 @@
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
 import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedDeleteFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: Omit<FeedQuerySchema.Type, "cursor" | "sort">;
 	}
 }
 
-export const feedDeleteFx = ({ database, userId, query }: feedDeleteFx.Props) => {
+export const feedDeleteFx = ({ query }: feedDeleteFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const feed = yield* feedFetchFx({
-			database,
-			userId,
 			query,
 		});
 
@@ -23,7 +23,7 @@ export const feedDeleteFx = ({ database, userId, query }: feedDeleteFx.Props) =>
 			return database
 				.deleteFrom("feed")
 				.where("id", "=", feed.id)
-				.where("userId", "=", userId)
+				.where("userId", "=", user.id)
 				.execute();
 		});
 

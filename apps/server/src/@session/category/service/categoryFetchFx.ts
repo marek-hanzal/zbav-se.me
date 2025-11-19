@@ -29,13 +29,11 @@ export const categoryFetchFx = ({ query }: categoryFetchFx.Props) => {
 		});
 
 		if (!data) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "category",
-					resourceId: "(query)",
-					message: "Category not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "category",
+				resourceId: "(query)",
+				message: "Category not found",
+			});
 		}
 
 		return data;

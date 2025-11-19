@@ -1,37 +1,11 @@
 import { genId } from "@use-pico/common/gen-id";
-import { linkTo } from "@use-pico/common/link-to";
-import { withList } from "@use-pico/common/list";
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { AppEnv } from "../../../AppEnv";
 import type { LocationDbSchema } from "../../../app/location/schema/LocationDbSchema";
-import type { WithDatabase } from "../../../database/WithDatabase";
-import { withLocationSelect } from "../db/withLocationSelect";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
 import { TextTooShortError } from "../error/TextTooShortError";
-import { LocationSchema } from "../schema/LocationSchema";
-
-/**
- * Soft schema from Geoapify (we believe in them - a mistake?)
- */
-interface Feature {
-	properties: {
-		city: string;
-		country: string;
-		country_code: string;
-		county: string;
-		formatted: string;
-		lat: number;
-		lon: number;
-		municipality: string;
-		postcode: string;
-		state: string;
-		street: string;
-		place_id: string;
-		rank: {
-			confidence: number;
-		};
-	};
-}
+import { withLocationListFx } from "./withLocationListFx";
+import { withLocationRequest } from "./withLocationRequest";
 
 /**
  * Generate a numeric lock ID from query and lang for PostgreSQL advisory locks
@@ -50,145 +24,159 @@ const getLockId = (text: string, lang: string): number => {
 
 export namespace locationAutocompleteFx {
 	export interface Props {
-		database: WithDatabase;
 		text: string;
 		lang: string;
 		limit?: number;
 	}
 }
 
-export const locationAutocompleteFx = ({
-	database,
-	text,
-	lang,
-	limit = 5,
-}: locationAutocompleteFx.Props) => {
+export const locationAutocompleteFx = ({ text, lang, limit = 5 }: locationAutocompleteFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+
 		if (text.length < 3) {
 			return yield* new TextTooShortError({
 				message: "Text too short",
 			});
 		}
 
-		const cache = yield* Effect.promise(async () => {
-			return withList({
-				select: withLocationSelect({
-					sort: [],
-					database: database,
-				})
-					.where((qb) => {
-						return qb.or([
-							qb("id", "=", text),
-							qb("query", "ilike", text),
-						]);
-					})
-					.where("lang", "=", lang)
-					.orderBy("confidence", "desc")
-					.offset(0)
-					.limit(limit),
-				output: LocationSchema,
-			});
-		});
-
-		if (cache.length > 0) {
-			return cache;
-		}
-
-		return yield* Effect.promise(async () => {
-			return database.transaction().execute(async (trx) => {
-				const lockId = getLockId(text, lang);
-
-				await sql`SELECT pg_advisory_xact_lock(${lockId})`.execute(trx);
-
-				const cache = await withList({
-					select: withLocationSelect({
-						sort: [],
-						database: trx,
-					})
-						.where("query", "ilike", text)
-						.where("lang", "=", lang)
-						.orderBy("confidence", "desc")
-						.offset(0)
-						.limit(limit),
-					output: LocationSchema,
-				});
-
-				if (cache.length > 0) {
-					return cache;
-				}
-
-				const link = linkTo({
-					base: "https://api.geoapify.com",
-					href: "/v1/geocode/autocomplete",
-					query: {
-						text,
-						apiKey: AppEnv.SERVER_GEOAPIFY_TOKEN,
-						lang,
-						limit,
-					},
-				});
-
-				const { features } = (await (await fetch(link)).json()) as {
-					features: Feature[];
-				};
-
-				const locations = features.map(({ properties }) => ({
-					id: genId(),
-					//
+		const results = yield* withLocationListFx({
+			database,
+			query: {
+				where: {
 					query: text,
 					lang,
-					//
-					country: properties.country,
-					code: properties.country_code,
-					municipality: properties.municipality,
-					state: properties.state,
-					county: properties.county,
-					address: properties.formatted,
-					city: properties.city,
-					street: properties.street,
-					zip: properties.postcode,
-					//
-					confidence: properties.rank.confidence,
-					//
-					hash: properties.place_id,
-					//
-					lat: properties.lat,
-					lon: properties.lon,
-				})) satisfies Omit<LocationDbSchema.Type, "geo">[] as LocationDbSchema.Type[];
-
-				if (locations.length > 0) {
-					await trx
-						.insertInto("location")
-						.values(locations)
-						.onConflict((oc) =>
-							oc
-								.columns([
-									"lang",
-									"hash",
-								])
-								.doNothing(),
-						)
-						.execute();
-				}
-
-				/**
-				 * No cache headers, so it won't reply all the times with cache-miss
-				 */
-
-				return withList({
-					select: withLocationSelect({
-						sort: [],
-						database: trx,
-					})
-						.where("query", "ilike", text)
-						.where("lang", "=", lang)
-						.orderBy("confidence", "desc")
-						.offset(0)
-						.limit(limit),
-					output: LocationSchema,
-				});
-			});
+				},
+				sort: [
+					{
+						field: "confidence",
+						direction: "desc",
+					},
+				],
+				cursor: {
+					page: 0,
+					size: limit,
+				},
+			},
 		});
+
+		if (results.length > 0) {
+			return results;
+		}
+
+		// TODO We've to cancel transaction as Effect does not throw
+
+		return yield* Effect.promise(() =>
+			database.transaction().execute((trx) =>
+				Effect.runPromise(
+					Effect.gen(function* () {
+						const lockId = getLockId(text, lang);
+
+						yield* Effect.promise(() =>
+							sql`SELECT pg_advisory_xact_lock(${lockId})`.execute(trx),
+						);
+
+						const cache = yield* withLocationListFx({
+							database: trx,
+							query: {
+								where: {
+									query: text,
+									lang,
+								},
+								sort: [
+									{
+										field: "confidence",
+										direction: "desc",
+									},
+								],
+								cursor: {
+									page: 0,
+									size: limit,
+								},
+							},
+						});
+
+						if (cache.length > 0) {
+							return cache;
+						}
+
+						const features = yield* withLocationRequest({
+							text,
+							lang,
+							limit,
+						});
+
+						const locations = features.map(({ properties }) => ({
+							id: genId(),
+							//
+							query: text,
+							lang,
+							//
+							country: properties.country,
+							code: properties.country_code,
+							municipality: properties.municipality,
+							state: properties.state,
+							county: properties.county,
+							address: properties.formatted,
+							city: properties.city,
+							street: properties.street,
+							zip: properties.postcode,
+							//
+							confidence: properties.rank.confidence,
+							//
+							hash: properties.place_id,
+							//
+							lat: properties.lat,
+							lon: properties.lon,
+						})) satisfies Omit<
+							LocationDbSchema.Type,
+							"geo"
+						>[] as LocationDbSchema.Type[];
+
+						if (locations.length > 0) {
+							yield* Effect.promise(() =>
+								trx
+									.insertInto("location")
+									.values(locations)
+									.onConflict((oc) =>
+										oc
+											.columns([
+												"lang",
+												"hash",
+											])
+											.doNothing(),
+									)
+									.execute(),
+							);
+						}
+
+						/**
+						 * No cache headers, so it won't reply all the times with cache-miss
+						 */
+
+						return yield* withLocationListFx({
+							database: trx,
+							query: {
+								where: {
+									query: text,
+									lang,
+								},
+								sort: [
+									{
+										field: "confidence",
+										direction: "desc",
+									},
+								],
+								cursor: {
+									page: 0,
+									size: limit,
+								},
+							},
+						});
+					}),
+				),
+			),
+		);
 	});
 };
 

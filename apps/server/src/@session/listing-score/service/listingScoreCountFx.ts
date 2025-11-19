@@ -1,24 +1,22 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { withListingScoreQueryBuilder } from "../db/withListingScoreQueryBuilder";
 import { withListingScoreSelect } from "../db/withListingScoreSelect";
 import type { ListingScoreCountQuerySchema } from "../schema/ListingScoreCountQuerySchema";
 
 export namespace listingScoreCountFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: ListingScoreCountQuerySchema.Type;
 	}
 }
 
-export const listingScoreCountFx = ({
-	database,
-	userId,
-	query: { filter, where },
-}: listingScoreCountFx.Props) => {
+export const listingScoreCountFx = ({ query: { filter, where } }: listingScoreCountFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		return yield* Effect.promise(async () => {
 			return withCount({
 				select: withListingScoreSelect({
@@ -28,7 +26,7 @@ export const listingScoreCountFx = ({
 				filter,
 				where: {
 					...where,
-					userId,
+					userId: user.id,
 				},
 				query: withListingScoreQueryBuilder,
 			});

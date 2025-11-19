@@ -2,9 +2,10 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { match } from "ts-pattern";
 import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { listingScoreRateLimitFx } from "./listingScoreRateLimitFx";
 
 const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
@@ -17,20 +18,16 @@ const ScoreList: Record<ListingScoreTypeSchema.Type, number> = {
 
 export namespace listingScoreCreateFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		listingId: string;
 		score: ListingScoreTypeSchema.Type;
 	}
 }
 
-export const listingScoreCreateFx = ({
-	database,
-	userId,
-	listingId,
-	score,
-}: listingScoreCreateFx.Props) => {
+export const listingScoreCreateFx = ({ listingId, score }: listingScoreCreateFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const listing = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("listing")
@@ -40,26 +37,20 @@ export const listingScoreCreateFx = ({
 		});
 
 		if (!listing) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "listing",
-					resourceId: listingId,
-					message: "Listing not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "listing",
+				resourceId: listingId,
+				message: "Listing not found",
+			});
 		}
 
-		if (listing.userId === userId) {
-			return yield* Effect.fail(
-				new InvalidRequestError({
-					message: "You cannot score your own listing",
-				}),
-			);
+		if (listing.userId === user.id) {
+			return yield* new InvalidRequestError({
+				message: "You cannot score your own listing",
+			});
 		}
 
 		yield* listingScoreRateLimitFx({
-			database,
-			userId,
 			listingId,
 			score,
 		});
@@ -74,7 +65,7 @@ export const listingScoreCreateFx = ({
 						.selectFrom("listing_score")
 						.selectAll()
 						.where("listingId", "=", listingId)
-						.where("userId", "=", userId)
+						.where("userId", "=", user.id)
 						.where("type", "=", score)
 						.executeTakeFirst();
 
@@ -87,7 +78,7 @@ export const listingScoreCreateFx = ({
 						.values({
 							id: genId(),
 							listingId,
-							userId,
+							userId: user.id,
 							score: ScoreList[score],
 							type: score,
 							createdAt: new Date(),
@@ -101,7 +92,7 @@ export const listingScoreCreateFx = ({
 						.values({
 							id: genId(),
 							listingId,
-							userId,
+							userId: user.id,
 							score: ScoreList[score],
 							type: score,
 							createdAt: new Date(),

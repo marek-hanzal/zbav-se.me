@@ -2,6 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
 import { locationAutocompleteFx } from "./service/locationAutocompleteFx";
@@ -40,6 +41,14 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 					},
 					description: "Location(s) created (cache miss)",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Text too short",
+				},
 				500: {
 					content: {
 						"application/json": {
@@ -55,42 +64,32 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 			],
 		}),
 		async (c) => {
-			const { text, lang } = c.req.valid("json");
-
 			return Effect.gen(function* () {
-				const result = yield* locationAutocompleteFx({
-					database: c.get("database"),
-					text,
-					lang,
-				});
-
-				const response = c.json<LocationSchema.Type[], 200 | 201>(
-					result.data,
-					result.status,
+				return c.json<LocationSchema.Type[], 200>(
+					yield* locationAutocompleteFx(c.req.valid("json")),
+					200,
 				);
-
-				// Set headers
-				Object.entries(result.headers).forEach(([key, value]) => {
-					if (value !== undefined) {
-						c.header(key, value);
-					}
-				});
-
-				return response;
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
-					/**
-					 * This just holds type exhaustive match for errors if any comes up.
-					 */
-					Match.value(e).pipe(Match.exhaustive);
-
 					return Effect.succeed(
-						c.json<MessageSchema.Type, 500>(
-							{
-								type: "error",
-								message: "This should not happen",
-							},
-							500,
+						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "TextTooShortError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
+							Match.exhaustive,
 						),
 					);
 				}),

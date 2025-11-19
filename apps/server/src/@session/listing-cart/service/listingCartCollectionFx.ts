@@ -1,6 +1,7 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { withListingCartQueryBuilder } from "../db/withListingCartQueryBuilder";
 import { withListingCartSelect } from "../db/withListingCartSelect";
 import type { ListingCartQuerySchema } from "../schema/ListingCartQuerySchema";
@@ -8,18 +9,17 @@ import { ListingCartSchema } from "../schema/ListingCartSchema";
 
 export namespace listingCartCollectionFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: ListingCartQuerySchema.Type;
 	}
 }
 
 export const listingCartCollectionFx = ({
-	database,
-	userId,
 	query: { cursor, filter, where, sort },
 }: listingCartCollectionFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		return yield* Effect.promise(async () => {
 			return withCollection({
 				select: withListingCartSelect({
@@ -34,7 +34,7 @@ export const listingCartCollectionFx = ({
 				filter,
 				where: {
 					...where,
-					userId,
+					userId: user.id,
 				},
 				query: withListingCartQueryBuilder,
 			});

@@ -1,7 +1,8 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { withFeedQueryBuilder } from "../db/withFeedQueryBuilder";
 import { withFeedSelect } from "../db/withFeedSelect";
 import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
@@ -9,14 +10,15 @@ import { FeedSchema } from "../schema/FeedSchema";
 
 export namespace feedFetchFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		query: Omit<FeedQuerySchema.Type, "cursor">;
 	}
 }
 
-export const feedFetchFx = ({ database, userId, query }: feedFetchFx.Props) => {
+export const feedFetchFx = ({ query }: feedFetchFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const data = yield* Effect.promise(async () => {
 			const { filter, where, sort } = query;
 
@@ -29,20 +31,18 @@ export const feedFetchFx = ({ database, userId, query }: feedFetchFx.Props) => {
 				filter,
 				where: {
 					...where,
-					userId,
+					userId: user.id,
 				},
 				query: withFeedQueryBuilder,
 			});
 		});
 
 		if (!data) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "feed",
-					resourceId: "(query)",
-					message: "Feed item not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "feed",
+				resourceId: "(query)",
+				message: "Feed item not found",
+			});
 		}
 
 		return data;

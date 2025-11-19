@@ -1,24 +1,24 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 
 export namespace listingCartCreateFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		listingId: string;
 		createdAt?: Date;
 	}
 }
 
 export const listingCartCreateFx = ({
-	database,
-	userId,
 	listingId,
 	createdAt = new Date(),
 }: listingCartCreateFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const id = genId();
 
 		return yield* Effect.tryPromise({
@@ -27,7 +27,7 @@ export const listingCartCreateFx = ({
 					.insertInto("listing_cart")
 					.values({
 						id,
-						userId,
+						userId: user.id,
 						listingId,
 						createdAt,
 					})

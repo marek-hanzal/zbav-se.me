@@ -5,7 +5,8 @@ export const LocationFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
 		query: z.string().optional().openapi({
-			description: "This filter matches the exact query that was used to get the location",
+			description:
+				"This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)",
 		}),
 		lang: z.string().optional().openapi({
 			description: "This filter matches the exact language that was used to get the location",

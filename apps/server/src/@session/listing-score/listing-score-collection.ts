@@ -3,6 +3,8 @@ import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { ListingScoreQuerySchema } from "./schema/ListingScoreQuerySchema";
 import { ListingScoreSchema } from "./schema/ListingScoreSchema";
 import { listingScoreCollectionFx } from "./service/listingScoreCollectionFx";
@@ -54,13 +56,14 @@ export const withListingScoreCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<ListingScoreSchema>, 200>(
 					yield* listingScoreCollectionFx({
-						database: c.get("database"),
-						userId: c.get("user").id,
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

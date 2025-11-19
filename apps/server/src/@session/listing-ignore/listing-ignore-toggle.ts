@@ -3,6 +3,8 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { listingScoreCreateFx } from "../listing-score/service/listingScoreCreateFx";
 import { ListingIgnoreToggleSchema } from "./schema/ListingIgnoreToggleSchema";
 
@@ -88,11 +90,12 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ sessionHono }) => {
 
 				await Effect.runPromise(
 					listingScoreCreateFx({
-						database: c.get("database"),
-						userId: user.id,
 						listingId,
 						score: "ignore",
 					}).pipe(
+						DatabaseContextProvider(c.get("database")),
+						UserContextProvider(user),
+						//
 						Effect.catchTags({
 							TooManyRequests: () => {
 								return Effect.succeed(undefined);

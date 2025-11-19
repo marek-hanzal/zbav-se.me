@@ -2,29 +2,29 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/service/listingTransactionLogCreateFx";
 
 export namespace listingTransactionPatchFx {
 	export interface Props {
-		database: WithDatabase;
 		transactionId: string;
-		userId: string;
 		status?: ListingTransactionStatusSchema.Type;
 		side?: ListingTransactionSideSchema.Type;
 	}
 }
 
 export const listingTransactionPatchFx = ({
-	database,
 	transactionId,
-	userId,
 	status,
 	side,
 }: listingTransactionPatchFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const transaction = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("listing_transaction as lt")
@@ -42,21 +42,17 @@ export const listingTransactionPatchFx = ({
 		});
 
 		if (!transaction) {
-			return yield* Effect.fail(
-				new NotFoundError({
-					resource: "listing_transaction",
-					resourceId: transactionId,
-					message: "Transaction not found",
-				}),
-			);
+			return yield* new NotFoundError({
+				resource: "listing_transaction",
+				resourceId: transactionId,
+				message: "Transaction not found",
+			});
 		}
 
-		if (transaction.userId !== userId && transaction.listingUserId !== userId) {
-			return yield* Effect.fail(
-				new InvalidRequestError({
-					message: "You are not allowed to modify this transaction",
-				}),
-			);
+		if (transaction.userId !== user.id && transaction.listingUserId !== user.id) {
+			return yield* new InvalidRequestError({
+				message: "You are not allowed to modify this transaction",
+			});
 		}
 
 		const nextStatus = status ?? transaction.status;
@@ -75,7 +71,7 @@ export const listingTransactionPatchFx = ({
 							days: 3,
 						})
 						.toJSDate(),
-					userId,
+					userId: user.id,
 				}))
 				.where("id", "=", transactionId)
 				.returningAll()
@@ -83,7 +79,6 @@ export const listingTransactionPatchFx = ({
 		});
 
 		yield* listingTransactionLogCreateFx({
-			database,
 			listingTransactionId: transactionId,
 			status: nextStatus,
 			side: nextSide,

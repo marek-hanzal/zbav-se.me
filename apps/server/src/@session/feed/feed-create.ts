@@ -2,6 +2,8 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
 import { FeedSchema } from "./schema/FeedSchema";
 import { feedCreateFx } from "./service/feedCreateFx";
@@ -50,13 +52,14 @@ export const withFeedCreateApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<FeedSchema.Type, 201>(
 					yield* feedCreateFx({
-						database: c.get("database"),
-						userId: c.get("user").id,
 						data: c.req.valid("json"),
 					}),
 					201,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

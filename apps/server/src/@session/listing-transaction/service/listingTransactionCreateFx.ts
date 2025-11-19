@@ -1,24 +1,22 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/service/listingTransactionLogCreateFx";
 
 export namespace listingTransactionCreateFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		listingId: string;
 	}
 }
 
-export const listingTransactionCreateFx = ({
-	database,
-	userId,
-	listingId,
-}: listingTransactionCreateFx.Props) => {
+export const listingTransactionCreateFx = ({ listingId }: listingTransactionCreateFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		const listing = yield* Effect.promise(async () => {
 			return database
 				.selectFrom("listing")
@@ -50,7 +48,7 @@ export const listingTransactionCreateFx = ({
 				.insertInto("listing_transaction")
 				.values({
 					id: genId(),
-					userId,
+					userId: user.id,
 					listingId,
 					side: "buyer",
 					status: "request",
@@ -63,7 +61,6 @@ export const listingTransactionCreateFx = ({
 		});
 
 		yield* listingTransactionLogCreateFx({
-			database,
 			listingTransactionId: transaction.id,
 			side: "buyer",
 			status: "request",

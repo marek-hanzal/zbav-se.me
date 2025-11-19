@@ -3,6 +3,8 @@ import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { FeedQuerySchema } from "./schema/FeedQuerySchema";
 import { feedCountFx } from "./service/feedCountFx";
 
@@ -49,13 +51,14 @@ export const withFeedCountApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
 					yield* feedCountFx({
-						database: c.get("database"),
-						userId: c.get("user").id,
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

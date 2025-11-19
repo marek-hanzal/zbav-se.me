@@ -2,6 +2,8 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { UserContextProvider } from "../../service/UserContextFx";
 import { ListingTransactionCreateSchema } from "./schema/ListingTransactionCreateSchema";
 import { listingTransactionCreateFx } from "./service/listingTransactionCreateFx";
 
@@ -42,14 +44,13 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ sessionHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingTransactionCreateFx({
-					database: c.get("database"),
-					userId: c.get("user").id,
-					...c.req.valid("json"),
-				});
+				yield* listingTransactionCreateFx(c.req.valid("json"));
 
 				return c.body(null, 201);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

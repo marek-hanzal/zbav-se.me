@@ -1,7 +1,8 @@
 import { Effect } from "effect";
-import type { WithDatabase } from "../../../database/WithDatabase";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "../../../service/DatabaseContextFx";
+import { UserContextFx } from "../../../service/UserContextFx";
 import { listingScoreCreateFx } from "../../listing-score/service/listingScoreCreateFx";
 import type { ListingCartToggleSchema } from "../schema/ListingCartToggleSchema";
 import { listingCartCreateFx } from "./listingCartCreateFx";
@@ -9,18 +10,15 @@ import { listingCartDeleteFx } from "./listingCartDeleteFx";
 
 export namespace listingCartToggleFx {
 	export interface Props {
-		database: WithDatabase;
-		userId: string;
 		data: ListingCartToggleSchema.Type;
 	}
 }
 
-export const listingCartToggleFx = ({
-	database,
-	userId,
-	data: { toggle, listingId },
-}: listingCartToggleFx.Props) => {
+export const listingCartToggleFx = ({ data: { toggle, listingId } }: listingCartToggleFx.Props) => {
 	return Effect.gen(function* () {
+		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
+
 		if (toggle) {
 			const listing = yield* Effect.promise(async () => {
 				return database
@@ -38,21 +36,17 @@ export const listingCartToggleFx = ({
 				});
 			}
 
-			if (listing.userId === userId) {
+			if (listing.userId === user.id) {
 				return yield* new InvalidRequestError({
 					message: "You cannot add your own listing to cart",
 				});
 			}
 
 			yield* listingCartCreateFx({
-				database,
-				userId,
 				listingId,
 			});
 
 			yield* listingScoreCreateFx({
-				database,
-				userId,
 				listingId,
 				score: "cart",
 			}).pipe(Effect.ignore);
@@ -61,8 +55,6 @@ export const listingCartToggleFx = ({
 		}
 
 		yield* listingCartDeleteFx({
-			database,
-			userId,
 			listingId,
 		});
 
