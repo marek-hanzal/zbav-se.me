@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
+import { uploadCollectionFx } from "./fx/uploadCollectionFx";
 import { UploadQuerySchema } from "./schema/UploadQuerySchema";
 import { UploadSchema } from "./schema/UploadSchema";
-import { uploadCollectionFx } from "./service/uploadCollectionFx";
 
 export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -54,12 +55,13 @@ export const withUploadCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<UploadSchema>, 200>(
 					yield* uploadCollectionFx({
-						database: c.get("database"),
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

@@ -1,11 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
+import { galleryCollectionFx } from "./fx/galleryCollectionFx";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
-import { galleryCollectionFx } from "./service/galleryCollectionFx";
 
 export const withGalleryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -54,12 +55,13 @@ export const withGalleryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<GallerySchema>, 200>(
 					yield* galleryCollectionFx({
-						database: c.get("database"),
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

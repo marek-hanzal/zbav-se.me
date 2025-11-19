@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { categoryFetchFx } from "./fx/categoryFetchFx";
 import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
 import { CategorySchema } from "./schema/CategorySchema";
-import { categoryFetchFx } from "./service/categoryFetchFx";
 
 export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -55,6 +56,8 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

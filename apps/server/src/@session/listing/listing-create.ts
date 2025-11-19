@@ -1,10 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { listingCreateFx } from "./fx/listingCreateFx";
 import { ListingCreateSchema } from "./schema/ListingCreateSchema";
 import { ListingSchema } from "./schema/ListingSchema";
-import { listingCreateFx } from "./service/listingCreateFx";
 
 export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -50,13 +52,14 @@ export const withListingCreateApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<ListingSchema.Type, 201>(
 					yield* listingCreateFx({
-						database: c.get("database"),
-						userId: c.get("user").id,
 						data: c.req.valid("json"),
 					}),
 					201,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+                //
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

@@ -1,17 +1,21 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { ListingTransactionSortSchema } from "../schema/ListingTransactionSortSchema";
 
 export namespace withListingTransactionSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort: ListingTransactionSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withListingTransactionSelect>;
 }
 
-export const withListingTransactionSelect = ({ sort }: withListingTransactionSelect.Props) => {
-	let query = database.kysely
+export const withListingTransactionSelect = ({
+	database,
+	sort,
+}: withListingTransactionSelect.Props) => {
+	let query = database
 		.selectFrom("listing_transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")
 		.select([

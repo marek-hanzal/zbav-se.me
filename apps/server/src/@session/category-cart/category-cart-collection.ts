@@ -1,11 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { withCollectionSchema } from "../../schema/withCollectionSchema";
+import { categoryCartCollectionFx } from "./fx/categoryCartCollectionFx";
 import { CategoryCartQuerySchema } from "./schema/CategoryCartQuerySchema";
 import { CategoryCartSchema } from "./schema/CategoryCartSchema";
-import { categoryCartCollectionFx } from "./service/categoryCartCollectionFx";
 
 export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -55,13 +57,14 @@ export const withCategoryCartCollectionApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<CategoryCartSchema>, 200>(
 					yield* categoryCartCollectionFx({
-						database: c.get("database"),
-						userId: c.get("user").id,
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

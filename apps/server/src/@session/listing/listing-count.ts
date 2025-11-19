@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { listingCountFx } from "./fx/listingCountFx";
 import { ListingCountQuerySchema } from "./schema/ListingCountQuerySchema";
-import { listingCountFx } from "./service/listingCountFx";
 
 export const withListingCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -49,12 +50,13 @@ export const withListingCountApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
 					yield* listingCountFx({
-						userId: c.get("user").id,
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				UserContextProvider(c.get("user")),
+                //
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

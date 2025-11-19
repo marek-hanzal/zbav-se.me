@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { CountSchema } from "../../schema/CountSchema";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
-import { UserContextProvider } from "../../service/UserContextFx";
+import { listingScoreCountFx } from "./fx/listingScoreCountFx";
 import { ListingScoreCountQuerySchema } from "./schema/ListingScoreCountQuerySchema";
-import { listingScoreCountFx } from "./service/listingScoreCountFx";
 
 export const withListingScoreCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(

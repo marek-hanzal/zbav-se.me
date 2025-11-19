@@ -4,6 +4,11 @@
 		"types": [
 			"@types/bun",
 			"node"
+		],
+		"plugins": [
+			{
+				"name": "@effect/language-service"
+			}
 		]
 	},
 	"include": [

@@ -1,11 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { listingTransactionFetchFx } from "./fx/listingTransactionFetchFx";
+import { listingTransactionGetSellerInfoFx } from "./fx/listingTransactionGetSellerInfoFx";
 import { ListingTransactionQuerySchema } from "./schema/ListingTransactionQuerySchema";
 import { ListingTransactionSellerInfoSchema } from "./schema/ListingTransactionSellerInfoSchema";
-import { listingTransactionFetchFx } from "./service/listingTransactionFetchFx";
-import { listingTransactionGetSellerInfoFx } from "./service/listingTransactionGetSellerInfoFx";
 
 export const withListingTransactionSellerInfoApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -50,21 +52,20 @@ export const withListingTransactionSellerInfoApi: Routes.Fn = ({ sessionHono }) 
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const user = c.get("user");
-
 				const transaction = yield* listingTransactionFetchFx({
 					query: c.req.valid("json"),
-					userId: user.id,
 				});
 
 				return c.json<ListingTransactionSellerInfoSchema.Type, 200>(
 					yield* listingTransactionGetSellerInfoFx({
 						transactionId: transaction.id,
-						userId: user.id,
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

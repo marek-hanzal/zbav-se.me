@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { locationFetchFx } from "./fx/locationFetchFx";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
-import { locationFetchFx } from "./service/locationFetchFx";
 
 export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -50,12 +51,13 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<LocationSchema.Type, 200>(
 					yield* locationFetchFx({
-						database: c.get("database"),
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

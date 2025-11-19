@@ -1,16 +1,17 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { CategorySortSchema } from "../schema/CategorySortSchema";
 
 export namespace withCategorySelect {
 	export interface Props {
+		database: WithDatabase;
 		sort?: CategorySortSchema.Type[];
 	}
 	export type Select = ReturnType<typeof withCategorySelect>;
 }
 
-export const withCategorySelect = ({ sort }: withCategorySelect.Props = {}) => {
-	let query = database.kysely.selectFrom("category as c").selectAll("c");
+export const withCategorySelect = ({ database, sort }: withCategorySelect.Props) => {
+	let query = database.selectFrom("category as c").selectAll("c");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

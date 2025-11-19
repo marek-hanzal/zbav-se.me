@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { galleryFetchFx } from "./fx/galleryFetchFx";
 import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
-import { galleryFetchFx } from "./service/galleryFetchFx";
 
 export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -50,12 +51,13 @@ export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<GallerySchema.Type, 200>(
 					yield* galleryFetchFx({
-						database: c.get("database"),
 						query: c.req.valid("json"),
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

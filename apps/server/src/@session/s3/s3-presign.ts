@@ -1,10 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { s3PreSignFx } from "./fx/s3PreSignFx";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
-import { s3PreSignFx } from "./service/s3PreSignFx";
 
 export const withS3PresignApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -53,13 +54,14 @@ export const withS3PresignApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<S3PreSignResponseSchema.Type, 200>(
 					yield* s3PreSignFx({
-						userId: c.get("user").id,
 						path,
 						extension,
 					}),
 					200,
 				);
 			}).pipe(
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.

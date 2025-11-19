@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
-import { UserContextProvider } from "../../service/UserContextFx";
+import { feedDeleteFx } from "./fx/feedDeleteFx";
 import { FeedQuerySchema } from "./schema/FeedQuerySchema";
 import { FeedSchema } from "./schema/FeedSchema";
-import { feedDeleteFx } from "./service/feedDeleteFx";
 
 export const withFeedDeleteApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(

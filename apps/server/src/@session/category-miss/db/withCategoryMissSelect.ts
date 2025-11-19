@@ -1,16 +1,17 @@
 import { match } from "ts-pattern";
-import { database } from "../../../database/kysely";
+import type { WithDatabase } from "../../../database/WithDatabase";
 import type { CategoryMissSortSchema } from "../schema/CategoryMissSortSchema";
 
 export namespace withCategoryMissSelect {
 	export interface Props {
+		database: WithDatabase;
 		sort?: CategoryMissSortSchema.Type[];
 	}
 	export type Select = ReturnType<typeof withCategoryMissSelect>;
 }
 
-export const withCategoryMissSelect = ({ sort }: withCategoryMissSelect.Props = {}) => {
-	let query = database.kysely.selectFrom("category_miss as cm").selectAll("cm");
+export const withCategoryMissSelect = ({ database, sort }: withCategoryMissSelect.Props) => {
+	let query = database.selectFrom("category_miss as cm").selectAll("cm");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

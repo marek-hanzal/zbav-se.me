@@ -1,9 +1,10 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { listingMetricsFx } from "./fx/listingMetricsFx";
 import { ListingMetricsSchema } from "./schema/ListingMetricsSchema";
-import { listingMetricsFx } from "./service/listingMetricsFx";
 
 const ListingMetricsPAramsSchema = z
 	.object({
@@ -52,12 +53,13 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ sessionHono }) => {
 			return Effect.gen(function* () {
 				return c.json<ListingMetricsSchema.Type, 200>(
 					yield* listingMetricsFx({
-						database: c.get("database"),
 						listingId: c.req.valid("param").id,
 					}),
 					200,
 				);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(

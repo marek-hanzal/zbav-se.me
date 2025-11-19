@@ -1,11 +1,11 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { DatabaseContextProvider } from "../../service/DatabaseContextFx";
+import { locationAutocompleteFx } from "./fx/locationAutocompleteFx";
 import { LocationAutocompleteSchema } from "./schema/LocationAutocompleteSchema";
 import { LocationSchema } from "./schema/LocationSchema";
-import { locationAutocompleteFx } from "./service/locationAutocompleteFx";
 
 export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(

@@ -1,9 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { DatabaseContextProvider } from "../../fx/DatabaseContextFx";
+import { UserContextProvider } from "../../fx/UserContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
+import { userExPatchFx } from "./fx/userExPatchFx";
 import { UserExPatchSchema } from "./schema/UserExPatchSchema";
-import { userExPatchFx } from "./service/userExPatchFx";
 
 export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -43,13 +45,14 @@ export const withUserExPatchApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				yield* userExPatchFx({
-					database: c.get("database"),
-					userId: c.get("user").id,
 					data: c.req.valid("json"),
 				});
 
 				return c.body(null, 204);
 			}).pipe(
+				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
+				//
 				Effect.catchAll((e) => {
 					/**
 					 * This just holds type exhaustive match for errors if any comes up.
