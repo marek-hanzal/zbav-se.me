@@ -11,9 +11,11 @@ import { translator } from "@use-pico/common/translator";
 import type { OptionalId } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withCategoryCollectionQuery, withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
+import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
+import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
 
 export namespace FeedContainer {
 	export interface Props extends Container.Props {
@@ -26,18 +28,6 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 		from: "/$locale",
 	});
 	const navigate = useNavigate();
-
-	const locationFetchQuery = withLocationFetchQuery.useSuspenseQuery({
-		where: {
-			id: feed.locationId ?? undefined,
-		},
-	});
-
-	const categoryCollectionQuery = withCategoryCollectionQuery.useSuspenseQuery({
-		where: {
-			idIn: feed.query?.filter?.categoryIdIn,
-		},
-	});
 
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
 		onPostMutation() {
@@ -101,13 +91,10 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 					}
 				/>
 
-				<BadgeValue
+				<LocationBadgeValue
+					locationId={feed.locationId}
 					textLabel={"Feed location (label)"}
-					textValue={
-						feed.locationId
-							? locationFetchQuery.data.address
-							: "Feed location not selected"
-					}
+					textValue={"Feed location not selected"}
 					action={
 						feed.id ? (
 							<LinkTo
@@ -148,23 +135,10 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 					}
 				/>
 
-				<ContainerValueList
+				<CategoryValueList
+                    categoryIdIn={feed.query?.filter?.categoryIdIn}
 					textTitle={"Feed category (label)"}
 					textEmpty={"Feed category not selected"}
-					items={
-						feed.query?.filter?.categoryIdIn?.length
-							? categoryCollectionQuery.data.data
-							: []
-					}
-					render={(category) => (
-						<div className={"flex flex-col gap-0.5 items-start"}>
-							<Typo
-								label={category.group}
-								size={"xs"}
-							/>
-							<Typo label={category.category} />
-						</div>
-					)}
 					action={
 						feed.id ? (
 							<LinkTo
