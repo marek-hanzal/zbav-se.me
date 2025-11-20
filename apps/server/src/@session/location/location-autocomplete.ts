@@ -80,13 +80,13 @@ export const withLocationAutocompleteApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "TextTooShortError",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 400>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										400,
-									);
+									return c.json<LocationSchema.Type[], 200>([], 200, {
+										/**
+										 * Keep responding, just mark header so more clever guys can eventually see,
+										 * what's wrong.
+										 */
+										"X-Location-Error": "Text too short",
+									});
 								},
 							),
 							Match.when(
