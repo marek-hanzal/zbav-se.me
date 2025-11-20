@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { UserContextProvider } from "../../auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
@@ -65,6 +66,7 @@ export const withGalleryFetchApi: Routes.Fn = ({ sessionHono }) => {
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

@@ -1,5 +1,6 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { withGalleryQueryBuilder } from "../db/withGalleryQueryBuilder";
@@ -16,6 +17,7 @@ export namespace galleryFetchFx {
 export const galleryFetchFx = ({ query }: galleryFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		const data = yield* Effect.tryPromise(async () => {
 			const { filter, where, sort } = query;
@@ -27,7 +29,10 @@ export const galleryFetchFx = ({ query }: galleryFetchFx.Props) => {
 				}),
 				output: GallerySchema,
 				filter,
-				where,
+				where: {
+					...where,
+					userId: user.id,
+				},
 				query: withGalleryQueryBuilder,
 			});
 		});

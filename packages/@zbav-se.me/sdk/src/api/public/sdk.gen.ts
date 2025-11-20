@@ -22,12 +22,10 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Provides health check, just returns a bool; if this endpoint does not work, something is really wrong.
  */
-export const apiHealth = <ThrowOnError extends boolean = false>(options?: Options<tApiHealthRequest, ThrowOnError>) => {
-    return (options?.client ?? client).get<tApiHealthResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiHealthData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
-        url: '/api/public/health',
-        ...options
-    });
-};
+export const apiHealth = <ThrowOnError extends boolean = false>(options?: Options<tApiHealthRequest, ThrowOnError>) => (options?.client ?? client).get<tApiHealthResponse, unknown, ThrowOnError>({
+    requestValidator: async (data) => await zApiHealthData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiHealthResponse.parseAsync(data),
+    url: '/api/public/health',
+    ...options
+});

@@ -1,5 +1,6 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withGalleryQueryBuilder } from "../db/withGalleryQueryBuilder";
 import { withGallerySelect } from "../db/withGallerySelect";
@@ -14,6 +15,7 @@ export namespace galleryCountFx {
 export const galleryCountFx = ({ query: { filter, where } }: galleryCountFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCount({
@@ -21,7 +23,10 @@ export const galleryCountFx = ({ query: { filter, where } }: galleryCountFx.Prop
 					database,
 				}),
 				filter,
-				where,
+				where: {
+					...where,
+					userId: user.id,
+				},
 				query: withGalleryQueryBuilder,
 			});
 		});

@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFetchErrors, apiFeedPatchErrors, apiGalleryFetchErrors, apiListingCartToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingFetchErrors, apiListingFlagToggleErrors, apiListingIgnoreToggleErrors, apiListingMetricsFetchErrors, apiListingScoreCreateErrors, apiListingTransactionBuyerInfoErrors, apiListingTransactionCollectionErrors, apiListingTransactionCreateErrors, apiListingTransactionFetchErrors, apiListingTransactionSellerInfoErrors, apiLocationFetchErrors, apiS3PresignErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiCategoryCartCollectionRequest, tApiCategoryCartCollectionResponse, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiListingCartCollectionRequest, tApiListingCartCollectionResponse, tApiListingCartCountRequest, tApiListingCartCountResponse, tApiListingCartToggleRequest, tApiListingCartToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingFlagCollectionRequest, tApiListingFlagCollectionResponse, tApiListingFlagCountRequest, tApiListingFlagCountResponse, tApiListingFlagToggleRequest, tApiListingFlagToggleResponse, tApiListingIgnoreCollectionRequest, tApiListingIgnoreCollectionResponse, tApiListingIgnoreCountRequest, tApiListingIgnoreCountResponse, tApiListingIgnoreToggleRequest, tApiListingIgnoreToggleResponse, tApiListingMetricsFetchRequest, tApiListingMetricsFetchResponse, tApiListingScoreCollectionRequest, tApiListingScoreCollectionResponse, tApiListingScoreCountRequest, tApiListingScoreCountResponse, tApiListingScoreCreateRequest, tApiListingScoreCreateResponse, tApiListingTransactionBuyerInfoRequest, tApiListingTransactionBuyerInfoResponse, tApiListingTransactionCollectionRequest, tApiListingTransactionCollectionResponse, tApiListingTransactionCreateRequest, tApiListingTransactionCreateResponse, tApiListingTransactionFetchRequest, tApiListingTransactionFetchResponse, tApiListingTransactionLogCollectionRequest, tApiListingTransactionLogCollectionResponse, tApiListingTransactionSellerInfoRequest, tApiListingTransactionSellerInfoResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
+import type { apiCategoryCartCollectionErrors, apiCategoryCollectionErrors, apiCategoryCountErrors, apiCategoryFetchErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFetchErrors, apiFeedPatchErrors, apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiListingCartCollectionErrors, apiListingCartCountErrors, apiListingCartToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingFetchErrors, apiListingFlagCollectionErrors, apiListingFlagCountErrors, apiListingFlagToggleErrors, apiListingIgnoreCollectionErrors, apiListingIgnoreCountErrors, apiListingIgnoreToggleErrors, apiListingMetricsFetchErrors, apiListingScoreCollectionErrors, apiListingScoreCountErrors, apiListingScoreCreateErrors, apiListingTransactionBuyerInfoErrors, apiListingTransactionCollectionErrors, apiListingTransactionCreateErrors, apiListingTransactionFetchErrors, apiListingTransactionLogCollectionErrors, apiListingTransactionSellerInfoErrors, apiLocationAutocompleteErrors, apiLocationFetchErrors, apiS3PresignErrors, apiUploadCollectionErrors, apiUploadCountErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiCategoryCartCollectionRequest, tApiCategoryCartCollectionResponse, tApiCategoryCollectionRequest, tApiCategoryCollectionResponse, tApiCategoryCountRequest, tApiCategoryCountResponse, tApiCategoryFetchRequest, tApiCategoryFetchResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiListingCartCollectionRequest, tApiListingCartCollectionResponse, tApiListingCartCountRequest, tApiListingCartCountResponse, tApiListingCartToggleRequest, tApiListingCartToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingFlagCollectionRequest, tApiListingFlagCollectionResponse, tApiListingFlagCountRequest, tApiListingFlagCountResponse, tApiListingFlagToggleRequest, tApiListingFlagToggleResponse, tApiListingIgnoreCollectionRequest, tApiListingIgnoreCollectionResponse, tApiListingIgnoreCountRequest, tApiListingIgnoreCountResponse, tApiListingIgnoreToggleRequest, tApiListingIgnoreToggleResponse, tApiListingMetricsFetchRequest, tApiListingMetricsFetchResponse, tApiListingScoreCollectionRequest, tApiListingScoreCollectionResponse, tApiListingScoreCountRequest, tApiListingScoreCountResponse, tApiListingScoreCreateRequest, tApiListingScoreCreateResponse, tApiListingTransactionBuyerInfoRequest, tApiListingTransactionBuyerInfoResponse, tApiListingTransactionCollectionRequest, tApiListingTransactionCollectionResponse, tApiListingTransactionCreateRequest, tApiListingTransactionCreateResponse, tApiListingTransactionFetchRequest, tApiListingTransactionFetchResponse, tApiListingTransactionLogCollectionRequest, tApiListingTransactionLogCollectionResponse, tApiListingTransactionSellerInfoRequest, tApiListingTransactionSellerInfoResponse, tApiLocationAutocompleteRequest, tApiLocationAutocompleteResponse, tApiLocationFetchRequest, tApiLocationFetchResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
 import { zApiCategoryCartCollectionData, zApiCategoryCartCollectionResponse, zApiCategoryCollectionData, zApiCategoryCollectionResponse, zApiCategoryCountData, zApiCategoryCountResponse, zApiCategoryFetchData, zApiCategoryFetchResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiListingCartCollectionData, zApiListingCartCollectionResponse, zApiListingCartCountData, zApiListingCartCountResponse, zApiListingCartToggleData, zApiListingCartToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingFlagCollectionData, zApiListingFlagCollectionResponse, zApiListingFlagCountData, zApiListingFlagCountResponse, zApiListingFlagToggleData, zApiListingFlagToggleResponse, zApiListingIgnoreCollectionData, zApiListingIgnoreCollectionResponse, zApiListingIgnoreCountData, zApiListingIgnoreCountResponse, zApiListingIgnoreToggleData, zApiListingIgnoreToggleResponse, zApiListingMetricsFetchData, zApiListingMetricsFetchResponse, zApiListingScoreCollectionData, zApiListingScoreCollectionResponse, zApiListingScoreCountData, zApiListingScoreCountResponse, zApiListingScoreCreateData, zApiListingTransactionBuyerInfoData, zApiListingTransactionBuyerInfoResponse, zApiListingTransactionCollectionData, zApiListingTransactionCollectionResponse, zApiListingTransactionCreateData, zApiListingTransactionFetchData, zApiListingTransactionFetchResponse, zApiListingTransactionLogCollectionData, zApiListingTransactionLogCollectionResponse, zApiListingTransactionSellerInfoData, zApiListingTransactionSellerInfoResponse, zApiLocationAutocompleteData, zApiLocationAutocompleteResponse, zApiLocationFetchData, zApiLocationFetchResponse, zApiS3PresignData, zApiS3PresignResponse, zApiUploadCollectionData, zApiUploadCollectionResponse, zApiUploadCountData, zApiUploadCountResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
@@ -22,735 +22,647 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 /**
  * Return a category based on the provided query
  */
-export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiCategoryFetchResponse, apiCategoryFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiCategoryFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiCategoryFetchResponse.parseAsync(data),
-        url: '/api/session/category/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiCategoryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryFetchResponse, apiCategoryFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiCategoryFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCategoryFetchResponse.parseAsync(data),
+    url: '/api/session/category/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns categories based on provided parameters
  */
-export const apiCategoryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiCategoryCollectionResponse, apiCategoryCollectionErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiCategoryCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiCategoryCollectionResponse.parseAsync(data),
-        url: '/api/session/category/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiCategoryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCollectionResponse, apiCategoryCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiCategoryCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCategoryCollectionResponse.parseAsync(data),
+    url: '/api/session/category/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of categories based on provided query
  */
-export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiCategoryCountResponse, apiCategoryCountErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiCategoryCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiCategoryCountResponse.parseAsync(data),
-        url: '/api/session/category/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiCategoryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCountResponse, apiCategoryCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiCategoryCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCategoryCountResponse.parseAsync(data),
+    url: '/api/session/category/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns categories for listings saved in the current user's cart
  */
-export const apiCategoryCartCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCartCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiCategoryCartCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiCategoryCartCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiCategoryCartCollectionResponse.parseAsync(data),
-        url: '/api/session/category-cart/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiCategoryCartCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiCategoryCartCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiCategoryCartCollectionResponse, apiCategoryCartCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiCategoryCartCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiCategoryCartCollectionResponse.parseAsync(data),
+    url: '/api/session/category-cart/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Create a new feed item
  */
-export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCreateRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiFeedCreateResponse, apiFeedCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiFeedCreateData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiFeedCreateResponse.parseAsync(data),
-        url: '/api/session/feed/create',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiFeedCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedCreateResponse, apiFeedCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedCreateData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedCreateResponse.parseAsync(data),
+    url: '/api/session/feed/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Update an existing feed item
  */
-export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedPatchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).patch<tApiFeedPatchResponse, apiFeedPatchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiFeedPatchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiFeedPatchResponse.parseAsync(data),
-        url: '/api/session/feed/patch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiFeedPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedPatchRequest, ThrowOnError>) => (options?.client ?? client).patch<tApiFeedPatchResponse, apiFeedPatchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedPatchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedPatchResponse.parseAsync(data),
+    url: '/api/session/feed/patch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return a feed item based on the provided query
  */
-export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiFeedFetchResponse, apiFeedFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiFeedFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiFeedFetchResponse.parseAsync(data),
-        url: '/api/session/feed/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiFeedFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedFetchResponse, apiFeedFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedFetchResponse.parseAsync(data),
+    url: '/api/session/feed/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns feed items based on provided parameters
  */
-export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiFeedCollectionResponse, apiFeedCollectionErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiFeedCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiFeedCollectionResponse.parseAsync(data),
-        url: '/api/session/feed/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiFeedCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedCollectionResponse, apiFeedCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedCollectionResponse.parseAsync(data),
+    url: '/api/session/feed/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of feed items based on provided query (user-specific)
  */
-export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiFeedCountResponse, apiFeedCountErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiFeedCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiFeedCountResponse.parseAsync(data),
-        url: '/api/session/feed/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiFeedCount = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFeedCountResponse, apiFeedCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedCountResponse.parseAsync(data),
+    url: '/api/session/feed/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Delete a feed item based on the provided query (user-specific)
  */
-export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedDeleteRequest, ThrowOnError>) => {
-    return (options?.client ?? client).delete<tApiFeedDeleteResponse, apiFeedDeleteErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiFeedDeleteData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiFeedDeleteResponse.parseAsync(data),
-        url: '/api/session/feed/delete',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Options<tApiFeedDeleteRequest, ThrowOnError>) => (options?.client ?? client).delete<tApiFeedDeleteResponse, apiFeedDeleteErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiFeedDeleteData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiFeedDeleteResponse.parseAsync(data),
+    url: '/api/session/feed/delete',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return a gallery item based on the provided query
  */
-export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiGalleryFetchResponse, apiGalleryFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiGalleryFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiGalleryFetchResponse.parseAsync(data),
-        url: '/api/session/gallery/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryFetchResponse, apiGalleryFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiGalleryFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiGalleryFetchResponse.parseAsync(data),
+    url: '/api/session/gallery/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns gallery items based on provided parameters
  */
-export const apiGalleryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiGalleryCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiGalleryCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiGalleryCollectionResponse.parseAsync(data),
-        url: '/api/session/gallery/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiGalleryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryCollectionResponse, apiGalleryCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiGalleryCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiGalleryCollectionResponse.parseAsync(data),
+    url: '/api/session/gallery/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of gallery items based on provided query
  */
-export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiGalleryCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiGalleryCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiGalleryCountResponse.parseAsync(data),
-        url: '/api/session/gallery/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryCountResponse, apiGalleryCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiGalleryCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiGalleryCountResponse.parseAsync(data),
+    url: '/api/session/gallery/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Create a new listing
  */
-export const apiListingCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCreateRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingCreateResponse, apiListingCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingCreateData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingCreateResponse.parseAsync(data),
-        url: '/api/session/listing/create',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCreateResponse, apiListingCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCreateData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCreateResponse.parseAsync(data),
+    url: '/api/session/listing/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return a listing based on the provided query
  */
-export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingFetchResponse, apiListingFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
-        url: '/api/session/listing/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFetchResponse, apiListingFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingFetchResponse.parseAsync(data),
+    url: '/api/session/listing/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns listings based on provided parameters
  */
-export const apiListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingCollectionResponse, apiListingCollectionErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
-        url: '/api/session/listing/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCollectionResponse, apiListingCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCollectionResponse.parseAsync(data),
+    url: '/api/session/listing/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of listings based on provided query
  */
-export const apiListingCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingCountResponse, apiListingCountErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
-        url: '/api/session/listing/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCountResponse, apiListingCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCountResponse.parseAsync(data),
+    url: '/api/session/listing/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return score for a listing
  */
-export const apiListingMetricsFetch = <ThrowOnError extends boolean = false>(options: Options<tApiListingMetricsFetchRequest, ThrowOnError>) => {
-    return (options.client ?? client).get<tApiListingMetricsFetchResponse, apiListingMetricsFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingMetricsFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingMetricsFetchResponse.parseAsync(data),
-        url: '/api/session/listing/{id}/metrics',
-        ...options
-    });
-};
+export const apiListingMetricsFetch = <ThrowOnError extends boolean = false>(options: Options<tApiListingMetricsFetchRequest, ThrowOnError>) => (options.client ?? client).get<tApiListingMetricsFetchResponse, apiListingMetricsFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingMetricsFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingMetricsFetchResponse.parseAsync(data),
+    url: '/api/session/listing/{id}/metrics',
+    ...options
+});
 
 /**
  * Returns listing cart items based on provided parameters
  */
-export const apiListingCartCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingCartCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingCartCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingCartCollectionResponse.parseAsync(data),
-        url: '/api/session/listing-cart/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingCartCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCartCollectionResponse, apiListingCartCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCartCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCartCollectionResponse.parseAsync(data),
+    url: '/api/session/listing-cart/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of listing cart items based on provided query
  */
-export const apiListingCartCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingCartCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingCartCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingCartCountResponse.parseAsync(data),
-        url: '/api/session/listing-cart/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingCartCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCartCountResponse, apiListingCartCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCartCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingCartCountResponse.parseAsync(data),
+    url: '/api/session/listing-cart/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Toggle listing in cart (add or remove)
  */
-export const apiListingCartToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartToggleRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingCartToggleResponse, apiListingCartToggleErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingCartToggleData.parseAsync(data),
-        responseValidator: async (data) => await zApiListingCartToggleResponse.parseAsync(data),
-        url: '/api/session/listing-cart/toggle',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingCartToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingCartToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingCartToggleResponse, apiListingCartToggleErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingCartToggleData.parseAsync(data),
+    responseValidator: async (data) => await zApiListingCartToggleResponse.parseAsync(data),
+    url: '/api/session/listing-cart/toggle',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns listing ignore items based on provided parameters
  */
-export const apiListingIgnoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingIgnoreCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingIgnoreCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingIgnoreCollectionResponse.parseAsync(data),
-        url: '/api/session/listing-ignore/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingIgnoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingIgnoreCollectionResponse, apiListingIgnoreCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingIgnoreCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingIgnoreCollectionResponse.parseAsync(data),
+    url: '/api/session/listing-ignore/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of listing ignore items based on provided query
  */
-export const apiListingIgnoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingIgnoreCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingIgnoreCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingIgnoreCountResponse.parseAsync(data),
-        url: '/api/session/listing-ignore/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingIgnoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingIgnoreCountResponse, apiListingIgnoreCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingIgnoreCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingIgnoreCountResponse.parseAsync(data),
+    url: '/api/session/listing-ignore/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Toggle listing ignore state (add or remove)
  */
-export const apiListingIgnoreToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreToggleRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingIgnoreToggleResponse, apiListingIgnoreToggleErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingIgnoreToggleData.parseAsync(data),
-        responseValidator: async (data) => await zApiListingIgnoreToggleResponse.parseAsync(data),
-        url: '/api/session/listing-ignore/toggle',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingIgnoreToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingIgnoreToggleResponse, apiListingIgnoreToggleErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingIgnoreToggleData.parseAsync(data),
+    responseValidator: async (data) => await zApiListingIgnoreToggleResponse.parseAsync(data),
+    url: '/api/session/listing-ignore/toggle',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns listing flag items based on provided parameters
  */
-export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingFlagCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingFlagCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingFlagCollectionResponse.parseAsync(data),
-        url: '/api/session/listing-flag/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagCollectionResponse, apiListingFlagCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFlagCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingFlagCollectionResponse.parseAsync(data),
+    url: '/api/session/listing-flag/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of listing flag items based on provided query
  */
-export const apiListingFlagCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingFlagCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingFlagCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingFlagCountResponse.parseAsync(data),
-        url: '/api/session/listing-flag/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingFlagCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagCountResponse, apiListingFlagCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFlagCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingFlagCountResponse.parseAsync(data),
+    url: '/api/session/listing-flag/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Toggle flag state on listing (add or remove)
  */
-export const apiListingFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagToggleRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingFlagToggleResponse, apiListingFlagToggleErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingFlagToggleData.parseAsync(data),
-        responseValidator: async (data) => await zApiListingFlagToggleResponse.parseAsync(data),
-        url: '/api/session/listing-flag/toggle',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagToggleResponse, apiListingFlagToggleErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFlagToggleData.parseAsync(data),
+    responseValidator: async (data) => await zApiListingFlagToggleResponse.parseAsync(data),
+    url: '/api/session/listing-flag/toggle',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns listing transactions based on provided parameters
  */
-export const apiListingTransactionCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingTransactionCollectionResponse, apiListingTransactionCollectionErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingTransactionCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingTransactionCollectionResponse.parseAsync(data),
-        url: '/api/session/listing-transaction/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingTransactionCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionCollectionResponse, apiListingTransactionCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionCollectionResponse.parseAsync(data),
+    url: '/api/session/listing-transaction/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Create a new listing transaction
  */
-export const apiListingTransactionCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionCreateRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingTransactionCreateResponse, apiListingTransactionCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingTransactionCreateData.parseAsync(data),
-        url: '/api/session/listing-transaction/create',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingTransactionCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionCreateResponse, apiListingTransactionCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionCreateData.parseAsync(data),
+    url: '/api/session/listing-transaction/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return a listing transaction based on the provided query
  */
-export const apiListingTransactionFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingTransactionFetchResponse, apiListingTransactionFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingTransactionFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingTransactionFetchResponse.parseAsync(data),
-        url: '/api/session/listing-transaction/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingTransactionFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionFetchResponse, apiListingTransactionFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionFetchResponse.parseAsync(data),
+    url: '/api/session/listing-transaction/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return seller info for a listing transaction. Requires access to the transaction.
  */
-export const apiListingTransactionSellerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionSellerInfoRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingTransactionSellerInfoResponse, apiListingTransactionSellerInfoErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingTransactionSellerInfoData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingTransactionSellerInfoResponse.parseAsync(data),
-        url: '/api/session/listing-transaction/seller-info',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingTransactionSellerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionSellerInfoRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionSellerInfoResponse, apiListingTransactionSellerInfoErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionSellerInfoData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionSellerInfoResponse.parseAsync(data),
+    url: '/api/session/listing-transaction/seller-info',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return buyer info for a listing transaction. Requires access to the transaction.
  */
-export const apiListingTransactionBuyerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionBuyerInfoRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingTransactionBuyerInfoResponse, apiListingTransactionBuyerInfoErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingTransactionBuyerInfoData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingTransactionBuyerInfoResponse.parseAsync(data),
-        url: '/api/session/listing-transaction/buyer-info',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingTransactionBuyerInfo = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionBuyerInfoRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionBuyerInfoResponse, apiListingTransactionBuyerInfoErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionBuyerInfoData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionBuyerInfoResponse.parseAsync(data),
+    url: '/api/session/listing-transaction/buyer-info',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns listing transaction log entries based on provided parameters
  */
-export const apiListingTransactionLogCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionLogCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingTransactionLogCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingTransactionLogCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingTransactionLogCollectionResponse.parseAsync(data),
-        url: '/api/session/listing-transaction-log/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingTransactionLogCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionLogCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionLogCollectionResponse, apiListingTransactionLogCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionLogCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionLogCollectionResponse.parseAsync(data),
+    url: '/api/session/listing-transaction-log/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns listing scores based on provided parameters
  */
-export const apiListingScoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingScoreCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingScoreCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingScoreCollectionResponse.parseAsync(data),
-        url: '/api/session/listing-score/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingScoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCollectionResponse, apiListingScoreCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingScoreCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingScoreCollectionResponse.parseAsync(data),
+    url: '/api/session/listing-score/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of listing scores based on provided query
  */
-export const apiListingScoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingScoreCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingScoreCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiListingScoreCountResponse.parseAsync(data),
-        url: '/api/session/listing-score/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingScoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCountResponse, apiListingScoreCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingScoreCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingScoreCountResponse.parseAsync(data),
+    url: '/api/session/listing-score/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Create a new listing score
  */
-export const apiListingScoreCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCreateRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiListingScoreCreateResponse, apiListingScoreCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiListingScoreCreateData.parseAsync(data),
-        url: '/api/session/listing-score/create',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiListingScoreCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCreateResponse, apiListingScoreCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingScoreCreateData.parseAsync(data),
+    url: '/api/session/listing-score/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return a location autocomplete
  */
-export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiLocationAutocompleteResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiLocationAutocompleteData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiLocationAutocompleteResponse.parseAsync(data),
-        url: '/api/session/location/autocomplete',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiLocationAutocomplete = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationAutocompleteRequest, ThrowOnError>) => (options?.client ?? client).post<tApiLocationAutocompleteResponse, apiLocationAutocompleteErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiLocationAutocompleteData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiLocationAutocompleteResponse.parseAsync(data),
+    url: '/api/session/location/autocomplete',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return a location based on the provided query
  */
-export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiLocationFetchResponse, apiLocationFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiLocationFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiLocationFetchResponse.parseAsync(data),
-        url: '/api/session/location/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiLocationFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiLocationFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiLocationFetchResponse, apiLocationFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiLocationFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiLocationFetchResponse.parseAsync(data),
+    url: '/api/session/location/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Generate a pre-signed URL for direct S3-compatible PUT upload (private bucket). Expiration is server-controlled. A random suffix is always added.
  */
-export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Options<tApiS3PresignRequest, ThrowOnError>) => {
-    return (options.client ?? client).post<tApiS3PresignResponse, apiS3PresignErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiS3PresignData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiS3PresignResponse.parseAsync(data),
-        url: '/api/session/s3/pre-sign',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options.headers
-        }
-    });
-};
+export const apiS3Presign = <ThrowOnError extends boolean = false>(options: Options<tApiS3PresignRequest, ThrowOnError>) => (options.client ?? client).post<tApiS3PresignResponse, apiS3PresignErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiS3PresignData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiS3PresignResponse.parseAsync(data),
+    url: '/api/session/s3/pre-sign',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Create a new upload
  */
-export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCreateRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiUploadCreateResponse, apiUploadCreateErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiUploadCreateData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiUploadCreateResponse.parseAsync(data),
-        url: '/api/session/upload/create',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiUploadCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadCreateResponse, apiUploadCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUploadCreateData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUploadCreateResponse.parseAsync(data),
+    url: '/api/session/upload/create',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Return an upload item based on the provided query
  */
-export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
-        url: '/api/session/upload/fetch',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiUploadFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadFetchResponse, apiUploadFetchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUploadFetchData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUploadFetchResponse.parseAsync(data),
+    url: '/api/session/upload/fetch',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns upload items based on provided parameters
  */
-export const apiUploadCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCollectionRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiUploadCollectionResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiUploadCollectionData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiUploadCollectionResponse.parseAsync(data),
-        url: '/api/session/upload/collection',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiUploadCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadCollectionResponse, apiUploadCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUploadCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUploadCollectionResponse.parseAsync(data),
+    url: '/api/session/upload/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Returns count of upload items based on provided query
  */
-export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCountRequest, ThrowOnError>) => {
-    return (options?.client ?? client).post<tApiUploadCountResponse, unknown, ThrowOnError>({
-        requestValidator: async (data) => await zApiUploadCountData.parseAsync(data),
-        responseType: 'json',
-        responseValidator: async (data) => await zApiUploadCountResponse.parseAsync(data),
-        url: '/api/session/upload/count',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: Options<tApiUploadCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiUploadCountResponse, apiUploadCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUploadCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiUploadCountResponse.parseAsync(data),
+    url: '/api/session/upload/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
 
 /**
  * Update user extended information
  */
-export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiUserExPatchRequest, ThrowOnError>) => {
-    return (options?.client ?? client).patch<tApiUserExPatchResponse, apiUserExPatchErrors, ThrowOnError>({
-        requestValidator: async (data) => await zApiUserExPatchData.parseAsync(data),
-        responseValidator: async (data) => await zApiUserExPatchResponse.parseAsync(data),
-        url: '/api/session/user-ex',
-        ...options,
-        headers: {
-            'Content-Type': 'application/json',
-            ...options?.headers
-        }
-    });
-};
+export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiUserExPatchRequest, ThrowOnError>) => (options?.client ?? client).patch<tApiUserExPatchResponse, apiUserExPatchErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiUserExPatchData.parseAsync(data),
+    responseValidator: async (data) => await zApiUserExPatchResponse.parseAsync(data),
+    url: '/api/session/user-ex',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});

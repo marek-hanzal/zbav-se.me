@@ -4,12 +4,15 @@ export const sUserExPatch = {
     type: 'object',
     properties: {
         locationId: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         side: {
             anyOf: [
                 {
-                    '$ref': '#/components/schemas/UserSide'
+                    $ref: '#/components/schemas/UserSide'
                 },
                 {
                     type: 'null'
@@ -24,7 +27,10 @@ export const sUserExPatch = {
 
 export const sUserSide = {
     type: 'string',
-    enum: ['seller', 'buyer']
+    enum: [
+        'seller',
+        'buyer'
+    ]
 } as const;
 
 export const sUploadCollection = {
@@ -33,14 +39,17 @@ export const sUploadCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Upload'
+                $ref: '#/components/schemas/Upload'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sUpload = {
@@ -54,25 +63,28 @@ export const sUpload = {
             format: 'uri'
         }
     },
-    required: ['id', 'url']
+    required: [
+        'id',
+        'url'
+    ]
 } as const;
 
 export const sUploadQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/UploadFilter'
+            $ref: '#/components/schemas/UploadFilter'
         },
         where: {
-            '$ref': '#/components/schemas/UploadWhere'
+            $ref: '#/components/schemas/UploadWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/UploadSort'
+                $ref: '#/components/schemas/UploadSort'
             }
         }
     }
@@ -80,25 +92,33 @@ export const sUploadQuery = {
 
 export const sOrder = {
     type: 'string',
-    enum: ['asc', 'desc']
+    enum: [
+        'asc',
+        'desc'
+    ]
 } as const;
 
 export const sUploadSortField = {
     type: 'string',
-    enum: ['createdAt']
+    enum: [
+        'createdAt'
+    ]
 } as const;
 
 export const sUploadSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/UploadSortField'
+            $ref: '#/components/schemas/UploadSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sUploadWhere = {
@@ -150,7 +170,10 @@ export const sCursor = {
             maximum: 1000
         }
     },
-    required: ['page', 'size']
+    required: [
+        'page',
+        'size'
+    ]
 } as const;
 
 export const sUploadCreate = {
@@ -161,35 +184,52 @@ export const sUploadCreate = {
             format: 'uri'
         }
     },
-    required: ['url']
+    required: [
+        'url'
+    ]
 } as const;
 
 export const sAllowedContentTypes = {
     type: 'string',
-    enum: ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/heic', 'image/heif']
+    enum: [
+        'image/jpeg',
+        'image/png',
+        'image/webp',
+        'image/avif',
+        'image/heic',
+        'image/heif'
+    ]
 } as const;
 
 export const sAllowedExtensions = {
     type: 'string',
-    enum: ['webp', 'png', 'jpg', 'jpeg', 'avif', 'heic', 'heif']
+    enum: [
+        'webp',
+        'png',
+        'jpg',
+        'jpeg',
+        'avif',
+        'heic',
+        'heif'
+    ]
 } as const;
 
 export const sLocationQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/LocationFilter'
+            $ref: '#/components/schemas/LocationFilter'
         },
         where: {
-            '$ref': '#/components/schemas/LocationWhere'
+            $ref: '#/components/schemas/LocationWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/LocationSort'
+                $ref: '#/components/schemas/LocationSort'
             }
         }
     }
@@ -197,20 +237,28 @@ export const sLocationQuery = {
 
 export const sLocationSortField = {
     type: 'string',
-    enum: ['confidence', 'query', 'country', 'address']
+    enum: [
+        'confidence',
+        'query',
+        'country',
+        'address'
+    ]
 } as const;
 
 export const sLocationSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/LocationSortField'
+            $ref: '#/components/schemas/LocationSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sLocationWhere = {
@@ -291,7 +339,10 @@ export const sLocationAutocomplete = {
             maxLength: 8
         }
     },
-    required: ['text', 'lang']
+    required: [
+        'text',
+        'lang'
+    ]
 } as const;
 
 export const sListingScoreCreate = {
@@ -301,25 +352,34 @@ export const sListingScoreCreate = {
             type: 'string'
         },
         score: {
-            '$ref': '#/components/schemas/ListingScoreType'
+            $ref: '#/components/schemas/ListingScoreType'
         }
     },
-    required: ['listingId', 'score']
+    required: [
+        'listingId',
+        'score'
+    ]
 } as const;
 
 export const sListingScoreType = {
     type: 'string',
-    enum: ['listing', 'ignore', 'flag', 'view', 'cart']
+    enum: [
+        'listing',
+        'ignore',
+        'flag',
+        'view',
+        'cart'
+    ]
 } as const;
 
 export const sListingScoreCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            '$ref': '#/components/schemas/ListingScoreFilter'
+            $ref: '#/components/schemas/ListingScoreFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingScoreWhere'
+            $ref: '#/components/schemas/ListingScoreWhere'
         }
     }
 } as const;
@@ -376,18 +436,18 @@ export const sListingScoreQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingScoreFilter'
+            $ref: '#/components/schemas/ListingScoreFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingScoreWhere'
+            $ref: '#/components/schemas/ListingScoreWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingScoreSort'
+                $ref: '#/components/schemas/ListingScoreSort'
             }
         }
     }
@@ -395,20 +455,26 @@ export const sListingScoreQuery = {
 
 export const sListingScoreSortField = {
     type: 'string',
-    enum: ['score', 'createdAt']
+    enum: [
+        'score',
+        'createdAt'
+    ]
 } as const;
 
 export const sListingScoreSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingScoreSortField'
+            $ref: '#/components/schemas/ListingScoreSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingScoreCollection = {
@@ -417,14 +483,17 @@ export const sListingScoreCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingScore'
+                $ref: '#/components/schemas/ListingScore'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingScore = {
@@ -437,7 +506,7 @@ export const sListingScore = {
             type: 'string'
         },
         type: {
-            '$ref': '#/components/schemas/ListingScoreType'
+            $ref: '#/components/schemas/ListingScoreType'
         },
         score: {
             type: 'integer'
@@ -446,25 +515,31 @@ export const sListingScore = {
             type: 'string'
         }
     },
-    required: ['id', 'listingId', 'type', 'score', 'createdAt']
+    required: [
+        'id',
+        'listingId',
+        'type',
+        'score',
+        'createdAt'
+    ]
 } as const;
 
 export const sListingTransactionLogQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingTransactionLogFilter'
+            $ref: '#/components/schemas/ListingTransactionLogFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingTransactionLogWhere'
+            $ref: '#/components/schemas/ListingTransactionLogWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingTransactionLogSort'
+                $ref: '#/components/schemas/ListingTransactionLogSort'
             }
         }
     }
@@ -472,20 +547,25 @@ export const sListingTransactionLogQuery = {
 
 export const sListingTransactionLogSortField = {
     type: 'string',
-    enum: ['createdAt']
+    enum: [
+        'createdAt'
+    ]
 } as const;
 
 export const sListingTransactionLogSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingTransactionLogSortField'
+            $ref: '#/components/schemas/ListingTransactionLogSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingTransactionLogWhere = {
@@ -507,28 +587,41 @@ export const sListingTransactionLogWhere = {
             type: 'string'
         },
         status: {
-            '$ref': '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         statusIn: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingTransactionStatus'
+                $ref: '#/components/schemas/ListingTransactionStatus'
             }
         },
         side: {
-            '$ref': '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSide'
         }
     }
 } as const;
 
 export const sListingTransactionSide = {
     type: 'string',
-    enum: ['seller', 'buyer', 'transaction', 'system', 'unknown']
+    enum: [
+        'seller',
+        'buyer',
+        'transaction',
+        'system',
+        'unknown'
+    ]
 } as const;
 
 export const sListingTransactionStatus = {
     type: 'string',
-    enum: ['request', 'accepted', 'rejected', 'success', 'closed', 'expired']
+    enum: [
+        'request',
+        'accepted',
+        'rejected',
+        'success',
+        'closed',
+        'expired'
+    ]
 } as const;
 
 export const sListingTransactionLogFilter = {
@@ -550,16 +643,16 @@ export const sListingTransactionLogFilter = {
             type: 'string'
         },
         status: {
-            '$ref': '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         statusIn: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingTransactionStatus'
+                $ref: '#/components/schemas/ListingTransactionStatus'
             }
         },
         side: {
-            '$ref': '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSide'
         }
     }
 } as const;
@@ -570,14 +663,17 @@ export const sListingTransactionLogCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingTransactionLog'
+                $ref: '#/components/schemas/ListingTransactionLog'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingTransactionLog = {
@@ -590,16 +686,22 @@ export const sListingTransactionLog = {
             type: 'string'
         },
         status: {
-            '$ref': '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         side: {
-            '$ref': '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSide'
         },
         createdAt: {
             type: 'string'
         }
     },
-    required: ['id', 'listingTransactionId', 'status', 'side', 'createdAt']
+    required: [
+        'id',
+        'listingTransactionId',
+        'status',
+        'side',
+        'createdAt'
+    ]
 } as const;
 
 export const sListingTransactionBuyerInfo = {
@@ -610,7 +712,9 @@ export const sListingTransactionBuyerInfo = {
             example: 0
         }
     },
-    required: ['score']
+    required: [
+        'score'
+    ]
 } as const;
 
 export const sListingTransactionSellerInfo = {
@@ -621,7 +725,9 @@ export const sListingTransactionSellerInfo = {
             example: 0
         }
     },
-    required: ['score']
+    required: [
+        'score'
+    ]
 } as const;
 
 export const sListingTransactionCreate = {
@@ -631,29 +737,31 @@ export const sListingTransactionCreate = {
             type: 'string'
         }
     },
-    required: ['listingId']
+    required: [
+        'listingId'
+    ]
 } as const;
 
 export const sListingTransactionQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingTransactionFilter'
+            $ref: '#/components/schemas/ListingTransactionFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingTransactionWhere'
+            $ref: '#/components/schemas/ListingTransactionWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingTransactionSort'
+                $ref: '#/components/schemas/ListingTransactionSort'
             }
         },
         meta: {
-            '$ref': '#/components/schemas/ListingTransactionMeta'
+            $ref: '#/components/schemas/ListingTransactionMeta'
         }
     }
 } as const;
@@ -662,27 +770,34 @@ export const sListingTransactionMeta = {
     type: 'object',
     properties: {
         side: {
-            '$ref': '#/components/schemas/UserSide'
+            $ref: '#/components/schemas/UserSide'
         }
     }
 } as const;
 
 export const sListingTransactionSortField = {
     type: 'string',
-    enum: ['createdAt', 'updatedAt', 'expiresAt']
+    enum: [
+        'createdAt',
+        'updatedAt',
+        'expiresAt'
+    ]
 } as const;
 
 export const sListingTransactionSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingTransactionSortField'
+            $ref: '#/components/schemas/ListingTransactionSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingTransactionWhere = {
@@ -707,10 +822,10 @@ export const sListingTransactionWhere = {
             type: 'string'
         },
         status: {
-            '$ref': '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         side: {
-            '$ref': '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSide'
         }
     }
 } as const;
@@ -737,10 +852,10 @@ export const sListingTransactionFilter = {
             type: 'string'
         },
         status: {
-            '$ref': '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         side: {
-            '$ref': '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSide'
         }
     }
 } as const;
@@ -751,14 +866,17 @@ export const sListingTransactionCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingTransaction'
+                $ref: '#/components/schemas/ListingTransaction'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingTransaction = {
@@ -771,10 +889,10 @@ export const sListingTransaction = {
             type: 'string'
         },
         status: {
-            '$ref': '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         side: {
-            '$ref': '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSide'
         },
         createdAt: {
             type: 'string'
@@ -789,7 +907,16 @@ export const sListingTransaction = {
             type: 'string'
         }
     },
-    required: ['id', 'listingId', 'status', 'side', 'createdAt', 'updatedAt', 'expiresAt', 'title']
+    required: [
+        'id',
+        'listingId',
+        'status',
+        'side',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'title'
+    ]
 } as const;
 
 export const sListingFlagToggle = {
@@ -802,17 +929,20 @@ export const sListingFlagToggle = {
             type: 'string'
         }
     },
-    required: ['toggle', 'listingId']
+    required: [
+        'toggle',
+        'listingId'
+    ]
 } as const;
 
 export const sListingFlagCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            '$ref': '#/components/schemas/ListingFlagFilter'
+            $ref: '#/components/schemas/ListingFlagFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingFlagCountWhere'
+            $ref: '#/components/schemas/ListingFlagCountWhere'
         }
     }
 } as const;
@@ -869,18 +999,18 @@ export const sListingFlagQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingFlagFilter'
+            $ref: '#/components/schemas/ListingFlagFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingFlagWhere'
+            $ref: '#/components/schemas/ListingFlagWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingFlagSort'
+                $ref: '#/components/schemas/ListingFlagSort'
             }
         }
     }
@@ -888,20 +1018,25 @@ export const sListingFlagQuery = {
 
 export const sListingFlagSortField = {
     type: 'string',
-    enum: ['createdAt']
+    enum: [
+        'createdAt'
+    ]
 } as const;
 
 export const sListingFlagSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingFlagSortField'
+            $ref: '#/components/schemas/ListingFlagSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingFlagWhere = {
@@ -934,14 +1069,17 @@ export const sListingFlagCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingFlag'
+                $ref: '#/components/schemas/ListingFlag'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingFlag = {
@@ -954,7 +1092,10 @@ export const sListingFlag = {
             type: 'string'
         }
     },
-    required: ['id', 'listingId']
+    required: [
+        'id',
+        'listingId'
+    ]
 } as const;
 
 export const sListingIgnoreToggle = {
@@ -967,17 +1108,20 @@ export const sListingIgnoreToggle = {
             type: 'string'
         }
     },
-    required: ['toggle', 'listingId']
+    required: [
+        'toggle',
+        'listingId'
+    ]
 } as const;
 
 export const sListingIgnoreCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            '$ref': '#/components/schemas/ListingIgnoreFilter'
+            $ref: '#/components/schemas/ListingIgnoreFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingIgnoreWhere'
+            $ref: '#/components/schemas/ListingIgnoreWhere'
         }
     }
 } as const;
@@ -1034,18 +1178,18 @@ export const sListingIgnoreQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingIgnoreFilter'
+            $ref: '#/components/schemas/ListingIgnoreFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingIgnoreWhere'
+            $ref: '#/components/schemas/ListingIgnoreWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingIgnoreSort'
+                $ref: '#/components/schemas/ListingIgnoreSort'
             }
         }
     }
@@ -1053,20 +1197,25 @@ export const sListingIgnoreQuery = {
 
 export const sListingIgnoreSortField = {
     type: 'string',
-    enum: ['createdAt']
+    enum: [
+        'createdAt'
+    ]
 } as const;
 
 export const sListingIgnoreSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingIgnoreSortField'
+            $ref: '#/components/schemas/ListingIgnoreSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingIgnoreCollection = {
@@ -1075,14 +1224,17 @@ export const sListingIgnoreCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingIgnore'
+                $ref: '#/components/schemas/ListingIgnore'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingIgnore = {
@@ -1095,7 +1247,10 @@ export const sListingIgnore = {
             type: 'string'
         }
     },
-    required: ['id', 'listingId']
+    required: [
+        'id',
+        'listingId'
+    ]
 } as const;
 
 export const sListingCartToggle = {
@@ -1108,17 +1263,20 @@ export const sListingCartToggle = {
             type: 'string'
         }
     },
-    required: ['toggle', 'listingId']
+    required: [
+        'toggle',
+        'listingId'
+    ]
 } as const;
 
 export const sListingCartCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            '$ref': '#/components/schemas/ListingCartFilter'
+            $ref: '#/components/schemas/ListingCartFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingCartWhere'
+            $ref: '#/components/schemas/ListingCartWhere'
         }
     }
 } as const;
@@ -1175,18 +1333,18 @@ export const sListingCartQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingCartFilter'
+            $ref: '#/components/schemas/ListingCartFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingCartWhere'
+            $ref: '#/components/schemas/ListingCartWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingCartSort'
+                $ref: '#/components/schemas/ListingCartSort'
             }
         }
     }
@@ -1194,20 +1352,25 @@ export const sListingCartQuery = {
 
 export const sListingCartSortField = {
     type: 'string',
-    enum: ['createdAt']
+    enum: [
+        'createdAt'
+    ]
 } as const;
 
 export const sListingCartSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingCartSortField'
+            $ref: '#/components/schemas/ListingCartSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingCartCollection = {
@@ -1216,14 +1379,17 @@ export const sListingCartCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingCart'
+                $ref: '#/components/schemas/ListingCart'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingCart = {
@@ -1239,60 +1405,109 @@ export const sListingCart = {
             type: 'string'
         }
     },
-    required: ['id', 'listingId', 'createdAt']
+    required: [
+        'id',
+        'listingId',
+        'createdAt'
+    ]
 } as const;
 
 export const sListingMetrics = {
     type: 'object',
     properties: {
         listing: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         listingScore: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         views: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         viewsScore: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         cart: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         cartScore: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         ignore: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         ignoreScore: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         flag: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         flagScore: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         },
         score: {
-            type: ['number', 'null']
+            type: [
+                'number',
+                'null'
+            ]
         }
     },
-    required: ['listing', 'listingScore', 'views', 'viewsScore', 'cart', 'cartScore', 'ignore', 'ignoreScore', 'flag', 'flagScore', 'score']
+    required: [
+        'listing',
+        'listingScore',
+        'views',
+        'viewsScore',
+        'cart',
+        'cartScore',
+        'ignore',
+        'ignoreScore',
+        'flag',
+        'flagScore',
+        'score'
+    ]
 } as const;
 
 export const sListingCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            '$ref': '#/components/schemas/ListingFilter'
+            $ref: '#/components/schemas/ListingFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingWhere'
+            $ref: '#/components/schemas/ListingWhere'
         },
         meta: {
-            '$ref': '#/components/schemas/ListingMeta'
+            $ref: '#/components/schemas/ListingMeta'
         }
     }
 } as const;
@@ -1311,14 +1526,17 @@ export const sLatLon = {
             maximum: 180
         }
     },
-    required: ['lat', 'lon']
+    required: [
+        'lat',
+        'lon'
+    ]
 } as const;
 
 export const sListingMeta = {
     type: 'object',
     properties: {
         latLon: {
-            '$ref': '#/components/schemas/LatLon'
+            $ref: '#/components/schemas/LatLon'
         }
     }
 } as const;
@@ -1339,10 +1557,10 @@ export const sListingWhere = {
             type: 'string'
         },
         priceMin: {
-            '$ref': '#/components/schemas/PriceMin'
+            $ref: '#/components/schemas/PriceMin'
         },
         priceMax: {
-            '$ref': '#/components/schemas/PriceMax'
+            $ref: '#/components/schemas/PriceMax'
         },
         conditionMin: {
             type: 'number',
@@ -1381,16 +1599,16 @@ export const sListingWhere = {
             }
         },
         categoryId: {
-            '$ref': '#/components/schemas/CategoryId'
+            $ref: '#/components/schemas/CategoryId'
         },
         categoryIdIn: {
-            '$ref': '#/components/schemas/CategoryIdIn'
+            $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            '$ref': '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyList'
         },
         currencyIn: {
-            '$ref': '#/components/schemas/CurrencyIn'
+            $ref: '#/components/schemas/CurrencyIn'
         },
         expiresAtBefore: {
             type: 'string'
@@ -1427,13 +1645,21 @@ export const sListingWhere = {
 export const sCurrencyIn = {
     type: 'array',
     items: {
-        '$ref': '#/components/schemas/CurrencyList'
+        $ref: '#/components/schemas/CurrencyList'
     }
 } as const;
 
 export const sCurrencyList = {
     type: 'string',
-    enum: ['CZK', 'EUR', 'USD', 'GBP', 'PLN', 'HUF', 'CHF']
+    enum: [
+        'CZK',
+        'EUR',
+        'USD',
+        'GBP',
+        'PLN',
+        'HUF',
+        'CHF'
+    ]
 } as const;
 
 export const sCategoryIdIn = {
@@ -1475,10 +1701,10 @@ export const sListingFilter = {
             type: 'string'
         },
         priceMin: {
-            '$ref': '#/components/schemas/PriceMin'
+            $ref: '#/components/schemas/PriceMin'
         },
         priceMax: {
-            '$ref': '#/components/schemas/PriceMax'
+            $ref: '#/components/schemas/PriceMax'
         },
         conditionMin: {
             type: 'number',
@@ -1517,16 +1743,16 @@ export const sListingFilter = {
             }
         },
         categoryId: {
-            '$ref': '#/components/schemas/CategoryId'
+            $ref: '#/components/schemas/CategoryId'
         },
         categoryIdIn: {
-            '$ref': '#/components/schemas/CategoryIdIn'
+            $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            '$ref': '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyList'
         },
         currencyIn: {
-            '$ref': '#/components/schemas/CurrencyIn'
+            $ref: '#/components/schemas/CurrencyIn'
         },
         expiresAtBefore: {
             type: 'string'
@@ -1566,14 +1792,17 @@ export const sListingCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Listing'
+                $ref: '#/components/schemas/Listing'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sGallery = {
@@ -1592,10 +1821,16 @@ export const sGallery = {
             type: 'number'
         },
         upload: {
-            '$ref': '#/components/schemas/Upload'
+            $ref: '#/components/schemas/Upload'
         }
     },
-    required: ['id', 'listingId', 'uploadId', 'sort', 'upload']
+    required: [
+        'id',
+        'listingId',
+        'uploadId',
+        'sort',
+        'upload'
+    ]
 } as const;
 
 export const sCategory = {
@@ -1620,7 +1855,14 @@ export const sCategory = {
             type: 'string'
         }
     },
-    required: ['id', 'group', 'category', 'slug', 'sort', 'locale']
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale'
+    ]
 } as const;
 
 export const sLocation = {
@@ -1642,25 +1884,43 @@ export const sLocation = {
             type: 'string'
         },
         county: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         municipality: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         state: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         address: {
             type: 'string'
         },
         city: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         street: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         zip: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         confidence: {
             type: 'number'
@@ -1675,7 +1935,18 @@ export const sLocation = {
             type: 'number'
         }
     },
-    required: ['id', 'query', 'lang', 'country', 'code', 'address', 'confidence', 'hash', 'lat', 'lon']
+    required: [
+        'id',
+        'query',
+        'lang',
+        'country',
+        'code',
+        'address',
+        'confidence',
+        'hash',
+        'lat',
+        'lon'
+    ]
 } as const;
 
 export const sListing = {
@@ -1688,7 +1959,7 @@ export const sListing = {
             type: 'number'
         },
         currency: {
-            '$ref': '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyList'
         },
         condition: {
             type: 'number'
@@ -1709,7 +1980,10 @@ export const sListing = {
             type: 'string'
         },
         description: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         createdAt: {
             type: 'string'
@@ -1718,15 +1992,15 @@ export const sListing = {
             type: 'string'
         },
         location: {
-            '$ref': '#/components/schemas/Location'
+            $ref: '#/components/schemas/Location'
         },
         category: {
-            '$ref': '#/components/schemas/Category'
+            $ref: '#/components/schemas/Category'
         },
         gallery: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Gallery'
+                $ref: '#/components/schemas/Gallery'
             }
         },
         isInCart: {
@@ -1739,7 +2013,25 @@ export const sListing = {
             type: 'boolean'
         }
     },
-    required: ['id', 'price', 'currency', 'condition', 'age', 'locationId', 'categoryId', 'expiresAt', 'title', 'createdAt', 'updatedAt', 'location', 'category', 'gallery', 'isInCart', 'isIgnored', 'hasFlag']
+    required: [
+        'id',
+        'price',
+        'currency',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'expiresAt',
+        'title',
+        'createdAt',
+        'updatedAt',
+        'location',
+        'category',
+        'gallery',
+        'isInCart',
+        'isIgnored',
+        'hasFlag'
+    ]
 } as const;
 
 export const sListingCreate = {
@@ -1761,10 +2053,10 @@ export const sListingCreate = {
             type: 'string'
         },
         currency: {
-            '$ref': '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyList'
         },
         expiresAt: {
-            '$ref': '#/components/schemas/ListingExpire'
+            $ref: '#/components/schemas/ListingExpire'
         },
         title: {
             type: 'string',
@@ -1783,12 +2075,26 @@ export const sListingCreate = {
             minItems: 1
         }
     },
-    required: ['price', 'condition', 'age', 'locationId', 'categoryId', 'currency', 'expiresAt', 'title', 'uploadIds']
+    required: [
+        'price',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'currency',
+        'expiresAt',
+        'title',
+        'uploadIds'
+    ]
 } as const;
 
 export const sListingExpire = {
     type: 'string',
-    enum: ['7-days', '14-days', '1-month']
+    enum: [
+        '7-days',
+        '14-days',
+        '1-month'
+    ]
 } as const;
 
 export const sGalleryCollection = {
@@ -1797,32 +2103,35 @@ export const sGalleryCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Gallery'
+                $ref: '#/components/schemas/Gallery'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sGalleryQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/GalleryFilter'
+            $ref: '#/components/schemas/GalleryFilter'
         },
         where: {
-            '$ref': '#/components/schemas/GalleryWhere'
+            $ref: '#/components/schemas/GalleryWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/GallerySort'
+                $ref: '#/components/schemas/GallerySort'
             }
         }
     }
@@ -1830,20 +2139,26 @@ export const sGalleryQuery = {
 
 export const sGallerySortField = {
     type: 'string',
-    enum: ['sort', 'createdAt']
+    enum: [
+        'sort',
+        'createdAt'
+    ]
 } as const;
 
 export const sGallerySort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/GallerySortField'
+            $ref: '#/components/schemas/GallerySortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sGalleryWhere = {
@@ -1900,54 +2215,69 @@ export const sFeedCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Feed'
+                $ref: '#/components/schemas/Feed'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sListingSortField = {
     type: 'string',
-    enum: ['price', 'condition', 'age', 'createdAt', 'updatedAt', 'expiresAt', 'geo', 'transaction']
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'geo',
+        'transaction'
+    ]
 } as const;
 
 export const sListingSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/ListingSortField'
+            $ref: '#/components/schemas/ListingSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sListingQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/ListingFilter'
+            $ref: '#/components/schemas/ListingFilter'
         },
         where: {
-            '$ref': '#/components/schemas/ListingWhere'
+            $ref: '#/components/schemas/ListingWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/ListingSort'
+                $ref: '#/components/schemas/ListingSort'
             }
         },
         meta: {
-            '$ref': '#/components/schemas/ListingMeta'
+            $ref: '#/components/schemas/ListingMeta'
         }
     }
 } as const;
@@ -1959,34 +2289,41 @@ export const sFeed = {
             type: 'string'
         },
         locationId: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         name: {
             type: 'string'
         },
         query: {
-            '$ref': '#/components/schemas/ListingQuery'
+            $ref: '#/components/schemas/ListingQuery'
         }
     },
-    required: ['id', 'name', 'query']
+    required: [
+        'id',
+        'name',
+        'query'
+    ]
 } as const;
 
 export const sFeedQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/FeedFilter'
+            $ref: '#/components/schemas/FeedFilter'
         },
         where: {
-            '$ref': '#/components/schemas/FeedWhere'
+            $ref: '#/components/schemas/FeedWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/FeedSort'
+                $ref: '#/components/schemas/FeedSort'
             }
         }
     }
@@ -1994,20 +2331,26 @@ export const sFeedQuery = {
 
 export const sFeedSortField = {
     type: 'string',
-    enum: ['createdAt', 'updatedAt']
+    enum: [
+        'createdAt',
+        'updatedAt'
+    ]
 } as const;
 
 export const sFeedSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/FeedSortField'
+            $ref: '#/components/schemas/FeedSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sFeedWhere = {
@@ -2064,12 +2407,15 @@ export const sFeedPatch = {
             minLength: 1
         },
         locationId: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         query: {
             anyOf: [
                 {
-                    '$ref': '#/components/schemas/ListingQuery'
+                    $ref: '#/components/schemas/ListingQuery'
                 },
                 {
                     type: 'null'
@@ -2080,7 +2426,9 @@ export const sFeedPatch = {
             ]
         }
     },
-    required: ['id']
+    required: [
+        'id'
+    ]
 } as const;
 
 export const sFeedCreate = {
@@ -2091,31 +2439,37 @@ export const sFeedCreate = {
             minLength: 1
         },
         locationId: {
-            type: ['string', 'null']
+            type: [
+                'string',
+                'null'
+            ]
         },
         query: {
-            '$ref': '#/components/schemas/ListingQuery'
+            $ref: '#/components/schemas/ListingQuery'
         }
     },
-    required: ['name', 'query']
+    required: [
+        'name',
+        'query'
+    ]
 } as const;
 
 export const sCategoryCartQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/CategoryFilter'
+            $ref: '#/components/schemas/CategoryFilter'
         },
         where: {
-            '$ref': '#/components/schemas/CategoryWhere'
+            $ref: '#/components/schemas/CategoryWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/CategoryCartSort'
+                $ref: '#/components/schemas/CategoryCartSort'
             }
         }
     }
@@ -2123,20 +2477,28 @@ export const sCategoryCartQuery = {
 
 export const sCategoryCartSortField = {
     type: 'string',
-    enum: ['group', 'category', 'sort', 'listingCount']
+    enum: [
+        'group',
+        'category',
+        'sort',
+        'listingCount'
+    ]
 } as const;
 
 export const sCategoryCartSort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/CategoryCartSortField'
+            $ref: '#/components/schemas/CategoryCartSortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sCategoryWhere = {
@@ -2211,14 +2573,17 @@ export const sCategoryCartCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/CategoryCart'
+                $ref: '#/components/schemas/CategoryCart'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sCategoryCart = {
@@ -2247,7 +2612,15 @@ export const sCategoryCart = {
             example: 3
         }
     },
-    required: ['id', 'group', 'category', 'slug', 'sort', 'locale', 'listingCount']
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale',
+        'listingCount'
+    ]
 } as const;
 
 export const sCount = {
@@ -2263,7 +2636,11 @@ export const sCount = {
             type: 'number'
         }
     },
-    required: ['where', 'filter', 'total']
+    required: [
+        'where',
+        'filter',
+        'total'
+    ]
 } as const;
 
 export const sCategoryCollection = {
@@ -2272,32 +2649,35 @@ export const sCategoryCollection = {
         data: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/Category'
+                $ref: '#/components/schemas/Category'
             }
         },
         more: {
             type: 'boolean'
         }
     },
-    required: ['data', 'more']
+    required: [
+        'data',
+        'more'
+    ]
 } as const;
 
 export const sCategoryQuery = {
     type: 'object',
     properties: {
         cursor: {
-            '$ref': '#/components/schemas/Cursor'
+            $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            '$ref': '#/components/schemas/CategoryFilter'
+            $ref: '#/components/schemas/CategoryFilter'
         },
         where: {
-            '$ref': '#/components/schemas/CategoryWhere'
+            $ref: '#/components/schemas/CategoryWhere'
         },
         sort: {
             type: 'array',
             items: {
-                '$ref': '#/components/schemas/CategorySort'
+                $ref: '#/components/schemas/CategorySort'
             }
         }
     }
@@ -2305,20 +2685,27 @@ export const sCategoryQuery = {
 
 export const sCategorySortField = {
     type: 'string',
-    enum: ['group', 'category', 'sort']
+    enum: [
+        'group',
+        'category',
+        'sort'
+    ]
 } as const;
 
 export const sCategorySort = {
     type: 'object',
     properties: {
         field: {
-            '$ref': '#/components/schemas/CategorySortField'
+            $ref: '#/components/schemas/CategorySortField'
         },
         direction: {
-            '$ref': '#/components/schemas/Order'
+            $ref: '#/components/schemas/Order'
         }
     },
-    required: ['field', 'direction']
+    required: [
+        'field',
+        'direction'
+    ]
 } as const;
 
 export const sMessage = {
@@ -2328,13 +2715,20 @@ export const sMessage = {
             type: 'string'
         },
         type: {
-            '$ref': '#/components/schemas/MessageType'
+            $ref: '#/components/schemas/MessageType'
         }
     },
-    required: ['message', 'type']
+    required: [
+        'message',
+        'type'
+    ]
 } as const;
 
 export const sMessageType = {
     type: 'string',
-    enum: ['info', 'warning', 'error']
+    enum: [
+        'info',
+        'warning',
+        'error'
+    ]
 } as const;

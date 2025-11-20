@@ -18,10 +18,7 @@ export type tUserExPatch = {
 /**
  * Side of the user
  */
-export const tUserSide = {
-    seller: 'seller',
-    buyer: 'buyer'
-} as const;
+export const tUserSide = { seller: 'seller', buyer: 'buyer' } as const;
 
 /**
  * Side of the user
@@ -66,10 +63,7 @@ export type tUploadQuery = {
 /**
  * Order
  */
-export const tOrder = {
-    asc: 'asc',
-    desc: 'desc'
-} as const;
+export const tOrder = { asc: 'asc', desc: 'desc' } as const;
 
 /**
  * Order
@@ -79,9 +73,7 @@ export type tOrder = typeof tOrder[keyof typeof tOrder];
 /**
  * Field for uploading a file
  */
-export const tUploadSortField = {
-    createdAt: 'createdAt'
-} as const;
+export const tUploadSortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field for uploading a file
@@ -241,7 +233,7 @@ export type tLocationWhere = {
      */
     fulltext?: string;
     /**
-     * This filter matches the exact query that was used to get the location
+     * This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)
      */
     query?: string;
     /**
@@ -279,7 +271,7 @@ export type tLocationFilter = {
      */
     fulltext?: string;
     /**
-     * This filter matches the exact query that was used to get the location
+     * This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)
      */
     query?: string;
     /**
@@ -414,10 +406,7 @@ export type tListingScoreQuery = {
 /**
  * Field of the listing score sort
  */
-export const tListingScoreSortField = {
-    score: 'score',
-    createdAt: 'createdAt'
-} as const;
+export const tListingScoreSortField = { score: 'score', createdAt: 'createdAt' } as const;
 
 /**
  * Field of the listing score sort
@@ -479,9 +468,7 @@ export type tListingTransactionLogQuery = {
 /**
  * Field of the listing transaction log sort
  */
-export const tListingTransactionLogSortField = {
-    createdAt: 'createdAt'
-} as const;
+export const tListingTransactionLogSortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field of the listing transaction log sort
@@ -866,9 +853,7 @@ export type tListingFlagQuery = {
 /**
  * Field of the listing flag sort
  */
-export const tListingFlagSortField = {
-    createdAt: 'createdAt'
-} as const;
+export const tListingFlagSortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field of the listing flag sort
@@ -1021,9 +1006,7 @@ export type tListingIgnoreQuery = {
 /**
  * Field of the listing ignore sort
  */
-export const tListingIgnoreSortField = {
-    createdAt: 'createdAt'
-} as const;
+export const tListingIgnoreSortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field of the listing ignore sort
@@ -1150,9 +1133,7 @@ export type tListingCartQuery = {
 /**
  * Field of the listing cart sort
  */
-export const tListingCartSortField = {
-    createdAt: 'createdAt'
-} as const;
+export const tListingCartSortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field of the listing cart sort
@@ -1765,10 +1746,7 @@ export type tGalleryQuery = {
 /**
  * Field of the gallery sort
  */
-export const tGallerySortField = {
-    sort: 'sort',
-    createdAt: 'createdAt'
-} as const;
+export const tGallerySortField = { sort: 'sort', createdAt: 'createdAt' } as const;
 
 /**
  * Field of the gallery sort
@@ -1916,10 +1894,7 @@ export type tFeedQuery = {
 /**
  * Field of the feed sort
  */
-export const tFeedSortField = {
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-} as const;
+export const tFeedSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
 
 /**
  * Field of the feed sort
@@ -2259,6 +2234,10 @@ export type apiCategoryFetchErrors = {
      * Category not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiCategoryFetchError = apiCategoryFetchErrors[keyof apiCategoryFetchErrors];
@@ -2329,6 +2308,15 @@ export type tApiCategoryCartCollectionRequest = {
     url: '/api/session/category-cart/collection';
 };
 
+export type apiCategoryCartCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiCategoryCartCollectionError = apiCategoryCartCollectionErrors[keyof apiCategoryCartCollectionErrors];
+
 export type tApiCategoryCartCollectionResponse = {
     /**
      * Access categories for listings stored in the user's cart
@@ -2353,6 +2341,10 @@ export type apiFeedCreateErrors = {
      * Feed not found after creation
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiFeedCreateError = apiFeedCreateErrors[keyof apiFeedCreateErrors];
@@ -2381,6 +2373,10 @@ export type apiFeedPatchErrors = {
      * Feed item not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiFeedPatchError = apiFeedPatchErrors[keyof apiFeedPatchErrors];
@@ -2409,6 +2405,10 @@ export type apiFeedFetchErrors = {
      * Feed item not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiFeedFetchError = apiFeedFetchErrors[keyof apiFeedFetchErrors];
@@ -2487,6 +2487,10 @@ export type apiFeedDeleteErrors = {
      * Feed item not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiFeedDeleteError = apiFeedDeleteErrors[keyof apiFeedDeleteErrors];
@@ -2515,6 +2519,10 @@ export type apiGalleryFetchErrors = {
      * Gallery item not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiGalleryFetchError = apiGalleryFetchErrors[keyof apiGalleryFetchErrors];
@@ -2535,6 +2543,15 @@ export type tApiGalleryCollectionRequest = {
     url: '/api/session/gallery/collection';
 };
 
+export type apiGalleryCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiGalleryCollectionError = apiGalleryCollectionErrors[keyof apiGalleryCollectionErrors];
+
 export type tApiGalleryCollectionResponse = {
     /**
      * Access collection of gallery items based on provided query
@@ -2550,6 +2567,15 @@ export type tApiGalleryCountRequest = {
     query?: never;
     url: '/api/session/gallery/count';
 };
+
+export type apiGalleryCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiGalleryCountError = apiGalleryCountErrors[keyof apiGalleryCountErrors];
 
 export type tApiGalleryCountResponse = {
     /**
@@ -2571,6 +2597,10 @@ export type tApiListingCreateRequest = {
 };
 
 export type apiListingCreateErrors = {
+    /**
+     * Listing not found after creation
+     */
+    404: tMessage;
     /**
      * Internal server error
      */
@@ -2603,6 +2633,10 @@ export type apiListingFetchErrors = {
      * Listing not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingFetchError = apiListingFetchErrors[keyof apiListingFetchErrors];
@@ -2683,6 +2717,10 @@ export type apiListingMetricsFetchErrors = {
      * Listing not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingMetricsFetchError = apiListingMetricsFetchErrors[keyof apiListingMetricsFetchErrors];
@@ -2703,6 +2741,15 @@ export type tApiListingCartCollectionRequest = {
     url: '/api/session/listing-cart/collection';
 };
 
+export type apiListingCartCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingCartCollectionError = apiListingCartCollectionErrors[keyof apiListingCartCollectionErrors];
+
 export type tApiListingCartCollectionResponse = {
     /**
      * Access collection of listing cart items based on provided query
@@ -2718,6 +2765,15 @@ export type tApiListingCartCountRequest = {
     query?: never;
     url: '/api/session/listing-cart/count';
 };
+
+export type apiListingCartCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingCartCountError = apiListingCartCountErrors[keyof apiListingCartCountErrors];
 
 export type tApiListingCartCountResponse = {
     /**
@@ -2745,9 +2801,9 @@ export type apiListingCartToggleErrors = {
      */
     404: tMessage;
     /**
-     * Too many requests
+     * Internal server error
      */
-    429: tMessage;
+    500: tMessage;
 };
 
 export type apiListingCartToggleError = apiListingCartToggleErrors[keyof apiListingCartToggleErrors];
@@ -2768,6 +2824,15 @@ export type tApiListingIgnoreCollectionRequest = {
     url: '/api/session/listing-ignore/collection';
 };
 
+export type apiListingIgnoreCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingIgnoreCollectionError = apiListingIgnoreCollectionErrors[keyof apiListingIgnoreCollectionErrors];
+
 export type tApiListingIgnoreCollectionResponse = {
     /**
      * Access collection of listing ignore items based on provided query
@@ -2783,6 +2848,15 @@ export type tApiListingIgnoreCountRequest = {
     query?: never;
     url: '/api/session/listing-ignore/count';
 };
+
+export type apiListingIgnoreCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingIgnoreCountError = apiListingIgnoreCountErrors[keyof apiListingIgnoreCountErrors];
 
 export type tApiListingIgnoreCountResponse = {
     /**
@@ -2805,6 +2879,14 @@ export type apiListingIgnoreToggleErrors = {
      * Invalid request
      */
     400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingIgnoreToggleError = apiListingIgnoreToggleErrors[keyof apiListingIgnoreToggleErrors];
@@ -2825,6 +2907,15 @@ export type tApiListingFlagCollectionRequest = {
     url: '/api/session/listing-flag/collection';
 };
 
+export type apiListingFlagCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingFlagCollectionError = apiListingFlagCollectionErrors[keyof apiListingFlagCollectionErrors];
+
 export type tApiListingFlagCollectionResponse = {
     /**
      * Access collection of listing flag items based on provided query
@@ -2840,6 +2931,15 @@ export type tApiListingFlagCountRequest = {
     query?: never;
     url: '/api/session/listing-flag/count';
 };
+
+export type apiListingFlagCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingFlagCountError = apiListingFlagCountErrors[keyof apiListingFlagCountErrors];
 
 export type tApiListingFlagCountResponse = {
     /**
@@ -2867,9 +2967,9 @@ export type apiListingFlagToggleErrors = {
      */
     404: tMessage;
     /**
-     * Too many requests
+     * Internal server error
      */
-    429: tMessage;
+    500: tMessage;
 };
 
 export type apiListingFlagToggleError = apiListingFlagToggleErrors[keyof apiListingFlagToggleErrors];
@@ -2923,6 +3023,10 @@ export type apiListingTransactionCreateErrors = {
      * Listing not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingTransactionCreateError = apiListingTransactionCreateErrors[keyof apiListingTransactionCreateErrors];
@@ -2949,6 +3053,10 @@ export type apiListingTransactionFetchErrors = {
      * Listing transaction not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingTransactionFetchError = apiListingTransactionFetchErrors[keyof apiListingTransactionFetchErrors];
@@ -2977,6 +3085,10 @@ export type apiListingTransactionSellerInfoErrors = {
      * Listing transaction not found or not accessible
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingTransactionSellerInfoError = apiListingTransactionSellerInfoErrors[keyof apiListingTransactionSellerInfoErrors];
@@ -3005,6 +3117,10 @@ export type apiListingTransactionBuyerInfoErrors = {
      * Listing transaction not found or not accessible
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingTransactionBuyerInfoError = apiListingTransactionBuyerInfoErrors[keyof apiListingTransactionBuyerInfoErrors];
@@ -3025,6 +3141,15 @@ export type tApiListingTransactionLogCollectionRequest = {
     url: '/api/session/listing-transaction-log/collection';
 };
 
+export type apiListingTransactionLogCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionLogCollectionError = apiListingTransactionLogCollectionErrors[keyof apiListingTransactionLogCollectionErrors];
+
 export type tApiListingTransactionLogCollectionResponse = {
     /**
      * Access collection of listing transaction log entries based on provided query
@@ -3041,6 +3166,15 @@ export type tApiListingScoreCollectionRequest = {
     url: '/api/session/listing-score/collection';
 };
 
+export type apiListingScoreCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingScoreCollectionError = apiListingScoreCollectionErrors[keyof apiListingScoreCollectionErrors];
+
 export type tApiListingScoreCollectionResponse = {
     /**
      * Access collection of listing scores based on provided query
@@ -3056,6 +3190,15 @@ export type tApiListingScoreCountRequest = {
     query?: never;
     url: '/api/session/listing-score/count';
 };
+
+export type apiListingScoreCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingScoreCountError = apiListingScoreCountErrors[keyof apiListingScoreCountErrors];
 
 export type tApiListingScoreCountResponse = {
     /**
@@ -3089,6 +3232,10 @@ export type apiListingScoreCreateErrors = {
      * Too many requests - please wait between scores
      */
     429: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiListingScoreCreateError = apiListingScoreCreateErrors[keyof apiListingScoreCreateErrors];
@@ -3109,6 +3256,19 @@ export type tApiLocationAutocompleteRequest = {
     query?: never;
     url: '/api/session/location/autocomplete';
 };
+
+export type apiLocationAutocompleteErrors = {
+    /**
+     * Text too short
+     */
+    400: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiLocationAutocompleteError = apiLocationAutocompleteErrors[keyof apiLocationAutocompleteErrors];
 
 export type tApiLocationAutocompleteResponse = {
     /**
@@ -3138,6 +3298,10 @@ export type apiLocationFetchErrors = {
      * Location not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiLocationFetchError = apiLocationFetchErrors[keyof apiLocationFetchErrors];
@@ -3208,6 +3372,10 @@ export type apiUploadCreateErrors = {
      * Upload not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiUploadCreateError = apiUploadCreateErrors[keyof apiUploadCreateErrors];
@@ -3236,6 +3404,10 @@ export type apiUploadFetchErrors = {
      * Upload not found
      */
     404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
 };
 
 export type apiUploadFetchError = apiUploadFetchErrors[keyof apiUploadFetchErrors];
@@ -3256,6 +3428,15 @@ export type tApiUploadCollectionRequest = {
     url: '/api/session/upload/collection';
 };
 
+export type apiUploadCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiUploadCollectionError = apiUploadCollectionErrors[keyof apiUploadCollectionErrors];
+
 export type tApiUploadCollectionResponse = {
     /**
      * Access collection of upload items based on provided query
@@ -3271,6 +3452,15 @@ export type tApiUploadCountRequest = {
     query?: never;
     url: '/api/session/upload/count';
 };
+
+export type apiUploadCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiUploadCountError = apiUploadCountErrors[keyof apiUploadCountErrors];
 
 export type tApiUploadCountResponse = {
     /**

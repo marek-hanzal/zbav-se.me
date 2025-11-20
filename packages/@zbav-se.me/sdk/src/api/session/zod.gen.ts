@@ -5,11 +5,8 @@ import { z } from 'zod';
 /**
  * Side of the user
  */
-export const zUserSide = z.enum([
-    'seller',
-    'buyer'
-]).register(z.globalRegistry, {
-    description: "Side of the user"
+export const zUserSide = z.enum(['seller', 'buyer']).register(z.globalRegistry, {
+    description: 'Side of the user'
 });
 
 export type zUserSide = z.infer<typeof zUserSide>;
@@ -27,7 +24,7 @@ export const zUserExPatch = z.object({
         z.null()
     ]))
 }).register(z.globalRegistry, {
-    description: "Data for patching a user ex"
+    description: 'Data for patching a user ex'
 });
 
 export type zUserExPatch = z.infer<typeof zUserExPatch>;
@@ -37,13 +34,13 @@ export type zUserExPatch = z.infer<typeof zUserExPatch>;
  */
 export const zUpload = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the upload"
+        description: 'ID of the upload'
     }),
     url: z.url().register(z.globalRegistry, {
-        description: "Public URL to the uploaded file"
+        description: 'Public URL to the uploaded file'
     })
 }).register(z.globalRegistry, {
-    description: "Upload file metadata"
+    description: 'Upload file metadata'
 });
 
 export type zUpload = z.infer<typeof zUpload>;
@@ -54,10 +51,10 @@ export type zUpload = z.infer<typeof zUpload>;
 export const zUploadCollection = z.object({
     data: z.array(zUpload),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of upload items"
+    description: 'Collection of upload items'
 });
 
 export type zUploadCollection = z.infer<typeof zUploadCollection>;
@@ -65,11 +62,8 @@ export type zUploadCollection = z.infer<typeof zUploadCollection>;
 /**
  * Order
  */
-export const zOrder = z.enum([
-    'asc',
-    'desc'
-]).register(z.globalRegistry, {
-    description: "Order"
+export const zOrder = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+    description: 'Order'
 });
 
 export type zOrder = z.infer<typeof zOrder>;
@@ -77,10 +71,8 @@ export type zOrder = z.infer<typeof zOrder>;
 /**
  * Field for uploading a file
  */
-export const zUploadSortField = z.enum([
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field for uploading a file"
+export const zUploadSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field for uploading a file'
 });
 
 export type zUploadSortField = z.infer<typeof zUploadSortField>;
@@ -92,7 +84,7 @@ export const zUploadSort = z.object({
     field: zUploadSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Data for uploading a file"
+    description: 'Data for uploading a file'
 });
 
 export type zUploadSort = z.infer<typeof zUploadSort>;
@@ -102,16 +94,16 @@ export type zUploadSort = z.infer<typeof zUploadSort>;
  */
 export const zUploadWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zUploadWhere = z.infer<typeof zUploadWhere>;
@@ -121,16 +113,16 @@ export type zUploadWhere = z.infer<typeof zUploadWhere>;
  */
 export const zUploadFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     }))
 }).register(z.globalRegistry, {
-    description: "Data for uploading a file"
+    description: 'Data for uploading a file'
 });
 
 export type zUploadFilter = z.infer<typeof zUploadFilter>;
@@ -140,13 +132,13 @@ export type zUploadFilter = z.infer<typeof zUploadFilter>;
  */
 export const zCursor = z.object({
     page: z.number().gte(0).register(z.globalRegistry, {
-        description: "Page number (0-indexed)"
+        description: 'Page number (0-indexed)'
     }),
     size: z.number().gte(1).lte(1000).register(z.globalRegistry, {
-        description: "Page size"
+        description: 'Page size'
     })
 }).register(z.globalRegistry, {
-    description: "Cursor for pagination"
+    description: 'Cursor for pagination'
 });
 
 export type zCursor = z.infer<typeof zCursor>;
@@ -160,7 +152,7 @@ export const zUploadQuery = z.object({
     where: z.optional(zUploadWhere),
     sort: z.optional(z.array(zUploadSort))
 }).register(z.globalRegistry, {
-    description: "Data for uploading a file"
+    description: 'Data for uploading a file'
 });
 
 export type zUploadQuery = z.infer<typeof zUploadQuery>;
@@ -170,10 +162,10 @@ export type zUploadQuery = z.infer<typeof zUploadQuery>;
  */
 export const zUploadCreate = z.object({
     url: z.url().register(z.globalRegistry, {
-        description: "Public URL to the uploaded file"
+        description: 'Public URL to the uploaded file'
     })
 }).register(z.globalRegistry, {
-    description: "Data for creating a new upload"
+    description: 'Data for creating a new upload'
 });
 
 export type zUploadCreate = z.infer<typeof zUploadCreate>;
@@ -189,7 +181,7 @@ export const zAllowedContentTypes = z.enum([
     'image/heic',
     'image/heif'
 ]).register(z.globalRegistry, {
-    description: "Allowed content types"
+    description: 'Allowed content types'
 });
 
 export type zAllowedContentTypes = z.infer<typeof zAllowedContentTypes>;
@@ -206,7 +198,7 @@ export const zAllowedExtensions = z.enum([
     'heic',
     'heif'
 ]).register(z.globalRegistry, {
-    description: "Allowed extensions"
+    description: 'Allowed extensions'
 });
 
 export type zAllowedExtensions = z.infer<typeof zAllowedExtensions>;
@@ -220,7 +212,7 @@ export const zLocationSortField = z.enum([
     'country',
     'address'
 ]).register(z.globalRegistry, {
-    description: "Field for location sort"
+    description: 'Field for location sort'
 });
 
 export type zLocationSortField = z.infer<typeof zLocationSortField>;
@@ -232,7 +224,7 @@ export const zLocationSort = z.object({
     field: zLocationSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Data for location sort"
+    description: 'Data for location sort'
 });
 
 export type zLocationSort = z.infer<typeof zLocationSort>;
@@ -242,31 +234,31 @@ export type zLocationSort = z.infer<typeof zLocationSort>;
  */
 export const zLocationWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     query: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact query that was used to get the location"
+        description: 'This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)'
     })),
     lang: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact language that was used to get the location"
+        description: 'This filter matches the exact language that was used to get the location'
     })),
     country: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact country of the location"
+        description: 'This filter matches the exact country of the location'
     })),
     code: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact country code of the location"
+        description: 'This filter matches the exact country code of the location'
     })),
     confidenceMin: z.optional(z.number().register(z.globalRegistry, {
-        description: "This filter matches locations with confidence greater than or equal to the provided value"
+        description: 'This filter matches locations with confidence greater than or equal to the provided value'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zLocationWhere = z.infer<typeof zLocationWhere>;
@@ -276,31 +268,31 @@ export type zLocationWhere = z.infer<typeof zLocationWhere>;
  */
 export const zLocationFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     query: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact query that was used to get the location"
+        description: 'This filter matches locations where id equals the value OR query ilike the value (useful for autocomplete)'
     })),
     lang: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact language that was used to get the location"
+        description: 'This filter matches the exact language that was used to get the location'
     })),
     country: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact country of the location"
+        description: 'This filter matches the exact country of the location'
     })),
     code: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact country code of the location"
+        description: 'This filter matches the exact country code of the location'
     })),
     confidenceMin: z.optional(z.number().register(z.globalRegistry, {
-        description: "This filter matches locations with confidence greater than or equal to the provided value"
+        description: 'This filter matches locations with confidence greater than or equal to the provided value'
     }))
 }).register(z.globalRegistry, {
-    description: "Data for location filter"
+    description: 'Data for location filter'
 });
 
 export type zLocationFilter = z.infer<typeof zLocationFilter>;
@@ -314,7 +306,7 @@ export const zLocationQuery = z.object({
     where: z.optional(zLocationWhere),
     sort: z.optional(z.array(zLocationSort))
 }).register(z.globalRegistry, {
-    description: "Data for location query"
+    description: 'Data for location query'
 });
 
 export type zLocationQuery = z.infer<typeof zLocationQuery>;
@@ -324,13 +316,13 @@ export type zLocationQuery = z.infer<typeof zLocationQuery>;
  */
 export const zLocationAutocomplete = z.object({
     text: z.string().register(z.globalRegistry, {
-        description: "The search text for location autocomplete"
+        description: 'The search text for location autocomplete'
     }),
     lang: z.string().min(2).max(8).register(z.globalRegistry, {
-        description: "The language code for the location search"
+        description: 'The language code for the location search'
     })
 }).register(z.globalRegistry, {
-    description: "Data for location autocomplete"
+    description: 'Data for location autocomplete'
 });
 
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
@@ -345,7 +337,7 @@ export const zListingScoreType = z.enum([
     'view',
     'cart'
 ]).register(z.globalRegistry, {
-    description: "Type of listing score"
+    description: 'Type of listing score'
 });
 
 export type zListingScoreType = z.infer<typeof zListingScoreType>;
@@ -355,11 +347,11 @@ export type zListingScoreType = z.infer<typeof zListingScoreType>;
  */
 export const zListingScoreCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing to score"
+        description: 'ID of the listing to score'
     }),
     score: zListingScoreType
 }).register(z.globalRegistry, {
-    description: "Data for creating a new listing score"
+    description: 'Data for creating a new listing score'
 });
 
 export type zListingScoreCreate = z.infer<typeof zListingScoreCreate>;
@@ -369,22 +361,22 @@ export type zListingScoreCreate = z.infer<typeof zListingScoreCreate>;
  */
 export const zListingScoreWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingScoreWhere = z.infer<typeof zListingScoreWhere>;
@@ -394,22 +386,22 @@ export type zListingScoreWhere = z.infer<typeof zListingScoreWhere>;
  */
 export const zListingScoreFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for listing score collection"
+    description: 'Filter object for listing score collection'
 });
 
 export type zListingScoreFilter = z.infer<typeof zListingScoreFilter>;
@@ -421,7 +413,7 @@ export const zListingScoreCountQuery = z.object({
     filter: z.optional(zListingScoreFilter),
     where: z.optional(zListingScoreWhere)
 }).register(z.globalRegistry, {
-    description: "Query object for listing score count"
+    description: 'Query object for listing score count'
 });
 
 export type zListingScoreCountQuery = z.infer<typeof zListingScoreCountQuery>;
@@ -429,11 +421,8 @@ export type zListingScoreCountQuery = z.infer<typeof zListingScoreCountQuery>;
 /**
  * Field of the listing score sort
  */
-export const zListingScoreSortField = z.enum([
-    'score',
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field of the listing score sort"
+export const zListingScoreSortField = z.enum(['score', 'createdAt']).register(z.globalRegistry, {
+    description: 'Field of the listing score sort'
 });
 
 export type zListingScoreSortField = z.infer<typeof zListingScoreSortField>;
@@ -445,7 +434,7 @@ export const zListingScoreSort = z.object({
     field: zListingScoreSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing score collection"
+    description: 'Sort object for listing score collection'
 });
 
 export type zListingScoreSort = z.infer<typeof zListingScoreSort>;
@@ -459,7 +448,7 @@ export const zListingScoreQuery = z.object({
     where: z.optional(zListingScoreWhere),
     sort: z.optional(z.array(zListingScoreSort))
 }).register(z.globalRegistry, {
-    description: "Query object for listing score collection"
+    description: 'Query object for listing score collection'
 });
 
 export type zListingScoreQuery = z.infer<typeof zListingScoreQuery>;
@@ -469,20 +458,20 @@ export type zListingScoreQuery = z.infer<typeof zListingScoreQuery>;
  */
 export const zListingScore = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the score"
+        description: 'ID of the score'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing"
+        description: 'ID of the listing'
     }),
     type: zListingScoreType,
     score: z.int().register(z.globalRegistry, {
-        description: "Score value"
+        description: 'Score value'
     }),
     createdAt: z.string().register(z.globalRegistry, {
-        description: "Creation timestamp"
+        description: 'Creation timestamp'
     })
 }).register(z.globalRegistry, {
-    description: "Listing score data"
+    description: 'Listing score data'
 });
 
 export type zListingScore = z.infer<typeof zListingScore>;
@@ -493,10 +482,10 @@ export type zListingScore = z.infer<typeof zListingScore>;
 export const zListingScoreCollection = z.object({
     data: z.array(zListingScore),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listing scores"
+    description: 'Collection of listing scores'
 });
 
 export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
@@ -504,10 +493,8 @@ export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
 /**
  * Field of the listing transaction log sort
  */
-export const zListingTransactionLogSortField = z.enum([
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field of the listing transaction log sort"
+export const zListingTransactionLogSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the listing transaction log sort'
 });
 
 export type zListingTransactionLogSortField = z.infer<typeof zListingTransactionLogSortField>;
@@ -519,7 +506,7 @@ export const zListingTransactionLogSort = z.object({
     field: zListingTransactionLogSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing transaction log collection"
+    description: 'Sort object for listing transaction log collection'
 });
 
 export type zListingTransactionLogSort = z.infer<typeof zListingTransactionLogSort>;
@@ -534,7 +521,7 @@ export const zListingTransactionSide = z.enum([
     'system',
     'unknown'
 ]).register(z.globalRegistry, {
-    description: "Who initiated or affected the transaction change"
+    description: 'Who initiated or affected the transaction change'
 });
 
 export type zListingTransactionSide = z.infer<typeof zListingTransactionSide>;
@@ -550,7 +537,7 @@ export const zListingTransactionStatus = z.enum([
     'closed',
     'expired'
 ]).register(z.globalRegistry, {
-    description: "Current status of the listing transaction"
+    description: 'Current status of the listing transaction'
 });
 
 export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus>;
@@ -560,22 +547,22 @@ export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus
  */
 export const zListingTransactionLogWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingTransactionId"
+        description: 'This filter matches the exact listingTransactionId'
     })),
     status: z.optional(zListingTransactionStatus),
     statusIn: z.optional(z.array(zListingTransactionStatus)),
     side: z.optional(zListingTransactionSide)
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingTransactionLogWhere = z.infer<typeof zListingTransactionLogWhere>;
@@ -585,22 +572,22 @@ export type zListingTransactionLogWhere = z.infer<typeof zListingTransactionLogW
  */
 export const zListingTransactionLogFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingTransactionId"
+        description: 'This filter matches the exact listingTransactionId'
     })),
     status: z.optional(zListingTransactionStatus),
     statusIn: z.optional(z.array(zListingTransactionStatus)),
     side: z.optional(zListingTransactionSide)
 }).register(z.globalRegistry, {
-    description: "Filter object for listing transaction log collection"
+    description: 'Filter object for listing transaction log collection'
 });
 
 export type zListingTransactionLogFilter = z.infer<typeof zListingTransactionLogFilter>;
@@ -614,7 +601,7 @@ export const zListingTransactionLogQuery = z.object({
     where: z.optional(zListingTransactionLogWhere),
     sort: z.optional(z.array(zListingTransactionLogSort))
 }).register(z.globalRegistry, {
-    description: "Query object for listing transaction log collection"
+    description: 'Query object for listing transaction log collection'
 });
 
 export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQuery>;
@@ -624,18 +611,18 @@ export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQ
  */
 export const zListingTransactionLog = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the transaction log entry"
+        description: 'ID of the transaction log entry'
     }),
     listingTransactionId: z.string().register(z.globalRegistry, {
-        description: "ID of the transaction referenced by the log"
+        description: 'ID of the transaction referenced by the log'
     }),
     status: zListingTransactionStatus,
     side: zListingTransactionSide,
     createdAt: z.string().register(z.globalRegistry, {
-        description: "Creation timestamp"
+        description: 'Creation timestamp'
     })
 }).register(z.globalRegistry, {
-    description: "Listing transaction log entry"
+    description: 'Listing transaction log entry'
 });
 
 export type zListingTransactionLog = z.infer<typeof zListingTransactionLog>;
@@ -646,10 +633,10 @@ export type zListingTransactionLog = z.infer<typeof zListingTransactionLog>;
 export const zListingTransactionLogCollection = z.object({
     data: z.array(zListingTransactionLog),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listing transaction log entries"
+    description: 'Collection of listing transaction log entries'
 });
 
 export type zListingTransactionLogCollection = z.infer<typeof zListingTransactionLogCollection>;
@@ -659,10 +646,10 @@ export type zListingTransactionLogCollection = z.infer<typeof zListingTransactio
  */
 export const zListingTransactionBuyerInfo = z.object({
     score: z.number().register(z.globalRegistry, {
-        description: "Buyer score"
+        description: 'Buyer score'
     })
 }).register(z.globalRegistry, {
-    description: "Buyer info for the listing transaction"
+    description: 'Buyer info for the listing transaction'
 });
 
 export type zListingTransactionBuyerInfo = z.infer<typeof zListingTransactionBuyerInfo>;
@@ -672,10 +659,10 @@ export type zListingTransactionBuyerInfo = z.infer<typeof zListingTransactionBuy
  */
 export const zListingTransactionSellerInfo = z.object({
     score: z.number().register(z.globalRegistry, {
-        description: "Seller score"
+        description: 'Seller score'
     })
 }).register(z.globalRegistry, {
-    description: "Seller info for the listing transaction"
+    description: 'Seller info for the listing transaction'
 });
 
 export type zListingTransactionSellerInfo = z.infer<typeof zListingTransactionSellerInfo>;
@@ -685,10 +672,10 @@ export type zListingTransactionSellerInfo = z.infer<typeof zListingTransactionSe
  */
 export const zListingTransactionCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing to start a transaction for"
+        description: 'ID of the listing to start a transaction for'
     })
 }).register(z.globalRegistry, {
-    description: "Data for creating a new listing transaction"
+    description: 'Data for creating a new listing transaction'
 });
 
 export type zListingTransactionCreate = z.infer<typeof zListingTransactionCreate>;
@@ -699,7 +686,7 @@ export type zListingTransactionCreate = z.infer<typeof zListingTransactionCreate
 export const zListingTransactionMeta = z.object({
     side: z.optional(zUserSide)
 }).register(z.globalRegistry, {
-    description: "Meta data for listing transaction collection"
+    description: 'Meta data for listing transaction collection'
 });
 
 export type zListingTransactionMeta = z.infer<typeof zListingTransactionMeta>;
@@ -712,7 +699,7 @@ export const zListingTransactionSortField = z.enum([
     'updatedAt',
     'expiresAt'
 ]).register(z.globalRegistry, {
-    description: "Field of the listing transaction sort"
+    description: 'Field of the listing transaction sort'
 });
 
 export type zListingTransactionSortField = z.infer<typeof zListingTransactionSortField>;
@@ -724,7 +711,7 @@ export const zListingTransactionSort = z.object({
     field: zListingTransactionSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing transaction collection"
+    description: 'Sort object for listing transaction collection'
 });
 
 export type zListingTransactionSort = z.infer<typeof zListingTransactionSort>;
@@ -734,24 +721,24 @@ export type zListingTransactionSort = z.infer<typeof zListingTransactionSort>;
  */
 export const zListingTransactionWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     })),
     status: z.optional(zListingTransactionStatus),
     side: z.optional(zListingTransactionSide)
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingTransactionWhere = z.infer<typeof zListingTransactionWhere>;
@@ -761,24 +748,24 @@ export type zListingTransactionWhere = z.infer<typeof zListingTransactionWhere>;
  */
 export const zListingTransactionFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     })),
     status: z.optional(zListingTransactionStatus),
     side: z.optional(zListingTransactionSide)
 }).register(z.globalRegistry, {
-    description: "Filter object for listing transaction collection"
+    description: 'Filter object for listing transaction collection'
 });
 
 export type zListingTransactionFilter = z.infer<typeof zListingTransactionFilter>;
@@ -793,7 +780,7 @@ export const zListingTransactionQuery = z.object({
     sort: z.optional(z.array(zListingTransactionSort)),
     meta: z.optional(zListingTransactionMeta)
 }).register(z.globalRegistry, {
-    description: "Query object for listing transaction collection"
+    description: 'Query object for listing transaction collection'
 });
 
 export type zListingTransactionQuery = z.infer<typeof zListingTransactionQuery>;
@@ -803,27 +790,27 @@ export type zListingTransactionQuery = z.infer<typeof zListingTransactionQuery>;
  */
 export const zListingTransaction = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the transaction"
+        description: 'ID of the transaction'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the related listing"
+        description: 'ID of the related listing'
     }),
     status: zListingTransactionStatus,
     side: zListingTransactionSide,
     createdAt: z.string().register(z.globalRegistry, {
-        description: "Creation timestamp"
+        description: 'Creation timestamp'
     }),
     updatedAt: z.string().register(z.globalRegistry, {
-        description: "Last update timestamp"
+        description: 'Last update timestamp'
     }),
     expiresAt: z.string().register(z.globalRegistry, {
-        description: "Expiration timestamp"
+        description: 'Expiration timestamp'
     }),
     title: z.string().register(z.globalRegistry, {
-        description: "Listing transaction title"
+        description: 'Listing transaction title'
     })
 }).register(z.globalRegistry, {
-    description: "Listing transaction data"
+    description: 'Listing transaction data'
 });
 
 export type zListingTransaction = z.infer<typeof zListingTransaction>;
@@ -834,10 +821,10 @@ export type zListingTransaction = z.infer<typeof zListingTransaction>;
 export const zListingTransactionCollection = z.object({
     data: z.array(zListingTransaction),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listing transactions"
+    description: 'Collection of listing transactions'
 });
 
 export type zListingTransactionCollection = z.infer<typeof zListingTransactionCollection>;
@@ -847,13 +834,13 @@ export type zListingTransactionCollection = z.infer<typeof zListingTransactionCo
  */
 export const zListingFlagToggle = z.object({
     toggle: z.boolean().register(z.globalRegistry, {
-        description: "Whether to add (true) or remove (false) the flag on the listing"
+        description: 'Whether to add (true) or remove (false) the flag on the listing'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing to toggle"
+        description: 'ID of the listing to toggle'
     })
 }).register(z.globalRegistry, {
-    description: "Data for toggling a flag on a listing"
+    description: 'Data for toggling a flag on a listing'
 });
 
 export type zListingFlagToggle = z.infer<typeof zListingFlagToggle>;
@@ -863,22 +850,22 @@ export type zListingFlagToggle = z.infer<typeof zListingFlagToggle>;
  */
 export const zListingFlagCountWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingFlagCountWhere = z.infer<typeof zListingFlagCountWhere>;
@@ -888,22 +875,22 @@ export type zListingFlagCountWhere = z.infer<typeof zListingFlagCountWhere>;
  */
 export const zListingFlagFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for listing flag collection"
+    description: 'Filter object for listing flag collection'
 });
 
 export type zListingFlagFilter = z.infer<typeof zListingFlagFilter>;
@@ -915,7 +902,7 @@ export const zListingFlagCountQuery = z.object({
     filter: z.optional(zListingFlagFilter),
     where: z.optional(zListingFlagCountWhere)
 }).register(z.globalRegistry, {
-    description: "Query object for listing flag count"
+    description: 'Query object for listing flag count'
 });
 
 export type zListingFlagCountQuery = z.infer<typeof zListingFlagCountQuery>;
@@ -923,10 +910,8 @@ export type zListingFlagCountQuery = z.infer<typeof zListingFlagCountQuery>;
 /**
  * Field of the listing flag sort
  */
-export const zListingFlagSortField = z.enum([
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field of the listing flag sort"
+export const zListingFlagSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the listing flag sort'
 });
 
 export type zListingFlagSortField = z.infer<typeof zListingFlagSortField>;
@@ -938,7 +923,7 @@ export const zListingFlagSort = z.object({
     field: zListingFlagSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing flag collection"
+    description: 'Sort object for listing flag collection'
 });
 
 export type zListingFlagSort = z.infer<typeof zListingFlagSort>;
@@ -948,22 +933,22 @@ export type zListingFlagSort = z.infer<typeof zListingFlagSort>;
  */
 export const zListingFlagWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingFlagWhere = z.infer<typeof zListingFlagWhere>;
@@ -977,7 +962,7 @@ export const zListingFlagQuery = z.object({
     where: z.optional(zListingFlagWhere),
     sort: z.optional(z.array(zListingFlagSort))
 }).register(z.globalRegistry, {
-    description: "Query object for listing flag collection"
+    description: 'Query object for listing flag collection'
 });
 
 export type zListingFlagQuery = z.infer<typeof zListingFlagQuery>;
@@ -987,13 +972,13 @@ export type zListingFlagQuery = z.infer<typeof zListingFlagQuery>;
  */
 export const zListingFlag = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the flag entry"
+        description: 'ID of the flag entry'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing"
+        description: 'ID of the listing'
     })
 }).register(z.globalRegistry, {
-    description: "Listing flag data"
+    description: 'Listing flag data'
 });
 
 export type zListingFlag = z.infer<typeof zListingFlag>;
@@ -1004,10 +989,10 @@ export type zListingFlag = z.infer<typeof zListingFlag>;
 export const zListingFlagCollection = z.object({
     data: z.array(zListingFlag),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listing flag items"
+    description: 'Collection of listing flag items'
 });
 
 export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
@@ -1017,13 +1002,13 @@ export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
  */
 export const zListingIgnoreToggle = z.object({
     toggle: z.boolean().register(z.globalRegistry, {
-        description: "Whether to add (true) or remove (false) the listing from ignore list"
+        description: 'Whether to add (true) or remove (false) the listing from ignore list'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing to toggle"
+        description: 'ID of the listing to toggle'
     })
 }).register(z.globalRegistry, {
-    description: "Data for toggling a listing in ignore list"
+    description: 'Data for toggling a listing in ignore list'
 });
 
 export type zListingIgnoreToggle = z.infer<typeof zListingIgnoreToggle>;
@@ -1033,22 +1018,22 @@ export type zListingIgnoreToggle = z.infer<typeof zListingIgnoreToggle>;
  */
 export const zListingIgnoreWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingIgnoreWhere = z.infer<typeof zListingIgnoreWhere>;
@@ -1058,22 +1043,22 @@ export type zListingIgnoreWhere = z.infer<typeof zListingIgnoreWhere>;
  */
 export const zListingIgnoreFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for listing ignore collection"
+    description: 'Filter object for listing ignore collection'
 });
 
 export type zListingIgnoreFilter = z.infer<typeof zListingIgnoreFilter>;
@@ -1085,7 +1070,7 @@ export const zListingIgnoreCountQuery = z.object({
     filter: z.optional(zListingIgnoreFilter),
     where: z.optional(zListingIgnoreWhere)
 }).register(z.globalRegistry, {
-    description: "Query object for listing ignore count"
+    description: 'Query object for listing ignore count'
 });
 
 export type zListingIgnoreCountQuery = z.infer<typeof zListingIgnoreCountQuery>;
@@ -1093,10 +1078,8 @@ export type zListingIgnoreCountQuery = z.infer<typeof zListingIgnoreCountQuery>;
 /**
  * Field of the listing ignore sort
  */
-export const zListingIgnoreSortField = z.enum([
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field of the listing ignore sort"
+export const zListingIgnoreSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the listing ignore sort'
 });
 
 export type zListingIgnoreSortField = z.infer<typeof zListingIgnoreSortField>;
@@ -1108,7 +1091,7 @@ export const zListingIgnoreSort = z.object({
     field: zListingIgnoreSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing ignore collection"
+    description: 'Sort object for listing ignore collection'
 });
 
 export type zListingIgnoreSort = z.infer<typeof zListingIgnoreSort>;
@@ -1122,7 +1105,7 @@ export const zListingIgnoreQuery = z.object({
     where: z.optional(zListingIgnoreWhere),
     sort: z.optional(z.array(zListingIgnoreSort))
 }).register(z.globalRegistry, {
-    description: "Query object for listing ignore collection"
+    description: 'Query object for listing ignore collection'
 });
 
 export type zListingIgnoreQuery = z.infer<typeof zListingIgnoreQuery>;
@@ -1132,13 +1115,13 @@ export type zListingIgnoreQuery = z.infer<typeof zListingIgnoreQuery>;
  */
 export const zListingIgnore = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the ignore entry"
+        description: 'ID of the ignore entry'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing that was ignored"
+        description: 'ID of the listing that was ignored'
     })
 }).register(z.globalRegistry, {
-    description: "Listing ignore data"
+    description: 'Listing ignore data'
 });
 
 export type zListingIgnore = z.infer<typeof zListingIgnore>;
@@ -1149,10 +1132,10 @@ export type zListingIgnore = z.infer<typeof zListingIgnore>;
 export const zListingIgnoreCollection = z.object({
     data: z.array(zListingIgnore),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listing ignore items"
+    description: 'Collection of listing ignore items'
 });
 
 export type zListingIgnoreCollection = z.infer<typeof zListingIgnoreCollection>;
@@ -1162,13 +1145,13 @@ export type zListingIgnoreCollection = z.infer<typeof zListingIgnoreCollection>;
  */
 export const zListingCartToggle = z.object({
     toggle: z.boolean().register(z.globalRegistry, {
-        description: "Whether to add (true) or remove (false) the listing from cart"
+        description: 'Whether to add (true) or remove (false) the listing from cart'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing to toggle"
+        description: 'ID of the listing to toggle'
     })
 }).register(z.globalRegistry, {
-    description: "Data for toggling a listing in cart"
+    description: 'Data for toggling a listing in cart'
 });
 
 export type zListingCartToggle = z.infer<typeof zListingCartToggle>;
@@ -1178,22 +1161,22 @@ export type zListingCartToggle = z.infer<typeof zListingCartToggle>;
  */
 export const zListingCartWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingCartWhere = z.infer<typeof zListingCartWhere>;
@@ -1203,22 +1186,22 @@ export type zListingCartWhere = z.infer<typeof zListingCartWhere>;
  */
 export const zListingCartFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact userId"
+        description: 'This filter matches the exact userId'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact listingId"
+        description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for listing cart collection"
+    description: 'Filter object for listing cart collection'
 });
 
 export type zListingCartFilter = z.infer<typeof zListingCartFilter>;
@@ -1230,7 +1213,7 @@ export const zListingCartCountQuery = z.object({
     filter: z.optional(zListingCartFilter),
     where: z.optional(zListingCartWhere)
 }).register(z.globalRegistry, {
-    description: "Query object for listing cart count"
+    description: 'Query object for listing cart count'
 });
 
 export type zListingCartCountQuery = z.infer<typeof zListingCartCountQuery>;
@@ -1238,10 +1221,8 @@ export type zListingCartCountQuery = z.infer<typeof zListingCartCountQuery>;
 /**
  * Field of the listing cart sort
  */
-export const zListingCartSortField = z.enum([
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field of the listing cart sort"
+export const zListingCartSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the listing cart sort'
 });
 
 export type zListingCartSortField = z.infer<typeof zListingCartSortField>;
@@ -1253,7 +1234,7 @@ export const zListingCartSort = z.object({
     field: zListingCartSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing cart collection"
+    description: 'Sort object for listing cart collection'
 });
 
 export type zListingCartSort = z.infer<typeof zListingCartSort>;
@@ -1267,7 +1248,7 @@ export const zListingCartQuery = z.object({
     where: z.optional(zListingCartWhere),
     sort: z.optional(z.array(zListingCartSort))
 }).register(z.globalRegistry, {
-    description: "Query object for listing cart collection"
+    description: 'Query object for listing cart collection'
 });
 
 export type zListingCartQuery = z.infer<typeof zListingCartQuery>;
@@ -1277,16 +1258,16 @@ export type zListingCartQuery = z.infer<typeof zListingCartQuery>;
  */
 export const zListingCart = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the cart item"
+        description: 'ID of the cart item'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing"
+        description: 'ID of the listing'
     }),
     createdAt: z.string().register(z.globalRegistry, {
-        description: "Creation timestamp"
+        description: 'Creation timestamp'
     })
 }).register(z.globalRegistry, {
-    description: "Listing cart data"
+    description: 'Listing cart data'
 });
 
 export type zListingCart = z.infer<typeof zListingCart>;
@@ -1297,10 +1278,10 @@ export type zListingCart = z.infer<typeof zListingCart>;
 export const zListingCartCollection = z.object({
     data: z.array(zListingCart),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listing cart items"
+    description: 'Collection of listing cart items'
 });
 
 export type zListingCartCollection = z.infer<typeof zListingCartCollection>;
@@ -1354,7 +1335,7 @@ export const zListingMetrics = z.object({
         z.null()
     ])
 }).register(z.globalRegistry, {
-    description: "Score data for the listing"
+    description: 'Score data for the listing'
 });
 
 export type zListingMetrics = z.infer<typeof zListingMetrics>;
@@ -1364,13 +1345,13 @@ export type zListingMetrics = z.infer<typeof zListingMetrics>;
  */
 export const zLatLon = z.object({
     lat: z.number().gte(-90).lte(90).register(z.globalRegistry, {
-        description: "Latitude coordinate"
+        description: 'Latitude coordinate'
     }),
     lon: z.number().gte(-180).lte(180).register(z.globalRegistry, {
-        description: "Longitude coordinate"
+        description: 'Longitude coordinate'
     })
 }).register(z.globalRegistry, {
-    description: "Latitude and longitude coordinates"
+    description: 'Latitude and longitude coordinates'
 });
 
 export type zLatLon = z.infer<typeof zLatLon>;
@@ -1381,7 +1362,7 @@ export type zLatLon = z.infer<typeof zLatLon>;
 export const zListingMeta = z.object({
     latLon: z.optional(zLatLon)
 }).register(z.globalRegistry, {
-    description: "Meta data for listing collection"
+    description: 'Meta data for listing collection'
 });
 
 export type zListingMeta = z.infer<typeof zListingMeta>;
@@ -1398,7 +1379,7 @@ export const zCurrencyList = z.enum([
     'HUF',
     'CHF'
 ]).register(z.globalRegistry, {
-    description: "List of available currencies"
+    description: 'List of available currencies'
 });
 
 export type zCurrencyList = z.infer<typeof zCurrencyList>;
@@ -1407,7 +1388,7 @@ export type zCurrencyList = z.infer<typeof zCurrencyList>;
  * This filter matches listings with currency codes in the provided array
  */
 export const zCurrencyIn = z.array(zCurrencyList).register(z.globalRegistry, {
-    description: "This filter matches listings with currency codes in the provided array"
+    description: 'This filter matches listings with currency codes in the provided array'
 });
 
 export type zCurrencyIn = z.infer<typeof zCurrencyIn>;
@@ -1416,7 +1397,7 @@ export type zCurrencyIn = z.infer<typeof zCurrencyIn>;
  * Filter listings based on the provided category IDs
  */
 export const zCategoryIdIn = z.array(z.string().min(1)).register(z.globalRegistry, {
-    description: "Filter listings based on the provided category IDs"
+    description: 'Filter listings based on the provided category IDs'
 });
 
 export type zCategoryIdIn = z.infer<typeof zCategoryIdIn>;
@@ -1425,7 +1406,7 @@ export type zCategoryIdIn = z.infer<typeof zCategoryIdIn>;
  * ID of the category
  */
 export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
-    description: "ID of the category"
+    description: 'ID of the category'
 });
 
 export type zCategoryId = z.infer<typeof zCategoryId>;
@@ -1434,7 +1415,7 @@ export type zCategoryId = z.infer<typeof zCategoryId>;
  * Sets the maximum price for the listings
  */
 export const zPriceMax = z.number().gte(0).register(z.globalRegistry, {
-    description: "Sets the maximum price for the listings"
+    description: 'Sets the maximum price for the listings'
 });
 
 export type zPriceMax = z.infer<typeof zPriceMax>;
@@ -1443,7 +1424,7 @@ export type zPriceMax = z.infer<typeof zPriceMax>;
  * Sets the minimum price for the listings
  */
 export const zPriceMin = z.number().gte(0).register(z.globalRegistry, {
-    description: "Sets the minimum price for the listings"
+    description: 'Sets the minimum price for the listings'
 });
 
 export type zPriceMin = z.infer<typeof zPriceMin>;
@@ -1453,67 +1434,67 @@ export type zPriceMin = z.infer<typeof zPriceMin>;
  */
 export const zListingWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
     conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with condition greater than or equal to the provided value"
+        description: 'This filter matches listings with condition greater than or equal to the provided value'
     })),
     conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with condition less than or equal to the provided value"
+        description: 'This filter matches listings with condition less than or equal to the provided value'
     })),
     conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: "This filter matches listings with conditions in the provided array"
+        description: 'This filter matches listings with conditions in the provided array'
     })),
     ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with age greater than or equal to the provided value"
+        description: 'This filter matches listings with age greater than or equal to the provided value'
     })),
     ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with age less than or equal to the provided value"
+        description: 'This filter matches listings with age less than or equal to the provided value'
     })),
     ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: "This filter matches listings with ages in the provided array"
+        description: 'This filter matches listings with ages in the provided array'
     })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
     currencyIn: z.optional(zCurrencyIn),
     expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches listings that expire before the provided date"
+        description: 'This filter matches listings that expire before the provided date'
     })),
     expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches listings that expire after the provided date"
+        description: 'This filter matches listings that expire after the provided date'
     })),
     rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: "This filter matches listings with range greater than or equal to the provided value (meters)"
+        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
     })),
     rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: "This filter matches listings with range less than or equal to the provided value (meters)"
+        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
     })),
     title: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches listings with title matching the provided value"
+        description: 'This filter matches listings with title matching the provided value'
     })),
     withOwn: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "This filter matches listings with the user's own listings"
+        description: 'This filter matches listings with the user\'s own listings'
     })),
     withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "Include ignored listings"
+        description: 'Include ignored listings'
     })),
     inCart: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "Show listing that are in the user's cart"
+        description: 'Show listing that are in the user\'s cart'
     })),
     transaction: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "Show listings that are in the user's transaction"
+        description: 'Show listings that are in the user\'s transaction'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zListingWhere = z.infer<typeof zListingWhere>;
@@ -1523,67 +1504,67 @@ export type zListingWhere = z.infer<typeof zListingWhere>;
  */
 export const zListingFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
     conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with condition greater than or equal to the provided value"
+        description: 'This filter matches listings with condition greater than or equal to the provided value'
     })),
     conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with condition less than or equal to the provided value"
+        description: 'This filter matches listings with condition less than or equal to the provided value'
     })),
     conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: "This filter matches listings with conditions in the provided array"
+        description: 'This filter matches listings with conditions in the provided array'
     })),
     ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with age greater than or equal to the provided value"
+        description: 'This filter matches listings with age greater than or equal to the provided value'
     })),
     ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: "This filter matches listings with age less than or equal to the provided value"
+        description: 'This filter matches listings with age less than or equal to the provided value'
     })),
     ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: "This filter matches listings with ages in the provided array"
+        description: 'This filter matches listings with ages in the provided array'
     })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
     currency: z.optional(zCurrencyList),
     currencyIn: z.optional(zCurrencyIn),
     expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches listings that expire before the provided date"
+        description: 'This filter matches listings that expire before the provided date'
     })),
     expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches listings that expire after the provided date"
+        description: 'This filter matches listings that expire after the provided date'
     })),
     rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: "This filter matches listings with range greater than or equal to the provided value (meters)"
+        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
     })),
     rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: "This filter matches listings with range less than or equal to the provided value (meters)"
+        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
     })),
     title: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches listings with title matching the provided value"
+        description: 'This filter matches listings with title matching the provided value'
     })),
     withOwn: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "This filter matches listings with the user's own listings"
+        description: 'This filter matches listings with the user\'s own listings'
     })),
     withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "Include ignored listings"
+        description: 'Include ignored listings'
     })),
     inCart: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "Show listing that are in the user's cart"
+        description: 'Show listing that are in the user\'s cart'
     })),
     transaction: z.optional(z.boolean().register(z.globalRegistry, {
-        description: "Show listings that are in the user's transaction"
+        description: 'Show listings that are in the user\'s transaction'
     }))
 }).register(z.globalRegistry, {
-    description: "User-land filters"
+    description: 'User-land filters'
 });
 
 export type zListingFilter = z.infer<typeof zListingFilter>;
@@ -1596,7 +1577,7 @@ export const zListingCountQuery = z.object({
     where: z.optional(zListingWhere),
     meta: z.optional(zListingMeta)
 }).register(z.globalRegistry, {
-    description: "Query object for listing count"
+    description: 'Query object for listing count'
 });
 
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
@@ -1606,20 +1587,20 @@ export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
  */
 export const zGallery = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the gallery item"
+        description: 'ID of the gallery item'
     }),
     listingId: z.string().register(z.globalRegistry, {
-        description: "ID of the listing this image belongs to"
+        description: 'ID of the listing this image belongs to'
     }),
     uploadId: z.string().register(z.globalRegistry, {
-        description: "ID of the upload this image belongs to"
+        description: 'ID of the upload this image belongs to'
     }),
     sort: z.number().register(z.globalRegistry, {
-        description: "Sort order of the image in the listing's gallery"
+        description: 'Sort order of the image in the listing\'s gallery'
     }),
     upload: zUpload
 }).register(z.globalRegistry, {
-    description: "Gallery data"
+    description: 'Gallery data'
 });
 
 export type zGallery = z.infer<typeof zGallery>;
@@ -1629,25 +1610,25 @@ export type zGallery = z.infer<typeof zGallery>;
  */
 export const zCategory = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the category"
+        description: 'ID of the category'
     }),
     group: z.string().register(z.globalRegistry, {
-        description: "Group/name of the category"
+        description: 'Group/name of the category'
     }),
     category: z.string().register(z.globalRegistry, {
-        description: "Category name within the group"
+        description: 'Category name within the group'
     }),
     slug: z.string().register(z.globalRegistry, {
-        description: "Slug of the category"
+        description: 'Slug of the category'
     }),
     sort: z.number().register(z.globalRegistry, {
-        description: "Sort order (position) of the category"
+        description: 'Sort order (position) of the category'
     }),
     locale: z.string().register(z.globalRegistry, {
-        description: "Locale/language of the category"
+        description: 'Locale/language of the category'
     })
 }).register(z.globalRegistry, {
-    description: "Category data"
+    description: 'Category data'
 });
 
 export type zCategory = z.infer<typeof zCategory>;
@@ -1658,16 +1639,16 @@ export type zCategory = z.infer<typeof zCategory>;
 export const zLocation = z.object({
     id: z.string(),
     query: z.string().register(z.globalRegistry, {
-        description: "The query that was used to get the location"
+        description: 'The query that was used to get the location'
     }),
     lang: z.string().register(z.globalRegistry, {
-        description: "The language that was used to get the location"
+        description: 'The language that was used to get the location'
     }),
     country: z.string().register(z.globalRegistry, {
-        description: "The country that the location is in"
+        description: 'The country that the location is in'
     }),
     code: z.string().register(z.globalRegistry, {
-        description: "Country code"
+        description: 'Country code'
     }),
     county: z.optional(z.union([
         z.string(),
@@ -1682,7 +1663,7 @@ export const zLocation = z.object({
         z.null()
     ])),
     address: z.string().register(z.globalRegistry, {
-        description: "Full address preview of a location"
+        description: 'Full address preview of a location'
     }),
     city: z.optional(z.union([
         z.string(),
@@ -1697,19 +1678,19 @@ export const zLocation = z.object({
         z.null()
     ])),
     confidence: z.number().register(z.globalRegistry, {
-        description: "Confidence score of the location (based on query)"
+        description: 'Confidence score of the location (based on query)'
     }),
     hash: z.string().register(z.globalRegistry, {
-        description: "Used to uniquely identify this location entry"
+        description: 'Used to uniquely identify this location entry'
     }),
     lat: z.number().register(z.globalRegistry, {
-        description: "Latitude of the location"
+        description: 'Latitude of the location'
     }),
     lon: z.number().register(z.globalRegistry, {
-        description: "Longitude of the location"
+        description: 'Longitude of the location'
     })
 }).register(z.globalRegistry, {
-    description: "Location data"
+    description: 'Location data'
 });
 
 export type zLocation = z.infer<typeof zLocation>;
@@ -1719,56 +1700,56 @@ export type zLocation = z.infer<typeof zLocation>;
  */
 export const zListing = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the listing"
+        description: 'ID of the listing'
     }),
     price: z.number().register(z.globalRegistry, {
-        description: "Price of the listing"
+        description: 'Price of the listing'
     }),
     currency: zCurrencyList,
     condition: z.number().register(z.globalRegistry, {
-        description: "Condition of the item (0-based index)"
+        description: 'Condition of the item (0-based index)'
     }),
     age: z.number().register(z.globalRegistry, {
-        description: "Age of the item (0-based index)"
+        description: 'Age of the item (0-based index)'
     }),
     locationId: z.string().register(z.globalRegistry, {
-        description: "ID of the location"
+        description: 'ID of the location'
     }),
     categoryId: z.string().register(z.globalRegistry, {
-        description: "ID of the category"
+        description: 'ID of the category'
     }),
     expiresAt: z.string().register(z.globalRegistry, {
-        description: "Expiration timestamp"
+        description: 'Expiration timestamp'
     }),
     title: z.string().register(z.globalRegistry, {
-        description: "Title of the item"
+        description: 'Title of the item'
     }),
     description: z.optional(z.union([
         z.string(),
         z.null()
     ])),
     createdAt: z.string().register(z.globalRegistry, {
-        description: "Creation timestamp"
+        description: 'Creation timestamp'
     }),
     updatedAt: z.string().register(z.globalRegistry, {
-        description: "Last update timestamp"
+        description: 'Last update timestamp'
     }),
     location: zLocation,
     category: zCategory,
     gallery: z.array(zGallery).register(z.globalRegistry, {
-        description: "Array of listing gallery images"
+        description: 'Array of listing gallery images'
     }),
     isInCart: z.boolean().register(z.globalRegistry, {
-        description: "Whether the user has this listing in the cart"
+        description: 'Whether the user has this listing in the cart'
     }),
     isIgnored: z.boolean().register(z.globalRegistry, {
-        description: "Whether the user ignored this listing"
+        description: 'Whether the user ignored this listing'
     }),
     hasFlag: z.boolean().register(z.globalRegistry, {
-        description: "Whether the user flagged this listing"
+        description: 'Whether the user flagged this listing'
     })
 }).register(z.globalRegistry, {
-    description: "Listing data"
+    description: 'Listing data'
 });
 
 export type zListing = z.infer<typeof zListing>;
@@ -1779,10 +1760,10 @@ export type zListing = z.infer<typeof zListing>;
 export const zListingCollection = z.object({
     data: z.array(zListing),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of listings"
+    description: 'Collection of listings'
 });
 
 export type zListingCollection = z.infer<typeof zListingCollection>;
@@ -1795,7 +1776,7 @@ export const zListingExpire = z.enum([
     '14-days',
     '1-month'
 ]).register(z.globalRegistry, {
-    description: "Expiration time of the listing"
+    description: 'Expiration time of the listing'
 });
 
 export type zListingExpire = z.infer<typeof zListingExpire>;
@@ -1805,33 +1786,33 @@ export type zListingExpire = z.infer<typeof zListingExpire>;
  */
 export const zListingCreate = z.object({
     price: z.number().register(z.globalRegistry, {
-        description: "Price of the listing"
+        description: 'Price of the listing'
     }),
     condition: z.number().register(z.globalRegistry, {
-        description: "Condition of the item (0-based index)"
+        description: 'Condition of the item (0-based index)'
     }),
     age: z.number().register(z.globalRegistry, {
-        description: "Age of the item (0-based index)"
+        description: 'Age of the item (0-based index)'
     }),
     locationId: z.string().register(z.globalRegistry, {
-        description: "ID of the location"
+        description: 'ID of the location'
     }),
     categoryId: z.string().register(z.globalRegistry, {
-        description: "ID of the category"
+        description: 'ID of the category'
     }),
     currency: zCurrencyList,
     expiresAt: zListingExpire,
     title: z.string().min(5).max(72).register(z.globalRegistry, {
-        description: "Title of the item"
+        description: 'Title of the item'
     }),
     description: z.optional(z.string().max(2048).register(z.globalRegistry, {
-        description: "Description of the item"
+        description: 'Description of the item'
     })),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
-        description: "IDs of the uploads; order of uploads defines order in the gallery"
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })
 }).register(z.globalRegistry, {
-    description: "Data for creating a new listing"
+    description: 'Data for creating a new listing'
 });
 
 export type zListingCreate = z.infer<typeof zListingCreate>;
@@ -1842,10 +1823,10 @@ export type zListingCreate = z.infer<typeof zListingCreate>;
 export const zGalleryCollection = z.object({
     data: z.array(zGallery),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of gallery items"
+    description: 'Collection of gallery items'
 });
 
 export type zGalleryCollection = z.infer<typeof zGalleryCollection>;
@@ -1853,11 +1834,8 @@ export type zGalleryCollection = z.infer<typeof zGalleryCollection>;
 /**
  * Field of the gallery sort
  */
-export const zGallerySortField = z.enum([
-    'sort',
-    'createdAt'
-]).register(z.globalRegistry, {
-    description: "Field of the gallery sort"
+export const zGallerySortField = z.enum(['sort', 'createdAt']).register(z.globalRegistry, {
+    description: 'Field of the gallery sort'
 });
 
 export type zGallerySortField = z.infer<typeof zGallerySortField>;
@@ -1869,7 +1847,7 @@ export const zGallerySort = z.object({
     field: zGallerySortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for gallery collection"
+    description: 'Sort object for gallery collection'
 });
 
 export type zGallerySort = z.infer<typeof zGallerySort>;
@@ -1879,22 +1857,22 @@ export type zGallerySort = z.infer<typeof zGallerySort>;
  */
 export const zGalleryWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "Exact user id"
+        description: 'Exact user id'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "Exact listing id"
+        description: 'Exact listing id'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zGalleryWhere = z.infer<typeof zGalleryWhere>;
@@ -1904,22 +1882,22 @@ export type zGalleryWhere = z.infer<typeof zGalleryWhere>;
  */
 export const zGalleryFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "Exact user id"
+        description: 'Exact user id'
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: "Exact listing id"
+        description: 'Exact listing id'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for gallery collection"
+    description: 'Filter object for gallery collection'
 });
 
 export type zGalleryFilter = z.infer<typeof zGalleryFilter>;
@@ -1933,7 +1911,7 @@ export const zGalleryQuery = z.object({
     where: z.optional(zGalleryWhere),
     sort: z.optional(z.array(zGallerySort))
 }).register(z.globalRegistry, {
-    description: "Query object for gallery collection"
+    description: 'Query object for gallery collection'
 });
 
 export type zGalleryQuery = z.infer<typeof zGalleryQuery>;
@@ -1951,7 +1929,7 @@ export const zListingSortField = z.enum([
     'geo',
     'transaction'
 ]).register(z.globalRegistry, {
-    description: "Field of the listing sort"
+    description: 'Field of the listing sort'
 });
 
 export type zListingSortField = z.infer<typeof zListingSortField>;
@@ -1963,7 +1941,7 @@ export const zListingSort = z.object({
     field: zListingSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for listing collection"
+    description: 'Sort object for listing collection'
 });
 
 export type zListingSort = z.infer<typeof zListingSort>;
@@ -1978,7 +1956,7 @@ export const zListingQuery = z.object({
     sort: z.optional(z.array(zListingSort)),
     meta: z.optional(zListingMeta)
 }).register(z.globalRegistry, {
-    description: "Query object for listing collection"
+    description: 'Query object for listing collection'
 });
 
 export type zListingQuery = z.infer<typeof zListingQuery>;
@@ -1988,18 +1966,18 @@ export type zListingQuery = z.infer<typeof zListingQuery>;
  */
 export const zFeed = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the feed"
+        description: 'ID of the feed'
     }),
     locationId: z.optional(z.union([
         z.string(),
         z.null()
     ])),
     name: z.string().register(z.globalRegistry, {
-        description: "Name of the feed"
+        description: 'Name of the feed'
     }),
     query: zListingQuery
 }).register(z.globalRegistry, {
-    description: "Feed data"
+    description: 'Feed data'
 });
 
 export type zFeed = z.infer<typeof zFeed>;
@@ -2010,10 +1988,10 @@ export type zFeed = z.infer<typeof zFeed>;
 export const zFeedCollection = z.object({
     data: z.array(zFeed),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of feed items"
+    description: 'Collection of feed items'
 });
 
 export type zFeedCollection = z.infer<typeof zFeedCollection>;
@@ -2021,11 +1999,8 @@ export type zFeedCollection = z.infer<typeof zFeedCollection>;
 /**
  * Field of the feed sort
  */
-export const zFeedSortField = z.enum([
-    'createdAt',
-    'updatedAt'
-]).register(z.globalRegistry, {
-    description: "Field of the feed sort"
+export const zFeedSortField = z.enum(['createdAt', 'updatedAt']).register(z.globalRegistry, {
+    description: 'Field of the feed sort'
 });
 
 export type zFeedSortField = z.infer<typeof zFeedSortField>;
@@ -2037,7 +2012,7 @@ export const zFeedSort = z.object({
     field: zFeedSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for feed collection"
+    description: 'Sort object for feed collection'
 });
 
 export type zFeedSort = z.infer<typeof zFeedSort>;
@@ -2047,19 +2022,19 @@ export type zFeedSort = z.infer<typeof zFeedSort>;
  */
 export const zFeedWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "Exact user id"
+        description: 'Exact user id'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zFeedWhere = z.infer<typeof zFeedWhere>;
@@ -2069,19 +2044,19 @@ export type zFeedWhere = z.infer<typeof zFeedWhere>;
  */
 export const zFeedFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
-        description: "Exact user id"
+        description: 'Exact user id'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for feed collection"
+    description: 'Filter object for feed collection'
 });
 
 export type zFeedFilter = z.infer<typeof zFeedFilter>;
@@ -2095,7 +2070,7 @@ export const zFeedQuery = z.object({
     where: z.optional(zFeedWhere),
     sort: z.optional(z.array(zFeedSort))
 }).register(z.globalRegistry, {
-    description: "Query object for feed collection"
+    description: 'Query object for feed collection'
 });
 
 export type zFeedQuery = z.infer<typeof zFeedQuery>;
@@ -2106,7 +2081,7 @@ export type zFeedQuery = z.infer<typeof zFeedQuery>;
 export const zFeedPatch = z.object({
     id: z.string().min(1),
     name: z.optional(z.string().min(1).register(z.globalRegistry, {
-        description: "Name of the feed"
+        description: 'Name of the feed'
     })),
     locationId: z.optional(z.union([
         z.string(),
@@ -2117,7 +2092,7 @@ export const zFeedPatch = z.object({
         z.null()
     ]))
 }).register(z.globalRegistry, {
-    description: "Data for updating an existing feed"
+    description: 'Data for updating an existing feed'
 });
 
 export type zFeedPatch = z.infer<typeof zFeedPatch>;
@@ -2127,7 +2102,7 @@ export type zFeedPatch = z.infer<typeof zFeedPatch>;
  */
 export const zFeedCreate = z.object({
     name: z.string().min(1).register(z.globalRegistry, {
-        description: "Name of the feed"
+        description: 'Name of the feed'
     }),
     locationId: z.optional(z.union([
         z.string(),
@@ -2135,7 +2110,7 @@ export const zFeedCreate = z.object({
     ])),
     query: zListingQuery
 }).register(z.globalRegistry, {
-    description: "Data for creating a new feed"
+    description: 'Data for creating a new feed'
 });
 
 export type zFeedCreate = z.infer<typeof zFeedCreate>;
@@ -2149,7 +2124,7 @@ export const zCategoryCartSortField = z.enum([
     'sort',
     'listingCount'
 ]).register(z.globalRegistry, {
-    description: "Field of the category cart sort"
+    description: 'Field of the category cart sort'
 });
 
 export type zCategoryCartSortField = z.infer<typeof zCategoryCartSortField>;
@@ -2161,7 +2136,7 @@ export const zCategoryCartSort = z.object({
     field: zCategoryCartSortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for category cart collection"
+    description: 'Sort object for category cart collection'
 });
 
 export type zCategoryCartSort = z.infer<typeof zCategoryCartSort>;
@@ -2171,28 +2146,28 @@ export type zCategoryCartSort = z.infer<typeof zCategoryCartSort>;
  */
 export const zCategoryWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     group: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact group of the category"
+        description: 'This filter matches the exact group of the category'
     })),
     category: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact category name"
+        description: 'This filter matches the exact category name'
     })),
     locale: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact locale of the category"
+        description: 'This filter matches the exact locale of the category'
     })),
     localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches categories with locales in the provided array"
+        description: 'This filter matches categories with locales in the provided array'
     }))
 }).register(z.globalRegistry, {
-    description: "App-based filters"
+    description: 'App-based filters'
 });
 
 export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
@@ -2202,28 +2177,28 @@ export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
  */
 export const zCategoryFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact id"
+        description: 'This filter matches the exact id'
     })),
     idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches the ids"
+        description: 'This filter matches the ids'
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: "Runs fulltext on the collection/query."
+        description: 'Runs fulltext on the collection/query.'
     })),
     group: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact group of the category"
+        description: 'This filter matches the exact group of the category'
     })),
     category: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact category name"
+        description: 'This filter matches the exact category name'
     })),
     locale: z.optional(z.string().register(z.globalRegistry, {
-        description: "This filter matches the exact locale of the category"
+        description: 'This filter matches the exact locale of the category'
     })),
     localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: "This filter matches categories with locales in the provided array"
+        description: 'This filter matches categories with locales in the provided array'
     }))
 }).register(z.globalRegistry, {
-    description: "Filter object for category collection"
+    description: 'Filter object for category collection'
 });
 
 export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
@@ -2237,7 +2212,7 @@ export const zCategoryCartQuery = z.object({
     where: z.optional(zCategoryWhere),
     sort: z.optional(z.array(zCategoryCartSort))
 }).register(z.globalRegistry, {
-    description: "Query object for category cart collection"
+    description: 'Query object for category cart collection'
 });
 
 export type zCategoryCartQuery = z.infer<typeof zCategoryCartQuery>;
@@ -2247,28 +2222,28 @@ export type zCategoryCartQuery = z.infer<typeof zCategoryCartQuery>;
  */
 export const zCategoryCart = z.object({
     id: z.string().register(z.globalRegistry, {
-        description: "ID of the category"
+        description: 'ID of the category'
     }),
     group: z.string().register(z.globalRegistry, {
-        description: "Group/name of the category"
+        description: 'Group/name of the category'
     }),
     category: z.string().register(z.globalRegistry, {
-        description: "Category name within the group"
+        description: 'Category name within the group'
     }),
     slug: z.string().register(z.globalRegistry, {
-        description: "Slug of the category"
+        description: 'Slug of the category'
     }),
     sort: z.number().register(z.globalRegistry, {
-        description: "Sort order (position) of the category"
+        description: 'Sort order (position) of the category'
     }),
     locale: z.string().register(z.globalRegistry, {
-        description: "Locale/language of the category"
+        description: 'Locale/language of the category'
     }),
     listingCount: z.int().register(z.globalRegistry, {
-        description: "Number of listings saved in this category"
+        description: 'Number of listings saved in this category'
     })
 }).register(z.globalRegistry, {
-    description: "Category cart data"
+    description: 'Category cart data'
 });
 
 export type zCategoryCart = z.infer<typeof zCategoryCart>;
@@ -2279,10 +2254,10 @@ export type zCategoryCart = z.infer<typeof zCategoryCart>;
 export const zCategoryCartCollection = z.object({
     data: z.array(zCategoryCart),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of categories represented in the user's cart"
+    description: 'Collection of categories represented in the user\'s cart'
 });
 
 export type zCategoryCartCollection = z.infer<typeof zCategoryCartCollection>;
@@ -2292,16 +2267,16 @@ export type zCategoryCartCollection = z.infer<typeof zCategoryCartCollection>;
  */
 export const zCount = z.object({
     where: z.number().register(z.globalRegistry, {
-        description: "Count of items based on provided where query."
+        description: 'Count of items based on provided where query.'
     }),
     filter: z.number().register(z.globalRegistry, {
-        description: "Count of items based on provided filter query."
+        description: 'Count of items based on provided filter query.'
     }),
     total: z.number().register(z.globalRegistry, {
-        description: "Total count of items (no filters applied)."
+        description: 'Total count of items (no filters applied).'
     })
 }).register(z.globalRegistry, {
-    description: "Count data"
+    description: 'Count data'
 });
 
 export type zCount = z.infer<typeof zCount>;
@@ -2312,10 +2287,10 @@ export type zCount = z.infer<typeof zCount>;
 export const zCategoryCollection = z.object({
     data: z.array(zCategory),
     more: z.boolean().register(z.globalRegistry, {
-        description: "Whether there are more items to fetch"
+        description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: "Collection of categories"
+    description: 'Collection of categories'
 });
 
 export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
@@ -2328,7 +2303,7 @@ export const zCategorySortField = z.enum([
     'category',
     'sort'
 ]).register(z.globalRegistry, {
-    description: "Field of the category sort"
+    description: 'Field of the category sort'
 });
 
 export type zCategorySortField = z.infer<typeof zCategorySortField>;
@@ -2340,7 +2315,7 @@ export const zCategorySort = z.object({
     field: zCategorySortField,
     direction: zOrder
 }).register(z.globalRegistry, {
-    description: "Sort object for category collection"
+    description: 'Sort object for category collection'
 });
 
 export type zCategorySort = z.infer<typeof zCategorySort>;
@@ -2354,7 +2329,7 @@ export const zCategoryQuery = z.object({
     where: z.optional(zCategoryWhere),
     sort: z.optional(z.array(zCategorySort))
 }).register(z.globalRegistry, {
-    description: "Category query parameters"
+    description: 'Category query parameters'
 });
 
 export type zCategoryQuery = z.infer<typeof zCategoryQuery>;
@@ -2367,7 +2342,7 @@ export const zMessageType = z.enum([
     'warning',
     'error'
 ]).register(z.globalRegistry, {
-    description: "Type of message"
+    description: 'Type of message'
 });
 
 export type zMessageType = z.infer<typeof zMessageType>;
@@ -2377,11 +2352,11 @@ export type zMessageType = z.infer<typeof zMessageType>;
  */
 export const zMessage = z.object({
     message: z.string().register(z.globalRegistry, {
-        description: "Message"
+        description: 'Message'
     }),
     type: zMessageType
 }).register(z.globalRegistry, {
-    description: "Message data"
+    description: 'Message data'
 });
 
 export type zMessage = z.infer<typeof zMessage>;
@@ -2645,7 +2620,7 @@ export const zApiListingMetricsFetchData = z.object({
     body: z.optional(z.never()),
     path: z.object({
         id: z.string().register(z.globalRegistry, {
-            description: "Listing identifier"
+            description: 'Listing identifier'
         })
     }),
     query: z.optional(z.never())
@@ -2702,7 +2677,7 @@ export type zapiListingCartToggleRequest = z.infer<typeof zApiListingCartToggleD
  * Nothing to say, we're just happy
  */
 export const zApiListingCartToggleResponse = z.void().register(z.globalRegistry, {
-    description: "Nothing to say, we're just happy"
+    description: 'Nothing to say, we\'re just happy'
 });
 
 export type zapiListingCartToggleResponse = z.infer<typeof zApiListingCartToggleResponse>;
@@ -2749,7 +2724,7 @@ export type zapiListingIgnoreToggleRequest = z.infer<typeof zApiListingIgnoreTog
  * Nothing to say, we're just happy
  */
 export const zApiListingIgnoreToggleResponse = z.void().register(z.globalRegistry, {
-    description: "Nothing to say, we're just happy"
+    description: 'Nothing to say, we\'re just happy'
 });
 
 export type zapiListingIgnoreToggleResponse = z.infer<typeof zApiListingIgnoreToggleResponse>;
@@ -2796,7 +2771,7 @@ export type zapiListingFlagToggleRequest = z.infer<typeof zApiListingFlagToggleD
  * Nothing to say, we're just happy
  */
 export const zApiListingFlagToggleResponse = z.void().register(z.globalRegistry, {
-    description: "Nothing to say, we're just happy"
+    description: 'Nothing to say, we\'re just happy'
 });
 
 export type zapiListingFlagToggleResponse = z.infer<typeof zApiListingFlagToggleResponse>;
@@ -2932,10 +2907,10 @@ export type zapiLocationAutocompleteRequest = z.infer<typeof zApiLocationAutocom
 
 export const zApiLocationAutocompleteResponse = z.union([
     z.array(zLocation).register(z.globalRegistry, {
-        description: "Location(s) found (cache hit)"
+        description: 'Location(s) found (cache hit)'
     }),
     z.array(zLocation).register(z.globalRegistry, {
-        description: "Location(s) created (cache miss)"
+        description: 'Location(s) created (cache miss)'
     })
 ]);
 
@@ -2959,7 +2934,7 @@ export type zapiLocationFetchResponse = z.infer<typeof zApiLocationFetchResponse
 export const zApiS3PresignData = z.object({
     body: z.object({
         path: z.string().min(3).register(z.globalRegistry, {
-            description: "Object path. After stripping leading '/', must start with `<userId>/`"
+            description: 'Object path. After stripping leading \'/\', must start with `<userId>/`'
         }),
         extension: zAllowedExtensions,
         contentType: zAllowedContentTypes
@@ -2976,10 +2951,10 @@ export type zapiS3PresignRequest = z.infer<typeof zApiS3PresignData>;
 export const zApiS3PresignResponse = z.object({
     url: z.url(),
     cdn: z.string().register(z.globalRegistry, {
-        description: "CDN url where the file lives"
+        description: 'CDN url where the file lives'
     })
 }).register(z.globalRegistry, {
-    description: "Pre-signed URL generated successfully."
+    description: 'Pre-signed URL generated successfully.'
 });
 
 export type zapiS3PresignResponse = z.infer<typeof zApiS3PresignResponse>;
@@ -3056,7 +3031,7 @@ export type zapiUserExPatchRequest = z.infer<typeof zApiUserExPatchData>;
  * User extended information updated successfully
  */
 export const zApiUserExPatchResponse = z.void().register(z.globalRegistry, {
-    description: "User extended information updated successfully"
+    description: 'User extended information updated successfully'
 });
 
 export type zapiUserExPatchResponse = z.infer<typeof zApiUserExPatchResponse>;

@@ -5,6 +5,7 @@ import { withGalleryQueryBuilder } from "../db/withGalleryQueryBuilder";
 import { withGallerySelect } from "../db/withGallerySelect";
 import type { GalleryQuerySchema } from "../schema/GalleryQuerySchema";
 import { GallerySchema } from "../schema/GallerySchema";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 
 export namespace galleryCollectionFx {
 	export interface Props {
@@ -17,6 +18,7 @@ export const galleryCollectionFx = ({
 }: galleryCollectionFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
@@ -30,7 +32,10 @@ export const galleryCollectionFx = ({
 					size: 10,
 				},
 				filter,
-				where,
+				where: {
+					...where,
+					userId: user.id,
+				},
 				query: withGalleryQueryBuilder,
 			});
 		});
