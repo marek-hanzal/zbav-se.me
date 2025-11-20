@@ -15,17 +15,22 @@ export namespace TransactionList {
 
 export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) => {
 	const listingTransactionCollectionQuery =
-		withListingTransactionCollectionQuery.useSuspenseQuery({
-			sort: [
-				{
-					field: "updatedAt",
-					direction: "desc",
+		withListingTransactionCollectionQuery.useSuspenseQuery(
+			{
+				sort: [
+					{
+						field: "updatedAt",
+						direction: "desc",
+					},
+				],
+				meta: {
+					side,
 				},
-			],
-			meta: {
-				side,
 			},
-		});
+			{
+				refetchInterval: 10_000,
+			},
+		);
 
 	return (
 		<Container

@@ -640,6 +640,24 @@ export const sListingTransactionSellerInfo = {
     ]
 } as const;
 
+export const sListingTransactionPatch = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/ListingTransactionStatus'
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSide'
+        }
+    },
+    required: [
+        'id'
+    ]
+} as const;
+
 export const sListingTransactionCreate = {
     type: 'object',
     properties: {

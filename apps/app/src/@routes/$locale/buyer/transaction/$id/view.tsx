@@ -4,6 +4,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { EpilogBadge } from "~/app/listing-transaction/ui/buyer/EpilogBadge";
 import { TransactionLogList } from "~/app/listing-transaction-log/ui/TransactionLogList";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
@@ -29,14 +30,19 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 	},
 	component() {
 		const { locale, id } = Route.useParams();
-		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery({
-			where: {
-				id,
+		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery(
+			{
+				where: {
+					id,
+				},
+				meta: {
+					side: "buyer",
+				},
 			},
-			meta: {
-				side: "buyer",
+			{
+				refetchInterval: 10_000,
 			},
-		});
+		);
 		const listingTransaction = listingTransactionFetchQuery.data;
 
 		return (
@@ -53,7 +59,10 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 					/>
 				}
 			>
-				<Container>
+				<Container
+					ui={"Buyer-TransactionDetail-root"}
+					gap={"lg"}
+				>
 					<TransactionLogList
 						side={"buyer"}
 						query={{
@@ -63,11 +72,13 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 							sort: [
 								{
 									field: "createdAt",
-									direction: "desc",
+									direction: "asc",
 								},
 							],
 						}}
 					/>
+
+					<EpilogBadge listingTransaction={listingTransaction} />
 				</Container>
 			</TitleContainer>
 		);

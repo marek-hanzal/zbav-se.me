@@ -71,6 +71,9 @@
 1e3d85c7c23a71840d9beb99b3e899a3f42d37c190376c17982f5ffa:
     ref: Listing Score - Raw score - no value (label)
     value: Čerstvý inzerát
+23fe9f2374988c20d18944a0e9c26724d358d8fe3ec9a8114bca3e2b:
+    ref: Seller - Reject transaction (label)
+    value: Odmítnout
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
@@ -479,6 +482,9 @@ Listing common sort value price - desc:
 Listing common sort value price - unused:
     static: true
     value: Cena (bez řazení)
+a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
+    ref: human
+    value: human
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
@@ -629,7 +635,7 @@ d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     value: Stav
 d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
     ref: Buyer - account age (label)
-    value: Věk účtu kupujícího
+    value: Věk účtu
 d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
     ref: Feed selection (button)
     value: Koukni na inzeráty
@@ -657,6 +663,9 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 dc8a5604f1b9115b53ec4d872f7412328bb63401b0d48651c5e8cbac:
     ref: Preparing cart feed (title)
     value: Připravuji košík...
+deccabc66c5cecc1232610a2cd5efe676f3c556ff1b3681df1936a48:
+    ref: Buyer - score (label)
+    value: Hodnocení
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
     ref: "0"
     value: "0"
@@ -698,6 +707,9 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
     ref: Next - feed condition (button)
     value: Stavy
+ecb2741020da43ce8754ffe647403bad8c01f4025eadc6c5941641d6:
+    ref: Seller - Accept transaction (label)
+    value: Přijmout
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat

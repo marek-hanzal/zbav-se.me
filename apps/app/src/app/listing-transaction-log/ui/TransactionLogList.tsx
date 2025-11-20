@@ -18,14 +18,19 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	...props
 }) => {
 	const listingTransactionLogCollectionQuery =
-		withListingTransactionLogCollectionQuery.useSuspenseQuery(query);
+		withListingTransactionLogCollectionQuery.useSuspenseQuery(query, {
+			refetchInterval: 10_000,
+		});
 
 	return (
 		<Container
 			ui={`TransactionLogList-${side}-root`}
+			layout={"vertical-flex"}
 			tweak={[
 				tweak,
 			]}
+			height={"content"}
+			gap={"md"}
 			{...props}
 		>
 			{listingTransactionLogCollectionQuery.data.data.map((item) => (

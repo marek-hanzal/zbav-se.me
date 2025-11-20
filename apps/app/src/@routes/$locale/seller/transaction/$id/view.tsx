@@ -31,14 +31,16 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 	component() {
 		const { locale, id } = Route.useParams();
 
-		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery({
-			where: {
-				id,
+		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery(
+			{
+				where: {
+					id,
+				},
+				meta: {
+					side: "seller",
+				},
 			},
-			meta: {
-				side: "seller",
-			},
-		});
+		);
 		const listingTransaction = listingTransactionFetchQuery.data;
 
 		return (
@@ -65,7 +67,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 						sort: [
 							{
 								field: "createdAt",
-								direction: "desc",
+								direction: "asc",
 							},
 						],
 					}}

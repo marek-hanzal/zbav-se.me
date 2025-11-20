@@ -40,8 +40,30 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 								"flex-col",
 								"gap-2",
 								match(side)
-									.with("buyer", () => "items-end")
-									.with("seller", () => "items-start")
+									.with("buyer", () => {
+										return match(listingTransactionLog.side)
+											.with("buyer", () => "items-end")
+											.with("seller", () => "items-start")
+											.with(
+												"system",
+												"transaction",
+												"unknown",
+												() => "items-center",
+											)
+											.exhaustive();
+									})
+									.with("seller", () => {
+										return match(listingTransactionLog.side)
+											.with("buyer", () => "items-start")
+											.with("seller", () => "items-end")
+											.with(
+												"system",
+												"transaction",
+												"unknown",
+												() => "items-center",
+											)
+											.exhaustive();
+									})
 									.exhaustive(),
 							],
 						},
@@ -58,6 +80,8 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 				size={"md"}
 				display={"block"}
 				font={"bold"}
+				theme={"light"}
+				tone={"secondary"}
 				tweak={{
 					slot: {
 						root: {

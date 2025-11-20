@@ -9,5 +9,10 @@ export namespace StatusRejected {
 }
 
 export const StatusRejected: FC<StatusRejected.Props> = (props) => {
-	return <StatusEvent {...props} />;
+	return (
+		<StatusEvent
+			ui={"Seller-Buyer-StatusRejected-root"}
+			{...props}
+		/>
+	);
 };

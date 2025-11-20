@@ -1,11 +1,11 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { AccessDeniedError } from "~/error/AccessDeniedError";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
 import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
 import { ListingTransactionContextFx } from "./ListingTransactionContextFx";
@@ -53,7 +53,7 @@ export const listingTransactionPatchFx = ({
 			}
 
 			if (transaction.userId !== user.id && transaction.listingUserId !== user.id) {
-				return yield* new InvalidRequestError({
+				return yield* new AccessDeniedError({
 					message: "You are not allowed to modify this transaction",
 				});
 			}
@@ -74,7 +74,6 @@ export const listingTransactionPatchFx = ({
 								days: config.extend,
 							})
 							.toJSDate(),
-						userId: user.id,
 					}))
 					.where("id", "=", transactionId)
 					.returningAll()
