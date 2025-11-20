@@ -1,5 +1,6 @@
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode } from "react";
+import { Icon, SpinnerIcon } from "../../icon";
 import { Badge } from "../badge/Badge";
 import { Tx } from "../tx/Tx";
 import { Container } from "./Container";
@@ -26,6 +27,7 @@ export namespace ContainerValueList {
 		 * Action element to display next to the title.
 		 */
 		action?: ReactNode;
+		loading?: boolean;
 	}
 }
 
@@ -35,6 +37,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	items,
 	render,
 	action,
+	loading,
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
@@ -83,34 +86,38 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				height={"auto"}
 				round={"lg"}
 			>
-				{items.map((item) => (
-					<Badge
-						key={item.id}
-						tone={"secondary"}
-						theme={"light"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"flex",
-										"flex-col",
-										"items-start",
-										"h-fit",
-										"w-full",
-									],
-									token: [
-										"round.md",
-										"square.md",
-									],
-								},
-							},
-						}}
-					>
-						{render(item)}
-					</Badge>
-				))}
+				{loading
+					? null
+					: items.map((item) => (
+							<Badge
+								key={item.id}
+								tone={"secondary"}
+								theme={"light"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"flex",
+												"flex-col",
+												"items-start",
+												"h-fit",
+												"w-full",
+											],
+											token: [
+												"round.md",
+												"square.md",
+											],
+										},
+									},
+								}}
+							>
+								{render(item)}
+							</Badge>
+						))}
 
-				{items.length === 0 && <Tx label={textEmpty} />}
+				{loading && <Icon icon={SpinnerIcon} />}
+
+				{!loading && items.length === 0 && <Tx label={textEmpty} />}
 			</Container>
 		</Container>
 	);
