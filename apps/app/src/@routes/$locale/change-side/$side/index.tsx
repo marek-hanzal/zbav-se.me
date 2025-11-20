@@ -1,6 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import type { tUserSide } from "@zbav-se.me/sdk/api/session";
-import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/session";
+import type { tUserSide } from "@zbav-se.me/sdk/api/user";
+import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { match } from "ts-pattern";
 

@@ -1,6 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tListingTransactionLogQuery, tUserSide } from "@zbav-se.me/sdk/api/session";
-import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/session";
+import type { tListingTransactionLogQuery, tUserSide } from "@zbav-se.me/sdk/api/user";
+import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { TransactionLogItem } from "~/app/listing-transaction-log/ui/TransactionLogItem";
 

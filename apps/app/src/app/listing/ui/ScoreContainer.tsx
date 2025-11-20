@@ -2,7 +2,7 @@ import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tListingMetrics } from "@zbav-se.me/sdk/api/session";
+import type { tListingMetrics } from "@zbav-se.me/sdk/api/user";
 import { ScoreIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 

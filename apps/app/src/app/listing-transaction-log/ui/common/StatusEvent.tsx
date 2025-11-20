@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tListingTransactionLog, tUserSide } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransactionLog, tUserSide } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";

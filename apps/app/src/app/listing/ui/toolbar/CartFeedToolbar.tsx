@@ -2,7 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/session";
+import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/user";
 import { type FC, useState } from "react";
 import { ToolbarContainer } from "~/app/ui/toolbar/ToolbarContainer";
 import { ListingCartButton } from "../button/ListingCartButton";

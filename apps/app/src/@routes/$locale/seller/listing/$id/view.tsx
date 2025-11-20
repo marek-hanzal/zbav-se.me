@@ -10,65 +10,54 @@ import { Sheet } from "@zbav-se.me/ui/sheet";
 export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 	component() {
 		const { id, locale } = Route.useParams();
-		const listingQuery = withListingFetchQuery.useQuery({
+		const listingQuery = withListingFetchQuery.useSuspenseQuery({
 			where: {
 				id,
 			},
 		});
-		const locationQuery = withLocationFetchQuery.useQuery(
-			{
-				where: {
-					id: listingQuery.data?.locationId,
-				},
+		const locationQuery = withLocationFetchQuery.useSuspenseQuery({
+			enabled: !!listingQuery.data?.locationId,
+			where: {
+				id: listingQuery.data?.locationId,
 			},
-			{
-				enabled: !!listingQuery.data?.locationId,
-			},
-		);
+		});
 
 		return (
 			<Container square={"md"}>
 				<Sheet>
-					<Data
-						result={listingQuery}
-						renderSuccess={({ data }) => {
-							return (
-								<div className={"flex flex-col gap-2 px-4"}>
-									<div>
-										<PriceInline
-											locale={locale}
-											price={data.price}
-											currency={data.currency}
-										/>
-									</div>
-									<Data
-										result={locationQuery}
-										renderSuccess={({ data }) => {
-											return data.address;
-										}}
-									/>
+					<div className={"flex flex-col gap-2 px-4"}>
+						<div>
+							<PriceInline
+								locale={locale}
+								price={listingQuery.data.price}
+								currency={listingQuery.data.currency}
+							/>
+						</div>
+						<Data
+							result={locationQuery}
+							renderSuccess={({ data }) => {
+								return data.address;
+							}}
+						/>
 
-									<LinkTo
-										to={"/$locale/dashboard"}
-										params={{
-											locale,
-										}}
-									>
-										[Dashboard]
-									</LinkTo>
+						<LinkTo
+							to={"/$locale/dashboard"}
+							params={{
+								locale,
+							}}
+						>
+							[Dashboard]
+						</LinkTo>
 
-									{data.gallery.map((image) => (
-										<img
-											key={image.id}
-											className={"w-full"}
-											src={image.upload.url}
-											alt={image.id}
-										/>
-									))}
-								</div>
-							);
-						}}
-					/>
+						{listingQuery.data.gallery.map((image) => (
+							<img
+								key={image.id}
+								className={"w-full"}
+								src={image.upload.url}
+								alt={image.id}
+							/>
+						))}
+					</div>
 				</Sheet>
 			</Container>
 		);

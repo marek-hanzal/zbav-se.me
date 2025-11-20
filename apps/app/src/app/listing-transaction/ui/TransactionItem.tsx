@@ -3,7 +3,7 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { tListingTransaction, tUserSide } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransaction, tUserSide } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";

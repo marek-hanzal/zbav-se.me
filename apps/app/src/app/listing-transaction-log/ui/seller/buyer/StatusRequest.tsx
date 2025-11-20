@@ -2,7 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { StatusEvent } from "../../common/StatusEvent";
 

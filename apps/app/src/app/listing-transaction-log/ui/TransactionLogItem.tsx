@@ -4,7 +4,7 @@ import type {
 	tListingTransactionSide,
 	tListingTransactionStatus,
 	tUserSide,
-} from "@zbav-se.me/sdk/api/session";
+} from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { StatusRejected as BuyerBuyerStatusRejected } from "~/app/listing-transaction-log/ui/buyer/buyer/StatusRejected";

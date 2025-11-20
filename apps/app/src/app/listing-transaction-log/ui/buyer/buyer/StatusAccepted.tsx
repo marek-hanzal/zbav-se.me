@@ -1,4 +1,4 @@
-import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { StatusEvent } from "../../common/StatusEvent";
 

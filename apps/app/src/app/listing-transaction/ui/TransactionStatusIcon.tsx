@@ -1,5 +1,5 @@
 import { Icon } from "@use-pico/client/icon";
-import type { tListingTransactionStatus } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
 import { CancelIcon, CheckIcon, SentIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 

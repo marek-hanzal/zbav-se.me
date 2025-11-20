@@ -1,5 +1,5 @@
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingTransactionStatus, tUserSide } from "@zbav-se.me/sdk/api/session";
+import type { tListingTransactionStatus, tUserSide } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 

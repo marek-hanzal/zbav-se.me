@@ -2,7 +2,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/session";
+import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/user";
 import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
