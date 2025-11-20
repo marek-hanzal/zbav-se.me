@@ -46,7 +46,7 @@ export async function getRouter() {
 				</Container>
 			);
 		},
-		defaultPendingMs: 500,
+		defaultPendingMs: 100,
 		scrollRestoration: true,
 	});
 
