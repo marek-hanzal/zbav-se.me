@@ -1,14 +1,16 @@
 import { auth } from "../auth/auth";
-import { database } from "../database/kysely";
+import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
 import { withAuthApi } from "./auth/withAuthApi";
 import { withCorsApi } from "./cors/withCorsApi";
 import { withOpenApiApi } from "./open-api/withOpenApiApi";
 import { withOriginApi } from "./origin/withOriginApi";
 
-export const withRootApi: Routes.Fn = (routes) => {
+export const withRootApi: Routes.FnWithDeps<{
+	database: WithDatabase;
+}> = (routes, deps) => {
 	routes.root.use(async (c, next) => {
-		c.set("database", database.kysely);
+		c.set("database", deps.database);
 
 		try {
 			const session = await auth.api.getSession({

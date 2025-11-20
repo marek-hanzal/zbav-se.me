@@ -5,12 +5,13 @@ import { secureHeaders } from "hono/secure-headers";
 import { withPublicApi } from "./@public/withPublicApi";
 import { withRootApi } from "./@root/withRootApi";
 import { withSessionApi } from "./@session/withSessionApi";
-import { withTokenApi } from "./@token/withTokenApi";
+import { withUserApi } from "./@user/withUserApi";
 import { AppEnv } from "./AppEnv";
+import { database } from "./database/kysely";
 import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
-import { withTokenHono } from "./hono/withTokenHono";
+import { withUserHono } from "./hono/withUserHono";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -81,12 +82,20 @@ const routes: Routes = {
 	root: app,
 	publicHono: withHono(),
 	sessionHono: withSessionHono(),
-	tokenHono: withTokenHono(),
+	userHono: withUserHono(),
 };
 
-withRootApi(routes);
-withPublicApi(routes);
-withSessionApi(routes);
-withTokenApi(routes);
+withRootApi(routes, {
+	database: database.kysely,
+});
+withPublicApi(routes, {
+	database: database.kysely,
+});
+withSessionApi(routes, {
+	database: database.kysely,
+});
+withUserApi(routes, {
+	database: database.kysely,
+});
 
 export default app;

@@ -12,6 +12,7 @@ export const ListingTransactionLogFilterSchema = z
 		status: ListingTransactionStatusSchema.optional(),
 		statusIn: ListingTransactionStatusSchema.array().optional(),
 		side: ListingTransactionSideSchema.optional(),
+		userId: z.string().optional(),
 	})
 	.openapi("ListingTransactionLogFilter", {
 		description: "Filter object for listing transaction log collection",
