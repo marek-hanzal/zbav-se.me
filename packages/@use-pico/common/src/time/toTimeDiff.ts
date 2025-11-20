@@ -31,7 +31,7 @@ export const toTimeDiff = ({
 
 	return match(type)
 		.with("human", () => {
-			const units: DurationUnits = [
+			const baseUnits: DurationUnits = [
 				"year",
 				"month",
 				"day",
@@ -39,20 +39,21 @@ export const toTimeDiff = ({
 				"minute",
 			];
 
-			const diff = target.diff(now, units);
+			const diff = target.diff(now, baseUnits);
 
+			let units: DurationUnits = baseUnits;
+
+			/**
+			 * Cut off units so the time diff is not too long
+			 */
 			if (Math.abs(diff.years) > 0) {
-				units.pop();
-				units.pop();
-				units.pop();
+				units = baseUnits.slice(0, 2);
 			} else if (Math.abs(diff.months) > 0) {
-				units.pop();
-				units.pop();
+				units = baseUnits.slice(0, 3);
 			} else if (Math.abs(diff.days) > 0) {
-				units.pop();
-				units.pop();
+				units = baseUnits.slice(0, 3);
 			} else if (Math.abs(diff.hours) > 0) {
-				units.pop();
+				units = baseUnits.slice(0, 4);
 			}
 
 			return target.diff(now, units).toHuman({

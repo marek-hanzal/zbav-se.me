@@ -2,6 +2,7 @@ import { useParams } from "@tanstack/react-router";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withListingTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
@@ -30,6 +31,8 @@ export const BuyerInfoContainer: FC<BuyerInfoContainer.Props> = ({
 	return (
 		<Container
 			ui={"BuyerInfoContainer-root"}
+			layout={"vertical-flex"}
+			gap={"sm"}
 			{...props}
 		>
 			<BadgeValue
@@ -38,6 +41,14 @@ export const BuyerInfoContainer: FC<BuyerInfoContainer.Props> = ({
 					locale,
 					time: buyerInfoQuery.data.registered,
 					type: "human",
+				})}
+			/>
+
+			<BadgeValue
+				textLabel={"Buyer - score (label)"}
+				textValue={toLocaleNumber({
+					locale,
+					number: buyerInfoQuery.data.score,
 				})}
 			/>
 		</Container>
