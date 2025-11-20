@@ -1625,6 +1625,9 @@ export const zListing = z.object({
     }),
     hasFlag: z.boolean().register(z.globalRegistry, {
         description: 'Whether the user flagged this listing'
+    }),
+    hasTransaction: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user has a transaction with this listing'
     })
 }).register(z.globalRegistry, {
     description: 'Listing data'

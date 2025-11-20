@@ -8,7 +8,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { CartIcon } from "@zbav-se.me/ui/icon";
+import { CartIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
 
@@ -42,8 +42,25 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 					theme: "light",
 				}}
 			>
-				{/** biome-ignore lint/correctness/noConstantCondition: <explanation> */}
-				{true ? (
+				{listing.hasTransaction ? (
+					<LinkTo
+						to={"/$locale/buyer/transaction/list"}
+						params={{
+							locale,
+						}}
+						full
+					>
+						<Button
+							label={"View transactions (button)"}
+							iconEnabled={TransactionIcon}
+							theme={"light"}
+							size={"xl"}
+							full
+						/>
+					</LinkTo>
+				) : null}
+
+				{listing.hasTransaction ? null : (
 					<ListingTransactionCreateButton
 						listing={listing}
 						onPostMutation={() => {
@@ -55,7 +72,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 							});
 						}}
 					/>
-				) : null}
+				)}
 
 				<Button
 					label={listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"}

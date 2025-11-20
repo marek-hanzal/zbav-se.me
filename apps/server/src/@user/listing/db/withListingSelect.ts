@@ -1,9 +1,9 @@
 import { sql } from "kysely";
 import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import type { WithDatabase } from "../../../database/WithDatabase";
-import type { ListingMetaSchema } from "../schema/ListingMetaSchema";
-import type { ListingSortSchema } from "../schema/ListingSortSchema";
+import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
+import type { ListingSortSchema } from "~/@user/listing/schema/ListingSortSchema";
+import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingSelect {
 	export interface Props {
@@ -116,6 +116,20 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 						.where("lf.userId", "=", userId),
 				)
 				.as("hasFlag"),
+
+			eb
+				.exists(
+					eb
+						.selectFrom("listing_transaction as lt")
+						.select(sql`1`.as("true"))
+						.whereRef("lt.listingId", "=", "l.id")
+						.where("lt.userId", "=", userId)
+						.where("lt.status", "in", [
+							"request",
+							"accepted",
+						]),
+				)
+				.as("hasTransaction"),
 		]);
 
 	for (const item of sort ?? []) {

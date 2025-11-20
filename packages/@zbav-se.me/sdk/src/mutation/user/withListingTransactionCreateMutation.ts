@@ -6,6 +6,7 @@ import type {
 	tApiListingTransactionCreateResponse,
 	tListingTransactionCreate,
 } from "../../api/user/types.gen";
+import { withListingCollectionQuery, withListingFetchQuery } from "../../query/user";
 import { withListingTransactionCollectionQuery } from "../../query/user/withListingTransactionCollectionQuery";
 
 export const withListingTransactionCreateMutation = withMutation<
@@ -28,6 +29,8 @@ export const withListingTransactionCreateMutation = withMutation<
 		);
 	},
 	invalidate: [
+		withListingCollectionQuery,
+		withListingFetchQuery,
 		withListingTransactionCollectionQuery,
 	],
 });

@@ -115,6 +115,9 @@
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
   ref: Listing Score - Feed views (label)
   value: Listing Score - Feed views (label)
+37f71ccaada9d3b7570f1389bfb7dcc587f4af8ba96d5718a260f55a:
+  ref: content
+  value: content
 3b25f85d532657d509b12da1d687a994f0da387a55ede88e53ffc704:
   ref: Listing price (label)
   value: Listing price (label)
@@ -175,6 +178,9 @@
 4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
   ref: Second tap to unignore listing (toast)
   value: Second tap to unignore listing (toast)
+4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
+  ref: light
+  value: light
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
   ref: Next - price (button)
   value: Next - price (button)
@@ -211,9 +217,6 @@
 5acf9318c3159040f4bbccb62a16c675285b6054ad32a78ff7b6249f:
   ref: Buyer detail (link)
   value: Buyer detail (link)
-5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
-  ref: Feed category (label)
-  value: Feed category (label)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
@@ -229,6 +232,9 @@
 60e1a755731eceba9aa1ed1d495b897bac04a5a5f2b167b45b064c8a:
   ref: Transaction closed - seller (label)
   value: Transaction closed - seller (label)
+6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
+  ref: View transactions (button)
+  value: View transactions (button)
 63b7339dbc11bd2ed8261905a9dfd6355cd7752429f212f0d1ccafb3:
   ref: Listing Score - Cart - no value (label)
   value: Listing Score - Cart - no value (label)
@@ -238,9 +244,9 @@
 6810972e1b5c962b2d6bba8f1d42faf0373fc4a6f038a0d748551d62:
   ref: Listing added to your cart (toast)
   value: Listing added to your cart (toast)
-69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
-  ref: Feed category not selected
-  value: Feed category not selected
+6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
+  ref: secondary
+  value: secondary
 6c388d147d0bda5b267c52bbf80482f6ba0eff93845084586bd1c058:
   ref: No transactions found - seller (title)
   value: No transactions found - seller (title)
@@ -292,6 +298,9 @@
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
+7c4c135a16c52d890c89f22c80c0457270fe347976ad1339098e430e:
+  ref: icon
+  value: icon
 7e472530689c600917abb98ada2c43213c4477f22ac6cde0c7acfa8e:
   ref: Add to cart (button)
   value: Add to cart (button)
@@ -337,9 +346,6 @@
 8c00fb88a09730194dd045f089bbea7de140bf5478b6e0626ba8b28d:
   ref: Transactions (label)
   value: Transactions (label)
-8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
-  ref: Feed location (label)
-  value: Feed location (label)
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
   ref: Feed (label)
   value: Feed (label)
@@ -483,9 +489,6 @@ c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
-cc083652e6791bac33175a322ae3064003ec8bb18c536014c239732f:
-  ref: Preparing feed (title)
-  value: Preparing feed (title)
 cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
   ref: Error adding listing to cart (toast)
   value: Error adding listing to cart (toast)
@@ -501,9 +504,6 @@ cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
 cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
   ref: I want to buy (label)
   value: I want to buy (label)
-d14a028c2a3a2bc9476102bb288234c415a2b01f828ea62ac5b3e42f:
-  ref: ""
-  value: ""
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
   ref: Location not found (badge)
   value: Location not found (badge)
@@ -546,6 +546,9 @@ dc8a5604f1b9115b53ec4d872f7412328bb63401b0d48651c5e8cbac:
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
   ref: "0"
   value: "0"
+dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
+  ref: md
+  value: md
 e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
   ref: Listing removed from your cart (toast)
   value: Listing removed from your cart (toast)
@@ -573,9 +576,6 @@ e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
   ref: Seller home (title)
   value: Seller home (title)
-e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
-  ref: Feed location not selected
-  value: Feed location not selected
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
   ref: Next - feed condition (button)
   value: Next - feed condition (button)

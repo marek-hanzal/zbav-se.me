@@ -30,6 +30,8 @@ export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) =
 	return (
 		<Container
 			ui="TransactionList-root"
+			layout={"vertical-flex"}
+			gap={"md"}
 			{...props}
 		>
 			{listingTransactionCollectionQuery.data.data.length > 0

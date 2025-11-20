@@ -1545,6 +1545,10 @@ export type tListing = {
      * Whether the user flagged this listing
      */
     hasFlag: boolean;
+    /**
+     * Whether the user has a transaction with this listing
+     */
+    hasTransaction: boolean;
 };
 
 /**

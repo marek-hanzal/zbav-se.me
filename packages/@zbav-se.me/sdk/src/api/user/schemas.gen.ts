@@ -1886,6 +1886,9 @@ export const sListing = {
         },
         hasFlag: {
             type: 'boolean'
+        },
+        hasTransaction: {
+            type: 'boolean'
         }
     },
     required: [
@@ -1905,7 +1908,8 @@ export const sListing = {
         'gallery',
         'isInCart',
         'isIgnored',
-        'hasFlag'
+        'hasFlag',
+        'hasTransaction'
     ]
 } as const;
 
