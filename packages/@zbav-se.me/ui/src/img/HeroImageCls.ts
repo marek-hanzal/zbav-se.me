@@ -1,5 +1,5 @@
 import { type Cls, contract } from "@use-pico/cls";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { ThemeCls } from "../cls/ThemeCls";
 
 export const HeroImageCls = contract(ThemeCls.contract)
 	.slots([

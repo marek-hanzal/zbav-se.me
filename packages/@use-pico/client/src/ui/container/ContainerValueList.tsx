@@ -1,9 +1,9 @@
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode } from "react";
-import { Icon, SpinnerIcon } from "../../icon";
 import { Badge } from "../badge/Badge";
 import { Tx } from "../tx/Tx";
 import { Container } from "./Container";
+import { SpinnerContainer } from "./SpinnerContainer";
 
 export namespace ContainerValueList {
 	export interface Props<TItem extends EntitySchema.Type> {
@@ -115,7 +115,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 							</Badge>
 						))}
 
-				{loading && <Icon icon={SpinnerIcon} />}
+				{loading && <SpinnerContainer height={"content"} />}
 
 				{!loading && items.length === 0 && <Tx label={textEmpty} />}
 			</Container>

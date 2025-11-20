@@ -1,7 +1,6 @@
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
-import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "~/app/location/ui/LocationSelection/ListContainer";
 

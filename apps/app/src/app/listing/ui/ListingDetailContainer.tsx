@@ -6,9 +6,9 @@ import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, useEffect } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
-import { HeroImage } from "~/app/ui/img/HeroImage";
 
 export namespace ListingDetailContainer {
 	export namespace ScoreBadge {

@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tUserSide } from "@zbav-se.me/sdk/api/user";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { match } from "ts-pattern";
 
 export const Route = createFileRoute("/$locale/change-side/$side/")({

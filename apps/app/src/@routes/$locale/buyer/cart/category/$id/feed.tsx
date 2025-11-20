@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
-import { FlowContainer, SpinnerContainer } from "@zbav-se.me/ui/container";
+import { FlowContainer } from "@zbav-se.me/ui/container";
 import { BuyerIcon, DeadEndIcon } from "@zbav-se.me/ui/icon";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
@@ -18,12 +19,27 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 		scrollToListingId: z.string().optional(),
 	}),
 	pendingComponent() {
+		const { locale } = Route.useParams();
+
 		return (
-			<SpinnerContainer
-				statusProps={{
-					textTitle: translator.text("Preparing cart feed (title)"),
-				}}
-			/>
+			<FlowContainer
+				left={
+					<LinkTo
+						to={"/$locale/buyer/cart/list"}
+						params={{
+							locale,
+						}}
+					>
+						<BadgeLeft />
+					</LinkTo>
+				}
+			>
+				<SpinnerContainer
+					statusProps={{
+						textTitle: translator.text("Preparing cart feed (title)"),
+					}}
+				/>
+			</FlowContainer>
 		);
 	},
 	component() {

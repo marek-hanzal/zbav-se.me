@@ -136,7 +136,7 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
 				/>
 
 				<CategoryValueList
-                    categoryIdIn={feed.query?.filter?.categoryIdIn}
+					categoryIdIn={feed.query?.filter?.categoryIdIn}
 					textTitle={"Feed category (label)"}
 					textEmpty={"Feed category not selected"}
 					action={

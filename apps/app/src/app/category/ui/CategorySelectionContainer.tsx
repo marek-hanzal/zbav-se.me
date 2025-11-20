@@ -1,8 +1,7 @@
 import type { useSelection } from "@use-pico/client/hook";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { SpinnerContainer } from "@zbav-se.me/ui/container";
 import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "~/app/category/ui/CategorySelectionContainer/ListContainer";
 

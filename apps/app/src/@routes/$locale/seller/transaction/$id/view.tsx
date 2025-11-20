@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import { TransactionLogList } from "~/app/listing-transaction-log/ui/TransactionLogList";
 
 export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({

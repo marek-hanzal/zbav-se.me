@@ -1,7 +1,8 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { SpinnerContainer, TitleContainer } from "@zbav-se.me/ui/container";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
 import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
