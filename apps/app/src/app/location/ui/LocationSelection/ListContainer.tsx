@@ -7,8 +7,8 @@ import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
-import type { tLocation } from "node_modules/@zbav-se.me/sdk/src/api/session/types.gen";
 import type { FC } from "react";
 
 export namespace ListContainer {

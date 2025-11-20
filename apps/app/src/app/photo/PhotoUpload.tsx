@@ -3,8 +3,8 @@ import { Container } from "@use-pico/client/ui/container";
 import { Data } from "@use-pico/client/ui/data";
 import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
-import { withUploadMutation } from "@zbav-se.me/sdk/mutation/session";
-import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import {
