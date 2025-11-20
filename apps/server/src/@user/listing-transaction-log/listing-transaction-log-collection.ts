@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
@@ -8,8 +9,8 @@ import { listingTransactionLogCollectionFx } from "./fx/listingTransactionLogCol
 import { ListingTransactionLogQuerySchema } from "./schema/ListingTransactionLogQuerySchema";
 import { ListingTransactionLogSchema } from "./schema/ListingTransactionLogSchema";
 
-export const withListingTransactionLogCollectionApi: Routes.Fn = ({ sessionHono }) => {
-	sessionHono.openapi(
+export const withListingTransactionLogCollectionApi: Routes.Fn = ({ userHono }) => {
+	userHono.openapi(
 		createRoute({
 			method: "post",
 			path: "/listing-transaction-log/collection",
@@ -49,7 +50,7 @@ export const withListingTransactionLogCollectionApi: Routes.Fn = ({ sessionHono 
 			},
 			tags: [
 				"listing-transaction-log",
-				"session",
+				"user",
 			],
 		}),
 		async (c) => {
@@ -62,6 +63,7 @@ export const withListingTransactionLogCollectionApi: Routes.Fn = ({ sessionHono 
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
+				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

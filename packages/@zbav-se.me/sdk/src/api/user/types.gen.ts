@@ -333,6 +333,150 @@ export type tListingScore = {
 };
 
 /**
+ * Query object for listing transaction log collection
+ */
+export type tListingTransactionLogQuery = {
+    cursor?: tCursor;
+    filter?: tListingTransactionLogFilter;
+    where?: tListingTransactionLogWhere;
+    sort?: Array<tListingTransactionLogSort>;
+};
+
+/**
+ * Field of the listing transaction log sort
+ */
+export const tListingTransactionLogSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the listing transaction log sort
+ */
+export type tListingTransactionLogSortField = typeof tListingTransactionLogSortField[keyof typeof tListingTransactionLogSortField];
+
+/**
+ * Sort object for listing transaction log collection
+ */
+export type tListingTransactionLogSort = {
+    field: tListingTransactionLogSortField;
+    direction: tOrder;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingTransactionLogWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact listingTransactionId
+     */
+    listingTransactionId?: string;
+    status?: tListingTransactionStatus;
+    statusIn?: Array<tListingTransactionStatus>;
+    side?: tListingTransactionSide;
+    userId?: string;
+};
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export const tListingTransactionSide = {
+    seller: 'seller',
+    buyer: 'buyer',
+    transaction: 'transaction',
+    system: 'system',
+    unknown: 'unknown'
+} as const;
+
+/**
+ * Who initiated or affected the transaction change
+ */
+export type tListingTransactionSide = typeof tListingTransactionSide[keyof typeof tListingTransactionSide];
+
+/**
+ * Current status of the listing transaction
+ */
+export const tListingTransactionStatus = {
+    request: 'request',
+    accepted: 'accepted',
+    rejected: 'rejected',
+    success: 'success',
+    closed: 'closed',
+    expired: 'expired'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tListingTransactionStatus = typeof tListingTransactionStatus[keyof typeof tListingTransactionStatus];
+
+/**
+ * Filter object for listing transaction log collection
+ */
+export type tListingTransactionLogFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact listingTransactionId
+     */
+    listingTransactionId?: string;
+    status?: tListingTransactionStatus;
+    statusIn?: Array<tListingTransactionStatus>;
+    side?: tListingTransactionSide;
+    userId?: string;
+};
+
+/**
+ * Collection of listing transaction log entries
+ */
+export type tListingTransactionLogCollection = {
+    data: Array<tListingTransactionLog>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing transaction log entry
+ */
+export type tListingTransactionLog = {
+    /**
+     * ID of the transaction log entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the log
+     */
+    listingTransactionId: string;
+    status: tListingTransactionStatus;
+    side: tListingTransactionSide;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
  * Buyer info for the listing transaction
  */
 export type tListingTransactionBuyerInfo = {
@@ -429,39 +573,6 @@ export type tListingTransactionWhere = {
     status?: tListingTransactionStatus;
     side?: tListingTransactionSide;
 };
-
-/**
- * Who initiated or affected the transaction change
- */
-export const tListingTransactionSide = {
-    seller: 'seller',
-    buyer: 'buyer',
-    transaction: 'transaction',
-    system: 'system',
-    unknown: 'unknown'
-} as const;
-
-/**
- * Who initiated or affected the transaction change
- */
-export type tListingTransactionSide = typeof tListingTransactionSide[keyof typeof tListingTransactionSide];
-
-/**
- * Current status of the listing transaction
- */
-export const tListingTransactionStatus = {
-    request: 'request',
-    accepted: 'accepted',
-    rejected: 'rejected',
-    success: 'success',
-    closed: 'closed',
-    expired: 'expired'
-} as const;
-
-/**
- * Current status of the listing transaction
- */
-export type tListingTransactionStatus = typeof tListingTransactionStatus[keyof typeof tListingTransactionStatus];
 
 /**
  * Filter object for listing transaction collection
@@ -2778,6 +2889,31 @@ export type tApiListingTransactionBuyerInfoResponse = {
 };
 
 export type apiListingTransactionBuyerInfoResponse = tApiListingTransactionBuyerInfoResponse[keyof tApiListingTransactionBuyerInfoResponse];
+
+export type tApiListingTransactionLogCollectionRequest = {
+    body?: tListingTransactionLogQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-transaction-log/collection';
+};
+
+export type apiListingTransactionLogCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionLogCollectionError = apiListingTransactionLogCollectionErrors[keyof apiListingTransactionLogCollectionErrors];
+
+export type tApiListingTransactionLogCollectionResponse = {
+    /**
+     * Access collection of listing transaction log entries based on provided query
+     */
+    200: tListingTransactionLogCollection;
+};
+
+export type apiListingTransactionLogCollectionResponse = tApiListingTransactionLogCollectionResponse[keyof tApiListingTransactionLogCollectionResponse];
 
 export type tApiListingScoreCollectionRequest = {
     body?: tListingScoreQuery;

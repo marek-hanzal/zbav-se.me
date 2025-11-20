@@ -1,4 +1,4 @@
-import type { CategoryMissFilterSchema } from "../schema/CategoryMissFilterSchema";
+import type { CategoryMissFilterSchema } from "~/@session/category-miss/schema/CategoryMissFilterSchema";
 import type { withCategoryMissSelect } from "./withCategoryMissSelect";
 
 export namespace withCategoryMissQueryBuilder {

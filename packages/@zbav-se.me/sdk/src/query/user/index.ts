@@ -13,5 +13,6 @@ export { withListingMetricsFetchQuery } from "./withListingMetricsFetchQuery";
 export { withListingTransactionBuyerInfoQuery } from "./withListingTransactionBuyerInfoQuery";
 export { withListingTransactionCollectionQuery } from "./withListingTransactionCollectionQuery";
 export { withListingTransactionFetchQuery } from "./withListingTransactionFetchQuery";
+export { withListingTransactionLogCollectionQuery } from "./withListingTransactionLogCollectionQuery";
 export { withListingTransactionSellerInfoQuery } from "./withListingTransactionSellerInfoQuery";
 export { withUploadFetchQuery } from "./withUploadFetchQuery";

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CategoryQuerySchema } from "../../../@session/category/schema/CategoryQuerySchema";
+import { CategoryQuerySchema } from "~/@session/category/schema/CategoryQuerySchema";
 import { CategoryCartSortSchema } from "./CategoryCartSortSchema";
 
 export const CategoryCartQuerySchema = z

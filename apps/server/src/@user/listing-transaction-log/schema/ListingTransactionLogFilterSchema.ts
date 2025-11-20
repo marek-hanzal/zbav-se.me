@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
-import { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
+import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
+import { ListingTransactionStatusSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const ListingTransactionLogFilterSchema = z
 	.object({

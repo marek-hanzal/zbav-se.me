@@ -2,7 +2,6 @@ import type { WithDatabase } from "../database/WithDatabase";
 import type { Routes } from "../hono/Routes";
 import type { MessageSchema } from "../schema/MessageSchema";
 import { withCategoryApi } from "./category/withCategoryApi";
-import { withListingTransactionLogApi } from "./listing-transaction-log/withListingTransactionLogApi";
 import { withLocationApi } from "./location/withLocationApi";
 
 export const withSessionApi: Routes.FnWithDeps<{
@@ -29,7 +28,6 @@ export const withSessionApi: Routes.FnWithDeps<{
 	});
 
 	withCategoryApi(routes);
-	withListingTransactionLogApi(routes);
 	withLocationApi(routes);
 
 	routes.root.route("/api/session", routes.sessionHono);

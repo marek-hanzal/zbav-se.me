@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { sql } from "kysely";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace categoryMissCreateFx {
 	export interface Props {

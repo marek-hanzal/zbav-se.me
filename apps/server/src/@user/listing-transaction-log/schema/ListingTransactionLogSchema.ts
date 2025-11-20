@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionLogDbSchema } from "../../../app/listing-transaction-log/schema/ListingTransactionLogDbSchema";
+import { ListingTransactionLogDbSchema } from "~/app/listing-transaction-log/schema/ListingTransactionLogDbSchema";
 
 export const ListingTransactionLogSchema = z
 	.object({

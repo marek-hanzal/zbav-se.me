@@ -42,5 +42,18 @@ export const withListingTransactionLogQueryBuilder: withListingTransactionLogQue
 			query = query.where("ltl.side", "=", where.side);
 		}
 
+		/**
+		 * Listing log can see only users related to the transaction
+		 */
+		if (where.userId) {
+			const userId = where.userId;
+			query = query.where((eb) => {
+				return eb.or([
+					eb("lt.userId", "=", userId),
+					eb("l.userId", "=", userId),
+				]);
+			});
+		}
+
 		return query;
 	};

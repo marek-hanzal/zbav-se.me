@@ -1,3 +1,4 @@
+import { fileURLToPath } from "node:url";
 import { defineNitroConfig } from "nitro/config";
 
 export default defineNitroConfig({
@@ -5,6 +6,9 @@ export default defineNitroConfig({
 		options: {
 			target: "node22",
 		},
+	},
+	alias: {
+		"~": fileURLToPath(new URL("./src", import.meta.url)),
 	},
 	// vercel: {
 	// 	config: {

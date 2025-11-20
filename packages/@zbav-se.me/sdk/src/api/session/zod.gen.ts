@@ -28,37 +28,6 @@ export const zCursor = z.object({
 export type zCursor = z.infer<typeof zCursor>;
 
 /**
- * Who initiated or affected the transaction change
- */
-export const zListingTransactionSide = z.enum([
-    'seller',
-    'buyer',
-    'transaction',
-    'system',
-    'unknown'
-]).register(z.globalRegistry, {
-    description: 'Who initiated or affected the transaction change'
-});
-
-export type zListingTransactionSide = z.infer<typeof zListingTransactionSide>;
-
-/**
- * Current status of the listing transaction
- */
-export const zListingTransactionStatus = z.enum([
-    'request',
-    'accepted',
-    'rejected',
-    'success',
-    'closed',
-    'expired'
-]).register(z.globalRegistry, {
-    description: 'Current status of the listing transaction'
-});
-
-export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus>;
-
-/**
  * Category data
  */
 export const zCategory = z.object({
@@ -335,128 +304,6 @@ export const zLocationAutocomplete = z.object({
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
 
 /**
- * Field of the listing transaction log sort
- */
-export const zListingTransactionLogSortField = z.enum(['createdAt']).register(z.globalRegistry, {
-    description: 'Field of the listing transaction log sort'
-});
-
-export type zListingTransactionLogSortField = z.infer<typeof zListingTransactionLogSortField>;
-
-/**
- * Sort object for listing transaction log collection
- */
-export const zListingTransactionLogSort = z.object({
-    field: zListingTransactionLogSortField,
-    direction: zOrder
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing transaction log collection'
-});
-
-export type zListingTransactionLogSort = z.infer<typeof zListingTransactionLogSort>;
-
-/**
- * App-based filters
- */
-export const zListingTransactionLogWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingTransactionId'
-    })),
-    status: z.optional(zListingTransactionStatus),
-    statusIn: z.optional(z.array(zListingTransactionStatus)),
-    side: z.optional(zListingTransactionSide),
-    userId: z.optional(z.string())
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingTransactionLogWhere = z.infer<typeof zListingTransactionLogWhere>;
-
-/**
- * Filter object for listing transaction log collection
- */
-export const zListingTransactionLogFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingTransactionId'
-    })),
-    status: z.optional(zListingTransactionStatus),
-    statusIn: z.optional(z.array(zListingTransactionStatus)),
-    side: z.optional(zListingTransactionSide),
-    userId: z.optional(z.string())
-}).register(z.globalRegistry, {
-    description: 'Filter object for listing transaction log collection'
-});
-
-export type zListingTransactionLogFilter = z.infer<typeof zListingTransactionLogFilter>;
-
-/**
- * Query object for listing transaction log collection
- */
-export const zListingTransactionLogQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingTransactionLogFilter),
-    where: z.optional(zListingTransactionLogWhere),
-    sort: z.optional(z.array(zListingTransactionLogSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing transaction log collection'
-});
-
-export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQuery>;
-
-/**
- * Listing transaction log entry
- */
-export const zListingTransactionLog = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction log entry'
-    }),
-    listingTransactionId: z.string().register(z.globalRegistry, {
-        description: 'ID of the transaction referenced by the log'
-    }),
-    status: zListingTransactionStatus,
-    side: zListingTransactionSide,
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing transaction log entry'
-});
-
-export type zListingTransactionLog = z.infer<typeof zListingTransactionLog>;
-
-/**
- * Collection of listing transaction log entries
- */
-export const zListingTransactionLogCollection = z.object({
-    data: z.array(zListingTransactionLog),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing transaction log entries'
-});
-
-export type zListingTransactionLogCollection = z.infer<typeof zListingTransactionLogCollection>;
-
-/**
  * Count data
  */
 export const zCount = z.object({
@@ -599,21 +446,6 @@ export type zapiCategoryCountRequest = z.infer<typeof zApiCategoryCountData>;
 export const zApiCategoryCountResponse = zCount;
 
 export type zapiCategoryCountResponse = z.infer<typeof zApiCategoryCountResponse>;
-
-export const zApiListingTransactionLogCollectionData = z.object({
-    body: z.optional(zListingTransactionLogQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingTransactionLogCollectionRequest = z.infer<typeof zApiListingTransactionLogCollectionData>;
-
-/**
- * Access collection of listing transaction log entries based on provided query
- */
-export const zApiListingTransactionLogCollectionResponse = zListingTransactionLogCollection;
-
-export type zapiListingTransactionLogCollectionResponse = z.infer<typeof zApiListingTransactionLogCollectionResponse>;
 
 export const zApiLocationAutocompleteData = z.object({
     body: z.optional(zLocationAutocomplete),

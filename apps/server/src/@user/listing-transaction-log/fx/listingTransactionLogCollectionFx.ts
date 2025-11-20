@@ -1,5 +1,6 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withListingTransactionLogQueryBuilder } from "../db/withListingTransactionLogQueryBuilder";
 import { withListingTransactionLogSelect } from "../db/withListingTransactionLogSelect";
@@ -17,6 +18,7 @@ export const listingTransactionLogCollectionFx = ({
 }: listingTransactionLogCollectionFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
+		const user = yield* UserContextFx;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
@@ -30,7 +32,10 @@ export const listingTransactionLogCollectionFx = ({
 					size: 10,
 				},
 				filter,
-				where,
+				where: {
+					...where,
+					userId: user.id,
+				},
 				query: withListingTransactionLogQueryBuilder,
 			});
 		});

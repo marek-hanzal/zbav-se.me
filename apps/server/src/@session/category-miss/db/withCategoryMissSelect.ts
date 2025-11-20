@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
-import type { WithDatabase } from "../../../database/WithDatabase";
-import type { CategoryMissSortSchema } from "../schema/CategoryMissSortSchema";
+import type { CategoryMissSortSchema } from "~/@session/category-miss/schema/CategoryMissSortSchema";
+import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withCategoryMissSelect {
 	export interface Props {

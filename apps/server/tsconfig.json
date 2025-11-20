@@ -9,7 +9,13 @@
 			{
 				"name": "@effect/language-service"
 			}
-		]
+		],
+		"baseUrl": ".",
+		"paths": {
+			"~/*": [
+				"./src/*"
+			]
+		}
 	},
 	"include": [
 		"src/**/*"
