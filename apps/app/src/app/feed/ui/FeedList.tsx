@@ -1,34 +1,28 @@
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
-import { withFeedCollectionQuery, withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
-import { type FC, useId } from "react";
-import { FeedItem } from "~/app/feed/ui/FeedItem";
+import { type FC, Suspense } from "react";
+import { FeedListContainer } from "~/app/feed/ui/FeedList/ListContainer";
 
 export namespace FeedList {
 	export interface Props {
 		query: tFeedQuery;
-		locale: string;
 		limit?: number;
-		scrollTo?: string;
 		onClickCreate?: () => void;
 	}
 }
 
 export const FeedList: FC<FeedList.Props> = ({
 	query,
-	locale,
 	limit: feedCountLimit = 10,
-	scrollTo: _scrollTo,
 	onClickCreate,
 }) => {
-	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
 	const feedCountQuery = withFeedCountQuery.useSuspenseQuery({});
 
-	const feedId = useId();
 	const isLimitReached = feedCountQuery.data.filter >= feedCountLimit;
 	const shouldShowCreateButton = onClickCreate !== undefined;
 
@@ -63,21 +57,9 @@ export const FeedList: FC<FeedList.Props> = ({
 				</Container>
 			) : null}
 
-			<Container
-				layout={"vertical-flex"}
-				scroll={"vertical"}
-				gap={"md"}
-			>
-				{feedCollectionQuery.data.data.map((feed) => {
-					return (
-						<FeedItem
-							key={`${feedId}-${feed.id}`}
-							feed={feed}
-							locale={locale}
-						/>
-					);
-				})}
-			</Container>
+			<Suspense fallback={<SpinnerContainer />}>
+				<FeedListContainer query={query} />
+			</Suspense>
 
 			{shouldShowCreateButton && !isLimitReached && feedCountQuery.data.filter > 0 ? (
 				<Button

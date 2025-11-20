@@ -1,15 +1,18 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { Suspense } from "react";
 import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/view")({
 	component() {
-		const { feed } = useLoaderData({
-			from: "/$locale/buyer/feed/$id",
+		const { id } = Route.useParams();
+
+		const feedFetchQuery = withFeedFetchQuery.useSuspenseQuery({
+			where: {
+				id,
+			},
 		});
 		const { locale } = Route.useParams();
 
@@ -26,9 +29,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/view")({
 					/>
 				}
 			>
-				<Suspense fallback={<SpinnerContainer />}>
-					<FeedContainer feed={feed} />
-				</Suspense>
+				<FeedContainer feed={feedFetchQuery.data} />
 			</TitleContainer>
 		);
 	},

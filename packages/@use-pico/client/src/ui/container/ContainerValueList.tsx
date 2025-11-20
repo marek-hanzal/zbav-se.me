@@ -115,7 +115,12 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 							</Badge>
 						))}
 
-				{loading && <SpinnerContainer height={"content"} />}
+				{loading && (
+					<SpinnerContainer
+						height={"content"}
+						size="md"
+					/>
+				)}
 
 				{!loading && items.length === 0 && <Tx label={textEmpty} />}
 			</Container>

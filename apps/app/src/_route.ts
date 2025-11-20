@@ -28,7 +28,6 @@ import { Route as LocaleBuyerTransactionListRouteImport } from './@routes/$local
 import { Route as LocaleBuyerTransactionIdRouteImport } from './@routes/$locale/buyer/transaction/$id'
 import { Route as LocaleBuyerListingListRouteImport } from './@routes/$locale/buyer/listing/list'
 import { Route as LocaleBuyerFeedSelectRouteImport } from './@routes/$locale/buyer/feed/select'
-import { Route as LocaleBuyerFeedIdRouteImport } from './@routes/$locale/buyer/feed/$id'
 import { Route as LocaleBuyerCartListRouteImport } from './@routes/$locale/buyer/cart/list'
 import { Route as LocaleSellerTransactionIdViewRouteImport } from './@routes/$locale/seller/transaction/$id/view'
 import { Route as LocaleSellerListingWizardTitleRouteImport } from './@routes/$locale/seller/listing/wizard/title'
@@ -165,11 +164,6 @@ const LocaleBuyerListingListRoute = LocaleBuyerListingListRouteImport.update({
 const LocaleBuyerFeedSelectRoute = LocaleBuyerFeedSelectRouteImport.update({
   id: '/buyer/feed/select',
   path: '/buyer/feed/select',
-  getParentRoute: () => LocaleRoute,
-} as any)
-const LocaleBuyerFeedIdRoute = LocaleBuyerFeedIdRouteImport.update({
-  id: '/buyer/feed/$id',
-  path: '/buyer/feed/$id',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleBuyerCartListRoute = LocaleBuyerCartListRouteImport.update({
@@ -316,9 +310,9 @@ const LocaleBuyerFeedWizardAgeRoute =
     getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdViewRoute = LocaleBuyerFeedIdViewRouteImport.update({
-  id: '/view',
-  path: '/view',
-  getParentRoute: () => LocaleBuyerFeedIdRoute,
+  id: '/buyer/feed/$id/view',
+  path: '/buyer/feed/$id/view',
+  getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleSellerTransactionIdBuyerInfoRoute =
   LocaleSellerTransactionIdBuyerInfoRouteImport.update({
@@ -328,45 +322,45 @@ const LocaleSellerTransactionIdBuyerInfoRoute =
   } as any)
 const LocaleBuyerFeedIdEditTitleRoute =
   LocaleBuyerFeedIdEditTitleRouteImport.update({
-    id: '/edit/title',
-    path: '/edit/title',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/title',
+    path: '/buyer/feed/$id/edit/title',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdEditSortRoute =
   LocaleBuyerFeedIdEditSortRouteImport.update({
-    id: '/edit/sort',
-    path: '/edit/sort',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/sort',
+    path: '/buyer/feed/$id/edit/sort',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdEditNameRoute =
   LocaleBuyerFeedIdEditNameRouteImport.update({
-    id: '/edit/name',
-    path: '/edit/name',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/name',
+    path: '/buyer/feed/$id/edit/name',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdEditLocationRoute =
   LocaleBuyerFeedIdEditLocationRouteImport.update({
-    id: '/edit/location',
-    path: '/edit/location',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/location',
+    path: '/buyer/feed/$id/edit/location',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdEditConditionRoute =
   LocaleBuyerFeedIdEditConditionRouteImport.update({
-    id: '/edit/condition',
-    path: '/edit/condition',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/condition',
+    path: '/buyer/feed/$id/edit/condition',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdEditCategoryRoute =
   LocaleBuyerFeedIdEditCategoryRouteImport.update({
-    id: '/edit/category',
-    path: '/edit/category',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/category',
+    path: '/buyer/feed/$id/edit/category',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerFeedIdEditAgeRoute =
   LocaleBuyerFeedIdEditAgeRouteImport.update({
-    id: '/edit/age',
-    path: '/edit/age',
-    getParentRoute: () => LocaleBuyerFeedIdRoute,
+    id: '/buyer/feed/$id/edit/age',
+    path: '/buyer/feed/$id/edit/age',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerCartListingIdViewRoute =
   LocaleBuyerCartListingIdViewRouteImport.update({
@@ -406,7 +400,6 @@ export interface FileRoutesByFullPath {
   '/$locale/buyer': typeof LocaleBuyerIndexRoute
   '/$locale/seller': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
-  '/$locale/buyer/feed/$id': typeof LocaleBuyerFeedIdRouteWithChildren
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
   '/$locale/buyer/listing/list': typeof LocaleBuyerListingListRoute
   '/$locale/buyer/transaction/$id': typeof LocaleBuyerTransactionIdRouteWithChildren
@@ -464,7 +457,6 @@ export interface FileRoutesByTo {
   '/$locale/buyer': typeof LocaleBuyerIndexRoute
   '/$locale/seller': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
-  '/$locale/buyer/feed/$id': typeof LocaleBuyerFeedIdRouteWithChildren
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
   '/$locale/buyer/listing/list': typeof LocaleBuyerListingListRoute
   '/$locale/buyer/transaction/$id': typeof LocaleBuyerTransactionIdRouteWithChildren
@@ -524,7 +516,6 @@ export interface FileRoutesById {
   '/$locale/buyer/': typeof LocaleBuyerIndexRoute
   '/$locale/seller/': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
-  '/$locale/buyer/feed/$id': typeof LocaleBuyerFeedIdRouteWithChildren
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
   '/$locale/buyer/listing/list': typeof LocaleBuyerListingListRoute
   '/$locale/buyer/transaction/$id': typeof LocaleBuyerTransactionIdRouteWithChildren
@@ -585,7 +576,6 @@ export interface FileRouteTypes {
     | '/$locale/buyer'
     | '/$locale/seller'
     | '/$locale/buyer/cart/list'
-    | '/$locale/buyer/feed/$id'
     | '/$locale/buyer/feed/select'
     | '/$locale/buyer/listing/list'
     | '/$locale/buyer/transaction/$id'
@@ -643,7 +633,6 @@ export interface FileRouteTypes {
     | '/$locale/buyer'
     | '/$locale/seller'
     | '/$locale/buyer/cart/list'
-    | '/$locale/buyer/feed/$id'
     | '/$locale/buyer/feed/select'
     | '/$locale/buyer/listing/list'
     | '/$locale/buyer/transaction/$id'
@@ -702,7 +691,6 @@ export interface FileRouteTypes {
     | '/$locale/buyer/'
     | '/$locale/seller/'
     | '/$locale/buyer/cart/list'
-    | '/$locale/buyer/feed/$id'
     | '/$locale/buyer/feed/select'
     | '/$locale/buyer/listing/list'
     | '/$locale/buyer/transaction/$id'
@@ -889,13 +877,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerFeedSelectRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/feed/$id': {
-      id: '/$locale/buyer/feed/$id'
-      path: '/buyer/feed/$id'
-      fullPath: '/$locale/buyer/feed/$id'
-      preLoaderRoute: typeof LocaleBuyerFeedIdRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/buyer/cart/list': {
       id: '/$locale/buyer/cart/list'
       path: '/buyer/cart/list'
@@ -1066,10 +1047,10 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/buyer/feed/$id/view': {
       id: '/$locale/buyer/feed/$id/view'
-      path: '/view'
+      path: '/buyer/feed/$id/view'
       fullPath: '/$locale/buyer/feed/$id/view'
       preLoaderRoute: typeof LocaleBuyerFeedIdViewRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/seller/transaction/$id/buyer/info': {
       id: '/$locale/seller/transaction/$id/buyer/info'
@@ -1080,52 +1061,52 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/buyer/feed/$id/edit/title': {
       id: '/$locale/buyer/feed/$id/edit/title'
-      path: '/edit/title'
+      path: '/buyer/feed/$id/edit/title'
       fullPath: '/$locale/buyer/feed/$id/edit/title'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditTitleRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/$id/edit/sort': {
       id: '/$locale/buyer/feed/$id/edit/sort'
-      path: '/edit/sort'
+      path: '/buyer/feed/$id/edit/sort'
       fullPath: '/$locale/buyer/feed/$id/edit/sort'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditSortRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/$id/edit/name': {
       id: '/$locale/buyer/feed/$id/edit/name'
-      path: '/edit/name'
+      path: '/buyer/feed/$id/edit/name'
       fullPath: '/$locale/buyer/feed/$id/edit/name'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditNameRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/$id/edit/location': {
       id: '/$locale/buyer/feed/$id/edit/location'
-      path: '/edit/location'
+      path: '/buyer/feed/$id/edit/location'
       fullPath: '/$locale/buyer/feed/$id/edit/location'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditLocationRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/$id/edit/condition': {
       id: '/$locale/buyer/feed/$id/edit/condition'
-      path: '/edit/condition'
+      path: '/buyer/feed/$id/edit/condition'
       fullPath: '/$locale/buyer/feed/$id/edit/condition'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditConditionRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/$id/edit/category': {
       id: '/$locale/buyer/feed/$id/edit/category'
-      path: '/edit/category'
+      path: '/buyer/feed/$id/edit/category'
       fullPath: '/$locale/buyer/feed/$id/edit/category'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditCategoryRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/feed/$id/edit/age': {
       id: '/$locale/buyer/feed/$id/edit/age'
-      path: '/edit/age'
+      path: '/buyer/feed/$id/edit/age'
       fullPath: '/$locale/buyer/feed/$id/edit/age'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditAgeRouteImport
-      parentRoute: typeof LocaleBuyerFeedIdRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/cart/listing/$id/view': {
       id: '/$locale/buyer/cart/listing/$id/view'
@@ -1157,31 +1138,6 @@ declare module '@tanstack/react-router' {
     }
   }
 }
-
-interface LocaleBuyerFeedIdRouteChildren {
-  LocaleBuyerFeedIdViewRoute: typeof LocaleBuyerFeedIdViewRoute
-  LocaleBuyerFeedIdEditAgeRoute: typeof LocaleBuyerFeedIdEditAgeRoute
-  LocaleBuyerFeedIdEditCategoryRoute: typeof LocaleBuyerFeedIdEditCategoryRoute
-  LocaleBuyerFeedIdEditConditionRoute: typeof LocaleBuyerFeedIdEditConditionRoute
-  LocaleBuyerFeedIdEditLocationRoute: typeof LocaleBuyerFeedIdEditLocationRoute
-  LocaleBuyerFeedIdEditNameRoute: typeof LocaleBuyerFeedIdEditNameRoute
-  LocaleBuyerFeedIdEditSortRoute: typeof LocaleBuyerFeedIdEditSortRoute
-  LocaleBuyerFeedIdEditTitleRoute: typeof LocaleBuyerFeedIdEditTitleRoute
-}
-
-const LocaleBuyerFeedIdRouteChildren: LocaleBuyerFeedIdRouteChildren = {
-  LocaleBuyerFeedIdViewRoute: LocaleBuyerFeedIdViewRoute,
-  LocaleBuyerFeedIdEditAgeRoute: LocaleBuyerFeedIdEditAgeRoute,
-  LocaleBuyerFeedIdEditCategoryRoute: LocaleBuyerFeedIdEditCategoryRoute,
-  LocaleBuyerFeedIdEditConditionRoute: LocaleBuyerFeedIdEditConditionRoute,
-  LocaleBuyerFeedIdEditLocationRoute: LocaleBuyerFeedIdEditLocationRoute,
-  LocaleBuyerFeedIdEditNameRoute: LocaleBuyerFeedIdEditNameRoute,
-  LocaleBuyerFeedIdEditSortRoute: LocaleBuyerFeedIdEditSortRoute,
-  LocaleBuyerFeedIdEditTitleRoute: LocaleBuyerFeedIdEditTitleRoute,
-}
-
-const LocaleBuyerFeedIdRouteWithChildren =
-  LocaleBuyerFeedIdRoute._addFileChildren(LocaleBuyerFeedIdRouteChildren)
 
 interface LocaleBuyerTransactionIdRouteChildren {
   LocaleBuyerTransactionIdViewRoute: typeof LocaleBuyerTransactionIdViewRoute
@@ -1225,7 +1181,6 @@ interface LocaleRouteChildren {
   LocaleBuyerIndexRoute: typeof LocaleBuyerIndexRoute
   LocaleSellerIndexRoute: typeof LocaleSellerIndexRoute
   LocaleBuyerCartListRoute: typeof LocaleBuyerCartListRoute
-  LocaleBuyerFeedIdRoute: typeof LocaleBuyerFeedIdRouteWithChildren
   LocaleBuyerFeedSelectRoute: typeof LocaleBuyerFeedSelectRoute
   LocaleBuyerListingListRoute: typeof LocaleBuyerListingListRoute
   LocaleBuyerTransactionIdRoute: typeof LocaleBuyerTransactionIdRouteWithChildren
@@ -1234,6 +1189,7 @@ interface LocaleRouteChildren {
   LocaleSellerTransactionIdRoute: typeof LocaleSellerTransactionIdRouteWithChildren
   LocaleSellerTransactionListRoute: typeof LocaleSellerTransactionListRoute
   LocaleChangeSideSideIndexRoute: typeof LocaleChangeSideSideIndexRoute
+  LocaleBuyerFeedIdViewRoute: typeof LocaleBuyerFeedIdViewRoute
   LocaleBuyerFeedWizardAgeRoute: typeof LocaleBuyerFeedWizardAgeRoute
   LocaleBuyerFeedWizardCategoryRoute: typeof LocaleBuyerFeedWizardCategoryRoute
   LocaleBuyerFeedWizardConditionRoute: typeof LocaleBuyerFeedWizardConditionRoute
@@ -1259,6 +1215,13 @@ interface LocaleRouteChildren {
   LocaleBuyerCartListingIdScoreRoute: typeof LocaleBuyerCartListingIdScoreRoute
   LocaleBuyerCartListingIdSellerRoute: typeof LocaleBuyerCartListingIdSellerRoute
   LocaleBuyerCartListingIdViewRoute: typeof LocaleBuyerCartListingIdViewRoute
+  LocaleBuyerFeedIdEditAgeRoute: typeof LocaleBuyerFeedIdEditAgeRoute
+  LocaleBuyerFeedIdEditCategoryRoute: typeof LocaleBuyerFeedIdEditCategoryRoute
+  LocaleBuyerFeedIdEditConditionRoute: typeof LocaleBuyerFeedIdEditConditionRoute
+  LocaleBuyerFeedIdEditLocationRoute: typeof LocaleBuyerFeedIdEditLocationRoute
+  LocaleBuyerFeedIdEditNameRoute: typeof LocaleBuyerFeedIdEditNameRoute
+  LocaleBuyerFeedIdEditSortRoute: typeof LocaleBuyerFeedIdEditSortRoute
+  LocaleBuyerFeedIdEditTitleRoute: typeof LocaleBuyerFeedIdEditTitleRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
@@ -1272,7 +1235,6 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleBuyerIndexRoute: LocaleBuyerIndexRoute,
   LocaleSellerIndexRoute: LocaleSellerIndexRoute,
   LocaleBuyerCartListRoute: LocaleBuyerCartListRoute,
-  LocaleBuyerFeedIdRoute: LocaleBuyerFeedIdRouteWithChildren,
   LocaleBuyerFeedSelectRoute: LocaleBuyerFeedSelectRoute,
   LocaleBuyerListingListRoute: LocaleBuyerListingListRoute,
   LocaleBuyerTransactionIdRoute: LocaleBuyerTransactionIdRouteWithChildren,
@@ -1281,6 +1243,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleSellerTransactionIdRoute: LocaleSellerTransactionIdRouteWithChildren,
   LocaleSellerTransactionListRoute: LocaleSellerTransactionListRoute,
   LocaleChangeSideSideIndexRoute: LocaleChangeSideSideIndexRoute,
+  LocaleBuyerFeedIdViewRoute: LocaleBuyerFeedIdViewRoute,
   LocaleBuyerFeedWizardAgeRoute: LocaleBuyerFeedWizardAgeRoute,
   LocaleBuyerFeedWizardCategoryRoute: LocaleBuyerFeedWizardCategoryRoute,
   LocaleBuyerFeedWizardConditionRoute: LocaleBuyerFeedWizardConditionRoute,
@@ -1310,6 +1273,13 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleBuyerCartListingIdScoreRoute: LocaleBuyerCartListingIdScoreRoute,
   LocaleBuyerCartListingIdSellerRoute: LocaleBuyerCartListingIdSellerRoute,
   LocaleBuyerCartListingIdViewRoute: LocaleBuyerCartListingIdViewRoute,
+  LocaleBuyerFeedIdEditAgeRoute: LocaleBuyerFeedIdEditAgeRoute,
+  LocaleBuyerFeedIdEditCategoryRoute: LocaleBuyerFeedIdEditCategoryRoute,
+  LocaleBuyerFeedIdEditConditionRoute: LocaleBuyerFeedIdEditConditionRoute,
+  LocaleBuyerFeedIdEditLocationRoute: LocaleBuyerFeedIdEditLocationRoute,
+  LocaleBuyerFeedIdEditNameRoute: LocaleBuyerFeedIdEditNameRoute,
+  LocaleBuyerFeedIdEditSortRoute: LocaleBuyerFeedIdEditSortRoute,
+  LocaleBuyerFeedIdEditTitleRoute: LocaleBuyerFeedIdEditTitleRoute,
 }
 
 const LocaleRouteWithChildren =

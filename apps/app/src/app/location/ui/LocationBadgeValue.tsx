@@ -1,6 +1,7 @@
 import { BadgeValue } from "@use-pico/client/ui/badge";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace LocationBadge {
@@ -30,14 +31,29 @@ export namespace LocationBadgeValue {
 }
 
 export const LocationBadgeValue: FC<LocationBadgeValue.Props> = ({ locationId, ...props }) => {
-	if (locationId) {
-		return (
-			<LocationBadge
-				locationId={locationId}
-				{...props}
-			/>
-		);
-	}
-
-	return <BadgeValue {...props} />;
+	return (
+		<Suspense
+			fallback={
+				<BadgeValue
+					{...props}
+					textValue={
+						<SpinnerContainer
+							type="icon"
+							height="content"
+							size="md"
+						/>
+					}
+				/>
+			}
+		>
+			{locationId ? (
+				<LocationBadge
+					locationId={locationId}
+					{...props}
+				/>
+			) : (
+				<BadgeValue {...props} />
+			)}
+		</Suspense>
+	);
 };

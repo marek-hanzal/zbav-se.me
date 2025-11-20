@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
@@ -10,30 +9,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	validateSearch: z.object({
 		feedId: z.string().optional(),
 	}),
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<TitleContainer
-				textTitle={"Feed select (title)"}
-				left={
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to={"/$locale/buyer"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
-				<SpinnerContainer
-					tone={"unset"}
-					theme={"unset"}
-					square={"unset"}
-				/>
-			</TitleContainer>
-		);
-	},
 	component() {
 		const { locale } = Route.useParams();
 		const search = Route.useSearch();
