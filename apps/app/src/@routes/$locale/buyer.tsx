@@ -21,10 +21,9 @@ export const Route = createFileRoute("/$locale/buyer")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to="/$locale/change-side/$side"
+						to="/$locale/dashboard"
 						params={{
 							locale,
-							side: "none",
 						}}
 					/>
 				}

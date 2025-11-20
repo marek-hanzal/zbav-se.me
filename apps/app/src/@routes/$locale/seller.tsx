@@ -17,17 +17,16 @@ export const Route = createFileRoute("/$locale/seller")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to="/$locale/change-side/$side"
+						to="/$locale/dashboard"
 						params={{
 							locale,
-							side: "none",
 						}}
 					/>
 				}
 			>
 				<SpinnerContainer />
 
-                <SignOutButton
+				<SignOutButton
 					tweak={{
 						slot: {
 							wrapper: {

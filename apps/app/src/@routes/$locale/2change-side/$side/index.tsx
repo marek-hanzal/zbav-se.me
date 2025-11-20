@@ -4,7 +4,7 @@ import type { tUserSide } from "@zbav-se.me/sdk/api/user";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { match } from "ts-pattern";
 
-export const Route = createFileRoute("/$locale/change-side/$side/")({
+export const Route = createFileRoute("/$locale/2change-side/$side/")({
 	pendingComponent() {
 		return <SpinnerContainer />;
 	},

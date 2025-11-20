@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
@@ -33,43 +33,49 @@ export const Route = createFileRoute("/$locale/dashboard")({
 		return (
 			<Container
 				ui="Dashboard-root"
-				layout={"vertical-content-footer"}
+				layout={"vertical-header-content-footer"}
 				gap={"lg"}
 				height={"fit"}
 				items={"center"}
 				square={"xl"}
 			>
+				<Logo />
+
 				<Container
 					ui="Dashboard-container"
 					layout={"vertical-flex"}
 					height={"content"}
 					gap={"xl"}
 				>
-					<Logo />
+					{userExPatchMutation.isPending ? null : (
+						<>
+							<Tile
+								iconEnabled={SellerIcon}
+								label={"I want to sell (label)"}
+								size={"xl"}
+								disabled={userExPatchMutation.isPending}
+								onClick={() => {
+									userExPatchMutation.mutate({
+										side: "seller",
+									});
+								}}
+							/>
 
-					<Tile
-						iconEnabled={SellerIcon}
-						label={"I want to sell (label)"}
-						size={"xl"}
-						disabled={userExPatchMutation.isPending}
-						onClick={() => {
-							userExPatchMutation.mutate({
-								side: "seller",
-							});
-						}}
-					/>
+							<Tile
+								iconEnabled={BuyerIcon}
+								label={"I want to buy (label)"}
+								size={"xl"}
+								disabled={userExPatchMutation.isPending}
+								onClick={() => {
+									userExPatchMutation.mutate({
+										side: "buyer",
+									});
+								}}
+							/>
+						</>
+					)}
 
-					<Tile
-						iconEnabled={BuyerIcon}
-						label={"I want to buy (label)"}
-						size={"xl"}
-						disabled={userExPatchMutation.isPending}
-						onClick={() => {
-							userExPatchMutation.mutate({
-								side: "buyer",
-							});
-						}}
-					/>
+					{userExPatchMutation.isPending ? <SpinnerContainer /> : null}
 				</Container>
 
 				<SignOutButton
