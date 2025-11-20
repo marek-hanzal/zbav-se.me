@@ -1,9 +1,9 @@
 import { usePatchCollection } from "@use-pico/client/hook";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import type { tListing, tListingCollection, tListingQuery } from "@zbav-se.me/sdk/api/session";
-import { withListingIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/session";
-import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/session";
+import type { tListing, tListingCollection, tListingQuery } from "@zbav-se.me/sdk/api/user";
+import { withListingIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";

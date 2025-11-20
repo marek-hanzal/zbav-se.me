@@ -4,8 +4,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tFeed } from "@zbav-se.me/sdk/api/session";
-import { withListingCountQuery } from "@zbav-se.me/sdk/query/session";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { withListingCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 

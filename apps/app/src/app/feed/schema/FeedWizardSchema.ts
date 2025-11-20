@@ -1,4 +1,4 @@
-import { zFeedCreate } from "@zbav-se.me/sdk/api/session";
+import { zFeedCreate } from "@zbav-se.me/sdk/api/user";
 import z from "zod";
 
 export const FeedWizardSchema = z.object({

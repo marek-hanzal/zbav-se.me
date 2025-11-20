@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
-import { tListingExpire } from "@zbav-se.me/sdk/api/session";
+import { tListingExpire } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { DateTime } from "luxon";
 import { type FC, useId } from "react";

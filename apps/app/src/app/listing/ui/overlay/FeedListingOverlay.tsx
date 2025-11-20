@@ -5,7 +5,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
-import type { tListing } from "@zbav-se.me/sdk/api/session";
+import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
