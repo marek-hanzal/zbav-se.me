@@ -62,6 +62,9 @@ app.onError((err, c) => {
 			message: err instanceof Error ? err.message : "Internal server error",
 		},
 		500,
+		{
+			"X-Error-Type": "Fallback Server Error",
+		},
 	);
 });
 
