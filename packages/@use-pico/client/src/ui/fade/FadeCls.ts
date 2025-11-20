@@ -44,7 +44,6 @@ export const FadeCls = contract(PicoCls.contract)
 				"opacity-0",
 				"will-change-[opacity]",
 				"bg-linear-to-t",
-				"blur-2xl",
 				"overflow-hidden",
 			],
 			token: [
@@ -62,7 +61,6 @@ export const FadeCls = contract(PicoCls.contract)
 				"opacity-0",
 				"will-change-[opacity]",
 				"bg-linear-to-b",
-				"blur-2xl",
 				"overflow-hidden",
 			],
 			token: [
@@ -81,7 +79,7 @@ export const FadeCls = contract(PicoCls.contract)
 		},
 		"fade.to": {
 			class: [
-				"to-slate-200/85",
+				"to-white",
 			],
 		},
 	})

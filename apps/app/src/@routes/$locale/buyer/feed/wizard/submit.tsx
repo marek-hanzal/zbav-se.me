@@ -5,7 +5,9 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { type tFeedCreate, zFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { Fade } from "@zbav-se.me/ui/fade";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
+import { useRef } from "react";
 import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import { FeedContainer } from "~/app/feed/ui/FeedContainer";
 
@@ -29,6 +31,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 				});
 			},
 		});
+
+		const containerRef = useRef<HTMLDivElement>(null);
 
 		return (
 			<TitleContainer
@@ -71,12 +75,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 						size={"lg"}
 						full
 						onClick={() => {
-							feedCreateMutation.mutate(state as tFeedCreate);
+							feedCreateMutation.mutate({
+								...state,
+								query: {
+									...state.query,
+									where: {
+										withOwn: false,
+									},
+								},
+							} as tFeedCreate);
 						}}
 					/>
 				}
 			>
+				<Fade scrollableRef={containerRef} />
+
 				<FeedContainer
+					ref={containerRef}
 					feed={zFeed
 						.omit({
 							id: true,
