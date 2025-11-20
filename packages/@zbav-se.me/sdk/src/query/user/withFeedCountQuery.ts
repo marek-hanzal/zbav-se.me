@@ -1,6 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiFeedCount } from "../../api/user/sdk.gen";
-import type { tApiFeedCountResponse, tFeedQuery } from "../../api/user/types.gen";
+import { apiFeedCount } from "~/api/user/sdk.gen";
+import type { tApiFeedCountResponse, tFeedQuery } from "~/api/user/types.gen";
 
 export const withFeedCountQuery = withQuery<tFeedQuery, tApiFeedCountResponse[200]>({
 	keys(data) {

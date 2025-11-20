@@ -1,12 +1,12 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiListingIgnoreToggle } from "../../api/user/sdk.gen";
+import { apiListingIgnoreToggle } from "~/api/user/sdk.gen";
 import type {
 	apiListingIgnoreToggleError,
 	tApiListingIgnoreToggleResponse,
 	tListingIgnoreToggle,
-} from "../../api/user/types.gen";
-import { withListingMetricsFetchQuery } from "../../query/user/withListingMetricsFetchQuery";
+} from "~/api/user/types.gen";
+import { withListingMetricsFetchQuery } from "~/query/user/withListingMetricsFetchQuery";
 
 export const withListingIgnoreToggleMutation = withMutation<
 	tListingIgnoreToggle,

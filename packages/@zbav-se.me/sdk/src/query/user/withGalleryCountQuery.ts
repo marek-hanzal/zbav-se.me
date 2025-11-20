@@ -1,6 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiGalleryCount } from "../../api/user/sdk.gen";
-import type { tApiGalleryCountResponse, tGalleryQuery } from "../../api/user/types.gen";
+import { apiGalleryCount } from "~/api/user/sdk.gen";
+import type { tApiGalleryCountResponse, tGalleryQuery } from "~/api/user/types.gen";
 
 export const withGalleryCountQuery = withQuery<tGalleryQuery, tApiGalleryCountResponse[200]>({
 	keys(data) {
