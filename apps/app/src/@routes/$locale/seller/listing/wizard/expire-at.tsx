@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { tListingExpire } from "@zbav-se.me/sdk/api/session";
+import type { tListingExpire } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ExpireAtContainer } from "~/app/expire-at/ui/ExpireAtContainer";

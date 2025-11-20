@@ -7,7 +7,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { sListingCreate } from "@zbav-se.me/sdk/api/session";
+import { sListingCreate } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";

@@ -5,7 +5,7 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
-import { withUploadMutation } from "@zbav-se.me/sdk/mutation/session";
+import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useId, useRef, useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
