@@ -18,14 +18,17 @@ export const StatusRequest: FC<StatusRequest.Props> = (props) => {
 	});
 
 	return (
-		<StatusEvent {...props}>
+		<StatusEvent
+			ui={"Seller-Buyer-StatusRequest"}
+			{...props}
+		>
 			<LinkTo
 				icon={ArrowRightIcon}
 				iconPosition={"right"}
 				to={"/$locale/seller/transaction/$id/buyer/info"}
 				params={{
 					locale,
-					id: props.listingTransactionLog.id,
+					id: props.listingTransactionLog.listingTransactionId,
 				}}
 			>
 				<Tx label="Buyer detail (link)" />

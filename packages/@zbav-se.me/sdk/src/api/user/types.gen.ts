@@ -496,6 +496,10 @@ export type tListingTransactionLog = {
  */
 export type tListingTransactionBuyerInfo = {
     /**
+     * Registration date
+     */
+    registered: string;
+    /**
      * Buyer score
      */
     score: number;

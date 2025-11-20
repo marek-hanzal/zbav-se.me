@@ -627,6 +627,9 @@ d4fd7a75d5cf12bfe3393f9960a95b1154214a585434558dcd62f954:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
+d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
+    ref: Buyer - account age (label)
+    value: Věk účtu kupujícího
 d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
     ref: Feed selection (button)
     value: Koukni na inzeráty

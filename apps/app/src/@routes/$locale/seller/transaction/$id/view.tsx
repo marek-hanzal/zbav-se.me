@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -56,22 +56,20 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 					/>
 				}
 			>
-				<Container>
-					<TransactionLogList
-						side={"seller"}
-						query={{
-							where: {
-								listingTransactionId: id,
+				<TransactionLogList
+					side={"seller"}
+					query={{
+						where: {
+							listingTransactionId: id,
+						},
+						sort: [
+							{
+								field: "createdAt",
+								direction: "desc",
 							},
-							sort: [
-								{
-									field: "createdAt",
-									direction: "desc",
-								},
-							],
-						}}
-					/>
-				</Container>
+						],
+					}}
+				/>
 			</TitleContainer>
 		);
 	},

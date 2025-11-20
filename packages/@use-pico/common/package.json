@@ -27,6 +27,7 @@
 		"luxon": "3.7.2",
 		"preferred-locale": "2.0.2",
 		"qs": "6.14.0",
+		"ts-pattern": "5.9.0",
 		"xxhash-wasm": "1.1.0",
 		"zod": "4.1.12"
 	},

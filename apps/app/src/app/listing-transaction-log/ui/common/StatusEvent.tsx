@@ -85,7 +85,7 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 				}}
 				tone={match<tUserSide, Cls.VariantOf<BadgeCls, "tone">>(side)
 					.with("buyer", () => "primary")
-					.with("seller", () => "link")
+					.with("seller", () => "secondary")
 					.exhaustive()}
 			>
 				<TransactionStatusIcon

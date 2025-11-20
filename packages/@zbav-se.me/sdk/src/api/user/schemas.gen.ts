@@ -613,12 +613,16 @@ export const sListingTransactionLog = {
 export const sListingTransactionBuyerInfo = {
     type: 'object',
     properties: {
+        registered: {
+            type: 'string'
+        },
         score: {
             type: 'number',
             example: 0
         }
     },
     required: [
+        'registered',
         'score'
     ]
 } as const;

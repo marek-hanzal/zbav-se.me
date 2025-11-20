@@ -22,6 +22,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 	return (
 		<Container
+			ui={`TransactionLogList-${side}-root`}
 			tweak={[
 				tweak,
 			]}

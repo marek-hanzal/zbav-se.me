@@ -544,6 +544,9 @@ export type zListingTransactionLogCollection = z.infer<typeof zListingTransactio
  * Buyer info for the listing transaction
  */
 export const zListingTransactionBuyerInfo = z.object({
+    registered: z.string().register(z.globalRegistry, {
+        description: 'Registration date'
+    }),
     score: z.number().register(z.globalRegistry, {
         description: 'Buyer score'
     })
