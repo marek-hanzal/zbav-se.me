@@ -1,27 +1,11 @@
+import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { sql } from "kysely";
-import { genId } from "../../../../../../packages/@use-pico/common/src/gen-id/genId";
-import type { LocationDbSchema } from "../../../app/location/schema/LocationDbSchema";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import { TextTooShortError } from "../error/TextTooShortError";
+import { TextTooShortError } from "~/@session/location/error/TextTooShortError";
+import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { withLocationListFx } from "./withLocationListFx";
 import { withLocationRequestFx } from "./withLocationRequestFx";
-
-/**
- * Generate a numeric lock ID from query and lang for PostgreSQL advisory locks
- * PostgreSQL advisory locks require a bigint (max 2^63-1)
- */
-const getLockId = (text: string, lang: string): number => {
-	const str = `${text}:${lang}`;
-	let hash = 0;
-	for (let i = 0; i < str.length; i++) {
-		const char = str.charCodeAt(i);
-		hash = (hash << 5) - hash + char;
-		hash = hash & hash; // Convert to 32bit integer
-	}
-	return Math.abs(hash);
-};
 
 export namespace locationAutocompleteFx {
 	export interface Props {
@@ -39,40 +23,11 @@ export const locationAutocompleteFx = ({ text, lang, limit = 5 }: locationAutoco
 			});
 		}
 
-		const results = yield* withLocationListFx({
-			query: {
-				where: {
-					query: text,
-					lang,
-				},
-				sort: [
-					{
-						field: "confidence",
-						direction: "desc",
-					},
-				],
-				cursor: {
-					page: 0,
-					size: limit,
-				},
-			},
-		});
-
-		if (results.length > 0) {
-			return results;
-		}
-
 		return yield* withTransactionFx(
 			Effect.gen(function* () {
 				const trx = yield* DatabaseContextFx;
 
-				const lockId = getLockId(text, lang);
-
-				yield* Effect.tryPromise(async () => {
-					return sql`SELECT pg_advisory_xact_lock(${lockId})`.execute(trx);
-				});
-
-				const cache = yield* withLocationListFx({
+				const results = yield* withLocationListFx({
 					query: {
 						where: {
 							query: text,
@@ -91,8 +46,8 @@ export const locationAutocompleteFx = ({ text, lang, limit = 5 }: locationAutoco
 					},
 				});
 
-				if (cache.length > 0) {
-					return cache;
+				if (results.length > 0) {
+					return results;
 				}
 
 				const features = yield* withLocationRequestFx({

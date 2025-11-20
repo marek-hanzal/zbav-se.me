@@ -15,12 +15,12 @@ export const withTransactionFx = <A, E, R>(effect: Effect.Effect<A, E, R>) => {
 			DatabaseContextProvider(trx),
 			Effect.matchEffect({
 				onSuccess(value) {
-					return Effect.tryPromise(async () => trx.commit()).pipe(
+					return Effect.tryPromise(async () => trx.commit().execute()).pipe(
 						Effect.map(() => value),
 					);
 				},
 				onFailure(error) {
-					return Effect.tryPromise(async () => trx.rollback()).pipe(
+					return Effect.tryPromise(async () => trx.rollback().execute()).pipe(
 						Effect.flatMap(() => Effect.fail(error)),
 					);
 				},
