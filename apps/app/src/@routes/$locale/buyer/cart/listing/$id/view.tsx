@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { CategoryIdQuerySchema } from "~/app/category/schema/CategoryIdQuerySchema";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";

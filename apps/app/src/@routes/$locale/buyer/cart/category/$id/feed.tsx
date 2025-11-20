@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/session";
+import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer, SpinnerContainer } from "@zbav-se.me/ui/container";
 import { BuyerIcon, DeadEndIcon } from "@zbav-se.me/ui/icon";
 import z from "zod";
