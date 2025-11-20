@@ -1,0 +1,93 @@
+import { useParams } from "@tanstack/react-router";
+import { UserIcon } from "@use-pico/client/icon";
+import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { CartIcon, FeedIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { Tile } from "~/app/ui/dashboard/Tile";
+
+export namespace BuyerMenu {
+	export interface Props extends Container.Props {
+		//
+	}
+}
+
+export const BuyerMenu = ({ ...props }: BuyerMenu.Props) => {
+	const { locale } = useParams({
+		from: "/$locale",
+	});
+
+	return (
+		<Container
+			layout={"vertical-flex"}
+			scroll={"vertical"}
+			gap={"sm"}
+			items={"center"}
+			{...props}
+		>
+			<LinkTo
+				to="/$locale/buyer/feed/select"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={FeedIcon}
+					label={"Feed (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/buyer/cart/list"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={CartIcon}
+					label={"Cart (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/buyer/transaction/list"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={TransactionIcon}
+					label={"Transactions (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/buyer/shop"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={ShopIcon}
+					label={"Shop (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/buyer/user"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={UserIcon}
+					label={"User profile (label)"}
+				/>
+			</LinkTo>
+		</Container>
+	);
+};

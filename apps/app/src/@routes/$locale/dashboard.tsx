@@ -34,10 +34,9 @@ export const Route = createFileRoute("/$locale/dashboard")({
 			<Container
 				ui="Dashboard-root"
 				layout={"vertical-header-content-footer"}
-				gap={"lg"}
 				height={"fit"}
 				items={"center"}
-				square={"xl"}
+				square={"md"}
 			>
 				<Logo />
 

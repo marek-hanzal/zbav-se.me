@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
+import { SellerMenu } from "~/app/seller/ui/SellerMenu";
 
 export const Route = createFileRoute("/$locale/seller")({
 	pendingComponent() {
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/seller")({
 					/>
 				}
 			>
-				<SpinnerContainer />
+				<SellerMenu />
 
 				<SignOutButton
 					tweak={{
