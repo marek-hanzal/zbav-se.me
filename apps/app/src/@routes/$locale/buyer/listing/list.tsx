@@ -4,7 +4,6 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { translator } from "@use-pico/common/translator";
 import { zListingQuery } from "@zbav-se.me/sdk/api/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
@@ -21,12 +20,23 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 		query: zListingQuery.optional(),
 	}),
 	pendingComponent() {
+		const { locale } = Route.useParams();
+
 		return (
-			<SpinnerContainer
-				statusProps={{
-					textTitle: translator.text("Preparing feed (title)"),
-				}}
-			/>
+			<FlowContainer
+				left={
+					<LinkTo
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
+						}}
+					>
+						<BadgeLeft />
+					</LinkTo>
+				}
+			>
+				<SpinnerContainer />
+			</FlowContainer>
 		);
 	},
 	component() {

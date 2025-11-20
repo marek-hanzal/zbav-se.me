@@ -1,8 +1,8 @@
 import { ContainerValueList } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { type FC, Suspense } from "react";
+import { CategoryInline } from "~/app/category/ui/CategoryInline";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace CategoryList {
@@ -20,15 +20,7 @@ const CategoryList: FC<CategoryList.Props> = ({ categoryIdIn, ...props }) => {
 
 	return (
 		<ContainerValueList
-			render={(category) => (
-				<div className={"flex flex-col gap-0.5 items-start"}>
-					<Typo
-						label={category.group}
-						size={"xs"}
-					/>
-					<Typo label={category.category} />
-				</div>
-			)}
+			render={(category) => <CategoryInline category={category} />}
 			items={categoryCollectionQuery.data.data}
 			{...props}
 		/>

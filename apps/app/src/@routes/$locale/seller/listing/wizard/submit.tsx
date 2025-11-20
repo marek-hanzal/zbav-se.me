@@ -17,12 +17,12 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withCategoryFetchQuery, withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
-import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
@@ -75,21 +75,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const categoryFetchQuery = withCategoryFetchQuery.useSuspenseQuery(
-			{
-				where: {
-					id: state.categoryId,
-				},
-			},
-			{
-				enabled: !!state.categoryId,
-			},
-		);
-		const locationFetchQuery = withLocationFetchQuery.useSuspenseQuery({
-			where: {
-				id: state.locationId,
-			},
-		});
+
 		const createListingMutation = withListingCreateMutation.useMutation({
 			async onPostMutation({ result }) {
 				return navigate({
@@ -221,7 +207,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<ContainerValueList
+								<CategoryValueList
+									categoryIdIn={
+										state.categoryId
+											? [
+													state.categoryId,
+												]
+											: undefined
+									}
 									textTitle={"Listing category (label)"}
 									textEmpty={"no"}
 									action={
@@ -230,10 +223,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 											size={"sm"}
 										/>
 									}
-									items={[
-										categoryFetchQuery.data,
-									]}
-									render={(category) => <CategoryInline category={category} />}
 								/>
 							</LinkTo>
 
@@ -335,19 +324,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								display={"block"}
 								full
 							>
-								<ContainerValueList
-									textTitle={"Listing location (label)"}
-									textEmpty={"no"}
+								<LocationBadgeValue
+									locationId={state.locationId}
+									textLabel={"Listing location (label)"}
+									textValue={"no"}
 									action={
 										<Icon
 											icon={EditIcon}
 											size={"sm"}
 										/>
 									}
-									items={[
-										locationFetchQuery.data,
-									]}
-									render={(location) => <Tx label={location.address} />}
 								/>
 							</LinkTo>
 
