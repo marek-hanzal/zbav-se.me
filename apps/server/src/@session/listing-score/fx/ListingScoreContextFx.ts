@@ -1,4 +1,5 @@
 import { Context, Effect } from "effect";
+import { DefaultListingScoreContext } from "../config/DefaultListingScoreContext";
 
 export type ListingScoreType = "listing" | "ignore" | "view" | "cart" | "flag";
 
@@ -11,6 +12,8 @@ export class ListingScoreContextFx extends Context.Tag("ListingScoreContextFx")<
 	//
 }
 
-export const ListingScoreContextProvider = (scores: ListingScoreContext) => {
+export const ListingScoreContextProvider = (
+	scores: ListingScoreContext = DefaultListingScoreContext,
+) => {
 	return Effect.provideService(ListingScoreContextFx, scores);
 };

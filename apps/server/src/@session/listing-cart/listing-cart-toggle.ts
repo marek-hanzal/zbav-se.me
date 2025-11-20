@@ -4,7 +4,6 @@ import { UserContextProvider } from "../../auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { DefaultListingScore } from "../listing-score/config/DefaultListingScore";
 import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
 import { listingCartToggleFx } from "./fx/listingCartToggleFx";
 import { ListingCartToggleSchema } from "./schema/ListingCartToggleSchema";
@@ -69,7 +68,7 @@ export const withListingCartToggleApi: Routes.Fn = ({ sessionHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
-				ListingScoreContextProvider(DefaultListingScore),
+				ListingScoreContextProvider(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

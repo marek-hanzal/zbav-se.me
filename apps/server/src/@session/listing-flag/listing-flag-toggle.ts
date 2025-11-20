@@ -4,7 +4,6 @@ import { UserContextProvider } from "../../auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
-import { DefaultListingScore } from "../listing-score/config/DefaultListingScore";
 import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
 import { listingFlagToggleFx } from "./fx/listingFlagToggleFx";
 import { ListingFlagToggleSchema } from "./schema/ListingFlagToggleSchema";
@@ -69,7 +68,7 @@ export const withListingFlagToggleApi: Routes.Fn = ({ sessionHono }) => {
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),
-				ListingScoreContextProvider(DefaultListingScore),
+				ListingScoreContextProvider(),
 				//
 				Effect.catchAll((e) => {
 					return Effect.succeed(

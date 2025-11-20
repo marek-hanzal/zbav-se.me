@@ -2,13 +2,13 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import { UserContextFx } from "../../../auth/UserContextFx";
-import { ConfigContextFx } from "../../../database/fx/ConfigContextFx";
+import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { InvalidRequestError } from "../../../error/InvalidRequestError";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
+import { ListingTransactionContextFx } from "./ListingTransactionContextFx";
 import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
 export namespace listingTransactionPatchFx {
@@ -28,7 +28,7 @@ export const listingTransactionPatchFx = ({
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
-			const config = yield* ConfigContextFx;
+			const config = yield* ListingTransactionContextFx;
 
 			const transaction = yield* Effect.tryPromise(async () => {
 				return database
@@ -71,7 +71,7 @@ export const listingTransactionPatchFx = ({
 						updatedAt: now.toJSDate(),
 						expiresAt: now
 							.plus({
-								days: config.listing.transaction.extend,
+								days: config.extend,
 							})
 							.toJSDate(),
 						userId: user.id,

@@ -2,11 +2,11 @@ import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { ConfigContextFx } from "../../../database/fx/ConfigContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { NotFoundError } from "../../../error/NotFoundError";
 import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
+import { ListingTransactionContextFx } from "./ListingTransactionContextFx";
 import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
 export namespace listingTransactionCreateFx {
@@ -20,7 +20,7 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
-			const config = yield* ConfigContextFx;
+			const config = yield* ListingTransactionContextFx;
 
 			const listing = yield* Effect.tryPromise(async () => {
 				return database
@@ -55,7 +55,7 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 						updatedAt: DateTime.now().toJSDate(),
 						expiresAt: DateTime.now()
 							.plus({
-								days: config.listing.transaction.expires,
+								days: config.expires,
 							})
 							.toJSDate(),
 					})
