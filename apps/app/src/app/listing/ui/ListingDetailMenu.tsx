@@ -62,7 +62,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...pro
 					iconEnabled={CartIcon}
 					disabled={listingCartToggle.isPending}
 					loading={listingCartToggle.isPending}
-					theme={listing.isInCart ? "dark" : "light"}
+					theme={"light"}
 					onClick={() =>
 						listingCartToggle.mutate({
 							listingId: listing.id,
