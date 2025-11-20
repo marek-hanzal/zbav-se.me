@@ -1,17 +1,14 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import z from "zod";
+import { Suspense } from "react";
 import { FeedList } from "~/app/feed/ui/FeedList";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
-	validateSearch: z.object({
-		feedId: z.string().optional(),
-	}),
 	component() {
 		const { locale } = Route.useParams();
-		const search = Route.useSearch();
 		const navigate = Route.useNavigate();
 
 		const feedCountLimit = 10;
@@ -29,28 +26,28 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					/>
 				}
 			>
-				<FeedList
-					query={{
-						cursor: {
-							page: 0,
-							size: feedCountLimit,
-						},
-						sort: [
-							{
-								field: "updatedAt",
-								direction: "desc",
+				<Suspense fallback={<SpinnerContainer />}>
+					<FeedList
+						query={{
+							cursor: {
+								page: 0,
+								size: feedCountLimit,
 							},
-						],
-					}}
-					locale={locale}
-					limit={feedCountLimit}
-					scrollTo={search.feedId}
-					onClickCreate={() => {
-						navigate({
-							to: "/$locale/buyer/feed/wizard/location",
-						});
-					}}
-				/>
+							sort: [
+								{
+									field: "updatedAt",
+									direction: "desc",
+								},
+							],
+						}}
+						limit={feedCountLimit}
+						onClickCreate={() => {
+							navigate({
+								to: "/$locale/buyer/feed/wizard/location",
+							});
+						}}
+					/>
+				</Suspense>
 			</TitleContainer>
 		);
 	},

@@ -1,21 +1,25 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedNameContainer } from "~/app/feed/ui/FeedNameContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 	component() {
-		const { feed } = useLoaderData({
-			from: "/$locale/buyer/feed/$id",
+		const { id } = Route.useParams();
+		const feedFetchQuery = withFeedFetchQuery.useSuspenseQuery({
+			where: {
+				id,
+			},
 		});
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
 		const [change, setChange] = useState(false);
-		const [name, setName] = useState(feed.name);
+		const [name, setName] = useState(feedFetchQuery.data.name);
 
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
@@ -34,7 +38,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 						to={"/$locale/buyer/feed/$id/view"}
 						params={{
 							locale,
-							id: feed.id,
+							id,
 						}}
 					/>
 				}
@@ -73,7 +77,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 							}
 
 							feedPatchMutation.mutate({
-								id: feed.id,
+								id,
 								name,
 							});
 						}}

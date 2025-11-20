@@ -1,22 +1,26 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { LocationSelection } from "~/app/location/ui/LocationSelection";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 	component() {
-		const { feed } = useLoaderData({
-			from: "/$locale/buyer/feed/$id",
+		const { id } = Route.useParams();
+		const feedFetchQuery = withFeedFetchQuery.useSuspenseQuery({
+			where: {
+				id,
+			},
 		});
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
 		const [change, setChange] = useState(false);
-		const [locationId, setLocationId] = useState(feed.locationId);
-		const [latLon, setLatLon] = useState(feed.query?.meta?.latLon);
+		const [locationId, setLocationId] = useState(feedFetchQuery.data.locationId);
+		const [latLon, setLatLon] = useState(feedFetchQuery.data.query?.meta?.latLon);
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
@@ -34,7 +38,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 						to={"/$locale/buyer/feed/$id/view"}
 						params={{
 							locale,
-							id: feed.id,
+							id,
 						}}
 					/>
 				}
@@ -73,12 +77,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/location")({
 							}
 
 							feedPatchMutation.mutate({
-								id: feed.id,
+								id,
 								locationId,
 								query: {
-									...feed.query,
+									...feedFetchQuery.data.query,
 									meta: {
-										...feed.query?.meta,
+										...feedFetchQuery.data.query?.meta,
 										latLon,
 									},
 								},

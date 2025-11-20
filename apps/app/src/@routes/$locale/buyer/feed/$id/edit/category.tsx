@@ -1,18 +1,22 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 	component() {
-		const { feed } = useLoaderData({
-			from: "/$locale/buyer/feed/$id",
+		const { id } = Route.useParams();
+		const feedFetchQuery = withFeedFetchQuery.useSuspenseQuery({
+			where: {
+				id,
+			},
 		});
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
@@ -20,7 +24,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 
 		const selection = useSelection<EntitySchema.Type>({
 			mode: "multi",
-			initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
+			initial: feedFetchQuery.data.query?.filter?.categoryIdIn?.map((id) => ({
 				id,
 			})),
 			onMulti() {
@@ -47,7 +51,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 						to={"/$locale/buyer/feed/$id/view"}
 						params={{
 							locale,
-							id: feed.id,
+							id,
 						}}
 					/>
 				}
@@ -86,11 +90,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 							}
 
 							feedPatchMutation.mutate({
-								id: feed.id,
+								id,
 								query: {
-									...feed.query,
+									...feedFetchQuery.data.query,
 									filter: {
-										...feed.query?.filter,
+										...feedFetchQuery.data.query?.filter,
 										categoryIdIn: categoryIds,
 									},
 								},

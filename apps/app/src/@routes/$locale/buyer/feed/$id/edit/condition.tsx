@@ -1,9 +1,10 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
@@ -11,15 +12,18 @@ import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 	component() {
-		const { feed } = useLoaderData({
-			from: "/$locale/buyer/feed/$id",
+		const { id } = Route.useParams();
+		const feedFetchQuery = withFeedFetchQuery.useSuspenseQuery({
+			where: {
+				id,
+			},
 		});
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
 		const [change, setChange] = useState(false);
 		const selection = useSelection<Rating.RatingItem>({
 			mode: "multi",
-			initial: feed.query?.filter?.conditionIn?.map((item) => ({
+			initial: feedFetchQuery.data.query?.filter?.conditionIn?.map((item) => ({
 				id: String(item),
 			})),
 			onMulti() {
@@ -46,7 +50,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 						to={"/$locale/buyer/feed/$id/view"}
 						params={{
 							locale,
-							id: feed.id,
+							id,
 						}}
 					/>
 				}
@@ -85,11 +89,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 							}
 
 							feedPatchMutation.mutate({
-								id: feed.id,
+								id,
 								query: {
-									...feed.query,
+									...feedFetchQuery.data.query,
 									filter: {
-										...feed.query?.filter,
+										...feedFetchQuery.data.query?.filter,
 										conditionIn,
 									},
 								},
