@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { zListingQuery } from "@zbav-se.me/sdk/api/session";
-import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/session";
+import { zListingQuery } from "@zbav-se.me/sdk/api/user";
+import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ScoreContainer } from "~/app/listing/ui/ScoreContainer";
 

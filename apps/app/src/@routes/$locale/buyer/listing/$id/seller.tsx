@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { zListingQuery } from "@zbav-se.me/sdk/api/session";
+import { zListingQuery } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
 export const Route = createFileRoute("/$locale/buyer/listing/$id/seller")({

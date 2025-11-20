@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import { zListingQuery } from "@zbav-se.me/sdk/api/session";
+import { zListingQuery } from "@zbav-se.me/sdk/api/user";
 import { FlowContainer, SpinnerContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";

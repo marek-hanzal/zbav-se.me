@@ -4,7 +4,7 @@ import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/session";
+import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
