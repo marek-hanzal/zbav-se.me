@@ -9,7 +9,7 @@ import type {
 
 export const withUserExPatchMutation = withMutation<
 	tUserExPatch,
-	tApiUserExPatchResponse[204],
+	tApiUserExPatchResponse[200],
 	apiUserExPatchError
 >({
 	keys(data) {

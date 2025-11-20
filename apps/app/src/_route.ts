@@ -12,7 +12,9 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
+import { Route as LocaleSellerRouteImport } from './@routes/$locale/seller'
 import { Route as LocaleDashboardRouteImport } from './@routes/$locale/dashboard'
+import { Route as LocaleBuyerRouteImport } from './@routes/$locale/buyer'
 import { Route as LocaleSellerIndexRouteImport } from './@routes/$locale/seller/index'
 import { Route as LocaleBuyerIndexRouteImport } from './@routes/$locale/buyer/index'
 import { Route as LocaleSellerUserRouteImport } from './@routes/$locale/seller/user'
@@ -80,30 +82,40 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleSellerRoute = LocaleSellerRouteImport.update({
+  id: '/seller',
+  path: '/seller',
+  getParentRoute: () => LocaleRoute,
+} as any)
 const LocaleDashboardRoute = LocaleDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleSellerIndexRoute = LocaleSellerIndexRouteImport.update({
-  id: '/seller/',
-  path: '/seller/',
+const LocaleBuyerRoute = LocaleBuyerRouteImport.update({
+  id: '/buyer',
+  path: '/buyer',
   getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleSellerIndexRoute = LocaleSellerIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocaleSellerRoute,
 } as any)
 const LocaleBuyerIndexRoute = LocaleBuyerIndexRouteImport.update({
-  id: '/buyer/',
-  path: '/buyer/',
-  getParentRoute: () => LocaleRoute,
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleSellerUserRoute = LocaleSellerUserRouteImport.update({
-  id: '/seller/user',
-  path: '/seller/user',
-  getParentRoute: () => LocaleRoute,
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => LocaleSellerRoute,
 } as any)
 const LocaleSellerShopRoute = LocaleSellerShopRouteImport.update({
-  id: '/seller/shop',
-  path: '/seller/shop',
-  getParentRoute: () => LocaleRoute,
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => LocaleSellerRoute,
 } as any)
 const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   id: '/dev/seed',
@@ -111,14 +123,14 @@ const LocaleDevSeedRoute = LocaleDevSeedRouteImport.update({
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleBuyerUserRoute = LocaleBuyerUserRouteImport.update({
-  id: '/buyer/user',
-  path: '/buyer/user',
-  getParentRoute: () => LocaleRoute,
+  id: '/user',
+  path: '/user',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleBuyerShopRoute = LocaleBuyerShopRouteImport.update({
-  id: '/buyer/shop',
-  path: '/buyer/shop',
-  getParentRoute: () => LocaleRoute,
+  id: '/shop',
+  path: '/shop',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleChangeSideSideIndexRoute =
   LocaleChangeSideSideIndexRouteImport.update({
@@ -128,41 +140,41 @@ const LocaleChangeSideSideIndexRoute =
   } as any)
 const LocaleSellerTransactionListRoute =
   LocaleSellerTransactionListRouteImport.update({
-    id: '/seller/transaction/list',
-    path: '/seller/transaction/list',
-    getParentRoute: () => LocaleRoute,
+    id: '/transaction/list',
+    path: '/transaction/list',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerTransactionIdRoute =
   LocaleSellerTransactionIdRouteImport.update({
-    id: '/seller/transaction/$id',
-    path: '/seller/transaction/$id',
-    getParentRoute: () => LocaleRoute,
+    id: '/transaction/$id',
+    path: '/transaction/$id',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingMyRoute = LocaleSellerListingMyRouteImport.update({
-  id: '/seller/listing/my',
-  path: '/seller/listing/my',
-  getParentRoute: () => LocaleRoute,
+  id: '/listing/my',
+  path: '/listing/my',
+  getParentRoute: () => LocaleSellerRoute,
 } as any)
 const LocaleBuyerTransactionListRoute =
   LocaleBuyerTransactionListRouteImport.update({
-    id: '/buyer/transaction/list',
-    path: '/buyer/transaction/list',
-    getParentRoute: () => LocaleRoute,
+    id: '/transaction/list',
+    path: '/transaction/list',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerListingListRoute = LocaleBuyerListingListRouteImport.update({
-  id: '/buyer/listing/list',
-  path: '/buyer/listing/list',
-  getParentRoute: () => LocaleRoute,
+  id: '/listing/list',
+  path: '/listing/list',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleBuyerFeedSelectRoute = LocaleBuyerFeedSelectRouteImport.update({
-  id: '/buyer/feed/select',
-  path: '/buyer/feed/select',
-  getParentRoute: () => LocaleRoute,
+  id: '/feed/select',
+  path: '/feed/select',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleBuyerCartListRoute = LocaleBuyerCartListRouteImport.update({
-  id: '/buyer/cart/list',
-  path: '/buyer/cart/list',
-  getParentRoute: () => LocaleRoute,
+  id: '/cart/list',
+  path: '/cart/list',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleSellerTransactionIdViewRoute =
   LocaleSellerTransactionIdViewRouteImport.update({
@@ -172,140 +184,140 @@ const LocaleSellerTransactionIdViewRoute =
   } as any)
 const LocaleSellerListingWizardTitleRoute =
   LocaleSellerListingWizardTitleRouteImport.update({
-    id: '/seller/listing/wizard/title',
-    path: '/seller/listing/wizard/title',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/title',
+    path: '/listing/wizard/title',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardSubmitRoute =
   LocaleSellerListingWizardSubmitRouteImport.update({
-    id: '/seller/listing/wizard/submit',
-    path: '/seller/listing/wizard/submit',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/submit',
+    path: '/listing/wizard/submit',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardPriceRoute =
   LocaleSellerListingWizardPriceRouteImport.update({
-    id: '/seller/listing/wizard/price',
-    path: '/seller/listing/wizard/price',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/price',
+    path: '/listing/wizard/price',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardPhotosRoute =
   LocaleSellerListingWizardPhotosRouteImport.update({
-    id: '/seller/listing/wizard/photos',
-    path: '/seller/listing/wizard/photos',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/photos',
+    path: '/listing/wizard/photos',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardLocationRoute =
   LocaleSellerListingWizardLocationRouteImport.update({
-    id: '/seller/listing/wizard/location',
-    path: '/seller/listing/wizard/location',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/location',
+    path: '/listing/wizard/location',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardExpireAtRoute =
   LocaleSellerListingWizardExpireAtRouteImport.update({
-    id: '/seller/listing/wizard/expire-at',
-    path: '/seller/listing/wizard/expire-at',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/expire-at',
+    path: '/listing/wizard/expire-at',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardConditionRoute =
   LocaleSellerListingWizardConditionRouteImport.update({
-    id: '/seller/listing/wizard/condition',
-    path: '/seller/listing/wizard/condition',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/condition',
+    path: '/listing/wizard/condition',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardCategoryRoute =
   LocaleSellerListingWizardCategoryRouteImport.update({
-    id: '/seller/listing/wizard/category',
-    path: '/seller/listing/wizard/category',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/category',
+    path: '/listing/wizard/category',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingWizardAgeRoute =
   LocaleSellerListingWizardAgeRouteImport.update({
-    id: '/seller/listing/wizard/age',
-    path: '/seller/listing/wizard/age',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/wizard/age',
+    path: '/listing/wizard/age',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleSellerListingIdViewRoute =
   LocaleSellerListingIdViewRouteImport.update({
-    id: '/seller/listing/$id/view',
-    path: '/seller/listing/$id/view',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/$id/view',
+    path: '/listing/$id/view',
+    getParentRoute: () => LocaleSellerRoute,
   } as any)
 const LocaleBuyerTransactionIdViewRoute =
   LocaleBuyerTransactionIdViewRouteImport.update({
-    id: '/buyer/transaction/$id/view',
-    path: '/buyer/transaction/$id/view',
-    getParentRoute: () => LocaleRoute,
+    id: '/transaction/$id/view',
+    path: '/transaction/$id/view',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerListingIdViewRoute =
   LocaleBuyerListingIdViewRouteImport.update({
-    id: '/buyer/listing/$id/view',
-    path: '/buyer/listing/$id/view',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/$id/view',
+    path: '/listing/$id/view',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerListingIdSellerRoute =
   LocaleBuyerListingIdSellerRouteImport.update({
-    id: '/buyer/listing/$id/seller',
-    path: '/buyer/listing/$id/seller',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/$id/seller',
+    path: '/listing/$id/seller',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerListingIdScoreRoute =
   LocaleBuyerListingIdScoreRouteImport.update({
-    id: '/buyer/listing/$id/score',
-    path: '/buyer/listing/$id/score',
-    getParentRoute: () => LocaleRoute,
+    id: '/listing/$id/score',
+    path: '/listing/$id/score',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardTitleRoute =
   LocaleBuyerFeedWizardTitleRouteImport.update({
-    id: '/buyer/feed/wizard/title',
-    path: '/buyer/feed/wizard/title',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/title',
+    path: '/feed/wizard/title',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardSubmitRoute =
   LocaleBuyerFeedWizardSubmitRouteImport.update({
-    id: '/buyer/feed/wizard/submit',
-    path: '/buyer/feed/wizard/submit',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/submit',
+    path: '/feed/wizard/submit',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardSortRoute =
   LocaleBuyerFeedWizardSortRouteImport.update({
-    id: '/buyer/feed/wizard/sort',
-    path: '/buyer/feed/wizard/sort',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/sort',
+    path: '/feed/wizard/sort',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardNameRoute =
   LocaleBuyerFeedWizardNameRouteImport.update({
-    id: '/buyer/feed/wizard/name',
-    path: '/buyer/feed/wizard/name',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/name',
+    path: '/feed/wizard/name',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardLocationRoute =
   LocaleBuyerFeedWizardLocationRouteImport.update({
-    id: '/buyer/feed/wizard/location',
-    path: '/buyer/feed/wizard/location',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/location',
+    path: '/feed/wizard/location',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardConditionRoute =
   LocaleBuyerFeedWizardConditionRouteImport.update({
-    id: '/buyer/feed/wizard/condition',
-    path: '/buyer/feed/wizard/condition',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/condition',
+    path: '/feed/wizard/condition',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardCategoryRoute =
   LocaleBuyerFeedWizardCategoryRouteImport.update({
-    id: '/buyer/feed/wizard/category',
-    path: '/buyer/feed/wizard/category',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/category',
+    path: '/feed/wizard/category',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedWizardAgeRoute =
   LocaleBuyerFeedWizardAgeRouteImport.update({
-    id: '/buyer/feed/wizard/age',
-    path: '/buyer/feed/wizard/age',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/wizard/age',
+    path: '/feed/wizard/age',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdViewRoute = LocaleBuyerFeedIdViewRouteImport.update({
-  id: '/buyer/feed/$id/view',
-  path: '/buyer/feed/$id/view',
-  getParentRoute: () => LocaleRoute,
+  id: '/feed/$id/view',
+  path: '/feed/$id/view',
+  getParentRoute: () => LocaleBuyerRoute,
 } as any)
 const LocaleSellerTransactionIdBuyerInfoRoute =
   LocaleSellerTransactionIdBuyerInfoRouteImport.update({
@@ -315,83 +327,85 @@ const LocaleSellerTransactionIdBuyerInfoRoute =
   } as any)
 const LocaleBuyerFeedIdEditTitleRoute =
   LocaleBuyerFeedIdEditTitleRouteImport.update({
-    id: '/buyer/feed/$id/edit/title',
-    path: '/buyer/feed/$id/edit/title',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/title',
+    path: '/feed/$id/edit/title',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdEditSortRoute =
   LocaleBuyerFeedIdEditSortRouteImport.update({
-    id: '/buyer/feed/$id/edit/sort',
-    path: '/buyer/feed/$id/edit/sort',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/sort',
+    path: '/feed/$id/edit/sort',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdEditNameRoute =
   LocaleBuyerFeedIdEditNameRouteImport.update({
-    id: '/buyer/feed/$id/edit/name',
-    path: '/buyer/feed/$id/edit/name',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/name',
+    path: '/feed/$id/edit/name',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdEditLocationRoute =
   LocaleBuyerFeedIdEditLocationRouteImport.update({
-    id: '/buyer/feed/$id/edit/location',
-    path: '/buyer/feed/$id/edit/location',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/location',
+    path: '/feed/$id/edit/location',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdEditConditionRoute =
   LocaleBuyerFeedIdEditConditionRouteImport.update({
-    id: '/buyer/feed/$id/edit/condition',
-    path: '/buyer/feed/$id/edit/condition',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/condition',
+    path: '/feed/$id/edit/condition',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdEditCategoryRoute =
   LocaleBuyerFeedIdEditCategoryRouteImport.update({
-    id: '/buyer/feed/$id/edit/category',
-    path: '/buyer/feed/$id/edit/category',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/category',
+    path: '/feed/$id/edit/category',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerFeedIdEditAgeRoute =
   LocaleBuyerFeedIdEditAgeRouteImport.update({
-    id: '/buyer/feed/$id/edit/age',
-    path: '/buyer/feed/$id/edit/age',
-    getParentRoute: () => LocaleRoute,
+    id: '/feed/$id/edit/age',
+    path: '/feed/$id/edit/age',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerCartListingIdViewRoute =
   LocaleBuyerCartListingIdViewRouteImport.update({
-    id: '/buyer/cart/listing/$id/view',
-    path: '/buyer/cart/listing/$id/view',
-    getParentRoute: () => LocaleRoute,
+    id: '/cart/listing/$id/view',
+    path: '/cart/listing/$id/view',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerCartListingIdSellerRoute =
   LocaleBuyerCartListingIdSellerRouteImport.update({
-    id: '/buyer/cart/listing/$id/seller',
-    path: '/buyer/cart/listing/$id/seller',
-    getParentRoute: () => LocaleRoute,
+    id: '/cart/listing/$id/seller',
+    path: '/cart/listing/$id/seller',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerCartListingIdScoreRoute =
   LocaleBuyerCartListingIdScoreRouteImport.update({
-    id: '/buyer/cart/listing/$id/score',
-    path: '/buyer/cart/listing/$id/score',
-    getParentRoute: () => LocaleRoute,
+    id: '/cart/listing/$id/score',
+    path: '/cart/listing/$id/score',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 const LocaleBuyerCartCategoryIdFeedRoute =
   LocaleBuyerCartCategoryIdFeedRouteImport.update({
-    id: '/buyer/cart/category/$id/feed',
-    path: '/buyer/cart/category/$id/feed',
-    getParentRoute: () => LocaleRoute,
+    id: '/cart/category/$id/feed',
+    path: '/cart/category/$id/feed',
+    getParentRoute: () => LocaleBuyerRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/buyer': typeof LocaleBuyerRouteWithChildren
   '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/seller': typeof LocaleSellerRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
   '/$locale/seller/user': typeof LocaleSellerUserRoute
-  '/$locale/buyer': typeof LocaleBuyerIndexRoute
-  '/$locale/seller': typeof LocaleSellerIndexRoute
+  '/$locale/buyer/': typeof LocaleBuyerIndexRoute
+  '/$locale/seller/': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
   '/$locale/buyer/feed/select': typeof LocaleBuyerFeedSelectRoute
   '/$locale/buyer/listing/list': typeof LocaleBuyerListingListRoute
@@ -497,7 +511,9 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
+  '/$locale/buyer': typeof LocaleBuyerRouteWithChildren
   '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/seller': typeof LocaleSellerRouteWithChildren
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
@@ -556,15 +572,17 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
+    | '/$locale/buyer'
     | '/$locale/dashboard'
+    | '/$locale/seller'
     | '/$locale/'
     | '/$locale/buyer/shop'
     | '/$locale/buyer/user'
     | '/$locale/dev/seed'
     | '/$locale/seller/shop'
     | '/$locale/seller/user'
-    | '/$locale/buyer'
-    | '/$locale/seller'
+    | '/$locale/buyer/'
+    | '/$locale/seller/'
     | '/$locale/buyer/cart/list'
     | '/$locale/buyer/feed/select'
     | '/$locale/buyer/listing/list'
@@ -669,7 +687,9 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$locale'
+    | '/$locale/buyer'
     | '/$locale/dashboard'
+    | '/$locale/seller'
     | '/$locale/'
     | '/$locale/buyer/shop'
     | '/$locale/buyer/user'
@@ -752,6 +772,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/seller': {
+      id: '/$locale/seller'
+      path: '/seller'
+      fullPath: '/$locale/seller'
+      preLoaderRoute: typeof LocaleSellerRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/dashboard': {
       id: '/$locale/dashboard'
       path: '/dashboard'
@@ -759,33 +786,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleDashboardRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/buyer': {
+      id: '/$locale/buyer'
+      path: '/buyer'
+      fullPath: '/$locale/buyer'
+      preLoaderRoute: typeof LocaleBuyerRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/seller/': {
       id: '/$locale/seller/'
-      path: '/seller'
-      fullPath: '/$locale/seller'
+      path: '/'
+      fullPath: '/$locale/seller/'
       preLoaderRoute: typeof LocaleSellerIndexRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/buyer/': {
       id: '/$locale/buyer/'
-      path: '/buyer'
-      fullPath: '/$locale/buyer'
+      path: '/'
+      fullPath: '/$locale/buyer/'
       preLoaderRoute: typeof LocaleBuyerIndexRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/seller/user': {
       id: '/$locale/seller/user'
-      path: '/seller/user'
+      path: '/user'
       fullPath: '/$locale/seller/user'
       preLoaderRoute: typeof LocaleSellerUserRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/shop': {
       id: '/$locale/seller/shop'
-      path: '/seller/shop'
+      path: '/shop'
       fullPath: '/$locale/seller/shop'
       preLoaderRoute: typeof LocaleSellerShopRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/dev/seed': {
       id: '/$locale/dev/seed'
@@ -796,17 +830,17 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/buyer/user': {
       id: '/$locale/buyer/user'
-      path: '/buyer/user'
+      path: '/user'
       fullPath: '/$locale/buyer/user'
       preLoaderRoute: typeof LocaleBuyerUserRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/shop': {
       id: '/$locale/buyer/shop'
-      path: '/buyer/shop'
+      path: '/shop'
       fullPath: '/$locale/buyer/shop'
       preLoaderRoute: typeof LocaleBuyerShopRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/change-side/$side/': {
       id: '/$locale/change-side/$side/'
@@ -817,52 +851,52 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/seller/transaction/list': {
       id: '/$locale/seller/transaction/list'
-      path: '/seller/transaction/list'
+      path: '/transaction/list'
       fullPath: '/$locale/seller/transaction/list'
       preLoaderRoute: typeof LocaleSellerTransactionListRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/transaction/$id': {
       id: '/$locale/seller/transaction/$id'
-      path: '/seller/transaction/$id'
+      path: '/transaction/$id'
       fullPath: '/$locale/seller/transaction/$id'
       preLoaderRoute: typeof LocaleSellerTransactionIdRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/my': {
       id: '/$locale/seller/listing/my'
-      path: '/seller/listing/my'
+      path: '/listing/my'
       fullPath: '/$locale/seller/listing/my'
       preLoaderRoute: typeof LocaleSellerListingMyRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/buyer/transaction/list': {
       id: '/$locale/buyer/transaction/list'
-      path: '/buyer/transaction/list'
+      path: '/transaction/list'
       fullPath: '/$locale/buyer/transaction/list'
       preLoaderRoute: typeof LocaleBuyerTransactionListRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/listing/list': {
       id: '/$locale/buyer/listing/list'
-      path: '/buyer/listing/list'
+      path: '/listing/list'
       fullPath: '/$locale/buyer/listing/list'
       preLoaderRoute: typeof LocaleBuyerListingListRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/select': {
       id: '/$locale/buyer/feed/select'
-      path: '/buyer/feed/select'
+      path: '/feed/select'
       fullPath: '/$locale/buyer/feed/select'
       preLoaderRoute: typeof LocaleBuyerFeedSelectRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/cart/list': {
       id: '/$locale/buyer/cart/list'
-      path: '/buyer/cart/list'
+      path: '/cart/list'
       fullPath: '/$locale/buyer/cart/list'
       preLoaderRoute: typeof LocaleBuyerCartListRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/seller/transaction/$id/view': {
       id: '/$locale/seller/transaction/$id/view'
@@ -873,164 +907,164 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/seller/listing/wizard/title': {
       id: '/$locale/seller/listing/wizard/title'
-      path: '/seller/listing/wizard/title'
+      path: '/listing/wizard/title'
       fullPath: '/$locale/seller/listing/wizard/title'
       preLoaderRoute: typeof LocaleSellerListingWizardTitleRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/submit': {
       id: '/$locale/seller/listing/wizard/submit'
-      path: '/seller/listing/wizard/submit'
+      path: '/listing/wizard/submit'
       fullPath: '/$locale/seller/listing/wizard/submit'
       preLoaderRoute: typeof LocaleSellerListingWizardSubmitRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/price': {
       id: '/$locale/seller/listing/wizard/price'
-      path: '/seller/listing/wizard/price'
+      path: '/listing/wizard/price'
       fullPath: '/$locale/seller/listing/wizard/price'
       preLoaderRoute: typeof LocaleSellerListingWizardPriceRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/photos': {
       id: '/$locale/seller/listing/wizard/photos'
-      path: '/seller/listing/wizard/photos'
+      path: '/listing/wizard/photos'
       fullPath: '/$locale/seller/listing/wizard/photos'
       preLoaderRoute: typeof LocaleSellerListingWizardPhotosRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/location': {
       id: '/$locale/seller/listing/wizard/location'
-      path: '/seller/listing/wizard/location'
+      path: '/listing/wizard/location'
       fullPath: '/$locale/seller/listing/wizard/location'
       preLoaderRoute: typeof LocaleSellerListingWizardLocationRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/expire-at': {
       id: '/$locale/seller/listing/wizard/expire-at'
-      path: '/seller/listing/wizard/expire-at'
+      path: '/listing/wizard/expire-at'
       fullPath: '/$locale/seller/listing/wizard/expire-at'
       preLoaderRoute: typeof LocaleSellerListingWizardExpireAtRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/condition': {
       id: '/$locale/seller/listing/wizard/condition'
-      path: '/seller/listing/wizard/condition'
+      path: '/listing/wizard/condition'
       fullPath: '/$locale/seller/listing/wizard/condition'
       preLoaderRoute: typeof LocaleSellerListingWizardConditionRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/category': {
       id: '/$locale/seller/listing/wizard/category'
-      path: '/seller/listing/wizard/category'
+      path: '/listing/wizard/category'
       fullPath: '/$locale/seller/listing/wizard/category'
       preLoaderRoute: typeof LocaleSellerListingWizardCategoryRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/wizard/age': {
       id: '/$locale/seller/listing/wizard/age'
-      path: '/seller/listing/wizard/age'
+      path: '/listing/wizard/age'
       fullPath: '/$locale/seller/listing/wizard/age'
       preLoaderRoute: typeof LocaleSellerListingWizardAgeRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/seller/listing/$id/view': {
       id: '/$locale/seller/listing/$id/view'
-      path: '/seller/listing/$id/view'
+      path: '/listing/$id/view'
       fullPath: '/$locale/seller/listing/$id/view'
       preLoaderRoute: typeof LocaleSellerListingIdViewRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleSellerRoute
     }
     '/$locale/buyer/transaction/$id/view': {
       id: '/$locale/buyer/transaction/$id/view'
-      path: '/buyer/transaction/$id/view'
+      path: '/transaction/$id/view'
       fullPath: '/$locale/buyer/transaction/$id/view'
       preLoaderRoute: typeof LocaleBuyerTransactionIdViewRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/listing/$id/view': {
       id: '/$locale/buyer/listing/$id/view'
-      path: '/buyer/listing/$id/view'
+      path: '/listing/$id/view'
       fullPath: '/$locale/buyer/listing/$id/view'
       preLoaderRoute: typeof LocaleBuyerListingIdViewRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/listing/$id/seller': {
       id: '/$locale/buyer/listing/$id/seller'
-      path: '/buyer/listing/$id/seller'
+      path: '/listing/$id/seller'
       fullPath: '/$locale/buyer/listing/$id/seller'
       preLoaderRoute: typeof LocaleBuyerListingIdSellerRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/listing/$id/score': {
       id: '/$locale/buyer/listing/$id/score'
-      path: '/buyer/listing/$id/score'
+      path: '/listing/$id/score'
       fullPath: '/$locale/buyer/listing/$id/score'
       preLoaderRoute: typeof LocaleBuyerListingIdScoreRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/title': {
       id: '/$locale/buyer/feed/wizard/title'
-      path: '/buyer/feed/wizard/title'
+      path: '/feed/wizard/title'
       fullPath: '/$locale/buyer/feed/wizard/title'
       preLoaderRoute: typeof LocaleBuyerFeedWizardTitleRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/submit': {
       id: '/$locale/buyer/feed/wizard/submit'
-      path: '/buyer/feed/wizard/submit'
+      path: '/feed/wizard/submit'
       fullPath: '/$locale/buyer/feed/wizard/submit'
       preLoaderRoute: typeof LocaleBuyerFeedWizardSubmitRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/sort': {
       id: '/$locale/buyer/feed/wizard/sort'
-      path: '/buyer/feed/wizard/sort'
+      path: '/feed/wizard/sort'
       fullPath: '/$locale/buyer/feed/wizard/sort'
       preLoaderRoute: typeof LocaleBuyerFeedWizardSortRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/name': {
       id: '/$locale/buyer/feed/wizard/name'
-      path: '/buyer/feed/wizard/name'
+      path: '/feed/wizard/name'
       fullPath: '/$locale/buyer/feed/wizard/name'
       preLoaderRoute: typeof LocaleBuyerFeedWizardNameRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/location': {
       id: '/$locale/buyer/feed/wizard/location'
-      path: '/buyer/feed/wizard/location'
+      path: '/feed/wizard/location'
       fullPath: '/$locale/buyer/feed/wizard/location'
       preLoaderRoute: typeof LocaleBuyerFeedWizardLocationRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/condition': {
       id: '/$locale/buyer/feed/wizard/condition'
-      path: '/buyer/feed/wizard/condition'
+      path: '/feed/wizard/condition'
       fullPath: '/$locale/buyer/feed/wizard/condition'
       preLoaderRoute: typeof LocaleBuyerFeedWizardConditionRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/category': {
       id: '/$locale/buyer/feed/wizard/category'
-      path: '/buyer/feed/wizard/category'
+      path: '/feed/wizard/category'
       fullPath: '/$locale/buyer/feed/wizard/category'
       preLoaderRoute: typeof LocaleBuyerFeedWizardCategoryRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/wizard/age': {
       id: '/$locale/buyer/feed/wizard/age'
-      path: '/buyer/feed/wizard/age'
+      path: '/feed/wizard/age'
       fullPath: '/$locale/buyer/feed/wizard/age'
       preLoaderRoute: typeof LocaleBuyerFeedWizardAgeRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/view': {
       id: '/$locale/buyer/feed/$id/view'
-      path: '/buyer/feed/$id/view'
+      path: '/feed/$id/view'
       fullPath: '/$locale/buyer/feed/$id/view'
       preLoaderRoute: typeof LocaleBuyerFeedIdViewRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/seller/transaction/$id/buyer/info': {
       id: '/$locale/seller/transaction/$id/buyer/info'
@@ -1041,83 +1075,155 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/buyer/feed/$id/edit/title': {
       id: '/$locale/buyer/feed/$id/edit/title'
-      path: '/buyer/feed/$id/edit/title'
+      path: '/feed/$id/edit/title'
       fullPath: '/$locale/buyer/feed/$id/edit/title'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditTitleRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/edit/sort': {
       id: '/$locale/buyer/feed/$id/edit/sort'
-      path: '/buyer/feed/$id/edit/sort'
+      path: '/feed/$id/edit/sort'
       fullPath: '/$locale/buyer/feed/$id/edit/sort'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditSortRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/edit/name': {
       id: '/$locale/buyer/feed/$id/edit/name'
-      path: '/buyer/feed/$id/edit/name'
+      path: '/feed/$id/edit/name'
       fullPath: '/$locale/buyer/feed/$id/edit/name'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditNameRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/edit/location': {
       id: '/$locale/buyer/feed/$id/edit/location'
-      path: '/buyer/feed/$id/edit/location'
+      path: '/feed/$id/edit/location'
       fullPath: '/$locale/buyer/feed/$id/edit/location'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditLocationRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/edit/condition': {
       id: '/$locale/buyer/feed/$id/edit/condition'
-      path: '/buyer/feed/$id/edit/condition'
+      path: '/feed/$id/edit/condition'
       fullPath: '/$locale/buyer/feed/$id/edit/condition'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditConditionRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/edit/category': {
       id: '/$locale/buyer/feed/$id/edit/category'
-      path: '/buyer/feed/$id/edit/category'
+      path: '/feed/$id/edit/category'
       fullPath: '/$locale/buyer/feed/$id/edit/category'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditCategoryRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/feed/$id/edit/age': {
       id: '/$locale/buyer/feed/$id/edit/age'
-      path: '/buyer/feed/$id/edit/age'
+      path: '/feed/$id/edit/age'
       fullPath: '/$locale/buyer/feed/$id/edit/age'
       preLoaderRoute: typeof LocaleBuyerFeedIdEditAgeRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/cart/listing/$id/view': {
       id: '/$locale/buyer/cart/listing/$id/view'
-      path: '/buyer/cart/listing/$id/view'
+      path: '/cart/listing/$id/view'
       fullPath: '/$locale/buyer/cart/listing/$id/view'
       preLoaderRoute: typeof LocaleBuyerCartListingIdViewRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/cart/listing/$id/seller': {
       id: '/$locale/buyer/cart/listing/$id/seller'
-      path: '/buyer/cart/listing/$id/seller'
+      path: '/cart/listing/$id/seller'
       fullPath: '/$locale/buyer/cart/listing/$id/seller'
       preLoaderRoute: typeof LocaleBuyerCartListingIdSellerRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/cart/listing/$id/score': {
       id: '/$locale/buyer/cart/listing/$id/score'
-      path: '/buyer/cart/listing/$id/score'
+      path: '/cart/listing/$id/score'
       fullPath: '/$locale/buyer/cart/listing/$id/score'
       preLoaderRoute: typeof LocaleBuyerCartListingIdScoreRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
     '/$locale/buyer/cart/category/$id/feed': {
       id: '/$locale/buyer/cart/category/$id/feed'
-      path: '/buyer/cart/category/$id/feed'
+      path: '/cart/category/$id/feed'
       fullPath: '/$locale/buyer/cart/category/$id/feed'
       preLoaderRoute: typeof LocaleBuyerCartCategoryIdFeedRouteImport
-      parentRoute: typeof LocaleRoute
+      parentRoute: typeof LocaleBuyerRoute
     }
   }
 }
+
+interface LocaleBuyerRouteChildren {
+  LocaleBuyerShopRoute: typeof LocaleBuyerShopRoute
+  LocaleBuyerUserRoute: typeof LocaleBuyerUserRoute
+  LocaleBuyerIndexRoute: typeof LocaleBuyerIndexRoute
+  LocaleBuyerCartListRoute: typeof LocaleBuyerCartListRoute
+  LocaleBuyerFeedSelectRoute: typeof LocaleBuyerFeedSelectRoute
+  LocaleBuyerListingListRoute: typeof LocaleBuyerListingListRoute
+  LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
+  LocaleBuyerFeedIdViewRoute: typeof LocaleBuyerFeedIdViewRoute
+  LocaleBuyerFeedWizardAgeRoute: typeof LocaleBuyerFeedWizardAgeRoute
+  LocaleBuyerFeedWizardCategoryRoute: typeof LocaleBuyerFeedWizardCategoryRoute
+  LocaleBuyerFeedWizardConditionRoute: typeof LocaleBuyerFeedWizardConditionRoute
+  LocaleBuyerFeedWizardLocationRoute: typeof LocaleBuyerFeedWizardLocationRoute
+  LocaleBuyerFeedWizardNameRoute: typeof LocaleBuyerFeedWizardNameRoute
+  LocaleBuyerFeedWizardSortRoute: typeof LocaleBuyerFeedWizardSortRoute
+  LocaleBuyerFeedWizardSubmitRoute: typeof LocaleBuyerFeedWizardSubmitRoute
+  LocaleBuyerFeedWizardTitleRoute: typeof LocaleBuyerFeedWizardTitleRoute
+  LocaleBuyerListingIdScoreRoute: typeof LocaleBuyerListingIdScoreRoute
+  LocaleBuyerListingIdSellerRoute: typeof LocaleBuyerListingIdSellerRoute
+  LocaleBuyerListingIdViewRoute: typeof LocaleBuyerListingIdViewRoute
+  LocaleBuyerTransactionIdViewRoute: typeof LocaleBuyerTransactionIdViewRoute
+  LocaleBuyerCartCategoryIdFeedRoute: typeof LocaleBuyerCartCategoryIdFeedRoute
+  LocaleBuyerCartListingIdScoreRoute: typeof LocaleBuyerCartListingIdScoreRoute
+  LocaleBuyerCartListingIdSellerRoute: typeof LocaleBuyerCartListingIdSellerRoute
+  LocaleBuyerCartListingIdViewRoute: typeof LocaleBuyerCartListingIdViewRoute
+  LocaleBuyerFeedIdEditAgeRoute: typeof LocaleBuyerFeedIdEditAgeRoute
+  LocaleBuyerFeedIdEditCategoryRoute: typeof LocaleBuyerFeedIdEditCategoryRoute
+  LocaleBuyerFeedIdEditConditionRoute: typeof LocaleBuyerFeedIdEditConditionRoute
+  LocaleBuyerFeedIdEditLocationRoute: typeof LocaleBuyerFeedIdEditLocationRoute
+  LocaleBuyerFeedIdEditNameRoute: typeof LocaleBuyerFeedIdEditNameRoute
+  LocaleBuyerFeedIdEditSortRoute: typeof LocaleBuyerFeedIdEditSortRoute
+  LocaleBuyerFeedIdEditTitleRoute: typeof LocaleBuyerFeedIdEditTitleRoute
+}
+
+const LocaleBuyerRouteChildren: LocaleBuyerRouteChildren = {
+  LocaleBuyerShopRoute: LocaleBuyerShopRoute,
+  LocaleBuyerUserRoute: LocaleBuyerUserRoute,
+  LocaleBuyerIndexRoute: LocaleBuyerIndexRoute,
+  LocaleBuyerCartListRoute: LocaleBuyerCartListRoute,
+  LocaleBuyerFeedSelectRoute: LocaleBuyerFeedSelectRoute,
+  LocaleBuyerListingListRoute: LocaleBuyerListingListRoute,
+  LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
+  LocaleBuyerFeedIdViewRoute: LocaleBuyerFeedIdViewRoute,
+  LocaleBuyerFeedWizardAgeRoute: LocaleBuyerFeedWizardAgeRoute,
+  LocaleBuyerFeedWizardCategoryRoute: LocaleBuyerFeedWizardCategoryRoute,
+  LocaleBuyerFeedWizardConditionRoute: LocaleBuyerFeedWizardConditionRoute,
+  LocaleBuyerFeedWizardLocationRoute: LocaleBuyerFeedWizardLocationRoute,
+  LocaleBuyerFeedWizardNameRoute: LocaleBuyerFeedWizardNameRoute,
+  LocaleBuyerFeedWizardSortRoute: LocaleBuyerFeedWizardSortRoute,
+  LocaleBuyerFeedWizardSubmitRoute: LocaleBuyerFeedWizardSubmitRoute,
+  LocaleBuyerFeedWizardTitleRoute: LocaleBuyerFeedWizardTitleRoute,
+  LocaleBuyerListingIdScoreRoute: LocaleBuyerListingIdScoreRoute,
+  LocaleBuyerListingIdSellerRoute: LocaleBuyerListingIdSellerRoute,
+  LocaleBuyerListingIdViewRoute: LocaleBuyerListingIdViewRoute,
+  LocaleBuyerTransactionIdViewRoute: LocaleBuyerTransactionIdViewRoute,
+  LocaleBuyerCartCategoryIdFeedRoute: LocaleBuyerCartCategoryIdFeedRoute,
+  LocaleBuyerCartListingIdScoreRoute: LocaleBuyerCartListingIdScoreRoute,
+  LocaleBuyerCartListingIdSellerRoute: LocaleBuyerCartListingIdSellerRoute,
+  LocaleBuyerCartListingIdViewRoute: LocaleBuyerCartListingIdViewRoute,
+  LocaleBuyerFeedIdEditAgeRoute: LocaleBuyerFeedIdEditAgeRoute,
+  LocaleBuyerFeedIdEditCategoryRoute: LocaleBuyerFeedIdEditCategoryRoute,
+  LocaleBuyerFeedIdEditConditionRoute: LocaleBuyerFeedIdEditConditionRoute,
+  LocaleBuyerFeedIdEditLocationRoute: LocaleBuyerFeedIdEditLocationRoute,
+  LocaleBuyerFeedIdEditNameRoute: LocaleBuyerFeedIdEditNameRoute,
+  LocaleBuyerFeedIdEditSortRoute: LocaleBuyerFeedIdEditSortRoute,
+  LocaleBuyerFeedIdEditTitleRoute: LocaleBuyerFeedIdEditTitleRoute,
+}
+
+const LocaleBuyerRouteWithChildren = LocaleBuyerRoute._addFileChildren(
+  LocaleBuyerRouteChildren,
+)
 
 interface LocaleSellerTransactionIdRouteChildren {
   LocaleSellerTransactionIdViewRoute: typeof LocaleSellerTransactionIdViewRoute
@@ -1136,37 +1242,13 @@ const LocaleSellerTransactionIdRouteWithChildren =
     LocaleSellerTransactionIdRouteChildren,
   )
 
-interface LocaleRouteChildren {
-  LocaleDashboardRoute: typeof LocaleDashboardRoute
-  LocaleIndexRoute: typeof LocaleIndexRoute
-  LocaleBuyerShopRoute: typeof LocaleBuyerShopRoute
-  LocaleBuyerUserRoute: typeof LocaleBuyerUserRoute
-  LocaleDevSeedRoute: typeof LocaleDevSeedRoute
+interface LocaleSellerRouteChildren {
   LocaleSellerShopRoute: typeof LocaleSellerShopRoute
   LocaleSellerUserRoute: typeof LocaleSellerUserRoute
-  LocaleBuyerIndexRoute: typeof LocaleBuyerIndexRoute
   LocaleSellerIndexRoute: typeof LocaleSellerIndexRoute
-  LocaleBuyerCartListRoute: typeof LocaleBuyerCartListRoute
-  LocaleBuyerFeedSelectRoute: typeof LocaleBuyerFeedSelectRoute
-  LocaleBuyerListingListRoute: typeof LocaleBuyerListingListRoute
-  LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
   LocaleSellerListingMyRoute: typeof LocaleSellerListingMyRoute
   LocaleSellerTransactionIdRoute: typeof LocaleSellerTransactionIdRouteWithChildren
   LocaleSellerTransactionListRoute: typeof LocaleSellerTransactionListRoute
-  LocaleChangeSideSideIndexRoute: typeof LocaleChangeSideSideIndexRoute
-  LocaleBuyerFeedIdViewRoute: typeof LocaleBuyerFeedIdViewRoute
-  LocaleBuyerFeedWizardAgeRoute: typeof LocaleBuyerFeedWizardAgeRoute
-  LocaleBuyerFeedWizardCategoryRoute: typeof LocaleBuyerFeedWizardCategoryRoute
-  LocaleBuyerFeedWizardConditionRoute: typeof LocaleBuyerFeedWizardConditionRoute
-  LocaleBuyerFeedWizardLocationRoute: typeof LocaleBuyerFeedWizardLocationRoute
-  LocaleBuyerFeedWizardNameRoute: typeof LocaleBuyerFeedWizardNameRoute
-  LocaleBuyerFeedWizardSortRoute: typeof LocaleBuyerFeedWizardSortRoute
-  LocaleBuyerFeedWizardSubmitRoute: typeof LocaleBuyerFeedWizardSubmitRoute
-  LocaleBuyerFeedWizardTitleRoute: typeof LocaleBuyerFeedWizardTitleRoute
-  LocaleBuyerListingIdScoreRoute: typeof LocaleBuyerListingIdScoreRoute
-  LocaleBuyerListingIdSellerRoute: typeof LocaleBuyerListingIdSellerRoute
-  LocaleBuyerListingIdViewRoute: typeof LocaleBuyerListingIdViewRoute
-  LocaleBuyerTransactionIdViewRoute: typeof LocaleBuyerTransactionIdViewRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
   LocaleSellerListingWizardAgeRoute: typeof LocaleSellerListingWizardAgeRoute
   LocaleSellerListingWizardCategoryRoute: typeof LocaleSellerListingWizardCategoryRoute
@@ -1177,50 +1259,15 @@ interface LocaleRouteChildren {
   LocaleSellerListingWizardPriceRoute: typeof LocaleSellerListingWizardPriceRoute
   LocaleSellerListingWizardSubmitRoute: typeof LocaleSellerListingWizardSubmitRoute
   LocaleSellerListingWizardTitleRoute: typeof LocaleSellerListingWizardTitleRoute
-  LocaleBuyerCartCategoryIdFeedRoute: typeof LocaleBuyerCartCategoryIdFeedRoute
-  LocaleBuyerCartListingIdScoreRoute: typeof LocaleBuyerCartListingIdScoreRoute
-  LocaleBuyerCartListingIdSellerRoute: typeof LocaleBuyerCartListingIdSellerRoute
-  LocaleBuyerCartListingIdViewRoute: typeof LocaleBuyerCartListingIdViewRoute
-  LocaleBuyerFeedIdEditAgeRoute: typeof LocaleBuyerFeedIdEditAgeRoute
-  LocaleBuyerFeedIdEditCategoryRoute: typeof LocaleBuyerFeedIdEditCategoryRoute
-  LocaleBuyerFeedIdEditConditionRoute: typeof LocaleBuyerFeedIdEditConditionRoute
-  LocaleBuyerFeedIdEditLocationRoute: typeof LocaleBuyerFeedIdEditLocationRoute
-  LocaleBuyerFeedIdEditNameRoute: typeof LocaleBuyerFeedIdEditNameRoute
-  LocaleBuyerFeedIdEditSortRoute: typeof LocaleBuyerFeedIdEditSortRoute
-  LocaleBuyerFeedIdEditTitleRoute: typeof LocaleBuyerFeedIdEditTitleRoute
 }
 
-const LocaleRouteChildren: LocaleRouteChildren = {
-  LocaleDashboardRoute: LocaleDashboardRoute,
-  LocaleIndexRoute: LocaleIndexRoute,
-  LocaleBuyerShopRoute: LocaleBuyerShopRoute,
-  LocaleBuyerUserRoute: LocaleBuyerUserRoute,
-  LocaleDevSeedRoute: LocaleDevSeedRoute,
+const LocaleSellerRouteChildren: LocaleSellerRouteChildren = {
   LocaleSellerShopRoute: LocaleSellerShopRoute,
   LocaleSellerUserRoute: LocaleSellerUserRoute,
-  LocaleBuyerIndexRoute: LocaleBuyerIndexRoute,
   LocaleSellerIndexRoute: LocaleSellerIndexRoute,
-  LocaleBuyerCartListRoute: LocaleBuyerCartListRoute,
-  LocaleBuyerFeedSelectRoute: LocaleBuyerFeedSelectRoute,
-  LocaleBuyerListingListRoute: LocaleBuyerListingListRoute,
-  LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
   LocaleSellerListingMyRoute: LocaleSellerListingMyRoute,
   LocaleSellerTransactionIdRoute: LocaleSellerTransactionIdRouteWithChildren,
   LocaleSellerTransactionListRoute: LocaleSellerTransactionListRoute,
-  LocaleChangeSideSideIndexRoute: LocaleChangeSideSideIndexRoute,
-  LocaleBuyerFeedIdViewRoute: LocaleBuyerFeedIdViewRoute,
-  LocaleBuyerFeedWizardAgeRoute: LocaleBuyerFeedWizardAgeRoute,
-  LocaleBuyerFeedWizardCategoryRoute: LocaleBuyerFeedWizardCategoryRoute,
-  LocaleBuyerFeedWizardConditionRoute: LocaleBuyerFeedWizardConditionRoute,
-  LocaleBuyerFeedWizardLocationRoute: LocaleBuyerFeedWizardLocationRoute,
-  LocaleBuyerFeedWizardNameRoute: LocaleBuyerFeedWizardNameRoute,
-  LocaleBuyerFeedWizardSortRoute: LocaleBuyerFeedWizardSortRoute,
-  LocaleBuyerFeedWizardSubmitRoute: LocaleBuyerFeedWizardSubmitRoute,
-  LocaleBuyerFeedWizardTitleRoute: LocaleBuyerFeedWizardTitleRoute,
-  LocaleBuyerListingIdScoreRoute: LocaleBuyerListingIdScoreRoute,
-  LocaleBuyerListingIdSellerRoute: LocaleBuyerListingIdSellerRoute,
-  LocaleBuyerListingIdViewRoute: LocaleBuyerListingIdViewRoute,
-  LocaleBuyerTransactionIdViewRoute: LocaleBuyerTransactionIdViewRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,
   LocaleSellerListingWizardAgeRoute: LocaleSellerListingWizardAgeRoute,
   LocaleSellerListingWizardCategoryRoute:
@@ -1235,17 +1282,28 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleSellerListingWizardPriceRoute: LocaleSellerListingWizardPriceRoute,
   LocaleSellerListingWizardSubmitRoute: LocaleSellerListingWizardSubmitRoute,
   LocaleSellerListingWizardTitleRoute: LocaleSellerListingWizardTitleRoute,
-  LocaleBuyerCartCategoryIdFeedRoute: LocaleBuyerCartCategoryIdFeedRoute,
-  LocaleBuyerCartListingIdScoreRoute: LocaleBuyerCartListingIdScoreRoute,
-  LocaleBuyerCartListingIdSellerRoute: LocaleBuyerCartListingIdSellerRoute,
-  LocaleBuyerCartListingIdViewRoute: LocaleBuyerCartListingIdViewRoute,
-  LocaleBuyerFeedIdEditAgeRoute: LocaleBuyerFeedIdEditAgeRoute,
-  LocaleBuyerFeedIdEditCategoryRoute: LocaleBuyerFeedIdEditCategoryRoute,
-  LocaleBuyerFeedIdEditConditionRoute: LocaleBuyerFeedIdEditConditionRoute,
-  LocaleBuyerFeedIdEditLocationRoute: LocaleBuyerFeedIdEditLocationRoute,
-  LocaleBuyerFeedIdEditNameRoute: LocaleBuyerFeedIdEditNameRoute,
-  LocaleBuyerFeedIdEditSortRoute: LocaleBuyerFeedIdEditSortRoute,
-  LocaleBuyerFeedIdEditTitleRoute: LocaleBuyerFeedIdEditTitleRoute,
+}
+
+const LocaleSellerRouteWithChildren = LocaleSellerRoute._addFileChildren(
+  LocaleSellerRouteChildren,
+)
+
+interface LocaleRouteChildren {
+  LocaleBuyerRoute: typeof LocaleBuyerRouteWithChildren
+  LocaleDashboardRoute: typeof LocaleDashboardRoute
+  LocaleSellerRoute: typeof LocaleSellerRouteWithChildren
+  LocaleIndexRoute: typeof LocaleIndexRoute
+  LocaleDevSeedRoute: typeof LocaleDevSeedRoute
+  LocaleChangeSideSideIndexRoute: typeof LocaleChangeSideSideIndexRoute
+}
+
+const LocaleRouteChildren: LocaleRouteChildren = {
+  LocaleBuyerRoute: LocaleBuyerRouteWithChildren,
+  LocaleDashboardRoute: LocaleDashboardRoute,
+  LocaleSellerRoute: LocaleSellerRouteWithChildren,
+  LocaleIndexRoute: LocaleIndexRoute,
+  LocaleDevSeedRoute: LocaleDevSeedRoute,
+  LocaleChangeSideSideIndexRoute: LocaleChangeSideSideIndexRoute,
 }
 
 const LocaleRouteWithChildren =

@@ -6,6 +6,7 @@ import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { userExPatchFx } from "./fx/userExPatchFx";
 import { UserExPatchSchema } from "./schema/UserExPatchSchema";
+import { UserExSchema } from "./schema/UserExSchema";
 
 export const withUserExPatchApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
@@ -25,7 +26,12 @@ export const withUserExPatchApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			responses: {
-				204: {
+				200: {
+					content: {
+						"application/json": {
+							schema: UserExSchema,
+						},
+					},
 					description: "User extended information updated successfully",
 				},
 				500: {
@@ -44,11 +50,12 @@ export const withUserExPatchApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* userExPatchFx({
-					data: c.req.valid("json"),
-				});
-
-				return c.body(null, 204);
+				return c.json<UserExSchema.Type, 200>(
+					yield* userExPatchFx({
+						data: c.req.valid("json"),
+					}),
+					200,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

@@ -30,6 +30,27 @@ export const zUserExPatch = z.object({
 export type zUserExPatch = z.infer<typeof zUserExPatch>;
 
 /**
+ * User extended information
+ */
+export const zUserEx = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the user_ex record'
+    }),
+    locationId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    side: z.optional(z.union([
+        zUserSide,
+        z.null()
+    ]))
+}).register(z.globalRegistry, {
+    description: 'User extended information'
+});
+
+export type zUserEx = z.infer<typeof zUserEx>;
+
+/**
  * Upload file metadata
  */
 export const zUpload = z.object({
@@ -2779,8 +2800,6 @@ export type zapiUserExPatchRequest = z.infer<typeof zApiUserExPatchData>;
 /**
  * User extended information updated successfully
  */
-export const zApiUserExPatchResponse = z.void().register(z.globalRegistry, {
-    description: 'User extended information updated successfully'
-});
+export const zApiUserExPatchResponse = zUserEx;
 
 export type zapiUserExPatchResponse = z.infer<typeof zApiUserExPatchResponse>;

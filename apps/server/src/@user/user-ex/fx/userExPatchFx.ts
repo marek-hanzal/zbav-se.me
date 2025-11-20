@@ -26,7 +26,7 @@ export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
 			});
 
 			if (!userEx) {
-				yield* Effect.tryPromise(async () => {
+				return yield* Effect.tryPromise(async () => {
 					return database
 						.insertInto("user_ex")
 						.values({
@@ -34,13 +34,12 @@ export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
 							userId: user.id,
 							...data,
 						})
-						.execute();
+						.returningAll()
+						.executeTakeFirstOrThrow();
 				});
-
-				return yield* Effect.void;
 			}
 
-			yield* Effect.tryPromise(async () => {
+			return yield* Effect.tryPromise(async () => {
 				return database
 					.updateTable("user_ex")
 					.set({
@@ -48,10 +47,9 @@ export const userExPatchFx = ({ data }: userExPatchFx.Props) => {
 						...data,
 					})
 					.where("id", "=", userEx.id)
-					.execute();
+					.returningAll()
+					.executeTakeFirstOrThrow();
 			});
-
-			return yield* Effect.void;
 		}),
 	);
 };

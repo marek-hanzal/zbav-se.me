@@ -33,6 +33,37 @@ export const sUserSide = {
     ]
 } as const;
 
+export const sUserEx = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        side: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/UserSide'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    required: [
+        'id'
+    ]
+} as const;
+
 export const sUploadCollection = {
     type: 'object',
     properties: {

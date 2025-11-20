@@ -97,20 +97,19 @@ export const Route = createFileRoute("/$locale/seller/")({
 							label={"User profile (label)"}
 						/>
 					</LinkTo>
-
-					<SignOutButton
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"py-12",
-										"mx-auto",
-									],
-								},
-							},
-						}}
-					/>
 				</Container>
+
+				<SignOutButton
+					tweak={{
+						slot: {
+							wrapper: {
+								class: [
+									"mx-auto",
+								],
+							},
+						},
+					}}
+				/>
 			</TitleContainer>
 		);
 	},

@@ -26,6 +26,21 @@ export const tUserSide = { seller: 'seller', buyer: 'buyer' } as const;
 export type tUserSide = typeof tUserSide[keyof typeof tUserSide];
 
 /**
+ * User extended information
+ */
+export type tUserEx = {
+    /**
+     * ID of the user_ex record
+     */
+    id: string;
+    /**
+     * Default location for the user - user for listings & listing sorting
+     */
+    locationId?: string | null;
+    side?: tUserSide | null;
+};
+
+/**
  * Collection of upload items
  */
 export type tUploadCollection = {
@@ -3184,7 +3199,7 @@ export type tApiUserExPatchResponse = {
     /**
      * User extended information updated successfully
      */
-    204: void;
+    200: tUserEx;
 };
 
 export type apiUserExPatchResponse = tApiUserExPatchResponse[keyof tApiUserExPatchResponse];

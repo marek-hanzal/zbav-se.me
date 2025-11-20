@@ -1,13 +1,13 @@
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { withListingCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
+import { type FC, Suspense } from "react";
+import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
 
 export namespace FeedItem {
 	export interface Props {
@@ -17,8 +17,6 @@ export namespace FeedItem {
 }
 
 export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
-	const listingCountQuery = withListingCountQuery.useSuspenseQuery(feed.query);
-
 	return (
 		<Badge
 			tone={"primary"}
@@ -74,30 +72,29 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					<Tx label={"Detail (link)"} />
 				</LinkTo>
 
-				<Badge
-					tone={"secondary"}
-					theme={"light"}
-					size={"sm"}
-					round={"default"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"flex-shrink-0",
-								],
-							},
-						},
-					}}
+				<Suspense
+					fallback={
+						<Badge
+							tone={"secondary"}
+							theme={"light"}
+							size={"sm"}
+							round={"default"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"flex-shrink-0",
+										],
+									},
+								},
+							}}
+						>
+							<SpinnerContainer size={"xs"} />
+						</Badge>
+					}
 				>
-					<Tx label={"Number of listings (label)"} />
-					<Typo
-						label={toLocaleNumber({
-							locale,
-							number: listingCountQuery.data.filter,
-						})}
-						font={"bold"}
-					/>
-				</Badge>
+					<ListingCountBadge query={feed.query} />
+				</Suspense>
 			</div>
 		</Badge>
 	);

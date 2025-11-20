@@ -583,6 +583,7 @@ export const apiUploadCount = <ThrowOnError extends boolean = false>(options?: O
  */
 export const apiUserExPatch = <ThrowOnError extends boolean = false>(options?: Options<tApiUserExPatchRequest, ThrowOnError>) => (options?.client ?? client).patch<tApiUserExPatchResponse, apiUserExPatchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiUserExPatchData.parseAsync(data),
+    responseType: 'json',
     responseValidator: async (data) => await zApiUserExPatchResponse.parseAsync(data),
     url: '/api/user/user-ex',
     ...options,
