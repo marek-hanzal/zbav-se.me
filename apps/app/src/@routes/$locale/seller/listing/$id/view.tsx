@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
-import { Data } from "@use-pico/client/ui/data";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 
@@ -13,12 +11,6 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 		const listingQuery = withListingFetchQuery.useSuspenseQuery({
 			where: {
 				id,
-			},
-		});
-		const locationQuery = withLocationFetchQuery.useSuspenseQuery({
-			enabled: !!listingQuery.data?.locationId,
-			where: {
-				id: listingQuery.data?.locationId,
 			},
 		});
 
@@ -33,12 +25,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 								currency={listingQuery.data.currency}
 							/>
 						</div>
-						<Data
-							result={locationQuery}
-							renderSuccess={({ data }) => {
-								return data.address;
-							}}
-						/>
+						{listingQuery.data.location.address}
 
 						<LinkTo
 							to={"/$locale/dashboard"}
