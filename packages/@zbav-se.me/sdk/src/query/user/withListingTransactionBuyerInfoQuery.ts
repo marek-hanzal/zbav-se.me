@@ -1,9 +1,9 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiListingTransactionBuyerInfo } from "~/api/user/sdk.gen";
+import { apiListingTransactionBuyerInfo } from "../../api/user/sdk.gen";
 import type {
 	tApiListingTransactionBuyerInfoResponse,
 	tListingTransactionQuery,
-} from "~/api/user/types.gen";
+} from "../../api/user/types.gen";
 
 export const withListingTransactionBuyerInfoQuery = withQuery<
 	tListingTransactionQuery,

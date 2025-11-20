@@ -1,9 +1,13 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiFeedCreate } from "~/api/user/sdk.gen";
-import type { apiFeedCreateError, tApiFeedCreateResponse, tFeedCreate } from "~/api/user/types.gen";
-import { withFeedCollectionQuery } from "~/query/user/withFeedCollectionQuery";
-import { withFeedCountQuery } from "~/query/user/withFeedCountQuery";
+import { apiFeedCreate } from "../../api/user/sdk.gen";
+import type {
+	apiFeedCreateError,
+	tApiFeedCreateResponse,
+	tFeedCreate,
+} from "../../api/user/types.gen";
+import { withFeedCollectionQuery } from "../../query/user/withFeedCollectionQuery";
+import { withFeedCountQuery } from "../../query/user/withFeedCountQuery";
 
 export const withFeedCreateMutation = withMutation<
 	tFeedCreate,

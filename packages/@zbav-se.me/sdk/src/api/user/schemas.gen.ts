@@ -2103,6 +2103,60 @@ export const sFeedCollection = {
     ]
 } as const;
 
+export const sListingSortField = {
+    type: 'string',
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'geo',
+        'transaction'
+    ]
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/Order'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingSort'
+            }
+        },
+        meta: {
+            $ref: '#/components/schemas/ListingMeta'
+        }
+    }
+} as const;
+
 export const sFeed = {
     type: 'object',
     properties: {
@@ -2119,9 +2173,7 @@ export const sFeed = {
             type: 'string'
         },
         query: {
-            type: 'object',
-            properties: {},
-            additionalProperties: {}
+            $ref: '#/components/schemas/ListingQuery'
         }
     },
     required: [
@@ -2252,60 +2304,6 @@ export const sFeedPatch = {
     required: [
         'id'
     ]
-} as const;
-
-export const sListingSortField = {
-    type: 'string',
-    enum: [
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'geo',
-        'transaction'
-    ]
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/Order'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingMeta'
-        }
-    }
 } as const;
 
 export const sFeedCreate = {

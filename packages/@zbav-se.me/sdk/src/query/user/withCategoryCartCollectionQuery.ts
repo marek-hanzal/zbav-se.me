@@ -1,6 +1,9 @@
 import { withQuery } from "@use-pico/client/query";
-import { apiCategoryCartCollection } from "~/api/user/sdk.gen";
-import type { tApiCategoryCartCollectionResponse, tCategoryCartQuery } from "~/api/user/types.gen";
+import { apiCategoryCartCollection } from "../../api/user/sdk.gen";
+import type {
+	tApiCategoryCartCollectionResponse,
+	tCategoryCartQuery,
+} from "../../api/user/types.gen";
 
 export const withCategoryCartCollectionQuery = withQuery<
 	tCategoryCartQuery,

@@ -2,14 +2,14 @@ import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
 import { genId } from "@use-pico/common/gen-id";
 import axios from "axios";
-import { apiS3Presign, apiUploadCreate } from "~/api/user/sdk.gen";
+import { apiS3Presign, apiUploadCreate } from "../../api/user/sdk.gen";
 import type {
 	apiS3PresignError,
 	apiUploadCreateError,
 	tAllowedContentTypes,
 	tAllowedExtensions,
 	tUpload,
-} from "~/api/user/types.gen";
+} from "../../api/user/types.gen";
 
 export namespace withUploadMutation {
 	export interface Props {
