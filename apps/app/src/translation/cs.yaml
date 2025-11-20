@@ -698,7 +698,7 @@ e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
     value: Inzerát byl úspěšně odebrán z košíku.
 e164d6b2893d2c34341349e7efb9ec4735b1e3b2f983a6181d0003fc:
     ref: Transaction accepted - seller (label)
-    value: Přijatá transakce
+    value: Přijato
 e2599c3b9d828a48f101d8e9d763a3fa348b11675f80809790e980a7:
     ref: Go to cart (button)
     value: Přejít do košíku
