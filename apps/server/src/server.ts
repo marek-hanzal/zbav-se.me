@@ -12,6 +12,7 @@ import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withUserHono } from "./hono/withUserHono";
+import type { MessageSchema } from "./schema/MessageSchema";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -53,6 +54,16 @@ app.use(
 		maxSize: 1024 * 50,
 	}),
 );
+
+app.onError((err, c) => {
+	return c.json<MessageSchema.Type, 500>(
+		{
+			type: "error",
+			message: err instanceof Error ? err.message : "Internal server error",
+		},
+		500,
+	);
+});
 
 // const withUserRateLimiter = rateLimiter<{
 // 	Variables: {
