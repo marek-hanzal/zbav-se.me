@@ -1,6 +1,6 @@
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { withListingTransactionPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { QuestionIcon } from "@zbav-se.me/ui/icon";
+import { CancelIcon, QuestionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace RejectTransactionButton {
@@ -13,6 +13,7 @@ export namespace RejectTransactionButton {
 export const RejectTransactionButton: FC<RejectTransactionButton.Props> = ({
 	listingTransactionId,
 	onSuccess,
+	disabled,
 	...props
 }) => {
 	const listingTransactionPatchMutation = withListingTransactionPatchMutation.useMutation({
@@ -27,12 +28,12 @@ export const RejectTransactionButton: FC<RejectTransactionButton.Props> = ({
 			full
 			size={"xl"}
 			tone={"danger"}
+			iconEnabled={CancelIcon}
 			loading={listingTransactionPatchMutation.isPending}
-			disabled={listingTransactionPatchMutation.isPending}
+			disabled={disabled || listingTransactionPatchMutation.isPending}
 			confirmProps={{
 				theme: "dark",
 				iconEnabled: QuestionIcon,
-				iconPosition: "right",
 				onClick() {
 					listingTransactionPatchMutation.mutate({
 						id: listingTransactionId,

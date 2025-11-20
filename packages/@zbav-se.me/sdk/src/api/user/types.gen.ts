@@ -510,6 +510,10 @@ export type tListingTransactionBuyerInfo = {
  */
 export type tListingTransactionSellerInfo = {
     /**
+     * Registration date
+     */
+    registered: string;
+    /**
      * Seller score
      */
     score: number;

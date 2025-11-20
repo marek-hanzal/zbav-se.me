@@ -3,14 +3,15 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { tvc } from "@use-pico/cls";
+import { withListingTransactionPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
 	withListingTransactionFetchQuery,
 	withListingTransactionLogCollectionQuery,
 } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { BuyerInfoContainer } from "~/app/listing-transaction/ui/buyer/BuyerInfoContainer";
 import { AcceptTransactionButton } from "~/app/listing-transaction/ui/seller/AcceptTransactionButton";
 import { RejectTransactionButton } from "~/app/listing-transaction/ui/seller/RejectTransactionButton";
-import { BuyerInfoContainer } from "~/app/listing-transaction-log/ui/seller/BuyerInfoContainer";
 
 export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info")({
 	async loader({ context: { queryClient }, params: { id } }) {
@@ -30,7 +31,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info
 				sort: [
 					{
 						field: "createdAt",
-						direction: "desc",
+						direction: "asc",
 					},
 				],
 			}),
@@ -71,6 +72,8 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info
 			},
 		});
 
+		const isTransactionPending = withListingTransactionPatchMutation.useIsMutating();
+
 		return (
 			<TitleContainer
 				ui="BuyerInfo-root"
@@ -92,34 +95,29 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info
 					<div
 						className={tvc([
 							"flex",
+							"flex-col",
 							"gap-2",
 							"w-full",
 							"items-center",
 							"justify-center",
 						])}
 					>
-						<RejectTransactionButton
+						<AcceptTransactionButton
 							listingTransactionId={id}
+							disabled={isTransactionPending}
 							onSuccess={() => {
 								return navigate({
 									href: "/$locale/seller/transaction/$id/view",
-									params: {
-										locale,
-										id,
-									},
 								});
 							}}
 						/>
 
-						<AcceptTransactionButton
+						<RejectTransactionButton
 							listingTransactionId={id}
+							disabled={isTransactionPending}
 							onSuccess={() => {
 								return navigate({
 									href: "/$locale/seller/transaction/$id/view",
-									params: {
-										locale,
-										id,
-									},
 								});
 							}}
 						/>

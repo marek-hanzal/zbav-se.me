@@ -1,6 +1,6 @@
-import { CheckIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { withListingTransactionPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace AcceptTransactionButton {
@@ -13,6 +13,7 @@ export namespace AcceptTransactionButton {
 export const AcceptTransactionButton: FC<AcceptTransactionButton.Props> = ({
 	listingTransactionId,
 	onSuccess,
+	disabled,
 	...props
 }) => {
 	const listingTransactionPatchMutation = withListingTransactionPatchMutation.useMutation({
@@ -27,12 +28,11 @@ export const AcceptTransactionButton: FC<AcceptTransactionButton.Props> = ({
 			full
 			size={"xl"}
 			tone={"primary"}
+			iconEnabled={CheckIcon}
 			loading={listingTransactionPatchMutation.isPending}
-			disabled={listingTransactionPatchMutation.isPending}
+			disabled={disabled || listingTransactionPatchMutation.isPending}
 			confirmProps={{
 				theme: "dark",
-				iconEnabled: CheckIcon,
-				iconPosition: "right",
 				onClick() {
 					listingTransactionPatchMutation.mutate({
 						id: listingTransactionId,

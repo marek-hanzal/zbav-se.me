@@ -41,6 +41,9 @@
 0f7b72d63c9509f02f16f4ec88b26001fd0e301da50f8abdd1d55711:
     ref: Start transaction (button)
     value: Mám zájem!
+11f1dfd86e0449ce01baa9bb34d83acca07ad2b21986fb8aa7eae28f:
+    ref: Seller detail (link)
+    value: Detail prodejce
 1251277d9ed5b1d65b9592d9c9c95ec5e6b943e99fc35e791642150b:
     ref: accepted
     value: accepted
@@ -53,6 +56,9 @@
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
     ref: Listing photos (label)
     value: Počet fotek
+192e18331ed93ab20823e86b17f803632e1521dc9af191ddf7bb9cc9:
+    ref: Seller rejected the transaction (label)
+    value: Prodejce odmítl transakci
 1a0e6c8c893bcf826c111d3947487374f61d2c8bf3de37c5b01fa8a6:
     ref: Listing Score - intro (title)
     value: Pár zajímavých čísel o inzerátu
@@ -71,9 +77,9 @@
 1e3d85c7c23a71840d9beb99b3e899a3f42d37c190376c17982f5ffa:
     ref: Listing Score - Raw score - no value (label)
     value: Čerstvý inzerát
-23fe9f2374988c20d18944a0e9c26724d358d8fe3ec9a8114bca3e2b:
-    ref: Seller - Reject transaction (label)
-    value: Odmítnout
+1f8ae1eecf5c922cd16eccf3b3fb0728404a62f374f43e74badf98f6:
+    ref: Seller - score (label)
+    value: Skóre
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
@@ -116,6 +122,12 @@
 3142dbbe5e5453a1903742ffb19fe5f58ac8433e5ef3e55dd65bd3f6:
     ref: Seller - shop (title)
     value: Obchod pro prodávající
+32b9f0966270206feec51c61d1cf5ac18fc5f75260008c0bc2e9ae78:
+    ref: This transaction has expired (label)
+    value: Tato transakce vypršela
+353320f7b253c48414903f8b8cd81097a39ff2139e7e8954ba00b03d:
+    ref: This transaction has been closed (label)
+    value: Tato transakce byla uzavřena
 36e3a2076a652d8613c8604b631fa834372b465cfc2497d82b2c4b04:
     ref: seller
     value: seller
@@ -218,6 +230,9 @@
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
     ref: Feed name (label)
     value: Jméno
+595d7bd7822a07089c1b688e2db7801c13caf30c35ed54b80f38e202:
+    ref: Seller - account age (label)
+    value: Stáří účtu
 59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
     ref: Go to feed (link)
     value: Přejít k nabídkám
@@ -380,6 +395,9 @@
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
     value: Nový inzerát
+9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
+    ref: Seller info (title)
+    value: Informace o prodejci
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
     ref: Submit (title)
     value: Vše připraveno
@@ -392,6 +410,9 @@
         Tuhle kategorii bohužel nemáme. Zkus jinou nebo v případě nouze
         vyber "Ostatní". Tak či tak, tvůj dotaz byl zaznamenán a třeba
         kategorii přidáme.
+9d7e3964cb471e503e8596142279b48d4845248318f0b45264fcde48:
+    ref: This transaction has been successfully completed (label)
+    value: Transakce úspěšně dokončena!
 9d96a108b9c86846287f96e8664fd01cd443ac91d6eb92649db0a909:
     ref: Feed select (title)
     value: Vyber z nabídek
@@ -635,7 +656,7 @@ d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     value: Stav
 d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
     ref: Buyer - account age (label)
-    value: Věk účtu
+    value: Stáří účtu
 d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
     ref: Feed selection (button)
     value: Koukni na inzeráty
@@ -707,9 +728,6 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
     ref: Next - feed condition (button)
     value: Stavy
-ecb2741020da43ce8754ffe647403bad8c01f4025eadc6c5941641d6:
-    ref: Seller - Accept transaction (label)
-    value: Přijmout
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat

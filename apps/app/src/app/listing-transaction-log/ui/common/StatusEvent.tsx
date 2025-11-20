@@ -4,7 +4,11 @@ import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { tListingTransactionLog, tUserSide } from "@zbav-se.me/sdk/api/user";
+import type {
+	tListingTransactionLog,
+	tListingTransactionStatus,
+	tUserSide,
+} from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
@@ -38,7 +42,7 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 							class: [
 								"inline-flex",
 								"flex-col",
-								"gap-2",
+								"gap-1",
 								match(side)
 									.with("buyer", () => {
 										return match(listingTransactionLog.side)
@@ -102,29 +106,53 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 							class: [
 								"h-fit",
 								"p-2",
-								"max-w-2/3",
+								"flex",
+								"flex-col",
+								"items-start",
+								"max-w-5/6",
+								"w-5/6",
 							],
 						},
 					},
 				}}
 				tone={match<tUserSide, Cls.VariantOf<BadgeCls, "tone">>(side)
-					.with("buyer", () => "primary")
-					.with("seller", () => "secondary")
+					.with("buyer", () => {
+						return match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
+							listingTransactionLog.status,
+						)
+							.with("request", () => "primary")
+							.with("accepted", "success", () => "secondary")
+							.with("rejected", () => "danger")
+							.with("closed", "expired", () => "secondary")
+							.exhaustive();
+					})
+					.with("seller", () => {
+						return match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
+							listingTransactionLog.status,
+						)
+							.with("request", () => "secondary")
+							.with("accepted", "success", () => "primary")
+							.with("rejected", () => "danger")
+							.with("closed", "expired", () => "secondary")
+							.exhaustive();
+					})
 					.exhaustive()}
 			>
-				<TransactionStatusIcon
-					size={"sm"}
-					transactionStatus={listingTransactionLog.status}
-				/>
+				<div className="flex items-center gap-1">
+					<TransactionStatusIcon
+						size={"sm"}
+						transactionStatus={listingTransactionLog.status}
+					/>
 
-				<TransactionStatusInline
-					side={side}
-					transactionStatus={listingTransactionLog.status}
-					size={"lg"}
-				/>
+					<TransactionStatusInline
+						side={side}
+						transactionStatus={listingTransactionLog.status}
+						size={"lg"}
+					/>
+				</div>
+
+				{children}
 			</Badge>
-
-			{children}
 		</Container>
 	);
 };
