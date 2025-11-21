@@ -3,7 +3,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Typo } from "@use-pico/client/ui/typo";
 import { TransactionList } from "@zbav-se.me/buyer/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
@@ -47,7 +46,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 				<TransactionList
 					_suspense={"I know"}
 					locale={locale}
-					renderItem={({ listingTransaction }) => {
+					renderItemFn={({ listingTransaction, children }) => {
 						return (
 							<LinkTo
 								icon={ArrowRightIcon}
@@ -59,11 +58,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 								}}
 								full
 							>
-								<Typo
-									label={listingTransaction.title}
-									truncate
-									size={"md"}
-								/>
+								{children}
 							</LinkTo>
 						);
 					}}

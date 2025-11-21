@@ -10,7 +10,7 @@ export namespace TransactionList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		emptyAction: ReactNode;
-		renderItem: TransactionItem.Item.RenderFn;
+		renderItemFn: TransactionItem.Item.RenderFn;
 	}
 }
 
@@ -18,7 +18,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	_suspense,
 	locale,
 	emptyAction,
-	renderItem,
+	renderItemFn,
 	...props
 }) => {
 	const listingTransactionCollectionQuery =
@@ -64,7 +64,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 								key={item.id}
 								listingTransaction={item}
 								locale={locale}
-								item={renderItem}
+								item={renderItemFn}
 							/>
 						))
 					: null}
