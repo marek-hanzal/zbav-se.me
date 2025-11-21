@@ -3,7 +3,6 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
 import { CategoryInline } from "@zbav-se.me/common/category";
@@ -13,7 +12,7 @@ import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC, PropsWithChildren, ReactNode } from "react";
 
 export namespace CategoryCartListContainer {
-	export namespace LinkTo {
+	export namespace CategoryLinkTo {
 		export interface Props extends PropsWithChildren {
 			locale: string;
 			categoryCart: tCategoryCart;
@@ -22,9 +21,21 @@ export namespace CategoryCartListContainer {
 		export type RenderFn = (props: Props) => ReactNode;
 	}
 
+	export namespace LinkTo {
+		export type Type = "empty-feed" | "empty-no-feed";
+
+		export interface Props extends PropsWithChildren {
+			locale: string;
+			type: Type;
+		}
+
+		export type RenderFn = (props: Props) => ReactNode;
+	}
+
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		categoryCartList: tCategoryCart[];
+		categoryLinkTo: CategoryLinkTo.RenderFn;
 		linkTo: LinkTo.RenderFn;
 	}
 }
@@ -33,6 +44,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 	_suspense,
 	locale,
 	categoryCartList,
+	categoryLinkTo,
 	linkTo,
 	...props
 }) => {
@@ -45,7 +57,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 			{...props}
 		>
 			{categoryCartList.map((categoryCart) =>
-				linkTo({
+				categoryLinkTo({
 					locale,
 					categoryCart,
 					children: (
@@ -97,13 +109,10 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 							tone={"primary"}
 							textTitle={"Your cart is empty - feed (title)"}
 							textMessage={"Your cart is empty - feed (message)"}
-							action={
-								<LinkTo
-									to={"/$locale/buyer/feed/select"}
-									params={{
-										locale,
-									}}
-								>
+							action={linkTo({
+								locale,
+								type: "empty-feed",
+								children: (
 									<Button
 										iconEnabled={ArrowRightIcon}
 										iconPosition={"right"}
@@ -111,8 +120,8 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 										size={"xl"}
 										theme={"dark"}
 									/>
-								</LinkTo>
-							}
+								),
+							})}
 						/>
 					) : null}
 
@@ -122,13 +131,10 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 							tone={"primary"}
 							textTitle={"Your cart is empty - no feed (title)"}
 							textMessage={"Your cart is empty - no feed (message)"}
-							action={
-								<LinkTo
-									to={"/$locale/buyer/feed/wizard/location"}
-									params={{
-										locale,
-									}}
-								>
+							action={linkTo({
+								locale,
+								type: "empty-no-feed",
+								children: (
 									<Button
 										iconEnabled={ArrowRightIcon}
 										iconPosition={"right"}
@@ -136,8 +142,8 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 										size={"xl"}
 										theme={"dark"}
 									/>
-								</LinkTo>
-							}
+								),
+							})}
 						/>
 					)}
 				</Container>
