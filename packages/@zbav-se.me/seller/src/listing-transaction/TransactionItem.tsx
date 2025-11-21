@@ -1,16 +1,23 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
 import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
-import { TransactionStatusInline } from "@zbav-se.me/seller/listing-transaction";
-import type { FC } from "react";
+import type { FC, PropsWithChildren, ReactNode } from "react";
+import { TransactionStatusInline } from "./TransactionStatusInline";
 
 export namespace TransactionItem {
-	export interface Props extends Badge.Props {
+	export namespace Item {
+		export interface Props extends PropsWithChildren {
+			listingTransaction: tListingTransaction;
+		}
+
+		export type RenderFn = (props: Item.Props) => ReactNode;
+	}
+
+	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		listingTransaction: tListingTransaction;
+		item: Item.RenderFn;
 	}
 }
 
@@ -18,6 +25,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	locale,
 	listingTransaction,
 	tweak,
+	item,
 	...props
 }) => {
 	return (
@@ -44,22 +52,16 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			round={"default"}
 			{...props}
 		>
-			<LinkTo
-				icon={ArrowRightIcon}
-				iconPosition={"right"}
-				to={"/$locale/seller/transaction/$id/view"}
-				params={{
-					locale,
-					id: listingTransaction.id,
-				}}
-				full
-			>
-				<Typo
-					label={listingTransaction.title}
-					truncate
-					size={"md"}
-				/>
-			</LinkTo>
+			{item({
+				listingTransaction,
+				children: (
+					<Typo
+						label={listingTransaction.title}
+						truncate
+						size={"md"}
+					/>
+				),
+			})}
 
 			<div className={"flex flex-row gap-2 items-center justify-between w-full"}>
 				<TransactionStatusIcon

@@ -1,18 +1,26 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { EmptyList } from "@zbav-se.me/seller/listing-transaction";
 import { Fade } from "@zbav-se.me/ui/fade";
-import { type FC, useRef } from "react";
-import { TransactionItem } from "~/app/@seller/listing-transaction/ui/TransactionItem";
+import { type FC, type ReactNode, useRef } from "react";
+import { EmptyList } from "./EmptyList";
+import { TransactionItem } from "./TransactionItem";
 
 export namespace TransactionList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
+		emptyAction: ReactNode;
+		renderItemFn: TransactionItem.Item.RenderFn;
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({ _suspense, locale, ...props }) => {
+export const TransactionList: FC<TransactionList.Props> = ({
+	_suspense,
+	locale,
+	emptyAction,
+	renderItemFn,
+	...props
+}) => {
 	const listingTransactionCollectionQuery =
 		withListingTransactionCollectionQuery.useSuspenseQuery(
 			{
@@ -54,8 +62,9 @@ export const TransactionList: FC<TransactionList.Props> = ({ _suspense, locale, 
 					? listingTransactionCollectionQuery.data.data.map((item) => (
 							<TransactionItem
 								key={item.id}
-								locale={locale}
 								listingTransaction={item}
+								locale={locale}
+								item={renderItemFn}
 							/>
 						))
 					: null}
@@ -65,7 +74,7 @@ export const TransactionList: FC<TransactionList.Props> = ({ _suspense, locale, 
 						layout={"vertical-centered"}
 						items={"center"}
 					>
-						<EmptyList />
+						<EmptyList action={emptyAction} />
 					</Container>
 				)}
 			</Container>
