@@ -1,3 +1,3 @@
 export { FeedDetailContainer } from "./FeedDetailContainer";
-export { FeedItem } from "./FeedItem";
+export { FeedItemBadge } from "./FeedItemBadge";
 export { FeedListContainer } from "./FeedListContainer";

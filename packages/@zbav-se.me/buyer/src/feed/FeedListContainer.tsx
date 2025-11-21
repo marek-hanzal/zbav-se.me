@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useId } from "react";
-import { FeedItem } from "./FeedItem";
+import { FeedItemBadge } from "./FeedItemBadge";
 
 export namespace FeedListContainer {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -30,7 +30,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 		>
 			{feedCollectionQuery.data.data.map((feed) => {
 				return (
-					<FeedItem
+					<FeedItemBadge
 						key={`${feedRootId}-${feed.id}`}
 						feed={feed}
 						locale={locale}
