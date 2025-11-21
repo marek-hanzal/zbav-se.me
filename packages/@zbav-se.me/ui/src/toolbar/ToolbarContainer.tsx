@@ -1,6 +1,6 @@
 import { Container, ContainerCls } from "@use-pico/client/ui/container";
 import type { FC } from "react";
-import { ToolbarContainerCls } from "~/app/ui/toolbar/ToolbarContainerCls";
+import { ToolbarContainerCls } from "./ToolbarContainerCls";
 
 export namespace ToolbarContainer {
 	export interface Props extends ToolbarContainerCls.Props<Container.Props> {

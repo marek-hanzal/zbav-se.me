@@ -199,11 +199,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					/>
 				)}
 			</Sheet>
-
-			{/* 
-        If you bring back the "trash" action, also clear the cache to avoid flash:
-        setUpload(undefined, { where: { id: value } });
-      */}
 		</Container>
 	);
 };

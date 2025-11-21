@@ -2,6 +2,7 @@
 	"name": "@zbav-se.me/sdk",
 	"version": "workspace:*",
 	"type": "module",
+	"sideEffects": false,
 	"scripts": {
 		"sdk": "openapi-ts",
 		"typecheck": "tsc --noEmit"

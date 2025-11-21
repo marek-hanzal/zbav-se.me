@@ -3,9 +3,9 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
+import { Tile } from "@zbav-se.me/ui/tile";
 import { match } from "ts-pattern";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
-import { Tile } from "~/app/ui/dashboard/Tile";
 
 export const Route = createFileRoute("/$locale/dashboard")({
 	component() {

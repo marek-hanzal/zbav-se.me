@@ -280,11 +280,17 @@
     "packages/@zbav-se.me/common": {
       "name": "@zbav-se.me/common",
       "dependencies": {
+        "@use-pico/client": "workspace:*",
+        "@zbav-se.me/sdk": "workspace:*",
+        "@zbav-se.me/ui": "workspace:*",
+        "react": "19.2.0",
         "zod": "4.1.12",
       },
       "devDependencies": {
+        "@types/react": "19.2.6",
         "@use-pico/tsconfig": "5.0.0",
         "typescript": "5.9.3",
+        "vite": "7.2.4",
       },
     },
     "packages/@zbav-se.me/sdk": {

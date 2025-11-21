@@ -1,0 +1,1 @@
+export { BadgeLeft } from "./BadgeLeft";

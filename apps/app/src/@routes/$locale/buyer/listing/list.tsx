@@ -5,6 +5,7 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { zListingQuery } from "@zbav-se.me/sdk/api/user";
+import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";
@@ -12,7 +13,6 @@ import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
 import { ListingFeedToolbar } from "~/app/listing/ui/toolbar/ListingFeedToolbar";
-import { BadgeLeft } from "~/app/ui/badge/BadgeLeft";
 
 export const Route = createFileRoute("/$locale/buyer/listing/list")({
 	validateSearch: z.object({

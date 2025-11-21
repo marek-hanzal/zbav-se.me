@@ -4,9 +4,10 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
-import { BackspaceIcon, ClearIcon } from "@zbav-se.me/ui/icon";
 import type { FC, RefObject } from "react";
-import { Item } from "~/app/ui/dial/Item";
+import { BackspaceIcon } from "../icon/BackspaceIcon";
+import { ClearIcon } from "../icon/ClearIcon";
+import { Item } from "./Item";
 
 const digit = (current: string, digit: number | string, limit = 8): string => {
 	let value = `${current}${digit}`.replace(/^0+(?=\d)/, "");
