@@ -19,27 +19,35 @@ export const withListingTransactionLogQueryBuilder: withListingTransactionLogQue
 		let query = select;
 
 		if (where.id) {
-			query = query.where("ltl.id", "=", where.id);
+			query = query.where("log.id", "=", where.id);
 		}
 
 		if (where.idIn && where.idIn.length > 0) {
-			query = query.where("ltl.id", "in", where.idIn);
+			query = query.where("log.id", "in", where.idIn);
 		}
 
 		if (where.listingTransactionId) {
-			query = query.where("ltl.listingTransactionId", "=", where.listingTransactionId);
+			query = query.where("log.listingTransactionId", "=", where.listingTransactionId);
+		}
+
+		if (where.event) {
+			query = query.where("log.event", "=", where.event);
+		}
+
+		if (where.eventIn && where.eventIn.length > 0) {
+			query = query.where("log.event", "in", where.eventIn);
 		}
 
 		if (where.status) {
-			query = query.where("ltl.status", "=", where.status);
+			query = query.where("log.status", "=", where.status);
 		}
 
 		if (where.statusIn && where.statusIn.length > 0) {
-			query = query.where("ltl.status", "in", where.statusIn);
+			query = query.where("log.status", "in", where.statusIn);
 		}
 
 		if (where.side) {
-			query = query.where("ltl.side", "=", where.side);
+			query = query.where("log.side", "=", where.side);
 		}
 
 		/**

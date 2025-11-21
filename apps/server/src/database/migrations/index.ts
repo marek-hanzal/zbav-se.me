@@ -15,7 +15,10 @@ import { ListingIgnoreMigration } from "./0013-listing-ignore";
 import { ListingFlagMigration } from "./0014-listing-flag";
 import { UserScoreMigration } from "./0015-user-score";
 import { ListingTransactionMigration } from "./0016-listing-transaction";
-import { ListingTransactionLogMigration } from "./0017-listing-transaction-log";
+import { ListingTransactionStatusMigration } from "./0017-listing-transaction-status";
+import { ListingTransactionMessageMigration } from "./0018-listing-transaction-message";
+import { ListingTransactionGalleryMigration } from "./0019-listing-transaction-gallery";
+import { ListingTransactionLocationMigration } from "./0020-listing-transaction-location";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -35,5 +38,8 @@ export const migrations = {
 	"0014-listing-flag": ListingFlagMigration,
 	"0015-user-score": UserScoreMigration,
 	"0016-listing-transaction": ListingTransactionMigration,
-	"0017-listing-transaction-log": ListingTransactionLogMigration,
+	"0017-listing-transaction-status": ListingTransactionStatusMigration,
+	"0018-listing-transaction-message": ListingTransactionMessageMigration,
+	"0019-listing-transaction-gallery": ListingTransactionGalleryMigration,
+	"0020-listing-transaction-location": ListingTransactionLocationMigration,
 } as const;

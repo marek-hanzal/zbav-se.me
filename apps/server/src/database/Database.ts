@@ -9,7 +9,10 @@ import type { ListingFlagDbSchema } from "../app/listing-flag/schema/ListingFlag
 import type { ListingIgnoreDbSchema } from "../app/listing-ignore/schema/ListingIgnoreDbSchema";
 import type { ListingScoreDbSchema } from "../app/listing-score/schema/ListingScoreDbSchema";
 import type { ListingTransactionDbSchema } from "../app/listing-transaction/schema/ListingTransactionDbSchema";
-import type { ListingTransactionLogDbSchema } from "../app/listing-transaction-log/schema/ListingTransactionLogDbSchema";
+import type { ListingTransactionGalleryDbSchema } from "../app/listing-transaction-gallery/schema/ListingTransactionGalleryDbSchema";
+import type { ListingTransactionLocationDbSchema } from "../app/listing-transaction-location/schema/ListingTransactionLocationDbSchema";
+import type { ListingTransactionMessageDbSchema } from "../app/listing-transaction-message/schema/ListingTransactionMessageDbSchema";
+import type { ListingTransactionStatusDbSchema } from "../app/listing-transaction-status/schema/ListingTransactionStatusDbSchema";
 import type { LocationDbSchema } from "../app/location/schema/LocationDbSchema";
 import type { UploadDbSchema } from "../app/upload/schema/UploadDbSchema";
 import type { UserExDbSchema } from "../app/user-ex/schema/UserExDbSchema";
@@ -25,7 +28,10 @@ export interface Database {
 	listing_flag: ListingFlagDbSchema.Type;
 	listing_ignore: ListingIgnoreDbSchema.Type;
 	listing_score: ListingScoreDbSchema.Type;
-	listing_transaction_log: ListingTransactionLogDbSchema.Type;
+	listing_transaction_gallery: ListingTransactionGalleryDbSchema.Type;
+	listing_transaction_location: ListingTransactionLocationDbSchema.Type;
+	listing_transaction_message: ListingTransactionMessageDbSchema.Type;
+	listing_transaction_status: ListingTransactionStatusDbSchema.Type;
 	listing_transaction: ListingTransactionDbSchema.Type;
 	listing: ListingDbSchema.Type;
 	location: LocationDbSchema.Type;

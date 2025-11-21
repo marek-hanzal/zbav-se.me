@@ -3,9 +3,9 @@ import { Effect } from "effect";
 import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
 import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { listingTransactionLogFetchFx } from "./listingTransactionLogFetchFx";
+import { listingTransactionStatusFetchFx } from "./listingTransactionStatusFetchFx";
 
-export namespace listingTransactionLogCreateFx {
+export namespace listingTransactionStatusCreateFx {
 	export interface Props {
 		listingTransactionId: string;
 		status: ListingTransactionStatusSchema.Type;
@@ -14,12 +14,12 @@ export namespace listingTransactionLogCreateFx {
 	}
 }
 
-export const listingTransactionLogCreateFx = ({
+export const listingTransactionStatusCreateFx = ({
 	listingTransactionId,
 	status,
 	side,
 	createdAt = new Date(),
-}: listingTransactionLogCreateFx.Props) => {
+}: listingTransactionStatusCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
@@ -27,10 +27,11 @@ export const listingTransactionLogCreateFx = ({
 
 		yield* Effect.tryPromise(async () => {
 			return database
-				.insertInto("listing_transaction_log")
+				.insertInto("listing_transaction_status")
 				.values({
 					id,
 					listingTransactionId,
+					event: "status",
 					status,
 					side,
 					createdAt,
@@ -39,7 +40,7 @@ export const listingTransactionLogCreateFx = ({
 				.executeTakeFirstOrThrow();
 		});
 
-		return yield* listingTransactionLogFetchFx({
+		return yield* listingTransactionStatusFetchFx({
 			query: {
 				where: {
 					id,
@@ -49,4 +50,4 @@ export const listingTransactionLogCreateFx = ({
 	});
 };
 
-export type listingTransactionLogCreateFx = ReturnType<typeof listingTransactionLogCreateFx>;
+export type listingTransactionStatusCreateFx = ReturnType<typeof listingTransactionStatusCreateFx>;
