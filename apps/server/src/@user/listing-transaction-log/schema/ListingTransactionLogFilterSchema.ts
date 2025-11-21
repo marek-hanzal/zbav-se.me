@@ -1,7 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
 import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
-import { ListingTransactionStatusSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const ListingTransactionLogFilterSchema = z
@@ -12,8 +11,6 @@ export const ListingTransactionLogFilterSchema = z
 		}),
 		event: ListingTransactionEventSchema.optional(),
 		eventIn: ListingTransactionEventSchema.array().optional(),
-		status: ListingTransactionStatusSchema.optional(),
-		statusIn: ListingTransactionStatusSchema.array().optional(),
 		side: ListingTransactionSideSchema.optional(),
 		userId: z.string().optional(),
 	})
