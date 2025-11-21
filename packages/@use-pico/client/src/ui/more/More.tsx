@@ -51,7 +51,7 @@ export const More = <TValues extends EntitySchema.Type>({
 	icon = ActionMenuIcon,
 	iconProps,
 	actionProps,
-	textTitle,
+	textTitle: _,
 	textEmpty,
 	items,
 	modalProps,
@@ -79,7 +79,6 @@ export const More = <TValues extends EntitySchema.Type>({
 			)}
 			{limit !== undefined && items.length > limit && (
 				<Modal
-					textTitle={textTitle}
 					target={
 						<Action
 							iconEnabled={icon}

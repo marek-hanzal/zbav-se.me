@@ -6,6 +6,7 @@ import { ActionModalCls } from "./ActionModalCls";
 
 export namespace ActionModal {
 	export interface Props extends ActionModalCls.Props<Omit<Modal.Props, "target">> {
+		icon: Icon.Type;
 		iconProps?: Icon.Props;
 		label: ReactNode;
 		disabled?: boolean;
@@ -33,7 +34,6 @@ export const ActionModal: FC<ActionModal.Props> = ({
 		<div className={slots.wrapper()}>
 			<div className={slots.root()}>
 				<Modal
-					icon={icon}
 					target={
 						<div className={"flex flex-row gap-2 items-center"}>
 							<Icon

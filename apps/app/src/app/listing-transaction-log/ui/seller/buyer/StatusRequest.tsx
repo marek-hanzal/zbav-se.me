@@ -1,9 +1,10 @@
-import { useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Tx } from "@use-pico/client/ui/tx";
+import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
-import type { FC } from "react";
+import { TitleContainer } from "@zbav-se.me/ui/container";
+import { Modal } from "node_modules/@use-pico/client/src/ui/modal/Modal";
+import { type FC, Suspense } from "react";
+import { BuyerInfoContainer } from "~/app/listing-transaction/ui/buyer/BuyerInfoContainer";
 import { StatusEvent } from "../../common/StatusEvent";
 
 export namespace StatusRequest {
@@ -13,26 +14,36 @@ export namespace StatusRequest {
 }
 
 export const StatusRequest: FC<StatusRequest.Props> = (props) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	return (
-		<StatusEvent
-			ui={"Seller-Buyer-StatusRequest"}
-			{...props}
+		<Modal
+			size={"full"}
+			target={
+				<StatusEvent
+					ui={"Seller-Buyer-StatusRequest"}
+					{...props}
+				/>
+			}
 		>
-			<LinkTo
-				icon={ArrowRightIcon}
-				iconPosition={"right"}
-				to={"/$locale/seller/transaction/$id/buyer/info"}
-				params={{
-					locale,
-					id: props.listingTransactionLog.listingTransactionId,
-				}}
-			>
-				<Tx label="Buyer detail (link)" />
-			</LinkTo>
-		</StatusEvent>
+			{({ close }) => (
+				<TitleContainer
+					ui="BuyerInfo-root"
+					textTitle="Buyer info (title)"
+					left={
+						<Icon
+							icon={ArrowLeftIcon}
+							onClick={close}
+							size={"sm"}
+						/>
+					}
+					onClick={close}
+				>
+					<Suspense fallback={<SpinnerContainer />}>
+						<BuyerInfoContainer
+							listingTransactionId={props.listingTransactionLog.listingTransactionId}
+						/>
+					</Suspense>
+				</TitleContainer>
+			)}
+		</Modal>
 	);
 };

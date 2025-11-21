@@ -13,7 +13,6 @@ import { StatusSuccess as BuyerBuyerStatusSuccess } from "~/app/listing-transact
 import { StatusAccepted as BuyerSellerStatusAccepted } from "~/app/listing-transaction-log/ui/buyer/seller/StatusAccepted";
 import { StatusClosed as BuyerSellerStatusClosed } from "~/app/listing-transaction-log/ui/buyer/seller/StatusClosed";
 import { StatusRejected as BuyerSellerStatusRejected } from "~/app/listing-transaction-log/ui/buyer/seller/StatusRejected";
-import { StatusRequest as BuyerSellerStatusRequest } from "~/app/listing-transaction-log/ui/buyer/seller/StatusRequest";
 import { StatusSuccess as BuyerSellerStatusSuccess } from "~/app/listing-transaction-log/ui/buyer/seller/StatusSuccess";
 import { StatusEvent as CommonStatusEvent } from "~/app/listing-transaction-log/ui/common/StatusEvent";
 import { StatusRejected as SellerBuyerStatusRejected } from "~/app/listing-transaction-log/ui/seller/buyer/StatusRejected";
@@ -30,7 +29,6 @@ const StatusComponents = {
 	"buyer.buyer.success": BuyerBuyerStatusSuccess,
 
 	// buyer viewing, seller acted
-	"buyer.seller.request": BuyerSellerStatusRequest,
 	"buyer.seller.accepted": BuyerSellerStatusAccepted,
 	"buyer.seller.rejected": BuyerSellerStatusRejected,
 	"buyer.seller.success": BuyerSellerStatusSuccess,

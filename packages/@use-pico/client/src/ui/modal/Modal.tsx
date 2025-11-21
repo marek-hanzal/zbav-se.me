@@ -10,11 +10,8 @@ import {
 	useInteractions,
 	useTransitionStyles,
 } from "@floating-ui/react";
-import { type Cls, tvc, useCls } from "@use-pico/cls";
+import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, type ReactNode, useMemo } from "react";
-import { CloseIcon } from "../../icon/CloseIcon";
-import { Icon } from "../../icon/Icon";
-import { Action } from "../action/Action";
 import { createModalStore } from "./createModalStore";
 import { ModalCls } from "./ModalCls";
 import { ModalContext } from "./ModalContext";
@@ -33,8 +30,6 @@ export namespace Modal {
 		 * The target element that will open the modal.
 		 */
 		target: ReactNode;
-		icon?: Icon.Type;
-		textTitle: ReactNode;
 		disabled?: boolean;
 		defaultOpen?: boolean;
 		size?: Cls.VariantOf<ModalCls, "size">;
@@ -50,8 +45,6 @@ export namespace Modal {
 
 export const Modal: FC<Modal.Props> = ({
 	target,
-	icon,
-	textTitle,
 	disabled = false,
 	defaultOpen = false,
 	outside = false,
@@ -126,54 +119,6 @@ export const Modal: FC<Modal.Props> = ({
 									data-ui="Modal-modal"
 									className={slots.modal()}
 								>
-									<div
-										className={tvc([
-											"border-b",
-											"border-slate-200",
-											"mb-2",
-											"py-1.5",
-											"flex",
-											"flex-row",
-											"items-center",
-											"justify-between",
-											"select-none",
-										])}
-									>
-										<div
-											className={tvc(
-												"flex",
-												"flex-row",
-												"items-center",
-												"gap-2",
-												"pr-4",
-											)}
-										>
-											<Icon
-												icon={icon}
-												size={"sm"}
-											/>
-											<div
-												className={tvc(
-													"text-lg",
-													"font-semibold",
-													"text-slate-700",
-												)}
-											>
-												{textTitle}
-											</div>
-										</div>
-										<Action
-											iconEnabled={CloseIcon}
-											onClick={() => close()}
-											tweak={{
-												variant: {
-													tone: "neutral",
-													theme: "light",
-												},
-											}}
-											size={"sm"}
-										/>
-									</div>
 									{children({
 										close,
 									})}

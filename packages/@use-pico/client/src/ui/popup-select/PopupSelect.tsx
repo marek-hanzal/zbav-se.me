@@ -109,7 +109,7 @@ export const PopupSelect = <TQuery extends withQuerySchema.Query, TItem extends 
 	return (
 		<Modal
 			key={modalId}
-			icon={icon}
+			// icon={icon}
 			disabled={disabled}
 			target={
 				<Target
@@ -122,7 +122,7 @@ export const PopupSelect = <TQuery extends withQuerySchema.Query, TItem extends 
 					selection={selection}
 				/>
 			}
-			textTitle={textTitle}
+			// textTitle={textTitle}
 			size={"lg"}
 			{...modalProps}
 		>
