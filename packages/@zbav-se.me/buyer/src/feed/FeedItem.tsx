@@ -1,13 +1,12 @@
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
+import { ListingCountBadge } from "@zbav-se.me/common/listing";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
-import { type FC, Suspense } from "react";
-import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
+import type { FC } from "react";
 
 export namespace FeedItem {
 	export interface Props extends Omit<Badge.Props, "children"> {
@@ -73,33 +72,10 @@ export const FeedItem: FC<FeedItem.Props> = ({ locale, feed, ...props }) => {
 					<Tx label={"Detail (link)"} />
 				</LinkTo>
 
-				<Suspense
-					fallback={
-						<Badge
-							tone={"secondary"}
-							theme={"light"}
-							size={"sm"}
-							round={"default"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"flex-shrink-0",
-										],
-									},
-								},
-							}}
-						>
-							<SpinnerContainer size={"xs"} />
-						</Badge>
-					}
-				>
-					<ListingCountBadge
-						_suspense={"I know"}
-						locale={locale}
-						query={feed.query}
-					/>
-				</Suspense>
+				<ListingCountBadge
+					locale={locale}
+					query={feed.query}
+				/>
 			</div>
 		</Badge>
 	);

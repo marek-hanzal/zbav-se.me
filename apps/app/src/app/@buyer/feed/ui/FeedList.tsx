@@ -3,11 +3,11 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { FeedListContainer } from "@zbav-se.me/buyer/feed";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense } from "react";
-import { FeedListContainer } from "~/app/@buyer/feed/ui/FeedList/ListContainer";
 
 export namespace FeedList {
 	export interface Props extends MarkSuspense.Props {
