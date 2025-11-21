@@ -1,7 +1,10 @@
 import { z } from "@hono/zod-openapi";
+import { ListingTransactionGallerySchema } from "~/@user/listing-transaction-gallery/schema/ListingTransactionGallerySchema";
+import { ListingTransactionLocationSchema } from "~/@user/listing-transaction-location/schema/ListingTransactionLocationSchema";
+import { ListingTransactionMessageSchema } from "~/@user/listing-transaction-message/schema/ListingTransactionMessageSchema";
+import { ListingTransactionStatusSchema } from "~/@user/listing-transaction-status/schema/ListingTransactionStatusSchema";
 import { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
 import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
-import { ListingTransactionStatusSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusSchema";
 
 export const ListingTransactionLogSchema = z
 	.object({
@@ -13,13 +16,17 @@ export const ListingTransactionLogSchema = z
 		}),
 		event: ListingTransactionEventSchema,
 		side: ListingTransactionSideSchema,
-		status: ListingTransactionStatusSchema.optional().openapi({
-			description: "Status (only for status events)",
-		}),
 		//
-		payload: z.any().optional().openapi({
-			description: "Payload of the event",
-		}),
+		payload: z
+			.union([
+				ListingTransactionStatusSchema,
+				ListingTransactionMessageSchema,
+				ListingTransactionLocationSchema,
+				ListingTransactionGallerySchema,
+			])
+			.openapi("ListingTransactionPayload", {
+				description: "Payload of the event",
+			}),
 		//
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",

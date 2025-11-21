@@ -1,4 +1,4 @@
-import { sql } from "kysely";
+import { jsonBuildObject } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { ListingTransactionLogSortSchema } from "~/@user/listing-transaction-log/schema/ListingTransactionLogSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
@@ -16,74 +16,66 @@ export const withListingTransactionLogSelect = ({
 	database,
 	sort,
 }: withListingTransactionLogSelect.Props) => {
-	// Union all event tables into a single log view
-	const statusQuery = database.selectFrom("listing_transaction_status as lts").select([
+	const statusQuery = database.selectFrom("listing_transaction_status as lts").select((eb) => [
 		"lts.id",
 		"lts.listingTransactionId",
 		"lts.event",
 		"lts.side",
-		sql<"request" | "accepted" | "rejected" | "success" | "closed" | "expired">`lts.status`.as(
-			"status",
-		),
-		sql<string | null>`null`.as("message"),
-		sql<string | null>`null`.as("galleryId"),
-		sql<string | null>`null`.as("locationId"),
-		sql<Date | null>`null`.as("time"),
 		"lts.createdAt",
+		jsonBuildObject({
+			status: eb.ref("lts.status"),
+		})
+			.$castTo<any>()
+			.as("payload"),
 	]);
 
-	const messageQuery = database.selectFrom("listing_transaction_message as ltm").select([
+	const messageQuery = database.selectFrom("listing_transaction_message as ltm").select((eb) => [
 		"ltm.id",
 		"ltm.listingTransactionId",
 		"ltm.event",
 		"ltm.side",
-		sql<"request" | "accepted" | "rejected" | "success" | "closed" | "expired" | null>`null`.as(
-			"status",
-		),
-		"ltm.message",
-		sql<string | null>`null`.as("galleryId"),
-		sql<string | null>`null`.as("locationId"),
-		sql<Date | null>`null`.as("time"),
 		"ltm.createdAt",
+		jsonBuildObject({
+			message: eb.ref("ltm.message"),
+		})
+			.$castTo<any>()
+			.as("payload"),
 	]);
 
-	const galleryQuery = database.selectFrom("listing_transaction_gallery as ltg").select([
+	const galleryQuery = database.selectFrom("listing_transaction_gallery as ltg").select((eb) => [
 		"ltg.id",
 		"ltg.listingTransactionId",
 		"ltg.event",
 		"ltg.side",
-		sql<"request" | "accepted" | "rejected" | "success" | "closed" | "expired" | null>`null`.as(
-			"status",
-		),
-		sql<string | null>`null`.as("message"),
-		"ltg.galleryId",
-		sql<string | null>`null`.as("locationId"),
-		sql<Date | null>`null`.as("time"),
 		"ltg.createdAt",
+		jsonBuildObject({
+			galleryId: eb.ref("ltg.galleryId"),
+		})
+			.$castTo<any>()
+			.as("payload"),
 	]);
 
-	const locationQuery = database.selectFrom("listing_transaction_location as ltl").select([
-		"ltl.id",
-		"ltl.listingTransactionId",
-		"ltl.event",
-		"ltl.side",
-		sql<"request" | "accepted" | "rejected" | "success" | "closed" | "expired" | null>`null`.as(
-			"status",
-		),
-		sql<string | null>`null`.as("message"),
-		sql<string | null>`null`.as("galleryId"),
-		"ltl.locationId",
-		"ltl.time",
-		"ltl.createdAt",
-	]);
+	const locationQuery = database
+		.selectFrom("listing_transaction_location as ltl")
+		.select((eb) => [
+			"ltl.id",
+			"ltl.listingTransactionId",
+			"ltl.event",
+			"ltl.side",
+			"ltl.createdAt",
+			jsonBuildObject({
+				locationId: eb.ref("ltl.locationId"),
+				time: eb.ref("ltl.time"),
+			})
+				.$castTo<any>()
+				.as("payload"),
+		]);
 
-	// Union all queries
 	const unionQuery = statusQuery
-		.unionAll(messageQuery as any)
-		.unionAll(galleryQuery as any)
-		.unionAll(locationQuery as any);
+		.unionAll(messageQuery)
+		.unionAll(galleryQuery)
+		.unionAll(locationQuery);
 
-	// Wrap in a subquery to allow ordering
 	let query = database
 		.selectFrom(unionQuery.as("log"))
 		.leftJoin("listing_transaction as lt", "log.listingTransactionId", "lt.id")
