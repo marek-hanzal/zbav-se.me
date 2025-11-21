@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/correctness/noUnusedFunctionParameters: Some other time, bro */
 import { useCls } from "@use-pico/cls";
 import type { EntitySchema, withQuerySchema } from "@use-pico/common/schema";
 import { type FC, type ReactNode, useId } from "react";

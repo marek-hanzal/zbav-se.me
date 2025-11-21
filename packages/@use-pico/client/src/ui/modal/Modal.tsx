@@ -11,10 +11,8 @@ import {
 	useTransitionStyles,
 } from "@floating-ui/react";
 import { type Cls, useCls } from "@use-pico/cls";
-import { type FC, type ReactNode, useMemo } from "react";
-import { createModalStore } from "./createModalStore";
+import { type FC, type ReactNode, useState } from "react";
 import { ModalCls } from "./ModalCls";
-import { ModalContext } from "./ModalContext";
 
 export namespace Modal {
 	export namespace Children {
@@ -53,21 +51,12 @@ export const Modal: FC<Modal.Props> = ({
 	cls = ModalCls,
 	children,
 }) => {
-	const useModalStore = useMemo(
-		() =>
-			createModalStore({
-				defaultOpen,
-			}),
-		[
-			defaultOpen,
-		],
-	);
-	const close = useModalStore((state) => state.close);
+	const [isOpen, setIsOpen] = useState(defaultOpen);
 	const nodeId = useFloatingNodeId();
 	const { refs, context } = useFloating({
 		nodeId,
-		open: useModalStore((state) => state.isOpen),
-		onOpenChange: useModalStore((state) => state.toggle),
+		open: isOpen,
+		onOpenChange: setIsOpen,
 	});
 	const click = useClick(context, {
 		enabled: !disabled,
@@ -89,7 +78,7 @@ export const Modal: FC<Modal.Props> = ({
 	});
 
 	return (
-		<ModalContext value={useModalStore}>
+		<>
 			<div
 				ref={refs.setReference}
 				{...getReferenceProps({
@@ -99,6 +88,7 @@ export const Modal: FC<Modal.Props> = ({
 			>
 				{target}
 			</div>
+
 			<FloatingNode id={nodeId}>
 				{isMounted && (
 					<FloatingPortal>
@@ -120,7 +110,7 @@ export const Modal: FC<Modal.Props> = ({
 									className={slots.modal()}
 								>
 									{children({
-										close,
+										close: () => setIsOpen(false),
 									})}
 								</div>
 							</FloatingFocusManager>
@@ -128,6 +118,6 @@ export const Modal: FC<Modal.Props> = ({
 					</FloatingPortal>
 				)}
 			</FloatingNode>
-		</ModalContext>
+		</>
 	);
 };

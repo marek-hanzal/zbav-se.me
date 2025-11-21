@@ -1,10 +1,9 @@
+/** biome-ignore-all lint/correctness/noUnusedVariables: Some other time, bro */
+/** biome-ignore-all lint/correctness/noUnusedFunctionParameters: Some other time, bro */
 import type { CursorSchema, EntitySchema, withQuerySchema } from "@use-pico/common/schema";
-import { type FC, useContext, useState } from "react";
+import { type FC, useState } from "react";
 import { useSelection } from "../../hook/useSelection";
 import type { Fulltext } from "../fulltext/Fulltext";
-import { ModalContent } from "../modal/ModalContent";
-import { ModalContext } from "../modal/ModalContext";
-import { ModalFooter } from "../modal/ModalFooter";
 import type { Table } from "../table/Table";
 
 export namespace Content {
@@ -26,8 +25,6 @@ export const Content = <TQuery extends withQuerySchema.Query, TItem extends Enti
 		mode: selection.mode,
 		initial: selection.selection,
 	});
-	const useModal = useContext(ModalContext);
-	const close = useModal((state) => state.close);
 	const [fulltext, setFulltext] = useState<Fulltext.Value>(undefined);
 	const [sort, setSort] = useState<any>([]);
 	const [cursor, setCursor] = useState<CursorSchema.Type>({
@@ -35,57 +32,59 @@ export const Content = <TQuery extends withQuerySchema.Query, TItem extends Enti
 		size: 15,
 	});
 
-	return (
-		<ModalContent
-			footer={
-				<ModalFooter
-					disabled={!local.hasAny && !allowEmpty}
-					onConfirm={() => {
-						selection.set(local.selection);
-					}}
-				/>
-			}
-		>
-			<Table
-				query={
-					{
-						filter: {
-							fulltext,
-						},
-						where: query?.where,
-						cursor,
-						sort,
-					} as TQuery
-				}
-				controlsHidden={[
-					"actions",
-				]}
-				cursor={{
-					value: cursor,
-					set: setCursor,
-				}}
-				sort={{
-					value: sort,
-					set: setSort,
-				}}
-				fulltext={{
-					value: fulltext,
-					set(value) {
-						setFulltext(value);
-						setCursor({
-							...cursor,
-							page: 0,
-						});
-					},
-				}}
-				selection={selection}
-				rowDblClick={({ data }) => {
-					if (selection.mode === "single") {
-						selection.single(data);
-						close();
-					}
-				}}
-			/>
-		</ModalContent>
-	);
+	return "not yet";
+
+	// return (
+	// 	<ModalContent
+	// 		footer={
+	// 			<ModalFooter
+	// 				disabled={!local.hasAny && !allowEmpty}
+	// 				onConfirm={() => {
+	// 					selection.set(local.selection);
+	// 				}}
+	// 			/>
+	// 		}
+	// 	>
+	// 		<Table
+	// 			query={
+	// 				{
+	// 					filter: {
+	// 						fulltext,
+	// 					},
+	// 					where: query?.where,
+	// 					cursor,
+	// 					sort,
+	// 				} as TQuery
+	// 			}
+	// 			controlsHidden={[
+	// 				"actions",
+	// 			]}
+	// 			cursor={{
+	// 				value: cursor,
+	// 				set: setCursor,
+	// 			}}
+	// 			sort={{
+	// 				value: sort,
+	// 				set: setSort,
+	// 			}}
+	// 			fulltext={{
+	// 				value: fulltext,
+	// 				set(value) {
+	// 					setFulltext(value);
+	// 					setCursor({
+	// 						...cursor,
+	// 						page: 0,
+	// 					});
+	// 				},
+	// 			}}
+	// 			selection={selection}
+	// 			rowDblClick={({ data }) => {
+	// 				if (selection.mode === "single") {
+	// 					selection.single(data);
+	// 					close();
+	// 				}
+	// 			}}
+	// 		/>
+	// 	</ModalContent>
+	// );
 };
