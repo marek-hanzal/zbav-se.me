@@ -1,7 +1,6 @@
 {
-	"extends": "@use-pico/tsconfig/tsconfig.json",
+	"extends": "@use-pico/tsconfig/common.json",
 	"compilerOptions": {
-		"outDir": "dist",
 		"rootDir": "src"
 	},
 	"include": [

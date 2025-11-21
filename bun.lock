@@ -259,6 +259,24 @@
         "vitest": "4.0.12",
       },
     },
+    "packages/@zbav-se.me/buyer": {
+      "name": "@zbav-se.me/buyer",
+      "dependencies": {
+        "@use-pico/client": "workspace:*",
+        "@use-pico/common": "workspace:*",
+        "@zbav-se.me/common": "workspace:*",
+        "@zbav-se.me/sdk": "workspace:*",
+        "@zbav-se.me/ui": "workspace:*",
+        "react": "19.2.0",
+        "react-dom": "19.2.0",
+      },
+      "devDependencies": {
+        "@types/node": "24.10.1",
+        "@types/react": "19.2.6",
+        "@use-pico/tsconfig": "5.0.0",
+        "typescript": "5.9.3",
+      },
+    },
     "packages/@zbav-se.me/common": {
       "name": "@zbav-se.me/common",
       "dependencies": {
@@ -284,6 +302,24 @@
         "@use-pico/tsconfig": "5.0.0",
         "typescript": "5.9.3",
         "vite": "7.2.4",
+      },
+    },
+    "packages/@zbav-se.me/seller": {
+      "name": "@zbav-se.me/seller",
+      "dependencies": {
+        "@use-pico/client": "workspace:*",
+        "@use-pico/common": "workspace:*",
+        "@zbav-se.me/common": "workspace:*",
+        "@zbav-se.me/sdk": "workspace:*",
+        "@zbav-se.me/ui": "workspace:*",
+        "react": "19.2.0",
+        "react-dom": "19.2.0",
+      },
+      "devDependencies": {
+        "@types/node": "24.10.1",
+        "@types/react": "19.2.6",
+        "@use-pico/tsconfig": "5.0.0",
+        "typescript": "5.9.3",
       },
     },
     "packages/@zbav-se.me/ui": {
@@ -922,9 +958,13 @@
 
     "@zbav-se.me/app": ["@zbav-se.me/app@workspace:apps/app"],
 
+    "@zbav-se.me/buyer": ["@zbav-se.me/buyer@workspace:packages/@zbav-se.me/buyer"],
+
     "@zbav-se.me/common": ["@zbav-se.me/common@workspace:packages/@zbav-se.me/common"],
 
     "@zbav-se.me/sdk": ["@zbav-se.me/sdk@workspace:packages/@zbav-se.me/sdk"],
+
+    "@zbav-se.me/seller": ["@zbav-se.me/seller@workspace:packages/@zbav-se.me/seller"],
 
     "@zbav-se.me/server": ["@zbav-se.me/server@workspace:apps/server"],
 

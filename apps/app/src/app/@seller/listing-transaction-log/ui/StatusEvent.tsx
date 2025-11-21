@@ -104,7 +104,6 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 					/>
 
 					<TransactionStatusInline
-						side={"seller"}
 						transactionStatus={listingTransactionLog.status}
 						size={"lg"}
 					/>
