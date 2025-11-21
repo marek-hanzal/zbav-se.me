@@ -2,6 +2,22 @@
 
 A marketplace application for buying and selling items, built with React, TanStack, and Effect.
 
+## Development Ports
+
+Each application runs on its own port in development mode:
+
+| Port | App | Description |
+|------|-----|-------------|
+| **3030** | `apps/web` | Public marketing website (about, privacy policy, landing pages) |
+| **3031** | `apps/app` | Main marketplace application (PWA for buyers and sellers) |
+| **3032** | `apps/server` | Backend API server (REST API, authentication, database) |
+
+Access the applications at:
+- Web: http://localhost:3030
+- App: http://localhost:3031
+- Server API: http://localhost:3032
+- OpenAPI docs: http://localhost:3032/docs
+
 ## Project Structure
 
 This is a monorepo managed by Bun workspaces, containing:

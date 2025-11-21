@@ -1,9 +1,7 @@
-import { useNavigate } from "@tanstack/react-router";
-import { ArrowRightIcon, EditIcon, TrashIcon } from "@use-pico/client/icon";
+import { TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
@@ -13,26 +11,46 @@ import { LocationBadgeValue } from "@zbav-se.me/common/location";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 
-export namespace FeedContainer {
+export namespace FeedDetailContainer {
+	export namespace LinkTo {
+		export type Type =
+			| "name"
+			| "title"
+			| "location"
+			| "sort"
+			| "category"
+			| "condition"
+			| "age"
+			| "view";
+
+		export interface Props {
+			feedId: string;
+			type: LinkTo.Type;
+		}
+
+		export type RenderFn = (props: Props) => ReactNode;
+	}
+
 	export interface Props extends Container.Props {
 		locale: string;
 		feed: OptionalId<tFeed>;
+		renderLinkTo?: FeedDetailContainer.LinkTo.RenderFn;
+		onDelete?(): Promise<void>;
 	}
 }
 
-export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props }) => {
-	const navigate = useNavigate();
-
+export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
+	locale,
+	feed,
+	renderLinkTo,
+	onDelete,
+	...props
+}) => {
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
-		onPostMutation() {
-			return navigate({
-				to: "/$locale/buyer/feed/select",
-				params: {
-					locale,
-				},
-			});
+		async onPostMutation() {
+			return onDelete?.();
 		},
 	});
 
@@ -57,16 +75,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 					textLabel={"Feed name (label)"}
 					textValue={feed.name}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/name"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "name",
+								})
+							: null
 					}
 				/>
 
@@ -74,16 +88,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 					textLabel={"Feed title (label)"}
 					textValue={feed.query?.filter?.title || "Feed title not filled"}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/name"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "title",
+								})
+							: null
 					}
 				/>
 
@@ -92,16 +102,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 					textLabel={"Feed location (label)"}
 					textValue={"Feed location not selected"}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/location"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "location",
+								})
+							: null
 					}
 				/>
 
@@ -118,16 +124,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 						/>
 					)}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/sort"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "sort",
+								})
+							: null
 					}
 				/>
 
@@ -136,16 +138,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 					textTitle={"Feed category (label)"}
 					textEmpty={"Feed category not selected"}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/category"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "category",
+								})
+							: null
 					}
 				/>
 
@@ -160,16 +158,12 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 						<Tx label={`Condition - Overall [${item.condition}] (hint)`} />
 					)}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/condition"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "condition",
+								})
+							: null
 					}
 				/>
 
@@ -182,63 +176,48 @@ export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props 
 					}))}
 					render={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
 					action={
-						feed.id ? (
-							<LinkTo
-								icon={EditIcon}
-								to={"/$locale/buyer/feed/$id/edit/age"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-							/>
-						) : null
+						feed.id
+							? renderLinkTo?.({
+									feedId: feed.id,
+									type: "age",
+								})
+							: null
 					}
 				/>
 
 				{feed.id ? (
 					<>
-						<LinkTo
-							to={"/$locale/buyer/listing/list"}
-							params={{
-								locale,
-							}}
-							search={{
-								query: feed.query,
-							}}
-							full
-						>
-							<Button
-								iconEnabled={ArrowRightIcon}
-								iconPosition={"right"}
-								label={"View feed (button)"}
-								size={"xl"}
-							/>
-						</LinkTo>
+						{renderLinkTo?.({
+							feedId: feed.id,
+							type: "view",
+						})}
 
-						<ConfirmButton
-							tone={"danger"}
-							iconEnabled={TrashIcon}
-							buttonProps={{
-								tone: "danger",
-								label: translator.text("Delete feed (button)"),
-							}}
-							confirmProps={{
-								iconEnabled: TrashIcon,
-								tone: "danger",
-								theme: "dark",
-								label: translator.text("Really delete feed (button)"),
-								onClick() {
-									feedDeleteMutation.mutate({
-										where: {
-											id: feed.id,
-										},
-									});
-								},
-							}}
-							loading={feedDeleteMutation.isPending}
-							full
-							size={"lg"}
-						/>
+						{onDelete ? (
+							<ConfirmButton
+								tone={"danger"}
+								iconEnabled={TrashIcon}
+								buttonProps={{
+									tone: "danger",
+									label: translator.text("Delete feed (button)"),
+								}}
+								confirmProps={{
+									iconEnabled: TrashIcon,
+									tone: "danger",
+									theme: "dark",
+									label: translator.text("Really delete feed (button)"),
+									onClick() {
+										feedDeleteMutation.mutate({
+											where: {
+												id: feed.id,
+											},
+										});
+									},
+								}}
+								loading={feedDeleteMutation.isPending}
+								full
+								size={"lg"}
+							/>
+						) : null}
 					</>
 				) : null}
 			</VariantProvider>

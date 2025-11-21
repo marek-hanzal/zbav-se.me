@@ -92,7 +92,7 @@ FeedSchema
 ### Key Components
 
 #### UI Components
-- `FeedContainer` - Full feed detail view with edit/delete actions
+- `FeedDetailContainer` - Full feed detail view with edit/delete actions
 - `FeedItem` - Compact feed card in list view
 - `FeedList` - Collection view with create button
 - `FeedListContainer` - Data-connected list wrapper
