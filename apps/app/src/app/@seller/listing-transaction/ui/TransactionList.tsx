@@ -1,20 +1,15 @@
 import { Container } from "@use-pico/client/ui/container";
-import type { tUserSide } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { type FC, useRef } from "react";
-import { match } from "ts-pattern";
-import { BuyerEmptyList } from "~/app/@buyer/listing-transaction/ui/BuyerEmptyList";
 import { SellerEmptyList } from "~/app/@seller/listing-transaction/ui/SellerEmptyList";
-import { TransactionItem } from "~/app/listing-transaction/ui/TransactionItem";
+import { TransactionItem } from "~/app/@seller/listing-transaction/ui/TransactionItem";
 
 export namespace TransactionList {
-	export interface Props extends Container.Props {
-		side: tUserSide;
-	}
+	export interface Props extends Container.Props {}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) => {
+export const TransactionList: FC<TransactionList.Props> = (props) => {
 	const listingTransactionCollectionQuery =
 		withListingTransactionCollectionQuery.useSuspenseQuery(
 			{
@@ -25,7 +20,7 @@ export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) =
 					},
 				],
 				meta: {
-					side,
+					side: "seller",
 				},
 			},
 			{
@@ -56,7 +51,6 @@ export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) =
 					? listingTransactionCollectionQuery.data.data.map((item) => (
 							<TransactionItem
 								key={item.id}
-								side={side}
 								listingTransaction={item}
 							/>
 						))
@@ -67,10 +61,7 @@ export const TransactionList: FC<TransactionList.Props> = ({ side, ...props }) =
 						layout={"vertical-centered"}
 						items={"center"}
 					>
-						{match(side)
-							.with("buyer", () => <BuyerEmptyList />)
-							.with("seller", () => <SellerEmptyList />)
-							.exhaustive()}
+						<SellerEmptyList />
 					</Container>
 				)}
 			</Container>

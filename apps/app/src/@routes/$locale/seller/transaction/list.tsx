@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { TransactionList } from "~/app/listing-transaction/ui/TransactionList";
+import { TransactionList } from "~/app/@seller/listing-transaction/ui/TransactionList";
 
 export const Route = createFileRoute("/$locale/seller/transaction/list")({
 	pendingComponent() {
@@ -43,7 +43,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 					/>
 				}
 			>
-				<TransactionList side={"seller"} />
+				<TransactionList />
 			</TitleContainer>
 		);
 	},

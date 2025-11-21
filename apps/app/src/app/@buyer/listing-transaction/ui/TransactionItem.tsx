@@ -3,21 +3,18 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { tListingTransaction, tUserSide } from "@zbav-se.me/sdk/api/user";
+import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
-import { match } from "ts-pattern";
+import { TransactionStatusInline } from "~/app/@buyer/listing-transaction/ui/TransactionStatusInline";
 import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
-import { TransactionStatusInline } from "~/app/listing-transaction/ui/TransactionStatusInline";
 
 export namespace TransactionItem {
 	export interface Props extends Badge.Props {
-		side: tUserSide;
 		listingTransaction: tListingTransaction;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
-	side,
 	listingTransaction,
 	tweak,
 	...props
@@ -53,14 +50,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			<LinkTo
 				icon={ArrowRightIcon}
 				iconPosition={"right"}
-				to={match(side)
-					.with("buyer", () => {
-						return "/$locale/buyer/transaction/$id/view" as const;
-					})
-					.with("seller", () => {
-						return "/$locale/seller/transaction/$id/view" as const;
-					})
-					.exhaustive()}
+				to={"/$locale/buyer/transaction/$id/view"}
 				params={{
 					locale,
 					id: listingTransaction.id,
@@ -81,7 +71,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				/>
 
 				<TransactionStatusInline
-					side={side}
 					size={"md"}
 					transactionStatus={listingTransaction.status}
 				/>

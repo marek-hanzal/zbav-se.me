@@ -1,7 +1,7 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
-import type { FC, ReactNode, Ref } from "react";
+import type { FC, ReactNode } from "react";
 import { ThemeCls } from "../cls";
 
 export namespace Title {

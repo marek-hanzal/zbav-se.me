@@ -1,3 +1,29 @@
 # @buyer
 
-This is a domain of components & stuff related to _buyers_ point of view.
+The buyer's side of the marketplace - finding stuff, saving searches, and buying things.
+
+## What's here
+
+**Routes** (`@routes/$locale/buyer/`) - buyer-facing pages:
+- **Feed** - custom search filters (location, category, condition, age, etc.) that refresh with new listings
+- **Cart** - categories you're watching, shows listing counts
+- **Listings** - browse items, score them, view seller info
+- **Transactions** - your purchase history and active deals
+- **Shop** - (placeholder for now)
+- **User** - profile settings
+
+**Components** (`app/@buyer/`) - reusable UI pieces:
+- `feed/` - feed list, items, wizard for creating new feeds
+- `listing-transaction/` - transaction cards, empty states, seller info
+- `listing-transaction-log/` - status events (request, accepted, rejected, success, closed)
+- `ui/` - buyer menu with navigation tiles
+
+## How it works
+
+Buyers create **feeds** (saved searches) with specific filters. The app notifies them when new matching listings appear. They add interesting categories to their **cart**, browse listings, and start **transactions** with sellers.
+
+Transaction flow (buyer side):
+1. Request → waiting for seller
+2. Accepted → deal confirmed
+3. Success → completed purchase
+4. Rejected/Closed → deal fell through
