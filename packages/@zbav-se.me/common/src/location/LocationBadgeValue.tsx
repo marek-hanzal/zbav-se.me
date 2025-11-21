@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
@@ -5,12 +6,12 @@ import { type FC, Suspense } from "react";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace LocationBadge {
-	export interface Props extends Omit<BadgeValue.Props, "textValue"> {
+	export interface Props extends Omit<BadgeValue.Props, "textValue">, MarkSuspense.Props {
 		locationId: string;
 	}
 }
 
-const LocationBadge: FC<LocationBadge.Props> = ({ locationId, ...props }) => {
+const LocationBadge: FC<LocationBadge.Props> = ({ _suspense, locationId, ...props }) => {
 	const locationQuery = withLocationFetchQuery.useSuspenseQuery({
 		where: {
 			id: locationId,
@@ -48,6 +49,7 @@ export const LocationBadgeValue: FC<LocationBadgeValue.Props> = ({ locationId, .
 		>
 			{locationId ? (
 				<LocationBadge
+					_suspense={"I know"}
 					locationId={locationId}
 					{...props}
 				/>

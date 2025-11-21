@@ -1,28 +1,32 @@
-import { useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Typo } from "@use-pico/client/ui/typo";
-import { TransactionStatusInline } from "@zbav-se.me/buyer/listing-transaction";
 import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
 import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
+import { TransactionStatusInline } from "./TransactionStatusInline";
 
 export namespace TransactionItem {
-	export interface Props extends Badge.Props {
+	export namespace Item {
+		export interface Props {
+			listingTransaction: tListingTransaction;
+		}
+
+		export type RenderFn = (props: Item.Props) => ReactNode;
+	}
+
+	export interface Props extends Omit<Badge.Props, "children"> {
+		locale: string;
 		listingTransaction: tListingTransaction;
+		item: Item.RenderFn;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
+	locale,
 	listingTransaction,
 	tweak,
+	item,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	return (
 		<Badge
 			size={"xl"}
@@ -47,22 +51,9 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			round={"default"}
 			{...props}
 		>
-			<LinkTo
-				icon={ArrowRightIcon}
-				iconPosition={"right"}
-				to={"/$locale/buyer/transaction/$id/view"}
-				params={{
-					locale,
-					id: listingTransaction.id,
-				}}
-				full
-			>
-				<Typo
-					label={listingTransaction.title}
-					truncate
-					size={"md"}
-				/>
-			</LinkTo>
+			{item({
+				listingTransaction,
+			})}
 
 			<div className={"flex flex-row gap-2 items-center justify-between w-full"}>
 				<TransactionStatusIcon

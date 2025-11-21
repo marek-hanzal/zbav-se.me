@@ -1,7 +1,7 @@
 // /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtual list component */
-import { useParams } from "@tanstack/react-router";
 import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -13,7 +13,8 @@ import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "reac
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
 		query: tListingQuery;
 		/**
 		 * Listing ID to scroll to
@@ -21,25 +22,24 @@ export namespace ListingListContainer {
 		scrollToListingId?: string;
 		empty?: ReactNode;
 		appendix?: ReactNode;
-		toolbar: ListingHeroContainer.Toolbar.Render;
-		imageErrorToolbar: ListingHeroContainer.Toolbar.Render;
+		toolbar: ListingHeroContainer.Toolbar.RenderFn;
+		renderImageErrorToolbarFn: ListingHeroContainer.Toolbar.RenderFn;
 		overlay: ListingHeroContainer.Overlay.Render;
 	}
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
+	_suspense,
+	locale,
 	query,
 	scrollToListingId,
 	empty,
 	appendix,
 	toolbar,
-	imageErrorToolbar,
+	renderImageErrorToolbarFn,
 	overlay,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
 	const listingIdPrefix = useId();
 
 	const listingQuery = withListingCollectionQuery.useSuspenseQuery(query, {
@@ -135,7 +135,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								query={query}
 								listing={listing}
 								toolbar={toolbar}
-								imageErrorToolbar={imageErrorToolbar}
+								renderImageErrorToolbarFn={renderImageErrorToolbarFn}
 								overlay={overlay}
 							/>
 						</VisibleContainer>

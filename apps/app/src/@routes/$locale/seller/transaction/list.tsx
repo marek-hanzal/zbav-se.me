@@ -43,7 +43,10 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 					/>
 				}
 			>
-				<TransactionList />
+				<TransactionList
+					_suspense={"I know"}
+					locale={locale}
+				/>
 			</TitleContainer>
 		);
 	},

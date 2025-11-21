@@ -21,6 +21,7 @@ export const Route = createFileRoute("/$locale/landing")({
 		};
 	},
 	component() {
+		const { locale } = Route.useParams();
 		const { about } = Route.useLoaderData();
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
@@ -54,7 +55,7 @@ export const Route = createFileRoute("/$locale/landing")({
 					snap={"vertical-start"}
 					gap={"md"}
 				>
-					<HeroSheet />
+					<HeroSheet locale={locale} />
 
 					<VariantProvider
 						cls={ThemeCls}
@@ -73,7 +74,7 @@ export const Route = createFileRoute("/$locale/landing")({
 							tone: "secondary",
 						}}
 					>
-						<CtaSheet />
+						<CtaSheet locale={locale} />
 					</VariantProvider>
 
 					<ContactSheet />

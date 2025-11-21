@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Typo } from "@use-pico/client/ui/typo";
+import { TransactionList } from "@zbav-se.me/buyer/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { TransactionList } from "~/app/@buyer/listing-transaction/ui/TransactionList";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 	pendingComponent() {
@@ -42,7 +44,47 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 					/>
 				}
 			>
-				<TransactionList />
+				<TransactionList
+					_suspense={"I know"}
+					locale={locale}
+					renderItem={({ listingTransaction }) => {
+						return (
+							<LinkTo
+								icon={ArrowRightIcon}
+								iconPosition={"right"}
+								to={"/$locale/buyer/transaction/$id/view"}
+								params={{
+									locale,
+									id: listingTransaction.id,
+								}}
+								full
+							>
+								<Typo
+									label={listingTransaction.title}
+									truncate
+									size={"md"}
+								/>
+							</LinkTo>
+						);
+					}}
+					emptyAction={
+						<LinkTo
+							to={"/$locale/buyer/feed/select"}
+							params={{
+								locale,
+							}}
+						>
+							<Button
+								iconEnabled={ArrowRightIcon}
+								iconPosition={"right"}
+								label={"Feed selection (button)"}
+								size={"xl"}
+								tone={"primary"}
+								theme={"dark"}
+							/>
+						</LinkTo>
+					}
+				/>
 			</TitleContainer>
 		);
 	},

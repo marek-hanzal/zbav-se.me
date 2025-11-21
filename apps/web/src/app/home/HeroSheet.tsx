@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -10,11 +9,13 @@ import { Logo } from "@zbav-se.me/ui/logo";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
-export const HeroSheet: FC = () => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export namespace HeroSheet {
+	export interface Props {
+		locale: string;
+	}
+}
 
+export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 	const linkToTweak: Cls.TweaksOf<LinkToCls> = {
 		slot: {
 			root: {

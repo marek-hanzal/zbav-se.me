@@ -62,6 +62,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
 					gap={"lg"}
 				>
 					<TransactionLogList
+						_suspense={"I know"}
 						locale={locale}
 						query={{
 							where: {

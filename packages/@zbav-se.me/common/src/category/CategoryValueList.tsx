@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { ContainerValueList } from "@use-pico/client/ui/container";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
@@ -6,12 +7,14 @@ import { CategoryInline } from "./CategoryInline";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace CategoryList {
-	export interface Props extends Omit<ContainerValueList.Props<tCategory>, "items" | "render"> {
+	export interface Props
+		extends Omit<ContainerValueList.Props<tCategory>, "items" | "render">,
+			MarkSuspense.Props {
 		categoryIdIn: string[];
 	}
 }
 
-const CategoryList: FC<CategoryList.Props> = ({ categoryIdIn, ...props }) => {
+const CategoryList: FC<CategoryList.Props> = ({ _suspense, categoryIdIn, ...props }) => {
 	const categoryCollectionQuery = withCategoryCollectionQuery.useSuspenseQuery({
 		where: {
 			idIn: categoryIdIn,
@@ -47,6 +50,7 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 		>
 			{categoryIdIn && categoryIdIn.length > 0 ? (
 				<CategoryList
+					_suspense={"I know"}
 					categoryIdIn={categoryIdIn}
 					{...props}
 				/>

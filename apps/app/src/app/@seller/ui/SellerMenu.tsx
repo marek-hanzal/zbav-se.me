@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -7,15 +6,11 @@ import { Tile } from "@zbav-se.me/ui/tile";
 
 export namespace SellerMenu {
 	export interface Props extends Container.Props {
-		//
+		locale: string;
 	}
 }
 
-export const SellerMenu = ({ ...props }: SellerMenu.Props) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
+export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 	return (
 		<Container
 			ui="Seller-container"

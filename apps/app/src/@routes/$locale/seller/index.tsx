@@ -39,9 +39,10 @@ export const Route = createFileRoute("/$locale/seller/")({
 					/>
 				}
 			>
-				<SellerMenu />
+				<SellerMenu locale={locale} />
 
 				<SignOutButton
+					locale={locale}
 					tweak={{
 						slot: {
 							wrapper: {
@@ -72,9 +73,10 @@ export const Route = createFileRoute("/$locale/seller/")({
 					/>
 				}
 			>
-				<SellerMenu />
+				<SellerMenu locale={locale} />
 
 				<SignOutButton
+					locale={locale}
 					tweak={{
 						slot: {
 							wrapper: {

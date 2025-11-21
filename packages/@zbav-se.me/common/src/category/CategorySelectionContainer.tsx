@@ -37,6 +37,7 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 
 			<Suspense fallback={<SpinnerContainer />}>
 				<ListContainer
+					_suspense={"I know"}
 					locale={locale}
 					fulltext={fulltext}
 					selection={selection}

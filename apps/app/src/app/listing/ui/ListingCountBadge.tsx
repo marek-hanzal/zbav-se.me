@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -8,15 +8,18 @@ import { withListingCountQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
 export namespace ListingCountBadge {
-	export interface Props extends Badge.Props {
+	export interface Props extends Badge.Props, MarkSuspense.Props {
+		locale: string;
 		query: tListingQuery;
 	}
 }
 
-export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ query, ...props }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
+	_suspense,
+	locale,
+	query,
+	...props
+}) => {
 	const listingCountQuery = withListingCountQuery.useSuspenseQuery(query);
 
 	return (

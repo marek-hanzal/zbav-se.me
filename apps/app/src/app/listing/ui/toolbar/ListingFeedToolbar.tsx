@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -13,6 +12,7 @@ export namespace ListingFeedToolbar {
 	export type Tools = "cart" | "ignore" | "flag";
 
 	export interface Props extends ToolbarContainer.Props {
+		locale: string;
 		query: tListingQuery | undefined;
 		listing: zListing;
 		tools?: Tools[];
@@ -20,6 +20,7 @@ export namespace ListingFeedToolbar {
 }
 
 export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
+	locale,
 	query,
 	listing,
 	tools = [
@@ -30,10 +31,6 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 	tweak,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	const [action, setIsAction] = useState<ListingFeedToolbar.Tools | undefined>(undefined);
 
 	return (

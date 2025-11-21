@@ -1,5 +1,6 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -13,15 +14,18 @@ import type { FC } from "react";
 import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
 
 export namespace ListingDetailMenu {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
 		listing: tListing;
 	}
 }
 
-export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ listing, ...props }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
+	_suspense,
+	locale,
+	listing,
+	...props
+}) => {
 	const navigate = useNavigate();
 
 	const listingCartCount = withListingCartCountQuery.useSuspenseQuery({});

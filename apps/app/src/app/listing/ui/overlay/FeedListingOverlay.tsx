@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -12,15 +11,12 @@ import type { FC } from "react";
 
 export namespace FeedListingOverlay {
 	export interface Props {
+		locale: string;
 		listing: tListing;
 	}
 }
 
-export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ listing }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
+export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listing }) => {
 	return (
 		<>
 			<Badge

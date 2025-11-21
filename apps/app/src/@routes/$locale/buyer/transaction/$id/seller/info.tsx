@@ -2,12 +2,12 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { SellerInfoContainer } from "@zbav-se.me/buyer/listing-transaction";
 import {
 	withListingTransactionFetchQuery,
 	withListingTransactionLogCollectionQuery,
 } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { SellerInfoContainer } from "~/app/@buyer/listing-transaction/ui/SellerInfoContainer";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/seller/info")({
 	async loader({ context: { queryClient }, params: { id } }) {
@@ -73,7 +73,11 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/seller/info
 					/>
 				}
 			>
-				<SellerInfoContainer listingTransactionId={id} />
+				<SellerInfoContainer
+					_suspense={"I know"}
+					locale={locale}
+					listingTransactionId={id}
+				/>
 			</TitleContainer>
 		);
 	},

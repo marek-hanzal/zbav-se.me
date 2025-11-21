@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { Button } from "@use-pico/client/ui/button";
 import { linkTo } from "@use-pico/common/link-to";
 import { LockIcon } from "@zbav-se.me/ui/icon";
@@ -7,14 +7,11 @@ import { withSignOutMutation } from "~/app/auth/withSignOutMutation";
 
 export namespace SignOutButton {
 	export interface Props extends Button.Props {
-		//
+		locale: string;
 	}
 }
 
-export const SignOutButton: FC<SignOutButton.Props> = ({ tweak, ...props }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export const SignOutButton: FC<SignOutButton.Props> = ({ locale, tweak, ...props }) => {
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
 		async onPostMutation() {

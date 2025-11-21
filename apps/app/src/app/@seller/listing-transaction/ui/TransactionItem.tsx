@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -10,19 +9,17 @@ import type { FC } from "react";
 
 export namespace TransactionItem {
 	export interface Props extends Badge.Props {
+		locale: string;
 		listingTransaction: tListingTransaction;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
+	locale,
 	listingTransaction,
 	tweak,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	return (
 		<Badge
 			size={"xl"}

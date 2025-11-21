@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
@@ -6,15 +6,18 @@ import { type FC, useId } from "react";
 import { FeedItem } from "~/app/@buyer/feed/ui/FeedItem";
 
 export namespace FeedListContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
 		query: tFeedQuery;
 	}
 }
 
-export const FeedListContainer: FC<FeedListContainer.Props> = ({ query, ...props }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export const FeedListContainer: FC<FeedListContainer.Props> = ({
+	_suspense,
+	locale,
+	query,
+	...props
+}) => {
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
 	const feedRootId = useId();
 

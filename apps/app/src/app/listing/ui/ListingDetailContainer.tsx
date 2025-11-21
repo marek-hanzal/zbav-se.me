@@ -1,5 +1,5 @@
-import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
@@ -16,7 +16,7 @@ export namespace ListingDetailContainer {
 			listing: tListing;
 		}
 
-		export type Render = (props: Props) => React.ReactNode;
+		export type RenderFn = (props: Props) => React.ReactNode;
 	}
 
 	export namespace SellerBadge {
@@ -24,19 +24,22 @@ export namespace ListingDetailContainer {
 			listing: tListing;
 		}
 
-		export type Render = (props: Props) => React.ReactNode;
+		export type RenderFn = (props: Props) => React.ReactNode;
 	}
 
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
 		query: tListingQuery | undefined;
 		listing: tListing;
 		withScore: boolean;
-		renderScoreBadge: ScoreBadge.Render;
-		renderSellerBadge: SellerBadge.Render;
+		renderScoreBadge: ScoreBadge.RenderFn;
+		renderSellerBadge: SellerBadge.RenderFn;
 	}
 }
 
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
+	_suspense,
+	locale,
 	query,
 	listing,
 	children,
@@ -45,9 +48,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	renderSellerBadge,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
 	const [hero] = listing.gallery as [
 		tGallery,
 		...tGallery[],

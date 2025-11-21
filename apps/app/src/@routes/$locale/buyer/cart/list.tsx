@@ -62,6 +62,8 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 			>
 				<Container scroll={"vertical"}>
 					<CategoryCartListContainer
+						_suspense={"I know"}
+						locale={locale}
 						categoryCartList={categoryCartCollectionQuery.data.data}
 					/>
 				</Container>

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { useNavigate } from "@tanstack/react-router";
 import { ArrowRightIcon, EditIcon, TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
@@ -17,14 +17,12 @@ import type { FC } from "react";
 
 export namespace FeedContainer {
 	export interface Props extends Container.Props {
+		locale: string;
 		feed: OptionalId<tFeed>;
 	}
 }
 
-export const FeedContainer: FC<FeedContainer.Props> = ({ feed, ...props }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export const FeedContainer: FC<FeedContainer.Props> = ({ locale, feed, ...props }) => {
 	const navigate = useNavigate();
 
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({

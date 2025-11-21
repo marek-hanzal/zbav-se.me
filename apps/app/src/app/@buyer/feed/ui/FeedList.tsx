@@ -1,4 +1,5 @@
 import { ArrowRightIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
@@ -9,7 +10,8 @@ import { type FC, Suspense } from "react";
 import { FeedListContainer } from "~/app/@buyer/feed/ui/FeedList/ListContainer";
 
 export namespace FeedList {
-	export interface Props {
+	export interface Props extends MarkSuspense.Props {
+		locale: string;
 		query: tFeedQuery;
 		limit?: number;
 		onClickCreate?: () => void;
@@ -17,6 +19,8 @@ export namespace FeedList {
 }
 
 export const FeedList: FC<FeedList.Props> = ({
+	_suspense,
+	locale,
 	query,
 	limit: feedCountLimit = 10,
 	onClickCreate,
@@ -58,7 +62,11 @@ export const FeedList: FC<FeedList.Props> = ({
 			) : null}
 
 			<Suspense fallback={<SpinnerContainer />}>
-				<FeedListContainer query={query} />
+				<FeedListContainer
+					_suspense={"I know"}
+					locale={locale}
+					query={query}
+				/>
 			</Suspense>
 
 			{shouldShowCreateButton && !isLimitReached && feedCountQuery.data.filter > 0 ? (

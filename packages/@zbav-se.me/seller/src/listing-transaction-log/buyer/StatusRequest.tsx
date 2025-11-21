@@ -39,6 +39,7 @@ export const StatusRequest: FC<StatusRequest.Props> = (props) => {
 				>
 					<Suspense fallback={<SpinnerContainer />}>
 						<BuyerInfoContainer
+							_suspense={"I know"}
 							locale={props.locale}
 							listingTransactionId={props.listingTransactionLog.listingTransactionId}
 						/>

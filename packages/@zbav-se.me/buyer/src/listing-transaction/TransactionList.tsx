@@ -1,22 +1,26 @@
-import { useParams } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { EmptyList } from "@zbav-se.me/buyer/listing-transaction";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { Fade } from "@zbav-se.me/ui/fade";
-import { type FC, useRef } from "react";
-import { TransactionItem } from "~/app/@buyer/listing-transaction/ui/TransactionItem";
+import { type FC, type ReactNode, useRef } from "react";
+import { EmptyList } from "./EmptyList";
+import { TransactionItem } from "./TransactionItem";
 
 export namespace TransactionList {
-	export interface Props extends Container.Props {}
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
+		emptyAction: ReactNode;
+		renderItem: TransactionItem.Item.RenderFn;
+	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = (props) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export const TransactionList: FC<TransactionList.Props> = ({
+	_suspense,
+	locale,
+	emptyAction,
+	renderItem,
+	...props
+}) => {
 	const listingTransactionCollectionQuery =
 		withListingTransactionCollectionQuery.useSuspenseQuery(
 			{
@@ -59,6 +63,8 @@ export const TransactionList: FC<TransactionList.Props> = (props) => {
 							<TransactionItem
 								key={item.id}
 								listingTransaction={item}
+								locale={locale}
+								item={renderItem}
 							/>
 						))
 					: null}
@@ -68,25 +74,7 @@ export const TransactionList: FC<TransactionList.Props> = (props) => {
 						layout={"vertical-centered"}
 						items={"center"}
 					>
-						<EmptyList
-							action={
-								<LinkTo
-									to={"/$locale/buyer/feed/select"}
-									params={{
-										locale,
-									}}
-								>
-									<Button
-										iconEnabled={ArrowRightIcon}
-										iconPosition={"right"}
-										label={"Feed selection (button)"}
-										size={"xl"}
-										tone={"primary"}
-										theme={"dark"}
-									/>
-								</LinkTo>
-							}
-						/>
+						<EmptyList action={emptyAction} />
 					</Container>
 				)}
 			</Container>

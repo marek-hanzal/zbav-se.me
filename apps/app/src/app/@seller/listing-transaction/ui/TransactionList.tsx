@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { EmptyList } from "@zbav-se.me/seller/listing-transaction";
@@ -6,10 +7,12 @@ import { type FC, useRef } from "react";
 import { TransactionItem } from "~/app/@seller/listing-transaction/ui/TransactionItem";
 
 export namespace TransactionList {
-	export interface Props extends Container.Props {}
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
+	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = (props) => {
+export const TransactionList: FC<TransactionList.Props> = ({ _suspense, locale, ...props }) => {
 	const listingTransactionCollectionQuery =
 		withListingTransactionCollectionQuery.useSuspenseQuery(
 			{
@@ -51,6 +54,7 @@ export const TransactionList: FC<TransactionList.Props> = (props) => {
 					? listingTransactionCollectionQuery.data.data.map((item) => (
 							<TransactionItem
 								key={item.id}
+								locale={locale}
 								listingTransaction={item}
 							/>
 						))

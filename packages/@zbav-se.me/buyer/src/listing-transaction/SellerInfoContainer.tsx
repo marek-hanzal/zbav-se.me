@@ -1,4 +1,4 @@
-import { useParams } from "@tanstack/react-router";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
@@ -7,18 +7,18 @@ import { withListingTransactionSellerInfoQuery } from "@zbav-se.me/sdk/query/use
 import type { FC } from "react";
 
 export namespace SellerInfoContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
 		listingTransactionId: string;
 	}
 }
 
 export const SellerInfoContainer: FC<SellerInfoContainer.Props> = ({
+	_suspense,
+	locale,
 	listingTransactionId,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
 	const sellerInfoQuery = withListingTransactionSellerInfoQuery.useSuspenseQuery({
 		where: {
 			id: listingTransactionId,

@@ -10,13 +10,13 @@ import { type FC, Suspense } from "react";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
 
 export namespace FeedItem {
-	export interface Props {
-		feed: tFeed;
+	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
+		feed: tFeed;
 	}
 }
 
-export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
+export const FeedItem: FC<FeedItem.Props> = ({ locale, feed, ...props }) => {
 	return (
 		<Badge
 			tone={"primary"}
@@ -36,6 +36,7 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 					},
 				},
 			}}
+			{...props}
 		>
 			<LinkTo
 				icon={ArrowRightIcon}
@@ -93,7 +94,11 @@ export const FeedItem: FC<FeedItem.Props> = ({ feed, locale }) => {
 						</Badge>
 					}
 				>
-					<ListingCountBadge query={feed.query} />
+					<ListingCountBadge
+						_suspense={"I know"}
+						locale={locale}
+						query={feed.query}
+					/>
 				</Suspense>
 			</div>
 		</Badge>

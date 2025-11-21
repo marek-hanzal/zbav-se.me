@@ -14,7 +14,7 @@ export namespace ListingHeroContainer {
 			listing: tListing;
 		}
 
-		export type Render = (props: Props) => ReactNode;
+		export type RenderFn = (props: Props) => ReactNode;
 	}
 
 	export namespace Overlay {
@@ -38,8 +38,8 @@ export namespace ListingHeroContainer {
 		 * Listing entity shown inside the hero preview.
 		 */
 		listing: tListing;
-		toolbar: Toolbar.Render;
-		imageErrorToolbar: Toolbar.Render;
+		toolbar: Toolbar.RenderFn;
+		renderImageErrorToolbarFn: Toolbar.RenderFn;
 		overlay: Overlay.Render;
 	}
 }
@@ -54,7 +54,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	query,
 	listing,
 	toolbar,
-	imageErrorToolbar,
+	renderImageErrorToolbarFn,
 	overlay,
 	tweak,
 	...props
@@ -180,7 +180,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
 				onLoad={() => setHasToolbar(true)}
 				errorStatusProps={{
-					action: imageErrorToolbar({
+					action: renderImageErrorToolbarFn({
 						query,
 						listing,
 					}),

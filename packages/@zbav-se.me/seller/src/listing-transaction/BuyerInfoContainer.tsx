@@ -1,3 +1,4 @@
+import type { MarkSuspense } from "@use-pico/client/type";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
@@ -6,13 +7,14 @@ import { withListingTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/user
 import type { FC } from "react";
 
 export namespace BuyerInfoContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		listingTransactionId: string;
 	}
 }
 
 export const BuyerInfoContainer: FC<BuyerInfoContainer.Props> = ({
+	_suspense,
 	locale,
 	listingTransactionId,
 	...props

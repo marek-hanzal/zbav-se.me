@@ -64,6 +64,8 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 			>
 				<Container scroll={"vertical"}>
 					<ListingDetailContainer
+						_suspense={"I know"}
+						locale={locale}
 						query={query}
 						listing={listingQuery.data}
 						withScore
@@ -96,7 +98,11 @@ export const Route = createFileRoute("/$locale/buyer/listing/$id/view")({
 							</LinkTo>
 						)}
 					>
-						<ListingDetailMenu listing={listingQuery.data} />
+						<ListingDetailMenu
+							_suspense={"I know"}
+							locale={locale}
+							listing={listingQuery.data}
+						/>
 					</ListingDetailContainer>
 				</Container>
 			</TitleContainer>

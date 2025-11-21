@@ -63,9 +63,17 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 				}
 			>
 				<ListingListContainer
-					overlay={({ listing }) => <FeedListingOverlay listing={listing} />}
+					_suspense={"I know"}
+					locale={locale}
+					overlay={({ listing }) => (
+						<FeedListingOverlay
+							locale={locale}
+							listing={listing}
+						/>
+					)}
 					toolbar={({ query, listing }) => (
 						<CartFeedToolbar
+							locale={locale}
 							query={query}
 							listing={listing}
 							tools={[
@@ -73,8 +81,9 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 							]}
 						/>
 					)}
-					imageErrorToolbar={({ query, listing }) => (
+					renderImageErrorToolbarFn={({ query, listing }) => (
 						<CartFeedToolbar
+							locale={locale}
 							query={query}
 							listing={listing}
 							snapTo={"unset"}

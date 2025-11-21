@@ -9,6 +9,7 @@ import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export const Route = createFileRoute("/$locale/dashboard")({
 	component() {
+		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();
 		const userExPatchMutation = withUserExPatchMutation.useMutation({
 			async onPostMutation({ result }) {
@@ -78,6 +79,7 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				</Container>
 
 				<SignOutButton
+					locale={locale}
 					tweak={{
 						slot: {
 							wrapper: {

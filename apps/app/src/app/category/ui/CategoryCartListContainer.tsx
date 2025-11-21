@@ -1,5 +1,5 @@
-import { useParams } from "@tanstack/react-router";
 import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -13,19 +13,18 @@ import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace CategoryCartListContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
+		locale: string;
 		categoryCartList: tCategoryCart[];
 	}
 }
 
 export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
+	_suspense,
+	locale,
 	categoryCartList,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	const feedCountQuery = withFeedCountQuery.useSuspenseQuery({});
 
 	return (

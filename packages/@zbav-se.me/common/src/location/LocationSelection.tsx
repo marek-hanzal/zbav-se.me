@@ -54,6 +54,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 
 			<Suspense fallback={<SpinnerContainer />}>
 				<ListContainer
+					_suspense={"I know"}
 					locale={locale}
 					textHint={textHint}
 					search={search}

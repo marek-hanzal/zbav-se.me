@@ -92,6 +92,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 
 				<FeedContainer
 					ref={containerRef}
+					locale={locale}
 					feed={zFeed
 						.omit({
 							id: true,

@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { UserIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -7,11 +6,13 @@ import { tvc } from "@use-pico/cls";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
-export const CtaSheet: FC = () => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
+export namespace CtaSheet {
+	export interface Props {
+		locale: string;
+	}
+}
 
+export const CtaSheet: FC<CtaSheet.Props> = ({ locale }) => {
 	return (
 		<Sheet>
 			<div className={"reveal"}>

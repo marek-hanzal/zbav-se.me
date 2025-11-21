@@ -1,4 +1,5 @@
 import { WarningIcon } from "@use-pico/client/icon";
+import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -11,7 +12,7 @@ import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 
 export namespace ListContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		textHint?: string;
 		search: Fulltext.Value;
@@ -22,6 +23,7 @@ export namespace ListContainer {
 }
 
 export const ListContainer: FC<ListContainer.Props> = ({
+	_suspense,
 	locale,
 	textHint,
 	search,
