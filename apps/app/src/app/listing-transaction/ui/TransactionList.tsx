@@ -4,8 +4,8 @@ import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/use
 import { Fade } from "@zbav-se.me/ui/fade";
 import { type FC, useRef } from "react";
 import { match } from "ts-pattern";
-import { BuyerEmptyList } from "~/app/listing-transaction/ui/buyer/BuyerEmptyList";
-import { SellerEmptyList } from "~/app/listing-transaction/ui/seller/SellerEmptyList";
+import { BuyerEmptyList } from "~/app/@buyer/listing-transaction/ui/BuyerEmptyList";
+import { SellerEmptyList } from "~/app/@seller/listing-transaction/ui/SellerEmptyList";
 import { TransactionItem } from "~/app/listing-transaction/ui/TransactionItem";
 
 export namespace TransactionList {

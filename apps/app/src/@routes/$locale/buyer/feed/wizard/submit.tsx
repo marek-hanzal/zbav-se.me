@@ -8,8 +8,8 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { useRef } from "react";
-import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
-import { FeedContainer } from "~/app/feed/ui/FeedContainer";
+import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
+import { FeedContainer } from "~/app/@buyer/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 	validateSearch: FeedWizardSchema,

@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { FeedContainer } from "~/app/feed/ui/FeedContainer";
+import { FeedContainer } from "~/app/@buyer/feed/ui/FeedContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/view")({
 	component() {

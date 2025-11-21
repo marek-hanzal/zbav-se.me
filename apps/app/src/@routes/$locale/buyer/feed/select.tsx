@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { FeedList } from "~/app/feed/ui/FeedList";
+import { FeedList } from "~/app/@buyer/feed/ui/FeedList";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	component() {

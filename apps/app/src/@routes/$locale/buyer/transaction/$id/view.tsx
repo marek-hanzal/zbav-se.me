@@ -4,7 +4,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { EpilogBadge } from "~/app/listing-transaction/ui/buyer/EpilogBadge";
+import { EpilogBadge } from "~/app/@buyer/listing-transaction/ui/EpilogBadge";
 import { TransactionLogList } from "~/app/listing-transaction-log/ui/TransactionLogList";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({

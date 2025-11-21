@@ -8,8 +8,8 @@ import {
 	withListingTransactionCollectionQuery,
 } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { BuyerMenu } from "~/app/@buyer/ui/BuyerMenu";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
-import { BuyerMenu } from "~/app/buyer/ui/BuyerMenu";
 
 export const Route = createFileRoute("/$locale/buyer/")({
 	async loader({ context: { queryClient }, params: { locale } }) {

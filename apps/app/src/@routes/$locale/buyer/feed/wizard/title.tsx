@@ -4,8 +4,8 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
-import { FeedTitleContainer } from "~/app/feed/ui/FeedTitleContainer";
+import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
+import { FeedTitleContainer } from "~/app/@buyer/feed/ui/FeedTitleContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 	validateSearch: FeedWizardSchema,

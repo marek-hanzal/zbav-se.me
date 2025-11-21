@@ -4,8 +4,8 @@ import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon"
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
 import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
-import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({

@@ -6,7 +6,6 @@ import { ThemeCls } from "../cls";
 
 export namespace Title {
 	export interface Props extends Container.Props {
-		ref?: Ref<HTMLDivElement>;
 		textTitle: string;
 		textSubtitle?: string;
 		right?: ReactNode;
@@ -14,7 +13,7 @@ export namespace Title {
 	}
 }
 
-export const Title: FC<Title.Props> = ({ ref, textTitle, textSubtitle, right, left, ...props }) => {
+export const Title: FC<Title.Props> = ({ textTitle, textSubtitle, right, left, ...props }) => {
 	return (
 		<VariantProvider
 			cls={ThemeCls}

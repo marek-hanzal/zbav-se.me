@@ -3,8 +3,8 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { SellerMenu } from "~/app/@seller/ui/SellerMenu";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
-import { SellerMenu } from "~/app/seller/ui/SellerMenu";
 
 export const Route = createFileRoute("/$locale/seller/")({
 	async loader({ context: { queryClient } }) {

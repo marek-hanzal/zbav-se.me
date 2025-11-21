@@ -9,9 +9,9 @@ import {
 	withListingTransactionLogCollectionQuery,
 } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { BuyerInfoContainer } from "~/app/listing-transaction/ui/buyer/BuyerInfoContainer";
-import { AcceptTransactionButton } from "~/app/listing-transaction/ui/seller/AcceptTransactionButton";
-import { RejectTransactionButton } from "~/app/listing-transaction/ui/seller/RejectTransactionButton";
+import { AcceptTransactionButton } from "~/app/@seller/listing-transaction/ui/AcceptTransactionButton";
+import { BuyerInfoContainer } from "~/app/@seller/listing-transaction/ui/BuyerInfoContainer";
+import { RejectTransactionButton } from "~/app/@seller/listing-transaction/ui/RejectTransactionButton";
 
 export const Route = createFileRoute("/$locale/seller/transaction/$id/buyer/info")({
 	async loader({ context: { queryClient }, params: { id } }) {

@@ -5,8 +5,8 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
-import { FeedWizardSchema } from "~/app/feed/schema/FeedWizardSchema";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 	validateSearch: FeedWizardSchema,

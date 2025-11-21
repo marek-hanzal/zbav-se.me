@@ -7,20 +7,20 @@ import type {
 } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { StatusRejected as BuyerBuyerStatusRejected } from "~/app/listing-transaction-log/ui/buyer/buyer/StatusRejected";
-import { StatusRequest as BuyerBuyerStatusRequest } from "~/app/listing-transaction-log/ui/buyer/buyer/StatusRequest";
-import { StatusSuccess as BuyerBuyerStatusSuccess } from "~/app/listing-transaction-log/ui/buyer/buyer/StatusSuccess";
-import { StatusAccepted as BuyerSellerStatusAccepted } from "~/app/listing-transaction-log/ui/buyer/seller/StatusAccepted";
-import { StatusClosed as BuyerSellerStatusClosed } from "~/app/listing-transaction-log/ui/buyer/seller/StatusClosed";
-import { StatusRejected as BuyerSellerStatusRejected } from "~/app/listing-transaction-log/ui/buyer/seller/StatusRejected";
-import { StatusSuccess as BuyerSellerStatusSuccess } from "~/app/listing-transaction-log/ui/buyer/seller/StatusSuccess";
+import { StatusRejected as BuyerBuyerStatusRejected } from "~/app/@buyer/listing-transaction-log/ui/buyer/StatusRejected";
+import { StatusRequest as BuyerBuyerStatusRequest } from "~/app/@buyer/listing-transaction-log/ui/buyer/StatusRequest";
+import { StatusSuccess as BuyerBuyerStatusSuccess } from "~/app/@buyer/listing-transaction-log/ui/buyer/StatusSuccess";
+import { StatusAccepted as BuyerSellerStatusAccepted } from "~/app/@buyer/listing-transaction-log/ui/seller/StatusAccepted";
+import { StatusClosed as BuyerSellerStatusClosed } from "~/app/@buyer/listing-transaction-log/ui/seller/StatusClosed";
+import { StatusRejected as BuyerSellerStatusRejected } from "~/app/@buyer/listing-transaction-log/ui/seller/StatusRejected";
+import { StatusSuccess as BuyerSellerStatusSuccess } from "~/app/@buyer/listing-transaction-log/ui/seller/StatusSuccess";
+import { StatusRejected as SellerBuyerStatusRejected } from "~/app/@seller/listing-transaction-log/ui/buyer/StatusRejected";
+import { StatusRequest as SellerBuyerStatusRequest } from "~/app/@seller/listing-transaction-log/ui/buyer/StatusRequest";
+import { StatusSuccess as SellerBuyerStatusSuccess } from "~/app/@seller/listing-transaction-log/ui/buyer/StatusSuccess";
+import { StatusAccepted as SellerSellerStatusAccepted } from "~/app/@seller/listing-transaction-log/ui/seller/StatusAccepted";
+import { StatusRejected as SellerSellerStatusRejected } from "~/app/@seller/listing-transaction-log/ui/seller/StatusRejected";
+import { StatusSuccess as SellerSellerStatusSuccess } from "~/app/@seller/listing-transaction-log/ui/seller/StatusSuccess";
 import { StatusEvent as CommonStatusEvent } from "~/app/listing-transaction-log/ui/common/StatusEvent";
-import { StatusRejected as SellerBuyerStatusRejected } from "~/app/listing-transaction-log/ui/seller/buyer/StatusRejected";
-import { StatusRequest as SellerBuyerStatusRequest } from "~/app/listing-transaction-log/ui/seller/buyer/StatusRequest";
-import { StatusSuccess as SellerBuyerStatusSuccess } from "~/app/listing-transaction-log/ui/seller/buyer/StatusSuccess";
-import { StatusAccepted as SellerSellerStatusAccepted } from "~/app/listing-transaction-log/ui/seller/seller/StatusAccepted";
-import { StatusRejected as SellerSellerStatusRejected } from "~/app/listing-transaction-log/ui/seller/seller/StatusRejected";
-import { StatusSuccess as SellerSellerStatusSuccess } from "~/app/listing-transaction-log/ui/seller/seller/StatusSuccess";
 
 const StatusComponents = {
 	// buyer viewing, buyer acted

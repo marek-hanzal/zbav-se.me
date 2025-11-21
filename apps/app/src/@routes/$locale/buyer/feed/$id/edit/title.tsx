@@ -6,7 +6,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { FeedTitleContainer } from "~/app/feed/ui/FeedTitleContainer";
+import { FeedTitleContainer } from "~/app/@buyer/feed/ui/FeedTitleContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/title")({
 	component() {

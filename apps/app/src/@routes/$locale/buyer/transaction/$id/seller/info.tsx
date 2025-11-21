@@ -7,7 +7,7 @@ import {
 	withListingTransactionLogCollectionQuery,
 } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { SellerInfoContainer } from "~/app/listing-transaction/ui/seller/SellerInfoContainer";
+import { SellerInfoContainer } from "~/app/@buyer/listing-transaction/ui/SellerInfoContainer";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/seller/info")({
 	async loader({ context: { queryClient }, params: { id } }) {
