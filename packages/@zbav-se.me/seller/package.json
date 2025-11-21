@@ -1,0 +1,33 @@
+{
+	"name": "@zbav-se.me/seller",
+	"description": "Seller domain",
+	"version": "workspace:*",
+	"type": "module",
+	"sideEffects": false,
+	"scripts": {
+		"typecheck": "tsc --noEmit"
+	},
+	"dependencies": {
+		"@use-pico/client": "workspace:*",
+		"@use-pico/common": "workspace:*",
+		"@zbav-se.me/common": "workspace:*",
+		"@zbav-se.me/sdk": "workspace:*",
+		"@zbav-se.me/ui": "workspace:*",
+		"react": "19.2.0",
+		"react-dom": "19.2.0"
+	},
+	"devDependencies": {
+		"@types/node": "24.10.1",
+		"@types/react": "19.2.6",
+		"@use-pico/tsconfig": "5.0.0",
+		"typescript": "5.9.3"
+	},
+	"files": [
+		"src"
+	],
+	"exports": {
+		"./*": {
+			"import": "./src/*/index.ts"
+		}
+	}
+}
