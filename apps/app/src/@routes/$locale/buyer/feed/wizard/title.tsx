@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { FeedTitleContainer } from "@zbav-se.me/buyer/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
-import { FeedTitleContainer } from "~/app/@buyer/feed/ui/FeedTitleContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/title")({
 	validateSearch: FeedWizardSchema,

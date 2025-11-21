@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { FeedListContainer } from "@zbav-se.me/buyer/feed";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
-import { FeedList } from "~/app/@buyer/feed/ui/FeedList";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	component() {
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 				}
 			>
 				<Suspense fallback={<SpinnerContainer />}>
-					<FeedList
+					<FeedListContainer
 						_suspense={"I know"}
 						locale={locale}
 						query={{

@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { FeedNameContainer } from "@zbav-se.me/buyer/feed";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { FeedNameContainer } from "~/app/@buyer/feed/ui/FeedNameContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/name")({
 	component() {
