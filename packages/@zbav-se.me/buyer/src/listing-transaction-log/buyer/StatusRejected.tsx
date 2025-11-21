@@ -1,6 +1,6 @@
+import { StatusEvent } from "@zbav-se.me/buyer/listing-transaction-log";
 import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
-import { StatusEvent } from "../StatusEvent";
 
 export namespace StatusRejected {
 	export interface Props extends StatusEvent.Props {
@@ -11,8 +11,7 @@ export namespace StatusRejected {
 export const StatusRejected: FC<StatusRejected.Props> = (props) => {
 	return (
 		<StatusEvent
-			ui={"Seller-Seller-StatusRejected-root"}
-			tone={"danger"}
+			ui={"Buyer-Buyer-StatusRejected-root"}
 			{...props}
 		/>
 	);

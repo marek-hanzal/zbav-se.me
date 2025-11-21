@@ -2,12 +2,17 @@ import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { StatusEvent } from "../StatusEvent";
 
-export namespace StatusClosed {
+export namespace StatusSuccess {
 	export interface Props extends StatusEvent.Props {
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
 
-export const StatusClosed: FC<StatusClosed.Props> = (props) => {
-	return <StatusEvent {...props} />;
+export const StatusSuccess: FC<StatusSuccess.Props> = (props) => {
+	return (
+		<StatusEvent
+			ui={"Buyer-Seller-StatusSuccess-root"}
+			{...props}
+		/>
+	);
 };

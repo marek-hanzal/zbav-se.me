@@ -1,19 +1,21 @@
 import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { Modal } from "@use-pico/client/ui/modal";
 import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { Modal } from "node_modules/@use-pico/client/src/ui/modal/Modal";
 import { type FC, Suspense } from "react";
-import { BuyerInfoContainer } from "~/app/@seller/listing-transaction/ui/BuyerInfoContainer";
 import { StatusEvent } from "../StatusEvent";
 
 export namespace StatusRequest {
 	export interface Props extends StatusEvent.Props {
 		listingTransactionLog: tListingTransactionLog;
+		BuyerInfoContainer: FC<{
+			listingTransactionId: string;
+		}>;
 	}
 }
 
-export const StatusRequest: FC<StatusRequest.Props> = (props) => {
+export const StatusRequest: FC<StatusRequest.Props> = ({ BuyerInfoContainer, ...props }) => {
 	return (
 		<Modal
 			size={"full"}

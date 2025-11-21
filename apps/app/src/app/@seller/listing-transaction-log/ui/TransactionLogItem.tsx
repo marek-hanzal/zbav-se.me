@@ -4,43 +4,20 @@ import type {
 	tListingTransactionSide,
 	tListingTransactionStatus,
 } from "@zbav-se.me/sdk/api/user";
+import { StatusComponent } from "@zbav-se.me/seller/listing-transaction-log";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { StatusRejected as BuyerStatusRejected } from "~/app/@seller/listing-transaction-log/ui/buyer/StatusRejected";
-import { StatusRequest as BuyerStatusRequest } from "~/app/@seller/listing-transaction-log/ui/buyer/StatusRequest";
-import { StatusSuccess as BuyerStatusSuccess } from "~/app/@seller/listing-transaction-log/ui/buyer/StatusSuccess";
-import { StatusEvent as CommonStatusEvent } from "~/app/@seller/listing-transaction-log/ui/StatusEvent";
-import { StatusAccepted as SellerStatusAccepted } from "~/app/@seller/listing-transaction-log/ui/seller/StatusAccepted";
-import { StatusRejected as SellerStatusRejected } from "~/app/@seller/listing-transaction-log/ui/seller/StatusRejected";
-import { StatusSuccess as SellerStatusSuccess } from "~/app/@seller/listing-transaction-log/ui/seller/StatusSuccess";
-
-const StatusComponents = {
-	// buyer acted
-	"buyer.request": BuyerStatusRequest,
-	"buyer.rejected": BuyerStatusRejected,
-	"buyer.success": BuyerStatusSuccess,
-
-	// seller acted
-	"seller.accepted": SellerStatusAccepted,
-	"seller.rejected": SellerStatusRejected,
-	"seller.success": SellerStatusSuccess,
-
-	// commons
-	common: CommonStatusEvent,
-
-	// others
-	invalid: () => null,
-} as const;
-
-type StatusComponentKey = keyof typeof StatusComponents;
+import { BuyerInfoContainer } from "~/app/@seller/listing-transaction/ui/BuyerInfoContainer";
 
 export namespace TransactionLogItem {
 	export interface Props extends Container.Props {
+		locale: string;
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
 
 export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
+	locale,
 	listingTransactionLog,
 	...props
 }) => {
@@ -49,7 +26,7 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 			tListingTransactionSide,
 			tListingTransactionStatus,
 		],
-		StatusComponentKey
+		StatusComponent.State
 	>([
 		listingTransactionLog.side,
 		listingTransactionLog.status,
@@ -114,11 +91,13 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 		)
 		.otherwise(() => "common");
 
-	const Component = StatusComponents[key];
+	const Component = StatusComponent[key];
 
 	return (
 		<Component
+			locale={locale}
 			listingTransactionLog={listingTransactionLog}
+			BuyerInfoContainer={BuyerInfoContainer}
 			{...props}
 		/>
 	);

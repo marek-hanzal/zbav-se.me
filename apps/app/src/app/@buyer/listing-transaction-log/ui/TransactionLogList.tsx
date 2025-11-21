@@ -6,11 +6,17 @@ import { TransactionLogItem } from "~/app/@buyer/listing-transaction-log/ui/Tran
 
 export namespace TransactionLogList {
 	export interface Props extends Container.Props {
+		locale: string;
 		query: tListingTransactionLogQuery;
 	}
 }
 
-export const TransactionLogList: FC<TransactionLogList.Props> = ({ query, tweak, ...props }) => {
+export const TransactionLogList: FC<TransactionLogList.Props> = ({
+	locale,
+	query,
+	tweak,
+	...props
+}) => {
 	const listingTransactionLogCollectionQuery =
 		withListingTransactionLogCollectionQuery.useSuspenseQuery(query, {
 			refetchInterval: 10_000,
@@ -31,6 +37,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({ query, tweak,
 				<TransactionLogItem
 					key={item.id}
 					listingTransactionLog={item}
+					locale={locale}
 				/>
 			))}
 		</Container>

@@ -9,5 +9,10 @@ export namespace StatusSuccess {
 }
 
 export const StatusSuccess: FC<StatusSuccess.Props> = (props) => {
-	return <StatusEvent {...props} />;
+	return (
+		<StatusEvent
+			ui={"Seller-Buyer-StatusSuccess-root"}
+			{...props}
+		/>
+	);
 };

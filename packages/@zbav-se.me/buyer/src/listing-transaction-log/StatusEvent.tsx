@@ -1,31 +1,28 @@
-import { useParams } from "@tanstack/react-router";
 import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
+import { TransactionStatusInline } from "@zbav-se.me/buyer/listing-transaction";
 import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
 import type { tListingTransactionLog, tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
-import { TransactionStatusInline } from "@zbav-se.me/seller/listing-transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 
 export namespace StatusEvent {
 	export interface Props extends Container.Props {
+		locale: string;
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
 
 export const StatusEvent: FC<StatusEvent.Props> = ({
+	locale,
 	listingTransactionLog,
 	tweak,
 	children,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	return (
 		<Container
 			tweak={[
@@ -38,8 +35,8 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 								"flex-col",
 								"gap-1",
 								match(listingTransactionLog.side)
-									.with("buyer", () => "items-start")
-									.with("seller", () => "items-end")
+									.with("buyer", () => "items-end")
+									.with("seller", () => "items-start")
 									.with("system", "transaction", "unknown", () => "items-center")
 									.exhaustive(),
 							],
@@ -91,8 +88,8 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 				tone={match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
 					listingTransactionLog.status,
 				)
-					.with("request", () => "secondary")
-					.with("accepted", "success", () => "primary")
+					.with("request", () => "primary")
+					.with("accepted", "success", () => "secondary")
 					.with("rejected", () => "danger")
 					.with("closed", "expired", () => "secondary")
 					.exhaustive()}
