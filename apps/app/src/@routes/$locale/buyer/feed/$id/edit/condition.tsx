@@ -8,7 +8,7 @@ import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { useState } from "react";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import { ConditionContainer } from "../../../../../../../../../packages/@zbav-se.me/common/src/condition/ConditionContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/condition")({
 	component() {

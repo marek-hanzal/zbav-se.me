@@ -3,12 +3,12 @@ import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { CategoryInline } from "@zbav-se.me/common/category";
 import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, useEffect } from "react";
-import { CategoryInline } from "~/app/category/ui/CategoryInline";
 
 export namespace ListingDetailContainer {
 	export namespace ScoreBadge {

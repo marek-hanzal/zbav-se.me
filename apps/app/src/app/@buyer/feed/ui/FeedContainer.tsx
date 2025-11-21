@@ -8,12 +8,12 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { OptionalId } from "@use-pico/common/type";
+import { CategoryValueList } from "@zbav-se.me/common/category";
+import { LocationBadgeValue } from "@zbav-se.me/common/location";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
-import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
-import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
 
 export namespace FeedContainer {
 	export interface Props extends Container.Props {

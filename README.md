@@ -1,6 +1,154 @@
 # Zbav se mě!
 
-A marketplace application for buying and selling items.
+A marketplace application for buying and selling items, built with React, TanStack, and Effect.
+
+## Project Structure
+
+This is a monorepo managed by Bun workspaces, containing:
+
+### Applications (`apps/`)
+
+- **`app`** - Main user-facing marketplace application (mobile/PWA)
+  - Built with TanStack Router, React 19, and Vite
+  - Supports both buyer and seller functionality
+  - Server-side rendering with TanStack Start
+  
+- **`web`** - Public marketing website
+  - Built with TanStack Router and React 19
+  - Static pages (about, privacy policy)
+  - Minimal dependencies, optimized for SEO
+  
+- **`server`** - Backend API server
+  - Built with Hono and Nitro
+  - PostgreSQL database with Kysely ORM
+  - Better Auth for authentication
+  - Redis for caching and rate limiting
+  - S3 for file storage
+  - OpenAPI documentation with Scalar
+
+### Packages (`packages/@zbav-se.me/`)
+
+- **`sdk`** - API client SDK
+  - Generated from OpenAPI specification
+  - Type-safe API queries and mutations
+  - Used by frontend applications
+
+- **`ui`** - Common UI component library
+  - Reusable React components
+  - GSAP animations
+  - Tailwind CSS styling
+  - No domain-specific logic
+
+- **`common`** - Shared domain components
+  - Domain-specific UI components (age, category, condition, location, etc.)
+  - Shared business logic
+  - Common utilities
+
+- **`buyer`** - Buyer domain package
+  - Buyer-specific components and logic
+  - Listing transactions, shopping cart
+
+- **`seller`** - Seller domain package
+  - Seller-specific components and logic
+  - Listing management
+
+### Use-Pico Framework (`packages/@use-pico/`)
+
+Internal framework packages providing core functionality:
+- **`client`** - Client-side utilities, hooks, and components
+- **`common`** - Shared utilities and types
+- **`server`** - Server-side utilities and middleware
+
+## Package Dependency Graph
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                         APPLICATION LAYER                            │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                       │
+│  ┌─────────────┐      ┌─────────────┐      ┌─────────────┐         │
+│  │  apps/app   │      │  apps/web   │      │ apps/server │         │
+│  │             │      │             │      │             │         │
+│  │  (mobile)   │      │  (website)  │      │  (backend)  │         │
+│  └──────┬──────┘      └──────┬──────┘      └──────┬──────┘         │
+│         │                    │                    │                 │
+│         └────────────────────┼────────────────────┘                 │
+│                              │                                       │
+└──────────────────────────────┼───────────────────────────────────────┘
+                               │
+┌──────────────────────────────┼───────────────────────────────────────┐
+│                         DOMAIN LAYER                                 │
+├──────────────────────────────┼───────────────────────────────────────┤
+│                              │                                       │
+│              ┌───────────────┴───────────────┐                      │
+│              │                               │                      │
+│         ┌────▼────┐                    ┌─────▼─────┐               │
+│         │  buyer  │                    │  seller   │               │
+│         └────┬────┘                    └─────┬─────┘               │
+│              │                               │                      │
+│              └───────────────┬───────────────┘                      │
+│                              │                                       │
+│                         ┌────▼────┐                                 │
+│                         │ common  │                                 │
+│                         └────┬────┘                                 │
+│                              │                                       │
+└──────────────────────────────┼───────────────────────────────────────┘
+                               │
+┌──────────────────────────────┼───────────────────────────────────────┐
+│                       FOUNDATION LAYER                               │
+├──────────────────────────────┼───────────────────────────────────────┤
+│                              │                                       │
+│                    ┌─────────┴──────────┐                           │
+│                    │                    │                           │
+│               ┌────▼────┐          ┌────▼────┐                      │
+│               │   sdk   │          │   ui    │                      │
+│               │         │          │         │                      │
+│               │  (API)  │          │  (UI)   │                      │
+│               └─────────┘          └─────────┘                      │
+│                                                                      │
+└──────────────────────────────────────────────────────────────────────┘
+
+DEPENDENCY RULES:
+├─ sdk, ui: No @zbav-se.me dependencies (foundation packages)
+├─ common: May import from sdk, ui
+├─ buyer, seller: May import from common, sdk, ui
+├─ apps/app: May import from buyer, seller, common, sdk, ui
+├─ apps/web: May import from ui only
+└─ apps/server: May import from common only
+
+Legend:
+  ┌─────┐
+  │ pkg │  = Package/Application
+  └──┬──┘
+     ▼     = Dependency direction (depends on)
+```
+
+## Technology Stack
+
+### Frontend
+- **React 19** - UI framework
+- **TanStack Router** - Type-safe routing
+- **TanStack Query** - Data fetching and caching
+- **TanStack Form** - Form management
+- **GSAP** - Animations
+- **Tailwind CSS 4** - Styling
+- **Vite** - Build tool
+
+### Backend
+- **Hono** - Web framework
+- **Nitro** - Server engine
+- **Kysely** - SQL query builder
+- **PostgreSQL** - Database
+- **Redis (Upstash)** - Caching and rate limiting
+- **Better Auth** - Authentication
+- **MinIO** - S3-compatible object storage
+- **Effect** - Functional programming utilities
+
+### DevOps
+- **Bun** - Package manager and runtime
+- **TypeScript** - Type safety
+- **Biome** - Linting and formatting
+- **Turbo** - Monorepo task runner
 
 ## Environment Variables
 
@@ -8,32 +156,60 @@ A marketplace application for buying and selling items.
 
 Server-side environment variables used by the backend API:
 
-- `SERVER_DATABASE_URL` - Database connection string
-- `DOMAIN` - Domain configuration
-- `WEB_ORIGIN` - Web application origin URL (for CORS)
-- `APP_ORIGIN` - App application origin URL (for CORS)
+- `SERVER_DATABASE_URL` - PostgreSQL connection string
 - `SERVER_BETTER_AUTH_SECRET` - Better Auth secret key
 - `SERVER_JWT_SECRET` - JWT token signing secret
-- `SERVER_GEOAPIFY_TOKEN` - Geoapify API key
+- `SERVER_GEOAPIFY_TOKEN` - Geoapify API key for location services
 - `SERVER_S3_API` - S3 API endpoint URL
 - `SERVER_S3_KEY` - S3 access key
 - `SERVER_S3_SECRET` - S3 secret key
 - `SERVER_S3_BUCKET` - S3 bucket name
-- `SERVER_UPSTASH_REDIS_REST_URL` - Upstash Redis REST URL
-- `SERVER_UPSTASH_REDIS_REST_TOKEN` - Upstash Redis REST token
+- `SERVER_UPSTASH_REDIS_URL` - Upstash Redis REST URL
+- `SERVER_UPSTASH_REDIS_TOKEN` - Upstash Redis REST token
+- `SERVER_CONTENT_CDN` - CDN base URL for static assets
+- `VITE_DOMAIN` - Domain configuration
+- `VITE_SERVER_API` - Server API endpoint URL (for server-side requests)
+- `VITE_WEB_ORIGIN` - Web application origin URL (for CORS)
+- `VITE_APP_ORIGIN` - App application origin URL (for CORS)
 
 ### Web App (`apps/web/`)
 
-Client-side environment variables for the web application:
+Client-side environment variables for the public website:
 
-- `VITE_WEB_ASSET_BASE` - Web asset base URL for build
+- `VITE_WEB_ASSETS` - Web asset base URL for build
+- `VITE_WEB_ORIGIN` - Web application origin URL
 - `VITE_SERVER_API` - Server API endpoint URL
-- `WEB_ORIGIN` - Web application origin URL
+- `VITE_DOMAIN` - Domain configuration
 
 ### App (`apps/app/`)
 
-Client-side environment variables for the mobile app:
+Client-side environment variables for the main marketplace application:
 
-- `VITE_APP_ASSET_BASE` - App asset base URL for build
+- `VITE_APP_ASSETS` - App asset base URL for build
+- `VITE_APP_ORIGIN` - App application origin URL
 - `VITE_SERVER_API` - Server API endpoint URL
-- `APP_ORIGIN` - App application origin URL
+- `VITE_DOMAIN` - Domain configuration
+
+## Development
+
+```bash
+# Install dependencies
+bun install
+
+# Run all applications in dev mode
+bun dev
+
+# Run specific app
+cd apps/app && bun dev    # Port 3031
+cd apps/web && bun dev    # Port 3030
+cd apps/server && bun dev # Port 3032
+
+# Type checking
+bun run typecheck
+
+# Build all packages
+bun run build
+
+# Generate API SDK from OpenAPI spec
+cd packages/@zbav-se.me/sdk && bun run sdk
+```

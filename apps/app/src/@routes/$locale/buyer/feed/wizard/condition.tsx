@@ -6,7 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import { ConditionContainer } from "../../../../../../../../packages/@zbav-se.me/common/src/condition/ConditionContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/condition")({
 	validateSearch: FeedWizardSchema,

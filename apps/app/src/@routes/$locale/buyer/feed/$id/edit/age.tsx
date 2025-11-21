@@ -8,7 +8,7 @@ import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { useState } from "react";
-import { AgeContainer } from "~/app/age/ui/AgeContainer";
+import { AgeContainer } from "../../../../../../../../../packages/@zbav-se.me/common/src/age/AgeContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 	component() {

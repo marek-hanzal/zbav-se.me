@@ -5,8 +5,8 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
-import { AgeContainer } from "~/app/age/ui/AgeContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { AgeContainer } from "../../../../../../../../packages/@zbav-se.me/common/src/age/AgeContainer";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 	validateSearch: ListingWizardSchema,

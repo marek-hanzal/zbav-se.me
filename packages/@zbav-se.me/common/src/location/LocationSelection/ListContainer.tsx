@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { WarningIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
@@ -13,6 +12,7 @@ import type { FC } from "react";
 
 export namespace ListContainer {
 	export interface Props extends Container.Props {
+		locale: string;
 		textHint?: string;
 		search: Fulltext.Value;
 		value: string | undefined | null;
@@ -22,6 +22,7 @@ export namespace ListContainer {
 }
 
 export const ListContainer: FC<ListContainer.Props> = ({
+	locale,
 	textHint,
 	search,
 	value,
@@ -29,9 +30,6 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	onLocation,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
 	const text = search ?? value ?? "";
 
 	const locationAutocompleteQuery = withLocationAutocompleteQuery.useSuspenseQuery({

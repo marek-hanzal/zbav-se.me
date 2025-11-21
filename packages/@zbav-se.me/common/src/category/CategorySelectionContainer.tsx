@@ -3,16 +3,18 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense, useState } from "react";
-import { ListContainer } from "~/app/category/ui/CategorySelectionContainer/ListContainer";
+import { ListContainer } from "./CategorySelectionContainer/ListContainer";
 
 export namespace CategorySelectionContainer {
 	export interface Props extends Container.Props {
+		locale: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
 		categoryId: string | undefined;
 	}
 }
 
 export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = ({
+	locale,
 	selection,
 	categoryId,
 	...props
@@ -35,6 +37,7 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 
 			<Suspense fallback={<SpinnerContainer />}>
 				<ListContainer
+					locale={locale}
 					fulltext={fulltext}
 					selection={selection}
 					categoryId={categoryId}

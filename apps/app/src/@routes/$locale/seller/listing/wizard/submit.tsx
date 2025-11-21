@@ -15,14 +15,14 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
+import { CategoryValueList } from "@zbav-se.me/common/category";
+import { LocationBadgeValue } from "@zbav-se.me/common/location";
 import { zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
-import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({

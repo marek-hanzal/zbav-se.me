@@ -2,7 +2,7 @@ import { ContainerValueList } from "@use-pico/client/ui/container";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { type FC, Suspense } from "react";
-import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { CategoryInline } from "./CategoryInline";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace CategoryList {

@@ -4,11 +4,11 @@ import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
+import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
 import type { tListingTransactionLog, tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
+import { TransactionStatusInline } from "@zbav-se.me/seller/listing-transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { TransactionStatusInline } from "~/app/@buyer/listing-transaction/ui/TransactionStatusInline";
-import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
 
 export namespace StatusEvent {
 	export interface Props extends Container.Props {

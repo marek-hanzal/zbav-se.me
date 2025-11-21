@@ -43,7 +43,14 @@
 		"**/*.tsx",
 		"**/*.cjs",
 		"**/*.js",
-		"../../packages/@zbav-se.me/ui/src/tile/Tile.tsx"
+		"../../packages/@zbav-se.me/ui/src/tile/Tile.tsx",
+		"../../packages/@zbav-se.me/common/src/location/LocationBadgeValue.tsx",
+		"../../packages/@zbav-se.me/common/src/location/LocationSelection.tsx",
+		"../../packages/@zbav-se.me/common/src/category/CategorySelectionContainer.tsx",
+		"../../packages/@zbav-se.me/common/src/category/CategoryInline.tsx",
+		"../../packages/@zbav-se.me/common/src/category/CategoryValueList.tsx",
+		"../../packages/@zbav-se.me/buyer/src/listing-transaction/TransactionStatusInline.tsx",
+		"../../packages/@zbav-se.me/seller/src/listing-transaction/TransactionStatusInline.tsx"
 	],
 	"exclude": [
 		"node_modules",

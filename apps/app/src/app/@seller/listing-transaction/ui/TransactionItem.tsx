@@ -3,10 +3,10 @@ import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
+import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
 import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
+import { TransactionStatusInline } from "@zbav-se.me/seller/listing-transaction";
 import type { FC } from "react";
-import { TransactionStatusInline } from "~/app/@seller/listing-transaction/ui/TransactionStatusInline";
-import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
 
 export namespace TransactionItem {
 	export interface Props extends Badge.Props {

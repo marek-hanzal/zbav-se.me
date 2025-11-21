@@ -4,9 +4,9 @@ import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon"
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { CategorySelectionContainer } from "@zbav-se.me/common/category";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
-import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 	validateSearch: FeedWizardSchema,
@@ -84,6 +84,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/category")({
 				}
 			>
 				<CategorySelectionContainer
+					locale={locale}
 					selection={selection}
 					categoryId={selection.optional.singleId()}
 				/>

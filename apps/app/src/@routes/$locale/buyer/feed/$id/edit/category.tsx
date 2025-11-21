@@ -4,11 +4,11 @@ import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { CategorySelectionContainer } from "@zbav-se.me/common/category";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
-import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 	component() {
@@ -104,6 +104,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/category")({
 				}
 			>
 				<CategorySelectionContainer
+					locale={locale}
 					selection={selection}
 					categoryId={selection.optional.singleId()}
 				/>

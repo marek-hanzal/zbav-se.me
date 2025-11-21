@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { LocationSelection } from "@zbav-se.me/common/location";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { FeedWizardSchema } from "~/app/@buyer/feed/schema/FeedWizardSchema";
-import { LocationSelection } from "~/app/location/ui/LocationSelection";
 
 export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 	validateSearch: FeedWizardSchema,
@@ -77,6 +77,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/location")({
 				}
 			>
 				<LocationSelection
+					locale={locale}
 					value={locationId}
 					onChange={setLocationId}
 					onLocation={({ lon, lat }) =>

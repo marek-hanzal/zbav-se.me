@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { useMergeRefs, useScrollTo, type useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
@@ -7,10 +6,11 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useEffect, useRef } from "react";
-import { CategoryItem } from "~/app/category/ui/CategorySelectionContainer/CategoryItem";
+import { CategoryItem } from "./CategoryItem";
 
 export namespace ListContainer {
 	export interface Props extends Container.Props {
+		locale: string;
 		fulltext: Fulltext.Value;
 		selection: useSelection.Selection<EntitySchema.Type>;
 		categoryId: string | undefined;
@@ -19,15 +19,12 @@ export namespace ListContainer {
 
 export const ListContainer: FC<ListContainer.Props> = ({
 	ref,
+	locale,
 	fulltext,
 	selection,
 	categoryId,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
-
 	const categoryQuery = withCategoryCollectionQuery.useSuspenseQuery({
 		filter: {
 			locale,

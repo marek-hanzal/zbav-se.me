@@ -2,10 +2,11 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense, useState } from "react";
-import { ListContainer } from "~/app/location/ui/LocationSelection/ListContainer";
+import { ListContainer } from "./LocationSelection/ListContainer";
 
 export namespace LocationSelection {
 	export interface Props extends Container.Props {
+		locale: string;
 		value: string | undefined | null;
 		onChange(value: string): void;
 		onLocation?(value: tLocation): void;
@@ -14,6 +15,7 @@ export namespace LocationSelection {
 }
 
 export const LocationSelection: FC<LocationSelection.Props> = ({
+	locale,
 	value,
 	onChange,
 	onLocation,
@@ -52,6 +54,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 
 			<Suspense fallback={<SpinnerContainer />}>
 				<ListContainer
+					locale={locale}
 					textHint={textHint}
 					search={search}
 					value={value}
