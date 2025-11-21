@@ -69,7 +69,22 @@ export const Modal: FC<Modal.Props> = ({
 		click,
 		dismiss,
 	]);
-	const { isMounted, styles } = useTransitionStyles(context);
+	const { isMounted, styles } = useTransitionStyles(context, {
+		duration: 400,
+		initial: {
+			transform: "translateY(10%)",
+			scale: 0.975,
+			opacity: 0,
+		},
+		open: {
+			transform: "translateY(0)",
+			scale: 1,
+			opacity: 1,
+		},
+		common: {
+			transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+		},
+	});
 	const { slots } = useCls(cls, tweak, {
 		variant: {
 			disabled,
