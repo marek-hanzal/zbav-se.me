@@ -7,8 +7,8 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import { type FC, type Ref, useId, useMemo } from "react";
-import { RatingCls } from "~/app/ui/rating/RatingCls";
-import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
+import { RatingCls } from "./RatingCls";
+import { RatingToIcon } from "./RatingToIcon";
 
 export namespace Rating {
 	export interface RatingItem extends EntitySchema.Type {}

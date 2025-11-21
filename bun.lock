@@ -329,6 +329,7 @@
         "@tanstack/react-form": "1.25.0",
         "@use-pico/client": "workspace:*",
         "@use-pico/cls": "5.0.76",
+        "@use-pico/common": "workspace:*",
         "gsap": "3.13.0",
         "react": "19.2.0",
         "react-dom": "19.2.0",

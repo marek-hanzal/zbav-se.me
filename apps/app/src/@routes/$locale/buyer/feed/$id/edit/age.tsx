@@ -6,9 +6,9 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import type { Rating } from "@zbav-se.me/ui/rating";
 import { useState } from "react";
 import { AgeContainer } from "~/app/age/ui/AgeContainer";
-import type { Rating } from "~/app/ui/rating/Rating";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 	component() {

@@ -7,8 +7,8 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { RatingToIcon } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { RatingToIcon } from "~/app/ui/rating/RatingToIcon";
 
 export namespace FeedListingOverlay {
 	export interface Props {
