@@ -1,6 +1,6 @@
 import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
-import { StatusEvent } from "~/app/listing-transaction-log/ui/common/StatusEvent";
+import { StatusEvent } from "../StatusEvent";
 
 export namespace StatusRejected {
 	export interface Props extends StatusEvent.Props {

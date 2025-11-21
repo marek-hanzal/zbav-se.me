@@ -5,7 +5,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Modal } from "node_modules/@use-pico/client/src/ui/modal/Modal";
 import { type FC, Suspense } from "react";
 import { BuyerInfoContainer } from "~/app/@seller/listing-transaction/ui/BuyerInfoContainer";
-import { StatusEvent } from "~/app/listing-transaction-log/ui/common/StatusEvent";
+import { StatusEvent } from "../StatusEvent";
 
 export namespace StatusRequest {
 	export interface Props extends StatusEvent.Props {

@@ -4,11 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
-import type {
-	tListingTransactionLog,
-	tListingTransactionStatus,
-	tUserSide,
-} from "@zbav-se.me/sdk/api/user";
+import type { tListingTransactionLog, tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { TransactionStatusIcon } from "~/app/listing-transaction/ui/TransactionStatusIcon";
@@ -16,13 +12,11 @@ import { TransactionStatusInline } from "~/app/listing-transaction/ui/Transactio
 
 export namespace StatusEvent {
 	export interface Props extends Container.Props {
-		side: tUserSide;
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
 
 export const StatusEvent: FC<StatusEvent.Props> = ({
-	side,
 	listingTransactionLog,
 	tweak,
 	children,
@@ -43,31 +37,10 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 								"inline-flex",
 								"flex-col",
 								"gap-1",
-								match(side)
-									.with("buyer", () => {
-										return match(listingTransactionLog.side)
-											.with("buyer", () => "items-end")
-											.with("seller", () => "items-start")
-											.with(
-												"system",
-												"transaction",
-												"unknown",
-												() => "items-center",
-											)
-											.exhaustive();
-									})
-									.with("seller", () => {
-										return match(listingTransactionLog.side)
-											.with("buyer", () => "items-start")
-											.with("seller", () => "items-end")
-											.with(
-												"system",
-												"transaction",
-												"unknown",
-												() => "items-center",
-											)
-											.exhaustive();
-									})
+								match(listingTransactionLog.side)
+									.with("buyer", () => "items-start")
+									.with("seller", () => "items-end")
+									.with("system", "transaction", "unknown", () => "items-center")
 									.exhaustive(),
 							],
 						},
@@ -115,27 +88,13 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 						},
 					},
 				}}
-				tone={match<tUserSide, Cls.VariantOf<BadgeCls, "tone">>(side)
-					.with("buyer", () => {
-						return match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
-							listingTransactionLog.status,
-						)
-							.with("request", () => "primary")
-							.with("accepted", "success", () => "secondary")
-							.with("rejected", () => "danger")
-							.with("closed", "expired", () => "secondary")
-							.exhaustive();
-					})
-					.with("seller", () => {
-						return match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
-							listingTransactionLog.status,
-						)
-							.with("request", () => "secondary")
-							.with("accepted", "success", () => "primary")
-							.with("rejected", () => "danger")
-							.with("closed", "expired", () => "secondary")
-							.exhaustive();
-					})
+				tone={match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
+					listingTransactionLog.status,
+				)
+					.with("request", () => "secondary")
+					.with("accepted", "success", () => "primary")
+					.with("rejected", () => "danger")
+					.with("closed", "expired", () => "secondary")
 					.exhaustive()}
 			>
 				<div className="flex items-center gap-1">
@@ -145,7 +104,7 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 					/>
 
 					<TransactionStatusInline
-						side={side}
+						side={"seller"}
 						transactionStatus={listingTransactionLog.status}
 						size={"lg"}
 					/>
