@@ -5,7 +5,7 @@ import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withTransactionFx } from "../../../database/fx/withTransactionFx";
 import { NotFoundError } from "../../../error/NotFoundError";
-import { listingTransactionLogCreateFx } from "../../listing-transaction-log/fx/listingTransactionLogCreateFx";
+import { listingTransactionStatusCreateFx } from "../../listing-transaction-status/fx/listingTransactionStatusCreateFx";
 import { ListingTransactionContextFx } from "./ListingTransactionContextFx";
 import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
@@ -63,7 +63,7 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 					.executeTakeFirstOrThrow();
 			});
 
-			yield* listingTransactionLogCreateFx({
+			yield* listingTransactionStatusCreateFx({
 				listingTransactionId: id,
 				side: "buyer",
 				status: "request",
