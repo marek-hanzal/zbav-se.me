@@ -34,28 +34,30 @@ export const EpilogBadge: FC<EpilogBadge.Props> = ({ listingTransaction, ...prop
 		.with("rejected", () => {
 			return (
 				<Badge {...defaultProps}>
-					<Tx label={"Seller rejected the transaction (label)"} />
+					<Tx label={"Seller rejected the transaction - buyer (label)"} />
 				</Badge>
 			);
 		})
 		.with("expired", () => {
 			return (
 				<Badge {...defaultProps}>
-					<Tx label={"This transaction has expired (label)"} />
+					<Tx label={"This transaction has expired - buyer (label)"} />
 				</Badge>
 			);
 		})
 		.with("success", () => {
 			return (
 				<Badge {...defaultProps}>
-					<Tx label={"This transaction has been successfully completed (label)"} />
+					<Tx
+						label={"This transaction has been successfully completed - buyer (label)"}
+					/>
 				</Badge>
 			);
 		})
 		.with("closed", () => {
 			return (
 				<Badge {...defaultProps}>
-					<Tx label={"This transaction has been closed (label)"} />
+					<Tx label={"This transaction has been closed - buyer (label)"} />
 				</Badge>
 			);
 		})

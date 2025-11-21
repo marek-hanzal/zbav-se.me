@@ -2,9 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { EpilogBadge } from "@zbav-se.me/buyer/listing-transaction";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { EpilogBadge } from "~/app/@buyer/listing-transaction/ui/EpilogBadge";
 import { TransactionLogList } from "~/app/@buyer/listing-transaction-log/ui/TransactionLogList";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
