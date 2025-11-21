@@ -97,16 +97,17 @@ export const Modal: FC<Modal.Props> = ({
 							style={styles}
 							data-ui="Modal-root"
 							className={slots.root()}
-							onDoubleClick={(e) => {
-								e.stopPropagation();
-								e.preventDefault();
-							}}
 						>
-							<FloatingFocusManager context={context}>
+							<FloatingFocusManager
+								context={context}
+								modal
+							>
 								<div
 									ref={refs.setFloating}
 									{...getFloatingProps()}
 									data-ui="Modal-modal"
+									role="dialog"
+									aria-modal="true"
 									className={slots.modal()}
 								>
 									{children({
