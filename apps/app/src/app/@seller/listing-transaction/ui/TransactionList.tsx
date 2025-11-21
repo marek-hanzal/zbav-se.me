@@ -1,8 +1,8 @@
 import { Container } from "@use-pico/client/ui/container";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { EmptyList } from "@zbav-se.me/seller/listing-transaction";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { type FC, useRef } from "react";
-import { SellerEmptyList } from "~/app/@seller/listing-transaction/ui/SellerEmptyList";
 import { TransactionItem } from "~/app/@seller/listing-transaction/ui/TransactionItem";
 
 export namespace TransactionList {
@@ -61,7 +61,7 @@ export const TransactionList: FC<TransactionList.Props> = (props) => {
 						layout={"vertical-centered"}
 						items={"center"}
 					>
-						<SellerEmptyList />
+						<EmptyList />
 					</Container>
 				)}
 			</Container>

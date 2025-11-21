@@ -1,8 +1,12 @@
+import { useParams } from "@tanstack/react-router";
+import { ArrowRightIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { LinkTo } from "@use-pico/client/ui/link-to";
+import { EmptyList } from "@zbav-se.me/buyer/listing-transaction";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { type FC, useRef } from "react";
-import { BuyerEmptyList } from "~/app/@buyer/listing-transaction/ui/BuyerEmptyList";
 import { TransactionItem } from "~/app/@buyer/listing-transaction/ui/TransactionItem";
 
 export namespace TransactionList {
@@ -10,6 +14,9 @@ export namespace TransactionList {
 }
 
 export const TransactionList: FC<TransactionList.Props> = (props) => {
+	const { locale } = useParams({
+		from: "/$locale",
+	});
 	const listingTransactionCollectionQuery =
 		withListingTransactionCollectionQuery.useSuspenseQuery(
 			{
@@ -61,7 +68,25 @@ export const TransactionList: FC<TransactionList.Props> = (props) => {
 						layout={"vertical-centered"}
 						items={"center"}
 					>
-						<BuyerEmptyList />
+						<EmptyList
+							action={
+								<LinkTo
+									to={"/$locale/buyer/feed/select"}
+									params={{
+										locale,
+									}}
+								>
+									<Button
+										iconEnabled={ArrowRightIcon}
+										iconPosition={"right"}
+										label={"Feed selection (button)"}
+										size={"xl"}
+										tone={"primary"}
+										theme={"dark"}
+									/>
+								</LinkTo>
+							}
+						/>
 					</Container>
 				)}
 			</Container>

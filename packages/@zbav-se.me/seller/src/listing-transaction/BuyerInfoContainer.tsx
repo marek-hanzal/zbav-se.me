@@ -1,4 +1,3 @@
-import { useParams } from "@tanstack/react-router";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { toTimeDiff } from "@use-pico/common/time";
@@ -8,17 +7,16 @@ import type { FC } from "react";
 
 export namespace BuyerInfoContainer {
 	export interface Props extends Container.Props {
+		locale: string;
 		listingTransactionId: string;
 	}
 }
 
 export const BuyerInfoContainer: FC<BuyerInfoContainer.Props> = ({
+	locale,
 	listingTransactionId,
 	...props
 }) => {
-	const { locale } = useParams({
-		from: "/$locale",
-	});
 	const buyerInfoQuery = withListingTransactionBuyerInfoQuery.useSuspenseQuery({
 		where: {
 			id: listingTransactionId,
