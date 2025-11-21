@@ -65,6 +65,21 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 						_suspense={"I know"}
 						locale={locale}
 						categoryCartList={categoryCartCollectionQuery.data.data}
+						linkTo={({ categoryCart, children }) => (
+							<LinkTo
+								key={categoryCart.id}
+								to={"/$locale/buyer/cart/category/$id/feed"}
+								params={{
+									locale,
+									id: categoryCart.id,
+								}}
+								display={"block"}
+								tone={"primary"}
+								full
+							>
+								{children}
+							</LinkTo>
+						)}
 					/>
 				</Container>
 			</TitleContainer>

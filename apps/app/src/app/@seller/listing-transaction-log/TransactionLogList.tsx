@@ -2,8 +2,8 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
 import type { tListingTransactionLogQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { TransactionLogItem } from "@zbav-se.me/seller/listing-transaction-log";
 import type { FC } from "react";
-import { TransactionLogItem } from "~/app/@buyer/listing-transaction-log/ui/TransactionLogItem";
 
 export namespace TransactionLogList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -26,7 +26,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 	return (
 		<Container
-			ui={"TransactionLogList-buyer-root"}
+			ui={"TransactionLogList-seller-root"}
 			layout={"vertical-flex"}
 			tweak={[
 				tweak,

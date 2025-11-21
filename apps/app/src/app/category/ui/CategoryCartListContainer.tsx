@@ -10,12 +10,22 @@ import { CategoryInline } from "@zbav-se.me/common/category";
 import type { tCategoryCart } from "@zbav-se.me/sdk/api/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
+import type { FC, PropsWithChildren, ReactNode } from "react";
 
 export namespace CategoryCartListContainer {
+	export namespace LinkTo {
+		export interface Props extends PropsWithChildren {
+			locale: string;
+			categoryCart: tCategoryCart;
+		}
+
+		export type RenderFn = (props: Props) => ReactNode;
+	}
+
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		categoryCartList: tCategoryCart[];
+		linkTo: LinkTo.RenderFn;
 	}
 }
 
@@ -23,6 +33,7 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 	_suspense,
 	locale,
 	categoryCartList,
+	linkTo,
 	...props
 }) => {
 	const feedCountQuery = withFeedCountQuery.useSuspenseQuery({});
@@ -33,53 +44,47 @@ export const CategoryCartListContainer: FC<CategoryCartListContainer.Props> = ({
 			gap={"sm"}
 			{...props}
 		>
-			{categoryCartList.map((category) => (
-				<LinkTo
-					key={category.id}
-					to={"/$locale/buyer/cart/category/$id/feed"}
-					params={{
-						locale,
-						id: category.id,
-					}}
-					display={"block"}
-					tone={"primary"}
-					full
-				>
-					<Badge
-						ui={"CategoryCartListContainer-badge"}
-						round={"default"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"inline-flex",
-										"flex-row",
-										"items-center",
-										"justify-between",
-										"h-fit",
-										"w-full",
-									],
-									token: [
-										"round.default",
-										"square.md",
-									],
+			{categoryCartList.map((categoryCart) =>
+				linkTo({
+					locale,
+					categoryCart,
+					children: (
+						<Badge
+							ui={"CategoryCartListContainer-badge"}
+							round={"default"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"inline-flex",
+											"flex-row",
+											"items-center",
+											"justify-between",
+											"h-fit",
+											"w-full",
+										],
+										token: [
+											"round.default",
+											"square.md",
+										],
+									},
 								},
-							},
-						}}
-					>
-						<CategoryInline category={category} />
+							}}
+						>
+							<CategoryInline category={categoryCart} />
 
-						<div className="inline-flex flex-row gap-2 items-center">
-							<Typo
-								label={`${category.listingCount}x`}
-								font={"bold"}
-							/>
+							<div className="inline-flex flex-row gap-2 items-center">
+								<Typo
+									label={`${categoryCart.listingCount}x`}
+									font={"bold"}
+								/>
 
-							<Icon icon={ArrowRightIcon} />
-						</div>
-					</Badge>
-				</LinkTo>
-			))}
+								<Icon icon={ArrowRightIcon} />
+							</div>
+						</Badge>
+					),
+				}),
+			)}
 
 			{categoryCartList.length === 0 ? (
 				<Container
