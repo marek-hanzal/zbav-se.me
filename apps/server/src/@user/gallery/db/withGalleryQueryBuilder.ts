@@ -28,9 +28,5 @@ export const withGalleryQueryBuilder: withGalleryQueryBuilder.Callback = ({ sele
 		query = query.where("g.userId", "=", where.userId);
 	}
 
-	if (where.listingId) {
-		query = query.where("g.listingId", "=", where.listingId);
-	}
-
 	return query;
 };

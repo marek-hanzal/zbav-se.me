@@ -1,7 +1,7 @@
-import { jsonObjectFrom } from "kysely/helpers/postgres";
+import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { WithDatabase } from "../../../database/WithDatabase";
-import { withUploadSelect } from "../../upload/db/withUploadSelect";
+import { withGalleryItemSelect } from "../../gallery-item/db/withGalleryItemSelect";
 import type { GallerySortSchema } from "../schema/GallerySortSchema";
 
 export namespace withGallerySelect {
@@ -15,22 +15,22 @@ export namespace withGallerySelect {
 export const withGallerySelect = ({ database, sort }: withGallerySelect.Props) => {
 	let query = database.selectFrom("gallery as g").select([
 		"g.id",
-		"g.listingId",
-		"g.uploadId",
-		"g.sort",
 		(eb) =>
-			jsonObjectFrom(
-				withUploadSelect({
+			jsonArrayFrom(
+				withGalleryItemSelect({
 					database,
-				})
-					.whereRef("u.id", "=", eb.ref("g.uploadId"))
-					.limit(1),
-			).as("upload"),
+					sort: [
+						{
+							field: "sort",
+							direction: "asc",
+						},
+					],
+				}).whereRef("gi.galleryId", "=", eb.ref("g.id")),
+			).as("items"),
 	]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("sort", () => query.orderBy("g.sort", item.direction))
 			.with("createdAt", () => query.orderBy("g.createdAt", item.direction))
 			.exhaustive();
 	}
