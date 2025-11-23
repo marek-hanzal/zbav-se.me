@@ -2,19 +2,10 @@ import { z } from "@hono/zod-openapi";
 
 export const GalleryDbSchema = z.object({
 	id: z.string().openapi({
-		description: "ID of the gallery item",
+		description: "ID of the gallery",
 	}),
 	userId: z.string().openapi({
-		description: "ID of the user who owns the gallery item",
-	}),
-	listingId: z.string().openapi({
-		description: "ID of the listing this image belongs to",
-	}),
-	uploadId: z.string().openapi({
-		description: "ID of the upload this image belongs to",
-	}),
-	sort: z.number().openapi({
-		description: "Sort order of the image in the listing's gallery",
+		description: "ID of the user who owns the gallery",
 	}),
 	createdAt: z.coerce.date().openapi({
 		description: "Creation timestamp",
