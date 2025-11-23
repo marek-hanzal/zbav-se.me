@@ -1,34 +1,45 @@
 import type { InferResult, SelectQueryBuilder } from "kysely";
 import type { z } from "zod";
 
-type Elem<T> = T extends readonly (infer U)[] ? U : T;
+type AsObject<T> = NonNullable<T> extends object ? NonNullable<T> : never;
 
-type NonNullish<T> = Exclude<T, null | undefined>;
+type ZodObject<TSchema extends z.ZodTypeAny> = AsObject<z.infer<TSchema>>;
 
-type SchemaRow<TOutputSchema extends z.ZodTypeAny> = Elem<NonNullish<z.infer<TOutputSchema>>>;
+type SelectObject<TSelect extends SelectQueryBuilder<any, any, any>> = AsObject<
+	InferResult<TSelect>[number]
+>;
 
-type SchemaRowKeys<TOutputSchema extends z.ZodTypeAny> = keyof SchemaRow<TOutputSchema>;
+type ArrayElement<T> = T extends readonly (infer U)[] ? NonNullable<U> : never;
 
-type SelectKeys<TSelect extends SelectQueryBuilder<any, any, any>> =
-	keyof InferResult<TSelect>[number];
+type DeepKeysImpl<T, P extends string> = NonNullable<T> extends readonly any[]
+	? DeepKeysImpl<ArrayElement<NonNullable<T>>, P>
+	: NonNullable<T> extends object
+		? DeepKeysObject<NonNullable<T>, P>
+		: never;
 
-type MissingInSelect<
-	TSelect extends SelectQueryBuilder<any, any, any>,
-	TOutputSchema extends z.ZodTypeAny,
-> = Exclude<SchemaRowKeys<TOutputSchema>, SelectKeys<TSelect>>;
+type DeepKeysObject<TObj, P extends string> = {
+	[K in keyof TObj & string]: `${P}${K}` | DeepKeysImpl<NonNullable<TObj[K]>, `${P}${K}.`>;
+}[keyof TObj & string];
 
-type FormatError<
-	TSelect extends SelectQueryBuilder<any, any, any>,
-	TOutputSchema extends z.ZodTypeAny,
-> = MissingInSelect<TSelect, TOutputSchema> extends never
+type DeepKeys<T, P extends string = ""> = T extends any ? DeepKeysImpl<T, P> : never;
+
+type MissingKeys<TZodObject extends object, TSelectObject extends object> = Exclude<
+	DeepKeys<TZodObject>,
+	DeepKeys<TSelectObject>
+>;
+
+type FormatError<TZodObject extends object, TSelectObject extends object> = MissingKeys<
+	TZodObject,
+	TSelectObject
+> extends never
 	? never
 	: {
-			missingInSelect: MissingInSelect<TSelect, TOutputSchema>;
+			missingInSelect: MissingKeys<TZodObject, TSelectObject>;
 		};
 
 export type EnsureSelectOutputSchema<
 	TSelect extends SelectQueryBuilder<any, any, any>,
-	TOutputSchema extends z.ZodTypeAny,
-> = MissingInSelect<TSelect, TOutputSchema> extends never
-	? TOutputSchema
-	: FormatError<TSelect, TOutputSchema>;
+	TSchema extends z.ZodTypeAny,
+> = MissingKeys<ZodObject<TSchema>, SelectObject<TSelect>> extends never
+	? TSchema
+	: FormatError<ZodObject<TSchema>, SelectObject<TSelect>>;
