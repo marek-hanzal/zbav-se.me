@@ -7,6 +7,7 @@ import type { GalleryItemDbSchema } from "../app/gallery-item/schema/GalleryItem
 import type { ListingDbSchema } from "../app/listing/schema/ListingDbSchema";
 import type { ListingCartDbSchema } from "../app/listing-cart/schema/ListingCartDbSchema";
 import type { ListingFlagDbSchema } from "../app/listing-flag/schema/ListingFlagDbSchema";
+import type { ListingGalleryDbSchema } from "../app/listing-gallery/schema/ListingGalleryDbSchema";
 import type { ListingIgnoreDbSchema } from "../app/listing-ignore/schema/ListingIgnoreDbSchema";
 import type { ListingScoreDbSchema } from "../app/listing-score/schema/ListingScoreDbSchema";
 import type { ListingTransactionDbSchema } from "../app/listing-transaction/schema/ListingTransactionDbSchema";
@@ -24,10 +25,11 @@ export interface Database {
 	category_spotlight: CategorySpotlightDbSchema.Type;
 	category: CategoryDbSchema.Type;
 	feed: FeedDbSchema.Type;
-	gallery: GalleryDbSchema.Type;
 	gallery_item: GalleryItemDbSchema.Type;
+	gallery: GalleryDbSchema.Type;
 	listing_cart: ListingCartDbSchema.Type;
 	listing_flag: ListingFlagDbSchema.Type;
+	listing_gallery: ListingGalleryDbSchema.Type;
 	listing_ignore: ListingIgnoreDbSchema.Type;
 	listing_score: ListingScoreDbSchema.Type;
 	listing_transaction_gallery: ListingTransactionGalleryDbSchema.Type;

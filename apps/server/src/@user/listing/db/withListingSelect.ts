@@ -68,23 +68,41 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 				.$notNull()
 				.as("category"),
 
-			jsonArrayFrom(
+			jsonObjectFrom(
 				eb
 					.selectFrom("gallery as g")
-					.selectAll("g")
-					.select((eb) =>
-						jsonObjectFrom(
-							eb
-								.selectFrom("upload as u")
-								.selectAll("u")
-								.whereRef("u.id", "=", "g.uploadId")
-								.limit(1),
-						)
-							.$notNull()
-							.as("upload"),
+					.where(
+						"g.id",
+						"in",
+						eb
+							.selectFrom("listing_gallery as lg")
+							.select("lg.galleryId")
+							.whereRef("lg.listingId", "=", "l.id")
+							.orderBy("lg.createdAt", "desc")
+							.limit(1),
 					)
-					.whereRef("g.listingId", "=", "l.id")
-					.orderBy("g.sort"),
+					.selectAll("g")
+					.select((eb2) => [
+						jsonArrayFrom(
+							eb2
+								.selectFrom("gallery_item as gi")
+								.selectAll("gi")
+								.select((eb3) =>
+									jsonObjectFrom(
+										eb3
+											.selectFrom("upload as u")
+											.selectAll("u")
+											.whereRef("u.id", "=", "gi.uploadId")
+											.limit(1),
+									)
+										.$notNull()
+										.as("upload"),
+								)
+								.whereRef("gi.galleryId", "=", "g.id")
+								.orderBy("gi.sort"),
+						).as("items"),
+					])
+					.limit(1),
 			).as("gallery"),
 
 			eb
