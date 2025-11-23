@@ -12,18 +12,18 @@ export type tUserExPatch = {
      * Default location for the user - used for listings & listing sorting
      */
     locationId?: string | null;
-    side?: tUserSide | null;
+    side?: tUserSideEnum | null;
 };
 
 /**
  * Side of the user
  */
-export const tUserSide = { seller: 'seller', buyer: 'buyer' } as const;
+export const tUserSideEnum = { seller: 'seller', buyer: 'buyer' } as const;
 
 /**
  * Side of the user
  */
-export type tUserSide = typeof tUserSide[keyof typeof tUserSide];
+export type tUserSideEnum = typeof tUserSideEnum[keyof typeof tUserSideEnum];
 
 /**
  * User extended information
@@ -37,7 +37,7 @@ export type tUserEx = {
      * Default location for the user - user for listings & listing sorting
      */
     locationId?: string | null;
-    side?: tUserSide | null;
+    side?: tUserSideEnum | null;
 };
 
 /**
@@ -78,12 +78,12 @@ export type tUploadQuery = {
 /**
  * Order
  */
-export const tOrder = { asc: 'asc', desc: 'desc' } as const;
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 
 /**
  * Order
  */
-export type tOrder = typeof tOrder[keyof typeof tOrder];
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
  * Field for uploading a file
@@ -100,7 +100,7 @@ export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortF
  */
 export type tUploadSort = {
     field: tUploadSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -166,7 +166,7 @@ export type tUploadCreate = {
 /**
  * Allowed content types
  */
-export const tAllowedContentTypes = {
+export const tAllowedContentTypesEnum = {
     'image/jpeg': 'image/jpeg',
     'image/png': 'image/png',
     'image/webp': 'image/webp',
@@ -178,12 +178,12 @@ export const tAllowedContentTypes = {
 /**
  * Allowed content types
  */
-export type tAllowedContentTypes = typeof tAllowedContentTypes[keyof typeof tAllowedContentTypes];
+export type tAllowedContentTypesEnum = typeof tAllowedContentTypesEnum[keyof typeof tAllowedContentTypesEnum];
 
 /**
  * Allowed extensions
  */
-export const tAllowedExtensions = {
+export const tAllowedExtensionsEnum = {
     webp: 'webp',
     png: 'png',
     jpg: 'jpg',
@@ -196,7 +196,7 @@ export const tAllowedExtensions = {
 /**
  * Allowed extensions
  */
-export type tAllowedExtensions = typeof tAllowedExtensions[keyof typeof tAllowedExtensions];
+export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof tAllowedExtensionsEnum];
 
 /**
  * Data for creating a new listing score
@@ -206,13 +206,13 @@ export type tListingScoreCreate = {
      * ID of the listing to score
      */
     listingId: string;
-    score: tListingScoreType;
+    score: tListingScoreTypeEnum;
 };
 
 /**
  * Type of listing score
  */
-export const tListingScoreType = {
+export const tListingScoreTypeEnum = {
     listing: 'listing',
     ignore: 'ignore',
     flag: 'flag',
@@ -223,7 +223,7 @@ export const tListingScoreType = {
 /**
  * Type of listing score
  */
-export type tListingScoreType = typeof tListingScoreType[keyof typeof tListingScoreType];
+export type tListingScoreTypeEnum = typeof tListingScoreTypeEnum[keyof typeof tListingScoreTypeEnum];
 
 /**
  * Query object for listing score count
@@ -310,7 +310,7 @@ export type tListingScoreSortField = typeof tListingScoreSortField[keyof typeof 
  */
 export type tListingScoreSort = {
     field: tListingScoreSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -336,7 +336,7 @@ export type tListingScore = {
      * ID of the listing
      */
     listingId: string;
-    type: tListingScoreType;
+    type: tListingScoreTypeEnum;
     /**
      * Score value
      */
@@ -372,7 +372,7 @@ export type tListingTransactionLogSortField = typeof tListingTransactionLogSortF
  */
 export type tListingTransactionLogSort = {
     field: tListingTransactionLogSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -395,16 +395,16 @@ export type tListingTransactionLogWhere = {
      * This filter matches the exact listingTransactionId
      */
     listingTransactionId?: string;
-    status?: tListingTransactionStatus;
-    statusIn?: Array<tListingTransactionStatus>;
-    side?: tListingTransactionSide;
+    event?: tListingTransactionEventEnum;
+    eventIn?: Array<tListingTransactionEventEnum>;
+    side?: tListingTransactionSideEnum;
     userId?: string;
 };
 
 /**
  * Who initiated or affected the transaction change
  */
-export const tListingTransactionSide = {
+export const tListingTransactionSideEnum = {
     seller: 'seller',
     buyer: 'buyer',
     transaction: 'transaction',
@@ -415,24 +415,22 @@ export const tListingTransactionSide = {
 /**
  * Who initiated or affected the transaction change
  */
-export type tListingTransactionSide = typeof tListingTransactionSide[keyof typeof tListingTransactionSide];
+export type tListingTransactionSideEnum = typeof tListingTransactionSideEnum[keyof typeof tListingTransactionSideEnum];
 
 /**
- * Current status of the listing transaction
+ * Type of transaction event
  */
-export const tListingTransactionStatus = {
-    request: 'request',
-    accepted: 'accepted',
-    rejected: 'rejected',
-    success: 'success',
-    closed: 'closed',
-    expired: 'expired'
+export const tListingTransactionEventEnum = {
+    status: 'status',
+    message: 'message',
+    gallery: 'gallery',
+    location: 'location'
 } as const;
 
 /**
- * Current status of the listing transaction
+ * Type of transaction event
  */
-export type tListingTransactionStatus = typeof tListingTransactionStatus[keyof typeof tListingTransactionStatus];
+export type tListingTransactionEventEnum = typeof tListingTransactionEventEnum[keyof typeof tListingTransactionEventEnum];
 
 /**
  * Filter object for listing transaction log collection
@@ -454,9 +452,9 @@ export type tListingTransactionLogFilter = {
      * This filter matches the exact listingTransactionId
      */
     listingTransactionId?: string;
-    status?: tListingTransactionStatus;
-    statusIn?: Array<tListingTransactionStatus>;
-    side?: tListingTransactionSide;
+    event?: tListingTransactionEventEnum;
+    eventIn?: Array<tListingTransactionEventEnum>;
+    side?: tListingTransactionSideEnum;
     userId?: string;
 };
 
@@ -472,7 +470,138 @@ export type tListingTransactionLogCollection = {
 };
 
 /**
- * Listing transaction log entry
+ * Listing transaction gallery entry
+ */
+export type tListingTransactionGallery = {
+    /**
+     * ID of the transaction gallery entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the gallery
+     */
+    listingTransactionId: string;
+    /**
+     * Type of transaction event (must be 'gallery')
+     */
+    event: 'gallery';
+    side: tListingTransactionSideEnum;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Listing transaction location entry
+ */
+export type tListingTransactionLocation = {
+    /**
+     * ID of the transaction location entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the location
+     */
+    listingTransactionId: string;
+    /**
+     * Type of transaction event (must be 'location')
+     */
+    event: 'location';
+    side: tListingTransactionSideEnum;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Scheduled time for the location
+     */
+    time: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Listing transaction message entry
+ */
+export type tListingTransactionMessage = {
+    /**
+     * ID of the transaction message entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the message
+     */
+    listingTransactionId: string;
+    /**
+     * Type of transaction event (must be 'message')
+     */
+    event: 'message';
+    side: tListingTransactionSideEnum;
+    /**
+     * Message content
+     */
+    message: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Current status of the listing transaction
+ */
+export const tListingTransactionStatusEnum = {
+    request: 'request',
+    accepted: 'accepted',
+    rejected: 'rejected',
+    success: 'success',
+    closed: 'closed',
+    expired: 'expired'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tListingTransactionStatusEnum = typeof tListingTransactionStatusEnum[keyof typeof tListingTransactionStatusEnum];
+
+/**
+ * Listing transaction status entry
+ */
+export type tListingTransactionStatus = {
+    /**
+     * ID of the transaction status entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the status
+     */
+    listingTransactionId: string;
+    /**
+     * Type of transaction event (must be 'status')
+     */
+    event: 'status';
+    side: tListingTransactionSideEnum;
+    status: tListingTransactionStatusEnum;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Payload of the event
+ */
+export type tListingTransactionPayload = tListingTransactionStatus | tListingTransactionMessage | tListingTransactionLocation | tListingTransactionGallery;
+
+/**
+ * Listing transaction log entry (unified view across all event types)
  */
 export type tListingTransactionLog = {
     /**
@@ -483,8 +612,9 @@ export type tListingTransactionLog = {
      * ID of the transaction referenced by the log
      */
     listingTransactionId: string;
-    status: tListingTransactionStatus;
-    side: tListingTransactionSide;
+    event: tListingTransactionEventEnum;
+    side: tListingTransactionSideEnum;
+    payload: tListingTransactionPayload;
     /**
      * Creation timestamp
      */
@@ -527,8 +657,8 @@ export type tListingTransactionPatch = {
      * ID of the listing transaction to patch
      */
     id: string;
-    status?: tListingTransactionStatus;
-    side?: tListingTransactionSide;
+    status?: tListingTransactionStatusEnum;
+    side?: tListingTransactionSideEnum;
 };
 
 /**
@@ -556,7 +686,7 @@ export type tListingTransactionQuery = {
  * Meta data for listing transaction collection
  */
 export type tListingTransactionMeta = {
-    side?: tUserSide;
+    side?: tUserSideEnum;
 };
 
 /**
@@ -578,7 +708,7 @@ export type tListingTransactionSortField = typeof tListingTransactionSortField[k
  */
 export type tListingTransactionSort = {
     field: tListingTransactionSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -605,8 +735,8 @@ export type tListingTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tListingTransactionStatus;
-    side?: tListingTransactionSide;
+    status?: tListingTransactionStatusEnum;
+    side?: tListingTransactionSideEnum;
 };
 
 /**
@@ -633,8 +763,8 @@ export type tListingTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tListingTransactionStatus;
-    side?: tListingTransactionSide;
+    status?: tListingTransactionStatusEnum;
+    side?: tListingTransactionSideEnum;
 };
 
 /**
@@ -660,8 +790,8 @@ export type tListingTransaction = {
      * ID of the related listing
      */
     listingId: string;
-    status: tListingTransactionStatus;
-    side: tListingTransactionSide;
+    status: tListingTransactionStatusEnum;
+    side: tListingTransactionSideEnum;
     /**
      * Creation timestamp
      */
@@ -779,7 +909,7 @@ export type tListingFlagSortField = typeof tListingFlagSortField[keyof typeof tL
  */
 export type tListingFlagSort = {
     field: tListingFlagSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -932,7 +1062,7 @@ export type tListingIgnoreSortField = typeof tListingIgnoreSortField[keyof typeo
  */
 export type tListingIgnoreSort = {
     field: tListingIgnoreSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -1059,7 +1189,7 @@ export type tListingCartSortField = typeof tListingCartSortField[keyof typeof tL
  */
 export type tListingCartSort = {
     field: tListingCartSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -1215,7 +1345,7 @@ export type tListingWhere = {
     ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyList;
+    currency?: tCurrencyListEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -1258,12 +1388,12 @@ export type tListingWhere = {
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export type tCurrencyIn = Array<tCurrencyList>;
+export type tCurrencyIn = Array<tCurrencyListEnum>;
 
 /**
  * List of available currencies
  */
-export const tCurrencyList = {
+export const tCurrencyListEnum = {
     CZK: 'CZK',
     EUR: 'EUR',
     USD: 'USD',
@@ -1276,7 +1406,7 @@ export const tCurrencyList = {
 /**
  * List of available currencies
  */
-export type tCurrencyList = typeof tCurrencyList[keyof typeof tCurrencyList];
+export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
 
 /**
  * Filter listings based on the provided category IDs
@@ -1342,7 +1472,7 @@ export type tListingFilter = {
     ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyList;
+    currency?: tCurrencyListEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -1394,26 +1524,40 @@ export type tListingCollection = {
 };
 
 /**
- * Gallery data
+ * Gallery item data
  */
-export type tGallery = {
+export type tGalleryItem = {
     /**
      * ID of the gallery item
      */
     id: string;
     /**
-     * ID of the listing this image belongs to
+     * ID of the gallery this item belongs to
      */
-    listingId: string;
+    galleryId: string;
     /**
      * ID of the upload this image belongs to
      */
     uploadId: string;
     /**
-     * Sort order of the image in the listing's gallery
+     * Sort order of the image in the gallery
      */
     sort: number;
     upload: tUpload;
+};
+
+/**
+ * Gallery data with items
+ */
+export type tGallery = {
+    /**
+     * ID of the gallery
+     */
+    id: string;
+    /**
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
 };
 
 /**
@@ -1525,7 +1669,7 @@ export type tListing = {
      * Price of the listing
      */
     price: number;
-    currency: tCurrencyList;
+    currency: tCurrencyListEnum;
     /**
      * Condition of the item (0-based index)
      */
@@ -1564,10 +1708,7 @@ export type tListing = {
     updatedAt: string;
     location: tLocation;
     category: tCategory;
-    /**
-     * Array of listing gallery images
-     */
-    gallery: Array<tGallery>;
+    gallery: tGallery & unknown;
     /**
      * Whether the user has this listing in the cart
      */
@@ -1610,8 +1751,8 @@ export type tListingCreate = {
      * ID of the category
      */
     categoryId: string;
-    currency: tCurrencyList;
-    expiresAt: tListingExpire;
+    currency: tCurrencyListEnum;
+    expiresAt: tListingExpireEnum;
     /**
      * Title of the item
      */
@@ -1629,7 +1770,7 @@ export type tListingCreate = {
 /**
  * Expiration time of the listing
  */
-export const tListingExpire = {
+export const tListingExpireEnum = {
     '7-days': '7-days',
     '14-days': '14-days',
     '1-month': '1-month'
@@ -1638,10 +1779,10 @@ export const tListingExpire = {
 /**
  * Expiration time of the listing
  */
-export type tListingExpire = typeof tListingExpire[keyof typeof tListingExpire];
+export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
 
 /**
- * Collection of gallery items
+ * Collection of galleries
  */
 export type tGalleryCollection = {
     data: Array<tGallery>;
@@ -1664,7 +1805,7 @@ export type tGalleryQuery = {
 /**
  * Field of the gallery sort
  */
-export const tGallerySortField = { sort: 'sort', createdAt: 'createdAt' } as const;
+export const tGallerySortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field of the gallery sort
@@ -1676,7 +1817,7 @@ export type tGallerySortField = typeof tGallerySortField[keyof typeof tGallerySo
  */
 export type tGallerySort = {
     field: tGallerySortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -1699,10 +1840,6 @@ export type tGalleryWhere = {
      * Exact user id
      */
     userId?: string;
-    /**
-     * Exact listing id
-     */
-    listingId?: string;
 };
 
 /**
@@ -1725,10 +1862,6 @@ export type tGalleryFilter = {
      * Exact user id
      */
     userId?: string;
-    /**
-     * Exact listing id
-     */
-    listingId?: string;
 };
 
 /**
@@ -1766,7 +1899,7 @@ export type tListingSortField = typeof tListingSortField[keyof typeof tListingSo
  */
 export type tListingSort = {
     field: tListingSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -1824,7 +1957,7 @@ export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
  */
 export type tFeedSort = {
     field: tFeedSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -1935,7 +2068,7 @@ export type tCategoryCartSortField = typeof tCategoryCartSortField[keyof typeof 
  */
 export type tCategoryCartSort = {
     field: tCategoryCartSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -2077,13 +2210,13 @@ export type tMessage = {
      * Message
      */
     message: string;
-    type: tMessageType;
+    type: tMessageTypeEnum;
 };
 
 /**
  * Type of message
  */
-export const tMessageType = {
+export const tMessageTypeEnum = {
     info: 'info',
     warning: 'warning',
     error: 'error'
@@ -2092,7 +2225,7 @@ export const tMessageType = {
 /**
  * Type of message
  */
-export type tMessageType = typeof tMessageType[keyof typeof tMessageType];
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
 
 export type tApiCategoryCartCollectionRequest = {
     body?: tCategoryCartQuery;
@@ -2309,7 +2442,7 @@ export type tApiGalleryFetchRequest = {
 
 export type apiGalleryFetchErrors = {
     /**
-     * Gallery item not found
+     * Gallery not found
      */
     404: tMessage;
     /**
@@ -2322,7 +2455,7 @@ export type apiGalleryFetchError = apiGalleryFetchErrors[keyof apiGalleryFetchEr
 
 export type tApiGalleryFetchResponse = {
     /**
-     * Return a gallery item based on the provided query
+     * Return a gallery based on the provided query
      */
     200: tGallery;
 };
@@ -2347,7 +2480,7 @@ export type apiGalleryCollectionError = apiGalleryCollectionErrors[keyof apiGall
 
 export type tApiGalleryCollectionResponse = {
     /**
-     * Access collection of gallery items based on provided query
+     * Access collection of galleries based on provided query
      */
     200: tGalleryCollection;
 };
@@ -2390,6 +2523,10 @@ export type tApiListingCreateRequest = {
 };
 
 export type apiListingCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
     /**
      * Listing not found after creation
      */
@@ -3082,8 +3219,8 @@ export type tApiS3PresignRequest = {
          * Object path. After stripping leading '/', must start with `<userId>/`
          */
         path: string;
-        extension: tAllowedExtensions;
-        contentType: tAllowedContentTypes;
+        extension: tAllowedExtensionsEnum;
+        contentType: tAllowedContentTypesEnum;
     };
     path?: never;
     query?: never;

@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "../../../schema/OrderSchema";
+import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
 
 export const ListingIgnoreSortSchema = z
 	.object({
@@ -10,7 +10,7 @@ export const ListingIgnoreSortSchema = z
 			.openapi("ListingIgnoreSortField", {
 				description: "Field of the listing ignore sort",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("ListingIgnoreSort", {
 		description: "Sort object for listing ignore collection",

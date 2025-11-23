@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionSideSchema } from "./ListingTransactionSideSchema";
-import { ListingTransactionStatusSchema } from "./ListingTransactionStatusSchema";
+import { ListingTransactionSideEnumSchema } from "./ListingTransactionSideEnumSchema";
+import { ListingTransactionStatusEnumSchema } from "./ListingTransactionStatusEnumSchema";
 
 export const ListingTransactionDbSchema = z.object({
 	id: z.string().openapi({
@@ -12,8 +12,8 @@ export const ListingTransactionDbSchema = z.object({
 	listingId: z.string().openapi({
 		description: "ID of the related listing",
 	}),
-	status: ListingTransactionStatusSchema,
-	side: ListingTransactionSideSchema,
+	status: ListingTransactionStatusEnumSchema,
+	side: ListingTransactionSideEnumSchema,
 	createdAt: z.coerce.date().openapi({
 		description: "Creation timestamp",
 		type: "string",

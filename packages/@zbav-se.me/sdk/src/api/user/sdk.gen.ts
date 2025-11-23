@@ -125,7 +125,7 @@ export const apiFeedDelete = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
- * Return a gallery item based on the provided query
+ * Return a gallery based on the provided query
  */
 export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryFetchRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryFetchResponse, apiGalleryFetchErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGalleryFetchData.parseAsync(data),
@@ -140,7 +140,7 @@ export const apiGalleryFetch = <ThrowOnError extends boolean = false>(options?: 
 });
 
 /**
- * Returns gallery items based on provided parameters
+ * Returns galleries based on provided parameters
  */
 export const apiGalleryCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryCollectionResponse, apiGalleryCollectionErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGalleryCollectionData.parseAsync(data),
@@ -155,7 +155,7 @@ export const apiGalleryCollection = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
- * Returns count of gallery items based on provided query
+ * Returns count of galleries based on provided query
  */
 export const apiGalleryCount = <ThrowOnError extends boolean = false>(options?: Options<tApiGalleryCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiGalleryCountResponse, apiGalleryCountErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiGalleryCountData.parseAsync(data),

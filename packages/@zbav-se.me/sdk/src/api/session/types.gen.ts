@@ -7,12 +7,12 @@ export type clientOptions = {
 /**
  * Order
  */
-export const tOrder = { asc: 'asc', desc: 'desc' } as const;
+export const tOrderEnum = { asc: 'asc', desc: 'desc' } as const;
 
 /**
  * Order
  */
-export type tOrder = typeof tOrder[keyof typeof tOrder];
+export type tOrderEnum = typeof tOrderEnum[keyof typeof tOrderEnum];
 
 /**
  * Cursor for pagination
@@ -223,7 +223,7 @@ export type tLocationSortField = typeof tLocationSortField[keyof typeof tLocatio
  */
 export type tLocationSort = {
     field: tLocationSortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -374,7 +374,7 @@ export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategor
  */
 export type tCategorySort = {
     field: tCategorySortField;
-    direction: tOrder;
+    direction: tOrderEnum;
 };
 
 /**
@@ -385,13 +385,13 @@ export type tMessage = {
      * Message
      */
     message: string;
-    type: tMessageType;
+    type: tMessageTypeEnum;
 };
 
 /**
  * Type of message
  */
-export const tMessageType = {
+export const tMessageTypeEnum = {
     info: 'info',
     warning: 'warning',
     error: 'error'
@@ -400,7 +400,7 @@ export const tMessageType = {
 /**
  * Type of message
  */
-export type tMessageType = typeof tMessageType[keyof typeof tMessageType];
+export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
 
 export type tApiCategoryFetchRequest = {
     /**

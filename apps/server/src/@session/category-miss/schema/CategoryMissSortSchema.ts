@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "~/schema/OrderSchema";
+import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const CategoryMissSortSchema = z
 	.object({
@@ -12,7 +12,7 @@ export const CategoryMissSortSchema = z
 			.openapi("CategoryMissSortField", {
 				description: "Field for category miss sort",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("CategoryMissSort", {
 		description: "Data for category miss sort",

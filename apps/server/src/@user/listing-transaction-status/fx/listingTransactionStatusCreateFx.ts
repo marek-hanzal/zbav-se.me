@@ -1,15 +1,15 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
-import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
+import type { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
+import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { listingTransactionStatusFetchFx } from "./listingTransactionStatusFetchFx";
 
 export namespace listingTransactionStatusCreateFx {
 	export interface Props {
 		listingTransactionId: string;
-		status: ListingTransactionStatusSchema.Type;
-		side: ListingTransactionSideSchema.Type;
+		status: ListingTransactionStatusEnumSchema.Type;
+		side: ListingTransactionSideEnumSchema.Type;
 	}
 }
 

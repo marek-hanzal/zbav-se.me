@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { UserSideSchema } from "../../../app/user-ex/schema/UserSideSchema";
+import { UserSideEnumSchema } from "../../../app/user-ex/schema/UserSideEnumSchema";
 
 export const UserExPatchSchema = z
 	.object({
@@ -8,7 +8,7 @@ export const UserExPatchSchema = z
 		}),
 		side: z
 			.union([
-				UserSideSchema,
+				UserSideEnumSchema,
 				z.null(),
 			])
 			.optional(),

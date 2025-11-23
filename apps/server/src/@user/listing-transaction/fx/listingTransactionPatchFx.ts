@@ -1,21 +1,21 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { listingTransactionStatusCreateFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusCreateFx";
+import type { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
+import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";
-import type { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
-import type { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
-import { NotFoundError } from "../../../error/NotFoundError";
-import { listingTransactionStatusCreateFx } from "../../listing-transaction-status/fx/listingTransactionStatusCreateFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { ListingTransactionContextFx } from "./ListingTransactionContextFx";
 import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
 export namespace listingTransactionPatchFx {
 	export interface Props {
 		transactionId: string;
-		status?: ListingTransactionStatusSchema.Type;
-		side?: ListingTransactionSideSchema.Type;
+		status?: ListingTransactionStatusEnumSchema.Type;
+		side?: ListingTransactionSideEnumSchema.Type;
 	}
 }
 

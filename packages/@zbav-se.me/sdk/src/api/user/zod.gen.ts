@@ -5,11 +5,11 @@ import { z } from 'zod';
 /**
  * Side of the user
  */
-export const zUserSide = z.enum(['seller', 'buyer']).register(z.globalRegistry, {
+export const zUserSideEnum = z.enum(['seller', 'buyer']).register(z.globalRegistry, {
     description: 'Side of the user'
 });
 
-export type zUserSide = z.infer<typeof zUserSide>;
+export type zUserSideEnum = z.infer<typeof zUserSideEnum>;
 
 /**
  * Data for patching a user ex
@@ -20,7 +20,7 @@ export const zUserExPatch = z.object({
         z.null()
     ])),
     side: z.optional(z.union([
-        zUserSide,
+        zUserSideEnum,
         z.null()
     ]))
 }).register(z.globalRegistry, {
@@ -41,7 +41,7 @@ export const zUserEx = z.object({
         z.null()
     ])),
     side: z.optional(z.union([
-        zUserSide,
+        zUserSideEnum,
         z.null()
     ]))
 }).register(z.globalRegistry, {
@@ -83,11 +83,11 @@ export type zUploadCollection = z.infer<typeof zUploadCollection>;
 /**
  * Order
  */
-export const zOrder = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
     description: 'Order'
 });
 
-export type zOrder = z.infer<typeof zOrder>;
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
 
 /**
  * Field for uploading a file
@@ -103,7 +103,7 @@ export type zUploadSortField = z.infer<typeof zUploadSortField>;
  */
 export const zUploadSort = z.object({
     field: zUploadSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Data for uploading a file'
 });
@@ -194,7 +194,7 @@ export type zUploadCreate = z.infer<typeof zUploadCreate>;
 /**
  * Allowed content types
  */
-export const zAllowedContentTypes = z.enum([
+export const zAllowedContentTypesEnum = z.enum([
     'image/jpeg',
     'image/png',
     'image/webp',
@@ -205,12 +205,12 @@ export const zAllowedContentTypes = z.enum([
     description: 'Allowed content types'
 });
 
-export type zAllowedContentTypes = z.infer<typeof zAllowedContentTypes>;
+export type zAllowedContentTypesEnum = z.infer<typeof zAllowedContentTypesEnum>;
 
 /**
  * Allowed extensions
  */
-export const zAllowedExtensions = z.enum([
+export const zAllowedExtensionsEnum = z.enum([
     'webp',
     'png',
     'jpg',
@@ -222,12 +222,12 @@ export const zAllowedExtensions = z.enum([
     description: 'Allowed extensions'
 });
 
-export type zAllowedExtensions = z.infer<typeof zAllowedExtensions>;
+export type zAllowedExtensionsEnum = z.infer<typeof zAllowedExtensionsEnum>;
 
 /**
  * Type of listing score
  */
-export const zListingScoreType = z.enum([
+export const zListingScoreTypeEnum = z.enum([
     'listing',
     'ignore',
     'flag',
@@ -237,7 +237,7 @@ export const zListingScoreType = z.enum([
     description: 'Type of listing score'
 });
 
-export type zListingScoreType = z.infer<typeof zListingScoreType>;
+export type zListingScoreTypeEnum = z.infer<typeof zListingScoreTypeEnum>;
 
 /**
  * Data for creating a new listing score
@@ -246,7 +246,7 @@ export const zListingScoreCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing to score'
     }),
-    score: zListingScoreType
+    score: zListingScoreTypeEnum
 }).register(z.globalRegistry, {
     description: 'Data for creating a new listing score'
 });
@@ -329,7 +329,7 @@ export type zListingScoreSortField = z.infer<typeof zListingScoreSortField>;
  */
 export const zListingScoreSort = z.object({
     field: zListingScoreSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing score collection'
 });
@@ -360,7 +360,7 @@ export const zListingScore = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
     }),
-    type: zListingScoreType,
+    type: zListingScoreTypeEnum,
     score: z.int().register(z.globalRegistry, {
         description: 'Score value'
     }),
@@ -401,7 +401,7 @@ export type zListingTransactionLogSortField = z.infer<typeof zListingTransaction
  */
 export const zListingTransactionLogSort = z.object({
     field: zListingTransactionLogSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing transaction log collection'
 });
@@ -411,7 +411,7 @@ export type zListingTransactionLogSort = z.infer<typeof zListingTransactionLogSo
 /**
  * Who initiated or affected the transaction change
  */
-export const zListingTransactionSide = z.enum([
+export const zListingTransactionSideEnum = z.enum([
     'seller',
     'buyer',
     'transaction',
@@ -421,23 +421,21 @@ export const zListingTransactionSide = z.enum([
     description: 'Who initiated or affected the transaction change'
 });
 
-export type zListingTransactionSide = z.infer<typeof zListingTransactionSide>;
+export type zListingTransactionSideEnum = z.infer<typeof zListingTransactionSideEnum>;
 
 /**
- * Current status of the listing transaction
+ * Type of transaction event
  */
-export const zListingTransactionStatus = z.enum([
-    'request',
-    'accepted',
-    'rejected',
-    'success',
-    'closed',
-    'expired'
+export const zListingTransactionEventEnum = z.enum([
+    'status',
+    'message',
+    'gallery',
+    'location'
 ]).register(z.globalRegistry, {
-    description: 'Current status of the listing transaction'
+    description: 'Type of transaction event'
 });
 
-export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus>;
+export type zListingTransactionEventEnum = z.infer<typeof zListingTransactionEventEnum>;
 
 /**
  * App-based filters
@@ -455,9 +453,9 @@ export const zListingTransactionLogWhere = z.object({
     listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingTransactionId'
     })),
-    status: z.optional(zListingTransactionStatus),
-    statusIn: z.optional(z.array(zListingTransactionStatus)),
-    side: z.optional(zListingTransactionSide),
+    event: z.optional(zListingTransactionEventEnum),
+    eventIn: z.optional(z.array(zListingTransactionEventEnum)),
+    side: z.optional(zListingTransactionSideEnum),
     userId: z.optional(z.string())
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -481,9 +479,9 @@ export const zListingTransactionLogFilter = z.object({
     listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingTransactionId'
     })),
-    status: z.optional(zListingTransactionStatus),
-    statusIn: z.optional(z.array(zListingTransactionStatus)),
-    side: z.optional(zListingTransactionSide),
+    event: z.optional(zListingTransactionEventEnum),
+    eventIn: z.optional(z.array(zListingTransactionEventEnum)),
+    side: z.optional(zListingTransactionSideEnum),
     userId: z.optional(z.string())
 }).register(z.globalRegistry, {
     description: 'Filter object for listing transaction log collection'
@@ -506,7 +504,140 @@ export const zListingTransactionLogQuery = z.object({
 export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQuery>;
 
 /**
- * Listing transaction log entry
+ * Listing transaction gallery entry
+ */
+export const zListingTransactionGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction gallery entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the gallery'
+    }),
+    event: z.enum(['gallery']).register(z.globalRegistry, {
+        description: 'Type of transaction event (must be \'gallery\')'
+    }),
+    side: zListingTransactionSideEnum,
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction gallery entry'
+});
+
+export type zListingTransactionGallery = z.infer<typeof zListingTransactionGallery>;
+
+/**
+ * Listing transaction location entry
+ */
+export const zListingTransactionLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction location entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the location'
+    }),
+    event: z.enum(['location']).register(z.globalRegistry, {
+        description: 'Type of transaction event (must be \'location\')'
+    }),
+    side: zListingTransactionSideEnum,
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    time: z.string().register(z.globalRegistry, {
+        description: 'Scheduled time for the location'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction location entry'
+});
+
+export type zListingTransactionLocation = z.infer<typeof zListingTransactionLocation>;
+
+/**
+ * Listing transaction message entry
+ */
+export const zListingTransactionMessage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction message entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the message'
+    }),
+    event: z.enum(['message']).register(z.globalRegistry, {
+        description: 'Type of transaction event (must be \'message\')'
+    }),
+    side: zListingTransactionSideEnum,
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message content'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction message entry'
+});
+
+export type zListingTransactionMessage = z.infer<typeof zListingTransactionMessage>;
+
+/**
+ * Current status of the listing transaction
+ */
+export const zListingTransactionStatusEnum = z.enum([
+    'request',
+    'accepted',
+    'rejected',
+    'success',
+    'closed',
+    'expired'
+]).register(z.globalRegistry, {
+    description: 'Current status of the listing transaction'
+});
+
+export type zListingTransactionStatusEnum = z.infer<typeof zListingTransactionStatusEnum>;
+
+/**
+ * Listing transaction status entry
+ */
+export const zListingTransactionStatus = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction status entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the status'
+    }),
+    event: z.enum(['status']).register(z.globalRegistry, {
+        description: 'Type of transaction event (must be \'status\')'
+    }),
+    side: zListingTransactionSideEnum,
+    status: zListingTransactionStatusEnum,
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction status entry'
+});
+
+export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus>;
+
+/**
+ * Payload of the event
+ */
+export const zListingTransactionPayload = z.union([
+    zListingTransactionStatus,
+    zListingTransactionMessage,
+    zListingTransactionLocation,
+    zListingTransactionGallery
+]);
+
+export type zListingTransactionPayload = z.infer<typeof zListingTransactionPayload>;
+
+/**
+ * Listing transaction log entry (unified view across all event types)
  */
 export const zListingTransactionLog = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -515,13 +646,14 @@ export const zListingTransactionLog = z.object({
     listingTransactionId: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction referenced by the log'
     }),
-    status: zListingTransactionStatus,
-    side: zListingTransactionSide,
+    event: zListingTransactionEventEnum,
+    side: zListingTransactionSideEnum,
+    payload: zListingTransactionPayload,
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     })
 }).register(z.globalRegistry, {
-    description: 'Listing transaction log entry'
+    description: 'Listing transaction log entry (unified view across all event types)'
 });
 
 export type zListingTransactionLog = z.infer<typeof zListingTransactionLog>;
@@ -579,8 +711,8 @@ export const zListingTransactionPatch = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the listing transaction to patch'
     }),
-    status: z.optional(zListingTransactionStatus),
-    side: z.optional(zListingTransactionSide)
+    status: z.optional(zListingTransactionStatusEnum),
+    side: z.optional(zListingTransactionSideEnum)
 }).register(z.globalRegistry, {
     description: 'Payload for patching a listing transaction'
 });
@@ -604,7 +736,7 @@ export type zListingTransactionCreate = z.infer<typeof zListingTransactionCreate
  * Meta data for listing transaction collection
  */
 export const zListingTransactionMeta = z.object({
-    side: z.optional(zUserSide)
+    side: z.optional(zUserSideEnum)
 }).register(z.globalRegistry, {
     description: 'Meta data for listing transaction collection'
 });
@@ -629,7 +761,7 @@ export type zListingTransactionSortField = z.infer<typeof zListingTransactionSor
  */
 export const zListingTransactionSort = z.object({
     field: zListingTransactionSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing transaction collection'
 });
@@ -655,8 +787,8 @@ export const zListingTransactionWhere = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zListingTransactionStatus),
-    side: z.optional(zListingTransactionSide)
+    status: z.optional(zListingTransactionStatusEnum),
+    side: z.optional(zListingTransactionSideEnum)
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
@@ -682,8 +814,8 @@ export const zListingTransactionFilter = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zListingTransactionStatus),
-    side: z.optional(zListingTransactionSide)
+    status: z.optional(zListingTransactionStatusEnum),
+    side: z.optional(zListingTransactionSideEnum)
 }).register(z.globalRegistry, {
     description: 'Filter object for listing transaction collection'
 });
@@ -715,8 +847,8 @@ export const zListingTransaction = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the related listing'
     }),
-    status: zListingTransactionStatus,
-    side: zListingTransactionSide,
+    status: zListingTransactionStatusEnum,
+    side: zListingTransactionSideEnum,
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
@@ -841,7 +973,7 @@ export type zListingFlagSortField = z.infer<typeof zListingFlagSortField>;
  */
 export const zListingFlagSort = z.object({
     field: zListingFlagSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing flag collection'
 });
@@ -1009,7 +1141,7 @@ export type zListingIgnoreSortField = z.infer<typeof zListingIgnoreSortField>;
  */
 export const zListingIgnoreSort = z.object({
     field: zListingIgnoreSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing ignore collection'
 });
@@ -1152,7 +1284,7 @@ export type zListingCartSortField = z.infer<typeof zListingCartSortField>;
  */
 export const zListingCartSort = z.object({
     field: zListingCartSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing cart collection'
 });
@@ -1290,7 +1422,7 @@ export type zListingMeta = z.infer<typeof zListingMeta>;
 /**
  * List of available currencies
  */
-export const zCurrencyList = z.enum([
+export const zCurrencyListEnum = z.enum([
     'CZK',
     'EUR',
     'USD',
@@ -1302,12 +1434,12 @@ export const zCurrencyList = z.enum([
     description: 'List of available currencies'
 });
 
-export type zCurrencyList = z.infer<typeof zCurrencyList>;
+export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
 
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export const zCurrencyIn = z.array(zCurrencyList).register(z.globalRegistry, {
+export const zCurrencyIn = z.array(zCurrencyListEnum).register(z.globalRegistry, {
     description: 'This filter matches listings with currency codes in the provided array'
 });
 
@@ -1384,7 +1516,7 @@ export const zListingWhere = z.object({
     })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
-    currency: z.optional(zCurrencyList),
+    currency: z.optional(zCurrencyListEnum),
     currencyIn: z.optional(zCurrencyIn),
     expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings that expire before the provided date'
@@ -1454,7 +1586,7 @@ export const zListingFilter = z.object({
     })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
-    currency: z.optional(zCurrencyList),
+    currency: z.optional(zCurrencyListEnum),
     currencyIn: z.optional(zCurrencyIn),
     expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings that expire before the provided date'
@@ -1503,24 +1635,40 @@ export const zListingCountQuery = z.object({
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
 
 /**
- * Gallery data
+ * Gallery item data
  */
-export const zGallery = z.object({
+export const zGalleryItem = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery item'
     }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing this image belongs to'
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery this item belongs to'
     }),
     uploadId: z.string().register(z.globalRegistry, {
         description: 'ID of the upload this image belongs to'
     }),
     sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order of the image in the listing\'s gallery'
+        description: 'Sort order of the image in the gallery'
     }),
     upload: zUpload
 }).register(z.globalRegistry, {
-    description: 'Gallery data'
+    description: 'Gallery item data'
+});
+
+export type zGalleryItem = z.infer<typeof zGalleryItem>;
+
+/**
+ * Gallery data with items
+ */
+export const zGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    items: z.array(zGalleryItem).register(z.globalRegistry, {
+        description: 'Gallery items sorted by sort order'
+    })
+}).register(z.globalRegistry, {
+    description: 'Gallery data with items'
 });
 
 export type zGallery = z.infer<typeof zGallery>;
@@ -1625,7 +1773,7 @@ export const zListing = z.object({
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
-    currency: zCurrencyList,
+    currency: zCurrencyListEnum,
     condition: z.number().register(z.globalRegistry, {
         description: 'Condition of the item (0-based index)'
     }),
@@ -1656,9 +1804,9 @@ export const zListing = z.object({
     }),
     location: zLocation,
     category: zCategory,
-    gallery: z.array(zGallery).register(z.globalRegistry, {
-        description: 'Array of listing gallery images'
-    }),
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Listing gallery images'
+    })),
     isInCart: z.boolean().register(z.globalRegistry, {
         description: 'Whether the user has this listing in the cart'
     }),
@@ -1694,7 +1842,7 @@ export type zListingCollection = z.infer<typeof zListingCollection>;
 /**
  * Expiration time of the listing
  */
-export const zListingExpire = z.enum([
+export const zListingExpireEnum = z.enum([
     '7-days',
     '14-days',
     '1-month'
@@ -1702,7 +1850,7 @@ export const zListingExpire = z.enum([
     description: 'Expiration time of the listing'
 });
 
-export type zListingExpire = z.infer<typeof zListingExpire>;
+export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
 
 /**
  * Data for creating a new listing
@@ -1723,8 +1871,8 @@ export const zListingCreate = z.object({
     categoryId: z.string().register(z.globalRegistry, {
         description: 'ID of the category'
     }),
-    currency: zCurrencyList,
-    expiresAt: zListingExpire,
+    currency: zCurrencyListEnum,
+    expiresAt: zListingExpireEnum,
     title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
     }),
@@ -1741,7 +1889,7 @@ export const zListingCreate = z.object({
 export type zListingCreate = z.infer<typeof zListingCreate>;
 
 /**
- * Collection of gallery items
+ * Collection of galleries
  */
 export const zGalleryCollection = z.object({
     data: z.array(zGallery),
@@ -1749,7 +1897,7 @@ export const zGalleryCollection = z.object({
         description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of gallery items'
+    description: 'Collection of galleries'
 });
 
 export type zGalleryCollection = z.infer<typeof zGalleryCollection>;
@@ -1757,7 +1905,7 @@ export type zGalleryCollection = z.infer<typeof zGalleryCollection>;
 /**
  * Field of the gallery sort
  */
-export const zGallerySortField = z.enum(['sort', 'createdAt']).register(z.globalRegistry, {
+export const zGallerySortField = z.enum(['createdAt']).register(z.globalRegistry, {
     description: 'Field of the gallery sort'
 });
 
@@ -1768,7 +1916,7 @@ export type zGallerySortField = z.infer<typeof zGallerySortField>;
  */
 export const zGallerySort = z.object({
     field: zGallerySortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for gallery collection'
 });
@@ -1790,9 +1938,6 @@ export const zGalleryWhere = z.object({
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
         description: 'Exact user id'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Exact listing id'
     }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -1815,9 +1960,6 @@ export const zGalleryFilter = z.object({
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
         description: 'Exact user id'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Exact listing id'
     }))
 }).register(z.globalRegistry, {
     description: 'Filter object for gallery collection'
@@ -1862,7 +2004,7 @@ export type zListingSortField = z.infer<typeof zListingSortField>;
  */
 export const zListingSort = z.object({
     field: zListingSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing collection'
 });
@@ -1933,7 +2075,7 @@ export type zFeedSortField = z.infer<typeof zFeedSortField>;
  */
 export const zFeedSort = z.object({
     field: zFeedSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for feed collection'
 });
@@ -2057,7 +2199,7 @@ export type zCategoryCartSortField = z.infer<typeof zCategoryCartSortField>;
  */
 export const zCategoryCartSort = z.object({
     field: zCategoryCartSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for category cart collection'
 });
@@ -2207,7 +2349,7 @@ export type zCount = z.infer<typeof zCount>;
 /**
  * Type of message
  */
-export const zMessageType = z.enum([
+export const zMessageTypeEnum = z.enum([
     'info',
     'warning',
     'error'
@@ -2215,7 +2357,7 @@ export const zMessageType = z.enum([
     description: 'Type of message'
 });
 
-export type zMessageType = z.infer<typeof zMessageType>;
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
 
 /**
  * Message data
@@ -2224,7 +2366,7 @@ export const zMessage = z.object({
     message: z.string().register(z.globalRegistry, {
         description: 'Message'
     }),
-    type: zMessageType
+    type: zMessageTypeEnum
 }).register(z.globalRegistry, {
     description: 'Message data'
 });
@@ -2345,7 +2487,7 @@ export const zApiGalleryFetchData = z.object({
 export type zapiGalleryFetchRequest = z.infer<typeof zApiGalleryFetchData>;
 
 /**
- * Return a gallery item based on the provided query
+ * Return a gallery based on the provided query
  */
 export const zApiGalleryFetchResponse = zGallery;
 
@@ -2360,7 +2502,7 @@ export const zApiGalleryCollectionData = z.object({
 export type zapiGalleryCollectionRequest = z.infer<typeof zApiGalleryCollectionData>;
 
 /**
- * Access collection of gallery items based on provided query
+ * Access collection of galleries based on provided query
  */
 export const zApiGalleryCollectionResponse = zGalleryCollection;
 
@@ -2742,8 +2884,8 @@ export const zApiS3PresignData = z.object({
         path: z.string().min(3).register(z.globalRegistry, {
             description: 'Object path. After stripping leading \'/\', must start with `<userId>/`'
         }),
-        extension: zAllowedExtensions,
-        contentType: zAllowedContentTypes
+        extension: zAllowedExtensionsEnum,
+        contentType: zAllowedContentTypesEnum
     }),
     path: z.optional(z.never()),
     query: z.optional(z.never())

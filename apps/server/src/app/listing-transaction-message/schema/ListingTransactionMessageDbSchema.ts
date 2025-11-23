@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import type { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
-import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
+import type { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
+import { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 
 export const ListingTransactionMessageDbSchema = z.object({
 	id: z.string().openapi({
@@ -9,10 +9,10 @@ export const ListingTransactionMessageDbSchema = z.object({
 	listingTransactionId: z.string().openapi({
 		description: "ID of the transaction referenced by the message",
 	}),
-	event: z.literal("message" satisfies ListingTransactionEventSchema.Type).openapi({
+	event: z.literal("message" satisfies ListingTransactionEventEnumSchema.Type).openapi({
 		description: "Type of transaction event (must be 'message')",
 	}),
-	side: ListingTransactionSideSchema,
+	side: ListingTransactionSideEnumSchema,
 	message: z.string().openapi({
 		description: "Message content",
 	}),

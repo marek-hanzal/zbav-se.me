@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionSideSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideSchema";
-import { ListingTransactionStatusSchema } from "../../../app/listing-transaction/schema/ListingTransactionStatusSchema";
-import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
+import { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
+import { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const ListingTransactionFilterSchema = z
 	.object({
@@ -12,8 +12,8 @@ export const ListingTransactionFilterSchema = z
 		listingId: z.string().optional().openapi({
 			description: "This filter matches the exact listingId",
 		}),
-		status: ListingTransactionStatusSchema.optional(),
-		side: ListingTransactionSideSchema.optional(),
+		status: ListingTransactionStatusEnumSchema.optional(),
+		side: ListingTransactionSideEnumSchema.optional(),
 	})
 	.openapi("ListingTransactionFilter", {
 		description: "Filter object for listing transaction collection",

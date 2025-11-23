@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { ListingScoreTypeSchema } from "../../../app/listing-score/schema/ListingScoreTypeSchema";
+import type { ListingScoreTypeEnumSchema } from "../../../app/listing-score/schema/ListingScoreTypeEnumSchema";
 import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { TooManyRequests } from "../../../error/TooManyRequests";
@@ -8,7 +8,7 @@ import { TooManyRequests } from "../../../error/TooManyRequests";
 export namespace listingScoreRateLimitFx {
 	export interface Props {
 		listingId: string;
-		score: ListingScoreTypeSchema.Type;
+		score: ListingScoreTypeEnumSchema.Type;
 		minutes?: number;
 	}
 }

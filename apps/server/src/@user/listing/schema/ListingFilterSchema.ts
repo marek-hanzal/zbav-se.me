@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListSchema } from "../../../schema/CurrencyListSchema";
+import { CurrencyListEnumSchema } from "../../../schema/CurrencyListEnumSchema";
 import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
 import { PriceSchema } from "../../../schema/PriceSchema";
 
@@ -46,8 +46,8 @@ export const ListingFilterSchema = z
 				description: "Filter listings based on the provided category IDs",
 			})
 			.optional(),
-		currency: CurrencyListSchema.optional(),
-		currencyIn: z.array(CurrencyListSchema).optional().openapi("CurrencyIn", {
+		currency: CurrencyListEnumSchema.optional(),
+		currencyIn: z.array(CurrencyListEnumSchema).optional().openapi("CurrencyIn", {
 			description: "This filter matches listings with currency codes in the provided array",
 		}),
 		expiresAtBefore: z.coerce.date().optional().openapi({

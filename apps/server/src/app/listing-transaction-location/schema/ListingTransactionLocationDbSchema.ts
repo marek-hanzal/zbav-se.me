@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import type { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
-import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
+import type { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
+import { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 
 export const ListingTransactionLocationDbSchema = z.object({
 	id: z.string().openapi({
@@ -9,10 +9,10 @@ export const ListingTransactionLocationDbSchema = z.object({
 	listingTransactionId: z.string().openapi({
 		description: "ID of the transaction referenced by the location",
 	}),
-	event: z.literal("location" satisfies ListingTransactionEventSchema.Type).openapi({
+	event: z.literal("location" satisfies ListingTransactionEventEnumSchema.Type).openapi({
 		description: "Type of transaction event (must be 'location')",
 	}),
-	side: ListingTransactionSideSchema,
+	side: ListingTransactionSideEnumSchema,
 	locationId: z.string().openapi({
 		description: "ID of the location",
 	}),

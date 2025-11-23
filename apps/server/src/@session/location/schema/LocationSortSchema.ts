@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "../../../schema/OrderSchema";
+import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
 
 export const LocationSortSchema = z
 	.object({
@@ -13,7 +13,7 @@ export const LocationSortSchema = z
 			.openapi("LocationSortField", {
 				description: "Field for location sort",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("LocationSort", {
 		description: "Data for location sort",

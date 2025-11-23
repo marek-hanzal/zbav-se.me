@@ -5,11 +5,11 @@ import { z } from 'zod';
 /**
  * Order
  */
-export const zOrder = z.enum(['asc', 'desc']).register(z.globalRegistry, {
+export const zOrderEnum = z.enum(['asc', 'desc']).register(z.globalRegistry, {
     description: 'Order'
 });
 
-export type zOrder = z.infer<typeof zOrder>;
+export type zOrderEnum = z.infer<typeof zOrderEnum>;
 
 /**
  * Cursor for pagination
@@ -198,7 +198,7 @@ export type zLocationSortField = z.infer<typeof zLocationSortField>;
  */
 export const zLocationSort = z.object({
     field: zLocationSortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Data for location sort'
 });
@@ -354,7 +354,7 @@ export type zCategorySortField = z.infer<typeof zCategorySortField>;
  */
 export const zCategorySort = z.object({
     field: zCategorySortField,
-    direction: zOrder
+    direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for category collection'
 });
@@ -378,7 +378,7 @@ export type zCategoryQuery = z.infer<typeof zCategoryQuery>;
 /**
  * Type of message
  */
-export const zMessageType = z.enum([
+export const zMessageTypeEnum = z.enum([
     'info',
     'warning',
     'error'
@@ -386,7 +386,7 @@ export const zMessageType = z.enum([
     description: 'Type of message'
 });
 
-export type zMessageType = z.infer<typeof zMessageType>;
+export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
 
 /**
  * Message data
@@ -395,7 +395,7 @@ export const zMessage = z.object({
     message: z.string().register(z.globalRegistry, {
         description: 'Message'
     }),
-    type: zMessageType
+    type: zMessageTypeEnum
 }).register(z.globalRegistry, {
     description: 'Message data'
 });

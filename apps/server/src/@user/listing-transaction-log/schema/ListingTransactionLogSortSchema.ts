@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "../../../schema/OrderSchema";
+import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
 
 export const ListingTransactionLogSortSchema = z
 	.object({
@@ -10,7 +10,7 @@ export const ListingTransactionLogSortSchema = z
 			.openapi("ListingTransactionLogSortField", {
 				description: "Field of the listing transaction log sort",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("ListingTransactionLogSort", {
 		description: "Sort object for listing transaction log collection",

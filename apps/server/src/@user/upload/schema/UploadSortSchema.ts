@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "../../../schema/OrderSchema";
+import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
 
 export const UploadSortSchema = z
 	.object({
@@ -10,7 +10,7 @@ export const UploadSortSchema = z
 			.openapi("UploadSortField", {
 				description: "Field for uploading a file",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("UploadSort", {
 		description: "Data for uploading a file",

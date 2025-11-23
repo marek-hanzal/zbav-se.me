@@ -3,8 +3,8 @@ import { ListingTransactionGallerySchema } from "~/@user/listing-transaction-gal
 import { ListingTransactionLocationSchema } from "~/@user/listing-transaction-location/schema/ListingTransactionLocationSchema";
 import { ListingTransactionMessageSchema } from "~/@user/listing-transaction-message/schema/ListingTransactionMessageSchema";
 import { ListingTransactionStatusSchema } from "~/@user/listing-transaction-status/schema/ListingTransactionStatusSchema";
-import { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
-import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
+import { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
+import { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 
 export const ListingTransactionLogSchema = z
 	.object({
@@ -14,8 +14,8 @@ export const ListingTransactionLogSchema = z
 		listingTransactionId: z.string().openapi({
 			description: "ID of the transaction referenced by the log",
 		}),
-		event: ListingTransactionEventSchema,
-		side: ListingTransactionSideSchema,
+		event: ListingTransactionEventEnumSchema,
+		side: ListingTransactionSideEnumSchema,
 		//
 		payload: z
 			.union([

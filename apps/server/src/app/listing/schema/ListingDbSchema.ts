@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListSchema } from "../../../schema/CurrencyListSchema";
+import { CurrencyListEnumSchema } from "../../../schema/CurrencyListEnumSchema";
 import { VectorSchema } from "../../../schema/VectorSchema";
 
 export const ListingDbSchema = z.object({
@@ -18,7 +18,7 @@ export const ListingDbSchema = z.object({
 		description: "Embedding vector for similarity search",
 	}),
 	//
-	currency: CurrencyListSchema,
+	currency: CurrencyListEnumSchema,
 	//
 	condition: z.number().openapi({
 		description: "Condition of the item (0-based index)",

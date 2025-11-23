@@ -1,6 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import type { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
+import type { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { listingTransactionGalleryFetchFx } from "./listingTransactionGalleryFetchFx";
 
@@ -8,7 +8,7 @@ export namespace listingTransactionGalleryCreateFx {
 	export interface Props {
 		listingTransactionId: string;
 		galleryId: string;
-		side: ListingTransactionSideSchema.Type;
+		side: ListingTransactionSideEnumSchema.Type;
 	}
 }
 

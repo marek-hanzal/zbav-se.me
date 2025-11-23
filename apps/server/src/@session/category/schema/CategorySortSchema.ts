@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "../../../schema/OrderSchema";
+import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
 
 export const CategorySortSchema = z
 	.object({
@@ -12,7 +12,7 @@ export const CategorySortSchema = z
 			.openapi("CategorySortField", {
 				description: "Field of the category sort",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("CategorySort", {
 		description: "Sort object for category collection",

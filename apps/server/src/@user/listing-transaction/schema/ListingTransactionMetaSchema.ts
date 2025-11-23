@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { UserSideSchema } from "../../../app/user-ex/schema/UserSideSchema";
+import { UserSideEnumSchema } from "../../../app/user-ex/schema/UserSideEnumSchema";
 
 export const ListingTransactionMetaSchema = z
 	.object({
-		side: UserSideSchema.optional(),
+		side: UserSideEnumSchema.optional(),
 	})
 	.openapi("ListingTransactionMeta", {
 		description: "Meta data for listing transaction collection",

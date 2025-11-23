@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "../../../schema/OrderSchema";
+import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
 
 export const ListingFlagSortSchema = z
 	.object({
@@ -10,7 +10,7 @@ export const ListingFlagSortSchema = z
 			.openapi("ListingFlagSortField", {
 				description: "Field of the listing flag sort",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("ListingFlagSort", {
 		description: "Sort object for listing flag collection",

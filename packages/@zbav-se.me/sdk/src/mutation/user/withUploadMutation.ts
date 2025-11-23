@@ -6,8 +6,8 @@ import { apiS3Presign, apiUploadCreate } from "../../api/user/sdk.gen";
 import type {
 	apiS3PresignError,
 	apiUploadCreateError,
-	tAllowedContentTypes,
-	tAllowedExtensions,
+	tAllowedContentTypesEnum,
+	tAllowedExtensionsEnum,
 	tUpload,
 } from "../../api/user/types.gen";
 
@@ -32,7 +32,7 @@ export const withUploadMutation = withMutation<
 		];
 	},
 	async mutationFn({ name, blob, path, onProgress }) {
-		const contentType = blob.type as tAllowedContentTypes;
+		const contentType = blob.type as tAllowedContentTypesEnum;
 
 		const dot = name.lastIndexOf(".");
 		const extension =
@@ -42,7 +42,7 @@ export const withUploadMutation = withMutation<
 			apiS3Presign({
 				body: {
 					path: path ?? genId(),
-					extension: extension as tAllowedExtensions,
+					extension: extension as tAllowedExtensionsEnum,
 					contentType,
 				},
 			}),

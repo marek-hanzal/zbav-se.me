@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderSchema } from "~/schema/OrderSchema";
+import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const ListingTransactionStatusSortSchema = z
 	.object({
@@ -10,7 +10,7 @@ export const ListingTransactionStatusSortSchema = z
 			.openapi("ListingTransactionStatusSortField", {
 				description: "Available sort fields for listing transaction status",
 			}),
-		direction: OrderSchema,
+		direction: OrderEnumSchema,
 	})
 	.openapi("ListingTransactionStatusSort", {
 		description: "Sort parameters for listing transaction status collection",

@@ -12,7 +12,7 @@ export const sUserExPatch = {
         side: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/UserSide'
+                    $ref: '#/components/schemas/UserSideEnum'
                 },
                 {
                     type: 'null'
@@ -25,7 +25,7 @@ export const sUserExPatch = {
     }
 } as const;
 
-export const sUserSide = {
+export const sUserSideEnum = {
     type: 'string',
     enum: [
         'seller',
@@ -48,7 +48,7 @@ export const sUserEx = {
         side: {
             anyOf: [
                 {
-                    $ref: '#/components/schemas/UserSide'
+                    $ref: '#/components/schemas/UserSideEnum'
                 },
                 {
                     type: 'null'
@@ -121,7 +121,7 @@ export const sUploadQuery = {
     }
 } as const;
 
-export const sOrder = {
+export const sOrderEnum = {
     type: 'string',
     enum: [
         'asc',
@@ -143,7 +143,7 @@ export const sUploadSort = {
             $ref: '#/components/schemas/UploadSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -220,7 +220,7 @@ export const sUploadCreate = {
     ]
 } as const;
 
-export const sAllowedContentTypes = {
+export const sAllowedContentTypesEnum = {
     type: 'string',
     enum: [
         'image/jpeg',
@@ -232,7 +232,7 @@ export const sAllowedContentTypes = {
     ]
 } as const;
 
-export const sAllowedExtensions = {
+export const sAllowedExtensionsEnum = {
     type: 'string',
     enum: [
         'webp',
@@ -252,7 +252,7 @@ export const sListingScoreCreate = {
             type: 'string'
         },
         score: {
-            $ref: '#/components/schemas/ListingScoreType'
+            $ref: '#/components/schemas/ListingScoreTypeEnum'
         }
     },
     required: [
@@ -261,7 +261,7 @@ export const sListingScoreCreate = {
     ]
 } as const;
 
-export const sListingScoreType = {
+export const sListingScoreTypeEnum = {
     type: 'string',
     enum: [
         'listing',
@@ -368,7 +368,7 @@ export const sListingScoreSort = {
             $ref: '#/components/schemas/ListingScoreSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -406,7 +406,7 @@ export const sListingScore = {
             type: 'string'
         },
         type: {
-            $ref: '#/components/schemas/ListingScoreType'
+            $ref: '#/components/schemas/ListingScoreTypeEnum'
         },
         score: {
             type: 'integer'
@@ -459,7 +459,7 @@ export const sListingTransactionLogSort = {
             $ref: '#/components/schemas/ListingTransactionLogSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -486,17 +486,17 @@ export const sListingTransactionLogWhere = {
         listingTransactionId: {
             type: 'string'
         },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+        event: {
+            $ref: '#/components/schemas/ListingTransactionEventEnum'
         },
-        statusIn: {
+        eventIn: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionStatus'
+                $ref: '#/components/schemas/ListingTransactionEventEnum'
             }
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
         },
         userId: {
             type: 'string'
@@ -504,7 +504,7 @@ export const sListingTransactionLogWhere = {
     }
 } as const;
 
-export const sListingTransactionSide = {
+export const sListingTransactionSideEnum = {
     type: 'string',
     enum: [
         'seller',
@@ -515,15 +515,13 @@ export const sListingTransactionSide = {
     ]
 } as const;
 
-export const sListingTransactionStatus = {
+export const sListingTransactionEventEnum = {
     type: 'string',
     enum: [
-        'request',
-        'accepted',
-        'rejected',
-        'success',
-        'closed',
-        'expired'
+        'status',
+        'message',
+        'gallery',
+        'location'
     ]
 } as const;
 
@@ -545,17 +543,17 @@ export const sListingTransactionLogFilter = {
         listingTransactionId: {
             type: 'string'
         },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+        event: {
+            $ref: '#/components/schemas/ListingTransactionEventEnum'
         },
-        statusIn: {
+        eventIn: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionStatus'
+                $ref: '#/components/schemas/ListingTransactionEventEnum'
             }
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
         },
         userId: {
             type: 'string'
@@ -582,6 +580,179 @@ export const sListingTransactionLogCollection = {
     ]
 } as const;
 
+export const sListingTransactionGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'gallery'
+            ]
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'event',
+        'side',
+        'galleryId',
+        'createdAt'
+    ]
+} as const;
+
+export const sListingTransactionLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'location'
+            ]
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        locationId: {
+            type: 'string'
+        },
+        time: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'event',
+        'side',
+        'locationId',
+        'time',
+        'createdAt'
+    ]
+} as const;
+
+export const sListingTransactionMessage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'message'
+            ]
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        message: {
+            type: 'string'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'event',
+        'side',
+        'message',
+        'createdAt'
+    ]
+} as const;
+
+export const sListingTransactionStatusEnum = {
+    type: 'string',
+    enum: [
+        'request',
+        'accepted',
+        'rejected',
+        'success',
+        'closed',
+        'expired'
+    ]
+} as const;
+
+export const sListingTransactionStatus = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'status'
+            ]
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        status: {
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'event',
+        'side',
+        'status',
+        'createdAt'
+    ]
+} as const;
+
+export const sListingTransactionPayload = {
+    anyOf: [
+        {
+            $ref: '#/components/schemas/ListingTransactionStatus'
+        },
+        {
+            $ref: '#/components/schemas/ListingTransactionMessage'
+        },
+        {
+            $ref: '#/components/schemas/ListingTransactionLocation'
+        },
+        {
+            $ref: '#/components/schemas/ListingTransactionGallery'
+        }
+    ]
+} as const;
+
 export const sListingTransactionLog = {
     type: 'object',
     properties: {
@@ -591,11 +762,14 @@ export const sListingTransactionLog = {
         listingTransactionId: {
             type: 'string'
         },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+        event: {
+            $ref: '#/components/schemas/ListingTransactionEventEnum'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        payload: {
+            $ref: '#/components/schemas/ListingTransactionPayload'
         },
         createdAt: {
             type: 'string'
@@ -604,8 +778,9 @@ export const sListingTransactionLog = {
     required: [
         'id',
         'listingTransactionId',
-        'status',
+        'event',
         'side',
+        'payload',
         'createdAt'
     ]
 } as const;
@@ -651,10 +826,10 @@ export const sListingTransactionPatch = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
         }
     },
     required: [
@@ -702,7 +877,7 @@ export const sListingTransactionMeta = {
     type: 'object',
     properties: {
         side: {
-            $ref: '#/components/schemas/UserSide'
+            $ref: '#/components/schemas/UserSideEnum'
         }
     }
 } as const;
@@ -723,7 +898,7 @@ export const sListingTransactionSort = {
             $ref: '#/components/schemas/ListingTransactionSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -754,10 +929,10 @@ export const sListingTransactionWhere = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
         }
     }
 } as const;
@@ -784,10 +959,10 @@ export const sListingTransactionFilter = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
         }
     }
 } as const;
@@ -821,10 +996,10 @@ export const sListingTransaction = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSide'
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
         },
         createdAt: {
             type: 'string'
@@ -962,7 +1137,7 @@ export const sListingFlagSort = {
             $ref: '#/components/schemas/ListingFlagSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -1141,7 +1316,7 @@ export const sListingIgnoreSort = {
             $ref: '#/components/schemas/ListingIgnoreSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -1296,7 +1471,7 @@ export const sListingCartSort = {
             $ref: '#/components/schemas/ListingCartSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -1537,7 +1712,7 @@ export const sListingWhere = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -1577,11 +1752,11 @@ export const sListingWhere = {
 export const sCurrencyIn = {
     type: 'array',
     items: {
-        $ref: '#/components/schemas/CurrencyList'
+        $ref: '#/components/schemas/CurrencyListEnum'
     }
 } as const;
 
-export const sCurrencyList = {
+export const sCurrencyListEnum = {
     type: 'string',
     enum: [
         'CZK',
@@ -1681,7 +1856,7 @@ export const sListingFilter = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -1737,13 +1912,13 @@ export const sListingCollection = {
     ]
 } as const;
 
-export const sGallery = {
+export const sGalleryItem = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        listingId: {
+        galleryId: {
             type: 'string'
         },
         uploadId: {
@@ -1758,10 +1933,29 @@ export const sGallery = {
     },
     required: [
         'id',
-        'listingId',
+        'galleryId',
         'uploadId',
         'sort',
         'upload'
+    ]
+} as const;
+
+export const sGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/GalleryItem'
+            }
+        }
+    },
+    required: [
+        'id',
+        'items'
     ]
 } as const;
 
@@ -1891,7 +2085,7 @@ export const sListing = {
             type: 'number'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         condition: {
             type: 'number'
@@ -1930,10 +2124,12 @@ export const sListing = {
             $ref: '#/components/schemas/Category'
         },
         gallery: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/Gallery'
-            }
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
         },
         isInCart: {
             type: 'boolean'
@@ -1989,10 +2185,10 @@ export const sListingCreate = {
             type: 'string'
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyList'
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         expiresAt: {
-            $ref: '#/components/schemas/ListingExpire'
+            $ref: '#/components/schemas/ListingExpireEnum'
         },
         title: {
             type: 'string',
@@ -2024,7 +2220,7 @@ export const sListingCreate = {
     ]
 } as const;
 
-export const sListingExpire = {
+export const sListingExpireEnum = {
     type: 'string',
     enum: [
         '7-days',
@@ -2076,7 +2272,6 @@ export const sGalleryQuery = {
 export const sGallerySortField = {
     type: 'string',
     enum: [
-        'sort',
         'createdAt'
     ]
 } as const;
@@ -2088,7 +2283,7 @@ export const sGallerySort = {
             $ref: '#/components/schemas/GallerySortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -2114,9 +2309,6 @@ export const sGalleryWhere = {
         },
         userId: {
             type: 'string'
-        },
-        listingId: {
-            type: 'string'
         }
     }
 } as const;
@@ -2137,9 +2329,6 @@ export const sGalleryFilter = {
             type: 'string'
         },
         userId: {
-            type: 'string'
-        },
-        listingId: {
             type: 'string'
         }
     }
@@ -2185,7 +2374,7 @@ export const sListingSort = {
             $ref: '#/components/schemas/ListingSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -2280,7 +2469,7 @@ export const sFeedSort = {
             $ref: '#/components/schemas/FeedSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -2428,7 +2617,7 @@ export const sCategoryCartSort = {
             $ref: '#/components/schemas/CategoryCartSortField'
         },
         direction: {
-            $ref: '#/components/schemas/Order'
+            $ref: '#/components/schemas/OrderEnum'
         }
     },
     required: [
@@ -2586,7 +2775,7 @@ export const sMessage = {
             type: 'string'
         },
         type: {
-            $ref: '#/components/schemas/MessageType'
+            $ref: '#/components/schemas/MessageTypeEnum'
         }
     },
     required: [
@@ -2595,7 +2784,7 @@ export const sMessage = {
     ]
 } as const;
 
-export const sMessageType = {
+export const sMessageTypeEnum = {
     type: 'string',
     enum: [
         'info',

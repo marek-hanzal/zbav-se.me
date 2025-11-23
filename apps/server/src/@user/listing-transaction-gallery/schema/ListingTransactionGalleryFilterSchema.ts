@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
+import { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const ListingTransactionGalleryFilterSchema = z
@@ -11,7 +11,7 @@ export const ListingTransactionGalleryFilterSchema = z
 		galleryId: z.string().optional().openapi({
 			description: "This filter matches the exact galleryId",
 		}),
-		side: ListingTransactionSideSchema.optional(),
+		side: ListingTransactionSideEnumSchema.optional(),
 	})
 	.openapi("ListingTransactionGalleryFilter", {
 		description: "Filter object for listing transaction gallery",
