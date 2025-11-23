@@ -40,11 +40,7 @@
 	},
 	"include": [
 		"**/*.ts",
-		"**/*.tsx",
-		"**/*.cjs",
-		"**/*.js",
-		"../../packages/@use-pico/client/src/data/InfiniteData.tsx",
-		"../../packages/@zbav-se.me/ui/src/gsap/gsap.ts"
+		"**/*.tsx"
 	],
 	"exclude": [
 		"node_modules",

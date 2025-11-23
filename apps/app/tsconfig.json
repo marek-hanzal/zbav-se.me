@@ -40,9 +40,7 @@
 	},
 	"include": [
 		"**/*.ts",
-		"**/*.tsx",
-		"**/*.cjs",
-		"**/*.js"
+		"**/*.tsx"
 	],
 	"exclude": [
 		"node_modules",
