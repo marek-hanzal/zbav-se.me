@@ -42,8 +42,7 @@
 		"**/*.ts",
 		"**/*.tsx",
 		"**/*.cjs",
-		"**/*.js",
-		"../../packages/@zbav-se.me/buyer/src/feed/FeedListContainer.tsx"
+		"**/*.js"
 	],
 	"exclude": [
 		"node_modules",
