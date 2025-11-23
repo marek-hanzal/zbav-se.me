@@ -9,8 +9,8 @@ export const ListingSchema = z
 		...ListingDbSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
-		gallery: z.array(GallerySchema).openapi({
-			description: "Array of listing gallery images",
+		gallery: GallerySchema.openapi({
+			description: "Listing gallery images",
 		}),
 		isInCart: z.boolean().openapi({
 			description: "Whether the user has this listing in the cart",
