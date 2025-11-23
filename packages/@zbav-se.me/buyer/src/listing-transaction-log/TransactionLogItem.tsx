@@ -2,8 +2,8 @@ import type { Container } from "@use-pico/client/ui/container";
 import { StatusComponent } from "@zbav-se.me/buyer/listing-transaction-log";
 import type {
 	tListingTransactionLog,
-	tListingTransactionSide,
-	tListingTransactionStatus,
+	tListingTransactionSideEnum,
+	tListingTransactionStatusEnum,
 } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -22,8 +22,8 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 }) => {
 	const key = match<
 		[
-			tListingTransactionSide,
-			tListingTransactionStatus,
+			tListingTransactionSideEnum,
+			tListingTransactionStatusEnum,
 		],
 		StatusComponent.State
 	>([

@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
-import { tListingExpire } from "@zbav-se.me/sdk/api/user";
+import { tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { DateTime } from "luxon";
 import { type FC, useId } from "react";
@@ -11,8 +11,8 @@ import { match } from "ts-pattern";
 
 export namespace ExpireAtContainer {
 	export interface Props extends Container.Props {
-		value: tListingExpire | undefined;
-		onChange(value: tListingExpire): void;
+		value: tListingExpireEnum | undefined;
+		onChange(value: tListingExpireEnum): void;
 	}
 }
 
@@ -27,7 +27,7 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 			height={"auto"}
 			{...props}
 		>
-			{Object.values(tListingExpire).map((expire) => {
+			{Object.values(tListingExpireEnum).map((expire) => {
 				return (
 					<VariantProvider
 						key={`${expireId}-${expire}`}

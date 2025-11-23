@@ -4,7 +4,10 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
-import type { tListingTransactionLog, tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
+import type {
+	tListingTransactionLog,
+	tListingTransactionStatusEnum,
+} from "@zbav-se.me/sdk/api/user";
 import { TransactionStatusInline } from "@zbav-se.me/seller/listing-transaction";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -85,7 +88,7 @@ export const StatusEvent: FC<StatusEvent.Props> = ({
 						},
 					},
 				}}
-				tone={match<tListingTransactionStatus, Cls.VariantOf<BadgeCls, "tone">>(
+				tone={match<tListingTransactionStatusEnum, Cls.VariantOf<BadgeCls, "tone">>(
 					listingTransactionLog.status,
 				)
 					.with("request", () => "secondary")
