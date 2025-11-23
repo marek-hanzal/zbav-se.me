@@ -38,7 +38,7 @@ import { Route as LocaleSellerListingWizardConditionRouteImport } from './@route
 import { Route as LocaleSellerListingWizardCategoryRouteImport } from './@routes/$locale/seller/listing/wizard/category'
 import { Route as LocaleSellerListingWizardAgeRouteImport } from './@routes/$locale/seller/listing/wizard/age'
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
-import { Route as LocaleBuyerTransactionIdViewRouteImport } from './@routes/$locale/buyer/transaction/$id/view'
+import { Route as LocaleBuyerTransactionIdLogRouteImport } from './@routes/$locale/buyer/transaction/$id/log'
 import { Route as LocaleBuyerListingIdViewRouteImport } from './@routes/$locale/buyer/listing/$id/view'
 import { Route as LocaleBuyerListingIdSellerRouteImport } from './@routes/$locale/buyer/listing/$id/seller'
 import { Route as LocaleBuyerListingIdScoreRouteImport } from './@routes/$locale/buyer/listing/$id/score'
@@ -222,10 +222,10 @@ const LocaleSellerListingIdViewRoute =
     path: '/seller/listing/$id/view',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleBuyerTransactionIdViewRoute =
-  LocaleBuyerTransactionIdViewRouteImport.update({
-    id: '/$id/view',
-    path: '/$id/view',
+const LocaleBuyerTransactionIdLogRoute =
+  LocaleBuyerTransactionIdLogRouteImport.update({
+    id: '/$id/log',
+    path: '/$id/log',
     getParentRoute: () => LocaleBuyerTransactionRoute,
   } as any)
 const LocaleBuyerListingIdViewRoute =
@@ -403,7 +403,7 @@ export interface FileRoutesByFullPath {
   '/$locale/buyer/listing/$id/score': typeof LocaleBuyerListingIdScoreRoute
   '/$locale/buyer/listing/$id/seller': typeof LocaleBuyerListingIdSellerRoute
   '/$locale/buyer/listing/$id/view': typeof LocaleBuyerListingIdViewRoute
-  '/$locale/buyer/transaction/$id/view': typeof LocaleBuyerTransactionIdViewRoute
+  '/$locale/buyer/transaction/$id/log': typeof LocaleBuyerTransactionIdLogRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -458,7 +458,7 @@ export interface FileRoutesByTo {
   '/$locale/buyer/listing/$id/score': typeof LocaleBuyerListingIdScoreRoute
   '/$locale/buyer/listing/$id/seller': typeof LocaleBuyerListingIdSellerRoute
   '/$locale/buyer/listing/$id/view': typeof LocaleBuyerListingIdViewRoute
-  '/$locale/buyer/transaction/$id/view': typeof LocaleBuyerTransactionIdViewRoute
+  '/$locale/buyer/transaction/$id/log': typeof LocaleBuyerTransactionIdLogRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -515,7 +515,7 @@ export interface FileRoutesById {
   '/$locale/buyer/listing/$id/score': typeof LocaleBuyerListingIdScoreRoute
   '/$locale/buyer/listing/$id/seller': typeof LocaleBuyerListingIdSellerRoute
   '/$locale/buyer/listing/$id/view': typeof LocaleBuyerListingIdViewRoute
-  '/$locale/buyer/transaction/$id/view': typeof LocaleBuyerTransactionIdViewRoute
+  '/$locale/buyer/transaction/$id/log': typeof LocaleBuyerTransactionIdLogRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -573,7 +573,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/listing/$id/score'
     | '/$locale/buyer/listing/$id/seller'
     | '/$locale/buyer/listing/$id/view'
-    | '/$locale/buyer/transaction/$id/view'
+    | '/$locale/buyer/transaction/$id/log'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -628,7 +628,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/listing/$id/score'
     | '/$locale/buyer/listing/$id/seller'
     | '/$locale/buyer/listing/$id/view'
-    | '/$locale/buyer/transaction/$id/view'
+    | '/$locale/buyer/transaction/$id/log'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -684,7 +684,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/listing/$id/score'
     | '/$locale/buyer/listing/$id/seller'
     | '/$locale/buyer/listing/$id/view'
-    | '/$locale/buyer/transaction/$id/view'
+    | '/$locale/buyer/transaction/$id/log'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -920,11 +920,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleSellerListingIdViewRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/transaction/$id/view': {
-      id: '/$locale/buyer/transaction/$id/view'
-      path: '/$id/view'
-      fullPath: '/$locale/buyer/transaction/$id/view'
-      preLoaderRoute: typeof LocaleBuyerTransactionIdViewRouteImport
+    '/$locale/buyer/transaction/$id/log': {
+      id: '/$locale/buyer/transaction/$id/log'
+      path: '/$id/log'
+      fullPath: '/$locale/buyer/transaction/$id/log'
+      preLoaderRoute: typeof LocaleBuyerTransactionIdLogRouteImport
       parentRoute: typeof LocaleBuyerTransactionRoute
     }
     '/$locale/buyer/listing/$id/view': {
@@ -1100,14 +1100,14 @@ declare module '@tanstack/react-router' {
 
 interface LocaleBuyerTransactionRouteChildren {
   LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
-  LocaleBuyerTransactionIdViewRoute: typeof LocaleBuyerTransactionIdViewRoute
+  LocaleBuyerTransactionIdLogRoute: typeof LocaleBuyerTransactionIdLogRoute
   LocaleBuyerTransactionIdSellerInfoRoute: typeof LocaleBuyerTransactionIdSellerInfoRoute
 }
 
 const LocaleBuyerTransactionRouteChildren: LocaleBuyerTransactionRouteChildren =
   {
     LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
-    LocaleBuyerTransactionIdViewRoute: LocaleBuyerTransactionIdViewRoute,
+    LocaleBuyerTransactionIdLogRoute: LocaleBuyerTransactionIdLogRoute,
     LocaleBuyerTransactionIdSellerInfoRoute:
       LocaleBuyerTransactionIdSellerInfoRoute,
   }

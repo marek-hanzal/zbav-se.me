@@ -8,7 +8,7 @@ import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
 
-export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
+export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 	component() {
 		const { locale, id } = Route.useParams();
 		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery(
@@ -42,7 +42,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/view")({
 			>
 				<Suspense fallback={<SpinnerContainer />}>
 					<Container
-						ui={"Buyer-TransactionDetail-root"}
+						ui={"Buyer-TransactionLog-root"}
 						gap={"lg"}
 					>
 						<TransactionLogList
