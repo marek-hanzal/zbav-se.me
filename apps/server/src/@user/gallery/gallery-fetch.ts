@@ -13,7 +13,7 @@ export const withGalleryFetchApi: Routes.Fn = ({ userHono }) => {
 		createRoute({
 			method: "post",
 			path: "/gallery/fetch",
-			description: "Return a gallery item based on the provided query",
+			description: "Return a gallery based on the provided query",
 			operationId: "apiGalleryFetch",
 			request: {
 				body: {
@@ -32,7 +32,7 @@ export const withGalleryFetchApi: Routes.Fn = ({ userHono }) => {
 							schema: GallerySchema,
 						},
 					},
-					description: "Return a gallery item based on the provided query",
+					description: "Return a gallery based on the provided query",
 				},
 				404: {
 					content: {
@@ -40,7 +40,7 @@ export const withGalleryFetchApi: Routes.Fn = ({ userHono }) => {
 							schema: MessageSchema,
 						},
 					},
-					description: "Gallery item not found",
+					description: "Gallery not found",
 				},
 				500: {
 					content: {

@@ -1,14 +1,11 @@
 import { z } from "@hono/zod-openapi";
-import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const GalleryFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
 		userId: z.string().optional().openapi({
 			description: "Exact user id",
-		}),
-		listingId: z.string().optional().openapi({
-			description: "Exact listing id",
 		}),
 	})
 	.openapi("GalleryFilter", {

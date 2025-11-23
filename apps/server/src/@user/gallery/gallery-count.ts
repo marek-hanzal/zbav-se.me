@@ -13,7 +13,7 @@ export const withGalleryCountApi: Routes.Fn = ({ userHono }) => {
 		createRoute({
 			method: "post",
 			path: "/gallery/count",
-			description: "Returns count of gallery items based on provided query",
+			description: "Returns count of galleries based on provided query",
 			operationId: "apiGalleryCount",
 			request: {
 				body: {

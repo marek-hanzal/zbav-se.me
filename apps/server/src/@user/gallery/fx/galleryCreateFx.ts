@@ -1,37 +1,24 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { galleryFetchFx } from "./galleryFetchFx";
+import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
-export namespace galleryCreateFx {
-	export interface Props {
-		listingId: string;
-		uploadIds: string[];
-	}
-}
-
-export const galleryCreateFx = ({ listingId, uploadIds }: galleryCreateFx.Props) => {
+export const galleryCreateFx = () => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
-		const now = new Date();
 		const id = genId();
 
 		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("gallery")
-				.values(
-					uploadIds.map((uploadId, index) => ({
-						id,
-						userId: user.id,
-						createdAt: now,
-						listingId,
-						uploadId,
-						sort: index,
-					})),
-				)
+				.values({
+					id,
+					userId: user.id,
+					createdAt: new Date(),
+				})
 				.execute();
 		});
 

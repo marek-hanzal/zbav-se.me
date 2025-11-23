@@ -1,18 +1,20 @@
 import { z } from "@hono/zod-openapi";
-import { GalleryDbSchema } from "../../../app/gallery/schema/GalleryDbSchema";
-import { UploadSchema } from "../../upload/schema/UploadSchema";
+import { GalleryItemSchema } from "~/@user/gallery-item/schema/GalleryItemSchema";
+import { GalleryDbSchema } from "~/app/gallery/schema/GalleryDbSchema";
 
 export const GallerySchema = z
 	.object({
 		...GalleryDbSchema.shape,
-		upload: UploadSchema,
+		items: z.array(GalleryItemSchema).openapi({
+			description: "Gallery items sorted by sort order",
+		}),
 	})
 	.omit({
 		userId: true,
 		createdAt: true,
 	})
 	.openapi("Gallery", {
-		description: "Gallery data",
+		description: "Gallery data with items",
 	});
 
 export type GallerySchema = typeof GallerySchema;

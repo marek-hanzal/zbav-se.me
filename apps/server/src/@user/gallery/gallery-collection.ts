@@ -14,7 +14,7 @@ export const withGalleryCollectionApi: Routes.Fn = ({ userHono }) => {
 		createRoute({
 			method: "post",
 			path: "/gallery/collection",
-			description: "Returns gallery items based on provided parameters",
+			description: "Returns galleries based on provided parameters",
 			operationId: "apiGalleryCollection",
 			request: {
 				body: {
@@ -32,11 +32,11 @@ export const withGalleryCollectionApi: Routes.Fn = ({ userHono }) => {
 							schema: withCollectionSchema({
 								schema: GallerySchema,
 								type: "GalleryCollection",
-								description: "Collection of gallery items",
+								description: "Collection of galleries",
 							}),
 						},
 					},
-					description: "Access collection of gallery items based on provided query",
+					description: "Access collection of galleries based on provided query",
 				},
 				500: {
 					content: {

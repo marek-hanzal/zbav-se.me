@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "../../../schema/CursorSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 import { GalleryFilterSchema } from "./GalleryFilterSchema";
 import { GallerySortSchema } from "./GallerySortSchema";
 
@@ -19,5 +19,5 @@ export const GalleryQuerySchema = z
 export type GalleryQuerySchema = typeof GalleryQuerySchema;
 
 export namespace GalleryQuerySchema {
-	export type Type = z.infer<typeof GalleryQuerySchema>;
+	export type Type = z.infer<GalleryQuerySchema>;
 }

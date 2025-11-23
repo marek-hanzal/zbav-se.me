@@ -41,7 +41,7 @@ export const galleryFetchFx = ({ query }: galleryFetchFx.Props) => {
 			return yield* new NotFoundError({
 				resource: "gallery",
 				resourceId: "(query)",
-				message: "Gallery item not found",
+				message: "Gallery not found",
 			});
 		}
 
