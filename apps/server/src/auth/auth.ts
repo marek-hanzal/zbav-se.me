@@ -8,6 +8,9 @@ import { AppEnv } from "~/AppEnv";
 import type { Database } from "~/database/Database";
 import { dialect } from "~/database/dialect";
 
+/**
+ * Necessary - resolves circular dependency
+ */
 const authKysely = new Kysely<Database>({
 	dialect,
 	log: [
