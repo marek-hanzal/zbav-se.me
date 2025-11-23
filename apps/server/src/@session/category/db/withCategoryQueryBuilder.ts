@@ -27,11 +27,11 @@ export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Sele
 	let query: typeof select = select;
 
 	if (where.id) {
-		query = query.where("c.id", "=", where.id) as typeof select;
+		query = query.where("cat.id", "=", where.id) as typeof select;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("c.id", "in", where.idIn) as typeof select;
+		query = query.where("cat.id", "in", where.idIn) as typeof select;
 	}
 
 	if (where.fulltext) {
@@ -39,13 +39,13 @@ export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Sele
 
 		query = query.where((eb) =>
 			eb.or([
-				withLikeEx(eb.ref("c.group"), fulltext),
-				withLikeEx(eb.ref("c.category"), fulltext),
+				withLikeEx(eb.ref("cat.group"), fulltext),
+				withLikeEx(eb.ref("cat.category"), fulltext),
 				eb.exists(
 					eb
 						.selectFrom("category_spotlight")
 						.select("category_spotlight.categoryId")
-						.whereRef("category_spotlight.categoryId", "=", "c.id")
+						.whereRef("category_spotlight.categoryId", "=", "cat.id")
 						.where((eb) => withLikeEx(eb.ref("category_spotlight.text"), fulltext)),
 				),
 			]),
@@ -53,21 +53,21 @@ export const withCategoryQueryBuilder = <TSelect extends withCategorySelect.Sele
 	}
 
 	if (where.group) {
-		query = query.where((eb) => withLikeEx(eb.ref("c.group"), where.group)) as typeof select;
+		query = query.where((eb) => withLikeEx(eb.ref("cat.group"), where.group)) as typeof select;
 	}
 
 	if (where.category) {
 		query = query.where((eb) =>
-			withLikeEx(eb.ref("c.category"), where.category),
+			withLikeEx(eb.ref("cat.category"), where.category),
 		) as typeof select;
 	}
 
 	if (where.locale) {
-		query = query.where("c.locale", "=", where.locale) as typeof select;
+		query = query.where("cat.locale", "=", where.locale) as typeof select;
 	}
 
 	if (where.localeIn?.length) {
-		query = query.where("c.locale", "in", where.localeIn) as typeof select;
+		query = query.where("cat.locale", "in", where.localeIn) as typeof select;
 	}
 
 	return query;
