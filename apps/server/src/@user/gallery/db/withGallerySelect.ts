@@ -25,7 +25,7 @@ export const withGallerySelect = ({ database, sort }: withGallerySelect.Props) =
 							direction: "asc",
 						},
 					],
-				}).whereRef("gitem.galleryId", "=", eb.ref("gal.id")),
+				}).whereRef("gal_item.galleryId", "=", eb.ref("gal.id")),
 			).as("items"),
 	]);
 

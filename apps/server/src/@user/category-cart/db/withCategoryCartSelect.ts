@@ -18,7 +18,7 @@ export const withCategoryCartSelect = ({
 	sort,
 }: withCategoryCartSelect.Props) => {
 	let query = database
-		.selectFrom("category as c")
+		.selectFrom("category as cat")
 		.innerJoin(
 			database
 				.selectFrom("listing_cart as lc")
@@ -31,23 +31,23 @@ export const withCategoryCartSelect = ({
 				.groupBy("l.categoryId")
 				.as("cnt"),
 			"cnt.categoryId",
-			"c.id",
+			"cat.id",
 		)
 		.select([
-			"c.id",
-			"c.group",
-			"c.category",
-			"c.slug",
-			"c.sort",
-			"c.locale",
+			"cat.id",
+			"cat.group",
+			"cat.category",
+			"cat.slug",
+			"cat.sort",
+			"cat.locale",
 			"cnt.listingCount",
 		]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("group", () => query.orderBy("c.group", item.direction))
-			.with("category", () => query.orderBy("c.category", item.direction))
-			.with("sort", () => query.orderBy("c.sort", item.direction))
+			.with("group", () => query.orderBy("cat.group", item.direction))
+			.with("category", () => query.orderBy("cat.category", item.direction))
+			.with("sort", () => query.orderBy("cat.sort", item.direction))
 			.with("listingCount", () => query.orderBy("cnt.listingCount", item.direction))
 			.exhaustive();
 	}

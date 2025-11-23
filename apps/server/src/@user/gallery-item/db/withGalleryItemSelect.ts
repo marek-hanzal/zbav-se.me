@@ -13,17 +13,17 @@ export namespace withGalleryItemSelect {
 }
 
 export const withGalleryItemSelect = ({ database, sort }: withGalleryItemSelect.Props) => {
-	let query = database.selectFrom("gallery_item as gi").select([
-		"gi.id",
-		"gi.galleryId",
-		"gi.uploadId",
-		"gi.sort",
+	let query = database.selectFrom("gallery_item as gal_item").select([
+		"gal_item.id",
+		"gal_item.galleryId",
+		"gal_item.uploadId",
+		"gal_item.sort",
 		(eb) =>
 			jsonObjectFrom(
 				withUploadSelect({
 					database,
 				})
-					.whereRef("u.id", "=", eb.ref("gi.uploadId"))
+					.whereRef("u.id", "=", eb.ref("gal_item.uploadId"))
 					.limit(1),
 			)
 				.$notNull()
@@ -32,8 +32,8 @@ export const withGalleryItemSelect = ({ database, sort }: withGalleryItemSelect.
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("sort", () => query.orderBy("gi.sort", item.direction))
-			.with("createdAt", () => query.orderBy("gi.createdAt", item.direction))
+			.with("sort", () => query.orderBy("gal_item.sort", item.direction))
+			.with("createdAt", () => query.orderBy("gal_item.createdAt", item.direction))
 			.exhaustive();
 	}
 

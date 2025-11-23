@@ -17,15 +17,15 @@ export const withGalleryQueryBuilder: withGalleryQueryBuilder.Callback = ({ sele
 	let query = select;
 
 	if (where.id) {
-		query = query.where("g.id", "=", where.id);
+		query = query.where("gal.id", "=", where.id);
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("g.id", "in", where.idIn);
+		query = query.where("gal.id", "in", where.idIn);
 	}
 
 	if (where.userId) {
-		query = query.where("g.userId", "=", where.userId);
+		query = query.where("gal.userId", "=", where.userId);
 	}
 
 	return query;

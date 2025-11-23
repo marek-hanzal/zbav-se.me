@@ -20,11 +20,11 @@ export const withGalleryItemQueryBuilder: withGalleryItemQueryBuilder.Callback =
 	let query = select;
 
 	if (where.id) {
-		query = query.where("gi.id", "=", where.id);
+		query = query.where("gal_item.id", "=", where.id);
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("gi.id", "in", where.idIn);
+		query = query.where("gal_item.id", "in", where.idIn);
 	}
 
 	if (where.userId) {
@@ -32,16 +32,16 @@ export const withGalleryItemQueryBuilder: withGalleryItemQueryBuilder.Callback =
 		query = query.where((eb) =>
 			eb.exists(
 				eb
-					.selectFrom("gallery as g")
-					.select("g.id")
-					.whereRef("g.id", "=", "gi.galleryId")
-					.where("g.userId", "=", userId),
+					.selectFrom("gallery as gal")
+					.select("gal.id")
+					.whereRef("gal.id", "=", "gal_item.galleryId")
+					.where("gal.userId", "=", userId),
 			),
 		);
 	}
 
 	if (where.galleryId) {
-		query = query.where("gi.galleryId", "=", where.galleryId);
+		query = query.where("gal_item.galleryId", "=", where.galleryId);
 	}
 
 	return query;
