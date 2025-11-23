@@ -21,7 +21,9 @@ export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ...prop
 			position={"relative"}
 			{...props}
 		>
-			{left ? <div className="absolute left-2 top-2 w-fit h-fit z-10">{left}</div> : null}
+			{left ? (
+				<div className="absolute left-2 top-2 w-fit h-fit isolate z-5">{left}</div>
+			) : null}
 
 			{children}
 		</Container>

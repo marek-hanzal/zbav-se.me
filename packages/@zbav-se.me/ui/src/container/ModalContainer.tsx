@@ -23,6 +23,7 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 	return (
 		<Container
 			layout={"vertical-header-content"}
+			square={"md"}
 			{...props}
 		>
 			<Title
@@ -41,7 +42,7 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 				textTitle={textTitle}
 			/>
 
-			{children}
+			<Container scroll={"vertical"}>{children}</Container>
 		</Container>
 	);
 };

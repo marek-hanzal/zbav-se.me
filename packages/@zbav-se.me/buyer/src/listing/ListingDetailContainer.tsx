@@ -31,6 +31,9 @@ export namespace ListingDetailContainer {
 		locale: string;
 		query: tListingQuery | undefined;
 		listing: tListing;
+		/**
+		 * Should the listing emit the score event?
+		 */
 		withScore: boolean;
 		renderScoreBadge: ScoreBadge.RenderFn;
 		renderSellerBadge: SellerBadge.RenderFn;
