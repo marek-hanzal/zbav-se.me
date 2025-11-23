@@ -65,5 +65,5 @@ export const withFetch = async <
 		return undefined;
 	}
 
-	return tryZodError(output as TOutputSchema, result);
+	return tryZodError(output, result);
 };

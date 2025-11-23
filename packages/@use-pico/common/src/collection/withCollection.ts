@@ -1,11 +1,12 @@
-import type { SelectQueryBuilder } from "kysely";
+import type { SelectQueryBuilder, Simplify } from "kysely";
 import { z } from "zod";
 import type { CursorSchema } from "../schema/CursorSchema";
 import type { FilterSchema } from "../schema/FilterSchema";
 import { tryZodError } from "../schema/tryZodError";
-import type { EnsureSelectOutputSchema } from "../source/EnsureSelectOutputSchema";
 
 export namespace withCollection {
+	export type Output<TOutputSchema extends z.ZodSchema> = Simplify<z.infer<TOutputSchema>>;
+
 	export interface Result<TOutput> {
 		data: TOutput[];
 		more: boolean;
@@ -13,7 +14,8 @@ export namespace withCollection {
 
 	export namespace Query {
 		export interface Props<
-			TSelect extends SelectQueryBuilder<any, any, any>,
+			TOutputSchema extends z.ZodSchema,
+			TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
 			TFilter extends FilterSchema.Type,
 		> {
 			select: TSelect;
@@ -22,17 +24,14 @@ export namespace withCollection {
 	}
 
 	export interface Props<
-		TSelect extends SelectQueryBuilder<any, any, any>,
-		TFilter extends FilterSchema.Type,
 		TOutputSchema extends z.ZodSchema,
+		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
+		TFilter extends FilterSchema.Type,
 	> {
 		select: TSelect;
-		query?(props: Query.Props<TSelect, TFilter>): TSelect;
+		query?(props: Query.Props<TOutputSchema, TSelect, TFilter>): TSelect;
 
-		/**
-		 * Output must match the result of the select query.
-		 */
-		output: EnsureSelectOutputSchema<TSelect, TOutputSchema>;
+		output: TOutputSchema;
 
 		filter?: TFilter;
 		where?: TFilter;
@@ -40,16 +39,16 @@ export namespace withCollection {
 	}
 
 	export type Callback<
-		TSelect extends SelectQueryBuilder<any, any, any>,
-		TFilter extends FilterSchema.Type,
 		TOutputSchema extends z.ZodSchema,
-	> = (props: Props<TSelect, TFilter, TOutputSchema>) => Promise<Result<z.infer<TOutputSchema>>>;
+		TSelect extends SelectQueryBuilder<any, any, Output<TOutputSchema>>,
+		TFilter extends FilterSchema.Type,
+	> = (props: Props<TOutputSchema, TSelect, TFilter>) => Promise<Result<Output<TOutputSchema>>>;
 }
 
 export const withCollection = async <
-	TSelect extends SelectQueryBuilder<any, any, any>,
-	TFilter extends FilterSchema.Type,
 	TOutputSchema extends z.ZodSchema,
+	TSelect extends SelectQueryBuilder<any, any, withCollection.Output<TOutputSchema>>,
+	TFilter extends FilterSchema.Type,
 >({
 	select,
 	query = () => select,
@@ -57,11 +56,11 @@ export const withCollection = async <
 	filter,
 	where,
 	cursor,
-}: withCollection.Props<TSelect, TFilter, TOutputSchema>): Promise<
+}: withCollection.Props<TOutputSchema, TSelect, TFilter>): Promise<
 	withCollection.Result<z.infer<TOutputSchema>>
 > => {
 	const results = tryZodError(
-		z.array(output as TOutputSchema),
+		z.array(output),
 		await query({
 			select: query({
 				select,
