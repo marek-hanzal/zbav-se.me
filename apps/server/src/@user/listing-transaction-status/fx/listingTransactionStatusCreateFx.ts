@@ -10,7 +10,6 @@ export namespace listingTransactionStatusCreateFx {
 		listingTransactionId: string;
 		status: ListingTransactionStatusSchema.Type;
 		side: ListingTransactionSideSchema.Type;
-		createdAt?: Date;
 	}
 }
 
@@ -18,7 +17,6 @@ export const listingTransactionStatusCreateFx = ({
 	listingTransactionId,
 	status,
 	side,
-	createdAt = new Date(),
 }: listingTransactionStatusCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
@@ -34,7 +32,7 @@ export const listingTransactionStatusCreateFx = ({
 					event: "status",
 					status,
 					side,
-					createdAt,
+					createdAt: new Date(),
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();

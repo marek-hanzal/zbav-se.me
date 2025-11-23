@@ -7,14 +7,10 @@ import { InvalidRequestError } from "../../../error/InvalidRequestError";
 export namespace listingIgnoreCreateFx {
 	export interface Props {
 		listingId: string;
-		createdAt?: Date;
 	}
 }
 
-export const listingIgnoreCreateFx = ({
-	listingId,
-	createdAt = new Date(),
-}: listingIgnoreCreateFx.Props) => {
+export const listingIgnoreCreateFx = ({ listingId }: listingIgnoreCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -28,7 +24,7 @@ export const listingIgnoreCreateFx = ({
 						id,
 						userId: user.id,
 						listingId,
-						createdAt,
+						createdAt: new Date(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();

@@ -9,7 +9,6 @@ export namespace listingTransactionMessageCreateFx {
 		listingTransactionId: string;
 		message: string;
 		side: ListingTransactionSideSchema.Type;
-		createdAt?: Date;
 	}
 }
 
@@ -17,7 +16,6 @@ export const listingTransactionMessageCreateFx = ({
 	listingTransactionId,
 	message,
 	side,
-	createdAt = new Date(),
 }: listingTransactionMessageCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
@@ -33,7 +31,7 @@ export const listingTransactionMessageCreateFx = ({
 					event: "message",
 					message,
 					side,
-					createdAt,
+					createdAt: new Date(),
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();

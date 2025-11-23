@@ -1,9 +1,10 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { NotFoundError } from "~/error/NotFoundError";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { galleryItemFetchFx } from "./galleryItemFetchFx";
 
 export namespace galleryItemCreateFx {
@@ -17,6 +18,12 @@ export const galleryItemCreateFx = ({ galleryId, uploadIds }: galleryItemCreateF
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
+
+		if (uploadIds.length === 0) {
+			return yield* new InvalidRequestError({
+				message: "At least one upload is required",
+			});
+		}
 
 		const now = new Date();
 		const id = genId();

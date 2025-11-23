@@ -10,7 +10,6 @@ export namespace listingTransactionLocationCreateFx {
 		locationId: string;
 		time: Date;
 		side: ListingTransactionSideSchema.Type;
-		createdAt?: Date;
 	}
 }
 
@@ -19,7 +18,6 @@ export const listingTransactionLocationCreateFx = ({
 	locationId,
 	time,
 	side,
-	createdAt = new Date(),
 }: listingTransactionLocationCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
@@ -36,7 +34,7 @@ export const listingTransactionLocationCreateFx = ({
 					locationId,
 					time,
 					side,
-					createdAt,
+					createdAt: new Date(),
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();

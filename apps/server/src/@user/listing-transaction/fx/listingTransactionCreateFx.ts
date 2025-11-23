@@ -67,7 +67,6 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 				listingTransactionId: id,
 				side: "buyer",
 				status: "request",
-				createdAt: DateTime.now().toJSDate(),
 			});
 
 			return yield* listingTransactionFetchFx({

@@ -84,7 +84,6 @@ export const listingTransactionPatchFx = ({
 				listingTransactionId: transactionId,
 				status: nextStatus,
 				side: nextSide,
-				createdAt: now.toJSDate(),
 			});
 
 			return yield* listingTransactionFetchFx({

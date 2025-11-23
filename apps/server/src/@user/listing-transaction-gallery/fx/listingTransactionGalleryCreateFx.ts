@@ -9,7 +9,6 @@ export namespace listingTransactionGalleryCreateFx {
 		listingTransactionId: string;
 		galleryId: string;
 		side: ListingTransactionSideSchema.Type;
-		createdAt?: Date;
 	}
 }
 
@@ -17,7 +16,6 @@ export const listingTransactionGalleryCreateFx = ({
 	listingTransactionId,
 	galleryId,
 	side,
-	createdAt = new Date(),
 }: listingTransactionGalleryCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
@@ -33,7 +31,7 @@ export const listingTransactionGalleryCreateFx = ({
 					event: "gallery",
 					galleryId,
 					side,
-					createdAt,
+					createdAt: new Date(),
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();

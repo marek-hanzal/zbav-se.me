@@ -7,14 +7,10 @@ import { InvalidRequestError } from "../../../error/InvalidRequestError";
 export namespace listingCartCreateFx {
 	export interface Props {
 		listingId: string;
-		createdAt?: Date;
 	}
 }
 
-export const listingCartCreateFx = ({
-	listingId,
-	createdAt = new Date(),
-}: listingCartCreateFx.Props) => {
+export const listingCartCreateFx = ({ listingId }: listingCartCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -29,7 +25,7 @@ export const listingCartCreateFx = ({
 						id,
 						userId: user.id,
 						listingId,
-						createdAt,
+						createdAt: new Date(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
