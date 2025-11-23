@@ -1,6 +1,6 @@
+import { passkey } from "@better-auth/passkey";
 import { genId } from "@use-pico/common/gen-id";
 import { betterAuth } from "better-auth";
-import { passkey } from "better-auth/passkey";
 import { anonymous, customSession, openAPI } from "better-auth/plugins";
 import { Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
