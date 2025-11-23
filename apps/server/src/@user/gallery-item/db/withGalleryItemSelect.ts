@@ -25,7 +25,9 @@ export const withGalleryItemSelect = ({ database, sort }: withGalleryItemSelect.
 				})
 					.whereRef("u.id", "=", eb.ref("gi.uploadId"))
 					.limit(1),
-			).as("upload"),
+			)
+				.$notNull()
+				.as("upload"),
 	]);
 
 	for (const item of sort ?? []) {

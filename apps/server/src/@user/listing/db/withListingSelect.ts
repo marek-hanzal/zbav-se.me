@@ -100,10 +100,14 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 								)
 								.whereRef("gi.galleryId", "=", "g.id")
 								.orderBy("gi.sort"),
-						).as("items"),
+						)
+							.$notNull()
+							.as("items"),
 					])
 					.limit(1),
-			).as("gallery"),
+			)
+				.$notNull()
+				.as("gallery"),
 
 			eb
 				.exists(
