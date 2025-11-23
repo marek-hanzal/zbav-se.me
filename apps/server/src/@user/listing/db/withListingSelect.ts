@@ -1,6 +1,9 @@
 import { sql } from "kysely";
-import { jsonArrayFrom, jsonObjectFrom } from "kysely/helpers/postgres";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
+import { withCategorySelect } from "~/@session/category/db/withCategorySelect";
+import { withLocationSelect } from "~/@session/location/db/withLocationSelect";
+import { withGallerySelect } from "~/@user/gallery/db/withGallerySelect";
 import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/@user/listing/schema/ListingSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
@@ -49,30 +52,34 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 		])
 		.select((eb) => [
 			jsonObjectFrom(
-				eb
-					.selectFrom("location as loc")
-					.selectAll("loc")
-					.whereRef("loc.id", "=", "l.locationId")
+				withLocationSelect({
+					database,
+					sort: undefined,
+				})
+					.whereRef("loc.id", "=", eb.ref("l.locationId"))
 					.limit(1),
 			)
 				.$notNull()
 				.as("location"),
 
 			jsonObjectFrom(
-				eb
-					.selectFrom("category as cat")
-					.selectAll("cat")
-					.whereRef("cat.id", "=", "l.categoryId")
+				withCategorySelect({
+					database,
+					sort: undefined,
+				})
+					.whereRef("cat.id", "=", eb.ref("l.categoryId"))
 					.limit(1),
 			)
 				.$notNull()
 				.as("category"),
 
 			jsonObjectFrom(
-				eb
-					.selectFrom("gallery as g")
+				withGallerySelect({
+					database,
+					sort: undefined,
+				})
 					.where(
-						"g.id",
+						"gal.id",
 						"in",
 						eb
 							.selectFrom("listing_gallery as lg")
@@ -81,29 +88,6 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 							.orderBy("lg.createdAt", "desc")
 							.limit(1),
 					)
-					.selectAll("g")
-					.select((eb2) => [
-						jsonArrayFrom(
-							eb2
-								.selectFrom("gallery_item as gi")
-								.selectAll("gi")
-								.select((eb3) =>
-									jsonObjectFrom(
-										eb3
-											.selectFrom("upload as u")
-											.selectAll("u")
-											.whereRef("u.id", "=", "gi.uploadId")
-											.limit(1),
-									)
-										.$notNull()
-										.as("upload"),
-								)
-								.whereRef("gi.galleryId", "=", "g.id")
-								.orderBy("gi.sort"),
-						)
-							.$notNull()
-							.as("items"),
-					])
 					.limit(1),
 			)
 				.$notNull()
