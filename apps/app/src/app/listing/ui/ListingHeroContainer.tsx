@@ -2,7 +2,7 @@ import { useVisibilityContext } from "@use-pico/client/context";
 import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
-import type { tGallery, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
@@ -59,9 +59,9 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	tweak,
 	...props
 }) => {
-	const [hero] = listing.gallery as [
-		tGallery,
-		...tGallery[],
+	const [hero] = listing.gallery.items as [
+		tGalleryItem,
+		...tGalleryItem[],
 	];
 
 	const rootRef = useRef<HTMLDivElement>(null);

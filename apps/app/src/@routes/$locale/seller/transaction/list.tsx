@@ -51,7 +51,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 						<LinkTo
 							icon={ArrowRightIcon}
 							iconPosition={"right"}
-							to={"/$locale/seller/transaction/$id/view"}
+							to={"/$locale/seller/transaction/$id/log"}
 							params={{
 								locale,
 								id: listingTransaction.id,
