@@ -3,7 +3,7 @@ import { type Migration, sql } from "kysely";
 export const ListingTransactionMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("listing_transaction_event")
+			.createType("listing_transaction_event_enum")
 			.asEnum([
 				"status",
 				"message",
@@ -13,7 +13,7 @@ export const ListingTransactionMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createType("listing_transaction_status")
+			.createType("listing_transaction_status_enum")
 			.asEnum([
 				"request",
 				"accepted",
@@ -25,7 +25,7 @@ export const ListingTransactionMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createType("listing_transaction_side")
+			.createType("listing_transaction_side_enum")
 			.asEnum([
 				"seller",
 				"buyer",
@@ -43,8 +43,8 @@ export const ListingTransactionMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			//
-			.addColumn("status", sql`listing_transaction_status`, (col) => col.notNull())
-			.addColumn("side", sql`listing_transaction_side`, (col) => col.notNull())
+			.addColumn("status", sql`listing_transaction_status_enum`, (col) => col.notNull())
+			.addColumn("side", sql`listing_transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))

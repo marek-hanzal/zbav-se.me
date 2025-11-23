@@ -9,10 +9,10 @@ export const ListingTransactionStatusMigration: Migration = {
 			//
 			.addColumn("listingTransactionId", "text", (col) => col.notNull())
 			//
-			.addColumn("event", sql`listing_transaction_event`, (col) => col.notNull())
-			.addColumn("side", sql`listing_transaction_side`, (col) => col.notNull())
+			.addColumn("event", sql`listing_transaction_event_enum`, (col) => col.notNull())
+			.addColumn("side", sql`listing_transaction_side_enum`, (col) => col.notNull())
 			//
-			.addColumn("status", sql`listing_transaction_status`, (col) => col.notNull())
+			.addColumn("status", sql`listing_transaction_status_enum`, (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			//

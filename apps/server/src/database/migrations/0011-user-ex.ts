@@ -3,7 +3,7 @@ import { type Migration, sql } from "kysely";
 export const UserExMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("user_ex_side")
+			.createType("user_ex_side_enum")
 			.asEnum([
 				"seller",
 				"buyer",
@@ -15,7 +15,7 @@ export const UserExMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull().unique())
 			.addColumn("locationId", "text")
-			.addColumn("side", sql`user_ex_side`)
+			.addColumn("side", sql`user_ex_side_enum`)
 			.addForeignKeyConstraint(
 				"user_ex_[userId]_fk",
 				[

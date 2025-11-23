@@ -3,7 +3,7 @@ import { type Migration, sql } from "kysely";
 export const UserScoreMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("user_score_type")
+			.createType("user_score_type_enum")
 			.asEnum([
 				"communication",
 				"trust",
@@ -18,7 +18,7 @@ export const UserScoreMigration: Migration = {
 			.addColumn("fromUserId", "text", (col) => col.notNull())
 			.addColumn("toUserId", "text", (col) => col.notNull())
 			.addColumn("score", "integer", (col) => col.notNull())
-			.addColumn("type", sql`user_score_type`, (col) => col.notNull())
+			.addColumn("type", sql`user_score_type_enum`, (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
 				"user_score_[fromUserId]_fk",

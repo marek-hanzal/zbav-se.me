@@ -9,8 +9,8 @@ export const ListingTransactionGalleryMigration: Migration = {
 			//
 			.addColumn("listingTransactionId", "text", (col) => col.notNull())
 			//
-			.addColumn("event", sql`listing_transaction_event`, (col) => col.notNull())
-			.addColumn("side", sql`listing_transaction_side`, (col) => col.notNull())
+			.addColumn("event", sql`listing_transaction_event_enum`, (col) => col.notNull())
+			.addColumn("side", sql`listing_transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("galleryId", "text", (col) => col.notNull())
 			//
