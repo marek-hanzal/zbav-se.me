@@ -89,11 +89,11 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 					query={{
 						...query,
 						/**
-						 * Cursor is hardcoded, so only first 200 listings are fetched.
+						 * Cursor is hardcoded
 						 */
 						cursor: {
 							page: 0,
-							size: 1000,
+							size: 256,
 						},
 					}}
 					scrollToListingId={scrollToListingId}

@@ -67,6 +67,33 @@ tx({
 				name: "ContainerValueList",
 				attr: "textEmpty",
 			},
+			//
+			{
+				name: "LocationBadgeValue",
+				attr: "textLabel",
+			},
+			{
+				name: "LocationBadgeValue",
+				attr: "textValue",
+			},
+			//
+			{
+				name: "CategoryValueList",
+				attr: "textTitle",
+			},
+			{
+				name: "CategoryValueList",
+				attr: "textEmpty",
+			},
+			//
+			{
+				name: "ContainerValueList",
+				attr: "textTitle",
+			},
+			{
+				name: "ContainerValueList",
+				attr: "textEmpty",
+			},
 		],
 	},
 });
