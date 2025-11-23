@@ -1,6 +1,7 @@
 import { jsonBuildObject } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { ListingTransactionLogSortSchema } from "~/@user/listing-transaction-log/schema/ListingTransactionLogSortSchema";
+import type { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingTransactionLogSelect {
@@ -19,7 +20,7 @@ export const withListingTransactionLogSelect = ({
 	const statusQuery = database.selectFrom("listing_transaction_status as lts").select((eb) => [
 		"lts.id",
 		"lts.listingTransactionId",
-		"lts.event",
+		(eb) => eb.ref("lts.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 		"lts.side",
 		"lts.createdAt",
 		jsonBuildObject({
@@ -32,7 +33,7 @@ export const withListingTransactionLogSelect = ({
 	const messageQuery = database.selectFrom("listing_transaction_message as ltm").select((eb) => [
 		"ltm.id",
 		"ltm.listingTransactionId",
-		"ltm.event",
+		(eb) => eb.ref("ltm.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 		"ltm.side",
 		"ltm.createdAt",
 		jsonBuildObject({
@@ -45,7 +46,7 @@ export const withListingTransactionLogSelect = ({
 	const galleryQuery = database.selectFrom("listing_transaction_gallery as ltg").select((eb) => [
 		"ltg.id",
 		"ltg.listingTransactionId",
-		"ltg.event",
+		(eb) => eb.ref("ltg.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 		"ltg.side",
 		"ltg.createdAt",
 		jsonBuildObject({
@@ -60,7 +61,8 @@ export const withListingTransactionLogSelect = ({
 		.select((eb) => [
 			"ltl.id",
 			"ltl.listingTransactionId",
-			"ltl.event",
+			(eb) =>
+				eb.ref("ltl.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 			"ltl.side",
 			"ltl.createdAt",
 			jsonBuildObject({

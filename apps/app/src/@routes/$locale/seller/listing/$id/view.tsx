@@ -36,7 +36,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 							[Dashboard]
 						</LinkTo>
 
-						{listingQuery.data.gallery.map((image) => (
+						{listingQuery.data.gallery.items.map((image) => (
 							<img
 								key={image.id}
 								className={"w-full"}

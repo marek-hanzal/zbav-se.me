@@ -7,7 +7,7 @@ import { EpilogBadge } from "@zbav-se.me/seller/listing-transaction";
 import { TransactionLogList } from "@zbav-se.me/seller/listing-transaction-log";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
-export const Route = createFileRoute("/$locale/seller/transaction/$id/view")({
+export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 	pendingComponent() {
 		const { locale } = Route.useParams();
 

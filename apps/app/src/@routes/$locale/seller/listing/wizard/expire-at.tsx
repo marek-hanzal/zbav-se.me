@@ -3,7 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon"
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { ExpireAtContainer } from "@zbav-se.me/common/expire-at";
-import type { tListingExpire } from "@zbav-se.me/sdk/api/user";
+import type { tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [expiresAt, setExpiresAt] = useState<tListingExpire | undefined>(state.expiresAt);
+		const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(state.expiresAt);
 
 		return (
 			<TitleContainer
