@@ -1,12 +1,12 @@
 import { genId } from "@use-pico/common/gen-id";
 import { betterAuth } from "better-auth";
+import { passkey } from "better-auth/passkey";
 import { anonymous, customSession, openAPI } from "better-auth/plugins";
-import { passkey } from "better-auth/plugins/passkey";
 import { Kysely } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
-import { AppEnv } from "../AppEnv";
-import type { Database } from "../database/Database";
-import { dialect } from "../database/dialect";
+import { AppEnv } from "~/AppEnv";
+import type { Database } from "~/database/Database";
+import { dialect } from "~/database/dialect";
 
 const authKysely = new Kysely<Database>({
 	dialect,

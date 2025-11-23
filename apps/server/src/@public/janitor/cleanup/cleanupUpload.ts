@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
-import { AppEnv } from "../../../AppEnv";
-import { database } from "../../../database/kysely";
-import { s3 } from "../../../s3";
-import type { CleanupSchema } from "../schema/CleanupSchema";
+import type { CleanupSchema } from "~/@public/janitor/schema/CleanupSchema";
+import { AppEnv } from "~/AppEnv";
+import { database } from "~/database/kysely";
+import { s3 } from "~/s3";
 
 export async function cleanupUpload(): Promise<CleanupSchema.Type> {
 	const limit = 512;
@@ -16,10 +16,9 @@ export async function cleanupUpload(): Promise<CleanupSchema.Type> {
 
 	const uploads = await database.kysely
 		.selectFrom("upload as u")
-		.leftJoin("gallery as g", "g.uploadId", "u.id")
-		.leftJoin("listing as l", "l.id", "g.listingId")
+		.leftJoin("gallery_item as gi", "gi.uploadId", "u.id")
+		.leftJoin("gallery as g", "gi.uploadId", "u.id")
 		.where("u.createdAt", "<", cutoffDate)
-		.where("l.id", "is", null)
 		.select([
 			"u.url",
 		])
