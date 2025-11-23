@@ -1,5 +1,6 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
+import { withCategorySelect } from "~/@session/category/db/withCategorySelect";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import type { CategoryCartSortSchema } from "../schema/CategoryCartSortSchema";
 
@@ -17,8 +18,14 @@ export const withCategoryCartSelect = ({
 	userId,
 	sort,
 }: withCategoryCartSelect.Props) => {
-	let query = database
-		.selectFrom("category as cat")
+	let query = withCategorySelect({
+		database,
+		/**
+		 * Must be undefined and handled in _this_ query because we may
+		 * get different order of sorted fields otherwise.
+		 */
+		sort: undefined,
+	})
 		.innerJoin(
 			database
 				.selectFrom("listing_cart as lc")
@@ -33,15 +40,7 @@ export const withCategoryCartSelect = ({
 			"cnt.categoryId",
 			"cat.id",
 		)
-		.select([
-			"cat.id",
-			"cat.group",
-			"cat.category",
-			"cat.slug",
-			"cat.sort",
-			"cat.locale",
-			"cnt.listingCount",
-		]);
+		.select("cnt.listingCount");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

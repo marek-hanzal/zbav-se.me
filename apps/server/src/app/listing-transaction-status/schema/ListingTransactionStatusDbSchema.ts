@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
+import type { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
 import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
 import { ListingTransactionStatusSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusSchema";
 
@@ -10,7 +10,9 @@ export const ListingTransactionStatusDbSchema = z.object({
 	listingTransactionId: z.string().openapi({
 		description: "ID of the transaction referenced by the status",
 	}),
-	event: ListingTransactionEventSchema,
+	event: z.literal("status" satisfies ListingTransactionEventSchema.Type).openapi({
+		description: "Type of transaction event (must be 'status')",
+	}),
 	side: ListingTransactionSideSchema,
 	status: ListingTransactionStatusSchema,
 	createdAt: z.coerce.date().openapi({

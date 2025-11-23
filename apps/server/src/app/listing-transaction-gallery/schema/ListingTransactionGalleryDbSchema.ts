@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
+import type { ListingTransactionEventSchema } from "~/app/listing-transaction/schema/ListingTransactionEventSchema";
 import { ListingTransactionSideSchema } from "~/app/listing-transaction/schema/ListingTransactionSideSchema";
 
 export const ListingTransactionGalleryDbSchema = z.object({
@@ -9,7 +9,9 @@ export const ListingTransactionGalleryDbSchema = z.object({
 	listingTransactionId: z.string().openapi({
 		description: "ID of the transaction referenced by the gallery",
 	}),
-	event: ListingTransactionEventSchema,
+	event: z.literal("gallery" satisfies ListingTransactionEventSchema.Type).openapi({
+		description: "Type of transaction event (must be 'gallery')",
+	}),
 	side: ListingTransactionSideSchema,
 	galleryId: z.string().openapi({
 		description: "ID of the gallery",
