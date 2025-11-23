@@ -11,31 +11,31 @@ export namespace withLocationSelect {
 }
 
 export const withLocationSelect = ({ database, sort }: withLocationSelect.Props) => {
-	let query = database.selectFrom("location as l").select([
-		"l.id",
-		"l.query",
-		"l.lang",
-		"l.country",
-		"l.code",
-		"l.county",
-		"l.municipality",
-		"l.state",
-		"l.address",
-		"l.city",
-		"l.street",
-		"l.zip",
-		"l.confidence",
-		"l.hash",
-		"l.lat",
-		"l.lon",
+	let query = database.selectFrom("location as loc").select([
+		"loc.id",
+		"loc.query",
+		"loc.lang",
+		"loc.country",
+		"loc.code",
+		"loc.county",
+		"loc.municipality",
+		"loc.state",
+		"loc.address",
+		"loc.city",
+		"loc.street",
+		"loc.zip",
+		"loc.confidence",
+		"loc.hash",
+		"loc.lat",
+		"loc.lon",
 	]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("confidence", () => query.orderBy("l.confidence", item.direction))
-			.with("query", () => query.orderBy("l.query", item.direction))
-			.with("country", () => query.orderBy("l.country", item.direction))
-			.with("address", () => query.orderBy("l.address", item.direction))
+			.with("confidence", () => query.orderBy("loc.confidence", item.direction))
+			.with("query", () => query.orderBy("loc.query", item.direction))
+			.with("country", () => query.orderBy("loc.country", item.direction))
+			.with("address", () => query.orderBy("loc.address", item.direction))
 			.exhaustive();
 	}
 
