@@ -101,6 +101,7 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 						.whereRef("lc.listingId", "=", "l.id")
 						.where("lc.userId", "=", userId),
 				)
+				.$castTo<boolean>()
 				.as("isInCart"),
 
 			eb
@@ -111,6 +112,7 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 						.whereRef("li.listingId", "=", "l.id")
 						.where("li.userId", "=", userId),
 				)
+				.$castTo<boolean>()
 				.as("isIgnored"),
 
 			eb
@@ -121,6 +123,7 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 						.whereRef("lf.listingId", "=", "l.id")
 						.where("lf.userId", "=", userId),
 				)
+				.$castTo<boolean>()
 				.as("hasFlag"),
 
 			eb
@@ -135,6 +138,7 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 							"accepted",
 						]),
 				)
+				.$castTo<boolean>()
 				.as("hasTransaction"),
 		]);
 
