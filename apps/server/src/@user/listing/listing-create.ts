@@ -34,6 +34,14 @@ export const withListingCreateApi: Routes.Fn = ({ userHono }) => {
 					},
 					description: "The created listing",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 				404: {
 					content: {
 						"application/json": {
@@ -82,6 +90,20 @@ export const withListingCreateApi: Routes.Fn = ({ userHono }) => {
 											message: e.message,
 										},
 										404,
+									);
+								},
+							),
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
 									);
 								},
 							),
