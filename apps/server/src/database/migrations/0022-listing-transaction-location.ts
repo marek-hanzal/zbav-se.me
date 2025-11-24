@@ -8,8 +8,6 @@ export const ListingTransactionLocationMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("listingTransactionId", "text", (col) => col.notNull())
-			//
-			.addColumn("event", sql`listing_transaction_event_enum`, (col) => col.notNull())
 			.addColumn("side", sql`listing_transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("locationId", "text", (col) => col.notNull())
