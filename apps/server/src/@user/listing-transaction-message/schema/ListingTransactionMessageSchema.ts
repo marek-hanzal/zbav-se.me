@@ -7,6 +7,9 @@ export const ListingTransactionMessageSchema = z
 	})
 	.openapi("ListingTransactionMessage", {
 		description: "Listing transaction message entry",
+	})
+	.omit({
+		createdAt: true,
 	});
 
 export type ListingTransactionMessageSchema = typeof ListingTransactionMessageSchema;
