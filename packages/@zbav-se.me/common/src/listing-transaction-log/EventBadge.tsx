@@ -1,49 +1,12 @@
 import type { Badge, BadgeCls } from "@use-pico/client/ui/badge";
 import type { Cls } from "@use-pico/cls";
-import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
-import type { FC, ReactNode } from "react";
-import { match } from "ts-pattern";
+import type { FC } from "react";
+import { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
 export namespace EventBadge {
-	export namespace Render {
-		export interface Props extends Badge.Props {
-			//
-		}
+	export interface Props extends Badge.Props, useSideSwitch.Props<Badge.Props> {}
 
-		export type RenderFn = (props: Props) => ReactNode;
-	}
-
-	export interface Props extends Badge.Props {
-		/**
-		 * Current user (or required point of view)
-		 */
-		side: tUserSideEnum;
-		/**
-		 * Who did the change?
-		 */
-		actor: tListingTransactionSideEnum;
-		/**
-		 * Seller side (seller views, seller acted)
-		 */
-		renderSellerFn: Render.RenderFn | undefined;
-		/**
-		 * Buyer side (buyer views, buyer acted)
-		 */
-		renderBuyerFn: Render.RenderFn | undefined;
-		/**
-		 * Buyer acted, seller views
-		 */
-		renderBuyerToSellerFn: Render.RenderFn | undefined;
-		/**
-		 * Seller acted, buyer views
-		 */
-		renderSellerToBuyerFn: Render.RenderFn | undefined;
-	}
-
-	export type PropsEx = Omit<
-		Props,
-		"renderSellerFn" | "renderBuyerFn" | "renderBuyerToSellerFn" | "renderSellerToBuyerFn"
-	>;
+	export type PropsEx = Badge.Props & useSideSwitch.PropsEx<Badge.Props>;
 }
 
 /**
@@ -64,6 +27,18 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	tweak,
 	...props
 }) => {
+	const tweaks: Partial<Record<useSideSwitch.Type, Cls.TweaksOf<BadgeCls>>> = {
+		buyer: {
+			slot: {
+				root: {
+					class: [
+						"items-end",
+						"ml-auto",
+					],
+				},
+			},
+		},
+	};
 	const badgeTweak: Cls.TweaksOf<BadgeCls> = {
 		slot: {
 			root: {
@@ -88,73 +63,21 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		...props,
 	};
 
-	return match(side)
-		.with("buyer", () => {
-			if (side === actor) {
-				return renderBuyerFn?.({
-					...defaultProps,
-					tweak: [
-						tweak,
-						badgeTweak,
-						{
-							slot: {
-								root: {
-									class: [
-										"items-end",
-										"ml-auto",
-									],
-								},
-							},
-						},
-					],
-				});
-			}
+	const { type, render } = useSideSwitch({
+		side,
+		actor,
+		renderSellerFn,
+		renderBuyerFn,
+		renderBuyerToSellerFn,
+		renderSellerToBuyerFn,
+	});
 
-			if (actor === "seller") {
-				return renderSellerToBuyerFn?.({
-					...defaultProps,
-					tweak: [
-						tweak,
-						badgeTweak,
-					],
-				});
-			}
-
-			return `unknown ${side} -> ${actor}`;
-		})
-		.with("seller", () => {
-			if (side === actor) {
-				return renderSellerFn?.({
-					...defaultProps,
-					tweak: [
-						tweak,
-						badgeTweak,
-						{
-							slot: {
-								root: {
-									class: [
-										"items-end",
-										"ml-auto",
-									],
-								},
-							},
-						},
-					],
-				});
-			}
-
-			if (actor === "buyer") {
-				return renderBuyerToSellerFn?.({
-					...defaultProps,
-					tone: "secondary",
-					tweak: [
-						tweak,
-						badgeTweak,
-					],
-				});
-			}
-
-			return `unknown ${side} -> ${actor}`;
-		})
-		.exhaustive();
+	return render?.({
+		...defaultProps,
+		tweak: [
+			tweak,
+			badgeTweak,
+			tweaks[type],
+		],
+	});
 };
