@@ -1,7 +1,8 @@
-import { jsonBuildObject } from "kysely/helpers/postgres";
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { ListingTransactionLogSortSchema } from "~/@user/listing-transaction-log/schema/ListingTransactionLogSortSchema";
 import type { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
+import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingTransactionLogSelect {
@@ -18,59 +19,63 @@ export const withListingTransactionLogSelect = ({
 	sort,
 }: withListingTransactionLogSelect.Props) => {
 	const statusQuery = database.selectFrom("listing_transaction_status as lts").select((eb) => [
+		eb.ref("lts.status").$castTo<ListingTransactionStatusEnumSchema.Type>().as("status"),
 		"lts.id",
 		"lts.listingTransactionId",
-		(eb) => eb.ref("lts.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
+		eb.ref("lts.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 		"lts.side",
 		"lts.createdAt",
-		jsonBuildObject({
-			status: eb.ref("lts.status"),
-		})
-			.$castTo<any>()
-			.as("payload"),
+		sql<string>`'message'`.as("message"),
+		sql<string>`'locationId'`.as("locationId"),
+		sql<Date>`now()`.as("time"),
+		sql<string>`'galleryId'`.as("galleryId"),
 	]);
 
 	const messageQuery = database.selectFrom("listing_transaction_message as ltm").select((eb) => [
+		sql<ListingTransactionStatusEnumSchema.Type>`'request'::listing_transaction_status_enum`.as(
+			"status",
+		),
 		"ltm.id",
 		"ltm.listingTransactionId",
-		(eb) => eb.ref("ltm.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
+		eb.ref("ltm.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 		"ltm.side",
 		"ltm.createdAt",
-		jsonBuildObject({
-			message: eb.ref("ltm.message"),
-		})
-			.$castTo<any>()
-			.as("payload"),
+		"ltm.message",
+		sql<string>`'locationId'`.as("locationId"),
+		sql<Date>`now()`.as("time"),
+		sql<string>`'galleryId'`.as("galleryId"),
 	]);
 
 	const galleryQuery = database.selectFrom("listing_transaction_gallery as ltg").select((eb) => [
+		sql<ListingTransactionStatusEnumSchema.Type>`'request'::listing_transaction_status_enum`.as(
+			"status",
+		),
 		"ltg.id",
 		"ltg.listingTransactionId",
-		(eb) => eb.ref("ltg.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
+		eb.ref("ltg.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 		"ltg.side",
 		"ltg.createdAt",
-		jsonBuildObject({
-			galleryId: eb.ref("ltg.galleryId"),
-		})
-			.$castTo<any>()
-			.as("payload"),
+		sql<string>`'message'`.as("message"),
+		sql<string>`'locationId'`.as("locationId"),
+		sql<Date>`now()`.as("time"),
+		"ltg.galleryId",
 	]);
 
 	const locationQuery = database
 		.selectFrom("listing_transaction_location as ltl")
 		.select((eb) => [
+			sql<ListingTransactionStatusEnumSchema.Type>`'request'::listing_transaction_status_enum`.as(
+				"status",
+			),
 			"ltl.id",
 			"ltl.listingTransactionId",
-			(eb) =>
-				eb.ref("ltl.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
+			eb.ref("ltl.event").$castTo<ListingTransactionEventEnumSchema.Type>().as("event"),
 			"ltl.side",
 			"ltl.createdAt",
-			jsonBuildObject({
-				locationId: eb.ref("ltl.locationId"),
-				time: eb.ref("ltl.time"),
-			})
-				.$castTo<any>()
-				.as("payload"),
+			sql<string>`'message'`.as("message"),
+			"ltl.locationId",
+			"ltl.time",
+			sql<string>`'galleryId'`.as("galleryId"),
 		]);
 
 	const unionQuery = statusQuery

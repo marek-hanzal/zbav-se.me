@@ -470,36 +470,59 @@ export type tListingTransactionLogCollection = {
 };
 
 /**
- * Listing transaction gallery entry
+ * Current status of the listing transaction
  */
-export type tListingTransactionGallery = {
+export const tListingTransactionStatusEnum = {
+    request: 'request',
+    accepted: 'accepted',
+    rejected: 'rejected',
+    success: 'success',
+    closed: 'closed',
+    expired: 'expired'
+} as const;
+
+/**
+ * Current status of the listing transaction
+ */
+export type tListingTransactionStatusEnum = typeof tListingTransactionStatusEnum[keyof typeof tListingTransactionStatusEnum];
+
+/**
+ * Listing transaction log entry (unified view across all event types)
+ */
+export type tListingTransactionLog = {
     /**
-     * ID of the transaction gallery entry
+     * ID of the transaction status entry
      */
     id: string;
     /**
-     * ID of the transaction referenced by the gallery
+     * ID of the transaction referenced by the status
      */
     listingTransactionId: string;
     /**
-     * Type of transaction event (must be 'gallery')
+     * Type of transaction event (must be 'status')
      */
-    event: 'gallery';
+    event: 'status';
+    side: tListingTransactionSideEnum;
+    status: tListingTransactionStatusEnum;
+} | {
+    /**
+     * ID of the transaction message entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the message
+     */
+    listingTransactionId: string;
+    /**
+     * Type of transaction event (must be 'message')
+     */
+    event: 'message';
     side: tListingTransactionSideEnum;
     /**
-     * ID of the gallery
+     * Message content
      */
-    galleryId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Listing transaction location entry
- */
-export type tListingTransactionLocation = {
+    message: string;
+} | {
     /**
      * ID of the transaction location entry
      */
@@ -521,104 +544,24 @@ export type tListingTransactionLocation = {
      * Scheduled time for the location
      */
     time: string;
+} | {
     /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Listing transaction message entry
- */
-export type tListingTransactionMessage = {
-    /**
-     * ID of the transaction message entry
+     * ID of the transaction gallery entry
      */
     id: string;
     /**
-     * ID of the transaction referenced by the message
+     * ID of the transaction referenced by the gallery
      */
     listingTransactionId: string;
     /**
-     * Type of transaction event (must be 'message')
+     * Type of transaction event (must be 'gallery')
      */
-    event: 'message';
+    event: 'gallery';
     side: tListingTransactionSideEnum;
     /**
-     * Message content
+     * ID of the gallery
      */
-    message: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Current status of the listing transaction
- */
-export const tListingTransactionStatusEnum = {
-    request: 'request',
-    accepted: 'accepted',
-    rejected: 'rejected',
-    success: 'success',
-    closed: 'closed',
-    expired: 'expired'
-} as const;
-
-/**
- * Current status of the listing transaction
- */
-export type tListingTransactionStatusEnum = typeof tListingTransactionStatusEnum[keyof typeof tListingTransactionStatusEnum];
-
-/**
- * Listing transaction status entry
- */
-export type tListingTransactionStatus = {
-    /**
-     * ID of the transaction status entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the status
-     */
-    listingTransactionId: string;
-    /**
-     * Type of transaction event (must be 'status')
-     */
-    event: 'status';
-    side: tListingTransactionSideEnum;
-    status: tListingTransactionStatusEnum;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Payload of the event
- */
-export type tListingTransactionPayload = tListingTransactionStatus | tListingTransactionMessage | tListingTransactionLocation | tListingTransactionGallery;
-
-/**
- * Listing transaction log entry (unified view across all event types)
- */
-export type tListingTransactionLog = {
-    /**
-     * ID of the transaction log entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the log
-     */
-    listingTransactionId: string;
-    event: tListingTransactionEventEnum;
-    side: tListingTransactionSideEnum;
-    payload: tListingTransactionPayload;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
+    galleryId: string;
 };
 
 /**
