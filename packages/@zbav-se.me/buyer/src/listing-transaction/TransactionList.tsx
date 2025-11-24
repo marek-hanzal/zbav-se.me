@@ -1,5 +1,5 @@
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { type FC, type ReactNode, useRef } from "react";
@@ -21,24 +21,6 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	renderItemFn,
 	...props
 }) => {
-	const listingTransactionCollectionQuery =
-		withListingTransactionCollectionQuery.useSuspenseQuery(
-			{
-				sort: [
-					{
-						field: "updatedAt",
-						direction: "desc",
-					},
-				],
-				meta: {
-					side: "buyer",
-				},
-			},
-			{
-				refetchInterval: 10_000,
-			},
-		);
-
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -58,25 +40,49 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				scroll={"vertical"}
 				{...props}
 			>
-				{listingTransactionCollectionQuery.data.data.length > 0
-					? listingTransactionCollectionQuery.data.data.map((item) => (
-							<TransactionItem
-								key={item.id}
-								listingTransaction={item}
-								locale={locale}
-								item={renderItemFn}
-							/>
-						))
-					: null}
+				<withListingTransactionCollectionQuery.Suspense
+					data={{
+						sort: [
+							{
+								field: "updatedAt",
+								direction: "desc",
+							},
+						],
+						meta: {
+							side: "buyer",
+						},
+					}}
+					options={{
+						refetchInterval: 10_000,
+					}}
+					fallback={<SpinnerContainer />}
+				>
+					{({ data }) => {
+						return (
+							<>
+								{data.data.length > 0
+									? data.data.map((item) => (
+											<TransactionItem
+												key={item.id}
+												listingTransaction={item}
+												locale={locale}
+												item={renderItemFn}
+											/>
+										))
+									: null}
 
-				{listingTransactionCollectionQuery.data.data.length > 0 ? null : (
-					<Container
-						layout={"vertical-centered"}
-						items={"center"}
-					>
-						<EmptyList action={emptyAction} />
-					</Container>
-				)}
+								{data.data.length > 0 ? null : (
+									<Container
+										layout={"vertical-centered"}
+										items={"center"}
+									>
+										<EmptyList action={emptyAction} />
+									</Container>
+								)}
+							</>
+						);
+					}}
+				</withListingTransactionCollectionQuery.Suspense>
 			</Container>
 		</Container>
 	);

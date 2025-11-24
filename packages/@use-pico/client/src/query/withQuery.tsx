@@ -59,6 +59,7 @@ export namespace withQuery {
 
 		export interface Props<TData, TResult> {
 			data: TData;
+			options?: QueryOptions<TResult>;
 			fallback: ReactNode;
 			children: Children.RenderFn<TResult>;
 		}
@@ -289,10 +290,10 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		/**
 		 * Suspense component used to execute this query and return the result.
 		 */
-		Suspense({ data, fallback, children }: withQuery.Suspense.Props<TData, TResult>) {
+		Suspense({ data, options, fallback, children }: withQuery.Suspense.Props<TData, TResult>) {
 			// biome-ignore lint/correctness/noNestedComponentDefinitions: Sleeper, bro
 			const Sleeper = () => {
-				const query = useSuspenseQuery$(data);
+				const query = useSuspenseQuery$(data, options);
 
 				return children({
 					data: query.data,
