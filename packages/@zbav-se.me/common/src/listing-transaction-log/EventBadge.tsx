@@ -3,6 +3,47 @@ import type { Cls } from "@use-pico/cls";
 import type { FC } from "react";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
+const typeTweaks: Partial<Record<useSideSwitch.Type, Cls.TweaksOf<BadgeCls>>> = {
+	buyer: {
+		slot: {
+			root: {
+				class: [
+					"items-end",
+					"ml-auto",
+				],
+			},
+		},
+	},
+};
+const typeProps: Partial<Record<useSideSwitch.Type, Badge.Props>> = {
+	"seller-buyer": {
+		tone: "secondary",
+	},
+	"buyer-seller": {
+		tone: "secondary",
+	},
+};
+
+const badgeTweak: Cls.TweaksOf<BadgeCls> = {
+	slot: {
+		root: {
+			class: [
+				"h-fit",
+				"flex",
+				"flex-col",
+				"items-start",
+				"gap-1",
+				"px-2",
+				"py-1",
+				"w-6/8",
+				"max-w-5/6",
+				// "bg-transparent",
+				"border-none",
+			],
+		},
+	},
+};
+
 export namespace EventBadge {
 	export interface Props extends Badge.Props, useSideSwitch.Props<Badge.Props> {}
 
@@ -27,37 +68,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	tweak,
 	...props
 }) => {
-	const tweaks: Partial<Record<useSideSwitch.Type, Cls.TweaksOf<BadgeCls>>> = {
-		buyer: {
-			slot: {
-				root: {
-					class: [
-						"items-end",
-						"ml-auto",
-					],
-				},
-			},
-		},
-	};
-	const badgeTweak: Cls.TweaksOf<BadgeCls> = {
-		slot: {
-			root: {
-				class: [
-					"h-fit",
-					"flex",
-					"flex-col",
-					"items-start",
-					"gap-1",
-					"px-2",
-					"py-1",
-					"w-6/8",
-					"max-w-5/6",
-					"bg-transparent",
-					"border-none",
-				],
-			},
-		},
-	};
 	const defaultProps: Badge.Props = {
 		round: "default",
 		...props,
@@ -74,10 +84,11 @@ export const EventBadge: FC<EventBadge.Props> = ({
 
 	return render?.({
 		...defaultProps,
+		...typeProps[type],
 		tweak: [
 			tweak,
 			badgeTweak,
-			tweaks[type],
+			typeTweaks[type],
 		],
 	});
 };

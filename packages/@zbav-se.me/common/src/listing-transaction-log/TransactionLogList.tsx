@@ -1,12 +1,18 @@
+import { Badge } from "@use-pico/client/ui/badge";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Markdown } from "@use-pico/client/ui/markdown";
+import { Typo } from "@use-pico/client/ui/typo";
+import { toTimeDiff } from "@use-pico/common/time";
 import {
 	type tListingTransactionLogQuery,
 	type tUserSideEnum,
+	zListingTransactionMessage,
 	zListingTransactionStatus,
 } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { EventBadge } from "./EventBadge";
 import { RequestEvent } from "./event/status/RequestEvent";
 
 export namespace TransactionLogList {
@@ -45,7 +51,51 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									BuyerInfo={BuyerInfo}
 								/>
 							))
-							.with("gallery", "location", "message", () => {
+							.with("message", () => {
+								const message = zListingTransactionMessage.parse(log);
+
+								return (
+									<EventBadge
+										side={side}
+										actor={message.side}
+										renderSellerFn={undefined}
+										renderBuyerFn={undefined}
+										renderBuyerToSellerFn={(props) => {
+											return (
+												<Badge {...props}>
+													<Typo
+														label={toTimeDiff({
+															locale,
+															time: message.createdAt,
+														})}
+														font={"normal"}
+														size={"sm"}
+													/>
+
+													<Markdown>{message.message}</Markdown>
+												</Badge>
+											);
+										}}
+										renderSellerToBuyerFn={(props) => {
+											return (
+												<Badge {...props}>
+													<Typo
+														label={toTimeDiff({
+															locale,
+															time: message.createdAt,
+														})}
+														font={"normal"}
+														size={"sm"}
+													/>
+
+													<Markdown>{message.message}</Markdown>
+												</Badge>
+											);
+										}}
+									/>
+								);
+							})
+							.with("gallery", "location", () => {
 								return null;
 							})
 							.exhaustive();
