@@ -290,13 +290,18 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * Suspense component used to execute this query and return the result.
 		 */
 		Suspense({ data, fallback, children }: withQuery.Suspense.Props<TData, TResult>) {
-			const query = useSuspenseQuery$(data);
+			// biome-ignore lint/correctness/noNestedComponentDefinitions: Sleeper, bro
+			const Sleeper = () => {
+				const query = useSuspenseQuery$(data);
+
+				return children({
+					data: query.data,
+				});
+			};
 
 			return (
 				<Suspense fallback={fallback}>
-					{children({
-						data: query.data,
-					})}
+					<Sleeper />
 				</Suspense>
 			);
 		},

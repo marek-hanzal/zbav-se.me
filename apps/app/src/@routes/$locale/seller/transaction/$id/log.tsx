@@ -2,9 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { SellerInfoContainer } from "@zbav-se.me/buyer/listing-transaction";
 import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { EpilogBadge } from "@zbav-se.me/seller/listing-transaction";
+import { BuyerInfoContainer, EpilogBadge } from "@zbav-se.me/seller/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
 export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
@@ -75,6 +76,8 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 								},
 							],
 						}}
+						SellerInfo={SellerInfoContainer}
+						BuyerInfo={BuyerInfoContainer}
 					/>
 
 					<EpilogBadge listingTransaction={listingTransaction} />

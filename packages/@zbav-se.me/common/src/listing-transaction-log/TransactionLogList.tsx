@@ -14,6 +14,8 @@ export namespace TransactionLogList {
 		locale: string;
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
+		SellerInfo: RequestEvent.Info.Component;
+		BuyerInfo: RequestEvent.Info.Component;
 	}
 }
 
@@ -21,6 +23,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	locale,
 	side,
 	query,
+	SellerInfo,
+	BuyerInfo,
 	...props
 }) => {
 	return (
@@ -37,6 +41,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									locale={locale}
 									side={side}
 									listingTransactionStatus={zListingTransactionStatus.parse(log)}
+									SellerInfo={SellerInfo}
+									BuyerInfo={BuyerInfo}
 								/>
 							))
 							.with("gallery", "location", "message", () => {

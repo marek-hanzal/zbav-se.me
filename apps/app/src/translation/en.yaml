@@ -64,6 +64,9 @@
 1f8ae1eecf5c922cd16eccf3b3fb0728404a62f374f43e74badf98f6:
   ref: Seller - score (label)
   value: Seller - score (label)
+20edb3c94a6d8d59aba301218e13ca8f48ffc6500657af104e4f25e3:
+  ref: Buyer transaction request (buyer-buyer) (label)
+  value: Buyer transaction request (buyer-buyer) (label)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
@@ -262,6 +265,9 @@
 6c388d147d0bda5b267c52bbf80482f6ba0eff93845084586bd1c058:
   ref: No transactions found - seller (title)
   value: No transactions found - seller (title)
+6cf1f312f04cf8aac969e1beb063b3fcbf6458d93e2707411b6e98dd:
+  ref: Seller info (label)
+  value: Seller info (label)
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
   ref: User profile (label)
   value: User profile (label)
@@ -310,6 +316,9 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
   ref: Next - submit (button)
   value: Next - submit (button)
+7bc80170fb044a52d59f0998e4d5bfba4cd157138e9bd4a3cef6d7cb:
+  ref: Buyer info (label)
+  value: Buyer info (label)
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
@@ -415,6 +424,9 @@ a7a95d03a84a9282e129c3a27bf77f9f0e8b749d22e277260b64c4b4:
 a94a3441be22610442865891781e2d0943dd42a886646f3f93c4dc06:
   ref: Your cart is empty - no feed (message)
   value: Your cart is empty - no feed (message)
+a94cbdf1ed6b5ec42ce7ff1be916aadee3ad91ba6871b9a7f84fc0d5:
+  ref: Buyer transaction request (buyer-seller) (label)
+  value: Buyer transaction request (buyer-seller) (label)
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
   ref: Your cart (title)
   value: Your cart (title)
