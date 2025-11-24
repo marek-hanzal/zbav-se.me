@@ -31,10 +31,23 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 						size={"sm"}
 					/>
 
-					<Tx label="Buyer transaction request (label)" />
+					<Tx label="Buyer transaction request (buyer-buyer) (label)" />
 				</Badge>
 			)}
-			renderBuyerToSellerFn={undefined}
+			renderBuyerToSellerFn={(props) => (
+				<Badge {...props}>
+					<Typo
+						label={toTimeDiff({
+							locale,
+							time: listingTransactionStatus.createdAt,
+						})}
+						font={"normal"}
+						size={"sm"}
+					/>
+
+					<Tx label="Buyer transaction request (buyer-seller) (label)" />
+				</Badge>
+			)}
 			renderSellerToBuyerFn={undefined}
 			{...props}
 		>

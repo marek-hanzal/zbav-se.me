@@ -86,14 +86,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		...props,
 	};
 
-	if (side === "seller" && side === actor) {
-		return renderSellerFn?.(defaultProps);
-	}
-
-	if (side === "seller" && actor === "buyer") {
-		return renderBuyerToSellerFn?.(defaultProps);
-	}
-
 	return match(side)
 		.with("buyer", () => {
 			if (side === actor) {
@@ -117,7 +109,13 @@ export const EventBadge: FC<EventBadge.Props> = ({
 			}
 
 			if (actor === "seller") {
-				return renderSellerToBuyerFn?.(defaultProps);
+				return renderSellerToBuyerFn?.({
+					...defaultProps,
+					tweak: [
+						tweak,
+						badgeTweak,
+					],
+				});
 			}
 
 			return `unknown ${side} -> ${actor}`;
@@ -144,7 +142,14 @@ export const EventBadge: FC<EventBadge.Props> = ({
 			}
 
 			if (actor === "buyer") {
-				return renderBuyerToSellerFn?.(defaultProps);
+				return renderBuyerToSellerFn?.({
+					...defaultProps,
+					tone: "secondary",
+					tweak: [
+						tweak,
+						badgeTweak,
+					],
+				});
 			}
 
 			return `unknown ${side} -> ${actor}`;
