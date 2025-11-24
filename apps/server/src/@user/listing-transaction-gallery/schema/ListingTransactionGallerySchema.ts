@@ -7,6 +7,9 @@ export const ListingTransactionGallerySchema = z
 	})
 	.openapi("ListingTransactionGallery", {
 		description: "Listing transaction gallery entry",
+	})
+	.omit({
+		createdAt: true,
 	});
 
 export type ListingTransactionGallerySchema = typeof ListingTransactionGallerySchema;

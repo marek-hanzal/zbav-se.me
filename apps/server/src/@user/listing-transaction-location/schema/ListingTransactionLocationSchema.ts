@@ -7,6 +7,9 @@ export const ListingTransactionLocationSchema = z
 	})
 	.openapi("ListingTransactionLocation", {
 		description: "Listing transaction location entry",
+	})
+	.omit({
+		createdAt: true,
 	});
 
 export type ListingTransactionLocationSchema = typeof ListingTransactionLocationSchema;
