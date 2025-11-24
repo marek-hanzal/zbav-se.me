@@ -1,6 +1,7 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { ListingTransactionLogSortSchema } from "~/@user/listing-transaction-log/schema/ListingTransactionLogSortSchema";
+import type { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
 import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
@@ -21,7 +22,7 @@ export const withListingTransactionLogSelect = ({
 		"lts.side",
 		"lts.id",
 		"lts.listingTransactionId",
-		sql<string>`'status'`.as("event"),
+		sql<ListingTransactionEventEnumSchema.Type>`'status'`.as("event"),
 		"lts.createdAt",
 		//
 		"lts.status",
@@ -35,7 +36,7 @@ export const withListingTransactionLogSelect = ({
 		"ltm.side",
 		"ltm.id",
 		"ltm.listingTransactionId",
-		sql<string>`'message'`.as("event"),
+		sql<ListingTransactionEventEnumSchema.Type>`'message'`.as("event"),
 		"ltm.createdAt",
 		sql<ListingTransactionStatusEnumSchema.Type>`'request'::listing_transaction_status_enum`.as(
 			"status",
@@ -50,7 +51,7 @@ export const withListingTransactionLogSelect = ({
 		"ltg.side",
 		"ltg.id",
 		"ltg.listingTransactionId",
-		sql<string>`'gallery'`.as("event"),
+		sql<ListingTransactionEventEnumSchema.Type>`'gallery'`.as("event"),
 		"ltg.createdAt",
 		sql<ListingTransactionStatusEnumSchema.Type>`'request'::listing_transaction_status_enum`.as(
 			"status",
@@ -65,7 +66,7 @@ export const withListingTransactionLogSelect = ({
 		"ltl.side",
 		"ltl.id",
 		"ltl.listingTransactionId",
-		sql<string>`'location'`.as("event"),
+		sql<ListingTransactionEventEnumSchema.Type>`'location'`.as("event"),
 		"ltl.createdAt",
 		sql<ListingTransactionStatusEnumSchema.Type>`'request'::listing_transaction_status_enum`.as(
 			"status",

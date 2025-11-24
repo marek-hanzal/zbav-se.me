@@ -504,6 +504,78 @@ export const zListingTransactionLogQuery = z.object({
 export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQuery>;
 
 /**
+ * Listing transaction gallery entry
+ */
+export const zListingTransactionGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction gallery entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the gallery'
+    }),
+    side: zListingTransactionSideEnum,
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    event: z.enum(['gallery']).register(z.globalRegistry, {
+        description: 'Event type'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction gallery entry'
+});
+
+export type zListingTransactionGallery = z.infer<typeof zListingTransactionGallery>;
+
+/**
+ * Listing transaction location entry
+ */
+export const zListingTransactionLocation = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction location entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the location'
+    }),
+    side: zListingTransactionSideEnum,
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    time: z.string().register(z.globalRegistry, {
+        description: 'Scheduled time for the location'
+    }),
+    event: z.enum(['location']).register(z.globalRegistry, {
+        description: 'Event type'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction location entry'
+});
+
+export type zListingTransactionLocation = z.infer<typeof zListingTransactionLocation>;
+
+/**
+ * Listing transaction message entry
+ */
+export const zListingTransactionMessage = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction message entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the message'
+    }),
+    side: zListingTransactionSideEnum,
+    message: z.string().register(z.globalRegistry, {
+        description: 'Message content'
+    }),
+    event: z.enum(['message']).register(z.globalRegistry, {
+        description: 'Event type'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction message entry'
+});
+
+export type zListingTransactionMessage = z.infer<typeof zListingTransactionMessage>;
+
+/**
  * Current status of the listing transaction
  */
 export const zListingTransactionStatusEnum = z.enum([
@@ -520,70 +592,34 @@ export const zListingTransactionStatusEnum = z.enum([
 export type zListingTransactionStatusEnum = z.infer<typeof zListingTransactionStatusEnum>;
 
 /**
+ * Listing transaction status entry
+ */
+export const zListingTransactionStatus = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction status entry'
+    }),
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'ID of the transaction referenced by the status'
+    }),
+    side: zListingTransactionSideEnum,
+    status: zListingTransactionStatusEnum,
+    event: z.enum(['status']).register(z.globalRegistry, {
+        description: 'Event type'
+    })
+}).register(z.globalRegistry, {
+    description: 'Listing transaction status entry'
+});
+
+export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus>;
+
+/**
  * Listing transaction log entry (unified view across all event types)
  */
 export const zListingTransactionLog = z.union([
-    z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction status entry'
-        }),
-        listingTransactionId: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction referenced by the status'
-        }),
-        event: z.enum(['status']).register(z.globalRegistry, {
-            description: 'Type of transaction event (must be \'status\')'
-        }),
-        side: zListingTransactionSideEnum,
-        status: zListingTransactionStatusEnum
-    }),
-    z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction message entry'
-        }),
-        listingTransactionId: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction referenced by the message'
-        }),
-        event: z.enum(['message']).register(z.globalRegistry, {
-            description: 'Type of transaction event (must be \'message\')'
-        }),
-        side: zListingTransactionSideEnum,
-        message: z.string().register(z.globalRegistry, {
-            description: 'Message content'
-        })
-    }),
-    z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction location entry'
-        }),
-        listingTransactionId: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction referenced by the location'
-        }),
-        event: z.enum(['location']).register(z.globalRegistry, {
-            description: 'Type of transaction event (must be \'location\')'
-        }),
-        side: zListingTransactionSideEnum,
-        locationId: z.string().register(z.globalRegistry, {
-            description: 'ID of the location'
-        }),
-        time: z.string().register(z.globalRegistry, {
-            description: 'Scheduled time for the location'
-        })
-    }),
-    z.object({
-        id: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction gallery entry'
-        }),
-        listingTransactionId: z.string().register(z.globalRegistry, {
-            description: 'ID of the transaction referenced by the gallery'
-        }),
-        event: z.enum(['gallery']).register(z.globalRegistry, {
-            description: 'Type of transaction event (must be \'gallery\')'
-        }),
-        side: zListingTransactionSideEnum,
-        galleryId: z.string().register(z.globalRegistry, {
-            description: 'ID of the gallery'
-        })
-    })
+    zListingTransactionStatus,
+    zListingTransactionMessage,
+    zListingTransactionLocation,
+    zListingTransactionGallery
 ]);
 
 export type zListingTransactionLog = z.infer<typeof zListingTransactionLog>;

@@ -30,14 +30,6 @@ export const withListingTransactionLogQueryBuilder: withListingTransactionLogQue
 			query = query.where("log.listingTransactionId", "=", where.listingTransactionId);
 		}
 
-		if (where.event) {
-			query = query.where("log.event", "=", where.event);
-		}
-
-		if (where.eventIn && where.eventIn.length > 0) {
-			query = query.where("log.event", "in", where.eventIn);
-		}
-
 		if (where.side) {
 			query = query.where("log.side", "=", where.side);
 		}

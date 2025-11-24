@@ -470,6 +470,79 @@ export type tListingTransactionLogCollection = {
 };
 
 /**
+ * Listing transaction gallery entry
+ */
+export type tListingTransactionGallery = {
+    /**
+     * ID of the transaction gallery entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the gallery
+     */
+    listingTransactionId: string;
+    side: tListingTransactionSideEnum;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * Event type
+     */
+    event: 'gallery';
+};
+
+/**
+ * Listing transaction location entry
+ */
+export type tListingTransactionLocation = {
+    /**
+     * ID of the transaction location entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the location
+     */
+    listingTransactionId: string;
+    side: tListingTransactionSideEnum;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * Scheduled time for the location
+     */
+    time: string;
+    /**
+     * Event type
+     */
+    event: 'location';
+};
+
+/**
+ * Listing transaction message entry
+ */
+export type tListingTransactionMessage = {
+    /**
+     * ID of the transaction message entry
+     */
+    id: string;
+    /**
+     * ID of the transaction referenced by the message
+     */
+    listingTransactionId: string;
+    side: tListingTransactionSideEnum;
+    /**
+     * Message content
+     */
+    message: string;
+    /**
+     * Event type
+     */
+    event: 'message';
+};
+
+/**
  * Current status of the listing transaction
  */
 export const tListingTransactionStatusEnum = {
@@ -487,9 +560,9 @@ export const tListingTransactionStatusEnum = {
 export type tListingTransactionStatusEnum = typeof tListingTransactionStatusEnum[keyof typeof tListingTransactionStatusEnum];
 
 /**
- * Listing transaction log entry (unified view across all event types)
+ * Listing transaction status entry
  */
-export type tListingTransactionLog = {
+export type tListingTransactionStatus = {
     /**
      * ID of the transaction status entry
      */
@@ -498,71 +571,18 @@ export type tListingTransactionLog = {
      * ID of the transaction referenced by the status
      */
     listingTransactionId: string;
-    /**
-     * Type of transaction event (must be 'status')
-     */
-    event: 'status';
     side: tListingTransactionSideEnum;
     status: tListingTransactionStatusEnum;
-} | {
     /**
-     * ID of the transaction message entry
+     * Event type
      */
-    id: string;
-    /**
-     * ID of the transaction referenced by the message
-     */
-    listingTransactionId: string;
-    /**
-     * Type of transaction event (must be 'message')
-     */
-    event: 'message';
-    side: tListingTransactionSideEnum;
-    /**
-     * Message content
-     */
-    message: string;
-} | {
-    /**
-     * ID of the transaction location entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the location
-     */
-    listingTransactionId: string;
-    /**
-     * Type of transaction event (must be 'location')
-     */
-    event: 'location';
-    side: tListingTransactionSideEnum;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * Scheduled time for the location
-     */
-    time: string;
-} | {
-    /**
-     * ID of the transaction gallery entry
-     */
-    id: string;
-    /**
-     * ID of the transaction referenced by the gallery
-     */
-    listingTransactionId: string;
-    /**
-     * Type of transaction event (must be 'gallery')
-     */
-    event: 'gallery';
-    side: tListingTransactionSideEnum;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
+    event: 'status';
 };
+
+/**
+ * Listing transaction log entry (unified view across all event types)
+ */
+export type tListingTransactionLog = tListingTransactionStatus | tListingTransactionMessage | tListingTransactionLocation | tListingTransactionGallery;
 
 /**
  * Buyer info for the listing transaction

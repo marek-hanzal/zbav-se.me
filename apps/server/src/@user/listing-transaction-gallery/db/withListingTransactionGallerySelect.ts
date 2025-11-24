@@ -1,3 +1,4 @@
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { ListingTransactionGallerySortSchema } from "../schema/ListingTransactionGallerySortSchema";
@@ -15,7 +16,10 @@ export const withListingTransactionGallerySelect = ({
 	database,
 	sort,
 }: withListingTransactionGallerySelect.Props) => {
-	let query = database.selectFrom("listing_transaction_gallery as ltg").selectAll();
+	let query = database
+		.selectFrom("listing_transaction_gallery as ltg")
+		.selectAll()
+		.select(sql<"gallery">`'gallery'`.as("event"));
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

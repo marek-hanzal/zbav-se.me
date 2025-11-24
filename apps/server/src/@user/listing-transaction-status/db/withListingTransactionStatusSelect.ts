@@ -1,3 +1,4 @@
+import { sql } from "kysely";
 import { match } from "ts-pattern";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { ListingTransactionStatusSortSchema } from "../schema/ListingTransactionStatusSortSchema";
@@ -15,7 +16,10 @@ export const withListingTransactionStatusSelect = ({
 	database,
 	sort,
 }: withListingTransactionStatusSelect.Props) => {
-	let query = database.selectFrom("listing_transaction_status as lts").selectAll();
+	let query = database
+		.selectFrom("listing_transaction_status as lts")
+		.selectAll()
+		.select(sql<"status">`'status'`.as("event"));
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

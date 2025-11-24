@@ -580,6 +580,103 @@ export const sListingTransactionLogCollection = {
     ]
 } as const;
 
+export const sListingTransactionGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'gallery'
+            ]
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'side',
+        'galleryId',
+        'event'
+    ]
+} as const;
+
+export const sListingTransactionLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        locationId: {
+            type: 'string'
+        },
+        time: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'location'
+            ]
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'side',
+        'locationId',
+        'time',
+        'event'
+    ]
+} as const;
+
+export const sListingTransactionMessage = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        message: {
+            type: 'string'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'message'
+            ]
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'side',
+        'message',
+        'event'
+    ]
+} as const;
+
 export const sListingTransactionStatusEnum = {
     type: 'string',
     enum: [
@@ -592,131 +689,50 @@ export const sListingTransactionStatusEnum = {
     ]
 } as const;
 
+export const sListingTransactionStatus = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingTransactionId: {
+            type: 'string'
+        },
+        side: {
+            $ref: '#/components/schemas/ListingTransactionSideEnum'
+        },
+        status: {
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+        },
+        event: {
+            type: 'string',
+            enum: [
+                'status'
+            ]
+        }
+    },
+    required: [
+        'id',
+        'listingTransactionId',
+        'side',
+        'status',
+        'event'
+    ]
+} as const;
+
 export const sListingTransactionLog = {
     anyOf: [
         {
-            type: 'object',
-            properties: {
-                id: {
-                    type: 'string'
-                },
-                listingTransactionId: {
-                    type: 'string'
-                },
-                event: {
-                    type: 'string',
-                    enum: [
-                        'status'
-                    ]
-                },
-                side: {
-                    $ref: '#/components/schemas/ListingTransactionSideEnum'
-                },
-                status: {
-                    $ref: '#/components/schemas/ListingTransactionStatusEnum'
-                }
-            },
-            required: [
-                'id',
-                'listingTransactionId',
-                'event',
-                'side',
-                'status'
-            ]
+            $ref: '#/components/schemas/ListingTransactionStatus'
         },
         {
-            type: 'object',
-            properties: {
-                id: {
-                    type: 'string'
-                },
-                listingTransactionId: {
-                    type: 'string'
-                },
-                event: {
-                    type: 'string',
-                    enum: [
-                        'message'
-                    ]
-                },
-                side: {
-                    $ref: '#/components/schemas/ListingTransactionSideEnum'
-                },
-                message: {
-                    type: 'string'
-                }
-            },
-            required: [
-                'id',
-                'listingTransactionId',
-                'event',
-                'side',
-                'message'
-            ]
+            $ref: '#/components/schemas/ListingTransactionMessage'
         },
         {
-            type: 'object',
-            properties: {
-                id: {
-                    type: 'string'
-                },
-                listingTransactionId: {
-                    type: 'string'
-                },
-                event: {
-                    type: 'string',
-                    enum: [
-                        'location'
-                    ]
-                },
-                side: {
-                    $ref: '#/components/schemas/ListingTransactionSideEnum'
-                },
-                locationId: {
-                    type: 'string'
-                },
-                time: {
-                    type: 'string'
-                }
-            },
-            required: [
-                'id',
-                'listingTransactionId',
-                'event',
-                'side',
-                'locationId',
-                'time'
-            ]
+            $ref: '#/components/schemas/ListingTransactionLocation'
         },
         {
-            type: 'object',
-            properties: {
-                id: {
-                    type: 'string'
-                },
-                listingTransactionId: {
-                    type: 'string'
-                },
-                event: {
-                    type: 'string',
-                    enum: [
-                        'gallery'
-                    ]
-                },
-                side: {
-                    $ref: '#/components/schemas/ListingTransactionSideEnum'
-                },
-                galleryId: {
-                    type: 'string'
-                }
-            },
-            required: [
-                'id',
-                'listingTransactionId',
-                'event',
-                'side',
-                'galleryId'
-            ]
+            $ref: '#/components/schemas/ListingTransactionGallery'
         }
     ]
 } as const;
