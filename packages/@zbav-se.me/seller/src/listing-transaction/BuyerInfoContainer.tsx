@@ -1,8 +1,10 @@
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { VariantProvider } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { withListingTransactionBuyerInfoQuery } from "@zbav-se.me/sdk/query/user";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 
 export namespace BuyerInfoContainer {
@@ -38,7 +40,13 @@ export const BuyerInfoContainer: FC<BuyerInfoContainer.Props> = ({
 			>
 				{({ data }) => {
 					return (
-						<>
+						<VariantProvider
+							cls={ThemeCls}
+							variant={{
+								tone: "primary",
+								theme: "light",
+							}}
+						>
 							<BadgeValue
 								textLabel={"Buyer - account age (label)"}
 								textValue={toTimeDiff({
@@ -55,7 +63,7 @@ export const BuyerInfoContainer: FC<BuyerInfoContainer.Props> = ({
 									number: data.score,
 								})}
 							/>
-						</>
+						</VariantProvider>
 					);
 				}}
 			</withListingTransactionBuyerInfoQuery.Suspense>

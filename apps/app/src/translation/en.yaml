@@ -55,6 +55,9 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
+1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
+  ref: Buyer info (title)
+  value: Buyer info (title)
 1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
   ref: Price (subtitle)
   value: Price (subtitle)
@@ -385,6 +388,9 @@
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
+9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
+  ref: Seller info (title)
+  value: Seller info (title)
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
   ref: Submit (title)
   value: Submit (title)

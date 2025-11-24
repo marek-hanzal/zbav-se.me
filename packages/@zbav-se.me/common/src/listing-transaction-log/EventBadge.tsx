@@ -77,6 +77,8 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"py-1",
 					"w-6/8",
 					"max-w-5/6",
+					"bg-transparent",
+					"border-none",
 				],
 			},
 		},

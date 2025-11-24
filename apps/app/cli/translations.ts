@@ -94,6 +94,11 @@ tx({
 				name: "ContainerValueList",
 				attr: "textEmpty",
 			},
+			//
+			{
+				name: "ModalContainer",
+				attr: "textTitle",
+			},
 		],
 	},
 });

@@ -5,7 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { ModalContainer } from "@zbav-se.me/ui/container";
-import { SellerIcon } from "@zbav-se.me/ui/icon";
+import { BuyerIcon, SellerIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
 
@@ -94,7 +94,14 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 					<Tx label="Buyer transaction request (buyer-seller) (label)" />
 
 					<Modal
-						target={<Tx label={"Buyer info (label)"} />}
+						target={
+							<Button
+								iconEnabled={BuyerIcon}
+								label={"Buyer info (label)"}
+								tone={"secondary"}
+								theme={"light"}
+							/>
+						}
 						size={"full"}
 					>
 						{({ close }) => {
