@@ -3,12 +3,32 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { EpilogBadge } from "@zbav-se.me/buyer/listing-transaction";
-import { TransactionLogList } from "@zbav-se.me/buyer/listing-transaction-log";
+import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { Suspense } from "react";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
+	pendingComponent() {
+		const { locale } = Route.useParams();
+
+		return (
+			<TitleContainer
+				ui="TransactionView-root"
+				textTitle={"Transaction detail (title)"}
+				left={
+					<LinkTo
+						icon={ArrowLeftIcon}
+						to={"/$locale/buyer/transaction/list"}
+						params={{
+							locale,
+						}}
+					/>
+				}
+			>
+				<SpinnerContainer />
+			</TitleContainer>
+		);
+	},
 	component() {
 		const { locale, id } = Route.useParams();
 		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery(
@@ -40,30 +60,28 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 					/>
 				}
 			>
-				<Suspense fallback={<SpinnerContainer />}>
-					<Container
-						ui={"Buyer-TransactionLog-root"}
-						gap={"lg"}
-					>
-						<TransactionLogList
-							_suspense={"I know"}
-							locale={locale}
-							query={{
-								where: {
-									listingTransactionId: id,
+				<Container
+					ui={"Buyer-TransactionLog-root"}
+					gap={"lg"}
+				>
+					<TransactionLogList
+						locale={locale}
+						side="buyer"
+						query={{
+							where: {
+								listingTransactionId: id,
+							},
+							sort: [
+								{
+									field: "createdAt",
+									direction: "asc",
 								},
-								sort: [
-									{
-										field: "createdAt",
-										direction: "asc",
-									},
-								],
-							}}
-						/>
+							],
+						}}
+					/>
 
-						<EpilogBadge listingTransaction={listingTransaction} />
-					</Container>
-				</Suspense>
+					<EpilogBadge listingTransaction={listingTransaction} />
+				</Container>
 			</TitleContainer>
 		);
 	},

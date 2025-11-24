@@ -11,6 +11,7 @@ import {
 	useSuspenseQuery,
 } from "@tanstack/react-query";
 import { cleanOf } from "@use-pico/common/clean-of";
+import { type ReactNode, Suspense } from "react";
 import type { withInvalidator } from "../invalidator/withInvalidator";
 
 export namespace withQuery {
@@ -46,6 +47,22 @@ export namespace withQuery {
 		UseQueryOptions<TResult, Error>,
 		"queryKey" | "queryFn"
 	>;
+
+	export namespace Suspense {
+		export namespace Children {
+			export interface Props<TResult> {
+				data: TResult;
+			}
+
+			export type RenderFn<TResult> = (props: Props<TResult>) => ReactNode;
+		}
+
+		export interface Props<TData, TResult> {
+			data: TData;
+			fallback: ReactNode;
+			children: Children.RenderFn<TResult>;
+		}
+	}
 
 	/**
 	 * Typed public facing API for query operations.
@@ -133,6 +150,13 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		});
 	};
 
+	const useSuspenseQuery$ = (
+		data: TData,
+		opts?: withQuery.QueryOptions<TResult>,
+	): UseSuspenseQueryResult<TResult, Error> => {
+		return useSuspenseQuery(options(data, opts));
+	};
+
 	return {
 		/**
 		 * Returns the key generator function for the query.
@@ -165,12 +189,7 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * @param opts - Optional query options to override defaults.
 		 * @returns The result of the query (suspense-enabled).
 		 */
-		useSuspenseQuery(
-			data: TData,
-			opts?: withQuery.QueryOptions<TResult>,
-		): UseSuspenseQueryResult<TResult, Error> {
-			return useSuspenseQuery(options(data, opts));
-		},
+		useSuspenseQuery: useSuspenseQuery$,
 		/**
 		 * Directly call query function. There is no caching or other logic here.
 		 * @param data - The input data for the query.
@@ -266,6 +285,20 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 			) => {
 				queryClient.setQueryData($keys(data), value);
 			};
+		},
+		/**
+		 * Suspense component used to execute this query and return the result.
+		 */
+		Suspense({ data, fallback, children }: withQuery.Suspense.Props<TData, TResult>) {
+			const query = useSuspenseQuery$(data);
+
+			return (
+				<Suspense fallback={fallback}>
+					{children({
+						data: query.data,
+					})}
+				</Suspense>
+			);
 		},
 	} as const;
 }
