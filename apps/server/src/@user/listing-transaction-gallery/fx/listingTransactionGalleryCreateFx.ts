@@ -28,7 +28,6 @@ export const listingTransactionGalleryCreateFx = ({
 				.values({
 					id,
 					listingTransactionId,
-					event: "gallery",
 					galleryId,
 					side,
 					createdAt: new Date(),

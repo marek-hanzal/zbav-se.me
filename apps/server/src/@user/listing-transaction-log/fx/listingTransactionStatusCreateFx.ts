@@ -29,7 +29,6 @@ export const listingTransactionStatusCreateFx = ({
 				.values({
 					id,
 					listingTransactionId,
-					event: "status",
 					status,
 					side,
 					createdAt: new Date(),

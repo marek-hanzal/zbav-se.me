@@ -28,7 +28,6 @@ export const listingTransactionMessageCreateFx = ({
 				.values({
 					id,
 					listingTransactionId,
-					event: "message",
 					message,
 					side,
 					createdAt: new Date(),

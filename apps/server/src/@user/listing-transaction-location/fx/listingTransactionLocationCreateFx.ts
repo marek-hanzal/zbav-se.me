@@ -30,7 +30,6 @@ export const listingTransactionLocationCreateFx = ({
 				.values({
 					id,
 					listingTransactionId,
-					event: "location",
 					locationId,
 					time,
 					side,
