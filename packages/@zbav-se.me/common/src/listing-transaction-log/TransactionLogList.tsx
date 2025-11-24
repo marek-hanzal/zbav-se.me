@@ -34,6 +34,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						return match(log.event)
 							.with("status", () => (
 								<RequestEvent
+									locale={locale}
 									side={side}
 									listingTransactionStatus={zListingTransactionStatus.parse(log)}
 								/>

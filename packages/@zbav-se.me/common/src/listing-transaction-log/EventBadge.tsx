@@ -1,4 +1,5 @@
-import type { Badge } from "@use-pico/client/ui/badge";
+import type { Badge, BadgeCls } from "@use-pico/client/ui/badge";
+import type { Cls } from "@use-pico/cls";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC, ReactNode } from "react";
 import { match } from "ts-pattern";
@@ -60,8 +61,26 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	renderBuyerFn,
 	renderBuyerToSellerFn,
 	renderSellerToBuyerFn,
+	tweak,
 	...props
 }) => {
+	const badgeTweak: Cls.TweaksOf<BadgeCls> = {
+		slot: {
+			root: {
+				class: [
+					"h-fit",
+					"flex",
+					"flex-col",
+					"items-start",
+					"gap-1",
+					"px-2",
+					"py-1",
+					"w-6/8",
+					"max-w-5/6",
+				],
+			},
+		},
+	};
 	const defaultProps: Badge.Props = {
 		round: "default",
 		...props,
@@ -78,7 +97,23 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	return match(side)
 		.with("buyer", () => {
 			if (side === actor) {
-				return renderBuyerFn?.(defaultProps);
+				return renderBuyerFn?.({
+					...defaultProps,
+					tweak: [
+						tweak,
+						badgeTweak,
+						{
+							slot: {
+								root: {
+									class: [
+										"items-end",
+										"ml-auto",
+									],
+								},
+							},
+						},
+					],
+				});
 			}
 
 			if (actor === "seller") {
@@ -89,7 +124,23 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		})
 		.with("seller", () => {
 			if (side === actor) {
-				return renderSellerFn?.(defaultProps);
+				return renderSellerFn?.({
+					...defaultProps,
+					tweak: [
+						tweak,
+						badgeTweak,
+						{
+							slot: {
+								root: {
+									class: [
+										"items-end",
+										"ml-auto",
+									],
+								},
+							},
+						},
+					],
+				});
 			}
 
 			if (actor === "buyer") {

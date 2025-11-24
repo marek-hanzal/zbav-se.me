@@ -424,20 +424,6 @@ export const zListingTransactionSideEnum = z.enum([
 export type zListingTransactionSideEnum = z.infer<typeof zListingTransactionSideEnum>;
 
 /**
- * Type of transaction event
- */
-export const zListingTransactionEventEnum = z.enum([
-    'status',
-    'message',
-    'gallery',
-    'location'
-]).register(z.globalRegistry, {
-    description: 'Type of transaction event'
-});
-
-export type zListingTransactionEventEnum = z.infer<typeof zListingTransactionEventEnum>;
-
-/**
  * App-based filters
  */
 export const zListingTransactionLogWhere = z.object({
@@ -453,8 +439,6 @@ export const zListingTransactionLogWhere = z.object({
     listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingTransactionId'
     })),
-    event: z.optional(zListingTransactionEventEnum),
-    eventIn: z.optional(z.array(zListingTransactionEventEnum)),
     side: z.optional(zListingTransactionSideEnum),
     userId: z.optional(z.string())
 }).register(z.globalRegistry, {
@@ -479,8 +463,6 @@ export const zListingTransactionLogFilter = z.object({
     listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingTransactionId'
     })),
-    event: z.optional(zListingTransactionEventEnum),
-    eventIn: z.optional(z.array(zListingTransactionEventEnum)),
     side: z.optional(zListingTransactionSideEnum),
     userId: z.optional(z.string())
 }).register(z.globalRegistry, {
@@ -517,6 +499,9 @@ export const zListingTransactionGallery = z.object({
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
     }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
     event: z.enum(['gallery']).register(z.globalRegistry, {
         description: 'Event type'
     })
@@ -543,6 +528,9 @@ export const zListingTransactionLocation = z.object({
     time: z.string().register(z.globalRegistry, {
         description: 'Scheduled time for the location'
     }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
     event: z.enum(['location']).register(z.globalRegistry, {
         description: 'Event type'
     })
@@ -565,6 +553,9 @@ export const zListingTransactionMessage = z.object({
     side: zListingTransactionSideEnum,
     message: z.string().register(z.globalRegistry, {
         description: 'Message content'
+    }),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
     }),
     event: z.enum(['message']).register(z.globalRegistry, {
         description: 'Event type'
@@ -603,6 +594,9 @@ export const zListingTransactionStatus = z.object({
     }),
     side: zListingTransactionSideEnum,
     status: zListingTransactionStatusEnum,
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
     event: z.enum(['status']).register(z.globalRegistry, {
         description: 'Event type'
     })

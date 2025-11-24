@@ -486,15 +486,6 @@ export const sListingTransactionLogWhere = {
         listingTransactionId: {
             type: 'string'
         },
-        event: {
-            $ref: '#/components/schemas/ListingTransactionEventEnum'
-        },
-        eventIn: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingTransactionEventEnum'
-            }
-        },
         side: {
             $ref: '#/components/schemas/ListingTransactionSideEnum'
         },
@@ -515,16 +506,6 @@ export const sListingTransactionSideEnum = {
     ]
 } as const;
 
-export const sListingTransactionEventEnum = {
-    type: 'string',
-    enum: [
-        'status',
-        'message',
-        'gallery',
-        'location'
-    ]
-} as const;
-
 export const sListingTransactionLogFilter = {
     type: 'object',
     properties: {
@@ -542,15 +523,6 @@ export const sListingTransactionLogFilter = {
         },
         listingTransactionId: {
             type: 'string'
-        },
-        event: {
-            $ref: '#/components/schemas/ListingTransactionEventEnum'
-        },
-        eventIn: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingTransactionEventEnum'
-            }
         },
         side: {
             $ref: '#/components/schemas/ListingTransactionSideEnum'
@@ -595,6 +567,9 @@ export const sListingTransactionGallery = {
         galleryId: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         event: {
             type: 'string',
             enum: [
@@ -607,6 +582,7 @@ export const sListingTransactionGallery = {
         'listingTransactionId',
         'side',
         'galleryId',
+        'createdAt',
         'event'
     ]
 } as const;
@@ -629,6 +605,9 @@ export const sListingTransactionLocation = {
         time: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         event: {
             type: 'string',
             enum: [
@@ -642,6 +621,7 @@ export const sListingTransactionLocation = {
         'side',
         'locationId',
         'time',
+        'createdAt',
         'event'
     ]
 } as const;
@@ -661,6 +641,9 @@ export const sListingTransactionMessage = {
         message: {
             type: 'string'
         },
+        createdAt: {
+            type: 'string'
+        },
         event: {
             type: 'string',
             enum: [
@@ -673,6 +656,7 @@ export const sListingTransactionMessage = {
         'listingTransactionId',
         'side',
         'message',
+        'createdAt',
         'event'
     ]
 } as const;
@@ -704,6 +688,9 @@ export const sListingTransactionStatus = {
         status: {
             $ref: '#/components/schemas/ListingTransactionStatusEnum'
         },
+        createdAt: {
+            type: 'string'
+        },
         event: {
             type: 'string',
             enum: [
@@ -716,6 +703,7 @@ export const sListingTransactionStatus = {
         'listingTransactionId',
         'side',
         'status',
+        'createdAt',
         'event'
     ]
 } as const;

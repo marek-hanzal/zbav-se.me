@@ -395,8 +395,6 @@ export type tListingTransactionLogWhere = {
      * This filter matches the exact listingTransactionId
      */
     listingTransactionId?: string;
-    event?: tListingTransactionEventEnum;
-    eventIn?: Array<tListingTransactionEventEnum>;
     side?: tListingTransactionSideEnum;
     userId?: string;
 };
@@ -418,21 +416,6 @@ export const tListingTransactionSideEnum = {
 export type tListingTransactionSideEnum = typeof tListingTransactionSideEnum[keyof typeof tListingTransactionSideEnum];
 
 /**
- * Type of transaction event
- */
-export const tListingTransactionEventEnum = {
-    status: 'status',
-    message: 'message',
-    gallery: 'gallery',
-    location: 'location'
-} as const;
-
-/**
- * Type of transaction event
- */
-export type tListingTransactionEventEnum = typeof tListingTransactionEventEnum[keyof typeof tListingTransactionEventEnum];
-
-/**
  * Filter object for listing transaction log collection
  */
 export type tListingTransactionLogFilter = {
@@ -452,8 +435,6 @@ export type tListingTransactionLogFilter = {
      * This filter matches the exact listingTransactionId
      */
     listingTransactionId?: string;
-    event?: tListingTransactionEventEnum;
-    eventIn?: Array<tListingTransactionEventEnum>;
     side?: tListingTransactionSideEnum;
     userId?: string;
 };
@@ -487,6 +468,10 @@ export type tListingTransactionGallery = {
      */
     galleryId: string;
     /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
      * Event type
      */
     event: 'gallery';
@@ -514,6 +499,10 @@ export type tListingTransactionLocation = {
      */
     time: string;
     /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
      * Event type
      */
     event: 'location';
@@ -536,6 +525,10 @@ export type tListingTransactionMessage = {
      * Message content
      */
     message: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     /**
      * Event type
      */
@@ -573,6 +566,10 @@ export type tListingTransactionStatus = {
     listingTransactionId: string;
     side: tListingTransactionSideEnum;
     status: tListingTransactionStatusEnum;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
     /**
      * Event type
      */

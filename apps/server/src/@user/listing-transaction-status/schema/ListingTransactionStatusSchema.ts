@@ -9,9 +9,6 @@ export const ListingTransactionStatusSchema = z
 			description: "Event type",
 		}),
 	})
-	.omit({
-		createdAt: true,
-	})
 	.openapi("ListingTransactionStatus", {
 		description: "Listing transaction status entry",
 	});

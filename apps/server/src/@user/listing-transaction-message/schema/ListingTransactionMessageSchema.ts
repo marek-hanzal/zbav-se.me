@@ -9,9 +9,6 @@ export const ListingTransactionMessageSchema = z
 			description: "Event type",
 		}),
 	})
-	.omit({
-		createdAt: true,
-	})
 	.openapi("ListingTransactionMessage", {
 		description: "Listing transaction message entry",
 	});

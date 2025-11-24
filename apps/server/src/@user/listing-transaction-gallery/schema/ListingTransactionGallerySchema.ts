@@ -9,9 +9,6 @@ export const ListingTransactionGallerySchema = z
 			description: "Event type",
 		}),
 	})
-	.omit({
-		createdAt: true,
-	})
 	.openapi("ListingTransactionGallery", {
 		description: "Listing transaction gallery entry",
 	});
