@@ -3,27 +3,21 @@ import { Effect } from "effect";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { NotFoundError } from "~/error/NotFoundError";
 import { galleryItemFetchFx } from "./galleryItemFetchFx";
 
 export namespace galleryItemCreateFx {
 	export interface Props {
 		galleryId: string;
-		uploadIds: string[];
+		uploadId: string;
+		sort: number;
 	}
 }
 
-export const galleryItemCreateFx = ({ galleryId, uploadIds }: galleryItemCreateFx.Props) => {
+export const galleryItemCreateFx = ({ galleryId, uploadId, sort }: galleryItemCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
-
-		if (uploadIds.length === 0) {
-			return yield* new InvalidRequestError({
-				message: "At least one upload is required",
-			});
-		}
 
 		const now = new Date();
 		const id = genId();
@@ -48,15 +42,13 @@ export const galleryItemCreateFx = ({ galleryId, uploadIds }: galleryItemCreateF
 		yield* Effect.tryPromise(async () => {
 			return database
 				.insertInto("gallery_item")
-				.values(
-					uploadIds.map((uploadId, index) => ({
-						id,
-						galleryId,
-						uploadId,
-						sort: index,
-						createdAt: now,
-					})),
-				)
+				.values({
+					id,
+					galleryId,
+					uploadId,
+					sort,
+					createdAt: now,
+				})
 				.execute();
 		});
 

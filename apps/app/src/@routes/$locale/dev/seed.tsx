@@ -78,9 +78,9 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			title: list(title),
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),
-			uploadIds: [
-				list(uploadIds),
-			],
+			uploadIds: Array.from(uploadIds)
+				.sort(() => Math.random() - 0.5)
+				.slice(0, rangedom(0, 10)),
 		},
 	}).then((res) => res.data);
 
@@ -159,7 +159,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			],
 			async mutationFn() {
 				const concurrency = 12;
-				const limit = 500;
+				const limit = 100;
 
 				const queue = new PQueue({
 					concurrency,

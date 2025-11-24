@@ -4,6 +4,7 @@ export const GalleryItemMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createTable("gallery_item")
+			//
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
 			.addColumn("galleryId", "text", (col) => col.notNull())

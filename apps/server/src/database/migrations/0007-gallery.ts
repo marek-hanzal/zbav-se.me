@@ -5,6 +5,7 @@ export const GalleryMigration: Migration = {
 		await db.schema
 			.createTable("gallery")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
+			//
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
