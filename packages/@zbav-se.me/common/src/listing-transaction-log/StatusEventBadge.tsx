@@ -12,10 +12,13 @@ export namespace StatusEventBadge {
 	};
 }
 
-export const StatusEventBadge: FC<StatusEventBadge.Props> = ({ ...props }) => {
+export const StatusEventBadge: FC<StatusEventBadge.Props> = ({
+	listingTransactionStatus,
+	...props
+}) => {
 	return (
 		<EventBadge
-			actor={props.listingTransactionStatus.side}
+			actor={listingTransactionStatus.side}
 			{...props}
 		/>
 	);
