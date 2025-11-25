@@ -1,21 +1,21 @@
 import { Button } from "@use-pico/client/ui/button";
 import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
-import { CheckIcon } from "@zbav-se.me/ui/icon";
+import { SellerIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
-export namespace AcceptButton {
+export namespace SellerInfoButton {
 	export interface Props extends Button.Props {
 		log: tListingTransactionLog;
 	}
 }
 
-export const AcceptButton: FC<AcceptButton.Props> = ({ log, ...props }) => {
+export const SellerInfoButton: FC<SellerInfoButton.Props> = ({ log, ...props }) => {
 	return (
 		<Button
-			iconEnabled={CheckIcon}
+			iconEnabled={SellerIcon}
 			size={"xl"}
 			full
-			label={"Accept transaction (label)"}
+			label={"Seller info (label)"}
 			{...props}
 		/>
 	);

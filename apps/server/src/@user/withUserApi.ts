@@ -42,11 +42,11 @@ export const withUserApi: Routes.FnWithDeps<{
 	withGalleryApi(routes);
 	withListingApi(routes);
 	withListingCartApi(routes);
-	withListingIgnoreApi(routes);
 	withListingFlagApi(routes);
+	withListingIgnoreApi(routes);
+	withListingScoreApi(routes);
 	withListingTransactionApi(routes);
 	withListingTransactionLogApi(routes);
-	withListingScoreApi(routes);
 	withS3Api(routes);
 	withUploadApi(routes);
 	withUserExApi(routes);
