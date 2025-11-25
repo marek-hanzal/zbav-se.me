@@ -29,6 +29,7 @@ app.use(
 			AppEnv.VITE_APP_ORIGIN,
 		],
 		allowHeaders: [
+			"User-Agent",
 			"Content-Type",
 			"Authorization",
 		],

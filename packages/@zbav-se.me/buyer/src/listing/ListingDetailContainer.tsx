@@ -152,7 +152,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					<Sheet.Container>
 						<Sheet.Header />
 
-						<Sheet.Content disableScroll>
+						<Sheet.Content disableDrag>
 							<withListingMetricsFetchQuery.Suspense
 								data={listing.id}
 								fallback={<SpinnerContainer />}
