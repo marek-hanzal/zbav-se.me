@@ -144,17 +144,22 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					isOpen={score}
 					onClose={() => setScore(false)}
 					modalEffectRootId="root"
+					tweenConfig={{
+						ease: "easeOut",
+						duration: 0.15,
+					}}
 				>
 					<Sheet.Container>
 						<Sheet.Header />
-						<Sheet.Content>
+
+						<Sheet.Content disableScroll>
 							<withListingMetricsFetchQuery.Suspense
 								data={listing.id}
 								fallback={<SpinnerContainer />}
 							>
 								{({ data }) => {
 									return (
-										<Container scroll={"vertical"}>
+										<Container square={"md"}>
 											<ScoreContainer
 												locale={locale}
 												listingMetrics={data}
@@ -165,8 +170,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							</withListingMetricsFetchQuery.Suspense>
 						</Sheet.Content>
 					</Sheet.Container>
-
-					{/* <Sheet.Backdrop  /> */}
 				</Sheet>
 
 				{renderSellerBadgeFn({
