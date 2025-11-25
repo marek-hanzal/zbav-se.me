@@ -1,9 +1,12 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ShowIcon } from "@use-pico/client/icon";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { LinkTo } from "@use-pico/client/ui/link-to";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { ListingDetailContainer } from "@zbav-se.me/buyer/listing";
 import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/user";
 import { ToolbarContainer } from "@zbav-se.me/ui/toolbar";
-import { type FC, useState } from "react";
+import { type FC, Suspense, useId, useState } from "react";
+import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 import { ListingCartButton } from "../button/ListingCartButton";
 import { ListingFlagButton } from "../button/ListingFlagButton";
 import { ListingIgnoreButton } from "../button/ListingIgnoreButton";
@@ -32,25 +35,19 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 	...props
 }) => {
 	const [action, setIsAction] = useState<ListingFeedToolbar.Tools | undefined>(undefined);
+	const [detail, setDetail] = useState(false);
+	const detailSheetId = useId();
 
 	return (
 		<ToolbarContainer {...props}>
-			<LinkTo
-				to={"/$locale/buyer/listing/$id/view"}
-				params={{
-					locale,
-					id: listing.id,
-				}}
-				search={query}
-			>
-				<Button
-					iconEnabled={ArrowRightIcon}
-					tone={"primary"}
-					theme={"light"}
-					size={"xl"}
-					round={"full"}
-				/>
-			</LinkTo>
+			<Button
+				iconEnabled={ShowIcon}
+				tone={"primary"}
+				theme={"light"}
+				size={"xl"}
+				round={"full"}
+				onClick={() => setDetail(true)}
+			/>
 
 			{tools.includes("cart") ? (
 				<ListingCartButton
@@ -114,6 +111,30 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 					}}
 				/>
 			) : null}
+
+			<BottomSheet
+				id={detailSheetId}
+				isOpen={detail}
+				onClose={() => setDetail(false)}
+				detent={"full"}
+			>
+				<Suspense fallback={<SpinnerContainer />}>
+					<ListingDetailContainer
+						_suspense={"I know"}
+						parentSheetId={detailSheetId}
+						locale={locale}
+						query={query}
+						listing={listing}
+						withScore
+					>
+						<ListingDetailMenu
+							_suspense={"I know"}
+							locale={locale}
+							listing={listing}
+						/>
+					</ListingDetailContainer>
+				</Suspense>
+			</BottomSheet>
 		</ToolbarContainer>
 	);
 };

@@ -38,6 +38,7 @@ export { SelectionOffIcon } from "./SelectionOffIcon";
 export { SelectionOnIcon } from "./SelectionOnIcon";
 export { SelectionUnfilterIcon } from "./SelectionUnfilterIcon";
 export { SettingsIcon } from "./SettingsIcon";
+export { ShowIcon } from "./ShowIcon";
 export { SortIcon } from "./SortIcon";
 export { SpinnerIcon } from "./SpinnerIcon";
 export { TagIcon } from "./TagIcon";

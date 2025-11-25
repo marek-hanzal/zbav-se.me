@@ -1,6 +1,7 @@
-import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
+import { ArrowRightIcon, Icon, ShowIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { BadgeValue } from "@use-pico/client/ui/badge";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { CategoryInline } from "@zbav-se.me/common/category";
@@ -8,27 +9,10 @@ import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, type PropsWithChildren, useEffect, useState } from "react";
-import { Sheet } from "react-modal-sheet";
+import { type FC, useEffect, useState } from "react";
 import { ScoreContainer } from "./ScoreContainer";
 
 export namespace ListingDetailContainer {
-	export namespace ScoreBadge {
-		export interface Props extends PropsWithChildren {
-			listing: tListing;
-		}
-
-		export type RenderFn = (props: Props) => React.ReactNode;
-	}
-
-	export namespace SellerBadge {
-		export interface Props extends PropsWithChildren {
-			listing: tListing;
-		}
-
-		export type RenderFn = (props: Props) => React.ReactNode;
-	}
-
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		query: tListingQuery | undefined;
@@ -37,8 +21,10 @@ export namespace ListingDetailContainer {
 		 * Should the listing emit the score event?
 		 */
 		withScore: boolean;
-		renderScoreBadgeFn: ScoreBadge.RenderFn;
-		renderSellerBadgeFn: SellerBadge.RenderFn;
+		/**
+		 * Used for bottom sheet stacking effect.
+		 */
+		parentSheetId: string | undefined;
 	}
 }
 
@@ -49,8 +35,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	listing,
 	children,
 	withScore,
-	renderScoreBadgeFn,
-	renderSellerBadgeFn,
+	parentSheetId,
 	...props
 }) => {
 	const [hero] = listing.gallery.items as [
@@ -136,52 +121,15 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						locale,
 						number: listingMetricsQuery.data.score,
 					})}
-					action={<Icon icon={ArrowRightIcon} />}
+					action={<Icon icon={ShowIcon} />}
 					onClick={() => setScore(true)}
 				/>
 
-				<Sheet
-					isOpen={score}
-					onClose={() => setScore(false)}
-					modalEffectRootId="root"
-					tweenConfig={{
-						ease: "easeOut",
-						duration: 0.15,
-					}}
-				>
-					<Sheet.Container>
-						<Sheet.Header />
-
-						<Sheet.Content disableDrag>
-							<withListingMetricsFetchQuery.Suspense
-								data={listing.id}
-								fallback={<SpinnerContainer />}
-							>
-								{({ data }) => {
-									return (
-										<Container square={"md"}>
-											<ScoreContainer
-												locale={locale}
-												listingMetrics={data}
-											/>
-										</Container>
-									);
-								}}
-							</withListingMetricsFetchQuery.Suspense>
-						</Sheet.Content>
-					</Sheet.Container>
-				</Sheet>
-
-				{renderSellerBadgeFn({
-					listing,
-					children: (
-						<BadgeValue
-							textLabel={"Listing seller hint (label)"}
-							textValue={"- skore + link -"}
-							action={<Icon icon={ArrowRightIcon} />}
-						/>
-					),
-				})}
+				<BadgeValue
+					textLabel={"Listing seller hint (label)"}
+					textValue={"- skore + link -"}
+					action={<Icon icon={ArrowRightIcon} />}
+				/>
 
 				<BadgeValue
 					textLabel={"Listing location (label)"}
@@ -215,6 +163,28 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			</Container>
 
 			{children}
+
+			<BottomSheet
+				isOpen={score}
+				onClose={() => setScore(false)}
+				modalEffectRootId={parentSheetId}
+			>
+				<withListingMetricsFetchQuery.Suspense
+					data={listing.id}
+					fallback={<SpinnerContainer />}
+				>
+					{({ data }) => {
+						return (
+							<Container square={"md"}>
+								<ScoreContainer
+									locale={locale}
+									listingMetrics={data}
+								/>
+							</Container>
+						);
+					}}
+				</withListingMetricsFetchQuery.Suspense>
+			</BottomSheet>
 		</Container>
 	);
 };
