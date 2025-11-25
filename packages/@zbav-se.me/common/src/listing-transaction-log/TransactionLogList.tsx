@@ -51,18 +51,34 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						<>
 							{data.data.map((log) => {
 								return match(log.event)
-									.with("status", () => (
-										<RequestEvent
-											key={log.id}
-											locale={locale}
-											side={side}
-											listingTransactionStatus={zListingTransactionStatus.parse(
-												log,
-											)}
-											SellerInfo={SellerInfo}
-											BuyerInfo={BuyerInfo}
-										/>
-									))
+									.with("status", () => {
+										const status = zListingTransactionStatus.parse(log);
+
+										return match(status.status)
+											.with("request", () => {
+												return (
+													<RequestEvent
+														key={log.id}
+														locale={locale}
+														side={side}
+														listingTransactionStatus={status}
+														SellerInfo={SellerInfo}
+														BuyerInfo={BuyerInfo}
+													/>
+												);
+											})
+											.with(
+												"accepted",
+												"closed",
+												"rejected",
+												"expired",
+												"success",
+												() => {
+													return "not-yet";
+												},
+											)
+											.exhaustive();
+									})
 									.with("message", () => {
 										return (
 											<MessageEvent

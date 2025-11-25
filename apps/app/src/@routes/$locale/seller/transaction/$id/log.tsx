@@ -72,7 +72,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 							sort: [
 								{
 									field: "createdAt",
-									direction: "desc",
+									direction: "asc",
 								},
 							],
 						}}
