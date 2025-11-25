@@ -8,6 +8,7 @@ import {
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { ContextMenu } from "./ContextMenu";
 import { MessageEvent } from "./event/MessageEvent";
 import { RequestEvent } from "./event/status/RequestEvent";
 
@@ -40,33 +41,46 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				fallback={<SpinnerContainer />}
 			>
 				{({ data }) => {
-					return data.data.map((log) => {
-						return match(log.event)
-							.with("status", () => (
-								<RequestEvent
-									key={log.id}
-									locale={locale}
-									side={side}
-									listingTransactionStatus={zListingTransactionStatus.parse(log)}
-									SellerInfo={SellerInfo}
-									BuyerInfo={BuyerInfo}
-								/>
-							))
-							.with("message", () => {
-								return (
-									<MessageEvent
-										key={log.id}
-										locale={locale}
-										side={side}
-										message={zListingTransactionMessage.parse(log)}
-									/>
-								);
-							})
-							.with("gallery", "location", () => {
-								return null;
-							})
-							.exhaustive();
-					});
+					const currentLog = data.data[data.data.length - 1];
+
+					if (!currentLog) {
+						return null;
+					}
+
+					return (
+						<>
+							{data.data.map((log) => {
+								return match(log.event)
+									.with("status", () => (
+										<RequestEvent
+											key={log.id}
+											locale={locale}
+											side={side}
+											listingTransactionStatus={zListingTransactionStatus.parse(
+												log,
+											)}
+											SellerInfo={SellerInfo}
+											BuyerInfo={BuyerInfo}
+										/>
+									))
+									.with("message", () => {
+										return (
+											<MessageEvent
+												key={log.id}
+												locale={locale}
+												side={side}
+												message={zListingTransactionMessage.parse(log)}
+											/>
+										);
+									})
+									.with("gallery", "location", () => {
+										return null;
+									})
+									.exhaustive();
+							})}
+							<ContextMenu transactionLog={currentLog} />
+						</>
+					);
 				}}
 			</withListingTransactionLogCollectionQuery.Suspense>
 		</Container>

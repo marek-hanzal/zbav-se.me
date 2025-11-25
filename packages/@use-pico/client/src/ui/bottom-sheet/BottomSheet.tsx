@@ -8,6 +8,8 @@ export namespace BottomSheet {
 		extends UiProps<PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">>> {
 		//
 	}
+
+	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
 }
 
 export const BottomSheet: FC<BottomSheet.Props> = ({ ui, children, ...props }) => {
