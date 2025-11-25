@@ -13,13 +13,25 @@ import type { FC } from "react";
 import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
 
 export namespace ListingDetailMenu {
+	export type Tools = "transaction" | "cart" | "go-to-cart";
+
 	export interface Props extends Container.Props {
 		locale: string;
 		listing: tListing;
+		tools?: Tools[];
 	}
 }
 
-export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ locale, listing, ...props }) => {
+export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
+	locale,
+	listing,
+	tools = [
+		"transaction",
+		"cart",
+		"go-to-cart",
+	],
+	...props
+}) => {
 	const navigate = useNavigate();
 
 	const listingCartToggle = withListingCartToggleMutation.useMutation();
@@ -38,7 +50,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ locale, listing
 					theme: "light",
 				}}
 			>
-				{listing.hasTransaction ? (
+				{tools.includes("transaction") && listing.hasTransaction ? (
 					<LinkTo
 						to={"/$locale/buyer/transaction/list"}
 						params={{
@@ -56,7 +68,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ locale, listing
 					</LinkTo>
 				) : null}
 
-				{listing.hasTransaction ? null : (
+				{tools.includes("transaction") && listing.hasTransaction ? null : (
 					<ListingTransactionCreateButton
 						listing={listing}
 						onPostMutation={() => {
@@ -70,60 +82,66 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ locale, listing
 					/>
 				)}
 
-				<Button
-					label={listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"}
-					iconEnabled={CartIcon}
-					disabled={listingCartToggle.isPending}
-					loading={listingCartToggle.isPending}
-					theme={"light"}
-					onClick={() =>
-						listingCartToggle.mutate({
-							listingId: listing.id,
-							toggle: !listing.isInCart,
-						})
-					}
-					size={"xl"}
-					full
-				/>
+				{tools.includes("cart") ? (
+					<Button
+						label={
+							listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"
+						}
+						iconEnabled={CartIcon}
+						disabled={listingCartToggle.isPending}
+						loading={listingCartToggle.isPending}
+						theme={"light"}
+						onClick={() =>
+							listingCartToggle.mutate({
+								listingId: listing.id,
+								toggle: !listing.isInCart,
+							})
+						}
+						size={"xl"}
+						full
+					/>
+				) : null}
 
-				<withListingCartCountQuery.Suspense
-					data={{}}
-					fallback={
-						<Button
-							disabled
-							loading
-							label={"Loading cart count (button)"}
-							size={"xl"}
-							full
-						/>
-					}
-				>
-					{({ data }) => {
-						return (
-							<LinkTo
-								to={"/$locale/buyer/cart/list"}
-								params={{
-									locale,
-								}}
-								disabled={data.filter === 0}
+				{tools.includes("go-to-cart") ? (
+					<withListingCartCountQuery.Suspense
+						data={{}}
+						fallback={
+							<Button
+								disabled
+								loading
+								label={"Loading cart count (button)"}
+								size={"xl"}
 								full
-							>
-								<Button
-									iconEnabled={data.filter > 0 ? ArrowRightIcon : undefined}
-									iconPosition={"right"}
+							/>
+						}
+					>
+						{({ data }) => {
+							return (
+								<LinkTo
+									to={"/$locale/buyer/cart/list"}
+									params={{
+										locale,
+									}}
 									disabled={data.filter === 0}
-									label={
-										data.filter > 0
-											? "Go to cart (button)"
-											: "Nothing in cart yet (button)"
-									}
-									size={"xl"}
 									full
-								/>
-							</LinkTo>
-						);
-					}}
-				</withListingCartCountQuery.Suspense>
+								>
+									<Button
+										iconEnabled={data.filter > 0 ? ArrowRightIcon : undefined}
+										iconPosition={"right"}
+										disabled={data.filter === 0}
+										label={
+											data.filter > 0
+												? "Go to cart (button)"
+												: "Nothing in cart yet (button)"
+										}
+										size={"xl"}
+										full
+									/>
+								</LinkTo>
+							);
+						}}
+					</withListingCartCountQuery.Suspense>
+				) : null}
 			</VariantProvider>
 		</Container>
 	);
