@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { match } from "ts-pattern";
 
 export namespace useSideSwitch {
-	export type Type = "buyer" | "seller" | "buyer-seller" | "seller-buyer" | "unknown";
+	export type Type = "buyer" | "seller" | "buyer-to-seller" | "seller-to-buyer" | "unknown";
 
 	export namespace Render {
 		export type RenderFn<TProps extends object> = (props: TProps) => ReactNode;
@@ -70,7 +70,7 @@ export const useSideSwitch = <TProps extends object>({
 
 			if (actor === "seller") {
 				return {
-					type: "buyer-seller",
+					type: "seller-to-buyer",
 					render: renderSellerToBuyerFn,
 				} as const;
 			}
@@ -90,7 +90,7 @@ export const useSideSwitch = <TProps extends object>({
 
 			if (actor === "buyer") {
 				return {
-					type: "seller-buyer",
+					type: "buyer-to-seller",
 					render: renderBuyerToSellerFn,
 				} as const;
 			}

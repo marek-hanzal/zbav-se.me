@@ -34,7 +34,10 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 			listingTransactionStatus={listingTransactionStatus}
 			renderSellerFn={undefined}
 			renderBuyerFn={(props) => (
-				<Badge {...props}>
+				<Badge
+					ui={"RequestEvent-Buyer"}
+					{...props}
+				>
 					<Typo
 						label={toTimeDiff({
 							locale,
@@ -48,7 +51,10 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 				</Badge>
 			)}
 			renderBuyerToSellerFn={(props) => (
-				<Badge {...props}>
+				<Badge
+					ui={"RequestEvent-BuyerToSeller"}
+					{...props}
+				>
 					<Typo
 						label={toTimeDiff({
 							locale,

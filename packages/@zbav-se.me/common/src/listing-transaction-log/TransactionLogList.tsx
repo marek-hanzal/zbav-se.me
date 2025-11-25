@@ -1,8 +1,4 @@
-import { Badge } from "@use-pico/client/ui/badge";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Markdown } from "@use-pico/client/ui/markdown";
-import { Typo } from "@use-pico/client/ui/typo";
-import { toTimeDiff } from "@use-pico/common/time";
 import {
 	type tListingTransactionLogQuery,
 	type tUserSideEnum,
@@ -12,7 +8,7 @@ import {
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { EventBadge } from "./EventBadge";
+import { MessageEvent } from "./event/MessageEvent";
 import { RequestEvent } from "./event/status/RequestEvent";
 
 export namespace TransactionLogList {
@@ -34,7 +30,11 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	...props
 }) => {
 	return (
-		<Container {...props}>
+		<Container
+			layout={"vertical-flex"}
+			gap={"md"}
+			{...props}
+		>
 			<withListingTransactionLogCollectionQuery.Suspense
 				data={query}
 				fallback={<SpinnerContainer />}
@@ -53,47 +53,12 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								/>
 							))
 							.with("message", () => {
-								const message = zListingTransactionMessage.parse(log);
-
 								return (
-									<EventBadge
+									<MessageEvent
 										key={log.id}
+										locale={locale}
 										side={side}
-										actor={message.side}
-										renderSellerFn={undefined}
-										renderBuyerFn={undefined}
-										renderBuyerToSellerFn={(props) => {
-											return (
-												<Badge {...props}>
-													<Typo
-														label={toTimeDiff({
-															locale,
-															time: message.createdAt,
-														})}
-														font={"normal"}
-														size={"sm"}
-													/>
-
-													<Markdown>{message.message}</Markdown>
-												</Badge>
-											);
-										}}
-										renderSellerToBuyerFn={(props) => {
-											return (
-												<Badge {...props}>
-													<Typo
-														label={toTimeDiff({
-															locale,
-															time: message.createdAt,
-														})}
-														font={"normal"}
-														size={"sm"}
-													/>
-
-													<Markdown>{message.message}</Markdown>
-												</Badge>
-											);
-										}}
+										message={zListingTransactionMessage.parse(log)}
 									/>
 								);
 							})
