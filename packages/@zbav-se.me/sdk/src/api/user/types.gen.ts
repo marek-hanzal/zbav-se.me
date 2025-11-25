@@ -199,155 +199,6 @@ export const tAllowedExtensionsEnum = {
 export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof tAllowedExtensionsEnum];
 
 /**
- * Data for creating a new listing score
- */
-export type tListingScoreCreate = {
-    /**
-     * ID of the listing to score
-     */
-    listingId: string;
-    score: tListingScoreTypeEnum;
-};
-
-/**
- * Type of listing score
- */
-export const tListingScoreTypeEnum = {
-    listing: 'listing',
-    ignore: 'ignore',
-    flag: 'flag',
-    view: 'view',
-    cart: 'cart'
-} as const;
-
-/**
- * Type of listing score
- */
-export type tListingScoreTypeEnum = typeof tListingScoreTypeEnum[keyof typeof tListingScoreTypeEnum];
-
-/**
- * Query object for listing score count
- */
-export type tListingScoreCountQuery = {
-    filter?: tListingScoreFilter;
-    where?: tListingScoreWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingScoreWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for listing score collection
- */
-export type tListingScoreFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for listing score collection
- */
-export type tListingScoreQuery = {
-    cursor?: tCursor;
-    filter?: tListingScoreFilter;
-    where?: tListingScoreWhere;
-    sort?: Array<tListingScoreSort>;
-};
-
-/**
- * Field of the listing score sort
- */
-export const tListingScoreSortField = { score: 'score', createdAt: 'createdAt' } as const;
-
-/**
- * Field of the listing score sort
- */
-export type tListingScoreSortField = typeof tListingScoreSortField[keyof typeof tListingScoreSortField];
-
-/**
- * Sort object for listing score collection
- */
-export type tListingScoreSort = {
-    field: tListingScoreSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of listing scores
- */
-export type tListingScoreCollection = {
-    data: Array<tListingScore>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Listing score data
- */
-export type tListingScore = {
-    /**
-     * ID of the score
-     */
-    id: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    type: tListingScoreTypeEnum;
-    /**
-     * Score value
-     */
-    score: number;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
  * Query object for listing transaction log collection
  */
 export type tListingTransactionLogQuery = {
@@ -582,6 +433,26 @@ export type tListingTransactionStatus = {
 export type tListingTransactionLog = tListingTransactionStatus | tListingTransactionMessage | tListingTransactionLocation | tListingTransactionGallery;
 
 /**
+ * Request to reject a listing transaction
+ */
+export type tListingTransactionStatusReject = {
+    /**
+     * The ID of the listing transaction to reject
+     */
+    listingTransactionId: string;
+};
+
+/**
+ * Request to accept a listing transaction
+ */
+export type tListingTransactionStatusAccept = {
+    /**
+     * The ID of the listing transaction to accept
+     */
+    listingTransactionId: string;
+};
+
+/**
  * Buyer info for the listing transaction
  */
 export type tListingTransactionBuyerInfo = {
@@ -771,6 +642,282 @@ export type tListingTransaction = {
 };
 
 /**
+ * Data for creating a new listing score
+ */
+export type tListingScoreCreate = {
+    /**
+     * ID of the listing to score
+     */
+    listingId: string;
+    score: tListingScoreTypeEnum;
+};
+
+/**
+ * Type of listing score
+ */
+export const tListingScoreTypeEnum = {
+    listing: 'listing',
+    ignore: 'ignore',
+    flag: 'flag',
+    view: 'view',
+    cart: 'cart'
+} as const;
+
+/**
+ * Type of listing score
+ */
+export type tListingScoreTypeEnum = typeof tListingScoreTypeEnum[keyof typeof tListingScoreTypeEnum];
+
+/**
+ * Query object for listing score count
+ */
+export type tListingScoreCountQuery = {
+    filter?: tListingScoreFilter;
+    where?: tListingScoreWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingScoreWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for listing score collection
+ */
+export type tListingScoreFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for listing score collection
+ */
+export type tListingScoreQuery = {
+    cursor?: tCursor;
+    filter?: tListingScoreFilter;
+    where?: tListingScoreWhere;
+    sort?: Array<tListingScoreSort>;
+};
+
+/**
+ * Field of the listing score sort
+ */
+export const tListingScoreSortField = { score: 'score', createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the listing score sort
+ */
+export type tListingScoreSortField = typeof tListingScoreSortField[keyof typeof tListingScoreSortField];
+
+/**
+ * Sort object for listing score collection
+ */
+export type tListingScoreSort = {
+    field: tListingScoreSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Collection of listing scores
+ */
+export type tListingScoreCollection = {
+    data: Array<tListingScore>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing score data
+ */
+export type tListingScore = {
+    /**
+     * ID of the score
+     */
+    id: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    type: tListingScoreTypeEnum;
+    /**
+     * Score value
+     */
+    score: number;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+};
+
+/**
+ * Data for toggling a listing in ignore list
+ */
+export type tListingIgnoreToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from ignore list
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for listing ignore count
+ */
+export type tListingIgnoreCountQuery = {
+    filter?: tListingIgnoreFilter;
+    where?: tListingIgnoreWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingIgnoreWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for listing ignore collection
+ */
+export type tListingIgnoreFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for listing ignore collection
+ */
+export type tListingIgnoreQuery = {
+    cursor?: tCursor;
+    filter?: tListingIgnoreFilter;
+    where?: tListingIgnoreWhere;
+    sort?: Array<tListingIgnoreSort>;
+};
+
+/**
+ * Field of the listing ignore sort
+ */
+export const tListingIgnoreSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the listing ignore sort
+ */
+export type tListingIgnoreSortField = typeof tListingIgnoreSortField[keyof typeof tListingIgnoreSortField];
+
+/**
+ * Sort object for listing ignore collection
+ */
+export type tListingIgnoreSort = {
+    field: tListingIgnoreSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Collection of listing ignore items
+ */
+export type tListingIgnoreCollection = {
+    data: Array<tListingIgnore>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Listing ignore data
+ */
+export type tListingIgnore = {
+    /**
+     * ID of the ignore entry
+     */
+    id: string;
+    /**
+     * ID of the listing that was ignored
+     */
+    listingId: string;
+};
+
+/**
  * Data for toggling a flag on a listing
  */
 export type tListingFlagToggle = {
@@ -919,133 +1066,6 @@ export type tListingFlag = {
     id: string;
     /**
      * ID of the listing
-     */
-    listingId: string;
-};
-
-/**
- * Data for toggling a listing in ignore list
- */
-export type tListingIgnoreToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from ignore list
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for listing ignore count
- */
-export type tListingIgnoreCountQuery = {
-    filter?: tListingIgnoreFilter;
-    where?: tListingIgnoreWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingIgnoreWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for listing ignore collection
- */
-export type tListingIgnoreFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for listing ignore collection
- */
-export type tListingIgnoreQuery = {
-    cursor?: tCursor;
-    filter?: tListingIgnoreFilter;
-    where?: tListingIgnoreWhere;
-    sort?: Array<tListingIgnoreSort>;
-};
-
-/**
- * Field of the listing ignore sort
- */
-export const tListingIgnoreSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the listing ignore sort
- */
-export type tListingIgnoreSortField = typeof tListingIgnoreSortField[keyof typeof tListingIgnoreSortField];
-
-/**
- * Sort object for listing ignore collection
- */
-export type tListingIgnoreSort = {
-    field: tListingIgnoreSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of listing ignore items
- */
-export type tListingIgnoreCollection = {
-    data: Array<tListingIgnore>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Listing ignore data
- */
-export type tListingIgnore = {
-    /**
-     * ID of the ignore entry
-     */
-    id: string;
-    /**
-     * ID of the listing that was ignored
      */
     listingId: string;
 };
@@ -2707,6 +2727,89 @@ export type tApiListingCartToggleResponse = {
 
 export type apiListingCartToggleResponse = tApiListingCartToggleResponse[keyof tApiListingCartToggleResponse];
 
+export type tApiListingFlagCollectionRequest = {
+    body?: tListingFlagQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-flag/collection';
+};
+
+export type apiListingFlagCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingFlagCollectionError = apiListingFlagCollectionErrors[keyof apiListingFlagCollectionErrors];
+
+export type tApiListingFlagCollectionResponse = {
+    /**
+     * Access collection of listing flag items based on provided query
+     */
+    200: tListingFlagCollection;
+};
+
+export type apiListingFlagCollectionResponse = tApiListingFlagCollectionResponse[keyof tApiListingFlagCollectionResponse];
+
+export type tApiListingFlagCountRequest = {
+    body?: tListingFlagCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-flag/count';
+};
+
+export type apiListingFlagCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingFlagCountError = apiListingFlagCountErrors[keyof apiListingFlagCountErrors];
+
+export type tApiListingFlagCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiListingFlagCountResponse = tApiListingFlagCountResponse[keyof tApiListingFlagCountResponse];
+
+export type tApiListingFlagToggleRequest = {
+    body?: tListingFlagToggle;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-flag/toggle';
+};
+
+export type apiListingFlagToggleErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingFlagToggleError = apiListingFlagToggleErrors[keyof apiListingFlagToggleErrors];
+
+export type tApiListingFlagToggleResponse = {
+    /**
+     * Nothing to say, we're just happy
+     */
+    204: void;
+};
+
+export type apiListingFlagToggleResponse = tApiListingFlagToggleResponse[keyof tApiListingFlagToggleResponse];
+
 export type tApiListingIgnoreCollectionRequest = {
     body?: tListingIgnoreQuery;
     path?: never;
@@ -2790,66 +2893,69 @@ export type tApiListingIgnoreToggleResponse = {
 
 export type apiListingIgnoreToggleResponse = tApiListingIgnoreToggleResponse[keyof tApiListingIgnoreToggleResponse];
 
-export type tApiListingFlagCollectionRequest = {
-    body?: tListingFlagQuery;
+export type tApiListingScoreCollectionRequest = {
+    body?: tListingScoreQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-flag/collection';
+    url: '/api/user/listing-score/collection';
 };
 
-export type apiListingFlagCollectionErrors = {
+export type apiListingScoreCollectionErrors = {
     /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingFlagCollectionError = apiListingFlagCollectionErrors[keyof apiListingFlagCollectionErrors];
+export type apiListingScoreCollectionError = apiListingScoreCollectionErrors[keyof apiListingScoreCollectionErrors];
 
-export type tApiListingFlagCollectionResponse = {
+export type tApiListingScoreCollectionResponse = {
     /**
-     * Access collection of listing flag items based on provided query
+     * Access collection of listing scores based on provided query
      */
-    200: tListingFlagCollection;
+    200: tListingScoreCollection;
 };
 
-export type apiListingFlagCollectionResponse = tApiListingFlagCollectionResponse[keyof tApiListingFlagCollectionResponse];
+export type apiListingScoreCollectionResponse = tApiListingScoreCollectionResponse[keyof tApiListingScoreCollectionResponse];
 
-export type tApiListingFlagCountRequest = {
-    body?: tListingFlagCountQuery;
+export type tApiListingScoreCountRequest = {
+    body?: tListingScoreCountQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-flag/count';
+    url: '/api/user/listing-score/count';
 };
 
-export type apiListingFlagCountErrors = {
+export type apiListingScoreCountErrors = {
     /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingFlagCountError = apiListingFlagCountErrors[keyof apiListingFlagCountErrors];
+export type apiListingScoreCountError = apiListingScoreCountErrors[keyof apiListingScoreCountErrors];
 
-export type tApiListingFlagCountResponse = {
+export type tApiListingScoreCountResponse = {
     /**
      * Return counts based on provided query
      */
     200: tCount;
 };
 
-export type apiListingFlagCountResponse = tApiListingFlagCountResponse[keyof tApiListingFlagCountResponse];
+export type apiListingScoreCountResponse = tApiListingScoreCountResponse[keyof tApiListingScoreCountResponse];
 
-export type tApiListingFlagToggleRequest = {
-    body?: tListingFlagToggle;
+export type tApiListingScoreCreateRequest = {
+    /**
+     * Data for creating a new listing score
+     */
+    body?: tListingScoreCreate;
     path?: never;
     query?: never;
-    url: '/api/user/listing-flag/toggle';
+    url: '/api/user/listing-score/create';
 };
 
-export type apiListingFlagToggleErrors = {
+export type apiListingScoreCreateErrors = {
     /**
-     * Invalid request
+     * Cannot score your own listing
      */
     400: tMessage;
     /**
@@ -2857,21 +2963,23 @@ export type apiListingFlagToggleErrors = {
      */
     404: tMessage;
     /**
+     * Too many requests - please wait between scores
+     */
+    429: tMessage;
+    /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingFlagToggleError = apiListingFlagToggleErrors[keyof apiListingFlagToggleErrors];
+export type apiListingScoreCreateError = apiListingScoreCreateErrors[keyof apiListingScoreCreateErrors];
 
-export type tApiListingFlagToggleResponse = {
+export type tApiListingScoreCreateResponse = {
     /**
-     * Nothing to say, we're just happy
+     * The listing score was created
      */
-    204: void;
+    201: unknown;
 };
-
-export type apiListingFlagToggleResponse = tApiListingFlagToggleResponse[keyof tApiListingFlagToggleResponse];
 
 export type tApiListingTransactionCollectionRequest = {
     body?: tListingTransactionQuery;
@@ -3060,6 +3168,78 @@ export type tApiListingTransactionBuyerInfoResponse = {
 
 export type apiListingTransactionBuyerInfoResponse = tApiListingTransactionBuyerInfoResponse[keyof tApiListingTransactionBuyerInfoResponse];
 
+export type tApiListingTransactionStatusAcceptRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tListingTransactionStatusAccept;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-transaction/status/accept';
+};
+
+export type apiListingTransactionStatusAcceptErrors = {
+    /**
+     * Access denied
+     */
+    403: tMessage;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionStatusAcceptError = apiListingTransactionStatusAcceptErrors[keyof apiListingTransactionStatusAcceptErrors];
+
+export type tApiListingTransactionStatusAcceptResponse = {
+    /**
+     * Accepted status created
+     */
+    200: tListingTransactionStatus;
+};
+
+export type apiListingTransactionStatusAcceptResponse = tApiListingTransactionStatusAcceptResponse[keyof tApiListingTransactionStatusAcceptResponse];
+
+export type tApiListingTransactionStatusRejectRequest = {
+    /**
+     * Query object for listing transaction access validation
+     */
+    body?: tListingTransactionStatusReject;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-transaction/status/reject';
+};
+
+export type apiListingTransactionStatusRejectErrors = {
+    /**
+     * Access denied
+     */
+    403: tMessage;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionStatusRejectError = apiListingTransactionStatusRejectErrors[keyof apiListingTransactionStatusRejectErrors];
+
+export type tApiListingTransactionStatusRejectResponse = {
+    /**
+     * Rejected status created
+     */
+    200: tListingTransactionStatus;
+};
+
+export type apiListingTransactionStatusRejectResponse = tApiListingTransactionStatusRejectResponse[keyof tApiListingTransactionStatusRejectResponse];
+
 export type tApiListingTransactionLogCollectionRequest = {
     body?: tListingTransactionLogQuery;
     path?: never;
@@ -3084,94 +3264,6 @@ export type tApiListingTransactionLogCollectionResponse = {
 };
 
 export type apiListingTransactionLogCollectionResponse = tApiListingTransactionLogCollectionResponse[keyof tApiListingTransactionLogCollectionResponse];
-
-export type tApiListingScoreCollectionRequest = {
-    body?: tListingScoreQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-score/collection';
-};
-
-export type apiListingScoreCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingScoreCollectionError = apiListingScoreCollectionErrors[keyof apiListingScoreCollectionErrors];
-
-export type tApiListingScoreCollectionResponse = {
-    /**
-     * Access collection of listing scores based on provided query
-     */
-    200: tListingScoreCollection;
-};
-
-export type apiListingScoreCollectionResponse = tApiListingScoreCollectionResponse[keyof tApiListingScoreCollectionResponse];
-
-export type tApiListingScoreCountRequest = {
-    body?: tListingScoreCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-score/count';
-};
-
-export type apiListingScoreCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingScoreCountError = apiListingScoreCountErrors[keyof apiListingScoreCountErrors];
-
-export type tApiListingScoreCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiListingScoreCountResponse = tApiListingScoreCountResponse[keyof tApiListingScoreCountResponse];
-
-export type tApiListingScoreCreateRequest = {
-    /**
-     * Data for creating a new listing score
-     */
-    body?: tListingScoreCreate;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-score/create';
-};
-
-export type apiListingScoreCreateErrors = {
-    /**
-     * Cannot score your own listing
-     */
-    400: tMessage;
-    /**
-     * Listing not found
-     */
-    404: tMessage;
-    /**
-     * Too many requests - please wait between scores
-     */
-    429: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingScoreCreateError = apiListingScoreCreateErrors[keyof apiListingScoreCreateErrors];
-
-export type tApiListingScoreCreateResponse = {
-    /**
-     * The listing score was created
-     */
-    201: unknown;
-};
 
 export type tApiS3PresignRequest = {
     body: {

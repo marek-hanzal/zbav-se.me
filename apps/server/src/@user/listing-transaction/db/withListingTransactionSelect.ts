@@ -26,6 +26,7 @@ export const withListingTransactionSelect = ({
 			"lt.createdAt",
 			"lt.updatedAt",
 			"lt.expiresAt",
+			"lt.userId",
 			"l.title",
 		]);
 

@@ -2,8 +2,8 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { apiCategoryCartCollectionErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFetchErrors, apiFeedPatchErrors, apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiListingCartCollectionErrors, apiListingCartCountErrors, apiListingCartToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingFetchErrors, apiListingFlagCollectionErrors, apiListingFlagCountErrors, apiListingFlagToggleErrors, apiListingIgnoreCollectionErrors, apiListingIgnoreCountErrors, apiListingIgnoreToggleErrors, apiListingMetricsFetchErrors, apiListingScoreCollectionErrors, apiListingScoreCountErrors, apiListingScoreCreateErrors, apiListingTransactionBuyerInfoErrors, apiListingTransactionCollectionErrors, apiListingTransactionCreateErrors, apiListingTransactionFetchErrors, apiListingTransactionLogCollectionErrors, apiListingTransactionPatchErrors, apiListingTransactionSellerInfoErrors, apiS3PresignErrors, apiUploadCollectionErrors, apiUploadCountErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiCategoryCartCollectionRequest, tApiCategoryCartCollectionResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiListingCartCollectionRequest, tApiListingCartCollectionResponse, tApiListingCartCountRequest, tApiListingCartCountResponse, tApiListingCartToggleRequest, tApiListingCartToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingFlagCollectionRequest, tApiListingFlagCollectionResponse, tApiListingFlagCountRequest, tApiListingFlagCountResponse, tApiListingFlagToggleRequest, tApiListingFlagToggleResponse, tApiListingIgnoreCollectionRequest, tApiListingIgnoreCollectionResponse, tApiListingIgnoreCountRequest, tApiListingIgnoreCountResponse, tApiListingIgnoreToggleRequest, tApiListingIgnoreToggleResponse, tApiListingMetricsFetchRequest, tApiListingMetricsFetchResponse, tApiListingScoreCollectionRequest, tApiListingScoreCollectionResponse, tApiListingScoreCountRequest, tApiListingScoreCountResponse, tApiListingScoreCreateRequest, tApiListingScoreCreateResponse, tApiListingTransactionBuyerInfoRequest, tApiListingTransactionBuyerInfoResponse, tApiListingTransactionCollectionRequest, tApiListingTransactionCollectionResponse, tApiListingTransactionCreateRequest, tApiListingTransactionCreateResponse, tApiListingTransactionFetchRequest, tApiListingTransactionFetchResponse, tApiListingTransactionLogCollectionRequest, tApiListingTransactionLogCollectionResponse, tApiListingTransactionPatchRequest, tApiListingTransactionPatchResponse, tApiListingTransactionSellerInfoRequest, tApiListingTransactionSellerInfoResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
-import { zApiCategoryCartCollectionData, zApiCategoryCartCollectionResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiListingCartCollectionData, zApiListingCartCollectionResponse, zApiListingCartCountData, zApiListingCartCountResponse, zApiListingCartToggleData, zApiListingCartToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingFlagCollectionData, zApiListingFlagCollectionResponse, zApiListingFlagCountData, zApiListingFlagCountResponse, zApiListingFlagToggleData, zApiListingFlagToggleResponse, zApiListingIgnoreCollectionData, zApiListingIgnoreCollectionResponse, zApiListingIgnoreCountData, zApiListingIgnoreCountResponse, zApiListingIgnoreToggleData, zApiListingIgnoreToggleResponse, zApiListingMetricsFetchData, zApiListingMetricsFetchResponse, zApiListingScoreCollectionData, zApiListingScoreCollectionResponse, zApiListingScoreCountData, zApiListingScoreCountResponse, zApiListingScoreCreateData, zApiListingTransactionBuyerInfoData, zApiListingTransactionBuyerInfoResponse, zApiListingTransactionCollectionData, zApiListingTransactionCollectionResponse, zApiListingTransactionCreateData, zApiListingTransactionFetchData, zApiListingTransactionFetchResponse, zApiListingTransactionLogCollectionData, zApiListingTransactionLogCollectionResponse, zApiListingTransactionPatchData, zApiListingTransactionPatchResponse, zApiListingTransactionSellerInfoData, zApiListingTransactionSellerInfoResponse, zApiS3PresignData, zApiS3PresignResponse, zApiUploadCollectionData, zApiUploadCollectionResponse, zApiUploadCountData, zApiUploadCountResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
+import type { apiCategoryCartCollectionErrors, apiFeedCollectionErrors, apiFeedCountErrors, apiFeedCreateErrors, apiFeedDeleteErrors, apiFeedFetchErrors, apiFeedPatchErrors, apiGalleryCollectionErrors, apiGalleryCountErrors, apiGalleryFetchErrors, apiListingCartCollectionErrors, apiListingCartCountErrors, apiListingCartToggleErrors, apiListingCollectionErrors, apiListingCountErrors, apiListingCreateErrors, apiListingFetchErrors, apiListingFlagCollectionErrors, apiListingFlagCountErrors, apiListingFlagToggleErrors, apiListingIgnoreCollectionErrors, apiListingIgnoreCountErrors, apiListingIgnoreToggleErrors, apiListingMetricsFetchErrors, apiListingScoreCollectionErrors, apiListingScoreCountErrors, apiListingScoreCreateErrors, apiListingTransactionBuyerInfoErrors, apiListingTransactionCollectionErrors, apiListingTransactionCreateErrors, apiListingTransactionFetchErrors, apiListingTransactionLogCollectionErrors, apiListingTransactionPatchErrors, apiListingTransactionSellerInfoErrors, apiListingTransactionStatusAcceptErrors, apiListingTransactionStatusRejectErrors, apiS3PresignErrors, apiUploadCollectionErrors, apiUploadCountErrors, apiUploadCreateErrors, apiUploadFetchErrors, apiUserExPatchErrors, tApiCategoryCartCollectionRequest, tApiCategoryCartCollectionResponse, tApiFeedCollectionRequest, tApiFeedCollectionResponse, tApiFeedCountRequest, tApiFeedCountResponse, tApiFeedCreateRequest, tApiFeedCreateResponse, tApiFeedDeleteRequest, tApiFeedDeleteResponse, tApiFeedFetchRequest, tApiFeedFetchResponse, tApiFeedPatchRequest, tApiFeedPatchResponse, tApiGalleryCollectionRequest, tApiGalleryCollectionResponse, tApiGalleryCountRequest, tApiGalleryCountResponse, tApiGalleryFetchRequest, tApiGalleryFetchResponse, tApiListingCartCollectionRequest, tApiListingCartCollectionResponse, tApiListingCartCountRequest, tApiListingCartCountResponse, tApiListingCartToggleRequest, tApiListingCartToggleResponse, tApiListingCollectionRequest, tApiListingCollectionResponse, tApiListingCountRequest, tApiListingCountResponse, tApiListingCreateRequest, tApiListingCreateResponse, tApiListingFetchRequest, tApiListingFetchResponse, tApiListingFlagCollectionRequest, tApiListingFlagCollectionResponse, tApiListingFlagCountRequest, tApiListingFlagCountResponse, tApiListingFlagToggleRequest, tApiListingFlagToggleResponse, tApiListingIgnoreCollectionRequest, tApiListingIgnoreCollectionResponse, tApiListingIgnoreCountRequest, tApiListingIgnoreCountResponse, tApiListingIgnoreToggleRequest, tApiListingIgnoreToggleResponse, tApiListingMetricsFetchRequest, tApiListingMetricsFetchResponse, tApiListingScoreCollectionRequest, tApiListingScoreCollectionResponse, tApiListingScoreCountRequest, tApiListingScoreCountResponse, tApiListingScoreCreateRequest, tApiListingScoreCreateResponse, tApiListingTransactionBuyerInfoRequest, tApiListingTransactionBuyerInfoResponse, tApiListingTransactionCollectionRequest, tApiListingTransactionCollectionResponse, tApiListingTransactionCreateRequest, tApiListingTransactionCreateResponse, tApiListingTransactionFetchRequest, tApiListingTransactionFetchResponse, tApiListingTransactionLogCollectionRequest, tApiListingTransactionLogCollectionResponse, tApiListingTransactionPatchRequest, tApiListingTransactionPatchResponse, tApiListingTransactionSellerInfoRequest, tApiListingTransactionSellerInfoResponse, tApiListingTransactionStatusAcceptRequest, tApiListingTransactionStatusAcceptResponse, tApiListingTransactionStatusRejectRequest, tApiListingTransactionStatusRejectResponse, tApiS3PresignRequest, tApiS3PresignResponse, tApiUploadCollectionRequest, tApiUploadCollectionResponse, tApiUploadCountRequest, tApiUploadCountResponse, tApiUploadCreateRequest, tApiUploadCreateResponse, tApiUploadFetchRequest, tApiUploadFetchResponse, tApiUserExPatchRequest, tApiUserExPatchResponse } from './types.gen';
+import { zApiCategoryCartCollectionData, zApiCategoryCartCollectionResponse, zApiFeedCollectionData, zApiFeedCollectionResponse, zApiFeedCountData, zApiFeedCountResponse, zApiFeedCreateData, zApiFeedCreateResponse, zApiFeedDeleteData, zApiFeedDeleteResponse, zApiFeedFetchData, zApiFeedFetchResponse, zApiFeedPatchData, zApiFeedPatchResponse, zApiGalleryCollectionData, zApiGalleryCollectionResponse, zApiGalleryCountData, zApiGalleryCountResponse, zApiGalleryFetchData, zApiGalleryFetchResponse, zApiListingCartCollectionData, zApiListingCartCollectionResponse, zApiListingCartCountData, zApiListingCartCountResponse, zApiListingCartToggleData, zApiListingCartToggleResponse, zApiListingCollectionData, zApiListingCollectionResponse, zApiListingCountData, zApiListingCountResponse, zApiListingCreateData, zApiListingCreateResponse, zApiListingFetchData, zApiListingFetchResponse, zApiListingFlagCollectionData, zApiListingFlagCollectionResponse, zApiListingFlagCountData, zApiListingFlagCountResponse, zApiListingFlagToggleData, zApiListingFlagToggleResponse, zApiListingIgnoreCollectionData, zApiListingIgnoreCollectionResponse, zApiListingIgnoreCountData, zApiListingIgnoreCountResponse, zApiListingIgnoreToggleData, zApiListingIgnoreToggleResponse, zApiListingMetricsFetchData, zApiListingMetricsFetchResponse, zApiListingScoreCollectionData, zApiListingScoreCollectionResponse, zApiListingScoreCountData, zApiListingScoreCountResponse, zApiListingScoreCreateData, zApiListingTransactionBuyerInfoData, zApiListingTransactionBuyerInfoResponse, zApiListingTransactionCollectionData, zApiListingTransactionCollectionResponse, zApiListingTransactionCreateData, zApiListingTransactionFetchData, zApiListingTransactionFetchResponse, zApiListingTransactionLogCollectionData, zApiListingTransactionLogCollectionResponse, zApiListingTransactionPatchData, zApiListingTransactionPatchResponse, zApiListingTransactionSellerInfoData, zApiListingTransactionSellerInfoResponse, zApiListingTransactionStatusAcceptData, zApiListingTransactionStatusAcceptResponse, zApiListingTransactionStatusRejectData, zApiListingTransactionStatusRejectResponse, zApiS3PresignData, zApiS3PresignResponse, zApiUploadCollectionData, zApiUploadCollectionResponse, zApiUploadCountData, zApiUploadCountResponse, zApiUploadCreateData, zApiUploadCreateResponse, zApiUploadFetchData, zApiUploadFetchResponse, zApiUserExPatchData, zApiUserExPatchResponse } from './zod.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -285,6 +285,50 @@ export const apiListingCartToggle = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Returns listing flag items based on provided parameters
+ */
+export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagCollectionResponse, apiListingFlagCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFlagCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingFlagCollectionResponse.parseAsync(data),
+    url: '/api/user/listing-flag/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Returns count of listing flag items based on provided query
+ */
+export const apiListingFlagCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagCountResponse, apiListingFlagCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFlagCountData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingFlagCountResponse.parseAsync(data),
+    url: '/api/user/listing-flag/count',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Toggle flag state on listing (add or remove)
+ */
+export const apiListingFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagToggleResponse, apiListingFlagToggleErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingFlagToggleData.parseAsync(data),
+    responseValidator: async (data) => await zApiListingFlagToggleResponse.parseAsync(data),
+    url: '/api/user/listing-flag/toggle',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
  * Returns listing ignore items based on provided parameters
  */
 export const apiListingIgnoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingIgnoreCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingIgnoreCollectionResponse, apiListingIgnoreCollectionErrors, ThrowOnError>({
@@ -329,13 +373,13 @@ export const apiListingIgnoreToggle = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Returns listing flag items based on provided parameters
+ * Returns listing scores based on provided parameters
  */
-export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagCollectionResponse, apiListingFlagCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingFlagCollectionData.parseAsync(data),
+export const apiListingScoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCollectionResponse, apiListingScoreCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingScoreCollectionData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiListingFlagCollectionResponse.parseAsync(data),
-    url: '/api/user/listing-flag/collection',
+    responseValidator: async (data) => await zApiListingScoreCollectionResponse.parseAsync(data),
+    url: '/api/user/listing-score/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -344,13 +388,13 @@ export const apiListingFlagCollection = <ThrowOnError extends boolean = false>(o
 });
 
 /**
- * Returns count of listing flag items based on provided query
+ * Returns count of listing scores based on provided query
  */
-export const apiListingFlagCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagCountResponse, apiListingFlagCountErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingFlagCountData.parseAsync(data),
+export const apiListingScoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCountResponse, apiListingScoreCountErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingScoreCountData.parseAsync(data),
     responseType: 'json',
-    responseValidator: async (data) => await zApiListingFlagCountResponse.parseAsync(data),
-    url: '/api/user/listing-flag/count',
+    responseValidator: async (data) => await zApiListingScoreCountResponse.parseAsync(data),
+    url: '/api/user/listing-score/count',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -359,12 +403,11 @@ export const apiListingFlagCount = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Toggle flag state on listing (add or remove)
+ * Create a new listing score
  */
-export const apiListingFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiListingFlagToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingFlagToggleResponse, apiListingFlagToggleErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingFlagToggleData.parseAsync(data),
-    responseValidator: async (data) => await zApiListingFlagToggleResponse.parseAsync(data),
-    url: '/api/user/listing-flag/toggle',
+export const apiListingScoreCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCreateResponse, apiListingScoreCreateErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingScoreCreateData.parseAsync(data),
+    url: '/api/user/listing-score/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -461,6 +504,36 @@ export const apiListingTransactionBuyerInfo = <ThrowOnError extends boolean = fa
 });
 
 /**
+ * Accept a listing transaction. Requires access to the transaction.
+ */
+export const apiListingTransactionStatusAccept = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionStatusAcceptRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionStatusAcceptResponse, apiListingTransactionStatusAcceptErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionStatusAcceptData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionStatusAcceptResponse.parseAsync(data),
+    url: '/api/user/listing-transaction/status/accept',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
+ * Reject a listing transaction. Requires access to the transaction.
+ */
+export const apiListingTransactionStatusReject = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionStatusRejectRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionStatusRejectResponse, apiListingTransactionStatusRejectErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionStatusRejectData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionStatusRejectResponse.parseAsync(data),
+    url: '/api/user/listing-transaction/status/reject',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
  * Returns listing transaction log entries based on provided parameters
  */
 export const apiListingTransactionLogCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionLogCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionLogCollectionResponse, apiListingTransactionLogCollectionErrors, ThrowOnError>({
@@ -468,49 +541,6 @@ export const apiListingTransactionLogCollection = <ThrowOnError extends boolean 
     responseType: 'json',
     responseValidator: async (data) => await zApiListingTransactionLogCollectionResponse.parseAsync(data),
     url: '/api/user/listing-transaction-log/collection',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Returns listing scores based on provided parameters
- */
-export const apiListingScoreCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCollectionResponse, apiListingScoreCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingScoreCollectionData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingScoreCollectionResponse.parseAsync(data),
-    url: '/api/user/listing-score/collection',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Returns count of listing scores based on provided query
- */
-export const apiListingScoreCount = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCountRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCountResponse, apiListingScoreCountErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingScoreCountData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingScoreCountResponse.parseAsync(data),
-    url: '/api/user/listing-score/count',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Create a new listing score
- */
-export const apiListingScoreCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiListingScoreCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingScoreCreateResponse, apiListingScoreCreateErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingScoreCreateData.parseAsync(data),
-    url: '/api/user/listing-score/create',
     ...options,
     headers: {
         'Content-Type': 'application/json',

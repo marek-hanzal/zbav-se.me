@@ -245,185 +245,6 @@ export const sAllowedExtensionsEnum = {
     ]
 } as const;
 
-export const sListingScoreCreate = {
-    type: 'object',
-    properties: {
-        listingId: {
-            type: 'string'
-        },
-        score: {
-            $ref: '#/components/schemas/ListingScoreTypeEnum'
-        }
-    },
-    required: [
-        'listingId',
-        'score'
-    ]
-} as const;
-
-export const sListingScoreTypeEnum = {
-    type: 'string',
-    enum: [
-        'listing',
-        'ignore',
-        'flag',
-        'view',
-        'cart'
-    ]
-} as const;
-
-export const sListingScoreCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingScoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingScoreWhere'
-        }
-    }
-} as const;
-
-export const sListingScoreWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingScoreFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingScoreQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingScoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingScoreWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingScoreSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingScoreSortField = {
-    type: 'string',
-    enum: [
-        'score',
-        'createdAt'
-    ]
-} as const;
-
-export const sListingScoreSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingScoreSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingScoreCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingScore'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingScore = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        },
-        type: {
-            $ref: '#/components/schemas/ListingScoreTypeEnum'
-        },
-        score: {
-            type: 'integer'
-        },
-        createdAt: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'listingId',
-        'type',
-        'score',
-        'createdAt'
-    ]
-} as const;
-
 export const sListingTransactionLogQuery = {
     type: 'object',
     properties: {
@@ -725,6 +546,30 @@ export const sListingTransactionLog = {
     ]
 } as const;
 
+export const sListingTransactionStatusReject = {
+    type: 'object',
+    properties: {
+        listingTransactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'listingTransactionId'
+    ]
+} as const;
+
+export const sListingTransactionStatusAccept = {
+    type: 'object',
+    properties: {
+        listingTransactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'listingTransactionId'
+    ]
+} as const;
+
 export const sListingTransactionBuyerInfo = {
     type: 'object',
     properties: {
@@ -966,6 +811,340 @@ export const sListingTransaction = {
     ]
 } as const;
 
+export const sListingScoreCreate = {
+    type: 'object',
+    properties: {
+        listingId: {
+            type: 'string'
+        },
+        score: {
+            $ref: '#/components/schemas/ListingScoreTypeEnum'
+        }
+    },
+    required: [
+        'listingId',
+        'score'
+    ]
+} as const;
+
+export const sListingScoreTypeEnum = {
+    type: 'string',
+    enum: [
+        'listing',
+        'ignore',
+        'flag',
+        'view',
+        'cart'
+    ]
+} as const;
+
+export const sListingScoreCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/ListingScoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingScoreWhere'
+        }
+    }
+} as const;
+
+export const sListingScoreWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sListingScoreFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sListingScoreQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingScoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingScoreWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingScoreSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingScoreSortField = {
+    type: 'string',
+    enum: [
+        'score',
+        'createdAt'
+    ]
+} as const;
+
+export const sListingScoreSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingScoreSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingScoreCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingScore'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sListingScore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        },
+        type: {
+            $ref: '#/components/schemas/ListingScoreTypeEnum'
+        },
+        score: {
+            type: 'integer'
+        },
+        createdAt: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingId',
+        'type',
+        'score',
+        'createdAt'
+    ]
+} as const;
+
+export const sListingIgnoreToggle = {
+    type: 'object',
+    properties: {
+        toggle: {
+            type: 'boolean'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'toggle',
+        'listingId'
+    ]
+} as const;
+
+export const sListingIgnoreCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/ListingIgnoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingIgnoreWhere'
+        }
+    }
+} as const;
+
+export const sListingIgnoreWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sListingIgnoreFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sListingIgnoreQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingIgnoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingIgnoreWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingIgnoreSort'
+            }
+        }
+    }
+} as const;
+
+export const sListingIgnoreSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sListingIgnoreSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingIgnoreSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingIgnoreCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingIgnore'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sListingIgnore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingId'
+    ]
+} as const;
+
 export const sListingFlagToggle = {
     type: 'object',
     properties: {
@@ -1130,161 +1309,6 @@ export const sListingFlagCollection = {
 } as const;
 
 export const sListingFlag = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'listingId'
-    ]
-} as const;
-
-export const sListingIgnoreToggle = {
-    type: 'object',
-    properties: {
-        toggle: {
-            type: 'boolean'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'toggle',
-        'listingId'
-    ]
-} as const;
-
-export const sListingIgnoreCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingIgnoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingIgnoreWhere'
-        }
-    }
-} as const;
-
-export const sListingIgnoreWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingIgnoreFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingIgnoreQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingIgnoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingIgnoreWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingIgnoreSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingIgnoreSortField = {
-    type: 'string',
-    enum: [
-        'createdAt'
-    ]
-} as const;
-
-export const sListingIgnoreSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingIgnoreSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingIgnoreCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingIgnore'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingIgnore = {
     type: 'object',
     properties: {
         id: {
