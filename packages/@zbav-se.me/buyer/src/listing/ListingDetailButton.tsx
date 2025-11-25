@@ -43,10 +43,10 @@ export const ListingDetailButton: FC<ListingDetailButton.Props> = ({
 							locale={locale}
 							query={undefined}
 							withScore
-							renderScoreBadge={() => {
+							renderScoreBadgeFn={() => {
 								return "nope";
 							}}
-							renderSellerBadge={() => {
+							renderSellerBadgeFn={() => {
 								return "nope";
 							}}
 							_suspense={"I know"}

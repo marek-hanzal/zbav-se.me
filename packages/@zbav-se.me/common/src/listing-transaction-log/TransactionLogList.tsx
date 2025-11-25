@@ -44,6 +44,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						return match(log.event)
 							.with("status", () => (
 								<RequestEvent
+									key={log.id}
 									locale={locale}
 									side={side}
 									listingTransactionStatus={zListingTransactionStatus.parse(log)}
@@ -56,6 +57,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 								return (
 									<EventBadge
+										key={log.id}
 										side={side}
 										actor={message.side}
 										renderSellerFn={undefined}

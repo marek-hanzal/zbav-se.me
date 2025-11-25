@@ -35,8 +35,8 @@ export namespace ListingDetailContainer {
 		 * Should the listing emit the score event?
 		 */
 		withScore: boolean;
-		renderScoreBadge: ScoreBadge.RenderFn;
-		renderSellerBadge: SellerBadge.RenderFn;
+		renderScoreBadgeFn: ScoreBadge.RenderFn;
+		renderSellerBadgeFn: SellerBadge.RenderFn;
 	}
 }
 
@@ -47,8 +47,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	listing,
 	children,
 	withScore,
-	renderScoreBadge,
-	renderSellerBadge,
+	renderScoreBadgeFn,
+	renderSellerBadgeFn,
 	...props
 }) => {
 	const [hero] = listing.gallery.items as [
@@ -125,7 +125,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					})}
 				/>
 
-				{renderScoreBadge?.({
+				{renderScoreBadgeFn?.({
 					listing,
 					children: (
 						<BadgeValue
@@ -139,7 +139,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					),
 				})}
 
-				{renderSellerBadge({
+				{renderSellerBadgeFn({
 					listing,
 					children: (
 						<BadgeValue

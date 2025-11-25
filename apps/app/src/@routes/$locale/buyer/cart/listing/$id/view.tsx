@@ -70,7 +70,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 						query={undefined}
 						listing={listingQuery.data}
 						withScore
-						renderScoreBadge={({ children }) => (
+						renderScoreBadgeFn={({ children }) => (
 							<LinkTo
 								to={"/$locale/buyer/cart/listing/$id/score"}
 								params={{
@@ -84,7 +84,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/listing/$id/view")({
 								{children}
 							</LinkTo>
 						)}
-						renderSellerBadge={({ children }) => (
+						renderSellerBadgeFn={({ children }) => (
 							<LinkTo
 								to={"/$locale/buyer/cart/listing/$id/seller"}
 								params={{

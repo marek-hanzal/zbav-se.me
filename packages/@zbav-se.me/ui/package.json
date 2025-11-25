@@ -8,7 +8,7 @@
 	},
 	"dependencies": {
 		"@gsap/react": "2.1.2",
-		"@tanstack/react-form": "1.25.0",
+		"@tanstack/react-form": "1.26.0",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/cls": "5.0.76",
 		"@use-pico/common": "workspace:*",
