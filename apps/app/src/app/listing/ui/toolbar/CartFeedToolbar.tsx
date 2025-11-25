@@ -1,6 +1,5 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ShowIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/user";
 import { ToolbarContainer } from "@zbav-se.me/ui/toolbar";
 import { type FC, useState } from "react";
@@ -31,24 +30,13 @@ export const CartFeedToolbar: FC<CartFeedToolbar.Props> = ({
 
 	return (
 		<ToolbarContainer {...props}>
-			<LinkTo
-				to={"/$locale/buyer/cart/listing/$id/view"}
-				params={{
-					locale,
-					id: listing.id,
-				}}
-				search={{
-					categoryId: listing.categoryId,
-				}}
-			>
-				<Button
-					iconEnabled={ArrowRightIcon}
-					tone={"primary"}
-					theme={"light"}
-					size={"xl"}
-					round={"full"}
-				/>
-			</LinkTo>
+			<Button
+				iconEnabled={ShowIcon}
+				tone={"primary"}
+				theme={"light"}
+				size={"xl"}
+				round={"full"}
+			/>
 
 			{tools.includes("cart") ? (
 				<ListingCartButton

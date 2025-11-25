@@ -1,11 +1,10 @@
 import { ShowIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { ListingDetailContainer } from "@zbav-se.me/buyer/listing";
 import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/user";
 import { ToolbarContainer } from "@zbav-se.me/ui/toolbar";
-import { type FC, Suspense, useId, useState } from "react";
+import { type FC, useId, useState } from "react";
 import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 import { ListingCartButton } from "../button/ListingCartButton";
 import { ListingFlagButton } from "../button/ListingFlagButton";
@@ -118,22 +117,17 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 				onClose={() => setDetail(false)}
 				detent={"full"}
 			>
-				<Suspense fallback={<SpinnerContainer />}>
-					<ListingDetailContainer
-						_suspense={"I know"}
-						parentSheetId={detailSheetId}
+				<ListingDetailContainer
+					parentSheetId={detailSheetId}
+					locale={locale}
+					listing={listing}
+					withScore
+				>
+					<ListingDetailMenu
 						locale={locale}
-						query={query}
 						listing={listing}
-						withScore
-					>
-						<ListingDetailMenu
-							_suspense={"I know"}
-							locale={locale}
-							listing={listing}
-						/>
-					</ListingDetailContainer>
-				</Suspense>
+					/>
+				</ListingDetailContainer>
 			</BottomSheet>
 		</ToolbarContainer>
 	);

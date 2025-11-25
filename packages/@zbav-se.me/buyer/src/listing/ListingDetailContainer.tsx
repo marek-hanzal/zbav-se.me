@@ -1,5 +1,4 @@
-import { ArrowRightIcon, Icon, ShowIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
+import { ArrowRightIcon, Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
@@ -13,7 +12,7 @@ import { type FC, useEffect, useState } from "react";
 import { ScoreContainer } from "./ScoreContainer";
 
 export namespace ListingDetailContainer {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		locale: string;
 		listing: tListing;
 		/**
@@ -28,7 +27,6 @@ export namespace ListingDetailContainer {
 }
 
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
-	_suspense,
 	locale,
 	listing,
 	children,
@@ -40,8 +38,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		tGalleryItem,
 		...tGalleryItem[],
 	];
-
-	const listingMetricsQuery = withListingMetricsFetchQuery.useSuspenseQuery(listing.id);
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation();
 
@@ -115,10 +111,19 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 				<BadgeValue
 					textLabel={"Listing score hint (label)"}
-					textValue={toLocaleNumber({
-						locale,
-						number: listingMetricsQuery.data.score,
-					})}
+					textValue={
+						<withListingMetricsFetchQuery.Suspense
+							data={listing.id}
+							fallback={<Icon icon={SpinnerIcon} />}
+						>
+							{({ data }) => {
+								return toLocaleNumber({
+									locale,
+									number: data.score,
+								});
+							}}
+						</withListingMetricsFetchQuery.Suspense>
+					}
 					action={<Icon icon={ShowIcon} />}
 					onClick={() => setScore(true)}
 				/>

@@ -1,6 +1,5 @@
 import { useNavigate } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -14,21 +13,14 @@ import type { FC } from "react";
 import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
 
 export namespace ListingDetailMenu {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		locale: string;
 		listing: tListing;
 	}
 }
 
-export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
-	_suspense,
-	locale,
-	listing,
-	...props
-}) => {
+export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({ locale, listing, ...props }) => {
 	const navigate = useNavigate();
-
-	const listingCartCount = withListingCartCountQuery.useSuspenseQuery({});
 
 	const listingCartToggle = withListingCartToggleMutation.useMutation();
 
@@ -94,27 +86,44 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 					full
 				/>
 
-				<LinkTo
-					to={"/$locale/buyer/cart/list"}
-					params={{
-						locale,
-					}}
-					disabled={listingCartCount.data.filter === 0}
-					full
+				<withListingCartCountQuery.Suspense
+					data={{}}
+					fallback={
+						<Button
+							disabled
+							loading
+							label={"Loading cart count (button)"}
+							size={"xl"}
+							full
+						/>
+					}
 				>
-					<Button
-						iconEnabled={listingCartCount.data.filter > 0 ? ArrowRightIcon : undefined}
-						iconPosition={"right"}
-						disabled={listingCartCount.data.filter === 0}
-						label={
-							listingCartCount.data.filter > 0
-								? "Go to cart (button)"
-								: "Nothing in cart yet (button)"
-						}
-						size={"xl"}
-						full
-					/>
-				</LinkTo>
+					{({ data }) => {
+						return (
+							<LinkTo
+								to={"/$locale/buyer/cart/list"}
+								params={{
+									locale,
+								}}
+								disabled={data.filter === 0}
+								full
+							>
+								<Button
+									iconEnabled={data.filter > 0 ? ArrowRightIcon : undefined}
+									iconPosition={"right"}
+									disabled={data.filter === 0}
+									label={
+										data.filter > 0
+											? "Go to cart (button)"
+											: "Nothing in cart yet (button)"
+									}
+									size={"xl"}
+									full
+								/>
+							</LinkTo>
+						);
+					}}
+				</withListingCartCountQuery.Suspense>
 			</VariantProvider>
 		</Container>
 	);
