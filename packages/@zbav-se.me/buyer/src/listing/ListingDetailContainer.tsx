@@ -1,14 +1,16 @@
 import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { CategoryInline } from "@zbav-se.me/common/category";
 import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, type PropsWithChildren, useEffect } from "react";
+import { type FC, type PropsWithChildren, useEffect, useState } from "react";
+import { Sheet } from "react-modal-sheet";
+import { ScoreContainer } from "./ScoreContainer";
 
 export namespace ListingDetailContainer {
 	export namespace ScoreBadge {
@@ -60,6 +62,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation();
 
+	// TODO Extract scoring into standalone hooks, which will handle also 429s
 	useEffect(() => {
 		if (!withScore) {
 			return;
@@ -78,6 +81,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		listing.id,
 		listingScoreCreateMutation,
 	]);
+
+	const [score, setScore] = useState<boolean>(false);
 
 	return (
 		<Container
@@ -125,19 +130,44 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					})}
 				/>
 
-				{renderScoreBadgeFn?.({
-					listing,
-					children: (
-						<BadgeValue
-							textLabel={"Listing score hint (label)"}
-							textValue={toLocaleNumber({
-								locale,
-								number: listingMetricsQuery.data.score,
-							})}
-							action={<Icon icon={ArrowRightIcon} />}
-						/>
-					),
-				})}
+				<BadgeValue
+					textLabel={"Listing score hint (label)"}
+					textValue={toLocaleNumber({
+						locale,
+						number: listingMetricsQuery.data.score,
+					})}
+					action={<Icon icon={ArrowRightIcon} />}
+					onClick={() => setScore(true)}
+				/>
+
+				<Sheet
+					isOpen={score}
+					onClose={() => setScore(false)}
+					modalEffectRootId="root"
+				>
+					<Sheet.Container>
+						<Sheet.Header />
+						<Sheet.Content>
+							<withListingMetricsFetchQuery.Suspense
+								data={listing.id}
+								fallback={<SpinnerContainer />}
+							>
+								{({ data }) => {
+									return (
+										<Container scroll={"vertical"}>
+											<ScoreContainer
+												locale={locale}
+												listingMetrics={data}
+											/>
+										</Container>
+									);
+								}}
+							</withListingMetricsFetchQuery.Suspense>
+						</Sheet.Content>
+					</Sheet.Container>
+
+					{/* <Sheet.Backdrop  /> */}
+				</Sheet>
 
 				{renderSellerBadgeFn({
 					listing,

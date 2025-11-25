@@ -41,7 +41,8 @@
 	},
 	"include": [
 		"**/*.ts",
-		"**/*.tsx"
+		"**/*.tsx",
+		"../../packages/@zbav-se.me/buyer/src/listing/ScoreContainer.tsx"
 	],
 	"exclude": [
 		"node_modules",

@@ -61,7 +61,9 @@ export const Route = createRootRouteWithContext<{
 							position={"top-center"}
 						/>
 
+						{/** biome-ignore lint/correctness/useUniqueElementIds: I'm OK, bro */}
 						<Container
+							id="root"
 							ui="Root-root"
 							height="viewport"
 							width="viewport"
@@ -70,6 +72,7 @@ export const Route = createRootRouteWithContext<{
 								"md:w-1/3",
 								"md:min-w-1/3",
 								"md:max-w-1/3",
+								"bg-white",
 							])}
 						>
 							<Outlet />

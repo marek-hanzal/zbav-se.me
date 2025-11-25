@@ -2,10 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { ScoreContainer } from "@zbav-se.me/buyer/listing";
 import { zListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { ScoreContainer } from "~/app/listing/ui/ScoreContainer";
 
 export const Route = createFileRoute("/$locale/buyer/listing/$id/score")({
 	validateSearch: zListingQuery,

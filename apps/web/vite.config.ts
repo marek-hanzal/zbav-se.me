@@ -79,6 +79,15 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						if (id.includes("gsap")) {
 							return "gsap";
 						}
+						if (id.includes("react-modal-sheet")) {
+							return "react-modal-sheet";
+						}
+						if (id.includes("sonner")) {
+							return "sonner";
+						}
+						if (id.includes("motion")) {
+							return "motion";
+						}
 						if (id.includes("js-sha256")) {
 							return "js-sha256";
 						}
