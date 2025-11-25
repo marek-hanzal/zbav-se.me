@@ -78,7 +78,11 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									})
 									.exhaustive();
 							})}
-							<ContextMenu transactionLog={currentLog} />
+
+							<ContextMenu
+								side={side}
+								log={currentLog}
+							/>
 						</>
 					);
 				}}

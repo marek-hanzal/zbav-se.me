@@ -21,19 +21,19 @@ export namespace useSideSwitch {
 		/**
 		 * Seller side (seller views, seller acted)
 		 */
-		renderSellerFn: Render.RenderFn<TProps> | undefined;
+		renderSellerFn?: Render.RenderFn<TProps>;
 		/**
 		 * Buyer side (buyer views, buyer acted)
 		 */
-		renderBuyerFn: Render.RenderFn<TProps> | undefined;
+		renderBuyerFn?: Render.RenderFn<TProps>;
 		/**
 		 * Buyer acted, seller views
 		 */
-		renderBuyerToSellerFn: Render.RenderFn<TProps> | undefined;
+		renderBuyerToSellerFn?: Render.RenderFn<TProps>;
 		/**
 		 * Seller acted, buyer views
 		 */
-		renderSellerToBuyerFn: Render.RenderFn<TProps> | undefined;
+		renderSellerToBuyerFn?: Render.RenderFn<TProps>;
 	}
 
 	export type PropsEx<TProps extends object> = Omit<
@@ -43,7 +43,7 @@ export namespace useSideSwitch {
 
 	export interface Result<TProps extends object> {
 		type: Type;
-		render: Render.RenderFn<TProps> | undefined;
+		render: Render.RenderFn<TProps>;
 	}
 }
 
@@ -54,10 +54,10 @@ export namespace useSideSwitch {
 export const useSideSwitch = <TProps extends object>({
 	side,
 	actor,
-	renderSellerFn,
-	renderBuyerFn,
-	renderBuyerToSellerFn,
-	renderSellerToBuyerFn,
+	renderSellerFn = () => null,
+	renderBuyerFn = () => null,
+	renderBuyerToSellerFn = () => null,
+	renderSellerToBuyerFn = () => null,
 }: useSideSwitch.Props<TProps>): useSideSwitch.Result<TProps> => {
 	return match(side)
 		.with("buyer", () => {
@@ -77,7 +77,9 @@ export const useSideSwitch = <TProps extends object>({
 
 			return {
 				type: "unknown",
-				render: undefined,
+				render() {
+					return null;
+				},
 			} as const;
 		})
 		.with("seller", () => {
@@ -97,7 +99,9 @@ export const useSideSwitch = <TProps extends object>({
 
 			return {
 				type: "unknown",
-				render: undefined,
+				render() {
+					return null;
+				},
 			} as const;
 		})
 		.exhaustive();
