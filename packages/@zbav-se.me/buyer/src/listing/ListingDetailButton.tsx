@@ -39,17 +39,11 @@ export const ListingDetailButton: FC<ListingDetailButton.Props> = ({
 						close={close}
 					>
 						<ListingDetailContainer
+							_suspense={"I know"}
+							parentSheetId={undefined}
 							listing={listing}
 							locale={locale}
-							query={undefined}
 							withScore
-							renderScoreBadgeFn={() => {
-								return "nope";
-							}}
-							renderSellerBadgeFn={() => {
-								return "nope";
-							}}
-							_suspense={"I know"}
 						/>
 					</ModalContainer>
 				);

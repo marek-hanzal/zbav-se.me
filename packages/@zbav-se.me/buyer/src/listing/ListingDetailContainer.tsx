@@ -5,7 +5,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { CategoryInline } from "@zbav-se.me/common/category";
-import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -15,7 +15,6 @@ import { ScoreContainer } from "./ScoreContainer";
 export namespace ListingDetailContainer {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
-		query: tListingQuery | undefined;
 		listing: tListing;
 		/**
 		 * Should the listing emit the score event?
@@ -31,7 +30,6 @@ export namespace ListingDetailContainer {
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	_suspense,
 	locale,
-	query,
 	listing,
 	children,
 	withScore,
