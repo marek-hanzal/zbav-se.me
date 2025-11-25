@@ -46,18 +46,12 @@
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
   ref: Listing photos (label)
   value: Listing photos (label)
-1a0e6c8c893bcf826c111d3947487374f61d2c8bf3de37c5b01fa8a6:
-  ref: Listing Score - intro (title)
-  value: Listing Score - intro (title)
 1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
   ref: Listing Score - Flag (label)
   value: Listing Score - Flag (label)
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
-1dcb2f3cf441e457db2a028bf490818c077bc6ce4ec21d35a15b6259:
-  ref: Buyer info (title)
-  value: Buyer info (title)
 1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
   ref: Price (subtitle)
   value: Price (subtitle)
@@ -76,9 +70,6 @@
 268f13190a629bd137dc802766a623af5fbbde39d57e2b4197131304:
   ref: Nothing in cart yet (button)
   value: Nothing in cart yet (button)
-26bf011c1df847de349ef1ca0e52367fcb0b66002ce30651a188f965:
-  ref: Listing - Seller info (title)
-  value: Listing - Seller info (title)
 296afd635ef4292785e24d4863ed42fac33a4bc1814216b988d458b6:
   ref: Transaction closed (label)
   value: Transaction closed (label)
@@ -130,6 +121,9 @@
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
+3e67f4ca250b943faacf3f771626fdb14ee4e93b8ae47f56c35e4b79:
+  ref: Loading cart count (button)
+  value: Loading cart count (button)
 3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
   ref: Feed name (hint)
   value: Enter a name for your feed
@@ -166,9 +160,6 @@
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
-4b8762ea82eb33c9d7ffd85b86a590872c56b65e0ea84a1fbc82240b:
-  ref: Listing - Score info (title)
-  value: Listing - Score info (title)
 4bd1da67da08ad7f6462519fa220d25f630427fcafac8999d88da53b:
   ref: Seller rejected the transaction - buyer (label)
   value: Seller rejected the transaction - buyer (label)
@@ -388,9 +379,6 @@
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
-9a23de247d53984321cd59852cc78c51be5369fcae87518e33d8b38b:
-  ref: Seller info (title)
-  value: Seller info (title)
 9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
   ref: Submit (title)
   value: Submit (title)
@@ -418,6 +406,9 @@ a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
 a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
   ref: Create your first feed to get started (description)
   value: Create your first feed to get started (description)
+a55387e66d56fc537f261c638ef5f30318fca9ffe61c9917ffa04684:
+  ref: Accept transaction (label)
+  value: Accept transaction (label)
 a58bea662bf786c15c3be9f5157fcaef109019e39b1d7fedac0977d2:
   ref: Transaction requested - seller (label)
   value: Transaction requested - seller (label)
@@ -469,6 +460,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b3afa18e627bef1c5cf094e6cc102284785ae36805b5d3ed027606da:
   ref: Transaction rejected (label)
   value: Transaction rejected (label)
+b3d47cffad0cfc3c198765decdb015eeca5c63873e48dc05c111c8e2:
+  ref: Reject transaction (label)
+  value: Reject transaction (label)
 b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
   ref: success
   value: success
@@ -552,9 +546,6 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
 d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
   ref: Feed title (label)
   value: Feed title (label)
-d34f82524280082cefa6d9bcf5d2a6b10f418dffd078c804aafcfa74:
-  ref: Listing detail (title)
-  value: Listing detail (title)
 d4fd7a75d5cf12bfe3393f9960a95b1154214a585434558dcd62f954:
   ref: Transaction expired (label)
   value: Transaction expired (label)
