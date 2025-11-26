@@ -6,7 +6,7 @@ import { Container } from "./Container";
 import { SpinnerContainer } from "./SpinnerContainer";
 
 export namespace ContainerValueList {
-	export interface Props<TItem extends EntitySchema.Type> {
+	export interface Props<TItem extends EntitySchema.Type> extends Container.Props {
 		/**
 		 * Translation label for the list title.
 		 */
@@ -38,6 +38,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	render,
 	action,
 	loading,
+	...props
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
@@ -45,6 +46,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			theme={"unset"}
 			height={"auto"}
 			round={"lg"}
+			{...props}
 		>
 			<Badge
 				theme={"light"}

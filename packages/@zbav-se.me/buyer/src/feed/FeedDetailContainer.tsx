@@ -1,3 +1,4 @@
+import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
@@ -5,13 +6,17 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
+import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
 import type { OptionalId } from "@use-pico/common/type";
-import { CategoryValueList } from "@zbav-se.me/common/category";
-import { LocationBadgeValue } from "@zbav-se.me/common/location";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { AgeContainer } from "@zbav-se.me/common/age";
+import { CategorySelectionContainer, CategoryValueList } from "@zbav-se.me/common/category";
+import { ConditionContainer } from "@zbav-se.me/common/condition";
+import { LocationBadgeValue, LocationSelection } from "@zbav-se.me/common/location";
+import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import { withFeedDeleteMutation, withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
+import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
 import { FeedNameContainer } from "./FeedNameContainer";
 import { FeedTitleContainer } from "./FeedTitleContainer";
@@ -38,6 +43,66 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	//
 	const [isTitle, setIsTitle] = useState(false);
 	const [title, setTitle] = useState(feed.query?.filter?.title ?? "");
+	//
+	const [isLocation, setIsLocation] = useState(false);
+	const [locationId, setLocationId] = useState(feed.locationId);
+	const [latLon, setLatLon] = useState(feed.query?.meta?.latLon);
+	//
+	const [isSort, setIsSort] = useState(false);
+	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
+	//
+	const [isCategory, setIsCategory] = useState(false);
+	const categorySelection = useSelection<EntitySchema.Type>({
+		mode: "multi",
+		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
+			id,
+		})),
+		onMulti() {
+			setChange(true);
+		},
+	});
+	//
+	const [isCondition, setIsCondition] = useState(false);
+	const conditionSelection = useSelection<Rating.RatingItem>({
+		mode: "multi",
+		initial: feed.query?.filter?.conditionIn?.map((item) => ({
+			id: String(item),
+		})),
+		onMulti(selected) {
+			setChange(true);
+			setPatch((prev) => ({
+				...prev,
+				query: {
+					...prev.query,
+					filter: {
+						...prev.query?.filter,
+						conditionIn: selected.map((item) => Number.parseInt(item.id, 10)),
+					},
+				},
+			}));
+		},
+	});
+	//
+	const [isAge, setIsAge] = useState(false);
+	const ageSelection = useSelection<Rating.RatingItem>({
+		mode: "multi",
+		initial: feed.query?.filter?.ageIn?.map((item) => ({
+			id: String(item),
+		})),
+		onMulti(selected) {
+			setChange(true);
+			setPatch((prev) => ({
+				...prev,
+				query: {
+					...prev.query,
+					filter: {
+						...prev.query?.filter,
+						ageIn: selected.map((item) => Number.parseInt(item.id, 10)),
+					},
+				},
+			}));
+		},
+	});
 
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
 		async onPostMutation() {
@@ -75,6 +140,11 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							onSuccess() {
 								setIsName(false);
 								setIsTitle(false);
+								setIsLocation(false);
+								setIsSort(false);
+								setIsCategory(false);
+								setIsCondition(false);
+								setIsAge(false);
 							},
 						},
 					);
@@ -135,6 +205,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							size={"sm"}
 						/>
 					}
+					onClick={() => setIsLocation(true)}
 				/>
 
 				<ContainerValueList
@@ -167,6 +238,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							size={"sm"}
 						/>
 					}
+					onClick={() => setIsCategory(true)}
 				/>
 
 				<ContainerValueList
@@ -185,6 +257,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							size={"sm"}
 						/>
 					}
+					onClick={() => setIsCondition(true)}
 				/>
 
 				<ContainerValueList
@@ -201,6 +274,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							size={"sm"}
 						/>
 					}
+					onClick={() => setIsAge(true)}
 				/>
 
 				{feed.id && onDelete ? (
@@ -277,6 +351,104 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						/>
 
 						<SaveButton />
+					</BottomSheet>
+
+					<BottomSheet
+						isOpen={isLocation}
+						onClose={() => setIsLocation(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-flex"}
+							gap={"md"}
+						>
+							<LocationSelection
+								locale={locale}
+								value={locationId}
+								onChange={(value) => {
+									setChange(true);
+									setLocationId(value);
+									setPatch((prev) => ({
+										...prev,
+										locationId: value,
+									}));
+								}}
+								onLocation={({ lon, lat }) => {
+									setChange(true);
+									setLatLon({
+										lon,
+										lat,
+									});
+									setPatch((prev) => ({
+										...prev,
+										query: {
+											...prev.query,
+											meta: {
+												...prev.query?.meta,
+												latLon: {
+													lon,
+													lat,
+												},
+											},
+										},
+									}));
+								}}
+								textHint={"Feed - location security (hint)"}
+							/>
+
+							<SaveButton />
+						</Container>
+					</BottomSheet>
+
+					<BottomSheet
+						isOpen={isCategory}
+						onClose={() => setIsCategory(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-flex"}
+							gap={"md"}
+							scroll={"vertical"}
+							height={"fit"}
+						>
+							<CategorySelectionContainer
+								locale={locale}
+								selection={categorySelection}
+								categoryId={categorySelection.optional.singleId()}
+							/>
+						</Container>
+
+						<SaveButton />
+					</BottomSheet>
+
+					<BottomSheet
+						isOpen={isCondition}
+						onClose={() => setIsCondition(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-flex"}
+							gap={"md"}
+						>
+							<ConditionContainer selection={conditionSelection} />
+
+							<SaveButton />
+						</Container>
+					</BottomSheet>
+
+					<BottomSheet
+						isOpen={isAge}
+						onClose={() => setIsAge(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-flex"}
+							gap={"md"}
+						>
+							<AgeContainer selection={ageSelection} />
+
+							<SaveButton />
+						</Container>
 					</BottomSheet>
 				</>
 			) : null}
