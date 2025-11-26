@@ -361,6 +361,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						<Container
 							layout={"vertical-flex"}
 							gap={"md"}
+							scroll={"vertical"}
+							height={"fit"}
 						>
 							<LocationSelection
 								locale={locale}
@@ -395,20 +397,23 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 								}}
 								textHint={"Feed - location security (hint)"}
 							/>
-
-							<SaveButton />
 						</Container>
+
+						<SaveButton />
 					</BottomSheet>
 
 					<BottomSheet
 						isOpen={isCategory}
 						onClose={() => setIsCategory(false)}
 						detent={"full"}
+						contentProps={{
+							disableScroll: true,
+						}}
 					>
 						<Container
-							layout={"vertical-flex"}
+							ui={"FeedDetailContainer-CategorySelectionContainer"}
+							layout={"vertical-content-footer"}
 							gap={"md"}
-							scroll={"vertical"}
 							height={"fit"}
 						>
 							<CategorySelectionContainer
@@ -416,9 +421,9 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 								selection={categorySelection}
 								categoryId={categorySelection.optional.singleId()}
 							/>
-						</Container>
 
-						<SaveButton />
+							<SaveButton />
+						</Container>
 					</BottomSheet>
 
 					<BottomSheet

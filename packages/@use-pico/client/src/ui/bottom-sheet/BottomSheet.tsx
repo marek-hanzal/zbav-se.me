@@ -6,13 +6,20 @@ import { Container } from "../container";
 export namespace BottomSheet {
 	export interface Props
 		extends UiProps<PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">>> {
-		//
+		containerProps?: ComponentProps<typeof Sheet.Container>;
+		contentProps?: ComponentProps<typeof Sheet.Content>;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
 }
 
-export const BottomSheet: FC<BottomSheet.Props> = ({ ui, children, ...props }) => {
+export const BottomSheet: FC<BottomSheet.Props> = ({
+	ui,
+	containerProps,
+	contentProps,
+	children,
+	...props
+}) => {
 	return (
 		<Sheet
 			data-ui={ui ?? "BottomSheet-root"}
@@ -22,14 +29,20 @@ export const BottomSheet: FC<BottomSheet.Props> = ({ ui, children, ...props }) =
 			}}
 			{...props}
 		>
-			<Sheet.Container data-ui={"BottomSheet-Container"}>
+			<Sheet.Container
+				data-ui={"BottomSheet-Container"}
+				{...containerProps}
+			>
 				<Sheet.Header data-ui={"BottomSheet-Header"} />
 
-				<Sheet.Content data-ui={"BottomSheet-Content"}>
+				<Sheet.Content
+					data-ui={"BottomSheet-Content"}
+					{...contentProps}
+				>
 					<Container
 						ui={"BottomSheet-Content-Container"}
 						square={"md"}
-						height={"content"}
+						height={"fit"}
 					>
 						{children}
 					</Container>
