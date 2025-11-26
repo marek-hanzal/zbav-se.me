@@ -8,15 +8,24 @@ import { ListingCountBadge } from "@zbav-se.me/common/listing";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
+import { FeedDetailContainer } from "./FeedDetailContainer";
 
 export namespace FeedItemBadge {
-	export interface Props extends Omit<Badge.Props, "children"> {
+	export interface Props
+		extends Omit<Badge.Props, "children">,
+			Pick<FeedDetailContainer.Props, "onDelete" | "renderLinkTo"> {
 		locale: string;
 		feed: tFeed;
 	}
 }
 
-export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, ...props }) => {
+export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
+	locale,
+	feed,
+	onDelete,
+	renderLinkTo,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -83,7 +92,12 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, ...props 
 				onClose={() => setIsOpen(false)}
 				detent={"full"}
 			>
-				pica
+				<FeedDetailContainer
+					locale={locale}
+					feed={feed}
+					onDelete={onDelete}
+					renderLinkTo={renderLinkTo}
+				/>
 			</BottomSheet>
 		</>
 	);

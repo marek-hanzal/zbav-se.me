@@ -3,12 +3,12 @@ import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { AgeContainer } from "@zbav-se.me/common/age";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { useState } from "react";
-import { AgeContainer } from "../../../../../../../../../packages/@zbav-se.me/common/src/age/AgeContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 	component() {
@@ -36,7 +36,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 		const feedPatchMutation = withFeedPatchMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
-					to: "/$locale/buyer/feed/$id/view",
+					to: "/$locale/buyer/feed/select",
 				});
 			},
 		});
@@ -47,10 +47,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/feed/$id/view"}
+						to={"/$locale/buyer/feed/select"}
 						params={{
 							locale,
-							id,
 						}}
 					/>
 				}
@@ -83,7 +82,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/edit/age")({
 						onClick={() => {
 							if (!change) {
 								navigate({
-									to: "/$locale/buyer/feed/$id/view",
+									to: "/$locale/buyer/feed/select",
 								});
 								return;
 							}
