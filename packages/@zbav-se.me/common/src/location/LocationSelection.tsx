@@ -30,6 +30,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 			layout={"vertical-header-content"}
 			gap={"md"}
 			round={"default"}
+			height={"fit"}
 			{...props}
 		>
 			<Fulltext

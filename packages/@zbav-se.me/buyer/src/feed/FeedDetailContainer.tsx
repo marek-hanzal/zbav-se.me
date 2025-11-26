@@ -357,11 +357,13 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						isOpen={isLocation}
 						onClose={() => setIsLocation(false)}
 						detent={"full"}
+						contentProps={{
+							disableScroll: true,
+						}}
 					>
 						<Container
-							layout={"vertical-flex"}
+							layout={"vertical-content-footer"}
 							gap={"md"}
-							scroll={"vertical"}
 							height={"fit"}
 						>
 							<LocationSelection
@@ -397,9 +399,9 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 								}}
 								textHint={"Feed - location security (hint)"}
 							/>
-						</Container>
 
-						<SaveButton />
+							<SaveButton />
+						</Container>
 					</BottomSheet>
 
 					<BottomSheet
