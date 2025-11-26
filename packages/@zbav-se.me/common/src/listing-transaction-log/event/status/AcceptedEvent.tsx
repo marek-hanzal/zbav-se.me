@@ -21,8 +21,6 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 }) => {
 	const [isOpen, setIsOpen] = useState(isCurrent);
 
-	console.log("AcceptedEvent", isCurrent, isOpen, isClosed);
-
 	return (
 		<>
 			<StatusEventBadge
