@@ -11,7 +11,6 @@ export const TabListCls = contract(PicoCls.contract)
 	.root({
 		root: {
 			class: [
-				"TabList-root",
 				"flex",
 				"flex-row",
 				"items-center",
@@ -20,7 +19,6 @@ export const TabListCls = contract(PicoCls.contract)
 		},
 		tabs: {
 			class: [
-				"TabList-tabs",
 				"flex",
 				"flex-row",
 				"items-center",

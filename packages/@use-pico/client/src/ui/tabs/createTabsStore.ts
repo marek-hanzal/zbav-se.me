@@ -6,16 +6,19 @@ export namespace createTabsStore {
 		hidden: string[];
 	}
 
-	export interface Instance {
+	export interface Store {
 		tab: string | undefined;
 		hidden: string[];
 		setCurrent(current: string): void;
 	}
 
-	export type Store = UseBoundStore<StoreApi<Instance>>;
+	export type UseStore = UseBoundStore<StoreApi<Store>>;
 }
 
-export const createTabsStore = ({ tab, hidden }: createTabsStore.Props): createTabsStore.Store => {
+export const createTabsStore = ({
+	tab,
+	hidden,
+}: createTabsStore.Props): createTabsStore.UseStore => {
 	return create((set) => ({
 		tab,
 		hidden,
