@@ -1,6 +1,7 @@
-import { TrashIcon } from "@use-pico/client/icon";
+import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { ConfirmButton } from "@use-pico/client/ui/button";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
@@ -9,33 +10,15 @@ import type { OptionalId } from "@use-pico/common/type";
 import { CategoryValueList } from "@zbav-se.me/common/category";
 import { LocationBadgeValue } from "@zbav-se.me/common/location";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedDeleteMutation, withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import type { FC, ReactNode } from "react";
+import { type FC, useState } from "react";
+import { FeedNameContainer } from "./FeedNameContainer";
 
 export namespace FeedDetailContainer {
-	export namespace LinkTo {
-		export type Type =
-			| "name"
-			| "title"
-			| "location"
-			| "sort"
-			| "category"
-			| "condition"
-			| "age";
-
-		export interface Props {
-			feedId: string;
-			type: LinkTo.Type;
-		}
-
-		export type RenderFn = (props: Props) => ReactNode;
-	}
-
 	export interface Props extends Container.Props {
 		locale: string;
 		feed: OptionalId<tFeed>;
-		renderLinkTo?: FeedDetailContainer.LinkTo.RenderFn;
 		onDelete?(): Promise<void>;
 	}
 }
@@ -43,13 +26,21 @@ export namespace FeedDetailContainer {
 export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	locale,
 	feed,
-	renderLinkTo,
 	onDelete,
 	...props
 }) => {
+	const [change, setChange] = useState(false);
+	const [isName, setIsName] = useState(false);
+	const [name, setName] = useState(feed.name);
+
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
 		async onPostMutation() {
 			return onDelete?.();
+		},
+	});
+	const feedPatchMutation = withFeedPatchMutation.useMutation({
+		onSettled() {
+			setChange(false);
 		},
 	});
 
@@ -74,25 +65,22 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					textLabel={"Feed name (label)"}
 					textValue={feed.name}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "name",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
+					onClick={() => setIsName(true)}
 				/>
 
 				<BadgeValue
 					textLabel={"Feed title (label)"}
 					textValue={feed.query?.filter?.title || "Feed title not filled"}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "title",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -101,12 +89,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					textLabel={"Feed location (label)"}
 					textValue={"Feed location not selected"}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "location",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -123,12 +109,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						/>
 					)}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "sort",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -137,12 +121,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					textTitle={"Feed category (label)"}
 					textEmpty={"Feed category not selected"}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "category",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -157,12 +139,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						<Tx label={`Condition - Overall [${item.condition}] (hint)`} />
 					)}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "condition",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -175,12 +155,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					}))}
 					render={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
 					action={
-						feed.id
-							? renderLinkTo?.({
-									feedId: feed.id,
-									type: "age",
-								})
-							: null
+						<Icon
+							icon={EditIcon}
+							size={"sm"}
+						/>
 					}
 				/>
 
@@ -211,6 +189,50 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					/>
 				) : null}
 			</VariantProvider>
+
+			{feed.id ? (
+				<BottomSheet
+					isOpen={isName}
+					onClose={() => setIsName(false)}
+					detent={"content"}
+				>
+					<FeedNameContainer
+						value={name}
+						onChange={(value) => {
+							setChange(true);
+							setName(value);
+						}}
+					/>
+
+					<Button
+						tone={"secondary"}
+						theme={"dark"}
+						label={"Feed - next and save (button)"}
+						size={"lg"}
+						loading={feedPatchMutation.isPending}
+						disabled={name.length === 0 || feedPatchMutation.isPending}
+						full
+						onClick={() => {
+							if (!change || !feed.id) {
+								return;
+							}
+
+							feedPatchMutation.mutate(
+								{
+									id: feed.id,
+									...feed,
+									name,
+								},
+								{
+									onSuccess() {
+										setIsName(false);
+									},
+								},
+							);
+						}}
+					/>
+				</BottomSheet>
+			) : null}
 		</Container>
 	);
 };
