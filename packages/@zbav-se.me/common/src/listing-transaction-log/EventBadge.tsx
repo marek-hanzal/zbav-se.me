@@ -42,11 +42,13 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	tweak,
 	...props
 }) => {
+	const isCurrentClosed = isClosed && isCurrent;
+
 	const typeTweaks: Partial<Record<useSideSwitch.Type, Cls.TweaksOf<BadgeCls>>> = {
 		buyer: {
 			slot: {
 				root: {
-					class: isClosed
+					class: isCurrentClosed
 						? [
 								"items-center",
 								"justify-center",
@@ -61,7 +63,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		"buyer-to-seller": {
 			slot: {
 				root: {
-					class: isClosed
+					class: isCurrentClosed
 						? [
 								"items-center",
 								"justify-center",
@@ -73,7 +75,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		seller: {
 			slot: {
 				root: {
-					class: isClosed
+					class: isCurrentClosed
 						? [
 								"items-center",
 								"justify-center",
@@ -88,7 +90,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		"seller-to-buyer": {
 			slot: {
 				root: {
-					class: isClosed
+					class: isCurrentClosed
 						? [
 								"items-center",
 								"justify-center",
@@ -101,16 +103,16 @@ export const EventBadge: FC<EventBadge.Props> = ({
 
 	const typeProps: Partial<Record<useSideSwitch.Type, Badge.Props>> = {
 		buyer: {
-			tone: isClosed ? "neutral" : "secondary",
+			tone: isCurrentClosed ? "neutral" : "secondary",
 		},
 		seller: {
-			tone: isClosed ? "neutral" : "secondary",
+			tone: isCurrentClosed ? "neutral" : "secondary",
 		},
 		"seller-to-buyer": {
-			tone: isClosed ? "neutral" : "secondary",
+			tone: isCurrentClosed ? "neutral" : "secondary",
 		},
 		"buyer-to-seller": {
-			tone: isClosed ? "neutral" : "secondary",
+			tone: isCurrentClosed ? "neutral" : "secondary",
 		},
 	};
 
@@ -128,7 +130,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"w-6/8",
 					"max-w-5/6",
 					"transition-all",
-					isClosed
+					isCurrentClosed
 						? [
 								"mx-auto",
 								"w-full",

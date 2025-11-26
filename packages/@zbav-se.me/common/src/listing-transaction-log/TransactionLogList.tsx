@@ -95,7 +95,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														listingTransactionStatus={status}
 														components={components}
 														isCurrent={isCurrent}
-														isClosed={isClosed && isCurrent}
+														isClosed={isClosed}
 													/>
 												);
 											})
@@ -106,9 +106,9 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														locale={locale}
 														side={side}
 														components={components}
-														isCurrent={isCurrent}
 														listingTransactionStatus={status}
-														isClosed={isClosed && isCurrent}
+														isCurrent={isCurrent}
+														isClosed={isClosed}
 													/>
 												);
 											})
@@ -120,7 +120,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														side={side}
 														listingTransactionStatus={status}
 														isCurrent={isCurrent}
-														isClosed={isClosed && isCurrent}
+														isClosed={isClosed}
 													/>
 												);
 											})
@@ -139,7 +139,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 												side={side}
 												message={message}
 												isCurrent={isCurrent}
-												isClosed={isClosed && isCurrent}
+												isClosed={isClosed}
 											/>
 										);
 									})

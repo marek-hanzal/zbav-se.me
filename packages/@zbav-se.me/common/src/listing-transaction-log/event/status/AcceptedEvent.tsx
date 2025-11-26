@@ -16,14 +16,18 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 	listingTransactionStatus,
 	components,
 	isCurrent,
+	isClosed,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(isCurrent);
+
+	console.log("AcceptedEvent", isCurrent, isOpen, isClosed);
 
 	return (
 		<>
 			<StatusEventBadge
 				listingTransactionStatus={listingTransactionStatus}
+				isClosed={isClosed}
 				renderSellerFn={({ tweak, timestamp, ...props }) => (
 					<Badge
 						ui={"AcceptedEvent-Seller"}
@@ -48,10 +52,12 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 							<Tx label="Seller accepted transaction (seller)" />
 						</div>
 
-						<Icon
-							icon={isOpen ? HideIcon : ShowIcon}
-							size={"xs"}
-						/>
+						{isClosed ? null : (
+							<Icon
+								icon={isOpen ? HideIcon : ShowIcon}
+								size={"xs"}
+							/>
+						)}
 					</Badge>
 				)}
 				renderSellerToBuyerFn={({ tweak, timestamp, ...props }) => {
@@ -79,10 +85,12 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 								<Tx label="Seller accepted transaction (seller-to-buyer)" />
 							</div>
 
-							<Icon
-								icon={isOpen ? HideIcon : ShowIcon}
-								size={"xs"}
-							/>
+							{isClosed ? null : (
+								<Icon
+									icon={isOpen ? HideIcon : ShowIcon}
+									size={"xs"}
+								/>
+							)}
 						</Badge>
 					);
 				}}
@@ -91,19 +99,24 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 				 */
 				isCurrent={isOpen}
 				onClick={() => {
+					if (isClosed) {
+						return;
+					}
 					setIsOpen((state) => !state);
 				}}
 				{...props}
 			/>
 
-			<StatusMenu
-				locale={props.locale}
-				side={props.side}
-				log={listingTransactionStatus}
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				components={components}
-			/>
+			{isClosed ? null : (
+				<StatusMenu
+					locale={props.locale}
+					side={props.side}
+					log={listingTransactionStatus}
+					isOpen={isOpen}
+					onClose={() => setIsOpen(false)}
+					components={components}
+				/>
+			)}
 		</>
 	);
 };

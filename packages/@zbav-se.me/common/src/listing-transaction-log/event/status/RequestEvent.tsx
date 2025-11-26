@@ -16,6 +16,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 	listingTransactionStatus,
 	components,
 	isCurrent,
+	isClosed,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(isCurrent);
@@ -24,6 +25,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 		<>
 			<StatusEventBadge
 				listingTransactionStatus={listingTransactionStatus}
+				isClosed={isClosed}
 				renderBuyerFn={({ tweak, timestamp, ...props }) => (
 					<Badge
 						ui={"RequestEvent-Buyer"}
@@ -48,12 +50,12 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 							<Tx label="Buyer transaction request (buyer-buyer) (label)" />
 						</div>
 
-						{isCurrent ? (
+						{isClosed ? null : (
 							<Icon
 								icon={isOpen ? HideIcon : ShowIcon}
 								size={"xs"}
 							/>
-						) : null}
+						)}
 					</Badge>
 				)}
 				renderBuyerToSellerFn={({ tweak, timestamp, ...props }) => (
@@ -80,12 +82,12 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 							<Tx label="Buyer transaction request (buyer-seller) (label)" />
 						</div>
 
-						{isCurrent ? (
+						{isClosed ? null : (
 							<Icon
 								icon={isOpen ? HideIcon : ShowIcon}
 								size={"xs"}
 							/>
-						) : null}
+						)}
 					</Badge>
 				)}
 				/**
@@ -93,7 +95,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 				 */
 				isCurrent={isOpen}
 				onClick={() => {
-					if (!isCurrent) {
+					if (isClosed) {
 						return;
 					}
 					setIsOpen((state) => !state);
