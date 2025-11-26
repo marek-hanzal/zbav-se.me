@@ -1,8 +1,6 @@
 import { HideIcon, Icon, ShowIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
-import { toTimeDiff } from "@use-pico/common/time";
 import { type FC, useState } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
 import type { TransactionLogList } from "../../TransactionLogList";
@@ -10,13 +8,11 @@ import { StatusMenu } from "./StatusMenu";
 
 export namespace RequestEvent {
 	export interface Props extends StatusEventBadge.PropsEx {
-		locale: string;
 		components: TransactionLogList.Components;
 	}
 }
 
 export const RequestEvent: FC<RequestEvent.Props> = ({
-	locale,
 	listingTransactionStatus,
 	components,
 	isCurrent,
@@ -28,7 +24,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 		<>
 			<StatusEventBadge
 				listingTransactionStatus={listingTransactionStatus}
-				renderBuyerFn={({ tweak, ...props }) => (
+				renderBuyerFn={({ tweak, timestamp, ...props }) => (
 					<Badge
 						ui={"RequestEvent-Buyer"}
 						tweak={[
@@ -47,14 +43,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 						{...props}
 					>
 						<div className="flex flex-col gap-1 w-full">
-							<Typo
-								label={toTimeDiff({
-									locale,
-									time: listingTransactionStatus.createdAt,
-								})}
-								font={"normal"}
-								size={"sm"}
-							/>
+							{timestamp}
 
 							<Tx label="Buyer transaction request (buyer-buyer) (label)" />
 						</div>
@@ -67,7 +56,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 						) : null}
 					</Badge>
 				)}
-				renderBuyerToSellerFn={({ tweak, ...props }) => (
+				renderBuyerToSellerFn={({ tweak, timestamp, ...props }) => (
 					<Badge
 						ui={"RequestEvent-BuyerToSeller"}
 						tweak={[
@@ -86,14 +75,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 						{...props}
 					>
 						<div className="flex flex-col gap-1 w-full">
-							<Typo
-								label={toTimeDiff({
-									locale,
-									time: listingTransactionStatus.createdAt,
-								})}
-								font={"normal"}
-								size={"sm"}
-							/>
+							{timestamp}
 
 							<Tx label="Buyer transaction request (buyer-seller) (label)" />
 						</div>
@@ -120,7 +102,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 			/>
 
 			<StatusMenu
-				locale={locale}
+				locale={props.locale}
 				side={props.side}
 				log={listingTransactionStatus}
 				isOpen={isOpen}

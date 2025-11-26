@@ -1,16 +1,32 @@
 import type { Badge, BadgeCls } from "@use-pico/client/ui/badge";
+import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
-import type { FC } from "react";
+import { toTimeDiff } from "@use-pico/common/time";
+import type { FC, ReactNode } from "react";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
 export namespace EventBadge {
-	export interface Props extends Badge.Props, useSideSwitch.Props<Badge.Props> {
+	export interface Props
+		extends Badge.Props,
+			useSideSwitch.Props<
+				Badge.Props & {
+					timestamp: ReactNode;
+				}
+			> {
+		locale: string;
+		timestamp: string;
 		isCurrent: boolean;
 	}
 
 	export type PropsEx = Badge.Props &
-		useSideSwitch.PropsEx<Badge.Props> & {
+		useSideSwitch.PropsEx<
+			Badge.Props & {
+				timestamp: ReactNode;
+			}
+		> & {
+			locale: string;
 			isCurrent: boolean;
+			timestamp: string;
 		};
 }
 
@@ -23,6 +39,8 @@ export namespace EventBadge {
  * This component by default expects "Badge" component being rendered, but it does not matter.
  */
 export const EventBadge: FC<EventBadge.Props> = ({
+	locale,
+	timestamp,
 	isCurrent,
 	side,
 	actor,
@@ -79,11 +97,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"w-6/8",
 					"max-w-5/6",
 					"transition-all",
-					isCurrent
-						? [
-								"scale-105",
-							]
-						: undefined,
 				],
 				token: isCurrent
 					? [
@@ -116,5 +129,15 @@ export const EventBadge: FC<EventBadge.Props> = ({
 			badgeTweak,
 			typeTweaks[type],
 		],
+		timestamp: (
+			<Typo
+				label={toTimeDiff({
+					locale,
+					time: timestamp,
+				})}
+				font={"normal"}
+				size={"sm"}
+			/>
+		),
 	});
 };

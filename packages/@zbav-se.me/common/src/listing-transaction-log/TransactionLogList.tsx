@@ -12,6 +12,7 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { MessageEvent } from "./event/MessageEvent";
 import { AcceptedEvent } from "./event/status/AcceptedEvent";
+import { RejectedEvent } from "./event/status/RejectedEvent";
 import { RequestEvent } from "./event/status/RequestEvent";
 
 export namespace TransactionLogList {
@@ -97,7 +98,15 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 												);
 											})
 											.with("rejected", () => {
-												return "rejected";
+												return (
+													<RejectedEvent
+														key={log.id}
+														locale={locale}
+														side={side}
+														listingTransactionStatus={status}
+														isCurrent={isCurrent}
+													/>
+												);
 											})
 											.with("closed", "expired", "success", () => {
 												return "not-yet";

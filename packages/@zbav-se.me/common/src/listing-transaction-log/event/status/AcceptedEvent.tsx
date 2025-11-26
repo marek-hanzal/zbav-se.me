@@ -1,8 +1,6 @@
 import { HideIcon, Icon, ShowIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
-import { toTimeDiff } from "@use-pico/common/time";
 import { type FC, useState } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
 import type { TransactionLogList } from "../../TransactionLogList";
@@ -10,13 +8,11 @@ import { StatusMenu } from "./StatusMenu";
 
 export namespace AcceptedEvent {
 	export interface Props extends StatusEventBadge.PropsEx {
-		locale: string;
 		components: TransactionLogList.Components;
 	}
 }
 
 export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
-	locale,
 	listingTransactionStatus,
 	components,
 	isCurrent,
@@ -28,7 +24,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 		<>
 			<StatusEventBadge
 				listingTransactionStatus={listingTransactionStatus}
-				renderSellerFn={({ tweak, ...props }) => (
+				renderSellerFn={({ tweak, timestamp, ...props }) => (
 					<Badge
 						ui={"AcceptedEvent-Seller"}
 						tweak={[
@@ -47,14 +43,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 						{...props}
 					>
 						<div className="flex flex-col gap-1 w-full">
-							<Typo
-								label={toTimeDiff({
-									locale,
-									time: listingTransactionStatus.createdAt,
-								})}
-								font={"normal"}
-								size={"sm"}
-							/>
+							{timestamp}
 
 							<Tx label="Seller accepted transaction (seller)" />
 						</div>
@@ -65,7 +54,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 						/>
 					</Badge>
 				)}
-				renderSellerToBuyerFn={({ tweak, ...props }) => {
+				renderSellerToBuyerFn={({ tweak, timestamp, ...props }) => {
 					return (
 						<Badge
 							ui={"AcceptedEvent-SellerToBuyer"}
@@ -85,14 +74,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 							{...props}
 						>
 							<div className="flex flex-col gap-1 w-full">
-								<Typo
-									label={toTimeDiff({
-										locale,
-										time: listingTransactionStatus.createdAt,
-									})}
-									font={"normal"}
-									size={"sm"}
-								/>
+								{timestamp}
 
 								<Tx label="Seller accepted transaction (seller-to-buyer)" />
 							</div>
@@ -115,7 +97,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 			/>
 
 			<StatusMenu
-				locale={locale}
+				locale={props.locale}
 				side={props.side}
 				log={listingTransactionStatus}
 				isOpen={isOpen}

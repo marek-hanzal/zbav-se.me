@@ -3,11 +3,11 @@ import type { FC } from "react";
 import { EventBadge } from "./EventBadge";
 
 export namespace StatusEventBadge {
-	export interface Props extends Omit<EventBadge.Props, "actor"> {
+	export interface Props extends Omit<EventBadge.Props, "actor" | "timestamp"> {
 		listingTransactionStatus: tListingTransactionStatus;
 	}
 
-	export type PropsEx = Omit<EventBadge.PropsEx, "actor"> & {
+	export type PropsEx = Omit<EventBadge.PropsEx, "actor" | "timestamp"> & {
 		listingTransactionStatus: tListingTransactionStatus;
 	};
 }
@@ -19,6 +19,7 @@ export const StatusEventBadge: FC<StatusEventBadge.Props> = ({
 	return (
 		<EventBadge
 			actor={listingTransactionStatus.side}
+			timestamp={listingTransactionStatus.createdAt}
 			{...props}
 		/>
 	);
