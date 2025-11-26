@@ -4,9 +4,14 @@ import type { FC } from "react";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
 export namespace EventBadge {
-	export interface Props extends Badge.Props, useSideSwitch.Props<Badge.Props> {}
+	export interface Props extends Badge.Props, useSideSwitch.Props<Badge.Props> {
+		isCurrent: boolean;
+	}
 
-	export type PropsEx = Badge.Props & useSideSwitch.PropsEx<Badge.Props>;
+	export type PropsEx = Badge.Props &
+		useSideSwitch.PropsEx<Badge.Props> & {
+			isCurrent: boolean;
+		};
 }
 
 /**
@@ -18,6 +23,7 @@ export namespace EventBadge {
  * This component by default expects "Badge" component being rendered, but it does not matter.
  */
 export const EventBadge: FC<EventBadge.Props> = ({
+	isCurrent,
 	side,
 	actor,
 	renderSellerFn,
@@ -72,6 +78,11 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"py-1",
 					"w-6/8",
 					"max-w-5/6",
+					isCurrent
+						? [
+								"border-3",
+							]
+						: undefined,
 				],
 			},
 		},

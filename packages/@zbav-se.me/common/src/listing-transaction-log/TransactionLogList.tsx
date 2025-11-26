@@ -8,7 +8,6 @@ import {
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { ContextMenu } from "./ContextMenu";
 import { MessageEvent } from "./event/MessageEvent";
 import { RequestEvent } from "./event/status/RequestEvent";
 
@@ -50,6 +49,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					return (
 						<>
 							{data.data.map((log) => {
+								const isCurrent = currentLog.id === log.id;
+
 								return match(log.event)
 									.with("status", () => {
 										const status = zListingTransactionStatus.parse(log);
@@ -64,6 +65,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														listingTransactionStatus={status}
 														SellerInfo={SellerInfo}
 														BuyerInfo={BuyerInfo}
+														isCurrent={isCurrent}
 													/>
 												);
 											})
@@ -80,12 +82,15 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 											.exhaustive();
 									})
 									.with("message", () => {
+										const message = zListingTransactionMessage.parse(log);
+
 										return (
 											<MessageEvent
 												key={log.id}
 												locale={locale}
 												side={side}
-												message={zListingTransactionMessage.parse(log)}
+												message={message}
+												isCurrent={isCurrent}
 											/>
 										);
 									})
@@ -94,11 +99,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									})
 									.exhaustive();
 							})}
-
-							<ContextMenu
-								side={side}
-								log={currentLog}
-							/>
 						</>
 					);
 				}}
