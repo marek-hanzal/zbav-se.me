@@ -61,7 +61,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 							<Tx label="Buyer transaction request (buyer-buyer) (label)" />
 						</div>
 
-						{isClosed ? null : (
+						{isClosed || !isCurrent ? null : (
 							<Icon
 								icon={isOpen ? HideIcon : ShowIcon}
 								size={"xs"}
@@ -93,7 +93,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 							<Tx label="Buyer transaction request (buyer-seller) (label)" />
 						</div>
 
-						{isClosed ? null : (
+						{isClosed || !isCurrent ? null : (
 							<Icon
 								icon={isOpen ? HideIcon : ShowIcon}
 								size={"xs"}

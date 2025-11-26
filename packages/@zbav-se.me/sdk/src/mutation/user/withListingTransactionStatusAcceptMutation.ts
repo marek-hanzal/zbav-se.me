@@ -31,8 +31,8 @@ export const withListingTransactionStatusAcceptMutation = withMutation<
 		);
 	},
 	invalidate: [
-		withListingTransactionCollectionQuery,
-		withListingTransactionFetchQuery,
 		withListingTransactionLogCollectionQuery,
+		withListingTransactionFetchQuery,
+		withListingTransactionCollectionQuery,
 	],
 });

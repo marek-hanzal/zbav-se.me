@@ -69,6 +69,9 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			<withListingTransactionLogCollectionQuery.Suspense
 				data={query}
 				fallback={<SpinnerContainer />}
+				options={{
+					refetchInterval: 10_000,
+				}}
 			>
 				{({ data }) => {
 					const currentLog = data.data[data.data.length - 1];

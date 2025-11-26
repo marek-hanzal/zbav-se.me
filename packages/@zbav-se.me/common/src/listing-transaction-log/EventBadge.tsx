@@ -103,10 +103,10 @@ export const EventBadge: FC<EventBadge.Props> = ({
 
 	const typeProps: Partial<Record<useSideSwitch.Type, Badge.Props>> = {
 		buyer: {
-			tone: isCurrentClosed ? "neutral" : "secondary",
+			tone: isCurrentClosed ? "neutral" : "primary",
 		},
 		seller: {
-			tone: isCurrentClosed ? "neutral" : "secondary",
+			tone: isCurrentClosed ? "neutral" : "primary",
 		},
 		"seller-to-buyer": {
 			tone: isCurrentClosed ? "neutral" : "secondary",

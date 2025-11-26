@@ -547,6 +547,9 @@ ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
+b1c96705cee9f240b173e9c05e3be0b65342ac52bef05a2cc58e4d43:
+    ref: Buyer transaction rejected (buyer) (label)
+    value: Transakce byla tebou odmítnuta
 b209e03b614a6ee9dbbfae08ece97fb6bb2b523c8bbd743c73fbfff2:
     ref: Next - Feed title (button)
     value: Nastavení popisku

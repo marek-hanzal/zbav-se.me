@@ -61,7 +61,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 							<Tx label="Seller accepted transaction (seller)" />
 						</div>
 
-						{isClosed ? null : (
+						{isClosed || !isCurrent ? null : (
 							<Icon
 								icon={isOpen ? HideIcon : ShowIcon}
 								size={"xs"}
@@ -94,7 +94,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 								<Tx label="Seller accepted transaction (seller-to-buyer)" />
 							</div>
 
-							{isClosed ? null : (
+							{isClosed || !isCurrent ? null : (
 								<Icon
 									icon={isOpen ? HideIcon : ShowIcon}
 									size={"xs"}

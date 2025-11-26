@@ -34,14 +34,19 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 	component() {
 		const { locale, id } = Route.useParams();
 
-		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery({
-			where: {
-				id,
+		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery(
+			{
+				where: {
+					id,
+				},
+				meta: {
+					side: "seller",
+				},
 			},
-			meta: {
-				side: "seller",
+			{
+				refetchInterval: 10_000,
 			},
-		});
+		);
 		const listingTransaction = listingTransactionFetchQuery.data;
 
 		return (

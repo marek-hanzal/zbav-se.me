@@ -13,6 +13,16 @@ export const RejectedEvent: FC<RejectedEvent.Props> = ({ listingTransactionStatu
 	return (
 		<StatusEventBadge
 			listingTransactionStatus={listingTransactionStatus}
+			renderBuyerFn={({ timestamp, ...props }) => (
+				<Badge
+					ui={"RejectedEvent-Buyer"}
+					{...props}
+				>
+					{timestamp}
+
+					<Tx label="Buyer transaction rejected (buyer) (label)" />
+				</Badge>
+			)}
 			renderSellerFn={({ timestamp, ...props }) => (
 				<Badge
 					ui={"RejectedEvent-Seller"}
