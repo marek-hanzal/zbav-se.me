@@ -96,15 +96,12 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 													/>
 												);
 											})
-											.with(
-												"closed",
-												"rejected",
-												"expired",
-												"success",
-												() => {
-													return "not-yet";
-												},
-											)
+											.with("rejected", () => {
+												return "rejected";
+											})
+											.with("closed", "expired", "success", () => {
+												return "not-yet";
+											})
 											.exhaustive();
 									})
 									.with("message", () => {
