@@ -9,7 +9,7 @@ import { SellerInfoButton } from "../../../listing-transaction/button/SellerInfo
 import { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 
 export namespace StatusMenu {
-	export interface Props extends BottomSheet.PropsEx {
+	export interface Props extends BottomSheet.Props {
 		side: tUserSideEnum;
 		log: tListingTransactionLog;
 	}
@@ -49,11 +49,6 @@ export const StatusMenu: FC<StatusMenu.Props> = ({ side, log, ...props }) => {
 
 	return (
 		<BottomSheet
-			disableDismiss
-			isOpen
-			onClose={() => {
-				//
-			}}
 			snapPoints={[
 				0,
 				/**

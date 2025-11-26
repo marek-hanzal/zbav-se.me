@@ -31,6 +31,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 }) => {
 	return (
 		<Container
+			ui={"TransactionLogList-root"}
 			layout={"vertical-flex"}
 			gap={"md"}
 			{...props}

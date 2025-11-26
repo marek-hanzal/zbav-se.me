@@ -23,6 +23,7 @@ export { FileIcon } from "./FileIcon";
 export { FilterApplyIcon } from "./FilterApplyIcon";
 export { FilterRemoveIcon } from "./FilterRemoveIcon";
 export { GteIcon } from "./GteIcon";
+export { HideIcon } from "./HideIcon";
 export { Icon } from "./Icon";
 export { IconCls } from "./IconCls";
 export { ImportIcon } from "./ImportIcon";

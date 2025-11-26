@@ -78,12 +78,18 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"py-1",
 					"w-6/8",
 					"max-w-5/6",
+					"transition-all",
 					isCurrent
 						? [
-								"border-3",
+								"scale-105",
 							]
 						: undefined,
 				],
+				token: isCurrent
+					? [
+							"shadow.lg",
+						]
+					: undefined,
 			},
 		},
 	};
