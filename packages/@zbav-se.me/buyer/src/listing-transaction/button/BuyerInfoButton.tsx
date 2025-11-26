@@ -29,6 +29,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ locale, log, ...pro
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
+				detent={"content"}
 			>
 				<BuyerInfoContainer
 					locale={locale}
