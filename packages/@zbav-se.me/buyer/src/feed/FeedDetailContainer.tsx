@@ -14,6 +14,7 @@ import { withFeedDeleteMutation, withFeedPatchMutation } from "@zbav-se.me/sdk/m
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { type FC, useState } from "react";
 import { FeedNameContainer } from "./FeedNameContainer";
+import { FeedTitleContainer } from "./FeedTitleContainer";
 
 export namespace FeedDetailContainer {
 	export interface Props extends Container.Props {
@@ -30,8 +31,13 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	...props
 }) => {
 	const [change, setChange] = useState(false);
+	const [patch, setPatch] = useState<OptionalId<tFeed>>(feed);
+	//
 	const [isName, setIsName] = useState(false);
 	const [name, setName] = useState(feed.name);
+	//
+	const [isTitle, setIsTitle] = useState(false);
+	const [title, setTitle] = useState(feed.query?.filter?.title ?? "");
 
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
 		async onPostMutation() {
@@ -43,6 +49,40 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 			setChange(false);
 		},
 	});
+
+	// biome-ignore lint/correctness/noNestedComponentDefinitions: Ssst
+	const SaveButton: FC<Button.Props> = (props) => {
+		return (
+			<Button
+				tone={"secondary"}
+				theme={"dark"}
+				label={"Feed - save (button)"}
+				size={"lg"}
+				loading={feedPatchMutation.isPending}
+				disabled={!change || feedPatchMutation.isPending}
+				full
+				onClick={() => {
+					if (!change || !patch.id) {
+						return;
+					}
+
+					feedPatchMutation.mutate(
+						{
+							id: patch.id,
+							...patch,
+						},
+						{
+							onSuccess() {
+								setIsName(false);
+								setIsTitle(false);
+							},
+						},
+					);
+				}}
+				{...props}
+			/>
+		);
+	};
 
 	return (
 		<Container
@@ -82,6 +122,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							size={"sm"}
 						/>
 					}
+					onClick={() => setIsTitle(true)}
 				/>
 
 				<LocationBadgeValue
@@ -191,47 +232,53 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 			</VariantProvider>
 
 			{feed.id ? (
-				<BottomSheet
-					isOpen={isName}
-					onClose={() => setIsName(false)}
-					detent={"content"}
-				>
-					<FeedNameContainer
-						value={name}
-						onChange={(value) => {
-							setChange(true);
-							setName(value);
-						}}
-					/>
+				<>
+					<BottomSheet
+						isOpen={isName}
+						onClose={() => setIsName(false)}
+						detent={"content"}
+					>
+						<FeedNameContainer
+							value={name}
+							onChange={(value) => {
+								setChange(true);
+								setName(value);
+								setPatch((prev) => ({
+									...prev,
+									name: value,
+								}));
+							}}
+						/>
 
-					<Button
-						tone={"secondary"}
-						theme={"dark"}
-						label={"Feed - next and save (button)"}
-						size={"lg"}
-						loading={feedPatchMutation.isPending}
-						disabled={name.length === 0 || feedPatchMutation.isPending}
-						full
-						onClick={() => {
-							if (!change || !feed.id) {
-								return;
-							}
+						<SaveButton />
+					</BottomSheet>
 
-							feedPatchMutation.mutate(
-								{
-									id: feed.id,
-									...feed,
-									name,
-								},
-								{
-									onSuccess() {
-										setIsName(false);
+					<BottomSheet
+						isOpen={isTitle}
+						onClose={() => setIsTitle(false)}
+						detent={"content"}
+					>
+						<FeedTitleContainer
+							value={title}
+							onChange={(value) => {
+								setChange(true);
+								setTitle(value);
+								setPatch((prev) => ({
+									...prev,
+									query: {
+										...prev.query,
+										filter: {
+											...prev.query?.filter,
+											title: value,
+										},
 									},
-								},
-							);
-						}}
-					/>
-				</BottomSheet>
+								}));
+							}}
+						/>
+
+						<SaveButton />
+					</BottomSheet>
+				</>
 			) : null}
 		</Container>
 	);
