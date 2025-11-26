@@ -1,7 +1,7 @@
 import type { ComponentProps, FC, PropsWithChildren } from "react";
 import { Sheet } from "react-modal-sheet";
 import type { UiProps } from "../../type/UiProps";
-import { Container } from "../container";
+import { Container } from "../container/Container";
 
 export namespace BottomSheet {
 	export interface Props
