@@ -9,10 +9,16 @@ export namespace BuyerInfoButton {
 	export interface Props extends Button.Props {
 		locale: string;
 		log: tListingTransactionLog;
+		modalRootId?: string;
 	}
 }
 
-export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ locale, log, ...props }) => {
+export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
+	locale,
+	log,
+	modalRootId,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -29,7 +35,8 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({ locale, log, ...pro
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
-				detent={"content"}
+				detent={"default"}
+				modalEffectRootId={modalRootId}
 			>
 				<BuyerInfoContainer
 					locale={locale}

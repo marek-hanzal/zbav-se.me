@@ -35,12 +35,12 @@ export const StatusMenu: FC<StatusMenu.Props> = ({ locale, side, log, components
 		renderBuyerToSellerFn() {
 			return (
 				<>
-					<AcceptButton log={log} />
-
 					<components.BuyerInfoButton
 						locale={locale}
 						log={log}
 					/>
+
+					<AcceptButton log={log} />
 
 					<RejectButton log={log} />
 				</>

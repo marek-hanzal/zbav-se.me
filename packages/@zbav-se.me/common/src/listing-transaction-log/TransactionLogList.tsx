@@ -23,6 +23,7 @@ export namespace TransactionLogList {
 			{
 				locale: string;
 				log: tListingTransactionLog;
+				modalRootId?: string;
 			} & Button.Props
 		>;
 	}
