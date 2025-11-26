@@ -41,11 +41,10 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
-			tone={"primary"}
-			theme={"light"}
+			tone={"unset"}
+			theme={"unset"}
 			height={"auto"}
 			round={"lg"}
-			border={"default"}
 		>
 			<Badge
 				theme={"light"}
@@ -63,6 +62,8 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 								"border-l-0",
 								"border-r-0",
 								"rounded-none",
+								"border-none",
+								"bg-transparent",
 							],
 							token: [
 								"square.md",
@@ -80,9 +81,10 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			</Badge>
 
 			<Container
+				tone={"unset"}
+				theme={"unset"}
 				layout={"vertical-flex"}
-				gap={"sm"}
-				square={"sm"}
+				square={"xs"}
 				height={"auto"}
 				round={"lg"}
 			>
@@ -102,6 +104,8 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 												"items-start",
 												"h-fit",
 												"w-full",
+												"border-none",
+												"gap-0",
 											],
 											token: [
 												"round.md",
