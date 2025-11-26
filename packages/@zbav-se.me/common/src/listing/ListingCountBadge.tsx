@@ -39,8 +39,6 @@ export namespace ListingCountBadge {
 export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, ...props }) => {
 	return (
 		<Badge
-			tone={"secondary"}
-			theme={"light"}
 			size={"sm"}
 			round={"default"}
 			tweak={{

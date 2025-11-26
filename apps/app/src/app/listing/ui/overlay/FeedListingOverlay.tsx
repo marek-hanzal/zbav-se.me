@@ -26,15 +26,6 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 				size={"lg"}
 				round={"default"}
 				snapTo={"top-center"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"border-none",
-							],
-						},
-					},
-				}}
 			>
 				{listing.price > 0 ? (
 					<PriceInline
@@ -59,7 +50,6 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 							class: [
 								"p-2",
 								"opacity-75",
-								"border-none",
 								"h-fit",
 							],
 						},
@@ -87,7 +77,6 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 								class: [
 									"opacity-85",
 									"overflow-hidden",
-									"border-none",
 								],
 							},
 						},
