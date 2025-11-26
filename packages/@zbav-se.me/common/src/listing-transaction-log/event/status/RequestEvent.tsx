@@ -59,10 +59,12 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 							<Tx label="Buyer transaction request (buyer-buyer) (label)" />
 						</div>
 
-						<Icon
-							icon={isOpen ? HideIcon : ShowIcon}
-							size={"xs"}
-						/>
+						{isCurrent ? (
+							<Icon
+								icon={isOpen ? HideIcon : ShowIcon}
+								size={"xs"}
+							/>
+						) : null}
 					</Badge>
 				)}
 				renderBuyerToSellerFn={({ tweak, ...props }) => (
@@ -96,10 +98,12 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 							<Tx label="Buyer transaction request (buyer-seller) (label)" />
 						</div>
 
-						<Icon
-							icon={isOpen ? HideIcon : ShowIcon}
-							size={"xs"}
-						/>
+						{isCurrent ? (
+							<Icon
+								icon={isOpen ? HideIcon : ShowIcon}
+								size={"xs"}
+							/>
+						) : null}
 					</Badge>
 				)}
 				/**
@@ -107,6 +111,9 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 				 */
 				isCurrent={isOpen}
 				onClick={() => {
+					if (!isCurrent) {
+						return;
+					}
 					setIsOpen((state) => !state);
 				}}
 				{...props}

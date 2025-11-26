@@ -46,6 +46,30 @@ export const StatusMenu: FC<StatusMenu.Props> = ({ locale, side, log, components
 				</>
 			);
 		},
+		renderSellerFn() {
+			return (
+				<>
+					<components.BuyerInfoButton
+						locale={locale}
+						log={log}
+					/>
+
+					<RejectButton log={log} />
+				</>
+			);
+		},
+		renderSellerToBuyerFn() {
+			return (
+				<>
+					<components.BuyerInfoButton
+						locale={locale}
+						log={log}
+					/>
+
+					<RejectButton log={log} />
+				</>
+			);
+		},
 	});
 
 	const content = render({});
