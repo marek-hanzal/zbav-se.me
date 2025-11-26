@@ -59,6 +59,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 							class: [
 								"p-2",
 								"opacity-75",
+								"border-none",
 								"h-fit",
 							],
 						},
