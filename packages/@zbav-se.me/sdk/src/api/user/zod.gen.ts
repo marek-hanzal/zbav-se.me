@@ -528,21 +528,6 @@ export const zListingTransactionSellerInfo = z.object({
 export type zListingTransactionSellerInfo = z.infer<typeof zListingTransactionSellerInfo>;
 
 /**
- * Payload for patching a listing transaction
- */
-export const zListingTransactionPatch = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing transaction to patch'
-    }),
-    status: z.optional(zListingTransactionStatusEnum),
-    side: z.optional(zListingTransactionSideEnum)
-}).register(z.globalRegistry, {
-    description: 'Payload for patching a listing transaction'
-});
-
-export type zListingTransactionPatch = z.infer<typeof zListingTransactionPatch>;
-
-/**
  * Data for creating a new listing transaction
  */
 export const zListingTransactionCreate = z.object({
@@ -2804,21 +2789,6 @@ export type zapiListingTransactionFetchRequest = z.infer<typeof zApiListingTrans
 export const zApiListingTransactionFetchResponse = zListingTransaction;
 
 export type zapiListingTransactionFetchResponse = z.infer<typeof zApiListingTransactionFetchResponse>;
-
-export const zApiListingTransactionPatchData = z.object({
-    body: z.optional(zListingTransactionPatch),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingTransactionPatchRequest = z.infer<typeof zApiListingTransactionPatchData>;
-
-/**
- * The listing transaction was updated
- */
-export const zApiListingTransactionPatchResponse = zListingTransaction;
-
-export type zapiListingTransactionPatchResponse = z.infer<typeof zApiListingTransactionPatchResponse>;
 
 export const zApiListingTransactionSellerInfoData = z.object({
     body: z.optional(zListingTransactionQuery),

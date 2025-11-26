@@ -7,7 +7,6 @@ export { withListingFlagToggleMutation } from "./withListingFlagToggleMutation";
 export { withListingIgnoreToggleMutation } from "./withListingIgnoreToggleMutation";
 export { withListingScoreCreateMutation } from "./withListingScoreCreateMutation";
 export { withListingTransactionCreateMutation } from "./withListingTransactionCreateMutation";
-export { withListingTransactionPatchMutation } from "./withListingTransactionPatchMutation";
 export { withListingTransactionStatusAcceptMutation } from "./withListingTransactionStatusAcceptMutation";
 export { withListingTransactionStatusRejectMutation } from "./withListingTransactionStatusRejectMutation";
 export { withUploadCreateMutation } from "./withUploadCreateMutation";

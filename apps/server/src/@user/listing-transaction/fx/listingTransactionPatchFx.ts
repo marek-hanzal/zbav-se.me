@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import { listingTransactionStatusCreateFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusCreateFx";
 import type { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -78,12 +77,6 @@ export const listingTransactionPatchFx = ({
 					.where("id", "=", transactionId)
 					.returningAll()
 					.executeTakeFirstOrThrow();
-			});
-
-			yield* listingTransactionStatusCreateFx({
-				listingTransactionId: transactionId,
-				status: nextStatus,
-				side: nextSide,
 			});
 
 			return yield* listingTransactionFetchFx({

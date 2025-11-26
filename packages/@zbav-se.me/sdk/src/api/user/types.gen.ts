@@ -481,18 +481,6 @@ export type tListingTransactionSellerInfo = {
 };
 
 /**
- * Payload for patching a listing transaction
- */
-export type tListingTransactionPatch = {
-    /**
-     * ID of the listing transaction to patch
-     */
-    id: string;
-    status?: tListingTransactionStatusEnum;
-    side?: tListingTransactionSideEnum;
-};
-
-/**
  * Data for creating a new listing transaction
  */
 export type tListingTransactionCreate = {
@@ -3067,42 +3055,6 @@ export type tApiListingTransactionFetchResponse = {
 };
 
 export type apiListingTransactionFetchResponse = tApiListingTransactionFetchResponse[keyof tApiListingTransactionFetchResponse];
-
-export type tApiListingTransactionPatchRequest = {
-    /**
-     * Data for updating a listing transaction
-     */
-    body?: tListingTransactionPatch;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-transaction/patch';
-};
-
-export type apiListingTransactionPatchErrors = {
-    /**
-     * Access denied
-     */
-    403: tMessage;
-    /**
-     * Listing transaction not found
-     */
-    404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingTransactionPatchError = apiListingTransactionPatchErrors[keyof apiListingTransactionPatchErrors];
-
-export type tApiListingTransactionPatchResponse = {
-    /**
-     * The listing transaction was updated
-     */
-    200: tListingTransaction;
-};
-
-export type apiListingTransactionPatchResponse = tApiListingTransactionPatchResponse[keyof tApiListingTransactionPatchResponse];
 
 export type tApiListingTransactionSellerInfoRequest = {
     /**

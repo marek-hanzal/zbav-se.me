@@ -22,6 +22,7 @@ export const listingTransactionStatusRejectFx = ({
 					.selectFrom("listing_transaction as lt")
 					.innerJoin("listing as l", "lt.listingId", "l.id")
 					.select([
+						"lt.id",
 						"l.userId as sellerId",
 						"lt.userId as buyerId",
 					])
@@ -48,10 +49,23 @@ export const listingTransactionStatusRejectFx = ({
 			});
 		}
 
+		const side = transaction.buyerId === user.id ? "buyer" : "seller";
+
+		yield* Effect.tryPromise(async () => {
+			return database
+				.updateTable("listing_transaction")
+				.set({
+					status: "rejected",
+					side,
+				})
+				.where("id", "=", listingTransactionId)
+				.executeTakeFirst();
+		});
+
 		return yield* listingTransactionStatusCreateFx({
 			listingTransactionId,
 			status: "rejected",
-			side: transaction.buyerId === user.id ? "buyer" : "seller",
+			side,
 		});
 	});
 };

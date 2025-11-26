@@ -1,5 +1,7 @@
+import type { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import {
+	type tListingTransactionLog,
 	type tListingTransactionLogQuery,
 	type tUserSideEnum,
 	zListingTransactionMessage,
@@ -12,12 +14,25 @@ import { MessageEvent } from "./event/MessageEvent";
 import { RequestEvent } from "./event/status/RequestEvent";
 
 export namespace TransactionLogList {
+	export namespace Components {
+		export type SideInfoButton = FC<
+			{
+				locale: string;
+				log: tListingTransactionLog;
+			} & Button.Props
+		>;
+	}
+
+	export interface Components {
+		SellerInfoButton: Components.SideInfoButton;
+		BuyerInfoButton: Components.SideInfoButton;
+	}
+
 	export interface Props extends Container.Props {
 		locale: string;
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
-		SellerInfo: RequestEvent.Info.Component;
-		BuyerInfo: RequestEvent.Info.Component;
+		components: Components;
 	}
 }
 
@@ -25,8 +40,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	locale,
 	side,
 	query,
-	SellerInfo,
-	BuyerInfo,
+	components,
 	...props
 }) => {
 	return (
@@ -64,8 +78,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														locale={locale}
 														side={side}
 														listingTransactionStatus={status}
-														SellerInfo={SellerInfo}
-														BuyerInfo={BuyerInfo}
+														components={components}
 														isCurrent={isCurrent}
 													/>
 												);

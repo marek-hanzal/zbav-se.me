@@ -5,30 +5,20 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { toTimeDiff } from "@use-pico/common/time";
 import { type FC, useState } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
+import type { TransactionLogList } from "../../TransactionLogList";
 import { StatusMenu } from "./StatusMenu";
 
 export namespace RequestEvent {
-	export namespace Info {
-		export interface Props {
-			locale: string;
-			listingTransactionId: string;
-		}
-
-		export type Component = FC<Info.Props>;
-	}
-
 	export interface Props extends StatusEventBadge.PropsEx {
 		locale: string;
-		SellerInfo: Info.Component;
-		BuyerInfo: Info.Component;
+		components: TransactionLogList.Components;
 	}
 }
 
 export const RequestEvent: FC<RequestEvent.Props> = ({
 	locale,
 	listingTransactionStatus,
-	SellerInfo,
-	BuyerInfo,
+	components,
 	isCurrent,
 	...props
 }) => {
@@ -123,10 +113,12 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 			/>
 
 			<StatusMenu
+				locale={locale}
 				side={props.side}
 				log={listingTransactionStatus}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
+				components={components}
 			/>
 		</>
 	);

@@ -3,26 +3,30 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tListingTransactionLog, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { AcceptButton } from "../../../listing-transaction/button/AcceptButton";
-import { BuyerInfoButton } from "../../../listing-transaction/button/BuyerInfoButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
-import { SellerInfoButton } from "../../../listing-transaction/button/SellerInfoButton";
 import { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
+import type { TransactionLogList } from "../../TransactionLogList";
 
 export namespace StatusMenu {
 	export interface Props extends BottomSheet.Props {
+		locale: string;
 		side: tUserSideEnum;
 		log: tListingTransactionLog;
+		components: TransactionLogList.Components;
 	}
 }
 
-export const StatusMenu: FC<StatusMenu.Props> = ({ side, log, ...props }) => {
+export const StatusMenu: FC<StatusMenu.Props> = ({ locale, side, log, components, ...props }) => {
 	const { render } = useSideSwitch({
 		side,
 		actor: log.side,
 		renderBuyerFn() {
 			return (
 				<>
-					<SellerInfoButton log={log} />
+					<components.SellerInfoButton
+						locale={locale}
+						log={log}
+					/>
 
 					<RejectButton log={log} />
 				</>
@@ -33,7 +37,10 @@ export const StatusMenu: FC<StatusMenu.Props> = ({ side, log, ...props }) => {
 				<>
 					<AcceptButton log={log} />
 
-					<BuyerInfoButton log={log} />
+					<components.BuyerInfoButton
+						locale={locale}
+						log={log}
+					/>
 
 					<RejectButton log={log} />
 				</>
