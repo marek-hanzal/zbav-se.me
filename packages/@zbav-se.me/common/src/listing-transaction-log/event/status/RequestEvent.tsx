@@ -1,7 +1,7 @@
 import { HideIcon, Icon, ShowIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
-import { type FC, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
 import type { TransactionLogList } from "../../TransactionLogList";
 import { StatusMenu } from "./StatusMenu";
@@ -19,7 +19,18 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 	isClosed,
 	...props
 }) => {
-	const [isOpen, setIsOpen] = useState(isCurrent);
+	const [isOpen, setIsOpen] = useState(false);
+
+	/**
+	 * This trick enables sub-sheet to appear in the right order.
+	 */
+	useEffect(() => {
+		setTimeout(() => {
+			setIsOpen(isCurrent);
+		}, 150);
+	}, [
+		isCurrent,
+	]);
 
 	return (
 		<>
