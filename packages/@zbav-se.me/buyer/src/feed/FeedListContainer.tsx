@@ -9,7 +9,9 @@ import type { FC } from "react";
 import { FeedList } from "./FeedListContainer/FeedList";
 
 export namespace FeedListContainer {
-	export interface Props extends Container.Props {
+	export interface Props
+		extends Container.Props,
+			Pick<FeedList.Props, "onDelete" | "renderLinkTo"> {
 		locale: string;
 		query: tFeedQuery;
 		limit?: number;
@@ -22,6 +24,8 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	query,
 	limit = 10,
 	onClickCreate,
+	onDelete,
+	renderLinkTo,
 	...props
 }) => {
 	return (
@@ -70,6 +74,8 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						<FeedList
 							locale={locale}
 							query={query}
+							onDelete={onDelete}
+							renderLinkTo={renderLinkTo}
 						/>
 
 						{shouldShowCreateButton && !isLimitReached && data.filter > 0 ? (

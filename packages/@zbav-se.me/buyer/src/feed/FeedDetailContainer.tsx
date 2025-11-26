@@ -22,8 +22,7 @@ export namespace FeedDetailContainer {
 			| "sort"
 			| "category"
 			| "condition"
-			| "age"
-			| "view";
+			| "age";
 
 		export interface Props {
 			feedId: string;
@@ -185,40 +184,31 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					}
 				/>
 
-				{feed.id ? (
-					<>
-						{renderLinkTo?.({
-							feedId: feed.id,
-							type: "view",
-						})}
-
-						{onDelete ? (
-							<ConfirmButton
-								tone={"danger"}
-								iconEnabled={TrashIcon}
-								buttonProps={{
-									tone: "danger",
-									label: translator.text("Delete feed (button)"),
-								}}
-								confirmProps={{
-									iconEnabled: TrashIcon,
-									tone: "danger",
-									theme: "dark",
-									label: translator.text("Really delete feed (button)"),
-									onClick() {
-										feedDeleteMutation.mutate({
-											where: {
-												id: feed.id,
-											},
-										});
+				{feed.id && onDelete ? (
+					<ConfirmButton
+						tone={"danger"}
+						iconEnabled={TrashIcon}
+						buttonProps={{
+							tone: "danger",
+							label: translator.text("Delete feed (button)"),
+						}}
+						confirmProps={{
+							iconEnabled: TrashIcon,
+							tone: "danger",
+							theme: "dark",
+							label: translator.text("Really delete feed (button)"),
+							onClick() {
+								feedDeleteMutation.mutate({
+									where: {
+										id: feed.id,
 									},
-								}}
-								loading={feedDeleteMutation.isPending}
-								full
-								size={"lg"}
-							/>
-						) : null}
-					</>
+								});
+							},
+						}}
+						loading={feedDeleteMutation.isPending}
+						full
+						size={"lg"}
+					/>
 				) : null}
 			</VariantProvider>
 		</Container>

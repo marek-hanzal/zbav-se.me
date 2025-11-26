@@ -5,13 +5,21 @@ import { type FC, useId } from "react";
 import { FeedItemBadge } from "../FeedItemBadge";
 
 export namespace FeedList {
-	export interface Props extends Container.Props {
+	export interface Props
+		extends Container.Props,
+			Pick<FeedItemBadge.Props, "onDelete" | "renderLinkTo"> {
 		locale: string;
 		query: tFeedQuery;
 	}
 }
 
-export const FeedList: FC<FeedList.Props> = ({ locale, query, ...props }) => {
+export const FeedList: FC<FeedList.Props> = ({
+	locale,
+	query,
+	onDelete,
+	renderLinkTo,
+	...props
+}) => {
 	const feedRootId = useId();
 
 	return (
@@ -32,6 +40,8 @@ export const FeedList: FC<FeedList.Props> = ({ locale, query, ...props }) => {
 								key={`${feedRootId}-${feed.id}`}
 								feed={feed}
 								locale={locale}
+								onDelete={onDelete}
+								renderLinkTo={renderLinkTo}
 							/>
 						);
 					});
