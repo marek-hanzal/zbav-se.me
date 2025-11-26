@@ -4,7 +4,7 @@ import type { FC } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
 
 export namespace RejectedEvent {
-	export interface Props extends StatusEventBadge.PropsEx {
+	export interface Props extends StatusEventBadge.Props {
 		//
 	}
 }

@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { EventBadge } from "../EventBadge";
 
 export namespace MessageEvent {
-	export interface Props extends Omit<EventBadge.PropsEx, "actor" | "timestamp"> {
+	export interface Props extends Omit<EventBadge.Props, "actor" | "timestamp"> {
 		message: tListingTransactionMessage;
 	}
 }

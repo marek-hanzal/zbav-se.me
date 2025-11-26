@@ -7,7 +7,7 @@ import type { TransactionLogList } from "../../TransactionLogList";
 import { StatusMenu } from "./StatusMenu";
 
 export namespace AcceptedEvent {
-	export interface Props extends StatusEventBadge.PropsEx {
+	export interface Props extends StatusEventBadge.Props {
 		components: TransactionLogList.Components;
 	}
 }

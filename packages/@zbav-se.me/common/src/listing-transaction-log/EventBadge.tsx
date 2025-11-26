@@ -16,18 +16,8 @@ export namespace EventBadge {
 		locale: string;
 		timestamp: string;
 		isCurrent: boolean;
+		isClosed: boolean;
 	}
-
-	export type PropsEx = Badge.Props &
-		useSideSwitch.PropsEx<
-			Badge.Props & {
-				timestamp: ReactNode;
-			}
-		> & {
-			locale: string;
-			isCurrent: boolean;
-			timestamp: string;
-		};
 }
 
 /**
@@ -42,6 +32,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	locale,
 	timestamp,
 	isCurrent,
+	isClosed,
 	side,
 	actor,
 	renderSellerFn,
@@ -55,31 +46,71 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		buyer: {
 			slot: {
 				root: {
-					class: [
-						"items-end",
-						"ml-auto",
-					],
+					class: isClosed
+						? [
+								"items-center",
+								"justify-center",
+							]
+						: [
+								"items-end",
+								"ml-auto",
+							],
+				},
+			},
+		},
+		"buyer-to-seller": {
+			slot: {
+				root: {
+					class: isClosed
+						? [
+								"items-center",
+								"justify-center",
+							]
+						: undefined,
 				},
 			},
 		},
 		seller: {
 			slot: {
 				root: {
-					class: [
-						"items-end",
-						"ml-auto",
-					],
+					class: isClosed
+						? [
+								"items-center",
+								"justify-center",
+							]
+						: [
+								"items-end",
+								"ml-auto",
+							],
+				},
+			},
+		},
+		"seller-to-buyer": {
+			slot: {
+				root: {
+					class: isClosed
+						? [
+								"items-center",
+								"justify-center",
+							]
+						: undefined,
 				},
 			},
 		},
 	};
 
 	const typeProps: Partial<Record<useSideSwitch.Type, Badge.Props>> = {
+		buyer: {
+			tone: isClosed ? "neutral" : "secondary",
+		},
+		seller: {
+			tone: isClosed ? "neutral" : "secondary",
+		},
 		"seller-to-buyer": {
-			tone: "secondary",
+			tone: isClosed ? "neutral" : "secondary",
 		},
 		"buyer-to-seller": {
-			tone: "secondary",
+			tone: isClosed ? "neutral" : "secondary",
 		},
 	};
 
@@ -97,6 +128,14 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"w-6/8",
 					"max-w-5/6",
 					"transition-all",
+					isClosed
+						? [
+								"mx-auto",
+								"w-full",
+								"max-w-full",
+								"my-2",
+							]
+						: undefined,
 				],
 				token: isCurrent
 					? [

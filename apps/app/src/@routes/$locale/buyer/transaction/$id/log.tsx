@@ -69,6 +69,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 					<TransactionLogList
 						locale={locale}
 						side="buyer"
+						listingTransaction={listingTransaction}
 						query={{
 							where: {
 								listingTransactionId: id,

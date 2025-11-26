@@ -1,8 +1,10 @@
 import type { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import {
+	type tListingTransaction,
 	type tListingTransactionLog,
 	type tListingTransactionLogQuery,
+	type tListingTransactionStatusEnum,
 	type tUserSideEnum,
 	zListingTransactionMessage,
 	zListingTransactionStatus,
@@ -34,6 +36,7 @@ export namespace TransactionLogList {
 		locale: string;
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
+		listingTransaction: tListingTransaction;
 		components: Components;
 	}
 }
@@ -42,9 +45,19 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	locale,
 	side,
 	query,
+	listingTransaction,
 	components,
 	...props
 }) => {
+	const isClosed = (
+		[
+			"closed",
+			"expired",
+			"closed",
+			"rejected",
+		] satisfies tListingTransactionStatusEnum[] as tListingTransactionStatusEnum[]
+	).includes(listingTransaction.status);
+
 	return (
 		<Container
 			ui={"TransactionLogList-root"}
@@ -82,6 +95,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														listingTransactionStatus={status}
 														components={components}
 														isCurrent={isCurrent}
+														isClosed={isClosed && isCurrent}
 													/>
 												);
 											})
@@ -94,6 +108,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														components={components}
 														isCurrent={isCurrent}
 														listingTransactionStatus={status}
+														isClosed={isClosed && isCurrent}
 													/>
 												);
 											})
@@ -105,6 +120,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														side={side}
 														listingTransactionStatus={status}
 														isCurrent={isCurrent}
+														isClosed={isClosed && isCurrent}
 													/>
 												);
 											})
@@ -123,6 +139,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 												side={side}
 												message={message}
 												isCurrent={isCurrent}
+												isClosed={isClosed && isCurrent}
 											/>
 										);
 									})

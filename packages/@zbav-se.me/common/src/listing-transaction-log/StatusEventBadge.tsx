@@ -6,10 +6,6 @@ export namespace StatusEventBadge {
 	export interface Props extends Omit<EventBadge.Props, "actor" | "timestamp"> {
 		listingTransactionStatus: tListingTransactionStatus;
 	}
-
-	export type PropsEx = Omit<EventBadge.PropsEx, "actor" | "timestamp"> & {
-		listingTransactionStatus: tListingTransactionStatus;
-	};
 }
 
 export const StatusEventBadge: FC<StatusEventBadge.Props> = ({

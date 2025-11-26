@@ -16,6 +16,9 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
+057aa39aa7a847d8eef3c78b926f4721d8d18085a29739850faedc45:
+  ref: Seller transaction rejected (seller) (label)
+  value: Seller transaction rejected (seller) (label)
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
@@ -106,6 +109,9 @@
 3267efc7c9e171b77629decf13991a2fe40fb9ae81f5dc05864ac28d:
   ref: Seller accepted transaction (seller)
   value: Seller accepted transaction (seller)
+35a4e86b1c3c0901d64e96e0bee1760b1f7bba60c419f5ff2c8e4591:
+  ref: Buyer transaction rejected (buyer-seller) (label)
+  value: Buyer transaction rejected (buyer-seller) (label)
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
@@ -142,6 +148,9 @@
 40e303be86527f9bd9a2ff0c64ae95d0376262257c76a19e4c60121f:
   ref: Listing Score - Cart (label)
   value: Listing Score - Cart (label)
+42a143c5ecf9eb24def0b8a4546ada7ea1adc0f1cca67c0e4c5bee48:
+  ref: Seller transaction rejected (seller-buyer) (label)
+  value: Seller transaction rejected (seller-buyer) (label)
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
