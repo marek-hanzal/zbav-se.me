@@ -19,6 +19,8 @@ export const BadgeLeft: FC<BadgeLeft.Props> = (props) => {
 						class: [
 							"p-2",
 							"opacity-65",
+							"border-none",
+							"h-fit",
 						],
 					},
 				},

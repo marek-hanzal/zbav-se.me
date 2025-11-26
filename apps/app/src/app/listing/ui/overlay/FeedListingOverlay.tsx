@@ -20,6 +20,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 	return (
 		<>
 			<Badge
+				ui={"FeedListingOverlay-price"}
 				tone={"secondary"}
 				theme={"dark"}
 				size={"lg"}
@@ -30,7 +31,6 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 						root: {
 							class: [
 								"border-none",
-								"shadow-none",
 							],
 						},
 					},
@@ -48,6 +48,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 			</Badge>
 
 			<Badge
+				ui={"FeedListingOverlay-rating"}
 				tone={"secondary"}
 				size={"lg"}
 				round={"full"}
@@ -58,6 +59,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 							class: [
 								"p-2",
 								"opacity-75",
+								"h-fit",
 							],
 						},
 					},
@@ -74,6 +76,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 				}}
 			>
 				<Badge
+					ui={"FeedListingOverlay-location"}
 					size={"lg"}
 					round={"default"}
 					snapTo={"bottom"}

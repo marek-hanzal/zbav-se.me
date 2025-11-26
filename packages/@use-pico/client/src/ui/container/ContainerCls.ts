@@ -691,8 +691,8 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"top-2",
-				"left-2",
+				"top-1",
+				"left-1",
 			],
 		},
 	})
@@ -700,7 +700,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"top-2",
+				"top-1",
 				"left-1/2",
 				"-translate-x-1/2",
 			],
@@ -710,8 +710,8 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"top-2",
-				"right-2",
+				"top-1",
+				"right-1",
 			],
 		},
 	})
@@ -719,7 +719,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"left-2",
+				"left-1",
 				"top-1/2",
 				"-translate-y-1/2",
 			],
@@ -729,7 +729,7 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"right-2",
+				"right-1",
 				"top-1/2",
 				"-translate-y-1/2",
 			],
@@ -739,8 +739,8 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"bottom-2",
-				"left-2",
+				"bottom-1",
+				"left-1",
 			],
 		},
 	})
@@ -748,8 +748,8 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"bottom-2",
-				"right-2",
+				"bottom-1",
+				"right-1",
 			],
 		},
 	})
@@ -757,9 +757,9 @@ export const ContainerCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"absolute",
-				"bottom-2",
-				"left-2",
-				"right-2",
+				"bottom-1",
+				"left-1",
+				"right-1",
 				"w-auto",
 			],
 		},

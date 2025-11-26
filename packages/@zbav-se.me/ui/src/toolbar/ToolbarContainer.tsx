@@ -24,12 +24,8 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 			width={"unset"}
 			snapTo={"right-center"}
 			square={"md"}
-			border={"default"}
-			shadow={"default"}
 			round={"full"}
 			gap={"lg"}
-			tone={"secondary"}
-			theme={"light"}
 			tweak={ContainerCls.tweak([
 				tweak,
 				{
@@ -42,7 +38,7 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 					slot: {
 						root: {
 							class: [
-								"opacity-80",
+								"opacity-90",
 								"z-100",
 							],
 						},

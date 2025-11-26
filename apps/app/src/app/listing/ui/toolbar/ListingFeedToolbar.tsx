@@ -45,6 +45,7 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 				theme={"light"}
 				size={"xl"}
 				round={"full"}
+				border={false}
 				onClick={() => setDetail(true)}
 			/>
 

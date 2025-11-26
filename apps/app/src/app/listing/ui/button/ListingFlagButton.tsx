@@ -53,6 +53,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 			theme={listing.hasFlag ? "dark" : "light"}
 			loading={listingFlagToggleMutation.isPending}
 			disabled={listing.isInCart || listing.isIgnored || disabled}
+			border={false}
 			buttonProps={{
 				size: "xl",
 				...buttonProps,

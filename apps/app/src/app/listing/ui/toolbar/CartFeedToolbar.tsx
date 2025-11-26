@@ -41,6 +41,7 @@ export const CartFeedToolbar: FC<CartFeedToolbar.Props> = ({
 				theme={"light"}
 				size={"xl"}
 				round={"full"}
+				border={false}
 				onClick={() => setDetail(true)}
 			/>
 

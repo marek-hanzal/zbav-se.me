@@ -76,10 +76,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			>
 				<Container
 					height={"content"}
-					tone={"primary"}
-					theme={"light"}
-					border={"default"}
-					shadow={"default"}
 					round={"default"}
 				>
 					<HeroImage
@@ -124,7 +120,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							}}
 						</withListingMetricsFetchQuery.Suspense>
 					}
-					action={<Icon icon={ShowIcon} />}
+					action={
+						<Icon
+							icon={ShowIcon}
+							size={"sm"}
+						/>
+					}
 					onClick={() => setScore(true)}
 				/>
 
