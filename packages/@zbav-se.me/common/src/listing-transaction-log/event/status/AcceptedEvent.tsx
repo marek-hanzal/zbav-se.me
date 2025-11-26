@@ -8,14 +8,14 @@ import { StatusEventBadge } from "../../StatusEventBadge";
 import type { TransactionLogList } from "../../TransactionLogList";
 import { StatusMenu } from "./StatusMenu";
 
-export namespace RequestEvent {
+export namespace AcceptedEvent {
 	export interface Props extends StatusEventBadge.PropsEx {
 		locale: string;
 		components: TransactionLogList.Components;
 	}
 }
 
-export const RequestEvent: FC<RequestEvent.Props> = ({
+export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 	locale,
 	listingTransactionStatus,
 	components,
@@ -28,9 +28,9 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 		<>
 			<StatusEventBadge
 				listingTransactionStatus={listingTransactionStatus}
-				renderBuyerFn={({ tweak, ...props }) => (
+				renderSellerFn={({ tweak, ...props }) => (
 					<Badge
-						ui={"RequestEvent-Buyer"}
+						ui={"AcceptedEvent-Seller"}
 						tweak={[
 							tweak,
 							{
@@ -56,7 +56,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 								size={"sm"}
 							/>
 
-							<Tx label="Buyer transaction request (buyer-buyer) (label)" />
+							<Tx label="Seller accepted transaction (seller)" />
 						</div>
 
 						<Icon
@@ -65,43 +65,45 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 						/>
 					</Badge>
 				)}
-				renderBuyerToSellerFn={({ tweak, ...props }) => (
-					<Badge
-						ui={"RequestEvent-BuyerToSeller"}
-						tweak={[
-							tweak,
-							{
-								slot: {
-									root: {
-										class: [
-											"flex-row",
-											"items-center",
-										],
+				renderSellerToBuyerFn={({ tweak, ...props }) => {
+					return (
+						<Badge
+							ui={"AcceptedEvent-SellerToBuyer"}
+							tweak={[
+								tweak,
+								{
+									slot: {
+										root: {
+											class: [
+												"flex-row",
+												"items-center",
+											],
+										},
 									},
 								},
-							},
-						]}
-						{...props}
-					>
-						<div className="flex flex-col gap-1 w-full">
-							<Typo
-								label={toTimeDiff({
-									locale,
-									time: listingTransactionStatus.createdAt,
-								})}
-								font={"normal"}
-								size={"sm"}
+							]}
+							{...props}
+						>
+							<div className="flex flex-col gap-1 w-full">
+								<Typo
+									label={toTimeDiff({
+										locale,
+										time: listingTransactionStatus.createdAt,
+									})}
+									font={"normal"}
+									size={"sm"}
+								/>
+
+								<Tx label="Seller accepted transaction (seller-to-buyer)" />
+							</div>
+
+							<Icon
+								icon={isOpen ? HideIcon : ShowIcon}
+								size={"xs"}
 							/>
-
-							<Tx label="Buyer transaction request (buyer-seller) (label)" />
-						</div>
-
-						<Icon
-							icon={isOpen ? HideIcon : ShowIcon}
-							size={"xs"}
-						/>
-					</Badge>
-				)}
+						</Badge>
+					);
+				}}
 				/**
 				 * Controlled via "context menu"
 				 */

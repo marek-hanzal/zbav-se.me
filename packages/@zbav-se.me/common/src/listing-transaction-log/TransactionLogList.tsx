@@ -11,6 +11,7 @@ import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { MessageEvent } from "./event/MessageEvent";
+import { AcceptedEvent } from "./event/status/AcceptedEvent";
 import { RequestEvent } from "./event/status/RequestEvent";
 
 export namespace TransactionLogList {
@@ -83,8 +84,19 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 													/>
 												);
 											})
+											.with("accepted", () => {
+												return (
+													<AcceptedEvent
+														key={log.id}
+														locale={locale}
+														side={side}
+														components={components}
+														isCurrent={isCurrent}
+														listingTransactionStatus={status}
+													/>
+												);
+											})
 											.with(
-												"accepted",
 												"closed",
 												"rejected",
 												"expired",

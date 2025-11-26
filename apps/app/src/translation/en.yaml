@@ -103,6 +103,9 @@
 3142dbbe5e5453a1903742ffb19fe5f58ac8433e5ef3e55dd65bd3f6:
   ref: Seller - shop (title)
   value: Seller - shop (title)
+3267efc7c9e171b77629decf13991a2fe40fb9ae81f5dc05864ac28d:
+  ref: Seller accepted transaction (seller)
+  value: Seller accepted transaction (seller)
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
@@ -142,9 +145,6 @@
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
   ref: Listing category (label)
   value: Listing category (label)
-43b9af55fff0f6dffe628fd15fea9515e2998e9f4574f1f1a1528123:
-  ref: This transaction has expired - buyer (label)
-  value: This transaction has expired - buyer (label)
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
   ref: Uploading photo (title)
   value: Uploading photo (title)
@@ -160,9 +160,6 @@
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
-4bd1da67da08ad7f6462519fa220d25f630427fcafac8999d88da53b:
-  ref: Seller rejected the transaction - buyer (label)
-  value: Seller rejected the transaction - buyer (label)
 4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
   ref: Next - feed category (button)
   value: Next - feed category (button)
@@ -199,9 +196,6 @@
 567d286dd4f0b55d57e494895a562b4a3c8f5158446c68ab67a9bbe6:
   ref: Transaction requested (label)
   value: Transaction requested (label)
-57bf044e980fcdafa31f9b3aee472745f43910962fcf77b299feed8d:
-  ref: This transaction has been successfully completed - buyer (label)
-  value: This transaction has been successfully completed - buyer (label)
 5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
   ref: Listing photos (title)
   value: Listing photos (title)
@@ -238,6 +232,9 @@
 60e1a755731eceba9aa1ed1d495b897bac04a5a5f2b167b45b064c8a:
   ref: Transaction closed - seller (label)
   value: Transaction closed - seller (label)
+628f6e8270d103d47f6e26e64227e6aa5fa967b20aff35b68f9156b5:
+  ref: Seller accepted transaction (seller-to-buyer)
+  value: Seller accepted transaction (seller-to-buyer)
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
   ref: View transactions (button)
   value: View transactions (button)
@@ -292,9 +289,6 @@
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
   ref: Listing unflagged (toast)
   value: Listing unflagged (toast)
-72c1d49d52c61bca5c62a3648b7ff915a4eea7ac9ed1b4e36596cf0e:
-  ref: This transaction has expired - seller (label)
-  value: This transaction has expired - seller (label)
 7366837155197535cc250b08bb01af26af2c7e9d0bb3de6327b1f150:
   ref: Listing Score - Views - no value (label)
   value: Listing Score - Views - no value (label)
@@ -304,9 +298,6 @@
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
   ref: Create new feed (title)
   value: Create new feed (title)
-79c691ae804f8a6fa292ac54498e724cc158192cb930d1a261d229d3:
-  ref: This transaction has been successfully completed - seller (label)
-  value: This transaction has been successfully completed - seller (label)
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
   ref: Next - submit (button)
   value: Next - submit (button)
@@ -367,6 +358,9 @@
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
   ref: Feed (label)
   value: Feed (label)
+931b84575965ad4be15931b3e84c0c5d0e66b102940c3ace733061a7:
+  ref: ...
+  value: ...
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
   ref: Listing title (title)
   value: Listing title (title)
@@ -439,9 +433,6 @@ ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
 ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
   ref: Listing expire at (label)
   value: Listing expire at (label)
-b12347c3dc51728b8058d8c414cab2318f20de41ab137e7d6907d030:
-  ref: Seller rejected the transaction - seller (label)
-  value: Seller rejected the transaction - seller (label)
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
@@ -570,9 +561,6 @@ d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
   ref: Feed sorting (title)
   value: Feed sorting (title)
-dbb38b36dad96aa59eb2f564882f49ff4ad9d222c0c6e0486d987c75:
-  ref: This transaction has been closed - buyer (label)
-  value: This transaction has been closed - buyer (label)
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
@@ -588,9 +576,6 @@ dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
 dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
   ref: md
   value: md
-e0a0c50066dd4f1e9d8a84b8988be39e76c80bad755b5587803bb7d2:
-  ref: This transaction has been closed - seller (label)
-  value: This transaction has been closed - seller (label)
 e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
   ref: Listing removed from your cart (toast)
   value: Listing removed from your cart (toast)
