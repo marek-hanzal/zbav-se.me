@@ -35,7 +35,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
-				detent={"content"}
+				detent={"default"}
 				modalEffectRootId={modalRootId}
 			>
 				<BuyerInfoContainer

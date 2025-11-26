@@ -114,14 +114,16 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 				{...props}
 			/>
 
-			<StatusMenu
-				locale={props.locale}
-				side={props.side}
-				log={listingTransactionStatus}
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				components={components}
-			/>
+			{isClosed ? null : (
+				<StatusMenu
+					locale={props.locale}
+					side={props.side}
+					log={listingTransactionStatus}
+					isOpen={isOpen}
+					onClose={() => setIsOpen(false)}
+					components={components}
+				/>
+			)}
 		</>
 	);
 };
