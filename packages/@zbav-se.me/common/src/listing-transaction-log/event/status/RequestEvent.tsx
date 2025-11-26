@@ -39,6 +39,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 									root: {
 										class: [
 											"flex-row",
+											"items-center",
 										],
 									},
 								},
@@ -75,6 +76,7 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 									root: {
 										class: [
 											"flex-row",
+											"items-center",
 										],
 									},
 								},

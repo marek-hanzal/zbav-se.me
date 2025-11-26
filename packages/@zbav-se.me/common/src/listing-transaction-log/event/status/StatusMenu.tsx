@@ -56,18 +56,6 @@ export const StatusMenu: FC<StatusMenu.Props> = ({ locale, side, log, components
 
 	return (
 		<BottomSheet
-			snapPoints={[
-				0,
-				/**
-				 * Hardcoded value for the height of the first button.
-				 */
-				122,
-				1,
-			]}
-			/**
-			 * Index to snap points.
-			 */
-			initialSnap={1}
 			detent={"content"}
 			{...props}
 		>
