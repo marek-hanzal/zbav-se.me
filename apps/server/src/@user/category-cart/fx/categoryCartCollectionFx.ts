@@ -1,11 +1,11 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withCategoryQueryBuilder } from "../../../@session/category/db/withCategoryQueryBuilder";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withCategoryCartSelect } from "../db/withCategoryCartSelect";
-import type { CategoryCartQuerySchema } from "../schema/CategoryCartQuerySchema";
-import { CategoryCartSchema } from "../schema/CategoryCartSchema";
+import { withCategoryQueryBuilder } from "~/@session/category/db/withCategoryQueryBuilder";
+import { withCategoryCartSelect } from "~/@user/category-cart/db/withCategoryCartSelect";
+import type { CategoryCartQuerySchema } from "~/@user/category-cart/schema/CategoryCartQuerySchema";
+import { CategoryCartSchema } from "~/@user/category-cart/schema/CategoryCartSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace categoryCartCollectionFx {
 	export interface Props {

@@ -1,4 +1,3 @@
-import { sql } from "kysely";
 import { match } from "ts-pattern";
 import { withCategorySelect } from "~/@session/category/db/withCategorySelect";
 import type { WithDatabase } from "../../../database/WithDatabase";
@@ -32,7 +31,7 @@ export const withCategoryCartSelect = ({
 				.innerJoin("listing as l", "l.id", "lc.listingId")
 				.select([
 					"l.categoryId as categoryId",
-					sql<number>`count(*)::int`.as("listingCount"),
+					(eb) => eb.fn.count<number>("l.id").as("listingCount"),
 				])
 				.where("lc.userId", "=", userId)
 				.groupBy("l.categoryId")
