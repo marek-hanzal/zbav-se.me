@@ -1,14 +1,11 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
-import { type FC, useState } from "react";
+import type { FC } from "react";
+import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
-import { FeedNameContainer } from "./FeedNameContainer";
 
 export namespace FeedListContainer {
 	export interface Props extends Container.Props {
@@ -24,8 +21,6 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	limit = 10,
 	...props
 }) => {
-	const [isNew, setIsNew] = useState(false);
-
 	return (
 		<withFeedCountQuery.Suspense
 			data={{}}
@@ -53,19 +48,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 									textMessage={
 										"Create your first feed to get started (description)"
 									}
-									action={
-										<Button
-											iconEnabled={ArrowRightIcon}
-											iconPosition={"right"}
-											onClick={() => {
-												alert("show bottom sheet with name only");
-											}}
-											label={"Create new feed (button)"}
-											tone={"primary"}
-											theme={"dark"}
-											size={"xl"}
-										/>
-									}
+									action={<FeedCreateButton />}
 								/>
 							</Container>
 						) : null}
@@ -76,32 +59,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						/>
 
 						{!isLimitReached && data.filter > 0 ? (
-							<>
-								<Button
-									tone={"primary"}
-									iconEnabled={FeedIcon}
-									theme={"dark"}
-									disabled={isLimitReached}
-									onClick={() => {
-										alert("show bottom sheet with name only");
-									}}
-									label={"Create new feed (title)"}
-									size={"lg"}
-									full
-								/>
-
-								<BottomSheet
-									isOpen={isNew}
-									onClose={() => setIsNew(false)}
-								>
-									<FeedNameContainer
-										value={""}
-										onChange={function (value: string): void {
-											throw new Error("Function not implemented.");
-										}}
-									/>
-								</BottomSheet>
-							</>
+							<FeedCreateButton disabled={isLimitReached} />
 						) : null}
 					</Container>
 				);
