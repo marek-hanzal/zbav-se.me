@@ -159,7 +159,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			],
 			async mutationFn() {
 				const concurrency = 12;
-				const limit = 100;
+				const limit = 500;
 
 				const queue = new PQueue({
 					concurrency,

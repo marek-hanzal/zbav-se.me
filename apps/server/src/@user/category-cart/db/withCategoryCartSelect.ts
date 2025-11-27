@@ -27,13 +27,14 @@ export const withCategoryCartSelect = ({
 	})
 		.innerJoin(
 			database
-				.selectFrom("listing_cart as lc")
-				.innerJoin("listing as l", "l.id", "lc.listingId")
+				.selectFrom("listing as l")
+				.innerJoin("listing_cart as lc", (eb) => {
+					return eb.onRef("l.id", "=", "lc.listingId").on("lc.userId", "=", userId);
+				})
 				.select([
 					"l.categoryId as categoryId",
 					(eb) => eb.fn.count<number>("l.id").as("listingCount"),
 				])
-				.where("lc.userId", "=", userId)
 				.groupBy("l.categoryId")
 				.as("cnt"),
 			"cnt.categoryId",
