@@ -1,3 +1,4 @@
+import { TrashIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -28,6 +29,8 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 			gap={"sm"}
 			height={"auto"}
 			width={"fit"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			{(
@@ -58,7 +61,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 										"text-left",
 										"py-2",
 										"px-3",
-										"h-fit",
+										"h-18",
 									],
 								},
 							},
@@ -128,6 +131,19 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 					</Button>
 				);
 			})}
+
+			<Button
+				iconEnabled={TrashIcon}
+				size={"xl"}
+				tone={"danger"}
+				label={"Clear all sorts (button)"}
+				full
+				onClick={() => {
+					onChange(() => {
+						return [];
+					});
+				}}
+			/>
 		</Container>
 	);
 };

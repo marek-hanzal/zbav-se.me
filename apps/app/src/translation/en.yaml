@@ -10,9 +10,6 @@
 01b47fb4a4df0bd1d39599b06eefe5b2c4961d5eac0ad2e9630ec980:
   ref: Listing unignored (toast)
   value: Listing unignored (toast)
-02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
-  ref: Feed age (title)
-  value: Feed age (title)
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
@@ -49,6 +46,9 @@
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
   ref: Listing photos (label)
   value: Listing photos (label)
+19be7c986ac14c2bf115207f1c2292064ecaad2932ed3e1edecc40e2:
+  ref: Clear all sorts (button)
+  value: Clear all sorts (button)
 1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
   ref: Listing Score - Flag (label)
   value: Listing Score - Flag (label)
@@ -160,24 +160,15 @@
 45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
   ref: Listing Score - Views (label)
   value: Listing Score - Views (label)
-45f38d57f03d10600b22e4b266ffbcf96453703c411de26c2e945233:
-  ref: Next - feed name (button)
-  value: Next
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
   ref: Price - free (title)
   value: Price - free (title)
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
-4d49a458ec1faa282c332c8493405795b6a526ccb5265422c923bc1a:
-  ref: Next - feed category (button)
-  value: Next - feed category (button)
 4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
   ref: Create new feed (button)
   value: Create new feed (button)
-4defdd02b7421e6dfd2f154e9d2a3cf4c3118acf7a1b7ff1d26aea16:
-  ref: Next - feed submit (button)
-  value: Next - feed submit (button)
 4df609ad7c71de7afb6404a01aca110553102d31c815f4f6969ea9bd:
   ref: No transactions found (title)
   value: No transactions found (title)
@@ -193,9 +184,6 @@
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
   ref: currency
   value: currency
-501b1f4b9d7915a52896fdc8cdbd9be18c239e3b0251f8b34b63ed91:
-  ref: Next - feed sort (button)
-  value: Next - feed sort (button)
 508db448927e219e075aaea16d106cb569b057ce5a0b44588ef428e0:
   ref: Second tap to add to cart (toast)
   value: Second tap to add to cart (toast)
@@ -208,9 +196,6 @@
 5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
   ref: Listing photos (title)
   value: Listing photos (title)
-58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
-  ref: Feed category (title)
-  value: Feed category (title)
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
   ref: Feed name (label)
   value: Feed name (label)
@@ -286,9 +271,6 @@
 704d700a9718605765b79e0b4f7c01628e9662830e560a3e08cec0cf:
   ref: Your cart is empty - no feed (title)
   value: Your cart is empty - no feed (title)
-7091771a9dbd5b2bffb8b548f897776b359c5242f076ac937685580a:
-  ref: Next - Feed age (button)
-  value: Next - Feed age (button)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
@@ -448,9 +430,6 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
 b1c96705cee9f240b173e9c05e3be0b65342ac52bef05a2cc58e4d43:
   ref: Buyer transaction rejected (buyer) (label)
   value: Buyer transaction rejected (buyer) (label)
-b209e03b614a6ee9dbbfae08ece97fb6bb2b523c8bbd743c73fbfff2:
-  ref: Next - Feed title (button)
-  value: Next - Feed title (button)
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
   ref: Invalid data provided (title)
   value: Invalid data provided (title)
@@ -522,9 +501,6 @@ c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
-cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
-  ref: Feed location (title)
-  value: Feed location (title)
 cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
   ref: Error adding listing to cart (toast)
   value: Error adding listing to cart (toast)
@@ -537,9 +513,6 @@ ccc9608f33bbd658f6abc07176e9cb33028027f216c81d70b4616401:
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
   ref: Upload - disabled (placeholder)
   value: Upload - disabled (placeholder)
-cce650af5bdaa4615923f357c214b5109ca46350e6fd2eec0ff03e73:
-  ref: Submit - feed (button)
-  value: Submit - feed (button)
 cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
   ref: I want to buy (label)
   value: I want to buy (label)
@@ -567,12 +540,6 @@ d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
   ref: Feed title (hint)
   value: Feed title (hint)
-d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
-  ref: Feed condition (title)
-  value: Feed condition (title)
-da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
-  ref: Feed sorting (title)
-  value: Feed sorting (title)
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
@@ -603,9 +570,6 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
   ref: Shop (label)
   value: Shop (label)
-e590492a612b479610ce9aeb09c55b9eb483968a6a924ff1d9791aa1:
-  ref: Feed - next and save (button)
-  value: Feed - next and save (button)
 e60ccc5a06a9f924d877f3e9484fb68bda0b6d8adcd214c4c169f4b7:
   ref: Transaction detail (title)
   value: Transaction detail (title)
@@ -618,15 +582,9 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected
-e96327d3082e2249762e7e9a1c9ce001991c966b971b4bc3bb595391:
-  ref: Next - feed condition (button)
-  value: Next - feed condition (button)
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
   ref: Submit listing (button)
   value: Submit listing (button)
-f1709cea94ee468710379bcd91002b9f9b08b6e61a1e4f48b4bda744:
-  ref: Feed submit (title)
-  value: Feed submit (title)
 f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
   ref: Listing title (placeholder)
   value: Listing title (placeholder)
