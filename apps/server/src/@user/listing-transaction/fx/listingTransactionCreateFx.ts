@@ -49,8 +49,6 @@ export const listingTransactionCreateFx = ({ listingId }: listingTransactionCrea
 						id,
 						userId: user.id,
 						listingId,
-						side: "buyer",
-						status: "request",
 						createdAt: DateTime.now().toJSDate(),
 						updatedAt: DateTime.now().toJSDate(),
 						expiresAt: DateTime.now()

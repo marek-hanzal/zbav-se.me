@@ -1,7 +1,5 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
-import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
@@ -13,15 +11,11 @@ import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 export namespace listingTransactionPatchFx {
 	export interface Props {
 		transactionId: string;
-		status?: ListingTransactionStatusEnumSchema.Type;
-		side?: ListingTransactionSideEnumSchema.Type;
 	}
 }
 
 export const listingTransactionPatchFx = ({
 	transactionId,
-	status,
-	side,
 }: listingTransactionPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -35,8 +29,6 @@ export const listingTransactionPatchFx = ({
 					.innerJoin("listing as l", "l.id", "lt.listingId")
 					.select([
 						"lt.userId",
-						"lt.status",
-						"lt.side",
 						"l.userId as listingUserId",
 					])
 					.where("lt.id", "=", transactionId)
@@ -57,23 +49,19 @@ export const listingTransactionPatchFx = ({
 				});
 			}
 
-			const nextStatus = status ?? transaction.status;
-			const nextSide = side ?? transaction.side;
 			const now = DateTime.now();
 
 			yield* Effect.tryPromise(async () => {
 				return database
 					.updateTable("listing_transaction")
-					.set(() => ({
-						status: nextStatus,
-						side: nextSide,
+					.set({
 						updatedAt: now.toJSDate(),
 						expiresAt: now
 							.plus({
 								days: config.extend,
 							})
 							.toJSDate(),
-					}))
+					})
 					.where("id", "=", transactionId)
 					.returningAll()
 					.executeTakeFirstOrThrow();
