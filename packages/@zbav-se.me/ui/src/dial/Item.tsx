@@ -52,12 +52,14 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
 							"Dial-Item-root",
 							"w-full",
 							"h-full",
+							"min-h-0",
 						],
 					},
 					root: {
 						class: [
 							"w-full",
 							"h-full",
+							"min-h-0",
 						],
 					},
 				},

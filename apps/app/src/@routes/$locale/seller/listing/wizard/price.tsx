@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -91,12 +90,11 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 					</LinkTo>
 				}
 			>
-				<Container square={"xl"}>
-					<Dial
-						value={price}
-						onChange={setPrice}
-					/>
-				</Container>
+				<Dial
+					value={price}
+					onChange={setPrice}
+					square={"xl"}
+				/>
 			</TitleContainer>
 		);
 	},

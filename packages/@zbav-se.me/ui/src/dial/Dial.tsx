@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
-import type { FC, RefObject } from "react";
+import type { FC } from "react";
 import { BackspaceIcon } from "../icon/BackspaceIcon";
 import { ClearIcon } from "../icon/ClearIcon";
 import { Item } from "./Item";
@@ -31,80 +31,70 @@ const icons = {
 } as const;
 
 export namespace Dial {
-	export interface Props {
-		ref?: RefObject<HTMLDivElement | null>;
+	export interface Props extends Container.Props {
 		value: string | undefined;
 		onChange: (value: string | undefined) => void;
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
+export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 	return (
 		<Container
-			ref={ref}
+			ui={"Dial-Container"}
 			layout={"vertical-header-content"}
+			height={"fit"}
 			gap={"sm"}
+			{...props}
 		>
-			<div
-				className={tvc([
-					"flex",
-					"flex-row",
-					"items-center",
-					"justify-between",
-					"gap-2",
-					"w-full",
-				])}
-			>
-				<Badge
-					tone={"primary"}
-					theme={"light"}
-					size={"xl"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"inline-flex",
-									"flex-row",
-									"items-center",
-									"justify-between",
-									"w-full",
-								],
-								token: [
-									"round.default",
-									"tone.primary.light.border",
-									"tone.primary.light.shadow",
-								],
-							},
+			<Badge
+				tone={"primary"}
+				theme={"light"}
+				size={"xl"}
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"inline-flex",
+								"flex-row",
+								"items-center",
+								"justify-between",
+								"w-full",
+							],
+							token: [
+								"round.default",
+								"tone.primary.light.border",
+								"tone.primary.light.shadow",
+							],
 						},
-					}}
-				>
-					{value ? (
-						<Typo
-							label={value}
-							size={"xl"}
-							font={"bold"}
-							display={"block"}
-						/>
-					) : (
-						<Tx
-							label={"Price (placeholder)"}
-							size={"xl"}
-							font={"bold"}
-							display={"block"}
-						/>
-					)}
-
-					<Icon
-						icon={BackspaceIcon}
-						tone="secondary"
-						theme="light"
-						disabled={!value}
-						onClick={() => {
-							onChange(value?.slice(0, -1) || undefined);
-						}}
+					},
+				}}
+			>
+				{value ? (
+					<Typo
+						label={value}
+						size={"xl"}
+						font={"bold"}
+						display={"block"}
 					/>
-				</Badge>
-			</div>
+				) : (
+					<Tx
+						label={"Price (placeholder)"}
+						size={"xl"}
+						font={"bold"}
+						display={"block"}
+					/>
+				)}
+
+				<Icon
+					icon={BackspaceIcon}
+					tone="secondary"
+					theme="light"
+					disabled={!value}
+					onClick={() => {
+						onChange(value?.slice(0, -1) || undefined);
+					}}
+				/>
+			</Badge>
 
 			<div
 				className={tvc([
@@ -112,6 +102,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange }) => {
 					"grid-cols-3",
 					"gap-2",
 					"place-items-center",
+					"min-h-0",
 				])}
 			>
 				{Array.from({
