@@ -16,6 +16,8 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange
 		<Container
 			layout={"vertical-centered"}
 			items={"center"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Status

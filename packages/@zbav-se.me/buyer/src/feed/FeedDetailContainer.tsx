@@ -18,6 +18,7 @@ import { withFeedDeleteMutation, withFeedPatchMutation } from "@zbav-se.me/sdk/m
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
+import { FeedNameBadge } from "./FeedNameBadge";
 import { FeedNameContainer } from "./FeedNameContainer";
 import { FeedTitleContainer } from "./FeedTitleContainer";
 
@@ -171,16 +172,9 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					theme: "light",
 				}}
 			>
-				<BadgeValue
-					textLabel={"Feed name (label)"}
-					textValue={feed.name}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setIsName(true)}
+				<FeedNameBadge
+					feedId={feed.id}
+					name={feed.name}
 				/>
 
 				<BadgeValue

@@ -25,7 +25,7 @@ export const feedPatchFx = ({ data: { id, name, locationId, query } }: feedPatch
 					.set({
 						name,
 						locationId,
-						query: query ? (JSON.stringify(query) as any) : null,
+						query: query ? (JSON.stringify(query) as any) : undefined,
 						updatedAt: now,
 					})
 					.where("id", "=", id)
