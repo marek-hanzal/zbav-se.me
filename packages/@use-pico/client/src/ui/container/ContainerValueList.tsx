@@ -60,15 +60,11 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 								"justify-between",
 								"h-fit",
 								"w-full",
-								"border-t-0",
-								"border-l-0",
-								"border-r-0",
 								"rounded-none",
 								"border-none",
 								"bg-transparent",
-							],
-							token: [
-								"square.md",
+								"px-0",
+								"py-0.5",
 							],
 						},
 					},
@@ -86,7 +82,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				tone={"unset"}
 				theme={"unset"}
 				layout={"vertical-flex"}
-				square={"xs"}
+				gap={"xs"}
 				height={"auto"}
 				round={"lg"}
 			>

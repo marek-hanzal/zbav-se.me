@@ -156,11 +156,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 	return (
 		<Container
-			// layout={"vertical-flex"}
-			scroll={"vertical"}
+			layout={"vertical-flex"}
 			gap={"md"}
-			// height={"fit"}
-			// width={"fit"}
+			height={"fit"}
+			width={"fit"}
 			disabled={feedDeleteMutation.isPending}
 			{...props}
 		>
