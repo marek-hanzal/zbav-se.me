@@ -24,6 +24,8 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 		<Container
 			layout={"vertical-centered"}
 			items={"center"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			{type === "status" ? (
