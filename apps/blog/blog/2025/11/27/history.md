@@ -15,12 +15,12 @@ _**Tímhle článkem nás chci trošku představit, ať máš představu.**_
 Úvodní myšlenka projektu _**už vznikla kolem roku 2023**_, kdy jsem chtěl něco prodávat, ale stále mi chybělo **Let Go**, přes které se mi prodávalo
 naprosto perfektně.
 
-Problém byl v tom, že mi tehdejší bazary nevyhovovaly z hlediska zadávání inzerátů a obecně mi přišly všechny _**jak přes kopírák**_, víceméně stejně
+Problém byl v tom, že mi tehdejší bazary nevyhovovaly z hlediska **zadávání inzerátů** a obecně mi všechny přišly _**jak přes kopírák**_, víceméně stejně
 zkostnatělé.
 
 :::info[Tehdy přišel klíčový okamžik]
-Začal jsem s prvními experimenty, ale _byly opravdu strašné_. Projekt mi _dlouho ležel v hlavě_ až jsem se k němu v **létě 2025** opět vrátil a začal jsem jej
-stavět znovu, ovšem s _**jasnou představou, co chci**_.
+Začal jsem s prvními experimenty, ale _**byly opravdu strašné**_. Projekt mi _dlouho ležel v hlavě_ až jsem se k němu v **létě 2025** opět vrátil a začal jsem jej
+stavět znovu, ovšem _**s jasnou představou, co chci**_.
 :::
 
 ## LetGo
@@ -47,7 +47,7 @@ Můžeš si prohlédnout můj **[LinkedIn profil](https://www.linkedin.com/in/ma
 
 _Nestojí za námi **žádný** investor_, díky čemuž máme zcela **volné ruce co vývoje a vedení projektu** se týče. Peníze jako takové si sháníme po vlastní ose, takže _projekt je v tomto ohledu zabezpečený_.
 
-Cílím na minimální náklady, díky čemuž se může projekt začít rozvíjet mnohem dříve - výhodou je, že **nestartujeme s čistě červenými čísly**, ale v neutrální zóně. Díky tomu u nás není klasický startupový strach, že investor řekne dost a **projekt chcípne**.
+Cílím na minimální náklady, díky čemuž se může projekt začít rozvíjet mnohem dříve - výhodou je, že **nestartujeme s čistě červenými čísly**, ale v neutrální zóně. Díky tomu u nás _**není klasický startupový strach**_, že investor řekne dost a **projekt chcípne**.
 
 V tomto ohledu se tedy nemusíš bát, _**projekt je zajištěný**_.
 
