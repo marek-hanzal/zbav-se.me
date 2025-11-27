@@ -33,6 +33,9 @@ const config: Config = {
 			{
 				docs: false,
 				pages: false,
+				theme: {
+					customCss: require.resolve("./src/css/custom.css"),
+				},
 				blog: {
 					blogTitle: "Zbav se mě",
 					blogDescription: "Podívej se nejen do zákulisí vývoje nejlepšího c2c tržiště!",
