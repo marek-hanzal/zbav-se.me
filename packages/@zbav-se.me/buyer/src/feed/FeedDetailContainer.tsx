@@ -58,10 +58,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				<FeedTitleBadge feed={feed} />
 
 				<FeedLocationBadge
-					feedId={feed.id}
 					locale={locale}
-					locationId={feed.locationId}
-					latLon={feed.query?.meta?.latLon}
+					feed={feed}
 				/>
 
 				<ContainerValueList
@@ -79,9 +77,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				/>
 
 				<FeedCategoryBadge
-					feedId={feed.id}
 					locale={locale}
-					categoryIdIn={feed.query?.filter?.categoryIdIn}
+					feed={feed}
 				/>
 
 				<FeedConditionValueList feed={feed} />
