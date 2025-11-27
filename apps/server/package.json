@@ -16,7 +16,7 @@
 		"@use-pico/common": "workspace:*",
 		"@zbav-se.me/common": "workspace:*",
 		"better-auth": "1.4.3",
-		"effect": "3.19.6",
+		"effect": "3.19.7",
 		"hono": "4.10.7",
 		"hono-rate-limiter": "0.4.2",
 		"jose": "6.1.2",

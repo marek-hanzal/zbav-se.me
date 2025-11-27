@@ -33,7 +33,7 @@
 		"zod": "4.1.13"
 	},
 	"devDependencies": {
-		"@iconify/json": "2.2.410",
+		"@iconify/json": "2.2.411",
 		"@iconify/tailwind4": "1.1.1",
 		"@modyfi/vite-plugin-yaml": "1.1.1",
 		"@tailwindcss/vite": "4.1.17",

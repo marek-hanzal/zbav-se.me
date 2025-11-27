@@ -10,5 +10,10 @@ news:
 
 features:
     label: Vychytávky
-    permalink: /feature
+    permalink: /features
     description: Diskuse o vychytávkách a funkcích
+
+blog:
+    label: Blog
+    permalink: /blog
+    description: Všelijaký bordel jen tak pro čtení
