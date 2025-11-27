@@ -528,6 +528,9 @@ cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
 cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
   ref: Error adding listing to cart (toast)
   value: Error adding listing to cart (toast)
+cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
+  ref: Feed - save (button)
+  value: Feed - save (button)
 ccc9608f33bbd658f6abc07176e9cb33028027f216c81d70b4616401:
   ref: Transaction successful (label)
   value: Transaction successful (label)
@@ -561,9 +564,6 @@ d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
 d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
   ref: Feed selection (button)
   value: Feed selection (button)
-d7f992496335423aba74c57614c83dd4949c4fdc39e6cc905580b45d:
-  ref: Feed detail (title)
-  value: Feed detail (title)
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
   ref: Feed title (hint)
   value: Feed title (hint)

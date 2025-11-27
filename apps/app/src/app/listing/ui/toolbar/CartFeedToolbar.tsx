@@ -77,6 +77,7 @@ export const CartFeedToolbar: FC<CartFeedToolbar.Props> = ({
 					locale={locale}
 					listing={listing}
 					withScore
+					square={"md"}
 				>
 					<ListingDetailMenu
 						locale={locale}

@@ -37,10 +37,11 @@ const defaultTweak: Cls.TweaksOf<BadgeCls> = {
 				"bg-transparent",
 				"border-none",
 				"gap-0",
+				"px-0",
+				"py-0.5",
 			],
 			token: [
 				"round.md",
-				"square.md",
 			],
 		},
 	},
@@ -87,7 +88,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 					label={textValue}
 					truncate
 					tone={"secondary"}
-					size={"lg"}
+					size={"md"}
 					{...textValueProps}
 				/>
 			) : (

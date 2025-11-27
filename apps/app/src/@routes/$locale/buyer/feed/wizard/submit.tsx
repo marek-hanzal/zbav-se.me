@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FeedDetailContainer } from "@zbav-se.me/buyer/feed";
 import { type tFeedCreate, zFeed } from "@zbav-se.me/sdk/api/user";
@@ -90,15 +91,20 @@ export const Route = createFileRoute("/$locale/buyer/feed/wizard/submit")({
 			>
 				<Fade scrollableRef={containerRef} />
 
-				<FeedDetailContainer
+				<Container
 					ref={containerRef}
-					locale={locale}
-					feed={zFeed
-						.omit({
-							id: true,
-						})
-						.parse(state)}
-				/>
+					scroll={"vertical"}
+					height={"fit"}
+				>
+					<FeedDetailContainer
+						locale={locale}
+						feed={zFeed
+							.omit({
+								id: true,
+							})
+							.parse(state)}
+					/>
+				</Container>
 			</TitleContainer>
 		);
 	},

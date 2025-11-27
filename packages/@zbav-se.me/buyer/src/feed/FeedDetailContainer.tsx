@@ -158,9 +158,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 		<Container
 			layout={"vertical-flex"}
 			gap={"md"}
-			height={"fit"}
+			height={"content"}
 			width={"fit"}
 			disabled={feedDeleteMutation.isPending}
+			square={"md"}
 			{...props}
 		>
 			<VariantProvider
@@ -306,13 +307,19 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 			{feed.id ? (
 				<>
-					{isName ? (
-						<BottomSheet
-							isOpen={isName}
-							onClose={() => setIsName(false)}
-							detent={"content"}
+					<BottomSheet
+						isOpen={isName}
+						onClose={() => setIsName(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							height={"fit"}
+							square={"md"}
 						>
 							<FeedNameContainer
+								height={"fit"}
 								value={name}
 								onChange={(value) => {
 									setChange(true);
@@ -325,14 +332,19 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							/>
 
 							<SaveButton />
-						</BottomSheet>
-					) : null}
+						</Container>
+					</BottomSheet>
 
-					{isTitle ? (
-						<BottomSheet
-							isOpen={isTitle}
-							onClose={() => setIsTitle(false)}
-							detent={"content"}
+					<BottomSheet
+						isOpen={isTitle}
+						onClose={() => setIsTitle(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							height={"fit"}
+							square={"md"}
 						>
 							<FeedTitleContainer
 								value={title}
@@ -353,121 +365,119 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							/>
 
 							<SaveButton />
-						</BottomSheet>
-					) : null}
+						</Container>
+					</BottomSheet>
 
-					{isLocation ? (
-						<BottomSheet
-							isOpen={isLocation}
-							onClose={() => setIsLocation(false)}
-							detent={"full"}
-							contentProps={{
-								disableScroll: true,
-							}}
+					<BottomSheet
+						isOpen={isLocation}
+						onClose={() => setIsLocation(false)}
+						detent={"full"}
+						contentProps={{
+							disableScroll: true,
+						}}
+					>
+						<Container
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							height={"fit"}
+							square={"md"}
 						>
-							<Container
-								layout={"vertical-content-footer"}
-								gap={"md"}
-								height={"fit"}
-							>
-								<LocationSelection
-									locale={locale}
-									value={locationId}
-									onChange={(value) => {
-										setChange(true);
-										setLocationId(value);
-										setPatch((prev) => ({
-											...prev,
-											locationId: value,
-										}));
-									}}
-									onLocation={({ lon, lat }) => {
-										setChange(true);
-										setLatLon({
-											lon,
-											lat,
-										});
-										setPatch((prev) => ({
-											...prev,
-											query: {
-												...prev.query,
-												meta: {
-													...prev.query?.meta,
-													latLon: {
-														lon,
-														lat,
-													},
+							<LocationSelection
+								locale={locale}
+								value={locationId}
+								onChange={(value) => {
+									setChange(true);
+									setLocationId(value);
+									setPatch((prev) => ({
+										...prev,
+										locationId: value,
+									}));
+								}}
+								onLocation={({ lon, lat }) => {
+									setChange(true);
+									setLatLon({
+										lon,
+										lat,
+									});
+									setPatch((prev) => ({
+										...prev,
+										query: {
+											...prev.query,
+											meta: {
+												...prev.query?.meta,
+												latLon: {
+													lon,
+													lat,
 												},
 											},
-										}));
-									}}
-									textHint={"Feed - location security (hint)"}
-								/>
+										},
+									}));
+								}}
+								textHint={"Feed - location security (hint)"}
+							/>
 
-								<SaveButton />
-							</Container>
-						</BottomSheet>
-					) : null}
+							<SaveButton />
+						</Container>
+					</BottomSheet>
 
-					{isCategory ? (
-						<BottomSheet
-							isOpen={isCategory}
-							onClose={() => setIsCategory(false)}
-							detent={"full"}
-							contentProps={{
-								disableScroll: true,
-							}}
+					<BottomSheet
+						isOpen={isCategory}
+						onClose={() => setIsCategory(false)}
+						detent={"full"}
+						contentProps={{
+							disableScroll: true,
+						}}
+					>
+						<Container
+							ui={"FeedDetailContainer-CategorySelectionContainer"}
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							height={"fit"}
+							square={"md"}
 						>
-							<Container
-								ui={"FeedDetailContainer-CategorySelectionContainer"}
-								layout={"vertical-content-footer"}
-								gap={"md"}
-								height={"fit"}
-							>
-								<CategorySelectionContainer
-									locale={locale}
-									selection={categorySelection}
-									categoryId={categorySelection.optional.singleId()}
-								/>
+							<CategorySelectionContainer
+								locale={locale}
+								selection={categorySelection}
+								categoryId={categorySelection.optional.singleId()}
+							/>
 
-								<SaveButton />
-							</Container>
-						</BottomSheet>
-					) : null}
+							<SaveButton />
+						</Container>
+					</BottomSheet>
 
-					{isCondition ? (
-						<BottomSheet
-							isOpen={isCondition}
-							onClose={() => setIsCondition(false)}
-							detent={"full"}
+					<BottomSheet
+						isOpen={isCondition}
+						onClose={() => setIsCondition(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							height={"fit"}
+							square={"md"}
 						>
-							<Container
-								layout={"vertical-flex"}
-								gap={"md"}
-							>
-								<ConditionContainer selection={conditionSelection} />
+							<ConditionContainer selection={conditionSelection} />
 
-								<SaveButton />
-							</Container>
-						</BottomSheet>
-					) : null}
+							<SaveButton />
+						</Container>
+					</BottomSheet>
 
-					{isAge ? (
-						<BottomSheet
-							isOpen={isAge}
-							onClose={() => setIsAge(false)}
-							detent={"full"}
+					<BottomSheet
+						isOpen={isAge}
+						onClose={() => setIsAge(false)}
+						detent={"full"}
+					>
+						<Container
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							height={"fit"}
+							square={"md"}
 						>
-							<Container
-								layout={"vertical-flex"}
-								gap={"md"}
-							>
-								<AgeContainer selection={ageSelection} />
+							<AgeContainer selection={ageSelection} />
 
-								<SaveButton />
-							</Container>
-						</BottomSheet>
-					) : null}
+							<SaveButton />
+						</Container>
+					</BottomSheet>
 				</>
 			) : null}
 		</Container>

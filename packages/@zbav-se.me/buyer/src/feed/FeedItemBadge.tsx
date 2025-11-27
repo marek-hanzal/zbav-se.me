@@ -81,19 +81,17 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, onDelete,
 				</div>
 			</Badge>
 
-			{isOpen ? (
-				<BottomSheet
-					isOpen={isOpen}
-					onClose={() => setIsOpen(false)}
-					detent={"full"}
-				>
-					<FeedDetailContainer
-						locale={locale}
-						feed={feed}
-						onDelete={onDelete}
-					/>
-				</BottomSheet>
-			) : null}
+			<BottomSheet
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+				detent={"full"}
+			>
+				<FeedDetailContainer
+					locale={locale}
+					feed={feed}
+					onDelete={onDelete}
+				/>
+			</BottomSheet>
 		</>
 	);
 };

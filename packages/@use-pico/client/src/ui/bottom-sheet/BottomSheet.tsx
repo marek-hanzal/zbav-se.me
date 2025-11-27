@@ -1,7 +1,6 @@
 import type { ComponentProps, FC, PropsWithChildren } from "react";
 import { Sheet } from "react-modal-sheet";
 import type { UiProps } from "../../type/UiProps";
-import { Container } from "../container/Container";
 
 export namespace BottomSheet {
 	export interface Props
@@ -27,6 +26,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 				ease: "easeOut",
 				duration: 0.15,
 			}}
+			avoidKeyboard={false}
 			{...props}
 		>
 			<Sheet.Container
@@ -39,13 +39,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					data-ui={"BottomSheet-Content"}
 					{...contentProps}
 				>
-					<Container
-						ui={"BottomSheet-Content-Container"}
-						square={"md"}
-						height={"fit"}
-					>
-						{children}
-					</Container>
+					{children}
 				</Sheet.Content>
 			</Sheet.Container>
 		</Sheet>

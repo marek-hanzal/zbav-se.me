@@ -123,6 +123,7 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 					locale={locale}
 					listing={listing}
 					withScore
+					square={"md"}
 				>
 					<ListingDetailMenu
 						locale={locale}

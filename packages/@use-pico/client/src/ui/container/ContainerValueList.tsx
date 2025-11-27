@@ -6,7 +6,7 @@ import { Container } from "./Container";
 import { SpinnerContainer } from "./SpinnerContainer";
 
 export namespace ContainerValueList {
-	export interface Props<TItem extends EntitySchema.Type> extends Container.Props {
+	export interface Props<TItem extends EntitySchema.Type> extends Omit<Container.Props, "items"> {
 		/**
 		 * Translation label for the list title.
 		 */
