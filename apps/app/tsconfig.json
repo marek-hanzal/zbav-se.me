@@ -42,7 +42,8 @@
 	"include": [
 		"**/*.ts",
 		"**/*.tsx",
-		"../../packages/@zbav-se.me/buyer/src/listing/ScoreContainer.tsx"
+		"../../packages/@zbav-se.me/buyer/src/listing/ScoreContainer.tsx",
+		"../../packages/@zbav-se.me/common/src/listing/ListingSortSelect.tsx"
 	],
 	"exclude": [
 		"node_modules",

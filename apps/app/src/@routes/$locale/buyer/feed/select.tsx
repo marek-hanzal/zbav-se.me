@@ -7,7 +7,6 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	component() {
 		const { locale } = Route.useParams();
-		const navigate = Route.useNavigate();
 
 		const feedCountLimit = 10;
 
@@ -39,19 +38,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						],
 					}}
 					limit={feedCountLimit}
-					onClickCreate={() => {
-						navigate({
-							to: "/$locale/buyer/feed/wizard/location",
-						});
-					}}
-					onDelete={async () => {
-						await navigate({
-							to: "/$locale/buyer/feed/select",
-							params: {
-								locale,
-							},
-						});
-					}}
 				/>
 			</TitleContainer>
 		);

@@ -11,15 +11,13 @@ import { type FC, useState } from "react";
 import { FeedDetailContainer } from "./FeedDetailContainer";
 
 export namespace FeedItemBadge {
-	export interface Props
-		extends Omit<Badge.Props, "children">,
-			Pick<FeedDetailContainer.Props, "onDelete"> {
+	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		feed: tFeed;
 	}
 }
 
-export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, onDelete, ...props }) => {
+export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
@@ -89,7 +87,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, onDelete,
 				<FeedDetailContainer
 					locale={locale}
 					feed={feed}
-					onDelete={onDelete}
 				/>
 			</BottomSheet>
 		</>

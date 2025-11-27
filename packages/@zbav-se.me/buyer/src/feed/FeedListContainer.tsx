@@ -9,11 +9,10 @@ import type { FC } from "react";
 import { FeedList } from "./FeedListContainer/FeedList";
 
 export namespace FeedListContainer {
-	export interface Props extends Container.Props, Pick<FeedList.Props, "onDelete"> {
+	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
 		limit?: number;
-		onClickCreate?: () => void;
 	}
 }
 
@@ -21,8 +20,6 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	locale,
 	query,
 	limit = 10,
-	onClickCreate,
-	onDelete,
 	...props
 }) => {
 	return (
@@ -32,7 +29,6 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 		>
 			{({ data }) => {
 				const isLimitReached = data.filter >= limit;
-				const shouldShowCreateButton = onClickCreate !== undefined;
 
 				return (
 					<Container
@@ -42,7 +38,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						gap={"md"}
 						{...props}
 					>
-						{shouldShowCreateButton && data.filter === 0 ? (
+						{data.filter === 0 ? (
 							<Container
 								layout={"vertical-centered"}
 								items={"center"}
@@ -57,7 +53,9 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 										<Button
 											iconEnabled={ArrowRightIcon}
 											iconPosition={"right"}
-											onClick={onClickCreate}
+											onClick={() => {
+												alert("show bottom sheet with name only");
+											}}
 											label={"Create new feed (button)"}
 											tone={"primary"}
 											theme={"dark"}
@@ -71,16 +69,17 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						<FeedList
 							locale={locale}
 							query={query}
-							onDelete={onDelete}
 						/>
 
-						{shouldShowCreateButton && !isLimitReached && data.filter > 0 ? (
+						{!isLimitReached && data.filter > 0 ? (
 							<Button
 								tone={"primary"}
 								iconEnabled={FeedIcon}
 								theme={"dark"}
 								disabled={isLimitReached}
-								onClick={onClickCreate}
+								onClick={() => {
+									alert("show bottom sheet with name only");
+								}}
 								label={"Create new feed (title)"}
 								size={"lg"}
 								full

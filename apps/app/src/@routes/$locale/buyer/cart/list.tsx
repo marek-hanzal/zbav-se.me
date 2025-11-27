@@ -95,7 +95,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 								))
 								.with("empty-no-feed", () => (
 									<LinkTo
-										to={"/$locale/buyer/feed/wizard/location"}
+										to={"/$locale/buyer/feed/select"}
 										params={{
 											locale,
 										}}
