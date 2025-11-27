@@ -1,5 +1,6 @@
 import { Effect } from "effect";
 import type { ListingTransactionStatusRejectSchema } from "~/@user/listing-transaction/@status/schema/ListingTransactionStatusRejectSchema";
+import { listingTransactionPatchFx } from "~/@user/listing-transaction/fx/listingTransactionPatchFx";
 import { listingTransactionStatusCreateFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -49,23 +50,14 @@ export const listingTransactionStatusRejectFx = ({
 			});
 		}
 
-		const side = transaction.buyerId === user.id ? "buyer" : "seller";
-
-		yield* Effect.tryPromise(async () => {
-			return database
-				.updateTable("listing_transaction")
-				.set({
-					status: "rejected",
-					side,
-				})
-				.where("id", "=", listingTransactionId)
-				.executeTakeFirst();
+		yield* listingTransactionPatchFx({
+			listingTransactionId: listingTransactionId,
 		});
 
 		return yield* listingTransactionStatusCreateFx({
 			listingTransactionId,
 			status: "rejected",
-			side,
+			side: transaction.buyerId === user.id ? "buyer" : "seller",
 		});
 	});
 };
