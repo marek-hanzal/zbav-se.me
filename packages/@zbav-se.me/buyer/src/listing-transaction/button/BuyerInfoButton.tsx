@@ -41,6 +41,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 				<BuyerInfoContainer
 					locale={locale}
 					listingTransactionId={log.listingTransactionId}
+					square={"md"}
 				/>
 			</BottomSheet>
 		</>
