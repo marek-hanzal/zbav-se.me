@@ -1,10 +1,10 @@
 import { usePatchCollection } from "@use-pico/client/hook";
+import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import type { tListing, tListingCollection, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { CancelIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";
 
@@ -48,7 +48,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 
 	return (
 		<ConfirmButton
-			iconEnabled={CancelIcon}
+			iconEnabled={TrashIcon}
 			tone={"primary"}
 			theme={listing.isIgnored ? "dark" : "light"}
 			loading={listingIgnoreToggleMutation.isPending}

@@ -442,37 +442,37 @@ Expire in 7-days:
     value: Za týden
 Listing common sort value age - asc:
     static: true
-    value: Od nejstaršího po nejmladší
+    value: Od nejstaršího
 Listing common sort value age - desc:
     static: true
-    value: Od nejmladšího po nejstarší
+    value: Od nejmladšího
 Listing common sort value age - unused:
     static: true
     value: Stáří (bez řazení)
 Listing common sort value condition - asc:
     static: true
-    value: Od nejhoršího po nejlepší
+    value: Od nejhoršího
 Listing common sort value condition - desc:
     static: true
-    value: Od nejlepšího po nejhorší
+    value: Od nejlepšího
 Listing common sort value condition - unused:
     static: true
     value: Stav (bez řazení)
 Listing common sort value geo - asc:
     static: true
-    value: Od nejbližšího po nejvzdálenější
+    value: Od nejbližšího
 Listing common sort value geo - desc:
     static: true
-    value: Od nejvzdálenějšího po nejbližší
+    value: Od nejvzdálenějšího
 Listing common sort value geo - unused:
     static: true
     value: Poloha (bez řazení)
 Listing common sort value price - asc:
     static: true
-    value: Od nejlevnějšího po nejdražší
+    value: Od nejlevnějšího
 Listing common sort value price - desc:
     static: true
-    value: Od nejdražšího po nejlevnější
+    value: Od nejdražšího
 Listing common sort value price - unused:
     static: true
     value: Cena (bez řazení)

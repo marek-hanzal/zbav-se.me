@@ -2,6 +2,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
+import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace FeedNameContainer {
@@ -21,6 +22,7 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange
 			{...props}
 		>
 			<Status
+				icon={FeedIcon}
 				textTitle={"Feed name (title)"}
 				textMessage={"Feed name (hint)"}
 				action={
