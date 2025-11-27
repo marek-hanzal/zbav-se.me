@@ -24,15 +24,11 @@ Co mi teď tedy jde pod rukama?
 
 Až se mi povede opravit ten zlobivý panel, dostanu se zpět k aktuálnímu velkému tématu.
 
-:::note
-
-hovno
-
-:::
-
 ## Transakce
 
-Nechci úplně říkat, že tohle je _unikátní_ vychytávka, kterou nikdo nemá, ale z mého pohledu je to důležitá součást interakce mezi kupujícím a prodávajícím.
+:::tip[Info]
+Nechci úplně říkat, že tohle je _**unikátní**_ vychytávka, kterou nikdo nemá, ale z mého pohledu je to důležitá součást interakce mezi kupujícím a prodávajícím.
+:::
 
 Celkově jde o zobrazení všeho, co se děje jako chatu, takže rozhraní má známý tvar (je povědomé, např. jako Messanger nebo WhatsApp) a dává k ruce vše
 důležité - vidíš, co se dělo, kliknutím si můžeš nastavit polohu nebo třeba napsat protistraně zprávu.
