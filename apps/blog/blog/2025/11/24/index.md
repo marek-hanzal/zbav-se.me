@@ -71,7 +71,10 @@ Cílem je ti **dát místo**, kam se s **radostí podíváš** a budeš jen tak 
 
 ### Index
 
-Tohle je trošku technická část, ale nutné zmínit - zpočátku budeme _**maličká služba**_ krčící se někde v koutě (_ano, bohužel je to tak_), nicméně přesto **děláme všechno proto**, aby se inzeráty _**publikovaly do internetu**_ a byly volně nalezitelné např. i z **Google**. Větší nás prozatím _sežerou_, ale nikdo nemůže říct, že jsme se nesnažili.
+Tohle je trošku technická část, ale nutné zmínit – zpočátku budeme _**maličká služba**_, která své postavení musí budovat jak u tebe, tak i v _samotném divokém internetu_.
+
+**To ale nemění nic na tom, že přesně víme, co děláme.**  
+Inzeráty _**publikujeme**_ tak, aby byly volně dohledatelné třeba přes **Google**, a s časem se bude zlepšovat i **veřejná viditelnost** – jak roste obsah, roste i důvěra vyhledávačů.
 
 ### Řazení
 
@@ -129,3 +132,7 @@ V běžném provozu si toho **ani nevšimneš** a nijak ti to neuškodí. Tvoje 
 Uvědomuji si, že tě tohle může **zvednout ze židle**, takový ten pocit _**"... nechci, aby mě něco šmírovalo!!"**_ - důležité je si **uvědomit**,
 že _**my to přiznáme**_, zdokumentujeme přesně, co děláme a hlavně tento _**systém je ve tvých rukách**_. Jiné služby tohle dělají na pozadí (_generují si data pro cílené reklamy_) a ty z **toho nemáš nic**.
 :::
+
+## Epilog
+
+Je toho ještě **mnohem více**, nicméně tento článek popisuje **základní kameny** aplikace, takže _**víš, co čekat**_. Další články budou vycházet už **menší** diskutující **dílčí sekce** rozepsané podrobněji.
