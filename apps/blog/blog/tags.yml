@@ -1,0 +1,9 @@
+dev:
+    label: Deník vývojaře
+    permalink: /dev
+    description: Co se děje za oponou?
+
+news:
+    label: Novinky
+    permalink: /news
+    description: Novinky pro všechny!
