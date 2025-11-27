@@ -44,6 +44,8 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			<Container
 				layout={"vertical-centered"}
 				items={"center"}
+				tone={"unset"}
+				theme={"unset"}
 			>
 				<Status
 					tone={"danger"}
@@ -72,6 +74,8 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			<Container
 				layout={"vertical-centered"}
 				items={"center"}
+				tone={"unset"}
+				theme={"unset"}
 			>
 				<Badge
 					size={"lg"}
@@ -104,6 +108,8 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			layout={"vertical-flex"}
 			scroll={"vertical"}
 			gap={"sm"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			{locationAutocompleteQuery.data.map((item) => {

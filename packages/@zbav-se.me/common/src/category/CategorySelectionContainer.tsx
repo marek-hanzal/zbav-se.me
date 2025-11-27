@@ -28,6 +28,8 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 			gap={"md"}
 			height={"fit"}
 			scroll={"vertical"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Fulltext

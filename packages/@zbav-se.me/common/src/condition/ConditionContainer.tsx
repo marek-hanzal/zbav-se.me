@@ -15,6 +15,8 @@ export const ConditionContainer: FC<ConditionContainer.Props> = ({ selection, ..
 			scroll={"vertical"}
 			height={"fit"}
 			width={"fit"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Rating

@@ -31,6 +31,8 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 			gap={"md"}
 			round={"default"}
 			height={"fit"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Fulltext

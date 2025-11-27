@@ -43,7 +43,11 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 	const ratingItems = useMemo<Rating.RatingItem[]>(() => withRatingItems(limit), []);
 
 	return (
-		<Container scroll={"vertical"}>
+		<Container
+			scroll={"vertical"}
+			tone={"unset"}
+			theme={"unset"}
+		>
 			<div
 				ref={ref}
 				className={slots.root()}

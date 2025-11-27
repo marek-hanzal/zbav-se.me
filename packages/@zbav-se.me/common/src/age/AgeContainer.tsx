@@ -15,6 +15,8 @@ export const AgeContainer: FC<AgeContainer.Props> = ({ selection, ...props }) =>
 			scroll={"vertical"}
 			height={"fit"}
 			width={"fit"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Rating
