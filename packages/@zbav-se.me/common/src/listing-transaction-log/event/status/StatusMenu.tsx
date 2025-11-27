@@ -80,12 +80,15 @@ export const StatusMenu: FC<StatusMenu.Props> = ({ locale, side, log, components
 
 	return (
 		<BottomSheet
+			ui={"StatusMenu-BottomSheet"}
 			detent={"content"}
 			{...props}
 		>
 			<Container
+				ui={"StatusMenu-Container"}
 				layout={"vertical-flex"}
 				gap={"md"}
+				square={"md"}
 			>
 				{content}
 			</Container>
