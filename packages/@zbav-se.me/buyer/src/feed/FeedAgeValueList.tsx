@@ -42,7 +42,7 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 			<ContainerValueList
 				textTitle={"Feed age (label)"}
 				textEmpty={"Feed age not selected"}
-				items={selection.optional.multi().map(({ id }) => ({
+				items={selection.optional.multiId().map((id) => ({
 					id,
 					age: id,
 				}))}
