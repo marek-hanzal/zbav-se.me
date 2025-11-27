@@ -3,7 +3,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
 
@@ -21,6 +21,8 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	limit = 10,
 	...props
 }) => {
+	const [defaultOpenId, setDefaultOpenId] = useState<string | null>(null);
+
 	return (
 		<withFeedCountQuery.Suspense
 			data={{}}
@@ -48,7 +50,15 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 									textMessage={
 										"Create your first feed to get started (description)"
 									}
-									action={<FeedCreateButton />}
+									action={
+										<FeedCreateButton
+											onCreate={(feed) => {
+												setTimeout(() => {
+													setDefaultOpenId(feed.id);
+												}, 500);
+											}}
+										/>
+									}
 								/>
 							</Container>
 						) : null}
@@ -56,10 +66,18 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						<FeedList
 							locale={locale}
 							query={query}
+							defaultOpenId={defaultOpenId}
 						/>
 
 						{!isLimitReached && data.filter > 0 ? (
-							<FeedCreateButton disabled={isLimitReached} />
+							<FeedCreateButton
+								disabled={isLimitReached}
+								onCreate={(feed) => {
+									setTimeout(() => {
+										setDefaultOpenId(feed.id);
+									}, 500);
+								}}
+							/>
 						) : null}
 					</Container>
 				);

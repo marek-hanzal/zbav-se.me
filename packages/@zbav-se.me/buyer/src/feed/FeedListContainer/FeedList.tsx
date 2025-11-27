@@ -8,10 +8,11 @@ export namespace FeedList {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
+		defaultOpenId: string | null;
 	}
 }
 
-export const FeedList: FC<FeedList.Props> = ({ locale, query, ...props }) => {
+export const FeedList: FC<FeedList.Props> = ({ locale, query, defaultOpenId, ...props }) => {
 	const feedRootId = useId();
 
 	return (
@@ -32,6 +33,7 @@ export const FeedList: FC<FeedList.Props> = ({ locale, query, ...props }) => {
 								key={`${feedRootId}-${feed.id}`}
 								feed={feed}
 								locale={locale}
+								defaultOpen={defaultOpenId === feed.id}
 							/>
 						);
 					});

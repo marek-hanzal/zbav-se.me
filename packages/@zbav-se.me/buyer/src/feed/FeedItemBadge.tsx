@@ -14,11 +14,12 @@ export namespace FeedItemBadge {
 	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		feed: tFeed;
+		defaultOpen: boolean;
 	}
 }
 
-export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
+export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
+	const [isOpen, setIsOpen] = useState(defaultOpen);
 
 	return (
 		<>

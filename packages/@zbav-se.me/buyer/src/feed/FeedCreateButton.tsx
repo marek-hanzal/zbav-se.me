@@ -1,6 +1,7 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
@@ -8,16 +9,19 @@ import { FeedNameContainer } from "./FeedNameContainer";
 
 export namespace FeedCreateButton {
 	export interface Props extends Button.Props {
-		//
+		onCreate(feed: tFeed): void;
 	}
 }
 
-export const FeedCreateButton: FC<FeedCreateButton.Props> = (props) => {
+export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [change, setChange] = useState(false);
 
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
+		onSuccess(data) {
+			onCreate(data);
+		},
 		onSettled() {
 			setChange(false);
 			setIsOpen(false);
