@@ -6,6 +6,9 @@ tags:
 ---
 
 import transaction from './img/transaction.png';
+import feedList from './img/feed-list.png';
+import feedCreate from './img/feed-create.png';
+import feedSetup from './img/feed-setup.png';
 
 První z řady **vývojařského deníčku**. Zábavné a zajímavé jenom pro _některé z vás_, ale i běžný smrtelník se může dozvědět _**něco nového**_, co se v appce
 odehrává.
@@ -47,3 +50,26 @@ Myslím, že je celkově tato mechanika **velmi silná**, jelikož na konci ti p
 Vše je stále ve **tvých rukách** - přijmeš transakci, ale zjistíš, že **kupující ti nevyhovuje**? Tak ji **zavři** a nic se neděje, život jde dál. Stejně tak **kupující si může ověřit prodávajícího**, takže vy, jako uživatelé, můžete _**projevovat**_ větší snahu _**chovat se slušně**_.
 
 _**Je to přísné**_, ale nutné opatření, kdy _**systém hlídá sám sebe**_ a vy (_jako uživatelé_) se na něj **můžete spolehnout**, že pomůže najít přesně to, co hledáte.
+
+## Nastavení feedu
+
+Dáme si drobnou aktualizaci chování feedů - původně byly rozsekané na dílčí stránky v rámci průvodce, což zdvojovalo práci a nebylo to úplně optimální z hlediska
+použitelnosti.
+
+Celkově teď plošně v aplikaci nasazuju spodní panel, takže celkové chování je teď konzistentnější a přehlednější - ty si tak budeš zvykat na jeden model chování
+appky a nic moc tě nepřekvapí.
+
+<div className="mx-auto flex flex-col gap-2 w-1/2">
+    <img alt="Prototyp feedu" src={feedList}/>
+
+    Seznam feedů, pro vytvoření se zeptá jen na jméno.
+
+    <img alt="Prototyp feedu" src={feedCreate}/>
+
+    Tady se už nic složitého neodehrává - po vytvoření se zase zobrazí seznam feedů.
+
+    <img alt="Prototyp nastavení feedu" src={feedSetup}/>
+
+    Tady je ten vylepšovák - nastavení tě už nenutí projít celého průvodce - prostě se podíváš, co tě zajímá a to
+    si upravíš.
+</div>
