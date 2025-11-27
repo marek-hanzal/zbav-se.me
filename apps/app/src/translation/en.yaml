@@ -136,9 +136,6 @@
 3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
   ref: Feed name (hint)
   value: Enter a name for your feed
-3f8977ca19869222cc842fff05d482216c60a464b166c605577d1dd1:
-  ref: Detail (link)
-  value: Detail (link)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
@@ -166,9 +163,6 @@
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
-4de936d4b1f35fb13cdfb1640a634d4d7225802275960a2a2abdf6ad:
-  ref: Create new feed (button)
-  value: Create new feed (button)
 4df609ad7c71de7afb6404a01aca110553102d31c815f4f6969ea9bd:
   ref: No transactions found (title)
   value: No transactions found (title)
@@ -409,6 +403,9 @@ a94a3441be22610442865891781e2d0943dd42a886646f3f93c4dc06:
 a94cbdf1ed6b5ec42ce7ff1be916aadee3ad91ba6871b9a7f84fc0d5:
   ref: Buyer transaction request (buyer-seller) (label)
   value: Buyer transaction request (buyer-seller) (label)
+a94f6ecf7f2bf1199ee1e3f3279418edf602a1b69abe4a50a0d072d1:
+  ref: Feed setup (label)
+  value: Feed setup (label)
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
   ref: Your cart (title)
   value: Your cart (title)

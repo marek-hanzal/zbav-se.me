@@ -8,7 +8,7 @@ export namespace FeedList {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
-		defaultOpenId: string | null;
+		defaultOpenId?: string;
 	}
 }
 

@@ -9,7 +9,7 @@ import { FeedNameContainer } from "./FeedNameContainer";
 
 export namespace FeedCreateButton {
 	export interface Props extends Button.Props {
-		onCreate(feed: tFeed): void;
+		onCreate?(feed: tFeed): void;
 	}
 }
 
@@ -20,7 +20,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
 		onSuccess(data) {
-			onCreate(data);
+			onCreate?.(data);
 		},
 		onSettled() {
 			setChange(false);

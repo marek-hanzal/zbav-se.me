@@ -69,7 +69,8 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 					<Button
 						iconEnabled={FeedIcon}
 						tone={"secondary"}
-						label={"Detail (link)"}
+						label={"Feed setup (label)"}
+						size={"md"}
 						onClick={() => setIsOpen(true)}
 					/>
 
