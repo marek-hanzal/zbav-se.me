@@ -1,4 +1,4 @@
-import { type Migration, sql } from "kysely";
+import { type Migration } from "kysely";
 
 export const ListingTransactionMigration: Migration = {
 	async up(db) {
@@ -42,9 +42,6 @@ export const ListingTransactionMigration: Migration = {
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
-			//
-			.addColumn("status", sql`listing_transaction_status_enum`, (col) => col.notNull())
-			.addColumn("side", sql`listing_transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
