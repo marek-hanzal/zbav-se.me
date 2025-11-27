@@ -6,10 +6,10 @@ tags:
 date: 2025-11-27T02:00:00
 ---
 
-První z řady vývojařského deníčku. Zábavné a zajímavé jenom pro některé z vás, ale i běžný smrtelník se může dozvědět něco zajímavého, co se v appce
+První z řady **vývojařského deníčku**. Zábavné a zajímavé jenom pro _některé z vás_, ale i běžný smrtelník se může dozvědět _**něco nového**_, co se v appce
 odehrává.
 
-Dnešní téma je celková aktualizace a oprášení uživatelského rozhraní.
+_**Dnešní téma je celková aktualizace a oprášení uživatelského rozhraní.**_
 
 <!-- truncate -->
 
