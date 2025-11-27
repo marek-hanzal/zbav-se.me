@@ -20,6 +20,8 @@ export const FeedTitleContainer: FC<FeedTitleContainer.Props> = ({ value, onChan
 			gap={"md"}
 			width={"fit"}
 			height={"auto"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Status

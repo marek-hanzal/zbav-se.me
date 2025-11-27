@@ -1,31 +1,25 @@
-import { useSelection } from "@use-pico/client/hook";
-import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { TrashIcon } from "@use-pico/client/icon";
+import { ConfirmButton } from "@use-pico/client/ui/button";
+import type { Container as ContainerType } from "@use-pico/client/ui/container";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
-import type { EntitySchema } from "@use-pico/common/schema";
 import { translator } from "@use-pico/common/translator";
-import type { OptionalId } from "@use-pico/common/type";
-import { AgeContainer } from "@zbav-se.me/common/age";
-import { CategorySelectionContainer, CategoryValueList } from "@zbav-se.me/common/category";
-import { ConditionContainer } from "@zbav-se.me/common/condition";
-import { LocationBadgeValue, LocationSelection } from "@zbav-se.me/common/location";
-import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
-import { withFeedDeleteMutation, withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import type { Rating } from "@zbav-se.me/ui/rating";
-import { type FC, useState } from "react";
+import type { FC } from "react";
+import { FeedAgeValueList } from "./FeedAgeValueList";
+import { FeedCategoryBadge } from "./FeedCategoryBadge";
+import { FeedConditionValueList } from "./FeedConditionValueList";
+import { FeedLocationBadge } from "./FeedLocationBadge";
 import { FeedNameBadge } from "./FeedNameBadge";
-import { FeedNameContainer } from "./FeedNameContainer";
-import { FeedTitleContainer } from "./FeedTitleContainer";
+import { FeedTitleBadge } from "./FeedTitleBadge";
 
 export namespace FeedDetailContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends ContainerType.Props {
 		locale: string;
-		feed: OptionalId<tFeed>;
+		feed: tFeed;
 		onDelete?(): Promise<void>;
 	}
 }
@@ -36,124 +30,11 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	onDelete,
 	...props
 }) => {
-	const [change, setChange] = useState(false);
-	const [patch, setPatch] = useState<OptionalId<tFeed>>(feed);
-	//
-	const [isName, setIsName] = useState(false);
-	const [name, setName] = useState(feed.name);
-	//
-	const [isTitle, setIsTitle] = useState(false);
-	const [title, setTitle] = useState(feed.query?.filter?.title ?? "");
-	//
-	const [isLocation, setIsLocation] = useState(false);
-	const [locationId, setLocationId] = useState(feed.locationId);
-	const [latLon, setLatLon] = useState(feed.query?.meta?.latLon);
-	//
-	const [isSort, setIsSort] = useState(false);
-	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
-	//
-	const [isCategory, setIsCategory] = useState(false);
-	const categorySelection = useSelection<EntitySchema.Type>({
-		mode: "multi",
-		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
-			id,
-		})),
-		onMulti() {
-			setChange(true);
-		},
-	});
-	//
-	const [isCondition, setIsCondition] = useState(false);
-	const conditionSelection = useSelection<Rating.RatingItem>({
-		mode: "multi",
-		initial: feed.query?.filter?.conditionIn?.map((item) => ({
-			id: String(item),
-		})),
-		onMulti(selected) {
-			setChange(true);
-			setPatch((prev) => ({
-				...prev,
-				query: {
-					...prev.query,
-					filter: {
-						...prev.query?.filter,
-						conditionIn: selected.map((item) => Number.parseInt(item.id, 10)),
-					},
-				},
-			}));
-		},
-	});
-	//
-	const [isAge, setIsAge] = useState(false);
-	const ageSelection = useSelection<Rating.RatingItem>({
-		mode: "multi",
-		initial: feed.query?.filter?.ageIn?.map((item) => ({
-			id: String(item),
-		})),
-		onMulti(selected) {
-			setChange(true);
-			setPatch((prev) => ({
-				...prev,
-				query: {
-					...prev.query,
-					filter: {
-						...prev.query?.filter,
-						ageIn: selected.map((item) => Number.parseInt(item.id, 10)),
-					},
-				},
-			}));
-		},
-	});
-
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation({
 		async onPostMutation() {
 			return onDelete?.();
 		},
 	});
-	const feedPatchMutation = withFeedPatchMutation.useMutation({
-		onSettled() {
-			setChange(false);
-		},
-	});
-
-	// biome-ignore lint/correctness/noNestedComponentDefinitions: Ssst
-	const SaveButton: FC<Button.Props> = (props) => {
-		return (
-			<Button
-				tone={"secondary"}
-				theme={"dark"}
-				label={"Feed - save (button)"}
-				size={"lg"}
-				loading={feedPatchMutation.isPending}
-				disabled={!change || feedPatchMutation.isPending}
-				full
-				onClick={() => {
-					if (!change || !patch.id) {
-						return;
-					}
-
-					feedPatchMutation.mutate(
-						{
-							id: patch.id,
-							...patch,
-						},
-						{
-							onSuccess() {
-								setIsName(false);
-								setIsTitle(false);
-								setIsLocation(false);
-								setIsSort(false);
-								setIsCategory(false);
-								setIsCondition(false);
-								setIsAge(false);
-							},
-						},
-					);
-				}}
-				{...props}
-			/>
-		);
-	};
 
 	return (
 		<Container
@@ -172,34 +53,15 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					theme: "light",
 				}}
 			>
-				<FeedNameBadge
+				<FeedNameBadge feed={feed} />
+
+				<FeedTitleBadge feed={feed} />
+
+				<FeedLocationBadge
 					feedId={feed.id}
-					name={feed.name}
-				/>
-
-				<BadgeValue
-					textLabel={"Feed title (label)"}
-					textValue={feed.query?.filter?.title || "Feed title not filled"}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setIsTitle(true)}
-				/>
-
-				<LocationBadgeValue
+					locale={locale}
 					locationId={feed.locationId}
-					textLabel={"Feed location (label)"}
-					textValue={"Feed location not selected"}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setIsLocation(true)}
+					latLon={feed.query?.meta?.latLon}
 				/>
 
 				<ContainerValueList
@@ -214,64 +76,19 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
 						/>
 					)}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
 				/>
 
-				<CategoryValueList
+				<FeedCategoryBadge
+					feedId={feed.id}
+					locale={locale}
 					categoryIdIn={feed.query?.filter?.categoryIdIn}
-					textTitle={"Feed category (label)"}
-					textEmpty={"Feed category not selected"}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setIsCategory(true)}
 				/>
 
-				<ContainerValueList
-					textTitle={"Feed condition (label)"}
-					textEmpty={"Feed condition not selected"}
-					items={(feed.query?.filter?.conditionIn ?? []).map((condition) => ({
-						id: String(condition),
-						condition,
-					}))}
-					render={(item) => (
-						<Tx label={`Condition - Overall [${item.condition}] (hint)`} />
-					)}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setIsCondition(true)}
-				/>
+				<FeedConditionValueList feed={feed} />
 
-				<ContainerValueList
-					textTitle={"Feed age (label)"}
-					textEmpty={"Feed age not selected"}
-					items={(feed.query?.filter?.ageIn ?? []).map((age) => ({
-						id: String(age),
-						age,
-					}))}
-					render={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
-					action={
-						<Icon
-							icon={EditIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setIsAge(true)}
-				/>
+				<FeedAgeValueList feed={feed} />
 
-				{feed.id && onDelete ? (
+				{onDelete ? (
 					<ConfirmButton
 						tone={"danger"}
 						iconEnabled={TrashIcon}
@@ -298,182 +115,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					/>
 				) : null}
 			</VariantProvider>
-
-			{feed.id ? (
-				<>
-					<BottomSheet
-						isOpen={isName}
-						onClose={() => setIsName(false)}
-						detent={"full"}
-					>
-						<Container
-							layout={"vertical-content-footer"}
-							gap={"md"}
-							height={"fit"}
-							square={"md"}
-						>
-							<FeedNameContainer
-								height={"fit"}
-								value={name}
-								onChange={(value) => {
-									setChange(true);
-									setName(value);
-									setPatch((prev) => ({
-										...prev,
-										name: value,
-									}));
-								}}
-							/>
-
-							<SaveButton />
-						</Container>
-					</BottomSheet>
-
-					<BottomSheet
-						isOpen={isTitle}
-						onClose={() => setIsTitle(false)}
-						detent={"full"}
-					>
-						<Container
-							layout={"vertical-content-footer"}
-							gap={"md"}
-							height={"fit"}
-							square={"md"}
-						>
-							<FeedTitleContainer
-								value={title}
-								onChange={(value) => {
-									setChange(true);
-									setTitle(value);
-									setPatch((prev) => ({
-										...prev,
-										query: {
-											...prev.query,
-											filter: {
-												...prev.query?.filter,
-												title: value,
-											},
-										},
-									}));
-								}}
-							/>
-
-							<SaveButton />
-						</Container>
-					</BottomSheet>
-
-					<BottomSheet
-						isOpen={isLocation}
-						onClose={() => setIsLocation(false)}
-						detent={"full"}
-						contentProps={{
-							disableScroll: true,
-						}}
-					>
-						<Container
-							layout={"vertical-content-footer"}
-							gap={"md"}
-							height={"fit"}
-							square={"md"}
-						>
-							<LocationSelection
-								locale={locale}
-								value={locationId}
-								onChange={(value) => {
-									setChange(true);
-									setLocationId(value);
-									setPatch((prev) => ({
-										...prev,
-										locationId: value,
-									}));
-								}}
-								onLocation={({ lon, lat }) => {
-									setChange(true);
-									setLatLon({
-										lon,
-										lat,
-									});
-									setPatch((prev) => ({
-										...prev,
-										query: {
-											...prev.query,
-											meta: {
-												...prev.query?.meta,
-												latLon: {
-													lon,
-													lat,
-												},
-											},
-										},
-									}));
-								}}
-								textHint={"Feed - location security (hint)"}
-							/>
-
-							<SaveButton />
-						</Container>
-					</BottomSheet>
-
-					<BottomSheet
-						isOpen={isCategory}
-						onClose={() => setIsCategory(false)}
-						detent={"full"}
-						contentProps={{
-							disableScroll: true,
-						}}
-					>
-						<Container
-							ui={"FeedDetailContainer-CategorySelectionContainer"}
-							layout={"vertical-content-footer"}
-							gap={"md"}
-							height={"fit"}
-							square={"md"}
-						>
-							<CategorySelectionContainer
-								locale={locale}
-								selection={categorySelection}
-								categoryId={categorySelection.optional.singleId()}
-							/>
-
-							<SaveButton />
-						</Container>
-					</BottomSheet>
-
-					<BottomSheet
-						isOpen={isCondition}
-						onClose={() => setIsCondition(false)}
-						detent={"full"}
-					>
-						<Container
-							layout={"vertical-content-footer"}
-							gap={"md"}
-							height={"fit"}
-							square={"md"}
-						>
-							<ConditionContainer selection={conditionSelection} />
-
-							<SaveButton />
-						</Container>
-					</BottomSheet>
-
-					<BottomSheet
-						isOpen={isAge}
-						onClose={() => setIsAge(false)}
-						detent={"full"}
-					>
-						<Container
-							layout={"vertical-content-footer"}
-							gap={"md"}
-							height={"fit"}
-							square={"md"}
-						>
-							<AgeContainer selection={ageSelection} />
-
-							<SaveButton />
-						</Container>
-					</BottomSheet>
-				</>
-			) : null}
 		</Container>
 	);
 };

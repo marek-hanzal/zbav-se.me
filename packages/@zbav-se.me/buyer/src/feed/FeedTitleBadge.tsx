@@ -6,15 +6,15 @@ import { Container } from "@use-pico/client/ui/container";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { type FC, useState } from "react";
-import { FeedNameContainer } from "./FeedNameContainer";
+import { FeedTitleContainer } from "./FeedTitleContainer";
 
-export namespace FeedNameBadge {
+export namespace FeedTitleBadge {
 	export interface Props {
 		feed: tFeed;
 	}
 }
 
-export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
+export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
@@ -30,8 +30,8 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 	return (
 		<>
 			<BadgeValue
-				textLabel={"Feed name (label)"}
-				textValue={feed.name}
+				textLabel={"Feed title (label)"}
+				textValue={feed.query?.filter?.title || "Feed title not filled"}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -54,14 +54,19 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 					theme={"unset"}
 					square={"md"}
 				>
-					<FeedNameContainer
-						height={"fit"}
-						value={patch.name ?? ""}
-						onChange={(name) => {
+					<FeedTitleContainer
+						value={patch.query?.filter?.title ?? ""}
+						onChange={(title) => {
 							setChange(true);
 							setPatch((prev) => ({
 								...prev,
-								name,
+								query: {
+									...prev.query,
+									filter: {
+										...prev.query?.filter,
+										title,
+									},
+								},
 							}));
 						}}
 					/>
