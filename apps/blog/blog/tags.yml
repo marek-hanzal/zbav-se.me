@@ -7,3 +7,8 @@ news:
     label: Novinky
     permalink: /news
     description: Novinky pro všechny!
+
+features:
+    label: Vychytávky
+    permalink: /feature
+    description: Diskuse o vychytávkách a funkcích

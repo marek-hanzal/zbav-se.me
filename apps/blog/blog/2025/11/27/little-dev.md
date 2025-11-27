@@ -24,6 +24,12 @@ Co mi teď tedy jde pod rukama?
 
 Až se mi povede opravit ten zlobivý panel, dostanu se zpět k aktuálnímu velkému tématu.
 
+:::note
+
+hovno
+
+:::
+
 ## Transakce
 
 Nechci úplně říkat, že tohle je _unikátní_ vychytávka, kterou nikdo nemá, ale z mého pohledu je to důležitá součást interakce mezi kupujícím a prodávajícím.
