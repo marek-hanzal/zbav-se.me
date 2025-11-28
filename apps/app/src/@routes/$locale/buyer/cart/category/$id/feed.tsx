@@ -4,7 +4,6 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { translator } from "@use-pico/common/translator";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
@@ -18,36 +17,10 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 	validateSearch: z.object({
 		scrollToListingId: z.string().optional(),
 	}),
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<FlowContainer
-				left={
-					<LinkTo
-						to={"/$locale/buyer/cart/list"}
-						params={{
-							locale,
-						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
-				}
-			>
-				<SpinnerContainer
-					statusProps={{
-						textTitle: translator.text("Preparing cart feed (title)"),
-					}}
-				/>
-			</FlowContainer>
-		);
-	},
 	component() {
 		const { locale } = Route.useParams();
 		const { scrollToListingId } = Route.useSearch();
 		const { id } = Route.useParams();
-
-		const listingCartCountQuery = withListingCartCountQuery.useSuspenseQuery({});
 
 		return (
 			<FlowContainer
@@ -112,67 +85,80 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 						],
 					}}
 					scrollToListingId={scrollToListingId}
-					empty={
-						listingCartCountQuery.data.filter === 0 ? (
-							<Status
-								icon={DeadEndIcon}
-								textTitle={"Empty cart - category and cart (title)"}
-								action={
-									<div className="flex flex-col gap-2 items-center justify-center w-full">
-										<LinkTo
-											to={"/$locale/buyer/feed/select"}
-											params={{
-												locale,
-											}}
-											full
-										>
-											<Button
-												iconEnabled={ArrowRightIcon}
-												iconPosition={"right"}
-												tone={"secondary"}
-												label={"Go to feed (link)"}
-												full
-											/>
-										</LinkTo>
+					renderEmptyFn={() => {
+						return (
+							<withListingCartCountQuery.Suspense
+								data={{}}
+								fallback={<SpinnerContainer />}
+							>
+								{({ data }) => {
+									if (data.filter === 0) {
+										return (
+											<Status
+												icon={DeadEndIcon}
+												textTitle={"Empty cart - category and cart (title)"}
+												action={
+													<div className="flex flex-col gap-2 items-center justify-center w-full">
+														<LinkTo
+															to={"/$locale/buyer/feed/select"}
+															params={{
+																locale,
+															}}
+															full
+														>
+															<Button
+																iconEnabled={ArrowRightIcon}
+																iconPosition={"right"}
+																tone={"secondary"}
+																label={"Go to feed (link)"}
+																full
+															/>
+														</LinkTo>
 
-										<LinkTo
-											to={"/$locale/buyer"}
-											params={{
-												locale,
-											}}
-											full
-										>
-											<Button
-												iconEnabled={BuyerIcon}
-												tone={"secondary"}
-												label={"Go to home (link)"}
-												full
+														<LinkTo
+															to={"/$locale/buyer"}
+															params={{
+																locale,
+															}}
+															full
+														>
+															<Button
+																iconEnabled={BuyerIcon}
+																tone={"secondary"}
+																label={"Go to home (link)"}
+																full
+															/>
+														</LinkTo>
+													</div>
+												}
 											/>
-										</LinkTo>
-									</div>
-								}
-							/>
-						) : (
-							<Status
-								icon={"icon-[streamline--sad-face-remix]"}
-								textTitle={"Empty cart category (title)"}
-								action={
-									<LinkTo
-										to={"/$locale/buyer/cart/list"}
-										params={{
-											locale,
-										}}
-									>
-										<Button
-											iconEnabled={ArrowLeftIcon}
-											tone={"secondary"}
-											label={"Back to cart (link)"}
+										);
+									}
+
+									return (
+										<Status
+											icon={"icon-[streamline--sad-face-remix]"}
+											textTitle={"Empty cart category (title)"}
+											action={
+												<LinkTo
+													to={"/$locale/buyer/cart/list"}
+													params={{
+														locale,
+													}}
+												>
+													<Button
+														iconEnabled={ArrowLeftIcon}
+														tone={"secondary"}
+														label={"Back to cart (link)"}
+													/>
+												</LinkTo>
+											}
 										/>
-									</LinkTo>
-								}
-							/>
-						)
-					}
+									);
+								}}
+							</withListingCartCountQuery.Suspense>
+						);
+					}}
 					appendix={
 						<Status
 							icon={DeadEndIcon}

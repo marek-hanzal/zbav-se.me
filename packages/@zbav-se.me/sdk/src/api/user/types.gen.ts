@@ -2999,6 +2999,10 @@ export type tApiListingTransactionCreateRequest = {
 
 export type apiListingTransactionCreateErrors = {
     /**
+     * Access denied
+     */
+    403: tMessage;
+    /**
      * Listing not found
      */
     404: tMessage;

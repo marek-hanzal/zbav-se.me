@@ -20,7 +20,7 @@ export namespace ListingListContainer {
 		 * Listing ID to scroll to
 		 */
 		scrollToListingId?: string;
-		empty?: ReactNode;
+		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
 		toolbar: ListingHeroContainer.Toolbar.RenderFn;
 		renderImageErrorToolbarFn: ListingHeroContainer.Toolbar.RenderFn;
@@ -33,7 +33,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	locale,
 	query,
 	scrollToListingId,
-	empty,
+	renderEmptyFn,
 	appendix,
 	toolbar,
 	renderImageErrorToolbarFn,
@@ -67,29 +67,29 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We don't care about changing "empty" props
 	const emptySlot = useMemo(() => {
-		return (
-			empty ?? (
-				<Status
-					ui="ListingList-empty"
-					key={`${listingIdPrefix}-no-listings`}
-					icon={"icon-[streamline--sad-face-remix]"}
-					textTitle={"No listings (title)"}
-					action={
-						<LinkTo
-							to={"/$locale/buyer/feed/select"}
-							params={{
-								locale,
-							}}
-						>
-							<Button
-								iconEnabled={ArrowLeftIcon}
-								tone={"secondary"}
-								label={"Back to home (link)"}
-							/>
-						</LinkTo>
-					}
-				/>
-			)
+		return renderEmptyFn ? (
+			renderEmptyFn()
+		) : (
+			<Status
+				ui="ListingList-empty"
+				key={`${listingIdPrefix}-no-listings`}
+				icon={"icon-[streamline--sad-face-remix]"}
+				textTitle={"No listings (title)"}
+				action={
+					<LinkTo
+						to={"/$locale/buyer/feed/select"}
+						params={{
+							locale,
+						}}
+					>
+						<Button
+							iconEnabled={ArrowLeftIcon}
+							tone={"secondary"}
+							label={"Back to home (link)"}
+						/>
+					</LinkTo>
+				}
+			/>
 		);
 	}, [
 		locale,
