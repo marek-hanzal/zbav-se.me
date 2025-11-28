@@ -4,6 +4,8 @@ import { match } from "ts-pattern";
 import { withGallerySelect } from "~/@user/gallery/db/withGallerySelect";
 import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/@user/listing/schema/ListingSortSchema";
+import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
+import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingSelect {
@@ -24,9 +26,8 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.selectAll("l")
 		.select((eb) => [
-			sql`to_jsonb(${eb.table("loc")}.*)`.as("location"),
-
-			sql`to_jsonb(${eb.table("cat")}.*)`.as("category"),
+			sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
+			sql<CategoryDbSchema.Type>`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 
 			jsonObjectFrom(
 				withGallerySelect({
