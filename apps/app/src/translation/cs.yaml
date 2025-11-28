@@ -115,7 +115,7 @@
     value: Obchod otevřen
 3429a13ac0ce97b0993fd1859d462e498dbd67e6f4b29853c1494151:
     ref: No transactions found - buyer (message)
-    value: No transactions found - buyer (message)
+    value: Jukni na inzeráty a otevři se obchod u těch, které tě zajímají!
 35a4e86b1c3c0901d64e96e0bee1760b1f7bba60c419f5ff2c8e4591:
     ref: Buyer transaction rejected (buyer-seller) (label)
     value: Zájemce tě odmítl
@@ -620,7 +620,7 @@ d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     value: Stav
 d5b5f13c7150021d732169079401965e929898f8e0a5b0e3f94043af:
     ref: No transactions found - buyer (title)
-    value: No transactions found - buyer (title)
+    value: Nemáš žádné otevřené obchody
 d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
     ref: Buyer - account age (label)
     value: Stáří účtu
