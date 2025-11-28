@@ -4,6 +4,7 @@ import { listingTransactionPatchFx } from "~/@user/listing-transaction/fx/listin
 import { listingTransactionResolveFx } from "~/@user/listing-transaction/fx/listingTransactionResolveFx";
 import { listingTransactionMessageFetchFx } from "~/@user/listing-transaction-message/fx/listingTransactionMessageFetchFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace listingTransactionMessageCreateFx {
 	export interface Props {
@@ -23,6 +24,12 @@ export const listingTransactionMessageCreateFx = ({
 			listingTransactionId,
 			message: "You are not allowed to create a message for this listing transaction",
 		});
+
+		if (transaction.status !== "accepted") {
+			return yield* new InvalidRequestError({
+				message: "You are not allowed to create a message for this listing transaction",
+			});
+		}
 
 		const id = genId();
 

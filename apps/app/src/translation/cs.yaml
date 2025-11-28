@@ -505,6 +505,9 @@ aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
 aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
     ref: Listing flagged (toast)
     value: Inzerát byl úspěšně nahlášen a bude zkontrolován.
+aad23f12339245d0c11e391e7e0e16cfac64e93bef11b82d20d5f8d2:
+    ref: Seller transaction request (seller-seller) (label)
+    value: Seller transaction request (seller-seller) (label)
 ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
     ref: Listing ignored (toast)
     value: Inzerát úspěšně ignorován - až se příště vrátíš, už tu nebude.
@@ -668,6 +671,9 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
     ref: Shop (label)
     value: Obchod
+e51ad3985aa0f70535db7c528188840f76e97d9180c7c519675831af:
+    ref: New message (label)
+    value: Poslat zprávu
 e60ccc5a06a9f924d877f3e9484fb68bda0b6d8adcd214c4c169f4b7:
     ref: Transaction detail (title)
     value: Detail transakce
