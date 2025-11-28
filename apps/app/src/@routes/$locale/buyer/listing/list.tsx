@@ -1,7 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { zListingQuery } from "@zbav-se.me/sdk/api/user";
@@ -19,26 +18,6 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 		scrollToListingId: z.string().optional(),
 		query: zListingQuery.optional(),
 	}),
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<FlowContainer
-				left={
-					<LinkTo
-						to={"/$locale/buyer/feed/select"}
-						params={{
-							locale,
-						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
-				}
-			>
-				<SpinnerContainer />
-			</FlowContainer>
-		);
-	},
 	component() {
 		const { locale } = Route.useParams();
 		const { scrollToListingId, query } = Route.useSearch();
@@ -57,7 +36,6 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 				}
 			>
 				<ListingListContainer
-					_suspense={"I know"}
 					locale={locale}
 					overlay={({ listing }) => (
 						<FeedListingOverlay

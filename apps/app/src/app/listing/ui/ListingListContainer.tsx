@@ -1,7 +1,6 @@
 // /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtual list component */
 import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -13,7 +12,7 @@ import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "reac
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		locale: string;
 		query: tListingQuery;
 		/**
@@ -29,7 +28,6 @@ export namespace ListingListContainer {
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
-	_suspense,
 	locale,
 	query,
 	scrollToListingId,
@@ -42,16 +40,9 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 }) => {
 	const listingIdPrefix = useId();
 
-	const listingQuery = withListingCollectionQuery.useSuspenseQuery(query, {
-		staleTime: 60_000 * 30,
-		refetchOnWindowFocus: true,
-	});
-
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	const scrollTo = useScrollTo(containerRef);
-
-	const hasListings = listingQuery.data.data.length > 0;
 
 	useEffect(() => {
 		if (!scrollToListingId || !containerRef.current) {
@@ -110,10 +101,20 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			])}
 			{...props}
 		>
-			{hasListings ? null : emptySlot}
+			<withListingCollectionQuery.Suspense
+				data={query}
+				options={{
+					staleTime: 60_000 * 30,
+					refetchOnWindowFocus: true,
+				}}
+				fallback={<SpinnerContainer />}
+			>
+				{({ data }) => {
+					if (data.data.length === 0) {
+						return emptySlot;
+					}
 
-			{hasListings
-				? listingQuery.data.data.map((listing) => (
+					return data.data.map((listing) => (
 						<VisibleContainer
 							key={`${listingIdPrefix}-${listing.id}`}
 							scrollerRef={containerRef}
@@ -139,8 +140,9 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								overlay={overlay}
 							/>
 						</VisibleContainer>
-					))
-				: null}
+					));
+				}}
+			</withListingCollectionQuery.Suspense>
 
 			{appendix}
 		</Container>
