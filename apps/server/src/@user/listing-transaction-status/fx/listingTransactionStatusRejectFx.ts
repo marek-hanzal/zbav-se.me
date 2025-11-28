@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import type { ListingTransactionStatusRejectSchema } from "~/@user/listing-transaction/@status/schema/ListingTransactionStatusRejectSchema";
 import { listingTransactionPatchFx } from "~/@user/listing-transaction/fx/listingTransactionPatchFx";
 import { listingTransactionStatusCreateFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusCreateFx";
+import type { ListingTransactionStatusRejectSchema } from "~/@user/listing-transaction-status/schema/ListingTransactionStatusRejectSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { AccessDeniedError } from "~/error/AccessDeniedError";

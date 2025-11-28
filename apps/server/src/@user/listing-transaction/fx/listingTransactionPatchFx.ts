@@ -47,7 +47,7 @@ export const listingTransactionPatchFx = ({
 				return yield* new AccessDeniedError({
 					message: "You are not allowed to modify this transaction",
 				});
-        }
+			}
 
 			const now = DateTime.now();
 

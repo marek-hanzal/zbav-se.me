@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { ListingTransactionContextProvider } from "~/@user/listing-transaction/fx/ListingTransactionContextFx";
 import { ListingTransactionStatusSchema } from "~/@user/listing-transaction-status/schema/ListingTransactionStatusSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
@@ -72,6 +73,7 @@ export const withListingTransactionStatusRejectApi: Routes.Fn = ({ userHono }) =
 				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
+				ListingTransactionContextProvider(),
 				UserContextProvider(c.get("user")),
 				//
 				Effect.catchAll((e) => {

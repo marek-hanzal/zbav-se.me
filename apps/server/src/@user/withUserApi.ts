@@ -1,3 +1,4 @@
+import { withListingTransactionStatusApi } from "~/@user/listing-transaction-status/withListingTransactionStatusApi";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
 import type { MessageSchema } from "~/schema/MessageSchema";
@@ -47,6 +48,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	withListingScoreApi(routes);
 	withListingTransactionApi(routes);
 	withListingTransactionLogApi(routes);
+	withListingTransactionStatusApi(routes);
 	withS3Api(routes);
 	withUploadApi(routes);
 	withUserExApi(routes);
