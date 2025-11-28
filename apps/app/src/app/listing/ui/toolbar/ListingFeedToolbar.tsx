@@ -1,7 +1,5 @@
 import { ShowIcon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
-import { ListingDetailContainer } from "@zbav-se.me/buyer/listing";
+import { ListingDetailButton } from "@zbav-se.me/buyer/listing";
 import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/user";
 import { ToolbarContainer } from "@zbav-se.me/ui/toolbar";
 import { type FC, useId, useState } from "react";
@@ -34,20 +32,22 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 	...props
 }) => {
 	const [action, setIsAction] = useState<ListingFeedToolbar.Tools | undefined>(undefined);
-	const [detail, setDetail] = useState(false);
 	const detailSheetId = useId();
 
 	return (
 		<ToolbarContainer {...props}>
-			<Button
+			<ListingDetailButton
+				locale={locale}
+				detailSheetId={detailSheetId}
+				listing={listing}
 				iconEnabled={ShowIcon}
-				tone={"primary"}
-				theme={"light"}
-				size={"xl"}
 				round={"full"}
-				border={false}
-				onClick={() => setDetail(true)}
-			/>
+			>
+				<ListingDetailMenu
+					locale={locale}
+					listing={listing}
+				/>
+			</ListingDetailButton>
 
 			{tools.includes("cart") ? (
 				<ListingCartButton
@@ -111,26 +111,6 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 					}}
 				/>
 			) : null}
-
-			<BottomSheet
-				id={detailSheetId}
-				isOpen={detail}
-				onClose={() => setDetail(false)}
-				detent={"full"}
-			>
-				<ListingDetailContainer
-					parentSheetId={detailSheetId}
-					locale={locale}
-					listing={listing}
-					withScore
-					square={"md"}
-				>
-					<ListingDetailMenu
-						locale={locale}
-						listing={listing}
-					/>
-				</ListingDetailContainer>
-			</BottomSheet>
 		</ToolbarContainer>
 	);
 };
