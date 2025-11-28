@@ -62,7 +62,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				data={query}
 				fallback={<SpinnerContainer />}
 				options={{
-					refetchInterval: 10_000,
+					refetchInterval: 5_000,
 				}}
 			>
 				{({ data }) => {
