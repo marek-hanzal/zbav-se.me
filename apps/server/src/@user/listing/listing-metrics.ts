@@ -35,14 +35,6 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ userHono }) => {
 					},
 					description: "Listing score for the provided identifier",
 				},
-				404: {
-					content: {
-						"application/json": {
-							schema: MessageSchema,
-						},
-					},
-					description: "Listing not found",
-				},
 				500: {
 					content: {
 						"application/json": {
@@ -71,20 +63,6 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ userHono }) => {
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
-							Match.when(
-								{
-									_tag: "NotFoundError",
-								},
-								() => {
-									return c.json<MessageSchema.Type, 404>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										404,
-									);
-								},
-							),
 							Match.when(
 								{
 									_tag: "UnknownException",

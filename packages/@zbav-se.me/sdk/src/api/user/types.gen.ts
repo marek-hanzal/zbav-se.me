@@ -2605,10 +2605,6 @@ export type tApiListingMetricsFetchRequest = {
 
 export type apiListingMetricsFetchErrors = {
     /**
-     * Listing not found
-     */
-    404: tMessage;
-    /**
      * Internal server error
      */
     500: tMessage;

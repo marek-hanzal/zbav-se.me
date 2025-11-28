@@ -1,6 +1,5 @@
 import { Effect } from "effect";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
 import { ListingMetricsSchema } from "../schema/ListingMetricsSchema";
 
 export namespace listingMetricsFx {
@@ -12,24 +11,6 @@ export namespace listingMetricsFx {
 export const listingMetricsFx = ({ listingId }: listingMetricsFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
-
-		const count = yield* Effect.tryPromise(async () => {
-			return database
-				.selectFrom("listing_score as ls")
-				.select((eb) => [
-					eb.fn.count<number>("ls.id").as("count"),
-				])
-				.where("ls.listingId", "=", listingId)
-				.executeTakeFirstOrThrow();
-		});
-
-		if (Number(count.count) === 0) {
-			return yield* new NotFoundError({
-				resource: "listing",
-				resourceId: listingId,
-				message: "Listing has no score yet",
-			});
-		}
 
 		const score = yield* Effect.tryPromise(async () => {
 			return database
