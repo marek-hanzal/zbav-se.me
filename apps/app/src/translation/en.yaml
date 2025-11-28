@@ -58,9 +58,6 @@
 1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
   ref: Price (subtitle)
   value: Price (subtitle)
-1e3d85c7c23a71840d9beb99b3e899a3f42d37c190376c17982f5ffa:
-  ref: Listing Score - Raw score - no value (label)
-  value: Listing Score - Raw score - no value (label)
 1f8ae1eecf5c922cd16eccf3b3fb0728404a62f374f43e74badf98f6:
   ref: Seller - score (label)
   value: Seller - score (label)
@@ -142,9 +139,6 @@
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
-409c34bae22e46f8c65e792531457dca3c54190439f8a4e1cca1a3d3:
-  ref: Listing Score - Feed views - no value (label)
-  value: Listing Score - Feed views - no value (label)
 40e303be86527f9bd9a2ff0c64ae95d0376262257c76a19e4c60121f:
   ref: Listing Score - Cart (label)
   value: Listing Score - Cart (label)
@@ -226,9 +220,6 @@
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
   ref: View transactions (button)
   value: View transactions (button)
-63b7339dbc11bd2ed8261905a9dfd6355cd7752429f212f0d1ccafb3:
-  ref: Listing Score - Cart - no value (label)
-  value: Listing Score - Cart - no value (label)
 64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
   ref: expired
   value: expired
@@ -274,9 +265,6 @@
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
   ref: Listing unflagged (toast)
   value: Listing unflagged (toast)
-7366837155197535cc250b08bb01af26af2c7e9d0bb3de6327b1f150:
-  ref: Listing Score - Views - no value (label)
-  value: Listing Score - Views - no value (label)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
@@ -439,9 +427,6 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b3afa18e627bef1c5cf094e6cc102284785ae36805b5d3ed027606da:
   ref: Transaction rejected (label)
   value: Transaction rejected (label)
-b3d47cffad0cfc3c198765decdb015eeca5c63873e48dc05c111c8e2:
-  ref: Reject transaction (label)
-  value: Reject transaction (label)
 b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
   ref: success
   value: success
@@ -460,9 +445,6 @@ b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
 b8bae7ce48064a4e0a2cb39f242622ece9bb3c7b040bdbddbbb57060:
   ref: Your cart is empty - feed (message)
   value: Your cart is empty - feed (message)
-b8fe81073164a598978b3692d0332bccff635f6946c9a8dd409323fc:
-  ref: Listing Score - Ignore - no value (label)
-  value: Listing Score - Ignore - no value (label)
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
   ref: My listings (label)
   value: My listings (label)
@@ -472,9 +454,6 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
 bb2826b23a357a691367f19c4467302f374041ded8c9a75b8abe866c:
   ref: Your cart is empty - feed (title)
   value: Your cart is empty - feed (title)
-bd37dcaef82ca084b52f531c8665ed9ebd91809eae1b430693aa3c00:
-  ref: Listing Score - Flag - no value (label)
-  value: Listing Score - Flag - no value (label)
 bd4c51483b9569475fa4f392deecd1f59492bf9e37050db9a96a80b4:
   ref: Back to cart (link)
   value: Back to cart (link)
@@ -501,6 +480,9 @@ c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
+c8170546be46d340679de6c5c2d599e30b46eadf57b56bd2fcb63378:
+  ref: Listing Score - no value (label)
+  value: Listing Score - no value (label)
 cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
   ref: Error adding listing to cart (toast)
   value: Error adding listing to cart (toast)

@@ -1,6 +1,6 @@
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { ListingMetricsSchema } from "../schema/ListingMetricsSchema";
+import { ListingMetricsSchema } from "~/@user/listing/schema/ListingMetricsSchema";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingMetricsFx {
 	export interface Props {

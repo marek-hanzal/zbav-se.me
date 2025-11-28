@@ -11,12 +11,14 @@ Each application runs on its own port in development mode:
 | **3030** | `apps/web` | Public marketing website (about, privacy policy, landing pages) |
 | **3031** | `apps/app` | Main marketplace application (PWA for buyers and sellers) |
 | **3032** | `apps/server` | Backend API server (REST API, authentication, database) |
+| **4090** | `apps/blog` | Development blog (Docusaurus) |
 
 Access the applications at:
 - Web: http://localhost:3030
 - App: http://localhost:3031
 - Server API: http://localhost:3032
 - OpenAPI docs: http://localhost:3032/docs
+- Blog: http://localhost:4090
 
 ## Project Structure
 
@@ -33,6 +35,13 @@ This is a monorepo managed by Bun workspaces, containing:
   - Built with TanStack Router and React 19
   - Static pages (about, privacy policy)
   - Minimal dependencies, optimized for SEO
+  
+- **`blog`** - Development blog
+  - Built with Docusaurus 3
+  - Blog-only setup (no docs or pages)
+  - RSS and Atom feeds
+  - Czech language support
+  - Tailwind CSS styling
   
 - **`server`** - Backend API server
   - Built with Hono and Nitro
@@ -149,6 +158,7 @@ Legend:
 - **GSAP** - Animations
 - **Tailwind CSS 4** - Styling
 - **Vite** - Build tool
+- **Docusaurus 3** - Blog platform
 
 ### Backend
 - **Hono** - Web framework
@@ -219,6 +229,7 @@ bun dev
 cd apps/app && bun dev    # Port 3031
 cd apps/web && bun dev    # Port 3030
 cd apps/server && bun dev # Port 3032
+cd apps/blog && bun dev   # Port 4090
 
 # Type checking
 bun run typecheck

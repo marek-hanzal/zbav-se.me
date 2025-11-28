@@ -116,6 +116,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 								return toLocaleNumber({
 									locale,
 									number: data.score,
+									empty: "0",
 								});
 							}}
 						</withListingMetricsFetchQuery.Suspense>

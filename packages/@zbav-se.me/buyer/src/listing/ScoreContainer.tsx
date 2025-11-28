@@ -31,7 +31,7 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			{listingMetrics.score ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Raw score (label)"}
-					textValue={"Listing Score - Raw score - no value (label)"}
+					textValue={0}
 				/>
 			)}
 
@@ -52,7 +52,7 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			{listingMetrics.views ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Views (label)"}
-					textValue={"Listing Score - Views - no value (label)"}
+					textValue={0}
 				/>
 			)}
 
@@ -73,7 +73,7 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			{listingMetrics.listing ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Feed views (label)"}
-					textValue={"Listing Score - Feed views - no value (label)"}
+					textValue={0}
 				/>
 			)}
 
@@ -94,7 +94,7 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			{listingMetrics.cart ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Cart (label)"}
-					textValue={"Listing Score - Cart - no value (label)"}
+					textValue={0}
 				/>
 			)}
 
@@ -115,7 +115,7 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			{listingMetrics.ignore ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Ignore (label)"}
-					textValue={"Listing Score - Ignore - no value (label)"}
+					textValue={0}
 				/>
 			)}
 
@@ -136,7 +136,7 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			{listingMetrics.flag ? null : (
 				<BadgeValue
 					textLabel={"Listing Score - Flag (label)"}
-					textValue={"Listing Score - Flag - no value (label)"}
+					textValue={0}
 				/>
 			)}
 		</Container>
