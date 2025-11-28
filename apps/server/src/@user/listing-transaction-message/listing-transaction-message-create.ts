@@ -110,6 +110,20 @@ export const withListingTransactionMessageCreateApi: Routes.Fn = ({ userHono }) 
 							),
 							Match.when(
 								{
+									_tag: "RuntimeError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 500>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										500,
+									);
+								},
+							),
+							Match.when(
+								{
 									_tag: "UnknownException",
 								},
 								() => {
