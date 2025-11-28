@@ -25,9 +25,9 @@ export const withDatabase = <TDatabase>({
 			if (!kysely) {
 				kysely = new Kysely<TDatabase>({
 					dialect,
-					log: [
-						"error",
-					],
+					log(log) {
+						console.log(log.query.sql);
+					},
 				});
 			}
 			return kysely;

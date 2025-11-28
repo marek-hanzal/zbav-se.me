@@ -1,8 +1,6 @@
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import { withCategorySelect } from "~/@session/category/db/withCategorySelect";
-import { withLocationSelect } from "~/@session/location/db/withLocationSelect";
 import { withGallerySelect } from "~/@user/gallery/db/withGallerySelect";
 import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/@user/listing/schema/ListingSortSchema";
@@ -39,27 +37,9 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 			"l.updatedAt",
 		])
 		.select((eb) => [
-			jsonObjectFrom(
-				withLocationSelect({
-					database,
-					sort: undefined,
-				})
-					.whereRef("loc.id", "=", eb.ref("l.locationId"))
-					.limit(1),
-			)
-				.$notNull()
-				.as("location"),
+			sql`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 
-			jsonObjectFrom(
-				withCategorySelect({
-					database,
-					sort: undefined,
-				})
-					.whereRef("cat.id", "=", eb.ref("l.categoryId"))
-					.limit(1),
-			)
-				.$notNull()
-				.as("category"),
+			sql`to_jsonb(${eb.table("cat")}.*)`.as("category"),
 
 			jsonObjectFrom(
 				withGallerySelect({
