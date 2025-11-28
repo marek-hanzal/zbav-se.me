@@ -29,6 +29,14 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ userHono }) => {
 				201: {
 					description: "The listing transaction was created",
 				},
+				403: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Access denied",
+				},
 				404: {
 					content: {
 						"application/json": {
@@ -64,6 +72,20 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ userHono }) => {
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "AccessDeniedError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 403>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										403,
+									);
+								},
+							),
 							Match.when(
 								{
 									_tag: "NotFoundError",

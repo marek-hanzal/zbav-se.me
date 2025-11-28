@@ -22,18 +22,6 @@ export namespace withListingSelect {
 export const withListingSelect = ({ database, userId, sort, meta }: withListingSelect.Props) => {
 	let query = database
 		.selectFrom("listing as l")
-		.leftJoin(
-			(eb) =>
-				eb
-					.selectFrom("listing_transaction as lt")
-					.select((eb) => [
-						"lt.listingId",
-						eb.fn.max("lt.updatedAt").as("transactionUpdatedAt"),
-					])
-					.groupBy("lt.listingId")
-					.as("ltx"),
-			(join) => join.onRef("ltx.listingId", "=", "l.id"),
-		)
 		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
 		.select([
@@ -181,7 +169,6 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 					item.direction,
 				);
 			})
-			.with("transaction", () => query.orderBy("ltx.transactionUpdatedAt", item.direction))
 			.exhaustive();
 	}
 

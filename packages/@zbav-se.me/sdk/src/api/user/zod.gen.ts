@@ -1956,8 +1956,7 @@ export const zListingSortField = z.enum([
     'createdAt',
     'updatedAt',
     'expiresAt',
-    'geo',
-    'transaction'
+    'geo'
 ]).register(z.globalRegistry, {
     description: 'Field of the listing sort'
 });

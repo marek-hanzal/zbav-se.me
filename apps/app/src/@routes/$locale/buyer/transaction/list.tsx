@@ -1,32 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { TransactionList } from "@zbav-se.me/buyer/listing-transaction";
+import { Status } from "@use-pico/client/ui/status";
+import { TransactionList } from "@zbav-se.me/common/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/list")({
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<TitleContainer
-				textTitle={"Transactions (title)"}
-				left={
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to={"/$locale/buyer"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
-				<SpinnerContainer />
-			</TitleContainer>
-		);
-	},
 	component() {
 		const { locale } = Route.useParams();
 
@@ -44,8 +24,8 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 				}
 			>
 				<TransactionList
-					_suspense={"I know"}
 					locale={locale}
+					side="buyer"
 					renderItemFn={({ listingTransaction, children }) => {
 						return (
 							<LinkTo
@@ -62,23 +42,32 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 							</LinkTo>
 						);
 					}}
-					emptyAction={
-						<LinkTo
-							to={"/$locale/buyer/feed/select"}
-							params={{
-								locale,
-							}}
-						>
-							<Button
-								iconEnabled={ArrowRightIcon}
-								iconPosition={"right"}
-								label={"Feed selection (button)"}
-								size={"xl"}
-								tone={"primary"}
-								theme={"dark"}
+					renderEmptyFn={(props) => {
+						return (
+							<Status
+								textTitle={"No transactions found - buyer (title)"}
+								textMessage={"No transactions found - buyer (message)"}
+								action={
+									<LinkTo
+										to={"/$locale/buyer/feed/select"}
+										params={{
+											locale,
+										}}
+									>
+										<Button
+											iconEnabled={ArrowRightIcon}
+											iconPosition={"right"}
+											label={"Feed selection (button)"}
+											size={"xl"}
+											tone={"primary"}
+											theme={"dark"}
+										/>
+									</LinkTo>
+								}
+								{...props}
 							/>
-						</LinkTo>
-					}
+						);
+					}}
 				/>
 			</TitleContainer>
 		);

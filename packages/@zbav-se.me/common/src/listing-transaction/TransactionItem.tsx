@@ -1,9 +1,7 @@
 import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
-import { TransactionStatusIcon } from "@zbav-se.me/common/listing-transaction";
 import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import type { FC, PropsWithChildren, ReactNode } from "react";
-import { TransactionStatusInline } from "./TransactionStatusInline";
 
 export namespace TransactionItem {
 	export namespace Item {
@@ -64,7 +62,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			})}
 
 			<div className={"flex flex-row gap-2 items-center justify-between w-full"}>
-				<TransactionStatusIcon
+				{/* <TransactionStatusIcon
 					transactionStatus={listingTransaction.status}
 					size={"sm"}
 				/>
@@ -72,7 +70,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				<TransactionStatusInline
 					size={"md"}
 					transactionStatus={listingTransaction.status}
-				/>
+				/> */}
 			</div>
 		</Badge>
 	);

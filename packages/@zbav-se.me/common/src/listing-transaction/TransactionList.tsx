@@ -1,23 +1,25 @@
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import type { Status } from "@use-pico/client/ui/status";
+import type { tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { Fade } from "@zbav-se.me/ui/fade";
+import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, type ReactNode, useRef } from "react";
-import { EmptyList } from "./EmptyList";
 import { TransactionItem } from "./TransactionItem";
 
 export namespace TransactionList {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends Container.Props {
 		locale: string;
-		emptyAction: ReactNode;
+		side: tUserSideEnum;
+		renderEmptyFn(props: Status.Props): ReactNode;
 		renderItemFn: TransactionItem.Item.RenderFn;
 	}
 }
 
 export const TransactionList: FC<TransactionList.Props> = ({
-	_suspense,
 	locale,
-	emptyAction,
+	side,
+	renderEmptyFn,
 	renderItemFn,
 	...props
 }) => {
@@ -49,7 +51,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 							},
 						],
 						meta: {
-							side: "buyer",
+							side,
 						},
 					}}
 					options={{
@@ -58,28 +60,26 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					fallback={<SpinnerContainer />}
 				>
 					{({ data }) => {
-						return (
-							<>
-								{data.data.length > 0
-									? data.data.map((item) => (
-											<TransactionItem
-												key={item.id}
-												listingTransaction={item}
-												locale={locale}
-												item={renderItemFn}
-											/>
-										))
-									: null}
+						if (data.data.length > 0) {
+							return data.data.map((item) => (
+								<TransactionItem
+									key={item.id}
+									listingTransaction={item}
+									locale={locale}
+									item={renderItemFn}
+								/>
+							));
+						}
 
-								{data.data.length > 0 ? null : (
-									<Container
-										layout={"vertical-centered"}
-										items={"center"}
-									>
-										<EmptyList action={emptyAction} />
-									</Container>
-								)}
-							</>
+						return (
+							<Container
+								layout={"vertical-centered"}
+								items={"center"}
+							>
+								{renderEmptyFn({
+									icon: TransactionIcon,
+								})}
+							</Container>
 						);
 					}}
 				</withListingTransactionCollectionQuery.Suspense>

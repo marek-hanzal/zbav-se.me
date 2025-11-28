@@ -2288,8 +2288,7 @@ export const sListingSortField = {
         'createdAt',
         'updatedAt',
         'expiresAt',
-        'geo',
-        'transaction'
+        'geo'
     ]
 } as const;
 

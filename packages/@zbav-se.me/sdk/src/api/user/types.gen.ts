@@ -1847,8 +1847,7 @@ export const tListingSortField = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt',
-    geo: 'geo',
-    transaction: 'transaction'
+    geo: 'geo'
 } as const;
 
 /**

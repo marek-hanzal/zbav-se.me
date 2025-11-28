@@ -50,15 +50,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	components,
 	...props
 }) => {
-	const isClosed = (
-		[
-			"closed",
-			"expired",
-			"closed",
-			"rejected",
-		] satisfies tListingTransactionStatusEnum[] as tListingTransactionStatusEnum[]
-	).includes(listingTransaction.status);
-
 	return (
 		<Container
 			ui={"TransactionLogList-root"}
@@ -75,10 +66,23 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			>
 				{({ data }) => {
 					const currentLog = data.data[data.data.length - 1];
+					const lastStatusLog = data.data.findLast((item) => item.event === "status");
 
-					if (!currentLog) {
+					/**
+					 * If there is no last status, it's a logical bug, so we just won't render.
+					 */
+					if (!currentLog || !lastStatusLog) {
 						return null;
 					}
+
+					const isClosed = (
+						[
+							"closed",
+							"expired",
+							"closed",
+							"rejected",
+						] satisfies tListingTransactionStatusEnum[] as tListingTransactionStatusEnum[]
+					).includes(lastStatusLog.status);
 
 					return (
 						<>
