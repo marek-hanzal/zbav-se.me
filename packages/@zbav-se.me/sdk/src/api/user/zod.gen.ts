@@ -251,6 +251,22 @@ export const zListingTransactionStatusAccept = z.object({
 export type zListingTransactionStatusAccept = z.infer<typeof zListingTransactionStatusAccept>;
 
 /**
+ * Request to create a listing transaction message
+ */
+export const zListingTransactionMessageCreate = z.object({
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to add a message to'
+    }),
+    message: z.string().register(z.globalRegistry, {
+        description: 'The message content'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a listing transaction message'
+});
+
+export type zListingTransactionMessageCreate = z.infer<typeof zListingTransactionMessageCreate>;
+
+/**
  * Field of the listing transaction log sort
  */
 export const zListingTransactionLogSortField = z.enum(['createdAt']).register(z.globalRegistry, {
@@ -2834,6 +2850,21 @@ export type zapiListingTransactionLogCollectionRequest = z.infer<typeof zApiList
 export const zApiListingTransactionLogCollectionResponse = zListingTransactionLogCollection;
 
 export type zapiListingTransactionLogCollectionResponse = z.infer<typeof zApiListingTransactionLogCollectionResponse>;
+
+export const zApiListingTransactionMessageCreateData = z.object({
+    body: z.optional(zListingTransactionMessageCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingTransactionMessageCreateRequest = z.infer<typeof zApiListingTransactionMessageCreateData>;
+
+/**
+ * Message created
+ */
+export const zApiListingTransactionMessageCreateResponse = zListingTransactionMessage;
+
+export type zapiListingTransactionMessageCreateResponse = z.infer<typeof zApiListingTransactionMessageCreateResponse>;
 
 export const zApiListingTransactionStatusAcceptData = z.object({
     body: z.optional(zListingTransactionStatusAccept),

@@ -269,6 +269,22 @@ export const sListingTransactionStatusAccept = {
     ]
 } as const;
 
+export const sListingTransactionMessageCreate = {
+    type: 'object',
+    properties: {
+        listingTransactionId: {
+            type: 'string'
+        },
+        message: {
+            type: 'string'
+        }
+    },
+    required: [
+        'listingTransactionId',
+        'message'
+    ]
+} as const;
+
 export const sListingTransactionLogQuery = {
     type: 'object',
     properties: {

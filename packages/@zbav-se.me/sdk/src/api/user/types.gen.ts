@@ -219,6 +219,20 @@ export type tListingTransactionStatusAccept = {
 };
 
 /**
+ * Request to create a listing transaction message
+ */
+export type tListingTransactionMessageCreate = {
+    /**
+     * The ID of the listing transaction to add a message to
+     */
+    listingTransactionId: string;
+    /**
+     * The message content
+     */
+    message: string;
+};
+
+/**
  * Query object for listing transaction log collection
  */
 export type tListingTransactionLogQuery = {
@@ -3139,6 +3153,42 @@ export type tApiListingTransactionLogCollectionResponse = {
 };
 
 export type apiListingTransactionLogCollectionResponse = tApiListingTransactionLogCollectionResponse[keyof tApiListingTransactionLogCollectionResponse];
+
+export type tApiListingTransactionMessageCreateRequest = {
+    /**
+     * Query object for listing transaction message creation
+     */
+    body?: tListingTransactionMessageCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-transaction/message/create';
+};
+
+export type apiListingTransactionMessageCreateErrors = {
+    /**
+     * Access denied
+     */
+    403: tMessage;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionMessageCreateError = apiListingTransactionMessageCreateErrors[keyof apiListingTransactionMessageCreateErrors];
+
+export type tApiListingTransactionMessageCreateResponse = {
+    /**
+     * Message created
+     */
+    200: tListingTransactionMessage;
+};
+
+export type apiListingTransactionMessageCreateResponse = tApiListingTransactionMessageCreateResponse[keyof tApiListingTransactionMessageCreateResponse];
 
 export type tApiListingTransactionStatusAcceptRequest = {
     /**
