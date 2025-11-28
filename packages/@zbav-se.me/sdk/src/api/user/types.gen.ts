@@ -3176,6 +3176,10 @@ export type tApiListingTransactionMessageCreateRequest = {
 
 export type apiListingTransactionMessageCreateErrors = {
     /**
+     * Invalid request
+     */
+    400: tMessage;
+    /**
      * Access denied
      */
     403: tMessage;

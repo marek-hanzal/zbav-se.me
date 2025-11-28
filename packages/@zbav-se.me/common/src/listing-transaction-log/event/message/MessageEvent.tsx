@@ -1,7 +1,7 @@
 import { Markdown } from "@use-pico/client/ui/markdown";
 import type { tListingTransactionMessage } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
-import { EventBadge } from "../EventBadge";
+import { EventBadge } from "../../EventBadge";
 
 export namespace MessageEvent {
 	export interface Props extends Omit<EventBadge.Props, "actor" | "timestamp" | "action"> {

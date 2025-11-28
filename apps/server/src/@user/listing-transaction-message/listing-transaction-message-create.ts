@@ -36,6 +36,14 @@ export const withListingTransactionMessageCreateApi: Routes.Fn = ({ userHono }) 
 					},
 					description: "Message created",
 				},
+				400: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Invalid request",
+				},
 				403: {
 					content: {
 						"application/json": {
@@ -80,6 +88,20 @@ export const withListingTransactionMessageCreateApi: Routes.Fn = ({ userHono }) 
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
 							Match.when(
 								{
 									_tag: "NotFoundError",

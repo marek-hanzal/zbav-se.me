@@ -7,8 +7,8 @@ import {
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
-import { MessageEvent } from "./event/MessageEvent";
-import { StatusSwitchEvent } from "./event/StatusSwitchEvent";
+import { MessageEvent } from "./event/message/MessageEvent";
+import { StatusSwitchEvent } from "./event/status/StatusSwitchEvent";
 import type { TransactionLogList } from "./TransactionLogList";
 
 export namespace TransactionLogItem {
