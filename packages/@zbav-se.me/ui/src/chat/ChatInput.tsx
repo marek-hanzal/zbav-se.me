@@ -46,10 +46,18 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	]);
 
 	const handleKeyDown: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
-		if (e.key === "Enter" && !e.shiftKey) {
+		if (e.key === "Enter" && !e.ctrlKey && !e.metaKey) {
+			return;
+		}
+
+		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
-			if (!props.disabled && value.trim().length > 0) {
-				onSubmit(value.trim());
+
+			if (!props.disabled) {
+				const trimmed = value.trim();
+				if (trimmed.length > 0) {
+					onSubmit(trimmed);
+				}
 			}
 		}
 	};
@@ -65,6 +73,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					slot: {
 						default: {
 							class: [
+								"flex",
+								"flex-col",
+								"items-center",
+								"justify-center",
 								"border-2",
 								"border-slate-200",
 								"bg-slate-100",
