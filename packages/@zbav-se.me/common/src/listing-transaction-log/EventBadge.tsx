@@ -3,15 +3,16 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
-import type { FC } from "react";
+import type { FC, ReactNode } from "react";
 import type { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
 export namespace EventBadge {
 	export interface Props extends Badge.Props {
+		locale: string;
 		side: tUserSideEnum;
 		actor: tListingTransactionSideEnum;
 		type: useSideSwitch.Type;
-		locale: string;
+		action: ReactNode;
 		timestamp: string;
 		isCurrent: boolean;
 		isClosed: boolean;
@@ -28,13 +29,15 @@ export namespace EventBadge {
  */
 export const EventBadge: FC<EventBadge.Props> = ({
 	locale,
-	timestamp,
-	type,
-	isCurrent,
-	isClosed,
 	side,
 	actor,
+	type,
+	action,
+	timestamp,
+	isCurrent,
+	isClosed,
 	tweak,
+	onClick,
 	children,
 	...props
 }) => {
@@ -50,7 +53,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
-								"items-end",
 								"ml-auto",
 							],
 				},
@@ -77,7 +79,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
-								"items-end",
 								"ml-auto",
 							],
 				},
@@ -118,8 +119,9 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				class: [
 					"h-fit",
 					"flex",
-					"flex-col",
-					"items-start",
+					"flex-row",
+					"items-center",
+					"justify-between",
 					"gap-1",
 					"px-2",
 					"py-1",
@@ -159,17 +161,22 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				badgeTweak,
 				typeTweaks[type],
 			]}
+			onClick={isClosed || !isCurrent ? undefined : onClick}
 		>
-			<Typo
-				label={toTimeDiff({
-					locale,
-					time: timestamp,
-				})}
-				font={"normal"}
-				size={"sm"}
-			/>
+			<div className="flex flex-col justify-end gap-1">
+				<Typo
+					label={toTimeDiff({
+						locale,
+						time: timestamp,
+					})}
+					font={"normal"}
+					size={"sm"}
+				/>
 
-			{children}
+				{children}
+			</div>
+
+			{isClosed || !isCurrent ? null : action}
 		</Badge>
 	);
 };
