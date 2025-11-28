@@ -71,11 +71,12 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 				{tools.includes("transaction") && listing.hasTransaction ? null : (
 					<ListingTransactionCreateButton
 						listing={listing}
-						onPostMutation={() => {
+						onPostMutation={async (transaction) => {
 							return navigate({
-								to: "/$locale/buyer/transaction/list",
+								to: "/$locale/buyer/transaction/$id/log",
 								params: {
 									locale,
+									id: transaction.id,
 								},
 							});
 						}}

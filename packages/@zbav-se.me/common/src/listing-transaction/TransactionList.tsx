@@ -55,7 +55,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						},
 					}}
 					options={{
-						refetchInterval: 10_000,
+						refetchInterval: 5_000,
 					}}
 					fallback={<SpinnerContainer />}
 				>

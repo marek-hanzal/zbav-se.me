@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { ListingTransactionSchema } from "~/@user/listing-transaction/schema/ListingTransactionSchema";
 import { UserContextProvider } from "../../auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
@@ -27,6 +28,11 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ userHono }) => {
 			},
 			responses: {
 				201: {
+					content: {
+						"application/json": {
+							schema: ListingTransactionSchema,
+						},
+					},
 					description: "The listing transaction was created",
 				},
 				403: {
@@ -61,9 +67,10 @@ export const withListingTransactionCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingTransactionCreateFx(c.req.valid("json"));
-
-				return c.body(null, 201);
+				return c.json<ListingTransactionSchema.Type, 201>(
+					yield* listingTransactionCreateFx(c.req.valid("json")),
+					201,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				ListingTransactionContextProvider(),

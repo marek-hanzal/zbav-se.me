@@ -3014,8 +3014,10 @@ export type tApiListingTransactionCreateResponse = {
     /**
      * The listing transaction was created
      */
-    201: unknown;
+    201: tListingTransaction;
 };
+
+export type apiListingTransactionCreateResponse = tApiListingTransactionCreateResponse[keyof tApiListingTransactionCreateResponse];
 
 export type tApiListingTransactionFetchRequest = {
     /**

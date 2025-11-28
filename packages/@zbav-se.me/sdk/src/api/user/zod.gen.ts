@@ -2768,6 +2768,13 @@ export const zApiListingTransactionCreateData = z.object({
 
 export type zapiListingTransactionCreateRequest = z.infer<typeof zApiListingTransactionCreateData>;
 
+/**
+ * The listing transaction was created
+ */
+export const zApiListingTransactionCreateResponse = zListingTransaction;
+
+export type zapiListingTransactionCreateResponse = z.infer<typeof zApiListingTransactionCreateResponse>;
+
 export const zApiListingTransactionFetchData = z.object({
     body: z.optional(zListingTransactionQuery),
     path: z.optional(z.never()),

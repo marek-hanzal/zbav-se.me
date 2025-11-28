@@ -1,5 +1,5 @@
 import { Button } from "@use-pico/client/ui/button";
-import type { tListing } from "@zbav-se.me/sdk/api/user";
+import type { tListing, tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
@@ -7,7 +7,7 @@ import type { FC } from "react";
 export namespace ListingTransactionCreateButton {
 	export interface Props extends Button.Props {
 		listing: tListing;
-		onPostMutation?(): Promise<void>;
+		onPostMutation?(transaction: tListingTransaction): Promise<void>;
 	}
 }
 
@@ -17,7 +17,9 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 	...props
 }) => {
 	const listingTransactionCreate = withListingTransactionCreateMutation.useMutation({
-		onPostMutation,
+		async onPostMutation({ result }) {
+			return onPostMutation?.(result);
+		},
 	});
 
 	return (
