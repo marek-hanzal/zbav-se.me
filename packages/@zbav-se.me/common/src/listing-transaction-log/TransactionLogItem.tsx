@@ -59,9 +59,10 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 					locale={locale}
 					side={side}
 					type={type}
-					message={message}
+					listingTransactionMessage={message}
 					isCurrent={isCurrent}
 					isClosed={isClosed}
+					components={components}
 				/>
 			);
 		})

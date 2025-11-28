@@ -53,7 +53,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
-								"justify-end",
 								"flex-row-reverse",
 								"ml-auto",
 							],
@@ -81,7 +80,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
-								"justify-end",
 								"flex-row-reverse",
 								"ml-auto",
 							],
@@ -124,13 +122,13 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"h-fit",
 					"flex",
 					"flex-row",
-					"items-center",
+					"items-start",
 					"justify-between",
 					"gap-1",
 					"px-2",
 					"py-1",
-					"w-5/8",
-					"max-w-5/8",
+					"w-6/8",
+					"max-w-6/8",
 					"transition-all",
 					isCurrentClosed
 						? [
@@ -193,6 +191,8 @@ export const EventBadge: FC<EventBadge.Props> = ({
 						: contentClassName[type],
 				)}
 			>
+				{children}
+
 				<Typo
 					label={toTimeDiff({
 						locale,
@@ -201,8 +201,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					font={"normal"}
 					size={"sm"}
 				/>
-
-				{children}
 			</div>
 
 			{isClosed || !isCurrent ? null : action}

@@ -55,6 +55,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 		<Container
 			ui={"TransactionLogList-root"}
 			layout={"vertical-flex"}
+			scroll={"vertical"}
 			gap={"md"}
 			{...props}
 		>
