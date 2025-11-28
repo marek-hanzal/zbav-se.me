@@ -1,5 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { listingTransactionPatchFx } from "../../../@user/listing-transaction/fx/listingTransactionPatchFx";
 import type { ListingTransactionSideEnumSchema } from "../../../app/listing-transaction/schema/ListingTransactionSideEnumSchema";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { listingTransactionMessageFetchFx } from "./listingTransactionMessageFetchFx";
@@ -34,6 +35,10 @@ export const listingTransactionMessageCreateFx = ({
 				})
 				.returningAll()
 				.executeTakeFirstOrThrow();
+		});
+
+		yield* listingTransactionPatchFx({
+			listingTransactionId,
 		});
 
 		return yield* listingTransactionMessageFetchFx({
