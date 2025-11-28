@@ -116,7 +116,7 @@ export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
 				 */
 				isCurrent={isOpen}
 				onClick={() => {
-					if (isClosed) {
+					if (isClosed || !isCurrent) {
 						return;
 					}
 					setIsOpen((state) => !state);

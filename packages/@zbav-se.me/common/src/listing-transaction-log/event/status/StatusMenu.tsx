@@ -93,7 +93,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 		renderSellerToBuyerFn() {
 			return (
 				<>
-					<components.BuyerInfoButton
+					<components.SellerInfoButton
 						locale={locale}
 						log={listingTransactionLog}
 					/>

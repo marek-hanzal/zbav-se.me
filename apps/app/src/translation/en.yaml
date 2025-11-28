@@ -427,6 +427,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b3afa18e627bef1c5cf094e6cc102284785ae36805b5d3ed027606da:
   ref: Transaction rejected (label)
   value: Transaction rejected (label)
+b3d47cffad0cfc3c198765decdb015eeca5c63873e48dc05c111c8e2:
+  ref: Reject transaction (label)
+  value: Reject transaction (label)
 b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
   ref: success
   value: success
@@ -480,9 +483,6 @@ c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
-c8170546be46d340679de6c5c2d599e30b46eadf57b56bd2fcb63378:
-  ref: Listing Score - no value (label)
-  value: Listing Score - no value (label)
 cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
   ref: Error adding listing to cart (toast)
   value: Error adding listing to cart (toast)
