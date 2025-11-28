@@ -58,9 +58,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							query={query}
 						/>
 
-						{!isLimitReached && data.filter > 0 ? (
-							<FeedCreateButton disabled={isLimitReached} />
-						) : null}
+						{data.filter > 0 ? <FeedCreateButton disabled={isLimitReached} /> : null}
 					</Container>
 				);
 			}}
