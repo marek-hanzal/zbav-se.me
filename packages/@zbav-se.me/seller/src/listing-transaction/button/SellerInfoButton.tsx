@@ -25,10 +25,10 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({
 		<>
 			<Button
 				iconEnabled={SellerIcon}
-				iconPosition={"right"}
-				size={"xl"}
-				menu
-				label={"Seller info (label)"}
+				tone={"link"}
+				theme={"light"}
+				size={"lg"}
+				round={"full"}
 				onClick={() => setIsOpen(true)}
 				{...props}
 			/>
@@ -36,7 +36,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
-				detent={"default"}
+				detent={"content"}
 				modalEffectRootId={modalRootId}
 			>
 				<SellerInfoContainer

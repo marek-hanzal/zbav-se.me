@@ -60,7 +60,16 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			{...props}
 		>
 			<withListingTransactionLogCollectionQuery.Suspense
-				data={query}
+				data={{
+					...query,
+					cursor: {
+						page: 0,
+						/**
+						 * Maximum of 256 events should be enough
+						 */
+						size: 256,
+					},
+				}}
 				fallback={<SpinnerContainer />}
 				options={{
 					refetchInterval: 5_000,

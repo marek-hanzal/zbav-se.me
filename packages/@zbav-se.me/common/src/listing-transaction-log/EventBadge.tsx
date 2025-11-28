@@ -1,8 +1,10 @@
 import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
+import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
-import { type Cls, tvc } from "@use-pico/cls";
+import { type Cls, VariantProvider } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC, ReactNode } from "react";
 import type { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
@@ -12,7 +14,7 @@ export namespace EventBadge {
 		side: tUserSideEnum;
 		actor: tListingTransactionSideEnum;
 		type: useSideSwitch.Type;
-		action: ReactNode;
+		toolbar: ReactNode;
 		timestamp: string;
 		isCurrent: boolean;
 		isClosed: boolean;
@@ -32,7 +34,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	side,
 	actor,
 	type,
-	action,
+	toolbar,
 	timestamp,
 	isCurrent,
 	isClosed,
@@ -53,7 +55,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
-								"flex-row-reverse",
 								"ml-auto",
 							],
 				},
@@ -80,7 +81,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
-								"flex-row-reverse",
 								"ml-auto",
 							],
 				},
@@ -121,7 +121,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				class: [
 					"h-fit",
 					"flex",
-					"flex-row",
+					"flex-col",
 					"items-start",
 					"justify-between",
 					"gap-1",
@@ -148,15 +148,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		},
 	};
 
-	const contentClassName: Partial<Record<useSideSwitch.Type, string[]>> = {
-		buyer: [
-			// "items-end",
-		],
-		seller: [
-			// "items-end",
-		],
-	};
-
 	const defaultProps: Badge.Props = {
 		round: "default",
 		...props,
@@ -174,36 +165,33 @@ export const EventBadge: FC<EventBadge.Props> = ({
 			]}
 			onClick={isClosed || !isCurrent ? undefined : onClick}
 		>
-			<div
-				className={tvc(
-					[
-						"flex",
-						"flex-col",
-						"justify-start",
-						"gap-1",
-						"w-full",
-					],
-					isClosed
-						? [
-								"justify-center",
-								"items-center",
-							]
-						: contentClassName[type],
-				)}
-			>
-				{children}
+			{children}
 
-				<Typo
-					label={toTimeDiff({
-						locale,
-						time: timestamp,
-					})}
-					font={"normal"}
-					size={"sm"}
-				/>
-			</div>
+			<Typo
+				label={toTimeDiff({
+					locale,
+					time: timestamp,
+				})}
+				font={"normal"}
+				size={"sm"}
+			/>
 
-			{isClosed || !isCurrent ? null : action}
+			{isCurrent && !isClosed ? (
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "unset",
+						theme: "unset",
+					}}
+				>
+					<Container
+						layout={"horizontal-flex"}
+						gap={"sm"}
+					>
+						{toolbar}
+					</Container>
+				</VariantProvider>
+			) : null}
 		</Badge>
 	);
 };

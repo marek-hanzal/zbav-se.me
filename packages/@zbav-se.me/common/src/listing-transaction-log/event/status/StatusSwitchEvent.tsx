@@ -1,4 +1,3 @@
-import { HideIcon, Icon, ShowIcon } from "@use-pico/client/icon";
 import type { tListingTransactionStatus, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { type FC, useEffect, useState } from "react";
 import { match } from "ts-pattern";
@@ -59,12 +58,6 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 					onClick={() => {
 						setIsMenuOpen((prev) => !prev);
 					}}
-					action={
-						<Icon
-							icon={isMenuOpen ? HideIcon : ShowIcon}
-							size={"sm"}
-						/>
-					}
 				/>
 			);
 		})
@@ -81,12 +74,6 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 					onClick={() => {
 						setIsMenuOpen((prev) => !prev);
 					}}
-					action={
-						<Icon
-							icon={isMenuOpen ? HideIcon : ShowIcon}
-							size={"sm"}
-						/>
-					}
 				/>
 			);
 		})
@@ -103,12 +90,6 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 					onClick={() => {
 						setIsMenuOpen((prev) => !prev);
 					}}
-					action={
-						<Icon
-							icon={isMenuOpen ? HideIcon : ShowIcon}
-							size={"sm"}
-						/>
-					}
 				/>
 			);
 		})

@@ -25,10 +25,10 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 		<>
 			<Button
 				iconEnabled={BuyerIcon}
-				iconPosition={"right"}
-				size={"xl"}
-				menu
-				label={"Buyer info (label)"}
+				tone={"link"}
+				theme={"light"}
+				size={"lg"}
+				round={"full"}
 				onClick={() => setIsOpen(true)}
 				{...props}
 			/>

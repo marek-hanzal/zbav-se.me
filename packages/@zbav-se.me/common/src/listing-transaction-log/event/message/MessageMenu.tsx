@@ -1,13 +1,12 @@
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Container } from "@use-pico/client/ui/container";
 import type { tListingTransactionMessage, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
+import { match } from "ts-pattern";
 import { MessageButton } from "../../../listing-transaction/button/MessageButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 import type { TransactionLogList } from "../../TransactionLogList";
 
 export namespace MessageMenu {
-	export interface Props extends BottomSheet.Props {
+	export interface Props {
 		locale: string;
 		side: tUserSideEnum;
 		type: useSideSwitch.Type;
@@ -22,22 +21,66 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 	type,
 	listingTransactionMessage,
 	components,
-	...props
 }) => {
-	return (
-		<BottomSheet
-			detent={"content"}
-			{...props}
-		>
-			<Container
-				layout={"vertical-flex"}
-				gap={"md"}
-				square={"md"}
-			>
-				<MessageButton
-					listingTransactionId={listingTransactionMessage.listingTransactionId}
-				/>
-			</Container>
-		</BottomSheet>
-	);
+	return match(type)
+		.with("buyer", () => {
+			return (
+				<>
+					<MessageButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
+
+					<components.SellerInfoButton
+						locale={locale}
+						log={listingTransactionMessage}
+					/>
+				</>
+			);
+		})
+		.with("buyer-to-seller", () => {
+			return (
+				<>
+					<MessageButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
+
+					<components.BuyerInfoButton
+						locale={locale}
+						log={listingTransactionMessage}
+					/>
+				</>
+			);
+		})
+		.with("seller", () => {
+			return (
+				<>
+					<MessageButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
+
+					<components.BuyerInfoButton
+						locale={locale}
+						log={listingTransactionMessage}
+					/>
+				</>
+			);
+		})
+		.with("seller-to-buyer", () => {
+			return (
+				<>
+					<MessageButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
+
+					<components.SellerInfoButton
+						locale={locale}
+						log={listingTransactionMessage}
+					/>
+				</>
+			);
+		})
+		.with("unknown", () => {
+			return "unknown";
+		})
+		.exhaustive();
 };

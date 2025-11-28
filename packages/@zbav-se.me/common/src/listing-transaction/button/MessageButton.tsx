@@ -23,40 +23,55 @@ export const MessageButton: FC<MessageButton.Props> = ({ listingTransactionId, .
 		<>
 			<Button
 				iconEnabled={MessageIcon}
-				iconPosition={"right"}
-				menu
-				label={"New message (label)"}
-				size={"xl"}
-				onClick={() => setIsOpen(true)}
+				tone={"link"}
+				theme={"light"}
+				size={"lg"}
+				round={"full"}
+				onClick={() => setIsOpen((prev) => !prev)}
+				disabled={mutation.isPending}
+				loading={mutation.isPending}
 				{...props}
 			/>
 
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
-				detent={"full"}
+				detent={"content"}
 			>
 				<Container
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					square={"md"}
 				>
-					<textarea
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
-						placeholder={translator.text("Enter your message (placeholder)")}
-						className={tvc([
-							"bg-slate-100",
-							"rounded-md",
-							"p-2",
-						])}
-					/>
+					<div className="min-h-0">
+						<textarea
+							value={message}
+							onChange={(e) => setMessage(e.target.value)}
+							placeholder={translator.text("Enter your message (placeholder)")}
+							className={tvc([
+								"bg-slate-100",
+								"rounded-md",
+								"p-2",
+								"focus:outline-rose-100",
+								"w-full",
+								"min-h-0",
+								"max-h-32",
+								"shrink",
+								"resize-none",
+							])}
+							rows={4}
+						/>
+					</div>
 
 					<Button
 						iconEnabled={MessageIcon}
+						tone={"primary"}
+						theme={"light"}
 						label={"Send message (label)"}
 						full
 						size={"xl"}
+						disabled={mutation.isPending}
+						loading={mutation.isPending}
 						onClick={() =>
 							mutation.mutate({
 								listingTransactionId,
