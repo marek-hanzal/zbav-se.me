@@ -1,21 +1,15 @@
 import type { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import {
-	type tListingTransaction,
-	type tListingTransactionLog,
-	type tListingTransactionLogQuery,
-	type tListingTransactionStatusEnum,
-	type tUserSideEnum,
-	zListingTransactionMessage,
-	zListingTransactionStatus,
+import type {
+	tListingTransaction,
+	tListingTransactionLog,
+	tListingTransactionLogQuery,
+	tListingTransactionStatusEnum,
+	tUserSideEnum,
 } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
-import { match } from "ts-pattern";
-import { MessageEvent } from "./event/MessageEvent";
-import { AcceptedEvent } from "./event/status/AcceptedEvent";
-import { RejectedEvent } from "./event/status/RejectedEvent";
-import { RequestEvent } from "./event/status/RequestEvent";
+import { TransactionLogItem } from "./TransactionLogItem";
 
 export namespace TransactionLogList {
 	export namespace Components {
@@ -29,8 +23,6 @@ export namespace TransactionLogList {
 
 		export type ListingDetailButton = FC<
 			{
-				locale: string;
-				listingTransaction: tListingTransaction;
 				modalRootId: string;
 			} & Button.Props
 		>;
@@ -93,82 +85,21 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						] satisfies tListingTransactionStatusEnum[] as tListingTransactionStatusEnum[]
 					).includes(lastStatusLog.status);
 
-					return (
-						<>
-							{data.data.map((log) => {
-								const isCurrent = currentLog.id === log.id;
+					return data.data.map((log) => {
+						const isCurrent = currentLog.id === log.id;
 
-								return match(log.event)
-									.with("status", () => {
-										const status = zListingTransactionStatus.parse(log);
-
-										return match(status.status)
-											.with("request", () => {
-												return (
-													<RequestEvent
-														key={log.id}
-														locale={locale}
-														side={side}
-														listingTransaction={listingTransaction}
-														listingTransactionStatus={status}
-														components={components}
-														isCurrent={isCurrent}
-														isClosed={isClosed}
-													/>
-												);
-											})
-											.with("accepted", () => {
-												return (
-													<AcceptedEvent
-														key={log.id}
-														locale={locale}
-														side={side}
-														components={components}
-														listingTransaction={listingTransaction}
-														listingTransactionStatus={status}
-														isCurrent={isCurrent}
-														isClosed={isClosed}
-													/>
-												);
-											})
-											.with("rejected", () => {
-												return (
-													<RejectedEvent
-														key={log.id}
-														locale={locale}
-														side={side}
-														listingTransactionStatus={status}
-														isCurrent={isCurrent}
-														isClosed={isClosed}
-													/>
-												);
-											})
-											.with("closed", "expired", "success", () => {
-												return "not-yet";
-											})
-											.exhaustive();
-									})
-									.with("message", () => {
-										const message = zListingTransactionMessage.parse(log);
-
-										return (
-											<MessageEvent
-												key={log.id}
-												locale={locale}
-												side={side}
-												message={message}
-												isCurrent={isCurrent}
-												isClosed={isClosed}
-											/>
-										);
-									})
-									.with("gallery", "location", () => {
-										return null;
-									})
-									.exhaustive();
-							})}
-						</>
-					);
+						return (
+							<TransactionLogItem
+								key={log.id}
+								locale={locale}
+								side={side}
+								listingTransactionLog={log}
+								isCurrent={isCurrent}
+								isClosed={isClosed}
+								components={components}
+							/>
+						);
+					});
 				}}
 			</withListingTransactionLogCollectionQuery.Suspense>
 		</Container>

@@ -1,18 +1,16 @@
-import type { Badge, BadgeCls } from "@use-pico/client/ui/badge";
+import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
-import type { FC, ReactNode } from "react";
-import { useSideSwitch } from "../listing-transaction/useSideSwitch";
+import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import type { FC } from "react";
+import type { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
 export namespace EventBadge {
-	export interface Props
-		extends Badge.Props,
-			useSideSwitch.Props<
-				Badge.Props & {
-					timestamp: ReactNode;
-				}
-			> {
+	export interface Props extends Badge.Props {
+		side: tUserSideEnum;
+		actor: tListingTransactionSideEnum;
+		type: useSideSwitch.Type;
 		locale: string;
 		timestamp: string;
 		isCurrent: boolean;
@@ -31,15 +29,13 @@ export namespace EventBadge {
 export const EventBadge: FC<EventBadge.Props> = ({
 	locale,
 	timestamp,
+	type,
 	isCurrent,
 	isClosed,
 	side,
 	actor,
-	renderSellerFn,
-	renderBuyerFn,
-	renderBuyerToSellerFn,
-	renderSellerToBuyerFn,
 	tweak,
+	children,
 	...props
 }) => {
 	const isCurrentClosed = isClosed && isCurrent;
@@ -153,24 +149,17 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		...props,
 	};
 
-	const { type, render } = useSideSwitch({
-		side,
-		actor,
-		renderSellerFn,
-		renderBuyerFn,
-		renderBuyerToSellerFn,
-		renderSellerToBuyerFn,
-	});
-
-	return render?.({
-		...defaultProps,
-		...typeProps[type],
-		tweak: [
-			tweak,
-			badgeTweak,
-			typeTweaks[type],
-		],
-		timestamp: (
+	return (
+		<Badge
+			ui={`EventBadge-${type}`}
+			{...defaultProps}
+			{...typeProps[type]}
+			tweak={[
+				tweak,
+				badgeTweak,
+				typeTweaks[type],
+			]}
+		>
 			<Typo
 				label={toTimeDiff({
 					locale,
@@ -179,6 +168,8 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				font={"normal"}
 				size={"sm"}
 			/>
-		),
-	});
+
+			{children}
+		</Badge>
+	);
 };

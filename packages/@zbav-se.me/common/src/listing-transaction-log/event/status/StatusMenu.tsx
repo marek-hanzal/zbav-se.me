@@ -1,10 +1,6 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
-import type {
-	tListingTransaction,
-	tListingTransactionLog,
-	tUserSideEnum,
-} from "@zbav-se.me/sdk/api/user";
+import type { tListingTransactionLog, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { type FC, useId } from "react";
 import { AcceptButton } from "../../../listing-transaction/button/AcceptButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
@@ -15,7 +11,6 @@ export namespace StatusMenu {
 	export interface Props extends BottomSheet.Props {
 		locale: string;
 		side: tUserSideEnum;
-		listingTransaction: tListingTransaction;
 		listingTransactionLog: tListingTransactionLog;
 		components: TransactionLogList.Components;
 	}
@@ -24,7 +19,6 @@ export namespace StatusMenu {
 export const StatusMenu: FC<StatusMenu.Props> = ({
 	locale,
 	side,
-	listingTransaction,
 	listingTransactionLog,
 	components,
 	...props
@@ -44,11 +38,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 
 					<RejectButton log={listingTransactionLog} />
 
-					<components.ListingDetailButton
-						locale={locale}
-						listingTransaction={listingTransaction}
-						modalRootId={listingSheetId}
-					/>
+					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
 			);
 		},
@@ -64,11 +54,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 
 					<RejectButton log={listingTransactionLog} />
 
-					<components.ListingDetailButton
-						locale={locale}
-						listingTransaction={listingTransaction}
-						modalRootId={listingSheetId}
-					/>
+					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
 			);
 		},
@@ -82,11 +68,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 
 					<RejectButton log={listingTransactionLog} />
 
-					<components.ListingDetailButton
-						locale={locale}
-						listingTransaction={listingTransaction}
-						modalRootId={listingSheetId}
-					/>
+					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
 			);
 		},
@@ -100,11 +82,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 
 					<RejectButton log={listingTransactionLog} />
 
-					<components.ListingDetailButton
-						locale={locale}
-						listingTransaction={listingTransaction}
-						modalRootId={listingSheetId}
-					/>
+					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
 			);
 		},

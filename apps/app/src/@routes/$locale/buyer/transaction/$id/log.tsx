@@ -80,7 +80,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 						components={{
 							BuyerInfoButton,
 							SellerInfoButton,
-							ListingDetailButton({ locale, modalRootId, listingTransaction }) {
+							ListingDetailButton({ modalRootId }) {
 								return (
 									<ListingDetailButton
 										locale={locale}

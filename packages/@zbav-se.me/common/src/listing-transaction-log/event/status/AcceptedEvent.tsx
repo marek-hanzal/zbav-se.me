@@ -1,138 +1,31 @@
-import { HideIcon, Icon, ShowIcon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
-import { type FC, useEffect, useState } from "react";
-import { StatusEventBadge } from "../../StatusEventBadge";
-import type { TransactionLogList } from "../../TransactionLogList";
-import { StatusMenu } from "./StatusMenu";
+import type { FC } from "react";
+import { match } from "ts-pattern";
+import { EventBadge } from "../../EventBadge";
 
 export namespace AcceptedEvent {
-	export interface Props extends StatusEventBadge.Props {
-		listingTransaction: tListingTransaction;
-		components: TransactionLogList.Components;
+	export interface Props extends EventBadge.Props {
+		//
 	}
 }
 
-export const AcceptedEvent: FC<AcceptedEvent.Props> = ({
-	listingTransaction,
-	listingTransactionStatus,
-	components,
-	isCurrent,
-	isClosed,
-	...props
-}) => {
-	const [isOpen, setIsOpen] = useState(false);
-
-	/**
-	 * This trick enables sub-sheet to appear in the right order.
-	 */
-	useEffect(() => {
-		if (isClosed) {
-			return;
-		}
-
-		setTimeout(() => {
-			setIsOpen(isCurrent);
-		}, 150);
-	}, [
-		isClosed,
-		isCurrent,
-	]);
-
+export const AcceptedEvent: FC<AcceptedEvent.Props> = (props) => {
 	return (
-		<>
-			<StatusEventBadge
-				listingTransactionStatus={listingTransactionStatus}
-				isClosed={isClosed}
-				renderSellerFn={({ tweak, timestamp, ...props }) => (
-					<Badge
-						ui={"AcceptedEvent-Seller"}
-						tweak={[
-							tweak,
-							{
-								slot: {
-									root: {
-										class: [
-											"flex-row",
-											"items-center",
-										],
-									},
-								},
-							},
-						]}
-						{...props}
-					>
-						<div className="flex flex-col gap-1 w-full">
-							{timestamp}
-
-							<Tx label="Seller accepted transaction (seller)" />
-						</div>
-
-						{isClosed || !isCurrent ? null : (
-							<Icon
-								icon={isOpen ? HideIcon : ShowIcon}
-								size={"xs"}
-							/>
-						)}
-					</Badge>
-				)}
-				renderSellerToBuyerFn={({ tweak, timestamp, ...props }) => {
-					return (
-						<Badge
-							ui={"AcceptedEvent-SellerToBuyer"}
-							tweak={[
-								tweak,
-								{
-									slot: {
-										root: {
-											class: [
-												"flex-row",
-												"items-center",
-											],
-										},
-									},
-								},
-							]}
-							{...props}
-						>
-							<div className="flex flex-col gap-1 w-full">
-								{timestamp}
-
-								<Tx label="Seller accepted transaction (seller-to-buyer)" />
-							</div>
-
-							{isClosed || !isCurrent ? null : (
-								<Icon
-									icon={isOpen ? HideIcon : ShowIcon}
-									size={"xs"}
-								/>
-							)}
-						</Badge>
-					);
-				}}
-				/**
-				 * Controlled via "context menu"
-				 */
-				isCurrent={isOpen}
-				onClick={() => {
-					if (isClosed || !isCurrent) {
-						return;
-					}
-					setIsOpen((state) => !state);
-				}}
-				{...props}
-			/>
-
-			<StatusMenu
-				locale={props.locale}
-				side={props.side}
-				listingTransaction={listingTransaction}
-				listingTransactionLog={listingTransactionStatus}
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				components={components}
-			/>
-		</>
+		<EventBadge {...props}>
+			{match(props.type)
+				.with("seller-to-buyer", () => {
+					return <Tx label="Seller accepted transaction (seller-to-buyer)" />;
+				})
+				.with("seller", () => {
+					return <Tx label="Seller accepted transaction (seller)" />;
+				})
+				.with("buyer", "buyer-to-seller", "unknown", () => {
+					/**
+					 * Invalid state, render nothing
+					 */
+					return null;
+				})
+				.exhaustive()}
+		</EventBadge>
 	);
 };
