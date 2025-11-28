@@ -1,10 +1,8 @@
 import { Effect } from "effect";
 import { listingTransactionPatchFx } from "~/@user/listing-transaction/fx/listingTransactionPatchFx";
+import { listingTransactionResolveFx } from "~/@user/listing-transaction/fx/listingTransactionResolveFx";
 import { listingTransactionStatusCreateFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusCreateFx";
 import type { ListingTransactionStatusRejectSchema } from "~/@user/listing-transaction-status/schema/ListingTransactionStatusRejectSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { AccessDeniedError } from "~/error/AccessDeniedError";
 
 export namespace listingTransactionStatusRejectFx {
 	export type Props = ListingTransactionStatusRejectSchema.Type;
@@ -14,50 +12,19 @@ export const listingTransactionStatusRejectFx = ({
 	listingTransactionId,
 }: listingTransactionStatusRejectFx.Props) => {
 	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
-		const user = yield* UserContextFx;
-
-		const transaction = yield* Effect.tryPromise(async () => {
-			return (
-				database
-					.selectFrom("listing_transaction as lt")
-					.innerJoin("listing as l", "lt.listingId", "l.id")
-					.select([
-						"lt.id",
-						"l.userId as sellerId",
-						"lt.userId as buyerId",
-					])
-					/**
-					 * For which transaction we want to create status
-					 */
-					.where("lt.id", "=", listingTransactionId)
-					/**
-					 * We've to check if current user is on either side of the transaction
-					 */
-					.where((eb) => {
-						return eb.or([
-							eb("lt.userId", "=", user.id),
-							eb("l.userId", "=", user.id),
-						]);
-					})
-					.executeTakeFirst()
-			);
+		const transaction = yield* listingTransactionResolveFx({
+			listingTransactionId,
+			message: "You are not allowed to reject this listing transaction",
 		});
 
-		if (!transaction) {
-			return yield* new AccessDeniedError({
-				message: "You are not allowed to accept this listing transaction",
-			});
-		}
-
 		yield* listingTransactionPatchFx({
-			listingTransactionId: listingTransactionId,
+			listingTransactionId: transaction.listingTransactionId,
 		});
 
 		return yield* listingTransactionStatusCreateFx({
-			listingTransactionId,
+			listingTransactionId: transaction.listingTransactionId,
 			status: "rejected",
-			side: transaction.buyerId === user.id ? "buyer" : "seller",
+			side: transaction.side,
 		});
 	});
 };
