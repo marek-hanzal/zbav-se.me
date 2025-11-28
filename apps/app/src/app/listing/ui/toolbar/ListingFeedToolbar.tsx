@@ -42,6 +42,7 @@ export const ListingFeedToolbar: FC<ListingFeedToolbar.Props> = ({
 				listing={listing}
 				iconEnabled={ShowIcon}
 				round={"full"}
+				menu={false}
 			>
 				<ListingDetailMenu
 					locale={locale}

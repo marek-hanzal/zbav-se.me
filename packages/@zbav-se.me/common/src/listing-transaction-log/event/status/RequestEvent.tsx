@@ -1,6 +1,7 @@
 import { HideIcon, Icon, ShowIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import { type FC, useEffect, useState } from "react";
 import { StatusEventBadge } from "../../StatusEventBadge";
 import type { TransactionLogList } from "../../TransactionLogList";
@@ -8,11 +9,13 @@ import { StatusMenu } from "./StatusMenu";
 
 export namespace RequestEvent {
 	export interface Props extends StatusEventBadge.Props {
+		listingTransaction: tListingTransaction;
 		components: TransactionLogList.Components;
 	}
 }
 
 export const RequestEvent: FC<RequestEvent.Props> = ({
+	listingTransaction,
 	listingTransactionStatus,
 	components,
 	isCurrent,
@@ -25,10 +28,15 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 	 * This trick enables sub-sheet to appear in the right order.
 	 */
 	useEffect(() => {
+		if (isClosed) {
+			return;
+		}
+
 		setTimeout(() => {
 			setIsOpen(isCurrent);
 		}, 150);
 	}, [
+		isClosed,
 		isCurrent,
 	]);
 
@@ -117,7 +125,8 @@ export const RequestEvent: FC<RequestEvent.Props> = ({
 			<StatusMenu
 				locale={props.locale}
 				side={props.side}
-				log={listingTransactionStatus}
+				listingTransaction={listingTransaction}
+				listingTransactionLog={listingTransactionStatus}
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				components={components}

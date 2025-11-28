@@ -36,6 +36,7 @@ export const CartFeedToolbar: FC<CartFeedToolbar.Props> = ({
 				detailSheetId={detailSheetId}
 				listing={listing}
 				round={"full"}
+				menu={false}
 			>
 				<ListingDetailMenu
 					locale={locale}

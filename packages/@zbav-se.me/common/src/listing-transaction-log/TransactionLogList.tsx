@@ -26,11 +26,20 @@ export namespace TransactionLogList {
 				modalRootId?: string;
 			} & Button.Props
 		>;
+
+		export type ListingDetailButton = FC<
+			{
+				locale: string;
+				listingTransaction: tListingTransaction;
+				modalRootId: string;
+			} & Button.Props
+		>;
 	}
 
 	export interface Components {
 		SellerInfoButton: Components.SideInfoButton;
 		BuyerInfoButton: Components.SideInfoButton;
+		ListingDetailButton: Components.ListingDetailButton;
 	}
 
 	export interface Props extends Container.Props {
@@ -100,6 +109,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														key={log.id}
 														locale={locale}
 														side={side}
+														listingTransaction={listingTransaction}
 														listingTransactionStatus={status}
 														components={components}
 														isCurrent={isCurrent}
@@ -114,6 +124,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 														locale={locale}
 														side={side}
 														components={components}
+														listingTransaction={listingTransaction}
 														listingTransactionStatus={status}
 														isCurrent={isCurrent}
 														isClosed={isClosed}

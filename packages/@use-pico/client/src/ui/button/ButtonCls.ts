@@ -12,6 +12,7 @@ export const ButtonCls = contract(PicoCls.contract)
 	.bool("full")
 	.bool("truncate")
 	.bool("square")
+	.bool("menu")
 	.variant("size", [
 		"xs",
 		"sm",
@@ -74,6 +75,19 @@ export const ButtonCls = contract(PicoCls.contract)
 		root: {
 			class: [
 				"w-full",
+			],
+		},
+	})
+	.match("menu", true, {
+		wrapper: {
+			class: [
+				"w-full",
+			],
+		},
+		root: {
+			class: [
+				"w-full",
+				"justify-between",
 			],
 		},
 	})
@@ -574,6 +588,7 @@ export const ButtonCls = contract(PicoCls.contract)
 		tone: "primary",
 		theme: "light",
 		full: false,
+		menu: false,
 		disabled: false,
 		size: "md",
 		border: true,

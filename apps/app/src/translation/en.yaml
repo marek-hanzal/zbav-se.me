@@ -109,6 +109,9 @@
 3267efc7c9e171b77629decf13991a2fe40fb9ae81f5dc05864ac28d:
   ref: Seller accepted transaction (seller)
   value: Seller accepted transaction (seller)
+3429a13ac0ce97b0993fd1859d462e498dbd67e6f4b29853c1494151:
+  ref: No transactions found - buyer (message)
+  value: No transactions found - buyer (message)
 35a4e86b1c3c0901d64e96e0bee1760b1f7bba60c419f5ff2c8e4591:
   ref: Buyer transaction rejected (buyer-seller) (label)
   value: Buyer transaction rejected (buyer-seller) (label)
@@ -163,9 +166,6 @@
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
-4df609ad7c71de7afb6404a01aca110553102d31c815f4f6969ea9bd:
-  ref: No transactions found (title)
-  value: No transactions found (title)
 4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
   ref: Second tap to unignore listing (toast)
   value: Second tap to unignore listing (toast)
@@ -483,6 +483,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+be8a51546a71094a7254b726d40e9c1830a7c6bef136125ca142c2cd:
+  ref: Listing detail (label)
+  value: Listing detail (label)
 bf14eea343ed184a8fe9160210305d3bbacfce9413efb44d366635dd:
   ref: Remove from cart (button)
   value: Remove from cart (button)
@@ -528,6 +531,9 @@ d4fd7a75d5cf12bfe3393f9960a95b1154214a585434558dcd62f954:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
   ref: Listing condition (label)
   value: Listing condition (label)
+d5b5f13c7150021d732169079401965e929898f8e0a5b0e3f94043af:
+  ref: No transactions found - buyer (title)
+  value: No transactions found - buyer (title)
 d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
   ref: Buyer - account age (label)
   value: Buyer - account age (label)
@@ -540,9 +546,6 @@ d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)
-dc8a5604f1b9115b53ec4d872f7412328bb63401b0d48651c5e8cbac:
-  ref: Preparing cart feed (title)
-  value: Preparing cart feed (title)
 deccabc66c5cecc1232610a2cd5efe676f3c556ff1b3681df1936a48:
   ref: Buyer - score (label)
   value: Buyer - score (label)
@@ -591,9 +594,6 @@ f40aebfe8ac1d83e7b93e069db67a2a93e47c887cab40eb726e6dc1f:
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)
-f5513d5f7d579cdb6e7850c2fad5c44887f60cbb050953936cd717a7:
-  ref: No transactions found (message)
-  value: No transactions found (message)
 f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
   ref: Second tap to unflag listing (toast)
   value: Second tap to unflag listing (toast)

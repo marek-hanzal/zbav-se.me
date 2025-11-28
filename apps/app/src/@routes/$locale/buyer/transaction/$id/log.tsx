@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { ListingDetailButton } from "@zbav-se.me/buyer/listing";
 import { BuyerInfoButton } from "@zbav-se.me/buyer/listing-transaction";
 import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
@@ -84,6 +85,16 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 						components={{
 							BuyerInfoButton,
 							SellerInfoButton,
+							ListingDetailButton({ locale, modalRootId, listingTransaction }) {
+								return (
+									<ListingDetailButton
+										locale={locale}
+										detailSheetId={modalRootId}
+										listing={listingTransaction.listingId}
+										label={"Listing detail (label)"}
+									/>
+								);
+							},
 						}}
 					/>
 				</Container>

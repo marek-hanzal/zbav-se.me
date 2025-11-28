@@ -99,6 +99,11 @@ tx({
 				name: "ModalContainer",
 				attr: "textTitle",
 			},
+			//
+			{
+				name: "ListingDetailButton",
+				attr: "label",
+			},
 		],
 	},
 });
