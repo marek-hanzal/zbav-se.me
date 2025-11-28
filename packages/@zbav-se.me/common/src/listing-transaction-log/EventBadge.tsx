@@ -150,10 +150,10 @@ export const EventBadge: FC<EventBadge.Props> = ({
 
 	const contentClassName: Partial<Record<useSideSwitch.Type, string[]>> = {
 		buyer: [
-			"items-end",
+			// "items-end",
 		],
 		seller: [
-			"items-end",
+			// "items-end",
 		],
 	};
 
