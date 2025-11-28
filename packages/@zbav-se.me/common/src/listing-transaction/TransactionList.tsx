@@ -44,6 +44,12 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			>
 				<withListingTransactionCollectionQuery.Suspense
 					data={{
+						where: {
+							statusIn: [
+								"request",
+								"accepted",
+							],
+						},
 						sort: [
 							{
 								field: "updatedAt",

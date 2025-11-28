@@ -67,5 +67,55 @@ export const withListingTransactionQueryBuilder: withListingTransactionQueryBuil
 		query = query.where("lt.listingId", "=", where.listingId);
 	}
 
+	if (where.status) {
+		const status = where.status;
+
+		query = query.where((eb) => {
+			return eb.exists((eb) =>
+				eb
+					.selectFrom("listing_transaction_status as lts")
+					.select("lts.id")
+					.whereRef("lts.listingTransactionId", "=", "lt.id")
+					.where("lts.status", "=", status)
+					.where((eb) => {
+						return eb.not(
+							eb.exists((eb) =>
+								eb
+									.selectFrom("listing_transaction_status as lts2")
+									.select("lts2.id")
+									.whereRef("lts2.listingTransactionId", "=", "lt.id")
+									.whereRef("lts2.createdAt", ">", "lts.createdAt"),
+							),
+						);
+					}),
+			);
+		});
+	}
+
+	if (where.statusIn && where.statusIn.length > 0) {
+		const statusIn = where.statusIn;
+
+		query = query.where((eb) => {
+			return eb.exists((eb) =>
+				eb
+					.selectFrom("listing_transaction_status as lts")
+					.select("lts.id")
+					.whereRef("lts.listingTransactionId", "=", "lt.id")
+					.where("lts.status", "in", statusIn)
+					.where((eb) => {
+						return eb.not(
+							eb.exists((eb) =>
+								eb
+									.selectFrom("listing_transaction_status as lts2")
+									.select("lts2.id")
+									.whereRef("lts2.listingTransactionId", "=", "lt.id")
+									.whereRef("lts2.createdAt", ">", "lts.createdAt"),
+							),
+						);
+					}),
+			);
+		});
+	}
+
 	return query;
 };

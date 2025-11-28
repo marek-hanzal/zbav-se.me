@@ -421,7 +421,7 @@ export type tListingTransactionMessage = {
 };
 
 /**
- * Current status of the listing transaction
+ * This filter matches the current status of the listing transaction
  */
 export const tListingTransactionStatusEnum = {
     request: 'request',
@@ -433,7 +433,7 @@ export const tListingTransactionStatusEnum = {
 } as const;
 
 /**
- * Current status of the listing transaction
+ * This filter matches the current status of the listing transaction
  */
 export type tListingTransactionStatusEnum = typeof tListingTransactionStatusEnum[keyof typeof tListingTransactionStatusEnum];
 
@@ -450,7 +450,7 @@ export type tListingTransactionStatus = {
      */
     listingTransactionId: string;
     side: tListingTransactionSideEnum;
-    status: tListingTransactionStatusEnum;
+    status: tListingTransactionStatusEnum & unknown;
     /**
      * Creation timestamp
      */
@@ -568,6 +568,11 @@ export type tListingTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    status?: tListingTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the listing transaction
+     */
+    statusIn?: Array<tListingTransactionStatusEnum & unknown>;
 };
 
 /**
@@ -594,6 +599,11 @@ export type tListingTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
+    status?: tListingTransactionStatusEnum;
+    /**
+     * This filter matches any of the provided statuses for the current status of the listing transaction
+     */
+    statusIn?: Array<tListingTransactionStatusEnum & unknown>;
 };
 
 /**

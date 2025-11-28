@@ -446,7 +446,7 @@ export const zListingTransactionMessage = z.object({
 export type zListingTransactionMessage = z.infer<typeof zListingTransactionMessage>;
 
 /**
- * Current status of the listing transaction
+ * This filter matches the current status of the listing transaction
  */
 export const zListingTransactionStatusEnum = z.enum([
     'request',
@@ -456,7 +456,7 @@ export const zListingTransactionStatusEnum = z.enum([
     'closed',
     'expired'
 ]).register(z.globalRegistry, {
-    description: 'Current status of the listing transaction'
+    description: 'This filter matches the current status of the listing transaction'
 });
 
 export type zListingTransactionStatusEnum = z.infer<typeof zListingTransactionStatusEnum>;
@@ -472,7 +472,9 @@ export const zListingTransactionStatus = z.object({
         description: 'ID of the transaction referenced by the status'
     }),
     side: zListingTransactionSideEnum,
-    status: zListingTransactionStatusEnum,
+    status: zListingTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    })),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
@@ -610,6 +612,12 @@ export const zListingTransactionWhere = z.object({
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
+    })),
+    status: z.optional(zListingTransactionStatusEnum),
+    statusIn: z.optional(z.array(zListingTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))).register(z.globalRegistry, {
+        description: 'This filter matches any of the provided statuses for the current status of the listing transaction'
     }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -635,6 +643,12 @@ export const zListingTransactionFilter = z.object({
     })),
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
+    })),
+    status: z.optional(zListingTransactionStatusEnum),
+    statusIn: z.optional(z.array(zListingTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+        description: 'Current status of the listing transaction'
+    }))).register(z.globalRegistry, {
+        description: 'This filter matches any of the provided statuses for the current status of the listing transaction'
     }))
 }).register(z.globalRegistry, {
     description: 'Filter object for listing transaction collection'

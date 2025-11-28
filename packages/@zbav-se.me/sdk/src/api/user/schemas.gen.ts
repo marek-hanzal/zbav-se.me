@@ -547,7 +547,12 @@ export const sListingTransactionStatus = {
             $ref: '#/components/schemas/ListingTransactionSideEnum'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/ListingTransactionStatusEnum'
+                },
+                {}
+            ]
         },
         createdAt: {
             type: 'string'
@@ -710,6 +715,20 @@ export const sListingTransactionWhere = {
         },
         listingId: {
             type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/ListingTransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
         }
     }
 } as const;
@@ -734,6 +753,20 @@ export const sListingTransactionFilter = {
         },
         listingId: {
             type: 'string'
+        },
+        status: {
+            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+        },
+        statusIn: {
+            type: 'array',
+            items: {
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/ListingTransactionStatusEnum'
+                    },
+                    {}
+                ]
+            }
         }
     }
 } as const;
