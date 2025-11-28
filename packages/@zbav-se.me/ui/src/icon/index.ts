@@ -22,6 +22,7 @@ export { LetterEIcon } from "./LetterEIcon";
 export { LetterFIcon } from "./LetterFIcon";
 export { LocationIcon } from "./LocationIcon";
 export { LockIcon } from "./LockIcon";
+export { MessageIcon } from "./MessageIcon";
 export { PassKeyIcon } from "./PassKeyIcon";
 export { PhotoIcon } from "./PhotoIcon";
 export { PostIcon } from "./PostIcon";

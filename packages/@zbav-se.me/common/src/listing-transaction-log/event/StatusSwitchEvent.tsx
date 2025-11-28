@@ -124,7 +124,8 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 			<StatusMenu
 				locale={locale}
 				side={side}
-				listingTransactionLog={listingTransactionStatus}
+				type={type}
+				listingTransactionStatus={listingTransactionStatus}
 				isOpen={isMenuOpen && isCurrent && !isClosed}
 				onClose={() => {
 					setIsMenuOpen(false);

@@ -1,17 +1,19 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
-import type { tListingTransactionLog, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import type { tListingTransactionStatus, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { type FC, useId } from "react";
+import { match } from "ts-pattern";
 import { AcceptButton } from "../../../listing-transaction/button/AcceptButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
-import { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
+import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 import type { TransactionLogList } from "../../TransactionLogList";
 
 export namespace StatusMenu {
 	export interface Props extends BottomSheet.Props {
 		locale: string;
 		side: tUserSideEnum;
-		listingTransactionLog: tListingTransactionLog;
+		type: useSideSwitch.Type;
+		listingTransactionStatus: tListingTransactionStatus;
 		components: TransactionLogList.Components;
 	}
 }
@@ -19,76 +21,83 @@ export namespace StatusMenu {
 export const StatusMenu: FC<StatusMenu.Props> = ({
 	locale,
 	side,
-	listingTransactionLog,
+	type,
+	listingTransactionStatus,
 	components,
 	...props
 }) => {
 	const listingSheetId = useId();
 
-	const { render } = useSideSwitch({
-		side,
-		actor: listingTransactionLog.side,
-		renderBuyerFn() {
-			return (
-				<>
-					<components.SellerInfoButton
-						locale={locale}
-						log={listingTransactionLog}
-					/>
+	const content = match(type)
+		.with("buyer", () => {
+			return match(listingTransactionStatus.status)
+				.with("request", () => {
+					return (
+						<>
+							<components.SellerInfoButton
+								locale={locale}
+								log={listingTransactionStatus}
+							/>
 
-					<RejectButton log={listingTransactionLog} />
+							<RejectButton log={listingTransactionStatus} />
 
-					<components.ListingDetailButton modalRootId={listingSheetId} />
-				</>
-			);
-		},
-		renderBuyerToSellerFn() {
-			return (
-				<>
-					<components.BuyerInfoButton
-						locale={locale}
-						log={listingTransactionLog}
-					/>
-
-					<AcceptButton log={listingTransactionLog} />
-
-					<RejectButton log={listingTransactionLog} />
-
-					<components.ListingDetailButton modalRootId={listingSheetId} />
-				</>
-			);
-		},
-		renderSellerFn() {
+							<components.ListingDetailButton modalRootId={listingSheetId} />
+						</>
+					);
+				})
+				.with("accepted", "closed", "expired", "success", "rejected", () => {
+					return null;
+				})
+				.exhaustive();
+		})
+		.with("buyer-to-seller", () => {
 			return (
 				<>
 					<components.BuyerInfoButton
 						locale={locale}
-						log={listingTransactionLog}
+						log={listingTransactionStatus}
 					/>
 
-					<RejectButton log={listingTransactionLog} />
+					<AcceptButton log={listingTransactionStatus} />
+
+					<RejectButton log={listingTransactionStatus} />
 
 					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
 			);
-		},
-		renderSellerToBuyerFn() {
+		})
+		.with("seller", () => {
+			return (
+				<>
+					<components.BuyerInfoButton
+						locale={locale}
+						log={listingTransactionStatus}
+					/>
+
+					<RejectButton log={listingTransactionStatus} />
+
+					<components.ListingDetailButton modalRootId={listingSheetId} />
+				</>
+			);
+		})
+		.with("seller-to-buyer", () => {
 			return (
 				<>
 					<components.SellerInfoButton
 						locale={locale}
-						log={listingTransactionLog}
+						log={listingTransactionStatus}
 					/>
 
-					<RejectButton log={listingTransactionLog} />
+					<RejectButton log={listingTransactionStatus} />
 
 					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
 			);
-		},
-	});
-
-	const content = render({});
+		})
+		.with("unknown", () => {
+			return null;
+		})
+		.exhaustive();
 
 	if (!content) {
 		return null;

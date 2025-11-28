@@ -1,4 +1,5 @@
 import { Button } from "@use-pico/client/ui/button";
+import { MessageIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace MessageButton {
