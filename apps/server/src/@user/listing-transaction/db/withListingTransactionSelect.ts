@@ -21,8 +21,6 @@ export const withListingTransactionSelect = ({
 		.select([
 			"lt.id",
 			"lt.listingId",
-			"lt.status",
-			"lt.side",
 			"lt.createdAt",
 			"lt.updatedAt",
 			"lt.expiresAt",

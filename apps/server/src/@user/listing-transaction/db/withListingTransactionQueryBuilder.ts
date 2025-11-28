@@ -67,13 +67,5 @@ export const withListingTransactionQueryBuilder: withListingTransactionQueryBuil
 		query = query.where("lt.listingId", "=", where.listingId);
 	}
 
-	if (where.status) {
-		query = query.where("lt.status", "=", where.status);
-	}
-
-	if (where.side) {
-		query = query.where("lt.side", "=", where.side);
-	}
-
 	return query;
 };

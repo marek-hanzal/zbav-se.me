@@ -10,12 +10,12 @@ import { listingTransactionFetchFx } from "./listingTransactionFetchFx";
 
 export namespace listingTransactionPatchFx {
 	export interface Props {
-		transactionId: string;
+		listingTransactionId: string;
 	}
 }
 
 export const listingTransactionPatchFx = ({
-	transactionId,
+	listingTransactionId,
 }: listingTransactionPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
@@ -31,14 +31,14 @@ export const listingTransactionPatchFx = ({
 						"lt.userId",
 						"l.userId as listingUserId",
 					])
-					.where("lt.id", "=", transactionId)
+					.where("lt.id", "=", listingTransactionId)
 					.executeTakeFirst();
 			});
 
 			if (!transaction) {
 				return yield* new NotFoundError({
 					resource: "listing_transaction",
-					resourceId: transactionId,
+					resourceId: listingTransactionId,
 					message: "Transaction not found",
 				});
 			}
@@ -47,7 +47,7 @@ export const listingTransactionPatchFx = ({
 				return yield* new AccessDeniedError({
 					message: "You are not allowed to modify this transaction",
 				});
-			}
+        }
 
 			const now = DateTime.now();
 
@@ -62,7 +62,7 @@ export const listingTransactionPatchFx = ({
 							})
 							.toJSDate(),
 					})
-					.where("id", "=", transactionId)
+					.where("id", "=", listingTransactionId)
 					.returningAll()
 					.executeTakeFirstOrThrow();
 			});
@@ -70,7 +70,7 @@ export const listingTransactionPatchFx = ({
 			return yield* listingTransactionFetchFx({
 				query: {
 					where: {
-						id: transactionId,
+						id: listingTransactionId,
 					},
 				},
 			});
