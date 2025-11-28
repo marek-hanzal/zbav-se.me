@@ -1,6 +1,6 @@
 import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { Cls } from "@use-pico/cls";
+import { type Cls, tvc } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC, ReactNode } from "react";
@@ -53,6 +53,8 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
+								"justify-end",
+								"flex-row-reverse",
 								"ml-auto",
 							],
 				},
@@ -79,6 +81,8 @@ export const EventBadge: FC<EventBadge.Props> = ({
 								"justify-center",
 							]
 						: [
+								"justify-end",
+								"flex-row-reverse",
 								"ml-auto",
 							],
 				},
@@ -125,8 +129,8 @@ export const EventBadge: FC<EventBadge.Props> = ({
 					"gap-1",
 					"px-2",
 					"py-1",
-					"w-6/8",
-					"max-w-5/6",
+					"w-5/8",
+					"max-w-5/8",
 					"transition-all",
 					isCurrentClosed
 						? [
@@ -146,6 +150,15 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		},
 	};
 
+	const contentClassName: Partial<Record<useSideSwitch.Type, string[]>> = {
+		buyer: [
+			"items-end",
+		],
+		seller: [
+			"items-end",
+		],
+	};
+
 	const defaultProps: Badge.Props = {
 		round: "default",
 		...props,
@@ -163,7 +176,23 @@ export const EventBadge: FC<EventBadge.Props> = ({
 			]}
 			onClick={isClosed || !isCurrent ? undefined : onClick}
 		>
-			<div className="flex flex-col justify-end gap-1">
+			<div
+				className={tvc(
+					[
+						"flex",
+						"flex-col",
+						"justify-start",
+						"gap-1",
+						"w-full",
+					],
+					isClosed
+						? [
+								"justify-center",
+								"items-center",
+							]
+						: contentClassName[type],
+				)}
+			>
 				<Typo
 					label={toTimeDiff({
 						locale,
