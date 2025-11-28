@@ -32,6 +32,7 @@ export { QuestionIcon } from "./QuestionIcon";
 export { ScoreIcon } from "./ScoreIcon";
 export { SearchIcon } from "./SearchIcon";
 export { SellerIcon } from "./SellerIcon";
+export { SendMessageIcon } from "./SendMessageIcon";
 export { SendPackageIcon } from "./SendPackageIcon";
 export { SentIcon } from "./SentIcon";
 export { ShopIcon } from "./ShopIcon";

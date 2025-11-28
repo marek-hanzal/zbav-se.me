@@ -8,7 +8,7 @@ import type {
 	tUserSideEnum,
 } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import type { FC } from "react";
+import { type FC, useLayoutEffect, useRef } from "react";
 import { TransactionLogItem } from "./TransactionLogItem";
 
 export namespace TransactionLogList {
@@ -51,8 +51,11 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	components,
 	...props
 }) => {
+	const containerRef = useRef<HTMLDivElement>(null);
+
 	return (
 		<Container
+			ref={containerRef}
 			ui={"TransactionLogList-root"}
 			layout={"vertical-flex"}
 			scroll={"vertical"}
@@ -78,6 +81,19 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				{({ data }) => {
 					const currentLog = data.data[data.data.length - 1];
 					const lastStatusLog = data.data.findLast((item) => item.event === "status");
+
+					// biome-ignore lint/correctness/useHookAtTopLevel: We're OK
+					useLayoutEffect(() => {
+						const el = containerRef.current;
+						if (!el) {
+							return;
+						}
+
+						el.scrollTo({
+							top: el.scrollHeight,
+							behavior: "instant",
+						});
+					}, []);
 
 					/**
 					 * If there is no last status, it's a logical bug, so we just won't render.

@@ -1,6 +1,8 @@
+import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { useCls } from "@use-pico/cls";
-import { type FC, type KeyboardEventHandler, useLayoutEffect, useRef } from "react";
+import { tvc, useCls } from "@use-pico/cls";
+import { type FC, type KeyboardEventHandler, useId, useLayoutEffect, useRef } from "react";
+import { SendMessageIcon } from "../icon";
 import { ChatInputCls } from "./ChatInputCls";
 
 export namespace ChatInput {
@@ -25,6 +27,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 }) => {
 	const { slots } = useCls(cls, tweak);
 
+	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're reacting to value change
@@ -64,43 +67,72 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	return (
 		<Container
-			layout={"vertical-centered"}
-			items={"center"}
+			layout={"horizontal-flex"}
+			gap={"md"}
 			{...props}
 		>
 			<div
-				className={slots.default({
-					slot: {
-						default: {
-							class: [
-								"flex",
-								"flex-col",
-								"items-center",
-								"justify-center",
-								"border-2",
-								"border-slate-200",
-								"bg-slate-100",
-								"min-h-0",
-								"h-fit",
-								"w-full",
-							],
-							token: [
-								"square.md",
-								"round.default",
-							],
-						},
-					},
-				})}
+				className={tvc([
+					"flex",
+					"flex-row",
+					"gap-2",
+					"items-end",
+					"justify-center",
+					"w-full",
+				])}
 			>
-				<textarea
-					ref={textareaRef}
-					rows={1}
-					value={value}
-					disabled={props.disabled}
-					onChange={(e) => onChange(e.target.value)}
-					onKeyDown={handleKeyDown}
-					placeholder={placeholder}
-					className={slots.input()}
+				<div
+					className={tvc([
+						"flex",
+						"flex-col",
+						"items-center",
+						"justify-center",
+						"w-full",
+					])}
+				>
+					<div
+						className={slots.default({
+							slot: {
+								default: {
+									class: [
+										"flex",
+										"flex-col",
+										"items-center",
+										"justify-center",
+										"border-2",
+										"border-slate-200",
+										"bg-slate-100",
+										"min-h-0",
+										"h-fit",
+										"w-full",
+									],
+									token: [
+										"square.md",
+										"round.default",
+									],
+								},
+							},
+						})}
+					>
+						<textarea
+							ref={textareaRef}
+							id={areaId}
+							rows={1}
+							value={value}
+							disabled={props.disabled}
+							onChange={(e) => onChange(e.target.value)}
+							onKeyDown={handleKeyDown}
+							placeholder={placeholder}
+							className={slots.input()}
+						/>
+					</div>
+				</div>
+
+				<Button
+					iconEnabled={SendMessageIcon}
+					iconProps={{
+						size: "md",
+					}}
 				/>
 			</div>
 		</Container>
