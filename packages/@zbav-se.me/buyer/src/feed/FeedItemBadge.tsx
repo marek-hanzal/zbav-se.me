@@ -4,10 +4,10 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
-import { ListingCountBadge } from "@zbav-se.me/common/listing";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
+import { ListingCountBadge } from "../listing/ListingCountBadge";
 import { FeedDetailContainer } from "./FeedDetailContainer";
 
 export namespace FeedItemBadge {

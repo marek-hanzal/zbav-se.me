@@ -3,10 +3,10 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { ListingSortSelect } from "@zbav-se.me/common/listing";
 import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { type FC, useState } from "react";
+import { ListingSortSelect } from "../listing/ListingSortSelect";
 
 export namespace FeedSortValueList {
 	export interface Props {
