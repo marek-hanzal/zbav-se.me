@@ -245,6 +245,30 @@ export const sAllowedExtensionsEnum = {
     ]
 } as const;
 
+export const sListingTransactionStatusReject = {
+    type: 'object',
+    properties: {
+        listingTransactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'listingTransactionId'
+    ]
+} as const;
+
+export const sListingTransactionStatusAccept = {
+    type: 'object',
+    properties: {
+        listingTransactionId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'listingTransactionId'
+    ]
+} as const;
+
 export const sListingTransactionLogQuery = {
     type: 'object',
     properties: {
@@ -546,30 +570,6 @@ export const sListingTransactionLog = {
     ]
 } as const;
 
-export const sListingTransactionStatusReject = {
-    type: 'object',
-    properties: {
-        listingTransactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'listingTransactionId'
-    ]
-} as const;
-
-export const sListingTransactionStatusAccept = {
-    type: 'object',
-    properties: {
-        listingTransactionId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'listingTransactionId'
-    ]
-} as const;
-
 export const sListingTransactionBuyerInfo = {
     type: 'object',
     properties: {
@@ -694,12 +694,6 @@ export const sListingTransactionWhere = {
         },
         listingId: {
             type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
         }
     }
 } as const;
@@ -724,12 +718,6 @@ export const sListingTransactionFilter = {
         },
         listingId: {
             type: 'string'
-        },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
         }
     }
 } as const;
@@ -762,12 +750,6 @@ export const sListingTransaction = {
         listingId: {
             type: 'string'
         },
-        status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
-        },
-        side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
-        },
         createdAt: {
             type: 'string'
         },
@@ -784,8 +766,6 @@ export const sListingTransaction = {
     required: [
         'id',
         'listingId',
-        'status',
-        'side',
         'createdAt',
         'updatedAt',
         'expiresAt',

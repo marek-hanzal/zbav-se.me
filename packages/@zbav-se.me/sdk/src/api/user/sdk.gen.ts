@@ -489,6 +489,21 @@ export const apiListingTransactionBuyerInfo = <ThrowOnError extends boolean = fa
 });
 
 /**
+ * Returns listing transaction log entries based on provided parameters
+ */
+export const apiListingTransactionLogCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionLogCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionLogCollectionResponse, apiListingTransactionLogCollectionErrors, ThrowOnError>({
+    requestValidator: async (data) => await zApiListingTransactionLogCollectionData.parseAsync(data),
+    responseType: 'json',
+    responseValidator: async (data) => await zApiListingTransactionLogCollectionResponse.parseAsync(data),
+    url: '/api/user/listing-transaction-log/collection',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options?.headers
+    }
+});
+
+/**
  * Accept a listing transaction. Requires access to the transaction.
  */
 export const apiListingTransactionStatusAccept = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionStatusAcceptRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionStatusAcceptResponse, apiListingTransactionStatusAcceptErrors, ThrowOnError>({
@@ -511,21 +526,6 @@ export const apiListingTransactionStatusReject = <ThrowOnError extends boolean =
     responseType: 'json',
     responseValidator: async (data) => await zApiListingTransactionStatusRejectResponse.parseAsync(data),
     url: '/api/user/listing-transaction/status/reject',
-    ...options,
-    headers: {
-        'Content-Type': 'application/json',
-        ...options?.headers
-    }
-});
-
-/**
- * Returns listing transaction log entries based on provided parameters
- */
-export const apiListingTransactionLogCollection = <ThrowOnError extends boolean = false>(options?: Options<tApiListingTransactionLogCollectionRequest, ThrowOnError>) => (options?.client ?? client).post<tApiListingTransactionLogCollectionResponse, apiListingTransactionLogCollectionErrors, ThrowOnError>({
-    requestValidator: async (data) => await zApiListingTransactionLogCollectionData.parseAsync(data),
-    responseType: 'json',
-    responseValidator: async (data) => await zApiListingTransactionLogCollectionResponse.parseAsync(data),
-    url: '/api/user/listing-transaction-log/collection',
     ...options,
     headers: {
         'Content-Type': 'application/json',

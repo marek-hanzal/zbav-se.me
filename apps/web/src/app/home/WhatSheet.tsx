@@ -1,16 +1,20 @@
+import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { BuyerIcon, CheckIcon, SellerIcon } from "@zbav-se.me/ui/icon";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import type { FC } from "react";
 
 export const WhatSheet: FC = () => {
 	return (
-		<Sheet tone="secondary">
-			<div className="reveal flex flex-col justify-evenly h-[100dvh] py-16">
+		<Container
+			layout={"vertical-centered"}
+			items={"center"}
+			className={"reveal"}
+		>
+			<div className="flex flex-col justify-evenly h-dvh py-16">
 				<Status
 					icon={SellerIcon}
 					tone={"primary"}
@@ -110,6 +114,6 @@ export const WhatSheet: FC = () => {
 					</VariantProvider>
 				</Status>
 			</div>
-		</Sheet>
+		</Container>
 	);
 };

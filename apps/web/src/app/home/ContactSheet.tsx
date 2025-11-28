@@ -1,34 +1,19 @@
+import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { Typo } from "@use-pico/client/ui/typo";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
 export const ContactSheet: FC = () => {
 	return (
-		<Sheet
-			tweak={{
-				slot: {
-					root: {
-						token: [
-							"square.lg",
-						],
-					},
-				},
-			}}
+		<Container
+			layout={"vertical-centered"}
+			items={"center"}
+			className={"reveal"}
 		>
 			<Status
 				icon={"icon-[line-md--email-twotone]"}
 				textTitle={"Landing - Contact (title)"}
 				textMessage={"Landing - Contact (text)"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"reveal",
-							],
-						},
-					},
-				}}
 			>
 				<Typo
 					label={"info@zbav-se.me"}
@@ -47,6 +32,6 @@ export const ContactSheet: FC = () => {
 					}}
 				/>
 			</Status>
-		</Sheet>
+		</Container>
 	);
 };

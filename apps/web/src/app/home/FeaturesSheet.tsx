@@ -1,27 +1,22 @@
+import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import { TypoIcon } from "@zbav-se.me/ui/typo";
 import type { FC } from "react";
 
 export const FeaturesSheet: FC = () => {
 	return (
-		<Sheet>
+		<Container
+			layout={"vertical-centered"}
+			items={"center"}
+			className={"reveal"}
+		>
 			<Status
 				textTitle={"Landing - Feature overview (title)"}
 				tone="secondary"
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"reveal",
-							],
-						},
-					},
-				}}
 			>
 				<VariantProvider
 					cls={ThemeCls}
@@ -112,6 +107,6 @@ export const FeaturesSheet: FC = () => {
 					</TypoIcon>
 				</VariantProvider>
 			</Status>
-		</Sheet>
+		</Container>
 	);
 };

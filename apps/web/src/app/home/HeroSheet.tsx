@@ -1,12 +1,11 @@
 import { UserIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo, type LinkToCls } from "@use-pico/client/ui/link-to";
+import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { type Cls, tvc } from "@use-pico/cls";
+import { tvc } from "@use-pico/cls";
 import { UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import type { FC } from "react";
 
 export namespace HeroSheet {
@@ -16,29 +15,16 @@ export namespace HeroSheet {
 }
 
 export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
-	const linkToTweak: Cls.TweaksOf<LinkToCls> = {
-		slot: {
-			root: {
-				class: [
-					"block",
-					"w-full",
-				],
-			},
-		},
-	};
-
 	return (
-		<Sheet>
+		<Container>
 			<div
 				className={tvc([
-					"reveal",
 					"flex",
 					"flex-col",
 					"justify-evenly",
 					"h-dvh",
 					"py-16",
 					"px-4",
-					"opacity-0",
 				])}
 			>
 				<Container
@@ -53,13 +39,24 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 				<Status
 					textTitle={"Landing - Hero (title)"}
 					textMessage={"Landing - Hero (subtitle)"}
+					tweak={{
+						slot: {
+							body: {
+								class: [
+									"flex",
+									"flex-col",
+									"gap-4",
+								],
+							},
+						},
+					}}
 				>
 					<LinkTo
 						to={"/$locale/login"}
 						params={{
 							locale,
 						}}
-						tweak={linkToTweak}
+						full
 					>
 						<Button
 							iconEnabled={UnlockIcon}
@@ -79,7 +76,7 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 						params={{
 							locale,
 						}}
-						tweak={linkToTweak}
+						full
 					>
 						<Button
 							iconEnabled={UserIcon}
@@ -95,6 +92,6 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 					</LinkTo>
 				</Status>
 			</div>
-		</Sheet>
+		</Container>
 	);
 };

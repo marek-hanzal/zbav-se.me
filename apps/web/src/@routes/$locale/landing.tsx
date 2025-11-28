@@ -6,7 +6,6 @@ import { VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { useRef } from "react";
-import { AboutSheet } from "~/app/home/AboutSheet";
 import { ContactSheet } from "~/app/home/ContactSheet";
 import { CtaSheet } from "~/app/home/CtaSheet";
 import { FeaturesSheet } from "~/app/home/FeaturesSheet";
@@ -15,14 +14,8 @@ import { useEnterAnim } from "~/app/home/useEnterAnim";
 import { WhatSheet } from "~/app/home/WhatSheet";
 
 export const Route = createFileRoute("/$locale/landing")({
-	async loader({ params: { locale } }) {
-		return {
-			about: await import(`../../@md/about/${locale}.md?raw`).then((m) => m.default),
-		};
-	},
 	component() {
 		const { locale } = Route.useParams();
-		const { about } = Route.useLoaderData();
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
 		useEnterAnim(scrollerRef);
@@ -78,15 +71,6 @@ export const Route = createFileRoute("/$locale/landing")({
 					</VariantProvider>
 
 					<ContactSheet />
-
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "secondary",
-						}}
-					>
-						<AboutSheet markdown={about} />
-					</VariantProvider>
 				</Container>
 			</Container>
 		);
