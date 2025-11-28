@@ -22,20 +22,7 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 		.selectFrom("listing as l")
 		.innerJoin("location as loc", "loc.id", "l.locationId")
 		.innerJoin("category as cat", "cat.id", "l.categoryId")
-		.select([
-			"l.age",
-			"l.categoryId",
-			"l.condition",
-			"l.createdAt",
-			"l.currency",
-			"l.title",
-			"l.description",
-			"l.expiresAt",
-			"l.id",
-			"l.locationId",
-			"l.price",
-			"l.updatedAt",
-		])
+		.selectAll("l")
 		.select((eb) => [
 			sql`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 
