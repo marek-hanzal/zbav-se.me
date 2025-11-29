@@ -1,7 +1,17 @@
+import { ShowIcon } from "@use-pico/client/icon";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { tvc, useCls } from "@use-pico/cls";
-import { type FC, type KeyboardEventHandler, useId, useLayoutEffect, useRef } from "react";
+import {
+	type FC,
+	type KeyboardEventHandler,
+	type ReactNode,
+	useId,
+	useLayoutEffect,
+	useRef,
+	useState,
+} from "react";
 import { SendMessageIcon } from "../icon";
 import { ChatInputCls } from "./ChatInputCls";
 
@@ -12,6 +22,10 @@ export namespace ChatInput {
 		onSubmit(value: string): void;
 		placeholder: string;
 		maxRows?: number;
+		menu?: {
+			content: ReactNode;
+			props?: BottomSheet.PropsEx;
+		};
 	}
 }
 
@@ -21,6 +35,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	onSubmit,
 	placeholder,
 	maxRows = 6,
+	menu,
 	cls = ChatInputCls,
 	tweak,
 	...props
@@ -29,6 +44,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+	const [isMenu, setIsMenu] = useState(false);
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're reacting to value change
 	useLayoutEffect(() => {
@@ -56,11 +72,13 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
 
-			if (!props.disabled) {
-				const trimmed = value.trim();
-				if (trimmed.length > 0) {
-					onSubmit(trimmed);
-				}
+			if (props.disabled) {
+				return;
+			}
+
+			const trimmed = value.trim();
+			if (trimmed.length > 0) {
+				onSubmit(trimmed);
 			}
 		}
 	};
@@ -81,6 +99,33 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					"w-full",
 				])}
 			>
+				{menu ? (
+					<>
+						<Button
+							iconEnabled={ShowIcon}
+							tone={"link"}
+							onClick={() => setIsMenu((prev) => !prev)}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"bg-transparent",
+										],
+									},
+								},
+							}}
+						/>
+
+						<BottomSheet
+							isOpen={isMenu}
+							onClose={() => setIsMenu(false)}
+							{...menu.props}
+						>
+							{menu.content}
+						</BottomSheet>
+					</>
+				) : null}
+
 				<div
 					className={tvc([
 						"flex",
@@ -132,6 +177,15 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					iconEnabled={SendMessageIcon}
 					iconProps={{
 						size: "md",
+					}}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"bg-transparent",
+								],
+							},
+						},
 					}}
 				/>
 			</div>
