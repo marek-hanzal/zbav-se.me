@@ -1,4 +1,5 @@
 import type { tListingTransactionMessage } from "@zbav-se.me/sdk/api/user";
+import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
@@ -10,6 +11,7 @@ export namespace MessageMenu {
 		locale: string;
 		type: useSideSwitch.Type;
 		listingTransactionMessage: tListingTransactionMessage;
+		menuState: ChatInput.Menu.State;
 		components: TransactionChat.Components;
 	}
 }
@@ -18,13 +20,17 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 	locale,
 	type,
 	listingTransactionMessage,
+	menuState,
 	components,
 }) => {
 	return match(type)
 		.with("buyer", () => {
 			return (
 				<>
-					<RejectButton log={listingTransactionMessage} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionMessage}
+					/>
 
 					<components.SellerInfoButton
 						locale={locale}
@@ -36,7 +42,10 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer-to-seller", () => {
 			return (
 				<>
-					<RejectButton log={listingTransactionMessage} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionMessage}
+					/>
 
 					<components.BuyerInfoButton
 						locale={locale}
@@ -48,7 +57,10 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller", () => {
 			return (
 				<>
-					<RejectButton log={listingTransactionMessage} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionMessage}
+					/>
 
 					<components.BuyerInfoButton
 						locale={locale}
@@ -60,7 +72,10 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller-to-buyer", () => {
 			return (
 				<>
-					<RejectButton log={listingTransactionMessage} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionMessage}
+					/>
 
 					<components.SellerInfoButton
 						locale={locale}

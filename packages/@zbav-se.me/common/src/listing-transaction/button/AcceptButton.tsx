@@ -1,17 +1,25 @@
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import type { tListingTransactionLog } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionStatusAcceptMutation } from "@zbav-se.me/sdk/mutation/user";
+import type { ChatInput } from "@zbav-se.me/ui/chat";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace AcceptButton {
 	export interface Props extends ConfirmButton.Props {
 		log: tListingTransactionLog;
+		menuState: ChatInput.Menu.State;
 	}
 }
 
-export const AcceptButton: FC<AcceptButton.Props> = ({ log, ...props }) => {
-	const acceptMutation = withListingTransactionStatusAcceptMutation.useMutation();
+export const AcceptButton: FC<AcceptButton.Props> = ({ menuState, log, ...props }) => {
+	const [, setIsMenu] = menuState;
+
+	const acceptMutation = withListingTransactionStatusAcceptMutation.useMutation({
+		async onPostMutation() {
+			setIsMenu(false);
+		},
+	});
 
 	return (
 		<ConfirmButton

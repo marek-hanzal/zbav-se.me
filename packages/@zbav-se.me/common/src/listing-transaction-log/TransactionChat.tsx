@@ -84,6 +84,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 								locale={locale}
 								type={type}
 								listingTransactionStatus={status}
+								menuState={menuState}
 								components={components}
 							/>
 						);
@@ -96,6 +97,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 								locale={locale}
 								type={type}
 								listingTransactionMessage={message}
+								menuState={menuState}
 								components={components}
 							/>
 						);

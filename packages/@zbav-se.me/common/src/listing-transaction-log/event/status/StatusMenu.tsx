@@ -1,4 +1,5 @@
 import type { tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
+import type { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useId } from "react";
 import { match } from "ts-pattern";
 import { AcceptButton } from "../../../listing-transaction/button/AcceptButton";
@@ -11,6 +12,7 @@ export namespace StatusMenu {
 		locale: string;
 		type: useSideSwitch.Type;
 		listingTransactionStatus: tListingTransactionStatus;
+		menuState: ChatInput.Menu.State;
 		components: TransactionChat.Components;
 	}
 }
@@ -19,6 +21,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 	locale,
 	type,
 	listingTransactionStatus,
+	menuState,
 	components,
 }) => {
 	const listingSheetId = useId();
@@ -34,7 +37,10 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 								log={listingTransactionStatus}
 							/>
 
-							<RejectButton log={listingTransactionStatus} />
+							<RejectButton
+								menuState={menuState}
+								log={listingTransactionStatus}
+							/>
 
 							<components.ListingDetailButton modalRootId={listingSheetId} />
 						</>
@@ -53,9 +59,15 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 						log={listingTransactionStatus}
 					/>
 
-					<AcceptButton log={listingTransactionStatus} />
+					<AcceptButton
+						menuState={menuState}
+						log={listingTransactionStatus}
+					/>
 
-					<RejectButton log={listingTransactionStatus} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionStatus}
+					/>
 
 					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
@@ -69,7 +81,10 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 						log={listingTransactionStatus}
 					/>
 
-					<RejectButton log={listingTransactionStatus} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionStatus}
+					/>
 
 					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
@@ -83,7 +98,10 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 						log={listingTransactionStatus}
 					/>
 
-					<RejectButton log={listingTransactionStatus} />
+					<RejectButton
+						menuState={menuState}
+						log={listingTransactionStatus}
+					/>
 
 					<components.ListingDetailButton modalRootId={listingSheetId} />
 				</>
