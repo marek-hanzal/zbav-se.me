@@ -25,10 +25,12 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({
 		<>
 			<Button
 				iconEnabled={SellerIcon}
-				tone={"link"}
+				iconPosition={"right"}
+				tone={"primary"}
 				theme={"light"}
-				size={"lg"}
-				round={"full"}
+				size={"xl"}
+				menu
+				label={"Seller info (label)"}
 				onClick={() => setIsOpen(true)}
 				{...props}
 			/>

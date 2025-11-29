@@ -1,7 +1,7 @@
 import type { tListingTransactionMessage } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { MessageButton } from "../../../listing-transaction/button/MessageButton";
+import { RejectButton } from "../../../listing-transaction/button/RejectButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 import type { TransactionChat } from "../../TransactionChat";
 
@@ -24,9 +24,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer", () => {
 			return (
 				<>
-					<MessageButton
-						listingTransactionId={listingTransactionMessage.listingTransactionId}
-					/>
+					<RejectButton log={listingTransactionMessage} />
 
 					<components.SellerInfoButton
 						locale={locale}
@@ -38,9 +36,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer-to-seller", () => {
 			return (
 				<>
-					<MessageButton
-						listingTransactionId={listingTransactionMessage.listingTransactionId}
-					/>
+					<RejectButton log={listingTransactionMessage} />
 
 					<components.BuyerInfoButton
 						locale={locale}
@@ -52,9 +48,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller", () => {
 			return (
 				<>
-					<MessageButton
-						listingTransactionId={listingTransactionMessage.listingTransactionId}
-					/>
+					<RejectButton log={listingTransactionMessage} />
 
 					<components.BuyerInfoButton
 						locale={locale}
@@ -66,9 +60,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller-to-buyer", () => {
 			return (
 				<>
-					<MessageButton
-						listingTransactionId={listingTransactionMessage.listingTransactionId}
-					/>
+					<RejectButton log={listingTransactionMessage} />
 
 					<components.SellerInfoButton
 						locale={locale}

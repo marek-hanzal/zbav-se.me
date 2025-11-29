@@ -1,4 +1,4 @@
-import { ShowIcon } from "@use-pico/client/icon";
+import { MenuIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -105,18 +105,9 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				{menu ? (
 					<>
 						<Button
-							iconEnabled={ShowIcon}
+							iconEnabled={MenuIcon}
 							tone={"link"}
 							onClick={() => setIsMenu((prev) => !prev)}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"bg-transparent",
-										],
-									},
-								},
-							}}
 						/>
 
 						<BottomSheet
@@ -124,7 +115,13 @@ export const ChatInput: FC<ChatInput.Props> = ({
 							onClose={() => setIsMenu(false)}
 							{...menu.props}
 						>
-							{menu.content}
+							<Container
+								layout={"vertical-flex"}
+								gap={"md"}
+								square={"md"}
+							>
+								{menu.content}
+							</Container>
 						</BottomSheet>
 					</>
 				) : null}
@@ -181,7 +178,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					iconProps={{
 						size: "md",
 					}}
-					disabled={loading}
+					disabled={loading || value.length === 0}
 					loading={loading}
 					tweak={{
 						slot: {
@@ -191,6 +188,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 								],
 							},
 						},
+					}}
+					onClick={() => {
+						onSubmit(value);
+						onChange("");
 					}}
 				/>
 			</div>

@@ -33,6 +33,7 @@ export { ListIcon } from "./ListIcon";
 export { LoaderIcon } from "./LoaderIcon";
 export { LogoutIcon } from "./LogoutIcon";
 export { LteIcon } from "./LteIcon";
+export { MenuIcon } from "./MenuIcon";
 export { SelectionAnyIcon } from "./SelectionAnyIcon";
 export { SelectionFilterIcon } from "./SelectionFilterIcon";
 export { SelectionOffIcon } from "./SelectionOffIcon";
