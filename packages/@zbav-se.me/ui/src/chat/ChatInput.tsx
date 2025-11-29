@@ -22,6 +22,7 @@ export namespace ChatInput {
 		onSubmit(value: string): void;
 		placeholder: string;
 		maxRows?: number;
+		loading: boolean;
 		menu?: {
 			content: ReactNode;
 			props?: BottomSheet.PropsEx;
@@ -35,6 +36,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	onSubmit,
 	placeholder,
 	maxRows = 6,
+	loading,
 	menu,
 	cls = ChatInputCls,
 	tweak,
@@ -79,6 +81,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			const trimmed = value.trim();
 			if (trimmed.length > 0) {
 				onSubmit(trimmed);
+				onChange("");
 			}
 		}
 	};
@@ -178,6 +181,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					iconProps={{
 						size: "md",
 					}}
+					disabled={loading}
+					loading={loading}
 					tweak={{
 						slot: {
 							root: {

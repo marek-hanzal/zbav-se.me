@@ -9,7 +9,6 @@ import { match } from "ts-pattern";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
 import { MessageEvent } from "./event/message/MessageEvent";
 import { StatusSwitchEvent } from "./event/status/StatusSwitchEvent";
-import type { TransactionLogList } from "./TransactionLogList";
 
 export namespace TransactionLogItem {
 	export interface Props {
@@ -18,7 +17,6 @@ export namespace TransactionLogItem {
 		listingTransactionLog: tListingTransactionLog;
 		isCurrent: boolean;
 		isClosed: boolean;
-		components: TransactionLogList.Components;
 	}
 }
 
@@ -28,7 +26,6 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 	listingTransactionLog,
 	isCurrent,
 	isClosed,
-	components,
 }) => {
 	const { type } = useSideSwitch({
 		actor: listingTransactionLog.side,
@@ -47,7 +44,6 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 					listingTransactionStatus={status}
 					isCurrent={isCurrent}
 					isClosed={isClosed}
-					components={components}
 				/>
 			);
 		})
@@ -62,7 +58,6 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 					listingTransactionMessage={message}
 					isCurrent={isCurrent}
 					isClosed={isClosed}
-					components={components}
 				/>
 			);
 		})

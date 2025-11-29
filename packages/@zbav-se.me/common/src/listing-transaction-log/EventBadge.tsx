@@ -1,10 +1,8 @@
 import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
-import { Container } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
-import { type Cls, VariantProvider } from "@use-pico/cls";
+import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 import type { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
@@ -199,23 +197,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				font={"normal"}
 				size={"sm"}
 			/>
-
-			{isCurrent && !isClosed ? (
-				<VariantProvider
-					cls={ThemeCls}
-					variant={{
-						tone: "unset",
-						theme: "unset",
-					}}
-				>
-					<Container
-						layout={"horizontal-flex"}
-						gap={"sm"}
-					>
-						{toolbar}
-					</Container>
-				</VariantProvider>
-			) : null}
 		</Badge>
 	);
 };

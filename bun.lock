@@ -51,7 +51,7 @@
         "zustand": "5.0.8",
       },
       "devDependencies": {
-        "@iconify/json": "2.2.411",
+        "@iconify/json": "2.2.412",
         "@iconify/tailwind4": "1.2.0",
         "@modyfi/vite-plugin-yaml": "1.1.1",
         "@tailwindcss/vite": "4.1.17",
@@ -157,7 +157,7 @@
         "zod": "4.1.13",
       },
       "devDependencies": {
-        "@iconify/json": "2.2.411",
+        "@iconify/json": "2.2.412",
         "@iconify/tailwind4": "1.2.0",
         "@modyfi/vite-plugin-yaml": "1.1.1",
         "@tailwindcss/vite": "4.1.17",
@@ -946,7 +946,7 @@
 
     "@hono/zod-validator": ["@hono/zod-validator@0.7.4", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-biKGn3BRJVaftZlIPMyK+HCe/UHAjJ6sH0UyXe3+v0OcgVr9xfImDROTJFLtn9e3XEEAHGZIM9U6evu85abm8Q=="],
 
-    "@iconify/json": ["@iconify/json@2.2.411", "", { "dependencies": { "@iconify/types": "*", "pathe": "^2.0.3" } }, "sha512-lbNY5utR46XT2seUTBNiqKwd0uxSq2lJfyg8WRxpThmlS1bk79eSToT9biraG1wzKKt0tCjJos9aZxj5Us9RTw=="],
+    "@iconify/json": ["@iconify/json@2.2.412", "", { "dependencies": { "@iconify/types": "*", "pathe": "^2.0.3" } }, "sha512-WV6kFgS6mfR6BdBVZ4x2ctsZy2hzQEacvGLSW439yizXrmAszkAJXAl7ytZ3VI0KL2TylUluQGc4ygHsQDrIww=="],
 
     "@iconify/tailwind4": ["@iconify/tailwind4@1.2.0", "", { "dependencies": { "@iconify/tools": "^5.0.0", "@iconify/types": "^2.0.0", "@iconify/utils": "^3.1.0" }, "peerDependencies": { "tailwindcss": ">= 4.0.0" } }, "sha512-+t7XqfojOB0zzZdd8gV7IQZGq1AaIHTlsxMVzagxYR0hAlJCLUD63o3iSlNKRMH3ZR7gZ8y5c9dJ7J431avRbA=="],
 

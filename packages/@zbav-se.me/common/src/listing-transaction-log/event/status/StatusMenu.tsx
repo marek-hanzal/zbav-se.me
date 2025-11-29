@@ -1,34 +1,29 @@
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Container } from "@use-pico/client/ui/container";
-import type { tListingTransactionStatus, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import type { tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
 import { type FC, useId } from "react";
 import { match } from "ts-pattern";
 import { AcceptButton } from "../../../listing-transaction/button/AcceptButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
-import type { TransactionLogList } from "../../TransactionLogList";
+import type { TransactionChat } from "../../TransactionChat";
 
 export namespace StatusMenu {
-	export interface Props extends BottomSheet.Props {
+	export interface Props {
 		locale: string;
-		side: tUserSideEnum;
 		type: useSideSwitch.Type;
 		listingTransactionStatus: tListingTransactionStatus;
-		components: TransactionLogList.Components;
+		components: TransactionChat.Components;
 	}
 }
 
 export const StatusMenu: FC<StatusMenu.Props> = ({
 	locale,
-	side,
 	type,
 	listingTransactionStatus,
 	components,
-	...props
 }) => {
 	const listingSheetId = useId();
 
-	const content = match(type)
+	return match(type)
 		.with("buyer", () => {
 			return match(listingTransactionStatus.status)
 				.with("request", () => {
@@ -95,28 +90,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 			);
 		})
 		.with("unknown", () => {
-			return null;
+			return "unknown";
 		})
 		.exhaustive();
-
-	if (!content) {
-		return null;
-	}
-
-	return (
-		<BottomSheet
-			ui={"StatusMenu-BottomSheet"}
-			detent={"content"}
-			{...props}
-		>
-			<Container
-				ui={"StatusMenu-Container"}
-				layout={"vertical-flex"}
-				gap={"md"}
-				square={"md"}
-			>
-				{content}
-			</Container>
-		</BottomSheet>
-	);
 };

@@ -1,12 +1,10 @@
 import type { tListingTransactionStatus, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
-import { type FC, useEffect, useState } from "react";
+import type { FC } from "react";
 import { match } from "ts-pattern";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
-import type { TransactionLogList } from "../../TransactionLogList";
 import { AcceptedEvent } from "./AcceptedEvent";
 import { RejectedEvent } from "./RejectedEvent";
 import { RequestEvent } from "./RequestEvent";
-import { StatusMenu } from "./StatusMenu";
 
 export namespace StatusSwitchEvent {
 	export interface Props {
@@ -16,7 +14,6 @@ export namespace StatusSwitchEvent {
 		listingTransactionStatus: tListingTransactionStatus;
 		isCurrent: boolean;
 		isClosed: boolean;
-		components: TransactionLogList.Components;
 	}
 }
 
@@ -27,24 +24,8 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 	listingTransactionStatus,
 	isCurrent,
 	isClosed,
-	components,
 }) => {
-	const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-	useEffect(() => {
-		if (!isCurrent || isClosed) {
-			return;
-		}
-
-		setTimeout(() => {
-			setIsMenuOpen(true);
-		}, 150);
-	}, [
-		isClosed,
-		isCurrent,
-	]);
-
-	const event = match(listingTransactionStatus.status)
+	return match(listingTransactionStatus.status)
 		.with("request", () => {
 			return (
 				<RequestEvent
@@ -55,9 +36,6 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 					timestamp={listingTransactionStatus.createdAt}
 					isCurrent={isCurrent}
 					isClosed={isClosed}
-					onClick={() => {
-						setIsMenuOpen((prev) => !prev);
-					}}
 				/>
 			);
 		})
@@ -71,9 +49,6 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 					timestamp={listingTransactionStatus.createdAt}
 					isCurrent={isCurrent}
 					isClosed={isClosed}
-					onClick={() => {
-						setIsMenuOpen((prev) => !prev);
-					}}
 				/>
 			);
 		})
@@ -87,9 +62,6 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 					timestamp={listingTransactionStatus.createdAt}
 					isCurrent={isCurrent}
 					isClosed={isClosed}
-					onClick={() => {
-						setIsMenuOpen((prev) => !prev);
-					}}
 				/>
 			);
 		})
@@ -97,22 +69,4 @@ export const StatusSwitchEvent: FC<StatusSwitchEvent.Props> = ({
 			return "not-yet";
 		})
 		.exhaustive();
-
-	return (
-		<>
-			{event}
-
-			<StatusMenu
-				locale={locale}
-				side={side}
-				type={type}
-				listingTransactionStatus={listingTransactionStatus}
-				isOpen={isMenuOpen && isCurrent && !isClosed}
-				onClose={() => {
-					setIsMenuOpen(false);
-				}}
-				components={components}
-			/>
-		</>
-	);
 };

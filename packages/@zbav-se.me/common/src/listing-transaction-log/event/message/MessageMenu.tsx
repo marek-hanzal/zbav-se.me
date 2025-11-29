@@ -1,23 +1,21 @@
-import type { tListingTransactionMessage, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
+import type { tListingTransactionMessage } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { MessageButton } from "../../../listing-transaction/button/MessageButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
-import type { TransactionLogList } from "../../TransactionLogList";
+import type { TransactionChat } from "../../TransactionChat";
 
 export namespace MessageMenu {
 	export interface Props {
 		locale: string;
-		side: tUserSideEnum;
 		type: useSideSwitch.Type;
 		listingTransactionMessage: tListingTransactionMessage;
-		components: TransactionLogList.Components;
+		components: TransactionChat.Components;
 	}
 }
 
 export const MessageMenu: FC<MessageMenu.Props> = ({
 	locale,
-	side,
 	type,
 	listingTransactionMessage,
 	components,

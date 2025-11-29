@@ -1,8 +1,6 @@
-import type { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type {
 	tListingTransaction,
-	tListingTransactionLog,
 	tListingTransactionLogQuery,
 	tListingTransactionStatusEnum,
 	tUserSideEnum,
@@ -12,34 +10,11 @@ import { type FC, useLayoutEffect, useRef } from "react";
 import { TransactionLogItem } from "./TransactionLogItem";
 
 export namespace TransactionLogList {
-	export namespace Components {
-		export type SideInfoButton = FC<
-			{
-				locale: string;
-				log: tListingTransactionLog;
-				modalRootId?: string;
-			} & Button.Props
-		>;
-
-		export type ListingDetailButton = FC<
-			{
-				modalRootId: string;
-			} & Button.Props
-		>;
-	}
-
-	export interface Components {
-		SellerInfoButton: Components.SideInfoButton;
-		BuyerInfoButton: Components.SideInfoButton;
-		ListingDetailButton: Components.ListingDetailButton;
-	}
-
 	export interface Props extends Container.Props {
 		locale: string;
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
 		listingTransaction: tListingTransaction;
-		components: Components;
 	}
 }
 
@@ -48,7 +23,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	side,
 	query,
 	listingTransaction,
-	components,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -122,7 +96,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								listingTransactionLog={log}
 								isCurrent={isCurrent}
 								isClosed={isClosed}
-								components={components}
 							/>
 						);
 					});
