@@ -51,6 +51,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 	listingTransactionLog,
 	components,
 }) => {
+	const menuState = useState(false);
 	const [message, setMessage] = useState("");
 
 	const { type } = useSideSwitch({
@@ -73,6 +74,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 			placeholder={translator.text("Enter your message (placeholder)")}
 			loading={messageCreateMutation.isPending}
 			menu={{
+				state: menuState,
 				content: match(listingTransactionLog.event)
 					.with("status", () => {
 						const status = zListingTransactionStatus.parse(listingTransactionLog);

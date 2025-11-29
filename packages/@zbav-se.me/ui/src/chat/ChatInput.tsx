@@ -10,12 +10,24 @@ import {
 	useId,
 	useLayoutEffect,
 	useRef,
-	useState,
 } from "react";
 import { SendMessageIcon } from "../icon";
 import { ChatInputCls } from "./ChatInputCls";
 
 export namespace ChatInput {
+	export namespace Menu {
+		export type State = [
+			boolean,
+			(value: boolean | ((value: boolean) => boolean)) => void,
+		];
+
+		export interface Props {
+			state: State;
+			content: ReactNode;
+			props?: BottomSheet.PropsEx;
+		}
+	}
+
 	export interface Props extends ChatInputCls.Props<Omit<Container.Props, "onSubmit">> {
 		value: string;
 		onChange(value: string): void;
@@ -23,10 +35,7 @@ export namespace ChatInput {
 		placeholder: string;
 		maxRows?: number;
 		loading: boolean;
-		menu?: {
-			content: ReactNode;
-			props?: BottomSheet.PropsEx;
-		};
+		menu?: Menu.Props;
 	}
 }
 
@@ -46,7 +55,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	const areaId = useId();
 	const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-	const [isMenu, setIsMenu] = useState(false);
+	const [isMenu, setIsMenu] = menu?.state || [
+		false,
+		(value) => !value,
+	];
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: We're reacting to value change
 	useLayoutEffect(() => {
