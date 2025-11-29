@@ -27,13 +27,13 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer", () => {
 			return (
 				<>
-					<RejectButton
-						menuState={menuState}
+					<components.SellerInfoButton
+						locale={locale}
 						log={listingTransactionMessage}
 					/>
 
-					<components.SellerInfoButton
-						locale={locale}
+					<RejectButton
+						menuState={menuState}
 						log={listingTransactionMessage}
 					/>
 				</>
@@ -42,13 +42,13 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer-to-seller", () => {
 			return (
 				<>
-					<RejectButton
-						menuState={menuState}
+					<components.BuyerInfoButton
+						locale={locale}
 						log={listingTransactionMessage}
 					/>
 
-					<components.BuyerInfoButton
-						locale={locale}
+					<RejectButton
+						menuState={menuState}
 						log={listingTransactionMessage}
 					/>
 				</>
@@ -57,13 +57,13 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller", () => {
 			return (
 				<>
-					<RejectButton
-						menuState={menuState}
+					<components.BuyerInfoButton
+						locale={locale}
 						log={listingTransactionMessage}
 					/>
 
-					<components.BuyerInfoButton
-						locale={locale}
+					<RejectButton
+						menuState={menuState}
 						log={listingTransactionMessage}
 					/>
 				</>
@@ -72,13 +72,13 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller-to-buyer", () => {
 			return (
 				<>
-					<RejectButton
-						menuState={menuState}
+					<components.SellerInfoButton
+						locale={locale}
 						log={listingTransactionMessage}
 					/>
 
-					<components.SellerInfoButton
-						locale={locale}
+					<RejectButton
+						menuState={menuState}
 						log={listingTransactionMessage}
 					/>
 				</>

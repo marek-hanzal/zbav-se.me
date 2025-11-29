@@ -184,9 +184,6 @@
 567d286dd4f0b55d57e494895a562b4a3c8f5158446c68ab67a9bbe6:
   ref: Transaction requested (label)
   value: Transaction requested (label)
-5812e91d6d8137dc399b4916a17ef52812364d11adffb57ebcba61c4:
-  ref: Send message (label)
-  value: Send message (label)
 5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
   ref: Listing photos (title)
   value: Listing photos (title)
@@ -241,6 +238,9 @@
 6c388d147d0bda5b267c52bbf80482f6ba0eff93845084586bd1c058:
   ref: No transactions found - seller (title)
   value: No transactions found - seller (title)
+6cf1f312f04cf8aac969e1beb063b3fcbf6458d93e2707411b6e98dd:
+  ref: Seller info (label)
+  value: Seller info (label)
 6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
   ref: User profile (label)
   value: User profile (label)
@@ -277,6 +277,9 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
   ref: Next - submit (button)
   value: Next - submit (button)
+7bc80170fb044a52d59f0998e4d5bfba4cd157138e9bd4a3cef6d7cb:
+  ref: Buyer info (label)
+  value: Buyer info (label)
 7bd8fc15e1d93b10be826ce8e00ebabcfb79fbb806b8c52e2fcef824:
   ref: Feed name (title)
   value: Feed name
