@@ -5,18 +5,43 @@ import { type Cls, VariantProvider } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import type { FC, ReactNode } from "react";
+import type { FC } from "react";
 import type { useSideSwitch } from "../listing-transaction/useSideSwitch";
 
 export namespace EventBadge {
 	export interface Props extends Badge.Props {
+		/**
+		 * Locale string used for formatting the timestamp display (e.g., "en", "cs").
+		 */
 		locale: string;
+		/**
+		 * The side of the user currently logged in ("buyer" or "seller").
+		 */
 		side: tUserSideEnum;
+		/**
+		 * The side that performed this action ("buyer" or "seller").
+		 */
 		actor: tListingTransactionSideEnum;
+		/**
+		 * The event type determined by the relationship between side and actor
+		 * ("buyer", "seller", "buyer-to-seller", "seller-to-buyer", or "unknown").
+		 *
+		 * @note Resolves who sees the event (e.g., event is pointing to me, to seller/buyer).
+		 */
 		type: useSideSwitch.Type;
-		toolbar: ReactNode;
+		/**
+		 * ISO timestamp string of when the event occurred.
+		 *
+		 * Used to display the event timestamp in the UI.
+		 */
 		timestamp: string;
+		/**
+		 * Whether this is the last item in the transaction log.
+		 */
 		isCurrent: boolean;
+		/**
+		 * Whether the transaction is closed/completed.
+		 */
 		isClosed: boolean;
 	}
 }
@@ -34,7 +59,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	side,
 	actor,
 	type,
-	toolbar,
 	timestamp,
 	isCurrent,
 	isClosed,
