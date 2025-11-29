@@ -172,7 +172,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 
 	const defaultProps: Badge.Props = {
 		round: "default",
-		...props,
 	};
 
 	return (
@@ -185,6 +184,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				badgeTweak,
 				typeTweaks[type],
 			]}
+			{...props}
 			onClick={isClosed || !isCurrent ? undefined : onClick}
 		>
 			{children}

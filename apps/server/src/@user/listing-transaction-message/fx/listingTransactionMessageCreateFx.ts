@@ -3,8 +3,8 @@ import { Effect } from "effect";
 import { listingTransactionPatchFx } from "~/@user/listing-transaction/fx/listingTransactionPatchFx";
 import { listingTransactionResolveFx } from "~/@user/listing-transaction/fx/listingTransactionResolveFx";
 import { listingTransactionMessageFetchFx } from "~/@user/listing-transaction-message/fx/listingTransactionMessageFetchFx";
+import { listingTransactionStatusAcceptFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusAcceptFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "~/error/InvalidRequestError";
 
 export namespace listingTransactionMessageCreateFx {
 	export interface Props {
@@ -25,9 +25,9 @@ export const listingTransactionMessageCreateFx = ({
 			message: "You are not allowed to create a message for this listing transaction",
 		});
 
-		if (transaction.status !== "accepted") {
-			return yield* new InvalidRequestError({
-				message: "You are not allowed to create a message for this listing transaction",
+		if (transaction.side === "seller" && transaction.status === "request") {
+			yield* listingTransactionStatusAcceptFx({
+				listingTransactionId: transaction.listingTransactionId,
 			});
 		}
 

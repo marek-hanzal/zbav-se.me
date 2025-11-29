@@ -11,7 +11,10 @@ export namespace AcceptedEvent {
 
 export const AcceptedEvent: FC<AcceptedEvent.Props> = (props) => {
 	return (
-		<EventBadge {...props}>
+		<EventBadge
+			tone={"link"}
+			{...props}
+		>
 			{match(props.type)
 				.with("seller-to-buyer", () => {
 					return <Tx label="Seller accepted transaction (seller-to-buyer)" />;

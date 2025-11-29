@@ -11,7 +11,10 @@ export namespace RejectedEvent {
 
 export const RejectedEvent: FC<RejectedEvent.Props> = (props) => {
 	return (
-		<EventBadge {...props}>
+		<EventBadge
+			tone={"danger"}
+			{...props}
+		>
 			{match(props.type)
 				.with("buyer", () => {
 					return <Tx label="Buyer transaction rejected (buyer) (label)" />;

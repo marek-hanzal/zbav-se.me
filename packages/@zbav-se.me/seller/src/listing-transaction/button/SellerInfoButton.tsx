@@ -38,7 +38,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({
 			<BottomSheet
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
-				detent={"content"}
+				detent={"default"}
 				modalEffectRootId={modalRootId}
 			>
 				<SellerInfoContainer

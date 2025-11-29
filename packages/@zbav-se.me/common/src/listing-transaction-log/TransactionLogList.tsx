@@ -57,6 +57,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					const lastStatusLog = data.data.findLast((item) => item.event === "status");
 
 					// biome-ignore lint/correctness/useHookAtTopLevel: We're OK
+					// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
 					useLayoutEffect(() => {
 						const el = containerRef.current;
 						if (!el) {
@@ -67,7 +68,9 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 							top: el.scrollHeight,
 							behavior: "instant",
 						});
-					}, []);
+					}, [
+						data,
+					]);
 
 					/**
 					 * If there is no last status, it's a logical bug, so we just won't render.

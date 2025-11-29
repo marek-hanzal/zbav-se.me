@@ -41,12 +41,10 @@ export const BadgeCls = contract(PicoCls.contract)
 				"Badge-root",
 				"flex-row",
 				"flex",
-				"font-bold",
 				"gap-2",
 				"items-center",
 				"justify-center",
 				"select-none",
-				"text-sm",
 				"w-fit",
 			],
 			token: [
