@@ -30,6 +30,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 }) => {
 	const bottomPinPx = 16;
 	const containerRef = useRef<HTMLDivElement>(null);
+	const contentRef = useRef<HTMLDivElement>(null);
 	const bottomRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -58,7 +59,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				useLayoutEffect(() => {
 					const bottom = bottomRef.current;
 					const container = containerRef.current;
-					if (!bottom || !container) {
+					const content = contentRef.current;
+					if (!bottom || !container || !content) {
 						return;
 					}
 
@@ -71,15 +73,19 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					scrollToBottom();
 
 					const ro = new ResizeObserver(() => {
-						const distanceFromBottom =
-							container.scrollHeight - container.clientHeight - container.scrollTop;
-						console.log("RO", distanceFromBottom, container.scrollHeight);
+						// const distanceFromBottom =
+						// 	container.scrollHeight - container.clientHeight - container.scrollTop;
+						// console.log("RO", {
+						// 	sh: container.scrollHeight,
+						// 	ch: container.clientHeight,
+						// 	st: container.scrollTop,
+						// });
 						scrollToBottom();
-						if (distanceFromBottom < bottomPinPx) {
-						}
+						// if (distanceFromBottom < bottomPinPx) {
+						// }
 					});
 
-					ro.observe(container);
+					ro.observe(content);
 
 					return () => {
 						ro.disconnect();
@@ -114,27 +120,32 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						<Container
 							ref={containerRef}
 							ui={"TransactionLogList-list"}
-							layout={"vertical-flex"}
 							scroll={"vertical"}
 							height={"fit"}
-							gap={"md"}
 						>
-							{data.data.map((log) => {
-								const isCurrent = lastLog.id === log.id;
+							<Container
+								ref={contentRef}
+								layout={"vertical-flex"}
+								gap={"md"}
+								height={"content"}
+							>
+								{data.data.map((log) => {
+									const isCurrent = lastLog.id === log.id;
 
-								return (
-									<TransactionLogItem
-										key={log.id}
-										locale={locale}
-										side={side}
-										listingTransactionLog={log}
-										isCurrent={isCurrent}
-										isClosed={isClosed}
-									/>
-								);
-							})}
+									return (
+										<TransactionLogItem
+											key={log.id}
+											locale={locale}
+											side={side}
+											listingTransactionLog={log}
+											isCurrent={isCurrent}
+											isClosed={isClosed}
+										/>
+									);
+								})}
 
-							<div ref={bottomRef} />
+								<div ref={bottomRef} />
+							</Container>
 						</Container>
 
 						{isClosed ? null : (
