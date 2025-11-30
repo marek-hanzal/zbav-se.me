@@ -1,3 +1,4 @@
+import { keepPreviousData } from "@tanstack/react-query";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type {
 	tListingTransaction,
@@ -47,6 +48,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			fallback={<SpinnerContainer />}
 			options={{
 				refetchInterval: 5_000,
+				placeholderData: keepPreviousData,
 			}}
 		>
 			{({ data }) => {
@@ -73,7 +75,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					scrollToBottom();
 
 					const ro = new ResizeObserver(() => {
-						scrollToBottom();
+						// scrollToBottom();
 					});
 
 					ro.observe(content);

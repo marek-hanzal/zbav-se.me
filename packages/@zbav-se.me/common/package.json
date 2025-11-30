@@ -7,6 +7,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
+		"@tanstack/react-query": "5.90.11",
 		"@use-pico/client": "workspace:*",
 		"@use-pico/cls": "5.0.76",
 		"@use-pico/common": "workspace:*",
