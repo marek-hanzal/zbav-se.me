@@ -14,6 +14,41 @@ import { cleanOf } from "@use-pico/common/clean-of";
 import { type ReactNode, Suspense } from "react";
 import type { withInvalidator } from "../invalidator/withInvalidator";
 
+// biome-ignore lint/correctness/noUnusedVariables: Private
+namespace Sleeper {
+	export namespace Children {
+		export interface Props<TResult> {
+			data: TResult;
+		}
+
+		export type RenderFn<TResult> = (props: Props<TResult>) => ReactNode;
+	}
+
+	export interface Props<TData, TResult> {
+		data: TData;
+		options?: withQuery.QueryOptions<TResult>;
+		useSuspenseQuery(
+			data: TData,
+			options?: withQuery.QueryOptions<TResult>,
+		): UseSuspenseQueryResult<TResult, Error>;
+		children: Children.RenderFn<TResult>;
+	}
+}
+
+// biome-ignore lint/style/useComponentExportOnlyModules: Ssst
+const Sleeper = <TData, TResult>({
+	data,
+	options,
+	useSuspenseQuery,
+	children,
+}: Sleeper.Props<TData, TResult>) => {
+	const query = useSuspenseQuery(data, options);
+
+	return children({
+		data: query.data,
+	});
+};
+
 export namespace withQuery {
 	/**
 	 * Props for configuring a generic query.
@@ -49,19 +84,11 @@ export namespace withQuery {
 	>;
 
 	export namespace Suspense {
-		export namespace Children {
-			export interface Props<TResult> {
-				data: TResult;
-			}
-
-			export type RenderFn<TResult> = (props: Props<TResult>) => ReactNode;
-		}
-
 		export interface Props<TData, TResult> {
 			data: TData;
 			options?: QueryOptions<TResult>;
 			fallback: ReactNode;
-			children: Children.RenderFn<TResult>;
+			children: Sleeper.Children.RenderFn<TResult>;
 		}
 	}
 
@@ -291,18 +318,15 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		 * Suspense component used to execute this query and return the result.
 		 */
 		Suspense({ data, options, fallback, children }: withQuery.Suspense.Props<TData, TResult>) {
-			// biome-ignore lint/correctness/noNestedComponentDefinitions: Sleeper, bro
-			const Sleeper = () => {
-				const query = useSuspenseQuery$(data, options);
-
-				return children({
-					data: query.data,
-				});
-			};
-
 			return (
 				<Suspense fallback={fallback}>
-					<Sleeper />
+					<Sleeper<TData, TResult>
+						data={data}
+						options={options}
+						useSuspenseQuery={useSuspenseQuery$}
+					>
+						{children}
+					</Sleeper>
 				</Suspense>
 			);
 		},

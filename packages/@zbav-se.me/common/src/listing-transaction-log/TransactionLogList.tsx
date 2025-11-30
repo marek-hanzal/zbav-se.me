@@ -50,6 +50,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				refetchInterval: 5_000,
 				placeholderData: keepPreviousData,
 			}}
+			deps={[]}
 		>
 			{({ data }) => {
 				const lastLog = data.data[data.data.length - 1];
@@ -65,22 +66,23 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						return;
 					}
 
-					const scrollToBottom = () => {
-						bottom.scrollIntoView({
-							block: "end",
-							behavior: "smooth",
+					const scrollToBottom = (behavior: ScrollBehavior) => {
+						container.scrollTo({
+							top: container.scrollHeight,
+							behavior,
 						});
 					};
 
-					scrollToBottom();
+					scrollToBottom("smooth");
 
 					const ro = new ResizeObserver(() => {
-						scrollToBottom();
+						scrollToBottom("smooth");
 					});
 
 					ro.observe(content);
 
 					return () => {
+						console.log("disconnect");
 						ro.disconnect();
 					};
 				}, [
