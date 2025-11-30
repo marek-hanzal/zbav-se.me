@@ -3,5 +3,5 @@
  */
 export interface StateType<TValue> {
 	value: TValue;
-	set(value: TValue): void;
+	set(value: TValue | ((prev: TValue) => TValue)): void;
 }

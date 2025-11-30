@@ -27,6 +27,8 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer", () => {
 			return (
 				<>
+					<div>Upload photos</div>
+
 					<components.SellerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
