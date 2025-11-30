@@ -1,40 +1,48 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { ListingTransactionContextProvider } from "~/@user/listing-transaction/fx/ListingTransactionContextFx";
-import { listingTransactionMessageCreateFx } from "~/@user/listing-transaction-message/fx/listingTransactionMessageCreateFx";
-import { ListingTransactionMessageSchema } from "~/@user/listing-transaction-message/schema/ListingTransactionMessageSchema";
+import { listingTransactionGalleryCreateFx } from "~/@user/listing-transaction-gallery/fx/listingTransactionGalleryCreateFx";
+import { ListingTransactionGallerySchema } from "~/@user/listing-transaction-gallery/schema/ListingTransactionGallerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
-import { ListingTransactionMessageCreateSchema } from "./schema/ListingTransactionMessageCreateSchema";
+import { ListingTransactionGalleryCreateSchema } from "./schema/ListingTransactionGalleryCreateSchema";
 
-export const withListingTransactionMessageCreateApi: Routes.Fn = ({ userHono }) => {
+export const withListingTransactionGalleryCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-transaction/message/create",
+			path: "/listing-transaction/gallery/create",
 			description:
-				"Create a message for a listing transaction. Requires access to the transaction.",
-			operationId: "apiListingTransactionMessageCreate",
+				"Create a gallery for a listing transaction. Requires access to the transaction.",
+			operationId: "apiListingTransactionGalleryCreate",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingTransactionMessageCreateSchema,
+							schema: ListingTransactionGalleryCreateSchema,
 						},
 					},
-					description: "Query object for listing transaction message creation",
+					description: "Query object for listing transaction gallery creation",
 				},
 			},
 			responses: {
 				200: {
 					content: {
 						"application/json": {
-							schema: ListingTransactionMessageSchema,
+							schema: ListingTransactionGallerySchema,
 						},
 					},
-					description: "Message created",
+					description: "Gallery created",
+				},
+				400: {
+					content: {
+						"application/json": {
+							schema: MessageSchema,
+						},
+					},
+					description: "Invalid request",
 				},
 				403: {
 					content: {
@@ -62,14 +70,14 @@ export const withListingTransactionMessageCreateApi: Routes.Fn = ({ userHono }) 
 				},
 			},
 			tags: [
-				"listing-transaction-message",
+				"listing-transaction-gallery",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<ListingTransactionMessageSchema.Type, 200>(
-					yield* listingTransactionMessageCreateFx(c.req.valid("json")),
+				return c.json<ListingTransactionGallerySchema.Type, 200>(
+					yield* listingTransactionGalleryCreateFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(
@@ -80,6 +88,20 @@ export const withListingTransactionMessageCreateApi: Routes.Fn = ({ userHono }) 
 				Effect.catchAll((e) => {
 					return Effect.succeed(
 						Match.value(e).pipe(
+							Match.when(
+								{
+									_tag: "InvalidRequestError",
+								},
+								() => {
+									return c.json<MessageSchema.Type, 400>(
+										{
+											type: "error",
+											message: e.message,
+										},
+										400,
+									);
+								},
+							),
 							Match.when(
 								{
 									_tag: "NotFoundError",

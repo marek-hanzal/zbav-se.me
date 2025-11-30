@@ -5,6 +5,7 @@ import { listingTransactionResolveFx } from "~/@user/listing-transaction/fx/list
 import { listingTransactionMessageFetchFx } from "~/@user/listing-transaction-message/fx/listingTransactionMessageFetchFx";
 import { listingTransactionStatusAcceptFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusAcceptFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
 export namespace listingTransactionMessageCreateFx {
 	export interface Props {
@@ -17,48 +18,50 @@ export const listingTransactionMessageCreateFx = ({
 	listingTransactionId,
 	message,
 }: listingTransactionMessageCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+	return withTransactionFx(
+		Effect.gen(function* () {
+			const database = yield* DatabaseContextFx;
 
-		const transaction = yield* listingTransactionResolveFx({
-			listingTransactionId,
-			message: "You are not allowed to create a message for this listing transaction",
-		});
+			const transaction = yield* listingTransactionResolveFx({
+				listingTransactionId,
+				message: "You are not allowed to create a message for this listing transaction",
+			});
 
-		if (transaction.side === "seller" && transaction.status === "request") {
-			yield* listingTransactionStatusAcceptFx({
+			if (transaction.side === "seller" && transaction.status === "request") {
+				yield* listingTransactionStatusAcceptFx({
+					listingTransactionId: transaction.listingTransactionId,
+				});
+			}
+
+			const id = genId();
+
+			yield* Effect.tryPromise(async () => {
+				return database
+					.insertInto("listing_transaction_message")
+					.values({
+						id,
+						listingTransactionId: transaction.listingTransactionId,
+						message,
+						side: transaction.side,
+						createdAt: new Date(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow();
+			});
+
+			yield* listingTransactionPatchFx({
 				listingTransactionId: transaction.listingTransactionId,
 			});
-		}
 
-		const id = genId();
-
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("listing_transaction_message")
-				.values({
-					id,
-					listingTransactionId: transaction.listingTransactionId,
-					message,
-					side: transaction.side,
-					createdAt: new Date(),
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
-		});
-
-		yield* listingTransactionPatchFx({
-			listingTransactionId: transaction.listingTransactionId,
-		});
-
-		return yield* listingTransactionMessageFetchFx({
-			query: {
-				where: {
-					id,
+			return yield* listingTransactionMessageFetchFx({
+				query: {
+					where: {
+						id,
+					},
 				},
-			},
-		});
-	});
+			});
+		}),
+	);
 };
 
 export type listingTransactionMessageCreateFx = ReturnType<

@@ -68,7 +68,7 @@ export namespace Table {
 	}
 
 	export namespace Sort {
-		export type State<TQuery extends withQuerySchema.Query> = StateType<TQuery["sort"]>;
+		export type State<TQuery extends withQuerySchema.Query> = StateType<TQuery["sort"] | null>;
 
 		export interface Props<TQuery extends withQuerySchema.Query> {
 			value: withQuerySchema.SortKeys<TQuery>;

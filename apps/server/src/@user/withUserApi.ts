@@ -11,6 +11,7 @@ import { withListingFlagApi } from "./listing-flag/withListingFlagApi";
 import { withListingIgnoreApi } from "./listing-ignore/withListingIgnoreApi";
 import { withListingScoreApi } from "./listing-score/withListingScoreApi";
 import { withListingTransactionApi } from "./listing-transaction/withListingTransactionApi";
+import { withListingTransactionGalleryApi } from "./listing-transaction-gallery/withListingTransactionGalleryApi";
 import { withListingTransactionLogApi } from "./listing-transaction-log/withListingTransactionLogApi";
 import { withListingTransactionMessageApi } from "./listing-transaction-message/withListingTransactionMessageApi";
 import { withS3Api } from "./s3/withS3Api";
@@ -48,6 +49,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	withListingIgnoreApi(routes);
 	withListingScoreApi(routes);
 	withListingTransactionApi(routes);
+	withListingTransactionGalleryApi(routes);
 	withListingTransactionLogApi(routes);
 	withListingTransactionMessageApi(routes);
 	withListingTransactionStatusApi(routes);

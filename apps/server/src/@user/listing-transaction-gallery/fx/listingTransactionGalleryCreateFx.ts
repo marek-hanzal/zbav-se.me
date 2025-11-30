@@ -1,54 +1,88 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
+import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { listingTransactionPatchFx } from "~/@user/listing-transaction/fx/listingTransactionPatchFx";
-import type { ListingTransactionSideEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionSideEnumSchema";
+import { listingTransactionResolveFx } from "~/@user/listing-transaction/fx/listingTransactionResolveFx";
+import { listingTransactionStatusAcceptFx } from "~/@user/listing-transaction-status/fx/listingTransactionStatusAcceptFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { listingTransactionGalleryFetchFx } from "./listingTransactionGalleryFetchFx";
 
 export namespace listingTransactionGalleryCreateFx {
 	export interface Props {
 		listingTransactionId: string;
-		galleryId: string;
-		side: ListingTransactionSideEnumSchema.Type;
+		uploadIds: string[];
 	}
 }
 
 export const listingTransactionGalleryCreateFx = ({
 	listingTransactionId,
-	galleryId,
-	side,
+	uploadIds,
 }: listingTransactionGalleryCreateFx.Props) => {
-	return Effect.gen(function* () {
-		const database = yield* DatabaseContextFx;
+	return withTransactionFx(
+		Effect.gen(function* () {
+			const database = yield* DatabaseContextFx;
 
-		const id = genId();
+			const transaction = yield* listingTransactionResolveFx({
+				listingTransactionId,
+				message: "You are not allowed to create a gallery for this listing transaction",
+			});
 
-		yield* Effect.tryPromise(async () => {
-			return database
-				.insertInto("listing_transaction_gallery")
-				.values({
-					id,
-					listingTransactionId,
-					galleryId,
-					side,
-					createdAt: new Date(),
-				})
-				.returningAll()
-				.executeTakeFirstOrThrow();
-		});
+			if (uploadIds.length === 0) {
+				return yield* new InvalidRequestError({
+					message: "At least one upload is required",
+				});
+			}
 
-		yield* listingTransactionPatchFx({
-			listingTransactionId,
-		});
+			if (transaction.side === "seller" && transaction.status === "request") {
+				yield* listingTransactionStatusAcceptFx({
+					listingTransactionId: transaction.listingTransactionId,
+				});
+			}
 
-		return yield* listingTransactionGalleryFetchFx({
-			query: {
-				where: {
-					id,
+			const gallery = yield* coolGalleryCreateFx();
+
+			let sort = 0;
+			for (const uploadId of uploadIds) {
+				yield* galleryItemCreateFx({
+					galleryId: gallery.id,
+					uploadId,
+					sort,
+				});
+				sort++;
+			}
+
+			const id = genId();
+
+			yield* Effect.tryPromise(async () => {
+				return database
+					.insertInto("listing_transaction_gallery")
+					.values({
+						id,
+						listingTransactionId: transaction.listingTransactionId,
+						galleryId: gallery.id,
+						side: transaction.side,
+						createdAt: new Date(),
+					})
+					.returningAll()
+					.executeTakeFirstOrThrow();
+			});
+
+			yield* listingTransactionPatchFx({
+				listingTransactionId: transaction.listingTransactionId,
+			});
+
+			return yield* listingTransactionGalleryFetchFx({
+				query: {
+					where: {
+						id,
+					},
 				},
-			},
-		});
-	});
+			});
+		}),
+	);
 };
 
 export type listingTransactionGalleryCreateFx = ReturnType<
