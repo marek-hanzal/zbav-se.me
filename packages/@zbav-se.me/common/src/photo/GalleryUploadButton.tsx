@@ -87,7 +87,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 							label={"Upload gallery (button)"}
 							size={"xl"}
 							full
-							disabled={mutation.isPending}
+							disabled={mutation.isPending || uploadIds.length === 0}
 							loading={mutation.isPending}
 							onClick={() => {
 								mutation.mutate({

@@ -28,7 +28,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	components,
 	...props
 }) => {
-	const bottomPinPx = 16;
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 	const bottomRef = useRef<HTMLDivElement>(null);
@@ -67,22 +66,14 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					const scrollToBottom = () => {
 						bottom.scrollIntoView({
 							block: "end",
+							behavior: "smooth",
 						});
 					};
 
 					scrollToBottom();
 
 					const ro = new ResizeObserver(() => {
-						// const distanceFromBottom =
-						// 	container.scrollHeight - container.clientHeight - container.scrollTop;
-						// console.log("RO", {
-						// 	sh: container.scrollHeight,
-						// 	ch: container.clientHeight,
-						// 	st: container.scrollTop,
-						// });
 						scrollToBottom();
-						// if (distanceFromBottom < bottomPinPx) {
-						// }
 					});
 
 					ro.observe(content);
