@@ -50,7 +50,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				refetchInterval: 5_000,
 				placeholderData: keepPreviousData,
 			}}
-			deps={[]}
 		>
 			{({ data }) => {
 				const lastLog = data.data[data.data.length - 1];
