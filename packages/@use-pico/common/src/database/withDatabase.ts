@@ -26,7 +26,16 @@ export const withDatabase = <TDatabase>({
 				kysely = new Kysely<TDatabase>({
 					dialect,
 					log(log) {
-						console.log(log.query.sql);
+						switch (log.level) {
+							case "error": {
+								console.error(log.error);
+								break;
+							}
+							case "query": {
+								console.log(log.query.sql);
+								break;
+							}
+						}
 					},
 				});
 			}

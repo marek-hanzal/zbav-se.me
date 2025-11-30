@@ -32,7 +32,7 @@ export const withListingTransactionLogSelect = ({
 		sql<string>`'locationId'`.as("locationId"),
 		sql<Date>`now()`.as("time"),
 		sql<string>`'galleryId'`.as("galleryId"),
-		sql<any>`null`.as("gallery"),
+		sql<any>`null::json`.as("gallery"),
 	]);
 
 	const messageQuery = database.selectFrom("listing_transaction_message as ltm").select([
@@ -48,7 +48,7 @@ export const withListingTransactionLogSelect = ({
 		sql<string>`'locationId'`.as("locationId"),
 		sql<Date>`now()`.as("time"),
 		sql<string>`'galleryId'`.as("galleryId"),
-		sql<any>`null`.as("gallery"),
+		sql<any>`null::json`.as("gallery"),
 	]);
 
 	const galleryQuery = database.selectFrom("listing_transaction_gallery as ltg").select([
@@ -70,7 +70,7 @@ export const withListingTransactionLogSelect = ({
 					database,
 					sort: undefined,
 				})
-					.whereRef("gal.id", "in", eb.ref("ltg.galleryId"))
+					.whereRef("gal.id", "=", eb.ref("ltg.galleryId"))
 					.limit(1),
 			)
 				.$notNull()
@@ -90,7 +90,7 @@ export const withListingTransactionLogSelect = ({
 		"ltl.locationId",
 		"ltl.time",
 		sql<string>`'galleryId'`.as("galleryId"),
-		sql<any>`null`.as("gallery"),
+		sql<any>`null::json`.as("gallery"),
 	]);
 
 	const unionQuery = statusQuery
