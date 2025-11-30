@@ -21,8 +21,6 @@ export namespace ListingListContainer {
 		scrollToListingId?: string;
 		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
-		toolbar: ListingHeroContainer.Toolbar.RenderFn;
-		renderImageErrorToolbarFn: ListingHeroContainer.Toolbar.RenderFn;
 		overlay: ListingHeroContainer.Overlay.Render;
 		tools?: ListingDetailMenu.Tools[];
 	}
@@ -34,8 +32,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToListingId,
 	renderEmptyFn,
 	appendix,
-	toolbar,
-	renderImageErrorToolbarFn,
 	overlay,
 	tools,
 	...props
@@ -138,8 +134,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								locale={locale}
 								query={query}
 								listing={listing}
-								toolbar={toolbar}
-								renderImageErrorToolbarFn={renderImageErrorToolbarFn}
 								overlay={overlay}
 								tools={tools}
 							/>

@@ -11,7 +11,6 @@ import { Sheet } from "@zbav-se.me/ui/sheet";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
-import { ListingFeedToolbar } from "~/app/listing/ui/toolbar/ListingFeedToolbar";
 
 export const Route = createFileRoute("/$locale/buyer/listing/list")({
 	validateSearch: z.object({
@@ -41,27 +40,6 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 						<FeedListingOverlay
 							locale={locale}
 							listing={listing}
-						/>
-					)}
-					toolbar={({ query, listing }) => (
-						<ListingFeedToolbar
-							locale={locale}
-							query={query}
-							listing={listing}
-						/>
-					)}
-					renderImageErrorToolbarFn={({ query, listing }) => (
-						<ListingFeedToolbar
-							locale={locale}
-							query={query}
-							listing={listing}
-							snapTo={"unset"}
-							horizontal
-							flip
-							tools={[
-								"flag",
-								"ignore",
-							]}
 						/>
 					)}
 					query={{

@@ -11,7 +11,6 @@ import { BuyerIcon, DeadEndIcon } from "@zbav-se.me/ui/icon";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
-import { CartFeedToolbar } from "~/app/listing/ui/toolbar/CartFeedToolbar";
 
 export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 	validateSearch: z.object({
@@ -41,26 +40,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 						<FeedListingOverlay
 							locale={locale}
 							listing={listing}
-						/>
-					)}
-					toolbar={({ query, listing }) => (
-						<CartFeedToolbar
-							locale={locale}
-							query={query}
-							listing={listing}
-							tools={[
-								"cart",
-							]}
-						/>
-					)}
-					renderImageErrorToolbarFn={({ query, listing }) => (
-						<CartFeedToolbar
-							locale={locale}
-							query={query}
-							listing={listing}
-							snapTo={"unset"}
-							horizontal
-							flip
 						/>
 					)}
 					query={{

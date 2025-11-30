@@ -66,21 +66,8 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							full
 						/>
 					</LinkTo>
-				) : null}
-
-				{tools.includes("transaction") && listing.hasTransaction ? null : (
-					<ListingTransactionCreateButton
-						listing={listing}
-						onPostMutation={async (transaction) => {
-							return navigate({
-								to: "/$locale/buyer/transaction/$id/log",
-								params: {
-									locale,
-									id: transaction.id,
-								},
-							});
-						}}
-					/>
+				) : (
+					<ListingTransactionCreateButton listing={listing} />
 				)}
 
 				{tools.includes("cart") ? (

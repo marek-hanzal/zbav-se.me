@@ -11,15 +11,6 @@ import { type FC, type ReactNode, useCallback, useEffect, useId, useRef, useStat
 import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export namespace ListingHeroContainer {
-	export namespace Toolbar {
-		export interface Props {
-			query: tListingQuery;
-			listing: tListing;
-		}
-
-		export type RenderFn = (props: Props) => ReactNode;
-	}
-
 	export namespace Overlay {
 		export interface Props {
 			query: tListingQuery;
@@ -42,8 +33,6 @@ export namespace ListingHeroContainer {
 		 * Listing entity shown inside the hero preview.
 		 */
 		listing: tListing;
-		toolbar: Toolbar.RenderFn;
-		renderImageErrorToolbarFn: Toolbar.RenderFn;
 		overlay: Overlay.Render;
 		tools?: ListingDetailMenu.Tools[];
 	}
@@ -60,8 +49,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	query,
 	listing,
 	tools,
-	toolbar,
-	renderImageErrorToolbarFn,
 	overlay,
 	tweak,
 	...props
@@ -152,8 +139,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		onHidden: clearTimer,
 	});
 
-	const [hasToolbar, setHasToolbar] = useState(false);
-
 	return (
 		<>
 			<Container
@@ -192,21 +177,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					alt={`Hero image for listing ${listing.id}`}
 					visible={visible}
 					invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
-					onLoad={() => setHasToolbar(true)}
-					errorStatusProps={{
-						action: renderImageErrorToolbarFn({
-							query,
-							listing,
-						}),
-					}}
 				/>
-
-				{hasToolbar
-					? toolbar({
-							query,
-							listing,
-						})
-					: null}
 			</Container>
 
 			<BottomSheet

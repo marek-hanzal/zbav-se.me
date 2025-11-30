@@ -22,7 +22,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 			<Badge
 				ui={"FeedListingOverlay-price"}
 				tone={"secondary"}
-				theme={"dark"}
+				theme={"light"}
 				size={"lg"}
 				round={"default"}
 				snapTo={"top-center"}
