@@ -17,7 +17,7 @@
 		"@types/is-empty": "1.2.3",
 		"@types/luxon": "3.7.1",
 		"@types/qs": "6.14.0",
-		"fast-clean": "1.5.2",
+		"fast-clean": "1.5.3",
 		"flattie": "1.1.1",
 		"is-callable": "1.2.7",
 		"is-empty": "1.2.0",

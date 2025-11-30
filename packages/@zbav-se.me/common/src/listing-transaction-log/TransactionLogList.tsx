@@ -75,7 +75,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					scrollToBottom();
 
 					const ro = new ResizeObserver(() => {
-						// scrollToBottom();
+						scrollToBottom();
 					});
 
 					ro.observe(content);

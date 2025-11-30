@@ -16,7 +16,7 @@
 		"@lexical/react": "0.38.2",
 		"@lexical/utils": "0.38.2",
 		"@tanstack/react-query": "5.90.11",
-		"@tanstack/react-router": "1.139.10",
+		"@tanstack/react-router": "1.139.12",
 		"@types/luxon": "3.7.1",
 		"@types/object-path": "0.11.4",
 		"@use-pico/cls": "5.0.76",
@@ -40,7 +40,7 @@
 		"uuid": "13.0.0",
 		"write-excel-file": "2.3.10",
 		"zod": "4.1.13",
-		"zustand": "5.0.8"
+		"zustand": "5.0.9"
 	},
 	"devDependencies": {
 		"@aminnairi/rollup-plugin-external": "0.1.3",
