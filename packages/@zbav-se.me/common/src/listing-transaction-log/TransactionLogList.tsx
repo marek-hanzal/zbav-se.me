@@ -28,7 +28,9 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	components,
 	...props
 }) => {
+	const bottomPinPx = 16;
 	const containerRef = useRef<HTMLDivElement>(null);
+	const bottomRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<withListingTransactionLogCollectionQuery.Suspense
@@ -54,17 +56,36 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				// biome-ignore lint/correctness/useHookAtTopLevel: We're OK
 				// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
 				useLayoutEffect(() => {
-					const el = containerRef.current;
-					if (!el) {
+					const bottom = bottomRef.current;
+					const container = containerRef.current;
+					if (!bottom || !container) {
 						return;
 					}
 
-					el.scrollTo({
-						top: el.scrollHeight,
-						behavior: "instant",
+					const scrollToBottom = () => {
+						bottom.scrollIntoView({
+							block: "end",
+						});
+					};
+
+					scrollToBottom();
+
+					const ro = new ResizeObserver(() => {
+						const distanceFromBottom =
+							container.scrollHeight - container.clientHeight - container.scrollTop;
+						console.log("RO", distanceFromBottom, container.scrollHeight);
+						scrollToBottom();
+						if (distanceFromBottom < bottomPinPx) {
+						}
 					});
+
+					ro.observe(container);
+
+					return () => {
+						ro.disconnect();
+					};
 				}, [
-					data,
+					data.data.length,
 				]);
 
 				/**
@@ -112,6 +133,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									/>
 								);
 							})}
+
+							<div ref={bottomRef} />
 						</Container>
 
 						{isClosed ? null : (
