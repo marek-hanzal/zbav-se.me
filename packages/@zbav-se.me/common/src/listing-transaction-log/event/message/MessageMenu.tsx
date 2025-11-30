@@ -4,6 +4,7 @@ import type { FC } from "react";
 import { match } from "ts-pattern";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
+import { GalleryUploadButton } from "../../../photo/GalleryUploadButton";
 import type { TransactionChat } from "../../TransactionChat";
 
 export namespace MessageMenu {
@@ -27,7 +28,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer", () => {
 			return (
 				<>
-					<div>Upload photos</div>
+					<GalleryUploadButton />
 
 					<components.SellerInfoButton
 						locale={locale}
@@ -44,6 +45,8 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer-to-seller", () => {
 			return (
 				<>
+					<GalleryUploadButton />
+
 					<components.BuyerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
@@ -59,6 +62,8 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller", () => {
 			return (
 				<>
+					<GalleryUploadButton />
+
 					<components.BuyerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
@@ -74,6 +79,8 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller-to-buyer", () => {
 			return (
 				<>
+					<GalleryUploadButton />
+
 					<components.SellerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}

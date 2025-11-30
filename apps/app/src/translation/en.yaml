@@ -46,6 +46,9 @@
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
   ref: Listing photos (label)
   value: Listing photos (label)
+1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
+  ref: Upload photos (button)
+  value: Upload photos (button)
 19be7c986ac14c2bf115207f1c2292064ecaad2932ed3e1edecc40e2:
   ref: Clear all sorts (button)
   value: Clear all sorts (button)
@@ -142,6 +145,9 @@
 40e303be86527f9bd9a2ff0c64ae95d0376262257c76a19e4c60121f:
   ref: Listing Score - Cart (label)
   value: Listing Score - Cart (label)
+420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
+  ref: Cancel (button)
+  value: Cancel (button)
 42a143c5ecf9eb24def0b8a4546ada7ea1adc0f1cca67c0e4c5bee48:
   ref: Seller transaction rejected (seller-buyer) (label)
   value: Seller transaction rejected (seller-buyer) (label)
@@ -208,6 +214,9 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
   ref: Feed name (placeholder)
   value: Feed name (placeholder)
+5f89ec425f9a625c897a3bcc1d45953bef4ace5e5b7cfacf258790c5:
+  ref: Upload gallery (button)
+  value: Upload gallery (button)
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
