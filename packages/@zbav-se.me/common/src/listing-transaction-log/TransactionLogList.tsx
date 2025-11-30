@@ -34,6 +34,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
+	const smoothRef = useRef(false);
 
 	const listingTransactionLogCollectionQuery =
 		withListingTransactionLogCollectionQuery.useSuspenseQuery(
@@ -79,7 +80,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 		scrollToBottom("instant");
 
 		const ro = new ResizeObserver(() => {
-			console.log("resize");
 			scrollToBottom("smooth");
 		});
 
