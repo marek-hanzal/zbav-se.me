@@ -2,20 +2,24 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { tvc } from "@use-pico/cls";
+import { withListingTransactionGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { GalleryUpload } from "./GalleryUpload";
 
 export namespace GalleryUploadButton {
 	export interface Props extends Button.Props {
-		//
+		listingTransactionId: string;
 	}
 }
 
-export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({ ...props }) => {
+export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
+	listingTransactionId,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [uploadIds, setUploadIds] = useState<string[]>([]);
-    // const mutation = withTrP
+	const mutation = withListingTransactionGalleryCreateMutation.useMutation();
 
 	return (
 		<>
@@ -71,12 +75,21 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({ ...props })
 									setUploadIds([]);
 								},
 							}}
+							disabled={mutation.isPending}
 						/>
 
 						<Button
 							label={"Upload gallery (button)"}
 							size={"xl"}
 							full
+							disabled={mutation.isPending}
+							loading={mutation.isPending}
+							onClick={() => {
+								mutation.mutate({
+									listingTransactionId,
+									uploadIds: uploadIds,
+								});
+							}}
 						/>
 					</div>
 				</Container>

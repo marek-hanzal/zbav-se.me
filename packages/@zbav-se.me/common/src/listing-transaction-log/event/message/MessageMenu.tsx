@@ -28,7 +28,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer", () => {
 			return (
 				<>
-					<GalleryUploadButton />
+					<GalleryUploadButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
 
 					<components.SellerInfoButton
 						locale={locale}
@@ -45,7 +47,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("buyer-to-seller", () => {
 			return (
 				<>
-					<GalleryUploadButton />
+					<GalleryUploadButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
 
 					<components.BuyerInfoButton
 						locale={locale}
@@ -62,7 +66,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller", () => {
 			return (
 				<>
-					<GalleryUploadButton />
+					<GalleryUploadButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
 
 					<components.BuyerInfoButton
 						locale={locale}
@@ -79,7 +85,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 		.with("seller-to-buyer", () => {
 			return (
 				<>
-					<GalleryUploadButton />
+					<GalleryUploadButton
+						listingTransactionId={listingTransactionMessage.listingTransactionId}
+					/>
 
 					<components.SellerInfoButton
 						locale={locale}
