@@ -1,12 +1,14 @@
 import {
 	type tListingTransactionLog,
 	type tUserSideEnum,
+	zListingTransactionGallery,
 	zListingTransactionMessage,
 	zListingTransactionStatus,
 } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
+import { GalleryEvent } from "./event/gallery/GalleryEvent";
 import { MessageEvent } from "./event/message/MessageEvent";
 import { StatusSwitchEvent } from "./event/status/StatusSwitchEvent";
 
@@ -61,7 +63,21 @@ export const TransactionLogItem: FC<TransactionLogItem.Props> = ({
 				/>
 			);
 		})
-		.with("gallery", "location", () => {
+		.with("gallery", () => {
+			const gallery = zListingTransactionGallery.parse(listingTransactionLog);
+
+			return (
+				<GalleryEvent
+					locale={locale}
+					side={side}
+					type={type}
+					listingTransactionGallery={gallery}
+					isCurrent={isCurrent}
+					isClosed={isClosed}
+				/>
+			);
+		})
+		.with("location", () => {
 			return "not-yet";
 		})
 		.exhaustive();

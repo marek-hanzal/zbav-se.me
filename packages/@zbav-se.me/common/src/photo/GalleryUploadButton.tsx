@@ -19,7 +19,12 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [uploadIds, setUploadIds] = useState<string[]>([]);
-	const mutation = withListingTransactionGalleryCreateMutation.useMutation();
+	const mutation = withListingTransactionGalleryCreateMutation.useMutation({
+		async onPostMutation() {
+			setIsOpen(false);
+			setUploadIds([]);
+		},
+	});
 
 	return (
 		<>

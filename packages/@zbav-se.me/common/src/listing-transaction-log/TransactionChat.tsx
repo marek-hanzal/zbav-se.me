@@ -3,6 +3,7 @@ import { translator } from "@use-pico/common/translator";
 import {
 	type tListingTransactionLog,
 	type tUserSideEnum,
+	zListingTransactionGallery,
 	zListingTransactionMessage,
 	zListingTransactionStatus,
 } from "@zbav-se.me/sdk/api/user";
@@ -11,6 +12,7 @@ import { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
 import { useSideSwitch } from "../listing-transaction/useSideSwitch";
+import { GalleryMenu } from "./event/gallery/GalleryMenu";
 import { MessageMenu } from "./event/message/MessageMenu";
 import { StatusMenu } from "./event/status/StatusMenu";
 
@@ -103,7 +105,17 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 						);
 					})
 					.with("gallery", () => {
-						return "not yet";
+						const gallery = zListingTransactionGallery.parse(listingTransactionLog);
+
+						return (
+							<GalleryMenu
+								locale={locale}
+								type={type}
+								listingTransactionGallery={gallery}
+								menuState={menuState}
+								components={components}
+							/>
+						);
 					})
 					.with("location", () => {
 						return "not yet";

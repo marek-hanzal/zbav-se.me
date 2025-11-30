@@ -28,7 +28,7 @@ export const withListingTransactionGallerySelect = ({
 					database,
 					sort: undefined,
 				})
-					.whereRef("gal.id", "in", eb.ref("ltg.galleryId"))
+					.whereRef("gal.id", "=", eb.ref("ltg.galleryId"))
 					.limit(1),
 			)
 				.$notNull()
