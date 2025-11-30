@@ -8,7 +8,7 @@ import type {
 	tUserSideEnum,
 } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useLayoutEffect, useRef } from "react";
+import { type FC, useCallback, useLayoutEffect, useRef } from "react";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionLogItem } from "./TransactionLogItem";
 
@@ -33,7 +33,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const bottomRef = useRef<HTMLDivElement>(null);
 
 	const listingTransactionLogCollectionQuery =
 		withListingTransactionLogCollectionQuery.useSuspenseQuery(
@@ -58,36 +57,32 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	const lastLog = data.data[data.data.length - 1];
 	const lastStatusLog = data.data.findLast((item) => item.event === "status");
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
+	const scrollToBottom = useCallback((behavior: ScrollBehavior) => {
+		containerRef.current?.scrollTo({
+			top: containerRef.current?.scrollHeight,
+			behavior,
+		});
+	}, []);
+
 	useLayoutEffect(() => {
-		const bottom = bottomRef.current;
-		const container = containerRef.current;
-		const content = contentRef.current;
-		if (!bottom || !container || !content) {
+		if (!contentRef.current) {
 			return;
 		}
 
-		const scrollToBottom = (behavior: ScrollBehavior) => {
-			container.scrollTo({
-				top: container.scrollHeight,
-				behavior,
-			});
-		};
-
-		scrollToBottom("smooth");
+		scrollToBottom("instant");
 
 		const ro = new ResizeObserver(() => {
 			scrollToBottom("smooth");
 		});
 
-		ro.observe(content);
+		ro.observe(contentRef.current);
 
 		return () => {
 			console.log("disconnect");
 			ro.disconnect();
 		};
 	}, [
-		data.data.length,
+		scrollToBottom,
 	]);
 
 	/**
@@ -139,8 +134,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 							/>
 						);
 					})}
-
-					<div ref={bottomRef} />
 				</Container>
 			</Container>
 
