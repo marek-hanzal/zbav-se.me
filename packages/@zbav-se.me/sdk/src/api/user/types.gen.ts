@@ -336,6 +336,43 @@ export type tListingTransactionLogCollection = {
 };
 
 /**
+ * Gallery item data
+ */
+export type tGalleryItem = {
+    /**
+     * ID of the gallery item
+     */
+    id: string;
+    /**
+     * ID of the gallery this item belongs to
+     */
+    galleryId: string;
+    /**
+     * ID of the upload this image belongs to
+     */
+    uploadId: string;
+    /**
+     * Sort order of the image in the gallery
+     */
+    sort: number;
+    upload: tUpload;
+};
+
+/**
+ * Gallery data with items
+ */
+export type tGallery = {
+    /**
+     * ID of the gallery
+     */
+    id: string;
+    /**
+     * Gallery items sorted by sort order
+     */
+    items: Array<tGalleryItem>;
+};
+
+/**
  * Listing transaction gallery entry
  */
 export type tListingTransactionGallery = {
@@ -360,6 +397,7 @@ export type tListingTransactionGallery = {
      * Event type
      */
     event: 'gallery';
+    gallery: tGallery;
 };
 
 /**
@@ -1521,43 +1559,6 @@ export type tListingCollection = {
      * Whether there are more items to fetch
      */
     more: boolean;
-};
-
-/**
- * Gallery item data
- */
-export type tGalleryItem = {
-    /**
-     * ID of the gallery item
-     */
-    id: string;
-    /**
-     * ID of the gallery this item belongs to
-     */
-    galleryId: string;
-    /**
-     * ID of the upload this image belongs to
-     */
-    uploadId: string;
-    /**
-     * Sort order of the image in the gallery
-     */
-    sort: number;
-    upload: tUpload;
-};
-
-/**
- * Gallery data with items
- */
-export type tGallery = {
-    /**
-     * ID of the gallery
-     */
-    id: string;
-    /**
-     * Gallery items sorted by sort order
-     */
-    items: Array<tGalleryItem>;
 };
 
 /**

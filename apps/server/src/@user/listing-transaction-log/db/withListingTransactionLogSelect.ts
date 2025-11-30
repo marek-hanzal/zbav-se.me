@@ -1,5 +1,7 @@
 import { sql } from "kysely";
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
+import { withGallerySelect } from "~/@user/gallery/db/withGallerySelect";
 import type { ListingTransactionLogSortSchema } from "~/@user/listing-transaction-log/schema/ListingTransactionLogSortSchema";
 import type { ListingTransactionEventEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionEventEnumSchema";
 import type { ListingTransactionStatusEnumSchema } from "~/app/listing-transaction/schema/ListingTransactionStatusEnumSchema";
@@ -60,6 +62,17 @@ export const withListingTransactionLogSelect = ({
 		sql<string>`'locationId'`.as("locationId"),
 		sql<Date>`now()`.as("time"),
 		"ltg.galleryId",
+		(eb) =>
+			jsonObjectFrom(
+				withGallerySelect({
+					database,
+					sort: undefined,
+				})
+					.whereRef("gal.id", "in", eb.ref("ltg.galleryId"))
+					.limit(1),
+			)
+				.$notNull()
+				.as("gallery"),
 	]);
 
 	const locationQuery = database.selectFrom("listing_transaction_location as ltl").select([

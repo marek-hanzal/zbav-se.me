@@ -413,6 +413,53 @@ export const sListingTransactionLogCollection = {
     ]
 } as const;
 
+export const sGalleryItem = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        uploadId: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        upload: {
+            $ref: '#/components/schemas/Upload'
+        }
+    },
+    required: [
+        'id',
+        'galleryId',
+        'uploadId',
+        'sort',
+        'upload'
+    ]
+} as const;
+
+export const sGallery = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        items: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/GalleryItem'
+            }
+        }
+    },
+    required: [
+        'id',
+        'items'
+    ]
+} as const;
+
 export const sListingTransactionGallery = {
     type: 'object',
     properties: {
@@ -436,6 +483,9 @@ export const sListingTransactionGallery = {
             enum: [
                 'gallery'
             ]
+        },
+        gallery: {
+            $ref: '#/components/schemas/Gallery'
         }
     },
     required: [
@@ -444,7 +494,8 @@ export const sListingTransactionGallery = {
         'side',
         'galleryId',
         'createdAt',
-        'event'
+        'event',
+        'gallery'
     ]
 } as const;
 
@@ -1904,53 +1955,6 @@ export const sListingCollection = {
     required: [
         'data',
         'more'
-    ]
-} as const;
-
-export const sGalleryItem = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        galleryId: {
-            type: 'string'
-        },
-        uploadId: {
-            type: 'string'
-        },
-        sort: {
-            type: 'number'
-        },
-        upload: {
-            $ref: '#/components/schemas/Upload'
-        }
-    },
-    required: [
-        'id',
-        'galleryId',
-        'uploadId',
-        'sort',
-        'upload'
-    ]
-} as const;
-
-export const sGallery = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        items: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/GalleryItem'
-            }
-        }
-    },
-    required: [
-        'id',
-        'items'
     ]
 } as const;
 

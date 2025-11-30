@@ -365,6 +365,45 @@ export const zListingTransactionLogQuery = z.object({
 export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQuery>;
 
 /**
+ * Gallery item data
+ */
+export const zGalleryItem = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery item'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery this item belongs to'
+    }),
+    uploadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the upload this image belongs to'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order of the image in the gallery'
+    }),
+    upload: zUpload
+}).register(z.globalRegistry, {
+    description: 'Gallery item data'
+});
+
+export type zGalleryItem = z.infer<typeof zGalleryItem>;
+
+/**
+ * Gallery data with items
+ */
+export const zGallery = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    items: z.array(zGalleryItem).register(z.globalRegistry, {
+        description: 'Gallery items sorted by sort order'
+    })
+}).register(z.globalRegistry, {
+    description: 'Gallery data with items'
+});
+
+export type zGallery = z.infer<typeof zGallery>;
+
+/**
  * Listing transaction gallery entry
  */
 export const zListingTransactionGallery = z.object({
@@ -383,7 +422,8 @@ export const zListingTransactionGallery = z.object({
     }),
     event: z.enum(['gallery']).register(z.globalRegistry, {
         description: 'Event type'
-    })
+    }),
+    gallery: zGallery
 }).register(z.globalRegistry, {
     description: 'Listing transaction gallery entry'
 });
@@ -1644,45 +1684,6 @@ export const zListingCountQuery = z.object({
 });
 
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
-
-/**
- * Gallery item data
- */
-export const zGalleryItem = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery item'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery this item belongs to'
-    }),
-    uploadId: z.string().register(z.globalRegistry, {
-        description: 'ID of the upload this image belongs to'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order of the image in the gallery'
-    }),
-    upload: zUpload
-}).register(z.globalRegistry, {
-    description: 'Gallery item data'
-});
-
-export type zGalleryItem = z.infer<typeof zGalleryItem>;
-
-/**
- * Gallery data with items
- */
-export const zGallery = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    items: z.array(zGalleryItem).register(z.globalRegistry, {
-        description: 'Gallery items sorted by sort order'
-    })
-}).register(z.globalRegistry, {
-    description: 'Gallery data with items'
-});
-
-export type zGallery = z.infer<typeof zGallery>;
 
 /**
  * Category data
