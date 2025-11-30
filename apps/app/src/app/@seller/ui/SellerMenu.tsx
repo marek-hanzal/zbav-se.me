@@ -1,7 +1,7 @@
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { PostIcon, PublicIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { BuyerIcon, PostIcon, PublicIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import { Tile } from "@zbav-se.me/ui/tile";
 
 export namespace SellerMenu {
@@ -30,6 +30,7 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 				<Tile
 					iconEnabled={PostIcon}
 					label={"Create listing (label)"}
+					tone={"secondary"}
 				/>
 			</LinkTo>
 
@@ -82,6 +83,19 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 				<Tile
 					iconEnabled={UserIcon}
 					label={"User profile (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/buyer"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={BuyerIcon}
+					label={"To buyer (label)"}
 				/>
 			</LinkTo>
 		</Container>

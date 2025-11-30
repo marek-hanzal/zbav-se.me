@@ -14,19 +14,19 @@ export const Tile: FC<Tile.Props> = ({ tweak, ...props }) => {
 			theme={"light"}
 			size={"xl"}
 			iconPosition={"right"}
+			menu
 			tweak={[
+				tweak,
 				{
 					slot: {
 						root: {
 							class: [
-								"justify-between",
+								"py-10",
 							],
 						},
 					},
 				},
-				tweak,
 			]}
-			full
 			{...props}
 		/>
 	);

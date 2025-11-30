@@ -1,77 +1,25 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { useEffect } from "react";
 import { SellerMenu } from "~/app/@seller/ui/SellerMenu";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export const Route = createFileRoute("/$locale/seller/")({
-	async loader({ context: { queryClient } }) {
-		await Promise.all([
-			withListingTransactionCollectionQuery.prefetch(queryClient, {
-				sort: [
-					{
-						field: "updatedAt",
-						direction: "desc",
-					},
-				],
-				meta: {
-					side: "seller",
-				},
-			}),
-		]);
-	},
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<TitleContainer
-				ui="Seller-root"
-				textTitle={"Seller home (title)"}
-				left={
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to="/$locale/dashboard"
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
-				<SellerMenu locale={locale} />
-
-				<SignOutButton
-					locale={locale}
-					tweak={{
-						slot: {
-							wrapper: {
-								class: [
-									"mx-auto",
-								],
-							},
-						},
-					}}
-				/>
-			</TitleContainer>
-		);
-	},
 	component() {
 		const { locale } = Route.useParams();
+		const mutation = withUserExPatchMutation.useMutation();
+
+		useEffect(() => {
+			mutation.mutate({
+				side: "seller",
+			});
+		}, []);
 
 		return (
 			<TitleContainer
 				ui="Seller-root"
 				textTitle={"Seller home (title)"}
-				left={
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to="/$locale/dashboard"
-						params={{
-							locale,
-						}}
-					/>
-				}
 			>
 				<SellerMenu locale={locale} />
 

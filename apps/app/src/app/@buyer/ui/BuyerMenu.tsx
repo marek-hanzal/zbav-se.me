@@ -1,7 +1,7 @@
 import { UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { CartIcon, FeedIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { CartIcon, FeedIcon, SellerIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import { Tile } from "@zbav-se.me/ui/tile";
 
 export namespace BuyerMenu {
@@ -29,6 +29,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 				<Tile
 					iconEnabled={FeedIcon}
 					label={"Feed (label)"}
+					tone={"secondary"}
 				/>
 			</LinkTo>
 
@@ -81,6 +82,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 				<Tile
 					iconEnabled={UserIcon}
 					label={"User profile (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/seller"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={SellerIcon}
+					label={"To seller (label)"}
 				/>
 			</LinkTo>
 		</Container>

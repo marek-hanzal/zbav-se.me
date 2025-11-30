@@ -383,7 +383,7 @@ export const ToneRoseCls = contract(PicoCls.contract)
 		},
 		"border.default": {
 			class: [
-				"border-none",
+				"border",
 			],
 		},
 		"shadow.default": {
