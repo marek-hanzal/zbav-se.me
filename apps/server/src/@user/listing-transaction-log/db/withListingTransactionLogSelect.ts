@@ -32,6 +32,7 @@ export const withListingTransactionLogSelect = ({
 		sql<string>`'locationId'`.as("locationId"),
 		sql<Date>`now()`.as("time"),
 		sql<string>`'galleryId'`.as("galleryId"),
+		sql<any>`null`.as("gallery"),
 	]);
 
 	const messageQuery = database.selectFrom("listing_transaction_message as ltm").select([
@@ -47,6 +48,7 @@ export const withListingTransactionLogSelect = ({
 		sql<string>`'locationId'`.as("locationId"),
 		sql<Date>`now()`.as("time"),
 		sql<string>`'galleryId'`.as("galleryId"),
+		sql<any>`null`.as("gallery"),
 	]);
 
 	const galleryQuery = database.selectFrom("listing_transaction_gallery as ltg").select([
@@ -88,6 +90,7 @@ export const withListingTransactionLogSelect = ({
 		"ltl.locationId",
 		"ltl.time",
 		sql<string>`'galleryId'`.as("galleryId"),
+		sql<any>`null`.as("gallery"),
 	]);
 
 	const unionQuery = statusQuery
