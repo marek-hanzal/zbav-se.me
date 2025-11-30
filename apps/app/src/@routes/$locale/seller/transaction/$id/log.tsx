@@ -4,12 +4,9 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { ListingDetailButton } from "@zbav-se.me/buyer/listing";
 import { BuyerInfoButton } from "@zbav-se.me/buyer/listing-transaction";
-import { TransactionChat, TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
+import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
 import type { tListingTransactionLogQuery } from "@zbav-se.me/sdk/api/user";
-import {
-	withListingTransactionFetchQuery,
-	withListingTransactionLogCollectionQuery,
-} from "@zbav-se.me/sdk/query/user";
+import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { SellerInfoButton } from "@zbav-se.me/seller/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
@@ -60,17 +57,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 			],
 		};
 
-		/**
-		 * Because list and chat uses the same query, we need to suspense it here to prevent UI jumps.
-		 */
-		const listingTransactionLogCollectionQuery =
-			withListingTransactionLogCollectionQuery.useSuspenseQuery(query);
-
-		const latestLog =
-			listingTransactionLogCollectionQuery.data.data[
-				listingTransactionLogCollectionQuery.data.data.length - 1
-			];
-
 		return (
 			<TitleContainer
 				ui="TransactionView-root"
@@ -86,40 +72,26 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 					/>
 				}
 			>
-				<Container
-					ui={"Seller-TransactionLog-root"}
-					layout={"vertical-content-footer"}
-					gap={"lg"}
-				>
-					<TransactionLogList
-						locale={locale}
-						side="seller"
-						listingTransaction={listingTransactionFetchQuery.data}
-						query={query}
-					/>
-
-					{latestLog ? (
-						<TransactionChat
-							locale={locale}
-							side="seller"
-							listingTransactionLog={latestLog}
-							components={{
-								SellerInfoButton,
-								BuyerInfoButton,
-								ListingDetailButton({ modalRootId }) {
-									return (
-										<ListingDetailButton
-											locale={locale}
-											detailSheetId={modalRootId}
-											listing={listingTransactionFetchQuery.data.listingId}
-											label={"Listing detail (label)"}
-										/>
-									);
-								},
-							}}
-						/>
-					) : null}
-				</Container>
+				<TransactionLogList
+					locale={locale}
+					side="seller"
+					listingTransaction={listingTransactionFetchQuery.data}
+					query={query}
+					components={{
+						SellerInfoButton,
+						BuyerInfoButton,
+						ListingDetailButton({ modalRootId }) {
+							return (
+								<ListingDetailButton
+									locale={locale}
+									detailSheetId={modalRootId}
+									listing={listingTransactionFetchQuery.data.listingId}
+									label={"Listing detail (label)"}
+								/>
+							);
+						},
+					}}
+				/>
 			</TitleContainer>
 		);
 	},

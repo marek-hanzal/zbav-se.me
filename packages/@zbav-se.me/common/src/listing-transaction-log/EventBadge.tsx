@@ -161,11 +161,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 							]
 						: undefined,
 				],
-				token: isCurrent
-					? [
-							"shadow.lg",
-						]
-					: undefined,
 			},
 		},
 	};
