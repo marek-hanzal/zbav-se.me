@@ -15,6 +15,7 @@ export namespace GalleryUploadButton {
 export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({ ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [uploadIds, setUploadIds] = useState<string[]>([]);
+    // const mutation = withTrP
 
 	return (
 		<>

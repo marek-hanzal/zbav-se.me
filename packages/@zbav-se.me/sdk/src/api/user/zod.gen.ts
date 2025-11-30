@@ -514,6 +514,22 @@ export const zListingTransactionLogCollection = z.object({
 export type zListingTransactionLogCollection = z.infer<typeof zListingTransactionLogCollection>;
 
 /**
+ * Request to create a listing transaction gallery
+ */
+export const zListingTransactionGalleryCreate = z.object({
+    listingTransactionId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the listing transaction to add a gallery to'
+    }),
+    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create a listing transaction gallery'
+});
+
+export type zListingTransactionGalleryCreate = z.infer<typeof zListingTransactionGalleryCreate>;
+
+/**
  * Buyer info for the listing transaction
  */
 export const zListingTransactionBuyerInfo = z.object({
@@ -2849,6 +2865,21 @@ export type zapiListingTransactionBuyerInfoRequest = z.infer<typeof zApiListingT
 export const zApiListingTransactionBuyerInfoResponse = zListingTransactionBuyerInfo;
 
 export type zapiListingTransactionBuyerInfoResponse = z.infer<typeof zApiListingTransactionBuyerInfoResponse>;
+
+export const zApiListingTransactionGalleryCreateData = z.object({
+    body: z.optional(zListingTransactionGalleryCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingTransactionGalleryCreateRequest = z.infer<typeof zApiListingTransactionGalleryCreateData>;
+
+/**
+ * Gallery created
+ */
+export const zApiListingTransactionGalleryCreateResponse = zListingTransactionGallery;
+
+export type zapiListingTransactionGalleryCreateResponse = z.infer<typeof zApiListingTransactionGalleryCreateResponse>;
 
 export const zApiListingTransactionLogCollectionData = z.object({
     body: z.optional(zListingTransactionLogQuery),

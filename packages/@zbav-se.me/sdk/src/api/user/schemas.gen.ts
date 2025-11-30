@@ -591,6 +591,26 @@ export const sListingTransactionLog = {
     ]
 } as const;
 
+export const sListingTransactionGalleryCreate = {
+    type: 'object',
+    properties: {
+        listingTransactionId: {
+            type: 'string'
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        }
+    },
+    required: [
+        'listingTransactionId',
+        'uploadIds'
+    ]
+} as const;
+
 export const sListingTransactionBuyerInfo = {
     type: 'object',
     properties: {

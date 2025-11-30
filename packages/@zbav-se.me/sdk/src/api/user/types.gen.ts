@@ -467,6 +467,20 @@ export type tListingTransactionStatus = {
 export type tListingTransactionLog = tListingTransactionStatus | tListingTransactionMessage | tListingTransactionLocation | tListingTransactionGallery;
 
 /**
+ * Request to create a listing transaction gallery
+ */
+export type tListingTransactionGalleryCreate = {
+    /**
+     * The ID of the listing transaction to add a gallery to
+     */
+    listingTransactionId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
  * Buyer info for the listing transaction
  */
 export type tListingTransactionBuyerInfo = {
@@ -3139,6 +3153,46 @@ export type tApiListingTransactionBuyerInfoResponse = {
 
 export type apiListingTransactionBuyerInfoResponse = tApiListingTransactionBuyerInfoResponse[keyof tApiListingTransactionBuyerInfoResponse];
 
+export type tApiListingTransactionGalleryCreateRequest = {
+    /**
+     * Query object for listing transaction gallery creation
+     */
+    body?: tListingTransactionGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-transaction/gallery/create';
+};
+
+export type apiListingTransactionGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
+    /**
+     * Access denied
+     */
+    403: tMessage;
+    /**
+     * Listing transaction not found or not accessible
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingTransactionGalleryCreateError = apiListingTransactionGalleryCreateErrors[keyof apiListingTransactionGalleryCreateErrors];
+
+export type tApiListingTransactionGalleryCreateResponse = {
+    /**
+     * Gallery created
+     */
+    200: tListingTransactionGallery;
+};
+
+export type apiListingTransactionGalleryCreateResponse = tApiListingTransactionGalleryCreateResponse[keyof tApiListingTransactionGalleryCreateResponse];
+
 export type tApiListingTransactionLogCollectionRequest = {
     body?: tListingTransactionLogQuery;
     path?: never;
@@ -3175,10 +3229,6 @@ export type tApiListingTransactionMessageCreateRequest = {
 };
 
 export type apiListingTransactionMessageCreateErrors = {
-    /**
-     * Invalid request
-     */
-    400: tMessage;
     /**
      * Access denied
      */
