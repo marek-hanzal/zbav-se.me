@@ -8,7 +8,8 @@ import type {
 	tUserSideEnum,
 } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useCallback, useLayoutEffect, useRef } from "react";
+import { type FC, useLayoutEffect, useRef } from "react";
+import { useDebouncedCallback } from "use-debounce";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionLogItem } from "./TransactionLogItem";
 
@@ -57,28 +58,37 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	const lastLog = data.data[data.data.length - 1];
 	const lastStatusLog = data.data.findLast((item) => item.event === "status");
 
-	const scrollToBottom = useCallback((behavior: ScrollBehavior) => {
-		containerRef.current?.scrollTo({
-			top: containerRef.current?.scrollHeight,
-			behavior,
-		});
-	}, []);
+	const scrollToBottom = useDebouncedCallback(
+		(behavior: ScrollBehavior) => {
+			containerRef.current?.scrollTo({
+				top: containerRef.current?.scrollHeight,
+				behavior,
+			});
+		},
+		150,
+		{
+			leading: true,
+		},
+	);
+
+	const resizeRef = useRef(false);
 
 	useLayoutEffect(() => {
-		if (!contentRef.current) {
+		if (!contentRef.current || !containerRef.current) {
 			return;
 		}
 
 		scrollToBottom("instant");
 
 		const ro = new ResizeObserver(() => {
-			scrollToBottom("smooth");
+			console.log("resize");
+			scrollToBottom(resizeRef.current ? "smooth" : "instant");
+			resizeRef.current = true;
 		});
 
 		ro.observe(contentRef.current);
 
 		return () => {
-			console.log("disconnect");
 			ro.disconnect();
 		};
 	}, [
