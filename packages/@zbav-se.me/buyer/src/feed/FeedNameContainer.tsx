@@ -24,7 +24,6 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange
 			<Status
 				icon={FeedIcon}
 				textTitle={"Feed name (title)"}
-				textMessage={"Feed name (hint)"}
 				action={
 					<FormField full>
 						{(props) => (

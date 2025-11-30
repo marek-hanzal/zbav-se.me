@@ -37,7 +37,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 				theme={"dark"}
 				onClick={() => setIsOpen(true)}
 				label={"Create new feed (title)"}
-				size={"lg"}
+				size={"xl"}
 				full
 				{...props}
 			/>
@@ -68,7 +68,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 						tone={"secondary"}
 						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"lg"}
+						size={"xl"}
 						loading={feedCreateMutation.isPending}
 						disabled={!change || !name || feedCreateMutation.isPending}
 						full

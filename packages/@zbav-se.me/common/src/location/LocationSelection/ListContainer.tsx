@@ -46,6 +46,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 				items={"center"}
 				tone={"unset"}
 				theme={"unset"}
+				scroll={"vertical"}
 			>
 				<Status
 					tone={"danger"}

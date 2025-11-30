@@ -1,4 +1,4 @@
-import { MenuIcon } from "@use-pico/client/icon";
+import { PlusIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -117,7 +117,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				{menu ? (
 					<>
 						<Button
-							iconEnabled={MenuIcon}
+							iconEnabled={PlusIcon}
 							tone={"link"}
 							onClick={() => setIsMenu((prev) => !prev)}
 						/>

@@ -74,19 +74,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 			</LinkTo>
 
 			<LinkTo
-				to="/$locale/seller/user"
-				params={{
-					locale,
-				}}
-				full
-			>
-				<Tile
-					iconEnabled={UserIcon}
-					label={"User profile (label)"}
-				/>
-			</LinkTo>
-
-			<LinkTo
 				to="/$locale/buyer"
 				params={{
 					locale,
@@ -96,6 +83,19 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 				<Tile
 					iconEnabled={BuyerIcon}
 					label={"To buyer (label)"}
+				/>
+			</LinkTo>
+
+			<LinkTo
+				to="/$locale/seller/user"
+				params={{
+					locale,
+				}}
+				full
+			>
+				<Tile
+					iconEnabled={UserIcon}
+					label={"User profile (label)"}
 				/>
 			</LinkTo>
 		</Container>

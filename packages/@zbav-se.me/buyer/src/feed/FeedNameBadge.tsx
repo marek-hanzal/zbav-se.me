@@ -70,7 +70,7 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 						tone={"secondary"}
 						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"lg"}
+						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						full
