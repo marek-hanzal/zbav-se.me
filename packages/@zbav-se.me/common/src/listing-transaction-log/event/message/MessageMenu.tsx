@@ -24,12 +24,20 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 	menuState,
 	components,
 }) => {
+	const [, setMenuState] = menuState;
+
 	return match(type)
 		.with("buyer", () => {
 			return (
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.SellerInfoButton
@@ -49,6 +57,12 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.BuyerInfoButton
@@ -68,6 +82,12 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.BuyerInfoButton
@@ -87,6 +107,12 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.SellerInfoButton

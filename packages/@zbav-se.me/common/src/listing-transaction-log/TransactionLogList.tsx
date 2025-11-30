@@ -34,7 +34,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
-	const smoothRef = useRef(false);
 
 	const listingTransactionLogCollectionQuery =
 		withListingTransactionLogCollectionQuery.useSuspenseQuery(

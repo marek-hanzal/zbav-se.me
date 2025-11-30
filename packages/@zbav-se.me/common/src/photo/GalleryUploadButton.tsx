@@ -10,11 +10,15 @@ import { GalleryUpload } from "./GalleryUpload";
 export namespace GalleryUploadButton {
 	export interface Props extends Button.Props {
 		listingTransactionId: string;
+		onSuccess(): void;
+		onCancel(): void;
 	}
 }
 
 export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 	listingTransactionId,
+	onSuccess,
+	onCancel,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -23,6 +27,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 		async onPostMutation() {
 			setIsOpen(false);
 			setUploadIds([]);
+			onSuccess();
 		},
 	});
 
@@ -78,6 +83,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 								onClick() {
 									setIsOpen(false);
 									setUploadIds([]);
+									onCancel();
 								},
 							}}
 							disabled={mutation.isPending}

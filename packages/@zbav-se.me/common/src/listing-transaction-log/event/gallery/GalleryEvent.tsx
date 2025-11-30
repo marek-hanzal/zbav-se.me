@@ -21,13 +21,15 @@ export const GalleryEvent: FC<GalleryEvent.Props> = ({ listingTransactionGallery
 			timestamp={listingTransactionGallery.createdAt}
 			{...props}
 		>
-			<HeroImage
-				ui={"GalleryEvent-image"}
-				src={hero.upload.url}
-				alt={`Hero image for transaction ${listingTransactionGallery.id}`}
-				visible
-				round
-			/>
+			<div className="w-full h-64 max-h-64 py-1">
+				<HeroImage
+					ui={"GalleryEvent-image"}
+					src={hero.upload.url}
+					alt={`Hero image for transaction ${listingTransactionGallery.id}`}
+					visible
+					round
+				/>
+			</div>
 		</EventBadge>
 	);
 };

@@ -1,4 +1,5 @@
 import type { tListingTransactionGallery } from "@zbav-se.me/sdk/api/user";
+import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
@@ -9,6 +10,7 @@ export namespace GalleryMenu {
 	export interface Props {
 		locale: string;
 		type: useSideSwitch.Type;
+		menuState: ChatInput.Menu.State;
 		listingTransactionGallery: tListingTransactionGallery;
 		components: TransactionChat.Components;
 	}
@@ -18,14 +20,23 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 	locale,
 	type,
 	listingTransactionGallery,
+	menuState,
 	components,
 }) => {
+	const [, setMenuState] = menuState;
+
 	return match(type)
 		.with("buyer", () => {
 			return (
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.SellerInfoButton
@@ -40,6 +51,12 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.SellerInfoButton
@@ -54,6 +71,12 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.BuyerInfoButton
@@ -68,6 +91,12 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						onSuccess={() => {
+							setMenuState(false);
+						}}
+						onCancel={() => {
+							setMenuState(false);
+						}}
 					/>
 
 					<components.BuyerInfoButton
