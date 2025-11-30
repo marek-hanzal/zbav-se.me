@@ -317,16 +317,13 @@ export function withQuery<TData, TResult>({ queryFn, keys }: withQuery.Props<TDa
 		/**
 		 * Suspense component used to execute this query and return the result.
 		 */
-		Suspense({ data, options, fallback, children }: withQuery.Suspense.Props<TData, TResult>) {
+		Suspense({ fallback, ...prop }: withQuery.Suspense.Props<TData, TResult>) {
 			return (
 				<Suspense fallback={fallback}>
-					<Sleeper<TData, TResult>
-						data={data}
-						options={options}
+					<Sleeper
 						useSuspenseQuery={useSuspenseQuery$}
-					>
-						{children}
-					</Sleeper>
+						{...prop}
+					/>
 				</Suspense>
 			);
 		},

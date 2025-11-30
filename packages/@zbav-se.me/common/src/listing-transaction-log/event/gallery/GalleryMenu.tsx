@@ -1,5 +1,4 @@
 import type { tListingTransactionGallery } from "@zbav-se.me/sdk/api/user";
-import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";

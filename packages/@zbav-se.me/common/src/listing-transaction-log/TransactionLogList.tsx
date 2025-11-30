@@ -1,5 +1,6 @@
 import { keepPreviousData } from "@tanstack/react-query";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import type { MarkSuspense } from "@use-pico/client/type";
+import { Container } from "@use-pico/client/ui/container";
 import type {
 	tListingTransaction,
 	tListingTransactionLogQuery,
@@ -12,7 +13,7 @@ import { TransactionChat } from "./TransactionChat";
 import { TransactionLogItem } from "./TransactionLogItem";
 
 export namespace TransactionLogList {
-	export interface Props extends Container.Props {
+	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
@@ -22,6 +23,7 @@ export namespace TransactionLogList {
 }
 
 export const TransactionLogList: FC<TransactionLogList.Props> = ({
+	_suspense,
 	locale,
 	side,
 	query,
@@ -33,9 +35,9 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	const contentRef = useRef<HTMLDivElement>(null);
 	const bottomRef = useRef<HTMLDivElement>(null);
 
-	return (
-		<withListingTransactionLogCollectionQuery.Suspense
-			data={{
+	const listingTransactionLogCollectionQuery =
+		withListingTransactionLogCollectionQuery.useSuspenseQuery(
+			{
 				...query,
 				cursor: {
 					page: 0,
@@ -44,115 +46,112 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					 */
 					size: 256,
 				},
-			}}
-			fallback={<SpinnerContainer />}
-			options={{
+			},
+			{
 				refetchInterval: 5_000,
 				placeholderData: keepPreviousData,
-			}}
+			},
+		);
+
+	const data = listingTransactionLogCollectionQuery.data;
+
+	const lastLog = data.data[data.data.length - 1];
+	const lastStatusLog = data.data.findLast((item) => item.event === "status");
+
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
+	useLayoutEffect(() => {
+		const bottom = bottomRef.current;
+		const container = containerRef.current;
+		const content = contentRef.current;
+		if (!bottom || !container || !content) {
+			return;
+		}
+
+		const scrollToBottom = (behavior: ScrollBehavior) => {
+			container.scrollTo({
+				top: container.scrollHeight,
+				behavior,
+			});
+		};
+
+		scrollToBottom("smooth");
+
+		const ro = new ResizeObserver(() => {
+			scrollToBottom("smooth");
+		});
+
+		ro.observe(content);
+
+		return () => {
+			console.log("disconnect");
+			ro.disconnect();
+		};
+	}, [
+		data.data.length,
+	]);
+
+	/**
+	 * If there is no last status, it's a logical bug, so we just won't render.
+	 */
+	if (!lastLog || !lastStatusLog) {
+		return null;
+	}
+
+	const isClosed = (
+		[
+			"closed",
+			"expired",
+			"closed",
+			"rejected",
+		] satisfies tListingTransactionStatusEnum[] as tListingTransactionStatusEnum[]
+	).includes(lastStatusLog.status);
+
+	return (
+		<Container
+			ui={"TransactionLogList-root"}
+			layout={isClosed ? undefined : "vertical-content-footer"}
+			gap={"md"}
+			{...props}
 		>
-			{({ data }) => {
-				const lastLog = data.data[data.data.length - 1];
-				const lastStatusLog = data.data.findLast((item) => item.event === "status");
+			<Container
+				ref={containerRef}
+				ui={"TransactionLogList-list"}
+				scroll={"vertical"}
+				height={"fit"}
+			>
+				<Container
+					ref={contentRef}
+					layout={"vertical-flex"}
+					gap={"md"}
+					height={"content"}
+				>
+					{data.data.map((log) => {
+						const isCurrent = lastLog.id === log.id;
 
-				// biome-ignore lint/correctness/useHookAtTopLevel: We're OK
-				// biome-ignore lint/correctness/useExhaustiveDependencies: We're OK
-				useLayoutEffect(() => {
-					const bottom = bottomRef.current;
-					const container = containerRef.current;
-					const content = contentRef.current;
-					if (!bottom || !container || !content) {
-						return;
-					}
-
-					const scrollToBottom = (behavior: ScrollBehavior) => {
-						container.scrollTo({
-							top: container.scrollHeight,
-							behavior,
-						});
-					};
-
-					scrollToBottom("smooth");
-
-					const ro = new ResizeObserver(() => {
-						scrollToBottom("smooth");
-					});
-
-					ro.observe(content);
-
-					return () => {
-						console.log("disconnect");
-						ro.disconnect();
-					};
-				}, [
-					data.data.length,
-				]);
-
-				/**
-				 * If there is no last status, it's a logical bug, so we just won't render.
-				 */
-				if (!lastLog || !lastStatusLog) {
-					return null;
-				}
-
-				const isClosed = (
-					[
-						"closed",
-						"expired",
-						"closed",
-						"rejected",
-					] satisfies tListingTransactionStatusEnum[] as tListingTransactionStatusEnum[]
-				).includes(lastStatusLog.status);
-
-				return (
-					<Container
-						ui={"TransactionLogList-root"}
-						layout={isClosed ? undefined : "vertical-content-footer"}
-						gap={"md"}
-						{...props}
-					>
-						<Container
-							ref={containerRef}
-							ui={"TransactionLogList-list"}
-							scroll={"vertical"}
-							height={"fit"}
-						>
-							<Container
-								ref={contentRef}
-								layout={"vertical-flex"}
-								gap={"md"}
-								height={"content"}
-							>
-								{data.data.map((log) => {
-									const isCurrent = lastLog.id === log.id;
-
-									return (
-										<TransactionLogItem
-											key={log.id}
-											locale={locale}
-											side={side}
-											listingTransactionLog={log}
-											isCurrent={isCurrent}
-											isClosed={isClosed}
-										/>
-									);
-								})}
-
-								<div ref={bottomRef} />
-							</Container>
-						</Container>
-
-						{isClosed ? null : (
-							<TransactionChat
+						return (
+							<TransactionLogItem
+								key={log.id}
 								locale={locale}
-								side="buyer"
-								listingTransactionLog={lastLog}
-								components={components}
+								side={side}
+								listingTransactionLog={log}
+								isCurrent={isCurrent}
+								isClosed={isClosed}
 							/>
-						)}
-					</Container>
-				);
-			}}
-		</withListingTransactionLogCollectionQuery.Suspense>
+						);
+					})}
+
+					<div ref={bottomRef} />
+				</Container>
+			</Container>
+
+			{isClosed ? null : (
+				<TransactionChat
+					locale={locale}
+					side="buyer"
+					listingTransactionLog={lastLog}
+					components={components}
+				/>
+			)}
+		</Container>
 	);
 };

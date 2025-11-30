@@ -4,11 +4,15 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { ListingDetailButton } from "@zbav-se.me/buyer/listing";
 import { BuyerInfoButton } from "@zbav-se.me/buyer/listing-transaction";
-import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
+import {
+	type TransactionChat,
+	TransactionLogList,
+} from "@zbav-se.me/common/listing-transaction-log";
 import type { tListingTransactionLogQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { SellerInfoButton } from "@zbav-se.me/seller/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { useMemo } from "react";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 	pendingComponent() {
@@ -44,17 +48,41 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 			},
 		});
 
-		const query: tListingTransactionLogQuery = {
-			where: {
-				listingTransactionId: id,
-			},
-			sort: [
-				{
-					field: "createdAt",
-					direction: "asc",
+		const query: tListingTransactionLogQuery = useMemo(() => {
+			return {
+				where: {
+					listingTransactionId: id,
 				},
-			],
-		};
+				sort: [
+					{
+						field: "createdAt",
+						direction: "asc",
+					},
+				],
+			};
+		}, [
+			id,
+		]);
+
+		const components: TransactionChat.Components = useMemo(() => {
+			return {
+				BuyerInfoButton,
+				SellerInfoButton,
+				ListingDetailButton({ modalRootId }) {
+					return (
+						<ListingDetailButton
+							locale={locale}
+							detailSheetId={modalRootId}
+							listing={listingTransactionFetchQuery.data.listingId}
+							label={"Listing detail (label)"}
+						/>
+					);
+				},
+			};
+		}, [
+			locale,
+			listingTransactionFetchQuery.data.listingId,
+		]);
 
 		return (
 			<TitleContainer
@@ -71,24 +99,12 @@ export const Route = createFileRoute("/$locale/buyer/transaction/$id/log")({
 				}
 			>
 				<TransactionLogList
+					_suspense={"I know"}
 					locale={locale}
 					side="buyer"
 					listingTransaction={listingTransactionFetchQuery.data}
 					query={query}
-					components={{
-						BuyerInfoButton,
-						SellerInfoButton,
-						ListingDetailButton({ modalRootId }) {
-							return (
-								<ListingDetailButton
-									locale={locale}
-									detailSheetId={modalRootId}
-									listing={listingTransactionFetchQuery.data.listingId}
-									label={"Listing detail (label)"}
-								/>
-							);
-						},
-					}}
+					components={components}
 				/>
 			</TitleContainer>
 		);
