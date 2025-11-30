@@ -127,7 +127,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			),
 		).then((ids) => ids.filter((id) => id !== undefined));
 
-		const photos = 128;
+		const photos = 256;
 		const uploadQueue = new PQueue({
 			concurrency: 8,
 		});
@@ -159,7 +159,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			],
 			async mutationFn() {
 				const concurrency = 12;
-				const limit = 500;
+				const limit = 5000;
 
 				const queue = new PQueue({
 					concurrency,
