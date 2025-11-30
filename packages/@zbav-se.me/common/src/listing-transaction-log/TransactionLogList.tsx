@@ -71,8 +71,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 		},
 	);
 
-	const resizeRef = useRef(false);
-
 	useLayoutEffect(() => {
 		if (!contentRef.current || !containerRef.current) {
 			return;
@@ -82,8 +80,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 		const ro = new ResizeObserver(() => {
 			console.log("resize");
-			scrollToBottom(resizeRef.current ? "smooth" : "instant");
-			resizeRef.current = true;
+			scrollToBottom("smooth");
 		});
 
 		ro.observe(contentRef.current);
