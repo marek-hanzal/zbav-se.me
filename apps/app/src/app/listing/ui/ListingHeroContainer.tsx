@@ -1,11 +1,14 @@
 import { useVisibilityContext } from "@use-pico/client/context";
 import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
+import { ListingDetailContainer } from "@zbav-se.me/buyer/listing";
 import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { type FC, type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
+import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export namespace ListingHeroContainer {
 	export namespace Toolbar {
@@ -30,6 +33,7 @@ export namespace ListingHeroContainer {
 	 * Props for `ListingHeroContainer`.
 	 */
 	export interface Props extends Container.Props {
+		locale: string;
 		/**
 		 * Active listing query used for local cache updates.
 		 */
@@ -41,6 +45,7 @@ export namespace ListingHeroContainer {
 		toolbar: Toolbar.RenderFn;
 		renderImageErrorToolbarFn: Toolbar.RenderFn;
 		overlay: Overlay.Render;
+		tools?: ListingDetailMenu.Tools[];
 	}
 }
 
@@ -50,9 +55,11 @@ export namespace ListingHeroContainer {
  * @param props Component props extending `Container.Props`.
  */
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
+	locale,
 	ref,
 	query,
 	listing,
+	tools,
 	toolbar,
 	renderImageErrorToolbarFn,
 	overlay,
@@ -65,6 +72,9 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	];
 
 	const rootRef = useRef<HTMLDivElement>(null);
+
+	const detailSheetId = useId();
+	const [detail, setDetail] = useState(false);
 
 	const mergeRef = useMergeRefs([
 		rootRef,
@@ -145,54 +155,80 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	const [hasToolbar, setHasToolbar] = useState(false);
 
 	return (
-		<Container
-			ref={mergeRef}
-			data-id={listing.id}
-			ui={"ListingHero-root"}
-			position={"relative"}
-			{...props}
-		>
-			{listing.isIgnored ? (
-				<Overlay
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"bg-rose-600/50",
-									"opacity-100",
-								],
+		<>
+			<Container
+				ref={mergeRef}
+				data-id={listing.id}
+				ui={"ListingHero-root"}
+				position={"relative"}
+				onClick={() => {
+					setDetail((prev) => !prev);
+				}}
+				{...props}
+			>
+				{listing.isIgnored ? (
+					<Overlay
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"bg-rose-600/50",
+										"opacity-100",
+									],
+								},
 							},
-						},
+						}}
+					/>
+				) : null}
+
+				{overlay({
+					query,
+					listing,
+				})}
+
+				<HeroImage
+					ui={"ListingHero-image"}
+					src={hero.upload.url}
+					alt={`Hero image for listing ${listing.id}`}
+					visible={visible}
+					invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
+					onLoad={() => setHasToolbar(true)}
+					errorStatusProps={{
+						action: renderImageErrorToolbarFn({
+							query,
+							listing,
+						}),
 					}}
 				/>
-			) : null}
 
-			{overlay({
-				query,
-				listing,
-			})}
+				{hasToolbar
+					? toolbar({
+							query,
+							listing,
+						})
+					: null}
+			</Container>
 
-			<HeroImage
-				ui={"ListingHero-image"}
-				src={hero.upload.url}
-				alt={`Hero image for listing ${listing.id}`}
-				visible={visible}
-				invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
-				onLoad={() => setHasToolbar(true)}
-				errorStatusProps={{
-					action: renderImageErrorToolbarFn({
-						query,
-						listing,
-					}),
-				}}
-			/>
-
-			{hasToolbar
-				? toolbar({
-						query,
-						listing,
-					})
-				: null}
-		</Container>
+			<BottomSheet
+				id={detailSheetId}
+				isOpen={detail}
+				onClose={() => setDetail(false)}
+				detent={"full"}
+			>
+				<ListingDetailContainer
+					parentSheetId={detailSheetId}
+					locale={locale}
+					listing={listing}
+					withScore
+					square={"md"}
+				>
+					<ListingDetailMenu
+						locale={locale}
+						listing={listing}
+						tools={tools}
+					/>
+				</ListingDetailContainer>
+			</BottomSheet>
+		</>
 	);
 };

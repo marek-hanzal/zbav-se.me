@@ -1,4 +1,3 @@
-// /** biome-ignore-all lint/correctness/noNestedComponentDefinitions: Virtual list component */
 import { useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
@@ -9,6 +8,7 @@ import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
+import type { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -24,6 +24,7 @@ export namespace ListingListContainer {
 		toolbar: ListingHeroContainer.Toolbar.RenderFn;
 		renderImageErrorToolbarFn: ListingHeroContainer.Toolbar.RenderFn;
 		overlay: ListingHeroContainer.Overlay.Render;
+		tools?: ListingDetailMenu.Tools[];
 	}
 }
 
@@ -36,6 +37,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	toolbar,
 	renderImageErrorToolbarFn,
 	overlay,
+	tools,
 	...props
 }) => {
 	const listingIdPrefix = useId();
@@ -133,11 +135,13 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							])}
 						>
 							<ListingHeroContainer
+								locale={locale}
 								query={query}
 								listing={listing}
 								toolbar={toolbar}
 								renderImageErrorToolbarFn={renderImageErrorToolbarFn}
 								overlay={overlay}
+								tools={tools}
 							/>
 						</VisibleContainer>
 					));

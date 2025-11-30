@@ -1,8 +1,6 @@
-import { ListingDetailButton } from "@zbav-se.me/buyer/listing";
 import type { tListingQuery, zListing } from "@zbav-se.me/sdk/api/user";
 import { ToolbarContainer } from "@zbav-se.me/ui/toolbar";
-import { type FC, useId, useState } from "react";
-import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
+import { type FC, useState } from "react";
 import { ListingCartButton } from "../button/ListingCartButton";
 
 export namespace CartFeedToolbar {
@@ -27,27 +25,9 @@ export const CartFeedToolbar: FC<CartFeedToolbar.Props> = ({
 	...props
 }) => {
 	const [action, setIsAction] = useState<CartFeedToolbar.Tools | undefined>(undefined);
-	const detailSheetId = useId();
 
 	return (
 		<ToolbarContainer {...props}>
-			<ListingDetailButton
-				locale={locale}
-				detailSheetId={detailSheetId}
-				listing={listing}
-				round={"full"}
-				menu={false}
-			>
-				<ListingDetailMenu
-					locale={locale}
-					listing={listing}
-					tools={[
-						"cart",
-						"transaction",
-					]}
-				/>
-			</ListingDetailButton>
-
 			{tools.includes("cart") ? (
 				<ListingCartButton
 					listing={listing}
