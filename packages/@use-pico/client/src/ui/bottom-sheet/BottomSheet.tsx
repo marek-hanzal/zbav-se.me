@@ -1,5 +1,7 @@
-import type { ComponentProps, FC, PropsWithChildren } from "react";
-import { Sheet } from "react-modal-sheet";
+import { tvc } from "@use-pico/cls";
+import { motion, useTransform } from "motion/react";
+import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "react";
+import { Sheet, type SheetRef } from "react-modal-sheet";
 import type { UiProps } from "../../type/UiProps";
 
 export namespace BottomSheet {
@@ -7,6 +9,7 @@ export namespace BottomSheet {
 		extends UiProps<PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">>> {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
+		withHeader?: boolean;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
@@ -16,11 +19,21 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	ui,
 	containerProps,
 	contentProps,
+	withHeader = false,
 	children,
 	...props
 }) => {
+	const sheetRef = useRef<SheetRef>(null);
+	const fade = useTransform(() => {
+		const y = sheetRef.current?.y.get() ?? 0;
+		const height = sheetRef.current?.height ?? 1;
+
+		return 1 - Math.min(Math.max(y / height, 0), 1);
+	});
+
 	return (
 		<Sheet
+			ref={sheetRef}
 			data-ui={ui ?? "BottomSheet-root"}
 			tweenConfig={{
 				ease: "easeOut",
@@ -32,7 +45,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 				data-ui={"BottomSheet-Container"}
 				{...containerProps}
 			>
-				<Sheet.Header data-ui={"BottomSheet-Header"} />
+				{withHeader ? <Sheet.Header data-ui={"BottomSheet-Header"} /> : null}
 
 				<Sheet.Content
 					data-ui={"BottomSheet-Content"}
@@ -41,6 +54,25 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					{children}
 				</Sheet.Content>
 			</Sheet.Container>
+
+			<motion.div
+				data-ui={"BottomSheet-Backdrop"}
+				className={tvc([
+					"fixed",
+					"top-0",
+					"left-0",
+					"w-full",
+					"h-full",
+					"touch-none",
+					"bg-black/10",
+					"pointer-events-auto",
+					"z-1",
+				])}
+				style={{
+					opacity: fade,
+				}}
+				onTap={props.onClose}
+			/>
 		</Sheet>
 	);
 };

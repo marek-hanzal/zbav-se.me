@@ -49,7 +49,7 @@
         "zustand": "5.0.9",
       },
       "devDependencies": {
-        "@iconify/json": "2.2.412",
+        "@iconify/json": "2.2.413",
         "@iconify/tailwind4": "1.2.0",
         "@modyfi/vite-plugin-yaml": "1.1.1",
         "@tailwindcss/vite": "4.1.17",
@@ -120,7 +120,7 @@
         "zod": "4.1.13",
       },
       "devDependencies": {
-        "@effect/language-service": "0.57.1",
+        "@effect/language-service": "0.58.0",
         "@types/bun": "1.3.3",
         "@types/luxon": "3.7.1",
         "@types/node": "24.10.1",
@@ -155,7 +155,7 @@
         "zod": "4.1.13",
       },
       "devDependencies": {
-        "@iconify/json": "2.2.412",
+        "@iconify/json": "2.2.413",
         "@iconify/tailwind4": "1.2.0",
         "@modyfi/vite-plugin-yaml": "1.1.1",
         "@tailwindcss/vite": "4.1.17",
@@ -198,6 +198,7 @@
         "kysely": "0.28.8",
         "lexical": "0.38.2",
         "luxon": "3.7.2",
+        "motion": "12.23.24",
         "object-path": "0.11.8",
         "react": "19.2.0",
         "react-dom": "19.2.0",
@@ -803,7 +804,7 @@
 
     "@docusaurus/utils-validation": ["@docusaurus/utils-validation@3.9.2", "", { "dependencies": { "@docusaurus/logger": "3.9.2", "@docusaurus/utils": "3.9.2", "@docusaurus/utils-common": "3.9.2", "fs-extra": "^11.2.0", "joi": "^17.9.2", "js-yaml": "^4.1.0", "lodash": "^4.17.21", "tslib": "^2.6.0" } }, "sha512-l7yk3X5VnNmATbwijJkexdhulNsQaNDwoagiwujXoxFbWLcxHQqNQ+c/IAlzrfMMOfa/8xSBZ7KEKDesE/2J7A=="],
 
-    "@effect/language-service": ["@effect/language-service@0.57.1", "", { "bin": { "effect-language-service": "cli.js" } }, "sha512-uWzYN+aHl4KfZHGmDxa3+OjV/mk9gMUycIyB8SYvyDiny3lXBtmRFdRVnw6TYL1P5EBfg4N09+lO/0ECRREVXQ=="],
+    "@effect/language-service": ["@effect/language-service@0.58.0", "", { "bin": { "effect-language-service": "cli.js" } }, "sha512-M5T9zEEu6sLuzXOIp+bQ8B1pMcX3A9gyahTTWlv9idr+b2SlZOfydomwgXkod4vlXw7mYhLLcXgCsnHcBUz9rw=="],
 
     "@emnapi/core": ["@emnapi/core@1.5.0", "", { "dependencies": { "@emnapi/wasi-threads": "1.1.0", "tslib": "^2.4.0" } }, "sha512-sbP8GzB1WDzacS8fgNPpHlp6C9VZe+SJP3F90W9rLemaQj2PzIuTEl1qDOYQf58YIpyjViI24y9aPWCjEzY2cg=="],
 
@@ -903,7 +904,7 @@
 
     "@hono/zod-validator": ["@hono/zod-validator@0.7.4", "", { "peerDependencies": { "hono": ">=3.9.0", "zod": "^3.25.0 || ^4.0.0" } }, "sha512-biKGn3BRJVaftZlIPMyK+HCe/UHAjJ6sH0UyXe3+v0OcgVr9xfImDROTJFLtn9e3XEEAHGZIM9U6evu85abm8Q=="],
 
-    "@iconify/json": ["@iconify/json@2.2.412", "", { "dependencies": { "@iconify/types": "*", "pathe": "^2.0.3" } }, "sha512-WV6kFgS6mfR6BdBVZ4x2ctsZy2hzQEacvGLSW439yizXrmAszkAJXAl7ytZ3VI0KL2TylUluQGc4ygHsQDrIww=="],
+    "@iconify/json": ["@iconify/json@2.2.413", "", { "dependencies": { "@iconify/types": "*", "pathe": "^2.0.3" } }, "sha512-0MpvnDjGoFuVgDLZkaAi3UzUJbfXhiaouLp50/eCJvbiXPtOHpcYkRfT++Zu+YR3meDn9KDRZQF/VS7OFPIMIA=="],
 
     "@iconify/tailwind4": ["@iconify/tailwind4@1.2.0", "", { "dependencies": { "@iconify/tools": "^5.0.0", "@iconify/types": "^2.0.0", "@iconify/utils": "^3.1.0" }, "peerDependencies": { "tailwindcss": ">= 4.0.0" } }, "sha512-+t7XqfojOB0zzZdd8gV7IQZGq1AaIHTlsxMVzagxYR0hAlJCLUD63o3iSlNKRMH3ZR7gZ8y5c9dJ7J431avRbA=="],
 
