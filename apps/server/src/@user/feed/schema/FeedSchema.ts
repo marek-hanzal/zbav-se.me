@@ -7,7 +7,14 @@ export const FeedSchema = z
 	.object({
 		...FeedDbSchema.shape,
 		query: ListingQuerySchema,
-		upload: UploadSchema.optional(),
+		upload: z
+			.union([
+				UploadSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Hero banner for this feed",
+			}),
 	})
 	.omit({
 		userId: true,

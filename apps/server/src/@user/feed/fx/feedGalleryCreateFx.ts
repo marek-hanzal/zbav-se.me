@@ -1,4 +1,5 @@
 import { Effect } from "effect";
+import { feedPatchFx } from "~/@user/feed/fx/feedPatchFx";
 import { feedResolveFx } from "~/@user/feed/fx/feedResolveFx";
 import { galleryFetchFx } from "~/@user/gallery/fx/galleryFetchFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
@@ -72,6 +73,13 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 				});
 			}
 
+			yield* Effect.tryPromise(async () => {
+				return database
+					.deleteFrom("gallery_item")
+					.where("galleryId", "=", gallery.id)
+					.execute();
+			});
+
 			let sort = 0;
 			for (const uploadId of uploadIds) {
 				yield* galleryItemCreateFx({
@@ -81,6 +89,11 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 				});
 				sort++;
 			}
+
+			yield* feedPatchFx({
+				id: feed.id,
+				uploadId: uploadIds[0],
+			});
 
 			return yield* galleryFetchFx({
 				query: {

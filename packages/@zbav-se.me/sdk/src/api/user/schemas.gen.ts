@@ -2476,13 +2476,24 @@ export const sFeed = {
             $ref: '#/components/schemas/ListingQuery'
         },
         upload: {
-            $ref: '#/components/schemas/Upload'
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
         'id',
         'name',
-        'query'
+        'query',
+        'upload'
     ]
 } as const;
 
@@ -2585,6 +2596,12 @@ export const sFeedPatch = {
             minLength: 1
         },
         locationId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        uploadId: {
             type: [
                 'string',
                 'null'

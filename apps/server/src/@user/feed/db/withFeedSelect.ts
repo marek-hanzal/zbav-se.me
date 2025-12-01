@@ -1,3 +1,4 @@
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import type { WithDatabase } from "../../../database/WithDatabase";
 import type { FeedSortSchema } from "../schema/FeedSortSchema";
@@ -12,12 +13,18 @@ export namespace withFeedSelect {
 }
 
 export const withFeedSelect = ({ database, sort }: withFeedSelect.Props) => {
-	let query = database.selectFrom("feed as f").select([
-		"f.id",
-		"f.locationId",
-		"f.name",
-		"f.query",
-	]);
+	let query = database
+		.selectFrom("feed as f")
+		.selectAll()
+		.select((eb) =>
+			jsonObjectFrom(
+				eb
+					.selectFrom("upload as u")
+					.selectAll()
+					.whereRef("u.id", "=", "f.uploadId")
+					.limit(1),
+			).as("upload"),
+		);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

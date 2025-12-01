@@ -1958,7 +1958,10 @@ export type tFeed = {
      */
     name: string;
     query: tListingQuery;
-    upload?: tUpload;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
 };
 
 /**
@@ -2046,6 +2049,10 @@ export type tFeedPatch = {
      * ID of the location associated with the feed
      */
     locationId?: string | null;
+    /**
+     * ID of the upload associated with the feed
+     */
+    uploadId?: string | null;
     /**
      * Query configuration for the feed (listing)
      */

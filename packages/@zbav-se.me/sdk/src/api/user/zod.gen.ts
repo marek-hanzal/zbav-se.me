@@ -2081,7 +2081,10 @@ export const zFeed = z.object({
         description: 'Name of the feed'
     }),
     query: zListingQuery,
-    upload: z.optional(zUpload)
+    upload: z.union([
+        zUpload,
+        z.null()
+    ])
 }).register(z.globalRegistry, {
     description: 'Feed data'
 });
@@ -2190,6 +2193,10 @@ export const zFeedPatch = z.object({
         description: 'Name of the feed'
     })),
     locationId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    uploadId: z.optional(z.union([
         z.string(),
         z.null()
     ])),

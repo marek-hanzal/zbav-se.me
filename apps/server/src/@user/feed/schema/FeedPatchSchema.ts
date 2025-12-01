@@ -10,6 +10,9 @@ export const FeedPatchSchema = z
 		locationId: z.string().nullish().openapi({
 			description: "ID of the location associated with the feed",
 		}),
+		uploadId: z.string().nullish().openapi({
+			description: "ID of the upload associated with the feed",
+		}),
 		query: z
 			.union([
 				ListingQuerySchema,

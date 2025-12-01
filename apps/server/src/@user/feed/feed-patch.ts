@@ -58,12 +58,7 @@ export const withFeedPatchApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<FeedSchema.Type, 200>(
-					yield* feedPatchFx({
-						data: c.req.valid("json"),
-					}),
-					200,
-				);
+				return c.json<FeedSchema.Type, 200>(yield* feedPatchFx(c.req.valid("json")), 200);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

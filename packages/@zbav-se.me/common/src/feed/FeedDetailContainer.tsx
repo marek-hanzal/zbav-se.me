@@ -1,13 +1,19 @@
 import { TrashIcon } from "@use-pico/client/icon";
+import { Badge } from "@use-pico/client/ui/badge";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
+import {
+	withFeedDeleteMutation,
+	withFeedGalleryCreateMutation,
+} from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import type { FC } from "react";
-import { GalleryUploadButton } from "../photo/GalleryUploadButton";
+import { HeroImage } from "@zbav-se.me/ui/img";
+import { type FC, useState } from "react";
+import { GallerySheet } from "../photo";
 import { FeedAgeValueList } from "./FeedAgeValueList";
 import { FeedCategoryBadge } from "./FeedCategoryBadge";
 import { FeedConditionValueList } from "./FeedConditionValueList";
@@ -25,6 +31,7 @@ export namespace FeedDetailContainer {
 
 export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, feed, ...props }) => {
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation();
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
 		<Container
@@ -43,6 +50,58 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 					theme: "light",
 				}}
 			>
+				{feed.upload ? (
+					<HeroImage
+						src={feed.upload.url}
+						alt={`Hero image for feed ${feed.id}`}
+						visible
+						round
+						tweak={{
+							slot: {
+								img: {
+									class: [
+										"w-full",
+										"h-52",
+									],
+								},
+							},
+						}}
+						onClick={() => setIsGalleryOpen((prev) => !prev)}
+					/>
+				) : (
+					<Badge
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"w-full",
+										"h-52",
+										"p-0",
+									],
+								},
+							},
+						}}
+						round={"md"}
+						onClick={() => setIsGalleryOpen((prev) => !prev)}
+					>
+						<Tx label={"Feed - Select hero image (label)"} />
+					</Badge>
+				)}
+
+				<GallerySheet
+					withMutation={withFeedGalleryCreateMutation}
+					toMutation={(uploadIds) => ({
+						feedId: feed.id,
+						uploadIds,
+					})}
+					state={{
+						value: isGalleryOpen,
+						set: setIsGalleryOpen,
+					}}
+					onSuccess={() => {}}
+					onCancel={() => {}}
+				/>
+
 				<FeedNameBadge feed={feed} />
 
 				<FeedTitleBadge feed={feed} />
@@ -63,11 +122,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 
 				<FeedAgeValueList feed={feed} />
 
-				<GalleryUploadButton />
-
 				<ConfirmButton
 					tone={"danger"}
 					iconEnabled={TrashIcon}
+					iconPosition={"right"}
 					buttonProps={{
 						tone: "danger",
 						label: translator.text("Delete feed (button)"),
@@ -86,8 +144,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 						},
 					}}
 					loading={feedDeleteMutation.isPending}
-					full
-					size={"lg"}
+					size={"xl"}
+					menu
 				/>
 			</VariantProvider>
 		</Container>

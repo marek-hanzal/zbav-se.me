@@ -1,4 +1,3 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
@@ -6,6 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { ListingCountBadge } from "../listing/ListingCountBadge";
 import { FeedDetailContainer } from "./FeedDetailContainer";
@@ -35,8 +35,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 								"w-full",
 								"h-fit",
 								"items-start",
-								"py-2",
-								"px-2",
+								"p-0",
 							],
 						},
 					},
@@ -44,10 +43,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				{...props}
 			>
 				<LinkTo
-					icon={ArrowRightIcon}
-					iconProps={{
-						size: "sm",
-					}}
 					to={"/$locale/buyer/listing/list"}
 					params={{
 						locale,
@@ -55,17 +50,58 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 					search={{
 						query: feed.query,
 					}}
-					iconPosition={"right"}
 					full
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"flex",
+									"flex-col",
+									"items-start",
+									"gap-1",
+									"w-full",
+								],
+							},
+						},
+					}}
 				>
+					{feed.upload ? (
+						<HeroImage
+							src={feed.upload.url}
+							alt={`Hero image for feed ${feed.id}`}
+							visible
+							round
+							tweak={{
+								slot: {
+									img: {
+										class: [
+											"w-full",
+											"h-52",
+										],
+									},
+								},
+							}}
+						/>
+					) : null}
+
 					<Typo
 						label={feed.name}
 						font={"bold"}
 						truncate
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"pt-1",
+										"px-2",
+									],
+								},
+							},
+						}}
 					/>
 				</LinkTo>
 
-				<div className={"flex flex-row gap-2 items-center justify-between w-full"}>
+				<div className={"flex flex-row gap-2 items-center justify-between w-full p-2"}>
 					<Button
 						iconEnabled={FeedIcon}
 						tone={"secondary"}
@@ -93,7 +129,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 						slot: {
 							root: {
 								class: [
-									"pt-12",
+									"pt-14",
 								],
 							},
 						},

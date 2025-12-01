@@ -89,9 +89,6 @@
 29f070d40b220deb96e6c0c19b11d4ad07de6cd9e55e4933e2f03f80:
     ref: no
     value: no
-29f90717f6c60d12c2c2eaf4a48a37f1621c140d106dc719a62e9134:
-    ref: Transaction successful - seller (label)
-    value: Dokončená transakce
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
@@ -146,10 +143,6 @@
 3e67f4ca250b943faacf3f771626fdb14ee4e93b8ae47f56c35e4b79:
     ref: Loading cart count (button)
     value: Přemýšlím...
-3ec054b584a78391abea298483c3a171e8184a577370d7828a9568cb:
-    ref: Feed name (hint)
-    value: |
-        Vyber si libovolný název pro svůj seznam.
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
@@ -168,6 +161,9 @@
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
+455ec82e7163626162cff48a8f9dcba9ee39925f8570fc0c6fd63b6e:
+    ref: Feed - Select hero image (label)
+    value: Nastav si úvodní obrázek
 45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
     ref: Listing Score - Views (label)
     value: Počet zobrazení v inzerátu (detail)
@@ -234,9 +230,6 @@
 5fa006f1c7ffd0d4762ce60de46e8e4cd93835200eba2aaf0c6ba6ef:
     ref: That's all for now - cart (title)
     value: A to je vše
-60e1a755731eceba9aa1ed1d495b897bac04a5a5f2b167b45b064c8a:
-    ref: Transaction closed - seller (label)
-    value: Zavřená transakce
 628f6e8270d103d47f6e26e64227e6aa5fa967b20aff35b68f9156b5:
     ref: Seller accepted transaction (seller-to-buyer)
     value: Obchodník tě přijal
@@ -273,9 +266,6 @@
 6f0c381fe28fafb75e2b708bfeefe7fefab6fb361cec10afd13b2374:
     ref: Next - age (button)
     value: Stáří
-6f6d4a4d04984ba5aa3c046fcf5b28643dc24a53ede342ae698ab507:
-    ref: Transaction expired - seller (label)
-    value: Transakce vypršela
 704d700a9718605765b79e0b4f7c01628e9662830e560a3e08cec0cf:
     ref: Your cart is empty - no feed (title)
     value: Vytvoř si nabídku pro zobrazení inzerátů
@@ -309,12 +299,6 @@
 7e472530689c600917abb98ada2c43213c4477f22ac6cde0c7acfa8e:
     ref: Add to cart (button)
     value: Přidat do oblíbených
-7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
-    ref: I want to sell (label)
-    value: Jdu prodávat
-7fcc9795b740a367fd80ebd80dbc412e537b7f72d99ac64c3b737b52:
-    ref: Transaction rejected - seller (label)
-    value: Tento obchod jsi odmítl
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
     ref: unused
     value: unused
@@ -362,9 +346,6 @@
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
     value: Inzeráty
-931b84575965ad4be15931b3e84c0c5d0e66b102940c3ace733061a7:
-    ref: ...
-    value: ...
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
     ref: Listing title (title)
     value: Co prodáváš?
@@ -491,9 +472,6 @@ a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
 a55387e66d56fc537f261c638ef5f30318fca9ffe61c9917ffa04684:
     ref: Accept transaction (label)
     value: Přijmout
-a58bea662bf786c15c3be9f5157fcaef109019e39b1d7fedac0977d2:
-    ref: Transaction requested - seller (label)
-    value: Nový zájemce
 a62fb7339fce50f73673412c11f10a25880e1e7b942b7261366a8529:
     ref: closed
     value: closed
@@ -620,9 +598,6 @@ ccc9608f33bbd658f6abc07176e9cb33028027f216c81d70b4616401:
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
     ref: Upload - disabled (placeholder)
     value: Musíš vybrat předchozí fotku pro odemčení této.
-cec65e34df25f45c675cfc6f930873c6e971fb291e14675d779a573c:
-    ref: I want to buy (label)
-    value: Jdu nakupovat
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
     ref: Location not found (badge)
     value: Adres známe hodně, ale tuhle ne
@@ -671,9 +646,6 @@ dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
 e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
     ref: Listing removed from your cart (toast)
     value: Inzerát byl úspěšně odebrán z košíku.
-e164d6b2893d2c34341349e7efb9ec4735b1e3b2f983a6181d0003fc:
-    ref: Transaction accepted - seller (label)
-    value: Přijato
 e2599c3b9d828a48f101d8e9d763a3fa348b11675f80809790e980a7:
     ref: Go to cart (button)
     value: Oblíbené
@@ -688,9 +660,6 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
     ref: Shop (label)
     value: Bonusy
-e60ccc5a06a9f924d877f3e9484fb68bda0b6d8adcd214c4c169f4b7:
-    ref: Transaction detail (title)
-    value: Obchod
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
     ref: Listing score hint (label)
     value: Hodnocení inzerátu

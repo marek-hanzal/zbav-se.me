@@ -6,12 +6,10 @@ import type { FeedPatchSchema } from "../schema/FeedPatchSchema";
 import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedPatchFx {
-	export interface Props {
-		data: FeedPatchSchema.Type;
-	}
+	export type Props = FeedPatchSchema.Type;
 }
 
-export const feedPatchFx = ({ data: { id, name, locationId, query } }: feedPatchFx.Props) => {
+export const feedPatchFx = ({ id, name, locationId, uploadId, query }: feedPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -25,6 +23,7 @@ export const feedPatchFx = ({ data: { id, name, locationId, query } }: feedPatch
 					.set({
 						name,
 						locationId,
+						uploadId,
 						query: query ? (JSON.stringify(query) as any) : undefined,
 						updatedAt: now,
 					})

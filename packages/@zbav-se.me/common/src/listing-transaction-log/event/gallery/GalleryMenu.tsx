@@ -1,7 +1,7 @@
 import type { tListingTransactionGallery } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import type { ChatInput } from "@zbav-se.me/ui/chat";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { match } from "ts-pattern";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
@@ -21,6 +21,7 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 	menuState,
 }) => {
 	const [, setMenuState] = menuState;
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return match(type)
 		.with("buyer", () => {
@@ -38,6 +39,10 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						}}
 						onCancel={() => {
 							setMenuState(false);
+						}}
+						state={{
+							value: isGalleryOpen,
+							set: setIsGalleryOpen,
 						}}
 					/>
 
@@ -64,6 +69,10 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						onCancel={() => {
 							setMenuState(false);
 						}}
+						state={{
+							value: isGalleryOpen,
+							set: setIsGalleryOpen,
+						}}
 					/>
 
 					<RejectButton
@@ -89,6 +98,10 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						onCancel={() => {
 							setMenuState(false);
 						}}
+						state={{
+							value: isGalleryOpen,
+							set: setIsGalleryOpen,
+						}}
 					/>
 
 					<RejectButton
@@ -113,6 +126,10 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						}}
 						onCancel={() => {
 							setMenuState(false);
+						}}
+						state={{
+							value: isGalleryOpen,
+							set: setIsGalleryOpen,
 						}}
 					/>
 
