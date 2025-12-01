@@ -4,24 +4,17 @@ import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
+import type { StateType } from "@use-pico/common/type";
 import type { tGalleryItem, tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, type PropsWithChildren, type ReactNode, Suspense, useState } from "react";
+import { type FC, Suspense } from "react";
 import { TransactionLogList } from "../listing-transaction-log/TransactionLogList";
 
 export namespace TransactionItem {
-	export namespace Item {
-		export interface Props extends PropsWithChildren {
-			listingTransaction: tListingTransaction;
-		}
-
-		export type RenderFn = (props: Item.Props) => ReactNode;
-	}
-
 	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		listingTransaction: tListingTransaction;
-		renderItemFn: Item.RenderFn;
+		open: StateType<string | undefined>;
 	}
 }
 
@@ -29,18 +22,18 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	locale,
 	listingTransaction,
 	tweak,
-	renderItemFn,
+	open,
 	...props
 }) => {
 	const [hero] = listingTransaction.gallery.items as [
 		tGalleryItem,
 		...tGalleryItem[],
 	];
-	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<>
 			<Badge
+				data-id={listingTransaction.id}
 				size={"xl"}
 				tweak={[
 					tweak,
@@ -63,7 +56,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					},
 				]}
 				round={"default"}
-				onClick={() => setIsOpen((prev) => !prev)}
+				onClick={() => open.set(listingTransaction.id)}
 				{...props}
 			>
 				<HeroImage
@@ -135,8 +128,8 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			</Badge>
 
 			<BottomSheet
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
+				isOpen={open.value === listingTransaction.id}
+				onClose={() => open.set(undefined)}
 				detent={"full"}
 				contentProps={{
 					disableScroll: true,

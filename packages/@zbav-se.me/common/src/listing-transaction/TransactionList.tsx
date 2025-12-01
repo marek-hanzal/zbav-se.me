@@ -1,10 +1,12 @@
+import { useScrollTo } from "@use-pico/client/hook";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Status } from "@use-pico/client/ui/status";
+import type { StateType } from "@use-pico/common/type";
 import type { tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { Fade } from "@zbav-se.me/ui/fade";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
-import { type FC, type ReactNode, useRef } from "react";
+import { type FC, type ReactNode, useEffect, useRef } from "react";
 import { TransactionItem } from "./TransactionItem";
 
 export namespace TransactionList {
@@ -12,7 +14,7 @@ export namespace TransactionList {
 		locale: string;
 		side: tUserSideEnum;
 		renderEmptyFn(props: Status.Props): ReactNode;
-		renderItemFn: TransactionItem.Item.RenderFn;
+		state: StateType<string | undefined>;
 	}
 }
 
@@ -20,10 +22,12 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	locale,
 	side,
 	renderEmptyFn,
-	renderItemFn,
+	state,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
+
+	const scrollTo = useScrollTo(containerRef);
 
 	return (
 		<Container
@@ -69,13 +73,22 @@ export const TransactionList: FC<TransactionList.Props> = ({
 					fallback={<SpinnerContainer />}
 				>
 					{({ data }) => {
+						// biome-ignore lint/correctness/useHookAtTopLevel: Ssst
+						useEffect(() => {
+							if (state.value) {
+								scrollTo(`[data-id="${state.value}"]`);
+							}
+						}, [
+							state.value,
+						]);
+
 						if (data.data.length > 0) {
 							return data.data.map((item) => (
 								<TransactionItem
 									key={item.id}
 									listingTransaction={item}
 									locale={locale}
-									renderItemFn={renderItemFn}
+									open={state}
 								/>
 							));
 						}

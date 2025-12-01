@@ -4,10 +4,17 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TransactionList } from "@zbav-se.me/common/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import z from "zod";
 
 export const Route = createFileRoute("/$locale/seller/transaction/list")({
+	validateSearch: z.object({
+		open: z.string().optional(),
+	}),
 	component() {
 		const { locale } = Route.useParams();
+		const search = Route.useSearch();
+		const navigate = Route.useNavigate();
+
 		return (
 			<TitleContainer
 				ui="TransactionList-root"
@@ -34,19 +41,16 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 							/>
 						);
 					}}
-					renderItemFn={({ listingTransaction, children }) => (
-						<LinkTo
-							to={"/$locale/seller/transaction/$id/log"}
-							params={{
-								locale,
-								id: listingTransaction.id,
-							}}
-							full
-							tone={"primary"}
-						>
-							{children}
-						</LinkTo>
-					)}
+					state={{
+						value: search.open,
+						set: (value) => {
+							navigate({
+								search: {
+									open: value,
+								},
+							});
+						},
+					}}
 				/>
 			</TitleContainer>
 		);
