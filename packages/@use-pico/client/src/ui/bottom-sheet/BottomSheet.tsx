@@ -2,7 +2,9 @@ import { tvc } from "@use-pico/cls";
 import { motion, useTransform } from "motion/react";
 import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
+import { ArrowLeftIcon } from "../../icon";
 import type { UiProps } from "../../type/UiProps";
+import { Button } from "../button";
 
 export namespace BottomSheet {
 	export interface Props
@@ -49,8 +51,25 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 
 				<Sheet.Content
 					data-ui={"BottomSheet-Content"}
+					style={{
+						position: "relative",
+					}}
 					{...contentProps}
 				>
+					{props.detent === "full" ? (
+						<Button
+							iconEnabled={ArrowLeftIcon}
+							onClick={props.onClose}
+							iconProps={{
+								size: "sm",
+							}}
+							snapTo={"top-left"}
+							round={"full"}
+							tone={"primary"}
+							theme={"light"}
+						/>
+					) : null}
+
 					{children}
 				</Sheet.Content>
 			</Sheet.Container>

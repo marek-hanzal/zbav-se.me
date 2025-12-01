@@ -15,7 +15,7 @@
     value: Kategorie
 057aa39aa7a847d8eef3c78b926f4721d8d18085a29739850faedc45:
     ref: Seller transaction rejected (seller) (label)
-    value: Zájemce byl odmítnut
+    value: Odmítl jsi zájemce
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
     ref: Feed sorting (label)
     value: Řazení
@@ -73,7 +73,7 @@
     value: Skóre
 20edb3c94a6d8d59aba301218e13ca8f48ffc6500657af104e4f25e3:
     ref: Buyer transaction request (buyer-buyer) (label)
-    value: Zájem o inzerát
+    value: Mám zájem!
 258a1ecbf8e264cd35df18a3b70940875586cb5db1d812c6cdc12853:
     ref: To seller (label)
     value: Chci prodávat
@@ -118,7 +118,7 @@
     value: Obchod pro prodávající
 3267efc7c9e171b77629decf13991a2fe40fb9ae81f5dc05864ac28d:
     ref: Seller accepted transaction (seller)
-    value: Obchod otevřen
+    value: Přijal jsi zájemce
 3429a13ac0ce97b0993fd1859d462e498dbd67e6f4b29853c1494151:
     ref: No transactions found - buyer (message)
     value: Jukni na inzeráty a otevři se obchod u těch, které tě zajímají!
@@ -239,7 +239,7 @@
     value: Zavřená transakce
 628f6e8270d103d47f6e26e64227e6aa5fa967b20aff35b68f9156b5:
     ref: Seller accepted transaction (seller-to-buyer)
-    value: Obchod otevřen
+    value: Obchodník tě přijal
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Detail obchodu
@@ -314,7 +314,7 @@
     value: Jdu prodávat
 7fcc9795b740a367fd80ebd80dbc412e537b7f72d99ac64c3b737b52:
     ref: Transaction rejected - seller (label)
-    value: Odmítnutá transakce
+    value: Tento obchod jsi odmítl
 80eb01c4f083e6af9055876045562a9157c605f15686e89854ee632b:
     ref: unused
     value: unused
@@ -338,8 +338,7 @@
 89067b3abe095783c508064cf823fc4ea13ef49e2421774f1650aa2f:
     ref: No transactions found - seller (message)
     value: |
-        Až někdo projeví zájem o tvé inzeráty, tady se objeví transakce, které si
-        pak můžeš odbavit a spravovat.
+        Tady najdeš seznam obchodů, až někdo projeví zájem o tvůj inzerát.
 89ce43e549ae96ce623508874d063e27e0a12b2bcece4e86069598b3:
     ref: Feed - location security (hint)
     value: >
@@ -508,7 +507,7 @@ a94a3441be22610442865891781e2d0943dd42a886646f3f93c4dc06:
         inzeráty, které tě zajímají. Tam si pak nějaký můžeš přidat do košíku.
 a94cbdf1ed6b5ec42ce7ff1be916aadee3ad91ba6871b9a7f84fc0d5:
     ref: Buyer transaction request (buyer-seller) (label)
-    value: Máš zájemce o inzerát
+    value: Mám zájem!
 a94f6ecf7f2bf1199ee1e3f3279418edf602a1b69abe4a50a0d072d1:
     ref: Feed setup (label)
     value: Nastavení
@@ -535,7 +534,7 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     value: Automatické ukončení
 b1c96705cee9f240b173e9c05e3be0b65342ac52bef05a2cc58e4d43:
     ref: Buyer transaction rejected (buyer) (label)
-    value: Transakce byla tebou odmítnuta
+    value: Tento obchod jsi odmítl
 b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
     ref: Invalid data provided (title)
     value: Invalid data provided (title)
