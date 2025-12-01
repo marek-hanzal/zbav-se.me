@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
-import type { WithDatabase } from "../../../database/WithDatabase";
-import type { ListingTransactionSortSchema } from "../schema/ListingTransactionSortSchema";
+import type { ListingTransactionSortSchema } from "~/@user/listing-transaction/schema/ListingTransactionSortSchema";
+import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingTransactionSelect {
 	export interface Props {
@@ -18,15 +18,8 @@ export const withListingTransactionSelect = ({
 	let query = database
 		.selectFrom("listing_transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")
-		.select([
-			"lt.id",
-			"lt.listingId",
-			"lt.createdAt",
-			"lt.updatedAt",
-			"lt.expiresAt",
-			"lt.userId",
-			"l.title",
-		]);
+		.selectAll("lt")
+		.select("l.title");
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
