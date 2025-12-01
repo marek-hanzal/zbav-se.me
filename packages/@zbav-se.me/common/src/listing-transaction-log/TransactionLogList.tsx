@@ -154,6 +154,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 							"p-0",
 							"rounded-md",
 							"relative",
+							"border-none",
 						]}
 					>
 						<HeroImage
