@@ -36,6 +36,7 @@ export const ListingDetailButton: FC<ListingDetailButton.Props> = ({
 				round={"md"}
 				onClick={() => setDetail(true)}
 				border={false}
+				label={"Listing detail (label)"}
 				menu
 				{...props}
 			/>
