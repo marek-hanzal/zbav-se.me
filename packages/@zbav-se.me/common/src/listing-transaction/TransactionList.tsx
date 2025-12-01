@@ -32,7 +32,10 @@ export const TransactionList: FC<TransactionList.Props> = ({
 				contain: "content",
 			}}
 		>
-			<Fade scrollableRef={containerRef} />
+			<Fade
+				height={64}
+				scrollableRef={containerRef}
+			/>
 
 			<Container
 				ref={containerRef}
@@ -72,7 +75,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 									key={item.id}
 									listingTransaction={item}
 									locale={locale}
-									item={renderItemFn}
+									renderItemFn={renderItemFn}
 								/>
 							));
 						}

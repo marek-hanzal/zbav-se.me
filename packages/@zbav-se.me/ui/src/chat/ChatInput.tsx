@@ -192,15 +192,6 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					}}
 					disabled={loading || value.length === 0}
 					loading={loading}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"bg-transparent",
-								],
-							},
-						},
-					}}
 					onClick={() => {
 						onSubmit(value);
 						onChange("");

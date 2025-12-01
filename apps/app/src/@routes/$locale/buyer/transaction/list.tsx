@@ -29,14 +29,13 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 					renderItemFn={({ listingTransaction, children }) => {
 						return (
 							<LinkTo
-								icon={ArrowRightIcon}
-								iconPosition={"right"}
 								to={"/$locale/buyer/transaction/$id/log"}
 								params={{
 									locale,
 									id: listingTransaction.id,
 								}}
 								full
+								tone={"primary"}
 							>
 								{children}
 							</LinkTo>

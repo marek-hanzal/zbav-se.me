@@ -17,7 +17,7 @@ export namespace TransactionItem {
 	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		listingTransaction: tListingTransaction;
-		item: Item.RenderFn;
+		renderItemFn: Item.RenderFn;
 	}
 }
 
@@ -25,7 +25,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	locale,
 	listingTransaction,
 	tweak,
-	item,
+	renderItemFn,
 	...props
 }) => {
 	const [hero] = listingTransaction.gallery.items as [
@@ -33,62 +33,60 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 		...tGalleryItem[],
 	];
 
-	return (
-		<Badge
-			size={"xl"}
-			tweak={[
-				tweak,
-				{
-					slot: {
-						root: {
-							class: [
-								"flex",
-								"flex-col",
-								"gap-2",
-								"h-fit",
-								"w-full",
-								"items-start",
-								"p-0",
-							],
+	return renderItemFn({
+		listingTransaction,
+		children: (
+			<Badge
+				size={"xl"}
+				tweak={[
+					tweak,
+					{
+						slot: {
+							root: {
+								class: [
+									"flex",
+									"flex-col",
+									"gap-2",
+									"h-fit",
+									"w-full",
+									"items-start",
+									"p-0",
+								],
+							},
 						},
 					},
-				},
-			]}
-			round={"default"}
-			{...props}
-		>
-			<div
-				className={tvc([
-					"w-full",
-					"h-32",
-				])}
+				]}
+				round={"default"}
+				{...props}
 			>
-				<HeroImage
-					ui={"TransactionItem-image"}
-					src={hero.upload.url}
-					alt={`Hero image for listing transaction ${listingTransaction.id}`}
-					visible
-					round
-				/>
-			</div>
+				<div
+					className={tvc([
+						"w-full",
+						"h-32",
+					])}
+				>
+					<HeroImage
+						ui={"TransactionItem-image"}
+						src={hero.upload.url}
+						alt={`Hero image for listing transaction ${listingTransaction.id}`}
+						visible
+						round
+					/>
+				</div>
 
-			<div
-				className={tvc([
-					"py-1",
-					"px-2",
-				])}
-			>
-				{item({
-					listingTransaction,
-					children: (
-						<Typo
-							label={listingTransaction.title}
-							truncate
-							size={"md"}
-						/>
-					),
-				})}
-			</div>
-		</Badge>
-	);
+				<div
+					className={tvc([
+						"py-1",
+						"px-2",
+					])}
+				>
+					<Typo
+						label={listingTransaction.title}
+						truncate
+						size={"md"}
+					/>
+				</div>
+			</Badge>
+		),
+	});
 };
