@@ -1,11 +1,11 @@
 import { keepPreviousData } from "@tanstack/react-query";
-import { Icon, ShowIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
+import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { tvc } from "@use-pico/cls";
 import type {
 	tGalleryItem,
 	tListingTransaction,
@@ -150,75 +150,106 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 							"items-start",
 							"gap-1",
 							"w-full",
-							"h-fit",
+							"h-64",
 							"p-0",
 							"rounded-md",
+							"relative",
 						]}
 					>
-						<div
-							className={tvc([
-								"w-full",
-								"h-32",
-							])}
+						<HeroImage
+							ui={"ListingHero-image"}
+							src={hero.upload.url}
+							alt={`Hero image for listing transaction ${listingTransaction.id}`}
+							visible
+							round
+							onClick={() => setDetail((prev) => !prev)}
+						/>
+
+						<Badge
+							ui={"TransactionLogList-price"}
+							tone={"secondary"}
+							theme={"light"}
+							round={"default"}
+							snapTo={"top-center"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"max-w-1/2",
+										],
+									},
+								},
+							}}
 						>
-							<HeroImage
-								ui={"ListingHero-image"}
-								src={hero.upload.url}
-								alt={`Hero image for listing transaction ${listingTransaction.id}`}
-								visible
-								round
-								onClick={() => setDetail((prev) => !prev)}
-							/>
+							{listingTransaction.price > 0 ? (
+								<PriceInline
+									price={listingTransaction.price}
+									locale={locale}
+									currency={listingTransaction.currency}
+								/>
+							) : (
+								<Tx label={"Price - free"} />
+							)}
+						</Badge>
 
-							<BottomSheet
-								id={detailSheetId}
-								isOpen={detail}
-								onClose={() => setDetail(false)}
-								detent={"full"}
-							>
-								<withListingFetchQuery.Suspense
-									data={{
-										where: {
-											id: listingTransaction.listingId,
-										},
-									}}
-									fallback={<SpinnerContainer />}
-								>
-									{({ data }) => {
-										return (
-											<ListingDetailContainer
-												parentSheetId={detailSheetId}
-												locale={locale}
-												listing={data}
-												withScore
-											/>
-										);
-									}}
-								</withListingFetchQuery.Suspense>
-							</BottomSheet>
-						</div>
-
-						<div
-							className={tvc([
-								"flex",
-								"flex-row",
-								"items-center",
-								"justify-between",
-								"w-full",
-								"py-1",
-								"px-2",
-							])}
+						<Badge
+							ui={"TransactionLogList-bottom"}
+							size={"lg"}
+							round={"default"}
+							snapTo={"bottom"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"flex",
+											"flex-col",
+											"gap-1",
+											"opacity-85",
+											"overflow-hidden",
+											"h-fit",
+										],
+									},
+								},
+							}}
 						>
 							<Typo
-								label={listingTransaction.title}
-								wrap={"wrap"}
+								truncate
+								label={listingTransaction.location}
 							/>
 
-							<Icon
-								icon={ShowIcon}
-								size={"xs"}
+							<Typo
+								label={listingTransaction.title}
+								truncate
+								size={"sm"}
 							/>
-						</div>
+						</Badge>
+
+						<BottomSheet
+							id={detailSheetId}
+							isOpen={detail}
+							onClose={() => setDetail(false)}
+							detent={"full"}
+						>
+							<withListingFetchQuery.Suspense
+								data={{
+									where: {
+										id: listingTransaction.listingId,
+									},
+								}}
+								fallback={<SpinnerContainer />}
+							>
+								{({ data }) => {
+									return (
+										<ListingDetailContainer
+											parentSheetId={detailSheetId}
+											locale={locale}
+											listing={data}
+											withScore
+										/>
+									);
+								}}
+							</withListingFetchQuery.Suspense>
+						</BottomSheet>
 					</Badge>
 
 					{data.data.map((log) => {
