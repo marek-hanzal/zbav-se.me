@@ -24,7 +24,7 @@
     value: Vyber fotku
 0c9fd2c1be3e9357f6ce010004cc93f4e2859ef4e62274ab72a0c42f:
     ref: Cart (label)
-    value: Tvůj košík
+    value: Oblíbené
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
     value: |
@@ -514,7 +514,7 @@ a94f6ecf7f2bf1199ee1e3f3279418edf602a1b69abe4a50a0d072d1:
     value: Nastavení
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
     ref: Your cart (title)
-    value: Tvůj košík
+    value: Oblíbené
 aa0b817fd188bc7d176bde3405ab3fc1a190f3b11cfd38a8bc033913:
     ref: Number of listings (label)
     value: "Počet inzerátů:"

@@ -1,1 +1,1 @@
-export const TransactionIcon = "icon-[tdesign--undertake-transaction-filled]";
+export const TransactionIcon = "icon-[fluent--arrow-swap-24-filled]";

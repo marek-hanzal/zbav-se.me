@@ -1,1 +1,1 @@
-export const FeedIcon = "icon-[stash--feed-light]";
+export const FeedIcon = "icon-[arcticons--smartnews]";
