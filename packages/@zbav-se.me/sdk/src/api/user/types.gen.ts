@@ -670,6 +670,24 @@ export type tListingTransactionCollection = {
 };
 
 /**
+ * List of available currencies
+ */
+export const tCurrencyListEnum = {
+    CZK: 'CZK',
+    EUR: 'EUR',
+    USD: 'USD',
+    GBP: 'GBP',
+    PLN: 'PLN',
+    HUF: 'HUF',
+    CHF: 'CHF'
+} as const;
+
+/**
+ * List of available currencies
+ */
+export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
+
+/**
  * Listing transaction data
  */
 export type tListingTransaction = {
@@ -698,6 +716,15 @@ export type tListingTransaction = {
      */
     title: string;
     gallery: tGallery;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    currency: tCurrencyListEnum;
+    /**
+     * Location of the listing
+     */
+    location: string;
 };
 
 /**
@@ -1428,24 +1455,6 @@ export type tListingWhere = {
  * This filter matches listings with currency codes in the provided array
  */
 export type tCurrencyIn = Array<tCurrencyListEnum>;
-
-/**
- * List of available currencies
- */
-export const tCurrencyListEnum = {
-    CZK: 'CZK',
-    EUR: 'EUR',
-    USD: 'USD',
-    GBP: 'GBP',
-    PLN: 'PLN',
-    HUF: 'HUF',
-    CHF: 'CHF'
-} as const;
-
-/**
- * List of available currencies
- */
-export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyListEnum];
 
 /**
  * Filter listings based on the provided category IDs

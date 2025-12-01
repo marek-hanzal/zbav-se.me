@@ -728,6 +728,23 @@ export const zListingTransactionQuery = z.object({
 export type zListingTransactionQuery = z.infer<typeof zListingTransactionQuery>;
 
 /**
+ * List of available currencies
+ */
+export const zCurrencyListEnum = z.enum([
+    'CZK',
+    'EUR',
+    'USD',
+    'GBP',
+    'PLN',
+    'HUF',
+    'CHF'
+]).register(z.globalRegistry, {
+    description: 'List of available currencies'
+});
+
+export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
+
+/**
  * Listing transaction data
  */
 export const zListingTransaction = z.object({
@@ -749,7 +766,14 @@ export const zListingTransaction = z.object({
     title: z.string().register(z.globalRegistry, {
         description: 'Listing transaction title'
     }),
-    gallery: zGallery
+    gallery: zGallery,
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    currency: zCurrencyListEnum,
+    location: z.string().register(z.globalRegistry, {
+        description: 'Location of the listing'
+    })
 }).register(z.globalRegistry, {
     description: 'Listing transaction data'
 });
@@ -1470,23 +1494,6 @@ export const zListingMeta = z.object({
 });
 
 export type zListingMeta = z.infer<typeof zListingMeta>;
-
-/**
- * List of available currencies
- */
-export const zCurrencyListEnum = z.enum([
-    'CZK',
-    'EUR',
-    'USD',
-    'GBP',
-    'PLN',
-    'HUF',
-    'CHF'
-]).register(z.globalRegistry, {
-    description: 'List of available currencies'
-});
-
-export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
 
 /**
  * This filter matches listings with currency codes in the provided array

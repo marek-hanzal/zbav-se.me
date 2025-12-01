@@ -20,9 +20,13 @@ export const withListingTransactionSelect = ({
 	let query = database
 		.selectFrom("listing_transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")
+		.innerJoin("location as loc", "l.locationId", "loc.id")
 		.selectAll("lt")
 		.select([
 			"l.title",
+			"l.price",
+			"l.currency",
+			"loc.address as location",
 			(eb) =>
 				jsonObjectFrom(
 					withGallerySelect({

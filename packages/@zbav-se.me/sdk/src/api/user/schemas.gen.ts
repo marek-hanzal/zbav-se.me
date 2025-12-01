@@ -861,6 +861,19 @@ export const sListingTransactionCollection = {
     ]
 } as const;
 
+export const sCurrencyListEnum = {
+    type: 'string',
+    enum: [
+        'CZK',
+        'EUR',
+        'USD',
+        'GBP',
+        'PLN',
+        'HUF',
+        'CHF'
+    ]
+} as const;
+
 export const sListingTransaction = {
     type: 'object',
     properties: {
@@ -884,6 +897,15 @@ export const sListingTransaction = {
         },
         gallery: {
             $ref: '#/components/schemas/Gallery'
+        },
+        price: {
+            type: 'number'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        location: {
+            type: 'string'
         }
     },
     required: [
@@ -893,7 +915,10 @@ export const sListingTransaction = {
         'updatedAt',
         'expiresAt',
         'title',
-        'gallery'
+        'gallery',
+        'price',
+        'currency',
+        'location'
     ]
 } as const;
 
@@ -1804,19 +1829,6 @@ export const sCurrencyIn = {
     items: {
         $ref: '#/components/schemas/CurrencyListEnum'
     }
-} as const;
-
-export const sCurrencyListEnum = {
-    type: 'string',
-    enum: [
-        'CZK',
-        'EUR',
-        'USD',
-        'GBP',
-        'PLN',
-        'HUF',
-        'CHF'
-    ]
 } as const;
 
 export const sCategoryIdIn = {

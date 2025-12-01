@@ -1,6 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { ListingTransactionDbSchema } from "~/app/listing-transaction/schema/ListingTransactionDbSchema";
+import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const ListingTransactionSchema = z
 	.object({
@@ -8,7 +9,18 @@ export const ListingTransactionSchema = z
 		title: z.string().openapi({
 			description: "Listing transaction title",
 		}),
+		//
 		gallery: GallerySchema,
+		//
+		price: z.coerce.number().openapi({
+			description: "Price of the listing",
+			type: "number",
+		}),
+		currency: CurrencyListEnumSchema,
+		//
+		location: z.string().openapi({
+			description: "Location of the listing",
+		}),
 	})
 	.omit({
 		userId: true,

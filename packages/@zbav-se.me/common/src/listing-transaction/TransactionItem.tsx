@@ -1,7 +1,7 @@
-import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
+import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { tvc } from "@use-pico/cls";
 import type { tGalleryItem, tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC, PropsWithChildren, ReactNode } from "react";
@@ -47,11 +47,13 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 								class: [
 									"flex",
 									"flex-col",
-									"gap-2",
-									"h-fit",
+									"gap-4",
+									"h-72",
 									"w-full",
 									"items-start",
 									"p-0",
+									"relative",
+									"border-none",
 								],
 							},
 						},
@@ -60,43 +62,72 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				round={"default"}
 				{...props}
 			>
-				<div
-					className={tvc([
-						"w-full",
-						"h-32",
-					])}
-				>
-					<HeroImage
-						ui={"TransactionItem-image"}
-						src={hero.upload.url}
-						alt={`Hero image for listing transaction ${listingTransaction.id}`}
-						visible
-						round
-					/>
-				</div>
+				<HeroImage
+					ui={"TransactionItem-image"}
+					src={hero.upload.url}
+					alt={`Hero image for listing transaction ${listingTransaction.id}`}
+					visible
+					round
+				/>
 
-				<div
-					className={tvc([
-						"flex",
-						"flex-row",
-						"items-center",
-						"justify-between",
-						"py-1",
-						"px-2",
-						"w-full",
-					])}
+				<Badge
+					ui={"TransactionItem-price"}
+					tone={"secondary"}
+					theme={"light"}
+					round={"default"}
+					snapTo={"top-center"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"max-w-1/2",
+								],
+							},
+						},
+					}}
 				>
+					{listingTransaction.price > 0 ? (
+						<PriceInline
+							price={listingTransaction.price}
+							locale={locale}
+							currency={listingTransaction.currency}
+						/>
+					) : (
+						<Tx label={"Price - free"} />
+					)}
+				</Badge>
+
+				<Badge
+					ui={"TransactionItem-bottom"}
+					size={"lg"}
+					round={"default"}
+					snapTo={"bottom"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"flex",
+									"flex-col",
+									"gap-1",
+									"opacity-85",
+									"overflow-hidden",
+									"h-fit",
+								],
+							},
+						},
+					}}
+				>
+					<Typo
+						truncate
+						label={listingTransaction.location}
+					/>
+
 					<Typo
 						label={listingTransaction.title}
 						truncate
-						size={"md"}
+						size={"sm"}
 					/>
-
-					<Icon
-						icon={ArrowRightIcon}
-						size={"xs"}
-					/>
-				</div>
+				</Badge>
 			</Badge>
 		),
 	});
