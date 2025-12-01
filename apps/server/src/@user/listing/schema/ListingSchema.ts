@@ -21,9 +21,14 @@ export const ListingSchema = z
 		hasFlag: z.boolean().openapi({
 			description: "Whether the user flagged this listing",
 		}),
-		hasTransaction: z.boolean().openapi({
-			description: "Whether the user has a transaction with this listing",
-		}),
+		transactionId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "Whether the user has a transaction with this listing",
+			}),
 	})
 	.omit({
 		userId: true,

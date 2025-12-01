@@ -1,3 +1,4 @@
+import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
 import { tvc } from "@use-pico/cls";
@@ -76,14 +77,24 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 
 				<div
 					className={tvc([
+						"flex",
+						"flex-row",
+						"items-center",
+						"justify-between",
 						"py-1",
 						"px-2",
+						"w-full",
 					])}
 				>
 					<Typo
 						label={listingTransaction.title}
 						truncate
 						size={"md"}
+					/>
+
+					<Icon
+						icon={ArrowRightIcon}
+						size={"sm"}
 					/>
 				</div>
 			</Badge>

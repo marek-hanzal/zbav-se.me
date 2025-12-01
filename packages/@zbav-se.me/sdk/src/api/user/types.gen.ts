@@ -1726,7 +1726,7 @@ export type tListing = {
     /**
      * Whether the user has a transaction with this listing
      */
-    hasTransaction: boolean;
+    transactionId: string | null;
 };
 
 /**

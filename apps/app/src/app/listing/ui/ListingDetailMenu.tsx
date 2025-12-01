@@ -47,11 +47,12 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 					theme: "light",
 				}}
 			>
-				{tools.includes("transaction") && listing.hasTransaction ? (
+				{tools.includes("transaction") && listing.transactionId ? (
 					<LinkTo
-						to={"/$locale/buyer/transaction/list"}
+						to={"/$locale/buyer/transaction/$id/log"}
 						params={{
 							locale,
+							id: listing.transactionId,
 						}}
 						full
 					>

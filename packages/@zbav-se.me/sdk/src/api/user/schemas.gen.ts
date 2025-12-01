@@ -2143,8 +2143,18 @@ export const sListing = {
         hasFlag: {
             type: 'boolean'
         },
-        hasTransaction: {
-            type: 'boolean'
+        transactionId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         }
     },
     required: [
@@ -2165,7 +2175,7 @@ export const sListing = {
         'isInCart',
         'isIgnored',
         'hasFlag',
-        'hasTransaction'
+        'transactionId'
     ]
 } as const;
 
