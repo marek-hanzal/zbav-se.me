@@ -9,7 +9,7 @@
 	"dependencies": {
 		"@tanstack/react-query": "5.90.11",
 		"@use-pico/client": "workspace:*",
-		"@use-pico/cls": "5.0.76",
+		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@zbav-se.me/sdk": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",

@@ -1,0 +1,19 @@
+{
+	"extends": "@use-pico/tsconfig/common.json",
+	"compilerOptions": {
+		"types": [
+			"node",
+			"react",
+			"react-dom",
+			"@testing-library/jest-dom"
+		]
+	},
+	"include": [
+		"src/**/*",
+		"src/**/*.json",
+		"test/**/*"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}

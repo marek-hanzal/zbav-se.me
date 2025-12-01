@@ -21,7 +21,7 @@
 		"@tanstack/react-router-ssr-query": "1.139.12",
 		"@tanstack/react-start": "1.139.12",
 		"@use-pico/client": "workspace:*",
-		"@use-pico/cls": "5.0.76",
+		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
 		"@zbav-se.me/common": "workspace:*",
