@@ -8,6 +8,7 @@ export namespace useElementVisibility {
 	}
 
 	export interface Proximity extends ScrollTrigger.StaticVars {
+		overscan?: number;
 		setTop?(proximity: boolean): void;
 		setBottom?(proximity: boolean): void;
 	}
@@ -98,6 +99,7 @@ export function useElementVisibility({
 
 			if (proximity) {
 				const {
+					overscan = 2,
 					setTop,
 					setBottom,
 					onEnter,
@@ -115,7 +117,7 @@ export function useElementVisibility({
 						trigger: triggerRef.current,
 						scroller: scrollerRef.current,
 						start: "top+=100% bottom",
-						end: "bottom+=100% top",
+						end: `bottom+=${overscan * 100}% top`,
 						...proximityProps,
 						onEnter(props) {
 							setTop(true);
@@ -143,7 +145,7 @@ export function useElementVisibility({
 					ScrollTrigger.create({
 						trigger: triggerRef.current,
 						scroller: scrollerRef.current,
-						start: "top-=100% bottom",
+						start: `top-=${overscan * 100}% bottom`,
 						end: "bottom-=100% top",
 						...proximityProps,
 						onEnter(props) {

@@ -117,6 +117,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							key={`${listingIdPrefix}-${listing.id}`}
 							scrollerRef={containerRef}
 							useProximity
+							overscan={4}
 							delay={200}
 							placeholder={(props) => (
 								<SpinnerContainer
