@@ -1,11 +1,13 @@
 import { z } from "@hono/zod-openapi";
 import { ListingQuerySchema } from "~/@user/listing/schema/ListingQuerySchema";
-import { FeedDbSchema } from "../../../app/feed/schema/FeedDbSchema";
+import { UploadSchema } from "~/@user/upload/schema/UploadSchema";
+import { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
 
 export const FeedSchema = z
 	.object({
 		...FeedDbSchema.shape,
 		query: ListingQuerySchema,
+		upload: UploadSchema.optional(),
 	})
 	.omit({
 		userId: true,

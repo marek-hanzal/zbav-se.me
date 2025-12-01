@@ -57,6 +57,15 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-14",
+								],
+							},
+						},
+					}}
 				>
 					<LocationSelection
 						locale={locale}

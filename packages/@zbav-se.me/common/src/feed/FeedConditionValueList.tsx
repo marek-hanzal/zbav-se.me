@@ -68,6 +68,15 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-14",
+								],
+							},
+						},
+					}}
 				>
 					<ConditionContainer selection={conditionSelection} />
 

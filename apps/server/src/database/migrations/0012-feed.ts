@@ -7,6 +7,7 @@ export const FeedMigration: Migration = {
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("locationId", "text")
+			.addColumn("uploadId", "text")
 			.addColumn("name", "text", (col) => col.notNull())
 			.addColumn("query", "jsonb", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
@@ -33,6 +34,17 @@ export const FeedMigration: Migration = {
 				],
 				(c) => c.onDelete("set null"),
 			)
+			.addForeignKeyConstraint(
+				"feed_[uploadId]_fk",
+				[
+					"uploadId",
+				],
+				"upload",
+				[
+					"id",
+				],
+				(c) => c.onDelete("set null"),
+			)
 			.addUniqueConstraint("feed_[userId-name]_unique_idx", [
 				"userId",
 				"name",
@@ -52,5 +64,7 @@ export const FeedMigration: Migration = {
 			.on("feed")
 			.column("locationId")
 			.execute();
+
+		await db.schema.createIndex("feed_[uploadId]_idx").on("feed").column("uploadId").execute();
 	},
 };

@@ -67,6 +67,15 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-14",
+								],
+							},
+						},
+					}}
 				>
 					<CategorySelectionContainer
 						locale={locale}

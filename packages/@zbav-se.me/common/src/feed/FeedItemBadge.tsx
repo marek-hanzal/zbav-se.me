@@ -89,6 +89,15 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				<FeedDetailContainer
 					locale={locale}
 					feed={feed}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-12",
+								],
+							},
+						},
+					}}
 				/>
 			</BottomSheet>
 		</>

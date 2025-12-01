@@ -68,6 +68,15 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-14",
+								],
+							},
+						},
+					}}
 				>
 					<AgeContainer selection={selection} />
 

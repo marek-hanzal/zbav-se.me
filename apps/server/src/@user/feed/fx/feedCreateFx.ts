@@ -1,8 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import type { FeedCreateSchema } from "../schema/FeedCreateSchema";
+import type { FeedCreateSchema } from "~/@user/feed/schema/FeedCreateSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { feedFetchFx } from "./feedFetchFx";
 
 export namespace feedCreateFx {
@@ -27,6 +27,7 @@ export const feedCreateFx = ({ data: { name, locationId, query } }: feedCreateFx
 					id,
 					userId: user.id,
 					locationId,
+					uploadId: null,
 					name,
 					query: JSON.stringify(query) as any,
 					createdAt: now,

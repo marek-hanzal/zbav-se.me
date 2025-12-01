@@ -64,6 +64,15 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-14",
+								],
+							},
+						},
+					}}
 				>
 					<ListingSortSelect
 						withGeo={withGeo}
