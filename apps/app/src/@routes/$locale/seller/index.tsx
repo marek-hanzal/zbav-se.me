@@ -3,7 +3,6 @@ import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useEffect } from "react";
 import { SellerMenu } from "~/app/@seller/ui/SellerMenu";
-import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export const Route = createFileRoute("/$locale/seller/")({
 	component() {
@@ -22,19 +21,6 @@ export const Route = createFileRoute("/$locale/seller/")({
 				textTitle={"Seller home (title)"}
 			>
 				<SellerMenu locale={locale} />
-
-				<SignOutButton
-					locale={locale}
-					tweak={{
-						slot: {
-							wrapper: {
-								class: [
-									"mx-auto",
-								],
-							},
-						},
-					}}
-				/>
 			</TitleContainer>
 		);
 	},
