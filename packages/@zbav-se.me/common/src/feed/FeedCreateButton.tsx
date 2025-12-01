@@ -75,7 +75,11 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 						onClick={() => {
 							feedCreateMutation.mutate({
 								name,
-								query: {},
+								query: {
+									where: {
+										withOwn: false,
+									},
+								},
 							});
 						}}
 					/>

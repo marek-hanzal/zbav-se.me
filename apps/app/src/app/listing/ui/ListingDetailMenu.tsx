@@ -1,4 +1,4 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -7,7 +7,7 @@ import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { CartIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
 
@@ -57,6 +57,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 						full
 					>
 						<Button
+							tone={"primary"}
 							label={"View transactions (button)"}
 							iconEnabled={TransactionIcon}
 							iconPosition={"right"}
@@ -66,7 +67,10 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 						/>
 					</LinkTo>
 				) : (
-					<ListingTransactionCreateButton listing={listing} />
+					<ListingTransactionCreateButton
+						tone={"primary"}
+						listing={listing}
+					/>
 				)}
 
 				{tools.includes("cart") ? (
@@ -74,7 +78,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 						label={
 							listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"
 						}
-						iconEnabled={CartIcon}
+						iconEnabled={listing.isInCart ? FavouriteIcon : FavouriteOffIcon}
 						iconPosition={"right"}
 						disabled={listingCartToggle.isPending}
 						loading={listingCartToggle.isPending}
@@ -95,6 +99,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 						data={{}}
 						fallback={
 							<Button
+								iconPosition={"right"}
 								disabled
 								loading
 								label={"Loading cart count (button)"}

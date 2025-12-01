@@ -82,7 +82,7 @@
     value: Lokalita inzerátu
 268f13190a629bd137dc802766a623af5fbbde39d57e2b4197131304:
     ref: Nothing in cart yet (button)
-    value: Máš prázdný košík
+    value: Nemáš oblíbené inzeráty
 296afd635ef4292785e24d4863ed42fac33a4bc1814216b988d458b6:
     ref: Transaction closed (label)
     value: Transakce uzavřena
@@ -593,7 +593,7 @@ be8a51546a71094a7254b726d40e9c1830a7c6bef136125ca142c2cd:
     value: Detail inzerátu
 bf14eea343ed184a8fe9160210305d3bbacfce9413efb44d366635dd:
     ref: Remove from cart (button)
-    value: Odebrat z košíku
+    value: Odebrat z oblíbených
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
     value: Všechno
@@ -677,7 +677,7 @@ e164d6b2893d2c34341349e7efb9ec4735b1e3b2f983a6181d0003fc:
     value: Přijato
 e2599c3b9d828a48f101d8e9d763a3fa348b11675f80809790e980a7:
     ref: Go to cart (button)
-    value: Přejít do košíku
+    value: Oblíbené
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
     ref: Listing title (required)
     value: |
