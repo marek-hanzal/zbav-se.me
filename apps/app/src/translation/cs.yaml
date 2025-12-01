@@ -97,7 +97,7 @@
     value: zbav-se.me
 2af48baae0e3a9ac9acf8ba4d1cb9527bd0ac47fd431f91b99b2dfd3:
     ref: Go to feed (button)
-    value: Přejít k nabídkám
+    value: Inzeráty
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
@@ -308,7 +308,7 @@
     value: icon
 7e472530689c600917abb98ada2c43213c4477f22ac6cde0c7acfa8e:
     ref: Add to cart (button)
-    value: Přidat do košíku
+    value: Přidat do oblíbených
 7eb54502ed3b034d6eb4efa9b31a5780be63c540b2d16a6eb33c2511:
     ref: I want to sell (label)
     value: Jdu prodávat
@@ -569,8 +569,7 @@ b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
 b8bae7ce48064a4e0a2cb39f242622ece9bb3c7b040bdbddbbb57060:
     ref: Your cart is empty - feed (message)
     value: |
-        Zatím v košíku nic nemáš - koukni do nabídek a z nich si pak
-        něco přidej!
+        Koukni na inzeráty a přidej si nějaký do oblíbených!
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty
@@ -579,10 +578,10 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     value: Napiš město, kraj, co tě napadne
 bb2826b23a357a691367f19c4467302f374041ded8c9a75b8abe866c:
     ref: Your cart is empty - feed (title)
-    value: Hoď si něco do košíku v nabídkách
+    value: Hoď si něco do oblíbených
 bd4c51483b9569475fa4f392deecd1f59492bf9e37050db9a96a80b4:
     ref: Back to cart (link)
-    value: Zpět do košíku
+    value: Zpět do oblíbených
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     ref:
         Missing identity for an Entity (id). I'm sorry, but I cannot provide better

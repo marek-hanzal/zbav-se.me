@@ -46,6 +46,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, 
 					root: {
 						class: [
 							"flex-shrink-0",
+							"border-none",
 						],
 					},
 				},

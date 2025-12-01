@@ -273,7 +273,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				<TransactionChat
 					locale={locale}
 					side="buyer"
-					listingTransaction={listingTransaction}
 					listingTransactionLog={lastLog}
 				/>
 			)}

@@ -64,7 +64,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						}}
 					/>
 
-					<BuyerInfoButton
+					<SellerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
 					/>
@@ -114,7 +114,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						}}
 					/>
 
-					<SellerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
 					/>

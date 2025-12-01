@@ -1,6 +1,5 @@
 import { translator } from "@use-pico/common/translator";
 import {
-	type tListingTransaction,
 	type tListingTransactionLog,
 	type tUserSideEnum,
 	zListingTransactionGallery,
@@ -20,7 +19,6 @@ export namespace TransactionChat {
 	export interface Props {
 		locale: string;
 		side: tUserSideEnum;
-		listingTransaction: tListingTransaction;
 		listingTransactionLog: tListingTransactionLog;
 	}
 }
@@ -28,7 +26,6 @@ export namespace TransactionChat {
 export const TransactionChat: FC<TransactionChat.Props> = ({
 	locale,
 	side,
-	listingTransaction,
 	listingTransactionLog,
 }) => {
 	const menuState = useState(false);
@@ -63,7 +60,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 							<StatusMenu
 								locale={locale}
 								type={type}
-								listingTransaction={listingTransaction}
 								listingTransactionStatus={status}
 								menuState={menuState}
 							/>
