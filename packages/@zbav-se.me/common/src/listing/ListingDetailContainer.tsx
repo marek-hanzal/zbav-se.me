@@ -79,95 +79,106 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					round={"default"}
 				>
 					<HeroImage
-						round
 						src={hero.upload.url}
 						alt={`Hero image for listing ${listing.id}`}
 					/>
 				</Container>
 
-				<BadgeValue
-					textLabel={"Listing title (label)"}
-					textValue={listing.title}
-					textValueProps={{
-						truncate: false,
-						wrap: "wrap",
-					}}
-				/>
+				<Container
+					layout={"vertical-flex"}
+					gap={"sm"}
+					square={"md"}
+					height={"content"}
+				>
+					<BadgeValue
+						textLabel={"Listing title (label)"}
+						textValue={listing.title}
+						textValueProps={{
+							truncate: false,
+							wrap: "wrap",
+						}}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing price (label)"}
-					textValue={toLocaleNumber({
-						locale,
-						number: listing.price,
-						currency: listing.currency,
-						currencyDisplay: "narrowSymbol",
-						style: "currency",
-					})}
-				/>
+					<BadgeValue
+						textLabel={"Listing price (label)"}
+						textValue={toLocaleNumber({
+							locale,
+							number: listing.price,
+							currency: listing.currency,
+							currencyDisplay: "narrowSymbol",
+							style: "currency",
+						})}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing score hint (label)"}
-					textValue={
-						<withListingMetricsFetchQuery.Suspense
-							data={listing.id}
-							fallback={<Icon icon={SpinnerIcon} />}
-						>
-							{({ data }) => {
-								return toLocaleNumber({
-									locale,
-									number: data.score,
-									empty: "0",
-								});
-							}}
-						</withListingMetricsFetchQuery.Suspense>
-					}
-					action={
-						<Icon
-							icon={ShowIcon}
-							size={"sm"}
-						/>
-					}
-					onClick={() => setScore(true)}
-				/>
+					<BadgeValue
+						textLabel={"Listing score hint (label)"}
+						textValue={
+							<withListingMetricsFetchQuery.Suspense
+								data={listing.id}
+								fallback={<Icon icon={SpinnerIcon} />}
+							>
+								{({ data }) => {
+									return toLocaleNumber({
+										locale,
+										number: data.score,
+										empty: "0",
+									});
+								}}
+							</withListingMetricsFetchQuery.Suspense>
+						}
+						action={
+							<Icon
+								icon={ShowIcon}
+								size={"sm"}
+							/>
+						}
+						onClick={() => setScore(true)}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing seller hint (label)"}
-					textValue={"- skore + link -"}
-					action={<Icon icon={ArrowRightIcon} />}
-				/>
+					<BadgeValue
+						textLabel={"Listing seller hint (label)"}
+						textValue={"- skore + link -"}
+						action={<Icon icon={ArrowRightIcon} />}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing location (label)"}
-					textValue={listing.location.address}
-					textValueProps={{
-						truncate: false,
-						wrap: "wrap",
-					}}
-				/>
+					<BadgeValue
+						textLabel={"Listing location (label)"}
+						textValue={listing.location.address}
+						textValueProps={{
+							truncate: false,
+							wrap: "wrap",
+						}}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing condition (label)"}
-					textValue={`Condition - Overall [${listing.condition}] (hint)`}
-				/>
+					<BadgeValue
+						textLabel={"Listing condition (label)"}
+						textValue={`Condition - Overall [${listing.condition}] (hint)`}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing age (label)"}
-					textValue={`Condition - Age [${listing.age}] (hint)`}
-				/>
+					<BadgeValue
+						textLabel={"Listing age (label)"}
+						textValue={`Condition - Age [${listing.age}] (hint)`}
+					/>
 
-				<BadgeValue
-					textLabel={"Listing category (label)"}
-					textValue={
-						<CategoryInline
-							category={listing.category}
-							tone="secondary"
-							theme="light"
-						/>
-					}
-				/>
+					<BadgeValue
+						textLabel={"Listing category (label)"}
+						textValue={
+							<CategoryInline
+								category={listing.category}
+								tone="secondary"
+								theme="light"
+							/>
+						}
+					/>
+				</Container>
 			</Container>
 
-			{children}
+			<Container
+				square={"md"}
+				height={"content"}
+			>
+				{children}
+			</Container>
 
 			<BottomSheet
 				isOpen={score}

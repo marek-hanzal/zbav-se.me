@@ -43,6 +43,7 @@ export namespace Badge {
 		 * Stretch badge to full width.
 		 */
 		full?: boolean;
+		className?: string[];
 	}
 }
 
@@ -57,6 +58,7 @@ export const Badge: FC<Badge.Props> = ({
 	theme,
 	snapTo,
 	full,
+	className,
 	//
 	cls = BadgeCls,
 	tweak,
@@ -64,17 +66,28 @@ export const Badge: FC<Badge.Props> = ({
 	//
 	...props
 }) => {
-	const { slots, variant } = useCls(cls, tweak, {
-		variant: {
-			disabled,
-			size,
-			round,
-			tone,
-			theme,
-			"snap-to": snapTo,
-			full,
+	const { slots, variant } = useCls(
+		cls,
+		tweak,
+		{
+			variant: {
+				disabled,
+				size,
+				round,
+				tone,
+				theme,
+				"snap-to": snapTo,
+				full,
+			},
 		},
-	});
+		{
+			slot: {
+				root: {
+					class: className,
+				},
+			},
+		},
+	);
 
 	return (
 		<div

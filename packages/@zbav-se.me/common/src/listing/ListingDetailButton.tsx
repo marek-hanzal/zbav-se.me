@@ -63,7 +63,6 @@ export const ListingDetailButton: FC<ListingDetailButton.Props> = ({
 									locale={locale}
 									listing={data}
 									withScore
-									square={"md"}
 								>
 									{children}
 								</ListingDetailContainer>
@@ -76,7 +75,6 @@ export const ListingDetailButton: FC<ListingDetailButton.Props> = ({
 						locale={locale}
 						listing={listing}
 						withScore
-						square={"md"}
 					>
 						{children}
 					</ListingDetailContainer>

@@ -1,5 +1,7 @@
 import { keepPreviousData } from "@tanstack/react-query";
+import { Icon, ShowIcon } from "@use-pico/client/icon";
 import type { MarkSuspense } from "@use-pico/client/type";
+import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -137,15 +139,21 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				<Container
 					ref={contentRef}
 					layout={"vertical-flex"}
-					gap={"md"}
+					gap={"xl"}
 					height={"content"}
 				>
-					<div
-						className={tvc([
+					<Badge
+						tone={"secondary"}
+						className={[
 							"flex",
 							"flex-col",
+							"items-start",
 							"gap-1",
-						])}
+							"w-full",
+							"h-fit",
+							"p-0",
+							"rounded-md",
+						]}
 					>
 						<div
 							className={tvc([
@@ -183,7 +191,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 												locale={locale}
 												listing={data}
 												withScore
-												square={"md"}
 											/>
 										);
 									}}
@@ -191,11 +198,28 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 							</BottomSheet>
 						</div>
 
-						<Typo
-							label={listingTransaction.title}
-							wrap={"wrap"}
-						/>
-					</div>
+						<div
+							className={tvc([
+								"flex",
+								"flex-row",
+								"items-center",
+								"justify-between",
+								"w-full",
+								"py-1",
+								"px-2",
+							])}
+						>
+							<Typo
+								label={listingTransaction.title}
+								wrap={"wrap"}
+							/>
+
+							<Icon
+								icon={ShowIcon}
+								size={"xs"}
+							/>
+						</div>
+					</Badge>
 
 					{data.data.map((log) => {
 						const isCurrent = lastLog.id === log.id;
