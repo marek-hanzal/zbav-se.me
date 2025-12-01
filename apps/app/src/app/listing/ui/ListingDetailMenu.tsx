@@ -58,9 +58,10 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 						<Button
 							label={"View transactions (button)"}
 							iconEnabled={TransactionIcon}
+							iconPosition={"right"}
 							theme={"light"}
 							size={"xl"}
-							full
+							menu
 						/>
 					</LinkTo>
 				) : (
@@ -73,6 +74,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"
 						}
 						iconEnabled={CartIcon}
+						iconPosition={"right"}
 						disabled={listingCartToggle.isPending}
 						loading={listingCartToggle.isPending}
 						theme={"light"}
@@ -83,7 +85,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							})
 						}
 						size={"xl"}
-						full
+						menu
 					/>
 				) : null}
 
@@ -96,7 +98,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 								loading
 								label={"Loading cart count (button)"}
 								size={"xl"}
-								full
+								menu
 							/>
 						}
 					>
@@ -120,7 +122,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 												: "Nothing in cart yet (button)"
 										}
 										size={"xl"}
-										full
+										menu
 									/>
 								</LinkTo>
 							);

@@ -26,6 +26,7 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 		<Button
 			label={"Start transaction (button)"}
 			iconEnabled={TransactionIcon}
+			iconPosition={"right"}
 			disabled={listingTransactionCreate.isPending}
 			loading={listingTransactionCreate.isPending}
 			tone={"secondary"}
@@ -36,7 +37,7 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 				});
 			}}
 			size={"xl"}
-			full
+			menu
 			{...props}
 		/>
 	);
