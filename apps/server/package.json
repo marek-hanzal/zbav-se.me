@@ -8,14 +8,14 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.4.3",
+		"@better-auth/passkey": "1.4.4",
 		"@hono-rate-limiter/redis": "0.1.4",
 		"@hono/zod-openapi": "1.1.5",
 		"@scalar/hono-api-reference": "0.9.25",
 		"@upstash/redis": "1.35.7",
 		"@use-pico/common": "workspace:*",
 		"@zbav-se.me/common": "workspace:*",
-		"better-auth": "1.4.3",
+		"better-auth": "1.4.4",
 		"effect": "3.19.8",
 		"hono": "4.10.7",
 		"hono-rate-limiter": "0.4.2",

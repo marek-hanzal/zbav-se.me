@@ -11,7 +11,7 @@
 		"typecheck": "tsc --noEmit"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.4.3",
+		"@better-auth/passkey": "1.4.4",
 		"@escapace/accept-language-parser": "2.1.1",
 		"@tanstack/query-async-storage-persister": "5.90.13",
 		"@tanstack/react-form": "1.26.0",
@@ -29,7 +29,7 @@
 		"@zbav-se.me/server": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",
 		"axios": "1.13.2",
-		"better-auth": "1.4.3",
+		"better-auth": "1.4.4",
 		"gsap": "3.13.0",
 		"luxon": "3.7.2",
 		"motion": "12.23.24",
@@ -61,7 +61,7 @@
 		"tailwindcss": "4.1.17",
 		"terser": "5.44.1",
 		"typescript": "5.9.3",
-		"vite": "7.2.4",
+		"vite": "7.2.6",
 		"vite-plugin-dynamic-import": "1.6.0",
 		"vite-plugin-qrcode": "0.3.0",
 		"vite-plugin-wasm": "3.5.0",
