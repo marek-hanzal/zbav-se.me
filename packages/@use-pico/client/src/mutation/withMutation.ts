@@ -93,6 +93,10 @@ export namespace withMutation {
 		Props<TVariables, TResult>,
 		"mutationFn" | "keys" | "invalidate"
 	>;
+
+	export type Api<TData, TResult, TError> = ReturnType<
+		typeof withMutation<TData, TResult, TError>
+	>;
 }
 
 /**

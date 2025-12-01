@@ -1,4 +1,5 @@
 import type { tListingTransactionGallery } from "@zbav-se.me/sdk/api/user";
+import { withListingTransactionGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
@@ -27,7 +28,11 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						tone={"secondary"}
-						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						withMutation={withListingTransactionGalleryCreateMutation}
+						toMutation={(uploadIds) => ({
+							listingTransactionId: listingTransactionGallery.listingTransactionId,
+							uploadIds,
+						})}
 						onSuccess={() => {
 							setMenuState(false);
 						}}
@@ -48,7 +53,11 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						tone={"secondary"}
-						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						withMutation={withListingTransactionGalleryCreateMutation}
+						toMutation={(uploadIds) => ({
+							listingTransactionId: listingTransactionGallery.listingTransactionId,
+							uploadIds,
+						})}
 						onSuccess={() => {
 							setMenuState(false);
 						}}
@@ -69,7 +78,11 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						tone={"secondary"}
-						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						withMutation={withListingTransactionGalleryCreateMutation}
+						toMutation={(uploadIds) => ({
+							listingTransactionId: listingTransactionGallery.listingTransactionId,
+							uploadIds,
+						})}
 						onSuccess={() => {
 							setMenuState(false);
 						}}
@@ -90,7 +103,11 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 				<>
 					<GalleryUploadButton
 						tone={"secondary"}
-						listingTransactionId={listingTransactionGallery.listingTransactionId}
+						withMutation={withListingTransactionGalleryCreateMutation}
+						toMutation={(uploadIds) => ({
+							listingTransactionId: listingTransactionGallery.listingTransactionId,
+							uploadIds,
+						})}
 						onSuccess={() => {
 							setMenuState(false);
 						}}

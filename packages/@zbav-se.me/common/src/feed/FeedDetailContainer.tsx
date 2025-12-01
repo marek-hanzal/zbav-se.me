@@ -7,6 +7,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
+import { GalleryUploadButton } from "../photo/GalleryUploadButton";
 import { FeedAgeValueList } from "./FeedAgeValueList";
 import { FeedCategoryBadge } from "./FeedCategoryBadge";
 import { FeedConditionValueList } from "./FeedConditionValueList";
@@ -61,6 +62,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 				<FeedConditionValueList feed={feed} />
 
 				<FeedAgeValueList feed={feed} />
+
+				<GalleryUploadButton />
 
 				<ConfirmButton
 					tone={"danger"}

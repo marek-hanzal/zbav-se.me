@@ -1,29 +1,39 @@
+import type { withMutation } from "@use-pico/client/mutation";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { tvc } from "@use-pico/cls";
-import { withListingTransactionGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { type FC, useState } from "react";
+import { useState } from "react";
 import { GalleryUpload } from "./GalleryUpload";
 
 export namespace GalleryUploadButton {
-	export interface Props extends Button.Props {
-		listingTransactionId: string;
+	export interface Props<
+		TData extends {
+			uploadIds: string[];
+		},
+	> extends Button.Props {
+		withMutation: withMutation.Api<TData, any, any>;
+		toMutation(uploadIds: string[]): TData;
 		onSuccess(): void;
 		onCancel(): void;
 	}
 }
 
-export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
-	listingTransactionId,
+export const GalleryUploadButton = <
+	TData extends {
+		uploadIds: string[];
+	},
+>({
+	withMutation,
+	toMutation,
 	onSuccess,
 	onCancel,
 	...props
-}) => {
+}: GalleryUploadButton.Props<TData>) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [uploadIds, setUploadIds] = useState<string[]>([]);
-	const mutation = withListingTransactionGalleryCreateMutation.useMutation({
+	const mutation = withMutation.useMutation({
 		async onPostMutation() {
 			setIsOpen(false);
 			setUploadIds([]);
@@ -102,10 +112,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 							disabled={mutation.isPending || uploadIds.length === 0}
 							loading={mutation.isPending}
 							onClick={() => {
-								mutation.mutate({
-									listingTransactionId,
-									uploadIds: uploadIds,
-								});
+								mutation.mutate(toMutation(uploadIds));
 							}}
 						/>
 					</div>
