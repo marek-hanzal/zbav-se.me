@@ -33,7 +33,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			}}
 		>
 			<Fade
-				height={32}
+				height={16}
 				scrollableRef={containerRef}
 			/>
 

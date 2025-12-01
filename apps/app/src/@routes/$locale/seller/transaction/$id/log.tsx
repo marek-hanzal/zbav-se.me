@@ -9,39 +9,8 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useMemo } from "react";
 
 export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
-	pendingComponent() {
-		const { locale } = Route.useParams();
-
-		return (
-			<TitleContainer
-				ui="TransactionView-root"
-				textTitle={"Transaction detail (title)"}
-				textSubtitle={"..."}
-				left={
-					<LinkTo
-						icon={ArrowLeftIcon}
-						to={"/$locale/seller/transaction/list"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
-				<SpinnerContainer />
-			</TitleContainer>
-		);
-	},
 	component() {
 		const { locale, id } = Route.useParams();
-
-		const listingTransactionFetchQuery = withListingTransactionFetchQuery.useSuspenseQuery({
-			where: {
-				id,
-			},
-			meta: {
-				side: "seller",
-			},
-		});
 
 		const query: tListingTransactionLogQuery = useMemo(() => {
 			return {
@@ -61,9 +30,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 
 		return (
 			<TitleContainer
-				ui="TransactionView-root"
-				textTitle="Transaction detail (title)"
-				textSubtitle={listingTransactionFetchQuery.data.title}
+				textTitle={"Transaction detail (title)"}
 				left={
 					<LinkTo
 						icon={ArrowLeftIcon}
@@ -74,13 +41,30 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 					/>
 				}
 			>
-				<TransactionLogList
-					_suspense={"I know"}
-					locale={locale}
-					side="seller"
-					listingTransaction={listingTransactionFetchQuery.data}
-					query={query}
-				/>
+				<withListingTransactionFetchQuery.Suspense
+					data={{
+						where: {
+							id,
+						},
+						meta: {
+							side: "seller",
+						},
+					}}
+					fallback={<SpinnerContainer />}
+				>
+					{({ data }) => {
+						return (
+							<TransactionLogList
+								_suspense={"I know"}
+								locale={locale}
+								side="seller"
+								listingTransaction={data}
+								query={query}
+								height={"auto"}
+							/>
+						);
+					}}
+				</withListingTransactionFetchQuery.Suspense>
 			</TitleContainer>
 		);
 	},
