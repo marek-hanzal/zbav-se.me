@@ -94,7 +94,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 
 					<Icon
 						icon={ArrowRightIcon}
-						size={"sm"}
+						size={"xs"}
 					/>
 				</div>
 			</Badge>
