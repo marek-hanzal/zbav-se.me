@@ -69,7 +69,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	]);
 
 	const useVisibilityStore = useVisibilityContext();
-	const visible = useVisibilityStore((store) => store.visible);
+	const visible = useVisibilityStore((store) => store.isVisible);
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation({
 		retry: () => {
