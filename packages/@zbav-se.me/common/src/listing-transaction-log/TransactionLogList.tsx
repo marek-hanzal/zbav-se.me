@@ -128,6 +128,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			ui={"TransactionLogList-root"}
 			layout={isClosed ? undefined : "vertical-content-footer"}
 			gap={"md"}
+			height={"fit"}
 			{...props}
 		>
 			<Container
@@ -253,20 +254,27 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 						</BottomSheet>
 					</Badge>
 
-					{data.data.map((log) => {
-						const isCurrent = lastLog.id === log.id;
+					<Container
+						layout={"vertical-flex"}
+						height={"content"}
+						gap={"md"}
+						square={"md"}
+					>
+						{data.data.map((log) => {
+							const isCurrent = lastLog.id === log.id;
 
-						return (
-							<TransactionLogItem
-								key={log.id}
-								locale={locale}
-								side={side}
-								listingTransactionLog={log}
-								isCurrent={isCurrent}
-								isClosed={isClosed}
-							/>
-						);
-					})}
+							return (
+								<TransactionLogItem
+									key={log.id}
+									locale={locale}
+									side={side}
+									listingTransactionLog={log}
+									isCurrent={isCurrent}
+									isClosed={isClosed}
+								/>
+							);
+						})}
+					</Container>
 				</Container>
 			</Container>
 
@@ -275,6 +283,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					locale={locale}
 					side={side}
 					listingTransactionLog={lastLog}
+					square={"md"}
 				/>
 			)}
 		</Container>

@@ -16,7 +16,7 @@ import { MessageMenu } from "./event/message/MessageMenu";
 import { StatusMenu } from "./event/status/StatusMenu";
 
 export namespace TransactionChat {
-	export interface Props {
+	export interface Props extends Partial<ChatInput.Props> {
 		locale: string;
 		side: tUserSideEnum;
 		listingTransactionLog: tListingTransactionLog;
@@ -27,6 +27,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 	locale,
 	side,
 	listingTransactionLog,
+	...props
 }) => {
 	const menuState = useState(false);
 	const [message, setMessage] = useState("");
@@ -96,6 +97,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 					detent: "content",
 				},
 			}}
+			{...props}
 		/>
 	);
 };

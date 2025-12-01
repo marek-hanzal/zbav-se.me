@@ -1,10 +1,13 @@
 import { Badge } from "@use-pico/client/ui/badge";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { tGalleryItem, tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import type { FC, PropsWithChildren, ReactNode } from "react";
+import { type FC, type PropsWithChildren, type ReactNode, Suspense, useState } from "react";
+import { TransactionLogList } from "../listing-transaction-log/TransactionLogList";
 
 export namespace TransactionItem {
 	export namespace Item {
@@ -33,10 +36,10 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 		tGalleryItem,
 		...tGalleryItem[],
 	];
+	const [isOpen, setIsOpen] = useState(false);
 
-	return renderItemFn({
-		listingTransaction,
-		children: (
+	return (
+		<>
 			<Badge
 				size={"xl"}
 				tweak={[
@@ -60,6 +63,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					},
 				]}
 				round={"default"}
+				onClick={() => setIsOpen((prev) => !prev)}
 				{...props}
 			>
 				<HeroImage
@@ -129,6 +133,35 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					/>
 				</Badge>
 			</Badge>
-		),
-	});
+
+			<BottomSheet
+				isOpen={isOpen}
+				onClose={() => setIsOpen(false)}
+				detent={"full"}
+				contentProps={{
+					disableScroll: true,
+				}}
+			>
+				<Suspense fallback={<SpinnerContainer />}>
+					<TransactionLogList
+						_suspense={"I know"}
+						locale={locale}
+						side="buyer"
+						listingTransaction={listingTransaction}
+						query={{
+							where: {
+								listingTransactionId: listingTransaction.id,
+							},
+							sort: [
+								{
+									field: "createdAt",
+									direction: "asc",
+								},
+							],
+						}}
+					/>
+				</Suspense>
+			</BottomSheet>
+		</>
+	);
 };

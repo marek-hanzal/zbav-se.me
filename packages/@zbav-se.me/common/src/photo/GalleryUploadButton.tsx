@@ -49,6 +49,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				detent={"full"}
+				noClose
 			>
 				<Container
 					layout={"vertical-content-footer"}

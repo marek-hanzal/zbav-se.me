@@ -12,6 +12,7 @@ export namespace BottomSheet {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
+		noClose?: boolean;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
@@ -22,6 +23,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	containerProps,
 	contentProps,
 	withHeader = false,
+	noClose = false,
 	children,
 	...props
 }) => {
@@ -56,7 +58,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					}}
 					{...contentProps}
 				>
-					{props.detent === "full" ? (
+					{props.detent === "full" && !noClose ? (
 						<Button
 							iconEnabled={ArrowLeftIcon}
 							onClick={props.onClose}
@@ -67,6 +69,15 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 							round={"full"}
 							tone={"primary"}
 							theme={"light"}
+							tweak={{
+								slot: {
+									wrapper: {
+										class: [
+											"z-1",
+										],
+									},
+								},
+							}}
 						/>
 					) : null}
 
