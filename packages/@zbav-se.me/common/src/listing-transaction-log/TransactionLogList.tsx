@@ -1,15 +1,24 @@
 import { keepPreviousData } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
+import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
+import { tvc } from "@use-pico/cls";
 import type {
+	tGalleryItem,
 	tListingTransaction,
 	tListingTransactionLogQuery,
 	tListingTransactionStatusEnum,
 	tUserSideEnum,
 } from "@zbav-se.me/sdk/api/user";
-import { withListingTransactionLogCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useLayoutEffect, useRef } from "react";
+import {
+	withListingFetchQuery,
+	withListingTransactionLogCollectionQuery,
+} from "@zbav-se.me/sdk/query/user";
+import { HeroImage } from "@zbav-se.me/ui/img";
+import { type FC, useId, useLayoutEffect, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
+import { ListingDetailContainer } from "../listing/ListingDetailContainer";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionLogItem } from "./TransactionLogItem";
 
@@ -30,6 +39,13 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	listingTransaction,
 	...props
 }) => {
+	const [hero] = listingTransaction.gallery.items as [
+		tGalleryItem,
+		...tGalleryItem[],
+	];
+	const detailSheetId = useId();
+	const [detail, setDetail] = useState(false);
+
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
@@ -124,6 +140,63 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					gap={"md"}
 					height={"content"}
 				>
+					<div
+						className={tvc([
+							"flex",
+							"flex-col",
+							"gap-1",
+						])}
+					>
+						<div
+							className={tvc([
+								"w-full",
+								"h-32",
+							])}
+						>
+							<HeroImage
+								ui={"ListingHero-image"}
+								src={hero.upload.url}
+								alt={`Hero image for listing transaction ${listingTransaction.id}`}
+								visible
+								round
+								onClick={() => setDetail((prev) => !prev)}
+							/>
+
+							<BottomSheet
+								id={detailSheetId}
+								isOpen={detail}
+								onClose={() => setDetail(false)}
+								detent={"full"}
+							>
+								<withListingFetchQuery.Suspense
+									data={{
+										where: {
+											id: listingTransaction.listingId,
+										},
+									}}
+									fallback={<SpinnerContainer />}
+								>
+									{({ data }) => {
+										return (
+											<ListingDetailContainer
+												parentSheetId={detailSheetId}
+												locale={locale}
+												listing={data}
+												withScore
+												square={"md"}
+											/>
+										);
+									}}
+								</withListingFetchQuery.Suspense>
+							</BottomSheet>
+						</div>
+
+						<Typo
+							label={listingTransaction.title}
+							wrap={"wrap"}
+						/>
+					</div>
+
 					{data.data.map((log) => {
 						const isCurrent = lastLog.id === log.id;
 

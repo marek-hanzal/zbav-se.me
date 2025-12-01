@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TransactionList } from "@zbav-se.me/common/listing-transaction";
@@ -36,14 +36,13 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 					}}
 					renderItemFn={({ listingTransaction, children }) => (
 						<LinkTo
-							icon={ArrowRightIcon}
-							iconPosition={"right"}
 							to={"/$locale/seller/transaction/$id/log"}
 							params={{
 								locale,
 								id: listingTransaction.id,
 							}}
 							full
+							tone={"primary"}
 						>
 							{children}
 						</LinkTo>
