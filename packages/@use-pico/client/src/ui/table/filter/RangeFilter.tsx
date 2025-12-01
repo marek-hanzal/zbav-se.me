@@ -10,7 +10,7 @@ export namespace RangeFilter {
 	export interface Props<TFilter extends withQuerySchema.Query> {
 		lte: DeepKeys<TFilter["filter"]>;
 		gte: DeepKeys<TFilter["filter"]>;
-		state: StateType<TFilter["filter"]>;
+		state: StateType.State<TFilter["filter"]>;
 		value: DeepValue<TFilter, DeepKeys<TFilter>>;
 	}
 }

@@ -9,7 +9,7 @@ import { FulltextCls } from "./FulltextCls";
 
 export namespace Fulltext {
 	export type Value = string | undefined;
-	export type State = StateType<Value>;
+	export type State = StateType.State<Value>;
 	export type OnFulltext = (text: Value) => void;
 
 	export interface Props extends FulltextCls.Props {

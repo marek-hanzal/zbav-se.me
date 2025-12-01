@@ -7,7 +7,7 @@ import { PhotoUpload } from "./PhotoUpload";
 
 export namespace GalleryUpload {
 	export interface Props extends Container.Props {
-		state: StateType<string[]>;
+		state: StateType.State<string[]>;
 		limit: number;
 	}
 }
@@ -26,6 +26,8 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 		<Container
 			ui={"GalleryUpload-root"}
 			position={"relative"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<SnapperNav

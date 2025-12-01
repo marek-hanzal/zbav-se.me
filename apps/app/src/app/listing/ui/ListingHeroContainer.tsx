@@ -193,6 +193,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					withScore
 				>
 					<ListingDetailMenu
+						parentSheetId={detailSheetId}
 						locale={locale}
 						listing={listing}
 						tools={tools}

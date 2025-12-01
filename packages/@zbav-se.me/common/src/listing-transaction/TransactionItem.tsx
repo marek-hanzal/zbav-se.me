@@ -5,7 +5,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { StateType } from "@use-pico/common/type";
-import type { tGalleryItem, tListingTransaction } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tListingTransaction, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, Suspense } from "react";
 import { TransactionLogList } from "../listing-transaction-log/TransactionLogList";
@@ -13,13 +13,15 @@ import { TransactionLogList } from "../listing-transaction-log/TransactionLogLis
 export namespace TransactionItem {
 	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
+		side: tUserSideEnum;
 		listingTransaction: tListingTransaction;
-		open: StateType<string | undefined>;
+		open: StateType.Simple<string | undefined>;
 	}
 }
 
 export const TransactionItem: FC<TransactionItem.Props> = ({
 	locale,
+	side,
 	listingTransaction,
 	tweak,
 	open,
@@ -139,7 +141,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					<TransactionLogList
 						_suspense={"I know"}
 						locale={locale}
-						side="buyer"
+						side={side}
 						listingTransaction={listingTransaction}
 						query={{
 							where: {

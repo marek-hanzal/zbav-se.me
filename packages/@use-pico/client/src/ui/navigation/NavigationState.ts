@@ -14,7 +14,7 @@ export const NavigationState = {
 			}) => any;
 			replace?: boolean;
 		}) => void,
-	): StateType<Record<string, any> | undefined> {
+	): StateType.State<Record<string, any> | undefined> {
 		return {
 			value,
 			set(filter) {
@@ -44,7 +44,7 @@ export const NavigationState = {
 			}) => any;
 			replace?: boolean;
 		}) => void,
-	): StateType<Fulltext.Value> {
+	): StateType.State<Fulltext.Value> {
 		return {
 			value,
 			set(text) {
@@ -79,7 +79,7 @@ export const NavigationState = {
 				};
 			}) => any;
 		}) => void,
-	): StateType<CursorSchema.Type> {
+	): StateType.State<CursorSchema.Type> {
 		return {
 			value,
 			set(value) {
@@ -100,7 +100,7 @@ export const NavigationState = {
 			}) => any;
 			replace?: boolean;
 		}) => void,
-	): StateType<withQuerySchema.Query<any, any>["sort"] | undefined> {
+	): StateType.State<withQuerySchema.Query<any, any>["sort"] | undefined> {
 		return {
 			value,
 			set(sort) {

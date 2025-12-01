@@ -58,7 +58,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					}}
 					{...contentProps}
 				>
-					{props.detent === "full" && !noClose ? (
+					{!noClose ? (
 						<Button
 							iconEnabled={ArrowLeftIcon}
 							onClick={props.onClose}

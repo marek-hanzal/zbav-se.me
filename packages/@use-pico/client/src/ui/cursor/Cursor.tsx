@@ -12,7 +12,7 @@ import { Pages } from "./Pages";
 import { SizeSelect } from "./SizeSelect";
 
 export namespace Cursor {
-	export type State = StateType<CursorSchema.Type>;
+	export type State = StateType.State<CursorSchema.Type>;
 
 	export interface Props extends CursorCls.Props {
 		ref?: Ref<HTMLDivElement>;

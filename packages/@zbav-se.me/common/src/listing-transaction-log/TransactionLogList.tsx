@@ -30,6 +30,7 @@ export namespace TransactionLogList {
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
 		listingTransaction: tListingTransaction;
+		noHero?: boolean;
 	}
 }
 
@@ -39,6 +40,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	side,
 	query,
 	listingTransaction,
+	noHero = false,
 	...props
 }) => {
 	const [hero] = listingTransaction.gallery.items as [
@@ -129,6 +131,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			layout={isClosed ? undefined : "vertical-content-footer"}
 			gap={"md"}
 			height={"fit"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<Container
@@ -136,129 +140,137 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				ui={"TransactionLogList-list"}
 				scroll={"vertical"}
 				height={"fit"}
+				tone={"unset"}
+				theme={"unset"}
 			>
 				<Container
 					ref={contentRef}
 					layout={"vertical-flex"}
 					gap={"md"}
 					height={"content"}
+					tone={"unset"}
+					theme={"unset"}
 				>
-					<Badge
-						tone={"secondary"}
-						className={[
-							"flex",
-							"flex-col",
-							"items-start",
-							"gap-1",
-							"w-full",
-							"h-64",
-							"p-0",
-							"rounded-md",
-							"relative",
-							"border-none",
-						]}
-					>
-						<HeroImage
-							ui={"ListingHero-image"}
-							src={hero.upload.url}
-							alt={`Hero image for listing transaction ${listingTransaction.id}`}
-							visible
-							round
-							onClick={() => setDetail((prev) => !prev)}
-						/>
-
+					{noHero ? null : (
 						<Badge
-							ui={"TransactionLogList-price"}
 							tone={"secondary"}
-							theme={"light"}
-							round={"default"}
-							snapTo={"top-center"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"max-w-1/2",
-										],
-									},
-								},
-							}}
+							className={[
+								"flex",
+								"flex-col",
+								"items-start",
+								"gap-1",
+								"w-full",
+								"h-64",
+								"p-0",
+								"rounded-md",
+								"relative",
+								"border-none",
+							]}
 						>
-							{listingTransaction.price > 0 ? (
-								<PriceInline
-									price={listingTransaction.price}
-									locale={locale}
-									currency={listingTransaction.currency}
-								/>
-							) : (
-								<Tx label={"Price - free"} />
-							)}
-						</Badge>
-
-						<Badge
-							ui={"TransactionLogList-bottom"}
-							size={"lg"}
-							round={"default"}
-							snapTo={"bottom"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"flex",
-											"flex-col",
-											"gap-1",
-											"opacity-85",
-											"overflow-hidden",
-											"h-fit",
-										],
-									},
-								},
-							}}
-						>
-							<Typo
-								truncate
-								label={listingTransaction.location}
+							<HeroImage
+								ui={"ListingHero-image"}
+								src={hero.upload.url}
+								alt={`Hero image for listing transaction ${listingTransaction.id}`}
+								visible
+								round
+								onClick={() => setDetail((prev) => !prev)}
 							/>
 
-							<Typo
-								label={listingTransaction.title}
-								truncate
-								size={"sm"}
-							/>
-						</Badge>
-
-						<BottomSheet
-							id={detailSheetId}
-							isOpen={detail}
-							onClose={() => setDetail(false)}
-							detent={"full"}
-						>
-							<withListingFetchQuery.Suspense
-								data={{
-									where: {
-										id: listingTransaction.listingId,
+							<Badge
+								ui={"TransactionLogList-price"}
+								tone={"secondary"}
+								theme={"light"}
+								round={"default"}
+								snapTo={"top-center"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"max-w-1/2",
+											],
+										},
 									},
 								}}
-								fallback={<SpinnerContainer />}
 							>
-								{({ data }) => {
-									return (
-										<ListingDetailContainer
-											parentSheetId={detailSheetId}
-											locale={locale}
-											listing={data}
-											withScore
-										/>
-									);
+								{listingTransaction.price > 0 ? (
+									<PriceInline
+										price={listingTransaction.price}
+										locale={locale}
+										currency={listingTransaction.currency}
+									/>
+								) : (
+									<Tx label={"Price - free"} />
+								)}
+							</Badge>
+
+							<Badge
+								ui={"TransactionLogList-bottom"}
+								size={"lg"}
+								round={"default"}
+								snapTo={"bottom"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"flex",
+												"flex-col",
+												"gap-1",
+												"opacity-85",
+												"overflow-hidden",
+												"h-fit",
+											],
+										},
+									},
 								}}
-							</withListingFetchQuery.Suspense>
-						</BottomSheet>
-					</Badge>
+							>
+								<Typo
+									truncate
+									label={listingTransaction.location}
+								/>
+
+								<Typo
+									label={listingTransaction.title}
+									truncate
+									size={"sm"}
+								/>
+							</Badge>
+
+							<BottomSheet
+								id={detailSheetId}
+								isOpen={detail}
+								onClose={() => setDetail(false)}
+								detent={"full"}
+							>
+								<withListingFetchQuery.Suspense
+									data={{
+										where: {
+											id: listingTransaction.listingId,
+										},
+									}}
+									fallback={<SpinnerContainer />}
+								>
+									{({ data }) => {
+										return (
+											<ListingDetailContainer
+												parentSheetId={detailSheetId}
+												locale={locale}
+												listing={data}
+												withScore
+											/>
+										);
+									}}
+								</withListingFetchQuery.Suspense>
+							</BottomSheet>
+						</Badge>
+					)}
 
 					<Container
 						layout={"vertical-flex"}
 						height={"content"}
 						gap={"md"}
 						square={"md"}
+						tone={"unset"}
+						theme={"unset"}
 					>
 						{data.data.map((log) => {
 							const isCurrent = lastLog.id === log.id;

@@ -55,6 +55,8 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					square={"md"}
+					tone={"unset"}
+					theme={"unset"}
 				>
 					<GalleryUpload
 						state={{
@@ -76,6 +78,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 						<ConfirmButton
 							label={"Cancel (button)"}
 							tone={"primary"}
+							theme={"light"}
 							size={"xl"}
 							full
 							confirmProps={{
@@ -94,6 +97,8 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 							label={"Upload gallery (button)"}
 							size={"xl"}
 							full
+							tone={"secondary"}
+							theme={"light"}
 							disabled={mutation.isPending || uploadIds.length === 0}
 							loading={mutation.isPending}
 							onClick={() => {

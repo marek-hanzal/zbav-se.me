@@ -18,7 +18,7 @@ import { TablePrefix } from "./TablePrefix";
 
 export namespace Table {
 	export namespace Filter {
-		export type State<TQuery extends withQuerySchema.Query> = StateType<TQuery["filter"]>;
+		export type State<TQuery extends withQuerySchema.Query> = StateType.State<TQuery["filter"]>;
 
 		export namespace is {
 			export interface Props<TQuery extends withQuerySchema.Query> {
@@ -68,7 +68,9 @@ export namespace Table {
 	}
 
 	export namespace Sort {
-		export type State<TQuery extends withQuerySchema.Query> = StateType<TQuery["sort"] | null>;
+		export type State<TQuery extends withQuerySchema.Query> = StateType.State<
+			TQuery["sort"] | null
+		>;
 
 		export interface Props<TQuery extends withQuerySchema.Query> {
 			value: withQuerySchema.SortKeys<TQuery>;

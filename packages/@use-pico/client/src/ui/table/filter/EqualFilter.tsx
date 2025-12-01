@@ -5,7 +5,7 @@ import { Action } from "../../action/Action";
 
 export namespace EqualFilter {
 	export interface Props<TData extends EntitySchema.Type, TFilter extends withQuerySchema.Query> {
-		state: StateType<TFilter["filter"]>;
+		state: StateType.State<TFilter["filter"]>;
 		path: DeepKeys<TFilter["filter"]>;
 		value: DeepValue<TData, DeepKeys<TFilter["filter"]>>;
 	}

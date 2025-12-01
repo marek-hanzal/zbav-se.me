@@ -14,7 +14,7 @@ export namespace TransactionList {
 		locale: string;
 		side: tUserSideEnum;
 		renderEmptyFn(props: Status.Props): ReactNode;
-		state: StateType<string | undefined>;
+		state: StateType.Simple<string | undefined>;
 	}
 }
 
@@ -86,6 +86,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 							return data.data.map((item) => (
 								<TransactionItem
 									key={item.id}
+									side={side}
 									listingTransaction={item}
 									locale={locale}
 									open={state}

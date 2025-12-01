@@ -102,6 +102,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		<Container
 			layout={"horizontal-flex"}
 			gap={"md"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<div
@@ -125,12 +127,15 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						<BottomSheet
 							isOpen={isMenu}
 							onClose={() => setIsMenu(false)}
+							noClose
 							{...menu.props}
 						>
 							<Container
 								layout={"vertical-flex"}
 								gap={"md"}
 								square={"md"}
+								tone={"unset"}
+								theme={"unset"}
 							>
 								{menu.content}
 							</Container>
@@ -190,6 +195,8 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					iconProps={{
 						size: "md",
 					}}
+					tone={"primary"}
+					theme={"light"}
 					disabled={loading || value.length === 0}
 					loading={loading}
 					onClick={() => {
