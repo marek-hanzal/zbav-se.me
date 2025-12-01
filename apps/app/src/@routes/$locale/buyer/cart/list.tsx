@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
-import { CategoryCartListContainer } from "@zbav-se.me/buyer/category-cart";
+import { CategoryCartListContainer } from "@zbav-se.me/common/category-cart";
 import { withCategoryCartCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { match } from "ts-pattern";

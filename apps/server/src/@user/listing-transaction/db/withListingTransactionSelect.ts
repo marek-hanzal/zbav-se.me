@@ -1,4 +1,6 @@
+import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
+import { withGallerySelect } from "~/@user/gallery/db/withGallerySelect";
 import type { ListingTransactionSortSchema } from "~/@user/listing-transaction/schema/ListingTransactionSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
@@ -19,7 +21,29 @@ export const withListingTransactionSelect = ({
 		.selectFrom("listing_transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")
 		.selectAll("lt")
-		.select("l.title");
+		.select([
+			"l.title",
+			(eb) =>
+				jsonObjectFrom(
+					withGallerySelect({
+						database,
+						sort: undefined,
+					})
+						.where(
+							"gal.id",
+							"in",
+							eb
+								.selectFrom("listing_gallery as lg")
+								.select("lg.galleryId")
+								.whereRef("lg.listingId", "=", "l.id")
+								.orderBy("lg.createdAt", "desc")
+								.limit(1),
+						)
+						.limit(1),
+				)
+					.$notNull()
+					.as("gallery"),
+		]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)

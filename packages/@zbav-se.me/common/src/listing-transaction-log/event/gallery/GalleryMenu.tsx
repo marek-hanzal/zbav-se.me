@@ -2,9 +2,10 @@ import type { tListingTransactionGallery } from "@zbav-se.me/sdk/api/user";
 import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { BuyerInfoButton } from "../../../listing-transaction/button/BuyerInfoButton";
+import { SellerInfoButton } from "../../../listing-transaction/button/SellerInfoButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 import { GalleryUploadButton } from "../../../photo/GalleryUploadButton";
-import type { TransactionChat } from "../../TransactionChat";
 
 export namespace GalleryMenu {
 	export interface Props {
@@ -12,7 +13,6 @@ export namespace GalleryMenu {
 		type: useSideSwitch.Type;
 		menuState: ChatInput.Menu.State;
 		listingTransactionGallery: tListingTransactionGallery;
-		components: TransactionChat.Components;
 	}
 }
 
@@ -21,7 +21,6 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 	type,
 	listingTransactionGallery,
 	menuState,
-	components,
 }) => {
 	const [, setMenuState] = menuState;
 
@@ -39,7 +38,7 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						}}
 					/>
 
-					<components.SellerInfoButton
+					<SellerInfoButton
 						locale={locale}
 						log={listingTransactionGallery}
 					/>
@@ -59,7 +58,7 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						}}
 					/>
 
-					<components.SellerInfoButton
+					<SellerInfoButton
 						locale={locale}
 						log={listingTransactionGallery}
 					/>
@@ -79,7 +78,7 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						}}
 					/>
 
-					<components.BuyerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionGallery}
 					/>
@@ -99,7 +98,7 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						}}
 					/>
 
-					<components.BuyerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionGallery}
 					/>

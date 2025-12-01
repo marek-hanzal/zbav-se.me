@@ -19,7 +19,6 @@ export namespace TransactionLogList {
 		side: tUserSideEnum;
 		query: tListingTransactionLogQuery;
 		listingTransaction: tListingTransaction;
-		components: TransactionChat.Components;
 	}
 }
 
@@ -29,7 +28,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	side,
 	query,
 	listingTransaction,
-	components,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -147,8 +145,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				<TransactionChat
 					locale={locale}
 					side="buyer"
+					listingTransaction={listingTransaction}
 					listingTransactionLog={lastLog}
-					components={components}
 				/>
 			)}
 		</Container>

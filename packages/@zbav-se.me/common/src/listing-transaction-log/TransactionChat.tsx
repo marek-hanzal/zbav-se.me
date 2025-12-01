@@ -1,6 +1,6 @@
-import type { Button } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import {
+	type tListingTransaction,
 	type tListingTransactionLog,
 	type tUserSideEnum,
 	zListingTransactionGallery,
@@ -17,41 +17,19 @@ import { MessageMenu } from "./event/message/MessageMenu";
 import { StatusMenu } from "./event/status/StatusMenu";
 
 export namespace TransactionChat {
-	export namespace Components {
-		export type SideInfoButton = FC<
-			{
-				locale: string;
-				log: tListingTransactionLog;
-				modalRootId?: string;
-			} & Button.Props
-		>;
-
-		export type ListingDetailButton = FC<
-			{
-				modalRootId: string;
-			} & Button.Props
-		>;
-	}
-
-	export interface Components {
-		SellerInfoButton: Components.SideInfoButton;
-		BuyerInfoButton: Components.SideInfoButton;
-		ListingDetailButton: Components.ListingDetailButton;
-	}
-
 	export interface Props {
 		locale: string;
 		side: tUserSideEnum;
+		listingTransaction: tListingTransaction;
 		listingTransactionLog: tListingTransactionLog;
-		components: Components;
 	}
 }
 
 export const TransactionChat: FC<TransactionChat.Props> = ({
 	locale,
 	side,
+	listingTransaction,
 	listingTransactionLog,
-	components,
 }) => {
 	const menuState = useState(false);
 	const [message, setMessage] = useState("");
@@ -85,9 +63,9 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 							<StatusMenu
 								locale={locale}
 								type={type}
+								listingTransaction={listingTransaction}
 								listingTransactionStatus={status}
 								menuState={menuState}
-								components={components}
 							/>
 						);
 					})
@@ -100,7 +78,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 								type={type}
 								listingTransactionMessage={message}
 								menuState={menuState}
-								components={components}
 							/>
 						);
 					})
@@ -113,7 +90,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 								type={type}
 								listingTransactionGallery={gallery}
 								menuState={menuState}
-								components={components}
 							/>
 						);
 					})

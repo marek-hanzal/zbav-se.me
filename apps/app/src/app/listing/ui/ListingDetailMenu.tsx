@@ -1,4 +1,3 @@
-import { useNavigate } from "@tanstack/react-router";
 import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -32,8 +31,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	],
 	...props
 }) => {
-	const navigate = useNavigate();
-
 	const listingCartToggle = withListingCartToggleMutation.useMutation();
 
 	return (

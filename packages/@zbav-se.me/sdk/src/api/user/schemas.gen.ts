@@ -881,6 +881,9 @@ export const sListingTransaction = {
         },
         title: {
             type: 'string'
+        },
+        gallery: {
+            $ref: '#/components/schemas/Gallery'
         }
     },
     required: [
@@ -889,7 +892,8 @@ export const sListingTransaction = {
         'createdAt',
         'updatedAt',
         'expiresAt',
-        'title'
+        'title',
+        'gallery'
     ]
 } as const;
 

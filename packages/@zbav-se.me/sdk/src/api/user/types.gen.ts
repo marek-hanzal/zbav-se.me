@@ -697,6 +697,7 @@ export type tListingTransaction = {
      * Listing transaction title
      */
     title: string;
+    gallery: tGallery;
 };
 
 /**

@@ -1,5 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { ListingTransactionDbSchema } from "../../../app/listing-transaction/schema/ListingTransactionDbSchema";
+import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
+import { ListingTransactionDbSchema } from "~/app/listing-transaction/schema/ListingTransactionDbSchema";
 
 export const ListingTransactionSchema = z
 	.object({
@@ -7,6 +8,7 @@ export const ListingTransactionSchema = z
 		title: z.string().openapi({
 			description: "Listing transaction title",
 		}),
+		gallery: GallerySchema,
 	})
 	.omit({
 		userId: true,

@@ -2,10 +2,11 @@ import type { tListingTransactionMessage } from "@zbav-se.me/sdk/api/user";
 import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
+import { BuyerInfoButton } from "../../../listing-transaction/button/BuyerInfoButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
+import { SellerInfoButton } from "../../../listing-transaction/button/SellerInfoButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 import { GalleryUploadButton } from "../../../photo/GalleryUploadButton";
-import type { TransactionChat } from "../../TransactionChat";
 
 export namespace MessageMenu {
 	export interface Props {
@@ -13,7 +14,6 @@ export namespace MessageMenu {
 		type: useSideSwitch.Type;
 		listingTransactionMessage: tListingTransactionMessage;
 		menuState: ChatInput.Menu.State;
-		components: TransactionChat.Components;
 	}
 }
 
@@ -22,7 +22,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 	type,
 	listingTransactionMessage,
 	menuState,
-	components,
 }) => {
 	const [, setMenuState] = menuState;
 
@@ -40,7 +39,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						}}
 					/>
 
-					<components.SellerInfoButton
+					<SellerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
 					/>
@@ -65,7 +64,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						}}
 					/>
 
-					<components.BuyerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
 					/>
@@ -90,7 +89,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						}}
 					/>
 
-					<components.BuyerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
 					/>
@@ -115,7 +114,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						}}
 					/>
 
-					<components.SellerInfoButton
+					<SellerInfoButton
 						locale={locale}
 						log={listingTransactionMessage}
 					/>

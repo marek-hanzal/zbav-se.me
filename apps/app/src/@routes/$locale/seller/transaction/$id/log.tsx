@@ -2,15 +2,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { ListingDetailButton } from "@zbav-se.me/buyer/listing";
-import { BuyerInfoButton } from "@zbav-se.me/buyer/listing-transaction";
-import {
-	type TransactionChat,
-	TransactionLogList,
-} from "@zbav-se.me/common/listing-transaction-log";
+import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
 import type { tListingTransactionLogQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { SellerInfoButton } from "@zbav-se.me/seller/listing-transaction";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useMemo } from "react";
 
@@ -65,26 +59,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 			id,
 		]);
 
-		const components: TransactionChat.Components = useMemo(() => {
-			return {
-				SellerInfoButton,
-				BuyerInfoButton,
-				ListingDetailButton({ modalRootId }) {
-					return (
-						<ListingDetailButton
-							locale={locale}
-							detailSheetId={modalRootId}
-							listing={listingTransactionFetchQuery.data.listingId}
-							label={"Listing detail (label)"}
-						/>
-					);
-				},
-			};
-		}, [
-			locale,
-			listingTransactionFetchQuery.data.listingId,
-		]);
-
 		return (
 			<TitleContainer
 				ui="TransactionView-root"
@@ -106,7 +80,6 @@ export const Route = createFileRoute("/$locale/seller/transaction/$id/log")({
 					side="seller"
 					listingTransaction={listingTransactionFetchQuery.data}
 					query={query}
-					components={components}
 				/>
 			</TitleContainer>
 		);

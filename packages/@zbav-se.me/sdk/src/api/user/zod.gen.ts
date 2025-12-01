@@ -748,7 +748,8 @@ export const zListingTransaction = z.object({
     }),
     title: z.string().register(z.globalRegistry, {
         description: 'Listing transaction title'
-    })
+    }),
+    gallery: zGallery
 }).register(z.globalRegistry, {
     description: 'Listing transaction data'
 });

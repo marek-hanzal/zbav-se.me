@@ -1,28 +1,30 @@
-import type { tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
+import type { tListingTransaction, tListingTransactionStatus } from "@zbav-se.me/sdk/api/user";
 import type { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useId } from "react";
 import { match } from "ts-pattern";
+import { ListingDetailButton } from "../../../listing/ListingDetailButton";
 import { AcceptButton } from "../../../listing-transaction/button/AcceptButton";
+import { BuyerInfoButton } from "../../../listing-transaction/button/BuyerInfoButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
+import { SellerInfoButton } from "../../../listing-transaction/button/SellerInfoButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
-import type { TransactionChat } from "../../TransactionChat";
 
 export namespace StatusMenu {
 	export interface Props {
 		locale: string;
 		type: useSideSwitch.Type;
+		listingTransaction: tListingTransaction;
 		listingTransactionStatus: tListingTransactionStatus;
 		menuState: ChatInput.Menu.State;
-		components: TransactionChat.Components;
 	}
 }
 
 export const StatusMenu: FC<StatusMenu.Props> = ({
 	locale,
 	type,
+	listingTransaction,
 	listingTransactionStatus,
 	menuState,
-	components,
 }) => {
 	const listingSheetId = useId();
 
@@ -32,7 +34,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 				.with("request", () => {
 					return (
 						<>
-							<components.SellerInfoButton
+							<SellerInfoButton
 								locale={locale}
 								log={listingTransactionStatus}
 							/>
@@ -42,7 +44,11 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 								log={listingTransactionStatus}
 							/>
 
-							<components.ListingDetailButton modalRootId={listingSheetId} />
+							<ListingDetailButton
+								locale={locale}
+								listing={listingTransaction.listingId}
+								detailSheetId={listingSheetId}
+							/>
 						</>
 					);
 				})
@@ -54,7 +60,7 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 		.with("buyer-to-seller", () => {
 			return (
 				<>
-					<components.BuyerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionStatus}
 					/>
@@ -69,14 +75,18 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 						log={listingTransactionStatus}
 					/>
 
-					<components.ListingDetailButton modalRootId={listingSheetId} />
+					<ListingDetailButton
+						locale={locale}
+						listing={listingTransaction.listingId}
+						detailSheetId={listingSheetId}
+					/>
 				</>
 			);
 		})
 		.with("seller", () => {
 			return (
 				<>
-					<components.BuyerInfoButton
+					<BuyerInfoButton
 						locale={locale}
 						log={listingTransactionStatus}
 					/>
@@ -86,14 +96,18 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 						log={listingTransactionStatus}
 					/>
 
-					<components.ListingDetailButton modalRootId={listingSheetId} />
+					<ListingDetailButton
+						locale={locale}
+						listing={listingTransaction.listingId}
+						detailSheetId={listingSheetId}
+					/>
 				</>
 			);
 		})
 		.with("seller-to-buyer", () => {
 			return (
 				<>
-					<components.SellerInfoButton
+					<SellerInfoButton
 						locale={locale}
 						log={listingTransactionStatus}
 					/>
@@ -103,7 +117,11 @@ export const StatusMenu: FC<StatusMenu.Props> = ({
 						log={listingTransactionStatus}
 					/>
 
-					<components.ListingDetailButton modalRootId={listingSheetId} />
+					<ListingDetailButton
+						locale={locale}
+						listing={listingTransaction.listingId}
+						detailSheetId={listingSheetId}
+					/>
 				</>
 			);
 		})
