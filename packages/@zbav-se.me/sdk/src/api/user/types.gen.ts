@@ -1876,6 +1876,20 @@ export type tGalleryFilter = {
 };
 
 /**
+ * Request to create or update a feed gallery
+ */
+export type tFeedGalleryCreate = {
+    /**
+     * The ID of the feed to add a gallery to
+     */
+    feedId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
  * Collection of feed items
  */
 export type tFeedCollection = {
@@ -1936,10 +1950,15 @@ export type tFeed = {
      */
     locationId?: string | null;
     /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId?: string | null;
+    /**
      * Name of the feed
      */
     name: string;
     query: tListingQuery;
+    upload?: tUpload;
 };
 
 /**
@@ -2439,6 +2458,46 @@ export type tApiFeedDeleteResponse = {
 };
 
 export type apiFeedDeleteResponse = tApiFeedDeleteResponse[keyof tApiFeedDeleteResponse];
+
+export type tApiFeedGalleryCreateRequest = {
+    /**
+     * Query object for feed gallery creation
+     */
+    body?: tFeedGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/feed/gallery/create';
+};
+
+export type apiFeedGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
+    /**
+     * Access denied
+     */
+    403: tMessage;
+    /**
+     * Feed not found or not accessible
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFeedGalleryCreateError = apiFeedGalleryCreateErrors[keyof apiFeedGalleryCreateErrors];
+
+export type tApiFeedGalleryCreateResponse = {
+    /**
+     * Gallery created or updated
+     */
+    200: tGallery;
+};
+
+export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
 
 export type tApiGalleryFetchRequest = {
     /**

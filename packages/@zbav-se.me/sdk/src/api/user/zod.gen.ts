@@ -2003,6 +2003,22 @@ export const zGalleryQuery = z.object({
 export type zGalleryQuery = z.infer<typeof zGalleryQuery>;
 
 /**
+ * Request to create or update a feed gallery
+ */
+export const zFeedGalleryCreate = z.object({
+    feedId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the feed to add a gallery to'
+    }),
+    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create or update a feed gallery'
+});
+
+export type zFeedGalleryCreate = z.infer<typeof zFeedGalleryCreate>;
+
+/**
  * Field of the listing sort
  */
 export const zListingSortField = z.enum([
@@ -2057,10 +2073,15 @@ export const zFeed = z.object({
         z.string(),
         z.null()
     ])),
+    uploadId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
-    query: zListingQuery
+    query: zListingQuery,
+    upload: z.optional(zUpload)
 }).register(z.globalRegistry, {
     description: 'Feed data'
 });
@@ -2497,6 +2518,21 @@ export type zapiFeedDeleteRequest = z.infer<typeof zApiFeedDeleteData>;
 export const zApiFeedDeleteResponse = zFeed;
 
 export type zapiFeedDeleteResponse = z.infer<typeof zApiFeedDeleteResponse>;
+
+export const zApiFeedGalleryCreateData = z.object({
+    body: z.optional(zFeedGalleryCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiFeedGalleryCreateRequest = z.infer<typeof zApiFeedGalleryCreateData>;
+
+/**
+ * Gallery created or updated
+ */
+export const zApiFeedGalleryCreateResponse = zGallery;
+
+export type zapiFeedGalleryCreateResponse = z.infer<typeof zApiFeedGalleryCreateResponse>;
 
 export const zApiGalleryFetchData = z.object({
     body: z.optional(zGalleryQuery),

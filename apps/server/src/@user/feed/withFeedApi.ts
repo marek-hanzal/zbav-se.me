@@ -4,6 +4,7 @@ import { withFeedCountApi } from "./feed-count";
 import { withFeedCreateApi } from "./feed-create";
 import { withFeedDeleteApi } from "./feed-delete";
 import { withFeedFetchApi } from "./feed-fetch";
+import { withFeedGalleryCreateApi } from "./feed-gallery-create";
 import { withFeedPatchApi } from "./feed-patch";
 
 export const withFeedApi: Routes.Fn = (routes) => {
@@ -13,4 +14,5 @@ export const withFeedApi: Routes.Fn = (routes) => {
 	withFeedCollectionApi(routes);
 	withFeedCountApi(routes);
 	withFeedDeleteApi(routes);
+	withFeedGalleryCreateApi(routes);
 };

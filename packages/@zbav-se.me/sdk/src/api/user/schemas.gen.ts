@@ -2359,6 +2359,26 @@ export const sGalleryFilter = {
     }
 } as const;
 
+export const sFeedGalleryCreate = {
+    type: 'object',
+    properties: {
+        feedId: {
+            type: 'string'
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        }
+    },
+    required: [
+        'feedId',
+        'uploadIds'
+    ]
+} as const;
+
 export const sFeedCollection = {
     type: 'object',
     properties: {
@@ -2443,11 +2463,20 @@ export const sFeed = {
                 'null'
             ]
         },
+        uploadId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
         name: {
             type: 'string'
         },
         query: {
             $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            $ref: '#/components/schemas/Upload'
         }
     },
     required: [
