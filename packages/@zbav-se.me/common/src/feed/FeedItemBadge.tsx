@@ -21,6 +21,120 @@ export namespace FeedItemBadge {
 export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
 	const [isOpen, setIsOpen] = useState(defaultOpen);
 
+	if (feed.upload) {
+		return (
+			<Badge
+				className={[
+					"relative",
+					"h-fit",
+					"p-0",
+					"w-full",
+				]}
+				round={"md"}
+			>
+				<LinkTo
+					to={"/$locale/buyer/listing/list"}
+					params={{
+						locale,
+					}}
+					search={{
+						query: feed.query,
+					}}
+					full
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"flex",
+									"flex-col",
+									"items-start",
+									"gap-1",
+									"w-full",
+								],
+							},
+						},
+					}}
+				>
+					<HeroImage
+						src={feed.upload.url}
+						alt={`Hero image for feed ${feed.id}`}
+						visible
+						round
+						tweak={{
+							slot: {
+								img: {
+									class: [
+										"w-full",
+										"h-64",
+									],
+								},
+							},
+						}}
+					/>
+				</LinkTo>
+
+				<Badge
+					snapTo={"top"}
+					round={"md"}
+					className={[
+						"h-fit",
+					]}
+				>
+					<Typo
+						label={feed.name}
+						font={"bold"}
+						truncate
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"pt-1",
+										"px-2",
+									],
+								},
+							},
+						}}
+					/>
+				</Badge>
+
+				<Button
+					iconEnabled={FeedIcon}
+					tone={"secondary"}
+					label={"Feed setup (label)"}
+					size={"md"}
+					snapTo={"bottom-left"}
+					onClick={() => setIsOpen(true)}
+				/>
+
+				<ListingCountBadge
+					locale={locale}
+					query={feed.query}
+					snapTo={"bottom-right"}
+				/>
+
+				<BottomSheet
+					isOpen={isOpen}
+					onClose={() => setIsOpen(false)}
+					detent={"full"}
+				>
+					<FeedDetailContainer
+						locale={locale}
+						feed={feed}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"pt-14",
+									],
+								},
+							},
+						}}
+					/>
+				</BottomSheet>
+			</Badge>
+		);
+	}
+
 	return (
 		<>
 			<Badge
@@ -51,39 +165,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 						query: feed.query,
 					}}
 					full
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"flex",
-									"flex-col",
-									"items-start",
-									"gap-1",
-									"w-full",
-								],
-							},
-						},
-					}}
 				>
-					{feed.upload ? (
-						<HeroImage
-							src={feed.upload.url}
-							alt={`Hero image for feed ${feed.id}`}
-							visible
-							round
-							tweak={{
-								slot: {
-									img: {
-										class: [
-											"w-full",
-											"h-52",
-										],
-									},
-								},
-							}}
-						/>
-					) : null}
-
 					<Typo
 						label={feed.name}
 						font={"bold"}

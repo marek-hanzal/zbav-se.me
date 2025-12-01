@@ -2,7 +2,7 @@ import { TrashIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Status } from "@use-pico/client/ui/status";
 import { VariantProvider } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
@@ -11,6 +11,7 @@ import {
 	withFeedGalleryCreateMutation,
 } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
+import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { GallerySheet } from "../photo";
@@ -41,6 +42,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 			width={"fit"}
 			disabled={feedDeleteMutation.isPending}
 			square={"md"}
+			tone={"unset"}
+			theme={"unset"}
 			{...props}
 		>
 			<VariantProvider
@@ -84,7 +87,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 						round={"md"}
 						onClick={() => setIsGalleryOpen((prev) => !prev)}
 					>
-						<Tx label={"Feed - Select hero image (label)"} />
+						<Status
+							icon={PhotoIcon}
+							textTitle={"Feed - Select hero image (label)"}
+						/>
 					</Badge>
 				)}
 
