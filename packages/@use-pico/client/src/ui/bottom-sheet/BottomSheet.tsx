@@ -64,7 +64,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					"w-full",
 					"h-full",
 					"touch-none",
-					"bg-black/10",
+					"bg-black/50",
 					"pointer-events-auto",
 					"z-1",
 				])}

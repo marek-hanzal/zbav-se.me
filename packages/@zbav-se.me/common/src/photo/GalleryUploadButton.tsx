@@ -60,7 +60,7 @@ export const GalleryUploadButton: FC<GalleryUploadButton.Props> = ({
 							value: uploadIds,
 							set: setUploadIds,
 						}}
-						limit={10}
+						limit={1}
 					/>
 
 					<div

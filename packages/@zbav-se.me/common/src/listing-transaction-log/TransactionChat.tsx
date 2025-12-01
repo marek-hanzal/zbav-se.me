@@ -86,9 +86,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 
 						return (
 							<GalleryMenu
-								locale={locale}
 								type={type}
-								listingTransaction={listingTransaction}
 								listingTransactionGallery={gallery}
 								menuState={menuState}
 							/>

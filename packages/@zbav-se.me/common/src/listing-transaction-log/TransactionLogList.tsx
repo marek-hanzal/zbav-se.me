@@ -139,7 +139,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 				<Container
 					ref={contentRef}
 					layout={"vertical-flex"}
-					gap={"xl"}
+					gap={"md"}
 					height={"content"}
 				>
 					<Badge
