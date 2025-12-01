@@ -16,7 +16,19 @@ export const MessageEvent: FC<MessageEvent.Props> = ({ listingTransactionMessage
 			timestamp={listingTransactionMessage.createdAt}
 			{...props}
 		>
-			<Markdown>{listingTransactionMessage.message}</Markdown>
+			<Markdown
+				tweak={{
+					slot: {
+						p: {
+							class: [
+								"py-0",
+							],
+						},
+					},
+				}}
+			>
+				{listingTransactionMessage.message}
+			</Markdown>
 		</EventBadge>
 	);
 };
