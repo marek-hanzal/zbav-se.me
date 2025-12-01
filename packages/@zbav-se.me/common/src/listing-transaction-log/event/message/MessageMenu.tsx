@@ -2,15 +2,12 @@ import type { tListingTransactionMessage } from "@zbav-se.me/sdk/api/user";
 import type { ChatInput } from "@zbav-se.me/ui/chat";
 import type { FC } from "react";
 import { match } from "ts-pattern";
-import { BuyerInfoButton } from "../../../listing-transaction/button/BuyerInfoButton";
 import { RejectButton } from "../../../listing-transaction/button/RejectButton";
-import { SellerInfoButton } from "../../../listing-transaction/button/SellerInfoButton";
 import type { useSideSwitch } from "../../../listing-transaction/useSideSwitch";
 import { GalleryUploadButton } from "../../../photo/GalleryUploadButton";
 
 export namespace MessageMenu {
 	export interface Props {
-		locale: string;
 		type: useSideSwitch.Type;
 		listingTransactionMessage: tListingTransactionMessage;
 		menuState: ChatInput.Menu.State;
@@ -18,7 +15,6 @@ export namespace MessageMenu {
 }
 
 export const MessageMenu: FC<MessageMenu.Props> = ({
-	locale,
 	type,
 	listingTransactionMessage,
 	menuState,
@@ -30,6 +26,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
+						tone={"secondary"}
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
 						onSuccess={() => {
 							setMenuState(false);
@@ -37,11 +34,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						onCancel={() => {
 							setMenuState(false);
 						}}
-					/>
-
-					<SellerInfoButton
-						locale={locale}
-						log={listingTransactionMessage}
 					/>
 
 					<RejectButton
@@ -55,6 +47,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
+						tone={"secondary"}
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
 						onSuccess={() => {
 							setMenuState(false);
@@ -62,11 +55,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						onCancel={() => {
 							setMenuState(false);
 						}}
-					/>
-
-					<SellerInfoButton
-						locale={locale}
-						log={listingTransactionMessage}
 					/>
 
 					<RejectButton
@@ -80,6 +68,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
+						tone={"secondary"}
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
 						onSuccess={() => {
 							setMenuState(false);
@@ -87,11 +76,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						onCancel={() => {
 							setMenuState(false);
 						}}
-					/>
-
-					<BuyerInfoButton
-						locale={locale}
-						log={listingTransactionMessage}
 					/>
 
 					<RejectButton
@@ -105,6 +89,7 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
+						tone={"secondary"}
 						listingTransactionId={listingTransactionMessage.listingTransactionId}
 						onSuccess={() => {
 							setMenuState(false);
@@ -112,11 +97,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						onCancel={() => {
 							setMenuState(false);
 						}}
-					/>
-
-					<BuyerInfoButton
-						locale={locale}
-						log={listingTransactionMessage}
 					/>
 
 					<RejectButton

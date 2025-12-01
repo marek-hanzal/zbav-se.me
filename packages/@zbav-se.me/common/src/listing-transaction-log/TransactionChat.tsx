@@ -40,6 +40,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 
 	return (
 		<ChatInput
+			ui={`ChatInput-${type}`}
 			value={message}
 			onChange={setMessage}
 			onSubmit={(message) => {
@@ -70,7 +71,6 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 
 						return (
 							<MessageMenu
-								locale={locale}
 								type={type}
 								listingTransactionMessage={message}
 								menuState={menuState}
