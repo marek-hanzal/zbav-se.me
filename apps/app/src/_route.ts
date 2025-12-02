@@ -19,7 +19,6 @@ import { Route as LocaleSellerUserRouteImport } from './@routes/$locale/seller/u
 import { Route as LocaleSellerShopRouteImport } from './@routes/$locale/seller/shop'
 import { Route as LocaleDevSeedRouteImport } from './@routes/$locale/dev/seed'
 import { Route as LocaleBuyerUserRouteImport } from './@routes/$locale/buyer/user'
-import { Route as LocaleBuyerTransactionRouteImport } from './@routes/$locale/buyer/transaction'
 import { Route as LocaleBuyerShopRouteImport } from './@routes/$locale/buyer/shop'
 import { Route as LocaleSellerTransactionListRouteImport } from './@routes/$locale/seller/transaction/list'
 import { Route as LocaleSellerListingMyRouteImport } from './@routes/$locale/seller/listing/my'
@@ -89,11 +88,6 @@ const LocaleBuyerUserRoute = LocaleBuyerUserRouteImport.update({
   path: '/buyer/user',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleBuyerTransactionRoute = LocaleBuyerTransactionRouteImport.update({
-  id: '/buyer/transaction',
-  path: '/buyer/transaction',
-  getParentRoute: () => LocaleRoute,
-} as any)
 const LocaleBuyerShopRoute = LocaleBuyerShopRouteImport.update({
   id: '/buyer/shop',
   path: '/buyer/shop',
@@ -112,9 +106,9 @@ const LocaleSellerListingMyRoute = LocaleSellerListingMyRouteImport.update({
 } as any)
 const LocaleBuyerTransactionListRoute =
   LocaleBuyerTransactionListRouteImport.update({
-    id: '/list',
-    path: '/list',
-    getParentRoute: () => LocaleBuyerTransactionRoute,
+    id: '/buyer/transaction/list',
+    path: '/buyer/transaction/list',
+    getParentRoute: () => LocaleRoute,
   } as any)
 const LocaleBuyerListingListRoute = LocaleBuyerListingListRouteImport.update({
   id: '/buyer/listing/list',
@@ -204,7 +198,6 @@ export interface FileRoutesByFullPath {
   '/$locale/dashboard': typeof LocaleDashboardRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
-  '/$locale/buyer/transaction': typeof LocaleBuyerTransactionRouteWithChildren
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
@@ -234,7 +227,6 @@ export interface FileRoutesByTo {
   '/$locale/dashboard': typeof LocaleDashboardRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
-  '/$locale/buyer/transaction': typeof LocaleBuyerTransactionRouteWithChildren
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
@@ -266,7 +258,6 @@ export interface FileRoutesById {
   '/$locale/dashboard': typeof LocaleDashboardRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
-  '/$locale/buyer/transaction': typeof LocaleBuyerTransactionRouteWithChildren
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
   '/$locale/dev/seed': typeof LocaleDevSeedRoute
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
@@ -299,7 +290,6 @@ export interface FileRouteTypes {
     | '/$locale/dashboard'
     | '/$locale/'
     | '/$locale/buyer/shop'
-    | '/$locale/buyer/transaction'
     | '/$locale/buyer/user'
     | '/$locale/dev/seed'
     | '/$locale/seller/shop'
@@ -329,7 +319,6 @@ export interface FileRouteTypes {
     | '/$locale/dashboard'
     | '/$locale'
     | '/$locale/buyer/shop'
-    | '/$locale/buyer/transaction'
     | '/$locale/buyer/user'
     | '/$locale/dev/seed'
     | '/$locale/seller/shop'
@@ -360,7 +349,6 @@ export interface FileRouteTypes {
     | '/$locale/dashboard'
     | '/$locale/'
     | '/$locale/buyer/shop'
-    | '/$locale/buyer/transaction'
     | '/$locale/buyer/user'
     | '/$locale/dev/seed'
     | '/$locale/seller/shop'
@@ -463,13 +451,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerUserRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/transaction': {
-      id: '/$locale/buyer/transaction'
-      path: '/buyer/transaction'
-      fullPath: '/$locale/buyer/transaction'
-      preLoaderRoute: typeof LocaleBuyerTransactionRouteImport
-      parentRoute: typeof LocaleRoute
-    }
     '/$locale/buyer/shop': {
       id: '/$locale/buyer/shop'
       path: '/buyer/shop'
@@ -493,10 +474,10 @@ declare module '@tanstack/react-router' {
     }
     '/$locale/buyer/transaction/list': {
       id: '/$locale/buyer/transaction/list'
-      path: '/list'
+      path: '/buyer/transaction/list'
       fullPath: '/$locale/buyer/transaction/list'
       preLoaderRoute: typeof LocaleBuyerTransactionListRouteImport
-      parentRoute: typeof LocaleBuyerTransactionRoute
+      parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/listing/list': {
       id: '/$locale/buyer/listing/list'
@@ -599,25 +580,10 @@ declare module '@tanstack/react-router' {
   }
 }
 
-interface LocaleBuyerTransactionRouteChildren {
-  LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
-}
-
-const LocaleBuyerTransactionRouteChildren: LocaleBuyerTransactionRouteChildren =
-  {
-    LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
-  }
-
-const LocaleBuyerTransactionRouteWithChildren =
-  LocaleBuyerTransactionRoute._addFileChildren(
-    LocaleBuyerTransactionRouteChildren,
-  )
-
 interface LocaleRouteChildren {
   LocaleDashboardRoute: typeof LocaleDashboardRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
   LocaleBuyerShopRoute: typeof LocaleBuyerShopRoute
-  LocaleBuyerTransactionRoute: typeof LocaleBuyerTransactionRouteWithChildren
   LocaleBuyerUserRoute: typeof LocaleBuyerUserRoute
   LocaleDevSeedRoute: typeof LocaleDevSeedRoute
   LocaleSellerShopRoute: typeof LocaleSellerShopRoute
@@ -627,6 +593,7 @@ interface LocaleRouteChildren {
   LocaleBuyerCartListRoute: typeof LocaleBuyerCartListRoute
   LocaleBuyerFeedSelectRoute: typeof LocaleBuyerFeedSelectRoute
   LocaleBuyerListingListRoute: typeof LocaleBuyerListingListRoute
+  LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
   LocaleSellerListingMyRoute: typeof LocaleSellerListingMyRoute
   LocaleSellerTransactionListRoute: typeof LocaleSellerTransactionListRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
@@ -646,7 +613,6 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleDashboardRoute: LocaleDashboardRoute,
   LocaleIndexRoute: LocaleIndexRoute,
   LocaleBuyerShopRoute: LocaleBuyerShopRoute,
-  LocaleBuyerTransactionRoute: LocaleBuyerTransactionRouteWithChildren,
   LocaleBuyerUserRoute: LocaleBuyerUserRoute,
   LocaleDevSeedRoute: LocaleDevSeedRoute,
   LocaleSellerShopRoute: LocaleSellerShopRoute,
@@ -656,6 +622,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleBuyerCartListRoute: LocaleBuyerCartListRoute,
   LocaleBuyerFeedSelectRoute: LocaleBuyerFeedSelectRoute,
   LocaleBuyerListingListRoute: LocaleBuyerListingListRoute,
+  LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
   LocaleSellerListingMyRoute: LocaleSellerListingMyRoute,
   LocaleSellerTransactionListRoute: LocaleSellerTransactionListRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,

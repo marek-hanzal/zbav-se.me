@@ -13,7 +13,7 @@ export namespace Fade {
 }
 
 export const Fade: FC<Fade.Props> = ({
-	height = 48,
+	height = 16,
 	fade = height * 2,
 	cls = FadeCls,
 	tweak,

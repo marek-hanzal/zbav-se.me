@@ -1,8 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
-import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -34,13 +35,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 				textTitle={"Age (title)"}
 				left={
 					<LinkTo
-						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/condition"}
 						search={state}
 						params={{
 							locale,
 						}}
-					/>
+					>
+						<BadgeLeft />
+					</LinkTo>
 				}
 				right={
 					<ConfirmButton

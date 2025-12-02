@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Spinner } from "@use-pico/client/ui/spinner";
 import { CategoryCartListContainer } from "@zbav-se.me/common/category-cart";
 import { withCategoryCartCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { match } from "ts-pattern";
 
@@ -17,12 +17,13 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				textTitle={"Your cart (title)"}
 				left={
 					<LinkTo
-						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
 						params={{
 							locale,
 						}}
-					/>
+					>
+						<BadgeLeft />
+					</LinkTo>
 				}
 			>
 				<Spinner />
@@ -53,12 +54,13 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 				textTitle={"Your cart (title)"}
 				left={
 					<LinkTo
-						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
 						params={{
 							locale,
 						}}
-					/>
+					>
+						<BadgeLeft />
+					</LinkTo>
 				}
 			>
 				<Container scroll={"vertical"}>

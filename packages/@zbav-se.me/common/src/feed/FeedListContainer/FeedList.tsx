@@ -1,8 +1,9 @@
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container } from "@use-pico/client/ui/container";
+import { Fade } from "@use-pico/client/ui/fade";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useId } from "react";
+import { type FC, useId, useRef } from "react";
 import { FeedItemBadge } from "../FeedItemBadge";
 
 export namespace FeedList {
@@ -21,6 +22,7 @@ export const FeedList: FC<FeedList.Props> = ({
 	...props
 }) => {
 	const feedRootId = useId();
+	const scrollableRef = useRef<HTMLDivElement>(null);
 
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
 
@@ -29,22 +31,28 @@ export const FeedList: FC<FeedList.Props> = ({
 	}
 
 	return (
-		<Container
-			layout={"vertical-flex"}
-			scroll={"vertical"}
-			gap={"md"}
-			{...props}
-		>
-			{feedCollectionQuery.data.data.map((feed) => {
-				return (
-					<FeedItemBadge
-						key={`${feedRootId}-${feed.id}`}
-						feed={feed}
-						locale={locale}
-						defaultOpen={defaultOpenId === feed.id}
-					/>
-				);
-			})}
+		<Container position={"relative"}>
+			<Fade scrollableRef={scrollableRef} />
+
+			<Container
+				ref={scrollableRef}
+				layout={"vertical-flex"}
+				scroll={"vertical"}
+				gap={"md"}
+				position={"relative"}
+				{...props}
+			>
+				{feedCollectionQuery.data.data.map((feed) => {
+					return (
+						<FeedItemBadge
+							key={`${feedRootId}-${feed.id}`}
+							feed={feed}
+							locale={locale}
+							defaultOpen={defaultOpenId === feed.id}
+						/>
+					);
+				})}
+			</Container>
 		</Container>
 	);
 };

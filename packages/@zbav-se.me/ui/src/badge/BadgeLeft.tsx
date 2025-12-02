@@ -1,33 +1,22 @@
-import { ArrowLeftIcon, Icon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import type { FC } from "react";
 
 export namespace BadgeLeft {
-	export interface Props extends Badge.Props {}
+	export interface Props extends Button.Props {}
 }
 
 export const BadgeLeft: FC<BadgeLeft.Props> = (props) => {
 	return (
-		<Badge
+		<Button
+			iconEnabled={ArrowLeftIcon}
+			iconProps={{
+				size: "sm",
+			}}
+			round={"full"}
 			tone={"secondary"}
 			theme={"light"}
-			size={"lg"}
-			round={"full"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"p-2",
-							"opacity-65",
-							"border-none",
-							"h-fit",
-						],
-					},
-				},
-			}}
 			{...props}
-		>
-			<Icon icon={ArrowLeftIcon} />
-		</Badge>
+		/>
 	);
 };

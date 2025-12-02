@@ -94,7 +94,7 @@ export const FadeCls = contract(PicoCls.contract)
 		},
 		"fade.to": {
 			class: [
-				"to-black/50",
+				"to-black/15",
 			],
 		},
 	})

@@ -41,6 +41,8 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, 
 		<Badge
 			size={"md"}
 			round={"default"}
+			tone={"secondary"}
+			theme={"light"}
 			tweak={{
 				slot: {
 					root: {
