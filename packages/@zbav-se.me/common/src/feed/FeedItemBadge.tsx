@@ -1,4 +1,3 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
@@ -22,40 +21,41 @@ export namespace FeedItemBadge {
 export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
 	const [isOpen, setIsOpen] = useState(defaultOpen);
 
-	if (feed.upload) {
-		return (
-			<Badge
-				className={[
-					"relative",
-					"h-fit",
-					"p-0",
-					"w-full",
-				]}
-				round={"md"}
-			>
-				<LinkTo
-					to={"/$locale/buyer/listing/list"}
-					params={{
-						locale,
-					}}
-					search={{
-						query: feed.query,
-					}}
-					full
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"flex",
-									"flex-col",
-									"items-start",
-									"gap-1",
-									"w-full",
-								],
-							},
+	return (
+		<Badge
+			className={[
+				"relative",
+				"h-fit",
+				"p-0",
+				"w-full",
+			]}
+			round={"md"}
+		>
+			<LinkTo
+				to={"/$locale/buyer/listing/list"}
+				params={{
+					locale,
+				}}
+				search={{
+					query: feed.query,
+				}}
+				full
+				tweak={{
+					slot: {
+						root: {
+							class: [
+								"flex",
+								"flex-col",
+								"items-start",
+								"gap-1",
+								"w-full",
+								"h-64",
+							],
 						},
-					}}
-				>
+					},
+				}}
+			>
+				{feed.upload ? (
 					<HeroImage
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
@@ -66,136 +66,52 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 								img: {
 									class: [
 										"w-full",
-										"h-64",
 									],
 								},
 							},
 						}}
 					/>
-				</LinkTo>
+				) : null}
+			</LinkTo>
 
-				<Badge
-					snapTo={"top"}
-					round={"md"}
-					className={[
-						"h-fit",
-					]}
-				>
-					<Typo
-						label={feed.name}
-						font={"bold"}
-						truncate
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"pt-1",
-										"px-2",
-									],
-								},
-							},
-						}}
-					/>
-				</Badge>
-
-				<Button
-					iconEnabled={FeedIcon}
-					tone={"secondary"}
-					label={"Feed setup (label)"}
-					size={"md"}
-					snapTo={"bottom-left"}
-					onClick={() => setIsOpen(true)}
-				/>
-
-				<ListingCountBadge
-					locale={locale}
-					query={feed.query}
-					snapTo={"bottom-right"}
-				/>
-
-				<BottomSheet
-					isOpen={isOpen}
-					onClose={() => setIsOpen(false)}
-					detent={"full"}
-					header={{
-						close: true,
-						title: feed.name,
-					}}
-				>
-					<FeedDetailContainer
-						locale={locale}
-						feed={feed}
-					/>
-				</BottomSheet>
-			</Badge>
-		);
-	}
-
-	return (
-		<>
 			<Badge
-				tone={"primary"}
-				round={"default"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"flex-col",
-								"gap-2",
-								"w-full",
-								"h-fit",
-								"items-start",
-								"p-0",
-							],
-						},
-					},
-				}}
-				{...props}
+				snapTo={"top"}
+				round={"md"}
+				className={[
+					"h-fit",
+				]}
 			>
-				<LinkTo
-					icon={ArrowRightIcon}
-					iconPosition={"right"}
-					to={"/$locale/buyer/listing/list"}
-					params={{
-						locale,
-					}}
-					search={{
-						query: feed.query,
-					}}
-					full
-				>
-					<Typo
-						label={feed.name}
-						font={"bold"}
-						truncate
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"pt-1",
-										"px-2",
-									],
-								},
+				<Typo
+					label={feed.name}
+					font={"bold"}
+					truncate
+					tweak={{
+						slot: {
+							root: {
+								class: [
+									"pt-1",
+									"px-2",
+								],
 							},
-						}}
-					/>
-				</LinkTo>
-
-				<div className={"flex flex-row gap-2 items-center justify-between w-full p-2"}>
-					<Button
-						iconEnabled={FeedIcon}
-						tone={"secondary"}
-						label={"Feed setup (label)"}
-						size={"md"}
-						onClick={() => setIsOpen(true)}
-					/>
-
-					<ListingCountBadge
-						locale={locale}
-						query={feed.query}
-					/>
-				</div>
+						},
+					}}
+				/>
 			</Badge>
+
+			<Button
+				iconEnabled={FeedIcon}
+				tone={"secondary"}
+				label={"Feed setup (label)"}
+				size={"md"}
+				snapTo={"bottom-left"}
+				onClick={() => setIsOpen(true)}
+			/>
+
+			<ListingCountBadge
+				locale={locale}
+				query={feed.query}
+				snapTo={"bottom-right"}
+			/>
 
 			<BottomSheet
 				isOpen={isOpen}
@@ -211,6 +127,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 					feed={feed}
 				/>
 			</BottomSheet>
-		</>
+		</Badge>
 	);
 };

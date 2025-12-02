@@ -38,7 +38,7 @@ export namespace ListingCountBadge {
 export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, ...props }) => {
 	return (
 		<Badge
-			size={"sm"}
+			size={"md"}
 			round={"default"}
 			tweak={{
 				slot: {
@@ -49,7 +49,6 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, 
 							"flex-row",
 							"items-center",
 							"gap-1",
-							"h-fit",
 						],
 					},
 				},
