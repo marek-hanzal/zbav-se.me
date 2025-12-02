@@ -106,7 +106,7 @@
     value: Název můžeš později upravit
 2cf7d683bdd6eadcc25497c243dfa1e5e7d076f4b752f146e25ea129:
     ref: Transactions (title)
-    value: Tvoje obchody
+    value: Zprávy
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
     ref: Next - title (button)
     value: Titulek
@@ -244,7 +244,7 @@
     value: Obchodník tě přijal
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
-    value: Detail obchodu
+    value: Zprávy
 6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
     ref: Feed name (default)
     value: Můj seznam
@@ -357,7 +357,7 @@
     value: Ťuknutím vyfoť nebo vyber z galerie
 8c00fb88a09730194dd045f089bbea7de140bf5478b6e0626ba8b28d:
     ref: Transactions (label)
-    value: Obchody
+    value: Zprávy
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
     ref: Feed location (label)
     value: Referenční lokalita

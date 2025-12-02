@@ -67,7 +67,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 							}}
 							snapTo={"top-left"}
 							round={"full"}
-							tone={"primary"}
+							tone={"secondary"}
 							theme={"light"}
 							tweak={{
 								slot: {
