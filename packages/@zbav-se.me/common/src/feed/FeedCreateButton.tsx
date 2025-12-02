@@ -62,6 +62,18 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 							setChange(true);
 							setName(value);
 						}}
+						onSubmit={(name) => {
+							if (change && name && !feedCreateMutation.isPending) {
+								feedCreateMutation.mutate({
+									name,
+									query: {
+										where: {
+											withOwn: false,
+										},
+									},
+								});
+							}
+						}}
 					/>
 
 					<Button

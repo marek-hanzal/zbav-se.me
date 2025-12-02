@@ -24,6 +24,10 @@ export const FeedList: FC<FeedList.Props> = ({
 
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
 
+	if (feedCollectionQuery.data.data.length === 0) {
+		return null;
+	}
+
 	return (
 		<Container
 			layout={"vertical-flex"}

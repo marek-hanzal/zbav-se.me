@@ -22,6 +22,9 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
     ref: Upload (title)
     value: Vyber fotku
+0ae38241dad8e253dd2770d4b3ad826257f505b7345634f052961672:
+    ref: First feed (title)
+    value: Název seznamu
 0c9fd2c1be3e9357f6ce010004cc93f4e2859ef4e62274ab72a0c42f:
     ref: Cart (label)
     value: Oblíbené
@@ -98,6 +101,9 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
+2c42c14799ffc5fc727a41adfa059bfa417aea517c104b17ec402486:
+    ref: First feed (hint)
+    value: Název si můžeš kdykoli změnit
 2cf7d683bdd6eadcc25497c243dfa1e5e7d076f4b752f146e25ea129:
     ref: Transactions (title)
     value: Tvoje obchody
@@ -220,7 +226,7 @@
     value: Stáří
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
-    value: Vymysli název
+    value: Např. nářadí
 5f89ec425f9a625c897a3bcc1d45953bef4ace5e5b7cfacf258790c5:
     ref: Upload gallery (button)
     value: Odeslat
@@ -236,6 +242,9 @@
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Detail obchodu
+6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
+    ref: Feed name (default)
+    value: Můj seznam
 64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
     ref: expired
     value: expired
@@ -466,9 +475,6 @@ a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
 a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
     ref: Invalid data provided (message)
     value: Invalid data provided (message)
-a5336e68bc3708c568c4e718244b1a593fa688f90cb04bcf43536501:
-    ref: Create your first feed to get started (description)
-    value: Nastav si přesně, co tě zajímá a jaké inzeráty se ti mají zobrazovat.
 a55387e66d56fc537f261c638ef5f30318fca9ffe61c9917ffa04684:
     ref: Accept transaction (label)
     value: Přijmout
@@ -534,9 +540,6 @@ b48018d27bcd6409768ac5c0dd69a1a716d97c25a2dbfe6713cf393b:
 b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
     ref: "- skore + link -"
     value: "- skore + link -"
-b6838f37e976c21b969088054a7709bd8eab26b6046b6566169056b3:
-    ref: Create first feed (title)
-    value: Vytvoř si své nabídky!
 b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
     ref: Feed age (label)
     value: Stáří

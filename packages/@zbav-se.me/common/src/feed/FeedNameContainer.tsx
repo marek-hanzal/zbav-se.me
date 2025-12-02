@@ -6,13 +6,22 @@ import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace FeedNameContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onSubmit"> {
 		value: string;
 		onChange(value: string): void;
+		onSubmit(value: string): void;
+		statusProps?: Status.Props;
 	}
 }
 
-export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange, ...props }) => {
+export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
+	value,
+	onChange,
+	onSubmit,
+	statusProps,
+	children,
+	...props
+}) => {
 	return (
 		<Container
 			layout={"vertical-centered"}
@@ -30,6 +39,12 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange
 							<TextInput
 								value={value}
 								onChange={(e) => onChange(e.target.value)}
+								onKeyDown={(e) => {
+									if (e.key === "Enter") {
+										e.preventDefault();
+										onSubmit(value);
+									}
+								}}
 								placeholder={"Feed name (placeholder)"}
 								autoFocus={!value}
 								{...props}
@@ -37,7 +52,10 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({ value, onChange
 						)}
 					</FormField>
 				}
-			/>
+				{...statusProps}
+			>
+				{children}
+			</Status>
 		</Container>
 	);
 };

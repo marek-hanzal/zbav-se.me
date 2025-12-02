@@ -1,5 +1,7 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
@@ -22,8 +24,8 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	limit = 10,
 	...props
 }) => {
-	const [name, setName] = useState("");
-	const [change, setChange] = useState(false);
+	const [name, setName] = useState(translator.text("Feed name (default)"));
+	const [change, setChange] = useState(true);
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
 		onSettled() {
 			setChange(false);
@@ -39,54 +41,88 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 			{({ data }) => {
 				const isLimitReached = data.filter >= limit;
 
+				if (data.filter === 0) {
+					return (
+						<Container
+							ui={"FeedListContainer-first-feed"}
+							layout={"vertical-content-footer"}
+							gap={"md"}
+							tone={"unset"}
+							theme={"unset"}
+						>
+							<FeedNameContainer
+								height={"fit"}
+								value={name}
+								onChange={(value) => {
+									setChange(true);
+									setName(value);
+								}}
+								onSubmit={(name) => {
+									feedCreateMutation.mutate({
+										name,
+										query: {
+											where: {
+												withOwn: false,
+											},
+										},
+									});
+								}}
+								statusProps={{
+									textTitle: translator.text("First feed (title)"),
+									tweak: {
+										slot: {
+											root: {
+												class: [
+													"gap-0",
+												],
+											},
+											body: {
+												class: [
+													"py-0",
+												],
+											},
+										},
+									},
+								}}
+							>
+								<Tx
+									label={"First feed (hint)"}
+									italic
+									size={"sm"}
+									tone={"subtle"}
+								/>
+							</FeedNameContainer>
+
+							<Button
+								tone={"secondary"}
+								theme={"dark"}
+								label={"Feed - save (button)"}
+								size={"xl"}
+								loading={feedCreateMutation.isPending}
+								disabled={!change || !name || feedCreateMutation.isPending}
+								full
+								onClick={() => {
+									feedCreateMutation.mutate({
+										name,
+										query: {
+											where: {
+												withOwn: false,
+											},
+										},
+									});
+								}}
+							/>
+						</Container>
+					);
+				}
+
 				return (
 					<Container
+						ui={"FeedListContainer-root"}
 						layout={isLimitReached ? "vertical" : "vertical-content-footer"}
-						items={"start"}
-						justify={"between"}
 						gap={"md"}
 						{...props}
 					>
-						{data.filter === 0 ? (
-							<Container
-								layout={"vertical-content-footer"}
-								gap={"md"}
-								height={"fit"}
-								tone={"unset"}
-								theme={"unset"}
-								square={"md"}
-							>
-								<FeedNameContainer
-									height={"fit"}
-									value={name}
-									onChange={(value) => {
-										setChange(true);
-										setName(value);
-									}}
-								/>
-
-								<Button
-									tone={"secondary"}
-									theme={"dark"}
-									label={"Feed - save (button)"}
-									size={"xl"}
-									loading={feedCreateMutation.isPending}
-									disabled={!change || !name || feedCreateMutation.isPending}
-									full
-									onClick={() => {
-										feedCreateMutation.mutate({
-											name,
-											query: {
-												where: {
-													withOwn: false,
-												},
-											},
-										});
-									}}
-								/>
-							</Container>
-						) : null}
-
 						<FeedList
 							_suspense={"I know"}
 							locale={locale}
