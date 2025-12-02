@@ -172,7 +172,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								src={hero.upload.url}
 								alt={`Hero image for listing transaction ${listingTransaction.id}`}
 								visible
-								round
 								onClick={() => setDetail((prev) => !prev)}
 							/>
 
@@ -212,11 +211,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									slot: {
 										root: {
 											class: [
-												"flex",
-												"flex-col",
-												"gap-1",
 												"opacity-85",
-												"overflow-hidden",
 												"h-fit",
 											],
 										},
@@ -226,12 +221,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								<Typo
 									truncate
 									label={listingTransaction.location}
-								/>
-
-								<Typo
-									label={listingTransaction.title}
-									truncate
-									size={"sm"}
 								/>
 							</Badge>
 

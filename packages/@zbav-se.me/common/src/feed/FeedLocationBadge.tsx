@@ -49,6 +49,10 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 				contentProps={{
 					disableScroll: true,
 				}}
+				header={{
+					close: true,
+					title: "Feed location (title)",
+				}}
 			>
 				<Container
 					layout={"vertical-content-footer"}
@@ -57,15 +61,6 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"pt-14",
-								],
-							},
-						},
-					}}
 				>
 					<LocationSelection
 						locale={locale}

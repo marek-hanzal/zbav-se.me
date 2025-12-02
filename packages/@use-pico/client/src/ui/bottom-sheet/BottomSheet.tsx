@@ -4,7 +4,9 @@ import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "re
 import { Sheet, type SheetRef } from "react-modal-sheet";
 import { ArrowLeftIcon } from "../../icon";
 import type { UiProps } from "../../type/UiProps";
+import { Badge } from "../badge";
 import { Button } from "../button";
+import { Tx } from "../tx";
 
 export namespace BottomSheet {
 	export interface Props
@@ -12,7 +14,10 @@ export namespace BottomSheet {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
-		noClose?: boolean;
+		header?: {
+			close?: boolean;
+			title: string;
+		};
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
@@ -23,7 +28,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	containerProps,
 	contentProps,
 	withHeader = false,
-	noClose = false,
+	header,
 	children,
 	...props
 }) => {
@@ -51,6 +56,55 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 			>
 				{withHeader ? <Sheet.Header data-ui={"BottomSheet-Header"} /> : null}
 
+				{header ? (
+					<Badge
+						round={"md"}
+						tone={"unset"}
+						theme={"unset"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"flex",
+										"flex-row",
+										"items-center",
+										"justify-start",
+										"gap-2",
+										"h-fit",
+										"p-2",
+										"pb-0",
+										"border-none",
+									],
+								},
+							},
+						}}
+					>
+						{header.close ? (
+							<Button
+								iconEnabled={ArrowLeftIcon}
+								onClick={props.onClose}
+								iconProps={{
+									size: "sm",
+								}}
+								round={"full"}
+								tone={"secondary"}
+								theme={"light"}
+							/>
+						) : (
+							<div />
+						)}
+
+						{header?.title ? (
+							<Tx
+								label={header.title}
+								tone={"primary"}
+								theme={"light"}
+								preset={"subheader"}
+							/>
+						) : null}
+					</Badge>
+				) : null}
+
 				<Sheet.Content
 					data-ui={"BottomSheet-Content"}
 					style={{
@@ -58,29 +112,6 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					}}
 					{...contentProps}
 				>
-					{!noClose ? (
-						<Button
-							iconEnabled={ArrowLeftIcon}
-							onClick={props.onClose}
-							iconProps={{
-								size: "sm",
-							}}
-							snapTo={"top-left"}
-							round={"full"}
-							tone={"secondary"}
-							theme={"light"}
-							tweak={{
-								slot: {
-									wrapper: {
-										class: [
-											"z-1",
-										],
-									},
-								},
-							}}
-						/>
-					) : null}
-
 					{children}
 				</Sheet.Content>
 			</Sheet.Container>

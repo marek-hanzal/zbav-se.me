@@ -111,6 +111,11 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 
 				<FeedNameBadge feed={feed} />
 
+				<FeedCategoryBadge
+					locale={locale}
+					feed={feed}
+				/>
+
 				<FeedTitleBadge feed={feed} />
 
 				<FeedLocationBadge
@@ -119,11 +124,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 				/>
 
 				<FeedSortValueList feed={feed} />
-
-				<FeedCategoryBadge
-					locale={locale}
-					feed={feed}
-				/>
 
 				<FeedConditionValueList feed={feed} />
 

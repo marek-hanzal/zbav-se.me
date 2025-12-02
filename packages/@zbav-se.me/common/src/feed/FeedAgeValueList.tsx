@@ -60,6 +60,10 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: "Feed age (title)",
+				}}
 			>
 				<Container
 					layout={"vertical-content-footer"}
@@ -68,15 +72,6 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"pt-14",
-								],
-							},
-						},
-					}}
 				>
 					<AgeContainer selection={selection} />
 

@@ -45,6 +45,10 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: "Feed title (title)",
+				}}
 			>
 				<Container
 					layout={"vertical-content-footer"}

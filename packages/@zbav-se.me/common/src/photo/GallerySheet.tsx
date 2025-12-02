@@ -44,7 +44,6 @@ export const GallerySheet = <TData extends GallerySheet.Uploads>({
 	return (
 		<BottomSheet
 			detent={"full"}
-			noClose
 			isOpen={state.value}
 			onClose={() => state.set(false)}
 			{...props}

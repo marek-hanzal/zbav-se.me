@@ -185,6 +185,10 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				isOpen={detail}
 				onClose={() => setDetail(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: listing.title,
+				}}
 			>
 				<ListingDetailContainer
 					parentSheetId={detailSheetId}

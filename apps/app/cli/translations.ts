@@ -104,6 +104,11 @@ tx({
 				name: "ListingDetailButton",
 				attr: "label",
 			},
+			//
+			{
+				name: "BottomSheet",
+				attr: "header",
+			},
 		],
 	},
 });

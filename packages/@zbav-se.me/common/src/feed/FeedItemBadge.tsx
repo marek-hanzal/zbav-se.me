@@ -1,3 +1,4 @@
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
@@ -116,19 +117,14 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 					isOpen={isOpen}
 					onClose={() => setIsOpen(false)}
 					detent={"full"}
+					header={{
+						close: true,
+						title: feed.name,
+					}}
 				>
 					<FeedDetailContainer
 						locale={locale}
 						feed={feed}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"pt-14",
-									],
-								},
-							},
-						}}
 					/>
 				</BottomSheet>
 			</Badge>
@@ -157,6 +153,8 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				{...props}
 			>
 				<LinkTo
+					icon={ArrowRightIcon}
+					iconPosition={"right"}
 					to={"/$locale/buyer/listing/list"}
 					params={{
 						locale,
@@ -203,19 +201,14 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: feed.name,
+				}}
 			>
 				<FeedDetailContainer
 					locale={locale}
 					feed={feed}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"pt-14",
-								],
-							},
-						},
-					}}
 				/>
 			</BottomSheet>
 		</>

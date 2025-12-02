@@ -56,6 +56,10 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: "Feed sorting (title)",
+				}}
 			>
 				<Container
 					layout={"vertical-content-footer"}
@@ -64,15 +68,6 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"pt-14",
-								],
-							},
-						},
-					}}
 				>
 					<ListingSortSelect
 						withGeo={withGeo}

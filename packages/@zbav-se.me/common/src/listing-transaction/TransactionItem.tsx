@@ -136,6 +136,10 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				contentProps={{
 					disableScroll: true,
 				}}
+				header={{
+					close: true,
+					title: listingTransaction.title,
+				}}
 			>
 				<Suspense fallback={<SpinnerContainer />}>
 					<TransactionLogList
@@ -153,6 +157,16 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 									direction: "asc",
 								},
 							],
+						}}
+						square={"md"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"px-0",
+									],
+								},
+							},
 						}}
 					/>
 				</Suspense>

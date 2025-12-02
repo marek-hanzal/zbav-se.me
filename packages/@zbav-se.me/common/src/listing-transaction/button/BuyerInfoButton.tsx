@@ -40,7 +40,6 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 				onClose={() => setIsOpen(false)}
 				detent={"default"}
 				modalEffectRootId={modalRootId}
-				noClose
 			>
 				<BuyerInfoContainer
 					locale={locale}

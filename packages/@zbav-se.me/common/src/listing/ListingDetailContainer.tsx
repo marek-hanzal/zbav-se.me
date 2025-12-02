@@ -34,6 +34,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	children,
 	withScore,
 	parentSheetId,
+	tweak,
 	...props
 }) => {
 	const [hero] = listing.gallery.items as [
@@ -78,6 +79,19 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				layout={children ? "vertical-content-footer" : undefined}
 				gap={"xl"}
 				height={"content"}
+				square={"md"}
+				tweak={[
+					tweak,
+					{
+						slot: {
+							root: {
+								class: [
+									"px-0",
+								],
+							},
+						},
+					},
+				]}
 				{...props}
 			>
 				<Container

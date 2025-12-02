@@ -40,7 +40,6 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({
 				onClose={() => setIsOpen(false)}
 				detent={"default"}
 				modalEffectRootId={modalRootId}
-				noClose
 			>
 				<SellerInfoContainer
 					locale={locale}

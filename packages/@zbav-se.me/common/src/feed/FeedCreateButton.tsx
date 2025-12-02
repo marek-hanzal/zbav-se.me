@@ -1,6 +1,7 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -48,8 +49,20 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: (
+						<Tx
+							label={"Create new feed (title)"}
+							tone={"primary"}
+							theme={"light"}
+							preset={"subheader"}
+						/>
+					),
+				}}
 			>
 				<Container
+					ui={"FeedCreateButton-Container"}
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					height={"fit"}

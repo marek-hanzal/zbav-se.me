@@ -76,6 +76,10 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 								disableScroll: true,
 							}}
 							modalEffectRootId={parentSheetId}
+							header={{
+								close: true,
+								title: "Listing transactions (title)",
+							}}
 						>
 							<Suspense fallback={<SpinnerContainer />}>
 								<withListingTransactionFetchQuery.Suspense

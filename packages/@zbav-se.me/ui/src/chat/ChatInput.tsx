@@ -127,7 +127,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						<BottomSheet
 							isOpen={isMenu}
 							onClose={() => setIsMenu(false)}
-							noClose
+							header={{
+								close: true,
+								title: undefined,
+							}}
 							{...menu.props}
 						>
 							<Container

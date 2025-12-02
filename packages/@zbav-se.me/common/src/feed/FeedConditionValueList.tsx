@@ -60,6 +60,10 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
+				header={{
+					close: true,
+					title: "Feed condition (title)",
+				}}
 			>
 				<Container
 					layout={"vertical-content-footer"}
@@ -68,15 +72,6 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 					tone={"unset"}
 					theme={"unset"}
 					square={"md"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"pt-14",
-								],
-							},
-						},
-					}}
 				>
 					<ConditionContainer selection={conditionSelection} />
 
