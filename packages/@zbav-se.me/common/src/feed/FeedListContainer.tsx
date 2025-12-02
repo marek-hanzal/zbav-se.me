@@ -1,11 +1,12 @@
+import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
+import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
-import { FeedIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
+import { FeedNameContainer } from "./FeedNameContainer";
 
 export namespace FeedListContainer {
 	export interface Props extends Container.Props {
@@ -21,6 +22,15 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	limit = 10,
 	...props
 }) => {
+	const [name, setName] = useState("");
+	const [change, setChange] = useState(false);
+	const feedCreateMutation = withFeedCreateMutation.useMutation({
+		onSettled() {
+			setChange(false);
+			setName("");
+		},
+	});
+
 	return (
 		<withFeedCountQuery.Suspense
 			data={{}}
@@ -39,21 +49,46 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 					>
 						{data.filter === 0 ? (
 							<Container
-								layout={"vertical-centered"}
-								items={"center"}
+								layout={"vertical-content-footer"}
+								gap={"md"}
+								height={"fit"}
+								tone={"unset"}
+								theme={"unset"}
+								square={"md"}
 							>
-								<Status
-									icon={FeedIcon}
-									textTitle={"Create first feed (title)"}
-									textMessage={
-										"Create your first feed to get started (description)"
-									}
-									action={<FeedCreateButton />}
+								<FeedNameContainer
+									height={"fit"}
+									value={name}
+									onChange={(value) => {
+										setChange(true);
+										setName(value);
+									}}
+								/>
+
+								<Button
+									tone={"secondary"}
+									theme={"dark"}
+									label={"Feed - save (button)"}
+									size={"xl"}
+									loading={feedCreateMutation.isPending}
+									disabled={!change || !name || feedCreateMutation.isPending}
+									full
+									onClick={() => {
+										feedCreateMutation.mutate({
+											name,
+											query: {
+												where: {
+													withOwn: false,
+												},
+											},
+										});
+									}}
 								/>
 							</Container>
 						) : null}
 
 						<FeedList
+							_suspense={"I know"}
 							locale={locale}
 							query={query}
 						/>
