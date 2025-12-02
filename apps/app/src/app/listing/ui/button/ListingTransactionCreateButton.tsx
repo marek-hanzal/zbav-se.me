@@ -36,6 +36,7 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 				});
 			}}
 			size={"xl"}
+			menu
 			{...props}
 		/>
 	);

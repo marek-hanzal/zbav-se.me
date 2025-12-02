@@ -64,6 +64,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							theme={"light"}
 							size={"xl"}
 							onClick={() => setIsTransaction((prev) => !prev)}
+							menu
 						/>
 
 						<BottomSheet
@@ -137,6 +138,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							})
 						}
 						size={"xl"}
+						menu
 					/>
 				) : null}
 
@@ -149,6 +151,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 								loading
 								label={"Loading cart count (button)"}
 								size={"xl"}
+								menu
 							/>
 						}
 					>
@@ -171,6 +174,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 												: "Nothing in cart yet (button)"
 										}
 										size={"xl"}
+										menu
 									/>
 								</LinkTo>
 							);

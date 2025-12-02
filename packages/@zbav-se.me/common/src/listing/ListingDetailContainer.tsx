@@ -104,6 +104,15 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						ui={"ListingDetailContainer-image"}
 						height={"content"}
 						round={"default"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"h-64",
+									],
+								},
+							},
+						}}
 					>
 						<HeroImage
 							src={hero.upload.url}
@@ -127,15 +136,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							theme={"unset"}
 							height={"content"}
 						>
-							<BadgeValue
-								textLabel={"Listing title (label)"}
-								textValue={listing.title}
-								textValueProps={{
-									truncate: false,
-									wrap: "wrap",
-								}}
-							/>
-
 							<BadgeValue
 								textLabel={"Listing price (label)"}
 								textValue={toLocaleNumber({

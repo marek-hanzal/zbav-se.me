@@ -13,6 +13,7 @@ export const Tile: FC<Tile.Props> = ({ tweak, ...props }) => {
 			tone={"primary"}
 			theme={"light"}
 			size={"xl"}
+			menu
 			tweak={[
 				tweak,
 				{

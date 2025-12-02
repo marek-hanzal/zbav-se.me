@@ -73,6 +73,11 @@ export namespace Button {
 		 */
 		full?: boolean;
 		/**
+		 * Menu-like button
+		 * @default false
+		 */
+		menu?: boolean;
+		/**
 		 * Whether to show the background.
 		 * @default true
 		 */
@@ -135,6 +140,7 @@ export const Button: FC<Button.Props> = ({
 	border,
 	background,
 	full,
+	menu,
 	truncate,
 	square,
 	snapTo,
@@ -165,6 +171,7 @@ export const Button: FC<Button.Props> = ({
 				border,
 				background,
 				full,
+				menu,
 				truncate,
 				square: square ?? (!children && !label),
 				"snap-to": snapTo,
