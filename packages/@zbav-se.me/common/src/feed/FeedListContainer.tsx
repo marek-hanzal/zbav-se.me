@@ -6,6 +6,7 @@ import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useState } from "react";
+import { toast } from "sonner";
 import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
 import { FeedNameContainer } from "./FeedNameContainer";
@@ -66,14 +67,23 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 									setName(value);
 								}}
 								onSubmit={(name) => {
-									feedCreateMutation.mutate({
-										name,
-										query: {
-											where: {
-												withOwn: false,
+									toast.promise(
+										feedCreateMutation.mutateAsync({
+											name,
+											query: {
+												where: {
+													withOwn: false,
+												},
 											},
+										}),
+										{
+											loading: translator.text("Loading... (toast)"),
+											success: translator.text("First feed created (toast)"),
+											error: translator.text(
+												"Error creating first feed (toast)",
+											),
 										},
-									});
+									);
 								}}
 								statusProps={{
 									textTitle: translator.text("First feed (title)"),
@@ -124,14 +134,23 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								disabled={!change || !name || feedCreateMutation.isPending}
 								full
 								onClick={() => {
-									feedCreateMutation.mutate({
-										name,
-										query: {
-											where: {
-												withOwn: false,
+									toast.promise(
+										feedCreateMutation.mutateAsync({
+											name,
+											query: {
+												where: {
+													withOwn: false,
+												},
 											},
+										}),
+										{
+											loading: translator.text("Loading... (toast)"),
+											success: translator.text("First feed created (toast)"),
+											error: translator.text(
+												"Error creating first feed (toast)",
+											),
 										},
-									});
+									);
 								}}
 							/>
 						</Container>

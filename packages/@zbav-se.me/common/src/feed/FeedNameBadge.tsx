@@ -3,9 +3,11 @@ import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { type FC, useState } from "react";
+import { toast } from "sonner";
 import { FeedNameContainer } from "./FeedNameContainer";
 
 export namespace FeedNameBadge {
@@ -64,6 +66,13 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 								name,
 							}));
 						}}
+						onSubmit={() => {
+							toast.promise(feedPatchMutation.mutateAsync(patch), {
+								loading: translator.text("Loading... (toast)"),
+								success: translator.text("Feed name updated (toast)"),
+								error: translator.text("Error updating feed name (toast)"),
+							});
+						}}
 					/>
 
 					<Button
@@ -75,7 +84,11 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 						disabled={!change || feedPatchMutation.isPending}
 						full
 						onClick={() => {
-							feedPatchMutation.mutate(patch);
+							toast.promise(feedPatchMutation.mutateAsync(patch), {
+								loading: translator.text("Loading... (toast)"),
+								success: translator.text("Feed name updated (toast)"),
+								error: translator.text("Error updating feed name (toast)"),
+							});
 						}}
 					/>
 				</Container>

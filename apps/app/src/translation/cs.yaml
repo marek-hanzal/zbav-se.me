@@ -197,6 +197,9 @@
 508db448927e219e075aaea16d106cb569b057ce5a0b44588ef428e0:
     ref: Second tap to add to cart (toast)
     value: Druhým kliknutím potvrď přidání do košíku
+5568cb09b7ca549979ce1793149f2bb8e8453eb271721effca13fff0:
+    ref: Error creating first feed (toast)
+    value: Seznam se nepodařilo vytvořit!
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
     ref: Buyer - shop (title)
     value: Obchod pro kupující
@@ -248,6 +251,9 @@
 64330c4baddecdf72a3e12b12827c2f9fc66b0966292e042eab4d26f:
     ref: expired
     value: expired
+675e9e5040b254589598079b8eb117d96354c925d2958af3b3234864:
+    ref: Error updating feed name (toast)
+    value: Název seznamu se nepovedlo upravit.
 6810972e1b5c962b2d6bba8f1d42faf0373fc4a6f038a0d748551d62:
     ref: Listing added to your cart (toast)
     value: Inzerát byl úspěšně přidán do tvého košíku.
@@ -296,6 +302,9 @@
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
+7a154bd14c6e908e0e95dbcd7e454206c4970f402f6b8879420e383b:
+    ref: First feed created (toast)
+    value: Tvůj první seznam byl úspěšně vytvořený!
 7bc80170fb044a52d59f0998e4d5bfba4cd157138e9bd4a3cef6d7cb:
     ref: Buyer info (label)
     value: Informace o kupujícím
@@ -364,6 +373,9 @@
 96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
     ref: Invalid/missing fields
     value: Invalid/missing fields
+9835a78e390b045bfa153f4b6289fd0578f068909548d7c7ab30b0ea:
+    ref: Feed created (toast)
+    value: Seznam byl úspěšně vytvořený!
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
     value: Nový inzerát
@@ -589,9 +601,12 @@ c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
 c7d618151613e564c1e8c2b9fce001e15ed60b9afd18b0cedb2aa5a5:
     ref: To buyer (label)
     value: Chci nakupovat
+ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
+    ref: Error creating feed (toast)
+    value: Seznam se nepodařilo vytvořit!
 cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
     ref: Error adding listing to cart (toast)
-    value: Error adding listing to cart (toast)
+    value: Inzerát se nepodařilo přidat do košíku!
 cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
     ref: Feed - save (button)
     value: Uložit
@@ -625,6 +640,9 @@ d66a76c1cb656fcbe98c18ab0c448bab35c36441ebcce2f318348660:
 d7d01dfdfbf0d9f6f29805dca21e09b89924e78770563dc50a65ce29:
     ref: Feed selection (button)
     value: Koukni na inzeráty
+d8190ee61cdb545062afa1147049c037ffaa5fe47502185c21cacb54:
+    ref: Feed name updated (toast)
+    value: Název seznamu byl úspěšně upravený!
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >
