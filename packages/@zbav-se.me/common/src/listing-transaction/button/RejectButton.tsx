@@ -24,11 +24,9 @@ export const RejectButton: FC<RejectButton.Props> = ({ menuState, log, ...props 
 	return (
 		<ConfirmButton
 			iconEnabled={CancelIcon}
-			iconPosition={"right"}
 			size={"xl"}
 			tone={"primary"}
 			theme={"light"}
-			menu
 			label={"Reject transaction (label)"}
 			disabled={rejectMutation.isPending}
 			loading={rejectMutation.isPending}

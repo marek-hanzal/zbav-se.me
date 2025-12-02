@@ -16,7 +16,7 @@ export namespace BottomSheet {
 		withHeader?: boolean;
 		header?: {
 			close?: boolean;
-			title: string;
+			title?: string;
 		};
 	}
 

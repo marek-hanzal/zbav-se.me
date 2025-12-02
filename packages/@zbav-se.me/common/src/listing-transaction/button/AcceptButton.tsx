@@ -24,9 +24,7 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ menuState, log, ...props 
 	return (
 		<ConfirmButton
 			iconEnabled={CheckIcon}
-			iconPosition={"right"}
 			size={"xl"}
-			menu
 			label={"Accept transaction (label)"}
 			disabled={acceptMutation.isPending}
 			loading={acceptMutation.isPending}

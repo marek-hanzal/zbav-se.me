@@ -132,7 +132,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 				<ConfirmButton
 					tone={"danger"}
 					iconEnabled={TrashIcon}
-					iconPosition={"right"}
 					buttonProps={{
 						tone: "danger",
 						label: translator.text("Delete feed (button)"),
@@ -152,7 +151,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 					}}
 					loading={feedDeleteMutation.isPending}
 					size={"xl"}
-					menu
 				/>
 			</VariantProvider>
 		</Container>

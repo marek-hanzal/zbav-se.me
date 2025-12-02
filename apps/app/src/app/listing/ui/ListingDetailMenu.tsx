@@ -61,10 +61,8 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							tone={"primary"}
 							label={"View transactions (button)"}
 							iconEnabled={TransactionIcon}
-							iconPosition={"right"}
 							theme={"light"}
 							size={"xl"}
-							menu
 							onClick={() => setIsTransaction((prev) => !prev)}
 						/>
 
@@ -129,7 +127,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"
 						}
 						iconEnabled={listing.isInCart ? FavouriteIcon : FavouriteOffIcon}
-						iconPosition={"right"}
 						disabled={listingCartToggle.isPending}
 						loading={listingCartToggle.isPending}
 						theme={"light"}
@@ -140,7 +137,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 							})
 						}
 						size={"xl"}
-						menu
 					/>
 				) : null}
 
@@ -149,12 +145,10 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 						data={{}}
 						fallback={
 							<Button
-								iconPosition={"right"}
 								disabled
 								loading
 								label={"Loading cart count (button)"}
 								size={"xl"}
-								menu
 							/>
 						}
 					>
@@ -170,7 +164,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 								>
 									<Button
 										iconEnabled={data.filter > 0 ? ArrowRightIcon : undefined}
-										iconPosition={"right"}
 										disabled={data.filter === 0}
 										label={
 											data.filter > 0
@@ -178,7 +171,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 												: "Nothing in cart yet (button)"
 										}
 										size={"xl"}
-										menu
 									/>
 								</LinkTo>
 							);
