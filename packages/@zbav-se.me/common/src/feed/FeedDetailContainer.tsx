@@ -36,6 +36,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 
 	return (
 		<Container
+			ui="FeedDetailContainer-root"
 			layout={"vertical-flex"}
 			gap={"md"}
 			height={"content"}
