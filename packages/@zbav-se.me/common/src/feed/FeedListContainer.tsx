@@ -76,6 +76,11 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 													"gap-0",
 												],
 											},
+											action: {
+												class: [
+													"py-0",
+												],
+											},
 											body: {
 												class: [
 													"py-0",
@@ -87,9 +92,18 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							>
 								<Tx
 									label={"First feed (hint)"}
-									italic
 									size={"sm"}
 									tone={"subtle"}
+									tweak={{
+										slot: {
+											root: {
+												class: [
+													"px-2",
+													"opacity-75",
+												],
+											},
+										},
+									}}
 								/>
 							</FeedNameContainer>
 
