@@ -20,6 +20,7 @@ export { LetterCIcon } from "./LetterCIcon";
 export { LetterDIcon } from "./LetterDIcon";
 export { LetterEIcon } from "./LetterEIcon";
 export { LetterFIcon } from "./LetterFIcon";
+export { ListingIcon } from "./ListingIcon";
 export { LocationIcon } from "./LocationIcon";
 export { LockIcon } from "./LockIcon";
 export { MessageIcon } from "./MessageIcon";

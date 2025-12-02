@@ -6,7 +6,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import { type FC, useEffect, useState } from "react";
 import { ListingCountBadge } from "../listing/ListingCountBadge";
 import { FeedDetailContainer } from "./FeedDetailContainer";
 
@@ -19,7 +19,15 @@ export namespace FeedItemBadge {
 }
 
 export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
-	const [isOpen, setIsOpen] = useState(defaultOpen);
+	const [isOpen, setIsOpen] = useState(false);
+
+	useEffect(() => {
+		setTimeout(() => {
+			setIsOpen(defaultOpen);
+		}, 100);
+	}, [
+		defaultOpen,
+	]);
 
 	return (
 		<Badge
@@ -30,6 +38,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				"w-full",
 			]}
 			round={"md"}
+			{...props}
 		>
 			<LinkTo
 				to={"/$locale/buyer/listing/list"}

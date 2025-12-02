@@ -4,6 +4,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCountQuery } from "@zbav-se.me/sdk/query/user";
+import { ListingIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense } from "react";
 
 // biome-ignore lint/correctness/noUnusedVariables: Private
@@ -55,7 +56,10 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, 
 			}}
 			{...props}
 		>
-			<Typo label={"x"} />
+			<Icon
+				icon={ListingIcon}
+				size={"xs"}
+			/>
 
 			<Typo
 				label={
