@@ -1,10 +1,9 @@
 import { ArrowRightIcon, Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
-import { Badge, BadgeValue } from "@use-pico/client/ui/badge";
+import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { CategoryInline } from "@zbav-se.me/common/category";
@@ -14,6 +13,8 @@ import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useState } from "react";
+import { ListingLocation } from "./ListingLocation";
+import { ListingPrice } from "./ListingPrice";
 import { ScoreContainer } from "./ScoreContainer";
 
 export namespace ListingDetailContainer {
@@ -24,6 +25,7 @@ export namespace ListingDetailContainer {
 		 * Should the listing emit the score event?
 		 */
 		withScore: boolean;
+		withHero?: boolean;
 		/**
 		 * Used for bottom sheet stacking effect.
 		 */
@@ -36,6 +38,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	listing,
 	children,
 	withScore,
+	withHero = true,
 	parentSheetId,
 	tweak,
 	...props
@@ -90,77 +93,40 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					gap={"sm"}
 					height={"content"}
 				>
-					<Container
-						ui={"ListingDetailContainer-image"}
-						height={"content"}
-						round={"default"}
-						position={"relative"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"h-64",
-									],
-								},
-							},
-						}}
-					>
-						<Badge
-							ui={"ListingDetailContainer-price"}
-							tone={"secondary"}
-							theme={"light"}
+					{withHero ? (
+						<Container
+							ui={"ListingDetailContainer-image"}
+							height={"content"}
 							round={"default"}
-							snapTo={"top-center"}
+							position={"relative"}
 							tweak={{
 								slot: {
 									root: {
 										class: [
-											"max-w-1/2",
+											"h-64",
 										],
 									},
 								},
 							}}
 						>
-							{listing.price > 0 ? (
-								<PriceInline
-									price={listing.price}
-									locale={locale}
-									currency={listing.currency}
-								/>
-							) : (
-								<Tx label={"Price - free"} />
-							)}
-						</Badge>
-
-						<Badge
-							ui={"ListingDetailContainer-bottom"}
-							size={"lg"}
-							round={"default"}
-							snapTo={"bottom"}
-							tone={"secondary"}
-							theme={"light"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"opacity-85",
-											"h-fit",
-										],
-									},
-								},
-							}}
-						>
-							<Typo
-								truncate
-								label={listing.location.address}
+							<ListingPrice
+								price={listing.price}
+								locale={locale}
+								currency={listing.currency}
+								snapTo={"top-center"}
 							/>
-						</Badge>
 
-						<HeroImage
-							src={hero.upload.url}
-							alt={`Hero image for listing ${listing.id}`}
-						/>
-					</Container>
+							<ListingLocation
+								location={listing.location.address}
+								snapTo={"bottom"}
+							/>
+
+							<HeroImage
+								src={hero.upload.url}
+								alt={`Hero image for listing ${listing.id}`}
+							/>
+						</Container>
+					) : null}
 
 					<VariantProvider
 						cls={ThemeCls}
@@ -178,6 +144,30 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							theme={"unset"}
 							height={"content"}
 						>
+							{withHero ? null : (
+								<>
+									<BadgeValue
+										textLabel={"Listing price (label)"}
+										textValue={
+											listing.price > 0 ? (
+												<PriceInline
+													price={listing.price}
+													locale={locale}
+													currency={listing.currency}
+												/>
+											) : (
+												<Tx label={"Price - free"} />
+											)
+										}
+									/>
+
+									<BadgeValue
+										textLabel={"Listing location (label)"}
+										textValue={listing.location.address}
+									/>
+								</>
+							)}
+
 							<BadgeValue
 								textLabel={"Listing condition (label)"}
 								textValue={`Condition - Overall [${listing.condition}] (hint)`}

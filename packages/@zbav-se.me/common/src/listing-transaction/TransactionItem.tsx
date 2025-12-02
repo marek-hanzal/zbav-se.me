@@ -1,14 +1,14 @@
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
-import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import type { StateType } from "@use-pico/common/type";
 import type { tGalleryItem, tListingTransaction, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, Suspense } from "react";
+import { ListingLocation } from "../listing/ListingLocation";
+import { ListingPrice } from "../listing/ListingPrice";
 import { TransactionLogList } from "../listing-transaction-log/TransactionLogList";
+import { Typo } from "@use-pico/client/ui/typo";
 
 export namespace TransactionItem {
 	export interface Props extends Omit<Badge.Props, "children"> {
@@ -69,66 +69,23 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					round
 				/>
 
-				<Badge
-					ui={"TransactionItem-price"}
-					tone={"secondary"}
-					theme={"light"}
-					round={"default"}
+				<ListingPrice
+					price={listingTransaction.price}
+					locale={locale}
+					currency={listingTransaction.currency}
 					snapTo={"top-center"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"max-w-1/2",
-								],
-							},
-						},
-					}}
-				>
-					{listingTransaction.price > 0 ? (
-						<PriceInline
-							price={listingTransaction.price}
-							locale={locale}
-							currency={listingTransaction.currency}
-						/>
-					) : (
-						<Tx label={"Price - free"} />
-					)}
-				</Badge>
+				/>
 
-				<Badge
-					ui={"TransactionItem-bottom"}
-					size={"lg"}
-					round={"default"}
+				<ListingLocation
+					location={listingTransaction.location}
 					snapTo={"bottom"}
-					tone={"secondary"}
-					theme={"light"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"flex",
-									"flex-col",
-									"gap-1",
-									"opacity-85",
-									"overflow-hidden",
-									"h-fit",
-								],
-							},
-						},
-					}}
 				>
-					<Typo
-						truncate
-						label={listingTransaction.location}
-					/>
-
 					<Typo
 						label={listingTransaction.title}
 						truncate
 						size={"sm"}
 					/>
-				</Badge>
+				</ListingLocation>
 			</Badge>
 
 			<BottomSheet

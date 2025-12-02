@@ -3,9 +3,6 @@ import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { Tx } from "@use-pico/client/ui/tx";
-import { Typo } from "@use-pico/client/ui/typo";
 import type {
 	tGalleryItem,
 	tListingTransaction,
@@ -21,6 +18,8 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useId, useLayoutEffect, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
 import { ListingDetailContainer } from "../listing/ListingDetailContainer";
+import { ListingLocation } from "../listing/ListingLocation";
+import { ListingPrice } from "../listing/ListingPrice";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionLogItem } from "./TransactionLogItem";
 
@@ -175,54 +174,17 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								onClick={() => setDetail((prev) => !prev)}
 							/>
 
-							<Badge
-								ui={"TransactionLogList-price"}
-								tone={"secondary"}
-								theme={"light"}
-								round={"default"}
+							<ListingPrice
+								price={listingTransaction.price}
+								locale={locale}
+								currency={listingTransaction.currency}
 								snapTo={"top-center"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"max-w-1/2",
-											],
-										},
-									},
-								}}
-							>
-								{listingTransaction.price > 0 ? (
-									<PriceInline
-										price={listingTransaction.price}
-										locale={locale}
-										currency={listingTransaction.currency}
-									/>
-								) : (
-									<Tx label={"Price - free"} />
-								)}
-							</Badge>
+							/>
 
-							<Badge
-								ui={"TransactionLogList-bottom"}
-								size={"lg"}
-								round={"default"}
+							<ListingLocation
+								location={listingTransaction.location}
 								snapTo={"bottom"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"opacity-85",
-												"h-fit",
-											],
-										},
-									},
-								}}
-							>
-								<Typo
-									truncate
-									label={listingTransaction.location}
-								/>
-							</Badge>
+							/>
 
 							<BottomSheet
 								id={detailSheetId}
@@ -248,7 +210,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 												parentSheetId={detailSheetId}
 												locale={locale}
 												listing={data}
-												withScore
+												withScore={false}
+												withHero={false}
 											/>
 										);
 									}}
