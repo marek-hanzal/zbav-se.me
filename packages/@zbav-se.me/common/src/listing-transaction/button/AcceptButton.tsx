@@ -36,6 +36,7 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ menuState, log, ...props 
 					});
 				},
 			}}
+			menu
 			{...props}
 		/>
 	);

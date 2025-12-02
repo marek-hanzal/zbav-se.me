@@ -1,5 +1,5 @@
 import { ArrowRightIcon, Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
+import { Badge, BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { VariantProvider } from "@use-pico/cls";
@@ -87,6 +87,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							root: {
 								class: [
 									"px-0",
+									"pb-0",
 								],
 							},
 						},
@@ -104,6 +105,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						ui={"ListingDetailContainer-image"}
 						height={"content"}
 						round={"default"}
+						position={"relative"}
 						tweak={{
 							slot: {
 								root: {
@@ -114,6 +116,49 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							},
 						}}
 					>
+						<Badge
+							tone={"secondary"}
+							theme={"light"}
+							snapTo={"top-center"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"h-fit",
+										],
+									},
+								},
+							}}
+							size={"xl"}
+							round={"default"}
+						>
+							{toLocaleNumber({
+								locale,
+								number: listing.price,
+								currency: listing.currency,
+								currencyDisplay: "narrowSymbol",
+								style: "currency",
+							})}
+						</Badge>
+
+						<Badge
+							tone={"secondary"}
+							theme={"light"}
+							snapTo={"bottom"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"h-fit",
+										],
+									},
+								},
+							}}
+							round={"default"}
+						>
+							{listing.location.address}
+						</Badge>
+
 						<HeroImage
 							src={hero.upload.url}
 							alt={`Hero image for listing ${listing.id}`}
@@ -137,14 +182,13 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							height={"content"}
 						>
 							<BadgeValue
-								textLabel={"Listing price (label)"}
-								textValue={toLocaleNumber({
-									locale,
-									number: listing.price,
-									currency: listing.currency,
-									currencyDisplay: "narrowSymbol",
-									style: "currency",
-								})}
+								textLabel={"Listing condition (label)"}
+								textValue={`Condition - Overall [${listing.condition}] (hint)`}
+							/>
+
+							<BadgeValue
+								textLabel={"Listing age (label)"}
+								textValue={`Condition - Age [${listing.age}] (hint)`}
 							/>
 
 							<BadgeValue
@@ -176,25 +220,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 								textLabel={"Listing seller hint (label)"}
 								textValue={"- skore + link -"}
 								action={<Icon icon={ArrowRightIcon} />}
-							/>
-
-							<BadgeValue
-								textLabel={"Listing location (label)"}
-								textValue={listing.location.address}
-								textValueProps={{
-									truncate: false,
-									wrap: "wrap",
-								}}
-							/>
-
-							<BadgeValue
-								textLabel={"Listing condition (label)"}
-								textValue={`Condition - Overall [${listing.condition}] (hint)`}
-							/>
-
-							<BadgeValue
-								textLabel={"Listing age (label)"}
-								textValue={`Condition - Age [${listing.age}] (hint)`}
 							/>
 
 							<BadgeValue

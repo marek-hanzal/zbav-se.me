@@ -30,6 +30,7 @@ export const SellerInfoButton: FC<SellerInfoButton.Props> = ({
 				size={"xl"}
 				label={"Seller info (label)"}
 				onClick={() => setIsOpen(true)}
+				menu
 				{...props}
 			/>
 

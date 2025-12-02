@@ -229,6 +229,10 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								isOpen={detail}
 								onClose={() => setDetail(false)}
 								detent={"full"}
+								header={{
+									close: true,
+									title: listingTransaction.title,
+								}}
 							>
 								<withListingFetchQuery.Suspense
 									data={{
