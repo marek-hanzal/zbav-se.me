@@ -1,6 +1,5 @@
 import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
-import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
@@ -47,20 +46,25 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, 
 						class: [
 							"flex-shrink-0",
 							"border-none",
+							"flex-row",
+							"items-center",
+							"gap-1",
+							"h-fit",
 						],
 					},
 				},
 			}}
 			{...props}
 		>
-			<Tx label={"Number of listings (label)"} />
+			<Typo label={"x"} />
+
 			<Typo
 				label={
 					<Suspense
 						fallback={
 							<Icon
 								icon={SpinnerIcon}
-								size={"sm"}
+								size={"xs"}
 							/>
 						}
 					>

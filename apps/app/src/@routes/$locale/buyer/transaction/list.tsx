@@ -65,6 +65,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 								search: {
 									open: value,
 								},
+								replace: true,
 							});
 						},
 					}}

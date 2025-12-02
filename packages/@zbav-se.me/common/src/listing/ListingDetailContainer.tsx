@@ -2,6 +2,9 @@ import { ArrowRightIcon, Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/ic
 import { Badge, BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Typo } from "@use-pico/client/ui/typo";
 import { VariantProvider } from "@use-pico/cls";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { CategoryInline } from "@zbav-se.me/common/category";
@@ -79,20 +82,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				layout={children ? "vertical-content-footer" : undefined}
 				gap={"xl"}
 				height={"content"}
-				square={"md"}
-				tweak={[
-					tweak,
-					{
-						slot: {
-							root: {
-								class: [
-									"px-0",
-									"pb-0",
-								],
-							},
-						},
-					},
-				]}
 				{...props}
 			>
 				<Container
@@ -117,46 +106,54 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						}}
 					>
 						<Badge
+							ui={"ListingDetailContainer-price"}
 							tone={"secondary"}
 							theme={"light"}
+							round={"default"}
 							snapTo={"top-center"}
 							tweak={{
 								slot: {
 									root: {
 										class: [
-											"h-fit",
+											"max-w-1/2",
 										],
 									},
 								},
 							}}
-							size={"xl"}
-							round={"default"}
 						>
-							{toLocaleNumber({
-								locale,
-								number: listing.price,
-								currency: listing.currency,
-								currencyDisplay: "narrowSymbol",
-								style: "currency",
-							})}
+							{listing.price > 0 ? (
+								<PriceInline
+									price={listing.price}
+									locale={locale}
+									currency={listing.currency}
+								/>
+							) : (
+								<Tx label={"Price - free"} />
+							)}
 						</Badge>
 
 						<Badge
+							ui={"ListingDetailContainer-bottom"}
+							size={"lg"}
+							round={"default"}
+							snapTo={"bottom"}
 							tone={"secondary"}
 							theme={"light"}
-							snapTo={"bottom"}
 							tweak={{
 								slot: {
 									root: {
 										class: [
+											"opacity-85",
 											"h-fit",
 										],
 									},
 								},
 							}}
-							round={"default"}
 						>
-							{listing.location.address}
+							<Typo
+								truncate
+								label={listing.location.address}
+							/>
 						</Badge>
 
 						<HeroImage

@@ -101,6 +101,8 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					size={"lg"}
 					round={"default"}
 					snapTo={"bottom"}
+					tone={"secondary"}
+					theme={"light"}
 					tweak={{
 						slot: {
 							root: {
@@ -157,16 +159,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 									direction: "asc",
 								},
 							],
-						}}
-						square={"md"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"px-0",
-									],
-								},
-							},
 						}}
 					/>
 				</Suspense>

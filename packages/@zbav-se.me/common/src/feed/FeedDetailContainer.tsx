@@ -151,6 +151,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 					}}
 					loading={feedDeleteMutation.isPending}
 					size={"xl"}
+					menu
 				/>
 			</VariantProvider>
 		</Container>

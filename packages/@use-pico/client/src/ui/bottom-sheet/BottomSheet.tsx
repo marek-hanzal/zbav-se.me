@@ -72,7 +72,6 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 										"gap-2",
 										"h-fit",
 										"p-2",
-										"pb-0",
 										"border-none",
 									],
 								},
