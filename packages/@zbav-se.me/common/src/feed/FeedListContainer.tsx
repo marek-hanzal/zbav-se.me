@@ -24,9 +24,17 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	limit = 10,
 	...props
 }) => {
+	// TODO One nice day - move to standalone component
 	const [name, setName] = useState(translator.text("Feed name (default)"));
 	const [change, setChange] = useState(true);
+	/**
+	 * We're keeping locale state just for "after creation" open state
+	 */
+	const [defaultOpenId, setDefaultOpenId] = useState<string | undefined>(undefined);
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
+		onSuccess(data) {
+			setDefaultOpenId(data.id);
+		},
 		onSettled() {
 			setChange(false);
 			setName("");
@@ -141,9 +149,17 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							_suspense={"I know"}
 							locale={locale}
 							query={query}
+							defaultOpenId={defaultOpenId}
 						/>
 
-						{data.filter > 0 ? <FeedCreateButton disabled={isLimitReached} /> : null}
+						{data.filter > 0 ? (
+							<FeedCreateButton
+								disabled={isLimitReached}
+								onCreate={(data) => {
+									setDefaultOpenId(data.id);
+								}}
+							/>
+						) : null}
 					</Container>
 				);
 			}}
