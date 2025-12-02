@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { GalleryUpload } from "@zbav-se.me/common/photo";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
+import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -30,12 +31,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 				textTitle={"Listing photos (title)"}
 				left={
 					<LinkTo
-						icon={ArrowLeftIcon}
 						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}
-					/>
+					>
+						<BadgeLeft />
+					</LinkTo>
 				}
 				right={
 					<ConfirmButton
@@ -75,7 +77,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							size={"lg"}
+							size={"xl"}
 							disabled={!hasUploads || isUploading}
 							label={"Next - category (button)"}
 							full

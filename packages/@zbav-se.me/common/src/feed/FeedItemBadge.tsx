@@ -31,7 +31,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 
 	return (
 		<Badge
-			tone={feed.upload ? "primary" : "neutral"}
+			tone={feed.upload ? "primary" : "secondary"}
 			className={[
 				"relative",
 				"h-fit",
