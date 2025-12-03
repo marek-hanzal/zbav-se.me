@@ -87,28 +87,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						}}
 						onClick={() => setIsGalleryOpen((prev) => !prev)}
 					/>
-				) : (
-					<Badge
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"w-full",
-										"h-52",
-										"p-0",
-									],
-								},
-							},
-						}}
-						round={"md"}
-						onClick={() => setIsGalleryOpen((prev) => !prev)}
-					>
-						<Status
-							icon={PhotoIcon}
-							textTitle={"Feed - Select hero image (label)"}
-						/>
-					</Badge>
-				)}
+				) : null}
 
 				<GallerySheet
 					withMutation={withFeedGalleryCreateMutation}
@@ -143,6 +122,32 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				<FeedConditionValueList feed={feed} />
 
 				<FeedAgeValueList feed={feed} />
+
+				{feed.upload ? null : (
+					<Badge
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"w-full",
+										"h-52",
+										"p-0",
+									],
+								},
+							},
+						}}
+						round={"md"}
+						onClick={() => setIsGalleryOpen((prev) => !prev)}
+					>
+						<Status
+							icon={PhotoIcon}
+							textTitle={"Feed - Select hero image (label)"}
+							titleProps={{
+								font: "normal",
+							}}
+						/>
+					</Badge>
+				)}
 
 				{noDelete ? null : (
 					<ConfirmButton

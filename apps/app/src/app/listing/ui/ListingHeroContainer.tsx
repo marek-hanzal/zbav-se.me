@@ -204,7 +204,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 						locale={locale}
 						listing={listing}
 						tools={tools}
-						feedId={feedId}
 					/>
 				</ListingDetailContainer>
 			</BottomSheet>

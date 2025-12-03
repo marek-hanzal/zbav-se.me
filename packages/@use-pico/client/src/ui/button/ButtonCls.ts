@@ -36,6 +36,8 @@ export const ButtonCls = contract(PicoCls.contract)
 		"bottom-left",
 		"bottom-right",
 		"bottom",
+		"left-center",
+		"right-center",
 	])
 	.def()
 	.root({
@@ -582,6 +584,26 @@ export const ButtonCls = contract(PicoCls.contract)
 				"left-2",
 				"right-2",
 				"w-auto",
+			],
+		},
+	})
+	.match("snap-to", "left-center", {
+		wrapper: {
+			class: [
+				"absolute",
+				"left-2",
+				"top-1/2",
+				"-translate-y-1/2",
+			],
+		},
+	})
+	.match("snap-to", "right-center", {
+		wrapper: {
+			class: [
+				"absolute",
+				"right-2",
+				"top-1/2",
+				"-translate-y-1/2",
 			],
 		},
 	})

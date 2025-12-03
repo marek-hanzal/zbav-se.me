@@ -3,8 +3,10 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { FeedSetupButton } from "@zbav-se.me/common/feed";
 import { zListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
@@ -51,6 +53,51 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 					</LinkTo>
 				}
 			>
+				{feedId ? (
+					<withFeedFetchQuery.Suspense
+						data={{
+							where: {
+								id: feedId,
+							},
+						}}
+						fallback={
+							<Button
+								loading
+								menu
+							/>
+						}
+					>
+						{({ data }) => {
+							return (
+								<FeedSetupButton
+									locale={locale}
+									iconProps={{
+										size: "md",
+									}}
+									feed={data}
+									tone={"secondary"}
+									theme={"light"}
+									defaultOpen={false}
+									noDelete={true}
+									round={"full"}
+									label={null}
+									size={"md"}
+									snapTo={"top-right"}
+									tweak={{
+										slot: {
+											wrapper: {
+												class: [
+													"z-5",
+												],
+											},
+										},
+									}}
+								/>
+							);
+						}}
+					</withFeedFetchQuery.Suspense>
+				) : null}
+
 				<ListingListContainer
 					locale={locale}
 					feedId={feedId}
