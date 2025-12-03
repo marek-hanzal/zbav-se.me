@@ -137,65 +137,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 									{children}
 								</Container>
 							) : null}
-
-							{/* <VariantProvider
-								cls={ThemeCls}
-								variant={{
-									tone: "primary",
-									theme: "light",
-								}}
-							>
-								<Container
-									layout={"horizontal-flex"}
-									gap={"sm"}
-									items={"center"}
-									justify={"center"}
-									tone={"unset"}
-									theme={"unset"}
-								>
-									<TransactionButton
-										locale={locale}
-										listing={listing}
-										parentSheetId={parentSheetId}
-										label={null}
-										menu={false}
-										tweak={{
-											slot: {
-												wrapper: {
-													class: [
-														"w-fit",
-													],
-												},
-											},
-										}}
-										round={"full"}
-										size={"lg"}
-									/>
-
-									<CartToggleButton
-										listing={listing}
-										round={"full"}
-										label={null}
-										menu={false}
-										size={"lg"}
-									/>
-
-									<GalleryButton
-										uploads={listing.gallery.items.map((item) => item.upload)}
-										round={"full"}
-										label={null}
-										menu={false}
-										size={"lg"}
-									/>
-
-									<FeedSetupButton
-										round={"full"}
-										label={null}
-										menu={false}
-										size={"lg"}
-									/>
-								</Container>
-							</VariantProvider> */}
 						</>
 					) : null}
 
