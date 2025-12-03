@@ -48,28 +48,28 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 			round={"md"}
 			{...props}
 		>
-			{feed.upload
-				? linkTo({
-						feed,
-						children: (
-							<HeroImage
-								src={feed.upload.url}
-								alt={`Hero image for feed ${feed.id}`}
-								visible
-								round
-								tweak={{
-									slot: {
-										img: {
-											class: [
-												"w-full",
-											],
-										},
-									},
-								}}
-							/>
-						),
-					})
-				: null}
+			{linkTo({
+				feed,
+				children: feed.upload ? (
+					<HeroImage
+						src={feed.upload.url}
+						alt={`Hero image for feed ${feed.id}`}
+						visible
+						round
+						tweak={{
+							slot: {
+								img: {
+									class: [
+										"w-full",
+									],
+								},
+							},
+						}}
+					/>
+				) : (
+					<div className="w-full h-48" />
+				),
+			})}
 
 			<Badge
 				snapTo={"top"}
