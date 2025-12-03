@@ -82,7 +82,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		>
 			<Container
 				ui={"ListingDetailContainer-root"}
-				layout={children ? "vertical-content-footer" : undefined}
 				gap={"xl"}
 				height={"content"}
 				{...props}
