@@ -1,4 +1,4 @@
-import { useScrollTo } from "@use-pico/client/hook";
+import { useMergeRefs, useScrollTo } from "@use-pico/client/hook";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
@@ -28,6 +28,7 @@ export namespace ListingListContainer {
 }
 
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
+	ref,
 	locale,
 	query,
 	scrollToId,
@@ -41,6 +42,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	const listingIdPrefix = useId();
 
 	const containerRef = useRef<HTMLDivElement>(null);
+	const mergedRef = useMergeRefs([
+		containerRef,
+		ref,
+	]);
 
 	const scrollTo = useScrollTo(containerRef);
 
@@ -88,7 +93,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 
 	return (
 		<Container
-			ref={containerRef}
+			ref={mergedRef}
 			ui="ListingList-root"
 			layout={"vertical-full"}
 			snap={"vertical-start"}

@@ -1,8 +1,9 @@
 import { SettingsIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { type FC, useEffect, useState } from "react";
+import { type FC, useEffect } from "react";
 import { FeedDetailContainer } from "../FeedDetailContainer";
 
 export namespace FeedSetupButton {
@@ -11,6 +12,7 @@ export namespace FeedSetupButton {
 		feed: tFeed;
 		defaultOpen: boolean;
 		noDelete: boolean | undefined;
+		state: StateType.State<boolean>;
 	}
 }
 
@@ -19,17 +21,17 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 	feed,
 	defaultOpen,
 	noDelete,
+	state,
 	children,
 	...props
 }) => {
-	const [isOpen, setIsOpen] = useState(false);
-
 	useEffect(() => {
 		setTimeout(() => {
-			setIsOpen(defaultOpen);
+			state.set(defaultOpen);
 		}, 100);
 	}, [
 		defaultOpen,
+		state.set,
 	]);
 
 	return (
@@ -40,13 +42,13 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 				theme={"light"}
 				size={"xl"}
 				label={"Feed setup (button)"}
-				onClick={() => setIsOpen((prev) => !prev)}
+				onClick={() => state.set((prev) => !prev)}
 				{...props}
 			/>
 
 			<BottomSheet
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
+				isOpen={state.value}
+				onClose={() => state.set(false)}
 				detent={"full"}
 				header={{
 					close: true,

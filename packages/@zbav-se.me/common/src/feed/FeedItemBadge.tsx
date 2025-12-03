@@ -4,7 +4,7 @@ import { Typo } from "@use-pico/client/ui/typo";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import type { FC } from "react";
+import { type FC, useState } from "react";
 import { ListingCountBadge } from "../listing/ListingCountBadge";
 import { FeedSetupButton } from "./button/FeedSetupButton";
 
@@ -17,6 +17,8 @@ export namespace FeedItemBadge {
 }
 
 export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
+	const [isFeedSettings, setIsFeedSettings] = useState(false);
+
 	return (
 		<Badge
 			ui={"FeedItemBadge-root"}
@@ -102,11 +104,15 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 			</Badge>
 
 			<FeedSetupButton
+				locale={locale}
+				state={{
+					value: isFeedSettings,
+					set: setIsFeedSettings,
+				}}
 				iconEnabled={FeedIcon}
 				tone={"secondary"}
 				size={"md"}
 				snapTo={"bottom-left"}
-				locale={locale}
 				feed={feed}
 				defaultOpen={defaultOpen}
 				noDelete={false}

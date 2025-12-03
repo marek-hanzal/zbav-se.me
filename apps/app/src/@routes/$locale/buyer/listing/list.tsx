@@ -11,7 +11,7 @@ import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import z from "zod";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
@@ -26,6 +26,8 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 		const { locale } = Route.useParams();
 		const { scrollToId, query, feedId } = Route.useSearch();
 		const mutation = withFeedPatchMutation.useMutation();
+		const [isFeedSettings, setIsFeedSettings] = useState(false);
+		const containerRef = useRef<HTMLDivElement>(null);
 
 		useEffect(() => {
 			if (feedId) {
@@ -71,6 +73,10 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 							return (
 								<FeedSetupButton
 									locale={locale}
+									state={{
+										value: isFeedSettings,
+										set: setIsFeedSettings,
+									}}
 									iconProps={{
 										size: "md",
 									}}
@@ -104,6 +110,13 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 										}}
 										resetScroll
 										full
+										onClick={() => {
+											setIsFeedSettings(false);
+											containerRef.current?.scrollTo({
+												top: 0,
+												behavior: "instant",
+											});
+										}}
 									>
 										<Button
 											iconEnabled={ListingIcon}
@@ -121,6 +134,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 				) : null}
 
 				<ListingListContainer
+					ref={containerRef}
 					locale={locale}
 					feedId={feedId}
 					overlay={({ listing }) => (
