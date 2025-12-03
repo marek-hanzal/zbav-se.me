@@ -9,7 +9,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import { DeadEndIcon } from "@zbav-se.me/ui/icon";
+import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { Sheet } from "@zbav-se.me/ui/sheet";
 import { useEffect } from "react";
 import z from "zod";
@@ -92,7 +92,29 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 											},
 										},
 									}}
-								/>
+								>
+									<LinkTo
+										to={"/$locale/buyer/listing/list"}
+										params={{
+											locale,
+										}}
+										search={{
+											feedId: data.id,
+											query: data.query,
+										}}
+										resetScroll
+										full
+									>
+										<Button
+											iconEnabled={ListingIcon}
+											tone={"primary"}
+											theme={"light"}
+											label={"Refresh listings (button)"}
+											size={"xl"}
+											menu
+										/>
+									</LinkTo>
+								</FeedSetupButton>
 							);
 						}}
 					</withFeedFetchQuery.Suspense>

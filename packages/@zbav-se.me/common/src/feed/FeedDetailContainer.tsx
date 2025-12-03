@@ -35,6 +35,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	locale,
 	feed,
 	noDelete = false,
+	children,
 	...props
 }) => {
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation();
@@ -80,14 +81,46 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 								img: {
 									class: [
 										"w-full",
-										"h-52",
+										"h-42",
 									],
 								},
 							},
 						}}
 						onClick={() => setIsGalleryOpen((prev) => !prev)}
 					/>
-				) : null}
+				) : (
+					<Badge
+						tone={"neutral"}
+						theme={"light"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"w-full",
+										"h-42",
+										"p-0",
+									],
+								},
+							},
+						}}
+						round={"md"}
+						onClick={() => setIsGalleryOpen((prev) => !prev)}
+					>
+						<Status
+							icon={PhotoIcon}
+							iconProps={{
+								size: "lg",
+							}}
+							tone={"primary"}
+							theme={"light"}
+							textTitle={"Feed - Select hero image (label)"}
+							titleProps={{
+								font: "normal",
+								size: "md",
+							}}
+						/>
+					</Badge>
+				)}
 
 				<GallerySheet
 					withMutation={withFeedGalleryCreateMutation}
@@ -123,32 +156,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 				<FeedAgeValueList feed={feed} />
 
-				{feed.upload ? null : (
-					<Badge
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"w-full",
-										"h-52",
-										"p-0",
-									],
-								},
-							},
-						}}
-						round={"md"}
-						onClick={() => setIsGalleryOpen((prev) => !prev)}
-					>
-						<Status
-							icon={PhotoIcon}
-							textTitle={"Feed - Select hero image (label)"}
-							titleProps={{
-								font: "normal",
-							}}
-						/>
-					</Badge>
-				)}
-
 				{noDelete ? null : (
 					<ConfirmButton
 						tone={"danger"}
@@ -175,6 +182,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						menu
 					/>
 				)}
+
+				{children}
 			</VariantProvider>
 		</Container>
 	);

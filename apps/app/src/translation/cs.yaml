@@ -128,12 +128,16 @@
 3267efc7c9e171b77629decf13991a2fe40fb9ae81f5dc05864ac28d:
     ref: Seller accepted transaction (seller)
     value: Přijal jsi zájemce
+32b4ec288db7ebabe1391515dbe208c78531723f5c2c4660baf9fd7b:
+    ref: Refresh listings (button)
+    value: Použít nastavení
 3429a13ac0ce97b0993fd1859d462e498dbd67e6f4b29853c1494151:
     ref: No transactions found - buyer (message)
     value: Jukni na inzeráty a otevři se obchod u těch, které tě zajímají!
 3462ccc81c58e39c5ad3d6b3cc2a5d6cde81ab00375906508aa30a7b:
     ref: Listing - start (text)
-    value: Tento průvodce ti pomůže s tvorbou nového inzerátu s několika jednoduchých krocích.
+    value: Tento průvodce ti pomůže s tvorbou nového inzerátu s několika
+        jednoduchých krocích.
 35a4e86b1c3c0901d64e96e0bee1760b1f7bba60c419f5ff2c8e4591:
     ref: Buyer transaction rejected (buyer-seller) (label)
     value: Zájemce tě odmítl
@@ -525,9 +529,6 @@ a94a3441be22610442865891781e2d0943dd42a886646f3f93c4dc06:
 a94cbdf1ed6b5ec42ce7ff1be916aadee3ad91ba6871b9a7f84fc0d5:
     ref: Buyer transaction request (buyer-seller) (label)
     value: Mám zájem!
-a94f6ecf7f2bf1199ee1e3f3279418edf602a1b69abe4a50a0d072d1:
-    ref: Feed setup (label)
-    value: Nastavení
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
     ref: Your cart (title)
     value: Oblíbené

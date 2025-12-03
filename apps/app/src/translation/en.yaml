@@ -121,6 +121,9 @@
 3267efc7c9e171b77629decf13991a2fe40fb9ae81f5dc05864ac28d:
   ref: Seller accepted transaction (seller)
   value: Seller accepted transaction (seller)
+32b4ec288db7ebabe1391515dbe208c78531723f5c2c4660baf9fd7b:
+  ref: Refresh listings (button)
+  value: Refresh listings (button)
 3429a13ac0ce97b0993fd1859d462e498dbd67e6f4b29853c1494151:
   ref: No transactions found - buyer (message)
   value: No transactions found - buyer (message)
@@ -424,9 +427,6 @@ a94a3441be22610442865891781e2d0943dd42a886646f3f93c4dc06:
 a94cbdf1ed6b5ec42ce7ff1be916aadee3ad91ba6871b9a7f84fc0d5:
   ref: Buyer transaction request (buyer-seller) (label)
   value: Buyer transaction request (buyer-seller) (label)
-a94f6ecf7f2bf1199ee1e3f3279418edf602a1b69abe4a50a0d072d1:
-  ref: Feed setup (label)
-  value: Feed setup (label)
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
   ref: Your cart (title)
   value: Your cart (title)

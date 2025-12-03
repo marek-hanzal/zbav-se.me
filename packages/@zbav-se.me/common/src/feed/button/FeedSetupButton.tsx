@@ -19,6 +19,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 	feed,
 	defaultOpen,
 	noDelete,
+	children,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -56,7 +57,9 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 					locale={locale}
 					feed={feed}
 					noDelete={noDelete}
-				/>
+				>
+					{children}
+				</FeedDetailContainer>
 			</BottomSheet>
 		</>
 	);
