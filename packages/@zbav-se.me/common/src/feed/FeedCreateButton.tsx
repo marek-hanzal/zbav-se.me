@@ -36,7 +36,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 			<Button
 				tone={"primary"}
 				iconEnabled={FeedIcon}
-				theme={"dark"}
+				theme={"light"}
 				onClick={() => setIsOpen(true)}
 				label={"Create new feed (title)"}
 				size={"xl"}
