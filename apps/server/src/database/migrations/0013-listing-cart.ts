@@ -6,6 +6,7 @@ export const ListingCartMigration: Migration = {
 			.createTable("listing_cart")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
+			.addColumn("feedId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
@@ -14,6 +15,17 @@ export const ListingCartMigration: Migration = {
 					"userId",
 				],
 				"user",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
+			.addForeignKeyConstraint(
+				"listing_cart_[feedId]_fk",
+				[
+					"feedId",
+				],
+				"feed",
 				[
 					"id",
 				],
@@ -40,6 +52,12 @@ export const ListingCartMigration: Migration = {
 			.createIndex("listing_cart_[userId]_idx")
 			.on("listing_cart")
 			.column("userId")
+			.execute();
+
+		await db.schema
+			.createIndex("listing_cart_[feedId]_idx")
+			.on("listing_cart")
+			.column("feedId")
 			.execute();
 
 		await db.schema

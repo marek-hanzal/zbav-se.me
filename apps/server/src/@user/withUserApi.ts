@@ -2,7 +2,6 @@ import { withListingTransactionStatusApi } from "~/@user/listing-transaction-sta
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
 import type { MessageSchema } from "~/schema/MessageSchema";
-import { withCategoryCartApi } from "./category-cart/withCategoryCartApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withListingApi } from "./listing/withListingApi";
@@ -40,7 +39,6 @@ export const withUserApi: Routes.FnWithDeps<{
 		return next();
 	});
 
-	withCategoryCartApi(routes);
 	withFeedApi(routes);
 	withGalleryApi(routes);
 	withListingApi(routes);

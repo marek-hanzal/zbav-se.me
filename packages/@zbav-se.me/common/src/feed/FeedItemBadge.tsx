@@ -1,5 +1,5 @@
 import { Badge } from "@use-pico/client/ui/badge";
-import { Typo } from "@use-pico/client/ui/typo";
+import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -79,7 +79,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 					"h-fit",
 				]}
 			>
-				<Typo
+				<Tx
 					label={feed.name}
 					font={"bold"}
 					truncate

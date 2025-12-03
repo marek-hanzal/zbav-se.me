@@ -1,4 +1,3 @@
-export { withCategoryCartCollectionQuery } from "./withCategoryCartCollectionQuery";
 export { withFeedCollectionQuery } from "./withFeedCollectionQuery";
 export { withFeedCountQuery } from "./withFeedCountQuery";
 export { withFeedFetchQuery } from "./withFeedFetchQuery";

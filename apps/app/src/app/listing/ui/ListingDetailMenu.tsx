@@ -11,6 +11,7 @@ export namespace ListingDetailMenu {
 
 	export interface Props extends Container.Props {
 		locale: string;
+		feedId: string;
 		listing: tListing;
 		tools?: Tools[];
 		parentSheetId: string | undefined;
@@ -19,6 +20,7 @@ export namespace ListingDetailMenu {
 
 export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	locale,
+	feedId,
 	listing,
 	tools = [
 		"transaction",
@@ -49,7 +51,12 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 					/>
 				) : null}
 
-				{tools.includes("cart") ? <CartToggleButton listing={listing} /> : null}
+				{tools.includes("cart") ? (
+					<CartToggleButton
+						feedId={feedId}
+						listing={listing}
+					/>
+				) : null}
 
 				<GalleryButton uploads={listing.gallery.items.map((item) => item.upload)} />
 			</VariantProvider>

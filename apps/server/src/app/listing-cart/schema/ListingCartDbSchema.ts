@@ -7,6 +7,9 @@ export const ListingCartDbSchema = z.object({
 	userId: z.string().openapi({
 		description: "ID of the user who added the item to cart",
 	}),
+	feedId: z.string().openapi({
+		description: "Feed this listing belongs to",
+	}),
 	listingId: z.string().openapi({
 		description: "ID of the listing",
 	}),

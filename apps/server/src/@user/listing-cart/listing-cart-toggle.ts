@@ -60,9 +60,7 @@ export const withListingCartToggleApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingCartToggleFx({
-					data: c.req.valid("json"),
-				});
+				yield* listingCartToggleFx(c.req.valid("json"));
 
 				return c.body(null, 204);
 			}).pipe(

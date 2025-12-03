@@ -6,11 +6,12 @@ import type { FC } from "react";
 
 export namespace CartToggleButton {
 	export interface Props extends Button.Props {
+		feedId: string;
 		listing: tListing;
 	}
 }
 
-export const CartToggleButton: FC<CartToggleButton.Props> = ({ listing, ...props }) => {
+export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listing, ...props }) => {
 	const listingCartToggle = withListingCartToggleMutation.useMutation();
 
 	return (
@@ -23,6 +24,7 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ listing, ...props
 			theme={"light"}
 			onClick={() =>
 				listingCartToggle.mutate({
+					feedId,
 					listingId: listing.id,
 					toggle: !listing.isInCart,
 				})

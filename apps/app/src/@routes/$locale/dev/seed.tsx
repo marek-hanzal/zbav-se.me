@@ -22,7 +22,11 @@ import {
 	tListingExpireEnum,
 	type tListingSort,
 } from "@zbav-se.me/sdk/api/user";
-import { withListingScoreCreateMutation, withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
+import {
+	withFeedCreateMutation,
+	withListingScoreCreateMutation,
+	withUploadMutation,
+} from "@zbav-se.me/sdk/mutation/user";
 import axios from "axios";
 import PQueue from "p-queue";
 import { withEmailSignInMutation } from "~/app/auth/withEmailSignInMutation";
@@ -143,15 +147,20 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				}),
 			),
 		);
+		const feed = await withFeedCreateMutation.mutate(queryClient, {
+			name: genId(),
+			query: {},
+		});
 
 		return {
 			categories,
 			locationIds,
 			uploadIds,
+			feed,
 		};
 	},
 	component() {
-		const { categories, locationIds, uploadIds } = Route.useLoaderData();
+		const { categories, locationIds, uploadIds, feed } = Route.useLoaderData();
 
 		const seedMutation = useMutation({
 			mutationKey: [
@@ -350,6 +359,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						queue.add(async () => {
 							return apiListingCartToggle({
 								body: {
+									feedId: feed.id,
 									listingId: listing.id,
 									toggle: true,
 								},

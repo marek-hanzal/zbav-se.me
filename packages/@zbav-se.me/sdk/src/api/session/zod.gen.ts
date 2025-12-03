@@ -118,68 +118,6 @@ export const zLocation = z.object({
 export type zLocation = z.infer<typeof zLocation>;
 
 /**
- * App-based filters
- */
-export const zCategoryWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    group: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact group of the category'
-    })),
-    category: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact category name'
-    })),
-    locale: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact locale of the category'
-    })),
-    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches categories with locales in the provided array'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
-
-/**
- * Filter object for category collection
- */
-export const zCategoryFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    group: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact group of the category'
-    })),
-    category: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact category name'
-    })),
-    locale: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact locale of the category'
-    })),
-    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches categories with locales in the provided array'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Filter object for category collection'
-});
-
-export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
-
-/**
  * Field for location sort
  */
 export const zLocationSortField = z.enum([
@@ -360,6 +298,68 @@ export const zCategorySort = z.object({
 });
 
 export type zCategorySort = z.infer<typeof zCategorySort>;
+
+/**
+ * App-based filters
+ */
+export const zCategoryWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    group: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact group of the category'
+    })),
+    category: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact category name'
+    })),
+    locale: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact locale of the category'
+    })),
+    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches categories with locales in the provided array'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
+
+/**
+ * Filter object for category collection
+ */
+export const zCategoryFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    group: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact group of the category'
+    })),
+    category: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact category name'
+    })),
+    locale: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact locale of the category'
+    })),
+    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches categories with locales in the provided array'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for category collection'
+});
+
+export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
 
 /**
  * Category query parameters

@@ -5,6 +5,9 @@ export const ListingCartToggleSchema = z
 		toggle: z.boolean().openapi({
 			description: "Whether to add (true) or remove (false) the listing from cart",
 		}),
+		feedId: z.string().openapi({
+			description: "Feed this listing belongs to",
+		}),
 		listingId: z.string().openapi({
 			description: "ID of the listing to toggle",
 		}),

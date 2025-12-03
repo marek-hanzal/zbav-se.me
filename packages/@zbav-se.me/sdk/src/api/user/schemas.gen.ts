@@ -1441,12 +1441,16 @@ export const sListingCartToggle = {
         toggle: {
             type: 'boolean'
         },
+        feedId: {
+            type: 'string'
+        },
         listingId: {
             type: 'string'
         }
     },
     required: [
         'toggle',
+        'feedId',
         'listingId'
     ]
 } as const;
@@ -1580,6 +1584,9 @@ export const sListingCart = {
         id: {
             type: 'string'
         },
+        feedId: {
+            type: 'string'
+        },
         listingId: {
             type: 'string'
         },
@@ -1589,6 +1596,7 @@ export const sListingCart = {
     },
     required: [
         'id',
+        'feedId',
         'listingId',
         'createdAt'
     ]
@@ -2646,175 +2654,6 @@ export const sFeedCreate = {
     required: [
         'name',
         'query'
-    ]
-} as const;
-
-export const sCategoryCartQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/CategoryFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/CategoryWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CategoryCartSort'
-            }
-        }
-    }
-} as const;
-
-export const sCategoryCartSortField = {
-    type: 'string',
-    enum: [
-        'group',
-        'category',
-        'sort',
-        'listingCount'
-    ]
-} as const;
-
-export const sCategoryCartSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/CategoryCartSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sCategoryWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        locale: {
-            type: 'string'
-        },
-        localeIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    }
-} as const;
-
-export const sCategoryFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        locale: {
-            type: 'string'
-        },
-        localeIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    }
-} as const;
-
-export const sCategoryCartCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/CategoryCart'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sCategoryCart = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        slug: {
-            type: 'string'
-        },
-        sort: {
-            type: 'number'
-        },
-        locale: {
-            type: 'string'
-        },
-        listingCount: {
-            type: 'integer',
-            example: 3
-        }
-    },
-    required: [
-        'id',
-        'group',
-        'category',
-        'slug',
-        'sort',
-        'locale',
-        'listingCount'
     ]
 } as const;
 

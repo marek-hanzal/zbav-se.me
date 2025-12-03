@@ -126,74 +126,6 @@ export type tLocation = {
 };
 
 /**
- * App-based filters
- */
-export type tCategoryWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-};
-
-/**
- * Filter object for category collection
- */
-export type tCategoryFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-};
-
-/**
  * Data for location query
  */
 export type tLocationQuery = {
@@ -375,6 +307,74 @@ export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategor
 export type tCategorySort = {
     field: tCategorySortField;
     direction: tOrderEnum;
+};
+
+/**
+ * App-based filters
+ */
+export type tCategoryWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact group of the category
+     */
+    group?: string;
+    /**
+     * This filter matches the exact category name
+     */
+    category?: string;
+    /**
+     * This filter matches the exact locale of the category
+     */
+    locale?: string;
+    /**
+     * This filter matches categories with locales in the provided array
+     */
+    localeIn?: Array<string>;
+};
+
+/**
+ * Filter object for category collection
+ */
+export type tCategoryFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact group of the category
+     */
+    group?: string;
+    /**
+     * This filter matches the exact category name
+     */
+    category?: string;
+    /**
+     * This filter matches the exact locale of the category
+     */
+    locale?: string;
+    /**
+     * This filter matches categories with locales in the provided array
+     */
+    localeIn?: Array<string>;
 };
 
 /**

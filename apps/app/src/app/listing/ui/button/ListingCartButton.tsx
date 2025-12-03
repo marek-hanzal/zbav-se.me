@@ -10,6 +10,7 @@ import { toast } from "sonner";
 
 export namespace ListingCartButton {
 	export interface Props extends ConfirmButton.Props {
+		feedId: string;
 		listing: tListing;
 		query: tListingQuery | undefined;
 		onSuccess?(toggle: boolean): void;
@@ -17,6 +18,7 @@ export namespace ListingCartButton {
 }
 
 export const ListingCartButton: FC<ListingCartButton.Props> = ({
+	feedId,
 	listing,
 	query,
 	onSuccess,
@@ -82,6 +84,7 @@ export const ListingCartButton: FC<ListingCartButton.Props> = ({
 					toast.promise(
 						listingCartToggleMutation.mutateAsync({
 							toggle: !listing.isInCart,
+							feedId,
 							listingId: listing.id,
 						}),
 						{

@@ -1275,6 +1275,9 @@ export const zListingCartToggle = z.object({
     toggle: z.boolean().register(z.globalRegistry, {
         description: 'Whether to add (true) or remove (false) the listing from cart'
     }),
+    feedId: z.string().register(z.globalRegistry, {
+        description: 'Feed this listing belongs to'
+    }),
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing to toggle'
     })
@@ -1387,6 +1390,9 @@ export type zListingCartQuery = z.infer<typeof zListingCartQuery>;
 export const zListingCart = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the cart item'
+    }),
+    feedId: z.string().register(z.globalRegistry, {
+        description: 'Feed this listing belongs to'
     }),
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing'
@@ -2229,153 +2235,6 @@ export const zFeedCreate = z.object({
 export type zFeedCreate = z.infer<typeof zFeedCreate>;
 
 /**
- * Field of the category cart sort
- */
-export const zCategoryCartSortField = z.enum([
-    'group',
-    'category',
-    'sort',
-    'listingCount'
-]).register(z.globalRegistry, {
-    description: 'Field of the category cart sort'
-});
-
-export type zCategoryCartSortField = z.infer<typeof zCategoryCartSortField>;
-
-/**
- * Sort object for category cart collection
- */
-export const zCategoryCartSort = z.object({
-    field: zCategoryCartSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for category cart collection'
-});
-
-export type zCategoryCartSort = z.infer<typeof zCategoryCartSort>;
-
-/**
- * App-based filters
- */
-export const zCategoryWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    group: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact group of the category'
-    })),
-    category: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact category name'
-    })),
-    locale: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact locale of the category'
-    })),
-    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches categories with locales in the provided array'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zCategoryWhere = z.infer<typeof zCategoryWhere>;
-
-/**
- * Filter object for category collection
- */
-export const zCategoryFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    group: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact group of the category'
-    })),
-    category: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact category name'
-    })),
-    locale: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact locale of the category'
-    })),
-    localeIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches categories with locales in the provided array'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Filter object for category collection'
-});
-
-export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
-
-/**
- * Query object for category cart collection
- */
-export const zCategoryCartQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zCategoryFilter),
-    where: z.optional(zCategoryWhere),
-    sort: z.optional(z.array(zCategoryCartSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for category cart collection'
-});
-
-export type zCategoryCartQuery = z.infer<typeof zCategoryCartQuery>;
-
-/**
- * Category cart data
- */
-export const zCategoryCart = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    group: z.string().register(z.globalRegistry, {
-        description: 'Group/name of the category'
-    }),
-    category: z.string().register(z.globalRegistry, {
-        description: 'Category name within the group'
-    }),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'Slug of the category'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order (position) of the category'
-    }),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'Locale/language of the category'
-    }),
-    listingCount: z.int().register(z.globalRegistry, {
-        description: 'Number of listings saved in this category'
-    })
-}).register(z.globalRegistry, {
-    description: 'Category cart data'
-});
-
-export type zCategoryCart = z.infer<typeof zCategoryCart>;
-
-/**
- * Collection of categories represented in the user's cart
- */
-export const zCategoryCartCollection = z.object({
-    data: z.array(zCategoryCart),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of categories represented in the user\'s cart'
-});
-
-export type zCategoryCartCollection = z.infer<typeof zCategoryCartCollection>;
-
-/**
  * Count data
  */
 export const zCount = z.object({
@@ -2420,21 +2279,6 @@ export const zMessage = z.object({
 });
 
 export type zMessage = z.infer<typeof zMessage>;
-
-export const zApiCategoryCartCollectionData = z.object({
-    body: z.optional(zCategoryCartQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiCategoryCartCollectionRequest = z.infer<typeof zApiCategoryCartCollectionData>;
-
-/**
- * Access categories for listings stored in the user's cart
- */
-export const zApiCategoryCartCollectionResponse = zCategoryCartCollection;
-
-export type zapiCategoryCartCollectionResponse = z.infer<typeof zApiCategoryCartCollectionResponse>;
 
 export const zApiFeedCreateData = z.object({
     body: z.optional(zFeedCreate),

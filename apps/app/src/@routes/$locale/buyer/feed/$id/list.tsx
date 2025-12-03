@@ -30,6 +30,26 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			id,
 		});
 	},
+	pendingComponent() {
+		const { locale } = Route.useParams();
+
+		return (
+			<FlowContainer
+				left={
+					<LinkTo
+						to={"/$locale/buyer"}
+						params={{
+							locale,
+						}}
+					>
+						<BadgeLeft />
+					</LinkTo>
+				}
+			>
+				<SpinnerContainer />
+			</FlowContainer>
+		);
+	},
 	component() {
 		const { id, locale } = Route.useParams();
 		const { scrollToId } = Route.useSearch();
@@ -118,6 +138,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 								<ListingListContainer
 									ref={containerRef}
 									locale={locale}
+									feedId={feed.id}
 									query={{
 										...feed.query,
 										/**

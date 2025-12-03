@@ -1,21 +1,43 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "../../../error/InvalidRequestError";
+import type { ListingCartCreateSchema } from "~/@user/listing-cart/schema/ListingCartCreateSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
+import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace listingCartCreateFx {
-	export interface Props {
-		listingId: string;
-	}
+	export type Props = ListingCartCreateSchema.Type;
 }
 
-export const listingCartCreateFx = ({ listingId }: listingCartCreateFx.Props) => {
+export const listingCartCreateFx = (props: listingCartCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
 		const id = genId();
+
+		const feed = yield* Effect.tryPromise(async () => {
+			return database
+				.selectFrom("feed")
+				.selectAll()
+				.where("id", "=", props.feedId)
+				.executeTakeFirst();
+		});
+
+		if (!feed) {
+			return new NotFoundError({
+				resource: "feed",
+				resourceId: props.feedId,
+				message: "Feed not found",
+			});
+		}
+
+		if (feed.userId !== user.id) {
+			return new InvalidRequestError({
+				message: "Unknown feed",
+			});
+		}
 
 		return yield* Effect.tryPromise({
 			async try() {
@@ -24,7 +46,7 @@ export const listingCartCreateFx = ({ listingId }: listingCartCreateFx.Props) =>
 					.values({
 						id,
 						userId: user.id,
-						listingId,
+						...props,
 						createdAt: new Date(),
 					})
 					.returningAll()

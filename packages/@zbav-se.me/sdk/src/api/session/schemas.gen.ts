@@ -143,72 +143,6 @@ export const sLocation = {
     ]
 } as const;
 
-export const sCategoryWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        locale: {
-            type: 'string'
-        },
-        localeIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    }
-} as const;
-
-export const sCategoryFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        locale: {
-            type: 'string'
-        },
-        localeIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        }
-    }
-} as const;
-
 export const sLocationQuery = {
     type: 'object',
     properties: {
@@ -423,6 +357,72 @@ export const sCategorySort = {
         'field',
         'direction'
     ]
+} as const;
+
+export const sCategoryWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        locale: {
+            type: 'string'
+        },
+        localeIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    }
+} as const;
+
+export const sCategoryFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        locale: {
+            type: 'string'
+        },
+        localeIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        }
+    }
 } as const;
 
 export const sMessage = {

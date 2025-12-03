@@ -7,12 +7,10 @@ import { listingCartCreateFx } from "./listingCartCreateFx";
 import { listingCartDeleteFx } from "./listingCartDeleteFx";
 
 export namespace listingCartToggleFx {
-	export interface Props {
-		data: ListingCartToggleSchema.Type;
-	}
+	export type Props = ListingCartToggleSchema.Type;
 }
 
-export const listingCartToggleFx = ({ data: { toggle, listingId } }: listingCartToggleFx.Props) => {
+export const listingCartToggleFx = ({ feedId, listingId, toggle }: listingCartToggleFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
@@ -24,6 +22,7 @@ export const listingCartToggleFx = ({ data: { toggle, listingId } }: listingCart
 				onTrue() {
 					return Effect.gen(function* () {
 						yield* listingCartCreateFx({
+							feedId,
 							listingId,
 						});
 

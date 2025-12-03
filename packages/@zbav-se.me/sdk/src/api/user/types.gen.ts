@@ -1165,6 +1165,10 @@ export type tListingCartToggle = {
      */
     toggle: boolean;
     /**
+     * Feed this listing belongs to
+     */
+    feedId: string;
+    /**
      * ID of the listing to toggle
      */
     listingId: string;
@@ -1277,6 +1281,10 @@ export type tListingCart = {
      * ID of the cart item
      */
     id: string;
+    /**
+     * Feed this listing belongs to
+     */
+    feedId: string;
     /**
      * ID of the listing
      */
@@ -2075,152 +2083,6 @@ export type tFeedCreate = {
 };
 
 /**
- * Query object for category cart collection
- */
-export type tCategoryCartQuery = {
-    cursor?: tCursor;
-    filter?: tCategoryFilter;
-    where?: tCategoryWhere;
-    sort?: Array<tCategoryCartSort>;
-};
-
-/**
- * Field of the category cart sort
- */
-export const tCategoryCartSortField = {
-    group: 'group',
-    category: 'category',
-    sort: 'sort',
-    listingCount: 'listingCount'
-} as const;
-
-/**
- * Field of the category cart sort
- */
-export type tCategoryCartSortField = typeof tCategoryCartSortField[keyof typeof tCategoryCartSortField];
-
-/**
- * Sort object for category cart collection
- */
-export type tCategoryCartSort = {
-    field: tCategoryCartSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tCategoryWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-};
-
-/**
- * Filter object for category collection
- */
-export type tCategoryFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact group of the category
-     */
-    group?: string;
-    /**
-     * This filter matches the exact category name
-     */
-    category?: string;
-    /**
-     * This filter matches the exact locale of the category
-     */
-    locale?: string;
-    /**
-     * This filter matches categories with locales in the provided array
-     */
-    localeIn?: Array<string>;
-};
-
-/**
- * Collection of categories represented in the user's cart
- */
-export type tCategoryCartCollection = {
-    data: Array<tCategoryCart>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Category cart data
- */
-export type tCategoryCart = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-    /**
-     * Number of listings saved in this category
-     */
-    listingCount: number;
-};
-
-/**
  * Count data
  */
 export type tCount = {
@@ -2262,31 +2124,6 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
-
-export type tApiCategoryCartCollectionRequest = {
-    body?: tCategoryCartQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/category-cart/collection';
-};
-
-export type apiCategoryCartCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiCategoryCartCollectionError = apiCategoryCartCollectionErrors[keyof apiCategoryCartCollectionErrors];
-
-export type tApiCategoryCartCollectionResponse = {
-    /**
-     * Access categories for listings stored in the user's cart
-     */
-    200: tCategoryCartCollection;
-};
-
-export type apiCategoryCartCollectionResponse = tApiCategoryCartCollectionResponse[keyof tApiCategoryCartCollectionResponse];
 
 export type tApiFeedCreateRequest = {
     /**

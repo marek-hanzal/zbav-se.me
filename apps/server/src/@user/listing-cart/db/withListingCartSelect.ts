@@ -14,6 +14,7 @@ export namespace withListingCartSelect {
 export const withListingCartSelect = ({ database, sort }: withListingCartSelect.Props) => {
 	let query = database.selectFrom("listing_cart as lc").select([
 		"lc.id",
+		"lc.feedId",
 		"lc.listingId",
 		"lc.createdAt",
 	]);
