@@ -23,6 +23,7 @@ export namespace ListingListContainer {
 		appendix?: ReactNode;
 		overlay: ListingHeroContainer.Overlay.Render;
 		tools?: ListingDetailMenu.Tools[];
+		feedId: string | undefined;
 	}
 }
 
@@ -34,6 +35,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	appendix,
 	overlay,
 	tools,
+	feedId,
 	...props
 }) => {
 	const listingIdPrefix = useId();
@@ -137,6 +139,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								listing={listing}
 								overlay={overlay}
 								tools={tools}
+								feedId={feedId}
 							/>
 						</VisibleContainer>
 					));

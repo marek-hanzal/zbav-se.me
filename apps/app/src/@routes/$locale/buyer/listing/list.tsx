@@ -53,6 +53,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 			>
 				<ListingListContainer
 					locale={locale}
+					feedId={feedId}
 					overlay={({ listing }) => (
 						<FeedListingOverlay
 							locale={locale}

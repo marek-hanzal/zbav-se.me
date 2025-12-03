@@ -85,6 +85,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				layout={"vertical-header-content"}
 				gap={"sm"}
 				height={"content"}
+				{...props}
 			>
 				{withHero ? (
 					<>

@@ -1,14 +1,12 @@
 import { Badge } from "@use-pico/client/ui/badge";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useEffect, useState } from "react";
+import type { FC } from "react";
 import { ListingCountBadge } from "../listing/ListingCountBadge";
-import { FeedDetailContainer } from "./FeedDetailContainer";
+import { FeedSetupButton } from "./button/FeedSetupButton";
 
 export namespace FeedItemBadge {
 	export interface Props extends Omit<Badge.Props, "children"> {
@@ -19,16 +17,6 @@ export namespace FeedItemBadge {
 }
 
 export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
-	const [isOpen, setIsOpen] = useState(false);
-
-	useEffect(() => {
-		setTimeout(() => {
-			setIsOpen(defaultOpen);
-		}, 100);
-	}, [
-		defaultOpen,
-	]);
-
 	return (
 		<Badge
 			ui={"FeedItemBadge-root"}
@@ -113,13 +101,15 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				/>
 			</Badge>
 
-			<Button
+			<FeedSetupButton
 				iconEnabled={FeedIcon}
 				tone={"secondary"}
-				label={"Feed setup (label)"}
 				size={"md"}
 				snapTo={"bottom-left"}
-				onClick={() => setIsOpen(true)}
+				locale={locale}
+				feed={feed}
+				defaultOpen={defaultOpen}
+				noDelete={false}
 			/>
 
 			<ListingCountBadge
@@ -127,21 +117,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				query={feed.query}
 				snapTo={"bottom-right"}
 			/>
-
-			<BottomSheet
-				isOpen={isOpen}
-				onClose={() => setIsOpen(false)}
-				detent={"full"}
-				header={{
-					close: true,
-					title: feed.name,
-				}}
-			>
-				<FeedDetailContainer
-					locale={locale}
-					feed={feed}
-				/>
-			</BottomSheet>
 		</Badge>
 	);
 };

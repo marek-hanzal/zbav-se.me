@@ -35,6 +35,7 @@ export namespace ListingHeroContainer {
 		listing: tListing;
 		overlay: Overlay.Render;
 		tools?: ListingDetailMenu.Tools[];
+		feedId: string | undefined;
 	}
 }
 
@@ -49,6 +50,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	query,
 	listing,
 	tools,
+	feedId,
 	overlay,
 	tweak,
 	...props
@@ -202,6 +204,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 						locale={locale}
 						listing={listing}
 						tools={tools}
+						feedId={feedId}
 					/>
 				</ListingDetailContainer>
 			</BottomSheet>

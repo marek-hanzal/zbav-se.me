@@ -27,10 +27,16 @@ export namespace FeedDetailContainer {
 	export interface Props extends Container.Props {
 		locale: string;
 		feed: tFeed;
+		noDelete: boolean | undefined;
 	}
 }
 
-export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, feed, ...props }) => {
+export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
+	locale,
+	feed,
+	noDelete = false,
+	...props
+}) => {
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation();
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
@@ -138,30 +144,32 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 
 				<FeedAgeValueList feed={feed} />
 
-				<ConfirmButton
-					tone={"danger"}
-					iconEnabled={TrashIcon}
-					buttonProps={{
-						tone: "danger",
-						label: translator.text("Delete feed (button)"),
-					}}
-					confirmProps={{
-						iconEnabled: TrashIcon,
-						tone: "danger",
-						theme: "dark",
-						label: translator.text("Really delete feed (button)"),
-						onClick() {
-							feedDeleteMutation.mutate({
-								where: {
-									id: feed.id,
-								},
-							});
-						},
-					}}
-					loading={feedDeleteMutation.isPending}
-					size={"xl"}
-					menu
-				/>
+				{noDelete ? null : (
+					<ConfirmButton
+						tone={"danger"}
+						iconEnabled={TrashIcon}
+						buttonProps={{
+							tone: "danger",
+							label: translator.text("Delete feed (button)"),
+						}}
+						confirmProps={{
+							iconEnabled: TrashIcon,
+							tone: "danger",
+							theme: "dark",
+							label: translator.text("Really delete feed (button)"),
+							onClick() {
+								feedDeleteMutation.mutate({
+									where: {
+										id: feed.id,
+									},
+								});
+							},
+						}}
+						loading={feedDeleteMutation.isPending}
+						size={"xl"}
+						menu
+					/>
+				)}
 			</VariantProvider>
 		</Container>
 	);
