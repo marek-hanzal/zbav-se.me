@@ -1,4 +1,4 @@
-import { useCls } from "@use-pico/cls";
+import { type Cls, useCls } from "@use-pico/cls";
 import { type FC, type RefObject, useCallback, useEffect, useRef } from "react";
 import { FadeCls } from "./FadeCls";
 
@@ -7,6 +7,7 @@ const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 export namespace Fade {
 	export interface Props extends FadeCls.Props {
 		scrollableRef: RefObject<HTMLElement | null>;
+		theme?: Cls.VariantOf<FadeCls, "theme">;
 		height?: number;
 		fade?: number;
 	}
@@ -14,12 +15,17 @@ export namespace Fade {
 
 export const Fade: FC<Fade.Props> = ({
 	height = 16,
+	theme,
 	fade = height * 2,
 	cls = FadeCls,
 	tweak,
 	scrollableRef,
 }) => {
-	const { slots } = useCls(cls, tweak);
+	const { slots } = useCls(cls, tweak, {
+		variant: {
+			theme,
+		},
+	});
 
 	const topFadeRef = useRef<HTMLDivElement>(null);
 	const bottomFadeRef = useRef<HTMLDivElement>(null);

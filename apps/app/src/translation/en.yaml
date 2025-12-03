@@ -22,6 +22,9 @@
 086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
   ref: Upload (title)
   value: Upload (title)
+08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
+  ref: Gallery (title)
+  value: Gallery (title)
 0ae38241dad8e253dd2770d4b3ad826257f505b7345634f052961672:
   ref: First feed (title)
   value: First feed (title)
@@ -127,6 +130,9 @@
 35a4e86b1c3c0901d64e96e0bee1760b1f7bba60c419f5ff2c8e4591:
   ref: Buyer transaction rejected (buyer-seller) (label)
   value: Buyer transaction rejected (buyer-seller) (label)
+36446a1dd7dd20bdfb36bbbe57ab18e8413e7f446d937fa6f2cdd00f:
+  ref: Feed setup (button)
+  value: Feed setup (button)
 376b4e9c64fcef908876651b54c8c0d6a03a96798a140ba2a9c865f2:
   ref: rejected
   value: rejected
@@ -307,6 +313,9 @@
 7a154bd14c6e908e0e95dbcd7e454206c4970f402f6b8879420e383b:
   ref: First feed created (toast)
   value: First feed created (toast)
+7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
+  ref: Open gallery (button)
+  value: Open gallery (button)
 7bc80170fb044a52d59f0998e4d5bfba4cd157138e9bd4a3cef6d7cb:
   ref: Buyer info (label)
   value: Buyer info (label)
