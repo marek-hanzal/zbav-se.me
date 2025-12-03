@@ -159,6 +159,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									scrollToId={scrollToId}
 									appendix={
 										<Container
+											layout={"vertical-centered"}
+											items={"center"}
 											round={"unset"}
 											height={"fit"}
 										>
