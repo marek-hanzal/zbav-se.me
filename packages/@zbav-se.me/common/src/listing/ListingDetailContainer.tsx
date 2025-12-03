@@ -1,4 +1,4 @@
-import { ArrowRightIcon, Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
+import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
@@ -206,7 +206,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							<BadgeValue
 								textLabel={"Listing seller hint (label)"}
 								textValue={"- skore + link -"}
-								action={<Icon icon={ArrowRightIcon} />}
+								action={
+									<Icon
+										icon={ShowIcon}
+										size={"sm"}
+									/>
+								}
 							/>
 
 							<BadgeValue

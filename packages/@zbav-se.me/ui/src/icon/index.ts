@@ -3,6 +3,7 @@ export { BackspaceIcon } from "./BackspaceIcon";
 export { BuyerIcon } from "./BuyerIcon";
 export { CancelIcon } from "./CancelIcon";
 export { CartIcon } from "./CartIcon";
+export { CashIcon } from "./CashIcon";
 export { CategoryIcon } from "./CategoryIcon";
 export { CheckIcon } from "./CheckIcon";
 export { ClearFilterIcon } from "./ClearFilterIcon";

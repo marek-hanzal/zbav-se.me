@@ -1,7 +1,7 @@
 import { Button } from "@use-pico/client/ui/button";
 import type { tListing, tListingTransaction } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { TransactionIcon } from "@zbav-se.me/ui/icon";
+import { CashIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace ListingTransactionCreateButton {
@@ -25,7 +25,7 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 	return (
 		<Button
 			label={"Start transaction (button)"}
-			iconEnabled={TransactionIcon}
+			iconEnabled={CashIcon}
 			disabled={listingTransactionCreate.isPending}
 			loading={listingTransactionCreate.isPending}
 			tone={"secondary"}
