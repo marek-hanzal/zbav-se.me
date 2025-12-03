@@ -44,16 +44,9 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 				{...props}
 			>
 				<LinkTo
-					to="/$locale/buyer/listing/list"
+					to="/$locale/buyer/listing/feed"
 					params={{
 						locale,
-					}}
-					search={{
-						query: {
-							where: {
-								withOwn: false,
-							},
-						},
 					}}
 					full
 				>
