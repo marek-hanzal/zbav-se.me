@@ -82,185 +82,178 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		>
 			<Container
 				ui={"ListingDetailContainer-root"}
-				gap={"xl"}
+				layout={"vertical-header-content"}
+				gap={"sm"}
 				height={"content"}
-				{...props}
 			>
-				<Container
-					ui={"ListingDetailContainer-layout"}
-					layout={"vertical-header-content"}
-					gap={"sm"}
-					height={"content"}
-				>
-					{withHero ? (
-						<>
-							<Container
-								ui={"ListingDetailContainer-image"}
-								height={"content"}
-								round={"default"}
-								position={"relative"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"h-64",
-											],
-										},
-									},
-								}}
-							>
-								<ListingPrice
-									price={listing.price}
-									locale={locale}
-									currency={listing.currency}
-									snapTo={"top-center"}
-								/>
-
-								<ListingLocation
-									location={listing.location.address}
-									snapTo={"bottom"}
-								/>
-
-								<HeroImage
-									src={hero.upload.url}
-									alt={`Hero image for listing ${listing.id}`}
-								/>
-							</Container>
-
-							{children ? (
-								<Container
-									ui={"ListingDetailContainer-content"}
-									square={"md"}
-									height={"content"}
-								>
-									{children}
-								</Container>
-							) : null}
-						</>
-					) : null}
-
-					<VariantProvider
-						cls={ThemeCls}
-						variant={{
-							tone: "primary",
-							theme: "light",
-						}}
-					>
+				{withHero ? (
+					<>
 						<Container
-							ui={"ListingDetailContainer-info"}
-							layout={"vertical-flex"}
-							gap={"sm"}
-							square={"md"}
-							tone={"unset"}
-							theme={"unset"}
+							ui={"ListingDetailContainer-image"}
 							height={"content"}
+							round={"default"}
+							position={"relative"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"h-64",
+										],
+									},
+								},
+							}}
 						>
-							{withHero ? null : (
-								<>
-									<BadgeValue
-										textLabel={"Listing price (label)"}
-										textValue={
-											listing.price > 0 ? (
-												<PriceInline
-													price={listing.price}
-													locale={locale}
-													currency={listing.currency}
-												/>
-											) : (
-												<Tx label={"Price - free"} />
-											)
-										}
-									/>
-
-									<BadgeValue
-										textLabel={"Listing location (label)"}
-										textValue={listing.location.address}
-									/>
-								</>
-							)}
-
-							<BadgeValue
-								textLabel={"Listing condition (label)"}
-								textValue={`Condition - Overall [${listing.condition}] (hint)`}
+							<ListingPrice
+								price={listing.price}
+								locale={locale}
+								currency={listing.currency}
+								snapTo={"top-center"}
 							/>
 
-							<BadgeValue
-								textLabel={"Listing age (label)"}
-								textValue={`Condition - Age [${listing.age}] (hint)`}
+							<ListingLocation
+								location={listing.location.address}
+								snapTo={"bottom"}
 							/>
 
-							<BadgeValue
-								textLabel={"Listing score hint (label)"}
-								textValue={
-									<withListingMetricsFetchQuery.Suspense
-										data={listing.id}
-										fallback={<Icon icon={SpinnerIcon} />}
-									>
-										{({ data }) => {
-											return toLocaleNumber({
-												locale,
-												number: data.score,
-												empty: "0",
-											});
-										}}
-									</withListingMetricsFetchQuery.Suspense>
-								}
-								action={
-									<Icon
-										icon={ShowIcon}
-										size={"sm"}
-									/>
-								}
-								onClick={() => setScore(true)}
-							/>
-
-							<BadgeValue
-								textLabel={"Listing seller hint (label)"}
-								textValue={"- skore + link -"}
-								action={
-									<Icon
-										icon={ShowIcon}
-										size={"sm"}
-									/>
-								}
-							/>
-
-							<BadgeValue
-								textLabel={"Listing category (label)"}
-								textValue={
-									<CategoryInline
-										category={listing.category}
-										tone="secondary"
-										theme="light"
-									/>
-								}
+							<HeroImage
+								src={hero.upload.url}
+								alt={`Hero image for listing ${listing.id}`}
 							/>
 						</Container>
-					</VariantProvider>
-				</Container>
 
-				<BottomSheet
-					isOpen={score}
-					onClose={() => setScore(false)}
-					modalEffectRootId={parentSheetId}
+						{children ? (
+							<Container
+								ui={"ListingDetailContainer-content"}
+								square={"md"}
+								height={"content"}
+							>
+								{children}
+							</Container>
+						) : null}
+					</>
+				) : null}
+
+				<VariantProvider
+					cls={ThemeCls}
+					variant={{
+						tone: "primary",
+						theme: "light",
+					}}
 				>
-					<withListingMetricsFetchQuery.Suspense
-						data={listing.id}
-						fallback={<SpinnerContainer />}
+					<Container
+						ui={"ListingDetailContainer-info"}
+						layout={"vertical-flex"}
+						gap={"md"}
+						square={"md"}
+						tone={"unset"}
+						theme={"unset"}
+						height={"content"}
 					>
-						{({ data }) => {
-							return (
-								<Container square={"md"}>
-									<ScoreContainer
-										locale={locale}
-										listingMetrics={data}
-									/>
-								</Container>
-							);
-						}}
-					</withListingMetricsFetchQuery.Suspense>
-				</BottomSheet>
+						{withHero ? null : (
+							<>
+								<BadgeValue
+									textLabel={"Listing price (label)"}
+									textValue={
+										listing.price > 0 ? (
+											<PriceInline
+												price={listing.price}
+												locale={locale}
+												currency={listing.currency}
+											/>
+										) : (
+											<Tx label={"Price - free"} />
+										)
+									}
+								/>
+
+								<BadgeValue
+									textLabel={"Listing location (label)"}
+									textValue={listing.location.address}
+								/>
+							</>
+						)}
+
+						<BadgeValue
+							textLabel={"Listing condition (label)"}
+							textValue={`Condition - Overall [${listing.condition}] (hint)`}
+						/>
+
+						<BadgeValue
+							textLabel={"Listing age (label)"}
+							textValue={`Condition - Age [${listing.age}] (hint)`}
+						/>
+
+						<BadgeValue
+							textLabel={"Listing score hint (label)"}
+							textValue={
+								<withListingMetricsFetchQuery.Suspense
+									data={listing.id}
+									fallback={<Icon icon={SpinnerIcon} />}
+								>
+									{({ data }) => {
+										return toLocaleNumber({
+											locale,
+											number: data.score,
+											empty: "0",
+										});
+									}}
+								</withListingMetricsFetchQuery.Suspense>
+							}
+							action={
+								<Icon
+									icon={ShowIcon}
+									size={"sm"}
+								/>
+							}
+							onClick={() => setScore(true)}
+						/>
+
+						<BadgeValue
+							textLabel={"Listing seller hint (label)"}
+							textValue={"- skore + link -"}
+							action={
+								<Icon
+									icon={ShowIcon}
+									size={"sm"}
+								/>
+							}
+						/>
+
+						<BadgeValue
+							textLabel={"Listing category (label)"}
+							textValue={
+								<CategoryInline
+									category={listing.category}
+									tone="secondary"
+									theme="light"
+								/>
+							}
+						/>
+					</Container>
+				</VariantProvider>
 			</Container>
+
+			<BottomSheet
+				isOpen={score}
+				onClose={() => setScore(false)}
+				modalEffectRootId={parentSheetId}
+			>
+				<withListingMetricsFetchQuery.Suspense
+					data={listing.id}
+					fallback={<SpinnerContainer />}
+				>
+					{({ data }) => {
+						return (
+							<Container square={"md"}>
+								<ScoreContainer
+									locale={locale}
+									listingMetrics={data}
+								/>
+							</Container>
+						);
+					}}
+				</withListingMetricsFetchQuery.Suspense>
+			</BottomSheet>
 		</VariantProvider>
 	);
 };
