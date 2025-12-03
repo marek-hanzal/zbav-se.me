@@ -38,6 +38,7 @@ import { Route as LocaleSellerListingWizardCategoryRouteImport } from './@routes
 import { Route as LocaleSellerListingWizardAgeRouteImport } from './@routes/$locale/seller/listing/wizard/age'
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
 import { Route as LocaleBuyerFeedIdListRouteImport } from './@routes/$locale/buyer/feed/$id/list'
+import { Route as LocaleBuyerCartFeedIdListRouteImport } from './@routes/$locale/buyer/cart/$feedId/list'
 import { Route as LocaleBuyerCartCategoryIdFeedRouteImport } from './@routes/$locale/buyer/cart/category/$id/feed'
 
 const LocaleRoute = LocaleRouteImport.update({
@@ -198,6 +199,12 @@ const LocaleBuyerFeedIdListRoute = LocaleBuyerFeedIdListRouteImport.update({
   path: '/buyer/feed/$id/list',
   getParentRoute: () => LocaleRoute,
 } as any)
+const LocaleBuyerCartFeedIdListRoute =
+  LocaleBuyerCartFeedIdListRouteImport.update({
+    id: '/buyer/cart/$feedId/list',
+    path: '/buyer/cart/$feedId/list',
+    getParentRoute: () => LocaleRoute,
+  } as any)
 const LocaleBuyerCartCategoryIdFeedRoute =
   LocaleBuyerCartCategoryIdFeedRouteImport.update({
     id: '/buyer/cart/category/$id/feed',
@@ -223,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
   '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
   '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
+  '/$locale/buyer/cart/$feedId/list': typeof LocaleBuyerCartFeedIdListRoute
   '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
@@ -254,6 +262,7 @@ export interface FileRoutesByTo {
   '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
   '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
   '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
+  '/$locale/buyer/cart/$feedId/list': typeof LocaleBuyerCartFeedIdListRoute
   '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
@@ -287,6 +296,7 @@ export interface FileRoutesById {
   '/$locale/buyer/transaction/list': typeof LocaleBuyerTransactionListRoute
   '/$locale/seller/listing/my': typeof LocaleSellerListingMyRoute
   '/$locale/seller/transaction/list': typeof LocaleSellerTransactionListRoute
+  '/$locale/buyer/cart/$feedId/list': typeof LocaleBuyerCartFeedIdListRoute
   '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
@@ -321,6 +331,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/transaction/list'
     | '/$locale/seller/listing/my'
     | '/$locale/seller/transaction/list'
+    | '/$locale/buyer/cart/$feedId/list'
     | '/$locale/buyer/feed/$id/list'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
@@ -352,6 +363,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/transaction/list'
     | '/$locale/seller/listing/my'
     | '/$locale/seller/transaction/list'
+    | '/$locale/buyer/cart/$feedId/list'
     | '/$locale/buyer/feed/$id/list'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
@@ -384,6 +396,7 @@ export interface FileRouteTypes {
     | '/$locale/buyer/transaction/list'
     | '/$locale/seller/listing/my'
     | '/$locale/seller/transaction/list'
+    | '/$locale/buyer/cart/$feedId/list'
     | '/$locale/buyer/feed/$id/list'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
@@ -609,6 +622,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerFeedIdListRouteImport
       parentRoute: typeof LocaleRoute
     }
+    '/$locale/buyer/cart/$feedId/list': {
+      id: '/$locale/buyer/cart/$feedId/list'
+      path: '/buyer/cart/$feedId/list'
+      fullPath: '/$locale/buyer/cart/$feedId/list'
+      preLoaderRoute: typeof LocaleBuyerCartFeedIdListRouteImport
+      parentRoute: typeof LocaleRoute
+    }
     '/$locale/buyer/cart/category/$id/feed': {
       id: '/$locale/buyer/cart/category/$id/feed'
       path: '/buyer/cart/category/$id/feed'
@@ -635,6 +655,7 @@ interface LocaleRouteChildren {
   LocaleBuyerTransactionListRoute: typeof LocaleBuyerTransactionListRoute
   LocaleSellerListingMyRoute: typeof LocaleSellerListingMyRoute
   LocaleSellerTransactionListRoute: typeof LocaleSellerTransactionListRoute
+  LocaleBuyerCartFeedIdListRoute: typeof LocaleBuyerCartFeedIdListRoute
   LocaleBuyerFeedIdListRoute: typeof LocaleBuyerFeedIdListRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
   LocaleSellerListingWizardAgeRoute: typeof LocaleSellerListingWizardAgeRoute
@@ -666,6 +687,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleBuyerTransactionListRoute: LocaleBuyerTransactionListRoute,
   LocaleSellerListingMyRoute: LocaleSellerListingMyRoute,
   LocaleSellerTransactionListRoute: LocaleSellerTransactionListRoute,
+  LocaleBuyerCartFeedIdListRoute: LocaleBuyerCartFeedIdListRoute,
   LocaleBuyerFeedIdListRoute: LocaleBuyerFeedIdListRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,
   LocaleSellerListingWizardAgeRoute: LocaleSellerListingWizardAgeRoute,

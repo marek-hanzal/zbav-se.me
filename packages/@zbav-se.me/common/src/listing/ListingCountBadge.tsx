@@ -5,38 +5,22 @@ import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCountQuery } from "@zbav-se.me/sdk/query/user";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
-import { type FC, Suspense } from "react";
-
-// biome-ignore lint/correctness/noUnusedVariables: Private
-namespace Count {
-	export interface Props {
-		locale: string;
-		query: tListingQuery;
-	}
-}
-
-const Count: FC<Count.Props> = ({ locale, query }) => {
-	const listingCountQuery = withListingCountQuery.useSuspenseQuery(query);
-
-	return (
-		<Typo
-			label={toLocaleNumber({
-				locale,
-				number: listingCountQuery.data.filter,
-			})}
-			font={"bold"}
-		/>
-	);
-};
+import type { FC } from "react";
 
 export namespace ListingCountBadge {
 	export interface Props extends Badge.Props {
 		locale: string;
+		count?: number;
 		query: tListingQuery;
 	}
 }
 
-export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, ...props }) => {
+export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
+	locale,
+	count,
+	query,
+	...props
+}) => {
 	return (
 		<Badge
 			size={"md"}
@@ -65,19 +49,34 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({ locale, query, 
 
 			<Typo
 				label={
-					<Suspense
-						fallback={
-							<Icon
-								icon={SpinnerIcon}
-								size={"xs"}
-							/>
-						}
-					>
-						<Count
-							locale={locale}
-							query={query}
-						/>
-					</Suspense>
+					count ? (
+						toLocaleNumber({
+							locale,
+							number: count,
+						})
+					) : (
+						<withListingCountQuery.Suspense
+							data={query}
+							fallback={
+								<Icon
+									icon={SpinnerIcon}
+									size={"xs"}
+								/>
+							}
+						>
+							{({ data }) => {
+								return (
+									<Typo
+										label={toLocaleNumber({
+											locale,
+											number: data.filter,
+										})}
+										font={"bold"}
+									/>
+								);
+							}}
+						</withListingCountQuery.Suspense>
+					)
 				}
 				font={"bold"}
 			/>

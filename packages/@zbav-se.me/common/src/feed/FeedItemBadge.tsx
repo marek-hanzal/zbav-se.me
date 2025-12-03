@@ -21,6 +21,8 @@ export namespace FeedItemBadge {
 		feed: tFeed;
 		defaultOpen: boolean;
 		linkTo: LinkTo.RenderFn;
+		noSetup?: boolean;
+		count?: number;
 	}
 }
 
@@ -29,6 +31,8 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 	feed,
 	defaultOpen,
 	linkTo,
+	noSetup,
+	count,
 	...props
 }) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
@@ -96,23 +100,26 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 				/>
 			</Badge>
 
-			<FeedSetupButton
-				locale={locale}
-				state={{
-					value: isFeedSettings,
-					set: setIsFeedSettings,
-				}}
-				iconEnabled={FeedIcon}
-				tone={"secondary"}
-				size={"md"}
-				snapTo={"bottom-left"}
-				feed={feed}
-				defaultOpen={defaultOpen}
-				noDelete={false}
-			/>
+			{noSetup ? null : (
+				<FeedSetupButton
+					locale={locale}
+					state={{
+						value: isFeedSettings,
+						set: setIsFeedSettings,
+					}}
+					iconEnabled={FeedIcon}
+					tone={"secondary"}
+					size={"md"}
+					snapTo={"bottom-left"}
+					feed={feed}
+					defaultOpen={defaultOpen}
+					noDelete={false}
+				/>
+			)}
 
 			<ListingCountBadge
 				locale={locale}
+				count={count}
 				query={feed.query}
 				snapTo={"bottom-right"}
 			/>
