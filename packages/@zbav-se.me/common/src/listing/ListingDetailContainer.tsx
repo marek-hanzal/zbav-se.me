@@ -14,6 +14,7 @@ import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useState } from "react";
 import { FeedSetupButton } from "../feed";
+import { GalleryButton } from "../photo/button/GalleryButton";
 import { CartToggleButton } from "./button/CartToggleButton";
 import { TransactionButton } from "./button/TransactionButton";
 import { ListingLocation } from "./ListingLocation";
@@ -167,6 +168,14 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 									<CartToggleButton
 										listing={listing}
+										round={"full"}
+										label={null}
+										menu={false}
+										size={"lg"}
+									/>
+
+									<GalleryButton
+										uploads={listing.gallery.items.map((item) => item.upload)}
 										round={"full"}
 										label={null}
 										menu={false}
