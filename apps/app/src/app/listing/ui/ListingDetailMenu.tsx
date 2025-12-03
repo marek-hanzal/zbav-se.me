@@ -1,20 +1,14 @@
 import { ArrowRightIcon, FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { VariantProvider } from "@use-pico/cls";
-import { TransactionLogList } from "@zbav-se.me/common/listing-transaction-log";
+import { TransactionButton } from "@zbav-se.me/common/listing";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import {
-	withListingCartCountQuery,
-	withListingTransactionFetchQuery,
-} from "@zbav-se.me/sdk/query/user";
+import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { TransactionIcon } from "@zbav-se.me/ui/icon";
-import { type FC, Suspense, useState } from "react";
-import { ListingTransactionCreateButton } from "~/app/listing/ui/button/ListingTransactionCreateButton";
+import type { FC } from "react";
 
 export namespace ListingDetailMenu {
 	export type Tools = "transaction" | "cart" | "go-to-cart";
@@ -39,7 +33,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	...props
 }) => {
 	const listingCartToggle = withListingCartToggleMutation.useMutation();
-	const [isTransaction, setIsTransaction] = useState(false);
 
 	return (
 		<Container
@@ -55,72 +48,13 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 					theme: "light",
 				}}
 			>
-				{tools.includes("transaction") && listing.transactionId ? (
-					<>
-						<Button
-							tone={"primary"}
-							label={"View transactions (button)"}
-							iconEnabled={TransactionIcon}
-							theme={"light"}
-							size={"xl"}
-							onClick={() => setIsTransaction((prev) => !prev)}
-							menu
-						/>
-
-						<BottomSheet
-							isOpen={isTransaction}
-							onClose={() => setIsTransaction(false)}
-							detent={"default"}
-							contentProps={{
-								disableScroll: true,
-							}}
-							modalEffectRootId={parentSheetId}
-							header={{
-								close: true,
-								title: "Listing transactions (title)",
-							}}
-						>
-							<Suspense fallback={<SpinnerContainer />}>
-								<withListingTransactionFetchQuery.Suspense
-									data={{
-										where: {
-											id: listing.transactionId,
-										},
-									}}
-									fallback={<SpinnerContainer />}
-								>
-									{({ data }) => {
-										return (
-											<TransactionLogList
-												_suspense={"I know"}
-												noHero
-												locale={locale}
-												side="buyer"
-												listingTransaction={data}
-												query={{
-													where: {
-														listingTransactionId: data.id,
-													},
-													sort: [
-														{
-															field: "createdAt",
-															direction: "asc",
-														},
-													],
-												}}
-											/>
-										);
-									}}
-								</withListingTransactionFetchQuery.Suspense>
-							</Suspense>
-						</BottomSheet>
-					</>
-				) : (
-					<ListingTransactionCreateButton
-						tone={"primary"}
+				{tools.includes("transaction") ? (
+					<TransactionButton
+						locale={locale}
 						listing={listing}
+						parentSheetId={parentSheetId}
 					/>
-				)}
+				) : null}
 
 				{tools.includes("cart") ? (
 					<Button

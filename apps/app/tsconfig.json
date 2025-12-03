@@ -42,7 +42,7 @@
 	"include": [
 		"**/*.ts",
 		"**/*.tsx"
-	],
+, "../../packages/@zbav-se.me/common/src/listing-transaction/button/ListingTransactionCreateButton.tsx"	],
 	"exclude": [
 		"node_modules",
 		"dist"
