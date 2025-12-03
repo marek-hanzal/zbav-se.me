@@ -85,9 +85,6 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
-268f13190a629bd137dc802766a623af5fbbde39d57e2b4197131304:
-  ref: Nothing in cart yet (button)
-  value: Nothing in cart yet (button)
 296afd635ef4292785e24d4863ed42fac33a4bc1814216b988d458b6:
   ref: Transaction closed (label)
   value: Transaction closed (label)
@@ -127,6 +124,9 @@
 3429a13ac0ce97b0993fd1859d462e498dbd67e6f4b29853c1494151:
   ref: No transactions found - buyer (message)
   value: No transactions found - buyer (message)
+3462ccc81c58e39c5ad3d6b3cc2a5d6cde81ab00375906508aa30a7b:
+  ref: Listing - start (text)
+  value: Listing - start (text)
 35a4e86b1c3c0901d64e96e0bee1760b1f7bba60c419f5ff2c8e4591:
   ref: Buyer transaction rejected (buyer-seller) (label)
   value: Buyer transaction rejected (buyer-seller) (label)
@@ -151,9 +151,6 @@
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
   ref: Price - free
   value: Price - free
-3e67f4ca250b943faacf3f771626fdb14ee4e93b8ae47f56c35e4b79:
-  ref: Loading cart count (button)
-  value: Loading cart count (button)
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
@@ -265,6 +262,9 @@
 6810972e1b5c962b2d6bba8f1d42faf0373fc4a6f038a0d748551d62:
   ref: Listing added to your cart (toast)
   value: Listing added to your cart (toast)
+6970895fee104309ad55fbd48566209a5afacadfc46938c310e9f4c6:
+  ref: Listing - start (button)
+  value: Listing - start (button)
 6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
   ref: secondary
   value: secondary
@@ -510,6 +510,9 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
+c615edcd5fcc61a4a0f293d9aab6bfb092ff553a1ea8bea15b55d381:
+  ref: New listing (title)
+  value: New listing (title)
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
@@ -519,6 +522,9 @@ c7d618151613e564c1e8c2b9fce001e15ed60b9afd18b0cedb2aa5a5:
 ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
   ref: Error creating feed (toast)
   value: Error creating feed (toast)
+ca33feea33ff2ffa8595751f246191c95de3c2d4fe9b88a743783d8c:
+  ref: Listing - start (title)
+  value: Listing - start (title)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
@@ -585,9 +591,6 @@ dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
 e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
   ref: Listing removed from your cart (toast)
   value: Listing removed from your cart (toast)
-e2599c3b9d828a48f101d8e9d763a3fa348b11675f80809790e980a7:
-  ref: Go to cart (button)
-  value: Go to cart (button)
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)

@@ -1,34 +1,24 @@
-import { createFileRoute, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { LocationSelection } from "@zbav-se.me/common/location";
+import { Status } from "@use-pico/client/ui/status";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { useState } from "react";
-import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { ListingIcon } from "@zbav-se.me/ui/icon";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/location")({
-	validateSearch: ListingWizardSchema,
+export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 	component() {
-		const { user } = useLoaderData({
-			from: "/$locale",
-		});
 		const { locale } = Route.useParams();
-		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [locationId, setLocationId] = useState(
-			state.locationId ?? user?.locationId ?? undefined,
-		);
 
 		return (
 			<TitleContainer
-				ui="Location-root"
-				textTitle={"Location (title)"}
+				ui="Start-root"
+				textTitle={"New listing (title)"}
 				left={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/price"}
-						search={state}
+						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}
@@ -55,34 +45,30 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/expire-at"}
+						to={"/$locale/seller/listing/wizard/photos"}
 						params={{
 							locale,
 						}}
-						search={{
-							...state,
-							locationId,
-						}}
-						disabled={!locationId}
 						full
 					>
 						<Button
 							tone={"secondary"}
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
-							disabled={!locationId}
 							size={"xl"}
 							full
 							iconPosition={"right"}
-							label={"Next - expire (button)"}
+							label={"Listing - start (button)"}
 						/>
 					</LinkTo>
 				}
 			>
-				<LocationSelection
-					locale={locale}
-					value={locationId}
-					onChange={setLocationId}
+				<Status
+					icon={ListingIcon}
+					textTitle={"Listing - start (title)"}
+					textMessage={"Listing - start (text)"}
+					tone={"primary"}
+					theme={"light"}
 				/>
 			</TitleContainer>
 		);
