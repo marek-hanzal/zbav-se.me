@@ -17,6 +17,14 @@ export const Route = createFileRoute("/$locale/buyer/listing/feed")({
 			feedId,
 		};
 	},
+	/**
+	 * Simple stuff:
+	 *
+	 * - pick most recent feed (create a new one if not present)
+	 * - redirect user to listings with that feedId
+     * 
+     * The idea is to _ensure_ we've a feed a user _can_ customize
+	 */
 	async loader({ context: { queryClient }, params: { locale }, deps: { feedId } }) {
 		let feed = await withFeedFetchQuery
 			.query({

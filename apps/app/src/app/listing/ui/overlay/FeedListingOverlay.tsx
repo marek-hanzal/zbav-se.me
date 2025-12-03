@@ -1,11 +1,10 @@
 import { Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { VariantProvider } from "@use-pico/cls";
-import { ListingPrice } from "@zbav-se.me/common/listing";
+import { ListingLocation, ListingPrice } from "@zbav-se.me/common/listing";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { RatingToIcon } from "@zbav-se.me/ui/rating";
-import { ListingLocation } from "node_modules/@zbav-se.me/common/src/listing/ListingLocation";
 import type { FC } from "react";
 
 export namespace FeedListingOverlay {
