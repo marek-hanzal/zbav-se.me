@@ -34,14 +34,13 @@ const defaultTweak: Cls.TweaksOf<BadgeCls> = {
 				"items-start",
 				"h-fit",
 				"w-full",
-				"bg-transparent",
 				"border-none",
-				"gap-0",
-				"px-0",
-				"py-0.5",
+				"gap-2",
+				"px-4",
+				"py-3",
 			],
 			token: [
-				"round.md",
+				"round.default",
 			],
 		},
 	},
@@ -59,6 +58,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 	return (
 		<Badge
 			ui={"BadgeValue-root"}
+			tone={"neutral"}
 			tweak={[
 				defaultTweak,
 				tweak,
@@ -76,6 +76,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			>
 				<Tx
 					label={textLabel}
+					tone={"primary"}
 					preset={"label"}
 					size={"md"}
 				/>

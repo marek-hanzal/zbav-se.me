@@ -46,7 +46,12 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 					id,
 					age: id,
 				}))}
-				render={(item) => <Tx label={`Condition - Age [${item.age}] (hint)`} />}
+				renderFn={(item) => (
+					<Tx
+						tone={"secondary"}
+						label={`Condition - Age [${item.age}] (hint)`}
+					/>
+				)}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -79,7 +84,7 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 						tone={"secondary"}
 						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"lg"}
+						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						full

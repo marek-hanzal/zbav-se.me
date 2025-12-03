@@ -8,7 +8,7 @@ import { CategoryInline } from "./CategoryInline";
 // biome-ignore lint/correctness/noUnusedVariables: Private
 namespace CategoryList {
 	export interface Props
-		extends Omit<ContainerValueList.Props<tCategory>, "items" | "render">,
+		extends Omit<ContainerValueList.Props<tCategory>, "items" | "renderFn">,
 			MarkSuspense.Props {
 		categoryIdIn: string[];
 	}
@@ -23,7 +23,7 @@ const CategoryList: FC<CategoryList.Props> = ({ _suspense, categoryIdIn, ...prop
 
 	return (
 		<ContainerValueList
-			render={(category) => <CategoryInline category={category} />}
+			renderFn={(category) => <CategoryInline category={category} />}
 			items={categoryCollectionQuery.data.data}
 			{...props}
 		/>
@@ -31,7 +31,7 @@ const CategoryList: FC<CategoryList.Props> = ({ _suspense, categoryIdIn, ...prop
 };
 
 export namespace CategoryValueList {
-	export interface Props extends Omit<ContainerValueList.Props<tCategory>, "items" | "render"> {
+	export interface Props extends Omit<ContainerValueList.Props<tCategory>, "items" | "renderFn"> {
 		categoryIdIn: string[] | undefined | null;
 	}
 }
@@ -41,7 +41,7 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 		<Suspense
 			fallback={
 				<ContainerValueList
-					render={() => null}
+					renderFn={() => null}
 					items={[]}
 					loading={true}
 					{...props}
@@ -56,7 +56,7 @@ export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, .
 				/>
 			) : (
 				<ContainerValueList
-					render={() => null}
+					renderFn={() => null}
 					items={[]}
 					{...props}
 				/>

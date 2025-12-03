@@ -38,8 +38,9 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 					id: `${sortItem.field}-${index}`,
 					...sortItem,
 				}))}
-				render={(sortItem) => (
+				renderFn={(sortItem) => (
 					<Tx
+						tone={"secondary"}
 						label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
 					/>
 				)}
@@ -82,7 +83,7 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 						tone={"secondary"}
 						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"lg"}
+						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						full

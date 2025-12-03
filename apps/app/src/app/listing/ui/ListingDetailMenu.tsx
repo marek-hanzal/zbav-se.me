@@ -31,7 +31,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 		<Container
 			layout={"vertical-flex"}
 			height={"content"}
-			gap={"lg"}
+			gap={"sm"}
 			{...props}
 		>
 			<VariantProvider

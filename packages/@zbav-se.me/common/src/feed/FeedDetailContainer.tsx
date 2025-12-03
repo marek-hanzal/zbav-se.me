@@ -45,6 +45,15 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({ locale, fee
 			square={"md"}
 			tone={"unset"}
 			theme={"unset"}
+			tweak={{
+				slot: {
+					root: {
+						class: [
+							"pt-0",
+						],
+					},
+				},
+			}}
 			{...props}
 		>
 			<VariantProvider

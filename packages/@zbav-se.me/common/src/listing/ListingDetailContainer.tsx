@@ -143,7 +143,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					<Container
 						ui={"ListingDetailContainer-info"}
 						layout={"vertical-flex"}
-						gap={"md"}
+						gap={"sm"}
 						square={"md"}
 						tone={"unset"}
 						theme={"unset"}

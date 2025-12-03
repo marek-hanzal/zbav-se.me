@@ -22,7 +22,7 @@ export namespace ContainerValueList {
 		/**
 		 * Function to render each item.
 		 */
-		render: (item: TItem) => ReactNode;
+		renderFn(item: TItem): ReactNode;
 		/**
 		 * Action element to display next to the title.
 		 */
@@ -35,7 +35,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	textTitle,
 	textEmpty,
 	items,
-	render,
+	renderFn,
 	action,
 	loading,
 	...props
@@ -49,6 +49,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			{...props}
 		>
 			<Badge
+				tone={"neutral"}
 				theme={"light"}
 				tweak={{
 					slot: {
@@ -60,17 +61,20 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 								"justify-between",
 								"h-fit",
 								"w-full",
-								"rounded-none",
 								"border-none",
-								"bg-transparent",
-								"px-0",
-								"py-0.5",
+								"gap-2",
+								"px-4",
+								"py-3",
+							],
+							token: [
+								"round.default",
 							],
 						},
 					},
 				}}
 			>
 				<Tx
+					tone={"primary"}
 					label={textTitle}
 					preset={"label"}
 				/>
@@ -85,13 +89,14 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				gap={"xs"}
 				height={"auto"}
 				round={"lg"}
+				square={"md"}
 			>
 				{loading
 					? null
 					: items.map((item) => (
 							<Badge
 								key={item.id}
-								tone={"secondary"}
+								tone={"neutral"}
 								theme={"light"}
 								tweak={{
 									slot: {
@@ -106,14 +111,14 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 												"gap-0",
 											],
 											token: [
-												"round.md",
+												"round.default",
 												"square.md",
 											],
 										},
 									},
 								}}
 							>
-								{render(item)}
+								{renderFn(item)}
 							</Badge>
 						))}
 

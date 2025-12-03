@@ -82,7 +82,7 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 						tone={"secondary"}
 						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"lg"}
+						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						full

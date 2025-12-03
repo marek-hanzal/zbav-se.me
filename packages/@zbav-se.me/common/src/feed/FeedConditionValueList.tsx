@@ -46,7 +46,12 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 					id,
 					condition: id,
 				}))}
-				render={(item) => <Tx label={`Condition - Overall [${item.condition}] (hint)`} />}
+				renderFn={(item) => (
+					<Tx
+						tone={"secondary"}
+						label={`Condition - Overall [${item.condition}] (hint)`}
+					/>
+				)}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -79,7 +84,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 						tone={"secondary"}
 						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"lg"}
+						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						full
