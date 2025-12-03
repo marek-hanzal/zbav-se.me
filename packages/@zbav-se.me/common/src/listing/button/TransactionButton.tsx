@@ -5,8 +5,8 @@ import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense, useState } from "react";
-import { ListingTransactionCreateButton } from "../listing-transaction/button/ListingTransactionCreateButton";
-import { TransactionLogList } from "../listing-transaction-log/TransactionLogList";
+import { ListingTransactionCreateButton } from "../../listing-transaction/button/ListingTransactionCreateButton";
+import { TransactionLogList } from "../../listing-transaction-log/TransactionLogList";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
@@ -35,6 +35,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 					size={"xl"}
 					onClick={() => setIsTransaction((prev) => !prev)}
 					menu
+					{...props}
 				/>
 
 				<BottomSheet

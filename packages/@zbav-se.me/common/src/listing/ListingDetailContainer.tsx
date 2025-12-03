@@ -13,6 +13,9 @@ import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useState } from "react";
+import { FeedSetupButton } from "../feed";
+import { CartToggleButton } from "./button/CartToggleButton";
+import { TransactionButton } from "./button/TransactionButton";
 import { ListingLocation } from "./ListingLocation";
 import { ListingPrice } from "./ListingPrice";
 import { ScoreContainer } from "./ScoreContainer";
@@ -94,38 +97,91 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					height={"content"}
 				>
 					{withHero ? (
-						<Container
-							ui={"ListingDetailContainer-image"}
-							height={"content"}
-							round={"default"}
-							position={"relative"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"h-64",
-										],
+						<>
+							<Container
+								ui={"ListingDetailContainer-image"}
+								height={"content"}
+								round={"default"}
+								position={"relative"}
+								tweak={{
+									slot: {
+										root: {
+											class: [
+												"h-64",
+											],
+										},
 									},
-								},
-							}}
-						>
-							<ListingPrice
-								price={listing.price}
-								locale={locale}
-								currency={listing.currency}
-								snapTo={"top-center"}
-							/>
+								}}
+							>
+								<ListingPrice
+									price={listing.price}
+									locale={locale}
+									currency={listing.currency}
+									snapTo={"top-center"}
+								/>
 
-							<ListingLocation
-								location={listing.location.address}
-								snapTo={"bottom"}
-							/>
+								<ListingLocation
+									location={listing.location.address}
+									snapTo={"bottom"}
+								/>
 
-							<HeroImage
-								src={hero.upload.url}
-								alt={`Hero image for listing ${listing.id}`}
-							/>
-						</Container>
+								<HeroImage
+									src={hero.upload.url}
+									alt={`Hero image for listing ${listing.id}`}
+								/>
+							</Container>
+
+							<VariantProvider
+								cls={ThemeCls}
+								variant={{
+									tone: "primary",
+									theme: "light",
+								}}
+							>
+								<Container
+									layout={"horizontal-flex"}
+									gap={"sm"}
+									items={"center"}
+									justify={"center"}
+									tone={"unset"}
+									theme={"unset"}
+								>
+									<TransactionButton
+										locale={locale}
+										listing={listing}
+										parentSheetId={parentSheetId}
+										label={null}
+										menu={false}
+										tweak={{
+											slot: {
+												wrapper: {
+													class: [
+														"w-fit",
+													],
+												},
+											},
+										}}
+										round={"full"}
+										size={"lg"}
+									/>
+
+									<CartToggleButton
+										listing={listing}
+										round={"full"}
+										label={null}
+										menu={false}
+										size={"lg"}
+									/>
+
+									<FeedSetupButton
+										round={"full"}
+										label={null}
+										menu={false}
+										size={"lg"}
+									/>
+								</Container>
+							</VariantProvider>
+						</>
 					) : null}
 
 					<VariantProvider

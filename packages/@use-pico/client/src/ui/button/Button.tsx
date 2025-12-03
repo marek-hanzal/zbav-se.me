@@ -33,7 +33,7 @@ export namespace Button {
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
 		 */
-		label?: string;
+		label?: string | null;
 		/**
 		 * Icon to display when the button is enabled and not loading.
 		 */
@@ -230,11 +230,13 @@ export const Button: FC<Button.Props> = ({
 				>
 					{iconPosition === "left" && renderIcon}
 
-					<Tx
-						label={label}
-						display={"block"}
-						truncate={truncate}
-					/>
+					{label ? (
+						<Tx
+							label={label}
+							display={"block"}
+							truncate={truncate}
+						/>
+					) : null}
 
 					{children}
 

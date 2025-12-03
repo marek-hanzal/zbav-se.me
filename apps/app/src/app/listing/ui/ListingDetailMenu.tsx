@@ -1,11 +1,10 @@
-import { ArrowRightIcon, FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { VariantProvider } from "@use-pico/cls";
-import { TransactionButton } from "@zbav-se.me/common/listing";
+import { CartToggleButton, TransactionButton } from "@zbav-se.me/common/listing";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
@@ -32,8 +31,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	parentSheetId,
 	...props
 }) => {
-	const listingCartToggle = withListingCartToggleMutation.useMutation();
-
 	return (
 		<Container
 			layout={"vertical-flex"}
@@ -56,25 +53,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 					/>
 				) : null}
 
-				{tools.includes("cart") ? (
-					<Button
-						label={
-							listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"
-						}
-						iconEnabled={listing.isInCart ? FavouriteIcon : FavouriteOffIcon}
-						disabled={listingCartToggle.isPending}
-						loading={listingCartToggle.isPending}
-						theme={"light"}
-						onClick={() =>
-							listingCartToggle.mutate({
-								listingId: listing.id,
-								toggle: !listing.isInCart,
-							})
-						}
-						size={"xl"}
-						menu
-					/>
-				) : null}
+				{tools.includes("cart") ? <CartToggleButton listing={listing} /> : null}
 
 				{tools.includes("go-to-cart") ? (
 					<withListingCartCountQuery.Suspense
