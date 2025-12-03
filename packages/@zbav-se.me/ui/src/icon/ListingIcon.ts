@@ -1,1 +1,1 @@
-export const ListingIcon = "icon-[fluent--document-one-page-multiple-16-regular]";
+export const ListingIcon = "icon-[arcticons--smartnews]";

@@ -3,7 +3,14 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { tvc } from "@use-pico/cls";
-import { CartIcon, FeedIcon, SellerIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import {
+	CartIcon,
+	FeedIcon,
+	ListingIcon,
+	SellerIcon,
+	ShopIcon,
+	TransactionIcon,
+} from "@zbav-se.me/ui/icon";
 import { Tile } from "@zbav-se.me/ui/tile";
 import { useRef } from "react";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
@@ -37,15 +44,22 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 				{...props}
 			>
 				<LinkTo
-					to="/$locale/buyer/feed/select"
+					to="/$locale/buyer/listing/list"
 					params={{
 						locale,
+					}}
+					search={{
+						query: {
+							where: {
+								withOwn: false,
+							},
+						},
 					}}
 					full
 				>
 					<Tile
-						iconEnabled={FeedIcon}
-						label={"Feed (label)"}
+						iconEnabled={ListingIcon}
+						label={"Listings (label)"}
 						tone={"secondary"}
 					/>
 				</LinkTo>
@@ -74,6 +88,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						<Tile
 							iconEnabled={TransactionIcon}
 							label={"Transactions (label)"}
+						/>
+					</LinkTo>
+
+					<LinkTo
+						to="/$locale/buyer/feed/select"
+						params={{
+							locale,
+						}}
+						full
+					>
+						<Tile
+							iconEnabled={FeedIcon}
+							label={"Feed (label)"}
 						/>
 					</LinkTo>
 				</div>

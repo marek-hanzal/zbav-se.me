@@ -14,24 +14,36 @@ import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay"
 
 export const Route = createFileRoute("/$locale/buyer/listing/list")({
 	validateSearch: z.object({
-		scrollToListingId: z.string().optional(),
+		scrollToId: z.string().optional(),
+		feedId: z.string().optional(),
 		query: zListingQuery.optional(),
 	}),
 	component() {
 		const { locale } = Route.useParams();
-		const { scrollToListingId, query } = Route.useSearch();
+		const { scrollToId, query, feedId } = Route.useSearch();
 
 		return (
 			<FlowContainer
 				left={
-					<LinkTo
-						to={"/$locale/buyer/feed/select"}
-						params={{
-							locale,
-						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					feedId ? (
+						<LinkTo
+							to={"/$locale/buyer/feed/select"}
+							params={{
+								locale,
+							}}
+						>
+							<BadgeLeft />
+						</LinkTo>
+					) : (
+						<LinkTo
+							to={"/$locale/buyer"}
+							params={{
+								locale,
+							}}
+						>
+							<BadgeLeft />
+						</LinkTo>
+					)
 				}
 			>
 				<ListingListContainer
@@ -52,7 +64,7 @@ export const Route = createFileRoute("/$locale/buyer/listing/list")({
 							size: 256,
 						},
 					}}
-					scrollToListingId={scrollToListingId}
+					scrollToId={scrollToId}
 					appendix={
 						<Sheet round={"unset"}>
 							<Status

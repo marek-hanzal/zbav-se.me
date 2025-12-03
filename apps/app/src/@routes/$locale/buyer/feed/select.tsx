@@ -3,10 +3,15 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { FeedListContainer } from "@zbav-se.me/common/feed";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import z from "zod";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
+	validateSearch: z.object({
+		scrollToId: z.string().optional(),
+	}),
 	component() {
 		const { locale } = Route.useParams();
+		const { scrollToId } = Route.useSearch();
 
 		const feedCountLimit = 10;
 
@@ -41,6 +46,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 						],
 					}}
 					limit={feedCountLimit}
+					scrollToId={scrollToId}
 				/>
 			</TitleContainer>
 		);

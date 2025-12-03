@@ -62,7 +62,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/category/$id/feed")({
 							},
 						],
 					}}
-					scrollToListingId={scrollToListingId}
+					scrollToId={scrollToListingId}
 					renderEmptyFn={() => {
 						return (
 							<withListingCartCountQuery.Suspense

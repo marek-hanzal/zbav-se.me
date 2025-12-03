@@ -38,6 +38,9 @@
 
 
         _Později si budeš moci v rámci transakce adresu upřesnit, když budeš chtít._
+0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
+    ref: Listings (label)
+    value: Inzeráty
 0f25aecf3dc16ad45bb4abf1dd685e545d61829586dc5b143ff86248:
     ref: Empty cart category (title)
     value: Tady ti už nic nezbylo
@@ -268,7 +271,7 @@
     value: secondary
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
     ref: Feed category not selected
-    value: Kategorie nebyla vybrána
+    value: Všechno
 6c388d147d0bda5b267c52bbf80482f6ba0eff93845084586bd1c058:
     ref: No transactions found - seller (title)
     value: Zatím bohužel nikdo nemá zájem
@@ -369,7 +372,7 @@
     value: Tvoje umístění
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
-    value: Inzeráty
+    value: Moje seznamy
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
     ref: Listing title (title)
     value: Co prodáváš?

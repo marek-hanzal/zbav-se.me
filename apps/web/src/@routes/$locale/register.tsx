@@ -25,7 +25,7 @@ export const Route = createFileRoute("/$locale/register")({
 				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/dashboard",
+						href: "/:locale/buyer/listing/list",
 						query: {
 							locale,
 						},

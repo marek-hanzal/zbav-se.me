@@ -31,7 +31,9 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 
 	return (
 		<Badge
-			tone={feed.upload ? "primary" : "secondary"}
+			ui={"FeedItemBadge-root"}
+			data-id={feed.id}
+			tone={"primary"}
 			className={[
 				"relative",
 				"h-fit",
@@ -49,6 +51,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 				}}
 				search={{
 					query: feed.query,
+					feedId: feed.id,
 				}}
 				full
 				tweak={{

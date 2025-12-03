@@ -16,6 +16,7 @@ export namespace FeedListContainer {
 		locale: string;
 		query: tFeedQuery;
 		limit?: number;
+		scrollToId: string | undefined;
 	}
 }
 
@@ -23,6 +24,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	locale,
 	query,
 	limit = 10,
+	scrollToId,
 	...props
 }) => {
 	// TODO One nice day - move to standalone component
@@ -169,6 +171,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							locale={locale}
 							query={query}
 							defaultOpenId={defaultOpenId}
+							scrollToId={scrollToId}
 						/>
 
 						{data.filter > 0 ? (

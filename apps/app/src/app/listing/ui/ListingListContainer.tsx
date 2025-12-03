@@ -18,7 +18,7 @@ export namespace ListingListContainer {
 		/**
 		 * Listing ID to scroll to
 		 */
-		scrollToListingId?: string;
+		scrollToId: string | undefined;
 		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
 		overlay: ListingHeroContainer.Overlay.Render;
@@ -29,7 +29,7 @@ export namespace ListingListContainer {
 export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	locale,
 	query,
-	scrollToListingId,
+	scrollToId,
 	renderEmptyFn,
 	appendix,
 	overlay,
@@ -43,14 +43,14 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	const scrollTo = useScrollTo(containerRef);
 
 	useEffect(() => {
-		if (!scrollToListingId || !containerRef.current) {
+		if (!scrollToId || !containerRef.current) {
 			return;
 		}
-		scrollTo(`[data-id="${scrollToListingId}"]`, {
+		scrollTo(`[data-id="${scrollToId}"]`, {
 			behavior: "instant",
 		});
 	}, [
-		scrollToListingId,
+		scrollToId,
 		scrollTo,
 	]);
 
