@@ -124,6 +124,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		} else {
 			clearTimer();
 		}
+
 		return () => {
 			clearTimer();
 		};
@@ -157,8 +158,8 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 							slot: {
 								root: {
 									class: [
-										"bg-rose-600/50",
-										"opacity-100",
+										"bg-rose-600/20",
+										"opacity-80",
 									],
 								},
 							},
