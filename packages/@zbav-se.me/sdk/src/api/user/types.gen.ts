@@ -1157,6 +1157,299 @@ export type tListingFlag = {
 };
 
 /**
+ * Collection of feed items from listing cart
+ */
+export type tListingCartFeedCollection = {
+    data: Array<tListingCartFeed>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Latitude and longitude coordinates
+ */
+export type tLatLon = {
+    /**
+     * Latitude coordinate
+     */
+    lat: number;
+    /**
+     * Longitude coordinate
+     */
+    lon: number;
+};
+
+/**
+ * Meta data for listing collection
+ */
+export type tListingMeta = {
+    latLon?: tLatLon;
+};
+
+/**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * App-based filters
+ */
+export type tListingWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    priceMin?: tPriceMin;
+    priceMax?: tPriceMax;
+    /**
+     * This filter matches listings with condition greater than or equal to the provided value
+     */
+    conditionMin?: number;
+    /**
+     * This filter matches listings with condition less than or equal to the provided value
+     */
+    conditionMax?: number;
+    /**
+     * This filter matches listings with conditions in the provided array
+     */
+    conditionIn?: Array<number>;
+    /**
+     * This filter matches listings with age greater than or equal to the provided value
+     */
+    ageMin?: number;
+    /**
+     * This filter matches listings with age less than or equal to the provided value
+     */
+    ageMax?: number;
+    /**
+     * This filter matches listings with ages in the provided array
+     */
+    ageIn?: Array<number>;
+    categoryId?: tCategoryId;
+    categoryIdIn?: tCategoryIdIn;
+    currency?: tCurrencyListEnum;
+    currencyIn?: tCurrencyIn;
+    /**
+     * This filter matches listings that expire before the provided date
+     */
+    expiresAtBefore?: string;
+    /**
+     * This filter matches listings that expire after the provided date
+     */
+    expiresAtAfter?: string;
+    /**
+     * This filter matches listings with range greater than or equal to the provided value (meters)
+     */
+    rangeMin?: number;
+    /**
+     * This filter matches listings with range less than or equal to the provided value (meters)
+     */
+    rangeMax?: number;
+    /**
+     * This filter matches listings with title matching the provided value
+     */
+    title?: string;
+    /**
+     * This filter matches listings with the user's own listings
+     */
+    withOwn?: boolean;
+    /**
+     * Include ignored listings
+     */
+    withIgnored?: boolean;
+    /**
+     * Show listing that are in the user's cart
+     */
+    inCart?: boolean;
+    /**
+     * Show listings that are in the user's transaction
+     */
+    transaction?: boolean;
+};
+
+/**
+ * This filter matches listings with currency codes in the provided array
+ */
+export type tCurrencyIn = Array<tCurrencyListEnum>;
+
+/**
+ * Filter listings based on the provided category IDs
+ */
+export type tCategoryIdIn = Array<string>;
+
+/**
+ * ID of the category
+ */
+export type tCategoryId = string;
+
+/**
+ * Sets the maximum price for the listings
+ */
+export type tPriceMax = number;
+
+/**
+ * Sets the minimum price for the listings
+ */
+export type tPriceMin = number;
+
+/**
+ * User-land filters
+ */
+export type tListingFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    priceMin?: tPriceMin;
+    priceMax?: tPriceMax;
+    /**
+     * This filter matches listings with condition greater than or equal to the provided value
+     */
+    conditionMin?: number;
+    /**
+     * This filter matches listings with condition less than or equal to the provided value
+     */
+    conditionMax?: number;
+    /**
+     * This filter matches listings with conditions in the provided array
+     */
+    conditionIn?: Array<number>;
+    /**
+     * This filter matches listings with age greater than or equal to the provided value
+     */
+    ageMin?: number;
+    /**
+     * This filter matches listings with age less than or equal to the provided value
+     */
+    ageMax?: number;
+    /**
+     * This filter matches listings with ages in the provided array
+     */
+    ageIn?: Array<number>;
+    categoryId?: tCategoryId;
+    categoryIdIn?: tCategoryIdIn;
+    currency?: tCurrencyListEnum;
+    currencyIn?: tCurrencyIn;
+    /**
+     * This filter matches listings that expire before the provided date
+     */
+    expiresAtBefore?: string;
+    /**
+     * This filter matches listings that expire after the provided date
+     */
+    expiresAtAfter?: string;
+    /**
+     * This filter matches listings with range greater than or equal to the provided value (meters)
+     */
+    rangeMin?: number;
+    /**
+     * This filter matches listings with range less than or equal to the provided value (meters)
+     */
+    rangeMax?: number;
+    /**
+     * This filter matches listings with title matching the provided value
+     */
+    title?: string;
+    /**
+     * This filter matches listings with the user's own listings
+     */
+    withOwn?: boolean;
+    /**
+     * Include ignored listings
+     */
+    withIgnored?: boolean;
+    /**
+     * Show listing that are in the user's cart
+     */
+    inCart?: boolean;
+    /**
+     * Show listings that are in the user's transaction
+     */
+    transaction?: boolean;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
+
+/**
+ * Feed data from listing cart
+ */
+export type tListingCartFeed = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string | null;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId?: string | null;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
+    /**
+     * Number of items in cart for this feed
+     */
+    count: number;
+};
+
+/**
  * Data for toggling a listing in cart
  */
 export type tListingCartToggle = {
@@ -1352,220 +1645,6 @@ export type tListingCountQuery = {
     filter?: tListingFilter;
     where?: tListingWhere;
     meta?: tListingMeta;
-};
-
-/**
- * Latitude and longitude coordinates
- */
-export type tLatLon = {
-    /**
-     * Latitude coordinate
-     */
-    lat: number;
-    /**
-     * Longitude coordinate
-     */
-    lon: number;
-};
-
-/**
- * Meta data for listing collection
- */
-export type tListingMeta = {
-    latLon?: tLatLon;
-};
-
-/**
- * App-based filters
- */
-export type tListingWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    priceMin?: tPriceMin;
-    priceMax?: tPriceMax;
-    /**
-     * This filter matches listings with condition greater than or equal to the provided value
-     */
-    conditionMin?: number;
-    /**
-     * This filter matches listings with condition less than or equal to the provided value
-     */
-    conditionMax?: number;
-    /**
-     * This filter matches listings with conditions in the provided array
-     */
-    conditionIn?: Array<number>;
-    /**
-     * This filter matches listings with age greater than or equal to the provided value
-     */
-    ageMin?: number;
-    /**
-     * This filter matches listings with age less than or equal to the provided value
-     */
-    ageMax?: number;
-    /**
-     * This filter matches listings with ages in the provided array
-     */
-    ageIn?: Array<number>;
-    categoryId?: tCategoryId;
-    categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
-    currencyIn?: tCurrencyIn;
-    /**
-     * This filter matches listings that expire before the provided date
-     */
-    expiresAtBefore?: string;
-    /**
-     * This filter matches listings that expire after the provided date
-     */
-    expiresAtAfter?: string;
-    /**
-     * This filter matches listings with range greater than or equal to the provided value (meters)
-     */
-    rangeMin?: number;
-    /**
-     * This filter matches listings with range less than or equal to the provided value (meters)
-     */
-    rangeMax?: number;
-    /**
-     * This filter matches listings with title matching the provided value
-     */
-    title?: string;
-    /**
-     * This filter matches listings with the user's own listings
-     */
-    withOwn?: boolean;
-    /**
-     * Include ignored listings
-     */
-    withIgnored?: boolean;
-    /**
-     * Show listing that are in the user's cart
-     */
-    inCart?: boolean;
-    /**
-     * Show listings that are in the user's transaction
-     */
-    transaction?: boolean;
-};
-
-/**
- * This filter matches listings with currency codes in the provided array
- */
-export type tCurrencyIn = Array<tCurrencyListEnum>;
-
-/**
- * Filter listings based on the provided category IDs
- */
-export type tCategoryIdIn = Array<string>;
-
-/**
- * ID of the category
- */
-export type tCategoryId = string;
-
-/**
- * Sets the maximum price for the listings
- */
-export type tPriceMax = number;
-
-/**
- * Sets the minimum price for the listings
- */
-export type tPriceMin = number;
-
-/**
- * User-land filters
- */
-export type tListingFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    priceMin?: tPriceMin;
-    priceMax?: tPriceMax;
-    /**
-     * This filter matches listings with condition greater than or equal to the provided value
-     */
-    conditionMin?: number;
-    /**
-     * This filter matches listings with condition less than or equal to the provided value
-     */
-    conditionMax?: number;
-    /**
-     * This filter matches listings with conditions in the provided array
-     */
-    conditionIn?: Array<number>;
-    /**
-     * This filter matches listings with age greater than or equal to the provided value
-     */
-    ageMin?: number;
-    /**
-     * This filter matches listings with age less than or equal to the provided value
-     */
-    ageMax?: number;
-    /**
-     * This filter matches listings with ages in the provided array
-     */
-    ageIn?: Array<number>;
-    categoryId?: tCategoryId;
-    categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
-    currencyIn?: tCurrencyIn;
-    /**
-     * This filter matches listings that expire before the provided date
-     */
-    expiresAtBefore?: string;
-    /**
-     * This filter matches listings that expire after the provided date
-     */
-    expiresAtAfter?: string;
-    /**
-     * This filter matches listings with range greater than or equal to the provided value (meters)
-     */
-    rangeMin?: number;
-    /**
-     * This filter matches listings with range less than or equal to the provided value (meters)
-     */
-    rangeMax?: number;
-    /**
-     * This filter matches listings with title matching the provided value
-     */
-    title?: string;
-    /**
-     * This filter matches listings with the user's own listings
-     */
-    withOwn?: boolean;
-    /**
-     * Include ignored listings
-     */
-    withIgnored?: boolean;
-    /**
-     * Show listing that are in the user's cart
-     */
-    inCart?: boolean;
-    /**
-     * Show listings that are in the user's transaction
-     */
-    transaction?: boolean;
 };
 
 /**
@@ -1906,43 +1985,6 @@ export type tFeedCollection = {
      * Whether there are more items to fetch
      */
     more: boolean;
-};
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
 };
 
 /**
@@ -2655,6 +2697,31 @@ export type tApiListingCartToggleResponse = {
 };
 
 export type apiListingCartToggleResponse = tApiListingCartToggleResponse[keyof tApiListingCartToggleResponse];
+
+export type tApiListingCartFeedCollectionRequest = {
+    body?: tFeedQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/listing-cart-feed/collection';
+};
+
+export type apiListingCartFeedCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiListingCartFeedCollectionError = apiListingCartFeedCollectionErrors[keyof apiListingCartFeedCollectionErrors];
+
+export type tApiListingCartFeedCollectionResponse = {
+    /**
+     * Access collection of feed items from listing cart based on provided query
+     */
+    200: tListingCartFeedCollection;
+};
+
+export type apiListingCartFeedCollectionResponse = tApiListingCartFeedCollectionResponse[keyof tApiListingCartFeedCollectionResponse];
 
 export type tApiListingFlagCollectionRequest = {
     body?: tListingFlagQuery;

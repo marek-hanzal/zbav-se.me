@@ -1,4 +1,4 @@
-import type { Routes } from "../../hono/Routes";
+import type { Routes } from "~/hono/Routes";
 import { withListingCartCollectionApi } from "./listing-cart-collection";
 import { withListingCartCountApi } from "./listing-cart-count";
 import { withListingCartToggleApi } from "./listing-cart-toggle";

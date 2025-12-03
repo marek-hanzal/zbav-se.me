@@ -1435,6 +1435,389 @@ export const sListingFlag = {
     ]
 } as const;
 
+export const sListingCartFeedCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingCartFeed'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sLatLon = {
+    type: 'object',
+    properties: {
+        lat: {
+            type: 'number',
+            minimum: -90,
+            maximum: 90
+        },
+        lon: {
+            type: 'number',
+            minimum: -180,
+            maximum: 180
+        }
+    },
+    required: [
+        'lat',
+        'lon'
+    ]
+} as const;
+
+export const sListingMeta = {
+    type: 'object',
+    properties: {
+        latLon: {
+            $ref: '#/components/schemas/LatLon'
+        }
+    }
+} as const;
+
+export const sListingSortField = {
+    type: 'string',
+    enum: [
+        'price',
+        'condition',
+        'age',
+        'createdAt',
+        'updatedAt',
+        'expiresAt',
+        'geo'
+    ]
+} as const;
+
+export const sListingSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/ListingSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sListingWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        priceMin: {
+            $ref: '#/components/schemas/PriceMin'
+        },
+        priceMax: {
+            $ref: '#/components/schemas/PriceMax'
+        },
+        conditionMin: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        conditionMax: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        conditionIn: {
+            type: 'array',
+            items: {
+                type: 'number',
+                minimum: 0,
+                maximum: 6
+            }
+        },
+        ageMin: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        ageMax: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        ageIn: {
+            type: 'array',
+            items: {
+                type: 'number',
+                minimum: 0,
+                maximum: 6
+            }
+        },
+        categoryId: {
+            $ref: '#/components/schemas/CategoryId'
+        },
+        categoryIdIn: {
+            $ref: '#/components/schemas/CategoryIdIn'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        currencyIn: {
+            $ref: '#/components/schemas/CurrencyIn'
+        },
+        expiresAtBefore: {
+            type: 'string'
+        },
+        expiresAtAfter: {
+            type: 'string'
+        },
+        rangeMin: {
+            type: 'number',
+            minimum: 0
+        },
+        rangeMax: {
+            type: 'number',
+            minimum: 0
+        },
+        title: {
+            type: 'string'
+        },
+        withOwn: {
+            type: 'boolean'
+        },
+        withIgnored: {
+            type: 'boolean'
+        },
+        inCart: {
+            type: 'boolean'
+        },
+        transaction: {
+            type: 'boolean'
+        }
+    }
+} as const;
+
+export const sCurrencyIn = {
+    type: 'array',
+    items: {
+        $ref: '#/components/schemas/CurrencyListEnum'
+    }
+} as const;
+
+export const sCategoryIdIn = {
+    type: 'array',
+    items: {
+        type: 'string',
+        minLength: 1
+    }
+} as const;
+
+export const sCategoryId = {
+    type: 'string',
+    minLength: 1
+} as const;
+
+export const sPriceMax = {
+    type: 'number',
+    minimum: 0
+} as const;
+
+export const sPriceMin = {
+    type: 'number',
+    minimum: 0
+} as const;
+
+export const sListingFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        priceMin: {
+            $ref: '#/components/schemas/PriceMin'
+        },
+        priceMax: {
+            $ref: '#/components/schemas/PriceMax'
+        },
+        conditionMin: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        conditionMax: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        conditionIn: {
+            type: 'array',
+            items: {
+                type: 'number',
+                minimum: 0,
+                maximum: 6
+            }
+        },
+        ageMin: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        ageMax: {
+            type: 'number',
+            minimum: 0,
+            maximum: 6
+        },
+        ageIn: {
+            type: 'array',
+            items: {
+                type: 'number',
+                minimum: 0,
+                maximum: 6
+            }
+        },
+        categoryId: {
+            $ref: '#/components/schemas/CategoryId'
+        },
+        categoryIdIn: {
+            $ref: '#/components/schemas/CategoryIdIn'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        currencyIn: {
+            $ref: '#/components/schemas/CurrencyIn'
+        },
+        expiresAtBefore: {
+            type: 'string'
+        },
+        expiresAtAfter: {
+            type: 'string'
+        },
+        rangeMin: {
+            type: 'number',
+            minimum: 0
+        },
+        rangeMax: {
+            type: 'number',
+            minimum: 0
+        },
+        title: {
+            type: 'string'
+        },
+        withOwn: {
+            type: 'boolean'
+        },
+        withIgnored: {
+            type: 'boolean'
+        },
+        inCart: {
+            type: 'boolean'
+        },
+        transaction: {
+            type: 'boolean'
+        }
+    }
+} as const;
+
+export const sListingQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/ListingFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/ListingWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/ListingSort'
+            }
+        },
+        meta: {
+            $ref: '#/components/schemas/ListingMeta'
+        }
+    }
+} as const;
+
+export const sListingCartFeed = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        uploadId: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        count: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'name',
+        'query',
+        'upload',
+        'count'
+    ]
+} as const;
+
 export const sListingCartToggle = {
     type: 'object',
     properties: {
@@ -1698,267 +2081,6 @@ export const sListingCountQuery = {
         },
         meta: {
             $ref: '#/components/schemas/ListingMeta'
-        }
-    }
-} as const;
-
-export const sLatLon = {
-    type: 'object',
-    properties: {
-        lat: {
-            type: 'number',
-            minimum: -90,
-            maximum: 90
-        },
-        lon: {
-            type: 'number',
-            minimum: -180,
-            maximum: 180
-        }
-    },
-    required: [
-        'lat',
-        'lon'
-    ]
-} as const;
-
-export const sListingMeta = {
-    type: 'object',
-    properties: {
-        latLon: {
-            $ref: '#/components/schemas/LatLon'
-        }
-    }
-} as const;
-
-export const sListingWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        priceMin: {
-            $ref: '#/components/schemas/PriceMin'
-        },
-        priceMax: {
-            $ref: '#/components/schemas/PriceMax'
-        },
-        conditionMin: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        conditionMax: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        conditionIn: {
-            type: 'array',
-            items: {
-                type: 'number',
-                minimum: 0,
-                maximum: 6
-            }
-        },
-        ageMin: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        ageMax: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        ageIn: {
-            type: 'array',
-            items: {
-                type: 'number',
-                minimum: 0,
-                maximum: 6
-            }
-        },
-        categoryId: {
-            $ref: '#/components/schemas/CategoryId'
-        },
-        categoryIdIn: {
-            $ref: '#/components/schemas/CategoryIdIn'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        currencyIn: {
-            $ref: '#/components/schemas/CurrencyIn'
-        },
-        expiresAtBefore: {
-            type: 'string'
-        },
-        expiresAtAfter: {
-            type: 'string'
-        },
-        rangeMin: {
-            type: 'number',
-            minimum: 0
-        },
-        rangeMax: {
-            type: 'number',
-            minimum: 0
-        },
-        title: {
-            type: 'string'
-        },
-        withOwn: {
-            type: 'boolean'
-        },
-        withIgnored: {
-            type: 'boolean'
-        },
-        inCart: {
-            type: 'boolean'
-        },
-        transaction: {
-            type: 'boolean'
-        }
-    }
-} as const;
-
-export const sCurrencyIn = {
-    type: 'array',
-    items: {
-        $ref: '#/components/schemas/CurrencyListEnum'
-    }
-} as const;
-
-export const sCategoryIdIn = {
-    type: 'array',
-    items: {
-        type: 'string',
-        minLength: 1
-    }
-} as const;
-
-export const sCategoryId = {
-    type: 'string',
-    minLength: 1
-} as const;
-
-export const sPriceMax = {
-    type: 'number',
-    minimum: 0
-} as const;
-
-export const sPriceMin = {
-    type: 'number',
-    minimum: 0
-} as const;
-
-export const sListingFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        priceMin: {
-            $ref: '#/components/schemas/PriceMin'
-        },
-        priceMax: {
-            $ref: '#/components/schemas/PriceMax'
-        },
-        conditionMin: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        conditionMax: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        conditionIn: {
-            type: 'array',
-            items: {
-                type: 'number',
-                minimum: 0,
-                maximum: 6
-            }
-        },
-        ageMin: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        ageMax: {
-            type: 'number',
-            minimum: 0,
-            maximum: 6
-        },
-        ageIn: {
-            type: 'array',
-            items: {
-                type: 'number',
-                minimum: 0,
-                maximum: 6
-            }
-        },
-        categoryId: {
-            $ref: '#/components/schemas/CategoryId'
-        },
-        categoryIdIn: {
-            $ref: '#/components/schemas/CategoryIdIn'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        currencyIn: {
-            $ref: '#/components/schemas/CurrencyIn'
-        },
-        expiresAtBefore: {
-            type: 'string'
-        },
-        expiresAtAfter: {
-            type: 'string'
-        },
-        rangeMin: {
-            type: 'number',
-            minimum: 0
-        },
-        rangeMax: {
-            type: 'number',
-            minimum: 0
-        },
-        title: {
-            type: 'string'
-        },
-        withOwn: {
-            type: 'boolean'
-        },
-        withIgnored: {
-            type: 'boolean'
-        },
-        inCart: {
-            type: 'boolean'
-        },
-        transaction: {
-            type: 'boolean'
         }
     }
 } as const;
@@ -2404,59 +2526,6 @@ export const sFeedCollection = {
         'data',
         'more'
     ]
-} as const;
-
-export const sListingSortField = {
-    type: 'string',
-    enum: [
-        'price',
-        'condition',
-        'age',
-        'createdAt',
-        'updatedAt',
-        'expiresAt',
-        'geo'
-    ]
-} as const;
-
-export const sListingSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingSort'
-            }
-        },
-        meta: {
-            $ref: '#/components/schemas/ListingMeta'
-        }
-    }
 } as const;
 
 export const sFeed = {

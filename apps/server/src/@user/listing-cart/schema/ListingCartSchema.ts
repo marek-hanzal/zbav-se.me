@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingCartDbSchema } from "../../../app/listing-cart/schema/ListingCartDbSchema";
+import { ListingCartDbSchema } from "~/app/listing-cart/schema/ListingCartDbSchema";
 
 export const ListingCartSchema = z
 	.object({

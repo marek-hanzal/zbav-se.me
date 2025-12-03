@@ -6,6 +6,7 @@ import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withListingApi } from "./listing/withListingApi";
 import { withListingCartApi } from "./listing-cart/withListingCartApi";
+import { withListingCartFeedApi } from "./listing-cart-feed/withListingCartFeedApi";
 import { withListingFlagApi } from "./listing-flag/withListingFlagApi";
 import { withListingIgnoreApi } from "./listing-ignore/withListingIgnoreApi";
 import { withListingScoreApi } from "./listing-score/withListingScoreApi";
@@ -43,6 +44,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	withGalleryApi(routes);
 	withListingApi(routes);
 	withListingCartApi(routes);
+	withListingCartFeedApi(routes);
 	withListingFlagApi(routes);
 	withListingIgnoreApi(routes);
 	withListingScoreApi(routes);

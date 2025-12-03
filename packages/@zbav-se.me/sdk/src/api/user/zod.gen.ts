@@ -1269,6 +1269,308 @@ export const zListingFlagCollection = z.object({
 export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
 
 /**
+ * Latitude and longitude coordinates
+ */
+export const zLatLon = z.object({
+    lat: z.number().gte(-90).lte(90).register(z.globalRegistry, {
+        description: 'Latitude coordinate'
+    }),
+    lon: z.number().gte(-180).lte(180).register(z.globalRegistry, {
+        description: 'Longitude coordinate'
+    })
+}).register(z.globalRegistry, {
+    description: 'Latitude and longitude coordinates'
+});
+
+export type zLatLon = z.infer<typeof zLatLon>;
+
+/**
+ * Meta data for listing collection
+ */
+export const zListingMeta = z.object({
+    latLon: z.optional(zLatLon)
+}).register(z.globalRegistry, {
+    description: 'Meta data for listing collection'
+});
+
+export type zListingMeta = z.infer<typeof zListingMeta>;
+
+/**
+ * Field of the listing sort
+ */
+export const zListingSortField = z.enum([
+    'price',
+    'condition',
+    'age',
+    'createdAt',
+    'updatedAt',
+    'expiresAt',
+    'geo'
+]).register(z.globalRegistry, {
+    description: 'Field of the listing sort'
+});
+
+export type zListingSortField = z.infer<typeof zListingSortField>;
+
+/**
+ * Sort object for listing collection
+ */
+export const zListingSort = z.object({
+    field: zListingSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for listing collection'
+});
+
+export type zListingSort = z.infer<typeof zListingSort>;
+
+/**
+ * This filter matches listings with currency codes in the provided array
+ */
+export const zCurrencyIn = z.array(zCurrencyListEnum).register(z.globalRegistry, {
+    description: 'This filter matches listings with currency codes in the provided array'
+});
+
+export type zCurrencyIn = z.infer<typeof zCurrencyIn>;
+
+/**
+ * Filter listings based on the provided category IDs
+ */
+export const zCategoryIdIn = z.array(z.string().min(1)).register(z.globalRegistry, {
+    description: 'Filter listings based on the provided category IDs'
+});
+
+export type zCategoryIdIn = z.infer<typeof zCategoryIdIn>;
+
+/**
+ * ID of the category
+ */
+export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
+    description: 'ID of the category'
+});
+
+export type zCategoryId = z.infer<typeof zCategoryId>;
+
+/**
+ * Sets the maximum price for the listings
+ */
+export const zPriceMax = z.number().gte(0).register(z.globalRegistry, {
+    description: 'Sets the maximum price for the listings'
+});
+
+export type zPriceMax = z.infer<typeof zPriceMax>;
+
+/**
+ * Sets the minimum price for the listings
+ */
+export const zPriceMin = z.number().gte(0).register(z.globalRegistry, {
+    description: 'Sets the minimum price for the listings'
+});
+
+export type zPriceMin = z.infer<typeof zPriceMin>;
+
+/**
+ * App-based filters
+ */
+export const zListingWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    priceMin: z.optional(zPriceMin),
+    priceMax: z.optional(zPriceMax),
+    conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with condition greater than or equal to the provided value'
+    })),
+    conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with condition less than or equal to the provided value'
+    })),
+    conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with conditions in the provided array'
+    })),
+    ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with age greater than or equal to the provided value'
+    })),
+    ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with age less than or equal to the provided value'
+    })),
+    ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with ages in the provided array'
+    })),
+    categoryId: z.optional(zCategoryId),
+    categoryIdIn: z.optional(zCategoryIdIn),
+    currency: z.optional(zCurrencyListEnum),
+    currencyIn: z.optional(zCurrencyIn),
+    expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire before the provided date'
+    })),
+    expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire after the provided date'
+    })),
+    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
+    })),
+    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
+    })),
+    title: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings with title matching the provided value'
+    })),
+    withOwn: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'This filter matches listings with the user\'s own listings'
+    })),
+    withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Include ignored listings'
+    })),
+    inCart: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Show listing that are in the user\'s cart'
+    })),
+    transaction: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Show listings that are in the user\'s transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zListingWhere = z.infer<typeof zListingWhere>;
+
+/**
+ * User-land filters
+ */
+export const zListingFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    priceMin: z.optional(zPriceMin),
+    priceMax: z.optional(zPriceMax),
+    conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with condition greater than or equal to the provided value'
+    })),
+    conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with condition less than or equal to the provided value'
+    })),
+    conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with conditions in the provided array'
+    })),
+    ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with age greater than or equal to the provided value'
+    })),
+    ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
+        description: 'This filter matches listings with age less than or equal to the provided value'
+    })),
+    ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
+        description: 'This filter matches listings with ages in the provided array'
+    })),
+    categoryId: z.optional(zCategoryId),
+    categoryIdIn: z.optional(zCategoryIdIn),
+    currency: z.optional(zCurrencyListEnum),
+    currencyIn: z.optional(zCurrencyIn),
+    expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire before the provided date'
+    })),
+    expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings that expire after the provided date'
+    })),
+    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
+    })),
+    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
+        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
+    })),
+    title: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches listings with title matching the provided value'
+    })),
+    withOwn: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'This filter matches listings with the user\'s own listings'
+    })),
+    withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Include ignored listings'
+    })),
+    inCart: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Show listing that are in the user\'s cart'
+    })),
+    transaction: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'Show listings that are in the user\'s transaction'
+    }))
+}).register(z.globalRegistry, {
+    description: 'User-land filters'
+});
+
+export type zListingFilter = z.infer<typeof zListingFilter>;
+
+/**
+ * Query object for listing collection
+ */
+export const zListingQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zListingFilter),
+    where: z.optional(zListingWhere),
+    sort: z.optional(z.array(zListingSort)),
+    meta: z.optional(zListingMeta)
+}).register(z.globalRegistry, {
+    description: 'Query object for listing collection'
+});
+
+export type zListingQuery = z.infer<typeof zListingQuery>;
+
+/**
+ * Feed data from listing cart
+ */
+export const zListingCartFeed = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the feed'
+    }),
+    locationId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    uploadId: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name of the feed'
+    }),
+    query: zListingQuery,
+    upload: z.union([
+        zUpload,
+        z.null()
+    ]),
+    count: z.number().register(z.globalRegistry, {
+        description: 'Number of items in cart for this feed'
+    })
+}).register(z.globalRegistry, {
+    description: 'Feed data from listing cart'
+});
+
+export type zListingCartFeed = z.infer<typeof zListingCartFeed>;
+
+/**
+ * Collection of feed items from listing cart
+ */
+export const zListingCartFeedCollection = z.object({
+    data: z.array(zListingCartFeed),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of feed items from listing cart'
+});
+
+export type zListingCartFeedCollection = z.infer<typeof zListingCartFeedCollection>;
+
+/**
  * Data for toggling a listing in cart
  */
 export const zListingCartToggle = z.object({
@@ -1473,218 +1775,6 @@ export const zListingMetrics = z.object({
 });
 
 export type zListingMetrics = z.infer<typeof zListingMetrics>;
-
-/**
- * Latitude and longitude coordinates
- */
-export const zLatLon = z.object({
-    lat: z.number().gte(-90).lte(90).register(z.globalRegistry, {
-        description: 'Latitude coordinate'
-    }),
-    lon: z.number().gte(-180).lte(180).register(z.globalRegistry, {
-        description: 'Longitude coordinate'
-    })
-}).register(z.globalRegistry, {
-    description: 'Latitude and longitude coordinates'
-});
-
-export type zLatLon = z.infer<typeof zLatLon>;
-
-/**
- * Meta data for listing collection
- */
-export const zListingMeta = z.object({
-    latLon: z.optional(zLatLon)
-}).register(z.globalRegistry, {
-    description: 'Meta data for listing collection'
-});
-
-export type zListingMeta = z.infer<typeof zListingMeta>;
-
-/**
- * This filter matches listings with currency codes in the provided array
- */
-export const zCurrencyIn = z.array(zCurrencyListEnum).register(z.globalRegistry, {
-    description: 'This filter matches listings with currency codes in the provided array'
-});
-
-export type zCurrencyIn = z.infer<typeof zCurrencyIn>;
-
-/**
- * Filter listings based on the provided category IDs
- */
-export const zCategoryIdIn = z.array(z.string().min(1)).register(z.globalRegistry, {
-    description: 'Filter listings based on the provided category IDs'
-});
-
-export type zCategoryIdIn = z.infer<typeof zCategoryIdIn>;
-
-/**
- * ID of the category
- */
-export const zCategoryId = z.string().min(1).register(z.globalRegistry, {
-    description: 'ID of the category'
-});
-
-export type zCategoryId = z.infer<typeof zCategoryId>;
-
-/**
- * Sets the maximum price for the listings
- */
-export const zPriceMax = z.number().gte(0).register(z.globalRegistry, {
-    description: 'Sets the maximum price for the listings'
-});
-
-export type zPriceMax = z.infer<typeof zPriceMax>;
-
-/**
- * Sets the minimum price for the listings
- */
-export const zPriceMin = z.number().gte(0).register(z.globalRegistry, {
-    description: 'Sets the minimum price for the listings'
-});
-
-export type zPriceMin = z.infer<typeof zPriceMin>;
-
-/**
- * App-based filters
- */
-export const zListingWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    priceMin: z.optional(zPriceMin),
-    priceMax: z.optional(zPriceMax),
-    conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with condition greater than or equal to the provided value'
-    })),
-    conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with condition less than or equal to the provided value'
-    })),
-    conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: 'This filter matches listings with conditions in the provided array'
-    })),
-    ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with age greater than or equal to the provided value'
-    })),
-    ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with age less than or equal to the provided value'
-    })),
-    ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: 'This filter matches listings with ages in the provided array'
-    })),
-    categoryId: z.optional(zCategoryId),
-    categoryIdIn: z.optional(zCategoryIdIn),
-    currency: z.optional(zCurrencyListEnum),
-    currencyIn: z.optional(zCurrencyIn),
-    expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches listings that expire before the provided date'
-    })),
-    expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches listings that expire after the provided date'
-    })),
-    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
-    })),
-    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
-    })),
-    title: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches listings with title matching the provided value'
-    })),
-    withOwn: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'This filter matches listings with the user\'s own listings'
-    })),
-    withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'Include ignored listings'
-    })),
-    inCart: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'Show listing that are in the user\'s cart'
-    })),
-    transaction: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'Show listings that are in the user\'s transaction'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingWhere = z.infer<typeof zListingWhere>;
-
-/**
- * User-land filters
- */
-export const zListingFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    priceMin: z.optional(zPriceMin),
-    priceMax: z.optional(zPriceMax),
-    conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with condition greater than or equal to the provided value'
-    })),
-    conditionMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with condition less than or equal to the provided value'
-    })),
-    conditionIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: 'This filter matches listings with conditions in the provided array'
-    })),
-    ageMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with age greater than or equal to the provided value'
-    })),
-    ageMax: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
-        description: 'This filter matches listings with age less than or equal to the provided value'
-    })),
-    ageIn: z.optional(z.array(z.number().gte(0).lte(6)).register(z.globalRegistry, {
-        description: 'This filter matches listings with ages in the provided array'
-    })),
-    categoryId: z.optional(zCategoryId),
-    categoryIdIn: z.optional(zCategoryIdIn),
-    currency: z.optional(zCurrencyListEnum),
-    currencyIn: z.optional(zCurrencyIn),
-    expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches listings that expire before the provided date'
-    })),
-    expiresAtAfter: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches listings that expire after the provided date'
-    })),
-    rangeMin: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range greater than or equal to the provided value (meters)'
-    })),
-    rangeMax: z.optional(z.number().gte(0).register(z.globalRegistry, {
-        description: 'This filter matches listings with range less than or equal to the provided value (meters)'
-    })),
-    title: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches listings with title matching the provided value'
-    })),
-    withOwn: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'This filter matches listings with the user\'s own listings'
-    })),
-    withIgnored: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'Include ignored listings'
-    })),
-    inCart: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'Show listing that are in the user\'s cart'
-    })),
-    transaction: z.optional(z.boolean().register(z.globalRegistry, {
-        description: 'Show listings that are in the user\'s transaction'
-    }))
-}).register(z.globalRegistry, {
-    description: 'User-land filters'
-});
-
-export type zListingFilter = z.infer<typeof zListingFilter>;
 
 /**
  * Query object for listing count
@@ -2023,50 +2113,6 @@ export const zFeedGalleryCreate = z.object({
 });
 
 export type zFeedGalleryCreate = z.infer<typeof zFeedGalleryCreate>;
-
-/**
- * Field of the listing sort
- */
-export const zListingSortField = z.enum([
-    'price',
-    'condition',
-    'age',
-    'createdAt',
-    'updatedAt',
-    'expiresAt',
-    'geo'
-]).register(z.globalRegistry, {
-    description: 'Field of the listing sort'
-});
-
-export type zListingSortField = z.infer<typeof zListingSortField>;
-
-/**
- * Sort object for listing collection
- */
-export const zListingSort = z.object({
-    field: zListingSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing collection'
-});
-
-export type zListingSort = z.infer<typeof zListingSort>;
-
-/**
- * Query object for listing collection
- */
-export const zListingQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingFilter),
-    where: z.optional(zListingWhere),
-    sort: z.optional(z.array(zListingSort)),
-    meta: z.optional(zListingMeta)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing collection'
-});
-
-export type zListingQuery = z.infer<typeof zListingQuery>;
 
 /**
  * Feed data
@@ -2555,6 +2601,21 @@ export const zApiListingCartToggleResponse = z.void().register(z.globalRegistry,
 });
 
 export type zapiListingCartToggleResponse = z.infer<typeof zApiListingCartToggleResponse>;
+
+export const zApiListingCartFeedCollectionData = z.object({
+    body: z.optional(zFeedQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiListingCartFeedCollectionRequest = z.infer<typeof zApiListingCartFeedCollectionData>;
+
+/**
+ * Access collection of feed items from listing cart based on provided query
+ */
+export const zApiListingCartFeedCollectionResponse = zListingCartFeedCollection;
+
+export type zapiListingCartFeedCollectionResponse = z.infer<typeof zApiListingCartFeedCollectionResponse>;
 
 export const zApiListingFlagCollectionData = z.object({
     body: z.optional(zListingFlagQuery),
