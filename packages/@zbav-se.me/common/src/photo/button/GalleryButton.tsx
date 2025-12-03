@@ -21,8 +21,11 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ uploads, ...props }) =>
 		<>
 			<Button
 				iconEnabled={GalleryIcon}
+				tone={"primary"}
 				onClick={() => setIsOpen((prev) => !prev)}
 				label={"Open gallery (button)"}
+				menu
+				size={"xl"}
 				{...props}
 			/>
 
@@ -34,6 +37,9 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ uploads, ...props }) =>
 				header={{
 					close: true,
 					title: "Gallery (title)",
+				}}
+				contentProps={{
+					disableScroll: true,
 				}}
 			>
 				<Container

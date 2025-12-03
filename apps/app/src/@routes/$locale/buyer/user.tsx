@@ -1,5 +1,5 @@
 import { createFileRoute, useLoaderData, useParams } from "@tanstack/react-router";
-import { ArrowLeftIcon, UserIcon } from "@use-pico/client/icon";
+import { UserIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";

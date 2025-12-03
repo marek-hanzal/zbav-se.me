@@ -1,6 +1,7 @@
 import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { Typo } from "@use-pico/client/ui/typo";
 import type { StateType } from "@use-pico/common/type";
 import type { tGalleryItem, tListingTransaction, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -8,7 +9,6 @@ import { type FC, Suspense } from "react";
 import { ListingLocation } from "../listing/ListingLocation";
 import { ListingPrice } from "../listing/ListingPrice";
 import { TransactionLogList } from "../listing-transaction-log/TransactionLogList";
-import { Typo } from "@use-pico/client/ui/typo";
 
 export namespace TransactionItem {
 	export interface Props extends Omit<Badge.Props, "children"> {

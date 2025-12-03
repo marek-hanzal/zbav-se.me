@@ -1,16 +1,13 @@
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { VariantProvider } from "@use-pico/cls";
 import { CartToggleButton, TransactionButton } from "@zbav-se.me/common/listing";
+import { GalleryButton } from "@zbav-se.me/common/photo";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 
 export namespace ListingDetailMenu {
-	export type Tools = "transaction" | "cart" | "go-to-cart";
+	export type Tools = "transaction" | "cart";
 
 	export interface Props extends Container.Props {
 		locale: string;
@@ -26,7 +23,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	tools = [
 		"transaction",
 		"cart",
-		"go-to-cart",
 	],
 	parentSheetId,
 	...props
@@ -55,45 +51,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 
 				{tools.includes("cart") ? <CartToggleButton listing={listing} /> : null}
 
-				{tools.includes("go-to-cart") ? (
-					<withListingCartCountQuery.Suspense
-						data={{}}
-						fallback={
-							<Button
-								disabled
-								loading
-								label={"Loading cart count (button)"}
-								size={"xl"}
-								menu
-							/>
-						}
-					>
-						{({ data }) => {
-							return (
-								<LinkTo
-									to={"/$locale/buyer/cart/list"}
-									params={{
-										locale,
-									}}
-									disabled={data.filter === 0}
-									full
-								>
-									<Button
-										iconEnabled={data.filter > 0 ? ArrowRightIcon : undefined}
-										disabled={data.filter === 0}
-										label={
-											data.filter > 0
-												? "Go to cart (button)"
-												: "Nothing in cart yet (button)"
-										}
-										size={"xl"}
-										menu
-									/>
-								</LinkTo>
-							);
-						}}
-					</withListingCartCountQuery.Suspense>
-				) : null}
+				<GalleryButton uploads={listing.gallery.items.map((item) => item.upload)} />
 			</VariantProvider>
 		</Container>
 	);

@@ -13,10 +13,6 @@ import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useState } from "react";
-import { FeedSetupButton } from "../feed";
-import { GalleryButton } from "../photo/button/GalleryButton";
-import { CartToggleButton } from "./button/CartToggleButton";
-import { TransactionButton } from "./button/TransactionButton";
 import { ListingLocation } from "./ListingLocation";
 import { ListingPrice } from "./ListingPrice";
 import { ScoreContainer } from "./ScoreContainer";
@@ -132,7 +128,17 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 								/>
 							</Container>
 
-							<VariantProvider
+							{children ? (
+								<Container
+									ui={"ListingDetailContainer-content"}
+									square={"md"}
+									height={"content"}
+								>
+									{children}
+								</Container>
+							) : null}
+
+							{/* <VariantProvider
 								cls={ThemeCls}
 								variant={{
 									tone: "primary",
@@ -189,7 +195,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 										size={"lg"}
 									/>
 								</Container>
-							</VariantProvider>
+							</VariantProvider> */}
 						</>
 					) : null}
 
@@ -292,16 +298,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						</Container>
 					</VariantProvider>
 				</Container>
-
-				{children ? (
-					<Container
-						ui={"ListingDetailContainer-content"}
-						square={"md"}
-						height={"content"}
-					>
-						{children}
-					</Container>
-				) : null}
 
 				<BottomSheet
 					isOpen={score}
