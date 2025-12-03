@@ -1,22 +1,36 @@
 import { Badge } from "@use-pico/client/ui/badge";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { ListingCountBadge } from "../listing/ListingCountBadge";
 import { FeedSetupButton } from "./button/FeedSetupButton";
 
 export namespace FeedItemBadge {
+	export namespace LinkTo {
+		export interface Props extends PropsWithChildren {
+			feed: tFeed;
+		}
+
+		export type RenderFn = (props: Props) => ReactNode;
+	}
+
 	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		feed: tFeed;
 		defaultOpen: boolean;
+		linkTo: LinkTo.RenderFn;
 	}
 }
 
-export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOpen, ...props }) => {
+export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
+	locale,
+	feed,
+	defaultOpen,
+	linkTo,
+	...props
+}) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
 
 	return (
@@ -26,57 +40,36 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({ locale, feed, defaultOp
 			tone={"primary"}
 			className={[
 				"relative",
-				"h-fit",
 				"p-0",
 				"w-full",
+				"h-48",
 				"contain-content",
 			]}
 			round={"md"}
 			{...props}
 		>
-			<LinkTo
-				to={"/$locale/buyer/listing/list"}
-				params={{
-					locale,
-				}}
-				search={{
-					query: feed.query,
-					feedId: feed.id,
-				}}
-				full
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"flex",
-								"flex-col",
-								"items-start",
-								"gap-1",
-								"w-full",
-								"h-64",
-							],
-						},
-					},
-				}}
-			>
-				{feed.upload ? (
-					<HeroImage
-						src={feed.upload.url}
-						alt={`Hero image for feed ${feed.id}`}
-						visible
-						round
-						tweak={{
-							slot: {
-								img: {
-									class: [
-										"w-full",
-									],
-								},
-							},
-						}}
-					/>
-				) : null}
-			</LinkTo>
+			{feed.upload
+				? linkTo({
+						feed,
+						children: (
+							<HeroImage
+								src={feed.upload.url}
+								alt={`Hero image for feed ${feed.id}`}
+								visible
+								round
+								tweak={{
+									slot: {
+										img: {
+											class: [
+												"w-full",
+											],
+										},
+									},
+								}}
+							/>
+						),
+					})
+				: null}
 
 			<Badge
 				snapTo={"top"}

@@ -1,5 +1,4 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { match } from "ts-pattern";
 
 export const Route = createFileRoute("/$locale/dashboard")({
@@ -14,26 +13,16 @@ export const Route = createFileRoute("/$locale/dashboard")({
 				});
 			})
 			.with("buyer", undefined, null, async () => {
-				const feed = await withFeedFetchQuery.query({
-					sort: [
-						{
-							field: "updatedAt",
-							direction: "desc",
-						},
-					],
-				});
-
+				/**
+				 * Send the user to default feed (see the logic there).
+				 *
+				 * By the time of writing, it's last visited feed.
+				 */
 				return redirect({
-					to: "/$locale/buyer/listing/list",
+					to: "/$locale/buyer/feed/default",
 					params: {
 						locale,
 					},
-					search: feed
-						? {
-								// feedId: feed.id,
-								query: feed.query,
-							}
-						: undefined,
 				});
 			})
 			.exhaustive();

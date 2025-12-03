@@ -42,6 +42,8 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
+			layout={"vertical-flex"}
+			gap={"xs"}
 			tone={"unset"}
 			theme={"unset"}
 			height={"auto"}
@@ -89,7 +91,6 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				gap={"xs"}
 				height={"auto"}
 				round={"lg"}
-				square={"md"}
 			>
 				{loading
 					? null
@@ -109,10 +110,12 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 												"w-full",
 												"border-none",
 												"gap-0",
+												"px-4",
+												"py-2",
+												"opacity-85",
 											],
 											token: [
 												"round.default",
-												"square.md",
 											],
 										},
 									},
@@ -129,7 +132,33 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 					/>
 				)}
 
-				{!loading && items.length === 0 && <Tx label={textEmpty} />}
+				{!loading && items.length === 0 && (
+					<Badge
+						tone={"neutral"}
+						theme={"light"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"justify-start",
+										"h-fit",
+										"w-full",
+										"border-none",
+										"gap-0",
+										"px-4",
+										"py-2",
+										"opacity-50",
+									],
+									token: [
+										"round.default",
+									],
+								},
+							},
+						}}
+					>
+						<Tx label={textEmpty} />
+					</Badge>
+				)}
 			</Container>
 		</Container>
 	);

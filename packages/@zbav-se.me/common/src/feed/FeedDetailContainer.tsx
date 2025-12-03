@@ -143,8 +143,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					feed={feed}
 				/>
 
-				<FeedTitleBadge feed={feed} />
-
 				<FeedLocationBadge
 					locale={locale}
 					feed={feed}
@@ -155,6 +153,8 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				<FeedConditionValueList feed={feed} />
 
 				<FeedAgeValueList feed={feed} />
+
+				<FeedTitleBadge feed={feed} />
 
 				{noDelete ? null : (
 					<ConfirmButton

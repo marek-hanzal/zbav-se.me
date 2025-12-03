@@ -6,17 +6,8 @@ import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import z from "zod";
 
-export const Route = createFileRoute("/$locale/buyer/listing/feed")({
-	validateSearch: z.object({
-		feedId: z.string().optional(),
-	}),
-	loaderDeps({ search: { feedId } }) {
-		return {
-			feedId,
-		};
-	},
+export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**
 	 * Simple stuff:
 	 *
@@ -25,27 +16,29 @@ export const Route = createFileRoute("/$locale/buyer/listing/feed")({
 	 *
 	 * The idea is to _ensure_ we've a feed a user _can_ customize
 	 */
-	async loader({ context: { queryClient }, params: { locale }, deps: { feedId } }) {
+	async loader({ context: { queryClient }, params: { locale } }) {
 		let feed = await withFeedFetchQuery
 			.query({
-				where: feedId
-					? {
-							id: feedId,
-						}
-					: undefined,
-				sort: feedId
-					? undefined
-					: [
-							{
-								field: "updatedAt",
-								direction: "desc",
-							},
-						],
+				sort: [
+					{
+						field: "updatedAt",
+						direction: "desc",
+					},
+				],
 			})
+			/**
+			 * We're getting 4o4, if the feed is not found
+			 */
 			.catch(() => undefined);
 
+		/**
+		 * No default? Ok, let's create default one
+		 */
 		if (!feed) {
 			feed = await withFeedCreateMutation.mutate(queryClient, {
+				/**
+				 * Translated feed name
+				 */
 				name: translator.text("Feed name (default)"),
 				query: {
 					where: {
@@ -56,13 +49,10 @@ export const Route = createFileRoute("/$locale/buyer/listing/feed")({
 		}
 
 		throw redirect({
-			to: "/$locale/buyer/listing/list",
+			to: "/$locale/buyer/feed/$id/list",
 			params: {
 				locale,
-			},
-			search: {
-				feedId: feed.id,
-				query: feed.query,
+				id: feed.id,
 			},
 		});
 	},

@@ -47,6 +47,19 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					}}
 					limit={feedCountLimit}
 					scrollToId={scrollToId}
+					linkTo={({ children, feed }) => {
+						return (
+							<LinkTo
+								to={"/$locale/buyer/feed/$id/list"}
+								params={{
+									locale,
+									id: feed.id,
+								}}
+							>
+								{children}
+							</LinkTo>
+						);
+					}}
 				/>
 			</TitleContainer>
 		);

@@ -44,7 +44,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 				{...props}
 			>
 				<LinkTo
-					to="/$locale/buyer/listing/feed"
+					to="/$locale/buyer/feed/default"
 					params={{
 						locale,
 					}}
