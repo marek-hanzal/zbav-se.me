@@ -279,7 +279,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						data={{
 							where: {
 								id: listing.id,
-								withIgnored: true,
 							},
 						}}
 						fallback={null}

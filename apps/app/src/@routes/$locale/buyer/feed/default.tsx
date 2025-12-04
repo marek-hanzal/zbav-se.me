@@ -43,6 +43,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 				query: {
 					where: {
 						withOwn: false,
+						withIgnored: false,
 					},
 				},
 			});

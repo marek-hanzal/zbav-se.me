@@ -59,9 +59,7 @@ export const withListingFetchApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<ListingSchema.Type, 200>(
-					yield* listingFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* listingFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

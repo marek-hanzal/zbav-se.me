@@ -1,7 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
 import { withListingFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";
@@ -20,7 +21,16 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 	disabled = false,
 	...props
 }) => {
+	const queryClient = useQueryClient();
 	const listingFlagToggleMutation = withListingFlagToggleMutation.useMutation({
+		onSuccess() {
+			withListingFetchQuery.invalidate(queryClient, {
+				where: {
+					id: listingId,
+				},
+			});
+			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
+		},
 		meta: {
 			mutationId: listingId,
 		},

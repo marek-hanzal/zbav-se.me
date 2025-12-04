@@ -1,7 +1,12 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
+import {
+	withListingCartCountQuery,
+	withListingFetchQuery,
+	withListingMetricsFetchQuery,
+} from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
 export namespace CartToggleButton {
@@ -12,7 +17,17 @@ export namespace CartToggleButton {
 }
 
 export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId, ...props }) => {
+	const queryClient = useQueryClient();
 	const listingCartToggle = withListingCartToggleMutation.useMutation({
+		onSuccess() {
+			withListingFetchQuery.invalidate(queryClient, {
+				where: {
+					id: listingId,
+				},
+			});
+			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
+			withListingCartCountQuery.invalidate(queryClient);
+		},
 		meta: {
 			mutationId: listingId,
 		},

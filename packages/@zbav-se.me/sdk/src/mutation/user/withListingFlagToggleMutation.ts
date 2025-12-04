@@ -6,8 +6,6 @@ import type {
 	tApiListingFlagToggleResponse,
 	tListingFlagToggle,
 } from "../../api/user/types.gen";
-import { withListingFetchQuery } from "../../query/user/withListingFetchQuery";
-import { withListingMetricsFetchQuery } from "../../query/user/withListingMetricsFetchQuery";
 
 export const withListingFlagToggleMutation = withMutation<
 	tListingFlagToggle,
@@ -28,8 +26,5 @@ export const withListingFlagToggleMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withListingMetricsFetchQuery,
-		withListingFetchQuery,
-	],
+	invalidate: [],
 });
