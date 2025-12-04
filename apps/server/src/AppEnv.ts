@@ -7,11 +7,6 @@ const ServerS3Schema = z.object({
 	SERVER_S3_BUCKET: z.string().min(1, "S3 bucket is required"),
 });
 
-const ServerUpstashSchema = z.object({
-	SERVER_UPSTASH_REDIS_URL: z.string().min(1, "Upstash URL is required"),
-	SERVER_UPSTASH_REDIS_TOKEN: z.string().min(1, "Upstash token is required"),
-});
-
 const ServerDatabaseSchema = z.object({
 	SERVER_DATABASE_URL: z.string().min(1, "Database URL is required"),
 });
@@ -35,7 +30,6 @@ const AppEnvSchema = z.object({
 	...ServerOriginSchema.shape,
 	...ServerOriginSchema.shape,
 	...ServerDatabaseSchema.shape,
-	...ServerUpstashSchema.shape,
 	...ServerS3Schema.shape,
 });
 
