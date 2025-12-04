@@ -212,8 +212,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 												query={query}
 												listing={data}
 												withScore={false}
-												withHero={false}
 												parentSheetId={detailSheetId}
+												tools={[]}
 											/>
 										);
 									}}

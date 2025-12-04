@@ -200,6 +200,10 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					withScore
 					query={query}
 					feedId={feedId}
+					tools={[
+						"destructive",
+						"hero",
+					]}
 				/>
 			</BottomSheet>
 		</>

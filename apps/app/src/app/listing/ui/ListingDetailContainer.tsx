@@ -23,6 +23,8 @@ import { ListingPrice } from "./ListingPrice";
 import { ScoreContainer } from "./ScoreContainer";
 
 export namespace ListingDetailContainer {
+	export type Tools = "destructive" | "hero";
+
 	export interface Props extends Container.Props {
 		locale: string;
 		feedId: string | undefined;
@@ -32,11 +34,11 @@ export namespace ListingDetailContainer {
 		 * Should the listing emit the score event?
 		 */
 		withScore: boolean;
-		withHero?: boolean;
 		/**
 		 * Used for bottom sheet stacking effect.
 		 */
 		parentSheetId: string | undefined;
+		tools: Tools[];
 	}
 }
 
@@ -46,8 +48,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	listing,
 	query,
 	withScore,
-	withHero = true,
 	parentSheetId,
+	tools,
 	tweak,
 	...props
 }) => {
@@ -91,12 +93,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		>
 			<Container
 				ui={"ListingDetailContainer-root"}
-				layout={"vertical-header-content"}
+				layout={"vertical-flex"}
 				gap={"lg"}
 				height={"content"}
 				{...props}
 			>
-				{withHero ? (
+				{tools.includes("hero") ? (
 					<>
 						<Container
 							ui={"ListingDetailContainer-image"}
@@ -190,17 +192,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						tone={"unset"}
 						theme={"unset"}
 						height={"content"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"py-0",
-									],
-								},
-							},
-						}}
 					>
-						{withHero ? null : (
+						{tools.includes("hero") ? null : (
 							<>
 								<BadgeValue
 									textLabel={"Listing price (label)"}
@@ -283,21 +276,12 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					</Container>
 				</VariantProvider>
 
-				{listing.isInCart ? null : (
+				{listing.isInCart || !tools.includes("destructive") ? null : (
 					<Container
 						layout={"vertical-flex"}
 						height={"content"}
 						gap={"sm"}
 						square={"md"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"pt-0",
-									],
-								},
-							},
-						}}
 					>
 						<ListingIgnoreButton
 							listing={listing}
