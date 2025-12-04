@@ -5,10 +5,10 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { CategorySelectionContainer } from "@zbav-se.me/common/category";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
+import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/category")({

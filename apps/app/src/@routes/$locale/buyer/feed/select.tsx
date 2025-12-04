@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { FeedListContainer } from "@zbav-se.me/common/feed";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
+import { FeedListContainer } from "~/app/feed/ui/FeedListContainer";
 
 export const Route = createFileRoute("/$locale/buyer/feed/select")({
 	validateSearch: z.object({
@@ -47,20 +47,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					}}
 					limit={feedCountLimit}
 					scrollToId={scrollToId}
-					linkTo={({ children, feed }) => {
-						return (
-							<LinkTo
-								to={"/$locale/buyer/feed/$id/list"}
-								params={{
-									locale,
-									id: feed.id,
-								}}
-								full
-							>
-								{children}
-							</LinkTo>
-						);
-					}}
 				/>
 			</TitleContainer>
 		);

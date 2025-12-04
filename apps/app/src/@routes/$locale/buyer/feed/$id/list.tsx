@@ -4,7 +4,6 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { FeedSetupButton } from "@zbav-se.me/common/feed";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
@@ -12,6 +11,7 @@ import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { useRef, useState } from "react";
 import z from "zod";
+import { FeedSetupButton } from "~/app/feed/ui/button/FeedSetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
 

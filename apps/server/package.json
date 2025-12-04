@@ -14,7 +14,6 @@
 		"@scalar/hono-api-reference": "0.9.25",
 		"@upstash/redis": "1.35.7",
 		"@use-pico/common": "workspace:*",
-		"@zbav-se.me/common": "workspace:*",
 		"better-auth": "1.4.5",
 		"effect": "3.19.8",
 		"hono": "4.10.7",

@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { ListingCartFeedList } from "@zbav-se.me/common/listing-cart-feed";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { ListingCartFeedList } from "~/app/listing-cart-feed/ui/ListingCartFeedList";
 
 export const Route = createFileRoute("/$locale/buyer/cart/list")({
 	component() {
@@ -31,20 +31,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 								direction: "desc",
 							},
 						],
-					}}
-					linkTo={({ feed, children }) => {
-						return (
-							<LinkTo
-								to={"/$locale/buyer/cart/$feedId/list"}
-								params={{
-									locale,
-									feedId: feed.id,
-								}}
-								full
-							>
-								{children}
-							</LinkTo>
-						);
 					}}
 				/>
 			</TitleContainer>

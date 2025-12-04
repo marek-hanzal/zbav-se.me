@@ -16,7 +16,8 @@
 			"!**/.vercel",
 			"!**/.tanstack",
 			"!**/sdk/src/api",
-			"!**/apps/blog/.docusaurus"
+			"!**/apps/blog/.docusaurus",
+			"!**/apps/blog/build"
 		]
 	},
 	"formatter": {

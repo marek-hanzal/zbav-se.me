@@ -3,11 +3,11 @@ import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
-import { ListingDetailContainer } from "@zbav-se.me/common/listing";
 import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
+import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
 import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export namespace ListingHeroContainer {

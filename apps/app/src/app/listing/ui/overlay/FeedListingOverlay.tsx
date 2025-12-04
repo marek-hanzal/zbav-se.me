@@ -1,8 +1,9 @@
 import { VariantProvider } from "@use-pico/cls";
-import { ListingLocation, ListingPrice } from "@zbav-se.me/common/listing";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
+import { ListingLocation } from "~/app/listing/ui/ListingLocation";
+import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 
 export namespace FeedListingOverlay {
 	export interface Props {
