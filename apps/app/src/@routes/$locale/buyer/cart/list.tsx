@@ -32,6 +32,19 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 							},
 						],
 					}}
+					linkTo={{
+						header: ({ feedId, children }) => (
+							<LinkTo
+								to={"/$locale/buyer/cart/$feedId/list"}
+								params={{
+									locale,
+									feedId,
+								}}
+							>
+								{children}
+							</LinkTo>
+						),
+					}}
 				/>
 			</TitleContainer>
 		);

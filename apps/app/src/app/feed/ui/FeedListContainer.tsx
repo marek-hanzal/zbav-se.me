@@ -7,6 +7,7 @@ import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
+import type { FeedItemBadge } from "~/app/feed/ui/FeedItemBadge";
 import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
 import { FeedNameContainer } from "./FeedNameContainer";
@@ -17,6 +18,8 @@ export namespace FeedListContainer {
 		query: tFeedQuery;
 		limit?: number;
 		scrollToId: string | undefined;
+        tools: FeedItemBadge.Tools[];
+		linkTo: FeedItemBadge.LinkTo;
 	}
 }
 
@@ -25,6 +28,8 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 	query,
 	limit = 10,
 	scrollToId,
+	tools,
+	linkTo,
 	...props
 }) => {
 	// TODO One nice day - move to standalone component
@@ -172,6 +177,8 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							query={query}
 							defaultOpenId={defaultOpenId}
 							scrollToId={scrollToId}
+							tools={tools}
+							linkTo={linkTo}
 						/>
 
 						{data.filter > 0 ? (

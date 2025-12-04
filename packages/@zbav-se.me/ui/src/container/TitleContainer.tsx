@@ -28,7 +28,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 		<Container
 			layout={"vertical-header-content-footer"}
 			square={"md"}
-			gap={"xs"}
+			gap={"sm"}
 			{...props}
 		>
 			{textTitle ? (
