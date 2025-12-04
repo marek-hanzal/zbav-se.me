@@ -74,7 +74,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 												action={
 													<div className="flex flex-col gap-2 items-center justify-center w-full">
 														<LinkTo
-															to={"/$locale/buyer/feed/select"}
+															to={"/$locale/buyer/feed/default"}
 															params={{
 																locale,
 															}}
@@ -101,6 +101,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 																tone={"secondary"}
 																label={"Go to home (link)"}
 																full
+																size={"xl"}
 															/>
 														</LinkTo>
 													</div>
@@ -124,6 +125,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 														iconEnabled={ArrowLeftIcon}
 														tone={"secondary"}
 														label={"Back to cart (link)"}
+														size={"xl"}
 													/>
 												</LinkTo>
 											}
@@ -156,11 +158,12 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 											tone={"secondary"}
 											label={"Back to cart (link)"}
 											full
+											size={"xl"}
 										/>
 									</LinkTo>
 
 									<LinkTo
-										to={"/$locale/buyer/feed/select"}
+										to={"/$locale/buyer/feed/default"}
 										params={{
 											locale,
 										}}
@@ -172,6 +175,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 											tone={"secondary"}
 											label={"Go to feed (link)"}
 											full
+											size={"xl"}
 										/>
 									</LinkTo>
 								</div>
