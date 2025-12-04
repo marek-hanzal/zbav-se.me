@@ -49,7 +49,7 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 
 			<CartToggleButton
 				feedId={feedId}
-				listing={listing}
+				listingId={listing.id}
 			/>
 
 			<ListingIgnoreButton

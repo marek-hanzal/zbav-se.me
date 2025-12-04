@@ -131,7 +131,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 								<CartToggleButton
 									tone={"secondary"}
 									feedId={feedId}
-									listing={listing}
+									listingId={listing.id}
 									label={null}
 									menu={false}
 									snapTo={"top-right"}

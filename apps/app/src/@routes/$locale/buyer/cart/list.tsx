@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 					query={{
 						sort: [
 							{
-								field: "updatedAt",
+								field: "createdAt",
 								direction: "desc",
 							},
 						],
