@@ -344,9 +344,7 @@
     value: unused
 80f1cb48a13ac3f252655cc343aabaf2f428cf49d2ed39fde9b21b3e:
     ref: No more listings to show (message)
-    value:
-        To je prozatím vše - zkuste jiné nastavení filtrů nebo prozkoumat další
-        možnosti vyhledávání!
+    value: Zkus jiné nastavení seznamu nebo 
 85ac6be17be3adb14aa92cb457175f48d0dd61a23f5766a50c160d51:
     ref: No listings (title)
     value: Kde nic, tu nic. Ale všechno bude, všechno bude!

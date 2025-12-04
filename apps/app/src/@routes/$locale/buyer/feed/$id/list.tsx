@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -171,21 +171,88 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 											<Status
 												icon={DeadEndIcon}
 												textTitle={"That's all for now (title)"}
-												textMessage={"No more listings to show (message)"}
 												action={
-													<LinkTo
-														to={"/$locale/buyer"}
-														params={{
-															locale,
-														}}
-													>
-														<Button
-															iconEnabled={ArrowLeftIcon}
-															tone={"secondary"}
-															label={"Back to home (link)"}
-														/>
-													</LinkTo>
+													<>
+														<FeedSetupButton
+															locale={locale}
+															feed={feed}
+															defaultOpen={false}
+															noDelete
+															state={{
+																value: isFeedSettings,
+																set: setIsFeedSettings,
+															}}
+															size={"xl"}
+															menu
+														>
+															<LinkTo
+																to={"/$locale/buyer/feed/$id/list"}
+																params={{
+																	locale,
+																	id: feed.id,
+																}}
+																resetScroll
+																full
+																onClick={() => {
+																	setIsFeedSettings(false);
+																	containerRef.current?.scrollTo({
+																		top: 0,
+																		behavior: "instant",
+																	});
+																}}
+															>
+																<Button
+																	iconEnabled={ListingIcon}
+																	tone={"primary"}
+																	theme={"light"}
+																	label={
+																		"Refresh listings (button)"
+																	}
+																	size={"xl"}
+																	menu
+																/>
+															</LinkTo>
+														</FeedSetupButton>
+
+														<LinkTo
+															to={"/$locale/buyer"}
+															params={{
+																locale,
+															}}
+															full
+														>
+															<Button
+																iconEnabled={ArrowRightIcon}
+																iconPosition={"right"}
+																tone={"primary"}
+																label={"Back to home (link)"}
+																size={"xl"}
+																menu
+																tweak={{
+																	slot: {
+																		root: {
+																			class: [
+																				"justify-between",
+																			],
+																		},
+																	},
+																}}
+															/>
+														</LinkTo>
+													</>
 												}
+												tweak={{
+													slot: {
+														action: {
+															class: [
+																"flex",
+																"flex-col",
+																"gap-2",
+																"w-full",
+															],
+														},
+													},
+												}}
 											/>
 										</Container>
 									}
