@@ -15,6 +15,11 @@
 			"cache": false,
 			"persistent": true
 		},
+		"knip": {
+			"outputs": [],
+			"outputLogs": "new-only",
+			"cache": false
+		},
 		"typecheck": {
 			"inputs": [
 				"src/**",

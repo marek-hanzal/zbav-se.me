@@ -10,6 +10,7 @@
 		"translations": "turbo run translations --parallel",
 		"format": "biome format --write .",
 		"lint": "biome check --write .",
+		"knip": "turbo run knip --parallel",
 		"typecheck": "turbo run typecheck --parallel",
 		"update": "bun update --linker=isolated",
 		"sp:fix": "bun x syncpack fix-mismatches",

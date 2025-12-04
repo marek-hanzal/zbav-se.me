@@ -70,23 +70,11 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						if (id.includes("react-dom")) {
 							return "react-dom";
 						}
-						if (id.includes("@tanstack/react-form")) {
-							return "tanstack-form";
-						}
 						if (id.includes("zod")) {
 							return "zod";
 						}
-						if (id.includes("gsap")) {
-							return "gsap";
-						}
-						if (id.includes("react-modal-sheet")) {
-							return "react-modal-sheet";
-						}
 						if (id.includes("sonner")) {
 							return "sonner";
-						}
-						if (id.includes("motion")) {
-							return "motion";
 						}
 						if (id.includes("js-sha256")) {
 							return "js-sha256";
@@ -120,9 +108,6 @@ export default defineConfig(({ isSsrBuild, mode }) => {
 						}
 						if (id.includes("use-debounce")) {
 							return "use-debounce";
-						}
-						if (id.includes("zustand")) {
-							return "zustand";
 						}
 						if (id.includes("@escapace")) {
 							return "escapace";
