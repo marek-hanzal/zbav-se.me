@@ -92,7 +92,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			<Container
 				ui={"ListingDetailContainer-root"}
 				layout={"vertical-header-content"}
-				gap={"sm"}
+				gap={"lg"}
 				height={"content"}
 				{...props}
 			>
@@ -156,6 +156,15 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							height={"content"}
 							gap={"sm"}
 							square={"md"}
+							tweak={{
+								slot: {
+									root: {
+										class: [
+											"py-0",
+										],
+									},
+								},
+							}}
 						>
 							<TransactionButton
 								locale={locale}
@@ -181,6 +190,15 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						tone={"unset"}
 						theme={"unset"}
 						height={"content"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"py-0",
+									],
+								},
+							},
+						}}
 					>
 						{withHero ? null : (
 							<>
@@ -264,26 +282,35 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						/>
 					</Container>
 				</VariantProvider>
+
+				{listing.isInCart ? null : (
+					<Container
+						layout={"vertical-flex"}
+						height={"content"}
+						gap={"sm"}
+						square={"md"}
+						tweak={{
+							slot: {
+								root: {
+									class: [
+										"pt-0",
+									],
+								},
+							},
+						}}
+					>
+						<ListingIgnoreButton
+							listing={listing}
+							query={query}
+						/>
+
+						<ListingFlagButton
+							listing={listing}
+							query={query}
+						/>
+					</Container>
+				)}
 			</Container>
-
-			{listing.isInCart ? null : (
-				<Container
-					layout={"vertical-flex"}
-					height={"content"}
-					gap={"sm"}
-					square={"md"}
-				>
-					<ListingIgnoreButton
-						listing={listing}
-						query={query}
-					/>
-
-					<ListingFlagButton
-						listing={listing}
-						query={query}
-					/>
-				</Container>
-			)}
 
 			<BottomSheet
 				isOpen={score}

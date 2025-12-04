@@ -121,6 +121,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						<Button
 							iconEnabled={PlusIcon}
 							tone={"link"}
+							theme={"light"}
 							onClick={() => setIsMenu((prev) => !prev)}
 						/>
 
