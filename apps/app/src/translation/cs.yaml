@@ -192,6 +192,9 @@
 45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
     ref: Listing Score - Views (label)
     value: Počet zobrazení v inzerátu (detail)
+46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
+    ref: Ignore listing (button)
+    value: Ignorovat inzerát
 48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
     ref: Price - free (title)
     value: Zdarma
@@ -213,9 +216,6 @@
 4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
     ref: currency
     value: currency
-508db448927e219e075aaea16d106cb569b057ce5a0b44588ef428e0:
-    ref: Second tap to add to cart (toast)
-    value: Druhým kliknutím potvrď přidání do košíku
 5568cb09b7ca549979ce1793149f2bb8e8453eb271721effca13fff0:
     ref: Error creating first feed (toast)
     value: Seznam se nepodařilo vytvořit!
@@ -279,9 +279,6 @@
 675e9e5040b254589598079b8eb117d96354c925d2958af3b3234864:
     ref: Error updating feed name (toast)
     value: Název seznamu se nepovedlo upravit.
-6810972e1b5c962b2d6bba8f1d42faf0373fc4a6f038a0d748551d62:
-    ref: Listing added to your cart (toast)
-    value: Inzerát byl úspěšně přidán do tvého košíku.
 6970895fee104309ad55fbd48566209a5afacadfc46938c310e9f4c6:
     ref: Listing - start (button)
     value: Začít
@@ -336,6 +333,9 @@
 7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
     ref: Open gallery (button)
     value: Otevřít galerii
+7b76eaae7e44c7090565c9a3f68a77cc082807fbf7f1c1111dfadb29:
+    ref: Unignore listing (button)
+    value: Zrušit ignoraci
 7bc80170fb044a52d59f0998e4d5bfba4cd157138e9bd4a3cef6d7cb:
     ref: Buyer info (label)
     value: Informace o kupujícím
@@ -633,9 +633,9 @@ ca33feea33ff2ffa8595751f246191c95de3c2d4fe9b88a743783d8c:
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
     ref: Feed location (title)
     value: Tvoje lokalita
-cc3bae8a5293984c1b9bb60663e77dab3e20843eff3fe09269b7f56f:
-    ref: Error adding listing to cart (toast)
-    value: Inzerát se nepodařilo přidat do košíku!
+cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
+    ref: Flag listing (button)
+    value: Nahlásit inzerát
 cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
     ref: Feed - save (button)
     value: Uložit
@@ -645,6 +645,9 @@ ccc9608f33bbd658f6abc07176e9cb33028027f216c81d70b4616401:
 ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
     ref: Upload - disabled (placeholder)
     value: Musíš vybrat předchozí fotku pro odemčení této.
+ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
+    ref: Unflag listing (button)
+    value: Zrušit nahlášení
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
     ref: Location not found (badge)
     value: Adres známe hodně, ale tuhle ne
@@ -699,9 +702,6 @@ dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
 dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
     ref: md
     value: md
-e0d56d0ac4aef08003a7c95e72ee63de7ed548042e08faf2d74ef740:
-    ref: Listing removed from your cart (toast)
-    value: Inzerát byl úspěšně odebrán z košíku.
 e164d6b2893d2c34341349e7efb9ec4735b1e3b2f983a6181d0003fc:
     ref: Transaction accepted - seller (label)
     value: Transaction accepted - seller (label)
@@ -757,9 +757,6 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Popis inzerátu
-fe633b89a7442d13ce7a77b20e737f97621b035d39f11fd18378be56:
-    ref: Second tap to remove from cart (toast)
-    value: Druhým kliknutím potvrď odebrání z košíku
 ff197626edbd1fc74cd98027a66223dbad02ff75c217da7af38d83a1:
     ref: No more listings to show - cart (message)
     value: |

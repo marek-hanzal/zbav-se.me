@@ -1,19 +1,19 @@
 import { Button } from "@use-pico/client/ui/button";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { GallerySheet } from "./GallerySheet";
+import { GalleryUploadSheet } from "./GalleryUploadSheet";
 
 export namespace GalleryUploadButton {
-	export interface Props<TData extends GallerySheet.Uploads>
+	export interface Props<TData extends GalleryUploadSheet.Uploads>
 		extends Button.Props,
 			Pick<
-				GallerySheet.Props<TData>,
+				GalleryUploadSheet.Props<TData>,
 				"withMutation" | "toMutation" | "onSuccess" | "onCancel" | "state"
 			> {
 		//
 	}
 }
 
-export const GalleryUploadButton = <TData extends GallerySheet.Uploads>({
+export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 	withMutation,
 	toMutation,
 	onSuccess,
@@ -34,7 +34,7 @@ export const GalleryUploadButton = <TData extends GallerySheet.Uploads>({
 				{...props}
 			/>
 
-			<GallerySheet
+			<GalleryUploadSheet
 				withMutation={withMutation}
 				toMutation={toMutation}
 				onSuccess={onSuccess}

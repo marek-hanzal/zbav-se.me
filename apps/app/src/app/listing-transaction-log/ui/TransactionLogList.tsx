@@ -207,11 +207,13 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									{({ data }) => {
 										return (
 											<ListingDetailContainer
-												parentSheetId={detailSheetId}
 												locale={locale}
+												feedId={undefined}
+												query={query}
 												listing={data}
 												withScore={false}
 												withHero={false}
+												parentSheetId={detailSheetId}
 											/>
 										);
 									}}

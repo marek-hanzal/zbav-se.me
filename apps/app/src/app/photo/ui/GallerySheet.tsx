@@ -1,108 +1,66 @@
-import type { withMutation } from "@use-pico/client/mutation";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { tvc } from "@use-pico/cls";
-import type { StateType } from "@use-pico/common/type";
-import { useState } from "react";
-import { GalleryUpload } from "./GalleryUpload";
+import { Fade } from "@use-pico/client/ui/fade";
+import type { tUpload } from "@zbav-se.me/sdk/api/user";
+import { HeroImage } from "@zbav-se.me/ui/img";
+import { type FC, useRef } from "react";
 
 export namespace GallerySheet {
-	export interface Uploads {
-		uploadIds: string[];
-	}
-
-	export interface Props<TData extends Uploads>
-		extends Omit<BottomSheet.Props, "isOpen" | "onClose"> {
-		withMutation: withMutation.Api<TData, any, any>;
-		toMutation(uploadIds: string[]): TData;
-		//
-		state: StateType.State<boolean>;
-		//
-		onSuccess(): void;
-		onCancel(): void;
+	export interface Props extends BottomSheet.Props {
+		uploads: tUpload[];
 	}
 }
 
-export const GallerySheet = <TData extends GallerySheet.Uploads>({
-	withMutation,
-	toMutation,
-	onSuccess,
-	onCancel,
-	state,
-	...props
-}: GallerySheet.Props<TData>) => {
-	const [uploadIds, setUploadIds] = useState<string[]>([]);
-	const mutation = withMutation.useMutation({
-		async onPostMutation() {
-			state.set(false);
-			setUploadIds([]);
-			onSuccess();
-		},
-	});
+export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
+	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
 		<BottomSheet
+			ui={"GalleryButton-bottom-sheet"}
 			detent={"full"}
-			isOpen={state.value}
-			onClose={() => state.set(false)}
+			header={{
+				close: true,
+				title: "Gallery (title)",
+			}}
+			contentProps={{
+				disableScroll: true,
+			}}
 			{...props}
 		>
 			<Container
-				layout={"vertical-content-footer"}
-				gap={"md"}
-				square={"md"}
+				ui={"GalleryButton-root"}
+				position={"relative"}
+				height={"fit"}
 				tone={"unset"}
 				theme={"unset"}
 			>
-				<GalleryUpload
-					state={{
-						value: uploadIds,
-						set: setUploadIds,
-					}}
-					limit={1}
+				<Fade
+					scrollableRef={containerRef}
+					theme={"dark"}
 				/>
 
-				<div
-					className={tvc([
-						"flex",
-						"flex-row",
-						"gap-2",
-						"items-center",
-						"justify-center",
-					])}
+				<Container
+					ref={containerRef}
+					ui={"GalleryButton-container"}
+					layout={"vertical-full"}
+					gap={"sm"}
+					height={"content"}
+					snap={"vertical-center"}
+					square={"md"}
+					tone={"unset"}
+					theme={"unset"}
 				>
-					<ConfirmButton
-						label={"Cancel (button)"}
-						tone={"primary"}
-						theme={"light"}
-						size={"xl"}
-						full
-						confirmProps={{
-							tone: "danger",
-							theme: "dark",
-							onClick() {
-								state.set(false);
-								setUploadIds([]);
-								onCancel();
-							},
-						}}
-						disabled={mutation.isPending}
-					/>
-
-					<Button
-						label={"Upload gallery (button)"}
-						size={"xl"}
-						full
-						tone={"secondary"}
-						theme={"light"}
-						disabled={mutation.isPending || uploadIds.length === 0}
-						loading={mutation.isPending}
-						onClick={() => {
-							mutation.mutate(toMutation(uploadIds));
-						}}
-					/>
-				</div>
+					{uploads.map((upload) => {
+						return (
+							<HeroImage
+								key={upload.id}
+								src={upload.url}
+								alt={"Gallery image"}
+								round
+							/>
+						);
+					})}
+				</Container>
 			</Container>
 		</BottomSheet>
 	);

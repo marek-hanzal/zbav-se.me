@@ -21,7 +21,6 @@ export namespace ListingDetailMenu {
 		 */
 		query: tListingQuery;
 		parentSheetId: string | undefined;
-		tools?: Tools[];
 	}
 }
 
@@ -31,10 +30,6 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	listing,
 	query,
 	parentSheetId,
-	tools = [
-		"transaction",
-		"cart",
-	],
 	...props
 }) => {
 	return (
@@ -46,20 +41,16 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 		>
 			<GalleryButton uploads={listing.gallery.items.map((item) => item.upload)} />
 
-			{tools.includes("transaction") ? (
-				<TransactionButton
-					locale={locale}
-					listing={listing}
-					parentSheetId={parentSheetId}
-				/>
-			) : null}
+			<TransactionButton
+				locale={locale}
+				listing={listing}
+				parentSheetId={parentSheetId}
+			/>
 
-			{tools.includes("cart") ? (
-				<CartToggleButton
-					feedId={feedId}
-					listing={listing}
-				/>
-			) : null}
+			<CartToggleButton
+				feedId={feedId}
+				listing={listing}
+			/>
 
 			<ListingIgnoreButton
 				listing={listing}

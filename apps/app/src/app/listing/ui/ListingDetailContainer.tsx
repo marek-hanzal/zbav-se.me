@@ -6,13 +6,18 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { CartToggleButton } from "~/app/listing/ui/button/CartToggleButton";
+import { ListingFlagButton } from "~/app/listing/ui/button/ListingFlagButton";
+import { ListingIgnoreButton } from "~/app/listing/ui/button/ListingIgnoreButton";
+import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
+import { GallerySheet } from "~/app/photo/ui/GallerySheet";
 import { ListingLocation } from "./ListingLocation";
 import { ListingPrice } from "./ListingPrice";
 import { ScoreContainer } from "./ScoreContainer";
@@ -20,7 +25,9 @@ import { ScoreContainer } from "./ScoreContainer";
 export namespace ListingDetailContainer {
 	export interface Props extends Container.Props {
 		locale: string;
+		feedId: string | undefined;
 		listing: tListing;
+		query: tListingQuery;
 		/**
 		 * Should the listing emit the score event?
 		 */
@@ -35,8 +42,9 @@ export namespace ListingDetailContainer {
 
 export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	locale,
+	feedId,
 	listing,
-	children,
+	query,
 	withScore,
 	withHero = true,
 	parentSheetId,
@@ -70,7 +78,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		listingScoreCreateMutation,
 	]);
 
-	const [score, setScore] = useState<boolean>(false);
+	const [score, setScore] = useState(false);
+	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
 		<VariantProvider
@@ -116,21 +125,44 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 								snapTo={"bottom"}
 							/>
 
+							{feedId ? (
+								<CartToggleButton
+									tone={"secondary"}
+									feedId={feedId}
+									listing={listing}
+									label={null}
+									menu={false}
+									snapTo={"top-right"}
+									round={"full"}
+									size={"lg"}
+								/>
+							) : null}
+
 							<HeroImage
 								src={hero.upload.url}
 								alt={`Hero image for listing ${listing.id}`}
+								onClick={() => setIsGalleryOpen((prev) => !prev)}
+							/>
+
+							<GallerySheet
+								uploads={listing.gallery.items.map((item) => item.upload)}
+								isOpen={isGalleryOpen}
+								onClose={() => setIsGalleryOpen(false)}
 							/>
 						</Container>
 
-						{children ? (
-							<Container
-								ui={"ListingDetailContainer-content"}
-								square={"md"}
-								height={"content"}
-							>
-								{children}
-							</Container>
-						) : null}
+						<Container
+							layout={"vertical-flex"}
+							height={"content"}
+							gap={"sm"}
+							square={"md"}
+						>
+							<TransactionButton
+								locale={locale}
+								listing={listing}
+								parentSheetId={parentSheetId}
+							/>
+						</Container>
 					</>
 				) : null}
 
@@ -233,6 +265,25 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					</Container>
 				</VariantProvider>
 			</Container>
+
+			{listing.isInCart ? null : (
+				<Container
+					layout={"vertical-flex"}
+					height={"content"}
+					gap={"sm"}
+					square={"md"}
+				>
+					<ListingIgnoreButton
+						listing={listing}
+						query={query}
+					/>
+
+					<ListingFlagButton
+						listing={listing}
+						query={query}
+					/>
+				</Container>
+			)}
 
 			<BottomSheet
 				isOpen={score}

@@ -14,7 +14,7 @@ import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { GallerySheet } from "~/app/photo/ui/GallerySheet";
+import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
 import { FeedAgeValueList } from "./FeedAgeValueList";
 import { FeedCategoryBadge } from "./FeedCategoryBadge";
 import { FeedConditionValueList } from "./FeedConditionValueList";
@@ -122,7 +122,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					</Badge>
 				)}
 
-				<GallerySheet
+				<GalleryUploadSheet
 					withMutation={withFeedGalleryCreateMutation}
 					toMutation={(uploadIds) => ({
 						feedId: feed.id,

@@ -8,7 +8,7 @@ import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
-import { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
+import type { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export namespace ListingHeroContainer {
 	export namespace Overlay {
@@ -198,16 +198,9 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					locale={locale}
 					listing={listing}
 					withScore
-				>
-					<ListingDetailMenu
-						parentSheetId={detailSheetId}
-						locale={locale}
-						listing={listing}
-						query={query}
-						tools={tools}
-						feedId={feedId}
-					/>
-				</ListingDetailContainer>
+					query={query}
+					feedId={feedId}
+				/>
 			</BottomSheet>
 		</>
 	);
