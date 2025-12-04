@@ -3,6 +3,7 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
+        platform: linux/amd64
         container_name: zbav-se-postgres
         restart: always
         ports:
