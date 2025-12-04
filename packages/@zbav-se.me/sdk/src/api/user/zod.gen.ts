@@ -1285,10 +1285,22 @@ export const zLatLon = z.object({
 export type zLatLon = z.infer<typeof zLatLon>;
 
 /**
+ * ID of the feed
+ */
+export const zFeedId = z.string().min(1).register(z.globalRegistry, {
+    description: 'ID of the feed'
+});
+
+export type zFeedId = z.infer<typeof zFeedId>;
+
+/**
  * Meta data for listing collection
  */
 export const zListingMeta = z.object({
-    latLon: z.optional(zLatLon)
+    latLon: z.optional(zLatLon),
+    feedId: z.optional(zFeedId.and(z.unknown().register(z.globalRegistry, {
+        description: 'Reference feed to do counts e.g. like is in cart'
+    })))
 }).register(z.globalRegistry, {
     description: 'Meta data for listing collection'
 });
@@ -1323,6 +1335,15 @@ export const zListingSort = z.object({
 });
 
 export type zListingSort = z.infer<typeof zListingSort>;
+
+/**
+ * Filter listings based on the provided feed IDs
+ */
+export const zFeedIdIn = z.array(z.string().min(1)).register(z.globalRegistry, {
+    description: 'Filter listings based on the provided feed IDs'
+});
+
+export type zFeedIdIn = z.infer<typeof zFeedIdIn>;
 
 /**
  * This filter matches listings with currency codes in the provided array
@@ -1430,6 +1451,8 @@ export const zListingWhere = z.object({
     inCart: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Show listing that are in the user\'s cart'
     })),
+    feedId: z.optional(zFeedId),
+    feedIdIn: z.optional(zFeedIdIn),
     transaction: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Show listings that are in the user\'s transaction'
     }))
@@ -1500,6 +1523,8 @@ export const zListingFilter = z.object({
     inCart: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Show listing that are in the user\'s cart'
     })),
+    feedId: z.optional(zFeedId),
+    feedIdIn: z.optional(zFeedIdIn),
     transaction: z.optional(z.boolean().register(z.globalRegistry, {
         description: 'Show listings that are in the user\'s transaction'
     }))

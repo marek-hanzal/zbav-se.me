@@ -118,5 +118,31 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 		);
 	}
 
+	if (where.feedId) {
+		const feedId = where.feedId;
+		query = query.where(({ exists, selectFrom }) =>
+			exists(
+				selectFrom("listing_cart as lc")
+					.select("lc.listingId")
+					.whereRef("lc.listingId", "=", "l.id")
+					.where("lc.userId", "=", userId)
+					.where("lc.feedId", "=", feedId),
+			),
+		);
+	}
+
+	if (where.feedIdIn && where.feedIdIn.length > 0) {
+		const feedIdIn = where.feedIdIn;
+		query = query.where(({ exists, selectFrom }) =>
+			exists(
+				selectFrom("listing_cart as lc")
+					.select("lc.listingId")
+					.whereRef("lc.listingId", "=", "l.id")
+					.where("lc.userId", "=", userId)
+					.where("lc.feedId", "in", feedIdIn),
+			),
+		);
+	}
+
 	return query;
 };

@@ -39,7 +39,6 @@ import { Route as LocaleSellerListingWizardAgeRouteImport } from './@routes/$loc
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
 import { Route as LocaleBuyerFeedIdListRouteImport } from './@routes/$locale/buyer/feed/$id/list'
 import { Route as LocaleBuyerCartFeedIdListRouteImport } from './@routes/$locale/buyer/cart/$feedId/list'
-import { Route as LocaleBuyerCartCategoryIdFeedRouteImport } from './@routes/$locale/buyer/cart/category/$id/feed'
 
 const LocaleRoute = LocaleRouteImport.update({
   id: '/$locale',
@@ -205,12 +204,6 @@ const LocaleBuyerCartFeedIdListRoute =
     path: '/buyer/cart/$feedId/list',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleBuyerCartCategoryIdFeedRoute =
-  LocaleBuyerCartCategoryIdFeedRouteImport.update({
-    id: '/buyer/cart/category/$id/feed',
-    path: '/buyer/cart/category/$id/feed',
-    getParentRoute: () => LocaleRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -243,7 +236,6 @@ export interface FileRoutesByFullPath {
   '/$locale/seller/listing/wizard/start': typeof LocaleSellerListingWizardStartRoute
   '/$locale/seller/listing/wizard/submit': typeof LocaleSellerListingWizardSubmitRoute
   '/$locale/seller/listing/wizard/title': typeof LocaleSellerListingWizardTitleRoute
-  '/$locale/buyer/cart/category/$id/feed': typeof LocaleBuyerCartCategoryIdFeedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -275,7 +267,6 @@ export interface FileRoutesByTo {
   '/$locale/seller/listing/wizard/start': typeof LocaleSellerListingWizardStartRoute
   '/$locale/seller/listing/wizard/submit': typeof LocaleSellerListingWizardSubmitRoute
   '/$locale/seller/listing/wizard/title': typeof LocaleSellerListingWizardTitleRoute
-  '/$locale/buyer/cart/category/$id/feed': typeof LocaleBuyerCartCategoryIdFeedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -309,7 +300,6 @@ export interface FileRoutesById {
   '/$locale/seller/listing/wizard/start': typeof LocaleSellerListingWizardStartRoute
   '/$locale/seller/listing/wizard/submit': typeof LocaleSellerListingWizardSubmitRoute
   '/$locale/seller/listing/wizard/title': typeof LocaleSellerListingWizardTitleRoute
-  '/$locale/buyer/cart/category/$id/feed': typeof LocaleBuyerCartCategoryIdFeedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -344,7 +334,6 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard/start'
     | '/$locale/seller/listing/wizard/submit'
     | '/$locale/seller/listing/wizard/title'
-    | '/$locale/buyer/cart/category/$id/feed'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -376,7 +365,6 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard/start'
     | '/$locale/seller/listing/wizard/submit'
     | '/$locale/seller/listing/wizard/title'
-    | '/$locale/buyer/cart/category/$id/feed'
   id:
     | '__root__'
     | '/'
@@ -409,7 +397,6 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/wizard/start'
     | '/$locale/seller/listing/wizard/submit'
     | '/$locale/seller/listing/wizard/title'
-    | '/$locale/buyer/cart/category/$id/feed'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -629,13 +616,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleBuyerCartFeedIdListRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/cart/category/$id/feed': {
-      id: '/$locale/buyer/cart/category/$id/feed'
-      path: '/buyer/cart/category/$id/feed'
-      fullPath: '/$locale/buyer/cart/category/$id/feed'
-      preLoaderRoute: typeof LocaleBuyerCartCategoryIdFeedRouteImport
-      parentRoute: typeof LocaleRoute
-    }
   }
 }
 
@@ -668,7 +648,6 @@ interface LocaleRouteChildren {
   LocaleSellerListingWizardStartRoute: typeof LocaleSellerListingWizardStartRoute
   LocaleSellerListingWizardSubmitRoute: typeof LocaleSellerListingWizardSubmitRoute
   LocaleSellerListingWizardTitleRoute: typeof LocaleSellerListingWizardTitleRoute
-  LocaleBuyerCartCategoryIdFeedRoute: typeof LocaleBuyerCartCategoryIdFeedRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
@@ -704,7 +683,6 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleSellerListingWizardStartRoute: LocaleSellerListingWizardStartRoute,
   LocaleSellerListingWizardSubmitRoute: LocaleSellerListingWizardSubmitRoute,
   LocaleSellerListingWizardTitleRoute: LocaleSellerListingWizardTitleRoute,
-  LocaleBuyerCartCategoryIdFeedRoute: LocaleBuyerCartCategoryIdFeedRoute,
 }
 
 const LocaleRouteWithChildren =

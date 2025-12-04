@@ -141,6 +141,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									feedId={feed.id}
 									query={{
 										...feed.query,
+										meta: {
+											feedId: feed.id,
+										},
 										/**
 										 * Hardcoded cursor to fetch the first page; we're assuming an user won't go through
 										 * thousands of listings, so we can do hard cap here.

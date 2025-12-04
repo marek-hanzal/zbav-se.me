@@ -79,6 +79,12 @@ export const ListingFilterSchema = z
 		inCart: z.boolean().optional().openapi({
 			description: "Show listing that are in the user's cart",
 		}),
+		feedId: z.string().min(1, "Feed ID is required").optional().openapi("FeedId", {
+			description: "ID of the feed",
+		}),
+		feedIdIn: z.array(z.string().min(1, "Feed ID is required")).optional().openapi("FeedIdIn", {
+			description: "Filter listings based on the provided feed IDs",
+		}),
 		//
 		transaction: z.boolean().optional().openapi({
 			description: "Show listings that are in the user's transaction",

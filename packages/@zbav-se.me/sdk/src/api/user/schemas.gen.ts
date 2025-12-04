@@ -1479,8 +1479,21 @@ export const sListingMeta = {
     properties: {
         latLon: {
             $ref: '#/components/schemas/LatLon'
+        },
+        feedId: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/FeedId'
+                },
+                {}
+            ]
         }
     }
+} as const;
+
+export const sFeedId = {
+    type: 'string',
+    minLength: 1
 } as const;
 
 export const sListingSortField = {
@@ -1607,9 +1620,23 @@ export const sListingWhere = {
         inCart: {
             type: 'boolean'
         },
+        feedId: {
+            $ref: '#/components/schemas/FeedId'
+        },
+        feedIdIn: {
+            $ref: '#/components/schemas/FeedIdIn'
+        },
         transaction: {
             type: 'boolean'
         }
+    }
+} as const;
+
+export const sFeedIdIn = {
+    type: 'array',
+    items: {
+        type: 'string',
+        minLength: 1
     }
 } as const;
 
@@ -1737,6 +1764,12 @@ export const sListingFilter = {
         },
         inCart: {
             type: 'boolean'
+        },
+        feedId: {
+            $ref: '#/components/schemas/FeedId'
+        },
+        feedIdIn: {
+            $ref: '#/components/schemas/FeedIdIn'
         },
         transaction: {
             type: 'boolean'

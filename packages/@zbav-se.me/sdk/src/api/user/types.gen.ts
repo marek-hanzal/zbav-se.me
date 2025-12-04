@@ -1186,7 +1186,13 @@ export type tLatLon = {
  */
 export type tListingMeta = {
     latLon?: tLatLon;
+    feedId?: tFeedId & unknown;
 };
+
+/**
+ * ID of the feed
+ */
+export type tFeedId = string;
 
 /**
  * Field of the listing sort
@@ -1292,11 +1298,18 @@ export type tListingWhere = {
      * Show listing that are in the user's cart
      */
     inCart?: boolean;
+    feedId?: tFeedId;
+    feedIdIn?: tFeedIdIn;
     /**
      * Show listings that are in the user's transaction
      */
     transaction?: boolean;
 };
+
+/**
+ * Filter listings based on the provided feed IDs
+ */
+export type tFeedIdIn = Array<string>;
 
 /**
  * This filter matches listings with currency codes in the provided array
@@ -1401,6 +1414,8 @@ export type tListingFilter = {
      * Show listing that are in the user's cart
      */
     inCart?: boolean;
+    feedId?: tFeedId;
+    feedIdIn?: tFeedIdIn;
     /**
      * Show listings that are in the user's transaction
      */

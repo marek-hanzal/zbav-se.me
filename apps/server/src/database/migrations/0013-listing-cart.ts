@@ -42,8 +42,9 @@ export const ListingCartMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("listing_cart_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("listing_cart_[userId-feedId-listingId]_unique_idx", [
 				"userId",
+				"feedId",
 				"listingId",
 			])
 			.execute();

@@ -29,7 +29,11 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 			>
 				{({ data }) => {
 					return (
-						<Container ui={"ListingCartFeedList-root"}>
+						<Container
+							ui={"ListingCartFeedList-root"}
+							layout={"vertical-flex"}
+							gap={"md"}
+						>
 							{data.data.map((feed) => (
 								<FeedItemBadge
 									key={feed.id}

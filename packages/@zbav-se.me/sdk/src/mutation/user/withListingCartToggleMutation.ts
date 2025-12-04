@@ -6,8 +6,10 @@ import type {
 	tApiListingCartToggleResponse,
 	tListingCartToggle,
 } from "../../api/user/types.gen";
-import { withListingCollectionQuery, withListingFetchQuery } from "../../query/user";
 import { withListingCartCountQuery } from "../../query/user/withListingCartCountQuery";
+import { withListingCartFeedCollectionQuery } from "../../query/user/withListingCartFeedCollectionQuery";
+import { withListingCollectionQuery } from "../../query/user/withListingCollectionQuery";
+import { withListingFetchQuery } from "../../query/user/withListingFetchQuery";
 import { withListingMetricsFetchQuery } from "../../query/user/withListingMetricsFetchQuery";
 
 export const withListingCartToggleMutation = withMutation<
@@ -31,6 +33,7 @@ export const withListingCartToggleMutation = withMutation<
 	},
 	invalidate: [
 		withListingMetricsFetchQuery,
+		withListingCartFeedCollectionQuery,
 		withListingCartCountQuery,
 		withListingCollectionQuery,
 		withListingFetchQuery,
