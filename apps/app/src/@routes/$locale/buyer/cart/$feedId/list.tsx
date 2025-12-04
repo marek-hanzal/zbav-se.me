@@ -7,7 +7,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import { BuyerIcon, DeadEndIcon } from "@zbav-se.me/ui/icon";
+import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
 
@@ -83,9 +83,19 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 															<Button
 																iconEnabled={ArrowRightIcon}
 																iconPosition={"right"}
-																tone={"secondary"}
+																tone={"primary"}
 																label={"Go to feed (link)"}
-																full
+																menu
+																size={"xl"}
+																tweak={{
+																	slot: {
+																		root: {
+																			class: [
+																				"justify-between",
+																			],
+																		},
+																	},
+																}}
 															/>
 														</LinkTo>
 
@@ -97,11 +107,21 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 															full
 														>
 															<Button
-																iconEnabled={BuyerIcon}
-																tone={"secondary"}
+																iconEnabled={ArrowRightIcon}
+																iconPosition={"right"}
+																tone={"primary"}
 																label={"Go to home (link)"}
-																full
+																menu
 																size={"xl"}
+																tweak={{
+																	slot: {
+																		root: {
+																			class: [
+																				"justify-between",
+																			],
+																		},
+																	},
+																}}
 															/>
 														</LinkTo>
 													</div>
