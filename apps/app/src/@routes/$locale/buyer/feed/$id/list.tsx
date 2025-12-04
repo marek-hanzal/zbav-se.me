@@ -53,7 +53,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	component() {
 		const { id, locale } = Route.useParams();
 		const { scrollToId } = Route.useSearch();
-		const [isFeedSettings, setIsFeedSettings] = useState(false);
+		const [isFeedSettings1, setIsFeedSettings1] = useState(false);
+		const [isFeedSettings2, setIsFeedSettings2] = useState(false);
 		const containerRef = useRef<HTMLDivElement>(null);
 
 		return (
@@ -83,8 +84,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 								<FeedSetupButton
 									locale={locale}
 									state={{
-										value: isFeedSettings,
-										set: setIsFeedSettings,
+										value: isFeedSettings1,
+										set: setIsFeedSettings1,
 									}}
 									iconProps={{
 										size: "md",
@@ -117,7 +118,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										resetScroll
 										full
 										onClick={() => {
-											setIsFeedSettings(false);
+											setIsFeedSettings1(false);
 											containerRef.current?.scrollTo({
 												top: 0,
 												behavior: "instant",
@@ -179,8 +180,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 															defaultOpen={false}
 															noDelete
 															state={{
-																value: isFeedSettings,
-																set: setIsFeedSettings,
+																value: isFeedSettings2,
+																set: setIsFeedSettings2,
 															}}
 															size={"xl"}
 															menu
@@ -194,7 +195,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																resetScroll
 																full
 																onClick={() => {
-																	setIsFeedSettings(false);
+																	setIsFeedSettings2(false);
 																	containerRef.current?.scrollTo({
 																		top: 0,
 																		behavior: "instant",
