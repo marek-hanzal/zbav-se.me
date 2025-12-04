@@ -22,6 +22,7 @@ export const GalleryButton: FC<GalleryButton.Props> = ({ uploads, ...props }) =>
 			<Button
 				iconEnabled={GalleryIcon}
 				tone={"primary"}
+				theme={"light"}
 				onClick={() => setIsOpen((prev) => !prev)}
 				label={"Open gallery (button)"}
 				menu

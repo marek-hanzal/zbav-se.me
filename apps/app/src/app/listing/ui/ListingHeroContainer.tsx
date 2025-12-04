@@ -203,6 +203,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 						parentSheetId={detailSheetId}
 						locale={locale}
 						listing={listing}
+						query={query}
 						tools={tools}
 						feedId={feedId}
 					/>

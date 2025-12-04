@@ -55,13 +55,7 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 						.selectFrom("listing_cart as lc")
 						.select(sql`1`.as("true"))
 						.whereRef("lc.listingId", "=", "l.id")
-						.where("lc.userId", "=", userId)
-						.$if(Boolean(meta?.feedId), (eb) => {
-							/**
-							 * The trick - we _know_ we've feedId, just we're tricking TS
-							 */
-							return eb.where("lc.feedId", "=", meta?.feedId ?? null);
-						}),
+						.where("lc.userId", "=", userId),
 				)
 				.$castTo<boolean>()
 				.as("isInCart"),

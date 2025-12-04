@@ -11,7 +11,7 @@ import { toast } from "sonner";
 export namespace ListingIgnoreButton {
 	export interface Props extends ConfirmButton.Props {
 		listing: tListing;
-		query: tListingQuery | undefined;
+		query: tListingQuery;
 		onSuccess?(toggle: boolean): void;
 	}
 }
@@ -49,13 +49,13 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 	return (
 		<ConfirmButton
 			iconEnabled={TrashIcon}
-			tone={"primary"}
-			theme={listing.isIgnored ? "dark" : "light"}
+			tone={listing.isIgnored ? "secondary" : "primary"}
+			theme={"light"}
 			loading={listingIgnoreToggleMutation.isPending}
 			disabled={listing.isInCart || disabled}
-			border={false}
+			label={listing.isIgnored ? "Unignore listing (button)" : "Ignore listing (button)"}
+			size={"xl"}
 			buttonProps={{
-				size: "xl",
 				...buttonProps,
 				onClick(event) {
 					if (listing.isIgnored) {
@@ -76,7 +76,6 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 			confirmProps={{
 				tone: "secondary",
 				theme: "dark",
-				size: "xl",
 				...confirmProps,
 				onClick(e) {
 					toast.promise(
@@ -102,7 +101,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				toast.dismiss("listing-ignore-button");
 				onReset?.();
 			}}
-			round={"full"}
+			menu
 			{...props}
 		/>
 	);

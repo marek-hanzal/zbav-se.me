@@ -53,9 +53,10 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 			theme={listing.hasFlag ? "dark" : "light"}
 			loading={listingFlagToggleMutation.isPending}
 			disabled={listing.isInCart || listing.isIgnored || disabled}
-			border={false}
+			label={listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"}
+			size={"xl"}
+			menu
 			buttonProps={{
-				size: "xl",
 				...buttonProps,
 				onClick(event) {
 					if (listing.hasFlag) {
@@ -76,7 +77,6 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 			confirmProps={{
 				tone: "secondary",
 				theme: "dark",
-				size: "xl",
 				...confirmProps,
 				onClick(e) {
 					toast.promise(
@@ -98,7 +98,6 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 					confirmProps?.onClick?.(e);
 				},
 			}}
-			round={"full"}
 			onReset={() => {
 				toast.dismiss("listing-flag-button");
 				onReset?.();

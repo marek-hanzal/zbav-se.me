@@ -18,7 +18,7 @@ export namespace FeedListContainer {
 		query: tFeedQuery;
 		limit?: number;
 		scrollToId: string | undefined;
-        tools: FeedItemBadge.Tools[];
+		tools: FeedItemBadge.Tools[];
 		linkTo: FeedItemBadge.LinkTo;
 	}
 }

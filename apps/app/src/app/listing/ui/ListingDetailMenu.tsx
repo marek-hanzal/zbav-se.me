@@ -1,9 +1,9 @@
 import { Container } from "@use-pico/client/ui/container";
-import { VariantProvider } from "@use-pico/cls";
-import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
+import type { tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 import { CartToggleButton } from "~/app/listing/ui/button/CartToggleButton";
+import { ListingFlagButton } from "~/app/listing/ui/button/ListingFlagButton";
+import { ListingIgnoreButton } from "~/app/listing/ui/button/ListingIgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
 import { GalleryButton } from "~/app/photo/ui/button/GalleryButton";
 
@@ -14,8 +14,14 @@ export namespace ListingDetailMenu {
 		locale: string;
 		feedId: string;
 		listing: tListing;
-		tools?: Tools[];
+		/**
+		 * Query used to fetch listing collection:
+		 *
+		 * Serves the source for patching the listing on various actions, e.g. moving to cart, ignoring, etc.
+		 */
+		query: tListingQuery;
 		parentSheetId: string | undefined;
+		tools?: Tools[];
 	}
 }
 
@@ -23,11 +29,12 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 	locale,
 	feedId,
 	listing,
+	query,
+	parentSheetId,
 	tools = [
 		"transaction",
 		"cart",
 	],
-	parentSheetId,
 	...props
 }) => {
 	return (
@@ -37,30 +44,32 @@ export const ListingDetailMenu: FC<ListingDetailMenu.Props> = ({
 			gap={"sm"}
 			{...props}
 		>
-			<VariantProvider
-				cls={ThemeCls}
-				variant={{
-					tone: "secondary",
-					theme: "light",
-				}}
-			>
-				{tools.includes("transaction") ? (
-					<TransactionButton
-						locale={locale}
-						listing={listing}
-						parentSheetId={parentSheetId}
-					/>
-				) : null}
+			<GalleryButton uploads={listing.gallery.items.map((item) => item.upload)} />
 
-				{tools.includes("cart") ? (
-					<CartToggleButton
-						feedId={feedId}
-						listing={listing}
-					/>
-				) : null}
+			{tools.includes("transaction") ? (
+				<TransactionButton
+					locale={locale}
+					listing={listing}
+					parentSheetId={parentSheetId}
+				/>
+			) : null}
 
-				<GalleryButton uploads={listing.gallery.items.map((item) => item.upload)} />
-			</VariantProvider>
+			{tools.includes("cart") ? (
+				<CartToggleButton
+					feedId={feedId}
+					listing={listing}
+				/>
+			) : null}
+
+			<ListingIgnoreButton
+				listing={listing}
+				query={query}
+			/>
+
+			<ListingFlagButton
+				listing={listing}
+				query={query}
+			/>
 		</Container>
 	);
 };
