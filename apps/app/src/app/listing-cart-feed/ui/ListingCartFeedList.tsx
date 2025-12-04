@@ -1,21 +1,24 @@
-import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCartFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
-import { CartIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { FeedItemBadge } from "~/app/feed/ui/FeedItemBadge";
+import { EmptyStatus } from "~/app/listing-cart-feed/ui/EmptyStatus";
 
 export namespace ListingCartFeedList {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
+		linkTo: FeedItemBadge.LinkTo;
 	}
 }
 
-export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({ locale, query, ...props }) => {
+export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
+	locale,
+	query,
+	linkTo,
+	...props
+}) => {
 	return (
 		<Container
 			ui={"ListingCartFeedList-root"}
@@ -27,49 +30,7 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({ locale, que
 			>
 				{({ data }) => {
 					if (data.data.length === 0) {
-						return (
-							<Container
-								layout={"vertical-centered"}
-								items={"center"}
-							>
-								<Status
-									icon={CartIcon}
-									textTitle={"No items in cart (title)"}
-									action={
-										<>
-											<LinkTo
-												to={"/$locale/buyer/feed/default"}
-												params={{
-													locale,
-												}}
-											>
-												<Button label={"Go to listings (button)"} />
-											</LinkTo>
-
-											<LinkTo
-												to={"/$locale/buyer/feed/select"}
-												params={{
-													locale,
-												}}
-											>
-												<Button label={"Go home (button)"} />
-											</LinkTo>
-										</>
-									}
-									tweak={{
-										slot: {
-											action: {
-												class: [
-													"flex",
-													"flex-col",
-													"gap-2",
-												],
-											},
-										},
-									}}
-								/>
-							</Container>
-						);
+						return <EmptyStatus locale={locale} />;
 					}
 
 					return (
@@ -85,7 +46,8 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({ locale, que
 									feed={feed}
 									defaultOpen={false}
 									count={feed.count}
-									noSetup
+									tools={[]}
+									linkTo={linkTo}
 								/>
 							))}
 						</Container>

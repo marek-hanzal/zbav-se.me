@@ -1,20 +1,41 @@
 import { Badge } from "@use-pico/client/ui/badge";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
-import { ListingCountBadge } from "../../listing/ui/ListingCountBadge";
+import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
+import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
 import { FeedSetupButton } from "./button/FeedSetupButton";
 
 export namespace FeedItemBadge {
+	export type Tools = "setup";
+
+	export namespace LinkTo {
+		export interface Props extends PropsWithChildren {
+			locale: string;
+			feedId: string;
+		}
+
+		export type RenderFn = (props: Props) => ReactNode;
+	}
+
+	/**
+	 * Links required by this component
+	 */
+	export interface LinkTo {
+		/**
+		 * Header link
+		 */
+		header: LinkTo.RenderFn;
+	}
+
 	export interface Props extends Omit<Badge.Props, "children"> {
 		locale: string;
 		feed: tFeed;
 		defaultOpen: boolean;
-		noSetup?: boolean;
+		tools: Tools[];
 		count?: number;
+		linkTo: LinkTo;
 	}
 }
 
@@ -22,8 +43,9 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 	locale,
 	feed,
 	defaultOpen,
-	noSetup,
+	tools,
 	count,
+	linkTo,
 	...props
 }) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
@@ -43,15 +65,10 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 			round={"md"}
 			{...props}
 		>
-			<LinkTo
-				to={"/$locale/buyer/cart/$feedId/list"}
-				params={{
-					locale,
-					feedId: feed.id,
-				}}
-				full
-			>
-				{feed.upload ? (
+			{linkTo.header({
+				locale,
+				feedId: feed.id,
+				children: feed.upload ? (
 					<HeroImage
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
@@ -69,8 +86,8 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 					/>
 				) : (
 					<div className="w-full h-48" />
-				)}
-			</LinkTo>
+				),
+			})}
 
 			<Badge
 				snapTo={"top"}
@@ -97,7 +114,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 				/>
 			</Badge>
 
-			{noSetup ? null : (
+			{tools.includes("setup") ? (
 				<FeedSetupButton
 					locale={locale}
 					state={{
@@ -112,7 +129,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 					defaultOpen={defaultOpen}
 					noDelete={false}
 				/>
-			)}
+			) : null}
 
 			<ListingCountBadge
 				locale={locale}

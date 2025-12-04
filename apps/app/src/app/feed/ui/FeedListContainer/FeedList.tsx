@@ -13,6 +13,8 @@ export namespace FeedList {
 		query: tFeedQuery;
 		defaultOpenId?: string;
 		scrollToId?: string;
+		tools: FeedItemBadge.Tools[];
+		linkTo: FeedItemBadge.LinkTo;
 	}
 }
 
@@ -22,6 +24,8 @@ export const FeedList: FC<FeedList.Props> = ({
 	query,
 	defaultOpenId,
 	scrollToId,
+	tools,
+	linkTo,
 	...props
 }) => {
 	const feedRootId = useId();
@@ -62,6 +66,8 @@ export const FeedList: FC<FeedList.Props> = ({
 							feed={feed}
 							locale={locale}
 							defaultOpen={defaultOpenId === feed.id}
+							tools={tools}
+							linkTo={linkTo}
 						/>
 					);
 				})}
