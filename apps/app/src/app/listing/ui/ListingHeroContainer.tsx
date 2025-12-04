@@ -3,17 +3,15 @@ import { useDocumentVisibility, useMergeRefs } from "@use-pico/client/hook";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
-import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
-import type { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 
 export namespace ListingHeroContainer {
 	export namespace Overlay {
 		export interface Props {
-			query: tListingQuery;
 			listing: tListing;
 		}
 
@@ -26,15 +24,10 @@ export namespace ListingHeroContainer {
 	export interface Props extends Container.Props {
 		locale: string;
 		/**
-		 * Active listing query used for local cache updates.
-		 */
-		query: tListingQuery;
-		/**
 		 * Listing entity shown inside the hero preview.
 		 */
 		listing: tListing;
 		overlay: Overlay.Render;
-		tools?: ListingDetailMenu.Tools[];
 		feedId: string;
 	}
 }
@@ -47,9 +40,7 @@ export namespace ListingHeroContainer {
 export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	locale,
 	ref,
-	query,
 	listing,
-	tools,
 	feedId,
 	overlay,
 	tweak,
@@ -170,7 +161,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				) : null}
 
 				{overlay({
-					query,
 					listing,
 				})}
 
@@ -198,7 +188,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					locale={locale}
 					listing={listing}
 					withScore
-					query={query}
 					feedId={feedId}
 					tools={[
 						"destructive",

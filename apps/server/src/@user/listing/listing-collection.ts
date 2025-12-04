@@ -1,13 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
+import { EntitySchema } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "../../auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
-import { withCollectionSchema } from "../../schema/withCollectionSchema";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { MessageSchema } from "~/schema/MessageSchema";
+import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { listingCollectionFx } from "./fx/listingCollectionFx";
 import { ListingQuerySchema } from "./schema/ListingQuerySchema";
-import { ListingSchema } from "./schema/ListingSchema";
 
 export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
@@ -30,7 +30,7 @@ export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 					content: {
 						"application/json": {
 							schema: withCollectionSchema({
-								schema: ListingSchema,
+								schema: EntitySchema,
 								type: "ListingCollection",
 								description: "Collection of listings",
 							}),
@@ -54,7 +54,7 @@ export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<withCollectionSchema.Type<ListingSchema>, 200>(
+				return c.json<withCollectionSchema.Type<EntitySchema>, 200>(
 					yield* listingCollectionFx({
 						query: c.req.valid("json"),
 					}),

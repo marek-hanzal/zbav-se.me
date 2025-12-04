@@ -1,37 +1,39 @@
+import type { withListingCollectionSelect } from "~/@user/listing/db/withListingCollectionSelect";
 import { withLikeEx } from "../../../database/expression/withLikeEx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
-import type { withListingSelect } from "./withListingSelect";
 
 export namespace withListingQueryBuilder {
-	export interface Props {
+	export interface Props<TSelect extends withListingCollectionSelect.Select> {
 		userId: string;
-		select: withListingSelect.Select;
+		select: TSelect;
 		where?: ListingFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withListingSelect.Select;
+	export type Callback<TSelect extends withListingCollectionSelect.Select> = (
+		props: Props<TSelect>,
+	) => TSelect;
 }
 
 /**
  * Standalone query builder that applies all filters from ListingQuerySchema
  * Can be used by both list and count queries to ensure consistency
  */
-export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
+export const withListingQueryBuilder = <TSelect extends withListingCollectionSelect.Select>({
 	userId,
 	select,
 	where,
-}) => {
+}: withListingQueryBuilder.Props<TSelect>) => {
 	if (!where) {
 		return select;
 	}
 	let query = select;
 
 	if (where.id) {
-		query = query.where("l.id", "=", where.id);
+		query = query.where("l.id", "=", where.id) as TSelect;
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("l.id", "in", where.idIn);
+		query = query.where("l.id", "in", where.idIn) as TSelect;
 	}
 
 	if (where.fulltext) {
@@ -43,55 +45,55 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 				withLikeEx(eb.ref("cat.category"), fulltext),
 				withLikeEx(eb.ref("cat.group"), fulltext),
 			]),
-		);
+		) as TSelect;
 	}
 
 	if (where.priceMin !== undefined) {
-		query = query.where("l.price", ">=", where.priceMin);
+		query = query.where("l.price", ">=", where.priceMin) as TSelect;
 	}
 
 	if (where.priceMax !== undefined) {
-		query = query.where("l.price", "<=", where.priceMax);
+		query = query.where("l.price", "<=", where.priceMax) as TSelect;
 	}
 
 	if (where.conditionMin !== undefined) {
-		query = query.where("l.condition", ">=", where.conditionMin);
+		query = query.where("l.condition", ">=", where.conditionMin) as TSelect;
 	}
 
 	if (where.conditionMax !== undefined) {
-		query = query.where("l.condition", "<=", where.conditionMax);
+		query = query.where("l.condition", "<=", where.conditionMax) as TSelect;
 	}
 
 	if (where.conditionIn && where.conditionIn.length > 0) {
-		query = query.where("l.condition", "in", where.conditionIn);
+		query = query.where("l.condition", "in", where.conditionIn) as TSelect;
 	}
 
 	if (where.ageMin !== undefined) {
-		query = query.where("l.age", ">=", where.ageMin);
+		query = query.where("l.age", ">=", where.ageMin) as TSelect;
 	}
 
 	if (where.ageMax !== undefined) {
-		query = query.where("l.age", "<=", where.ageMax);
+		query = query.where("l.age", "<=", where.ageMax) as TSelect;
 	}
 
 	if (where.ageIn && where.ageIn.length > 0) {
-		query = query.where("l.age", "in", where.ageIn);
+		query = query.where("l.age", "in", where.ageIn) as TSelect;
 	}
 
 	if (where.categoryId) {
-		query = query.where("l.categoryId", "=", where.categoryId);
+		query = query.where("l.categoryId", "=", where.categoryId) as TSelect;
 	}
 
 	if (where.categoryIdIn && where.categoryIdIn.length > 0) {
-		query = query.where("l.categoryId", "in", where.categoryIdIn);
+		query = query.where("l.categoryId", "in", where.categoryIdIn) as TSelect;
 	}
 
 	if (where.title) {
-		query = query.where((eb) => withLikeEx(eb.ref("l.title"), where.title, "both"));
+		query = query.where((eb) => withLikeEx(eb.ref("l.title"), where.title, "both")) as TSelect;
 	}
 
 	if (where.withOwn === false) {
-		query = query.where("l.userId", "!=", userId);
+		query = query.where("l.userId", "!=", userId) as TSelect;
 	}
 
 	if (where.withIgnored !== true) {
@@ -104,7 +106,7 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 						.where("li.userId", "=", userId),
 				),
 			),
-		);
+		) as TSelect;
 	}
 
 	if (where.inCart === true) {
@@ -115,7 +117,7 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 					.whereRef("lc.listingId", "=", "l.id")
 					.where("lc.userId", "=", userId),
 			),
-		);
+		) as TSelect;
 	}
 
 	if (where.feedId) {
@@ -128,7 +130,7 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 					.where("lc.userId", "=", userId)
 					.where("lc.feedId", "=", feedId),
 			),
-		);
+		) as TSelect;
 	}
 
 	if (where.feedIdIn && where.feedIdIn.length > 0) {
@@ -141,7 +143,7 @@ export const withListingQueryBuilder: withListingQueryBuilder.Callback = ({
 					.where("lc.userId", "=", userId)
 					.where("lc.feedId", "in", feedIdIn),
 			),
-		);
+		) as TSelect;
 	}
 
 	return query;

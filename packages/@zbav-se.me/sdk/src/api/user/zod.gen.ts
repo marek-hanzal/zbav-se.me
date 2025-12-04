@@ -1815,6 +1815,71 @@ export const zListingCountQuery = z.object({
 export type zListingCountQuery = z.infer<typeof zListingCountQuery>;
 
 /**
+ * Collection of listings
+ */
+export const zListingCollection = z.object({
+    data: z.array(z.object({
+        id: z.string().min(1)
+    })),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of listings'
+});
+
+export type zListingCollection = z.infer<typeof zListingCollection>;
+
+/**
+ * Expiration time of the listing
+ */
+export const zListingExpireEnum = z.enum([
+    '7-days',
+    '14-days',
+    '1-month'
+]).register(z.globalRegistry, {
+    description: 'Expiration time of the listing'
+});
+
+export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
+
+/**
+ * Data for creating a new listing
+ */
+export const zListingCreate = z.object({
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    condition: z.number().register(z.globalRegistry, {
+        description: 'Condition of the item (0-based index)'
+    }),
+    age: z.number().register(z.globalRegistry, {
+        description: 'Age of the item (0-based index)'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    categoryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    currency: zCurrencyListEnum,
+    expiresAt: zListingExpireEnum,
+    title: z.string().min(5).max(72).register(z.globalRegistry, {
+        description: 'Title of the item'
+    }),
+    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
+        description: 'Description of the item'
+    })),
+    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Data for creating a new listing'
+});
+
+export type zListingCreate = z.infer<typeof zListingCreate>;
+
+/**
  * Category data
  */
 export const zCategory = z.object({
@@ -1966,69 +2031,6 @@ export const zListing = z.object({
 });
 
 export type zListing = z.infer<typeof zListing>;
-
-/**
- * Collection of listings
- */
-export const zListingCollection = z.object({
-    data: z.array(zListing),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listings'
-});
-
-export type zListingCollection = z.infer<typeof zListingCollection>;
-
-/**
- * Expiration time of the listing
- */
-export const zListingExpireEnum = z.enum([
-    '7-days',
-    '14-days',
-    '1-month'
-]).register(z.globalRegistry, {
-    description: 'Expiration time of the listing'
-});
-
-export type zListingExpireEnum = z.infer<typeof zListingExpireEnum>;
-
-/**
- * Data for creating a new listing
- */
-export const zListingCreate = z.object({
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    condition: z.number().register(z.globalRegistry, {
-        description: 'Condition of the item (0-based index)'
-    }),
-    age: z.number().register(z.globalRegistry, {
-        description: 'Age of the item (0-based index)'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    categoryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    currency: zCurrencyListEnum,
-    expiresAt: zListingExpireEnum,
-    title: z.string().min(5).max(72).register(z.globalRegistry, {
-        description: 'Title of the item'
-    }),
-    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
-        description: 'Description of the item'
-    })),
-    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
-        description: 'IDs of the uploads; order of uploads defines order in the gallery'
-    })
-}).register(z.globalRegistry, {
-    description: 'Data for creating a new listing'
-});
-
-export type zListingCreate = z.infer<typeof zListingCreate>;
 
 /**
  * Collection of galleries

@@ -6,9 +6,9 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import type { tGalleryItem, tListing, tListingQuery } from "@zbav-se.me/sdk/api/user";
+import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useEffect, useState } from "react";
@@ -29,7 +29,6 @@ export namespace ListingDetailContainer {
 		locale: string;
 		feedId: string | undefined;
 		listing: tListing;
-		query: tListingQuery;
 		/**
 		 * Should the listing emit the score event?
 		 */
@@ -46,7 +45,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	locale,
 	feedId,
 	listing,
-	query,
 	withScore,
 	parentSheetId,
 	tools,
@@ -276,24 +274,36 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					</Container>
 				</VariantProvider>
 
-				{listing.isInCart || !tools.includes("destructive") ? null : (
-					<Container
-						layout={"vertical-flex"}
-						height={"content"}
-						gap={"sm"}
-						square={"md"}
+				{tools.includes("destructive") ? (
+					<withListingFetchQuery.Suspense
+						data={{
+							where: {
+								id: listing.id,
+								withIgnored: true,
+							},
+						}}
+						fallback={null}
 					>
-						<ListingIgnoreButton
-							listing={listing}
-							query={query}
-						/>
+						{({ data: listing }) => {
+							if (listing.isInCart) {
+								return null;
+							}
 
-						<ListingFlagButton
-							listing={listing}
-							query={query}
-						/>
-					</Container>
-				)}
+							return (
+								<Container
+									layout={"vertical-flex"}
+									height={"content"}
+									gap={"sm"}
+									square={"md"}
+								>
+									<ListingIgnoreButton listingId={listing.id} />
+
+									<ListingFlagButton listingId={listing.id} />
+								</Container>
+							);
+						}}
+					</withListingFetchQuery.Suspense>
+				) : null}
 			</Container>
 
 			<BottomSheet

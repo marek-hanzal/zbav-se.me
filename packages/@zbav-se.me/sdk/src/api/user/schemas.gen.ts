@@ -2124,7 +2124,16 @@ export const sListingCollection = {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/Listing'
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        minLength: 1
+                    }
+                },
+                required: [
+                    'id'
+                ]
             }
         },
         more: {
@@ -2134,6 +2143,170 @@ export const sListingCollection = {
     required: [
         'data',
         'more'
+    ]
+} as const;
+
+export const sListingCreate = {
+    type: 'object',
+    properties: {
+        price: {
+            type: 'number'
+        },
+        condition: {
+            type: 'number'
+        },
+        age: {
+            type: 'number'
+        },
+        locationId: {
+            type: 'string'
+        },
+        categoryId: {
+            type: 'string'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        expiresAt: {
+            $ref: '#/components/schemas/ListingExpireEnum'
+        },
+        title: {
+            type: 'string',
+            minLength: 5,
+            maxLength: 72
+        },
+        description: {
+            type: 'string',
+            maxLength: 2048
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        }
+    },
+    required: [
+        'price',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'currency',
+        'expiresAt',
+        'title',
+        'uploadIds'
+    ]
+} as const;
+
+export const sListingExpireEnum = {
+    type: 'string',
+    enum: [
+        '7-days',
+        '14-days',
+        '1-month'
+    ]
+} as const;
+
+export const sListing = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        price: {
+            type: 'number'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        condition: {
+            type: 'number'
+        },
+        age: {
+            type: 'number'
+        },
+        locationId: {
+            type: 'string'
+        },
+        categoryId: {
+            type: 'string'
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        description: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        },
+        category: {
+            $ref: '#/components/schemas/Category'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        },
+        isInCart: {
+            type: 'boolean'
+        },
+        isIgnored: {
+            type: 'boolean'
+        },
+        hasFlag: {
+            type: 'boolean'
+        },
+        transactionId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    required: [
+        'id',
+        'price',
+        'currency',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'expiresAt',
+        'title',
+        'createdAt',
+        'updatedAt',
+        'location',
+        'category',
+        'gallery',
+        'isInCart',
+        'isIgnored',
+        'hasFlag',
+        'transactionId'
     ]
 } as const;
 
@@ -2250,170 +2423,6 @@ export const sLocation = {
         'hash',
         'lat',
         'lon'
-    ]
-} as const;
-
-export const sListing = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        price: {
-            type: 'number'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        condition: {
-            type: 'number'
-        },
-        age: {
-            type: 'number'
-        },
-        locationId: {
-            type: 'string'
-        },
-        categoryId: {
-            type: 'string'
-        },
-        expiresAt: {
-            type: 'string'
-        },
-        title: {
-            type: 'string'
-        },
-        description: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        updatedAt: {
-            type: 'string'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        },
-        category: {
-            $ref: '#/components/schemas/Category'
-        },
-        gallery: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
-                },
-                {}
-            ]
-        },
-        isInCart: {
-            type: 'boolean'
-        },
-        isIgnored: {
-            type: 'boolean'
-        },
-        hasFlag: {
-            type: 'boolean'
-        },
-        transactionId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        }
-    },
-    required: [
-        'id',
-        'price',
-        'currency',
-        'condition',
-        'age',
-        'locationId',
-        'categoryId',
-        'expiresAt',
-        'title',
-        'createdAt',
-        'updatedAt',
-        'location',
-        'category',
-        'gallery',
-        'isInCart',
-        'isIgnored',
-        'hasFlag',
-        'transactionId'
-    ]
-} as const;
-
-export const sListingCreate = {
-    type: 'object',
-    properties: {
-        price: {
-            type: 'number'
-        },
-        condition: {
-            type: 'number'
-        },
-        age: {
-            type: 'number'
-        },
-        locationId: {
-            type: 'string'
-        },
-        categoryId: {
-            type: 'string'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        expiresAt: {
-            $ref: '#/components/schemas/ListingExpireEnum'
-        },
-        title: {
-            type: 'string',
-            minLength: 5,
-            maxLength: 72
-        },
-        description: {
-            type: 'string',
-            maxLength: 2048
-        },
-        uploadIds: {
-            type: 'array',
-            items: {
-                type: 'string'
-            },
-            minItems: 1
-        }
-    },
-    required: [
-        'price',
-        'condition',
-        'age',
-        'locationId',
-        'categoryId',
-        'currency',
-        'expiresAt',
-        'title',
-        'uploadIds'
-    ]
-} as const;
-
-export const sListingExpireEnum = {
-    type: 'string',
-    enum: [
-        '7-days',
-        '14-days',
-        '1-month'
     ]
 } as const;
 

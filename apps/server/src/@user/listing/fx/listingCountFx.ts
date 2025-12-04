@@ -1,9 +1,9 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
+import { withListingCollectionSelect } from "~/@user/listing/db/withListingCollectionSelect";
 import { UserContextFx } from "../../../auth/fx/UserContextFx";
 import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
 import { withListingQueryBuilder } from "../db/withListingQueryBuilder";
-import { withListingSelect } from "../db/withListingSelect";
 import type { ListingCountQuerySchema } from "../schema/ListingCountQuerySchema";
 
 export namespace listingCountFx {
@@ -21,9 +21,8 @@ export const listingCountFx = ({ query }: listingCountFx.Props) => {
 
 		return yield* Effect.tryPromise(async () => {
 			return withCount({
-				select: withListingSelect({
+				select: withListingCollectionSelect({
 					database,
-					userId: user.id,
 					sort: undefined,
 					meta: undefined,
 				}),

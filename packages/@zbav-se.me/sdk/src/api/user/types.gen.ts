@@ -1666,11 +1666,137 @@ export type tListingCountQuery = {
  * Collection of listings
  */
 export type tListingCollection = {
-    data: Array<tListing>;
+    data: Array<{
+        id: string;
+    }>;
     /**
      * Whether there are more items to fetch
      */
     more: boolean;
+};
+
+/**
+ * Data for creating a new listing
+ */
+export type tListingCreate = {
+    /**
+     * Price of the listing
+     */
+    price: number;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: number;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * ID of the category
+     */
+    categoryId: string;
+    currency: tCurrencyListEnum;
+    expiresAt: tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title: string;
+    /**
+     * Description of the item
+     */
+    description?: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
+ * Expiration time of the listing
+ */
+export const tListingExpireEnum = {
+    '7-days': '7-days',
+    '14-days': '14-days',
+    '1-month': '1-month'
+} as const;
+
+/**
+ * Expiration time of the listing
+ */
+export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
+
+/**
+ * Listing data
+ */
+export type tListing = {
+    /**
+     * ID of the listing
+     */
+    id: string;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    currency: tCurrencyListEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: number;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * ID of the category
+     */
+    categoryId: string;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Title of the item
+     */
+    title: string;
+    /**
+     * Description of the item
+     */
+    description?: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    location: tLocation;
+    category: tCategory;
+    gallery: tGallery & unknown;
+    /**
+     * Whether the user has this listing in the cart
+     */
+    isInCart: boolean;
+    /**
+     * Whether the user ignored this listing
+     */
+    isIgnored: boolean;
+    /**
+     * Whether the user flagged this listing
+     */
+    hasFlag: boolean;
+    /**
+     * Whether the user has a transaction with this listing
+     */
+    transactionId: string | null;
 };
 
 /**
@@ -1769,130 +1895,6 @@ export type tLocation = {
      */
     lon: number;
 };
-
-/**
- * Listing data
- */
-export type tListing = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    currency: tCurrencyListEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description?: string | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    location: tLocation;
-    category: tCategory;
-    gallery: tGallery & unknown;
-    /**
-     * Whether the user has this listing in the cart
-     */
-    isInCart: boolean;
-    /**
-     * Whether the user ignored this listing
-     */
-    isIgnored: boolean;
-    /**
-     * Whether the user flagged this listing
-     */
-    hasFlag: boolean;
-    /**
-     * Whether the user has a transaction with this listing
-     */
-    transactionId: string | null;
-};
-
-/**
- * Data for creating a new listing
- */
-export type tListingCreate = {
-    /**
-     * Price of the listing
-     */
-    price: number;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    currency: tCurrencyListEnum;
-    expiresAt: tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description?: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds: Array<string>;
-};
-
-/**
- * Expiration time of the listing
- */
-export const tListingExpireEnum = {
-    '7-days': '7-days',
-    '14-days': '14-days',
-    '1-month': '1-month'
-} as const;
-
-/**
- * Expiration time of the listing
- */
-export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
 
 /**
  * Collection of galleries

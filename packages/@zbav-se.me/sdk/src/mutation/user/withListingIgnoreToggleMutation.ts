@@ -6,6 +6,7 @@ import type {
 	tApiListingIgnoreToggleResponse,
 	tListingIgnoreToggle,
 } from "../../api/user/types.gen";
+import { withListingFetchQuery } from "../../query/user/withListingFetchQuery";
 import { withListingMetricsFetchQuery } from "../../query/user/withListingMetricsFetchQuery";
 
 export const withListingIgnoreToggleMutation = withMutation<
@@ -29,5 +30,6 @@ export const withListingIgnoreToggleMutation = withMutation<
 	},
 	invalidate: [
 		withListingMetricsFetchQuery,
+		withListingFetchQuery,
 	],
 });

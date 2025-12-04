@@ -6,9 +6,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
-import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
-import type { ListingDetailMenu } from "~/app/listing/ui/ListingDetailMenu";
 import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
 
 export namespace ListingListContainer {
@@ -22,7 +21,6 @@ export namespace ListingListContainer {
 		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
 		overlay: ListingHeroContainer.Overlay.Render;
-		tools?: ListingDetailMenu.Tools[];
 		feedId: string;
 	}
 }
@@ -35,7 +33,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	renderEmptyFn,
 	appendix,
 	overlay,
-	tools,
 	feedId,
 	...props
 }) => {
@@ -138,14 +135,25 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 								"[contain-intrinsic-size:100dvh]",
 							])}
 						>
-							<ListingHeroContainer
-								locale={locale}
-								query={query}
-								listing={listing}
-								overlay={overlay}
-								tools={tools}
-								feedId={feedId}
-							/>
+							<withListingFetchQuery.Suspense
+								data={{
+									where: {
+										id: listing.id,
+									},
+								}}
+								fallback={<SpinnerContainer height={"fit"} />}
+							>
+								{({ data: listing }) => {
+									return (
+										<ListingHeroContainer
+											locale={locale}
+											listing={listing}
+											overlay={overlay}
+											feedId={feedId}
+										/>
+									);
+								}}
+							</withListingFetchQuery.Suspense>
 						</VisibleContainer>
 					));
 				}}

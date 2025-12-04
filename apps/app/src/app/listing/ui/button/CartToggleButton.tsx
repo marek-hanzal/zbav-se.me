@@ -12,7 +12,11 @@ export namespace CartToggleButton {
 }
 
 export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId, ...props }) => {
-	const listingCartToggle = withListingCartToggleMutation.useMutation();
+	const listingCartToggle = withListingCartToggleMutation.useMutation({
+		meta: {
+			mutationId: listingId,
+		},
+	});
 
 	return (
 		<withListingFetchQuery.Suspense

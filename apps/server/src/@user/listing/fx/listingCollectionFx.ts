@@ -1,11 +1,12 @@
 import { withCollection } from "@use-pico/common/collection";
+import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { withListingCollectionSelect } from "~/@user/listing/db/withListingCollectionSelect";
 import { withListingQueryBuilder } from "~/@user/listing/db/withListingQueryBuilder";
-import { withListingSelect } from "~/@user/listing/db/withListingSelect";
 import type { ListingQuerySchema } from "~/@user/listing/schema/ListingQuerySchema";
-import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+
 export namespace listingCollectionFx {
 	export interface Props {
 		query: ListingQuerySchema.Type;
@@ -21,13 +22,12 @@ export const listingCollectionFx = ({
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
-				select: withListingSelect({
+				select: withListingCollectionSelect({
 					database,
 					sort,
 					meta,
-					userId: user.id,
 				}),
-				output: ListingSchema,
+				output: EntitySchema,
 				cursor: cursor ?? {
 					page: 0,
 					size: 10,
