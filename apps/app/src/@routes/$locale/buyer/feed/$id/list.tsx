@@ -142,6 +142,14 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									feedId={feed.id}
 									query={{
 										...feed.query,
+										sort: feed.query.sort?.length
+											? feed.query.sort
+											: [
+													{
+														field: "createdAt",
+														direction: "desc",
+													},
+												],
 										meta: {
 											feedId: feed.id,
 											...feed.query.meta,
