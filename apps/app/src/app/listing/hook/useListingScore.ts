@@ -6,13 +6,17 @@ import { useCallback, useEffect, useRef } from "react";
 
 export namespace useListingScore {
 	export interface Props {
+		/**
+		 * This switch _is not reactive_. It's useful when you _know_ you're not interested in scoring
+		 */
+		enabled: boolean;
 		listingId: string;
 		type: tListingScoreTypeEnum;
 		timeout: number;
 	}
 }
 
-export const useListingScore = ({ listingId, type, timeout }: useListingScore.Props) => {
+export const useListingScore = ({ enabled, listingId, type, timeout }: useListingScore.Props) => {
 	const useVisibilityStore = useVisibilityContext();
 	const visible = useVisibilityStore((store) => store.visible);
 
@@ -50,6 +54,10 @@ export const useListingScore = ({ listingId, type, timeout }: useListingScore.Pr
 
 	useDocumentVisibility({
 		onVisible() {
+			if (!enabled) {
+				return;
+			}
+
 			documentRef.current = true;
 
 			timerRef.current = setTimeout(() => {
@@ -65,6 +73,10 @@ export const useListingScore = ({ listingId, type, timeout }: useListingScore.Pr
 
 	// biome-ignore lint/correctness/useExhaustiveDependencies: One-time shot
 	useEffect(() => {
+		if (!enabled) {
+			return;
+		}
+
 		clearTimeout(timerRef.current);
 
 		timerRef.current = setTimeout(() => {

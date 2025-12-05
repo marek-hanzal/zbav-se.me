@@ -97,11 +97,9 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 			});
 
 			return yield* listingFetchFx({
-				query: {
-					where: {
-						id,
-						withOwn: true,
-					},
+				where: {
+					id,
+					withOwn: true,
 				},
 			});
 		}),

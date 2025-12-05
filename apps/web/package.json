@@ -13,7 +13,7 @@
 	"dependencies": {
 		"@better-auth/passkey": "1.4.5",
 		"@escapace/accept-language-parser": "2.1.1",
-		"@tanstack/react-form": "1.27.0",
+		"@tanstack/react-form": "1.27.1",
 		"@tanstack/react-query": "5.90.12",
 		"@tanstack/react-router": "1.139.14",
 		"@tanstack/react-router-ssr-query": "1.139.14",

@@ -7,12 +7,12 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useEffect, useState } from "react";
+import { type FC, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { useListingScore } from "~/app/listing/hook/useListingScore";
 import { CartToggleButton } from "~/app/listing/ui/button/CartToggleButton";
 import { ListingFlagButton } from "~/app/listing/ui/button/ListingFlagButton";
 import { ListingIgnoreButton } from "~/app/listing/ui/button/ListingIgnoreButton";
@@ -56,29 +56,14 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		...tGalleryItem[],
 	];
 
-	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation();
+	useListingScore({
+		enabled: withScore,
+		listingId: listing.id,
+		type: "view",
+		timeout: 2_500,
+	});
 
-	// TODO Extract scoring into standalone hooks, which will handle also 429s
-	useEffect(() => {
-		if (!withScore) {
-			return;
-		}
-
-		const timeoutId = setTimeout(() => {
-			listingScoreCreateMutation.mutate({
-				listingId: listing.id,
-				score: "view",
-			});
-		}, 2_500);
-
-		return () => clearTimeout(timeoutId);
-	}, [
-		withScore,
-		listing.id,
-		listingScoreCreateMutation,
-	]);
-
-	const [score, setScore] = useState(false);
+	const [isScore, setIsScore] = useState(false);
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
@@ -247,7 +232,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 									size={"sm"}
 								/>
 							}
-							onClick={() => setScore(true)}
+							onClick={() => setIsScore(true)}
 						/>
 
 						<BadgeValue
@@ -306,8 +291,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			</Container>
 
 			<BottomSheet
-				isOpen={score}
-				onClose={() => setScore(false)}
+				isOpen={isScore}
+				onClose={() => setIsScore(false)}
 				modalEffectRootId={parentSheetId}
 			>
 				<withListingMetricsFetchQuery.Suspense
