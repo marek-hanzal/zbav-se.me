@@ -53,15 +53,13 @@ export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useList
 
 		visibleRef.current = visible;
 
+		clearTimeout(timerRef.current);
+
 		if (visible) {
-			clearTimeout(timerRef.current);
 			timerRef.current = setTimeout(() => {
 				score(listingId, type);
 			}, timeoutMs);
-			return;
 		}
-
-		clearTimeout(timerRef.current);
 
 		return () => {
 			clearTimeout(timerRef.current);
