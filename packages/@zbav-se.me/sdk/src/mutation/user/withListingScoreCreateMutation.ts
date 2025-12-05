@@ -6,7 +6,6 @@ import type {
 	tApiListingScoreCreateResponse,
 	tListingScoreCreate,
 } from "../../api/user/types.gen";
-import { withListingMetricsFetchQuery } from "../../query/user/withListingMetricsFetchQuery";
 
 export const withListingScoreCreateMutation = withMutation<
 	tListingScoreCreate,
@@ -27,7 +26,5 @@ export const withListingScoreCreateMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withListingMetricsFetchQuery,
-	],
+	invalidate: [],
 });

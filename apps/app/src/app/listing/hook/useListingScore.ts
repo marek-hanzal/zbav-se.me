@@ -1,6 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useVisibilityContext } from "@use-pico/client/context";
 import type { tListingScoreTypeEnum } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { useCallback, useEffect, useRef } from "react";
 
 export namespace useListingScore {
@@ -16,12 +18,16 @@ export namespace useListingScore {
 }
 
 export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useListingScore.Props) => {
+	const queryClient = useQueryClient();
 	const useVisibilityStore = useVisibilityContext();
 	const visible = useVisibilityStore((store) => store.isVisibleState);
 	const visibleRef = useRef(visible);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation({
+		onSuccess() {
+			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
+		},
 		retry() {
 			return visibleRef.current;
 		},
