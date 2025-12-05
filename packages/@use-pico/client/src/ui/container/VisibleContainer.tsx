@@ -47,7 +47,7 @@ export namespace VisibleContainer {
 		 * Optional delay in milliseconds before the visibility state update is
 		 * applied; defaults to `200ms`.
 		 */
-		delay?: number;
+		delayMs?: number;
 	}
 }
 
@@ -60,7 +60,7 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	visibility,
 	overscan = 2,
 	useProximity = false,
-	delay = 200,
+	delayMs = 200,
 	placeholder,
 	...props
 }) => {
@@ -69,6 +69,8 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 	const [visible, setVisible] = useState(false);
 	const visibleRef = useRef(false);
 	const visibleTimerRef = useRef<NodeJS.Timeout>(undefined);
+	//
+	const [isVisibleState, setIsVisibleState] = useState(false);
 	//
 	const [topProximity, setTopProximity] = useState(false);
 	const topProximityRef = useRef(false);
@@ -94,10 +96,10 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 			timerRef.current = setTimeout(() => {
 				set(state);
 				timerRef.current = undefined;
-			}, delay);
+			}, delayMs);
 		},
 		[
-			delay,
+			delayMs,
 		],
 	);
 
@@ -115,6 +117,7 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 		visibility: {
 			setVisible(state) {
 				setState(state, visibleTimerRef, visibleRef, setVisible);
+				setIsVisibleState(state);
 			},
 			...visibility,
 		},
@@ -142,9 +145,14 @@ export const VisibleContainer: FC<VisibleContainer.Props> = ({
 		});
 	}
 
+	/**
+	 * We're re-creating visible store every time, but in this case we don't care as the
+	 * source of truth are states in this component
+	 */
 	return (
 		<VisibilityProvider
 			defaultVisible={visible}
+			defaultIsVisibleState={isVisibleState}
 			defaultTopProximity={topProximity}
 			defaultBottomProximity={bottomProximity}
 		>

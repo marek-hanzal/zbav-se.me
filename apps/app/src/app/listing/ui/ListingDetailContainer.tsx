@@ -60,7 +60,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		enabled: withScore,
 		listingId: listing.id,
 		type: "view",
-		timeout: 2_500,
+		timeoutMs: 2_500,
 	});
 
 	const [isScore, setIsScore] = useState(false);

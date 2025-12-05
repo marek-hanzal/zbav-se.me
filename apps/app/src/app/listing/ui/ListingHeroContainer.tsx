@@ -60,7 +60,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		enabled: true,
 		listingId: listing.id,
 		type: "listing",
-		timeout: 1_600,
+		timeoutMs: 1_600,
 	});
 
 	return (

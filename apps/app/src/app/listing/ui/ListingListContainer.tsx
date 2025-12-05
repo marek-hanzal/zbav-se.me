@@ -122,7 +122,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							scrollerRef={containerRef}
 							useProximity
 							overscan={4}
-							delay={200}
+							delayMs={200}
 							placeholder={(props) => (
 								<SpinnerContainer
 									ui="ListingList-spinner"

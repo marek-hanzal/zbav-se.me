@@ -1,5 +1,4 @@
 import { useVisibilityContext } from "@use-pico/client/context";
-import { useDocumentVisibility } from "@use-pico/client/hook";
 import type { tListingScoreTypeEnum } from "@zbav-se.me/sdk/api/user";
 import { withListingScoreCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { useCallback, useEffect, useRef } from "react";
@@ -12,20 +11,19 @@ export namespace useListingScore {
 		enabled: boolean;
 		listingId: string;
 		type: tListingScoreTypeEnum;
-		timeout: number;
+		timeoutMs: number;
 	}
 }
 
-export const useListingScore = ({ enabled, listingId, type, timeout }: useListingScore.Props) => {
+export const useListingScore = ({ enabled, listingId, type, timeoutMs }: useListingScore.Props) => {
 	const useVisibilityStore = useVisibilityContext();
-	const visible = useVisibilityStore((store) => store.visible);
-
-	const documentRef = useRef<boolean>(document.visibilityState === "visible");
+	const visible = useVisibilityStore((store) => store.isVisibleState);
+	const visibleRef = useRef(visible);
 	const timerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
 	const listingScoreCreateMutation = withListingScoreCreateMutation.useMutation({
 		retry() {
-			return visible && documentRef.current;
+			return visibleRef.current;
 		},
 		retryDelay(count) {
 			if (count >= 3) {
@@ -37,10 +35,6 @@ export const useListingScore = ({ enabled, listingId, type, timeout }: useListin
 
 	const score = useCallback(
 		(listingId: string, type: tListingScoreTypeEnum) => {
-			if (!documentRef.current || !visible) {
-				return;
-			}
-
 			listingScoreCreateMutation.mutate({
 				listingId,
 				score: type,
@@ -48,43 +42,31 @@ export const useListingScore = ({ enabled, listingId, type, timeout }: useListin
 		},
 		[
 			listingScoreCreateMutation,
-			visible,
 		],
 	);
 
-	useDocumentVisibility({
-		onVisible() {
-			if (!enabled) {
-				return;
-			}
-
-			documentRef.current = true;
-
-			timerRef.current = setTimeout(() => {
-				score(listingId, type);
-			}, timeout);
-		},
-		onHidden() {
-			documentRef.current = false;
-
-			clearTimeout(timerRef.current);
-		},
-	});
-
-	// biome-ignore lint/correctness/useExhaustiveDependencies: One-time shot
+	// biome-ignore lint/correctness/useExhaustiveDependencies: We're watching only visible flag
 	useEffect(() => {
 		if (!enabled) {
 			return;
 		}
 
-		clearTimeout(timerRef.current);
+		visibleRef.current = visible;
 
-		timerRef.current = setTimeout(() => {
-			score(listingId, type);
-		}, timeout);
+		if (visible) {
+			clearTimeout(timerRef.current);
+			timerRef.current = setTimeout(() => {
+				score(listingId, type);
+			}, timeoutMs);
+			return;
+		}
+
+		clearTimeout(timerRef.current);
 
 		return () => {
 			clearTimeout(timerRef.current);
 		};
-	}, []);
+	}, [
+		visible,
+	]);
 };
