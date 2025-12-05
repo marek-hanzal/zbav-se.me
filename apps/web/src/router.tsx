@@ -1,4 +1,4 @@
-import { keepPreviousData, QueryClient } from "@tanstack/react-query";
+import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { setupRouterSsrQueryIntegration } from "@tanstack/react-router-ssr-query";
 import { Container } from "@use-pico/client/ui/container";
@@ -9,8 +9,9 @@ export function getRouter() {
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
-				placeholderData: keepPreviousData,
-				staleTime: 1000 * 60,
+				staleTime: 0,
+				gcTime: 0,
+				refetchOnWindowFocus: true,
 			},
 		},
 	});

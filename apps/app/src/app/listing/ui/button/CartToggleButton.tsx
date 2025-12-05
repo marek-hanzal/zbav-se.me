@@ -3,7 +3,7 @@ import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
-	withListingCartCountQuery,
+	withListingCartFeedCollectionQuery,
 	withListingFetchQuery,
 	withListingMetricsFetchQuery,
 } from "@zbav-se.me/sdk/query/user";
@@ -26,7 +26,7 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId
 				},
 			});
 			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
-			withListingCartCountQuery.invalidate(queryClient);
+			withListingCartFeedCollectionQuery.invalidate(queryClient);
 		},
 		meta: {
 			mutationId: listingId,

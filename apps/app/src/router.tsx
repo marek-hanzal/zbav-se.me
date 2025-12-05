@@ -8,11 +8,16 @@ import { Logo } from "@zbav-se.me/ui/logo";
 import { routeTree } from "~/_route";
 
 export async function getRouter() {
+	const staleTime = 5 * 60 * 1_000;
+
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
 				placeholderData: keepPreviousData,
-				staleTime: 1000 * 60,
+				staleTime,
+				gcTime: staleTime * 2,
+				refetchOnWindowFocus: true,
+				refetchOnReconnect: true,
 			},
 		},
 	});

@@ -22,7 +22,7 @@ export namespace ListingListContainer {
 		appendix?: ReactNode;
 		overlay: ListingHeroContainer.Overlay.Render;
 		feedId: string;
-        withScore: boolean;
+		withScore: boolean;
 	}
 }
 
@@ -107,10 +107,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		>
 			<withListingCollectionQuery.Suspense
 				data={query}
-				options={{
-					staleTime: 60_000 * 30,
-					refetchOnWindowFocus: true,
-				}}
 				fallback={<SpinnerContainer />}
 			>
 				{({ data }) => {
