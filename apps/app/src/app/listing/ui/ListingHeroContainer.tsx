@@ -28,6 +28,7 @@ export namespace ListingHeroContainer {
 		listing: tListing;
 		overlay: Overlay.Render;
 		feedId: string;
+		withScore: boolean;
 	}
 }
 
@@ -42,6 +43,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	listing,
 	feedId,
 	overlay,
+	withScore,
 	tweak,
 	...props
 }) => {
@@ -57,7 +59,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	const visible = useVisibilityStore((store) => store.isVisible);
 
 	useListingScore({
-		enabled: true,
+		enabled: withScore,
 		listingId: listing.id,
 		type: "listing",
 		timeoutMs: 1_600,
@@ -116,7 +118,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					parentSheetId={detailSheetId}
 					locale={locale}
 					listing={listing}
-					withScore
+					withScore={withScore}
 					feedId={feedId}
 					tools={[
 						"destructive",

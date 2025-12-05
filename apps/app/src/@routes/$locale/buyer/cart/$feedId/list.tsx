@@ -32,6 +32,10 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 				<ListingListContainer
 					locale={locale}
 					feedId={feedId}
+					/**
+					 * Don't count score for listings in cart
+					 */
+					withScore={false}
 					scrollToId={undefined}
 					overlay={({ listing }) => (
 						<FeedListingOverlay

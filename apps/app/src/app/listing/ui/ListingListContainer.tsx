@@ -22,6 +22,7 @@ export namespace ListingListContainer {
 		appendix?: ReactNode;
 		overlay: ListingHeroContainer.Overlay.Render;
 		feedId: string;
+        withScore: boolean;
 	}
 }
 
@@ -34,6 +35,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	appendix,
 	overlay,
 	feedId,
+	withScore,
 	...props
 }) => {
 	const listingIdPrefix = useId();
@@ -150,6 +152,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 											listing={listing}
 											overlay={overlay}
 											feedId={feedId}
+											withScore={withScore}
 										/>
 									);
 								}}

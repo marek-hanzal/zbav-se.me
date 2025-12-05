@@ -140,6 +140,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									ref={containerRef}
 									locale={locale}
 									feedId={feed.id}
+									/**
+									 * Listings in feed should be scored
+									 */
+									withScore
 									query={{
 										...feed.query,
 										sort: feed.query.sort?.length
