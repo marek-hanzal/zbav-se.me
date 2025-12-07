@@ -6,6 +6,8 @@
 
 @plugin "@iconify/tailwind4";
 
+@config "../../tailwind.config.ts";
+
 @theme {
 	--font-limelight: "Limelight", sans-serif;
 	--font-zalando: "Zalando Sans", sans-serif;

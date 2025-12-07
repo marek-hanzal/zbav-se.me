@@ -1,11 +1,18 @@
-import { ListIcon, UserIcon } from "@use-pico/client/icon";
+import { UserIcon } from "@use-pico/client/icon";
+import { asButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
-import { CartIcon, FeedIcon, SellerIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
-import { Tile } from "@zbav-se.me/ui/tile";
+import {
+	CartIcon,
+	FeedIcon,
+	ListingIcon,
+	SellerIcon,
+	ShopIcon,
+	TransactionIcon,
+} from "@zbav-se.me/ui/icon";
 import { useRef } from "react";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
@@ -47,99 +54,153 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					gap={"sm"}
 				>
 					<LinkTo
-						data-root="Button-root"
-						data-tone={"secondary"}
-						data-theme={"light"}
-						//
-						icon={ListIcon}
+						{...asButton({
+							tone: "primary",
+							theme: "light",
+							justify: "start",
+							round: "default",
+							size: "xl",
+							background: true,
+						})}
+						icon={ListingIcon}
+						iconProps={{
+							size: "2xl",
+						}}
 						to="/$locale/buyer/feed/default"
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Tx label="Listings (label)" />
 					</LinkTo>
 
 					<div className={spacing}>
 						<LinkTo
+							{...asButton({
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+								background: true,
+							})}
+							icon={CartIcon}
+							iconProps={{
+								size: "2xl",
+							}}
 							to="/$locale/buyer/cart/list"
 							params={{
 								locale,
 							}}
-							full
 						>
-							<Tile
-								iconEnabled={CartIcon}
-								label={"Cart (label)"}
-							/>
+							<Tx label="Cart (label)" />
 						</LinkTo>
 
 						<LinkTo
+							{...asButton({
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+								background: true,
+							})}
+							icon={TransactionIcon}
+							iconProps={{
+								size: "2xl",
+							}}
 							to="/$locale/buyer/transaction/list"
 							params={{
 								locale,
 							}}
-							full
 						>
-							<Tile
-								iconEnabled={TransactionIcon}
-								label={"Transactions (label)"}
-							/>
+							<Tx label="Transactions (label)" />
 						</LinkTo>
 
 						<LinkTo
+							{...asButton({
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+								background: true,
+							})}
+							icon={FeedIcon}
+							iconProps={{
+								size: "2xl",
+							}}
 							to="/$locale/buyer/feed/select"
 							params={{
 								locale,
 							}}
-							full
 						>
-							<Tile
-								iconEnabled={FeedIcon}
-								label={"Feed (label)"}
-							/>
+							<Tx label="Feed (label)" />
 						</LinkTo>
 					</div>
 
 					<LinkTo
+						{...asButton({
+							tone: "secondary",
+							theme: "light",
+							justify: "start",
+							round: "default",
+							size: "xl",
+							background: true,
+						})}
+						icon={ShopIcon}
+						iconProps={{
+							size: "2xl",
+						}}
 						to="/$locale/buyer/shop"
 						params={{
 							locale,
 						}}
-						full
 					>
-						<Tile
-							iconEnabled={ShopIcon}
-							label={"Shop (label)"}
-						/>
+						<Tx label="Shop (label)" />
 					</LinkTo>
 
 					<div className={spacing}>
 						<LinkTo
+							{...asButton({
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+								background: true,
+							})}
+							icon={SellerIcon}
+							iconProps={{
+								size: "2xl",
+							}}
 							to="/$locale/seller"
 							params={{
 								locale,
 							}}
-							full
 						>
-							<Tile
-								iconEnabled={SellerIcon}
-								label={"To seller (label)"}
-							/>
+							<Tx label="To seller (label)" />
 						</LinkTo>
 
 						<LinkTo
+							{...asButton({
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+								background: true,
+							})}
+							icon={UserIcon}
+							iconProps={{
+								size: "2xl",
+							}}
 							to="/$locale/buyer/user"
 							params={{
 								locale,
 							}}
-							full
 						>
-							<Tile
-								iconEnabled={UserIcon}
-								label={"User profile (label)"}
-							/>
+							<Tx label="User profile (label)" />
 						</LinkTo>
 					</div>
 

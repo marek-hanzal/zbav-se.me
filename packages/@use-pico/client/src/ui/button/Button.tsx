@@ -4,9 +4,10 @@ import { useMemo } from "react";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
 import { Tx } from "../tx/Tx";
+import { asButton } from "./asButton";
 import type { ButtonCls } from "./ButtonCls";
 
-const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, Button.Size>> = {
+const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, asButton.Size>> = {
 	sm: "xs",
 	md: "xs",
 	lg: "sm",
@@ -14,21 +15,7 @@ const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, Button.Siz
 } as const;
 
 export namespace Button {
-	export type Tone = "primary" | "secondary" | "warning" | "danger" | "link";
-	export type Theme = "light" | "dark";
-	export type Size = "xs" | "sm" | "md" | "lg" | "xl";
-	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";
-	export type SnapTo =
-		| "top-left"
-		| "top-center"
-		| "top-right"
-		| "bottom-left"
-		| "bottom-right"
-		| "bottom"
-		| "left-center"
-		| "right-center";
-
-	export interface Props extends ComponentProps<"button"> {
+	export interface Props extends ComponentProps<"button">, asButton.Props {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
@@ -83,42 +70,10 @@ export namespace Button {
 		 */
 		background?: boolean;
 		/**
-		 * Size of the button (affects padding and font size).
-		 * @default "md"
-		 */
-		size?: Button.Size;
-		/**
-		 * Color tone of the button (affects background, text, border, and shadow colors).
-		 * @default "primary"
-		 */
-		tone?: Tone;
-		/**
-		 * Theme variant (light or dark).
-		 * @default "light"
-		 */
-		theme?: Theme;
-		/**
-		 * Border radius of the button.
-		 * @default undefined
-		 */
-		round?: Round;
-		/**
 		 * Whether to truncate text that overflows the button width.
 		 * @default false
 		 */
 		truncate?: boolean;
-		/**
-		 * Whether to render the button with equal width and height.
-		 * When not provided, it defaults to true when neither children nor label are present.
-		 * @default false
-		 */
-		square?: boolean;
-		/**
-		 * Absolute positioning for snapping the button to corners of a parent container.
-		 * Requires the parent element to have relative positioning.
-		 * @default undefined
-		 */
-		snapTo?: SnapTo;
 	}
 }
 
@@ -139,7 +94,6 @@ export const Button: FC<Button.Props> = ({
 	full,
 	menu,
 	truncate,
-	square,
 	snapTo,
 	//
 	disabled,
@@ -176,28 +130,17 @@ export const Button: FC<Button.Props> = ({
 
 	return (
 		<button
-			data-root={"Button-root"}
 			type={"button"}
 			disabled={disabled}
 			//
-			data-tone={tone}
-			data-theme={theme}
-			//
-			data-size={size}
-			data-round={round}
-			//
-			data-border={border}
-			data-background={background}
-			//
-			data-full={full}
-			data-menu={menu}
-			//
-			data-truncate={truncate}
-			data-square={square}
-			//
-			data-snap-to={snapTo}
-			//
-			data-disabled={disabled}
+			{...asButton({
+				tone,
+				theme,
+				size,
+				round,
+				snapTo,
+				disabled,
+			})}
 			//
 			{...props}
 		>

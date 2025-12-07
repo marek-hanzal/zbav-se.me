@@ -1,35 +1,45 @@
 @layer components {
 	/** Sizes */
 
-	[data-root="Icon-root"] {
+	[data-root="Icon"] {
 		display: block;
 		flex-shrink: 0;
 		min-width: 0;
 		min-height: 0;
 	}
 
-	[data-root="Icon-root"][data-size="xs"] {
-		@apply w-6 h-6;
+	[data-root="Icon"][data-size="xs"] {
+		@apply text-sm;
 	}
-	[data-root="Icon-root"][data-size="sm"] {
-		@apply w-8 h-8;
+	[data-root="Icon"][data-size="sm"] {
+		@apply text-base;
 	}
-	[data-root="Icon-root"][data-size="md"] {
-		@apply w-10 h-10;
+	[data-root="Icon"][data-size="md"] {
+		@apply text-lg;
 	}
-	[data-root="Icon-root"][data-size="lg"] {
-		@apply w-12 h-12;
+	[data-root="Icon"][data-size="lg"] {
+		@apply text-xl;
 	}
-	[data-root="Icon-root"][data-size="xl"] {
-		@apply w-16 h-16;
+	[data-root="Icon"][data-size="xl"] {
+		@apply text-2xl;
 	}
-	[data-root="Icon-root"][data-size="2xl"] {
-		@apply w-24 h-24;
+	[data-root="Icon"][data-size="2xl"] {
+		@apply text-3xl;
 	}
-	[data-root="Icon-root"][data-size="3xl"] {
-		@apply w-32 h-32;
+	[data-root="Icon"][data-size="3xl"] {
+		@apply text-4xl;
 	}
-	[data-root="Icon-root"][data-size="4xl"] {
-		@apply w-40 h-40;
+	[data-root="Icon"][data-size="4xl"] {
+		@apply text-5xl;
+	}
+
+	/** Tone */
+
+	[data-root="Icon"][data-tone="primary"][data-theme="light"] {
+		@apply tone-primary-light;
+	}
+
+	[data-root="Icon"][data-tone="primary"][data-theme="dark"] {
+		@apply tone-primary-dark;
 	}
 }

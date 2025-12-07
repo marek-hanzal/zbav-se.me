@@ -1,14 +1,50 @@
 @layer components {
-	[data-root="Button-root"] {
+	[data-root="Button"] {
 		display: block;
-		color: var(--text-color);
+		color: var(--color-text);
+		background: var(--color-background);
+		@apply flex flex-row items-center justify-center gap-2;
 	}
 
-	[data-root="Button-root"][data-tone="primary"][data-theme="light"] {
+	/** Justify */
+
+	[data-root="Button"][data-justify="start"] {
+		@apply justify-start;
+	}
+
+	[data-root="Button"][data-justify="between"] {
+		@apply justify-between;
+	}
+
+	/** Sizes */
+
+	[data-root="Button"][data-size="xs"] {
+		@apply p-1 text-xs;
+	}
+
+	[data-root="Button"][data-size="sm"] {
+		@apply p-2 text-sm;
+	}
+
+	[data-root="Button"][data-size="md"] {
+		@apply p-3 text-base;
+	}
+
+	[data-root="Button"][data-size="lg"] {
+		@apply p-4 text-lg;
+	}
+
+	[data-root="Button"][data-size="xl"] {
+		@apply p-5 text-xl;
+	}
+
+	/** Tone */
+
+	[data-root="Button"][data-tone="primary"][data-theme="light"] {
 		@apply tone-primary-light;
 	}
 
-	[data-root="Button-root"][data-tone="secondary"][data-theme="light"] {
+	[data-root="Button"][data-tone="secondary"][data-theme="light"] {
 		@apply tone-secondary-light;
 	}
 }

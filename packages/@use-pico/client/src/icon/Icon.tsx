@@ -55,7 +55,7 @@ export const Icon: FC<Icon.Props> = ({
 }) => {
 	return isString(icon) ? (
 		<span
-			data-root="Icon-root"
+			data-root="Icon"
 			//
 			data-tone={tone}
 			data-theme={theme}

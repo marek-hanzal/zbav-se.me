@@ -18,36 +18,12 @@ interface BaseLinkToProps extends ComponentProps<"a"> {
 	 * @default "left"
 	 */
 	iconPosition?: Cls.VariantOf<LinkToCls, "icon-position">;
-	/**
-	 * Display mode of the link.
-	 * @default "unset"
-	 */
-	display?: Cls.VariantOf<LinkToCls, "display">;
-	/**
-	 * Whether the link should take full width of its container.
-	 * @default false
-	 */
-	full?: boolean;
-	/**
-	 * Color tone of the link (affects text, background, and border colors).
-	 * @default "link"
-	 */
-	tone?: Cls.VariantOf<LinkToCls, "tone">;
-	/**
-	 * Theme variant (light or dark).
-	 * @default "light"
-	 */
-	theme?: Cls.VariantOf<LinkToCls, "theme">;
 }
 
 const BaseLinkTo: FC<BaseLinkToProps> = ({
 	icon,
 	iconProps,
 	iconPosition = "left",
-	display,
-	full,
-	tone,
-	theme,
 	children,
 	...props
 }) => {
@@ -63,7 +39,9 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 					{...iconProps}
 				/>
 			)}
+
 			{children}
+
 			{iconPosition === "right" && (
 				<Icon
 					icon={icon}

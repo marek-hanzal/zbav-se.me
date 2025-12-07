@@ -1,7 +1,19 @@
 @utility tone-primary-light {
-	--text-color: var(--color-red-500);
+	--color-text: var(--color-cyan-700);
+	--color-background: var(--color-cyan-50);
+}
+
+@utility tone-primary-dark {
+	--color-text: var(--color-cyan-100);
+	--color-background: var(--color-cyan-900);
 }
 
 @utility tone-secondary-light {
-	--text-color: var(--color-purple-500);
+	--color-text: var(--color-purple-700);
+	--color-background: var(--color-purple-50);
+}
+
+@utility tone-secondary-dark {
+	--color-text: var(--color-purple-100);
+	--color-background: var(--color-purple-900);
 }
