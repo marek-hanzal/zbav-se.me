@@ -1,7 +1,6 @@
 import { tvc } from "@use-pico/cls";
 import { isString } from "@use-pico/common/is-string";
 import type { ComponentProps, FC, ReactNode } from "react";
-import type { UiProps } from "../type";
 
 /**
  * Simple styled icon (span); uses Tailwind CSS classes.
@@ -25,7 +24,7 @@ export namespace Icon {
 	/**
 	 * Props for `Icon` component.
 	 */
-	export interface Props extends UiProps<ComponentProps<"div">> {
+	export interface Props extends ComponentProps<"span"> {
 		/**
 		 * `Iconify` icon name.
 		 *
@@ -46,7 +45,6 @@ export namespace Icon {
 }
 
 export const Icon: FC<Icon.Props> = ({
-	ui,
 	icon,
 	size,
 	tone,
@@ -56,9 +54,8 @@ export const Icon: FC<Icon.Props> = ({
 	...props
 }) => {
 	return isString(icon) ? (
-		<div
+		<span
 			data-root="Icon-root"
-			data-ui={ui ?? "Icon-root"}
 			//
 			data-tone={tone}
 			data-theme={theme}

@@ -1,0 +1,5 @@
+@layer components {
+	[data-root="Overlay"] {
+		@apply pointer-events-none absolute h-dvh w-dvw top-0 left-0 overflow-hidden z-[100];
+	}
+}

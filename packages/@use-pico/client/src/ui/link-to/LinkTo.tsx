@@ -1,15 +1,10 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
-import type { AnchorHTMLAttributes, ComponentProps, FC, Ref } from "react";
-import { PicoCls } from "../../cls/PicoCls";
+import type { Cls } from "@use-pico/cls";
+import type { ComponentProps, FC } from "react";
 import { Icon } from "../../icon/Icon";
-import { LinkToCls } from "./LinkToCls";
+import type { LinkToCls } from "./LinkToCls";
 
-interface BaseLinkToProps extends LinkToCls.Props<AnchorHTMLAttributes<HTMLAnchorElement>> {
-	/**
-	 * Ref to the anchor element.
-	 */
-	ref?: Ref<HTMLAnchorElement>;
+interface BaseLinkToProps extends ComponentProps<"a"> {
 	/**
 	 * Icon to display in the link.
 	 */
@@ -46,7 +41,6 @@ interface BaseLinkToProps extends LinkToCls.Props<AnchorHTMLAttributes<HTMLAncho
 }
 
 const BaseLinkTo: FC<BaseLinkToProps> = ({
-	ref,
 	icon,
 	iconProps,
 	iconPosition = "left",
@@ -54,49 +48,30 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	full,
 	tone,
 	theme,
-	cls = LinkToCls,
-	tweak,
 	children,
 	...props
 }) => {
-	const { slots, variant } = useCls(cls, tweak, {
-		variant: {
-			display,
-			full,
-			tone,
-			theme,
-			"icon-position": iconPosition,
-		},
-	});
-
 	return (
-		<VariantProvider
-			cls={PicoCls}
-			variant={variant}
+		<a
+			data-root={"LinkTo"}
+			{...props}
 		>
-			<a
-				{...props}
-				ref={ref}
-				data-ui="LinkTo-root"
-				className={slots.root()}
-			>
-				{iconPosition === "left" && (
-					<Icon
-						icon={icon}
-						size={"sm"}
-						{...iconProps}
-					/>
-				)}
-				{children}
-				{iconPosition === "right" && (
-					<Icon
-						icon={icon}
-						size={"sm"}
-						{...iconProps}
-					/>
-				)}
-			</a>
-		</VariantProvider>
+			{iconPosition === "left" && (
+				<Icon
+					icon={icon}
+					size={"sm"}
+					{...iconProps}
+				/>
+			)}
+			{children}
+			{iconPosition === "right" && (
+				<Icon
+					icon={icon}
+					size={"sm"}
+					{...iconProps}
+				/>
+			)}
+		</a>
 	);
 };
 

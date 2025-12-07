@@ -11,16 +11,15 @@ export namespace BadgeLeft {
 export const BadgeLeft: FC<BadgeLeft.Props> = (props) => {
 	return (
 		<Badge
+			data-ui={"BadgeLeft-root"}
+			//
 			round={"full"}
 			tone={"secondary"}
 			theme={"light"}
-			className={[
-				"w-10",
-				"h-10",
-			]}
 			{...props}
 		>
 			<Icon
+				data-ui={"BadgeLeft-Icon"}
 				icon={ArrowLeftIcon}
 				size={"sm"}
 			/>

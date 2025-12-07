@@ -1,2 +1,14 @@
 @layer components {
+	[data-root="Button-root"] {
+		display: block;
+		color: var(--text-color);
+	}
+
+	[data-root="Button-root"][data-tone="primary"][data-theme="light"] {
+		@apply tone-primary-light;
+	}
+
+	[data-root="Button-root"][data-tone="secondary"][data-theme="light"] {
+		@apply tone-secondary-light;
+	}
 }

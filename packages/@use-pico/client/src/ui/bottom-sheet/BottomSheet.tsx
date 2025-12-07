@@ -3,14 +3,13 @@ import { motion, useTransform } from "motion/react";
 import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
 import { ArrowLeftIcon } from "../../icon";
-import type { UiProps } from "../../type/UiProps";
 import { Badge } from "../badge";
 import { Button } from "../button";
 import { Tx } from "../tx";
 
 export namespace BottomSheet {
 	export interface Props
-		extends UiProps<PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">>> {
+		extends PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">> {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
@@ -24,7 +23,6 @@ export namespace BottomSheet {
 }
 
 export const BottomSheet: FC<BottomSheet.Props> = ({
-	ui,
 	containerProps,
 	contentProps,
 	withHeader = false,
@@ -43,7 +41,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	return (
 		<Sheet
 			ref={sheetRef}
-			data-ui={ui ?? "BottomSheet-root"}
+			data-root={"BottomSheet"}
 			tweenConfig={{
 				ease: "easeOut",
 				duration: 0.15,
@@ -51,33 +49,15 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 			{...props}
 		>
 			<Sheet.Container
-				data-ui={"BottomSheet-Container"}
+				data-root={"BottomSheet-Container"}
 				{...containerProps}
 			>
-				{withHeader ? <Sheet.Header data-ui={"BottomSheet-Header"} /> : null}
+				{withHeader ? <Sheet.Header data-root={"BottomSheet-Header"} /> : null}
 
 				{header ? (
 					<Badge
+						data-root={"BottomSheet-Badge-header-wrapper"}
 						round={"md"}
-						tone={"unset"}
-						theme={"unset"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"flex",
-										"flex-row",
-										"items-center",
-										"justify-start",
-										"gap-2",
-										"h-fit",
-										"p-2",
-										"border-none",
-										"w-full",
-									],
-								},
-							},
-						}}
 					>
 						{header.close ? (
 							<Button

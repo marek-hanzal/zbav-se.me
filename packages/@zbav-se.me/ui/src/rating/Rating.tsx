@@ -44,7 +44,7 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 
 	return (
 		<Container
-			ui={"Rating-root"}
+			data-ui={"Rating-root"}
 			scroll={"vertical"}
 			height={"auto"}
 		>

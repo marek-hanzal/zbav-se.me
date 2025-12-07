@@ -1,0 +1,5 @@
+@layer components {
+	[data-root="BottomSheet-Badge-header-wrapper"] {
+		@apply flex flex-row items-center justify-start gap-2 h-fit p-2 w-full;
+	}
+}

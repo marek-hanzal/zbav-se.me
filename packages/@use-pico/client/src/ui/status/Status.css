@@ -1,0 +1,21 @@
+@layer components {
+	[data-root="Status"] {
+		@apply w-full flex flex-col items-center justify-center gap-2 min-w-0 p-4;
+	}
+
+	[data-root="Status-title-wrapper"] {
+		@apply flex flex-col gap-1 items-center justify-center text-center w-full max-w-full min-w-0 p-4;
+	}
+
+	[data-root="Status-icon"] {
+		opacity: 0.5;
+	}
+
+	[data-root="Status-action"] {
+		@apply flex gap-4 items-center justify-center w-full p-4;
+	}
+
+	[data-root="Status-body"] {
+		@apply w-full p-4;
+	}
+}

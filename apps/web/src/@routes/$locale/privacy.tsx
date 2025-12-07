@@ -1,16 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 
 export const Route = createFileRoute("/$locale/privacy")({
 	component() {
 		return (
-			<Sheet>
+			<Container>
 				<Status
 					textTitle={"Privacy policy not available in this language (title)"}
 					textMessage={"Privacy policy not available in this language (description)"}
 				/>
-			</Sheet>
+			</Container>
 		);
 	},
 });

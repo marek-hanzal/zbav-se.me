@@ -1,5 +1,4 @@
 import type { ComponentProps, FC, ReactNode } from "react";
-import type { UiProps } from "../../type";
 
 export namespace Typo {
 	export type Value = ReactNode;
@@ -13,7 +12,7 @@ export namespace Typo {
 	export type Font = "light" | "normal" | "bold";
 	export type Wrap = "wrap" | "nowrap";
 
-	export interface Props extends UiProps<ComponentProps<"div">> {
+	export interface Props extends ComponentProps<"span"> {
 		label: Value;
 		truncate?: boolean;
 		preset?: Preset;
@@ -50,7 +49,6 @@ const presets: Record<Typo.Preset, Partial<Typo.Props>> = {
 };
 
 export const Typo: FC<Typo.Props> = ({
-	ui,
 	label,
 	preset = "none",
 	truncate,
@@ -60,13 +58,12 @@ export const Typo: FC<Typo.Props> = ({
 	font,
 	tone,
 	theme,
-	italic = false,
+	italic,
 	...props
 }) => {
 	return (
-		<div
-			data-root="Typo-root"
-			data-ui={ui ?? "Typo-root"}
+		<span
+			data-root={"Typo-root"}
 			//
 			data-tone={tone}
 			data-theme={theme}
@@ -77,11 +74,12 @@ export const Typo: FC<Typo.Props> = ({
 			data-wrap={wrap}
 			data-truncate={truncate}
 			data-italic={italic}
+			//
 			{...presets[preset]}
-			//;
+			//
 			{...props}
 		>
 			{label}
-		</div>
+		</span>
 	);
 };

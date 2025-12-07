@@ -1,7 +1,6 @@
-import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
-import type { FC, HTMLAttributes, Ref } from "react";
-import type { UiProps } from "../../type/UiProps";
-import { BadgeCls } from "./BadgeCls";
+import type { Cls } from "@use-pico/cls";
+import type { ComponentProps, FC } from "react";
+import type { BadgeCls } from "./BadgeCls";
 
 /**
  * Simple badge icon; just rounded background with children.
@@ -9,11 +8,7 @@ import { BadgeCls } from "./BadgeCls";
  * @group ui
  */
 export namespace Badge {
-	export interface Props extends UiProps<BadgeCls.Props<HTMLAttributes<HTMLDivElement>>> {
-		/**
-		 * Ref to the root div element.
-		 */
-		ref?: Ref<HTMLDivElement>;
+	export interface Props extends ComponentProps<"div"> {
 		/**
 		 * Whether the badge is disabled (reduces opacity and prevents interaction).
 		 */
@@ -43,14 +38,10 @@ export namespace Badge {
 		 * Stretch badge to full width.
 		 */
 		full?: boolean;
-		className?: string[];
 	}
 }
 
 export const Badge: FC<Badge.Props> = ({
-	ui,
-	ref,
-	//
 	disabled,
 	size,
 	round,
@@ -59,52 +50,16 @@ export const Badge: FC<Badge.Props> = ({
 	snapTo,
 	full,
 	className,
-	//
-	cls = BadgeCls,
-	tweak,
 	children,
 	//
 	...props
 }) => {
-	const { slots, variant } = useCls(
-		cls,
-		tweak,
-		{
-			variant: {
-				disabled,
-				size,
-				round,
-				tone,
-				theme,
-				"snap-to": snapTo,
-				full,
-			},
-		},
-		{
-			slot: {
-				root: {
-					class: className,
-				},
-			},
-		},
-	);
-
 	return (
 		<div
-			ref={ref}
-			data-ui={ui ?? "Badge-root"}
-			className={slots.root()}
+			data-root={"Badge-root"}
 			{...props}
 		>
-			<VariantProvider
-				cls={cls}
-				variant={{
-					tone: variant.tone,
-					theme: variant.theme,
-				}}
-			>
-				{children}
-			</VariantProvider>
+			{children}
 		</div>
 	);
 };

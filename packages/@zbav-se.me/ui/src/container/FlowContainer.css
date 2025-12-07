@@ -1,0 +1,5 @@
+@layer components {
+	[data-ui="FlowContainer-left"] {
+		@apply absolute left-2 top-2 w-fit h-fit isolate z-5;
+	}
+}

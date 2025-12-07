@@ -3,7 +3,6 @@ import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
-import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
 import type { ButtonCls } from "./ButtonCls";
 
@@ -29,7 +28,7 @@ export namespace Button {
 		| "left-center"
 		| "right-center";
 
-	export interface Props extends UiProps<ComponentProps<"button">> {
+	export interface Props extends ComponentProps<"button"> {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
@@ -124,7 +123,6 @@ export namespace Button {
 }
 
 export const Button: FC<Button.Props> = ({
-	ui,
 	label,
 	iconEnabled,
 	iconDisabled,
@@ -178,10 +176,29 @@ export const Button: FC<Button.Props> = ({
 
 	return (
 		<button
-			data-root="Button-root"
-			data-ui={ui ?? "Button-root"}
+			data-root={"Button-root"}
 			type={"button"}
 			disabled={disabled}
+			//
+			data-tone={tone}
+			data-theme={theme}
+			//
+			data-size={size}
+			data-round={round}
+			//
+			data-border={border}
+			data-background={background}
+			//
+			data-full={full}
+			data-menu={menu}
+			//
+			data-truncate={truncate}
+			data-square={square}
+			//
+			data-snap-to={snapTo}
+			//
+			data-disabled={disabled}
+			//
 			{...props}
 		>
 			{iconPosition === "left" && renderIcon}

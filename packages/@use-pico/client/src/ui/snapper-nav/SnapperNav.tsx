@@ -1,10 +1,9 @@
 import { type Cls, useCls } from "@use-pico/cls";
-import { type FC, type Ref, useCallback, useId, useMemo } from "react";
+import { type ComponentProps, type FC, useCallback, useId, useMemo } from "react";
 import { useDoubleTap } from "../../hook/useDoubleTap";
 import type { useSnapperNav } from "../../hook/useSnapperNav";
 import { DotIcon } from "../../icon/DotIcon";
 import { Icon } from "../../icon/Icon";
-import type { UiProps } from "../../type/UiProps";
 import { SnapperNavCls } from "./SnapperNavCls";
 
 export namespace SnapperNav {
@@ -34,8 +33,7 @@ export namespace SnapperNav {
 		icon?: Icon.Type;
 	}
 
-	export interface Props extends UiProps<SnapperNavCls.Props> {
-		ref?: Ref<HTMLDivElement>;
+	export interface Props extends SnapperNavCls.Props<ComponentProps<"div">> {
 		snapperNav: useSnapperNav.Result;
 		pages?: Page[] | Count;
 		subtle?: boolean;
@@ -48,8 +46,6 @@ export namespace SnapperNav {
 }
 
 export const SnapperNav: FC<SnapperNav.Props> = ({
-	ui,
-	ref,
 	snapperNav,
 	pages,
 	//
@@ -64,6 +60,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	cls = SnapperNavCls,
 	tweak,
 	//
+	...props
 }) => {
 	const pageId = useId();
 	const $pages: SnapperNav.Page[] = pages
@@ -149,7 +146,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		return (
 			<>
 				<Icon
-					ui="SnapperNav-first"
+					data-ui="SnapperNav-first"
 					key={firstId}
 					onDoubleClick={snapperNav.api.start}
 					onClick={snapperNav.api.prev}
@@ -175,7 +172,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
-							ui="SnapperNav-item"
+							data-ui="SnapperNav-item"
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
@@ -195,7 +192,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					);
 				})}
 				<Icon
-					ui="SnapperNav-last"
+					data-ui="SnapperNav-last"
 					key={lastId}
 					onClick={snapperNav.api.next}
 					onDoubleClick={snapperNav.api.end}
@@ -232,7 +229,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
-							ui="SnapperNav-item"
+							data-ui="SnapperNav-item"
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
@@ -261,9 +258,9 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 	return snapperNav.state.count > 1 ? (
 		<div
-			data-ui={ui ?? "SnapperNav-root"}
-			ref={ref}
+			data-root="SnapperNav"
 			className={slots.root()}
+			{...props}
 		>
 			<div
 				data-ui="SnapperNav-items"

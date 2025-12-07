@@ -10,7 +10,7 @@ export namespace Tile {
 export const Tile: FC<Tile.Props> = (props) => {
 	return (
 		<Button
-			ui={"Tile-root"}
+			data-ui={"Tile-root"}
 			tone={"primary"}
 			theme={"light"}
 			size={"xl"}

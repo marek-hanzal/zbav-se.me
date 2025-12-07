@@ -1,0 +1,5 @@
+@layer components {
+	[data-ui="BottomContainer"] {
+		@apply flex flex-row justify-between items-center;
+	}
+}

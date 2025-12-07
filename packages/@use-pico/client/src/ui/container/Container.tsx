@@ -1,5 +1,4 @@
 import type { ComponentProps, FC } from "react";
-import type { UiProps } from "../../type/UiProps";
 
 export namespace Container {
 	export type Tone = "primary";
@@ -35,7 +34,7 @@ export namespace Container {
 		| "bottom-right"
 		| "bottom";
 
-	export interface Props extends UiProps<Omit<ComponentProps<"div">, "onChange">> {
+	export interface Props extends Omit<ComponentProps<"div">, "onChange"> {
 		/**
 		 * Visual tone of the container.
 		 *
@@ -173,9 +172,6 @@ export namespace Container {
 }
 
 export const Container: FC<Container.Props> = ({
-	ref,
-	ui,
-	//
 	tone,
 	theme,
 	height,
@@ -193,9 +189,7 @@ export const Container: FC<Container.Props> = ({
 }) => {
 	return (
 		<div
-			ref={ref}
 			data-root={"Container"}
-			data-ui={ui ?? "Container"}
 			//
 			data-tone={tone}
 			data-theme={theme}

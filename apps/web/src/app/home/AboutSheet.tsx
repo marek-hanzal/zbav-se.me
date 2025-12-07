@@ -1,7 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Markdown } from "@use-pico/client/ui/markdown";
 import { Fade } from "@zbav-se.me/ui/fade";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import { type FC, useRef } from "react";
 
 export namespace AboutSheet {
@@ -14,17 +13,7 @@ export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
 	const scrollerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<Sheet
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"p-4",
-						],
-					},
-				},
-			}}
-		>
+		<Container>
 			<Fade scrollableRef={scrollerRef} />
 
 			<Container
@@ -36,6 +25,6 @@ export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
 					<Markdown>{markdown}</Markdown>
 				</div>
 			</Container>
-		</Sheet>
+		</Container>
 	);
 };

@@ -44,13 +44,9 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tweak={{
-								variant: {
-									theme: "light",
-									tone: "danger",
-									size: "xs",
-								},
-							}}
+							tone={"danger"}
+							theme={"light"}
+							size={"xs"}
 						>
 							{entity.component}
 						</Badge>
@@ -59,13 +55,9 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tweak={{
-								variant: {
-									theme: "light",
-									tone: "danger",
-									size: "xs",
-								},
-							}}
+							tone={"danger"}
+							theme={"light"}
+							size={"xs"}
 						>
 							<Tx label={entity.message} />
 						</Badge>
@@ -77,12 +69,8 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tweak={{
-								variant: {
-									theme: "light",
-									tone: "danger",
-								},
-							}}
+							tone={"danger"}
+							theme={"light"}
 						>
 							{entity.component}
 						</Badge>
@@ -91,12 +79,8 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tweak={{
-								variant: {
-									theme: "light",
-									tone: "danger",
-								},
-							}}
+							tone={"danger"}
+							theme={"light"}
 						>
 							<Mx label={entity.message} />
 						</Badge>

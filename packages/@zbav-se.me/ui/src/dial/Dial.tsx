@@ -40,37 +40,21 @@ export namespace Dial {
 export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 	return (
 		<Container
-			ui={"Dial-Container"}
+			data-ui={"Dial-Container"}
 			layout={"vertical-header-content"}
 			height={"full"}
 			gap={"sm"}
 			{...props}
 		>
 			<Badge
+				data-ui={"Dial-Badge-value-wrapper"}
 				tone={"primary"}
 				theme={"light"}
 				size={"xl"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"inline-flex",
-								"flex-row",
-								"items-center",
-								"justify-between",
-								"w-full",
-							],
-							token: [
-								"round.default",
-								"tone.primary.light.border",
-								"tone.primary.light.shadow",
-							],
-						},
-					},
-				}}
 			>
 				{value ? (
 					<Typo
+						data-ui={"Dial-Typo-value"}
 						label={value}
 						size={"xl"}
 						font={"bold"}
@@ -78,6 +62,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 					/>
 				) : (
 					<Tx
+						data-ui={"Dial-Typo-value-placeholder"}
 						label={"Price (placeholder)"}
 						size={"xl"}
 						font={"bold"}
@@ -86,6 +71,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				)}
 
 				<Icon
+					data-ui={"Dial-Icon-backspace"}
 					icon={BackspaceIcon}
 					tone="secondary"
 					theme="light"
@@ -97,6 +83,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 			</Badge>
 
 			<div
+				data-ui={"Dial-grid"}
 				className={tvc([
 					"grid",
 					"grid-cols-3",
@@ -119,6 +106,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				))}
 
 				<Item
+					data-ui={"Dial-Item-comma"}
 					icon={"icon-[fluent--comma-20-filled]"}
 					disabled={!value || value.includes(".")}
 					onClick={() => {
@@ -127,6 +115,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				/>
 
 				<Item
+					data-ui={"Dial-Item-zero"}
 					icon={icons[0]}
 					disabled={false}
 					onClick={() => {
@@ -135,6 +124,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 				/>
 
 				<Item
+					data-ui={"Dial-Item-clear"}
 					icon={ClearIcon}
 					disabled={!value}
 					onClick={() => {

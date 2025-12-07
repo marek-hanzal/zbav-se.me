@@ -6,7 +6,7 @@ import type { FC } from "react";
 export const ContactSheet: FC = () => {
 	return (
 		<Container
-			ui={"ContactSheet-root"}
+			data-ui={"ContactSheet"}
 			layout={"vertical-centered"}
 			className={"reveal"}
 		>

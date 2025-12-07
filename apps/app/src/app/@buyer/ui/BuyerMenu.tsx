@@ -1,16 +1,10 @@
-import { UserIcon } from "@use-pico/client/icon";
+import { ListIcon, UserIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
-import {
-	CartIcon,
-	FeedIcon,
-	ListingIcon,
-	SellerIcon,
-	ShopIcon,
-	TransactionIcon,
-} from "@zbav-se.me/ui/icon";
+import { CartIcon, FeedIcon, SellerIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import { Tile } from "@zbav-se.me/ui/tile";
 import { useRef } from "react";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
@@ -53,17 +47,18 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					gap={"sm"}
 				>
 					<LinkTo
+						data-root="Button-root"
+						data-tone={"secondary"}
+						data-theme={"light"}
+						//
+						icon={ListIcon}
 						to="/$locale/buyer/feed/default"
 						params={{
 							locale,
 						}}
 						full
 					>
-						<Tile
-							iconEnabled={ListingIcon}
-							label={"Listings (label)"}
-							tone={"secondary"}
-						/>
+						<Tx label="Listings (label)" />
 					</LinkTo>
 
 					<div className={spacing}>

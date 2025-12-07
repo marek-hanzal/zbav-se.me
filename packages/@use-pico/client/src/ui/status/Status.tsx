@@ -1,11 +1,10 @@
 import type { ComponentProps, FC, ReactNode } from "react";
 import { Icon } from "../../icon/Icon";
-import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
 import type { Typo } from "../typo/Typo";
 
 export namespace Status {
-	export interface Props extends UiProps<ComponentProps<"div">> {
+	export interface Props extends ComponentProps<"div"> {
 		/**
 		 * Translation key for the title text.
 		 */
@@ -28,8 +27,6 @@ export namespace Status {
 }
 
 export const Status: FC<Status.Props> = ({
-	ref,
-	ui,
 	textTitle,
 	textMessage,
 	action,
@@ -44,24 +41,23 @@ export const Status: FC<Status.Props> = ({
 }) => {
 	return (
 		<div
-			ref={ref}
-			data-root="Status-root"
-			data-ui={ui ?? "Status-root"}
+			data-root="Status"
 			//
 			data-tone={tone}
 			data-theme={theme}
 			//
 			{...props}
 		>
-			<div data-ui="Status-title">
+			<div data-ui="Status-title-wrapper">
 				<Icon
+					data-ui="Status-icon"
 					icon={icon}
 					size="xl"
-					className="opacity-50"
 					{...iconProps}
 				/>
 
 				<Tx
+					data-ui="Status-title"
 					label={textTitle}
 					size="xl"
 					font="bold"
@@ -70,6 +66,7 @@ export const Status: FC<Status.Props> = ({
 					{...titleProps}
 				/>
 				<Tx
+					data-ui="Status-message"
 					label={textMessage}
 					display="block"
 					wrap={"wrap"}

@@ -42,37 +42,16 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
-			ui={"ContainerValueList-root"}
+			data-root="ContainerValueList"
 			layout={"vertical-flex"}
 			gap={"xs"}
 			height={"auto"}
 			{...props}
 		>
 			<Badge
-				ui={"ContainerValueList-title"}
+				data-ui="ContainerValueList-Badge-title-wrapper"
 				tone={"neutral"}
 				theme={"light"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"flex",
-								"flex-row",
-								"items-center",
-								"justify-between",
-								"h-fit",
-								"w-full",
-								"border-none",
-								"gap-2",
-								"px-4",
-								"py-3",
-							],
-							token: [
-								"round.default",
-							],
-						},
-					},
-				}}
 			>
 				<Tx
 					tone={"primary"}
@@ -84,7 +63,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			</Badge>
 
 			<Container
-				ui={"ContainerValueList-content"}
+				data-ui="ContainerValueList-Container-content"
 				layout={"vertical-flex"}
 				gap={"xs"}
 				height={"auto"}
@@ -93,31 +72,10 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 					? null
 					: items.map((item) => (
 							<Badge
-								ui={"ContainerValueList-item"}
+								data-ui="ContainerValueList-Badge-item"
 								key={item.id}
 								tone={"neutral"}
 								theme={"light"}
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"flex",
-												"flex-col",
-												"items-start",
-												"h-fit",
-												"w-full",
-												"border-none",
-												"gap-0",
-												"px-4",
-												"py-2",
-												"opacity-85",
-											],
-											token: [
-												"round.default",
-											],
-										},
-									},
-								}}
 							>
 								{renderFn(item)}
 							</Badge>
@@ -132,28 +90,9 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 
 				{!loading && items.length === 0 && (
 					<Badge
-						ui={"ContainerValueList-empty"}
+						data-ui="ContainerValueList-Badge-empty"
 						tone={"neutral"}
 						theme={"light"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"justify-start",
-										"h-fit",
-										"w-full",
-										"border-none",
-										"gap-0",
-										"px-4",
-										"py-2",
-										"opacity-50",
-									],
-									token: [
-										"round.default",
-									],
-								},
-							},
-						}}
 					>
 						<Tx label={textEmpty} />
 					</Badge>

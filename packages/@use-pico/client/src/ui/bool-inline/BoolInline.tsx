@@ -3,7 +3,6 @@ import { CheckIcon } from "../../icon/CheckIcon";
 import { Icon } from "../../icon/Icon";
 import { UnCheckIcon } from "../../icon/UnCheckIcon";
 import { UndefinedIcon } from "../../icon/UndefinedIcon";
-import type { UiProps } from "../../type/UiProps";
 
 /**
  * Renders icon based on a boolean value.
@@ -25,7 +24,7 @@ export namespace BoolInline {
 	/**
 	 * Props for BoolInline component.
 	 */
-	export interface Props extends UiProps<ComponentProps<"div">> {
+	export interface Props extends ComponentProps<"div"> {
 		/**
 		 * Input boolean value.
 		 */
@@ -47,7 +46,6 @@ export namespace BoolInline {
 }
 
 export const BoolInline: FC<BoolInline.Props> = ({
-	ui,
 	value,
 	checkIcon = CheckIcon,
 	unCheckIcon = UnCheckIcon,
@@ -58,8 +56,7 @@ export const BoolInline: FC<BoolInline.Props> = ({
 	if (value === null || value === undefined) {
 		return (
 			<div
-				data-root="BoolInline-root"
-				data-ui={ui ?? "BoolInline-root"}
+				data-root="BoolInline"
 				//
 				data-value="unknown"
 				//
@@ -75,8 +72,7 @@ export const BoolInline: FC<BoolInline.Props> = ({
 
 	return (
 		<div
-			data-root="BoolInline-root"
-			data-ui={ui ?? "BoolInline-root"}
+			data-root="BoolInline"
 			//
 			data-value={value}
 			//

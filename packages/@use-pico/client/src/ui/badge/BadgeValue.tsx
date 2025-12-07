@@ -1,9 +1,7 @@
-import type { Cls } from "@use-pico/cls";
 import { isString } from "@use-pico/common/is-string";
 import type { FC, ReactNode } from "react";
 import { Tx } from "../tx/Tx";
 import { Badge } from "./Badge";
-import type { BadgeCls } from "./BadgeCls";
 
 /**
  * Badge component with label and value display.
@@ -25,44 +23,18 @@ export namespace BadgeValue {
 	}
 }
 
-const defaultTweak: Cls.TweaksOf<BadgeCls> = {
-	slot: {
-		root: {
-			class: [
-				"flex",
-				"flex-col",
-				"items-start",
-				"h-fit",
-				"w-full",
-				"border-none",
-				"gap-2",
-				"px-4",
-				"py-3",
-			],
-			token: [
-				"round.default",
-			],
-		},
-	},
-};
-
 export const BadgeValue: FC<BadgeValue.Props> = ({
 	textLabel,
 	textValue,
 	textValueProps,
 	action,
-	tweak,
 	//
 	...props
 }) => {
 	return (
 		<Badge
-			ui={"BadgeValue-root"}
+			data-ui={"BadgeValue"}
 			tone={"neutral"}
-			tweak={[
-				defaultTweak,
-				tweak,
-			]}
 			{...props}
 		>
 			<div data-ui="BadgeValue-label-wrapper">

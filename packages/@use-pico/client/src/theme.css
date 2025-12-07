@@ -1,0 +1,7 @@
+@utility tone-primary-light {
+	--text-color: var(--color-red-500);
+}
+
+@utility tone-secondary-light {
+	--text-color: var(--color-purple-500);
+}

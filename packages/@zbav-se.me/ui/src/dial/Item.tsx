@@ -37,7 +37,7 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
 	return (
 		<Button
 			ref={rootRef}
-			ui={"Dial-Item-root"}
+			data-ui={"Dial-Item-root"}
 			iconEnabled={icon}
 			disabled={disabled}
 			onClick={() => {

@@ -16,7 +16,7 @@ export namespace HeroSheet {
 
 export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 	return (
-		<Container ui={"HeroSheet-root"}>
+		<Container data-ui={"HeroSheet"}>
 			<div
 				data-ui={"HeroSheet-wrapper"}
 				className={tvc([
@@ -37,7 +37,7 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 				</Container>
 
 				<Status
-					ui="HeroSheet-Status"
+					data-ui="HeroSheet-Status"
 					textTitle={"Landing - Hero (title)"}
 					textMessage={"Landing - Hero (subtitle)"}
 				>

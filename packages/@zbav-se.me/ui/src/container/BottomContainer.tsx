@@ -1,5 +1,4 @@
 import { Container } from "@use-pico/client/ui/container";
-import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 
 export namespace BottomContainer {
@@ -9,13 +8,7 @@ export namespace BottomContainer {
 export const BottomContainer: FC<BottomContainer.Props> = (props) => {
 	return (
 		<Container
-			ui="BottomContainer-root"
-			className={tvc([
-				"flex",
-				"flex-row",
-				"justify-between",
-				"items-center",
-			])}
+			data-ui={"BottomContainer"}
 			{...props}
 		/>
 	);

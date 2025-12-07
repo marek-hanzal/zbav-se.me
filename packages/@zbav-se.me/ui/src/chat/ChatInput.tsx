@@ -100,112 +100,101 @@ export const ChatInput: FC<ChatInput.Props> = ({
 
 	return (
 		<Container
-			ui={"ChatInput-root"}
+			data-ui={"ChatInput-Container"}
 			layout={"horizontal-flex"}
 			gap={"md"}
 			{...props}
 		>
+			{menu ? (
+				<>
+					<Button
+						data-ui={"ChatInput-Button-menu"}
+						iconEnabled={PlusIcon}
+						tone={"link"}
+						theme={"light"}
+						onClick={() => setIsMenu((prev) => !prev)}
+					/>
+
+					<BottomSheet
+						data-ui={"ChatInput-BottomSheet-menu"}
+						isOpen={isMenu}
+						onClose={() => setIsMenu(false)}
+						{...menu.props}
+					>
+						<Container
+							data-ui={"ChatInput-BottomSheet-Container"}
+							layout={"vertical-flex"}
+							gap={"md"}
+							square={"md"}
+						>
+							{menu.content}
+						</Container>
+					</BottomSheet>
+				</>
+			) : null}
+
 			<div
 				className={tvc([
 					"flex",
-					"flex-row",
-					"gap-2",
-					"items-end",
+					"flex-col",
+					"items-center",
 					"justify-center",
 					"w-full",
 				])}
 			>
-				{menu ? (
-					<>
-						<Button
-							ui={"ChatInput-menu-button"}
-							iconEnabled={PlusIcon}
-							tone={"link"}
-							theme={"light"}
-							onClick={() => setIsMenu((prev) => !prev)}
-						/>
-
-						<BottomSheet
-							ui={"ChatInput-BottomSheet"}
-							isOpen={isMenu}
-							onClose={() => setIsMenu(false)}
-							{...menu.props}
-						>
-							<Container
-								ui={"ChatInput-menu"}
-								layout={"vertical-flex"}
-								gap={"md"}
-								square={"md"}
-							>
-								{menu.content}
-							</Container>
-						</BottomSheet>
-					</>
-				) : null}
-
 				<div
-					className={tvc([
-						"flex",
-						"flex-col",
-						"items-center",
-						"justify-center",
-						"w-full",
-					])}
-				>
-					<div
-						className={slots.default({
-							slot: {
-								default: {
-									class: [
-										"flex",
-										"flex-col",
-										"items-center",
-										"justify-center",
-										"border-2",
-										"border-slate-200",
-										"bg-slate-100",
-										"min-h-0",
-										"h-fit",
-										"w-full",
-									],
-									token: [
-										"square.md",
-										"round.default",
-									],
-								},
+					className={slots.default({
+						slot: {
+							default: {
+								class: [
+									"flex",
+									"flex-col",
+									"items-center",
+									"justify-center",
+									"border-2",
+									"border-slate-200",
+									"bg-slate-100",
+									"min-h-0",
+									"h-fit",
+									"w-full",
+								],
+								token: [
+									"square.md",
+									"round.default",
+								],
 							},
-						})}
-					>
-						<textarea
-							ref={textareaRef}
-							id={areaId}
-							rows={1}
-							value={value}
-							disabled={props.disabled}
-							onChange={(e) => onChange(e.target.value)}
-							onKeyDown={handleKeyDown}
-							placeholder={placeholder}
-							className={slots.input()}
-						/>
-					</div>
+						},
+					})}
+				>
+					<textarea
+						ref={textareaRef}
+						id={areaId}
+						rows={1}
+						value={value}
+						disabled={props.disabled}
+						onChange={(e) => onChange(e.target.value)}
+						onKeyDown={handleKeyDown}
+						placeholder={placeholder}
+						className={slots.input()}
+					/>
 				</div>
-
-				<Button
-					ui={"ChatInput-send-button"}
-					iconEnabled={SendMessageIcon}
-					iconProps={{
-						size: "md",
-					}}
-					tone={"primary"}
-					theme={"light"}
-					disabled={loading || value.length === 0}
-					loading={loading}
-					onClick={() => {
-						onSubmit(value);
-						onChange("");
-					}}
-				/>
 			</div>
+
+			<Button
+				data-ui={"ChatInput-Button-send"}
+				iconEnabled={SendMessageIcon}
+				iconProps={{
+					size: "md",
+				}}
+				tone={"primary"}
+				theme={"light"}
+				disabled={loading || value.length === 0}
+				loading={loading}
+				onClick={() => {
+					onSubmit(value);
+					onChange("");
+				}}
+			/>
 		</Container>
 	);
 };
