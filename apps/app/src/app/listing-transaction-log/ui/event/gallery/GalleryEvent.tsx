@@ -36,15 +36,6 @@ export const GalleryEvent: FC<GalleryEvent.Props> = ({
 					},
 				},
 			]}
-			timestampTweak={{
-				slot: {
-					root: {
-						class: [
-							"p-2",
-						],
-					},
-				},
-			}}
 			{...props}
 		>
 			<div className="w-full h-64 max-h-64">

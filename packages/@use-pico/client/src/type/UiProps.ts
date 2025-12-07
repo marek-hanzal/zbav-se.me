@@ -1,4 +1,4 @@
-export type UiProps<P> = {
+export type UiProps<P = unknown> = {
 	/**
 	 * UI identifier.
 	 */

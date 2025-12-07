@@ -80,7 +80,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 							{label ? (
 								<Typo
 									size={"md"}
-									font={"semi"}
+									font={"normal"}
 									label={label}
 								/>
 							) : (

@@ -1,5 +1,5 @@
 import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
-import { Typo, type TypoCls } from "@use-pico/client/ui/typo";
+import { Typo } from "@use-pico/client/ui/typo";
 import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
@@ -41,7 +41,7 @@ export namespace EventBadge {
 		 * Whether the transaction is closed/completed.
 		 */
 		isClosed: boolean;
-		timestampTweak?: Cls.TweaksOf<TypoCls>;
+		timestampProps?: Partial<Typo.Props>;
 	}
 }
 
@@ -62,7 +62,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	isCurrent,
 	isClosed,
 	tweak,
-	timestampTweak,
+	timestampProps,
 	onClick,
 	children,
 	...props
@@ -194,7 +194,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				})}
 				font={"normal"}
 				size={"sm"}
-				tweak={timestampTweak}
+				{...timestampProps}
 			/>
 		</Badge>
 	);

@@ -1,0 +1,66 @@
+@layer components {
+	/** Sizes */
+
+	[data-root="Typo-root"][data-size="xs"] {
+		@apply text-xs;
+	}
+	[data-root="Typo-root"][data-size="sm"] {
+		@apply text-sm;
+	}
+	[data-root="Typo-root"][data-size="md"] {
+		@apply text-base;
+	}
+	[data-root="Typo-root"][data-size="lg"] {
+		@apply text-lg;
+	}
+	[data-root="Typo-root"][data-size="xl"] {
+		@apply text-xl;
+	}
+	[data-root="Typo-root"][data-size="2xl"] {
+		@apply text-2xl;
+	}
+	[data-root="Typo-root"][data-size="3xl"] {
+		@apply text-3xl;
+	}
+	[data-root="Typo-root"][data-size="4xl"] {
+		@apply text-4xl;
+	}
+
+	/** Display */
+	[data-root="Typo-root"][data-display="block"] {
+		display: block;
+	}
+	[data-root="Typo-root"][data-display="inline"] {
+		display: inline;
+	}
+
+	/** Font */
+	[data-root="Typo-root"][data-font="light"] {
+		@apply font-light;
+	}
+	[data-root="Typo-root"][data-font="normal"] {
+		@apply font-normal;
+	}
+	[data-root="Typo-root"][data-font="bold"] {
+		@apply font-bold;
+	}
+
+	/** Wrap */
+	[data-root="Typo-root"][data-wrap="wrap"] {
+		@apply min-w-0 max-w-full text-wrap whitespace-normal break-words overflow-hidden hyphens-auto [-webkit-hyphens:auto];
+	}
+
+	[data-root="Typo-root"][data-wrap="nowrap"] {
+		@apply text-nowrap min-w-0 max-w-full;
+	}
+
+	/** Truncate */
+	[data-root="Typo-root"][data-truncate="true"] {
+		@apply truncate text-nowrap min-w-0 max-w-full;
+	}
+
+	/** Italic */
+	[data-root="Typo-root"][data-italic="true"] {
+		font-style: italic;
+	}
+}

@@ -19,17 +19,6 @@ export const ContactSheet: FC = () => {
 					label={"info@zbav-se.me"}
 					font={"bold"}
 					size={"xl"}
-					display={"block"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"w-fit",
-									"mx-auto",
-								],
-							},
-						},
-					}}
 				/>
 			</Status>
 		</Container>

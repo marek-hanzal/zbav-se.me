@@ -1,78 +1,34 @@
 import { Tx } from "@use-pico/client/ui/tx";
-import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 
 export const Logo: FC = () => {
 	return (
-		<div
-			className={tvc([
-				"flex",
-				"flex-col",
-				"items-center",
-				"relative",
-			])}
-		>
-			<div
-				className={tvc([
-					"relative",
-					"font-limelight",
-					"text-4xl",
-				])}
-			>
+		<div data-ui="Logo-root">
+			<div data-ui="Logo-title-wrapper">
 				<Tx
+					data-ui="Logo-title-primary"
 					label={"zbav-se.me"}
 					tone={"primary"}
 					theme={"light"}
 					display={"block"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"z-5",
-								],
-							},
-						},
-					}}
 				/>
 				<Tx
+					data-ui="Logo-title-secondary"
 					label={"zbav-se.me"}
 					tone={"secondary"}
 					theme={"light"}
 					display={"block"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"absolute",
-									"scale-105",
-									"top-0",
-									"left-0",
-									"opacity-25",
-								],
-							},
-						},
-					}}
 				/>
 			</div>
 
 			<Tx
+				data-ui="Logo-motto"
 				label="Logo motto (label)"
 				tone="secondary"
 				theme={"light"}
 				font={"bold"}
 				display={"block"}
 				size={"xl"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"relative",
-								"top-[-10%]",
-								"transform-[rotateZ(-3deg)]",
-							],
-						},
-					},
-				}}
 			/>
 		</div>
 	);

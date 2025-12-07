@@ -1,4 +1,4 @@
-import { type Cls, tvc } from "@use-pico/cls";
+import type { Cls } from "@use-pico/cls";
 import { isString } from "@use-pico/common/is-string";
 import type { FC, ReactNode } from "react";
 import { Tx } from "../tx/Tx";
@@ -65,15 +65,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			]}
 			{...props}
 		>
-			<div
-				className={tvc([
-					"flex",
-					"flex-row",
-					"items-center",
-					"justify-between",
-					"w-full",
-				])}
-			>
+			<div data-ui="BadgeValue-label-wrapper">
 				<Tx
 					label={textLabel}
 					tone={"primary"}

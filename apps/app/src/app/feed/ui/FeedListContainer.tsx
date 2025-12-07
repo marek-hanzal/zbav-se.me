@@ -114,19 +114,10 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								}}
 							>
 								<Tx
+									ui="FeedListContainer-first-feed-hint"
 									label={"First feed (hint)"}
 									size={"sm"}
 									tone={"subtle"}
-									tweak={{
-										slot: {
-											root: {
-												class: [
-													"px-2",
-													"opacity-75",
-												],
-											},
-										},
-									}}
 								/>
 							</FeedNameContainer>
 

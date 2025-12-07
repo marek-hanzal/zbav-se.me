@@ -101,16 +101,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 					label={feed.name}
 					font={"bold"}
 					truncate
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"pt-1",
-									"px-2",
-								],
-							},
-						},
-					}}
 				/>
 			</Badge>
 

@@ -1,30 +1,35 @@
-import { type Cls, useCls } from "@use-pico/cls";
-import type { FC, ReactNode, Ref } from "react";
-import { TypoCls } from "./TypoCls";
+import type { ComponentProps, FC, ReactNode } from "react";
+import type { UiProps } from "../../type";
 
 export namespace Typo {
 	export type Value = ReactNode;
+
 	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
 
-	export interface Props extends TypoCls.Props {
-		ref?: Ref<HTMLDivElement>;
+	export type Tone = "primary" | "secondary" | "subtle" | "link";
+	export type Theme = "light" | "dark";
+	export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+	export type Display = "inline" | "block";
+	export type Font = "light" | "normal" | "bold";
+	export type Wrap = "wrap" | "nowrap";
+
+	export interface Props extends UiProps<ComponentProps<"div">> {
 		label: Value;
 		truncate?: boolean;
 		preset?: Preset;
-		display?: Cls.VariantOf<TypoCls, "display">;
-		text?: Cls.VariantOf<TypoCls, "text">;
-		wrap?: Cls.VariantOf<TypoCls, "wrap">;
-		size?: Cls.VariantOf<TypoCls, "size">;
-		font?: Cls.VariantOf<TypoCls, "font">;
-		tone?: Cls.VariantOf<TypoCls, "tone">;
-		theme?: Cls.VariantOf<TypoCls, "theme">;
+		display?: Display;
+		wrap?: Wrap;
+		size?: Size;
+		font?: Font;
+		tone?: Tone;
+		theme?: Theme;
 		italic?: boolean;
 	}
 
 	export type PropsEx = Omit<Props, "label">;
 }
 
-const presets: Record<Typo.Preset, Cls.VariantsOf<TypoCls>> = {
+const presets: Record<Typo.Preset, Partial<Typo.Props>> = {
 	none: {},
 	label: {
 		size: "lg",
@@ -45,47 +50,36 @@ const presets: Record<Typo.Preset, Cls.VariantsOf<TypoCls>> = {
 };
 
 export const Typo: FC<Typo.Props> = ({
+	ui,
 	label,
 	preset = "none",
 	truncate,
 	display,
-	text,
 	wrap,
 	size,
 	font,
 	tone,
 	theme,
 	italic = false,
-	cls = TypoCls,
-	tweak,
-	ref,
+	...props
 }) => {
-	const { slots } = useCls(
-		cls,
-		tweak,
-		{
-			variant: presets[preset],
-		},
-		{
-			variant: {
-				truncate,
-				display,
-				text,
-				wrap,
-				size,
-				font,
-				italic,
-				tone,
-				theme,
-			},
-		},
-	);
-
 	return (
 		<div
-			data-ui="Typo-root"
-			ref={ref}
-			className={slots.root()}
+			data-root="Typo-root"
+			data-ui={ui ?? "Typo-root"}
+			//
+			data-tone={tone}
+			data-theme={theme}
+			//
+			data-size={size}
+			data-display={display}
+			data-font={font}
+			data-wrap={wrap}
+			data-truncate={truncate}
+			data-italic={italic}
+			{...presets[preset]}
+			//;
+			{...props}
 		>
 			{label}
 		</div>

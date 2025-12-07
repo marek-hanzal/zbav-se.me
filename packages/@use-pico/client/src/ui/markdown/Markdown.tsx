@@ -42,13 +42,6 @@ export const Markdown: FC<Markdown.Props> = ({
 								label={children}
 								size={"xl"}
 								font={"bold"}
-								tweak={{
-									slot: {
-										root: {
-											class: slots.h1(),
-										},
-									},
-								}}
 							/>
 						);
 					},
@@ -57,14 +50,7 @@ export const Markdown: FC<Markdown.Props> = ({
 							<Typo
 								label={children}
 								size={"lg"}
-								font={"semi"}
-								tweak={{
-									slot: {
-										root: {
-											class: slots.h2(),
-										},
-									},
-								}}
+								font={"normal"}
 							/>
 						);
 					},
@@ -86,13 +72,6 @@ export const Markdown: FC<Markdown.Props> = ({
 							<Typo
 								label={children}
 								font={"bold"}
-								tweak={{
-									slot: {
-										root: {
-											class: slots.strong(),
-										},
-									},
-								}}
 							/>
 						);
 					},
@@ -104,13 +83,6 @@ export const Markdown: FC<Markdown.Props> = ({
 							<Typo
 								label={children}
 								italic
-								tweak={{
-									slot: {
-										root: {
-											class: slots.em(),
-										},
-									},
-								}}
 							/>
 						);
 					},

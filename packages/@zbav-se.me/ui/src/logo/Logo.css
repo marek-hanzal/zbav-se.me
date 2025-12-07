@@ -1,0 +1,21 @@
+@layer components {
+	[data-ui="Logo-root"] {
+		@apply flex flex-col items-center relative font-limelight;
+	}
+
+	[data-ui="Logo-title-wrapper"] {
+		@apply relative text-4xl;
+	}
+
+	[data-ui="Logo-title-primary"] {
+		@apply z-5;
+	}
+
+	[data-ui="Logo-title-secondary"] {
+		@apply absolute scale-105 top-0 left-0 opacity-25;
+	}
+
+	[data-ui="Logo-motto"] {
+		@apply relative top-[-10%] transform-[rotateZ(-3deg)];
+	}
+}
