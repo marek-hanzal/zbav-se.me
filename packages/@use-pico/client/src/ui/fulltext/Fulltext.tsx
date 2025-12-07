@@ -1,4 +1,4 @@
-import { useCls } from "@use-pico/cls";
+import { tvc, useCls } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, type Ref, useRef, useState } from "react";
@@ -104,22 +104,18 @@ export const Fulltext: FC<Fulltext.Props> = ({
 						size="sm"
 						onClick={handleSubmit}
 						tone={"neutral"}
-						tweak={{
-							slot: {
-								root: {
-									class: isDisabled
-										? [
-												"opacity-25",
-												"cursor-not-allowed",
-											]
-										: [
-												"opacity-50",
-												"hover:opacity-75",
-												"cursor-pointer",
-											],
-								},
-							},
-						}}
+						className={tvc(
+							isDisabled
+								? [
+										"opacity-25",
+										"cursor-not-allowed",
+									]
+								: [
+										"opacity-50",
+										"hover:opacity-75",
+										"cursor-pointer",
+									],
+						)}
 					/>
 				</div>
 			) : (

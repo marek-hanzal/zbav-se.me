@@ -37,19 +37,9 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 				</Container>
 
 				<Status
+					ui="HeroSheet-Status"
 					textTitle={"Landing - Hero (title)"}
 					textMessage={"Landing - Hero (subtitle)"}
-					tweak={{
-						slot: {
-							body: {
-								class: [
-									"flex",
-									"flex-col",
-									"gap-4",
-								],
-							},
-						},
-					}}
 				>
 					<LinkTo
 						to={"/$locale/login"}

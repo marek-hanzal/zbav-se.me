@@ -1,10 +1,9 @@
-import type { FC, Ref } from "react";
+import type { ComponentProps, FC } from "react";
 import { CheckIcon } from "../../icon/CheckIcon";
 import { Icon } from "../../icon/Icon";
-import { IconCls } from "../../icon/IconCls";
 import { UnCheckIcon } from "../../icon/UnCheckIcon";
 import { UndefinedIcon } from "../../icon/UndefinedIcon";
-import { BoolInlineCls } from "./BoolInlineCls";
+import type { UiProps } from "../../type/UiProps";
 
 /**
  * Renders icon based on a boolean value.
@@ -26,8 +25,7 @@ export namespace BoolInline {
 	/**
 	 * Props for BoolInline component.
 	 */
-	export interface Props extends BoolInlineCls.Props<Icon.PropsEx> {
-		ref?: Ref<HTMLDivElement>;
+	export interface Props extends UiProps<ComponentProps<"div">> {
 		/**
 		 * Input boolean value.
 		 */
@@ -44,30 +42,32 @@ export namespace BoolInline {
 		 * Icon to display when value is undefined.
 		 */
 		undefinedIcon?: string;
+		iconProps?: Icon.PropsEx;
 	}
 }
 
 export const BoolInline: FC<BoolInline.Props> = ({
-	ref,
+	ui,
 	value,
 	checkIcon = CheckIcon,
 	unCheckIcon = UnCheckIcon,
 	undefinedIcon = UndefinedIcon,
-	cls = BoolInlineCls,
-	tweak,
+	iconProps,
 	...props
 }) => {
 	if (value === null || value === undefined) {
 		return (
 			<div
-				ref={ref}
-				data-ui="BoolInline-root"
+				data-root="BoolInline-root"
+				data-ui={ui ?? "BoolInline-root"}
+				//
+				data-value="unknown"
+				//
+				{...props}
 			>
 				<Icon
 					icon={undefinedIcon}
-					cls={IconCls.use(cls)}
-					tweak={IconCls.tweak(tweak)}
-					{...props}
+					{...iconProps}
 				/>
 			</div>
 		);
@@ -75,18 +75,16 @@ export const BoolInline: FC<BoolInline.Props> = ({
 
 	return (
 		<div
-			ref={ref}
-			data-ui="BoolInline-root"
+			data-root="BoolInline-root"
+			data-ui={ui ?? "BoolInline-root"}
+			//
+			data-value={value}
+			//
+			{...props}
 		>
 			<Icon
 				icon={value ? checkIcon : unCheckIcon}
-				cls={IconCls.use(cls)}
-				tweak={IconCls.tweak(tweak, {
-					variant: {
-						value,
-					},
-				})}
-				{...props}
+				{...iconProps}
 			/>
 		</div>
 	);

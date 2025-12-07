@@ -11,7 +11,7 @@ export namespace SignOutButton {
 	}
 }
 
-export const SignOutButton: FC<SignOutButton.Props> = ({ locale, tweak, ...props }) => {
+export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ...props }) => {
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
 		async onPostMutation() {
@@ -37,7 +37,6 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ locale, tweak, ...props
 			theme={"light"}
 			label={"Sign out"}
 			size={"lg"}
-			tweak={tweak}
 			{...props}
 		/>
 	);

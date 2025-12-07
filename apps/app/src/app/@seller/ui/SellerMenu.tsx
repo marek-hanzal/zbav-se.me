@@ -122,18 +122,7 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 					</LinkTo>
 				</div>
 
-				<SignOutButton
-					locale={locale}
-					tweak={{
-						slot: {
-							wrapper: {
-								class: [
-									"mx-auto",
-								],
-							},
-						},
-					}}
-				/>
+				<SignOutButton locale={locale} />
 			</Container>
 		</Container>
 	);

@@ -92,25 +92,6 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								}}
 								statusProps={{
 									textTitle: translator.text("First feed (title)"),
-									tweak: {
-										slot: {
-											root: {
-												class: [
-													"gap-0",
-												],
-											},
-											action: {
-												class: [
-													"py-0",
-												],
-											},
-											body: {
-												class: [
-													"py-0",
-												],
-											},
-										},
-									},
 								}}
 							>
 								<Tx

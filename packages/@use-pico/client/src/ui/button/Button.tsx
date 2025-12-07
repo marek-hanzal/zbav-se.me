@@ -1,17 +1,13 @@
-import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
-import type { ButtonHTMLAttributes, FC, Ref } from "react";
+import type { Cls } from "@use-pico/cls";
+import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
-import { PicoCls } from "../../cls/PicoCls";
 import { Icon } from "../../icon/Icon";
-import type { IconCls } from "../../icon/IconCls";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
 import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
-import { ButtonCls } from "./ButtonCls";
+import type { ButtonCls } from "./ButtonCls";
 
-const ICON_SIZE_MAP: Partial<
-	Record<Cls.VariantOf<ButtonCls, "size">, Cls.VariantOf<IconCls, "size">>
-> = {
+const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, Button.Size>> = {
 	sm: "xs",
 	md: "xs",
 	lg: "sm",
@@ -19,16 +15,21 @@ const ICON_SIZE_MAP: Partial<
 } as const;
 
 export namespace Button {
-	export interface Props
-		extends UiProps<ButtonCls.Props<ButtonHTMLAttributes<HTMLButtonElement>>> {
-		/**
-		 * Ref to the wrapper div element.
-		 */
-		wrapperRef?: Ref<HTMLDivElement>;
-		/**
-		 * Ref to the button element.
-		 */
-		buttonRef?: Ref<HTMLButtonElement>;
+	export type Tone = "primary" | "secondary" | "warning" | "danger" | "link";
+	export type Theme = "light" | "dark";
+	export type Size = "xs" | "sm" | "md" | "lg" | "xl";
+	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";
+	export type SnapTo =
+		| "top-left"
+		| "top-center"
+		| "top-right"
+		| "bottom-left"
+		| "bottom-right"
+		| "bottom"
+		| "left-center"
+		| "right-center";
+
+	export interface Props extends UiProps<ComponentProps<"button">> {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
@@ -86,22 +87,22 @@ export namespace Button {
 		 * Size of the button (affects padding and font size).
 		 * @default "md"
 		 */
-		size?: Cls.VariantOf<ButtonCls, "size">;
+		size?: Button.Size;
 		/**
 		 * Color tone of the button (affects background, text, border, and shadow colors).
 		 * @default "primary"
 		 */
-		tone?: Cls.VariantOf<ButtonCls, "tone">;
+		tone?: Tone;
 		/**
 		 * Theme variant (light or dark).
 		 * @default "light"
 		 */
-		theme?: Cls.VariantOf<ButtonCls, "theme">;
+		theme?: Theme;
 		/**
 		 * Border radius of the button.
-		 * @default "default"
+		 * @default undefined
 		 */
-		round?: Cls.VariantOf<ButtonCls, "round">;
+		round?: Round;
 		/**
 		 * Whether to truncate text that overflows the button width.
 		 * @default false
@@ -116,16 +117,14 @@ export namespace Button {
 		/**
 		 * Absolute positioning for snapping the button to corners of a parent container.
 		 * Requires the parent element to have relative positioning.
-		 * @default "unset"
+		 * @default undefined
 		 */
-		snapTo?: Cls.VariantOf<ButtonCls, "snap-to">;
+		snapTo?: SnapTo;
 	}
 }
 
 export const Button: FC<Button.Props> = ({
 	ui,
-	wrapperRef,
-	buttonRef,
 	label,
 	iconEnabled,
 	iconDisabled,
@@ -133,7 +132,7 @@ export const Button: FC<Button.Props> = ({
 	iconProps,
 	iconPosition = "left",
 	loading,
-	size,
+	size = "md",
 	tone,
 	theme,
 	round,
@@ -145,41 +144,11 @@ export const Button: FC<Button.Props> = ({
 	square,
 	snapTo,
 	//
-	cls = ButtonCls,
-	tweak,
-	//
 	disabled,
 	children,
 	...props
 }) => {
-	const { slots, variant } = useCls(
-		cls,
-		/**
-		 * Component tweak has lowest precedence
-		 */
-		tweak,
-		/**
-		 * Component props has highest precedence
-		 */
-		{
-			variant: {
-				disabled,
-				theme,
-				tone,
-				size,
-				round,
-				border,
-				background,
-				full,
-				menu,
-				truncate,
-				square: square ?? (!children && !label),
-				"snap-to": snapTo,
-			},
-		},
-	);
-
-	const iconSize = ICON_SIZE_MAP[variant.size] ?? variant.size;
+	const iconSize = ICON_SIZE_MAP[size] ?? size;
 
 	const renderIcon = useMemo(
 		() =>
@@ -208,41 +177,26 @@ export const Button: FC<Button.Props> = ({
 	);
 
 	return (
-		<VariantProvider
-			cls={PicoCls}
-			variant={{
-				tone: variant.tone,
-				theme: variant.theme,
-			}}
+		<button
+			data-root="Button-root"
+			data-ui={ui ?? "Button-root"}
+			type={"button"}
+			disabled={disabled}
+			{...props}
 		>
-			<div
-				data-ui={ui ?? "Button-wrapper"}
-				ref={wrapperRef}
-				className={slots.wrapper()}
-			>
-				<button
-					data-ui="Button-root"
-					ref={buttonRef}
-					className={slots.root()}
-					type={"button"}
-					disabled={disabled}
-					{...props}
-				>
-					{iconPosition === "left" && renderIcon}
+			{iconPosition === "left" && renderIcon}
 
-					{label ? (
-						<Tx
-							label={label}
-							display={"block"}
-							truncate={truncate}
-						/>
-					) : null}
+			{label ? (
+				<Tx
+					label={label}
+					display={"block"}
+					truncate={truncate}
+				/>
+			) : null}
 
-					{children}
+			{children}
 
-					{iconPosition === "right" && renderIcon}
-				</button>
-			</div>
-		</VariantProvider>
+			{iconPosition === "right" && renderIcon}
+		</button>
 	);
 };

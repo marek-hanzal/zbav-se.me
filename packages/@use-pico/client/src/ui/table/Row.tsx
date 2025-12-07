@@ -105,17 +105,6 @@ export const Row = <
 					<Icon
 						icon={isSelected ? SelectionOnIcon : SelectionOffIcon}
 						size={"sm"}
-						tweak={{
-							slot: {
-								root: {
-									class: slots.select({
-										variant: {
-											selected: isSelected,
-										},
-									}),
-								},
-							},
-						}}
 						onClick={() => {
 							selection?.toggle(item);
 						}}

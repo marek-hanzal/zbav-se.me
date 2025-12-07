@@ -1,0 +1,32 @@
+@layer components {
+	/** Sizes */
+
+	[data-root="Icon-root"] {
+		@apply flex-shrink-0 min-w-0 min-h-0;
+	}
+
+	[data-root="Icon-root"][data-size="xs"] {
+		@apply w-6 h-6;
+	}
+	[data-root="Icon-root"][data-size="sm"] {
+		@apply w-8 h-8;
+	}
+	[data-root="Icon-root"][data-size="md"] {
+		@apply w-10 h-10;
+	}
+	[data-root="Icon-root"][data-size="lg"] {
+		@apply w-12 h-12;
+	}
+	[data-root="Icon-root"][data-size="xl"] {
+		@apply w-16 h-16;
+	}
+	[data-root="Icon-root"][data-size="2xl"] {
+		@apply w-24 h-24;
+	}
+	[data-root="Icon-root"][data-size="3xl"] {
+		@apply w-32 h-32;
+	}
+	[data-root="Icon-root"][data-size="4xl"] {
+		@apply w-40 h-40;
+	}
+}

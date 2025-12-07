@@ -1,16 +1,11 @@
-import { type Cls, useCls, VariantProvider } from "@use-pico/cls";
-import type { FC, PropsWithChildren, ReactNode, Ref } from "react";
-import { PicoCls } from "../../cls/PicoCls";
+import type { ComponentProps, FC, ReactNode } from "react";
 import { Icon } from "../../icon/Icon";
-import type { IconCls } from "../../icon/IconCls";
 import type { UiProps } from "../../type/UiProps";
 import { Tx } from "../tx/Tx";
 import type { Typo } from "../typo/Typo";
-import { StatusCls } from "./StatusCls";
 
 export namespace Status {
-	export interface Props extends UiProps<StatusCls.Props<PropsWithChildren>> {
-		ref?: Ref<HTMLDivElement>;
+	export interface Props extends UiProps<ComponentProps<"div">> {
 		/**
 		 * Translation key for the title text.
 		 */
@@ -27,8 +22,8 @@ export namespace Status {
 		iconProps?: Icon.PropsEx;
 		titleProps?: Typo.PropsEx;
 		messageProps?: Typo.PropsEx;
-		tone?: Cls.VariantOf<IconCls, "tone">;
-		theme?: Cls.VariantOf<IconCls, "theme">;
+		tone?: Icon.Tone;
+		theme?: Icon.Theme;
 	}
 }
 
@@ -44,83 +39,47 @@ export const Status: FC<Status.Props> = ({
 	messageProps,
 	tone,
 	theme,
-	cls = StatusCls,
-	tweak,
 	children,
+	...props
 }) => {
-	const { slots, variant } = useCls(cls, tweak, {
-		variant: {
-			tone,
-			theme,
-		},
-	});
-
 	return (
-		<VariantProvider
-			cls={PicoCls}
-			variant={{
-				tone: variant.tone,
-				theme: variant.theme,
-			}}
+		<div
+			ref={ref}
+			data-root="Status-root"
+			data-ui={ui ?? "Status-root"}
+			//
+			data-tone={tone}
+			data-theme={theme}
+			//
+			{...props}
 		>
-			<div
-				data-ui={ui ?? "Status-root"}
-				ref={ref}
-				className={slots.root()}
-			>
-				<div
-					data-ui="Status-title"
-					className={slots.title()}
-				>
-					<Icon
-						icon={icon}
-						size="xl"
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"opacity-50",
-									],
-								},
-							},
-						}}
-						{...iconProps}
-					/>
+			<div data-ui="Status-title">
+				<Icon
+					icon={icon}
+					size="xl"
+					className="opacity-50"
+					{...iconProps}
+				/>
 
-					<Tx
-						label={textTitle}
-						size="xl"
-						font="bold"
-						display="block"
-						wrap={"wrap"}
-						{...titleProps}
-					/>
-					<Tx
-						label={textMessage}
-						display="block"
-						wrap={"wrap"}
-						{...messageProps}
-					/>
-				</div>
-
-				{action && (
-					<div
-						data-ui="Status-action"
-						className={slots.action()}
-					>
-						{action}
-					</div>
-				)}
-
-				{children ? (
-					<div
-						data-ui="Status-body"
-						className={slots.body()}
-					>
-						{children}
-					</div>
-				) : null}
+				<Tx
+					label={textTitle}
+					size="xl"
+					font="bold"
+					display="block"
+					wrap={"wrap"}
+					{...titleProps}
+				/>
+				<Tx
+					label={textMessage}
+					display="block"
+					wrap={"wrap"}
+					{...messageProps}
+				/>
 			</div>
-		</VariantProvider>
+
+			{action && <div data-ui="Status-action">{action}</div>}
+
+			{children ? <div data-ui="Status-body">{children}</div> : null}
+		</div>
 	);
 };

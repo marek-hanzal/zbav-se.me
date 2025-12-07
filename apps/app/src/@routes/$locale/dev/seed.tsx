@@ -423,15 +423,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedMutation.mutate()}
 						disabled={seedMutation.isPending}
 						loading={seedMutation.isPending}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"mx-auto",
-									],
-								},
-							},
-						}}
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}
@@ -444,15 +435,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedScoresMutation.mutate()}
 						disabled={seedScoresMutation.isPending}
 						loading={seedScoresMutation.isPending}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"mx-auto",
-									],
-								},
-							},
-						}}
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}
@@ -465,15 +447,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedCartFlagIgnoreMutation.mutate()}
 						disabled={seedCartFlagIgnoreMutation.isPending}
 						loading={seedCartFlagIgnoreMutation.isPending}
-						tweak={{
-							slot: {
-								wrapper: {
-									class: [
-										"mx-auto",
-									],
-								},
-							},
-						}}
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}

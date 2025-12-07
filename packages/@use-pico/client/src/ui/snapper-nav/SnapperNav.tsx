@@ -4,7 +4,6 @@ import { useDoubleTap } from "../../hook/useDoubleTap";
 import type { useSnapperNav } from "../../hook/useSnapperNav";
 import { DotIcon } from "../../icon/DotIcon";
 import { Icon } from "../../icon/Icon";
-import type { IconCls } from "../../icon/IconCls";
 import type { UiProps } from "../../type/UiProps";
 import { SnapperNavCls } from "./SnapperNavCls";
 
@@ -41,7 +40,7 @@ export namespace SnapperNav {
 		pages?: Page[] | Count;
 		subtle?: boolean;
 		orientation: Cls.VariantOf<SnapperNavCls, "orientation">;
-		tone?: Cls.VariantOf<IconCls, "tone">;
+		tone?: Icon.Tone;
 		align?: Cls.VariantOf<SnapperNavCls, "align">;
 		iconProps?: IconProps.IconPropsFn;
 		limit?: number;
@@ -150,6 +149,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		return (
 			<>
 				<Icon
+					ui="SnapperNav-first"
 					key={firstId}
 					onDoubleClick={snapperNav.api.start}
 					onClick={snapperNav.api.prev}
@@ -157,13 +157,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					icon={leftIcon}
 					tone={tone}
 					size="md"
-					tweak={{
-						slot: {
-							root: {
-								class: slots.first(),
-							},
-						},
-					}}
 					{...iconProps?.({
 						limit: true,
 						active: false,
@@ -182,22 +175,12 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
+							ui="SnapperNav-item"
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
 							tone={tone}
 							size="md"
-							tweak={{
-								slot: {
-									root: {
-										class: slots.item({
-											variant: {
-												active: isActive,
-											},
-										}),
-									},
-								},
-							}}
 							{...iconProps?.({
 								limit: false,
 								active: isActive,
@@ -212,6 +195,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					);
 				})}
 				<Icon
+					ui="SnapperNav-last"
 					key={lastId}
 					onClick={snapperNav.api.next}
 					onDoubleClick={snapperNav.api.end}
@@ -219,13 +203,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					icon={rightIcon}
 					tone={tone}
 					size="md"
-					tweak={{
-						slot: {
-							root: {
-								class: slots.last(),
-							},
-						},
-					}}
 					{...iconProps?.({
 						limit: true,
 						active: false,
@@ -243,7 +220,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		$pages,
 		snapperNav,
 		flow,
-		slots,
 		firstDoubleTap,
 		lastDoubleTap,
 	]);
@@ -256,23 +232,15 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
+							ui="SnapperNav-item"
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
 							tone={tone}
 							size="md"
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"pointer-events-auto select-none transition cursor-pointer",
-											isActive
-												? "scale-125 opacity-100"
-												: "opacity-60 hover:opacity-90",
-										],
-									},
-								},
-							}}
+							//
+							data-active={isActive}
+							//
 							{...iconProps?.({
 								limit: false,
 								active: isActive,

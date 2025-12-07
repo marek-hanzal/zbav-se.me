@@ -38,15 +38,6 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 								size={"xl"}
 								label={"Go to listings (button)"}
 								menu
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"justify-between",
-											],
-										},
-									},
-								}}
 							/>
 						</LinkTo>
 
@@ -65,30 +56,10 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 								size={"xl"}
 								label={"Go home (button)"}
 								menu
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												"justify-between",
-											],
-										},
-									},
-								}}
 							/>
 						</LinkTo>
 					</>
 				}
-				tweak={{
-					slot: {
-						action: {
-							class: [
-								"flex",
-								"flex-col",
-								"gap-2",
-							],
-						},
-					},
-				}}
 				{...props}
 			/>
 		</Container>

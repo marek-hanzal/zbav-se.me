@@ -12,7 +12,7 @@ import {
 	useListNavigation,
 	useTransitionStyles,
 } from "@floating-ui/react";
-import { type Cls, useCls } from "@use-pico/cls";
+import { type Cls, tvc, useCls } from "@use-pico/cls";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { Entity } from "@use-pico/common/type";
 import { type FC, type ReactNode, useEffect, useRef, useState } from "react";
@@ -163,16 +163,10 @@ export const Select = <TItem extends EntitySchema.Type>({
 						<Icon
 							icon={icon}
 							size="sm"
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"text-slate-400",
-											"group-hover:text-slate-600",
-										],
-									},
-								},
-							}}
+							className={tvc([
+								"text-slate-400",
+								"group-hover:text-slate-600",
+							])}
 						/>
 						{item ? <Render entity={item} /> : textSelect || <Mx label="Select item" />}
 						<div className={"flex flex-row gap-2 items-center"}>
@@ -199,17 +193,11 @@ export const Select = <TItem extends EntitySchema.Type>({
 							<Icon
 								icon={"icon-[gg--select]"}
 								size="sm"
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												!isOpen && "text-slate-400",
-												isOpen && "text-slate-600",
-												"group-hover:text-slate-600",
-											],
-										},
-									},
-								}}
+								className={tvc([
+									!isOpen && "text-slate-400",
+									isOpen && "text-slate-600",
+									"group-hover:text-slate-600",
+								])}
 							/>
 						</div>
 					</div>

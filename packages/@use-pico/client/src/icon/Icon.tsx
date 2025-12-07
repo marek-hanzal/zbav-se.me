@@ -1,7 +1,7 @@
-import { type Cls, useCls } from "@use-pico/cls";
+import { tvc } from "@use-pico/cls";
 import { isString } from "@use-pico/common/is-string";
-import type { FC, HTMLAttributes, ReactNode, Ref } from "react";
-import { IconCls } from "./IconCls";
+import type { ComponentProps, FC, ReactNode } from "react";
+import type { UiProps } from "../type";
 
 /**
  * Simple styled icon (span); uses Tailwind CSS classes.
@@ -11,12 +11,21 @@ import { IconCls } from "./IconCls";
 export namespace Icon {
 	export type Type = string | ReactNode;
 
+	export type Tone =
+		| "primary"
+		| "secondary"
+		| "danger"
+		| "warning"
+		| "neutral"
+		| "subtle"
+		| "link";
+	export type Theme = "light" | "dark";
+	export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+
 	/**
 	 * Props for `Icon` component.
 	 */
-	export interface Props
-		extends IconCls.Props<Omit<HTMLAttributes<HTMLDivElement>, "className">> {
-		ref?: Ref<HTMLDivElement>;
+	export interface Props extends UiProps<ComponentProps<"div">> {
 		/**
 		 * `Iconify` icon name.
 		 *
@@ -24,48 +33,40 @@ export namespace Icon {
 		 * is replaced with the element.
 		 */
 		icon: Icon.Type;
-		size?: Cls.VariantOf<IconCls, "size">;
-		tone?: Cls.VariantOf<IconCls, "tone">;
-		theme?: Cls.VariantOf<IconCls, "theme">;
+		tone?: Tone;
+		theme?: Theme;
+		size?: Size;
 		disabled?: boolean;
 	}
 
 	/**
 	 * Useful for extending an icon.
 	 */
-	export type PropsEx = Omit<Props, "icon"> & Partial<Pick<Props, "icon">>;
+	export type PropsEx = Partial<Props>;
 }
 
 export const Icon: FC<Icon.Props> = ({
-	ref,
+	ui,
 	icon,
 	size,
 	tone,
 	theme,
 	disabled,
-	cls = IconCls,
-	tweak,
+	className,
 	...props
 }) => {
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			size,
-			disabled,
-			theme,
-			tone,
-		},
-		slot: {
-			root: {
-				class: isString(icon) ? icon : undefined,
-			},
-		},
-	});
-
 	return isString(icon) ? (
 		<div
-			data-ui="Icon-root"
-			ref={ref}
-			className={slots.root()}
+			data-root="Icon-root"
+			data-ui={ui ?? "Icon-root"}
+			//
+			data-tone={tone}
+			data-theme={theme}
+			//
+			data-size={size}
+			data-disabled={disabled}
+			//
+			className={tvc(className, icon)}
 			{...props}
 		/>
 	) : (

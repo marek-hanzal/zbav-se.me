@@ -110,17 +110,6 @@ export const TableHeader = <
 							}
 							disabled={selection.mode === "single"}
 							size="sm"
-							tweak={{
-								slot: {
-									root: {
-										class: slots.select({
-											variant: {
-												selected: isAny,
-											},
-										}),
-									},
-								},
-							}}
 							onClick={onSelectAll}
 						/>
 					) : null}

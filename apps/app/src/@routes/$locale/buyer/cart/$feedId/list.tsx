@@ -91,15 +91,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 																label={"Go to feed (link)"}
 																menu
 																size={"xl"}
-																tweak={{
-																	slot: {
-																		root: {
-																			class: [
-																				"justify-between",
-																			],
-																		},
-																	},
-																}}
 															/>
 														</LinkTo>
 
@@ -117,15 +108,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 																label={"Go to home (link)"}
 																menu
 																size={"xl"}
-																tweak={{
-																	slot: {
-																		root: {
-																			class: [
-																				"justify-between",
-																			],
-																		},
-																	},
-																}}
 															/>
 														</LinkTo>
 													</div>

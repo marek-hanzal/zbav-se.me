@@ -43,13 +43,11 @@ export const ButtonCls = contract(PicoCls.contract)
 	.root({
 		wrapper: {
 			class: [
-				"Button-wrapper",
 				"w-fit",
 			],
 		},
 		root: {
 			class: [
-				"Button-root",
 				"flex",
 				"flex-row",
 				"items-center",

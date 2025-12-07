@@ -100,15 +100,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									label={null}
 									size={"md"}
 									snapTo={"top-right"}
-									tweak={{
-										slot: {
-											wrapper: {
-												class: [
-													"z-5",
-												],
-											},
-										},
-									}}
 								>
 									<LinkTo
 										to={"/$locale/buyer/feed/$id/list"}
@@ -240,31 +231,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																label={"Back to home (link)"}
 																size={"xl"}
 																menu
-																tweak={{
-																	slot: {
-																		root: {
-																			class: [
-																				"justify-between",
-																			],
-																		},
-																	},
-																}}
 															/>
 														</LinkTo>
 													</>
 												}
-												tweak={{
-													slot: {
-														action: {
-															class: [
-																"flex",
-																"flex-col",
-																"gap-2",
-																"w-full",
-															],
-														},
-													},
-												}}
 											/>
 										</Container>
 									}

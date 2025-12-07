@@ -7,25 +7,14 @@ export namespace Tile {
 	}
 }
 
-export const Tile: FC<Tile.Props> = ({ tweak, ...props }) => {
+export const Tile: FC<Tile.Props> = (props) => {
 	return (
 		<Button
+			ui={"Tile-root"}
 			tone={"primary"}
 			theme={"light"}
 			size={"xl"}
 			menu
-			tweak={[
-				tweak,
-				{
-					slot: {
-						root: {
-							class: [
-								"py-10",
-							],
-						},
-					},
-				},
-			]}
 			{...props}
 		/>
 	);

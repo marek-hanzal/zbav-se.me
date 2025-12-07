@@ -1,0 +1,5 @@
+@layer components {
+	[data-ui="Dial-Item-root"] {
+		@apply w-full h-full min-h-0;
+	}
+}

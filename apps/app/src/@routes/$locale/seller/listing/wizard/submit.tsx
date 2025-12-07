@@ -50,12 +50,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						}}
 						confirmProps={{
 							tone: "danger",
-							onClick: () => {
+							onClick() {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -110,12 +107,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						}}
 						confirmProps={{
 							tone: "danger",
-							onClick: () => {
+							onClick() {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}

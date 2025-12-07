@@ -25,7 +25,6 @@ export { FilterRemoveIcon } from "./FilterRemoveIcon";
 export { GteIcon } from "./GteIcon";
 export { HideIcon } from "./HideIcon";
 export { Icon } from "./Icon";
-export { IconCls } from "./IconCls";
 export { ImportIcon } from "./ImportIcon";
 export { InfoIcon } from "./InfoIcon";
 export { JobIcon } from "./JobIcon";

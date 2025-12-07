@@ -82,15 +82,6 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 									}}
 									iconProps={{
 										size: "md",
-										tweak: {
-											slot: {
-												root: {
-													class: [
-														"Rating-Item-root",
-													],
-												},
-											},
-										},
 									}}
 									tweak={{
 										slot: {

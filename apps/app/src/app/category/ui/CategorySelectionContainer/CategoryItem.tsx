@@ -1,6 +1,7 @@
 import type { useSelection } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Typo } from "@use-pico/client/ui/typo";
+import { tvc } from "@use-pico/cls";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
@@ -26,21 +27,15 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 			}}
 			full
 			size={"xl"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"justify-center",
-							"items-start",
-							"text-left",
-							"flex",
-							"flex-col",
-							"gap-1",
-							"w-full",
-						],
-					},
-				},
-			}}
+			className={tvc([
+				"justify-center",
+				"items-start",
+				"text-left",
+				"flex",
+				"flex-col",
+				"gap-1",
+				"w-full",
+			])}
 		>
 			<Typo
 				label={item.group}
