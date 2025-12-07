@@ -9,11 +9,7 @@ export namespace GalleryEvent {
 	}
 }
 
-export const GalleryEvent: FC<GalleryEvent.Props> = ({
-	listingTransactionGallery,
-	tweak,
-	...props
-}) => {
+export const GalleryEvent: FC<GalleryEvent.Props> = ({ listingTransactionGallery, ...props }) => {
 	const [hero] = listingTransactionGallery.gallery.items as [
 		tGalleryItem,
 		...tGalleryItem[],
@@ -21,30 +17,18 @@ export const GalleryEvent: FC<GalleryEvent.Props> = ({
 
 	return (
 		<EventBadge
-			ui={"GalleryEvent-root"}
+			data-ui={"GalleryEvent-root"}
 			actor={listingTransactionGallery.side}
 			timestamp={listingTransactionGallery.createdAt}
-			tweak={[
-				tweak,
-				{
-					slot: {
-						root: {
-							class: [
-								"p-0",
-							],
-						},
-					},
-				},
-			]}
 			{...props}
 		>
 			<div className="w-full h-64 max-h-64">
 				<HeroImage
-					ui={"GalleryEvent-image"}
+					data-ui={"GalleryEvent-image"}
 					src={hero.upload.url}
 					alt={`Hero image for transaction ${listingTransactionGallery.id}`}
 					visible
-					round
+					round={"default"}
 				/>
 			</div>
 		</EventBadge>

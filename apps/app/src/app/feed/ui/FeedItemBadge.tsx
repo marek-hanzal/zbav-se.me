@@ -75,15 +75,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 						alt={`Hero image for feed ${feed.id}`}
 						visible
 						round={"default"}
-						tweak={{
-							slot: {
-								img: {
-									class: [
-										"w-full",
-									],
-								},
-							},
-						}}
+						className="w-full"
 					/>
 				) : (
 					<div className="w-full h-48" />

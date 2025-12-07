@@ -30,7 +30,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 
 		return (
 			<TitleContainer
-				ui="Category-root"
+				data-ui="Category-root"
 				textTitle={"Listing category (title)"}
 				left={
 					<LinkTo

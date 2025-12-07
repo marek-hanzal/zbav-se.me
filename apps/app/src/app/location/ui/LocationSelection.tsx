@@ -26,7 +26,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 
 	return (
 		<Container
-			ui="LocationSelection-root"
+			data-ui="LocationSelection-root"
 			layout={"vertical-header-content"}
 			gap={"md"}
 			height={"full"}

@@ -27,7 +27,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 
 	return (
 		<Container
-			ui={"BuyerMenu-root"}
+			data-ui={"BuyerMenu-root"}
 			position={"relative"}
 			height={"full"}
 			width={"full"}
@@ -36,13 +36,13 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 			<Fade scrollableRef={containerRef} />
 
 			<Container
-				ui={"BuyerMenu-container"}
+				data-ui={"BuyerMenu-container"}
 				ref={containerRef}
 				scroll={"vertical"}
 				height={"full"}
 			>
 				<Container
-					ui={"BuyerMenu-content"}
+					data-ui={"BuyerMenu-content"}
 					layout={"vertical-flex"}
 					gap={"sm"}
 				>

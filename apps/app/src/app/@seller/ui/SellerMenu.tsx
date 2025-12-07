@@ -26,14 +26,14 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 
 	return (
 		<Container
-			ui={"SellerMenu-root"}
+			data-ui={"SellerMenu-root"}
 			position={"relative"}
 		>
 			<Fade scrollableRef={containerRef} />
 
 			<Container
 				ref={containerRef}
-				ui="Seller-container"
+				data-ui="Seller-container"
 				layout={"vertical-flex"}
 				scroll={"vertical"}
 				gap={"sm"}

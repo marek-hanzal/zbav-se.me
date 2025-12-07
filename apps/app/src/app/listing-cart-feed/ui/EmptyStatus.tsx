@@ -15,7 +15,7 @@ export namespace EmptyStatus {
 export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 	return (
 		<Container
-			ui={"EmptyStatus-root"}
+			data-ui={"EmptyStatus-root"}
 			layout={"vertical-centered"}
 		>
 			<Status

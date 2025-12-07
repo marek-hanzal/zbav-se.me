@@ -54,7 +54,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 				}}
 			>
 				<Container
-					ui={"FeedCreateButton-Container"}
+					data-ui={"FeedCreateButton-Container"}
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					height={"content"}

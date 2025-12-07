@@ -43,7 +43,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 	return (
 		<Container
-			ui="FeedDetailContainer-root"
+			data-ui="FeedDetailContainer-root"
 			layout={"vertical-flex"}
 			gap={"md"}
 			height={"content"}
@@ -64,34 +64,15 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
 						visible
-						round
-						tweak={{
-							slot: {
-								img: {
-									class: [
-										"w-full",
-										"h-42",
-									],
-								},
-							},
-						}}
+						round={"default"}
+						className="w-full h-42"
 						onClick={() => setIsGalleryOpen((prev) => !prev)}
 					/>
 				) : (
 					<Badge
 						tone={"neutral"}
 						theme={"light"}
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"w-full",
-										"h-42",
-										"p-0",
-									],
-								},
-							},
-						}}
+						className="w-full h-42 p-0"
 						round={"md"}
 						onClick={() => setIsGalleryOpen((prev) => !prev)}
 					>

@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 
 		return (
 			<TitleContainer
-				ui="TransactionList-root"
+				data-ui="TransactionList-root"
 				textTitle={"Transactions (title)"}
 				left={
 					<LinkTo

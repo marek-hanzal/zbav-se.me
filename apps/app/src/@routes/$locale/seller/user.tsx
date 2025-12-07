@@ -16,7 +16,7 @@ export const Route = createFileRoute("/$locale/seller/user")({
 
 		return (
 			<TitleContainer
-				ui="User-root"
+				data-ui="User-root"
 				gap={"md"}
 				textTitle={"User profile (title)"}
 				left={

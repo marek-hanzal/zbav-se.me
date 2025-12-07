@@ -27,19 +27,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 			round={"default"}
 			tone={"secondary"}
 			theme={"light"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"flex-shrink-0",
-							"border-none",
-							"flex-row",
-							"items-center",
-							"gap-1",
-						],
-					},
-				},
-			}}
+			className="shrink-0 border-none flex-row items-center gap-1"
 			{...props}
 		>
 			<Icon

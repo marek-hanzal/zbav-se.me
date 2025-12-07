@@ -56,7 +56,7 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 				}}
 			>
 				<Container
-					ui="FeedLocationBadge-BottomSheet"
+					data-ui="FeedLocationBadge-BottomSheet"
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					height={"full"}

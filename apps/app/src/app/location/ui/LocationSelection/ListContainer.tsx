@@ -75,20 +75,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 					size={"lg"}
 					tone={"danger"}
 					theme={"light"}
-					tweak={{
-						slot: {
-							root: {
-								class: [
-									"text-center",
-									"mx-auto",
-								],
-								token: [
-									"square.xl",
-									"round.default",
-								],
-							},
-						},
-					}}
+					className="text-center mx-auto"
 				>
 					<Tx label={"Location not found (badge)"} />
 				</Badge>
@@ -98,7 +85,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	return (
 		<Container
-			ui="LocationSelectionList-content"
+			data-ui="LocationSelectionList-content"
 			layout={"vertical-flex"}
 			scroll={"vertical"}
 			gap={"sm"}
@@ -107,7 +94,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			{locationAutocompleteQuery.data.map((item) => {
 				return (
 					<Button
-						ui="LocationItem-root"
+						data-ui="LocationItem-root"
 						key={item.id}
 						full
 						tone={"primary"}

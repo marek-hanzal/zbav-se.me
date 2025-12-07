@@ -14,20 +14,11 @@ export namespace ListingPrice {
 export const ListingPrice: FC<ListingPrice.Props> = ({ price, locale, currency, ...props }) => {
 	return (
 		<Badge
-			ui={"ListingPrice-root"}
+			data-ui={"ListingPrice-root"}
 			tone={"secondary"}
 			theme={"light"}
 			round={"default"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"max-w-1/2",
-							"px-4",
-						],
-					},
-				},
-			}}
+			className="max-w-1/2 px-4"
 			{...props}
 		>
 			{price > 0 ? (

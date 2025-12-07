@@ -126,7 +126,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 	return (
 		<Container
-			ui={"TransactionLogList-root"}
+			data-ui={"TransactionLogList-root"}
 			layout={isClosed ? undefined : "vertical-content-footer"}
 			gap={"md"}
 			height={"full"}
@@ -134,7 +134,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 		>
 			<Container
 				ref={containerRef}
-				ui={"TransactionLogList-list"}
+				data-ui={"TransactionLogList-list"}
 				scroll={"vertical"}
 				height={"full"}
 			>
@@ -147,21 +147,10 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					{noHero ? null : (
 						<Badge
 							tone={"secondary"}
-							className={[
-								"flex",
-								"flex-col",
-								"items-start",
-								"gap-1",
-								"w-full",
-								"h-64",
-								"p-0",
-								"rounded-md",
-								"relative",
-								"border-none",
-							]}
+							className="flex flex-col items-start gap-1 w-full h-64 p-0 rounded-md relative border-none"
 						>
 							<HeroImage
-								ui={"ListingHero-image"}
+								data-ui={"ListingHero-image"}
 								src={hero.upload.url}
 								alt={`Hero image for listing transaction ${listingTransaction.id}`}
 								visible

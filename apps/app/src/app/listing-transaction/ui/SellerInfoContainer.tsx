@@ -21,7 +21,7 @@ export const SellerInfoContainer: FC<SellerInfoContainer.Props> = ({
 }) => {
 	return (
 		<Container
-			ui={"SellerInfoContainer-root"}
+			data-ui={"SellerInfoContainer-root"}
 			layout={"vertical-flex"}
 			gap={"sm"}
 			{...props}

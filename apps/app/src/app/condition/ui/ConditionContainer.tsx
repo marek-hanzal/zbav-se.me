@@ -12,7 +12,7 @@ export namespace ConditionContainer {
 export const ConditionContainer: FC<ConditionContainer.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
-			ui="ConditionContainer-root"
+			data-ui="ConditionContainer-root"
 			scroll={"vertical"}
 			height={"full"}
 			width={"full"}

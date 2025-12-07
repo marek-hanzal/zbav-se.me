@@ -23,7 +23,7 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 
 	return (
 		<Container
-			ui={"CategorySelectionContainer"}
+			data-ui={"CategorySelectionContainer"}
 			layout={"vertical-header-content"}
 			gap={"md"}
 			height={"full"}

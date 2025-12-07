@@ -74,7 +74,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			}}
 		>
 			<Container
-				ui={"ListingDetailContainer-root"}
+				data-ui={"ListingDetailContainer-root"}
 				layout={"vertical-flex"}
 				gap={"lg"}
 				{...props}
@@ -82,7 +82,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				{tools.includes("hero") ? (
 					<>
 						<Container
-							ui={"ListingDetailContainer-image"}
+							data-ui={"ListingDetailContainer-image"}
 							position={"relative"}
 						>
 							<ListingPrice
@@ -145,7 +145,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					}}
 				>
 					<Container
-						ui={"ListingDetailContainer-info"}
+						data-ui={"ListingDetailContainer-info"}
 						layout={"vertical-flex"}
 						gap={"sm"}
 						square={"md"}
@@ -249,7 +249,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 							return (
 								<Container
-									ui="ListingDetailContainer-destructive"
+									data-ui="ListingDetailContainer-destructive"
 									layout={"vertical-flex"}
 									gap={"sm"}
 									square={"md"}

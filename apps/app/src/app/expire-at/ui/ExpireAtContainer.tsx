@@ -21,7 +21,7 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 
 	return (
 		<Container
-			ui="ExpireAtContainer"
+			data-ui="ExpireAtContainer"
 			layout={"vertical-flex"}
 			gap={"sm"}
 			height={"auto"}
@@ -39,7 +39,7 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 						}}
 					>
 						<Button
-							ui="ExpireAtItem-root"
+							data-ui="ExpireAtItem-root"
 							onClick={() => {
 								onChange(expire);
 							}}

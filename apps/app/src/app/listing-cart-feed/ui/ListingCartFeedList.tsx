@@ -21,7 +21,7 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 }) => {
 	return (
 		<Container
-			ui={"ListingCartFeedList-root"}
+			data-ui={"ListingCartFeedList-root"}
 			{...props}
 		>
 			<withListingCartFeedCollectionQuery.Suspense
@@ -35,7 +35,7 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 
 					return (
 						<Container
-							ui={"ListingCartFeedList-root"}
+							data-ui={"ListingCartFeedList-content"}
 							layout={"vertical-flex"}
 							gap={"md"}
 						>

@@ -68,7 +68,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		<>
 			<Container
 				data-id={listing.id}
-				ui={"ListingHero-root"}
+				data-ui={"ListingHero-root"}
 				position={"relative"}
 				onClick={() => {
 					setDetail((prev) => !prev);
@@ -95,11 +95,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				})}
 
 				<HeroImage
-					ui={"ListingHero-image"}
+					data-ui={"ListingHero-image"}
 					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
 					visible={visible}
-					invisible={<SpinnerContainer ui={"ListingHero-spinner"} />}
+					invisible={<SpinnerContainer data-ui={"ListingHero-spinner"} />}
 				/>
 			</Container>
 

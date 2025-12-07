@@ -61,7 +61,6 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	timestamp,
 	isCurrent,
 	isClosed,
-	tweak,
 	timestampProps,
 	onClick,
 	children,
@@ -174,14 +173,9 @@ export const EventBadge: FC<EventBadge.Props> = ({
 
 	return (
 		<Badge
-			ui={`EventBadge-${type}`}
+			data-ui={`EventBadge-${type}`}
 			{...defaultProps}
 			{...typeProps[type]}
-			tweak={[
-				badgeTweak,
-				typeTweaks[type],
-				tweak,
-			]}
 			{...props}
 			onClick={isClosed || !isCurrent ? undefined : onClick}
 		>

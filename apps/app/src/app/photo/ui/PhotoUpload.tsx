@@ -6,7 +6,6 @@ import { Status } from "@use-pico/client/ui/status";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 import {
 	type ChangeEvent,
 	type FC,
@@ -20,7 +19,7 @@ export namespace PhotoUpload {
 	export type Value = string | undefined;
 	export type OnChangeFn = (uploadId: Value) => void;
 
-	export interface Props extends Omit<Sheet.Props, "slot" | "onChange"> {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		camera?: boolean;
 		value: Value;
 		onChange: OnChangeFn;
@@ -31,7 +30,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
-	tweak,
 	disabled,
 	...props
 }) => {
@@ -113,7 +111,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	return (
 		<Container
 			ref={containerRef}
-			ui="PhotoUpload-Container"
+			data-ui={"PhotoUpload"}
 			position="relative"
 		>
 			<input
@@ -126,26 +124,12 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={onUpload}
 			/>
 
-			<Sheet
-				ui="PhotoUpload-Sheet"
+			<Container
+				data-ui={"PhotoUpload-Sheet"}
 				onClick={pick}
 				onKeyDown={onKeyDown}
 				disabled={disabled || uploadMutation.isPending}
-				tweak={[
-					tweak,
-					{
-						slot: {
-							root: {
-								class: [
-									/**
-									 * Because of internal <img/> uses absolute sizes.
-									 */
-									"relative",
-								],
-							},
-						},
-					},
-				]}
+				position={"relative"}
 				{...props}
 			>
 				{uploadMutation.isPending ? (
@@ -198,7 +182,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 						)}
 					/>
 				)}
-			</Sheet>
+			</Container>
 		</Container>
 	);
 };

@@ -60,7 +60,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 				if (data.filter === 0) {
 					return (
 						<Container
-							ui={"FeedListContainer-first-feed"}
+							data-ui={"FeedListContainer-first-feed"}
 							layout={"vertical-content-footer"}
 							gap={"md"}
 						>
@@ -95,7 +95,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								}}
 							>
 								<Tx
-									ui="FeedListContainer-first-feed-hint"
+									data-ui="FeedListContainer-first-feed-hint"
 									label={"First feed (hint)"}
 									size={"sm"}
 									tone={"subtle"}
@@ -136,7 +136,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 
 				return (
 					<Container
-						ui={"FeedListContainer-root"}
+						data-ui={"FeedListContainer-root"}
 						layout={isLimitReached ? "vertical" : "vertical-content-footer"}
 						gap={"md"}
 						{...props}

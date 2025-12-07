@@ -18,7 +18,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 
 	return (
 		<Button
-			ui="CategoryItem-root"
+			data-ui="CategoryItem-root"
 			data-id={item.id}
 			tone={"primary"}
 			theme={isSelected ? "dark" : "light"}

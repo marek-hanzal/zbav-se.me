@@ -3,7 +3,6 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { Sheet } from "@zbav-se.me/ui/sheet";
 
 export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 	component() {
@@ -16,7 +15,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 
 		return (
 			<Container square={"md"}>
-				<Sheet>
+				<Container>
 					<div className={"flex flex-col gap-2 px-4"}>
 						<div>
 							<PriceInline
@@ -45,7 +44,7 @@ export const Route = createFileRoute("/$locale/seller/listing/$id/view")({
 							/>
 						))}
 					</div>
-				</Sheet>
+				</Container>
 			</Container>
 		);
 	},
