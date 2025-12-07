@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 
 		return (
 			<TitleContainer
-				ui="ListingWizard-Photos-root"
+				data-ui={"ListingWizard-Photos"}
 				textTitle={"Listing photos (title)"}
 				left={
 					<LinkTo

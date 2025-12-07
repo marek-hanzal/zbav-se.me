@@ -64,7 +64,7 @@ export const Route = createRootRouteWithContext<{
 						{/** biome-ignore lint/correctness/useUniqueElementIds: I'm OK, bro */}
 						<Container
 							id="root"
-							ui="Root-root"
+							data-ui={"Root"}
 							height="viewport"
 							width="viewport"
 							className={"font-roboto font-light"}

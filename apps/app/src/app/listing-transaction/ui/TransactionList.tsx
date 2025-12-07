@@ -31,6 +31,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 	return (
 		<Container
+			data-ui={"TransactionList"}
 			position={"relative"}
 			style={{
 				contain: "content",
@@ -43,7 +44,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 			<Container
 				ref={containerRef}
-				ui="TransactionList-root"
+				data-ui={"TransactionList-Container"}
 				layout={"vertical-flex"}
 				gap={"md"}
 				scroll={"vertical"}
@@ -96,7 +97,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 						return (
 							<Container
-								ui={"TransactionList-empty"}
+								data-ui={"TransactionList-Container-empty"}
 								layout={"vertical-centered"}
 							>
 								{renderEmptyFn({

@@ -16,7 +16,7 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 
 	return (
 		<BottomSheet
-			ui={"GalleryButton-bottom-sheet"}
+			data-ui={"GalleryButton-BottomSheet"}
 			detent={"full"}
 			header={{
 				close: true,
@@ -28,7 +28,7 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 			{...props}
 		>
 			<Container
-				ui={"GalleryButton-root"}
+				data-ui={"GalleryButton-Container-wrapper"}
 				position={"relative"}
 				height={"full"}
 			>
@@ -39,7 +39,7 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 
 				<Container
 					ref={containerRef}
-					ui={"GalleryButton-container"}
+					data-ui={"GalleryButton-Container-content"}
 					layout={"vertical-full"}
 					gap={"sm"}
 					height={"content"}
@@ -55,7 +55,7 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 								key={upload.id}
 								src={upload.url}
 								alt={"Gallery image"}
-								round
+								round={"default"}
 							/>
 						);
 					})}

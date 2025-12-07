@@ -32,7 +32,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 
 		return (
 			<TitleContainer
-				ui="Condition-root"
+				data-ui={"Condition"}
 				textTitle={"Condition (title)"}
 				left={
 					<LinkTo

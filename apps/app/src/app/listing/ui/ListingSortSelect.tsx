@@ -25,7 +25,7 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 
 	return (
 		<Container
-			ui="ListingSortSelect-root"
+			data-ui={"ListingSortSelect"}
 			layout={"vertical-flex"}
 			scroll={"vertical"}
 			gap={"sm"}
@@ -107,16 +107,6 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 									tone={"primary"}
 									theme={"dark"}
 									size={"sm"}
-									tweak={{
-										slot: {
-											root: {
-												class: [
-													"py-2",
-													"px-4",
-												],
-											},
-										},
-									}}
 								>
 									{position}
 								</Badge>

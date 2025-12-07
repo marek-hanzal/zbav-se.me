@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 
 		return (
 			<TitleContainer
-				ui={"FeedSelect-root"}
+				data-ui={"FeedSelect"}
 				layout={"vertical-header-content"}
 				textTitle={"Feed select (title)"}
 				left={

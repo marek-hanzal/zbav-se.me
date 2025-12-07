@@ -23,7 +23,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	locale,
 	side,
 	listingTransaction,
-	tweak,
 	open,
 	...props
 }) => {
@@ -35,38 +34,39 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	return (
 		<>
 			<Badge
+				data-ui={"TransactionItem"}
 				data-id={listingTransaction.id}
 				size={"xl"}
-				tweak={[
-					tweak,
-					{
-						slot: {
-							root: {
-								class: [
-									"flex",
-									"flex-col",
-									"gap-4",
-									"h-72",
-									"w-full",
-									"items-start",
-									"p-0",
-									"relative",
-									"border-none",
-								],
-							},
-						},
-					},
-				]}
+				// tweak={[
+				// 	tweak,
+				// 	{
+				// 		slot: {
+				// 			root: {
+				// 				class: [
+				// 					"flex",
+				// 					"flex-col",
+				// 					"gap-4",
+				// 					"h-72",
+				// 					"w-full",
+				// 					"items-start",
+				// 					"p-0",
+				// 					"relative",
+				// 					"border-none",
+				// 				],
+				// 			},
+				// 		},
+				// 	},
+				// ]}
 				round={"default"}
 				onClick={() => open.set(listingTransaction.id)}
 				{...props}
 			>
 				<HeroImage
-					ui={"TransactionItem-image"}
+					data-ui={"TransactionItem-HeroImage"}
 					src={hero.upload.url}
 					alt={`Hero image for listing transaction ${listingTransaction.id}`}
 					visible
-					round
+					round={"default"}
 				/>
 
 				<ListingPrice

@@ -41,7 +41,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 
 	return (
 		<ChatInput
-			ui={`ChatInput-${type}`}
+			data-ui={`ChatInput-${type}`}
 			value={message}
 			onChange={setMessage}
 			onSubmit={(message) => {

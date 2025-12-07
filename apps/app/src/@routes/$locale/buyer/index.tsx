@@ -17,7 +17,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 
 		return (
 			<TitleContainer
-				ui={"BuyerHome-root"}
+				data-ui={"BuyerHome"}
 				textTitle={"Buyer home (title)"}
 			>
 				<BuyerMenu locale={locale} />

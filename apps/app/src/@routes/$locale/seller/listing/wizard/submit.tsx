@@ -28,7 +28,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 
 		return (
 			<TitleContainer
-				ui="Submit-root"
+				data-ui={"Submit"}
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo

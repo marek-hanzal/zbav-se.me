@@ -59,7 +59,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 
 		return (
 			<FlowContainer
-				ui={"FeedList-root"}
+				data-ui={"FeedList"}
 				left={
 					<LinkTo
 						to={"/$locale/buyer"}

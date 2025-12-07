@@ -66,7 +66,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			renderEmptyFn()
 		) : (
 			<Status
-				ui="ListingList-empty"
+				data-ui={"ListingListContainer-Status-empty"}
 				key={`${listingIdPrefix}-no-listings`}
 				icon={"icon-[streamline--sad-face-remix]"}
 				textTitle={"No listings (title)"}
@@ -93,7 +93,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	return (
 		<Container
 			ref={mergedRef}
-			ui="ListingList-root"
+			data-ui={"ListingListContainer"}
 			layout={"vertical-full"}
 			snap={{
 				snap: "vertical",
@@ -119,7 +119,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							delayMs={200}
 							placeholder={(props) => (
 								<SpinnerContainer
-									ui="ListingList-spinner"
+									data-ui={"ListingListContainer-SpinnerContainer"}
 									data-id={listing.id}
 									{...props}
 								/>

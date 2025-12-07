@@ -1,5 +1,6 @@
 import { Badge } from "@use-pico/client/ui/badge";
 import { Tx } from "@use-pico/client/ui/tx";
+import { tvc } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
@@ -52,16 +53,16 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 
 	return (
 		<Badge
-			ui={"FeedItemBadge-root"}
+			data-ui={"FeedItemBadge"}
 			data-id={feed.id}
 			tone={"primary"}
-			className={[
+			className={tvc([
 				"relative",
 				"p-0",
 				"w-full",
 				"h-48",
 				"contain-content",
-			]}
+			])}
 			round={"md"}
 			{...props}
 		>
@@ -73,7 +74,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
 						visible
-						round
+						round={"default"}
 						tweak={{
 							slot: {
 								img: {
@@ -93,9 +94,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 				snapTo={"top"}
 				round={"md"}
 				tone={"secondary"}
-				className={[
-					"h-fit",
-				]}
+				className={"h-fit"}
 			>
 				<Tx
 					label={feed.name}

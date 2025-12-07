@@ -24,7 +24,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 	return (
 		<Container
-			ui={"GalleryUpload-root"}
+			data-ui={"GalleryUpload"}
 			position={"relative"}
 			{...props}
 		>
@@ -49,7 +49,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 			/>
 
 			<Container
-				ui={"GalleryUpload-container"}
+				data-ui={"GalleryUpload-Container"}
 				ref={snapperRef}
 				layout="horizontal-full"
 				snap={{
