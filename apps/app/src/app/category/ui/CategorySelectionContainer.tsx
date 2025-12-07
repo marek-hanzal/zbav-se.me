@@ -26,10 +26,8 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 			ui={"CategorySelectionContainer"}
 			layout={"vertical-header-content"}
 			gap={"md"}
-			height={"fit"}
+			height={"full"}
 			scroll={"vertical"}
-			tone={"unset"}
-			theme={"unset"}
 			{...props}
 		>
 			<Fulltext

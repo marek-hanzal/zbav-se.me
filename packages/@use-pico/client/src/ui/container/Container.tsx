@@ -1,55 +1,80 @@
-import { type Cls, useCls } from "@use-pico/cls";
-import type { ComponentProps, FC, Ref } from "react";
+import type { ComponentProps, FC } from "react";
 import type { UiProps } from "../../type/UiProps";
-import { ContainerCls } from "./ContainerCls";
 
 export namespace Container {
-	export interface Props
-		extends UiProps<ContainerCls.Props<Omit<ComponentProps<"div">, "onChange">>> {
-		ref?: Ref<HTMLDivElement>;
+	export type Tone = "primary";
+	export type Theme = "light" | "dark";
+	export type Layout =
+		//
+		| "vertical"
+		| "vertical-full"
+		| "vertical-header-content-footer"
+		| "vertical-header-content"
+		| "vertical-content-footer"
+		| "vertical-centered"
+		| "vertical-flex"
+		//
+		| "horizontal"
+		| "horizontal-full"
+		| "horizontal-flex";
+	export type Height = "full" | "auto" | "content" | "viewport";
+	export type Width = "full" | "auto" | "viewport";
+	export type Position = "absolute" | "relative";
+	export type Scroll = "vertical" | "horizontal" | "hidden";
+	export type Snap = "vertical" | "horizontal";
+	export type SnapAlign = "start" | "center" | "end";
+	export type Square = "xs" | "sm" | "md" | "lg" | "xl";
+	export type Gap = "xs" | "sm" | "md" | "lg" | "xl";
+	export type SnapTo =
+		| "top-left"
+		| "top-center"
+		| "top-right"
+		| "left-center"
+		| "right-center"
+		| "bottom-left"
+		| "bottom-right"
+		| "bottom";
 
+	export interface Props extends UiProps<Omit<ComponentProps<"div">, "onChange">> {
 		/**
 		 * Visual tone of the container.
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		tone?: Cls.VariantOf<ContainerCls, "tone">;
+		tone?: Tone;
 
 		/**
 		 * Theme variant for light/dark mode.
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		theme?: Cls.VariantOf<ContainerCls, "theme">;
+		theme?: Theme;
 
 		/**
 		 * Height behavior of the container.
 		 *
-		 * - `"unset"` - Default div behavior (no classes applied)
-		 * - `"fit"` - Fits parent container (h-full with min-h-0 and max-h-full)
+		 * - `"full"` - Fits parent container (h-full with min-h-0 and max-h-full)
 		 * - `"auto"` - Adjusts to content (h-auto with min-h-0 and w-full)
 		 * - `"viewport"` - Uses dynamic viewport height (h-dvh with min-h-dvh and w-full)
 		 *
-		 * @default "fit"
+		 * @default undefined
 		 */
-		height?: Cls.VariantOf<ContainerCls, "height">;
+		height?: Height;
 
 		/**
 		 * Width behavior of the container.
 		 *
-		 * - `"unset"` - Default div behavior (no classes applied)
-		 * - `"fit"` - Fits parent container (w-full with min-w-0 and max-w-full)
+		 * - `"full"` - Fits parent container (w-full with min-w-0 and max-w-full)
 		 * - `"auto"` - Adjusts to content (w-auto with min-w-0 and h-full)
 		 * - `"viewport"` - Uses dynamic viewport width (w-dvw with min-w-dvw)
 		 *
-		 * @default "fit"
+		 * @default undefined
 		 */
-		width?: Cls.VariantOf<ContainerCls, "width">;
+		width?: Width;
 
 		/**
 		 * Layout behavior and grid configuration.
 		 *
-		 * - `"unset"` - No grid layout applied
 		 * - `"horizontal"` - Horizontal grid with auto-sized columns
 		 * - `"horizontal-full"` - Horizontal grid where each child takes 100% width (snap-scroll friendly)
 		 * - `"vertical"` - Vertical grid with auto-sized rows
@@ -61,23 +86,22 @@ export namespace Container {
 		 * - `"horizontal-flex"` - Horizontal flexbox layout (flex-row)
 		 * - `"vertical-flex"` - Vertical flexbox layout (flex-col)
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		layout?: Cls.VariantOf<ContainerCls, "layout">;
+		layout?: Layout;
 
 		/**
 		 * Scroll behavior for scrolling.
 		 *
-		 * - `"unset"` - No scroll handling
 		 * - `"horizontal"` - Horizontal scrolling with stable scrollbar gutter
 		 * - `"vertical"` - Vertical scrolling with stable scrollbar gutter
 		 * - `"hidden"` - Hide overflow content
 		 *
 		 * **Note:** When using `snap`, scrolling is automatically enabled and you don't need to specify `scroll` separately.
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		scroll?: Cls.VariantOf<ContainerCls, "scroll">;
+		scroll?: Scroll;
 
 		/**
 		 * Scroll snap behavior for smooth scrolling.
@@ -85,115 +109,47 @@ export namespace Container {
 		 * Automatically enables scrolling in the appropriate direction (horizontal or vertical).
 		 * You don't need to specify `scroll` when using `snap` - it's included automatically.
 		 *
-		 * - `"unset"` - No scroll snap
-		 * - `"horizontal-start"` - Snap to start horizontally (includes horizontal scrolling)
-		 * - `"horizontal-center"` - Snap to center horizontally (includes horizontal scrolling)
-		 * - `"horizontal-end"` - Snap to end horizontally (includes horizontal scrolling)
-		 * - `"vertical-start"` - Snap to start vertically (includes vertical scrolling)
-		 * - `"vertical-center"` - Snap to center vertically (includes vertical scrolling)
-		 * - `"vertical-end"` - Snap to end vertically (includes vertical scrolling)
-		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		snap?: Cls.VariantOf<ContainerCls, "snap">;
-
-		/**
-		 * Touch panning lock behavior for mobile interactions.
-		 *
-		 * - `"unset"` - No touch panning restrictions
-		 * - `"horizontal"` - Locks horizontal panning, allows vertical panning/scrolling
-		 * - `"vertical"` - Locks vertical panning, allows horizontal panning/scrolling
-		 *
-		 * @default "unset"
-		 */
-		lock?: Cls.VariantOf<ContainerCls, "lock">;
+		snap?: {
+			snap: Snap;
+			align: SnapAlign;
+		};
 
 		/**
 		 * Square padding using design tokens.
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		square?: Cls.VariantOf<ContainerCls, "square">;
+		square?: Square;
 
 		/**
 		 * Gap spacing between grid items or flex items.
 		 *
-		 * - `"unset"` - No gap applied
 		 * - `"xs"` - gap-1 (0.25rem)
 		 * - `"sm"` - gap-2 (0.5rem)
 		 * - `"md"` - gap-3 (0.75rem)
 		 * - `"lg"` - gap-4 (1rem)
 		 * - `"xl"` - gap-5 (1.25rem)
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		gap?: Cls.VariantOf<ContainerCls, "gap">;
-
-		/**
-		 * Item alignment for flex layouts (align-items).
-		 *
-		 * Controls the alignment of items along the cross axis in flex containers.
-		 * Use `placeItems` for grid layouts instead.
-		 *
-		 * - `"unset"` - No alignment applied (default behavior)
-		 * - `"start"` - Items aligned to start (items-start)
-		 * - `"center"` - Items centered (items-center)
-		 * - `"end"` - Items aligned to end (items-end)
-		 * - `"stretch"` - Items stretched to fill available space (items-stretch)
-		 *
-		 * @default "unset"
-		 */
-		items?: Cls.VariantOf<ContainerCls, "items">;
-
-		/**
-		 * Item placement for grid layouts (place-items).
-		 *
-		 * Controls the alignment of items within their grid cells.
-		 * Use `items` for flex layouts instead.
-		 *
-		 * - `"unset"` - No placement applied (default behavior)
-		 * - `"start"` - Items aligned to start (place-items-start)
-		 * - `"center"` - Items centered (place-items-center)
-		 * - `"end"` - Items aligned to end (place-items-end)
-		 * - `"stretch"` - Items stretched to fill grid cells (place-items-stretch)
-		 *
-		 * @default "unset"
-		 */
-		placeItems?: Cls.VariantOf<ContainerCls, "place-items">;
-
-		/**
-		 * Justify content alignment (for flex layouts only).
-		 *
-		 * Controls the distribution of items along the main axis.
-		 *
-		 * - `"unset"` - No justification applied
-		 * - `"start"` - Items aligned to start (justify-start)
-		 * - `"center"` - Items centered (justify-center)
-		 * - `"end"` - Items aligned to end (justify-end)
-		 * - `"between"` - Items evenly distributed with space between (justify-between)
-		 * - `"around"` - Items evenly distributed with space around (justify-around)
-		 * - `"evenly"` - Items evenly distributed with equal space (justify-evenly)
-		 *
-		 * @default "unset"
-		 */
-		justify?: Cls.VariantOf<ContainerCls, "justify">;
+		gap?: Gap;
 
 		/**
 		 * CSS position behavior.
 		 *
-		 * - `"unset"` - No position applied
 		 * - `"absolute"` - Absolutely positioned
 		 * - `"relative"` - Relatively positioned
 		 *
 		 * @default "unset"
 		 */
-		position?: Cls.VariantOf<ContainerCls, "position">;
+		position?: Position;
 
 		/**
 		 * Absolute positioning helper for snapping the container to parent edges.
 		 * Requires the parent element to have relative positioning.
 		 *
-		 * - `"unset"` - No snapping applied
 		 * - `"top-left"` - Snaps to top-left corner
 		 * - `"top-center"` - Snaps to top-center edge
 		 * - `"top-right"` - Snaps to top-right corner
@@ -203,41 +159,16 @@ export namespace Container {
 		 * - `"bottom-right"` - Snaps to bottom-right corner
 		 * - `"bottom"` - Snaps to full-width bottom edge
 		 *
-		 * @default "unset"
+		 * @default undefined
 		 */
-		snapTo?: Cls.VariantOf<ContainerCls, "snap-to">;
-
-		/**
-		 * Border styling using design tokens.
-		 *
-		 * @default "unset"
-		 */
-		border?: Cls.VariantOf<ContainerCls, "border">;
-
-		/**
-		 * Border radius using design tokens.
-		 *
-		 * @default "unset"
-		 */
-		round?: Cls.VariantOf<ContainerCls, "round">;
-
-		/**
-		 * Box shadow using design tokens.
-		 *
-		 * @default "unset"
-		 */
-		shadow?: Cls.VariantOf<ContainerCls, "shadow">;
+		snapTo?: SnapTo;
 
 		/**
 		 * Disabled state of the container.
 		 *
-		 * @default false
+		 * @default undefined
 		 */
-		disabled?: Cls.VariantOf<ContainerCls, "disabled">;
-		/**
-		 * Additional className to apply to the container.
-		 */
-		className?: string;
+		disabled?: boolean;
 	}
 }
 
@@ -252,69 +183,43 @@ export const Container: FC<Container.Props> = ({
 	layout,
 	scroll,
 	snap,
-	lock,
 	square,
 	gap,
-	items,
-	placeItems,
-	justify,
 	position,
 	snapTo,
-	border,
-	round,
-	shadow,
 	disabled,
-	className,
 	//
-	cls = ContainerCls,
-	tweak,
-	//
-	children,
 	...props
 }) => {
-	const { slots } = useCls(
-		cls,
-		{
-			slot: {
-				root: {
-					class: className,
-				},
-			},
-		},
-		tweak,
-		{
-			variant: {
-				height,
-				width,
-				layout,
-				scroll,
-				snap,
-				lock,
-				square,
-				gap,
-				items,
-				"place-items": placeItems,
-				justify,
-				position,
-				"snap-to": snapTo,
-				border,
-				round,
-				shadow,
-				tone,
-				theme,
-				disabled,
-			},
-		},
-	);
-
 	return (
 		<div
 			ref={ref}
-			data-ui={ui ?? "Container-root"}
-			className={slots.root()}
+			data-root={"Container"}
+			data-ui={ui ?? "Container"}
+			//
+			data-tone={tone}
+			data-theme={theme}
+			//
+			data-disabled={disabled}
+			//
+			data-layout={layout}
+			//
+			data-height={height}
+			data-width={width}
+			//
+			data-position={position}
+			//
+			data-scroll={scroll}
+			//
+			data-snap={snap?.snap}
+			data-snap-align={snap?.align}
+			//
+			data-square={square}
+			data-gap={gap}
+			//
+			data-snap-to={snapTo}
+			//
 			{...props}
-		>
-			{children}
-		</div>
+		/>
 	);
 };

@@ -16,12 +16,9 @@ export const FeedTitleContainer: FC<FeedTitleContainer.Props> = ({ value, onChan
 	return (
 		<Container
 			layout={"vertical-centered"}
-			items={"center"}
 			gap={"md"}
-			width={"fit"}
 			height={"auto"}
-			tone={"unset"}
-			theme={"unset"}
+			width={"full"}
 			{...props}
 		>
 			<Status

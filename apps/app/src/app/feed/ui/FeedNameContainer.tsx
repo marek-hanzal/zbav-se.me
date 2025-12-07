@@ -24,10 +24,8 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
 }) => {
 	return (
 		<Container
+			ui={"FeedNameContainer-root"}
 			layout={"vertical-centered"}
-			items={"center"}
-			tone={"unset"}
-			theme={"unset"}
 			{...props}
 		>
 			<Status

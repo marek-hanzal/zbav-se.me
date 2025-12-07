@@ -59,6 +59,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 
 		return (
 			<FlowContainer
+				ui={"FeedList-root"}
 				left={
 					<LinkTo
 						to={"/$locale/buyer"}
@@ -177,9 +178,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									appendix={
 										<Container
 											layout={"vertical-centered"}
-											items={"center"}
-											round={"unset"}
-											height={"fit"}
+											height={"full"}
 										>
 											<Status
 												icon={DeadEndIcon}

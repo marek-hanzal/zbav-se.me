@@ -42,15 +42,14 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
+			ui={"ContainerValueList-root"}
 			layout={"vertical-flex"}
 			gap={"xs"}
-			tone={"unset"}
-			theme={"unset"}
 			height={"auto"}
-			round={"lg"}
 			{...props}
 		>
 			<Badge
+				ui={"ContainerValueList-title"}
 				tone={"neutral"}
 				theme={"light"}
 				tweak={{
@@ -85,17 +84,16 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			</Badge>
 
 			<Container
-				tone={"unset"}
-				theme={"unset"}
+				ui={"ContainerValueList-content"}
 				layout={"vertical-flex"}
 				gap={"xs"}
 				height={"auto"}
-				round={"lg"}
 			>
 				{loading
 					? null
 					: items.map((item) => (
 							<Badge
+								ui={"ContainerValueList-item"}
 								key={item.id}
 								tone={"neutral"}
 								theme={"light"}
@@ -128,12 +126,13 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				{loading && (
 					<SpinnerContainer
 						height={"content"}
-						size="md"
+						size={"md"}
 					/>
 				)}
 
 				{!loading && items.length === 0 && (
 					<Badge
+						ui={"ContainerValueList-empty"}
 						tone={"neutral"}
 						theme={"light"}
 						tweak={{

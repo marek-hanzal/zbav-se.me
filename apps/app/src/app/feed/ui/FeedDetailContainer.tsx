@@ -47,20 +47,9 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 			layout={"vertical-flex"}
 			gap={"md"}
 			height={"content"}
-			width={"fit"}
+			width={"full"}
 			disabled={feedDeleteMutation.isPending}
 			square={"md"}
-			tone={"unset"}
-			theme={"unset"}
-			tweak={{
-				slot: {
-					root: {
-						class: [
-							"pt-0",
-						],
-					},
-				},
-			}}
 			{...props}
 		>
 			<VariantProvider

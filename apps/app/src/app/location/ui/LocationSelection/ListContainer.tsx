@@ -43,9 +43,6 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		return (
 			<Container
 				layout={"vertical-centered"}
-				items={"center"}
-				tone={"unset"}
-				theme={"unset"}
 				scroll={"vertical"}
 			>
 				<Status
@@ -72,12 +69,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	if (locationAutocompleteQuery.data.length === 0) {
 		return (
-			<Container
-				layout={"vertical-centered"}
-				items={"center"}
-				tone={"unset"}
-				theme={"unset"}
-			>
+			<Container layout={"vertical-centered"}>
 				<Badge
 					size={"lg"}
 					tone={"danger"}
@@ -105,12 +97,10 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	return (
 		<Container
-			ui="Location-content"
+			ui="LocationSelectionList-content"
 			layout={"vertical-flex"}
 			scroll={"vertical"}
 			gap={"sm"}
-			tone={"unset"}
-			theme={"unset"}
 			{...props}
 		>
 			{locationAutocompleteQuery.data.map((item) => {

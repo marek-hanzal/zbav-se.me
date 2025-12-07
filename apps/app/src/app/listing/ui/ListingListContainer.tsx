@@ -95,14 +95,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			ref={mergedRef}
 			ui="ListingList-root"
 			layout={"vertical-full"}
-			snap={"vertical-start"}
-			className={tvc([
-				"isolate",
-				"overflow-x-clip",
-				"overscroll-contain",
-				"contain-strict",
-				"will-change-scroll",
-			])}
+			snap={{
+				snap: "vertical",
+				align: "start",
+			}}
 			{...props}
 		>
 			<withListingCollectionQuery.Suspense
@@ -139,7 +135,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 										id: listing.id,
 									},
 								}}
-								fallback={<SpinnerContainer height={"fit"} />}
+								fallback={<SpinnerContainer />}
 							>
 								{({ data: listing }) => {
 									return (

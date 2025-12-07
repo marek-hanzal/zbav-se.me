@@ -24,9 +24,6 @@ export const SellerInfoContainer: FC<SellerInfoContainer.Props> = ({
 			ui={"SellerInfoContainer-root"}
 			layout={"vertical-flex"}
 			gap={"sm"}
-			height={"content"}
-			tone={"unset"}
-			theme={"unset"}
 			{...props}
 		>
 			<withListingTransactionSellerInfoQuery.Suspense

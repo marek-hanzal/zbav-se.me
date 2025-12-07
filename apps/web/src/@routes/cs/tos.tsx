@@ -12,8 +12,6 @@ export const Route = createFileRoute("/cs/tos")({
 			<Container
 				layout={"vertical"}
 				scroll={"vertical"}
-				tone={"secondary"}
-				theme={"light"}
 				square={"md"}
 			>
 				<Typo

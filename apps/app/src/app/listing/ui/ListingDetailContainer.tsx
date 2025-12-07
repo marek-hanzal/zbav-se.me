@@ -48,7 +48,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	withScore,
 	parentSheetId,
 	tools,
-	tweak,
 	...props
 }) => {
 	const [hero] = listing.gallery.items as [
@@ -78,25 +77,13 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				ui={"ListingDetailContainer-root"}
 				layout={"vertical-flex"}
 				gap={"lg"}
-				height={"content"}
 				{...props}
 			>
 				{tools.includes("hero") ? (
 					<>
 						<Container
 							ui={"ListingDetailContainer-image"}
-							height={"content"}
-							round={"default"}
 							position={"relative"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"h-64",
-										],
-									},
-								},
-							}}
 						>
 							<ListingPrice
 								price={listing.price}
@@ -138,18 +125,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 						<Container
 							layout={"vertical-flex"}
-							height={"content"}
 							gap={"sm"}
 							square={"md"}
-							tweak={{
-								slot: {
-									root: {
-										class: [
-											"py-0",
-										],
-									},
-								},
-							}}
 						>
 							<TransactionButton
 								locale={locale}
@@ -172,9 +149,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						layout={"vertical-flex"}
 						gap={"sm"}
 						square={"md"}
-						tone={"unset"}
-						theme={"unset"}
-						height={"content"}
 					>
 						{tools.includes("hero") ? null : (
 							<>
@@ -275,8 +249,8 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 							return (
 								<Container
+									ui="ListingDetailContainer-destructive"
 									layout={"vertical-flex"}
-									height={"content"}
 									gap={"sm"}
 									square={"md"}
 								>

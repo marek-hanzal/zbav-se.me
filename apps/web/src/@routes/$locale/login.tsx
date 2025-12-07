@@ -111,15 +111,14 @@ export const Route = createFileRoute("/$locale/login")({
 				<Container
 					ref={rootRef}
 					layout={"vertical-full"}
-					snap={"vertical-center"}
+					snap={{
+						snap: "vertical",
+						align: "center",
+					}}
 					gap={"md"}
 					square={"md"}
-					round={"lg"}
 				>
-					<Container
-						layout={"vertical-centered"}
-						items={"center"}
-					>
+					<Container layout={"vertical-centered"}>
 						<Status icon={<Logo />}>
 							<form
 								onSubmit={(e) => {
@@ -195,11 +194,8 @@ export const Route = createFileRoute("/$locale/login")({
 
 								<Container
 									layout={"vertical-flex"}
-									items={"center"}
 									gap={"sm"}
-									width={"fit"}
-									tone={"unset"}
-									theme={"unset"}
+									width={"full"}
 								>
 									<form.SubmitButton
 										iconEnabled={UnlockIcon}
@@ -236,10 +232,7 @@ export const Route = createFileRoute("/$locale/login")({
 						</Status>
 					</Container>
 
-					<Container
-						layout={"vertical-centered"}
-						items={"center"}
-					>
+					<Container layout={"vertical-centered"}>
 						<Status
 							icon={PassKeyIcon}
 							textTitle={"Login with passkey (title)"}
@@ -265,10 +258,7 @@ export const Route = createFileRoute("/$locale/login")({
 						/>
 					</Container>
 
-					<Container
-						layout={"vertical-centered"}
-						items={"center"}
-					>
+					<Container layout={"vertical-centered"}>
 						<Status
 							icon={SocialIcon}
 							textTitle={"Login with social (title)"}

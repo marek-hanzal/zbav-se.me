@@ -32,125 +32,135 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<Container position={"relative"}>
+		<Container
+			ui={"BuyerMenu-root"}
+			position={"relative"}
+			height={"full"}
+			width={"full"}
+			{...props}
+		>
 			<Fade scrollableRef={containerRef} />
 
 			<Container
+				ui={"BuyerMenu-container"}
 				ref={containerRef}
-				layout={"vertical-flex"}
 				scroll={"vertical"}
-				gap={"sm"}
-				items={"center"}
-				{...props}
+				height={"full"}
 			>
-				<LinkTo
-					to="/$locale/buyer/feed/default"
-					params={{
-						locale,
-					}}
-					full
+				<Container
+					ui={"BuyerMenu-content"}
+					layout={"vertical-flex"}
+					gap={"sm"}
 				>
-					<Tile
-						iconEnabled={ListingIcon}
-						label={"Listings (label)"}
-						tone={"secondary"}
-					/>
-				</LinkTo>
-
-				<div className={spacing}>
 					<LinkTo
-						to="/$locale/buyer/cart/list"
+						to="/$locale/buyer/feed/default"
 						params={{
 							locale,
 						}}
 						full
 					>
 						<Tile
-							iconEnabled={CartIcon}
-							label={"Cart (label)"}
+							iconEnabled={ListingIcon}
+							label={"Listings (label)"}
+							tone={"secondary"}
 						/>
 					</LinkTo>
 
+					<div className={spacing}>
+						<LinkTo
+							to="/$locale/buyer/cart/list"
+							params={{
+								locale,
+							}}
+							full
+						>
+							<Tile
+								iconEnabled={CartIcon}
+								label={"Cart (label)"}
+							/>
+						</LinkTo>
+
+						<LinkTo
+							to="/$locale/buyer/transaction/list"
+							params={{
+								locale,
+							}}
+							full
+						>
+							<Tile
+								iconEnabled={TransactionIcon}
+								label={"Transactions (label)"}
+							/>
+						</LinkTo>
+
+						<LinkTo
+							to="/$locale/buyer/feed/select"
+							params={{
+								locale,
+							}}
+							full
+						>
+							<Tile
+								iconEnabled={FeedIcon}
+								label={"Feed (label)"}
+							/>
+						</LinkTo>
+					</div>
+
 					<LinkTo
-						to="/$locale/buyer/transaction/list"
+						to="/$locale/buyer/shop"
 						params={{
 							locale,
 						}}
 						full
 					>
 						<Tile
-							iconEnabled={TransactionIcon}
-							label={"Transactions (label)"}
+							iconEnabled={ShopIcon}
+							label={"Shop (label)"}
 						/>
 					</LinkTo>
 
-					<LinkTo
-						to="/$locale/buyer/feed/select"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={FeedIcon}
-							label={"Feed (label)"}
-						/>
-					</LinkTo>
-				</div>
+					<div className={spacing}>
+						<LinkTo
+							to="/$locale/seller"
+							params={{
+								locale,
+							}}
+							full
+						>
+							<Tile
+								iconEnabled={SellerIcon}
+								label={"To seller (label)"}
+							/>
+						</LinkTo>
 
-				<LinkTo
-					to="/$locale/buyer/shop"
-					params={{
-						locale,
-					}}
-					full
-				>
-					<Tile
-						iconEnabled={ShopIcon}
-						label={"Shop (label)"}
-					/>
-				</LinkTo>
+						<LinkTo
+							to="/$locale/buyer/user"
+							params={{
+								locale,
+							}}
+							full
+						>
+							<Tile
+								iconEnabled={UserIcon}
+								label={"User profile (label)"}
+							/>
+						</LinkTo>
+					</div>
 
-				<div className={spacing}>
-					<LinkTo
-						to="/$locale/seller"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={SellerIcon}
-							label={"To seller (label)"}
-						/>
-					</LinkTo>
-
-					<LinkTo
-						to="/$locale/buyer/user"
-						params={{
-							locale,
-						}}
-						full
-					>
-						<Tile
-							iconEnabled={UserIcon}
-							label={"User profile (label)"}
-						/>
-					</LinkTo>
-				</div>
-
-				<SignOutButton
-					locale={locale}
-					tweak={{
-						slot: {
-							wrapper: {
-								class: [
-									"mx-auto",
-								],
+					<SignOutButton
+						locale={locale}
+						tweak={{
+							slot: {
+								wrapper: {
+									class: [
+										"mx-auto",
+									],
+								},
 							},
-						},
-					}}
-				/>
+						}}
+					/>
+				</Container>
 			</Container>
 		</Container>
 	);

@@ -24,13 +24,12 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 
 	return (
 		<Container
+			ui="ListingSortSelect-root"
 			layout={"vertical-flex"}
 			scroll={"vertical"}
 			gap={"sm"}
 			height={"auto"}
-			width={"fit"}
-			tone={"unset"}
-			theme={"unset"}
+			width={"full"}
 			{...props}
 		>
 			{(

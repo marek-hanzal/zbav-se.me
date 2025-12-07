@@ -44,7 +44,6 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 	feedId,
 	overlay,
 	withScore,
-	tweak,
 	...props
 }) => {
 	const [hero] = listing.gallery.items as [

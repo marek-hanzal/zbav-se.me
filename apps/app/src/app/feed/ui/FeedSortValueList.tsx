@@ -65,9 +65,7 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 				<Container
 					layout={"vertical-content-footer"}
 					gap={"md"}
-					height={"fit"}
-					tone={"unset"}
-					theme={"unset"}
+					height={"full"}
 					square={"md"}
 				>
 					<ListingSortSelect

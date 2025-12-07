@@ -44,11 +44,12 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 
 	return (
 		<Container
+			ui={"Rating-root"}
 			scroll={"vertical"}
-			tone={"unset"}
-			theme={"unset"}
+			height={"auto"}
 		>
 			<div
+				data-ui={"Rating-items"}
 				ref={ref}
 				className={slots.root()}
 			>
@@ -73,16 +74,6 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 							<Button
 								size={"xl"}
 								full
-								tweak={{
-									slot: {
-										root: {
-											class: [
-												// "px-4",
-												// "py-7",
-											],
-										},
-									},
-								}}
 							>
 								<TypoIcon
 									icon={icon}

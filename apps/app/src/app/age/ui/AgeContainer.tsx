@@ -12,11 +12,10 @@ export namespace AgeContainer {
 export const AgeContainer: FC<AgeContainer.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
+			ui="AgeContainer-root"
 			scroll={"vertical"}
-			height={"fit"}
-			width={"fit"}
-			tone={"unset"}
-			theme={"unset"}
+			height={"full"}
+			width={"full"}
 			{...props}
 		>
 			<Rating

@@ -30,9 +30,7 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 			<Container
 				ui={"GalleryButton-root"}
 				position={"relative"}
-				height={"fit"}
-				tone={"unset"}
-				theme={"unset"}
+				height={"full"}
 			>
 				<Fade
 					scrollableRef={containerRef}
@@ -45,10 +43,11 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 					layout={"vertical-full"}
 					gap={"sm"}
 					height={"content"}
-					snap={"vertical-center"}
+					snap={{
+						snap: "vertical",
+						align: "center",
+					}}
 					square={"md"}
-					tone={"unset"}
-					theme={"unset"}
 				>
 					{uploads.map((upload) => {
 						return (

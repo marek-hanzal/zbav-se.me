@@ -18,7 +18,10 @@ export namespace FlowContainer {
 export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ...props }) => {
 	return (
 		<Container
+			ui={"FlowContainer-root"}
 			position={"relative"}
+			height={"full"}
+			width={"full"}
 			{...props}
 		>
 			{left ? (

@@ -11,7 +11,6 @@ export const FeaturesSheet: FC = () => {
 	return (
 		<Container
 			layout={"vertical-centered"}
-			items={"center"}
 			className={"reveal"}
 		>
 			<Status

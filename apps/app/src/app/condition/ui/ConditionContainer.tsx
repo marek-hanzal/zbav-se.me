@@ -12,11 +12,10 @@ export namespace ConditionContainer {
 export const ConditionContainer: FC<ConditionContainer.Props> = ({ selection, ...props }) => {
 	return (
 		<Container
+			ui="ConditionContainer-root"
 			scroll={"vertical"}
-			height={"fit"}
-			width={"fit"}
-			tone={"unset"}
-			theme={"unset"}
+			height={"full"}
+			width={"full"}
 			{...props}
 		>
 			<Rating

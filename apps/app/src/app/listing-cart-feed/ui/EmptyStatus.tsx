@@ -15,8 +15,8 @@ export namespace EmptyStatus {
 export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 	return (
 		<Container
+			ui={"EmptyStatus-root"}
 			layout={"vertical-centered"}
-			items={"center"}
 		>
 			<Status
 				icon={CartIcon}

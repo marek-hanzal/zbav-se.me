@@ -21,10 +21,11 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 
 	return (
 		<Container
+			ui="ExpireAtContainer"
 			layout={"vertical-flex"}
 			gap={"sm"}
-			width={"fit"}
 			height={"auto"}
+			width={"full"}
 			{...props}
 		>
 			{Object.values(tListingExpireEnum).map((expire) => {

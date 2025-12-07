@@ -80,8 +80,6 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			layout={"vertical-flex"}
 			scroll={"vertical"}
 			gap={"md"}
-			tone={"unset"}
-			theme={"unset"}
 			{...props}
 		>
 			{categoryQuery.data.data.map((item) => {

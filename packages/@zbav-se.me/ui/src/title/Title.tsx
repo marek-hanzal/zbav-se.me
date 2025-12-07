@@ -1,8 +1,6 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { VariantProvider } from "@use-pico/cls";
 import type { FC, ReactNode } from "react";
-import { ThemeCls } from "../cls";
 
 export namespace Title {
 	export interface Props extends Container.Props {
@@ -15,65 +13,35 @@ export namespace Title {
 
 export const Title: FC<Title.Props> = ({ textTitle, textSubtitle, right, left, ...props }) => {
 	return (
-		<VariantProvider
-			cls={ThemeCls}
-			variant={{
-				tone: "primary",
-				theme: "light",
-			}}
+		<Container
+			ui="Title-root"
+			{...props}
 		>
-			<Container
-				ui="Title-root"
-				round={"lg"}
-				tone={"unset"}
-				theme={"unset"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"inline-flex",
-								"items-center",
-								"justify-between",
-								"gap-xs",
-							],
-						},
-					},
-				}}
-				{...props}
-			>
-				<div
-					data-ui="Title-title"
-					className="inline-flex flex-col gap-0 items-start justify-center min-w-0"
-				>
-					<div className="inline-flex flex-row gap-2 items-center justify-center min-w-0 max-w-full">
-						{left ? (
-							<div className="flex flex-row items-center justify-center">{left}</div>
-						) : null}
-						<Tx
-							label={textTitle}
-							font={"bold"}
-							size={"xl"}
-							truncate
-						/>
-					</div>
+			<div data-ui="Title-wrapper">
+				<div data-ui="Title-title">
+					{left ? <div data-ui="Title-left">{left}</div> : null}
 
-					{textSubtitle ? (
-						<Tx
-							label={textSubtitle}
-							size={"sm"}
-						/>
-					) : null}
+					<Tx
+						label={textTitle}
+						font={"bold"}
+						size={"xl"}
+						tone={"primary"}
+						theme={"light"}
+						truncate
+					/>
 				</div>
 
-				{right ? (
-					<div
-						data-ui="Title-right"
-						className="inline-flex flex-row gap-1 items-end justify-center max-w-[50%]"
-					>
-						{right}
-					</div>
+				{textSubtitle ? (
+					<Tx
+						label={textSubtitle}
+						tone={"secondary"}
+						theme={"light"}
+						size={"sm"}
+					/>
 				) : null}
-			</Container>
-		</VariantProvider>
+			</div>
+
+			{right ? <div data-ui="Title-right">{right}</div> : null}
+		</Container>
 	);
 };

@@ -129,26 +129,20 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 			ui={"TransactionLogList-root"}
 			layout={isClosed ? undefined : "vertical-content-footer"}
 			gap={"md"}
-			height={"fit"}
-			tone={"unset"}
-			theme={"unset"}
+			height={"full"}
 			{...props}
 		>
 			<Container
 				ref={containerRef}
 				ui={"TransactionLogList-list"}
 				scroll={"vertical"}
-				height={"fit"}
-				tone={"unset"}
-				theme={"unset"}
+				height={"full"}
 			>
 				<Container
 					ref={contentRef}
 					layout={"vertical-flex"}
 					gap={"md"}
 					height={"content"}
-					tone={"unset"}
-					theme={"unset"}
 				>
 					{noHero ? null : (
 						<Badge
@@ -223,11 +217,8 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 					<Container
 						layout={"vertical-flex"}
-						height={"content"}
 						gap={"md"}
 						square={"md"}
-						tone={"unset"}
-						theme={"unset"}
 					>
 						{data.data.map((log) => {
 							const isCurrent = lastLog.id === log.id;

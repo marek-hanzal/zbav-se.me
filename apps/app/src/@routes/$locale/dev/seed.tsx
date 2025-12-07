@@ -383,11 +383,9 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 		return (
 			<Container
+				ui={"Seed-root"}
 				layout={"vertical-centered"}
-				items={"center"}
 				gap={"md"}
-				tone={"secondary"}
-				theme={"light"}
 			>
 				<div className={"space-y-2"}>
 					<Button

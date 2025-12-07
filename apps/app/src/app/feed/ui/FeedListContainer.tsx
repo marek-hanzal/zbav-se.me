@@ -63,11 +63,9 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							ui={"FeedListContainer-first-feed"}
 							layout={"vertical-content-footer"}
 							gap={"md"}
-							tone={"unset"}
-							theme={"unset"}
 						>
 							<FeedNameContainer
-								height={"fit"}
+								height={"full"}
 								value={name}
 								onChange={(value) => {
 									setChange(true);

@@ -31,22 +31,14 @@ export async function getRouter() {
 		defaultPreload: "intent",
 		defaultNotFoundComponent() {
 			return (
-				<Container
-					layout="vertical-centered"
-					items={"center"}
-				>
+				<Container layout="vertical-centered">
 					<div>4😞4</div>
 				</Container>
 			);
 		},
 		defaultPendingComponent() {
 			return (
-				<Container
-					layout={"vertical-centered"}
-					items={"center"}
-					tone={"secondary"}
-					theme={"light"}
-				>
+				<Container layout={"vertical-centered"}>
 					<Logo />
 				</Container>
 			);

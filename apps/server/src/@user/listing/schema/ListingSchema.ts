@@ -5,7 +5,7 @@ import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { ListingDbSchema } from "~/app/listing/schema/ListingDbSchema";
 
 export const ListingSchema = z
-	.object({
+	.looseObject({
 		...ListingDbSchema.shape,
 		location: LocationSchema,
 		category: CategorySchema,
@@ -33,10 +33,8 @@ export const ListingSchema = z
 	.omit({
 		userId: true,
 		titleVec: true,
-		priceVec: true,
-		conditionVec: true,
-		ageVec: true,
 	})
+	.strip()
 	.openapi("Listing", {
 		description: "Listing data",
 	});

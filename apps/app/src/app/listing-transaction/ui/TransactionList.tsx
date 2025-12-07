@@ -96,8 +96,8 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 						return (
 							<Container
+								ui={"TransactionList-empty"}
 								layout={"vertical-centered"}
-								items={"center"}
 							>
 								{renderEmptyFn({
 									icon: TransactionIcon,

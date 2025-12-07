@@ -26,8 +26,6 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 		<Container
 			ui={"GalleryUpload-root"}
 			position={"relative"}
-			tone={"unset"}
-			theme={"unset"}
 			{...props}
 		>
 			<SnapperNav
@@ -51,11 +49,14 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 			/>
 
 			<Container
+				ui={"GalleryUpload-container"}
 				ref={snapperRef}
 				layout="horizontal-full"
-				snap={"horizontal-start"}
+				snap={{
+					snap: "horizontal",
+					align: "start",
+				}}
 				gap={"md"}
-				round={"default"}
 			>
 				{Array.from({
 					length: limit,

@@ -56,13 +56,8 @@ export const Route = createFileRoute("/$locale/register")({
 					square={"md"}
 					layout={"vertical"}
 					scroll={"vertical"}
-					tone={"unset"}
-					theme={"unset"}
 				>
-					<Container
-						layout={"vertical-centered"}
-						items={"center"}
-					>
+					<Container layout={"vertical-centered"}>
 						<Status
 							icon={<Logo />}
 							textTitle={"Register (title)"}
@@ -213,11 +208,7 @@ export const Route = createFileRoute("/$locale/register")({
 
 								<Container
 									layout={"vertical-flex"}
-									items={"center"}
 									gap={"sm"}
-									width={"fit"}
-									tone={"unset"}
-									theme={"unset"}
 								>
 									<form.SubmitButton
 										iconEnabled={"icon-[eos-icons--system-re-registered]"}

@@ -1,0 +1,21 @@
+@layer components {
+	[data-ui="Title-root"] {
+		@apply inline-flex items-center justify-between gap-1;
+	}
+
+	[data-ui="Title-root"] [data-ui="Title-wrapper"] {
+		@apply inline-flex flex-col gap-0 items-start justify-center min-w-0;
+	}
+
+	[data-ui="Title-title"] {
+		@apply inline-flex flex-row gap-2 items-center justify-center min-w-0 max-w-full;
+	}
+
+	[data-ui="Title-left"] {
+		@apply flex flex-row items-center justify-center;
+	}
+
+	[data-ui="Title-right"] {
+		@apply inline-flex flex-row gap-1 items-end justify-center max-w-[50%];
+	}
+}

@@ -25,7 +25,10 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
-		<Container position={"relative"}>
+		<Container
+			ui={"SellerMenu-root"}
+			position={"relative"}
+		>
 			<Fade scrollableRef={containerRef} />
 
 			<Container
@@ -34,7 +37,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 				layout={"vertical-flex"}
 				scroll={"vertical"}
 				gap={"sm"}
-				items={"center"}
 				{...props}
 			>
 				<LinkTo

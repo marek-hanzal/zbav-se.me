@@ -8,6 +8,9 @@
 	"files.readonlyInclude": {
 		"**/_route.ts": true
 	},
+	"files.associations": {
+		"*.css": "tailwindcss"
+	},
 	"cSpell.words": [
 		"adduser",
 		"airpods",
@@ -240,6 +243,7 @@
 		"overclicking",
 		"overlappings",
 		"overscan",
+		"overscroll",
 		"Packeta",
 		"pannable",
 		"paralleldrive",
@@ -367,6 +371,7 @@
 		"webfonts",
 		"webglob",
 		"webp",
+		"wght",
 		"workerpool",
 		"Worley",
 		"worleyjs",

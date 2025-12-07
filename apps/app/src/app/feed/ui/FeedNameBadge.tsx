@@ -55,13 +55,11 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 				<Container
 					layout={"vertical-content-footer"}
 					gap={"md"}
-					height={"fit"}
-					tone={"unset"}
-					theme={"unset"}
+					height={"full"}
 					square={"md"}
 				>
 					<FeedNameContainer
-						height={"fit"}
+						height={"full"}
 						value={patch.name ?? ""}
 						onChange={(name) => {
 							setChange(true);

@@ -42,7 +42,7 @@ export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
 		<Container
 			ui={"Dial-Container"}
 			layout={"vertical-header-content"}
-			height={"fit"}
+			height={"full"}
 			gap={"sm"}
 			{...props}
 		>

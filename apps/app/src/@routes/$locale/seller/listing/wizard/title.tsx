@@ -84,10 +84,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 			>
 				<Container
 					layout={"vertical-centered"}
-					items={"center"}
 					gap={"md"}
-					width={"fit"}
 					height={"auto"}
+					width={"full"}
 				>
 					<Status
 						textTitle={"Listing title (title)"}

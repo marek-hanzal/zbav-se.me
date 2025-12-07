@@ -73,9 +73,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 				<Container
 					layout={"vertical-content-footer"}
 					gap={"md"}
-					height={"fit"}
-					tone={"unset"}
-					theme={"unset"}
+					height={"full"}
 					square={"md"}
 				>
 					<ConditionContainer selection={conditionSelection} />

@@ -1,0 +1,187 @@
+@layer components {
+	/** Misc smaller utils */
+
+	[data-root="Container"][data-disabled="true"] {
+		@apply opacity-50 cursor-not-allowed;
+	}
+
+	/** Position */
+	[data-root="Container"][data-position="absolute"] {
+		@apply absolute;
+	}
+
+	[data-root="Container"][data-position="relative"] {
+		@apply relative;
+	}
+
+	/** Sizes - Height */
+
+	[data-root="Container"][data-height="full"] {
+		@apply h-full min-h-0 max-h-full;
+	}
+
+	[data-root="Container"][data-height="auto"] {
+		@apply h-auto min-h-0;
+	}
+
+	[data-root="Container"][data-height="content"] {
+		@apply h-fit min-h-0;
+	}
+
+	[data-root="Container"][data-height="viewport"] {
+		@apply h-dvh min-h-dvh max-h-dvh;
+	}
+
+	/** Sizes - Width */
+
+	[data-root="Container"][data-width="full"] {
+		@apply w-full min-w-0 max-w-full;
+	}
+
+	[data-root="Container"][data-width="auto"] {
+		@apply w-auto min-w-0;
+	}
+
+	[data-root="Container"][data-width="viewport"] {
+		@apply w-dvw min-w-dvw max-w-dvw;
+	}
+
+	/** Layout - Vertical */
+	[data-root="Container"][data-layout="vertical"] {
+		@apply grid grid-flow-row auto-rows-auto grid-cols-1;
+	}
+
+	[data-root="Container"][data-layout="vertical-full"] {
+		/** Layout - setup grid */
+		@apply grid grid-flow-row grid-cols-1 auto-rows-[100%];
+		/** Setup sizes to match the grid */
+		@apply w-full h-full min-w-0 min-h-0;
+	}
+
+	[data-root="Container"][data-layout="vertical-header-content-footer"] {
+		/** Layout - setup grid */
+		@apply grid grid-rows-[min-content_1fr_min-content] grid-cols-1;
+		/** Setup sizes to match the grid */
+		@apply w-full h-full min-w-0 min-h-0;
+	}
+
+	[data-root="Container"][data-layout="vertical-header-content"] {
+		/** Layout - setup grid */
+		@apply grid grid-rows-[min-content_1fr] grid-cols-1;
+		/** Setup sizes to match the grid */
+		@apply w-full h-full min-w-0 min-h-0;
+	}
+
+	[data-root="Container"][data-layout="vertical-content-footer"] {
+		/** Layout - setup grid */
+		@apply grid grid-rows-[1fr_min-content] grid-cols-1;
+		/** Setup sizes to match the grid */
+		@apply w-full h-full min-w-0 min-h-0;
+	}
+
+	[data-root="Container"][data-layout="vertical-centered"] {
+		/** Layout - setup grid */
+		@apply grid grid-rows-1 justify-stretch;
+		/** Setup sizes to match the grid */
+		@apply w-full h-full min-w-0 min-h-0;
+	}
+
+	[data-root="Container"][data-layout="vertical-flex"] {
+		@apply flex flex-col [&>*]:flex-shrink-0;
+	}
+
+	/** Layout - Horizontal */
+
+	[data-root="Container"][data-layout="horizontal"] {
+		@apply grid grid-flow-col auto-cols-auto grid-rows-1;
+	}
+
+	[data-root="Container"][data-layout="horizontal-full"] {
+		@apply grid grid-flow-col grid-rows-1 auto-cols-[100%];
+		@apply w-full h-full min-w-0 min-h-0;
+	}
+
+	[data-root="Container"][data-layout="horizontal-flex"] {
+		@apply flex flex-row [&>*]:flex-shrink-0;
+	}
+
+	/** Scroll - Vertical */
+	[data-root="Container"][data-scroll="vertical"] {
+		@apply overflow-y-auto overflow-x-clip overscroll-none [scrollbar-gutter:stable_both-edges];
+	}
+
+	/** Scroll - Horizontal */
+	[data-root="Container"][data-scroll="horizontal"] {
+		@apply overflow-x-auto overflow-y-clip overscroll-none [scrollbar-gutter:stable_both-edges];
+	}
+
+	/** Scroll - Hidden */
+	[data-root="Container"][data-scroll="hidden"] {
+		@apply overflow-hidden;
+	}
+
+	/** Snap - Vertical */
+	[data-root="Container"][data-snap="vertical"] {
+		@apply isolate overflow-y-auto overflow-x-clip overscroll-none [scrollbar-gutter:stable_both-edges] snap-y snap-mandatory;
+	}
+
+	/** Snap - Horizontal */
+	[data-root="Container"][data-snap="horizontal"] {
+		@apply isolate overflow-x-auto overflow-y-clip overscroll-none [scrollbar-gutter:stable_both-edges] snap-x snap-mandatory;
+	}
+
+	/** Snap - Points */
+	[data-root="Container"][data-snap-align="start"] {
+		@apply [&>*]:snap-start;
+	}
+
+	[data-root="Container"][data-snap-align="center"] {
+		@apply [&>*]:snap-center;
+	}
+
+	[data-root="Container"][data-snap-align="end"] {
+		@apply [&>*]:snap-end;
+	}
+
+	/** Gap */
+	[data-root="Container"][data-gap="xs"] {
+		@apply gap-1;
+	}
+
+	[data-root="Container"][data-gap="sm"] {
+		@apply gap-2;
+	}
+
+	[data-root="Container"][data-gap="md"] {
+		@apply gap-3;
+	}
+
+	[data-root="Container"][data-gap="lg"] {
+		@apply gap-4;
+	}
+
+	[data-root="Container"][data-gap="xl"] {
+		@apply gap-5;
+	}
+
+	/** Square */
+	[data-root="Container"][data-square="xs"] {
+		@apply p-1;
+	}
+
+	[data-root="Container"][data-square="sm"] {
+		@apply p-2;
+	}
+
+	[data-root="Container"][data-square="md"] {
+		@apply p-3;
+	}
+
+	[data-root="Container"][data-square="lg"] {
+		@apply p-4;
+	}
+
+	[data-root="Container"][data-square="xl"] {
+		@apply p-5;
+	}
+}

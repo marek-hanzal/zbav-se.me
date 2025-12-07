@@ -57,13 +57,11 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 					ui={"FeedCreateButton-Container"}
 					layout={"vertical-content-footer"}
 					gap={"md"}
-					height={"fit"}
-					tone={"unset"}
-					theme={"unset"}
+					height={"content"}
 					square={"md"}
 				>
 					<FeedNameContainer
-						height={"fit"}
+						height={"content"}
 						value={name}
 						onChange={(value) => {
 							setChange(true);

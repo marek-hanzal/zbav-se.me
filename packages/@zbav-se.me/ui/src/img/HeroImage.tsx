@@ -75,7 +75,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 					layout={"vertical-centered"}
 					tone={"primary"}
 					theme={"light"}
-					items={"center"}
 				>
 					<Status
 						icon={"icon-[ph--image-broken-duotone]"}

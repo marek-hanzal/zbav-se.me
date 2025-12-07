@@ -16,8 +16,9 @@ export namespace HeroSheet {
 
 export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 	return (
-		<Container>
+		<Container ui={"HeroSheet-root"}>
 			<div
+				data-ui={"HeroSheet-wrapper"}
 				className={tvc([
 					"flex",
 					"flex-col",
@@ -29,9 +30,8 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 			>
 				<Container
 					layout={"horizontal"}
-					items={"center"}
 					height={"auto"}
-					width={"fit"}
+					width={"full"}
 				>
 					<Logo />
 				</Container>

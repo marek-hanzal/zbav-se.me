@@ -142,8 +142,8 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						layout={"vertical-flex"}
 						scroll={"vertical"}
 						gap={"md"}
-						height={"fit"}
-						width={"fit"}
+						height={"full"}
+						width={"full"}
 					>
 						<VariantProvider
 							cls={ThemeCls}
