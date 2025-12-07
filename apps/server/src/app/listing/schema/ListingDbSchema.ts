@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListEnumSchema } from "../../../schema/CurrencyListEnumSchema";
-import { VectorSchema } from "../../../schema/VectorSchema";
+import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+import { VectorSchema } from "~/schema/VectorSchema";
 
 export const ListingDbSchema = z.object({
 	id: z.string().openapi({
@@ -14,24 +14,15 @@ export const ListingDbSchema = z.object({
 		description: "Price of the listing",
 		type: "number",
 	}),
-	priceVec: VectorSchema.openapi({
-		description: "Embedding vector for similarity search",
-	}),
 	//
 	currency: CurrencyListEnumSchema,
 	//
 	condition: z.number().openapi({
 		description: "Condition of the item (0-based index)",
 	}),
-	conditionVec: VectorSchema.openapi({
-		description: "Embedding vector for similarity search",
-	}),
 	//
 	age: z.number().openapi({
 		description: "Age of the item (0-based index)",
-	}),
-	ageVec: VectorSchema.openapi({
-		description: "Embedding vector for similarity search",
 	}),
 	//
 	locationId: z.string().openapi({

@@ -11,16 +11,9 @@ export const ListingMigration: Migration = {
 			.addColumn("userId", "text", (col) => col.notNull())
 			//
 			.addColumn("price", "decimal(10, 2)", (col) => col.notNull())
-			.addColumn("priceVec", sql`vector(1)`)
-			//
 			.addColumn("currency", "text", (col) => col.notNull())
-			//
 			.addColumn("condition", "integer", (col) => col.notNull())
-			.addColumn("conditionVec", sql`vector(1)`)
-			//
 			.addColumn("age", "integer", (col) => col.notNull())
-			.addColumn("ageVec", sql`vector(1)`)
-			//
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
 			//
@@ -98,33 +91,13 @@ export const ListingMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_[title]_btree_idx")
-			.on("listing")
-			.using("btree")
-			.expression(sql`lower(title) text_pattern_ops`)
-			.execute();
-
-		await db.schema
 			.createIndex("listing_[title]_trgm_idx")
 			.on("listing")
 			.using("gin")
 			.expression(sql`lower(title) gin_trgm_ops`)
 			.execute();
 
-		// Vector indexes
-
-		// 1D numeric vectors (price/condition/age): use L2
-		await sql`
-            CREATE INDEX "listing_[priceVec]_hnsw_l2_idx" ON "listing" USING hnsw ("priceVec" vector_l2_ops);
-        `.execute(db);
-
-		await sql`
-            CREATE INDEX "listing_[conditionVec]_hnsw_l2_idx" ON "listing" USING hnsw ("conditionVec" vector_l2_ops);
-        `.execute(db);
-
-		await sql`
-            CREATE INDEX "listing_[ageVec]_hnsw_l2_idx" ON "listing" USING hnsw ("ageVec" vector_l2_ops);
-        `.execute(db);
+		// TODO We can use CREATE INDEX CONCURRENTLY (out of transaction, so we've to talk to kysely about this)
 
 		// Title vector (e.g., simhash/char-ngrams): cosine
 		await sql`

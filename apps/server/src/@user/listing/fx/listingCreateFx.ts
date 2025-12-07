@@ -1,4 +1,4 @@
-import { embedMinHash, embedNumberRange } from "@use-pico/common/embedding";
+import { embedMinHash } from "@use-pico/common/embedding";
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
@@ -33,25 +33,8 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 						id,
 						userId: user.id,
 						price: data.price,
-						priceVec: pgvector.toSql([
-							data.price,
-						]),
 						condition: data.condition,
-						conditionVec: pgvector.toSql(
-							embedNumberRange({
-								min: 0,
-								max: 6,
-								value: data.condition,
-							}),
-						),
 						age: data.age,
-						ageVec: pgvector.toSql(
-							embedNumberRange({
-								min: 0,
-								max: 6,
-								value: data.age,
-							}),
-						),
 						locationId: data.locationId,
 						categoryId: data.categoryId,
 						createdAt: now,
