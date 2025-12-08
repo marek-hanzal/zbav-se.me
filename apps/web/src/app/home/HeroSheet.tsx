@@ -54,7 +54,6 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 							}}
 							tone={"secondary"}
 							theme={"dark"}
-							full
 							size={"xl"}
 							label={"Login (hero)"}
 						/>
@@ -73,7 +72,6 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 							}}
 							tone={"primary"}
 							theme={"dark"}
-							full
 							size={"xl"}
 							label={"Register (hero)"}
 						/>

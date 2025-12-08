@@ -111,10 +111,8 @@ export const Route = createFileRoute("/$locale/login")({
 				<Container
 					ref={rootRef}
 					layout={"vertical-full"}
-					snap={{
-						snap: "vertical",
-						align: "center",
-					}}
+					snap={"vertical"}
+					snapAlign={"center"}
 					gap={"md"}
 					square={"md"}
 				>
@@ -207,7 +205,6 @@ export const Route = createFileRoute("/$locale/login")({
 										tone={"primary"}
 										theme={"dark"}
 										size={"xl"}
-										full
 									>
 										{signInMutation.isPending ? (
 											<Tx label={"Please wait..."} />
@@ -249,7 +246,6 @@ export const Route = createFileRoute("/$locale/login")({
 									}}
 									disabled={passkeyMutation.isPending}
 									size={"xl"}
-									full
 									tone={"primary"}
 									theme={"dark"}
 									label={"Login with passkey"}

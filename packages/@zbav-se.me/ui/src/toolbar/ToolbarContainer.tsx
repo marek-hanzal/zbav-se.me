@@ -1,5 +1,4 @@
 import { Container } from "@use-pico/client/ui/container";
-import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 
 export namespace ToolbarContainer {
@@ -16,6 +15,7 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 }) => {
 	return (
 		<Container
+			data-ui="ToolbarContainer"
 			layout={"vertical-flex"}
 			snapTo={"right-center"}
 			square={"md"}
@@ -26,10 +26,9 @@ export const ToolbarContainer: FC<ToolbarContainer.Props> = ({
 			data-flip={flip}
 			data-horizontal={horizontal}
 			//
-			className={tvc([
-				"opacity-90",
-				"z-100",
-			])}
+			className={[
+				"ToolbarContainer",
+			]}
 			{...props}
 		/>
 	);

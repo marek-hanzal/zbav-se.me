@@ -1,5 +1,5 @@
 @layer components {
-	[data-root="Button"] {
+	.Button {
 		display: block;
 		color: var(--color-text);
 		background: var(--color-background);
@@ -8,43 +8,43 @@
 
 	/** Justify */
 
-	[data-root="Button"][data-justify="start"] {
-		@apply justify-start;
+	.Button[data-justify="start"] {
+		justify-content: flex-start;
 	}
 
-	[data-root="Button"][data-justify="between"] {
-		@apply justify-between;
+	.Button[data-justify="between"] {
+		justify-content: space-between;
 	}
 
 	/** Sizes */
 
-	[data-root="Button"][data-size="xs"] {
+	.Button[data-size="xs"] {
 		@apply p-1 text-xs;
 	}
 
-	[data-root="Button"][data-size="sm"] {
+	.Button[data-size="sm"] {
 		@apply p-2 text-sm;
 	}
 
-	[data-root="Button"][data-size="md"] {
+	.Button[data-size="md"] {
 		@apply p-3 text-base;
 	}
 
-	[data-root="Button"][data-size="lg"] {
+	.Button[data-size="lg"] {
 		@apply p-4 text-lg;
 	}
 
-	[data-root="Button"][data-size="xl"] {
+	.Button[data-size="xl"] {
 		@apply p-5 text-xl;
 	}
 
 	/** Tone */
 
-	[data-root="Button"][data-tone="primary"][data-theme="light"] {
+	.Button[data-tone="primary"][data-theme="light"] {
 		@apply tone-primary-light;
 	}
 
-	[data-root="Button"][data-tone="secondary"][data-theme="light"] {
+	.Button[data-tone="secondary"][data-theme="light"] {
 		@apply tone-secondary-light;
 	}
 }

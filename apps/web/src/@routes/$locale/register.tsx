@@ -219,7 +219,6 @@ export const Route = createFileRoute("/$locale/register")({
 										tone={"primary"}
 										theme={"dark"}
 										size={"xl"}
-										full
 									>
 										{registerMutation.isPending ? (
 											<Tx label={"Please wait..."} />

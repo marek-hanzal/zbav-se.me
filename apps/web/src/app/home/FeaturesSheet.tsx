@@ -11,7 +11,9 @@ export const FeaturesSheet: FC = () => {
 	return (
 		<Container
 			layout={"vertical-centered"}
-			className={"reveal"}
+			className={[
+				"reveal",
+			]}
 		>
 			<Status
 				textTitle={"Landing - Feature overview (title)"}

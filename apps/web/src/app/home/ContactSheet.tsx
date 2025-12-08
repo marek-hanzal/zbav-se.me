@@ -8,7 +8,9 @@ export const ContactSheet: FC = () => {
 		<Container
 			data-ui={"ContactSheet"}
 			layout={"vertical-centered"}
-			className={"reveal"}
+			className={[
+				"reveal",
+			]}
 		>
 			<Status
 				icon={"icon-[line-md--email-twotone]"}

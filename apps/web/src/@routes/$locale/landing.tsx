@@ -45,10 +45,8 @@ export const Route = createFileRoute("/$locale/landing")({
 				<Container
 					ref={scrollerRef}
 					layout={"vertical-full"}
-					snap={{
-						snap: "vertical",
-						align: "center",
-					}}
+					snap={"vertical"}
+					snapAlign={"center"}
 					gap={"md"}
 				>
 					<HeroSheet locale={locale} />

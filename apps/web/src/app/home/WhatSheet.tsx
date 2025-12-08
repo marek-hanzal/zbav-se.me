@@ -11,7 +11,9 @@ export const WhatSheet: FC = () => {
 	return (
 		<Container
 			layout={"vertical-centered"}
-			className={"reveal"}
+			className={[
+				"reveal",
+			]}
 		>
 			<div className="flex flex-col justify-evenly h-dvh py-16">
 				<Status

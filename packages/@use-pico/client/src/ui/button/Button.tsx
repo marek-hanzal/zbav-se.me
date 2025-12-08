@@ -15,7 +15,7 @@ const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, asButton.S
 } as const;
 
 export namespace Button {
-	export interface Props extends ComponentProps<"button">, asButton.Props {
+	export interface Props extends asButton.PropsEx<ComponentProps<"button">> {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
@@ -50,26 +50,6 @@ export namespace Button {
 		 */
 		loading?: boolean;
 		/**
-		 * Whether to show the border.
-		 * @default true
-		 */
-		border?: boolean;
-		/**
-		 * Whether the button should take full width of its container.
-		 * @default false
-		 */
-		full?: boolean;
-		/**
-		 * Menu-like button
-		 * @default false
-		 */
-		menu?: boolean;
-		/**
-		 * Whether to show the background.
-		 * @default true
-		 */
-		background?: boolean;
-		/**
 		 * Whether to truncate text that overflows the button width.
 		 * @default false
 		 */
@@ -85,18 +65,18 @@ export const Button: FC<Button.Props> = ({
 	iconProps,
 	iconPosition = "left",
 	loading,
-	size = "md",
+	disabled,
+	//
 	tone,
 	theme,
+	size = "md",
 	round,
-	border,
 	background,
-	full,
-	menu,
-	truncate,
 	snapTo,
+	justify,
+	className,
 	//
-	disabled,
+	truncate,
 	children,
 	...props
 }) => {
@@ -140,6 +120,9 @@ export const Button: FC<Button.Props> = ({
 				round,
 				snapTo,
 				disabled,
+				background,
+				justify,
+				className,
 			})}
 			//
 			{...props}

@@ -1,3 +1,5 @@
+import { tvc } from "@use-pico/cls";
+
 export namespace asButton {
 	export type Tone = "primary" | "secondary" | "warning" | "danger" | "link";
 	export type Theme = "light" | "dark";
@@ -23,7 +25,10 @@ export namespace asButton {
 		disabled?: boolean;
 		background?: boolean;
 		justify?: Justify;
+		className?: string[];
 	}
+
+	export type PropsEx<TProps = unknown> = Omit<TProps, "className"> & Props;
 }
 
 export const asButton = ({
@@ -35,9 +40,11 @@ export const asButton = ({
 	disabled,
 	background,
 	justify,
+	className,
 }: asButton.Props) => {
 	return {
-		"data-root": "Button",
+		"data-ui": "Button",
+		//
 		"data-tone": tone,
 		"data-theme": theme,
 		"data-size": size,
@@ -46,5 +53,7 @@ export const asButton = ({
 		"data-disabled": disabled,
 		"data-background": background,
 		"data-justify": justify,
+		//
+		className: tvc("Button", className),
 	} as const;
 };

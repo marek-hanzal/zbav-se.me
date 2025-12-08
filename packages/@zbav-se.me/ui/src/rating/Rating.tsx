@@ -71,10 +71,7 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 								theme: selected ? "dark" : "light",
 							}}
 						>
-							<Button
-								size={"xl"}
-								full
-							>
+							<Button size={"xl"}>
 								<TypoIcon
 									icon={icon}
 									onClick={() => {

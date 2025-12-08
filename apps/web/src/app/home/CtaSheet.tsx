@@ -16,7 +16,9 @@ export const CtaSheet: FC<CtaSheet.Props> = ({ locale }) => {
 	return (
 		<Container
 			layout={"vertical-centered"}
-			className={"reveal"}
+			className={[
+				"reveal",
+			]}
 		>
 			<Status
 				icon={"icon-[mingcute--celebrate-line]"}
