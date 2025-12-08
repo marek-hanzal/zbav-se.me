@@ -20,6 +20,7 @@ export const Badge: FC<Badge.Props> = ({
 	snapTo,
 	flow,
 	disabled,
+	opacity,
 	//
 	className,
 	children,
@@ -36,6 +37,7 @@ export const Badge: FC<Badge.Props> = ({
 				snapTo,
 				flow,
 				disabled,
+				opacity,
 				className,
 			})}
 			{...props}

@@ -57,6 +57,19 @@ export namespace attr {
 	export type Position = "absolute" | "relative";
 	export type Height = "full" | "auto" | "content" | "viewport";
 	export type Width = "full" | "auto" | "content" | "viewport";
+	export type Opacity =
+		| "xs"
+		| "sm"
+		| "md"
+		| "lg"
+		| "xl"
+		| "2xl"
+		| "3xl"
+		| "4xl"
+		//
+		| "subtle"
+		| "medium"
+		| "strong";
 
 	/**
 	 * All attributes available for styling that a user can choose from.
@@ -94,6 +107,11 @@ export namespace attr {
 		 * Controls how items are aligned along the cross axis.
 		 */
 		items?: Items;
+		/**
+		 * Opacity of the component.
+		 * Available options: xs, sm, md, lg, xl, 2xl, 3xl, 4xl.
+		 */
+		opacity?: Opacity;
 		/**
 		 * Square dimensions where width equals height.
 		 * Uses the same size scale as the size property.

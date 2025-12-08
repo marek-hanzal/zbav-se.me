@@ -68,6 +68,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 						{...asButton({
 							round: "full",
 							square: "default",
+							opacity: "subtle",
 						})}
 						icon={ArrowLeftIcon}
 						iconProps={{
@@ -110,6 +111,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									round={"full"}
 									label={null}
 									snapTo={"top-right"}
+									opacity={"subtle"}
 								>
 									<LinkTo
 										to={"/$locale/buyer/feed/$id/list"}

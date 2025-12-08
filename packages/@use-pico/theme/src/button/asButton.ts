@@ -16,6 +16,7 @@ export namespace asButton {
 		| "square"
 		| "border"
 		| "shadow"
+		| "opacity"
 		| "zIndex",
 		TProps
 	>;

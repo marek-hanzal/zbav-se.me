@@ -13,6 +13,7 @@ export namespace asBadge {
 		| "justify"
 		| "background"
 		| "border"
+		| "opacity"
 		| "shadow",
 		TProps
 	>;

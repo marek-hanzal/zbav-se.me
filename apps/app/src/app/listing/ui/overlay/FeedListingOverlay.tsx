@@ -1,6 +1,4 @@
-import { VariantProvider } from "@use-pico/cls";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
 import type { FC } from "react";
 import { ListingLocation } from "~/app/listing/ui/ListingLocation";
 import { ListingPrice } from "~/app/listing/ui/ListingPrice";
@@ -20,20 +18,14 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 				locale={locale}
 				currency={listing.currency}
 				snapTo={"top-center"}
+				opacity={"subtle"}
 			/>
 
-			<VariantProvider
-				cls={ThemeCls}
-				variant={{
-					tone: "secondary",
-					theme: "light",
-				}}
-			>
-				<ListingLocation
-					location={listing.location.address}
-					snapTo={"bottom"}
-				/>
-			</VariantProvider>
+			<ListingLocation
+				location={listing.location.address}
+				snapTo={"bottom"}
+				opacity={"subtle"}
+			/>
 		</>
 	);
 };
