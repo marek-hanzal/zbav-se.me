@@ -15,49 +15,6 @@
 		position: relative;
 	}
 
-	/** Sizes - Height */
-
-	.Container[data-height="full"] {
-		height: 100%;
-		min-height: 0;
-		max-height: 100%;
-	}
-
-	.Container[data-height="auto"] {
-		height: auto;
-		min-height: 0;
-	}
-
-	.Container[data-height="content"] {
-		height: fit-content;
-		min-height: 0;
-	}
-
-	.Container[data-height="viewport"] {
-		height: 100dvh;
-		min-height: 100dvh;
-		max-height: 100dvh;
-	}
-
-	/** Sizes - Width */
-
-	.Container[data-width="full"] {
-		width: 100%;
-		min-width: 0;
-		max-width: 100%;
-	}
-
-	.Container[data-width="auto"] {
-		width: auto;
-		min-width: 0;
-	}
-
-	.Container[data-width="viewport"] {
-		width: 100dvw;
-		min-width: 100dvw;
-		max-width: 100dvw;
-	}
-
 	/** Layout - Vertical */
 	.Container[data-layout="vertical"] {
 		display: grid;

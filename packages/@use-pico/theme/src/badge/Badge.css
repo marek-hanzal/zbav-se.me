@@ -5,14 +5,4 @@
 
 		@apply gap-2;
 	}
-
-	.Badge[data-flow="horizontal"] {
-		flex-direction: row;
-		@apply items-center justify-center;
-	}
-
-	.Badge[data-flow="vertical"] {
-		flex-direction: column;
-		@apply items-center justify-center;
-	}
 }

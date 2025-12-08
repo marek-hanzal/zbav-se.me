@@ -14,7 +14,7 @@ const ICON_SIZE_MAP: Partial<Record<asButton.Size, asIcon.Size>> = {
 } as const;
 
 export namespace Button {
-	export interface Props extends asButton.PropsEx<ComponentProps<"button">> {
+	export interface Props extends asButton.Props<ComponentProps<"button">> {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.

@@ -19,15 +19,4 @@ export namespace Type {
 	export type Square = Size;
 
 	export type Inner = Size;
-
-	export type SnapTo =
-		| "top-left"
-		| "top-center"
-		| "top-right"
-		| "top"
-		| "bottom-left"
-		| "bottom-right"
-		| "bottom"
-		| "left-center"
-		| "right-center";
 }

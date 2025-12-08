@@ -1,4 +1,5 @@
 import { tvc } from "@use-pico/cls";
+import type { attr } from "../attr/attr";
 import type { Type } from "../type/Type";
 
 export namespace asContainer {
@@ -25,7 +26,7 @@ export namespace asContainer {
 	export type SnapAlign = "start" | "center" | "end";
 	export type Inner = Type.Inner;
 	export type Gap = Type.Size;
-	export type SnapTo = Type.SnapTo;
+	export type SnapTo = attr.SnapTo;
 
 	export interface Props {
 		tone?: Tone;

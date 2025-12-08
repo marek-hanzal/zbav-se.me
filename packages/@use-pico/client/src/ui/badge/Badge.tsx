@@ -7,7 +7,7 @@ import type { ComponentProps, FC } from "react";
  * @group ui
  */
 export namespace Badge {
-	export interface Props extends asBadge.PropsEx<ComponentProps<"div">> {
+	export interface Props extends asBadge.Props<ComponentProps<"div">> {
 		//
 	}
 }

@@ -37,6 +37,7 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ...props }) => 
 			theme={"light"}
 			label={"Sign out"}
 			size={"lg"}
+			data-width="content"
 			{...props}
 		/>
 	);
