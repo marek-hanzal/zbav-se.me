@@ -6,7 +6,6 @@ import { useInViewport } from "../../hook/useInViewport";
 import { ArrowLeftIcon } from "../../icon/ArrowLeftIcon";
 import { ArrowRightIcon } from "../../icon/ArrowRightIcon";
 import { CloseIcon } from "../../icon/CloseIcon";
-import { Action } from "../action/Action";
 import { Button } from "../button/Button";
 import { Highlighter } from "../highlighter/Highlighter";
 import { Typo } from "../typo/Typo";
@@ -119,7 +118,7 @@ export namespace Tour {
 
 const DefaultClose: Tour.Close.RenderFn = ({ close }) => {
 	return (
-		<Action
+		<Button
 			iconEnabled={CloseIcon}
 			iconDisabled={CloseIcon}
 			onClick={close}

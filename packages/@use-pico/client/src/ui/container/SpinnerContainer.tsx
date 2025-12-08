@@ -2,12 +2,13 @@ import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";
+import type { asIcon } from "../../icon/asIcon";
 
 export namespace SpinnerContainer {
 	export interface Props extends Container.Props {
 		statusProps?: Status.Props;
 		iconProps?: Icon.Props;
-		size?: Icon.Size;
+		size?: asIcon.Size;
 		type?: "icon" | "status";
 	}
 }

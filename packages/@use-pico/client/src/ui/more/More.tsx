@@ -3,7 +3,7 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode, Ref } from "react";
 import { ActionMenuIcon } from "../../icon/ActionMenuIcon";
 import type { Icon } from "../../icon/Icon";
-import { Action } from "../action/Action";
+import { Button } from "../button/Button";
 import { Modal } from "../modal/Modal";
 import { MoreCls } from "./MoreCls";
 
@@ -22,7 +22,7 @@ export namespace More {
 		ref?: Ref<HTMLDivElement>;
 		icon?: string;
 		iconProps?: Icon.PropsEx;
-		actionProps?: Action.Props;
+		actionProps?: Button.Props;
 		textTitle?: ReactNode;
 		textEmpty?: ReactNode;
 		modalProps?: Partial<Modal.PropsEx>;
@@ -80,17 +80,13 @@ export const More = <TValues extends EntitySchema.Type>({
 			{limit !== undefined && items.length > limit && (
 				<Modal
 					target={
-						<Action
+						<Button
 							iconEnabled={icon}
 							iconProps={iconProps}
 							disabled={disabled}
 							size={"xs"}
-							tweak={{
-								variant: {
-									tone: "subtle",
-									theme: "light",
-								},
-							}}
+							tone="subtle"
+							theme="light"
 							{...actionProps}
 						/>
 					}

@@ -1,6 +1,6 @@
-import { tvc } from "@use-pico/cls";
 import { isString } from "@use-pico/common/is-string";
 import type { ComponentProps, FC, ReactNode } from "react";
+import { asIcon } from "./asIcon";
 
 /**
  * Simple styled icon (span); uses Tailwind CSS classes.
@@ -10,32 +10,11 @@ import type { ComponentProps, FC, ReactNode } from "react";
 export namespace Icon {
 	export type Type = string | ReactNode;
 
-	export type Tone =
-		| "primary"
-		| "secondary"
-		| "danger"
-		| "warning"
-		| "neutral"
-		| "subtle"
-		| "link";
-	export type Theme = "light" | "dark";
-	export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
-
 	/**
 	 * Props for `Icon` component.
 	 */
-	export interface Props extends ComponentProps<"span"> {
-		/**
-		 * `Iconify` icon name.
-		 *
-		 * If non-string is provided (basically a JSX element), this component
-		 * is replaced with the element.
-		 */
+	export interface Props extends asIcon.PropsEx<ComponentProps<"span">> {
 		icon: Icon.Type;
-		tone?: Tone;
-		theme?: Theme;
-		size?: Size;
-		disabled?: boolean;
 	}
 
 	/**
@@ -46,24 +25,28 @@ export namespace Icon {
 
 export const Icon: FC<Icon.Props> = ({
 	icon,
-	size,
+	//
 	tone,
 	theme,
+	size,
 	disabled,
 	className,
+	//
 	...props
 }) => {
 	return isString(icon) ? (
 		<span
-			data-root="Icon"
-			//
-			data-tone={tone}
-			data-theme={theme}
-			//
-			data-size={size}
-			data-disabled={disabled}
-			//
-			className={tvc(className, icon)}
+			{...asIcon({
+				tone,
+				theme,
+				size,
+				disabled,
+				//
+				className: [
+					icon,
+					className,
+				],
+			})}
 			{...props}
 		/>
 	) : (

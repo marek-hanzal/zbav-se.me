@@ -38,7 +38,6 @@ export namespace SnapperNav {
 		pages?: Page[] | Count;
 		subtle?: boolean;
 		orientation: Cls.VariantOf<SnapperNavCls, "orientation">;
-		tone?: Icon.Tone;
 		align?: Cls.VariantOf<SnapperNavCls, "align">;
 		iconProps?: IconProps.IconPropsFn;
 		limit?: number;
@@ -51,7 +50,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	//
 	subtle,
 	orientation,
-	tone = "secondary",
 	align,
 	//
 	iconProps,
@@ -152,7 +150,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					onClick={snapperNav.api.prev}
 					onTouchStart={firstDoubleTap.onTouchStart}
 					icon={leftIcon}
-					tone={tone}
 					size="md"
 					{...iconProps?.({
 						limit: true,
@@ -176,7 +173,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
-							tone={tone}
 							size="md"
 							{...iconProps?.({
 								limit: false,
@@ -198,7 +194,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					onDoubleClick={snapperNav.api.end}
 					onTouchStart={lastDoubleTap.onTouchStart}
 					icon={rightIcon}
-					tone={tone}
 					size="md"
 					{...iconProps?.({
 						limit: true,
@@ -212,7 +207,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		firstId,
 		lastId,
 		orientation,
-		tone,
 		iconProps,
 		$pages,
 		snapperNav,
@@ -233,7 +227,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
-							tone={tone}
 							size="md"
 							//
 							data-active={isActive}
@@ -249,7 +242,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 			</>
 		),
 		[
-			tone,
 			$pages,
 			iconProps,
 			snapperNav,

@@ -1,45 +1,45 @@
 @layer components {
 	/** Sizes */
 
-	[data-root="Icon"] {
+	.Icon {
 		display: block;
 		flex-shrink: 0;
 		min-width: 0;
 		min-height: 0;
 	}
 
-	[data-root="Icon"][data-size="xs"] {
+	.Icon[data-size="xs"] {
 		@apply text-sm;
 	}
-	[data-root="Icon"][data-size="sm"] {
+	.Icon[data-size="sm"] {
 		@apply text-base;
 	}
-	[data-root="Icon"][data-size="md"] {
+	.Icon[data-size="md"] {
 		@apply text-lg;
 	}
-	[data-root="Icon"][data-size="lg"] {
+	.Icon[data-size="lg"] {
 		@apply text-xl;
 	}
-	[data-root="Icon"][data-size="xl"] {
+	.Icon[data-size="xl"] {
 		@apply text-2xl;
 	}
-	[data-root="Icon"][data-size="2xl"] {
+	.Icon[data-size="2xl"] {
 		@apply text-3xl;
 	}
-	[data-root="Icon"][data-size="3xl"] {
+	.Icon[data-size="3xl"] {
 		@apply text-4xl;
 	}
-	[data-root="Icon"][data-size="4xl"] {
+	.Icon[data-size="4xl"] {
 		@apply text-5xl;
 	}
 
 	/** Tone */
 
-	[data-root="Icon"][data-tone="primary"][data-theme="light"] {
+	.Icon[data-tone="primary"][data-theme="light"] {
 		@apply tone-primary-light;
 	}
 
-	[data-root="Icon"][data-tone="primary"][data-theme="dark"] {
+	.Icon[data-tone="primary"][data-theme="dark"] {
 		@apply tone-primary-dark;
 	}
 }

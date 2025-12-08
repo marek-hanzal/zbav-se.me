@@ -1,11 +1,9 @@
 import { SpinnerIcon } from "@use-pico/client/icon";
-import { Container } from "@use-pico/client/ui/container";
-import { Data } from "@use-pico/client/ui/data";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import {
 	type ChangeEvent,
 	type FC,
@@ -77,17 +75,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 		},
 	});
 
-	const uploadFetchQuery = withUploadFetchQuery.useQuery(
-		{
-			where: {
-				id: current,
-			},
-		},
-		{
-			enabled: !!current && !uploadMutation.isPending,
-		},
-	);
-
 	const onUpload = useCallback(
 		async (e: ChangeEvent<HTMLInputElement>) => {
 			const file = e.target.files?.[0];
@@ -147,41 +134,28 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 							/>
 						}
 					/>
-				) : (
-					<Data
-						result={uploadFetchQuery}
-						renderEmpty={() => {
+				) : null}
+
+				{current && !uploadMutation.isPending ? (
+					<withUploadFetchQuery.Suspense
+						data={{
+							where: {
+								id: current,
+							},
+						}}
+						fallback={<SpinnerContainer />}
+					>
+						{({ data }) => {
 							return (
-								<Status
-									icon={PhotoIcon}
-									iconProps={{
-										size: "2xl",
-									}}
-									textTitle={"Upload (title)"}
-									titleProps={{
-										size: "2xl",
-									}}
-									textMessage={
-										disabled
-											? "Upload - disabled (placeholder)"
-											: "Listing - upload photo (placeholder)"
-									}
-									messageProps={{
-										size: "xl",
-									}}
-									tone={"primary"}
+								<img
+									src={data.url}
+									alt={data.id}
+									className="absolute inset-0 h-full w-full object-cover object-center"
 								/>
 							);
 						}}
-						renderSuccess={({ data }) => (
-							<img
-								src={data.url}
-								alt={data.id}
-								className="absolute inset-0 h-full w-full object-cover object-center"
-							/>
-						)}
-					/>
-				)}
+					</withUploadFetchQuery.Suspense>
+				) : null}
 			</Container>
 		</Container>
 	);

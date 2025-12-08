@@ -1,7 +1,14 @@
 import { tvc } from "@use-pico/cls";
 
 export namespace asButton {
-	export type Tone = "primary" | "secondary" | "warning" | "danger" | "link";
+	export type Tone =
+		| "primary"
+		| "secondary"
+		| "warning"
+		| "danger"
+		| "link"
+		| "neutral"
+		| "subtle";
 	export type Theme = "light" | "dark";
 	export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";

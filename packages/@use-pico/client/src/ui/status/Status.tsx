@@ -2,9 +2,10 @@ import type { ComponentProps, FC, ReactNode } from "react";
 import { Icon } from "../../icon/Icon";
 import { Tx } from "../tx/Tx";
 import type { Typo } from "../typo/Typo";
+import { asStatus } from "./asStatus";
 
 export namespace Status {
-	export interface Props extends ComponentProps<"div"> {
+	export interface Props extends asStatus.PropsEx<ComponentProps<"div">> {
 		/**
 		 * Translation key for the title text.
 		 */
@@ -21,8 +22,6 @@ export namespace Status {
 		iconProps?: Icon.PropsEx;
 		titleProps?: Typo.PropsEx;
 		messageProps?: Typo.PropsEx;
-		tone?: Icon.Tone;
-		theme?: Icon.Theme;
 	}
 }
 
@@ -34,17 +33,23 @@ export const Status: FC<Status.Props> = ({
 	iconProps,
 	titleProps,
 	messageProps,
+	//
 	tone,
 	theme,
+	//
+	className,
+	//
 	children,
 	...props
 }) => {
 	return (
 		<div
-			data-root="Status"
-			//
-			data-tone={tone}
-			data-theme={theme}
+			{...asStatus({
+				tone,
+				theme,
+				//
+				className,
+			})}
 			//
 			{...props}
 		>

@@ -89,12 +89,8 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 			}}
 			actionProps={{
 				iconEnabled: ErrorIcon,
-				tweak: {
-					variant: {
-						theme: "light",
-						tone: "danger",
-					},
-				},
+				tone: "danger",
+				theme: "light",
 			}}
 			modalProps={{
 				size: "sm",
