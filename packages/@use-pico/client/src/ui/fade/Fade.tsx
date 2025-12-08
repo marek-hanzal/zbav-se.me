@@ -1,5 +1,5 @@
+import { asFade } from "@use-pico/theme/fade";
 import { type FC, type RefObject, useCallback, useEffect, useRef } from "react";
-import { asFade } from "./asFade";
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 

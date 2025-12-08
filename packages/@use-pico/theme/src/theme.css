@@ -2,4 +2,6 @@
 
 @import "./badge/Badge.css";
 @import "./button/Button.css";
+@import "./container/Container.css";
+@import "./fade/Fade.css";
 @import "./icon/Icon.css";

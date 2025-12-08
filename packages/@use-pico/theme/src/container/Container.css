@@ -235,25 +235,4 @@
 			scroll-snap-align: end;
 		}
 	}
-
-	/** Square */
-	.Container[data-square="xs"] {
-		@apply p-1;
-	}
-
-	.Container[data-square="sm"] {
-		@apply p-2;
-	}
-
-	.Container[data-square="md"] {
-		@apply p-3;
-	}
-
-	.Container[data-square="lg"] {
-		@apply p-4;
-	}
-
-	.Container[data-square="xl"] {
-		@apply p-5;
-	}
 }

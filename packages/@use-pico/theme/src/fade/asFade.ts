@@ -1,8 +1,9 @@
 import { tvc } from "@use-pico/cls";
+import type { Type } from "../type/Type";
 
 export namespace asFade {
-	export type Tone = "primary" | "secondary";
-	export type Theme = "light" | "dark";
+	export type Tone = Type.Tone;
+	export type Theme = Type.Theme;
 
 	export interface Props {
 		tone?: Tone;
