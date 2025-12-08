@@ -1,34 +1,7 @@
 import type { ComponentProps, FC, ReactNode } from "react";
+import { asTypo } from "./asTypo";
 
-export namespace Typo {
-	export type Value = ReactNode;
-
-	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
-
-	export type Tone = "primary" | "secondary" | "subtle" | "link";
-	export type Theme = "light" | "dark";
-	export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
-	export type Display = "inline" | "block";
-	export type Font = "light" | "normal" | "bold";
-	export type Wrap = "wrap" | "nowrap";
-
-	export interface Props extends ComponentProps<"span"> {
-		label: Value;
-		truncate?: boolean;
-		preset?: Preset;
-		display?: Display;
-		wrap?: Wrap;
-		size?: Size;
-		font?: Font;
-		tone?: Tone;
-		theme?: Theme;
-		italic?: boolean;
-	}
-
-	export type PropsEx = Omit<Props, "label">;
-}
-
-const presets: Record<Typo.Preset, Partial<Typo.Props>> = {
+const presets: Record<Typo.Preset, Partial<Omit<Typo.Props, "className">>> = {
 	none: {},
 	label: {
 		size: "lg",
@@ -48,6 +21,19 @@ const presets: Record<Typo.Preset, Partial<Typo.Props>> = {
 	paragraph: {},
 };
 
+export namespace Typo {
+	export type Value = ReactNode;
+
+	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
+
+	export interface Props extends asTypo.PropsEx<ComponentProps<"span">> {
+		label: Value;
+		preset?: Preset;
+	}
+
+	export type PropsEx = Omit<Props, "label">;
+}
+
 export const Typo: FC<Typo.Props> = ({
 	label,
 	preset = "none",
@@ -59,21 +45,24 @@ export const Typo: FC<Typo.Props> = ({
 	tone,
 	theme,
 	italic,
+	//
+	className,
 	...props
 }) => {
 	return (
 		<span
-			data-root={"Typo-root"}
-			//
-			data-tone={tone}
-			data-theme={theme}
-			//
-			data-size={size}
-			data-display={display}
-			data-font={font}
-			data-wrap={wrap}
-			data-truncate={truncate}
-			data-italic={italic}
+			{...asTypo({
+				tone,
+				theme,
+				size,
+				font,
+				display,
+				wrap,
+				truncate,
+				italic,
+				//
+				className,
+			})}
 			//
 			{...presets[preset]}
 			//

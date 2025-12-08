@@ -34,7 +34,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 
 	return (
 		<Container
-			data-ui={"BuyerMenu-root"}
+			data-ui={"BuyerMenu"}
 			position={"relative"}
 			height={"full"}
 			width={"full"}
@@ -52,6 +52,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					data-ui={"BuyerMenu-content"}
 					layout={"vertical-flex"}
 					gap={"sm"}
+					square={"md"}
 				>
 					<LinkTo
 						{...asButton({

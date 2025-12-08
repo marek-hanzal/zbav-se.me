@@ -28,8 +28,6 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 		<Container
 			data-ui={"TitleContainer"}
 			layout={"vertical-header-content-footer"}
-			square={"md"}
-			gap={"sm"}
 			height={"full"}
 			width={"full"}
 			{...props}

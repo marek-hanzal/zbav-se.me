@@ -1,9 +1,9 @@
 @layer components {
-	[data-ui="Title-root"] {
+	.Title {
 		@apply inline-flex items-center justify-between gap-1;
 	}
 
-	[data-ui="Title-root"] [data-ui="Title-wrapper"] {
+	[data-ui="Title-wrapper"] {
 		@apply inline-flex flex-col gap-0 items-start justify-center min-w-0;
 	}
 

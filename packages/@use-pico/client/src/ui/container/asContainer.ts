@@ -49,7 +49,7 @@ export namespace asContainer {
 		gap?: Gap;
 		disabled?: boolean;
 		//
-		className?: string[];
+		className?: tvc.ClassName;
 	}
 
 	export type PropsEx<TProps = unknown> = Omit<TProps, "className"> & Props;

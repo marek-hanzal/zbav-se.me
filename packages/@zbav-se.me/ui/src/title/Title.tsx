@@ -11,10 +11,23 @@ export namespace Title {
 	}
 }
 
-export const Title: FC<Title.Props> = ({ textTitle, textSubtitle, right, left, ...props }) => {
+export const Title: FC<Title.Props> = ({
+	textTitle,
+	textSubtitle,
+	right,
+	left,
+	//
+	className,
+	...props
+}) => {
 	return (
 		<Container
-			data-ui={"Title-root"}
+			data-ui={"Title"}
+			className={[
+				"Title",
+				className,
+			]}
+			square={"md"}
 			{...props}
 		>
 			<div data-ui={"Title-wrapper"}>

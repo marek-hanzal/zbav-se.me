@@ -19,6 +19,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 			<TitleContainer
 				data-ui={"BuyerHome"}
 				textTitle={"Buyer home (title)"}
+				layout={"vertical-header-content"}
 			>
 				<BuyerMenu locale={locale} />
 			</TitleContainer>
