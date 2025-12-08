@@ -190,6 +190,7 @@ export namespace attr {
 		 * Used to mark piece of UI in DOM, so it's easy to find the proper component by its name.
 		 */
 		ui: string;
+		attrs: TPick[];
 		/**
 		 * More clever way to pass individual classnames (going through tailwind merge).
 		 */
@@ -210,7 +211,7 @@ export namespace attr {
 		TProps,
 		"className"
 	> &
-		Omit<Props<TPick>, "ui">;
+		Omit<Props<TPick>, "ui" | "attrs">;
 }
 
 /**
@@ -223,20 +224,19 @@ export namespace attr {
  */
 export const attr = <TPick extends keyof attr.Attributes>({
 	ui,
+	attrs,
 	className,
 	...props
 }: attr.Props<TPick>) => {
-	const attrs = Object.fromEntries(
-		Object.entries(props).map(([key, value]) => [
-			toKey(key),
-			value,
-		]),
-	) as Attrs<TPick>;
-
 	return {
 		"data-ui": ui,
 		//
-		...attrs,
+		...(Object.fromEntries(
+			Object.entries(props).map(([key, value]) => [
+				toKey(key),
+				value,
+			]),
+		) as Attrs<TPick>),
 		//
 		className: tvc(ui, className),
 	} as const;

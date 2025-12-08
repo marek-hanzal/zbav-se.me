@@ -12,37 +12,10 @@ export namespace Badge {
 	}
 }
 
-export const Badge: FC<Badge.Props> = ({
-	tone,
-	theme,
-	size,
-	round,
-	snapTo,
-	flow,
-	disabled,
-	opacity,
-	//
-	className,
-	children,
-	//
-	...props
-}) => {
+export const Badge: FC<Badge.Props> = (props) => {
 	return (
 		<div
-			{...asBadge({
-				tone,
-				theme,
-				size,
-				round,
-				snapTo,
-				flow,
-				disabled,
-				opacity,
-				className,
-			})}
-			{...props}
-		>
-			{children}
-		</div>
+			{...asBadge(props)}
+		/>
 	);
 };

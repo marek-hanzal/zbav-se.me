@@ -1,22 +1,25 @@
 import { attr } from "../attr/attr";
 
+const attributes = [
+	"theme",
+	"tone",
+	"size",
+	"round",
+	"snapTo",
+	"disabled",
+	"flow",
+	"items",
+	"justify",
+	"background",
+	"border",
+	"opacity",
+	"shadow",
+] satisfies (keyof attr.Attributes)[];
+
+type Attributes = (typeof attributes)[number];
+
 export namespace asBadge {
-	export type Props<TProps = unknown> = attr.Component<
-		| "theme"
-		| "tone"
-		| "size"
-		| "round"
-		| "snapTo"
-		| "disabled"
-		| "flow"
-		| "items"
-		| "justify"
-		| "background"
-		| "border"
-		| "opacity"
-		| "shadow",
-		TProps
-	>;
+	export type Props<TProps = unknown> = attr.Component<Attributes, TProps>;
 }
 
 export const asBadge = ({
@@ -34,6 +37,7 @@ export const asBadge = ({
 }: asBadge.Props) => {
 	return attr({
 		ui: "Badge",
+		attrs: attributes,
 		//
 		theme,
 		tone,
