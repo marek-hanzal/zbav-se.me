@@ -60,7 +60,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 							justify: "start",
 							round: "default",
 							size: "xl",
-							background: true,
 						})}
 						icon={ListingIcon}
 						iconProps={{
@@ -82,7 +81,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								justify: "start",
 								round: "default",
 								size: "xl",
-								background: true,
 							})}
 							icon={CartIcon}
 							iconProps={{
@@ -103,7 +101,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								justify: "start",
 								round: "default",
 								size: "xl",
-								background: true,
 							})}
 							icon={TransactionIcon}
 							iconProps={{
@@ -124,7 +121,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								justify: "start",
 								round: "default",
 								size: "xl",
-								background: true,
 							})}
 							icon={FeedIcon}
 							iconProps={{
@@ -146,7 +142,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 							justify: "start",
 							round: "default",
 							size: "xl",
-							background: true,
 						})}
 						icon={ShopIcon}
 						iconProps={{
@@ -168,7 +163,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								justify: "start",
 								round: "default",
 								size: "xl",
-								background: true,
 							})}
 							icon={SellerIcon}
 							iconProps={{
@@ -189,7 +183,6 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								justify: "start",
 								round: "default",
 								size: "xl",
-								background: true,
 							})}
 							icon={UserIcon}
 							iconProps={{

@@ -1,9 +1,15 @@
 @layer components {
 	.Button {
-		display: block;
 		color: var(--color-text);
-		background: var(--color-background);
-		@apply flex flex-row items-center justify-center gap-2;
+
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+
+		border-radius: var(--radius-default);
+
+		@apply gap-4;
 	}
 
 	/** Justify */
@@ -38,13 +44,35 @@
 		@apply p-5 text-xl;
 	}
 
+	/** Misc styles */
+
+	.Button[data-border="true"] {
+		border: var(--border-default) solid var(--color-border);
+	}
+
+	.Button[data-background="true"] {
+		background-color: var(--color-background);
+	}
+
+	.Button[data-shadow="true"] {
+		@apply shadow-md;
+	}
+
 	/** Tone */
 
 	.Button[data-tone="primary"][data-theme="light"] {
 		@apply tone-primary-light;
 	}
 
+	.Button[data-tone="primary"][data-theme="dark"] {
+		@apply tone-primary-dark;
+	}
+
 	.Button[data-tone="secondary"][data-theme="light"] {
 		@apply tone-secondary-light;
+	}
+
+	.Button[data-tone="secondary"][data-theme="dark"] {
+		@apply tone-secondary-dark;
 	}
 }

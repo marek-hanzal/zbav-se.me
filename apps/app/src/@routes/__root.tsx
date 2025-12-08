@@ -69,7 +69,6 @@ export const Route = createRootRouteWithContext<{
 							width="viewport"
 							className={[
 								"font-roboto",
-								"font-light",
 							]}
 						>
 							<Outlet />

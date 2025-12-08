@@ -1,17 +1,16 @@
-import type { Cls } from "@use-pico/cls";
 import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
+import type { asIcon } from "../../icon/asIcon";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
 import { Tx } from "../tx/Tx";
 import { asButton } from "./asButton";
-import type { ButtonCls } from "./ButtonCls";
 
-const ICON_SIZE_MAP: Partial<Record<Cls.VariantOf<ButtonCls, "size">, asButton.Size>> = {
+const ICON_SIZE_MAP: Partial<Record<asButton.Size, asIcon.Size>> = {
 	sm: "xs",
 	md: "xs",
-	lg: "sm",
-	xl: "md",
+	lg: "xl",
+	xl: "2xl",
 } as const;
 
 export namespace Button {
@@ -72,6 +71,7 @@ export const Button: FC<Button.Props> = ({
 	size = "md",
 	round,
 	background,
+	border,
 	snapTo,
 	justify,
 	className,
@@ -121,6 +121,7 @@ export const Button: FC<Button.Props> = ({
 				snapTo,
 				disabled,
 				background,
+				border,
 				justify,
 				className,
 			})}

@@ -1,43 +1,23 @@
-import { type Cls, useCls } from "@use-pico/cls";
-import type { FC } from "react";
-import { OverlayCls } from "./OverlayCls";
+import type { ComponentProps, FC } from "react";
+import { asOverlay } from "./asOverlay";
 
 export namespace Overlay {
-	export interface Props extends OverlayCls.Props {
-		opacity?: Cls.VariantOf<OverlayCls, "opacity">;
-		type?: Cls.VariantOf<OverlayCls, "type">;
-		accentFrom?: Cls.VariantOf<OverlayCls, "accent-from">;
-		accentTo?: Cls.VariantOf<OverlayCls, "accent-to">;
+	export interface Props extends asOverlay.PropsEx<ComponentProps<"div">> {
+		//
 	}
 }
 
-export const Overlay: FC<Overlay.Props> = ({
-	opacity,
-	type,
-	accentFrom,
-	accentTo,
-	cls = OverlayCls,
-	tweak,
-}) => {
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			"accent-from": accentFrom,
-			"accent-to": accentTo,
-			opacity,
-			type,
-		},
-	});
-
+export const Overlay: FC<Overlay.Props> = ({ type, className, ...props }) => {
 	return (
-		<div data-root={"Overlay"}>
-			<div
-				data-ui="Overlay-top"
-				className={slots.top()}
-			/>
-			<div
-				data-ui="Overlay-bottom"
-				className={slots.bottom()}
-			/>
+		<div
+			{...asOverlay({
+				type,
+				className,
+			})}
+			{...props}
+		>
+			<div className="Overlay-top" />
+			<div className="Overlay-bottom" />
 		</div>
 	);
 };

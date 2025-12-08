@@ -75,20 +75,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				}}
 				{...props}
 			>
-				{listing.isIgnored ? (
-					<Overlay
-						tweak={{
-							slot: {
-								root: {
-									class: [
-										"bg-rose-600/20",
-										"opacity-80",
-									],
-								},
-							},
-						}}
-					/>
-				) : null}
+				{listing.isIgnored ? <Overlay type={"subtle"} /> : null}
 
 				{overlay({
 					listing,

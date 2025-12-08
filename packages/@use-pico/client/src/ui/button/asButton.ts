@@ -31,8 +31,11 @@ export namespace asButton {
 		snapTo?: SnapTo;
 		disabled?: boolean;
 		background?: boolean;
+		border?: boolean;
 		justify?: Justify;
-		className?: string[];
+		shadow?: boolean;
+		//
+		className?: tvc.ClassName;
 	}
 
 	export type PropsEx<TProps = unknown> = Omit<TProps, "className"> & Props;
@@ -41,11 +44,13 @@ export namespace asButton {
 export const asButton = ({
 	tone,
 	theme,
-	size,
+	size = "md",
 	round,
 	snapTo,
 	disabled,
-	background,
+	background = true,
+	border = true,
+	shadow = true,
 	justify,
 	className,
 }: asButton.Props) => {
@@ -59,7 +64,9 @@ export const asButton = ({
 		"data-snap-to": snapTo,
 		"data-disabled": disabled,
 		"data-background": background,
+		"data-border": border,
 		"data-justify": justify,
+		"data-shadow": shadow,
 		//
 		className: tvc("Button", className),
 	} as const;
