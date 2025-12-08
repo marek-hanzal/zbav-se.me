@@ -1,6 +1,7 @@
 @import "./@theme/theme.css";
 
 @import "./icon/Icon.css";
+@import "./ui/badge/Badge.css";
 @import "./ui/badge/BadgeValue.css";
 @import "./ui/bool-inline/BoolInline.css";
 @import "./ui/bottom-sheet/BottomSheet.css";

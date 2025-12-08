@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { useState } from "react";
@@ -37,14 +37,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/age"}
 						search={state}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 				right={
 					<ConfirmButton

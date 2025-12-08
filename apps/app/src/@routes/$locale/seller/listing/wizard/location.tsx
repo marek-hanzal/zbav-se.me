@@ -1,8 +1,8 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -27,14 +27,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 				textTitle={"Location (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/price"}
 						search={state}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 				right={
 					<ConfirmButton

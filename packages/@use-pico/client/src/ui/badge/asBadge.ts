@@ -1,43 +1,38 @@
 import { tvc } from "@use-pico/cls";
 
-export namespace asButton {
+export namespace asBadge {
 	export type Tone =
 		| "primary"
 		| "secondary"
-		| "warning"
 		| "danger"
-		| "link"
+		| "warning"
 		| "neutral"
-		| "subtle";
+		| "subtle"
+		| "link";
 	export type Theme = "light" | "dark";
 	export type Size = "xs" | "sm" | "md" | "lg" | "xl";
+	export type Flow = "vertical" | "horizontal";
 	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";
 	export type SnapTo =
 		| "top-left"
 		| "top-center"
 		| "top-right"
+		| "top"
 		| "bottom-left"
 		| "bottom-right"
-		| "bottom-center"
+		| "bottom"
 		| "left-center"
 		| "right-center";
-	export type Justify = "start" | "center";
 
 	export interface Props {
 		tone?: Tone;
 		theme?: Theme;
 		size?: Size;
 		round?: Round;
+		flow?: Flow;
 		snapTo?: SnapTo;
-		disabled?: boolean;
-		background?: boolean;
-		border?: boolean;
-		justify?: Justify;
-		shadow?: boolean;
-		/**
-		 * When true, button will be bumped by a z-index.
-		 */
 		zIndex?: boolean;
+		disabled?: boolean;
 		//
 		className?: tvc.ClassName;
 	}
@@ -45,35 +40,29 @@ export namespace asButton {
 	export type PropsEx<TProps = unknown> = Omit<TProps, "className"> & Props;
 }
 
-export const asButton = ({
-	tone = "primary",
-	theme = "light",
+export const asBadge = ({
+	tone,
+	theme,
 	size = "md",
+	flow = "horizontal",
 	round = "default",
 	snapTo,
-	disabled,
-	background = true,
-	border = true,
-	shadow = true,
-	justify,
 	zIndex,
+	disabled,
 	className,
-}: asButton.Props) => {
+}: asBadge.Props) => {
 	return {
-		"data-ui": "Button",
+		"data-ui": "Badge",
 		//
 		"data-tone": tone,
 		"data-theme": theme,
 		"data-size": size,
+		"data-flow": flow,
 		"data-round": round,
 		"data-snap-to": snapTo,
-		"data-disabled": disabled,
-		"data-background": background,
-		"data-border": border,
 		"data-z-index": zIndex,
-		"data-justify": justify,
-		"data-shadow": shadow,
+		"data-disabled": disabled,
 		//
-		className: tvc("Button", className),
+		className: tvc("Badge", className),
 	} as const;
 };

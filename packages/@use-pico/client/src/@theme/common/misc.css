@@ -1,0 +1,13 @@
+@layer components {
+	[data-border="true"] {
+		border: var(--border-default) solid var(--color-border);
+	}
+
+	[data-background="true"] {
+		background-color: var(--color-background);
+	}
+
+	[data-shadow="true"] {
+		@apply shadow-md;
+	}
+}

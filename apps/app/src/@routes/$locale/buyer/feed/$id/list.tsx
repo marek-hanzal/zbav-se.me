@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
+import { asButton, Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { useRef, useState } from "react";
@@ -37,13 +37,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			<FlowContainer
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 			>
 				<SpinnerContainer />
@@ -62,13 +65,19 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 				data-ui={"FeedList"}
 				left={
 					<LinkTo
+						{...asButton({
+							round: "full",
+							size: "sm",
+						})}
+						icon={ArrowLeftIcon}
+						iconProps={{
+							size: "xl",
+						}}
 						to={"/$locale/buyer"}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 			>
 				<withFeedFetchQuery.Suspense
@@ -94,6 +103,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									feed={feed}
 									tone={"secondary"}
 									theme={"light"}
+									zIndex
 									defaultOpen={false}
 									noDelete={true}
 									round={"full"}

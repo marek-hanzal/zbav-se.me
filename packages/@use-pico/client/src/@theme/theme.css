@@ -1,9 +1,11 @@
-@import "./theme.primary.css";
-@import "./theme.secondary.css";
+@import "./theme.common.css";
 
-@theme {
-	--border-sm: 1px;
-	--border-default: var(--border-sm);
+@import "./common/round.css";
+@import "./common/size.css";
+@import "./common/snap-to.css";
+@import "./common/z-index.css";
+@import "./common/misc.css";
+@import "./common/square.css";
 
-	--radius-default: var(--radius-md);
-}
+@import "./tone/primary.css";
+@import "./tone/secondary.css";

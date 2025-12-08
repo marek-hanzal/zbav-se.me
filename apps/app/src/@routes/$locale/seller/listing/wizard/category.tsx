@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
-import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
@@ -34,14 +34,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				textTitle={"Listing category (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/photos"}
 						search={state}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 				right={
 					<ConfirmButton

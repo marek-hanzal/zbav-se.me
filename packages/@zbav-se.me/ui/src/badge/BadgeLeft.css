@@ -1,5 +1,0 @@
-@layer components {
-	[data-ui="BadgeLeft-root"] {
-		@apply w-10 h-10;
-	}
-}

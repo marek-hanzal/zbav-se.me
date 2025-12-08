@@ -1,8 +1,8 @@
 import { createFileRoute, useLoaderData, useParams } from "@tanstack/react-router";
-import { UserIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, UserIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
 export const Route = createFileRoute("/$locale/buyer/user")({
@@ -21,13 +21,16 @@ export const Route = createFileRoute("/$locale/buyer/user")({
 				textTitle={"User profile (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 			>
 				<Status

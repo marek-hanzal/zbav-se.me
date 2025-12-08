@@ -1,6 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { CloseIcon, EditIcon, ErrorIcon, Icon, SpinnerIcon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
+import {
+	ArrowLeftIcon,
+	CloseIcon,
+	EditIcon,
+	ErrorIcon,
+	Icon,
+	SpinnerIcon,
+} from "@use-pico/client/icon";
+import { asBadge, BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -10,7 +17,6 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
 import { zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
@@ -32,14 +38,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/title"}
 						search={state}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 				right={
 					<ConfirmButton
@@ -89,14 +98,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/title"}
 						search={state}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 				right={
 					<ConfirmButton

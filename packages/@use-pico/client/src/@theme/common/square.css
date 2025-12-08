@@ -1,0 +1,37 @@
+@layer components {
+	[data-square="default"] {
+		@apply h-8 w-8;
+	}
+
+	[data-square="xs"] {
+		@apply h-4 w-4;
+	}
+
+	[data-square="sm"] {
+		@apply h-6 w-6;
+	}
+
+	[data-square="md"] {
+		@apply h-10 w-10;
+	}
+
+	[data-square="lg"] {
+		@apply h-12 w-12;
+	}
+
+	[data-square="xl"] {
+		@apply h-16 w-16;
+	}
+
+	[data-square="2xl"] {
+		@apply h-20 w-20;
+	}
+
+	[data-square="3xl"] {
+		@apply h-24 w-24;
+	}
+
+	[data-square="4xl"] {
+		@apply h-28 w-28;
+	}
+}

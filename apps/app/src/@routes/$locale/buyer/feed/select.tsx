@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { FeedListContainer } from "~/app/feed/ui/FeedListContainer";
@@ -22,13 +23,16 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 				textTitle={"Feed select (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 			>
 				<FeedListContainer

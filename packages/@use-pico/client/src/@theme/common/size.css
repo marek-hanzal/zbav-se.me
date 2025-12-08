@@ -1,0 +1,41 @@
+@layer components {
+	[data-size="xs"] {
+		@apply px-1 py-0.5;
+	}
+
+	[data-round="full"][data-size="xs"] {
+		@apply p-1;
+	}
+
+	[data-size="sm"] {
+		@apply px-2 py-1;
+	}
+
+	[data-round="full"][data-size="sm"] {
+		@apply p-2;
+	}
+
+	[data-size="md"] {
+		@apply px-3 py-1.5;
+	}
+
+	[data-round="full"][data-size="md"] {
+		@apply p-3;
+	}
+
+	[data-size="lg"] {
+		@apply px-4 py-2;
+	}
+
+	[data-round="full"][data-size="lg"] {
+		@apply p-4;
+	}
+
+	[data-size="xl"] {
+		@apply px-5 py-4;
+	}
+
+	[data-round="full"][data-size="xl"] {
+		@apply p-5;
+	}
+}

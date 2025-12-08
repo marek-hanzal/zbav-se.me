@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
+import { asBadge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
-import { BadgeLeft } from "@zbav-se.me/ui/badge";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -17,9 +17,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 		const navigate = Route.useNavigate();
 		const [uploadIds, setUploadIds] = useState<string[]>(state.uploadIds ?? []);
 
-		/**
-		 * TODO Resolve photo limit from the user's tokens/plan/whatever
-		 */
+		// TODO Resolve photo limit from the user's tokens/plan/whatever
 		const photoCountLimit = 10;
 
 		const hasUploads = uploadIds.length > 0;
@@ -31,13 +29,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 				textTitle={"Listing photos (title)"}
 				left={
 					<LinkTo
+						{...asBadge({
+							round: "full",
+							size: "md",
+						})}
+						icon={ArrowLeftIcon}
 						to={"/$locale/seller"}
 						params={{
 							locale,
 						}}
-					>
-						<BadgeLeft />
-					</LinkTo>
+					/>
 				}
 				right={
 					<ConfirmButton

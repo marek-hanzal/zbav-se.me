@@ -1,6 +1,5 @@
-import { Badge, type BadgeCls } from "@use-pico/client/ui/badge";
+import { Badge } from "@use-pico/client/ui/badge";
 import { Typo } from "@use-pico/client/ui/typo";
-import type { Cls } from "@use-pico/cls";
 import { toTimeDiff } from "@use-pico/common/time";
 import type { tListingTransactionSideEnum, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
@@ -66,105 +65,105 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	children,
 	...props
 }) => {
-	const isCurrentClosed = isClosed && isCurrent;
+	// const isCurrentClosed = isClosed && isCurrent;
 
-	const typeTweaks: Partial<Record<useSideSwitch.Type, Cls.TweaksOf<BadgeCls>>> = {
-		buyer: {
-			slot: {
-				root: {
-					class: isCurrentClosed
-						? [
-								"items-center",
-								"justify-center",
-							]
-						: [
-								"ml-auto",
-							],
-				},
-			},
-		},
-		"buyer-to-seller": {
-			slot: {
-				root: {
-					class: isCurrentClosed
-						? [
-								"items-center",
-								"justify-center",
-							]
-						: undefined,
-				},
-			},
-		},
-		seller: {
-			slot: {
-				root: {
-					class: isCurrentClosed
-						? [
-								"items-center",
-								"justify-center",
-							]
-						: [
-								"ml-auto",
-							],
-				},
-			},
-		},
-		"seller-to-buyer": {
-			slot: {
-				root: {
-					class: isCurrentClosed
-						? [
-								"items-center",
-								"justify-center",
-							]
-						: undefined,
-				},
-			},
-		},
-	};
+	// const typeTweaks: Partial<Record<useSideSwitch.Type, Cls.TweaksOf<BadgeCls>>> = {
+	// 	buyer: {
+	// 		slot: {
+	// 			root: {
+	// 				class: isCurrentClosed
+	// 					? [
+	// 							"items-center",
+	// 							"justify-center",
+	// 						]
+	// 					: [
+	// 							"ml-auto",
+	// 						],
+	// 			},
+	// 		},
+	// 	},
+	// 	"buyer-to-seller": {
+	// 		slot: {
+	// 			root: {
+	// 				class: isCurrentClosed
+	// 					? [
+	// 							"items-center",
+	// 							"justify-center",
+	// 						]
+	// 					: undefined,
+	// 			},
+	// 		},
+	// 	},
+	// 	seller: {
+	// 		slot: {
+	// 			root: {
+	// 				class: isCurrentClosed
+	// 					? [
+	// 							"items-center",
+	// 							"justify-center",
+	// 						]
+	// 					: [
+	// 							"ml-auto",
+	// 						],
+	// 			},
+	// 		},
+	// 	},
+	// 	"seller-to-buyer": {
+	// 		slot: {
+	// 			root: {
+	// 				class: isCurrentClosed
+	// 					? [
+	// 							"items-center",
+	// 							"justify-center",
+	// 						]
+	// 					: undefined,
+	// 			},
+	// 		},
+	// 	},
+	// };
 
-	const typeProps: Partial<Record<useSideSwitch.Type, Badge.Props>> = {
-		buyer: {
-			tone: isCurrentClosed ? "neutral" : "primary",
-		},
-		seller: {
-			tone: isCurrentClosed ? "neutral" : "primary",
-		},
-		"seller-to-buyer": {
-			tone: isCurrentClosed ? "neutral" : "secondary",
-		},
-		"buyer-to-seller": {
-			tone: isCurrentClosed ? "neutral" : "secondary",
-		},
-	};
+	// const typeProps: Partial<Record<useSideSwitch.Type, Badge.Props>> = {
+	// 	buyer: {
+	// 		tone: isCurrentClosed ? "neutral" : "primary",
+	// 	},
+	// 	seller: {
+	// 		tone: isCurrentClosed ? "neutral" : "primary",
+	// 	},
+	// 	"seller-to-buyer": {
+	// 		tone: isCurrentClosed ? "neutral" : "secondary",
+	// 	},
+	// 	"buyer-to-seller": {
+	// 		tone: isCurrentClosed ? "neutral" : "secondary",
+	// 	},
+	// };
 
-	const badgeTweak: Cls.TweaksOf<BadgeCls> = {
-		slot: {
-			root: {
-				class: [
-					"h-fit",
-					"flex",
-					"flex-col",
-					"items-start",
-					"justify-between",
-					"gap-1",
-					"px-2",
-					"py-1",
-					"w-6/8",
-					"max-w-6/8",
-					"transition-all",
-					isCurrentClosed
-						? [
-								"mx-auto",
-								"w-full",
-								"max-w-full",
-								"my-2",
-							]
-						: undefined,
-				],
-			},
-		},
-	};
+	// const badgeTweak: Cls.TweaksOf<BadgeCls> = {
+	// 	slot: {
+	// 		root: {
+	// 			class: [
+	// 				"h-fit",
+	// 				"flex",
+	// 				"flex-col",
+	// 				"items-start",
+	// 				"justify-between",
+	// 				"gap-1",
+	// 				"px-2",
+	// 				"py-1",
+	// 				"w-6/8",
+	// 				"max-w-6/8",
+	// 				"transition-all",
+	// 				isCurrentClosed
+	// 					? [
+	// 							"mx-auto",
+	// 							"w-full",
+	// 							"max-w-full",
+	// 							"my-2",
+	// 						]
+	// 					: undefined,
+	// 			],
+	// 		},
+	// 	},
+	// };
 
 	const defaultProps: Badge.Props = {
 		theme: "light",
@@ -175,7 +174,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 		<Badge
 			data-ui={`EventBadge-${type}`}
 			{...defaultProps}
-			{...typeProps[type]}
+			// {...typeProps[type]}
 			{...props}
 			onClick={isClosed || !isCurrent ? undefined : onClick}
 		>

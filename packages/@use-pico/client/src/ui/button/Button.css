@@ -7,8 +7,6 @@
 		align-items: center;
 		justify-content: center;
 
-		border-radius: var(--radius-default);
-
 		@apply gap-4;
 	}
 
@@ -20,42 +18,6 @@
 
 	.Button[data-justify="between"] {
 		justify-content: space-between;
-	}
-
-	/** Sizes */
-
-	.Button[data-size="xs"] {
-		@apply p-1 text-xs;
-	}
-
-	.Button[data-size="sm"] {
-		@apply p-2 text-sm;
-	}
-
-	.Button[data-size="md"] {
-		@apply p-3 text-base;
-	}
-
-	.Button[data-size="lg"] {
-		@apply p-4 text-lg;
-	}
-
-	.Button[data-size="xl"] {
-		@apply p-5 text-xl;
-	}
-
-	/** Misc styles */
-
-	.Button[data-border="true"] {
-		border: var(--border-default) solid var(--color-border);
-	}
-
-	.Button[data-background="true"] {
-		background-color: var(--color-background);
-	}
-
-	.Button[data-shadow="true"] {
-		@apply shadow-md;
 	}
 
 	/** Tone */
