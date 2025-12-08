@@ -1,0 +1,9 @@
+@layer components {
+	[data-position="absolute"] {
+		position: absolute;
+	}
+
+	[data-position="relative"] {
+		position: relative;
+	}
+}

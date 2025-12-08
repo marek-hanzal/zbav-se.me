@@ -67,11 +67,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 					<LinkTo
 						{...asButton({
 							round: "full",
-							size: "sm",
+							square: "default",
 						})}
 						icon={ArrowLeftIcon}
 						iconProps={{
-							size: "xl",
+							size: "lg",
 						}}
 						to={"/$locale/buyer"}
 						params={{
@@ -98,17 +98,17 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										set: setIsFeedSettings1,
 									}}
 									iconProps={{
-										size: "md",
+										size: "lg",
 									}}
+									size={undefined}
+									square={"default"}
 									feed={feed}
 									tone={"secondary"}
-									theme={"light"}
 									zIndex
 									defaultOpen={false}
 									noDelete={true}
 									round={"full"}
 									label={null}
-									size={"md"}
 									snapTo={"top-right"}
 								>
 									<LinkTo

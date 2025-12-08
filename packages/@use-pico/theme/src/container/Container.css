@@ -6,15 +6,6 @@
 		cursor: not-allowed;
 	}
 
-	/** Position */
-	.Container[data-position="absolute"] {
-		position: absolute;
-	}
-
-	.Container[data-position="relative"] {
-		position: relative;
-	}
-
 	/** Layout - Vertical */
 	.Container[data-layout="vertical"] {
 		display: grid;

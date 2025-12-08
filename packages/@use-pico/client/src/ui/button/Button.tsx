@@ -68,7 +68,9 @@ export const Button: FC<Button.Props> = ({
 	//
 	tone,
 	theme,
-	size = "md",
+	size,
+	items,
+	square,
 	round,
 	background,
 	zIndex,
@@ -81,7 +83,7 @@ export const Button: FC<Button.Props> = ({
 	children,
 	...props
 }) => {
-	const iconSize = ICON_SIZE_MAP[size] ?? size;
+	const iconSize = ICON_SIZE_MAP[size ?? "md"] ?? size;
 
 	const renderIcon = useMemo(
 		() =>
@@ -120,11 +122,13 @@ export const Button: FC<Button.Props> = ({
 				size,
 				round,
 				snapTo,
+				square,
+				items,
+				justify,
 				disabled,
 				zIndex,
 				background,
 				border,
-				justify,
 				className,
 			})}
 			//

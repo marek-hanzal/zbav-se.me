@@ -9,6 +9,7 @@ export namespace asButton {
 		| "size"
 		| "round"
 		| "snapTo"
+		| "items"
 		| "justify"
 		| "disabled"
 		| "background"
@@ -23,8 +24,8 @@ export namespace asButton {
 export const asButton = ({
 	tone = "primary",
 	theme = "light",
-	size = "md",
 	round = "default",
+	items = "center",
 	justify = "center",
 	background = true,
 	border = true,
@@ -37,8 +38,8 @@ export const asButton = ({
 		tone,
 		theme,
 		//
-		size,
 		round,
+		items,
 		justify,
 		background,
 		border,

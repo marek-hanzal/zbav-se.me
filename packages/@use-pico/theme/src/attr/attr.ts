@@ -27,6 +27,7 @@ export namespace attr {
 	export type Size = "default" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
 	export type Square = Size;
 	export type Inner = Size;
+	export type Gap = Size;
 	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";
 	export type Flow = "vertical" | "horizontal";
 	export type Items =
@@ -53,6 +54,9 @@ export namespace attr {
 		| "bottom"
 		| "left-center"
 		| "right-center";
+	export type Position = "absolute" | "relative";
+	export type Height = "full" | "auto" | "content" | "viewport";
+	export type Width = "full" | "auto" | "content" | "viewport";
 
 	export interface Attributes {
 		tone?: Tone;
@@ -65,7 +69,11 @@ export namespace attr {
 		square?: Square;
 		inner?: Inner;
 		snapTo?: SnapTo;
+		gap?: Gap;
 		flow?: Flow;
+		position?: Position;
+		height?: Height;
+		width?: Width;
 		//
 		background?: boolean;
 		border?: boolean;
