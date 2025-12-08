@@ -35,8 +35,13 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
-				{...attr<"round" | "height" | "width">({
+				{...attr({
 					ui: "HeroImage",
+					attrs: [
+						"round",
+						"height",
+						"width",
+					],
 					round,
 					height: "full",
 					width: "full",

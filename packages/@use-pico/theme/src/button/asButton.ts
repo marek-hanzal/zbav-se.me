@@ -1,28 +1,30 @@
 import { attr } from "../attr/attr";
 
+const attributes = [
+	"theme",
+	"tone",
+	"size",
+	"round",
+	"snapTo",
+	"items",
+	"justify",
+	"disabled",
+	"background",
+	"square",
+	"border",
+	"shadow",
+	"opacity",
+	"zIndex",
+] as const satisfies (keyof attr.Attributes)[];
+type Attributes = (typeof attributes)[number];
+
 export namespace asButton {
 	export type Size = attr.Size;
 
-	export type Props<TProps = unknown> = attr.Component<
-		| "theme"
-		| "tone"
-		| "size"
-		| "round"
-		| "snapTo"
-		| "items"
-		| "justify"
-		| "disabled"
-		| "background"
-		| "square"
-		| "border"
-		| "shadow"
-		| "opacity"
-		| "zIndex",
-		TProps
-	>;
+	export type Props<TRest extends attr.Rest> = attr.Component<Attributes, TRest>;
 }
 
-export const asButton = ({
+export const asButton = <const TRest extends attr.Rest>({
 	tone = "primary",
 	theme = "light",
 	round = "default",
@@ -32,9 +34,10 @@ export const asButton = ({
 	border = true,
 	shadow = true,
 	...props
-}: asButton.Props) => {
+}: asButton.Props<TRest>) => {
 	return attr({
 		ui: "Button",
+		attrs: attributes,
 		//
 		tone,
 		theme,

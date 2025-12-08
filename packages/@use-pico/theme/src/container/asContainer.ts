@@ -1,5 +1,18 @@
 import { attr } from "../attr/attr";
 
+const attributes = [
+	"theme",
+	"tone",
+	"height",
+	"width",
+	"inner",
+	"gap",
+	"position",
+	"disabled",
+	"snapTo",
+] satisfies (keyof attr.Attributes)[];
+type Attributes = (typeof attributes)[number];
+
 export namespace asContainer {
 	export type Layout =
 		//
@@ -18,18 +31,7 @@ export namespace asContainer {
 	export type Snap = "vertical" | "horizontal";
 	export type SnapAlign = "start" | "center" | "end";
 
-	export type Props<TProps = unknown> = attr.Component<
-		| "theme"
-		| "tone"
-		| "height"
-		| "width"
-		| "inner"
-		| "gap"
-		| "position"
-		| "disabled"
-		| "snapTo",
-		TProps
-	> & {
+	export type Props<TRest extends attr.Rest> = attr.Component<Attributes, TRest> & {
 		layout?: Layout;
 		scroll?: Scroll;
 		snap?: Snap;
@@ -37,9 +39,11 @@ export namespace asContainer {
 	};
 }
 
-export const asContainer = ({ ...props }: asContainer.Props) => {
+export const asContainer = <const TRest extends attr.Rest>(props: asContainer.Props<TRest>) => {
 	return attr({
 		ui: "Container",
+		attrs: attributes,
+		//
 		...props,
 	});
 };

@@ -10,11 +10,18 @@ type Attrs<T extends keyof attr.Attributes> = {
 	[K in T as `data-${KebabCase<K & string>}`]?: attr.Attributes[K];
 };
 
+/**
+ * Converts a camelCase key to a kebab-case data attribute key.
+ * @param key - The camelCase key to convert
+ * @returns The kebab-case data attribute key (e.g., "tone" -> "data-tone", "snapTo" -> "data-snap-to")
+ */
 const toKey = (key: string) => {
 	return `data-${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`;
 };
 
 export namespace attr {
+	export type Rest = Record<string, any>;
+
 	export type Tone =
 		| "primary"
 		| "secondary"
@@ -178,66 +185,92 @@ export namespace attr {
 	}
 
 	/**
-	 * Internal props type used for calling the attr method.
-	 *
-	 * @internal
-	 * @template TPick - The keys from Attributes to include in the props
-	 * @returns A type that combines selected attributes with required "ui" string
-	 *          and optional "className" for the attr method
+	 * Input type for attr() function.
+	 * Includes:
+	 * - ui, attrs, className
+	 * - any TProps (DOM properties)
+	 * - plus subset of Attributes determined by TPick
 	 */
-	export type Props<TPick extends keyof Attributes> = Pick<Attributes, TPick> & {
-		/**
-		 * Used to mark piece of UI in DOM, so it's easy to find the proper component by its name.
-		 */
+	export type Props<TPick extends keyof Attributes, TRest extends Rest> = {
 		ui: string;
 		attrs: TPick[];
-		/**
-		 * More clever way to pass individual classnames (going through tailwind merge).
-		 */
 		className?: tvc.ClassName;
-	};
+	} & Omit<TRest, "className"> &
+		Pick<Attributes, TPick>;
 
 	/**
-	 * Component type is used to define individual components (e.g. button, badge, whatever)
-	 * which will use props from default set (if needed); it ensures it has proper "api"
-	 * (e.g. exported data-ui attribute, handled classNames,...)
-	 *
-	 * @template TPick - The keys from Attributes to include in the component's props
-	 * @template TProps - The component's own props type (defaults to unknown)
-	 * @returns A type that combines the component's props with selected attributes,
-	 *          excluding "className" from TProps and "ui" from Props<TPick>
+	 * Output type from attr() function.
+	 * Includes:
+	 * - "data-ui"
+	 * - data-xxx attributes for TPick
+	 * - all original TProps excluding TPick and className
 	 */
-	export type Component<TPick extends keyof Attributes, TProps = unknown> = Omit<
-		TProps,
+	export type Result<TPick extends keyof Attributes, TRest extends Rest> = Omit<
+		TRest,
+		TPick | "className"
+	> &
+		Attrs<TPick> & {
+			"data-ui": string;
+			className?: string;
+		};
+
+	/**
+	 * Public type for components – what you expose on <Badge>, <Button>, etc.
+	 * Component users see:
+	 * - all DOM props from TProps (excluding className)
+	 * - plus subset of Attributes (TPick)
+	 */
+	export type Component<TPick extends keyof Attributes, TRest extends Rest> = Omit<
+		TRest,
 		"className"
 	> &
-		Omit<Props<TPick>, "ui" | "attrs">;
+		Partial<Pick<Attributes, TPick>> & {
+			className?: tvc.ClassName;
+		};
 }
 
 /**
- * Used to access all the available styling options for any element supporting data-xxx attributes.
- * Converts attribute props to data attributes and combines them with the ui identifier and className.
+ * Transforms component props into data attributes for styling.
+ * Separates styling attributes (specified in attrs) from regular DOM props,
+ * converts styling attributes to data-* attributes, and merges className using tvc.
  *
- * @template TPick - The keys from Attributes to include in the props
- * @param props - Props containing ui, className, and selected attributes
- * @returns An object with data-ui attribute, converted data-xxx attributes, and merged className
+ * @param props - Component props including ui, attrs, className, and other props
+ * @param props.ui - The UI component identifier
+ * @param props.attrs - Array of attribute keys to convert to data attributes
+ * @param props.className - Optional className to merge with ui
+ * @returns Object with data-ui, data-* attributes, remaining props, and merged className
  */
-export const attr = <TPick extends keyof attr.Attributes>({
+export const attr = <const TPick extends keyof attr.Attributes, const TRest extends attr.Rest>({
 	ui,
 	attrs,
 	className,
-	...props
-}: attr.Props<TPick>) => {
-	return {
-		"data-ui": ui,
-		//
-		...(Object.fromEntries(
-			Object.entries(props).map(([key, value]) => [
+	...rest
+}: attr.Props<TPick, TRest>): attr.Result<TPick, TRest> => {
+	const data: [
+		string,
+		unknown,
+	][] = [];
+	const props: Record<string, unknown> = {};
+
+	for (const [key, value] of Object.entries(rest)) {
+		if ((attrs as readonly string[]).includes(key)) {
+			data.push([
 				toKey(key),
 				value,
-			]),
-		) as Attrs<TPick>),
-		//
+			]);
+			continue;
+		}
+
+		props[key] = value;
+	}
+
+	return {
+		"data-ui": ui,
+		// data-xxx attributes for TPick
+		...(Object.fromEntries(data) as Attrs<TPick>),
+		// remaining original props excluding TPick and className
+		...props,
+		// className merged via tvc(ui, className)
 		className: tvc(ui, className),
-	} as const;
+	} as attr.Result<TPick, TRest>;
 };

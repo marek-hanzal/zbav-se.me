@@ -14,15 +14,15 @@ const attributes = [
 	"border",
 	"opacity",
 	"shadow",
-] satisfies (keyof attr.Attributes)[];
+] as const satisfies (keyof attr.Attributes)[];
 
 type Attributes = (typeof attributes)[number];
 
 export namespace asBadge {
-	export type Props<TProps = unknown> = attr.Component<Attributes, TProps>;
+	export type Props<TRest extends attr.Rest> = attr.Component<Attributes, TRest>;
 }
 
-export const asBadge = ({
+export const asBadge = <const TRest extends attr.Rest>({
 	theme = "light",
 	tone = "primary",
 	size = "md",
@@ -34,7 +34,7 @@ export const asBadge = ({
 	border = true,
 	shadow = true,
 	...props
-}: asBadge.Props) => {
+}: asBadge.Props<TRest>) => {
 	return attr({
 		ui: "Badge",
 		attrs: attributes,
