@@ -407,5 +407,6 @@
 	},
 	"[mdx]": {
 		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
-	}
+	},
+	"typescript.experimental.useTsgo": true
 }
