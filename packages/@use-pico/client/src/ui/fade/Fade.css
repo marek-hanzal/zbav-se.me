@@ -1,0 +1,25 @@
+@layer components {
+	.Fade {
+		pointer-events: none;
+		position: absolute;
+		inset-inline: 0;
+		z-index: 20;
+		opacity: 0;
+		will-change: opacity;
+		overflow: hidden;
+
+		@apply from-white/75 via-slate-700/20 to-black/40;
+	}
+
+	.Fade-top {
+		top: -1px;
+
+		@apply bg-linear-to-t;
+	}
+
+	.Fade-bottom {
+		bottom: -1px;
+
+		@apply bg-linear-to-b;
+	}
+}

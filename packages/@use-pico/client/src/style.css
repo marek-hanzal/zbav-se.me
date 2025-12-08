@@ -7,6 +7,7 @@
 @import "./ui/button/Button.css";
 @import "./ui/container/Container.css";
 @import "./ui/container/ContainerValueList.css";
+@import "./ui/fade/Fade.css";
 @import "./ui/navigation/NavigationIndicator.css";
 @import "./ui/progress/Progress.css";
 @import "./ui/status/Status.css";
