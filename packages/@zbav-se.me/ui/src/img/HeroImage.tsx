@@ -1,16 +1,15 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
+import { attr } from "@use-pico/theme/attr";
 import { type ComponentProps, type FC, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
 
 export namespace HeroImage {
-	export type Round = "default";
-
 	export interface Props extends ComponentProps<"img"> {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
-		round?: Round;
+		round?: attr.Round;
 	}
 }
 
@@ -22,6 +21,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	onError,
 	//
 	round,
+	className,
 	//
 	...props
 }) => {
@@ -35,9 +35,17 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
-				data-root={"HeroImage-root"}
-				//
-				data-round={round}
+				{...attr<"round" | "height" | "width">({
+					ui: "HeroImage",
+					round,
+					height: "full",
+					width: "full",
+					className: [
+						"object-cover",
+						"object-center",
+						className,
+					],
+				})}
 				//
 				loading={"eager"}
 				fetchPriority={"high"}

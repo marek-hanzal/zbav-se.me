@@ -18,7 +18,7 @@ export namespace asContainer {
 	export type Snap = "vertical" | "horizontal";
 	export type SnapAlign = "start" | "center" | "end";
 
-	export type Props<TProps = unknown> = attr.PropsEx<
+	export type Props<TProps = unknown> = attr.Component<
 		| "theme"
 		| "tone"
 		| "height"

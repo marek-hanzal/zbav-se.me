@@ -110,6 +110,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					return data.data.map((listing) => (
 						<VisibleContainer
 							key={`${listingIdPrefix}-${listing.id}`}
+							data-ui="ListingListContainer-VisibleContainer"
 							scrollerRef={containerRef}
 							useProximity
 							overscan={4}
@@ -121,10 +122,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									{...props}
 								/>
 							)}
-							className={[
-								"[content-visibility:auto]",
-								"[contain-intrinsic-size:100dvh]",
-							]}
+							height={"full"}
+							width={"full"}
 						>
 							<withListingFetchQuery.Suspense
 								data={{

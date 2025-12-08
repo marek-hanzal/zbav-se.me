@@ -3,7 +3,7 @@ import { attr } from "../attr/attr";
 export namespace asButton {
 	export type Size = attr.Size;
 
-	export type Props<TProps = unknown> = attr.PropsEx<
+	export type Props<TProps = unknown> = attr.Component<
 		| "theme"
 		| "tone"
 		| "size"

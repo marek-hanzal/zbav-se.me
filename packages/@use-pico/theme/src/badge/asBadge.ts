@@ -1,8 +1,19 @@
 import { attr } from "../attr/attr";
 
 export namespace asBadge {
-	export type Props<TProps = unknown> = attr.PropsEx<
-		"theme" | "tone" | "size" | "round" | "snapTo" | "disabled" | "flow" | "items" | "justify",
+	export type Props<TProps = unknown> = attr.Component<
+		| "theme"
+		| "tone"
+		| "size"
+		| "round"
+		| "snapTo"
+		| "disabled"
+		| "flow"
+		| "items"
+		| "justify"
+		| "background"
+		| "border"
+		| "shadow",
 		TProps
 	>;
 }
@@ -15,6 +26,9 @@ export const asBadge = ({
 	flow = "horizontal",
 	items = "center",
 	justify = "center",
+	background = true,
+	border = true,
+	shadow = true,
 	...props
 }: asBadge.Props) => {
 	return attr({
@@ -27,6 +41,9 @@ export const asBadge = ({
 		flow,
 		items,
 		justify,
+		background,
+		border,
+		shadow,
 		//
 		...props,
 	});

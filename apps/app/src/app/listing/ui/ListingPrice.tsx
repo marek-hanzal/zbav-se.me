@@ -18,7 +18,7 @@ export const ListingPrice: FC<ListingPrice.Props> = ({ price, locale, currency, 
 			tone={"secondary"}
 			theme={"light"}
 			round={"default"}
-			className="max-w-1/2 px-4"
+			className="max-w-1/2"
 			{...props}
 		>
 			{price > 0 ? (
