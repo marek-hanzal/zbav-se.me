@@ -30,3 +30,13 @@
 	--color-background: var(--color-secondary-xl);
 	--color-border: var(--color-secondary-md);
 }
+
+@layer components {
+	[data-tone="secondary"][data-theme="light"] {
+		@apply tone-secondary-light;
+	}
+
+	[data-tone="secondary"][data-theme="dark"] {
+		@apply tone-secondary-dark;
+	}
+}

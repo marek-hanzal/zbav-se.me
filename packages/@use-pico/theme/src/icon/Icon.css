@@ -1,12 +1,12 @@
 @layer components {
-	/** Sizes */
-
 	.Icon {
 		display: block;
 		flex-shrink: 0;
 		min-width: 0;
 		min-height: 0;
 	}
+
+	/** Sizes */
 
 	.Icon[data-size="xs"] {
 		@apply text-sm;
@@ -31,15 +31,5 @@
 	}
 	.Icon[data-size="4xl"] {
 		@apply text-5xl;
-	}
-
-	/** Tone */
-
-	.Icon[data-tone="primary"][data-theme="light"] {
-		@apply tone-primary-light;
-	}
-
-	.Icon[data-tone="primary"][data-theme="dark"] {
-		@apply tone-primary-dark;
 	}
 }

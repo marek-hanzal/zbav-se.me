@@ -1,28 +1,14 @@
 import { tvc } from "@use-pico/cls";
+import type { Type } from "../type/Type";
 
 export namespace asBadge {
-	export type Tone =
-		| "primary"
-		| "secondary"
-		| "danger"
-		| "warning"
-		| "neutral"
-		| "subtle"
-		| "link";
-	export type Theme = "light" | "dark";
-	export type Size = "xs" | "sm" | "md" | "lg" | "xl";
-	export type Flow = "vertical" | "horizontal";
-	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";
-	export type SnapTo =
-		| "top-left"
-		| "top-center"
-		| "top-right"
-		| "top"
-		| "bottom-left"
-		| "bottom-right"
-		| "bottom"
-		| "left-center"
-		| "right-center";
+	export type Tone = Type.Tone;
+	export type Theme = Type.Theme;
+	export type Size = Type.Size;
+
+	export type Flow = Type.Flow;
+	export type Round = Type.Round;
+	export type SnapTo = Type.SnapTo;
 
 	export interface Props {
 		tone?: Tone;

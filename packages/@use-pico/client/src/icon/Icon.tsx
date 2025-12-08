@@ -1,6 +1,6 @@
 import { isString } from "@use-pico/common/is-string";
+import { asIcon } from "@use-pico/theme/icon";
 import type { ComponentProps, FC, ReactNode } from "react";
-import { asIcon } from "./asIcon";
 
 /**
  * Simple styled icon (span); uses Tailwind CSS classes.

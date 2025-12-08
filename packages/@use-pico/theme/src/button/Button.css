@@ -1,0 +1,22 @@
+@layer components {
+	.Button {
+		color: var(--color-text);
+
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+
+		@apply gap-4;
+	}
+
+	/** Justify */
+
+	.Button[data-justify="start"] {
+		justify-content: flex-start;
+	}
+
+	.Button[data-justify="between"] {
+		justify-content: space-between;
+	}
+}

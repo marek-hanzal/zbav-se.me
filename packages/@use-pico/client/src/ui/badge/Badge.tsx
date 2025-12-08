@@ -1,5 +1,5 @@
+import { asBadge } from "@use-pico/theme/badge";
 import type { ComponentProps, FC } from "react";
-import { asBadge } from "./asBadge";
 
 /**
  * Simple badge icon; just rounded background with children.

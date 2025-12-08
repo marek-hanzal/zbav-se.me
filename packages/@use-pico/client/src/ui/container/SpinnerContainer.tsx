@@ -2,7 +2,7 @@ import { Icon, SpinnerIcon } from "@use-pico/client/icon";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import type { FC } from "react";
-import type { asIcon } from "../../icon/asIcon";
+import type { asIcon } from "../../../../theme/src/icon/asIcon";
 
 export namespace SpinnerContainer {
 	export interface Props extends Container.Props {

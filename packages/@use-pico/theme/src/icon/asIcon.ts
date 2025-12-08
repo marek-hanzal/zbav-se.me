@@ -1,16 +1,10 @@
 import { tvc } from "@use-pico/cls";
+import type { Type } from "../type/Type";
 
 export namespace asIcon {
-	export type Tone =
-		| "primary"
-		| "secondary"
-		| "danger"
-		| "warning"
-		| "neutral"
-		| "subtle"
-		| "link";
-	export type Theme = "light" | "dark";
-	export type Size = "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+	export type Tone = Type.Tone;
+	export type Theme = Type.Theme;
+	export type Size = Type.Size;
 
 	export interface Props {
 		tone?: Tone;
@@ -25,11 +19,13 @@ export namespace asIcon {
 
 export const asIcon = ({ tone, theme, size, disabled, className }: asIcon.Props) => {
 	return {
-		"data-root": "Icon",
+		"data-ui": "Icon",
+		//
 		"data-tone": tone,
 		"data-theme": theme,
 		"data-size": size,
 		"data-disabled": disabled,
+		//
 		className: tvc("Icon", className),
 	} as const;
 };

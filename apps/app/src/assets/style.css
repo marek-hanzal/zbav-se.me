@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @import "./fonts.css";
-@import "@use-pico/client/style.css";
+@import "@use-pico/theme/theme.css";
 @import "@zbav-se.me/ui/style.css";
 @import "~/app/listing/ui/style.css";
 

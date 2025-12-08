@@ -1,10 +1,10 @@
+import { asButton } from "@use-pico/theme/button";
 import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
-import type { asIcon } from "../../icon/asIcon";
+import type { asIcon } from "../../../../theme/src/icon/asIcon";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
 import { Tx } from "../tx/Tx";
-import { asButton } from "./asButton";
 
 const ICON_SIZE_MAP: Partial<Record<asButton.Size, asIcon.Size>> = {
 	sm: "xs",

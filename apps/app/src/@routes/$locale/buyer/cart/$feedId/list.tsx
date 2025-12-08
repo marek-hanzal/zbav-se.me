@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { asBadge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { asBadge } from "@use-pico/theme/badge";
+import { asButton } from "@use-pico/theme/button";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
@@ -20,7 +21,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 			<FlowContainer
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							size: "md",
 							round: "full",
 						})}

@@ -30,3 +30,13 @@
 	--color-background: var(--color-primary-xl);
 	--color-border: var(--color-primary-md);
 }
+
+@layer components {
+	[data-tone="primary"][data-theme="light"] {
+		@apply tone-primary-light;
+	}
+
+	[data-tone="primary"][data-theme="dark"] {
+		@apply tone-primary-dark;
+	}
+}

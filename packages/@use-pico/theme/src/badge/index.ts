@@ -1,0 +1,1 @@
+export { asBadge } from "./asBadge";

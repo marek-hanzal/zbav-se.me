@@ -1,26 +1,12 @@
 import { tvc } from "@use-pico/cls";
+import type { Type } from "../type/Type";
 
 export namespace asButton {
-	export type Tone =
-		| "primary"
-		| "secondary"
-		| "warning"
-		| "danger"
-		| "link"
-		| "neutral"
-		| "subtle";
-	export type Theme = "light" | "dark";
-	export type Size = "xs" | "sm" | "md" | "lg" | "xl";
-	export type Round = "default" | "sm" | "md" | "lg" | "xl" | "full";
-	export type SnapTo =
-		| "top-left"
-		| "top-center"
-		| "top-right"
-		| "bottom-left"
-		| "bottom-right"
-		| "bottom-center"
-		| "left-center"
-		| "right-center";
+	export type Tone = Type.Tone;
+	export type Theme = Type.Theme;
+	export type Size = Type.Size;
+	export type Round = Type.Round;
+	export type SnapTo = Type.SnapTo;
 	export type Justify = "start" | "center";
 
 	export interface Props {
