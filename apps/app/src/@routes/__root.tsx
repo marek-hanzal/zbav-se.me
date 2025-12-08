@@ -67,7 +67,10 @@ export const Route = createRootRouteWithContext<{
 							data-ui={"Root"}
 							height="viewport"
 							width="viewport"
-							className={"font-roboto font-light"}
+							className={[
+								"font-roboto",
+								"font-light",
+							]}
 						>
 							<Outlet />
 						</Container>

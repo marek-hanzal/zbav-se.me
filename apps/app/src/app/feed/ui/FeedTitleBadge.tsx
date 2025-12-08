@@ -80,7 +80,6 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
-						full
 						onClick={() => {
 							feedPatchMutation.mutate(patch);
 						}}

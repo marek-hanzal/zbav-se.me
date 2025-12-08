@@ -28,7 +28,7 @@ export const RejectButton: FC<RejectButton.Props> = ({ menuState, log, ...props 
 			tone={"primary"}
 			theme={"light"}
 			label={"Reject transaction (label)"}
-			menu
+			justify={"start"}
 			disabled={rejectMutation.isPending}
 			loading={rejectMutation.isPending}
 			confirmProps={{

@@ -51,7 +51,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 					tone={"primary"}
 					theme={"light"}
 					size={"xl"}
-					menu
+					justify={"start"}
 					{...props}
 				/>
 			}
@@ -68,7 +68,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 							listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"
 						}
 						size={"xl"}
-						menu
+						justify={"start"}
 						buttonProps={{
 							...buttonProps,
 							onClick(event) {

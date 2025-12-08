@@ -109,7 +109,6 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								size={"xl"}
 								loading={feedCreateMutation.isPending}
 								disabled={!change || !name || feedCreateMutation.isPending}
-								full
 								onClick={() => {
 									toast.promise(
 										feedCreateMutation.mutateAsync({

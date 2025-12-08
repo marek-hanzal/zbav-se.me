@@ -117,7 +117,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 							toast.dismiss("listing-ignore-button");
 							onReset?.();
 						}}
-						menu
+						justify={"start"}
 						{...props}
 					/>
 				);

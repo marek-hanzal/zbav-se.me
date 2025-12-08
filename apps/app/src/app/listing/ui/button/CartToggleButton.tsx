@@ -48,7 +48,7 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId
 					tone={"primary"}
 					theme={"light"}
 					size={"xl"}
-					menu
+					justify={"start"}
 					{...props}
 				/>
 			}
@@ -72,7 +72,7 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId
 							})
 						}
 						size={"xl"}
-						menu
+						justify={"start"}
 						{...props}
 					/>
 				);

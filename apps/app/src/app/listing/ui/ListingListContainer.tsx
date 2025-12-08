@@ -4,7 +4,6 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer, VisibleContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { tvc } from "@use-pico/cls";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
@@ -95,10 +94,8 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			ref={mergedRef}
 			data-ui={"ListingListContainer"}
 			layout={"vertical-full"}
-			snap={{
-				snap: "vertical",
-				align: "start",
-			}}
+			snap={"vertical"}
+			snapAlign={"center"}
 			{...props}
 		>
 			<withListingCollectionQuery.Suspense
@@ -124,10 +121,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									{...props}
 								/>
 							)}
-							className={tvc([
+							className={[
 								"[content-visibility:auto]",
 								"[contain-intrinsic-size:100dvh]",
-							])}
+							]}
 						>
 							<withListingFetchQuery.Suspense
 								data={{

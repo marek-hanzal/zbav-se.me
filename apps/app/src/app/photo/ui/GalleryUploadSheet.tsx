@@ -75,7 +75,6 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 						tone={"primary"}
 						theme={"light"}
 						size={"xl"}
-						full
 						confirmProps={{
 							tone: "danger",
 							theme: "dark",
@@ -91,7 +90,6 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 					<Button
 						label={"Upload gallery (button)"}
 						size={"xl"}
-						full
 						tone={"secondary"}
 						theme={"light"}
 						disabled={mutation.isPending || uploadIds.length === 0}

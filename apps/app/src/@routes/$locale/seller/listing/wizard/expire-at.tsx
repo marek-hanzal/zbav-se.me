@@ -66,7 +66,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							size={"lg"}
-							full
 							iconPosition={"right"}
 							label={"Next - title (button)"}
 							disabled={!expiresAt}

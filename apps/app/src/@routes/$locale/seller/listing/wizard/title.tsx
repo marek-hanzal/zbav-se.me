@@ -72,7 +72,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 							iconPosition={"right"}
 							label={"Next - submit (button)"}
 							size={"lg"}
-							full
 							disabled={!title}
 						/>
 					</LinkTo>

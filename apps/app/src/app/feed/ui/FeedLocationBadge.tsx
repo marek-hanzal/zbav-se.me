@@ -97,7 +97,6 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
-						full
 						onClick={() => {
 							feedPatchMutation.mutate(patch);
 						}}

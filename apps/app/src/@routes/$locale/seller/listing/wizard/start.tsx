@@ -55,7 +55,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							size={"xl"}
-							full
 							iconPosition={"right"}
 							label={"Listing - start (button)"}
 						/>

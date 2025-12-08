@@ -84,7 +84,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 							iconEnabled={ArrowRightIcon}
 							disabled={!price}
 							size={"lg"}
-							full
 							iconPosition={"right"}
 							label={"Next - location (button)"}
 						/>

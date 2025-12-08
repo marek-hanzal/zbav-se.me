@@ -103,7 +103,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 									feedId={feedId}
 									listingId={listing.id}
 									label={null}
-									menu={false}
 									snapTo={"top-right"}
 									round={"full"}
 									size={"lg"}

@@ -82,7 +82,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							size={"lg"}
-							full
 							iconPosition={"right"}
 							label={"Next - age (button)"}
 							disabled={!selection.hasAny}

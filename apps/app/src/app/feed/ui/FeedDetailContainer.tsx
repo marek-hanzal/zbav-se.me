@@ -149,7 +149,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						}}
 						loading={feedDeleteMutation.isPending}
 						size={"xl"}
-						menu
+						justify={"start"}
 					/>
 				)}
 

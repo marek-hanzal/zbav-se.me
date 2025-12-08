@@ -83,7 +83,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 							label={"Next - condition (button)"}
 							disabled={!selection.hasAny}
 							size={"lg"}
-							full
 						/>
 					</LinkTo>
 				}

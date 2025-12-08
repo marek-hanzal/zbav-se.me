@@ -71,7 +71,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 							iconEnabled={ArrowRightIcon}
 							disabled={!locationId}
 							size={"xl"}
-							full
 							iconPosition={"right"}
 							label={"Next - expire (button)"}
 						/>

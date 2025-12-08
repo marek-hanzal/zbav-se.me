@@ -7,7 +7,6 @@ import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
-import { tvc } from "@use-pico/cls";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
@@ -96,7 +95,6 @@ export const ListContainer: FC<ListContainer.Props> = ({
 					<Button
 						data-ui="LocationItem-root"
 						key={item.id}
-						full
 						tone={"primary"}
 						theme={value === item.id ? "dark" : "light"}
 						onClick={() => {
@@ -105,7 +103,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 						}}
 						size={"xl"}
 						truncate
-						className={tvc([
+						className={[
 							"justify-center",
 							"items-start",
 							"text-left",
@@ -113,7 +111,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 							"flex-col",
 							"gap-1",
 							"w-full",
-						])}
+						]}
 						label={item.address}
 					/>
 				);

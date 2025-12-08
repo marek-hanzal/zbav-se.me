@@ -52,10 +52,8 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 				data-ui={"GalleryUpload-Container"}
 				ref={snapperRef}
 				layout="horizontal-full"
-				snap={{
-					snap: "horizontal",
-					align: "start",
-				}}
+				snap={"horizontal"}
+				snapAlign={"center"}
 				gap={"md"}
 			>
 				{Array.from({

@@ -3,7 +3,6 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { tvc } from "@use-pico/cls";
 import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/user";
 import { type FC, useId } from "react";
 
@@ -53,14 +52,13 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 					<Button
 						key={`${sortKeyId}-${sortValue}`}
 						size={"xl"}
-						className={tvc([
+						className={[
 							"justify-start",
 							"text-left",
 							"py-2",
 							"px-3",
 							"h-18",
-						])}
-						full
+						]}
 						onClick={() => {
 							onChange((prev) => {
 								const idx = prev.findIndex((s) => s.field === sortValue);
@@ -121,7 +119,6 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 				size={"xl"}
 				tone={"danger"}
 				label={"Clear all sorts (button)"}
-				full
 				onClick={() => {
 					onChange(() => {
 						return [];

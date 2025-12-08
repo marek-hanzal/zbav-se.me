@@ -2,7 +2,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
-import { tvc, VariantProvider } from "@use-pico/cls";
+import { VariantProvider } from "@use-pico/cls";
 import { tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { DateTime } from "luxon";
@@ -44,14 +44,13 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 								onChange(expire);
 							}}
 							size={"xl"}
-							full
-							className={tvc([
+							className={[
 								"flex",
 								"flex-row",
 								"items-center",
 								"justify-between",
 								"gap-1",
-							])}
+							]}
 						>
 							<Tx
 								label={`Expire in ${expire}`}

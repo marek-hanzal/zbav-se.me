@@ -40,7 +40,6 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 				onClick={() => setIsOpen(true)}
 				label={"Create new feed (title)"}
 				size={"xl"}
-				full
 				{...props}
 			/>
 
@@ -95,7 +94,6 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 						size={"xl"}
 						loading={feedCreateMutation.isPending}
 						disabled={!change || !name || feedCreateMutation.isPending}
-						full
 						onClick={() => {
 							toast.promise(
 								feedCreateMutation.mutateAsync({

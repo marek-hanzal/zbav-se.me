@@ -84,7 +84,6 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
-						full
 						onClick={() => {
 							toast.promise(feedPatchMutation.mutateAsync(patch), {
 								loading: translator.text("Loading... (toast)"),

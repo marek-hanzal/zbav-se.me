@@ -76,7 +76,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 							size={"xl"}
 							disabled={!hasUploads || isUploading}
 							label={"Next - category (button)"}
-							full
 						/>
 					</LinkTo>
 				}

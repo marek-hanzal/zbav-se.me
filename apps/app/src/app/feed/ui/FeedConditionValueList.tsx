@@ -85,7 +85,6 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
-						full
 						onClick={() => {
 							feedPatchMutation.mutate({
 								...feed,

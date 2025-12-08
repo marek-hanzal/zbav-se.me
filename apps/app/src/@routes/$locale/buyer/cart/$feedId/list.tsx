@@ -88,7 +88,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 																iconPosition={"right"}
 																tone={"primary"}
 																label={"Go to feed (link)"}
-																menu
+																justify={"start"}
 																size={"xl"}
 															/>
 														</LinkTo>
@@ -104,7 +104,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 																iconPosition={"right"}
 																tone={"primary"}
 																label={"Go to home (link)"}
-																menu
+																justify={"start"}
 																size={"xl"}
 															/>
 														</LinkTo>
@@ -160,7 +160,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 											iconEnabled={ArrowLeftIcon}
 											tone={"secondary"}
 											label={"Back to cart (link)"}
-											full
 											size={"xl"}
 										/>
 									</LinkTo>
@@ -176,7 +175,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 											iconPosition={"right"}
 											tone={"secondary"}
 											label={"Go to feed (link)"}
-											full
 											size={"xl"}
 										/>
 									</LinkTo>

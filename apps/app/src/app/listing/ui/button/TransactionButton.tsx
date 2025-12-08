@@ -34,7 +34,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 					theme={"light"}
 					size={"xl"}
 					onClick={() => setIsTransaction((prev) => !prev)}
-					menu
+					justify={"start"}
 					{...props}
 				/>
 

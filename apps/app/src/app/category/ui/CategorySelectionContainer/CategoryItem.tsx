@@ -1,7 +1,6 @@
 import type { useSelection } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Typo } from "@use-pico/client/ui/typo";
-import { tvc } from "@use-pico/cls";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
@@ -25,9 +24,8 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 			onClick={() => {
 				selection.toggle(item);
 			}}
-			full
 			size={"xl"}
-			className={tvc([
+			className={[
 				"justify-center",
 				"items-start",
 				"text-left",
@@ -35,7 +33,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
 				"flex-col",
 				"gap-1",
 				"w-full",
-			])}
+			]}
 		>
 			<Typo
 				label={item.group}

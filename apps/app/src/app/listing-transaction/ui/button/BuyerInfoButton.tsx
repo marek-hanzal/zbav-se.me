@@ -30,7 +30,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 				size={"xl"}
 				label={"Buyer info (label)"}
 				onClick={() => setIsOpen(true)}
-				menu
+				justify={"start"}
 				{...props}
 			/>
 

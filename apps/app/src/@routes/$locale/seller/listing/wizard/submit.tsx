@@ -124,7 +124,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						tone={"primary"}
 						theme={"dark"}
 						size={"lg"}
-						full
 						onClick={() => {
 							valid.success && createListingMutation.mutate(valid.data);
 						}}

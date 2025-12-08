@@ -36,7 +36,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 								theme={"light"}
 								size={"xl"}
 								label={"Go to listings (button)"}
-								menu
+								justify={"start"}
 							/>
 						</LinkTo>
 
@@ -53,7 +53,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 								theme={"light"}
 								size={"xl"}
 								label={"Go home (button)"}
-								menu
+								justify={"start"}
 							/>
 						</LinkTo>
 					</>

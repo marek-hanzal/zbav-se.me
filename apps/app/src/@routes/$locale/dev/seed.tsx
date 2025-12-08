@@ -395,8 +395,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						}}
 						tone={"secondary"}
 						theme={"dark"}
-						size={"xl"}
-						full
 					>
 						Prepare users
 					</Button>
@@ -414,7 +412,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}
-						full
 					>
 						Random user
 					</Button>
@@ -426,7 +423,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}
-						full
 					>
 						Seed Listings
 					</Button>
@@ -438,7 +434,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}
-						full
 					>
 						Seed scores
 					</Button>
@@ -450,7 +445,6 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						tone={"secondary"}
 						theme={"dark"}
 						size={"xl"}
-						full
 					>
 						Seed cart/flag/ignore
 					</Button>

@@ -122,7 +122,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 											theme={"light"}
 											label={"Refresh listings (button)"}
 											size={"xl"}
-											menu
+											justify={"start"}
 										/>
 									</LinkTo>
 								</FeedSetupButton>
@@ -185,7 +185,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																set: setIsFeedSettings2,
 															}}
 															size={"xl"}
-															menu
+															justify={"start"}
 														>
 															<LinkTo
 																to={"/$locale/buyer/feed/$id/list"}
@@ -210,7 +210,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																		"Refresh listings (button)"
 																	}
 																	size={"xl"}
-																	menu
+																	justify={"start"}
 																/>
 															</LinkTo>
 														</FeedSetupButton>
@@ -227,7 +227,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																tone={"primary"}
 																label={"Back to home (link)"}
 																size={"xl"}
-																menu
+																justify={"start"}
 															/>
 														</LinkTo>
 													</>

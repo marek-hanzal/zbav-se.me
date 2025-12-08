@@ -409,5 +409,5 @@
 	"[mdx]": {
 		"editor.defaultFormatter": "unifiedjs.vscode-mdx"
 	},
-	"typescript.experimental.useTsgo": true
+	"typescript.experimental.useTsgo": false
 }
