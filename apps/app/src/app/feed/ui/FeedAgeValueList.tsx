@@ -74,7 +74,6 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					height={"full"}
-					square={"md"}
 				>
 					<AgeContainer selection={selection} />
 

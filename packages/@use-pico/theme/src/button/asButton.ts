@@ -7,19 +7,22 @@ export namespace asButton {
 	export type Size = Type.Size;
 	export type Round = Type.Round;
 	export type SnapTo = Type.SnapTo;
+	export type Square = Type.Square;
 	export type Justify = "start" | "center";
 
 	export interface Props {
 		tone?: Tone;
 		theme?: Theme;
-		size?: Size;
-		round?: Round;
-		snapTo?: SnapTo;
-		disabled?: boolean;
+		//
 		background?: boolean;
 		border?: boolean;
+		disabled?: boolean;
 		justify?: Justify;
+		round?: Round;
 		shadow?: boolean;
+		size?: Size;
+		snapTo?: SnapTo;
+		square?: Square;
 		/**
 		 * When true, button will be bumped by a z-index.
 		 */
@@ -35,6 +38,7 @@ export const asButton = ({
 	tone = "primary",
 	theme = "light",
 	size = "md",
+	square,
 	round = "default",
 	snapTo,
 	disabled,
@@ -43,6 +47,7 @@ export const asButton = ({
 	shadow = true,
 	justify,
 	zIndex,
+	//
 	className,
 }: asButton.Props) => {
 	return {
@@ -50,15 +55,17 @@ export const asButton = ({
 		//
 		"data-tone": tone,
 		"data-theme": theme,
-		"data-size": size,
-		"data-round": round,
-		"data-snap-to": snapTo,
-		"data-disabled": disabled,
+		//
 		"data-background": background,
 		"data-border": border,
-		"data-z-index": zIndex,
+		"data-disabled": disabled,
 		"data-justify": justify,
+		"data-round": round,
 		"data-shadow": shadow,
+		"data-size": size,
+		"data-snap-to": snapTo,
+		"data-square": square,
+		"data-z-index": zIndex,
 		//
 		className: tvc("Button", className),
 	} as const;

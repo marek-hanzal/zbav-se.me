@@ -54,7 +54,6 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 					layout={"vertical-content-footer"}
 					gap={"md"}
 					height={"full"}
-					square={"md"}
 				>
 					<FeedTitleContainer
 						value={patch.query?.filter?.title ?? ""}

@@ -37,10 +37,10 @@ export namespace Dial {
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ ref, value, onChange, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, ...props }) => {
 	return (
 		<Container
-			data-ui={"Dial-Container"}
+			data-ui={"Dial"}
 			layout={"vertical-header-content"}
 			height={"full"}
 			gap={"sm"}

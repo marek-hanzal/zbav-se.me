@@ -45,7 +45,6 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 					height={"content"}
 					snap={"vertical"}
 					snapAlign={"center"}
-					square={"md"}
 				>
 					{uploads.map((upload) => {
 						return (

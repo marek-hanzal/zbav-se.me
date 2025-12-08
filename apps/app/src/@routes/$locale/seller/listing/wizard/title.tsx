@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { asBadge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
@@ -8,6 +7,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
+import { asButton } from "@use-pico/theme/button";
 import { sListingCreate } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
@@ -27,9 +27,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 				textTitle={"Listing title (title)"}
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							round: "full",
-							size: "md",
+							square: "default",
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/expire-at"}

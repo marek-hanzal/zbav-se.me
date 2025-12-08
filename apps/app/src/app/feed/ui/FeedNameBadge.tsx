@@ -54,9 +54,8 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 			>
 				<Container
 					layout={"vertical-content-footer"}
-					gap={"md"}
+					gap={"default"}
 					height={"full"}
-					square={"md"}
 				>
 					<FeedNameContainer
 						height={"full"}

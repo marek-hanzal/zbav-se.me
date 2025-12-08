@@ -1,10 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { asBadge } from "@use-pico/client/ui/badge";
-import { asButton, Button } from "@use-pico/client/ui/button";
+import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { asButton } from "@use-pico/theme/button";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
@@ -37,9 +37,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			<FlowContainer
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							round: "full",
-							size: "md",
+							square: "default",
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}

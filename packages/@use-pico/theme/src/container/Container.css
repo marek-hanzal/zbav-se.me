@@ -236,27 +236,6 @@
 		}
 	}
 
-	/** Gap */
-	.Container[data-gap="xs"] {
-		@apply gap-1;
-	}
-
-	.Container[data-gap="sm"] {
-		@apply gap-2;
-	}
-
-	.Container[data-gap="md"] {
-		@apply gap-3;
-	}
-
-	.Container[data-gap="lg"] {
-		@apply gap-4;
-	}
-
-	.Container[data-gap="xl"] {
-		@apply gap-5;
-	}
-
 	/** Square */
 	.Container[data-square="xs"] {
 		@apply p-1;

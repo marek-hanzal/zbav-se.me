@@ -1,9 +1,9 @@
-import { asButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
+import { asButton } from "@use-pico/theme/button";
 import { useRef } from "react";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
@@ -25,7 +25,7 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 
 	return (
 		<Container
-			data-ui={"SellerMenu-root"}
+			data-ui={"SellerMenu"}
 			position={"relative"}
 		>
 			<Fade scrollableRef={containerRef} />
@@ -45,7 +45,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 						justify: "start",
 						round: "default",
 						size: "xl",
-						background: true,
 					})}
 					to="/$locale/seller/listing/wizard/photos"
 					params={{

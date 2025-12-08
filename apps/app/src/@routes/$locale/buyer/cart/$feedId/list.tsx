@@ -4,7 +4,6 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { asBadge } from "@use-pico/theme/badge";
 import { asButton } from "@use-pico/theme/button";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";

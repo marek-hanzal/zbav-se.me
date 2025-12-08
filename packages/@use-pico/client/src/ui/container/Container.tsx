@@ -1,5 +1,5 @@
+import { asContainer } from "@use-pico/theme/container";
 import type { ComponentProps, FC } from "react";
-import { asContainer } from "./asContainer";
 
 export namespace Container {
 	export interface Props extends asContainer.PropsEx<Omit<ComponentProps<"div">, "onChange">> {
@@ -10,13 +10,14 @@ export namespace Container {
 export const Container: FC<Container.Props> = ({
 	tone,
 	theme,
+	//
 	height,
 	width,
 	layout,
 	scroll,
 	snap,
 	snapAlign,
-	square,
+	inner,
 	gap,
 	position,
 	disabled,
@@ -30,13 +31,14 @@ export const Container: FC<Container.Props> = ({
 			{...asContainer({
 				tone,
 				theme,
+				//
 				height,
 				width,
 				layout,
 				scroll,
 				snap,
 				snapAlign,
-				square,
+				inner,
 				gap,
 				position,
 				disabled,

@@ -51,7 +51,6 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 			<Container
 				layout={"vertical-content-footer"}
 				gap={"md"}
-				square={"md"}
 			>
 				<GalleryUpload
 					state={{

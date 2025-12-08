@@ -1,8 +1,9 @@
 import { tvc } from "@use-pico/cls";
+import type { Type } from "../type/Type";
 
 export namespace asContainer {
-	export type Tone = "primary";
-	export type Theme = "light" | "dark";
+	export type Tone = Type.Tone;
+	export type Theme = Type.Theme;
 	export type Layout =
 		//
 		| "vertical"
@@ -22,17 +23,9 @@ export namespace asContainer {
 	export type Scroll = "vertical" | "horizontal" | "hidden";
 	export type Snap = "vertical" | "horizontal";
 	export type SnapAlign = "start" | "center" | "end";
-	export type Square = "xs" | "sm" | "md" | "lg" | "xl";
-	export type Gap = "xs" | "sm" | "md" | "lg" | "xl";
-	export type SnapTo =
-		| "top-left"
-		| "top-center"
-		| "top-right"
-		| "left-center"
-		| "right-center"
-		| "bottom-left"
-		| "bottom-right"
-		| "bottom";
+	export type Inner = Type.Inner;
+	export type Gap = Type.Size;
+	export type SnapTo = Type.SnapTo;
 
 	export interface Props {
 		tone?: Tone;
@@ -44,7 +37,7 @@ export namespace asContainer {
 		scroll?: Scroll;
 		snap?: Snap;
 		snapAlign?: SnapAlign;
-		square?: Square;
+		inner?: Inner;
 		snapTo?: SnapTo;
 		gap?: Gap;
 		disabled?: boolean;
@@ -65,7 +58,7 @@ export const asContainer = ({
 	scroll,
 	snap,
 	snapAlign,
-	square,
+	inner,
 	gap,
 	snapTo,
 	disabled,
@@ -82,7 +75,7 @@ export const asContainer = ({
 		"data-height": height,
 		"data-width": width,
 		//
-		"data-square": square,
+		"data-inner": inner,
 		"data-gap": gap,
 		//
 		"data-snap-to": snapTo,

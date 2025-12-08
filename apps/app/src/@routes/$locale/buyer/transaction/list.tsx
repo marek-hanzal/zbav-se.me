@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { asBadge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { TransactionList } from "~/app/listing-transaction/ui/TransactionList";
@@ -22,9 +22,9 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 				textTitle={"Transactions (title)"}
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							round: "full",
-							size: "md",
+							square: "default",
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}

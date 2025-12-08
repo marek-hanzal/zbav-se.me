@@ -53,7 +53,7 @@ export const Route = createFileRoute("/$locale/register")({
 
 				<Container
 					ref={scrollerRef}
-					square={"md"}
+					inner={"default"}
 					layout={"vertical"}
 					scroll={"vertical"}
 				>

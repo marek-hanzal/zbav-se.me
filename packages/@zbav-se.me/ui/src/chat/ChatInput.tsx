@@ -125,7 +125,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 							data-ui={"ChatInput-BottomSheet-Container"}
 							layout={"vertical-flex"}
 							gap={"md"}
-							square={"md"}
+							inner={"default"}
 						>
 							{menu.content}
 						</Container>

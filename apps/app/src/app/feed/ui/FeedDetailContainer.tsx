@@ -49,7 +49,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 			height={"content"}
 			width={"full"}
 			disabled={feedDeleteMutation.isPending}
-			square={"md"}
 			{...props}
 		>
 			<VariantProvider

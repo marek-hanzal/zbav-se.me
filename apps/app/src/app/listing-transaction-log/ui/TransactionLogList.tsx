@@ -206,8 +206,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 					<Container
 						layout={"vertical-flex"}
-						gap={"md"}
-						square={"md"}
+						gap={"default"}
 					>
 						{data.data.map((log) => {
 							const isCurrent = lastLog.id === log.id;
@@ -232,7 +231,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					locale={locale}
 					side={side}
 					listingTransactionLog={lastLog}
-					square={"md"}
 				/>
 			)}
 		</Container>

@@ -1,10 +1,10 @@
 import { UserIcon } from "@use-pico/client/icon";
-import { asButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
+import { asButton } from "@use-pico/theme/button";
 import {
 	CartIcon,
 	FeedIcon,
@@ -52,14 +52,11 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					data-ui={"BuyerMenu-content"}
 					layout={"vertical-flex"}
 					gap={"sm"}
-					square={"md"}
+					inner={"default"}
 				>
 					<LinkTo
 						{...asButton({
-							tone: "primary",
-							theme: "light",
 							justify: "start",
-							round: "default",
 							size: "xl",
 						})}
 						icon={ListingIcon}
@@ -78,9 +75,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						<LinkTo
 							{...asButton({
 								tone: "secondary",
-								theme: "light",
 								justify: "start",
-								round: "default",
 								size: "xl",
 							})}
 							icon={CartIcon}
@@ -98,9 +93,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						<LinkTo
 							{...asButton({
 								tone: "secondary",
-								theme: "light",
 								justify: "start",
-								round: "default",
 								size: "xl",
 							})}
 							icon={TransactionIcon}
@@ -118,9 +111,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						<LinkTo
 							{...asButton({
 								tone: "secondary",
-								theme: "light",
 								justify: "start",
-								round: "default",
 								size: "xl",
 							})}
 							icon={FeedIcon}
@@ -139,9 +130,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					<LinkTo
 						{...asButton({
 							tone: "secondary",
-							theme: "light",
 							justify: "start",
-							round: "default",
 							size: "xl",
 						})}
 						icon={ShopIcon}
@@ -160,9 +149,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						<LinkTo
 							{...asButton({
 								tone: "secondary",
-								theme: "light",
 								justify: "start",
-								round: "default",
 								size: "xl",
 							})}
 							icon={SellerIcon}
@@ -180,9 +167,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						<LinkTo
 							{...asButton({
 								tone: "secondary",
-								theme: "light",
 								justify: "start",
-								round: "default",
 								size: "xl",
 							})}
 							icon={UserIcon}

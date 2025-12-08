@@ -125,7 +125,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						<Container
 							layout={"vertical-flex"}
 							gap={"sm"}
-							square={"md"}
 						>
 							<TransactionButton
 								locale={locale}
@@ -136,101 +135,91 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					</>
 				) : null}
 
-				<VariantProvider
-					cls={ThemeCls}
-					variant={{
-						tone: "primary",
-						theme: "light",
-					}}
+				<Container
+					data-ui={"ListingDetailContainer-info"}
+					layout={"vertical-flex"}
 				>
-					<Container
-						data-ui={"ListingDetailContainer-info"}
-						layout={"vertical-flex"}
-						gap={"sm"}
-						square={"md"}
-					>
-						{tools.includes("hero") ? null : (
-							<>
-								<BadgeValue
-									textLabel={"Listing price (label)"}
-									textValue={
-										listing.price > 0 ? (
-											<PriceInline
-												price={listing.price}
-												locale={locale}
-												currency={listing.currency}
-											/>
-										) : (
-											<Tx label={"Price - free"} />
-										)
-									}
-								/>
+					{tools.includes("hero") ? null : (
+						<>
+							<BadgeValue
+								textLabel={"Listing price (label)"}
+								textValue={
+									listing.price > 0 ? (
+										<PriceInline
+											price={listing.price}
+											locale={locale}
+											currency={listing.currency}
+										/>
+									) : (
+										<Tx label={"Price - free"} />
+									)
+								}
+							/>
 
-								<BadgeValue
-									textLabel={"Listing location (label)"}
-									textValue={listing.location.address}
-								/>
-							</>
-						)}
+							<BadgeValue
+								textLabel={"Listing location (label)"}
+								textValue={listing.location.address}
+							/>
+						</>
+					)}
 
-						<BadgeValue
-							textLabel={"Listing condition (label)"}
-							textValue={`Condition - Overall [${listing.condition}] (hint)`}
-						/>
+					<BadgeValue
+						textLabel={"Listing condition (label)"}
+						textValue={`Condition - Overall [${listing.condition}] (hint)`}
+					/>
 
-						<BadgeValue
-							textLabel={"Listing age (label)"}
-							textValue={`Condition - Age [${listing.age}] (hint)`}
-						/>
+					<BadgeValue
+						textLabel={"Listing age (label)"}
+						textValue={`Condition - Age [${listing.age}] (hint)`}
+					/>
 
-						<BadgeValue
-							textLabel={"Listing score hint (label)"}
-							textValue={
-								<withListingMetricsFetchQuery.Suspense
-									data={listing.id}
-									fallback={<Icon icon={SpinnerIcon} />}
-								>
-									{({ data }) => {
-										return toLocaleNumber({
-											locale,
-											number: data.score,
-											empty: "0",
-										});
-									}}
-								</withListingMetricsFetchQuery.Suspense>
-							}
-							action={
-								<Icon
-									icon={ShowIcon}
-									size={"sm"}
-								/>
-							}
-							onClick={() => setIsScore(true)}
-						/>
+					<BadgeValue
+						textLabel={"Listing score hint (label)"}
+						textValue={
+							<withListingMetricsFetchQuery.Suspense
+								data={listing.id}
+								fallback={<Icon icon={SpinnerIcon} />}
+							>
+								{({ data }) => {
+									return toLocaleNumber({
+										locale,
+										number: data.score,
+										empty: "0",
+									});
+								}}
+							</withListingMetricsFetchQuery.Suspense>
+						}
+						action={
+							<Icon
+								icon={ShowIcon}
+								size={"sm"}
+							/>
+						}
+						onClick={() => setIsScore(true)}
+					/>
 
-						<BadgeValue
-							textLabel={"Listing seller hint (label)"}
-							textValue={"- skore + link -"}
-							action={
-								<Icon
-									icon={ShowIcon}
-									size={"sm"}
-								/>
-							}
-						/>
+					<BadgeValue
+						textLabel={"Listing seller hint (label)"}
+						textValue={"- skore + link -"}
+						action={
+							<Icon
+								icon={ShowIcon}
+								size={"sm"}
+							/>
+						}
+					/>
 
-						<BadgeValue
-							textLabel={"Listing category (label)"}
-							textValue={
-								<CategoryInline
-									category={listing.category}
-									tone="secondary"
-									theme="light"
-								/>
-							}
-						/>
-					</Container>
-				</VariantProvider>
+					<BadgeValue
+						textLabel={"Listing category (label)"}
+						textValue={
+							<CategoryInline
+								category={listing.category}
+								tone="secondary"
+								theme="light"
+							/>
+						}
+					/>
+				</Container>
 
 				{tools.includes("destructive") ? (
 					<withListingFetchQuery.Suspense
@@ -251,7 +240,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 									data-ui="ListingDetailContainer-destructive"
 									layout={"vertical-flex"}
 									gap={"sm"}
-									square={"md"}
 								>
 									<ListingIgnoreButton listingId={listing.id} />
 
@@ -274,12 +262,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				>
 					{({ data }) => {
 						return (
-							<Container square={"md"}>
-								<ScoreContainer
-									locale={locale}
-									listingMetrics={data}
-								/>
-							</Container>
+							<ScoreContainer
+								locale={locale}
+								listingMetrics={data}
+							/>
 						);
 					}}
 				</withListingMetricsFetchQuery.Suspense>

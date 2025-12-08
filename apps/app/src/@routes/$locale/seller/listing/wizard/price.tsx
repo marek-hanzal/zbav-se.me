@@ -1,9 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { asBadge } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { useState } from "react";
@@ -37,9 +37,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				}
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							round: "full",
-							size: "md",
+							square: "default",
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/age"}
@@ -96,7 +96,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				<Dial
 					value={price}
 					onChange={setPrice}
-					square={"xl"}
 				/>
 			</TitleContainer>
 		);

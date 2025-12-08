@@ -7,7 +7,7 @@ import {
 	Icon,
 	SpinnerIcon,
 } from "@use-pico/client/icon";
-import { asBadge, BadgeValue } from "@use-pico/client/ui/badge";
+import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -15,6 +15,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
+import { asButton } from "@use-pico/theme/button";
 import { zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
@@ -38,9 +39,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							round: "full",
-							size: "md",
+							square: "default",
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/title"}
@@ -98,7 +99,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
-						{...asBadge({
+						{...asButton({
 							round: "full",
 							size: "md",
 						})}

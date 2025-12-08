@@ -67,9 +67,8 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 			>
 				<Container
 					layout={"vertical-content-footer"}
-					gap={"md"}
+					gap={"default"}
 					height={"full"}
-					square={"md"}
 				>
 					<CategorySelectionContainer
 						locale={locale}

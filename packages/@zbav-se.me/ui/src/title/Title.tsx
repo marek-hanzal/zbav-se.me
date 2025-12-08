@@ -27,7 +27,7 @@ export const Title: FC<Title.Props> = ({
 				"Title",
 				className,
 			]}
-			square={"md"}
+			inner={"default"}
 			{...props}
 		>
 			<div data-ui={"Title-wrapper"}>

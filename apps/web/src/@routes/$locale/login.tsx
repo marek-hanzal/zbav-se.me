@@ -114,7 +114,7 @@ export const Route = createFileRoute("/$locale/login")({
 					snap={"vertical"}
 					snapAlign={"center"}
 					gap={"md"}
-					square={"md"}
+					inner={"default"}
 				>
 					<Container layout={"vertical-centered"}>
 						<Status icon={<Logo />}>
