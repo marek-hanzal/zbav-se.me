@@ -44,7 +44,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 					params={{
 						locale,
 					}}
-					full
 				>
 					<Tile
 						iconEnabled={PostIcon}
@@ -59,7 +58,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Tile
 							iconEnabled={PublicIcon}
@@ -72,7 +70,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Tile
 							iconEnabled={TransactionIcon}
@@ -86,7 +83,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 					params={{
 						locale,
 					}}
-					full
 				>
 					<Tile
 						iconEnabled={ShopIcon}
@@ -100,7 +96,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Tile
 							iconEnabled={BuyerIcon}
@@ -113,7 +108,6 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Tile
 							iconEnabled={UserIcon}

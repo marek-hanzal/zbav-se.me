@@ -28,7 +28,6 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 							params={{
 								locale,
 							}}
-							full
 						>
 							<Button
 								iconEnabled={ArrowRightIcon}
@@ -46,7 +45,6 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 							params={{
 								locale,
 							}}
-							full
 						>
 							<Button
 								iconEnabled={ArrowRightIcon}

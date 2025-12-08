@@ -51,9 +51,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -70,7 +67,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 							uploadIds,
 						}}
 						disabled={!hasUploads || isUploading}
-						full
 					>
 						<Button
 							tone={"secondary"}

@@ -64,7 +64,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 							locationId,
 						}}
 						disabled={!locationId}
-						full
 					>
 						<Button
 							tone={"secondary"}

@@ -5,7 +5,7 @@
 	"sideEffects": false,
 	"scripts": {
 		"sdk": "openapi-ts",
-		"typecheck": "tsc --noEmit"
+		"typecheck": "tsgo --noEmit"
 	},
 	"dependencies": {
 		"@use-pico/client": "workspace:*",
@@ -15,11 +15,12 @@
 		"zod": "4.1.13"
 	},
 	"devDependencies": {
-		"@hey-api/openapi-ts": "0.88.0",
+		"@hey-api/openapi-ts": "0.88.1",
 		"@types/node": "24.10.1",
+		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3",
-		"vite": "7.2.6"
+		"vite": "7.2.7"
 	},
 	"exports": {
 		"./api/*": {

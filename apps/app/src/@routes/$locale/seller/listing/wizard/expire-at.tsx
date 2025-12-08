@@ -44,9 +44,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -63,7 +60,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 							expiresAt,
 						}}
 						disabled={!expiresAt}
-						full
 					>
 						<Button
 							tone={"secondary"}

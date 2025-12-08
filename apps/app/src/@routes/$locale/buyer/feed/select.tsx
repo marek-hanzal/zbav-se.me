@@ -58,7 +58,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 									locale,
 									id: feedId,
 								}}
-								full
 							>
 								{children}
 							</LinkTo>

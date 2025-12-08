@@ -75,7 +75,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 							...state,
 							condition,
 						}}
-						full
 						disabled={!selection.hasAny}
 					>
 						<Button

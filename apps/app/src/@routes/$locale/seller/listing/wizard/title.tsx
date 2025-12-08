@@ -48,9 +48,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -67,7 +64,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 							title,
 						}}
 						disabled={!title}
-						full
 					>
 						<Button
 							tone={"secondary"}

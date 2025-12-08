@@ -74,7 +74,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 							categoryId: selection.optional.singleId(),
 						}}
 						disabled={!selection.hasAny}
-						full
 					>
 						<Button
 							tone={"secondary"}

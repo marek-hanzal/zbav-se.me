@@ -56,9 +56,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -75,7 +72,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 							age,
 						}}
 						disabled={!selection.hasAny}
-						full
 					>
 						<Button
 							tone={"secondary"}

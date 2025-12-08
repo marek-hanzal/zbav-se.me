@@ -82,7 +82,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 															params={{
 																locale,
 															}}
-															full
 														>
 															<Button
 																iconEnabled={ArrowRightIcon}
@@ -99,7 +98,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 															params={{
 																locale,
 															}}
-															full
 														>
 															<Button
 																iconEnabled={ArrowRightIcon}
@@ -157,7 +155,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 										params={{
 											locale,
 										}}
-										full
 									>
 										<Button
 											iconEnabled={ArrowLeftIcon}
@@ -173,7 +170,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 										params={{
 											locale,
 										}}
-										full
 									>
 										<Button
 											iconEnabled={ArrowRightIcon}

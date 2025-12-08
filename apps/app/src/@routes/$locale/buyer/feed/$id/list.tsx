@@ -108,7 +108,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 											id: feed.id,
 										}}
 										resetScroll
-										full
 										onClick={() => {
 											setIsFeedSettings1(false);
 											containerRef.current?.scrollTo({
@@ -195,7 +194,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																	id: feed.id,
 																}}
 																resetScroll
-																full
 																onClick={() => {
 																	setIsFeedSettings2(false);
 																	containerRef.current?.scrollTo({
@@ -222,7 +220,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 															params={{
 																locale,
 															}}
-															full
 														>
 															<Button
 																iconEnabled={ArrowRightIcon}

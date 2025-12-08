@@ -152,8 +152,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<BadgeValue
 									textLabel={"Listing title (label)"}
@@ -173,8 +171,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<BadgeValue
 									textLabel={"Listing photos (label)"}
@@ -194,8 +190,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<CategoryValueList
 									categoryIdIn={
@@ -222,8 +216,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<ContainerValueList
 									textTitle={"Listing condition (label)"}
@@ -254,8 +246,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<ContainerValueList
 									textTitle={"Listing age (label)"}
@@ -284,8 +274,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<BadgeValue
 									textLabel={"Listing price (label)"}
@@ -311,8 +299,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<LocationBadgeValue
 									locationId={state.locationId}
@@ -333,8 +319,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locale,
 								}}
 								search={state}
-								display={"block"}
-								full
 							>
 								<ContainerValueList
 									textTitle={"Listing expire at (label)"}

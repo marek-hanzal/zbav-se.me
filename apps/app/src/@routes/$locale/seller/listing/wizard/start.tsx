@@ -49,7 +49,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Button
 							tone={"secondary"}

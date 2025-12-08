@@ -77,7 +77,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 							price,
 						}}
 						disabled={!price}
-						full
 					>
 						<Button
 							tone={"secondary"}

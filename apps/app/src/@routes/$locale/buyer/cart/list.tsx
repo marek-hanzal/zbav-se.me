@@ -40,7 +40,6 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 									locale,
 									feedId,
 								}}
-								full
 							>
 								{children}
 							</LinkTo>

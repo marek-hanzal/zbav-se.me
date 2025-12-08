@@ -5,7 +5,7 @@
 	"type": "module",
 	"sideEffects": false,
 	"scripts": {
-		"typecheck": "tsc --noEmit",
+		"typecheck": "tsgo --noEmit",
 		"no:build": "bun x rollup -c",
 		"test": "run-s test:*",
 		"test:code": "vitest --run"
@@ -25,6 +25,7 @@
 		"@rollup/plugin-typescript": "12.3.0",
 		"@types/node": "24.10.1",
 		"@types/react": "19.2.7",
+		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"npm-run-all2": "8.0.4",
 		"react": "19.2.1",

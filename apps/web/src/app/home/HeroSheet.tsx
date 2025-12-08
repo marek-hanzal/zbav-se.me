@@ -46,7 +46,6 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Button
 							iconEnabled={UnlockIcon}
@@ -66,7 +65,6 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 						params={{
 							locale,
 						}}
-						full
 					>
 						<Button
 							iconEnabled={UserIcon}
