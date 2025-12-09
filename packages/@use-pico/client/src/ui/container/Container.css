@@ -19,74 +19,37 @@
 	}
 
 	.Container[data-ui-layout="vertical-full"] {
-		/** Layout - setup grid */
 		display: grid;
 		grid-template-rows: 100%;
 		grid-template-columns: 1fr;
 		grid-auto-rows: 100%;
-
-		/** Setup sizes to match the grid */
-		width: 100%;
-		height: 100%;
-		min-width: 0;
-		min-height: 0;
 	}
 
 	.Container[data-ui-layout="vertical-header-content-footer"] {
-		/** Layout - setup grid */
 		display: grid;
 		grid-template-rows: min-content 1fr min-content;
 		grid-template-columns: 1fr;
 		grid-auto-rows: auto;
-
-		/** Setup sizes to match the grid */
-		width: 100%;
-		height: 100%;
-		min-width: 0;
-		min-height: 0;
 	}
 
 	.Container[data-ui-layout="vertical-header-content"] {
-		/** Layout - setup grid */
 		display: grid;
 		grid-template-rows: min-content 1fr;
 		grid-template-columns: 1fr;
 		grid-auto-rows: auto;
-
-		/** Setup sizes to match the grid */
-		width: 100%;
-		height: 100%;
-		min-width: 0;
-		min-height: 0;
 	}
 
 	.Container[data-ui-layout="vertical-content-footer"] {
-		/** Layout - setup grid */
 		display: grid;
 		grid-template-rows: 1fr min-content;
 		grid-template-columns: 1fr;
 		grid-auto-rows: auto;
-
-		/** Setup sizes to match the grid */
-		width: 100%;
-		height: 100%;
-		min-width: 0;
-		min-height: 0;
 	}
 
 	.Container[data-ui-layout="vertical-centered"] {
-		/** Layout - setup grid */
-		display: grid;
-		grid-template-rows: 1fr;
-		grid-template-columns: 1fr;
-		grid-auto-rows: auto;
-		justify-content: stretch;
-
-		/** Setup sizes to match the grid */
-		width: 100%;
-		height: 100%;
-		min-width: 0;
-		min-height: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.Container[data-ui-layout="vertical-flex"] {
@@ -107,17 +70,10 @@
 	}
 
 	.Container[data-ui-layout="horizontal-full"] {
-		/** Layout - setup grid */
 		display: grid;
 		grid-template-rows: 1fr;
 		grid-template-columns: 100%;
 		grid-auto-columns: 100%;
-
-		/** Setup sizes to match the grid */
-		width: 100%;
-		height: 100%;
-		min-width: 0;
-		min-height: 0;
 	}
 
 	.Container[data-ui-layout="horizontal-flex"] {

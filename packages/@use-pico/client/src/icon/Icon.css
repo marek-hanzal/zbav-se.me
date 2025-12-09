@@ -8,6 +8,10 @@
 
 	/** Sizes */
 
+	.Icon[data-ui-size="default"] {
+		@apply text-lg;
+	}
+
 	.Icon[data-ui-size="xs"] {
 		@apply text-sm;
 	}
