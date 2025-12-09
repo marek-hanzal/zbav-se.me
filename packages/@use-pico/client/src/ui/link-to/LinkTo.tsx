@@ -35,7 +35,9 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 			{iconPosition === "left" && (
 				<Icon
 					icon={icon}
-					size={"sm"}
+					ui={{
+						size: "sm",
+					}}
 					{...iconProps}
 				/>
 			)}
@@ -45,7 +47,9 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 			{iconPosition === "right" && (
 				<Icon
 					icon={icon}
-					size={"sm"}
+					ui={{
+						size: "sm",
+					}}
 					{...iconProps}
 				/>
 			)}

@@ -11,13 +11,13 @@
 		@apply from-white/0 via-slate-700/20 to-black/45;
 	}
 
-	.Fade-top {
+	.Fade[data-ui-top="true"] {
 		top: -1px;
 
 		@apply bg-linear-to-t;
 	}
 
-	.Fade-bottom {
+	.Fade[data-ui-bottom="true"] {
 		bottom: -1px;
 
 		@apply bg-linear-to-b;

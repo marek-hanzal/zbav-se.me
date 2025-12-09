@@ -1,4 +1,4 @@
-import { tvc, useCls } from "@use-pico/cls";
+import { useCls } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import { type FC, type Ref, useRef, useState } from "react";
@@ -68,7 +68,9 @@ export const Fulltext: FC<Fulltext.Props> = ({
 			>
 				<Icon
 					icon={"icon-[material-symbols-light--search]"}
-					size={"sm"}
+					ui={{
+						size: "sm",
+					}}
 				/>
 			</div>
 
@@ -101,10 +103,8 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				>
 					<Icon
 						icon={"icon-[lucide--send]"}
-						size="sm"
 						onClick={handleSubmit}
-						tone={"neutral"}
-						className={tvc(
+						className={
 							isDisabled
 								? [
 										"opacity-25",
@@ -114,8 +114,12 @@ export const Fulltext: FC<Fulltext.Props> = ({
 										"opacity-50",
 										"hover:opacity-75",
 										"cursor-pointer",
-									],
-						)}
+									]
+						}
+						ui={{
+							tone: "neutral",
+							size: "sm",
+						}}
 					/>
 				</div>
 			) : (
@@ -126,11 +130,13 @@ export const Fulltext: FC<Fulltext.Props> = ({
 					>
 						<Icon
 							icon={"icon-[gridicons--cross]"}
-							size="sm"
-							tone={"secondary"}
 							onClick={() => {
 								setSearch("");
 								set(undefined);
+							}}
+							ui={{
+								size: "sm",
+								tone: "secondary",
 							}}
 						/>
 					</div>

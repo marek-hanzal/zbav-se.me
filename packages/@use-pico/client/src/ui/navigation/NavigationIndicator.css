@@ -10,11 +10,11 @@
 		@apply h-1 transition-opacity animate-pulse;
 	}
 
-	.NavigationIndicator[data-visible="true"] {
+	.NavigationIndicator[data-ui-visible="true"] {
 		opacity: 1;
 	}
 
-	.NavigationIndicator[data-visible="false"] {
+	.NavigationIndicator[data-ui-visible="false"] {
 		opacity: 0;
 	}
 }

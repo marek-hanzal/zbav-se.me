@@ -84,9 +84,11 @@ export const More = <TValues extends EntitySchema.Type>({
 							iconEnabled={icon}
 							iconProps={iconProps}
 							disabled={disabled}
-							size={"xs"}
-							tone="subtle"
-							theme="light"
+							ui={{
+								size: "xs",
+								tone: "subtle",
+								theme: "light",
+							}}
 							{...actionProps}
 						/>
 					}

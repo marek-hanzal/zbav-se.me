@@ -1,5 +1,5 @@
 @layer components {
-	[data-root="ContainerValueList-Badge-title-wrapper"] {
+	[data-ui="ContainerValueList-Badge-title-wrapper"] {
 		@apply flex flex-row items-center justify-between h-fit w-full gap-2 px-4 py-3 rounded-md;
 	}
 

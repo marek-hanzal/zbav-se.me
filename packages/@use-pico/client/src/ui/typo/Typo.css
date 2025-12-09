@@ -5,52 +5,52 @@
 
 	/** Sizes */
 
-	.Typo[data-size="xs"] {
+	.Typo[data-ui-size="xs"] {
 		@apply text-xs;
 	}
-	.Typo[data-size="sm"] {
+	.Typo[data-ui-size="sm"] {
 		@apply text-sm;
 	}
-	.Typo[data-size="md"] {
+	.Typo[data-ui-size="md"] {
 		@apply text-base;
 	}
-	.Typo[data-size="lg"] {
+	.Typo[data-ui-size="lg"] {
 		@apply text-lg;
 	}
-	.Typo[data-size="xl"] {
+	.Typo[data-ui-size="xl"] {
 		@apply text-xl;
 	}
-	.Typo[data-size="2xl"] {
+	.Typo[data-ui-size="2xl"] {
 		@apply text-2xl;
 	}
-	.Typo[data-size="3xl"] {
+	.Typo[data-ui-size="3xl"] {
 		@apply text-3xl;
 	}
-	.Typo[data-size="4xl"] {
+	.Typo[data-ui-size="4xl"] {
 		@apply text-4xl;
 	}
 
 	/** Display */
-	.Typo[data-display="block"] {
+	.Typo[data-ui-display="block"] {
 		display: block;
 	}
-	.Typo[data-display="inline"] {
+	.Typo[data-ui-display="inline"] {
 		display: inline;
 	}
 
 	/** Font */
-	.Typo[data-font="light"] {
+	.Typo[data-ui-font="light"] {
 		@apply font-light;
 	}
-	.Typo[data-font="normal"] {
+	.Typo[data-ui-font="normal"] {
 		@apply font-normal;
 	}
-	.Typo[data-font="bold"] {
+	.Typo[data-ui-font="bold"] {
 		@apply font-bold;
 	}
 
 	/** Wrap */
-	.Typo[data-wrap="wrap"] {
+	.Typo[data-ui-wrap="wrap"] {
 		min-width: 0;
 		max-width: 100%;
 		white-space: normal;
@@ -61,7 +61,7 @@
 		word-break: break-all;
 	}
 
-	.Typo[data-wrap="nowrap"] {
+	.Typo[data-ui-wrap="nowrap"] {
 		min-width: 0;
 		max-width: 100%;
 		text-wrap: nowrap;
@@ -69,7 +69,7 @@
 	}
 
 	/** Truncate */
-	.Typo[data-truncate="true"] {
+	.Typo[data-ui-truncate="true"] {
 		min-width: 0;
 		max-width: 100%;
 		text-wrap: nowrap;
@@ -79,24 +79,24 @@
 	}
 
 	/** Italic */
-	.Typo[data-italic="true"] {
+	.Typo[data-ui-italic="true"] {
 		font-style: italic;
 	}
 
 	/** Tone */
-	.Typo[data-tone="primary"][data-theme="light"] {
+	.Typo[data-ui-tone="primary"][data-ui-theme="light"] {
 		@apply tone-primary-light;
 	}
 
-	.Typo[data-tone="primary"][data-theme="dark"] {
+	.Typo[data-ui-tone="primary"][data-ui-theme="dark"] {
 		@apply tone-primary-dark;
 	}
 
-	.Typo[data-tone="secondary"][data-theme="light"] {
+	.Typo[data-ui-tone="secondary"][data-ui-theme="light"] {
 		@apply tone-secondary-light;
 	}
 
-	.Typo[data-tone="secondary"][data-theme="dark"] {
+	.Typo[data-ui-tone="secondary"][data-ui-theme="dark"] {
 		@apply tone-secondary-dark;
 	}
 }

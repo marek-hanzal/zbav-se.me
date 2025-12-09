@@ -122,9 +122,10 @@ const DefaultClose: Tour.Close.RenderFn = ({ close }) => {
 			iconEnabled={CloseIcon}
 			iconDisabled={CloseIcon}
 			onClick={close}
-			size="sm"
-			tone={"neutral"}
-			theme={"light"}
+			ui={{
+				size: "sm",
+				tone: "neutral",
+			}}
 		/>
 	);
 };
@@ -163,8 +164,10 @@ const DefaultPrevButton: Tour.PrevButton.RenderFn = ({ prev, disabled }) => {
 			iconDisabled={ArrowLeftIcon}
 			onClick={prev}
 			disabled={disabled}
-			size="sm"
 			label="Previous (tour)"
+			ui={{
+				size: "sm",
+			}}
 		/>
 	);
 };
@@ -176,8 +179,10 @@ const DefaultNextButton: Tour.NextButton.RenderFn = ({ next, disabled }) => {
 			iconDisabled={ArrowRightIcon}
 			onClick={next}
 			disabled={disabled}
-			size="sm"
 			label="Next (tour)"
+			ui={{
+				size: "sm",
+			}}
 		/>
 	);
 };
@@ -186,9 +191,11 @@ const DefaultFinishButton: Tour.FinishButton.RenderFn = ({ finish }) => {
 	return (
 		<Button
 			onClick={finish}
-			size="sm"
-			tone="warning"
 			label="Finish (tour)"
+			ui={{
+				size: "sm",
+				tone: "warning",
+			}}
 		/>
 	);
 };

@@ -44,9 +44,11 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tone={"danger"}
-							theme={"light"}
-							size={"xs"}
+							ui={{
+								tone: "danger",
+								theme: "light",
+								size: "xs",
+							}}
 						>
 							{entity.component}
 						</Badge>
@@ -55,9 +57,11 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tone={"danger"}
-							theme={"light"}
-							size={"xs"}
+							ui={{
+								tone: "danger",
+								theme: "light",
+								size: "xs",
+							}}
 						>
 							<Tx label={entity.message} />
 						</Badge>
@@ -69,8 +73,10 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tone={"danger"}
-							theme={"light"}
+							ui={{
+								tone: "danger",
+								theme: "light",
+							}}
 						>
 							{entity.component}
 						</Badge>
@@ -79,8 +85,10 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 					return (
 						<Badge
 							key={`${entity.id}`}
-							tone={"danger"}
-							theme={"light"}
+							ui={{
+								tone: "danger",
+								theme: "light",
+							}}
 						>
 							<Mx label={entity.message} />
 						</Badge>
@@ -89,8 +97,10 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 			}}
 			actionProps={{
 				iconEnabled: ErrorIcon,
-				tone: "danger",
-				theme: "light",
+				ui: {
+					tone: "danger",
+					theme: "light",
+				},
 			}}
 			modalProps={{
 				size: "sm",

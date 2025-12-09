@@ -8,28 +8,28 @@
 
 	/** Sizes */
 
-	.Icon[data-size="xs"] {
+	.Icon[data-ui-size="xs"] {
 		@apply text-sm;
 	}
-	.Icon[data-size="sm"] {
+	.Icon[data-ui-size="sm"] {
 		@apply text-base;
 	}
-	.Icon[data-size="md"] {
+	.Icon[data-ui-size="md"] {
 		@apply text-lg;
 	}
-	.Icon[data-size="lg"] {
+	.Icon[data-ui-size="lg"] {
 		@apply text-xl;
 	}
-	.Icon[data-size="xl"] {
+	.Icon[data-ui-size="xl"] {
 		@apply text-2xl;
 	}
-	.Icon[data-size="2xl"] {
+	.Icon[data-ui-size="2xl"] {
 		@apply text-3xl;
 	}
-	.Icon[data-size="3xl"] {
+	.Icon[data-ui-size="3xl"] {
 		@apply text-4xl;
 	}
-	.Icon[data-size="4xl"] {
+	.Icon[data-ui-size="4xl"] {
 		@apply text-5xl;
 	}
 }
