@@ -94,7 +94,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							titleProps={{
 								ui: {
 									font: "normal",
-									size: "md",
 								},
 							}}
 						/>

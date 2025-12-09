@@ -189,7 +189,7 @@ export const EventBadge: FC<EventBadge.Props> = ({
 				})}
 				ui={{
 					font: "normal",
-					size: "sm",
+					text: "sm",
 				}}
 				{...timestampProps}
 			/>

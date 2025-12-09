@@ -35,7 +35,7 @@ export const CategoryInline: FC<CategoryInline.Props> = ({
 					ui={{
 						tone: "secondary",
 						theme: "light",
-						size: "xs",
+						text: "xs",
 					}}
 					{...textGroupProps}
 				/>
@@ -45,7 +45,7 @@ export const CategoryInline: FC<CategoryInline.Props> = ({
 					ui={{
 						tone: "secondary",
 						theme: "light",
-						size: "lg",
+						text: "lg",
 						font: "bold",
 					}}
 					{...textCategoryProps}

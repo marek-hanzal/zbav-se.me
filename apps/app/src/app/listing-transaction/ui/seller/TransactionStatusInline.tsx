@@ -24,7 +24,7 @@ export const TransactionStatusInline: FC<TransactionStatusInline.Props> = ({
 				.with("expired", () => "Transaction expired - seller (label)")
 				.exhaustive()}
 			ui={{
-				size: "sm",
+				text: "sm",
 				font: "normal",
 			}}
 			{...props}

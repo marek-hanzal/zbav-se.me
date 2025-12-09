@@ -139,7 +139,7 @@ const DefaultDescription: Tour.Description.RenderFn = ({ description }) => {
 		<Typo
 			label={description}
 			ui={{
-				size: "sm",
+				text: "sm",
 				tone: "secondary",
 				theme: "light",
 			}}
@@ -152,7 +152,7 @@ const DefaultProgress: Tour.Progress.RenderFn = ({ progress, percent, total }) =
 		<Typo
 			label={`${progress} / ${total} (${percent.toFixed(0)}%)`}
 			ui={{
-				size: "sm",
+				text: "sm",
 				font: "bold",
 				tone: "primary",
 				theme: "light",

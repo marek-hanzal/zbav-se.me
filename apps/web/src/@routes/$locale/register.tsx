@@ -258,7 +258,7 @@ export const Route = createFileRoute("/$locale/register")({
 									<Tx
 										label={"Agreement with (label)"}
 										ui={{
-											size: "sm",
+											text: "sm",
 											font: "bold",
 										}}
 									/>
@@ -274,7 +274,7 @@ export const Route = createFileRoute("/$locale/register")({
 											label={"ToS agreement (label)"}
 											ui={{
 												tone: "link",
-												size: "lg",
+												text: "lg",
 											}}
 										/>
 									</LinkTo>
@@ -290,7 +290,7 @@ export const Route = createFileRoute("/$locale/register")({
 											label={"Privacy policy (label)"}
 											ui={{
 												tone: "link",
-												size: "lg",
+												text: "lg",
 											}}
 										/>
 									</LinkTo>

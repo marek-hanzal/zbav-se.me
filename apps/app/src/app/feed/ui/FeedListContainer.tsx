@@ -102,7 +102,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 									data-ui="FeedListContainer-first-feed-hint"
 									label={"First feed (hint)"}
 									ui={{
-										size: "sm",
+										text: "sm",
 										tone: "subtle",
 									}}
 								/>

@@ -93,7 +93,7 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({
 									)
 									.exhaustive()}
 								ui={{
-									size: "md",
+									text: "md",
 								}}
 							/>
 						</Button>

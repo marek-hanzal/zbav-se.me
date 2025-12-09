@@ -41,7 +41,7 @@ export const Markdown: FC<Markdown.Props> = ({
 							<Typo
 								label={children}
 								ui={{
-									size: "xl",
+									text: "xl",
 									font: "bold",
 								}}
 							/>
@@ -52,7 +52,7 @@ export const Markdown: FC<Markdown.Props> = ({
 							<Typo
 								label={children}
 								ui={{
-									size: "lg",
+									text: "lg",
 									font: "normal",
 								}}
 							/>

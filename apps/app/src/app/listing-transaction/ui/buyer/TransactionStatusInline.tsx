@@ -11,6 +11,7 @@ export namespace TransactionStatusInline {
 
 export const TransactionStatusInline: FC<TransactionStatusInline.Props> = ({
 	transactionStatus,
+	ui,
 	...props
 }) => {
 	return (
@@ -25,7 +26,8 @@ export const TransactionStatusInline: FC<TransactionStatusInline.Props> = ({
 				.exhaustive()}
 			ui={{
 				font: "normal",
-				size: "sm",
+				text: "sm",
+				...ui,
 			}}
 			{...props}
 		/>

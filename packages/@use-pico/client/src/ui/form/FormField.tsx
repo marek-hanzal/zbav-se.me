@@ -81,7 +81,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 								<Typo
 									label={label}
 									ui={{
-										size: "md",
+										text: "md",
 										font: "normal",
 									}}
 								/>
@@ -96,7 +96,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 							label={hint}
 							ui={{
 								tone: "subtle",
-								size: "md",
+								text: "md",
 								italic: true,
 							}}
 						/>

@@ -91,7 +91,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					<Typo
 						label={listingTransaction.title}
 						ui={{
-							size: "sm",
+							text: "sm",
 							truncate: true,
 						}}
 					/>

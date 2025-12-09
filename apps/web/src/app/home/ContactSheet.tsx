@@ -24,7 +24,7 @@ export const ContactSheet: FC = () => {
 					label={"info@zbav-se.me"}
 					ui={{
 						font: "bold",
-						size: "xl",
+						text: "xl",
 					}}
 				/>
 			</Status>

@@ -45,7 +45,7 @@ export const FeaturesSheet: FC = () => {
 							label={"Landing - Feature 1 (title) - hint"}
 							ui={{
 								display: "block",
-								size: "sm",
+								text: "sm",
 							}}
 						/>
 					</TypoIcon>
@@ -65,7 +65,7 @@ export const FeaturesSheet: FC = () => {
 							label={"Landing - Feature 2 (title) - hint"}
 							ui={{
 								display: "block",
-								size: "sm",
+								text: "sm",
 							}}
 						/>
 					</TypoIcon>
@@ -85,7 +85,7 @@ export const FeaturesSheet: FC = () => {
 							label={"Landing - Feature 3 (title) - hint"}
 							ui={{
 								display: "block",
-								size: "sm",
+								text: "sm",
 							}}
 						/>
 					</TypoIcon>
@@ -105,7 +105,7 @@ export const FeaturesSheet: FC = () => {
 							label={"Landing - Feature 4 (title) - hint"}
 							ui={{
 								display: "block",
-								size: "sm",
+								text: "sm",
 							}}
 						/>
 					</TypoIcon>
@@ -125,7 +125,7 @@ export const FeaturesSheet: FC = () => {
 							label={"Landing - Feature 5 (title) - hint"}
 							ui={{
 								display: "block",
-								size: "sm",
+								text: "sm",
 							}}
 						/>
 					</TypoIcon>
