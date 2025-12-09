@@ -1,0 +1,44 @@
+@theme {
+	--color-subtle-50: var(--color-slate-50);
+	--color-subtle-100: var(--color-slate-100);
+	--color-subtle-200: var(--color-slate-200);
+	--color-subtle-300: var(--color-slate-300);
+	--color-subtle-400: var(--color-slate-400);
+	--color-subtle-500: var(--color-slate-500);
+	--color-subtle-600: var(--color-slate-600);
+	--color-subtle-700: var(--color-slate-700);
+	--color-subtle-800: var(--color-slate-800);
+	--color-subtle-900: var(--color-slate-900);
+
+	--color-subtle-xs: var(--color-subtle-50);
+	--color-subtle-sm: var(--color-subtle-100);
+	--color-subtle-md: var(--color-subtle-500);
+	--color-subtle-lg: var(--color-subtle-700);
+	--color-subtle-xl: var(--color-subtle-900);
+}
+
+@utility tone-subtle-light {
+	--color-text: var(--color-subtle-xl);
+	--color-background: var(--color-subtle-xs);
+	--color-border: color-mix(in srgb, var(--color-subtle-md) 30%, transparent);
+
+	@apply shadow-subtle-md/20;
+}
+
+@utility tone-subtle-dark {
+	--color-text: var(--color-subtle-xs);
+	--color-background: var(--color-subtle-xl);
+	--color-border: var(--color-subtle-md);
+
+	@apply shadow-subtle-md/20;
+}
+
+@layer components {
+	[data-ui-tone="subtle"][data-ui-theme="light"] {
+		@apply tone-subtle-light;
+	}
+
+	[data-ui-tone="subtle"][data-ui-theme="dark"] {
+		@apply tone-subtle-dark;
+	}
+}

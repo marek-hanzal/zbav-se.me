@@ -43,6 +43,7 @@ export namespace uiContainer {
 		round?: CoolUi.Round;
 		//
 		disabled?: boolean;
+		background?: boolean;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
