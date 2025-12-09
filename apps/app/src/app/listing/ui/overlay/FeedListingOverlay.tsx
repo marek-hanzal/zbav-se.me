@@ -17,14 +17,18 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 				price={listing.price}
 				locale={locale}
 				currency={listing.currency}
-				snapTo={"top-center"}
-				opacity={"subtle"}
+				ui={{
+					snapTo: "top-center",
+					opacity: "subtle",
+				}}
 			/>
 
 			<ListingLocation
 				location={listing.location.address}
-				snapTo={"bottom"}
-				opacity={"subtle"}
+				ui={{
+					snapTo: "bottom",
+					opacity: "subtle",
+				}}
 			/>
 		</>
 	);

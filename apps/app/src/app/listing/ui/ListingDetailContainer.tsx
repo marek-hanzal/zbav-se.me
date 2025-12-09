@@ -75,37 +75,47 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 		>
 			<Container
 				data-ui={"ListingDetailContainer-root"}
-				layout={"vertical-flex"}
-				gap={"lg"}
+				ui={{
+					layout: "vertical-flex",
+					gap: "lg",
+				}}
 				{...props}
 			>
 				{tools.includes("hero") ? (
 					<>
 						<Container
 							data-ui={"ListingDetailContainer-image"}
-							position={"relative"}
+							ui={{
+								position: "relative",
+							}}
 						>
 							<ListingPrice
 								price={listing.price}
 								locale={locale}
 								currency={listing.currency}
-								snapTo={"top-center"}
+								ui={{
+									snapTo: "top-center",
+								}}
 							/>
 
 							<ListingLocation
 								location={listing.location.address}
-								snapTo={"bottom"}
+								ui={{
+									snapTo: "bottom",
+								}}
 							/>
 
 							{feedId ? (
 								<CartToggleButton
-									tone={"secondary"}
 									feedId={feedId}
 									listingId={listing.id}
 									label={null}
-									snapTo={"top-right"}
-									round={"full"}
-									size={"lg"}
+									ui={{
+										tone: "secondary",
+										round: "full",
+										size: "lg",
+										snapTo: "top-right",
+									}}
 								/>
 							) : null}
 
@@ -123,8 +133,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						</Container>
 
 						<Container
-							layout={"vertical-flex"}
-							gap={"sm"}
+							ui={{
+								layout: "vertical-flex",
+								gap: "sm",
+							}}
 						>
 							<TransactionButton
 								locale={locale}
@@ -137,7 +149,9 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 				<Container
 					data-ui={"ListingDetailContainer-info"}
-					layout={"vertical-flex"}
+					ui={{
+						layout: "vertical-flex",
+					}}
 				>
 					{tools.includes("hero") ? null : (
 						<>
@@ -192,7 +206,9 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						action={
 							<Icon
 								icon={ShowIcon}
-								size={"sm"}
+								ui={{
+									size: "sm",
+								}}
 							/>
 						}
 						onClick={() => setIsScore(true)}
@@ -204,7 +220,9 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						action={
 							<Icon
 								icon={ShowIcon}
-								size={"sm"}
+								ui={{
+									size: "sm",
+								}}
 							/>
 						}
 					/>
@@ -238,8 +256,10 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							return (
 								<Container
 									data-ui="ListingDetailContainer-destructive"
-									layout={"vertical-flex"}
-									gap={"sm"}
+									ui={{
+										layout: "vertical-flex",
+										gap: "sm",
+									}}
 								>
 									<ListingIgnoreButton listingId={listing.id} />
 

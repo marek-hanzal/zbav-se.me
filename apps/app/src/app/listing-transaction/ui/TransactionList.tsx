@@ -23,6 +23,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	side,
 	renderEmptyFn,
 	state,
+	ui,
 	...props
 }) => {
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -32,9 +33,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionList"}
-			position={"relative"}
-			style={{
-				contain: "content",
+			ui={{
+				position: "relative",
+				...ui,
 			}}
 		>
 			<Fade
@@ -45,9 +46,11 @@ export const TransactionList: FC<TransactionList.Props> = ({
 			<Container
 				ref={containerRef}
 				data-ui={"TransactionList-Container"}
-				layout={"vertical-flex"}
-				gap={"md"}
-				scroll={"vertical"}
+				ui={{
+					layout: "vertical-flex",
+					gap: "default",
+					scroll: "vertical",
+				}}
 				{...props}
 			>
 				<withListingTransactionCollectionQuery.Suspense
@@ -98,7 +101,9 @@ export const TransactionList: FC<TransactionList.Props> = ({
 						return (
 							<Container
 								data-ui={"TransactionList-Container-empty"}
-								layout={"vertical-centered"}
+								ui={{
+									layout: "vertical-centered",
+								}}
 							>
 								{renderEmptyFn({
 									icon: TransactionIcon,

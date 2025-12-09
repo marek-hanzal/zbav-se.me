@@ -48,15 +48,23 @@ export const FeedList: FC<FeedList.Props> = ({
 	}
 
 	return (
-		<Container position={"relative"}>
+		<Container
+			data-ui="FeedListContainer-FeedList"
+			ui={{
+				position: "relative",
+			}}
+		>
 			<Fade scrollableRef={scrollableRef} />
 
 			<Container
+				data-ui="FeedListContainer-FeedList-content"
 				ref={scrollableRef}
-				layout={"vertical-flex"}
-				scroll={"vertical"}
-				gap={"md"}
-				position={"relative"}
+				ui={{
+					layout: "vertical-flex",
+					scroll: "vertical",
+					gap: "default",
+					position: "relative",
+				}}
 				{...props}
 			>
 				{feedCollectionQuery.data.data.map((feed) => {

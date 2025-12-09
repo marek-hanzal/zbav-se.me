@@ -45,20 +45,22 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
 						iconProps={{
 							ui: {
 								size: "md",
 							},
 						}}
+						ui={{
+							tone: "secondary",
+						}}
 						confirmProps={{
-							ui: {
-								tone: "danger",
-							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
 								});
+							},
+							ui: {
+								tone: "danger",
 							},
 						}}
 					/>
@@ -90,10 +92,12 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 				}
 			>
 				<Container
-					layout={"vertical-centered"}
-					gap={"md"}
-					height={"auto"}
-					width={"full"}
+					ui={{
+						layout: "vertical-centered",
+						gap: "md",
+						height: "auto",
+						width: "full",
+					}}
 				>
 					<Status
 						textTitle={"Listing title (title)"}

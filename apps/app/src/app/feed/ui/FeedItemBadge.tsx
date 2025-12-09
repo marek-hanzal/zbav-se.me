@@ -47,6 +47,8 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 	tools,
 	count,
 	linkTo,
+	ui,
+	className,
 	...props
 }) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
@@ -55,15 +57,18 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 		<Badge
 			data-ui={"FeedItemBadge"}
 			data-id={feed.id}
-			tone={"primary"}
 			className={tvc([
-				"relative",
-				"p-0",
-				"w-full",
 				"h-48",
-				"contain-content",
+				className,
 			])}
-			round={"md"}
+			ui={{
+				tone: "primary",
+				round: "md",
+				position: "relative",
+				width: "full",
+				size: undefined,
+				...ui,
+			}}
 			{...props}
 		>
 			{linkTo.header({
@@ -83,10 +88,11 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 			})}
 
 			<Badge
-				snapTo={"top"}
-				round={"md"}
-				tone={"secondary"}
 				className={"h-fit"}
+				ui={{
+					round: "md",
+					tone: "secondary",
+				}}
 			>
 				<Tx
 					label={feed.name}
@@ -103,12 +109,14 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 						set: setIsFeedSettings,
 					}}
 					iconEnabled={FeedIcon}
-					tone={"secondary"}
-					size={"md"}
-					snapTo={"bottom-left"}
 					feed={feed}
 					defaultOpen={defaultOpen}
 					noDelete={false}
+					ui={{
+						tone: "secondary",
+						size: "md",
+						snapTo: "bottom-left",
+					}}
 				/>
 			) : null}
 
@@ -116,7 +124,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 				locale={locale}
 				count={count}
 				query={feed.query}
-				snapTo={"bottom-right"}
 			/>
 		</Badge>
 	);

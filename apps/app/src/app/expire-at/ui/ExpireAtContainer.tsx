@@ -16,16 +16,24 @@ export namespace ExpireAtContainer {
 	}
 }
 
-export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange, ...props }) => {
+export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({
+	value,
+	onChange,
+	ui,
+	...props
+}) => {
 	const expireId = useId();
 
 	return (
 		<Container
 			data-ui="ExpireAtContainer"
-			layout={"vertical-flex"}
-			gap={"sm"}
-			height={"auto"}
-			width={"full"}
+			ui={{
+				layout: "vertical-flex",
+				height: "auto",
+				width: "full",
+				gap: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			{Object.values(tListingExpireEnum).map((expire) => {
@@ -43,7 +51,6 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 							onClick={() => {
 								onChange(expire);
 							}}
-							size={"xl"}
 							className={[
 								"flex",
 								"flex-row",
@@ -51,6 +58,9 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({ value, onChange
 								"justify-between",
 								"gap-1",
 							]}
+							ui={{
+								size: "xl",
+							}}
 						>
 							<Tx
 								label={`Expire in ${expire}`}

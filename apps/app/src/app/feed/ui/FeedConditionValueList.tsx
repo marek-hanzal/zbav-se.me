@@ -55,7 +55,9 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 				action={
 					<Icon
 						icon={EditIcon}
-						size={"sm"}
+						ui={{
+							size: "sm",
+						}}
 					/>
 				}
 				onClick={() => setIsEdit(true)}
@@ -71,17 +73,16 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 				}}
 			>
 				<Container
-					layout={"vertical-content-footer"}
-					gap={"default"}
-					height={"full"}
+					ui={{
+						layout: "vertical-content-footer",
+						height: "full",
+						gap: "default",
+					}}
 				>
 					<ConditionContainer selection={conditionSelection} />
 
 					<Button
-						tone={"secondary"}
-						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
@@ -97,6 +98,11 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 									},
 								},
 							});
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
 					/>
 				</Container>

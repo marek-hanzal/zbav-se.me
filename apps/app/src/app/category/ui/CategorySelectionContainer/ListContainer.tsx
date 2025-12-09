@@ -76,10 +76,13 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	return categoryQuery.data.data.length > 0 ? (
 		<Container
+			data-ui="CategorySelectionContainer-ListContainer"
 			ref={mergedRef}
-			layout={"vertical-flex"}
-			scroll={"vertical"}
-			gap={"md"}
+			ui={{
+				layout: "vertical-flex",
+				scroll: "vertical",
+				gap: "default",
+			}}
 			{...props}
 		>
 			{categoryQuery.data.data.map((item) => {

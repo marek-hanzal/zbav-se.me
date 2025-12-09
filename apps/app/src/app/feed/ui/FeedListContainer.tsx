@@ -61,12 +61,16 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 					return (
 						<Container
 							data-ui={"FeedListContainer-first-feed"}
-							layout={"vertical-content-footer"}
-							gap={"md"}
+							ui={{
+								layout: "vertical-content-footer",
+								gap: "default",
+							}}
 						>
 							<FeedNameContainer
-								height={"full"}
 								value={name}
+								ui={{
+									height: "full",
+								}}
 								onChange={(value) => {
 									setChange(true);
 									setName(value);
@@ -103,10 +107,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 							</FeedNameContainer>
 
 							<Button
-								tone={"secondary"}
-								theme={"dark"}
 								label={"Feed - save (button)"}
-								size={"xl"}
 								loading={feedCreateMutation.isPending}
 								disabled={!change || !name || feedCreateMutation.isPending}
 								onClick={() => {
@@ -136,8 +137,10 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 				return (
 					<Container
 						data-ui={"FeedListContainer-root"}
-						layout={isLimitReached ? "vertical" : "vertical-content-footer"}
-						gap={"md"}
+						ui={{
+							layout: isLimitReached ? "vertical" : "vertical-content-footer",
+							gap: "md",
+						}}
 						{...props}
 					>
 						<FeedList

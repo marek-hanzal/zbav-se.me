@@ -49,8 +49,10 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 			{...props}
 		>
 			<Container
-				layout={"vertical-content-footer"}
-				gap={"md"}
+				ui={{
+					layout: "vertical-content-footer",
+					gap: "default",
+				}}
 			>
 				<GalleryUpload
 					state={{
@@ -71,12 +73,11 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 				>
 					<ConfirmButton
 						label={"Cancel (button)"}
-						tone={"primary"}
-						theme={"light"}
-						size={"xl"}
 						confirmProps={{
-							tone: "danger",
-							theme: "dark",
+							ui: {
+								tone: "danger",
+								theme: "dark",
+							},
 							onClick() {
 								state.set(false);
 								setUploadIds([]);
@@ -84,17 +85,24 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 							},
 						}}
 						disabled={mutation.isPending}
+						ui={{
+							tone: "primary",
+							theme: "light",
+							size: "xl",
+						}}
 					/>
 
 					<Button
 						label={"Upload gallery (button)"}
-						size={"xl"}
-						tone={"secondary"}
-						theme={"light"}
 						disabled={mutation.isPending || uploadIds.length === 0}
 						loading={mutation.isPending}
 						onClick={() => {
 							mutation.mutate(toMutation(uploadIds));
+						}}
+						ui={{
+							size: "xl",
+							tone: "secondary",
+							theme: "light",
 						}}
 					/>
 				</div>

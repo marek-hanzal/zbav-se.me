@@ -16,7 +16,12 @@ export namespace CartToggleButton {
 	}
 }
 
-export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId, ...props }) => {
+export const CartToggleButton: FC<CartToggleButton.Props> = ({
+	feedId,
+	listingId,
+	ui,
+	...props
+}) => {
 	const queryClient = useQueryClient();
 	const listingCartToggle = withListingCartToggleMutation.useMutation({
 		onSuccess() {
@@ -45,10 +50,13 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId
 					label={"Loading... (button)"}
 					disabled
 					loading
-					tone={"primary"}
-					theme={"light"}
-					size={"xl"}
-					justify={"start"}
+					ui={{
+						tone: "primary",
+						theme: "light",
+						size: "xl",
+						justify: "start",
+						...ui,
+					}}
 					{...props}
 				/>
 			}
@@ -62,8 +70,6 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId
 						iconEnabled={listing.isInCart ? FavouriteIcon : FavouriteOffIcon}
 						disabled={listingCartToggle.isPending}
 						loading={listingCartToggle.isPending}
-						tone={"primary"}
-						theme={"light"}
 						onClick={() =>
 							listingCartToggle.mutate({
 								feedId,
@@ -71,8 +77,13 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({ feedId, listingId
 								toggle: !listing.isInCart,
 							})
 						}
-						size={"xl"}
-						justify={"start"}
+						ui={{
+							tone: "primary",
+							theme: "light",
+							size: "xl",
+							justify: "start",
+							...ui,
+						}}
 						{...props}
 					/>
 				);

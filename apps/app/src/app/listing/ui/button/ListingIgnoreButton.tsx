@@ -19,6 +19,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 	buttonProps,
 	onReset,
 	disabled = false,
+	ui,
 	...props
 }) => {
 	const queryClient = useQueryClient();
@@ -55,8 +56,6 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				return (
 					<ConfirmButton
 						iconEnabled={TrashIcon}
-						tone={listing.isIgnored ? "secondary" : "primary"}
-						theme={"light"}
 						loading={listingIgnoreToggleMutation.isPending}
 						disabled={listing.isInCart || disabled}
 						label={
@@ -64,7 +63,6 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 								? "Unignore listing (button)"
 								: "Ignore listing (button)"
 						}
-						size={"xl"}
 						buttonProps={{
 							...buttonProps,
 							onClick(event) {
@@ -90,8 +88,10 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 							},
 						}}
 						confirmProps={{
-							tone: "secondary",
-							theme: "dark",
+							ui: {
+								tone: "secondary",
+								theme: "dark",
+							},
 							...confirmProps,
 							onClick(e) {
 								toast.promise(
@@ -117,7 +117,13 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 							toast.dismiss("listing-ignore-button");
 							onReset?.();
 						}}
-						justify={"start"}
+						ui={{
+							tone: listing.isIgnored ? "secondary" : "primary",
+							theme: "light",
+							size: "xl",
+							justify: "start",
+							...ui,
+						}}
 						{...props}
 					/>
 				);

@@ -47,7 +47,9 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 				action={
 					<Icon
 						icon={EditIcon}
-						size={"sm"}
+						ui={{
+							size: "sm",
+						}}
 					/>
 				}
 				onClick={() => setIsEdit(true)}
@@ -63,9 +65,11 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 				}}
 			>
 				<Container
-					layout={"vertical-content-footer"}
-					gap={"default"}
-					height={"full"}
+					ui={{
+						layout: "vertical-content-footer",
+						height: "full",
+						gap: "default",
+					}}
 				>
 					<ListingSortSelect
 						withGeo={withGeo}
@@ -77,10 +81,7 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 					/>
 
 					<Button
-						tone={"secondary"}
-						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
@@ -91,6 +92,11 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 									sort,
 								},
 							});
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
 					/>
 				</Container>

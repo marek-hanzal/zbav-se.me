@@ -69,9 +69,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 			<Container
 				data-id={listing.id}
 				data-ui={"ListingHeroContainer"}
-				height={"full"}
-				width={"full"}
-				position={"relative"}
+				ui={{
+					height: "full",
+					width: "full",
+					position: "relative",
+				}}
 				onClick={() => {
 					setDetail((prev) => !prev);
 				}}

@@ -17,6 +17,7 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 	locale,
 	log,
 	modalRootId,
+	ui,
 	...props
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
@@ -25,12 +26,15 @@ export const BuyerInfoButton: FC<BuyerInfoButton.Props> = ({
 		<>
 			<Button
 				iconEnabled={BuyerIcon}
-				tone={"primary"}
-				theme={"light"}
-				size={"xl"}
 				label={"Buyer info (label)"}
 				onClick={() => setIsOpen(true)}
-				justify={"start"}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					size: "xl",
+					justify: "start",
+					...ui,
+				}}
 				{...props}
 			/>
 

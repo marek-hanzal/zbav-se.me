@@ -10,19 +10,22 @@ export namespace GalleryButton {
 	}
 }
 
-export const GalleryButton: FC<GalleryButton.Props> = ({ uploads, ...props }) => {
+export const GalleryButton: FC<GalleryButton.Props> = ({ uploads, ui, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	return (
 		<>
 			<Button
 				iconEnabled={GalleryIcon}
-				tone={"primary"}
-				theme={"light"}
 				onClick={() => setIsOpen((prev) => !prev)}
 				label={"Open gallery (button)"}
-				justify={"start"}
-				size={"xl"}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					justify: "start",
+					size: "xl",
+					...ui,
+				}}
 				{...props}
 			/>
 

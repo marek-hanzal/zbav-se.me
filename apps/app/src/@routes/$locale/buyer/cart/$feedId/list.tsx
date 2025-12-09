@@ -170,9 +170,11 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 									>
 										<Button
 											iconEnabled={ArrowLeftIcon}
-											tone={"secondary"}
 											label={"Back to cart (link)"}
-											size={"xl"}
+											ui={{
+												tone: "secondary",
+												size: "xl",
+											}}
 										/>
 									</LinkTo>
 

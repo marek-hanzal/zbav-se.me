@@ -24,6 +24,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 	side,
 	listingTransaction,
 	open,
+	ui,
 	...props
 }) => {
 	const [hero] = listingTransaction.gallery.items as [
@@ -36,7 +37,6 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 			<Badge
 				data-ui={"TransactionItem"}
 				data-id={listingTransaction.id}
-				size={"xl"}
 				// tweak={[
 				// 	tweak,
 				// 	{
@@ -57,8 +57,12 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				// 		},
 				// 	},
 				// ]}
-				round={"default"}
 				onClick={() => open.set(listingTransaction.id)}
+				ui={{
+					size: "xl",
+					round: "default",
+					...ui,
+				}}
 				{...props}
 			>
 				<HeroImage
@@ -73,12 +77,16 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 					price={listingTransaction.price}
 					locale={locale}
 					currency={listingTransaction.currency}
-					snapTo={"top-center"}
+					ui={{
+						snapTo: "top-center",
+					}}
 				/>
 
 				<ListingLocation
 					location={listingTransaction.location}
-					snapTo={"bottom"}
+					ui={{
+						snapTo: "bottom",
+					}}
 				>
 					<Typo
 						label={listingTransaction.title}

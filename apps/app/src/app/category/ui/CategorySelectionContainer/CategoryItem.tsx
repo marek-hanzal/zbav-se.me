@@ -6,34 +6,33 @@ import type { tCategory } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 
 export namespace CategoryItem {
-	export interface Props {
+	export interface Props extends Button.Props {
 		selection: useSelection.Selection<EntitySchema.Type>;
 		item: tCategory;
 	}
 }
 
-export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item }) => {
+export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item, ui, ...props }) => {
 	const isSelected = selection.isSelected(item.id);
 
 	return (
 		<Button
-			data-ui="CategoryItem-root"
+			data-ui="CategoryItem"
 			data-id={item.id}
-			tone={"primary"}
-			theme={isSelected ? "dark" : "light"}
 			onClick={() => {
 				selection.toggle(item);
 			}}
-			size={"xl"}
-			className={[
-				"justify-center",
-				"items-start",
-				"text-left",
-				"flex",
-				"flex-col",
-				"gap-1",
-				"w-full",
-			]}
+			ui={{
+				tone: "primary",
+				theme: isSelected ? "dark" : "light",
+				flow: "vertical",
+				items: "start",
+				justify: "center",
+				size: "xl",
+				width: "full",
+				...ui,
+			}}
+			{...props}
 		>
 			<Typo
 				label={item.group}

@@ -31,6 +31,11 @@ export namespace uiContainer {
 		snap?: Snap;
 		snapAlign?: SnapAlign;
 		//
+		items?: CoolUi.Items;
+		justify?: CoolUi.Justify;
+		//
+		opacity?: CoolUi.Opacity;
+		//
 		position?: CoolUi.Position;
 		//
 		scroll?: Scroll;

@@ -384,8 +384,10 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 		return (
 			<Container
 				data-ui={"Seed-root"}
-				layout={"vertical-centered"}
-				gap={"md"}
+				ui={{
+					layout: "vertical-centered",
+					gap: "default",
+				}}
 			>
 				<div className={"space-y-2"}>
 					<Button
@@ -393,8 +395,10 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => {
 							registerUsersMutation.mutate();
 						}}
-						tone={"secondary"}
-						theme={"dark"}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+						}}
 					>
 						Prepare users
 					</Button>
@@ -409,9 +413,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 								password: "12345678",
 							});
 						}}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
+						}}
 					>
 						Random user
 					</Button>
@@ -420,9 +426,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedMutation.mutate()}
 						disabled={seedMutation.isPending}
 						loading={seedMutation.isPending}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
+						}}
 					>
 						Seed Listings
 					</Button>
@@ -431,9 +439,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedScoresMutation.mutate()}
 						disabled={seedScoresMutation.isPending}
 						loading={seedScoresMutation.isPending}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
+						}}
 					>
 						Seed scores
 					</Button>
@@ -442,9 +452,11 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						onClick={() => seedCartFlagIgnoreMutation.mutate()}
 						disabled={seedCartFlagIgnoreMutation.isPending}
 						loading={seedCartFlagIgnoreMutation.isPending}
-						tone={"secondary"}
-						theme={"dark"}
-						size={"xl"}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
+						}}
 					>
 						Seed cart/flag/ignore
 					</Button>

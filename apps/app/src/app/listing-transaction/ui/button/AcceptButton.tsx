@@ -24,19 +24,23 @@ export const AcceptButton: FC<AcceptButton.Props> = ({ menuState, log, ...props 
 	return (
 		<ConfirmButton
 			iconEnabled={CheckIcon}
-			size={"xl"}
 			label={"Accept transaction (label)"}
 			disabled={acceptMutation.isPending}
 			loading={acceptMutation.isPending}
 			confirmProps={{
-				theme: "dark",
+				ui: {
+					theme: "dark",
+				},
 				onClick() {
 					acceptMutation.mutate({
 						listingTransactionId: log.listingTransactionId,
 					});
 				},
 			}}
-			justify={"start"}
+			ui={{
+				size: "xl",
+				justify: "start",
+			}}
 			{...props}
 		/>
 	);

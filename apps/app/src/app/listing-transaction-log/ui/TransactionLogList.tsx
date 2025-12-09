@@ -40,6 +40,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	query,
 	listingTransaction,
 	noHero = false,
+	ui,
 	...props
 }) => {
 	const [hero] = listingTransaction.gallery.items as [
@@ -127,27 +128,36 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	return (
 		<Container
 			data-ui={"TransactionLogList-root"}
-			layout={isClosed ? undefined : "vertical-content-footer"}
-			gap={"md"}
-			height={"full"}
+			ui={{
+				layout: isClosed ? undefined : "vertical-content-footer",
+				height: "full",
+				gap: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			<Container
 				ref={containerRef}
 				data-ui={"TransactionLogList-list"}
-				scroll={"vertical"}
-				height={"full"}
+				ui={{
+					scroll: "vertical",
+					height: "full",
+				}}
 			>
 				<Container
 					ref={contentRef}
-					layout={"vertical-flex"}
-					gap={"md"}
-					height={"content"}
+					ui={{
+						layout: "vertical-flex",
+						height: "content",
+						gap: "default",
+					}}
 				>
 					{noHero ? null : (
 						<Badge
-							tone={"secondary"}
 							className="flex flex-col items-start gap-1 w-full h-64 p-0 rounded-md relative border-none"
+							ui={{
+								tone: "secondary",
+							}}
 						>
 							<HeroImage
 								data-ui={"ListingHero-image"}
@@ -161,13 +171,9 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								price={listingTransaction.price}
 								locale={locale}
 								currency={listingTransaction.currency}
-								snapTo={"top-center"}
 							/>
 
-							<ListingLocation
-								location={listingTransaction.location}
-								snapTo={"bottom"}
-							/>
+							<ListingLocation location={listingTransaction.location} />
 
 							<BottomSheet
 								id={detailSheetId}
@@ -205,8 +211,10 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					)}
 
 					<Container
-						layout={"vertical-flex"}
-						gap={"default"}
+						ui={{
+							layout: "vertical-flex",
+							gap: "default",
+						}}
 					>
 						{data.data.map((log) => {
 							const isCurrent = lastLog.id === log.id;

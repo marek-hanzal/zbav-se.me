@@ -11,14 +11,17 @@ export namespace ListingPrice {
 	}
 }
 
-export const ListingPrice: FC<ListingPrice.Props> = ({ price, locale, currency, ...props }) => {
+export const ListingPrice: FC<ListingPrice.Props> = ({ price, locale, currency, ui, ...props }) => {
 	return (
 		<Badge
 			data-ui={"ListingPrice-root"}
-			tone={"secondary"}
-			theme={"light"}
-			round={"default"}
 			className="max-w-1/2"
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				round: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			{price > 0 ? (

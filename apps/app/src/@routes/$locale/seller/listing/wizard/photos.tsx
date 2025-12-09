@@ -80,14 +80,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 					>
 						<Button
 							iconEnabled={ArrowRightIcon}
+							iconPosition={"right"}
+							disabled={!hasUploads || isUploading}
+							label={"Next - category (button)"}
 							ui={{
 								tone: "secondary",
 								theme: "dark",
+								size: "xl",
 							}}
-							iconPosition={"right"}
-							size={"xl"}
-							disabled={!hasUploads || isUploading}
-							label={"Next - category (button)"}
 						/>
 					</LinkTo>
 				}

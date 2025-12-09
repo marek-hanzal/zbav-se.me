@@ -20,6 +20,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 	locale,
 	listing,
 	parentSheetId,
+	ui,
 	...props
 }) => {
 	const [isTransaction, setIsTransaction] = useState(false);
@@ -28,13 +29,16 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 		return (
 			<>
 				<Button
-					tone={"primary"}
 					label={"View transactions (button)"}
 					iconEnabled={TransactionIcon}
-					theme={"light"}
-					size={"xl"}
 					onClick={() => setIsTransaction((prev) => !prev)}
-					justify={"start"}
+					ui={{
+						tone: "primary",
+						theme: "light",
+						size: "xl",
+						justify: "start",
+						...ui,
+					}}
 					{...props}
 				/>
 
@@ -91,8 +95,11 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 
 	return (
 		<ListingTransactionCreateButton
-			tone={"primary"}
 			listing={listing}
+			ui={{
+				tone: "primary",
+				...ui,
+			}}
 			{...props}
 		/>
 	);

@@ -15,7 +15,7 @@ export namespace FeedCreateButton {
 	}
 }
 
-export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...props }) => {
+export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ui, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [change, setChange] = useState(false);
@@ -34,12 +34,15 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 	return (
 		<>
 			<Button
-				tone={"primary"}
 				iconEnabled={FeedIcon}
-				theme={"light"}
 				onClick={() => setIsOpen(true)}
 				label={"Create new feed (title)"}
-				size={"xl"}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					size: "xl",
+					...ui,
+				}}
 				{...props}
 			/>
 
@@ -54,11 +57,12 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 			>
 				<Container
 					data-ui={"FeedCreateButton-Container"}
-					layout={"vertical-content-footer"}
-					gap={"default"}
+					ui={{
+						layout: "vertical-content-footer",
+						gap: "default",
+					}}
 				>
 					<FeedNameContainer
-						height={"content"}
 						value={name}
 						onChange={(value) => {
 							setChange(true);
@@ -83,13 +87,13 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 								);
 							}
 						}}
+						ui={{
+							height: "content",
+						}}
 					/>
 
 					<Button
-						tone={"secondary"}
-						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"xl"}
 						loading={feedCreateMutation.isPending}
 						disabled={!change || !name || feedCreateMutation.isPending}
 						onClick={() => {
@@ -108,6 +112,11 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ...prop
 									error: translator.text("Error creating feed (toast)"),
 								},
 							);
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
 					/>
 				</Container>

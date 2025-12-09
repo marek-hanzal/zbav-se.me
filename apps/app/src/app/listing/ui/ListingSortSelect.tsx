@@ -25,11 +25,13 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 	return (
 		<Container
 			data-ui={"ListingSortSelect"}
-			layout={"vertical-flex"}
-			scroll={"vertical"}
-			gap={"sm"}
-			height={"auto"}
-			width={"full"}
+			ui={{
+				layout: "vertical-flex",
+				scroll: "vertical",
+				gap: "sm",
+				height: "auto",
+				width: "full",
+			}}
 			{...props}
 		>
 			{(
@@ -51,7 +53,6 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 				return (
 					<Button
 						key={`${sortKeyId}-${sortValue}`}
-						size={"xl"}
 						className={[
 							"justify-start",
 							"text-left",
@@ -59,6 +60,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 							"px-3",
 							"h-18",
 						]}
+						ui={{
+							size: "xl",
+						}}
 						onClick={() => {
 							onChange((prev) => {
 								const idx = prev.findIndex((s) => s.field === sortValue);
@@ -102,9 +106,11 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 
 							{position ? (
 								<Badge
-									tone={"primary"}
-									theme={"dark"}
-									size={"sm"}
+									ui={{
+										tone: "primary",
+										theme: "dark",
+										size: "sm",
+									}}
 								>
 									{position}
 								</Badge>
@@ -116,13 +122,15 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 
 			<Button
 				iconEnabled={TrashIcon}
-				size={"xl"}
-				tone={"danger"}
 				label={"Clear all sorts (button)"}
 				onClick={() => {
 					onChange(() => {
 						return [];
 					});
+				}}
+				ui={{
+					size: "xl",
+					tone: "danger",
 				}}
 			/>
 		</Container>

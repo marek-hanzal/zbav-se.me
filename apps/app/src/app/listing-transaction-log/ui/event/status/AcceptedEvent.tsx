@@ -9,10 +9,13 @@ export namespace AcceptedEvent {
 	}
 }
 
-export const AcceptedEvent: FC<AcceptedEvent.Props> = (props) => {
+export const AcceptedEvent: FC<AcceptedEvent.Props> = ({ ui, ...props }) => {
 	return (
 		<EventBadge
-			tone={"link"}
+			ui={{
+				tone: "link",
+				...ui,
+			}}
 			{...props}
 		>
 			{match(props.type)

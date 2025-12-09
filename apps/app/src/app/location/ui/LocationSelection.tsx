@@ -27,9 +27,11 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 	return (
 		<Container
 			data-ui="LocationSelection-root"
-			layout={"vertical-header-content"}
-			gap={"md"}
-			height={"full"}
+			ui={{
+				layout: "vertical-header-content",
+				height: "full",
+				gap: "default",
+			}}
 			{...props}
 		>
 			<Fulltext

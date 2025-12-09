@@ -36,8 +36,10 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 					return (
 						<Container
 							data-ui={"ListingCartFeedList-content"}
-							layout={"vertical-flex"}
-							gap={"md"}
+							ui={{
+								layout: "vertical-flex",
+								gap: "default",
+							}}
 						>
 							{data.data.map((feed) => (
 								<FeedItemBadge

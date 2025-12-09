@@ -37,9 +37,11 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 			<Container
 				ref={containerRef}
 				data-ui="Seller-container"
-				layout={"vertical-flex"}
-				scroll={"vertical"}
-				gap={"sm"}
+				ui={{
+					layout: "vertical-flex",
+					scroll: "vertical",
+					gap: "sm",
+				}}
 			>
 				<LinkTo
 					{...uiButton({

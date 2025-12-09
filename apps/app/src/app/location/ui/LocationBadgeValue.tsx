@@ -40,8 +40,10 @@ export const LocationBadgeValue: FC<LocationBadgeValue.Props> = ({ locationId, .
 					textValue={
 						<SpinnerContainer
 							type="icon"
-							height="content"
 							size="md"
+							ui={{
+								height: "content",
+							}}
 						/>
 					}
 				/>

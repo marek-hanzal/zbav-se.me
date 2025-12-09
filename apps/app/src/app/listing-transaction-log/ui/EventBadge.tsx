@@ -166,8 +166,10 @@ export const EventBadge: FC<EventBadge.Props> = ({
 	// };
 
 	const defaultProps: Badge.Props = {
-		theme: "light",
-		round: "default",
+		ui: {
+			theme: "light",
+			round: "default",
+		},
 	};
 
 	return (

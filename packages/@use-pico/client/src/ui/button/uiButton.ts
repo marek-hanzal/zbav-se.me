@@ -14,6 +14,11 @@ export namespace uiButton {
 		snapTo?: CoolUi.SnapTo;
 		opacity?: CoolUi.Opacity;
 		//
+		width?: CoolUi.Width;
+		height?: CoolUi.Height;
+		//
+		flow?: CoolUi.Flow;
+		//
 		justify?: CoolUi.Justify;
 		items?: CoolUi.Items;
 		//

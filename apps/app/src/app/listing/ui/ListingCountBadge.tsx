@@ -19,20 +19,30 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 	locale,
 	count,
 	query,
+	ui,
+	className,
 	...props
 }) => {
 	return (
 		<Badge
-			size={"md"}
-			round={"default"}
-			tone={"secondary"}
-			theme={"light"}
-			className="shrink-0 border-none flex-row items-center gap-1"
+			className={[
+				"shrink-0 border-none flex-row items-center gap-1",
+				className,
+			]}
+			ui={{
+				size: "md",
+				round: "default",
+				tone: "secondary",
+				theme: "light",
+				...ui,
+			}}
 			{...props}
 		>
 			<Icon
 				icon={ListingIcon}
-				size={"xs"}
+				ui={{
+					size: "xs",
+				}}
 			/>
 
 			<Typo
@@ -48,7 +58,9 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 							fallback={
 								<Icon
 									icon={SpinnerIcon}
-									size={"xs"}
+									ui={{
+										size: "xs",
+									}}
 								/>
 							}
 						>

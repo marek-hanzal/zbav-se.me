@@ -48,15 +48,19 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 			<Container
 				data-ui={"BuyerMenu-container"}
 				ref={containerRef}
-				scroll={"vertical"}
-				height={"full"}
+				ui={{
+					scroll: "vertical",
+					height: "full",
+				}}
 			>
 				<Container
 					data-ui={"BuyerMenu-content"}
-					layout={"vertical-flex"}
-					gap={"sm"}
-					inner={"default"}
-					items={"center"}
+					ui={{
+						layout: "vertical-flex",
+						gap: "sm",
+						inner: "default",
+						items: "center",
+					}}
 				>
 					<LinkTo
 						{...uiButton({

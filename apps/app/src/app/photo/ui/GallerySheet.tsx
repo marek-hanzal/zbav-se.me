@@ -29,22 +29,28 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 		>
 			<Container
 				data-ui={"GalleryButton-Container-wrapper"}
-				position={"relative"}
-				height={"full"}
+				ui={{
+					position: "relative",
+					height: "full",
+				}}
 			>
 				<Fade
 					scrollableRef={containerRef}
-					theme={"dark"}
+					ui={{
+						theme: "dark",
+					}}
 				/>
 
 				<Container
 					ref={containerRef}
 					data-ui={"GalleryButton-Container-content"}
-					layout={"vertical-full"}
-					gap={"sm"}
-					height={"content"}
-					snap={"vertical"}
-					snapAlign={"center"}
+					ui={{
+						layout: "vertical-full",
+						height: "content",
+						snap: "vertical",
+						snapAlign: "center",
+						gap: "sm",
+					}}
 				>
 					{uploads.map((upload) => {
 						return (

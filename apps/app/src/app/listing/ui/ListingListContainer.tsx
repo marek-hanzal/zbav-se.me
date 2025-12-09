@@ -78,8 +78,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					>
 						<Button
 							iconEnabled={ArrowLeftIcon}
-							tone={"secondary"}
 							label={"Back to home (link)"}
+							ui={{
+								tone: "secondary",
+							}}
 						/>
 					</LinkTo>
 				}
@@ -93,9 +95,11 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		<Container
 			ref={mergedRef}
 			data-ui={"ListingListContainer"}
-			layout={"vertical-full"}
-			snap={"vertical"}
-			snapAlign={"center"}
+			ui={{
+				layout: "vertical-full",
+				snap: "vertical",
+				snapAlign: "center",
+			}}
 			{...props}
 		>
 			<withListingCollectionQuery.Suspense
@@ -122,8 +126,10 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 									{...props}
 								/>
 							)}
-							height={"full"}
-							width={"full"}
+							ui={{
+								height: "full",
+								width: "full",
+							}}
 						>
 							<withListingFetchQuery.Suspense
 								data={{

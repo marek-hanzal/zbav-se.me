@@ -35,7 +35,9 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 				action={
 					<Icon
 						icon={EditIcon}
-						size={"sm"}
+						ui={{
+							size: "sm",
+						}}
 					/>
 				}
 				onClick={() => setIsEdit(true)}
@@ -51,9 +53,11 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 				}}
 			>
 				<Container
-					layout={"vertical-content-footer"}
-					gap={"md"}
-					height={"full"}
+					ui={{
+						layout: "vertical-content-footer",
+						height: "full",
+						gap: "default",
+					}}
 				>
 					<FeedTitleContainer
 						value={patch.query?.filter?.title ?? ""}
@@ -73,14 +77,16 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 					/>
 
 					<Button
-						tone={"secondary"}
-						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
 							feedPatchMutation.mutate(patch);
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
 					/>
 				</Container>

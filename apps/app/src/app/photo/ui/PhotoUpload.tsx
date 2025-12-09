@@ -28,7 +28,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	camera = false,
 	value,
 	onChange,
-	disabled,
+	ui,
 	...props
 }) => {
 	const [current, setCurrent] = useState<string | undefined>(value);
@@ -99,7 +99,11 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 		<Container
 			ref={containerRef}
 			data-ui={"PhotoUpload"}
-			position="relative"
+			ui={{
+				position: "relative",
+				disabled: (ui?.disabled || uploadMutation.isPending) ?? undefined,
+				...ui,
+			}}
 		>
 			<input
 				data-ui="PhotoUpload-Input"
@@ -115,8 +119,9 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				data-ui={"PhotoUpload-Sheet"}
 				onClick={pick}
 				onKeyDown={onKeyDown}
-				disabled={disabled || uploadMutation.isPending}
-				position={"relative"}
+				ui={{
+					position: "relative",
+				}}
 				{...props}
 			>
 				{uploadMutation.isPending ? (

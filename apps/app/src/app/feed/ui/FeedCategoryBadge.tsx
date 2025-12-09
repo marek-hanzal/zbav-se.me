@@ -47,7 +47,9 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 				action={
 					<Icon
 						icon={EditIcon}
-						size={"sm"}
+						ui={{
+							size: "sm",
+						}}
 					/>
 				}
 				onClick={() => setIsEdit(true)}
@@ -66,9 +68,11 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 				}}
 			>
 				<Container
-					layout={"vertical-content-footer"}
-					gap={"default"}
-					height={"full"}
+					ui={{
+						layout: "vertical-content-footer",
+						height: "full",
+						gap: "default",
+					}}
 				>
 					<CategorySelectionContainer
 						locale={locale}
@@ -77,10 +81,7 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 					/>
 
 					<Button
-						tone={"secondary"}
-						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
@@ -94,6 +95,11 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 									},
 								},
 							});
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
 					/>
 				</Container>

@@ -20,12 +20,17 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
 	onSubmit,
 	statusProps,
 	children,
+	ui,
 	...props
 }) => {
 	return (
 		<Container
-			data-ui={"FeedNameContainer-root"}
-			layout={"vertical-centered"}
+			data-ui={"FeedNameContainer"}
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+				...ui,
+			}}
 			{...props}
 		>
 			<Status

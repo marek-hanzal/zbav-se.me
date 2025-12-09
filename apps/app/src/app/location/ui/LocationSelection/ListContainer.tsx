@@ -30,6 +30,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	value,
 	onChange,
 	onLocation,
+	ui,
 	...props
 }) => {
 	const text = search ?? value ?? "";
@@ -42,8 +43,12 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	if (text.length < 3) {
 		return (
 			<Container
-				layout={"vertical-centered"}
-				scroll={"vertical"}
+				ui={{
+					layout: "vertical-centered",
+					scroll: "vertical",
+					height: "full",
+					...ui,
+				}}
 			>
 				<Status
 					tone={"danger"}
@@ -69,12 +74,20 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	if (locationAutocompleteQuery.data.length === 0) {
 		return (
-			<Container layout={"vertical-centered"}>
+			<Container
+				ui={{
+					layout: "vertical-centered",
+					height: "full",
+					...ui,
+				}}
+			>
 				<Badge
-					size={"lg"}
-					tone={"danger"}
-					theme={"light"}
 					className="text-center mx-auto"
+					ui={{
+						size: "lg",
+						tone: "danger",
+						theme: "light",
+					}}
 				>
 					<Tx label={"Location not found (badge)"} />
 				</Badge>
@@ -85,9 +98,13 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	return (
 		<Container
 			data-ui="LocationSelectionList-content"
-			layout={"vertical-flex"}
-			scroll={"vertical"}
-			gap={"sm"}
+			ui={{
+				layout: "vertical-flex",
+				scroll: "vertical",
+				height: "full",
+				gap: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			{locationAutocompleteQuery.data.map((item) => {
@@ -95,13 +112,10 @@ export const ListContainer: FC<ListContainer.Props> = ({
 					<Button
 						data-ui="LocationItem-root"
 						key={item.id}
-						tone={"primary"}
-						theme={value === item.id ? "dark" : "light"}
 						onClick={() => {
 							onChange(item.id);
 							onLocation?.(item);
 						}}
-						size={"xl"}
 						truncate
 						className={[
 							"justify-center",
@@ -113,6 +127,11 @@ export const ListContainer: FC<ListContainer.Props> = ({
 							"w-full",
 						]}
 						label={item.address}
+						ui={{
+							tone: "primary",
+							theme: value === item.id ? "dark" : "light",
+							size: "xl",
+						}}
 					/>
 				);
 			})}

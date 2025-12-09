@@ -19,18 +19,22 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 	onSuccess,
 	onCancel,
 	state,
+	ui,
 	...props
 }: GalleryUploadButton.Props<TData>) => {
 	return (
 		<>
 			<Button
 				iconEnabled={PhotoIcon}
-				tone={"primary"}
-				theme={"light"}
 				label={"Upload photos (button)"}
-				size={"xl"}
 				onClick={() => state.set((prev) => !prev)}
-				justify={"start"}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					size: "xl",
+					justify: "start",
+					...ui,
+				}}
 				{...props}
 			/>
 

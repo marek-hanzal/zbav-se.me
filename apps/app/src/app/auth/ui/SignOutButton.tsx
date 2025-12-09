@@ -11,7 +11,7 @@ export namespace SignOutButton {
 	}
 }
 
-export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ...props }) => {
+export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ui, ...props }) => {
 	const navigate = useNavigate();
 	const signOutMutation = withSignOutMutation.useMutation({
 		async onPostMutation() {
@@ -33,11 +33,14 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ...props }) => 
 			onClick={() => signOutMutation.mutate({})}
 			disabled={signOutMutation.isPending}
 			loading={signOutMutation.isPending}
-			tone={"secondary"}
-			theme={"light"}
 			label={"Sign out"}
-			size={"lg"}
-			data-width="content"
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				size: "lg",
+				width: "content",
+				...ui,
+			}}
 			{...props}
 		/>
 	);

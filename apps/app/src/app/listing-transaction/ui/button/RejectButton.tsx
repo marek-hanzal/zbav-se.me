@@ -24,20 +24,24 @@ export const RejectButton: FC<RejectButton.Props> = ({ menuState, log, ...props 
 	return (
 		<ConfirmButton
 			iconEnabled={CancelIcon}
-			size={"xl"}
-			tone={"primary"}
-			theme={"light"}
 			label={"Reject transaction (label)"}
-			justify={"start"}
 			disabled={rejectMutation.isPending}
 			loading={rejectMutation.isPending}
 			confirmProps={{
-				theme: "dark",
+				ui: {
+					theme: "dark",
+				},
 				onClick() {
 					rejectMutation.mutate({
 						listingTransactionId: log.listingTransactionId,
 					});
 				},
+			}}
+			ui={{
+				tone: "primary",
+				theme: "light",
+				size: "xl",
+				justify: "start",
 			}}
 			{...props}
 		/>

@@ -19,6 +19,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 	confirmProps,
 	onReset,
 	disabled = false,
+	ui,
 	...props
 }) => {
 	const queryClient = useQueryClient();
@@ -48,10 +49,13 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 					label={"Loading... (button)"}
 					disabled
 					loading
-					tone={"primary"}
-					theme={"light"}
-					size={"xl"}
-					justify={"start"}
+					ui={{
+						tone: "primary",
+						theme: "light",
+						size: "xl",
+						justify: "start",
+						...ui,
+					}}
 					{...props}
 				/>
 			}
@@ -60,15 +64,11 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 				return (
 					<ConfirmButton
 						iconEnabled={FlagIcon}
-						tone={"primary"}
-						theme={listing.hasFlag ? "dark" : "light"}
 						loading={listingFlagToggleMutation.isPending}
 						disabled={listing.isInCart || listing.isIgnored || disabled}
 						label={
 							listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"
 						}
-						size={"xl"}
-						justify={"start"}
 						buttonProps={{
 							...buttonProps,
 							onClick(event) {
@@ -94,8 +94,10 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 							},
 						}}
 						confirmProps={{
-							tone: "secondary",
-							theme: "dark",
+							ui: {
+								tone: "secondary",
+								theme: "dark",
+							},
 							...confirmProps,
 							onClick(e) {
 								toast.promise(
@@ -120,6 +122,13 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 						onReset={() => {
 							toast.dismiss("listing-flag-button");
 							onReset?.();
+						}}
+						ui={{
+							tone: "primary",
+							theme: listing.hasFlag ? "dark" : "light",
+							size: "xl",
+							justify: "start",
+							...ui,
 						}}
 						{...props}
 					/>

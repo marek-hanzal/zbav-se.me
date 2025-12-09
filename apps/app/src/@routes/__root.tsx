@@ -65,8 +65,10 @@ export const Route = createRootRouteWithContext<{
 						<Container
 							id="root"
 							data-ui={"Root"}
-							height="viewport"
-							width="viewport"
+							ui={{
+								height: "viewport",
+								width: "viewport",
+							}}
 							className={[
 								"font-roboto",
 							]}

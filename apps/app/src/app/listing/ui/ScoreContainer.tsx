@@ -14,8 +14,10 @@ export namespace ScoreContainer {
 export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetrics, ...props }) => {
 	return (
 		<Container
-			layout={"vertical-flex"}
-			gap={"md"}
+			ui={{
+				layout: "vertical-flex",
+				gap: "default",
+			}}
 			{...props}
 		>
 			{listingMetrics.score ? (

@@ -8,6 +8,15 @@ export namespace uiBadge {
 		//
 		round?: CoolUi.Round;
 		size?: CoolUi.Size;
+		//
+		height?: CoolUi.Height;
+		width?: CoolUi.Width;
+		//
+		position?: CoolUi.Position;
+		//
+		snapTo?: CoolUi.SnapTo;
+		//
+		opacity?: CoolUi.Opacity;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

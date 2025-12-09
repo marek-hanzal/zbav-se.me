@@ -36,6 +36,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	feed,
 	noDelete = false,
 	children,
+	ui,
 	...props
 }) => {
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation();
@@ -44,11 +45,14 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 	return (
 		<Container
 			data-ui="FeedDetailContainer-root"
-			layout={"vertical-flex"}
-			gap={"md"}
-			height={"content"}
-			width={"full"}
-			disabled={feedDeleteMutation.isPending}
+			ui={{
+				layout: "vertical-flex",
+				height: "content",
+				width: "full",
+				gap: "default",
+				disabled: feedDeleteMutation.isPending,
+				...ui,
+			}}
 			{...props}
 		>
 			<VariantProvider
@@ -69,16 +73,20 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					/>
 				) : (
 					<Badge
-						tone={"neutral"}
-						theme={"light"}
 						className="w-full h-42 p-0"
-						round={"md"}
 						onClick={() => setIsGalleryOpen((prev) => !prev)}
+						ui={{
+							tone: "neutral",
+							theme: "light",
+							round: "md",
+						}}
 					>
 						<Status
 							icon={PhotoIcon}
 							iconProps={{
-								size: "lg",
+								ui: {
+									size: "lg",
+								},
 							}}
 							tone={"primary"}
 							theme={"light"}
@@ -127,16 +135,19 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 				{noDelete ? null : (
 					<ConfirmButton
-						tone={"danger"}
 						iconEnabled={TrashIcon}
 						buttonProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							label: translator.text("Delete feed (button)"),
 						}}
 						confirmProps={{
 							iconEnabled: TrashIcon,
-							tone: "danger",
-							theme: "dark",
+							ui: {
+								tone: "danger",
+								theme: "dark",
+							},
 							label: translator.text("Really delete feed (button)"),
 							onClick() {
 								feedDeleteMutation.mutate({
@@ -147,8 +158,11 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							},
 						}}
 						loading={feedDeleteMutation.isPending}
-						size={"xl"}
-						justify={"start"}
+						ui={{
+							tone: "danger",
+							size: "xl",
+							justify: "start",
+						}}
 					/>
 				)}
 

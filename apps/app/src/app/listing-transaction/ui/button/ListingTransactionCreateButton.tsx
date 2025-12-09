@@ -14,6 +14,7 @@ export namespace ListingTransactionCreateButton {
 export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.Props> = ({
 	listing,
 	onPostMutation,
+	ui,
 	...props
 }) => {
 	const listingTransactionCreate = withListingTransactionCreateMutation.useMutation({
@@ -28,15 +29,18 @@ export const ListingTransactionCreateButton: FC<ListingTransactionCreateButton.P
 			iconEnabled={CashIcon}
 			disabled={listingTransactionCreate.isPending}
 			loading={listingTransactionCreate.isPending}
-			tone={"secondary"}
-			theme={"light"}
 			onClick={() => {
 				listingTransactionCreate.mutate({
 					listingId: listing.id,
 				});
 			}}
-			size={"xl"}
-			justify={"start"}
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				size: "xl",
+				justify: "start",
+				...ui,
+			}}
 			{...props}
 		/>
 	);

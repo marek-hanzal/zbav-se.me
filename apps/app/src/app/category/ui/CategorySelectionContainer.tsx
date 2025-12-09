@@ -17,6 +17,7 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 	locale,
 	selection,
 	categoryId,
+	ui,
 	...props
 }) => {
 	const [fulltext, setFulltext] = useState<Fulltext.Value>();
@@ -24,10 +25,13 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 	return (
 		<Container
 			data-ui={"CategorySelectionContainer"}
-			layout={"vertical-header-content"}
-			gap={"md"}
-			height={"full"}
-			scroll={"vertical"}
+			ui={{
+				layout: "vertical-header-content",
+				gap: "default",
+				height: "full",
+				scroll: "vertical",
+				...ui,
+			}}
 			{...props}
 		>
 			<Fulltext

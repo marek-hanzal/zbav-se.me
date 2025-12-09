@@ -37,7 +37,9 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 				action={
 					<Icon
 						icon={EditIcon}
-						size={"sm"}
+						ui={{
+							size: "sm",
+						}}
 					/>
 				}
 				onClick={() => setIsEdit(true)}
@@ -53,13 +55,17 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 				}}
 			>
 				<Container
-					layout={"vertical-content-footer"}
-					gap={"default"}
-					height={"full"}
+					ui={{
+						layout: "vertical-content-footer",
+						height: "full",
+						gap: "default",
+					}}
 				>
 					<FeedNameContainer
-						height={"full"}
 						value={patch.name ?? ""}
+						ui={{
+							height: "full",
+						}}
 						onChange={(name) => {
 							setChange(true);
 							setPatch((prev) => ({
@@ -77,10 +83,7 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 					/>
 
 					<Button
-						tone={"secondary"}
-						theme={"dark"}
 						label={"Feed - save (button)"}
-						size={"xl"}
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
@@ -89,6 +92,11 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 								success: translator.text("Feed name updated (toast)"),
 								error: translator.text("Error updating feed name (toast)"),
 							});
+						}}
+						ui={{
+							tone: "secondary",
+							theme: "dark",
+							size: "xl",
 						}}
 					/>
 				</Container>

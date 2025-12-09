@@ -15,8 +15,10 @@ export namespace EmptyStatus {
 export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 	return (
 		<Container
-			data-ui={"EmptyStatus-root"}
-			layout={"vertical-centered"}
+			data-ui={"EmptyStatus"}
+			ui={{
+				layout: "vertical-centered",
+			}}
 		>
 			<Status
 				icon={CartIcon}
@@ -32,11 +34,13 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 							<Button
 								iconEnabled={ArrowRightIcon}
 								iconPosition={"right"}
-								tone={"primary"}
-								theme={"light"}
-								size={"xl"}
 								label={"Go to listings (button)"}
-								justify={"start"}
+								ui={{
+									tone: "primary",
+									theme: "light",
+									size: "xl",
+									justify: "start",
+								}}
 							/>
 						</LinkTo>
 
@@ -49,11 +53,13 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 							<Button
 								iconEnabled={ArrowRightIcon}
 								iconPosition={"right"}
-								tone={"primary"}
-								theme={"light"}
-								size={"xl"}
 								label={"Go home (button)"}
-								justify={"start"}
+								ui={{
+									tone: "primary",
+									theme: "light",
+									size: "xl",
+									justify: "start",
+								}}
 							/>
 						</LinkTo>
 					</>

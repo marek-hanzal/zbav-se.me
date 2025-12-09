@@ -1,5 +1,4 @@
 import { Badge } from "@use-pico/client/ui/badge";
-import { tvc } from "@use-pico/cls";
 import type { FC } from "react";
 
 export namespace ListingLocation {
@@ -12,15 +11,22 @@ export const ListingLocation: FC<ListingLocation.Props> = ({
 	location,
 	children,
 	className,
+	ui,
 	...props
 }) => {
 	return (
 		<Badge
 			data-ui={"ListingLocation-root"}
-			tone={"secondary"}
-			theme={"light"}
-			round={"default"}
-			className={tvc("flex flex-col h-fit py-2 gap-0", className)}
+			className={[
+				"flex flex-col h-fit py-2 gap-0",
+				className,
+			]}
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				round: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			{location}

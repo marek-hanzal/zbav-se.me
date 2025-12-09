@@ -28,7 +28,6 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionGallery.listingTransactionId,
@@ -44,6 +43,9 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 							value: isGalleryOpen,
 							set: setIsGalleryOpen,
 						}}
+						ui={{
+							tone: "secondary",
+						}}
 					/>
 
 					<RejectButton
@@ -57,8 +59,10 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
+						ui={{
+							tone: "secondary",
+						}}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionGallery.listingTransactionId,
 							uploadIds,
@@ -86,8 +90,10 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
+						ui={{
+							tone: "secondary",
+						}}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionGallery.listingTransactionId,
 							uploadIds,
@@ -115,7 +121,6 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionGallery.listingTransactionId,
@@ -130,6 +135,9 @@ export const GalleryMenu: FC<GalleryMenu.Props> = ({
 						state={{
 							value: isGalleryOpen,
 							set: setIsGalleryOpen,
+						}}
+						ui={{
+							tone: "secondary",
 						}}
 					/>
 

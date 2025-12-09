@@ -9,10 +9,13 @@ export namespace RejectedEvent {
 	}
 }
 
-export const RejectedEvent: FC<RejectedEvent.Props> = (props) => {
+export const RejectedEvent: FC<RejectedEvent.Props> = ({ ui, ...props }) => {
 	return (
 		<EventBadge
-			tone={"danger"}
+			ui={{
+				tone: "danger",
+				...ui,
+			}}
 			{...props}
 		>
 			{match(props.type)

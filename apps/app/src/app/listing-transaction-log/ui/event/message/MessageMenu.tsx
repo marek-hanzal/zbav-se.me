@@ -28,7 +28,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionMessage.listingTransactionId,
@@ -43,6 +42,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						state={{
 							value: isGalleryOpen,
 							set: setIsGalleryOpen,
+						}}
+						ui={{
+							tone: "secondary",
 						}}
 					/>
 
@@ -57,7 +59,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionMessage.listingTransactionId,
@@ -72,6 +73,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						state={{
 							value: isGalleryOpen,
 							set: setIsGalleryOpen,
+						}}
+						ui={{
+							tone: "secondary",
 						}}
 					/>
 
@@ -86,7 +90,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionMessage.listingTransactionId,
@@ -101,6 +104,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						state={{
 							value: isGalleryOpen,
 							set: setIsGalleryOpen,
+						}}
+						ui={{
+							tone: "secondary",
 						}}
 					/>
 
@@ -115,7 +121,6 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 			return (
 				<>
 					<GalleryUploadButton
-						tone={"secondary"}
 						withMutation={withListingTransactionGalleryCreateMutation}
 						toMutation={(uploadIds) => ({
 							listingTransactionId: listingTransactionMessage.listingTransactionId,
@@ -130,6 +135,9 @@ export const MessageMenu: FC<MessageMenu.Props> = ({
 						state={{
 							value: isGalleryOpen,
 							set: setIsGalleryOpen,
+						}}
+						ui={{
+							tone: "secondary",
 						}}
 					/>
 
