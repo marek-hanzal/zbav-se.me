@@ -66,18 +66,7 @@ export const Button: FC<Button.Props> = ({
 	loading,
 	disabled,
 	//
-	tone,
-	theme,
 	size,
-	items,
-	square,
-	round,
-	background,
-	zIndex,
-	border,
-	snapTo,
-	justify,
-	className,
 	//
 	truncate,
 	children,
@@ -117,22 +106,10 @@ export const Button: FC<Button.Props> = ({
 			disabled={disabled}
 			//
 			{...asButton({
-				tone,
-				theme,
-				size,
-				round,
-				snapTo,
-				square,
-				items,
-				justify,
 				disabled,
-				zIndex,
-				background,
-				border,
-				className,
+				size,
+				...props,
 			})}
-			//
-			{...props}
 		>
 			{iconPosition === "left" && renderIcon}
 

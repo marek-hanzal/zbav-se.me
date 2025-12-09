@@ -13,5 +13,5 @@ export namespace Badge {
 }
 
 export const Badge: FC<Badge.Props> = (props) => {
-	return <div {...asBadge<ComponentProps<"div">>(props)} />;
+	return <div {...asBadge(props)} />;
 };
