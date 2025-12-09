@@ -18,28 +18,33 @@ export const Title: FC<Title.Props> = ({
 	left,
 	//
 	ui,
-	className,
 	...props
 }) => {
 	return (
 		<Container
 			data-ui={"Title"}
-			className={[
-				"Title",
-				className,
-			]}
 			ui={{
+				layout: "horizontal-flex",
+				items: "center",
+				justify: "space-between",
 				inner: "default",
 				width: "full",
 				...ui,
 			}}
 			{...props}
 		>
-			<div data-ui={"Title-wrapper"}>
+			<Container
+				ui={{
+					layout: "vertical-flex",
+					items: "start",
+					justify: "center",
+				}}
+			>
 				<div data-ui={"Title-title"}>
 					{left ? <div data-ui="Title-left">{left}</div> : null}
 
 					<Tx
+						data-ui={"Title-title-text"}
 						label={textTitle}
 						ui={{
 							tone: "primary",
@@ -54,6 +59,7 @@ export const Title: FC<Title.Props> = ({
 
 				{textSubtitle ? (
 					<Tx
+						data-ui={"Title-subtitle"}
 						label={textSubtitle}
 						ui={{
 							tone: "secondary",
@@ -62,7 +68,7 @@ export const Title: FC<Title.Props> = ({
 						}}
 					/>
 				) : null}
-			</div>
+			</Container>
 
 			{right ? <div data-ui="Title-right">{right}</div> : null}
 		</Container>

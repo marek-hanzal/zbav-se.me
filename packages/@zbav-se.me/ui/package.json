@@ -26,7 +26,7 @@
 		"typescript": "5.9.3"
 	},
 	"exports": {
-		"./style.css": "./src/style.css",
+		"./ui.css": "./src/ui.css",
 		"./*": {
 			"import": "./src/*/index.ts",
 			"require": "./src/*/index.ts"

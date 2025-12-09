@@ -2,6 +2,7 @@
 @import "tailwindcss";
 
 @import "@use-pico/client/ui.css";
+@import "@zbav-se.me/ui/ui.css";
 
 @plugin "@iconify/tailwind4";
 

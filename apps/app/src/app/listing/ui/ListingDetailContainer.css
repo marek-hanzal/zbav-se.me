@@ -1,5 +1,0 @@
-@layer components {
-	[data-ui="ListingDetailContainer-image"] {
-		@apply h-64;
-	}
-}
