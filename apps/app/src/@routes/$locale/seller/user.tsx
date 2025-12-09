@@ -4,6 +4,7 @@ import { uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export const Route = createFileRoute("/$locale/seller/user")({
 	component() {
@@ -43,6 +44,7 @@ export const Route = createFileRoute("/$locale/seller/user")({
 					icon={UserIcon}
 					textTitle={user.email}
 					textMessage={user.name}
+					action={<SignOutButton locale={locale} />}
 				/>
 			</TitleContainer>
 		);

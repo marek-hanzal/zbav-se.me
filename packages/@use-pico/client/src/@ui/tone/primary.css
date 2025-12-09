@@ -1,17 +1,19 @@
 @utility tone-primary-light {
 	--color-text: var(--color-slate-700);
-	--color-background: color-mix(in srgb, var(--color-fuchsia-200) 80%, white);
-	--color-border: color-mix(in srgb, var(--color-fuchsia-400) 22%, transparent);
+	--color-background: color-mix(in srgb, var(--color-pink-300) 65%, white);
+	--color-border: color-mix(in srgb, var(--color-pink-400) 30%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-text) 75%, white);
 
-	@apply shadow-black/10;
+	@apply shadow-slate-800/20;
 }
 
 @utility tone-primary-dark {
-	--color-text: var(--color-fuchsia-50);
-	--color-background: color-mix(in srgb, var(--color-fuchsia-800) 75%, black);
-	--color-border: color-mix(in srgb, var(--color-fuchsia-500) 50%, transparent);
+	--color-text: var(--color-pink-50);
+	--color-background: color-mix(in srgb, var(--color-pink-800) 75%, black);
+	--color-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-text) 80%, black);
 
-	@apply shadow-black/10;
+	@apply shadow-slate-800/15;
 }
 
 @layer components {

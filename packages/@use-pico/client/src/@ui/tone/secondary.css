@@ -1,17 +1,19 @@
 @utility tone-secondary-light {
-	--color-text: var(--color-slate-700);
-	--color-background: color-mix(in srgb, var(--color-violet-100) 82%, white);
-	--color-border: color-mix(in srgb, var(--color-violet-300) 24%, transparent);
+	--color-text: var(--color-slate-800);
+	--color-background: color-mix(in srgb, var(--color-violet-400) 25%, white);
+	--color-border: color-mix(in srgb, var(--color-violet-400) 24%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-text) 75%, white);
 
-	@apply shadow-black/10;
+	@apply shadow-slate-800/15;
 }
 
 @utility tone-secondary-dark {
 	--color-text: var(--color-violet-50);
 	--color-background: color-mix(in srgb, var(--color-violet-800) 75%, black);
 	--color-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-text) 80%, black);
 
-	@apply shadow-black/10;
+	@apply shadow-slate-800/15;
 }
 
 @layer components {

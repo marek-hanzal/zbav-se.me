@@ -13,7 +13,6 @@ import {
 	TransactionIcon,
 } from "@zbav-se.me/ui/icon";
 import { useRef } from "react";
-import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export namespace BuyerMenu {
 	export interface Props extends Container.Props {
@@ -65,7 +64,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 				<LinkTo
 					{...uiButton({
 						ui: {
-                            font:'semibold',
+							font: "semibold",
 							...button,
 						},
 						className: [],
@@ -219,8 +218,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						<Tx label="User profile (label)" />
 					</LinkTo>
 				</Container>
-
-				<SignOutButton locale={locale} />
 			</Container>
 		</Container>
 	);
