@@ -40,8 +40,10 @@ export const Markdown: FC<Markdown.Props> = ({
 						return (
 							<Typo
 								label={children}
-								size={"xl"}
-								font={"bold"}
+								ui={{
+									size: "xl",
+									font: "bold",
+								}}
 							/>
 						);
 					},
@@ -49,8 +51,10 @@ export const Markdown: FC<Markdown.Props> = ({
 						return (
 							<Typo
 								label={children}
-								size={"lg"}
-								font={"normal"}
+								ui={{
+									size: "lg",
+									font: "normal",
+								}}
 							/>
 						);
 					},
@@ -71,7 +75,9 @@ export const Markdown: FC<Markdown.Props> = ({
 						return (
 							<Typo
 								label={children}
-								font={"bold"}
+								ui={{
+									font: "bold",
+								}}
 							/>
 						);
 					},
@@ -82,7 +88,9 @@ export const Markdown: FC<Markdown.Props> = ({
 						return (
 							<Typo
 								label={children}
-								italic
+								ui={{
+									italic: true,
+								}}
 							/>
 						);
 					},

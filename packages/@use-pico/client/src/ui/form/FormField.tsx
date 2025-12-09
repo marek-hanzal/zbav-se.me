@@ -79,9 +79,11 @@ export const FormField: FC<FormField.Props> = (props) => {
 						<div className={"flex flex-row items-end justify-between"}>
 							{label ? (
 								<Typo
-									size={"md"}
-									font={"normal"}
 									label={label}
+									ui={{
+										size: "md",
+										font: "normal",
+									}}
 								/>
 							) : (
 								<div />
@@ -91,10 +93,12 @@ export const FormField: FC<FormField.Props> = (props) => {
 					) : null}
 					{hint ? (
 						<Typo
-							italic
-							size={"sm"}
-							tone={"subtle"}
 							label={hint}
+							ui={{
+								tone: "subtle",
+								size: "md",
+								italic: true,
+							}}
 						/>
 					) : null}
 				</div>

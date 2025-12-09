@@ -239,7 +239,9 @@ export const Route = createFileRoute("/$locale/login")({
 									>
 										<Tx
 											label={"Register (link)"}
-											tone={"link"}
+											ui={{
+												tone: "link",
+											}}
 										/>
 									</LinkTo>
 								</Container>

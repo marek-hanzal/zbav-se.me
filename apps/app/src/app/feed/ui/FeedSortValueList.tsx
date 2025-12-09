@@ -40,8 +40,10 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 				}))}
 				renderFn={(sortItem) => (
 					<Tx
-						tone={"secondary"}
 						label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
+						ui={{
+							tone: "secondary",
+						}}
 					/>
 				)}
 				action={

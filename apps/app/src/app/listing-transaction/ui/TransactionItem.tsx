@@ -90,8 +90,10 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				>
 					<Typo
 						label={listingTransaction.title}
-						truncate
-						size={"sm"}
+						ui={{
+							size: "sm",
+							truncate: true,
+						}}
 					/>
 				</ListingLocation>
 			</Badge>

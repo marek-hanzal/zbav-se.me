@@ -15,8 +15,6 @@ export const TransactionStatusInline: FC<TransactionStatusInline.Props> = ({
 }) => {
 	return (
 		<Tx
-			font={"normal"}
-			size={"sm"}
 			label={match(transactionStatus)
 				.with("request", () => "Transaction requested - seller (label)")
 				.with("accepted", () => "Transaction accepted - seller (label)")
@@ -25,6 +23,10 @@ export const TransactionStatusInline: FC<TransactionStatusInline.Props> = ({
 				.with("closed", () => "Transaction closed - seller (label)")
 				.with("expired", () => "Transaction expired - seller (label)")
 				.exhaustive()}
+			ui={{
+				size: "sm",
+				font: "normal",
+			}}
 			{...props}
 		/>
 	);

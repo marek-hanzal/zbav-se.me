@@ -48,8 +48,10 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 				}))}
 				renderFn={(item) => (
 					<Tx
-						tone={"secondary"}
 						label={`Condition - Age [${item.age}] (hint)`}
+						ui={{
+							tone: "secondary",
+						}}
 					/>
 				)}
 				action={

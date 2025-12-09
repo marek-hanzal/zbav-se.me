@@ -71,14 +71,18 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 											locale,
 											number: data.filter,
 										})}
-										font={"bold"}
+										ui={{
+											font: "bold",
+										}}
 									/>
 								);
 							}}
 						</withListingCountQuery.Suspense>
 					)
 				}
-				font={"bold"}
+				ui={{
+					font: "bold",
+				}}
 			/>
 		</Badge>
 	);

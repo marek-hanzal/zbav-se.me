@@ -247,7 +247,9 @@ export const Route = createFileRoute("/$locale/register")({
 									>
 										<Tx
 											label={"Login (link)"}
-											tone={"link"}
+											ui={{
+												tone: "link",
+											}}
 										/>
 									</LinkTo>
 								</Container>
@@ -255,8 +257,10 @@ export const Route = createFileRoute("/$locale/register")({
 								<div className={"flex flex-col gap-2 w-full"}>
 									<Tx
 										label={"Agreement with (label)"}
-										size={"sm"}
-										font={"bold"}
+										ui={{
+											size: "sm",
+											font: "bold",
+										}}
 									/>
 
 									<LinkTo
@@ -268,8 +272,10 @@ export const Route = createFileRoute("/$locale/register")({
 									>
 										<Tx
 											label={"ToS agreement (label)"}
-											tone={"link"}
-											size={"lg"}
+											ui={{
+												tone: "link",
+												size: "lg",
+											}}
 										/>
 									</LinkTo>
 
@@ -282,8 +288,10 @@ export const Route = createFileRoute("/$locale/register")({
 									>
 										<Tx
 											label={"Privacy policy (label)"}
-											tone={"link"}
-											size={"lg"}
+											ui={{
+												tone: "link",
+												size: "lg",
+											}}
 										/>
 									</LinkTo>
 								</div>

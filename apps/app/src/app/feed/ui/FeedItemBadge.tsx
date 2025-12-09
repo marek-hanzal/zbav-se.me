@@ -96,8 +96,10 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 			>
 				<Tx
 					label={feed.name}
-					font={"bold"}
-					truncate
+					ui={{
+						font: "bold",
+						truncate: true,
+					}}
 				/>
 			</Badge>
 

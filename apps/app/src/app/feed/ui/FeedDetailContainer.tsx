@@ -92,8 +92,10 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 							theme={"light"}
 							textTitle={"Feed - Select hero image (label)"}
 							titleProps={{
-								font: "normal",
-								size: "md",
+								ui: {
+									font: "normal",
+									size: "md",
+								},
 							}}
 						/>
 					</Badge>

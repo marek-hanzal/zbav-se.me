@@ -36,13 +36,17 @@ export const FeaturesSheet: FC = () => {
 					>
 						<Tx
 							label={"Landing - Feature 1 (title)"}
-							display={"block"}
-							font={"bold"}
+							ui={{
+								display: "block",
+								font: "bold",
+							}}
 						/>
 						<Tx
 							label={"Landing - Feature 1 (title) - hint"}
-							display={"block"}
-							size={"sm"}
+							ui={{
+								display: "block",
+								size: "sm",
+							}}
 						/>
 					</TypoIcon>
 					<TypoIcon
@@ -52,13 +56,17 @@ export const FeaturesSheet: FC = () => {
 					>
 						<Tx
 							label={"Landing - Feature 2 (title)"}
-							display={"block"}
-							font={"bold"}
+							ui={{
+								display: "block",
+								font: "bold",
+							}}
 						/>
 						<Tx
 							label={"Landing - Feature 2 (title) - hint"}
-							display={"block"}
-							size={"sm"}
+							ui={{
+								display: "block",
+								size: "sm",
+							}}
 						/>
 					</TypoIcon>
 					<TypoIcon
@@ -68,13 +76,17 @@ export const FeaturesSheet: FC = () => {
 					>
 						<Tx
 							label={"Landing - Feature 3 (title)"}
-							display={"block"}
-							font={"bold"}
+							ui={{
+								display: "block",
+								font: "bold",
+							}}
 						/>
 						<Tx
 							label={"Landing - Feature 3 (title) - hint"}
-							display={"block"}
-							size={"sm"}
+							ui={{
+								display: "block",
+								size: "sm",
+							}}
 						/>
 					</TypoIcon>
 					<TypoIcon
@@ -84,13 +96,17 @@ export const FeaturesSheet: FC = () => {
 					>
 						<Tx
 							label={"Landing - Feature 4 (title)"}
-							display={"block"}
-							font={"bold"}
+							ui={{
+								display: "block",
+								font: "bold",
+							}}
 						/>
 						<Tx
 							label={"Landing - Feature 4 (title) - hint"}
-							display={"block"}
-							size={"sm"}
+							ui={{
+								display: "block",
+								size: "sm",
+							}}
 						/>
 					</TypoIcon>
 					<TypoIcon
@@ -100,13 +116,17 @@ export const FeaturesSheet: FC = () => {
 					>
 						<Tx
 							label={"Landing - Feature 5 (title)"}
-							display={"block"}
-							font={"bold"}
+							ui={{
+								display: "block",
+								font: "bold",
+							}}
 						/>
 						<Tx
 							label={"Landing - Feature 5 (title) - hint"}
-							display={"block"}
-							size={"sm"}
+							ui={{
+								display: "block",
+								size: "sm",
+							}}
 						/>
 					</TypoIcon>
 				</VariantProvider>

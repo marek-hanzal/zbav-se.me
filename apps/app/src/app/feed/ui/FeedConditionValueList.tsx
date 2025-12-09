@@ -48,8 +48,10 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 				}))}
 				renderFn={(item) => (
 					<Tx
-						tone={"secondary"}
 						label={`Condition - Overall [${item.condition}] (hint)`}
+						ui={{
+							tone: "secondary",
+						}}
 					/>
 				)}
 				action={

@@ -64,7 +64,9 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({
 						>
 							<Tx
 								label={`Expire in ${expire}`}
-								font={"bold"}
+								ui={{
+									font: "bold",
+								}}
 							/>
 							<Typo
 								label={match(expire)
@@ -90,7 +92,9 @@ export const ExpireAtContainer: FC<ExpireAtContainer.Props> = ({
 											.toFormat("dd.MM.yyyy"),
 									)
 									.exhaustive()}
-								size={"md"}
+								ui={{
+									size: "md",
+								}}
 							/>
 						</Button>
 					</VariantProvider>

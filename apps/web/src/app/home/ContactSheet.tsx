@@ -22,8 +22,10 @@ export const ContactSheet: FC = () => {
 			>
 				<Typo
 					label={"info@zbav-se.me"}
-					font={"bold"}
-					size={"xl"}
+					ui={{
+						font: "bold",
+						size: "xl",
+					}}
 				/>
 			</Status>
 		</Container>

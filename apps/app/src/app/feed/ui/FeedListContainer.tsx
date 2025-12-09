@@ -101,8 +101,10 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								<Tx
 									data-ui="FeedListContainer-first-feed-hint"
 									label={"First feed (hint)"}
-									size={"sm"}
-									tone={"subtle"}
+									ui={{
+										size: "sm",
+										tone: "subtle",
+									}}
 								/>
 							</FeedNameContainer>
 

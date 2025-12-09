@@ -138,9 +138,11 @@ const DefaultDescription: Tour.Description.RenderFn = ({ description }) => {
 	return (
 		<Typo
 			label={description}
-			size="sm"
-			tone={"secondary"}
-			theme={"light"}
+			ui={{
+				size: "sm",
+				tone: "secondary",
+				theme: "light",
+			}}
 		/>
 	);
 };
@@ -149,10 +151,12 @@ const DefaultProgress: Tour.Progress.RenderFn = ({ progress, percent, total }) =
 	return (
 		<Typo
 			label={`${progress} / ${total} (${percent.toFixed(0)}%)`}
-			font={"bold"}
-			size={"sm"}
-			tone={"primary"}
-			theme={"light"}
+			ui={{
+				size: "sm",
+				font: "bold",
+				tone: "primary",
+				theme: "light",
+			}}
 		/>
 	);
 };

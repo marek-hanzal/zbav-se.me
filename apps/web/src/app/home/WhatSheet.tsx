@@ -38,8 +38,10 @@ export const WhatSheet: FC = () => {
 							>
 								<Tx
 									label={"What - sellers (badge 1)"}
-									display={"block"}
-									font={"bold"}
+									ui={{
+										display: "block",
+										font: "bold",
+									}}
 								/>
 							</TypoIcon>
 
@@ -49,8 +51,10 @@ export const WhatSheet: FC = () => {
 							>
 								<Tx
 									label={"What - sellers (badge 2)"}
-									display={"block"}
-									font={"bold"}
+									ui={{
+										display: "block",
+										font: "bold",
+									}}
 								/>
 							</TypoIcon>
 
@@ -60,8 +64,10 @@ export const WhatSheet: FC = () => {
 							>
 								<Tx
 									label={"What - sellers (badge 3)"}
-									display={"block"}
-									font={"bold"}
+									ui={{
+										display: "block",
+										font: "bold",
+									}}
 								/>
 							</TypoIcon>
 						</div>
@@ -88,8 +94,10 @@ export const WhatSheet: FC = () => {
 							>
 								<Tx
 									label={"What - buyers (badge 1)"}
-									display={"block"}
-									font={"bold"}
+									ui={{
+										display: "block",
+										font: "bold",
+									}}
 								/>
 							</TypoIcon>
 
@@ -99,8 +107,10 @@ export const WhatSheet: FC = () => {
 							>
 								<Tx
 									label={"What - buyers (badge 2)"}
-									display={"block"}
-									font={"bold"}
+									ui={{
+										display: "block",
+										font: "bold",
+									}}
 								/>
 							</TypoIcon>
 
@@ -110,8 +120,10 @@ export const WhatSheet: FC = () => {
 							>
 								<Tx
 									label={"What - buyers (badge 3)"}
-									display={"block"}
-									font={"bold"}
+									ui={{
+										display: "block",
+										font: "bold",
+									}}
 								/>
 							</TypoIcon>
 						</div>

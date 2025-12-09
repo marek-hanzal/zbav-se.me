@@ -36,13 +36,17 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item, ui, ...p
 		>
 			<Typo
 				label={item.group}
-				size={"sm"}
+				ui={{
+					size: "sm",
+				}}
 			/>
 
 			<Typo
 				label={item.category}
-				size={"lg"}
-				font={"bold"}
+				ui={{
+					size: "lg",
+					font: "bold",
+				}}
 			/>
 		</Button>
 	);

@@ -101,7 +101,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({
 						<div className="flex gap-2 items-center justify-between w-full">
 							<Tx
 								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
-								font={position ? "bold" : "normal"}
+								ui={{
+									font: position ? "bold" : "normal",
+								}}
 							/>
 
 							{position ? (
