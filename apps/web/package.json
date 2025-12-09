@@ -45,7 +45,7 @@
 		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/vite-asset-size": "1.0.4",
 		"@vitejs/plugin-react": "5.1.2",
-		"nitro": "^3.0.1-alpha.0",
+		"nitro": "3.0.1-alpha.1",
 		"rollup": "4.53.3",
 		"tailwindcss": "4.1.17",
 		"terser": "5.44.1",
