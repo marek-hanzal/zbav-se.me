@@ -5,6 +5,7 @@ import type { FC, ReactNode } from "react";
 export namespace Title {
 	export interface Props extends Container.Props {
 		textTitle: string;
+		textTitleProps?: Tx.PropsEx;
 		textSubtitle?: string;
 		right?: ReactNode;
 		left?: ReactNode;
@@ -13,6 +14,7 @@ export namespace Title {
 
 export const Title: FC<Title.Props> = ({
 	textTitle,
+	textTitleProps,
 	textSubtitle,
 	right,
 	left,
@@ -29,6 +31,7 @@ export const Title: FC<Title.Props> = ({
 				justify: "space-between",
 				inner: "default",
 				width: "full",
+				lead: true,
 				...ui,
 			}}
 			{...props}
@@ -40,22 +43,29 @@ export const Title: FC<Title.Props> = ({
 					justify: "center",
 				}}
 			>
-				<div data-ui={"Title-title"}>
-					{left ? <div data-ui="Title-left">{left}</div> : null}
+				<Container
+					ui={{
+						layout: "horizontal-flex",
+						items: "center",
+						justify: "center",
+						gap: "sm",
+					}}
+				>
+					{left}
 
 					<Tx
 						data-ui={"Title-title-text"}
 						label={textTitle}
+						{...textTitleProps}
 						ui={{
-							tone: "primary",
-							theme: "light",
 							text: "xl",
 							font: "bold",
 							display: "block",
 							truncate: true,
+							...textTitleProps?.ui,
 						}}
 					/>
-				</div>
+				</Container>
 
 				{textSubtitle ? (
 					<Tx

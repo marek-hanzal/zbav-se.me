@@ -1,4 +1,5 @@
 import { Container } from "@use-pico/client/ui/container";
+import type { Tx } from "@use-pico/client/ui/tx";
 import type { FC, ReactNode } from "react";
 import { Title } from "../title/Title";
 import { BottomContainer } from "./BottomContainer";
@@ -6,6 +7,7 @@ import { BottomContainer } from "./BottomContainer";
 export namespace TitleContainer {
 	export interface Props extends Container.Props {
 		textTitle?: string;
+		textTitleProps?: Tx.PropsEx;
 		textSubtitle?: string;
 		titleProps?: Omit<Title.Props, "textTitle">;
 		left?: ReactNode;
@@ -16,6 +18,7 @@ export namespace TitleContainer {
 
 export const TitleContainer: FC<TitleContainer.Props> = ({
 	textTitle,
+	textTitleProps,
 	textSubtitle,
 	titleProps,
 	left,
@@ -40,6 +43,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 				<Title
 					data-ui={"TitleContainer-Title"}
 					textTitle={textTitle}
+					textTitleProps={textTitleProps}
 					textSubtitle={textSubtitle}
 					left={left}
 					right={right}

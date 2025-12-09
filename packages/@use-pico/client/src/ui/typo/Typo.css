@@ -3,6 +3,10 @@
 		color: var(--color-text);
 	}
 
+	.Typo[data-ui-lead="true"] {
+		color: var(--color-lead);
+	}
+
 	/** Wrap */
 	.Typo[data-ui-wrap="wrap"] {
 		min-width: 0;
