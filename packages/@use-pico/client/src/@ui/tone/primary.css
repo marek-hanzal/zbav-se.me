@@ -29,6 +29,8 @@
 	--color-text: var(--color-primary-xs);
 	--color-background: var(--color-primary-xl);
 	--color-border: var(--color-primary-md);
+
+	@apply shadow-primary-md/20;
 }
 
 @layer components {

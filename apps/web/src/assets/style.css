@@ -1,6 +1,8 @@
 @import "./font.css";
 @import "tailwindcss";
 
+@import "@use-pico/client/ui.css";
+
 @plugin "@iconify/tailwind4";
 
 @config "../../tailwind.config.ts";

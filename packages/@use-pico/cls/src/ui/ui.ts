@@ -29,13 +29,13 @@ export namespace ui {
 		TRest,
 		"className"
 	> & {
-        /**
-         * UI configuration (data-ui-* attributes) of the element.
-         */
+		/**
+		 * UI configuration (data-ui-* attributes) of the element.
+		 */
 		ui?: TProps;
-        /**
-         * Optional class names, uses tailwind merge under the hood.
-         */
+		/**
+		 * Optional class names, uses tailwind merge under the hood.
+		 */
 		className?: tvc.ClassName;
 	};
 
