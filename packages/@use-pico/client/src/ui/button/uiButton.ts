@@ -27,6 +27,9 @@ export namespace uiButton {
 		border?: boolean;
 		shadow?: boolean;
 		zIndex?: boolean;
+		//
+		text?: CoolUi.Text;
+		font?: CoolUi.Font;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

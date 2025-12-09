@@ -28,7 +28,6 @@ export const uiTypo = ({ ui, className }: uiTypo.Props) => {
 	return coolUi({
 		name: "Typo",
 		ui: {
-			text: "default",
 			display: "inline",
 			...ui,
 		},

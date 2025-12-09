@@ -27,6 +27,13 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		width: "full",
 		gap: "md",
 	};
+	const button: uiButton.Ui = {
+		justify: "start",
+		size: "xl",
+		width: "full",
+		text: "xl",
+		font: "bold",
+	};
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -58,9 +65,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 				<LinkTo
 					{...uiButton({
 						ui: {
-							justify: "start",
-							size: "xl",
-							width: "full",
+							...button,
 						},
 						className: [],
 					})}
@@ -83,9 +88,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+								...button,
 							},
 							className: [],
 						})}
@@ -107,9 +110,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+								...button,
 							},
 							className: [],
 						})}
@@ -131,9 +132,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+								...button,
 							},
 							className: [],
 						})}
@@ -156,9 +155,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					{...uiButton({
 						ui: {
 							tone: "secondary",
-							justify: "start",
-							size: "xl",
-							width: "full",
+							...button,
 						},
 						className: [],
 					})}
@@ -181,9 +178,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+								...button,
 							},
 							className: [],
 						})}
@@ -205,9 +200,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+								...button,
 							},
 							className: [],
 						})}
