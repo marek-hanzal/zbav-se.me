@@ -1,6 +1,6 @@
 import { isString } from "@use-pico/common/is-string";
-import { asIcon } from "@use-pico/theme/icon";
 import type { ComponentProps, FC, ReactNode } from "react";
+import { uiIcon } from "./uiIcon";
 
 /**
  * Simple styled icon (span); uses Tailwind CSS classes.
@@ -13,7 +13,7 @@ export namespace Icon {
 	/**
 	 * Props for `Icon` component.
 	 */
-	export interface Props extends asIcon.PropsEx<ComponentProps<"span">> {
+	export interface Props extends uiIcon.Component<ComponentProps<"span">> {
 		icon: Icon.Type;
 	}
 
@@ -26,21 +26,15 @@ export namespace Icon {
 export const Icon: FC<Icon.Props> = ({
 	icon,
 	//
-	tone,
-	theme,
-	size,
-	disabled,
+	ui,
 	className,
 	//
 	...props
 }) => {
 	return isString(icon) ? (
 		<span
-			{...asIcon({
-				tone,
-				theme,
-				size,
-				disabled,
+			{...uiIcon({
+				ui,
 				//
 				className: [
 					icon,

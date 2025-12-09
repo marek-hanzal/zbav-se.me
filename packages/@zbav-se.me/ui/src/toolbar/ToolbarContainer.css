@@ -1,9 +1,9 @@
 @layer components {
-	.ToolbarContainer[data-flip="true"] {
+	.ToolbarContainer[data-ui-flip="true"] {
 		flex-direction: row-reverse;
 	}
 
-	.ToolbarContainer[data-horizontal="true"] {
+	.ToolbarContainer[data-ui-horizontal="true"] {
 		flex-direction: row;
 	}
 }

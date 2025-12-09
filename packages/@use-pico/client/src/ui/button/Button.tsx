@@ -1,12 +1,12 @@
-import { asButton } from "@use-pico/theme/button";
 import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
-import type { asIcon } from "../../../../theme/src/icon/asIcon";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
+import type { uiIcon } from "../../icon/uiIcon";
 import { Tx } from "../tx/Tx";
+import { uiButton } from "./uiButton";
 
-const ICON_SIZE_MAP: Partial<Record<asButton.Size, asIcon.Size>> = {
+const ICON_SIZE_MAP: Partial<Record<uiButton.Size, uiIcon.Size>> = {
 	sm: "xs",
 	md: "xs",
 	lg: "xl",
@@ -14,7 +14,7 @@ const ICON_SIZE_MAP: Partial<Record<asButton.Size, asIcon.Size>> = {
 } as const;
 
 export namespace Button {
-	export interface Props extends asButton.Props<ComponentProps<"button">> {
+	export interface Props extends uiButton.Component<ComponentProps<"button">> {
 		/**
 		 * Goes through translation; in general buttons should _not_ have
 		 * any complex content, thus the "label" only.
@@ -66,26 +66,32 @@ export const Button: FC<Button.Props> = ({
 	loading,
 	disabled,
 	//
-	size,
-	//
 	truncate,
 	children,
+	//
+	ui,
+	className,
+	//
 	...props
 }) => {
-	const iconSize = ICON_SIZE_MAP[size ?? "md"] ?? size;
+	const iconSize = ICON_SIZE_MAP[ui?.size ?? "md"] ?? ui?.size;
 
 	const renderIcon = useMemo(
 		() =>
 			disabled ? (
 				<Icon
 					icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
-					size={iconSize}
+					ui={{
+						size: iconSize,
+					}}
 					{...iconProps}
 				/>
 			) : (
 				<Icon
 					icon={loading === true ? iconLoading : iconEnabled}
-					size={iconSize}
+					ui={{
+						size: iconSize,
+					}}
 					{...iconProps}
 				/>
 			),
@@ -105,11 +111,14 @@ export const Button: FC<Button.Props> = ({
 			type={"button"}
 			disabled={disabled}
 			//
-			{...asButton({
-				disabled,
-				size,
-				...props,
+			{...uiButton({
+				ui: {
+					disabled,
+					...ui,
+				},
+				className,
 			})}
+			{...props}
 		>
 			{iconPosition === "left" && renderIcon}
 

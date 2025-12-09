@@ -23,6 +23,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 	noDelete,
 	state,
 	children,
+	ui,
 	...props
 }) => {
 	useEffect(() => {
@@ -38,9 +39,10 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 		<>
 			<Button
 				iconEnabled={SettingsIcon}
-				tone={"primary"}
-				theme={"light"}
-				size={"xl"}
+				ui={{
+					size: "xl",
+					...ui,
+				}}
 				label={"Feed setup (button)"}
 				onClick={() => state.set((prev) => !prev)}
 				{...props}

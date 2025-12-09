@@ -24,7 +24,6 @@
 		"@use-pico/cls": "workspace:*",
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
-		"@use-pico/theme": "workspace:*",
 		"@zbav-se.me/sdk": "workspace:*",
 		"@zbav-se.me/server": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",

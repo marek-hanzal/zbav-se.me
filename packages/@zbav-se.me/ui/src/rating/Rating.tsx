@@ -10,16 +10,6 @@ import { type FC, type Ref, useId, useMemo } from "react";
 import { RatingCls } from "./RatingCls";
 import { RatingToIcon } from "./RatingToIcon";
 
-export namespace Rating {
-	export interface RatingItem extends EntitySchema.Type {}
-
-	export interface Props extends RatingCls.Props {
-		ref?: Ref<HTMLDivElement>;
-		textHint(value: number): string;
-		selection: useSelection.Selection<RatingItem>;
-	}
-}
-
 function withRatingItems(limit = 6): Rating.RatingItem[] {
 	return Array.from(
 		{
@@ -34,6 +24,16 @@ function withRatingItems(limit = 6): Rating.RatingItem[] {
 	);
 }
 
+export namespace Rating {
+	export interface RatingItem extends EntitySchema.Type {}
+
+	export interface Props extends RatingCls.Props {
+		ref?: Ref<HTMLDivElement>;
+		textHint(value: number): string;
+		selection: useSelection.Selection<RatingItem>;
+	}
+}
+
 export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = RatingCls, tweak }) => {
 	const limit = 6;
 	const { slots } = useCls(cls, tweak);
@@ -45,8 +45,10 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 	return (
 		<Container
 			data-ui={"Rating-root"}
-			scroll={"vertical"}
-			height={"auto"}
+			ui={{
+				scroll: "vertical",
+				height: "auto",
+			}}
 		>
 			<div
 				data-ui={"Rating-items"}
@@ -71,14 +73,20 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 								theme: selected ? "dark" : "light",
 							}}
 						>
-							<Button size={"xl"}>
+							<Button
+								ui={{
+									size: "xl",
+								}}
+							>
 								<TypoIcon
 									icon={icon}
 									onClick={() => {
 										selection.toggle(item);
 									}}
 									iconProps={{
-										size: "md",
+										ui: {
+											size: "md",
+										},
 									}}
 									tweak={{
 										slot: {

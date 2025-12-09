@@ -18,12 +18,16 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 	iconProps,
 	close,
 	children,
+	ui,
 	...props
 }) => {
 	return (
 		<Container
-			layout={"vertical-header-content"}
-			inner={"default"}
+			ui={{
+				layout: "vertical-header-content",
+				inner: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			<Title
@@ -42,7 +46,14 @@ export const ModalContainer: FC<ModalContainer.Props> = ({
 				textTitle={textTitle}
 			/>
 
-			<Container scroll={"vertical"}>{children}</Container>
+			<Container
+				data-ui="ModalContainer-content"
+				ui={{
+					scroll: "vertical",
+				}}
+			>
+				{children}
+			</Container>
 		</Container>
 	);
 };

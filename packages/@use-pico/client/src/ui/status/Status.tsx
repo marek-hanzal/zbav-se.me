@@ -57,7 +57,9 @@ export const Status: FC<Status.Props> = ({
 				<Icon
 					data-ui="Status-icon"
 					icon={icon}
-					size="xl"
+					ui={{
+						size: "xl",
+					}}
 					{...iconProps}
 				/>
 

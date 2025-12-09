@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { asButton } from "@use-pico/theme/button";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
@@ -37,9 +36,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			<FlowContainer
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
@@ -65,14 +68,19 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 				data-ui={"FeedList"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
-							opacity: "subtle",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						iconProps={{
-							size: "lg",
+							ui: {
+								size: "lg",
+							},
 						}}
 						to={"/$locale/buyer"}
 						params={{
@@ -99,19 +107,23 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										set: setIsFeedSettings1,
 									}}
 									iconProps={{
-										size: "lg",
+										ui: {
+											size: "lg",
+										},
 									}}
-									size={undefined}
-									square={"default"}
+									ui={{
+										tone: "secondary",
+										size: undefined,
+										square: "default",
+										zIndex: true,
+										round: "full",
+										snapTo: "top-right",
+										opacity: "subtle",
+									}}
 									feed={feed}
-									tone={"secondary"}
-									zIndex
 									defaultOpen={false}
 									noDelete={true}
-									round={"full"}
 									label={null}
-									snapTo={"top-right"}
-									opacity={"subtle"}
 								>
 									<LinkTo
 										to={"/$locale/buyer/feed/$id/list"}
@@ -130,11 +142,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									>
 										<Button
 											iconEnabled={ListingIcon}
-											tone={"primary"}
-											theme={"light"}
 											label={"Refresh listings (button)"}
-											size={"xl"}
-											justify={"start"}
+											ui={{
+												size: "xl",
+												justify: "start",
+											}}
 										/>
 									</LinkTo>
 								</FeedSetupButton>
@@ -179,8 +191,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									scrollToId={scrollToId}
 									appendix={
 										<Container
-											layout={"vertical-centered"}
-											height={"full"}
+											ui={{
+												layout: "vertical-centered",
+												height: "full",
+											}}
 										>
 											<Status
 												icon={DeadEndIcon}
@@ -196,8 +210,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																value: isFeedSettings2,
 																set: setIsFeedSettings2,
 															}}
-															size={"xl"}
-															justify={"start"}
+															ui={{
+																size: "xl",
+																justify: "start",
+															}}
 														>
 															<LinkTo
 																to={"/$locale/buyer/feed/$id/list"}
@@ -216,13 +232,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 															>
 																<Button
 																	iconEnabled={ListingIcon}
-																	tone={"primary"}
-																	theme={"light"}
 																	label={
 																		"Refresh listings (button)"
 																	}
-																	size={"xl"}
-																	justify={"start"}
+																	ui={{
+																		size: "xl",
+																		justify: "start",
+																	}}
 																/>
 															</LinkTo>
 														</FeedSetupButton>
@@ -236,10 +252,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 															<Button
 																iconEnabled={ArrowRightIcon}
 																iconPosition={"right"}
-																tone={"primary"}
 																label={"Back to home (link)"}
-																size={"xl"}
-																justify={"start"}
+																ui={{
+																	size: "xl",
+																	justify: "start",
+																}}
 															/>
 														</LinkTo>
 													</>

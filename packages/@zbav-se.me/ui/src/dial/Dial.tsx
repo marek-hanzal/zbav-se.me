@@ -37,20 +37,23 @@ export namespace Dial {
 	}
 }
 
-export const Dial: FC<Dial.Props> = ({ value, onChange, ...props }) => {
+export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 	return (
 		<Container
 			data-ui={"Dial"}
-			layout={"vertical-header-content"}
-			height={"full"}
-			gap={"sm"}
+			ui={{
+				layout: "vertical-header-content",
+				height: "full",
+				gap: "sm",
+				...ui,
+			}}
 			{...props}
 		>
 			<Badge
 				data-ui={"Dial-Badge-value-wrapper"}
-				tone={"primary"}
-				theme={"light"}
-				size={"xl"}
+				ui={{
+					size: "xl",
+				}}
 			>
 				{value ? (
 					<Typo
@@ -73,11 +76,12 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ...props }) => {
 				<Icon
 					data-ui={"Dial-Icon-backspace"}
 					icon={BackspaceIcon}
-					tone="secondary"
-					theme="light"
-					disabled={!value}
 					onClick={() => {
 						onChange(value?.slice(0, -1) || undefined);
+					}}
+					ui={{
+						tone: "secondary",
+						disabled: !value,
 					}}
 				/>
 			</Badge>

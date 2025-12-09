@@ -117,8 +117,9 @@ export const BoolInput: FC<BoolInput.Props> = ({
 			{(textOn || textOff) && (
 				<Badge
 					data-ui="BoolInput-badge"
-					tone={value ? "secondary" : "neutral"}
-					theme={"light"}
+					ui={{
+						tone: value ? "secondary" : "neutral",
+					}}
 				>
 					{value ? textOn : textOff}
 				</Badge>

@@ -1,7 +1,6 @@
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
+import type { Ui } from "@use-pico/client/ui/";
+import { Container, SpinnerContainer, uiContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import { attr } from "@use-pico/theme/attr";
-import type { Theme } from "@use-pico/theme/theme";
 import { type ComponentProps, type FC, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
 
@@ -10,7 +9,7 @@ export namespace HeroImage {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
-		round?: Theme.Round;
+		round?: Ui.Round;
 	}
 }
 
@@ -36,16 +35,12 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
-				{...attr<Theme.Attrs>({
-					ui: "HeroImage",
-					attrs: [
-						"round",
-						"height",
-						"width",
-					],
-					round,
-					height: "full",
-					width: "full",
+				{...uiContainer({
+					ui: {
+						round,
+						height: "full",
+						width: "full",
+					},
 					className: [
 						"object-cover",
 						"object-center",
@@ -80,9 +75,11 @@ export const HeroImage: FC<HeroImage.Props> = ({
 			{state === "error" ? (
 				<Container
 					data-ui={"HeroImage-error"}
-					layout={"vertical-centered"}
-					tone={"primary"}
-					theme={"light"}
+					ui={{
+						layout: "vertical-centered",
+						tone: "primary",
+						theme: "light",
+					}}
 				>
 					<Status
 						icon={"icon-[ph--image-broken-duotone]"}

@@ -57,18 +57,24 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 				{header ? (
 					<Badge
 						data-root={"BottomSheet-Badge-header-wrapper"}
-						round={"md"}
+						ui={{
+							round: "md",
+						}}
 					>
 						{header.close ? (
 							<Button
 								iconEnabled={ArrowLeftIcon}
 								onClick={props.onClose}
 								iconProps={{
-									size: "sm",
+									ui: {
+										size: "sm",
+									},
 								}}
-								round={"full"}
-								tone={"secondary"}
-								theme={"light"}
+								ui={{
+									round: "full",
+									tone: "secondary",
+									theme: "light",
+								}}
 							/>
 						) : (
 							<div />

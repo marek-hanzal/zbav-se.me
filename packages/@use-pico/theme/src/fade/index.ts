@@ -1,1 +1,0 @@
-export { asFade } from "./asFade";

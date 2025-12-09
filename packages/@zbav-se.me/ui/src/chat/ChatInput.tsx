@@ -50,6 +50,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	menu,
 	cls = ChatInputCls,
 	tweak,
+	ui,
 	...props
 }) => {
 	const { slots } = useCls(cls, tweak);
@@ -87,7 +88,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 		if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
 			e.preventDefault();
 
-			if (props.disabled) {
+			if (ui?.disabled) {
 				return;
 			}
 
@@ -102,8 +103,11 @@ export const ChatInput: FC<ChatInput.Props> = ({
 	return (
 		<Container
 			data-ui={"ChatInput-Container"}
-			layout={"horizontal-flex"}
-			gap={"md"}
+			ui={{
+				layout: "horizontal-flex",
+				gap: "md",
+				...ui,
+			}}
 			{...props}
 		>
 			{menu ? (
@@ -111,9 +115,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					<Button
 						data-ui={"ChatInput-Button-menu"}
 						iconEnabled={PlusIcon}
-						tone={"link"}
-						theme={"light"}
 						onClick={() => setIsMenu((prev) => !prev)}
+						ui={{
+							tone: "link",
+						}}
 					/>
 
 					<BottomSheet
@@ -124,9 +129,11 @@ export const ChatInput: FC<ChatInput.Props> = ({
 					>
 						<Container
 							data-ui={"ChatInput-BottomSheet-Container"}
-							layout={"vertical-flex"}
-							gap={"md"}
-							inner={"default"}
+							ui={{
+								layout: "vertical-flex",
+								gap: "md",
+								inner: "default",
+							}}
 						>
 							{menu.content}
 						</Container>
@@ -172,7 +179,7 @@ export const ChatInput: FC<ChatInput.Props> = ({
 						id={areaId}
 						rows={1}
 						value={value}
-						disabled={props.disabled}
+						disabled={ui?.disabled}
 						onChange={(e) => onChange(e.target.value)}
 						onKeyDown={handleKeyDown}
 						placeholder={placeholder}
@@ -185,10 +192,10 @@ export const ChatInput: FC<ChatInput.Props> = ({
 				data-ui={"ChatInput-Button-send"}
 				iconEnabled={SendMessageIcon}
 				iconProps={{
-					size: "md",
+					ui: {
+						size: "md",
+					},
 				}}
-				tone={"primary"}
-				theme={"light"}
 				disabled={loading || value.length === 0}
 				loading={loading}
 				onClick={() => {

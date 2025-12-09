@@ -1,0 +1,41 @@
+import { ui as coolUi } from "@use-pico/cls";
+import type { Ui as CoolUi } from "../Ui";
+
+export namespace uiButton {
+	export type Size = CoolUi.Size;
+
+	export interface Ui {
+		theme?: CoolUi.Theme;
+		tone?: CoolUi.Tone;
+		//
+		size?: Size;
+		square?: CoolUi.Square;
+		round?: CoolUi.Round;
+		snapTo?: CoolUi.SnapTo;
+		opacity?: CoolUi.Opacity;
+		//
+		justify?: CoolUi.Justify;
+		items?: CoolUi.Items;
+		//
+		disabled?: boolean;
+		zIndex?: boolean;
+	}
+
+	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
+
+	export interface Props extends coolUi.PropsEx<Ui> {
+		//
+	}
+}
+
+export const uiButton = ({ ui, className }: uiButton.Props) => {
+	return coolUi<uiButton.Ui>({
+		name: "Button",
+		ui: {
+			theme: "light",
+			tone: "primary",
+			...ui,
+		},
+		className,
+	});
+};

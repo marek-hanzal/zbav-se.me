@@ -11,7 +11,7 @@ export namespace Item {
 	}
 }
 
-export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
+export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ui, ...props }) => {
 	const rootRef = useRef<HTMLButtonElement>(null);
 
 	const { contextSafe } = useAnim({
@@ -44,8 +44,10 @@ export const Item: FC<Item.Props> = ({ icon, disabled, onClick, ...props }) => {
 				onClick();
 				onItemClick();
 			}}
-			tone={"primary"}
-			size={"xl"}
+			ui={{
+				size: "xl",
+				...ui,
+			}}
 			{...props}
 		/>
 	);

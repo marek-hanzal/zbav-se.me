@@ -38,20 +38,25 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	renderFn,
 	action,
 	loading,
+	ui,
 	...props
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
 			data-root="ContainerValueList"
-			layout={"vertical-flex"}
-			gap={"xs"}
-			height={"auto"}
+			ui={{
+				layout: "vertical-flex",
+				gap: "xs",
+				height: "auto",
+				...ui,
+			}}
 			{...props}
 		>
 			<Badge
 				data-ui="ContainerValueList-Badge-title-wrapper"
-				tone={"neutral"}
-				theme={"light"}
+				ui={{
+					tone: "neutral",
+				}}
 			>
 				<Tx
 					tone={"primary"}
@@ -64,9 +69,11 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 
 			<Container
 				data-ui="ContainerValueList-Container-content"
-				layout={"vertical-flex"}
-				gap={"xs"}
-				height={"auto"}
+				ui={{
+					layout: "vertical-flex",
+					gap: "xs",
+					height: "auto",
+				}}
 			>
 				{loading
 					? null
@@ -74,8 +81,9 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 							<Badge
 								data-ui="ContainerValueList-Badge-item"
 								key={item.id}
-								tone={"neutral"}
-								theme={"light"}
+								ui={{
+									tone: "neutral",
+								}}
 							>
 								{renderFn(item)}
 							</Badge>
@@ -83,16 +91,19 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 
 				{loading && (
 					<SpinnerContainer
-						height={"content"}
 						size={"md"}
+						ui={{
+							height: "content",
+						}}
 					/>
 				)}
 
 				{!loading && items.length === 0 && (
 					<Badge
 						data-ui="ContainerValueList-Badge-empty"
-						tone={"neutral"}
-						theme={"light"}
+						ui={{
+							tone: "neutral",
+						}}
 					>
 						<Tx label={textEmpty} />
 					</Badge>

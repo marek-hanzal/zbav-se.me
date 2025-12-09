@@ -7,12 +7,15 @@ export namespace SubmitButton {
 	}
 }
 
-export const SubmitButton: FC<SubmitButton.Props> = (props) => {
+export const SubmitButton: FC<SubmitButton.Props> = ({ ui, ...props }) => {
 	return (
 		<Button
 			type={"submit"}
-			tone={"primary"}
-			theme={"light"}
+			ui={{
+				tone: "primary",
+				theme: "light",
+				...ui,
+			}}
 			{...props}
 		/>
 	);

@@ -22,14 +22,18 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 	right,
 	bottom,
 	children,
+	ui,
 	...props
 }) => {
 	return (
 		<Container
 			data-ui={"TitleContainer"}
-			layout={"vertical-header-content-footer"}
-			height={"full"}
-			width={"full"}
+			ui={{
+				layout: "vertical-header-content-footer",
+				height: "full",
+				width: "full",
+				...ui,
+			}}
 			{...props}
 		>
 			{textTitle ? (

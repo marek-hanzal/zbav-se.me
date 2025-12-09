@@ -1,0 +1,54 @@
+import { ui as coolUi } from "@use-pico/cls";
+import type { Ui as CoolUi } from "../Ui";
+
+export namespace uiContainer {
+	export type Layout =
+		| "vertical"
+		| "vertical-full"
+		| "vertical-header-content-footer"
+		| "vertical-header-content"
+		| "vertical-content-footer"
+		| "vertical-centered"
+		| "vertical-flex"
+		//
+		| "horizontal"
+		| "horizontal-full"
+		| "horizontal-flex";
+	export type Scroll = "vertical" | "horizontal";
+
+	export interface Ui {
+		theme?: CoolUi.Theme;
+		tone?: CoolUi.Tone;
+		//
+		layout?: Layout;
+		height?: CoolUi.Height;
+		width?: CoolUi.Width;
+		gap?: CoolUi.Gap;
+		inner?: CoolUi.Inner;
+		snapTo?: CoolUi.SnapTo;
+		//
+		position?: CoolUi.Position;
+		//
+		scroll?: Scroll;
+		//
+		round?: CoolUi.Round;
+		//
+		disabled?: boolean;
+	}
+
+	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
+
+	export interface Props extends coolUi.PropsEx<Ui> {
+		//
+	}
+}
+
+export const uiContainer = ({ ui, className }: uiContainer.Props) => {
+	return coolUi<uiContainer.Ui>({
+		name: "Container",
+		ui: {
+			...ui,
+		},
+		className,
+	});
+};

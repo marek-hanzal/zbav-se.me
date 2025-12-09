@@ -29,12 +29,21 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 	textValueProps,
 	action,
 	//
+	ui,
+	className,
 	...props
 }) => {
 	return (
 		<Badge
 			data-ui={"BadgeValue"}
-			tone={"neutral"}
+			ui={{
+				tone: "neutral",
+				...ui,
+			}}
+			className={[
+				"BadgeValue",
+				className,
+			]}
 			{...props}
 		>
 			<div data-ui="BadgeValue-label-wrapper">

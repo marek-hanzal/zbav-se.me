@@ -1,10 +1,10 @@
-import { asFade } from "@use-pico/theme/fade";
 import { type FC, type RefObject, useCallback, useEffect, useRef } from "react";
+import { uiFade } from "./uiFade";
 
 const clamp01 = (v: number) => (v < 0 ? 0 : v > 1 ? 1 : v);
 
 export namespace Fade {
-	export interface Props extends asFade.PropsEx {
+	export interface Props extends uiFade.Component {
 		scrollableRef: RefObject<HTMLElement | null>;
 		height?: number;
 		fade?: number;
@@ -12,13 +12,11 @@ export namespace Fade {
 }
 
 export const Fade: FC<Fade.Props> = ({
-	tone,
-	theme,
-	//
 	height = 8,
 	fade = height * 2,
 	scrollableRef,
 	//
+	ui,
 	className,
 }) => {
 	const topFadeRef = useRef<HTMLDivElement>(null);
@@ -105,9 +103,8 @@ export const Fade: FC<Fade.Props> = ({
 			<div
 				ref={topFadeRef}
 				aria-hidden
-				{...asFade({
-					tone,
-					theme,
+				{...uiFade({
+					ui,
 					className: [
 						"Fade-top",
 						className,
@@ -121,9 +118,8 @@ export const Fade: FC<Fade.Props> = ({
 			<div
 				ref={bottomFadeRef}
 				aria-hidden
-				{...asFade({
-					tone,
-					theme,
+				{...uiFade({
+					ui,
 					className: [
 						"Fade-bottom",
 						className,

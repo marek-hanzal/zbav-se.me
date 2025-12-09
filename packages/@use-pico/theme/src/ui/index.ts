@@ -1,1 +1,0 @@
-export { attr } from "./attr";
