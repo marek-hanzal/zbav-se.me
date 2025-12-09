@@ -12,7 +12,7 @@
 		"knip": "knip"
 	},
 	"dependencies": {
-		"@better-auth/passkey": "1.4.5",
+		"@better-auth/passkey": "1.4.6",
 		"@escapace/accept-language-parser": "2.1.1",
 		"@tanstack/query-async-storage-persister": "5.90.14",
 		"@tanstack/react-query": "5.90.12",
@@ -28,7 +28,7 @@
 		"@zbav-se.me/server": "workspace:*",
 		"@zbav-se.me/ui": "workspace:*",
 		"axios": "1.13.2",
-		"better-auth": "1.4.5",
+		"better-auth": "1.4.6",
 		"luxon": "3.7.2",
 		"p-queue": "9.0.1",
 		"react": "19.2.1",
@@ -48,7 +48,7 @@
 		"@types/luxon": "3.7.1",
 		"@types/react": "19.2.7",
 		"@types/react-dom": "19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20251208.1",
+		"@typescript/native-preview": "7.0.0-dev.20251209.1",
 		"@use-pico/vite-asset-size": "1.0.4",
 		"@vitejs/plugin-react": "5.1.2",
 		"google-fonts-helper": "3.7.3",
