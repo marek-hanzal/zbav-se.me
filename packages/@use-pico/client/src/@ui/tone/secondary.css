@@ -32,11 +32,11 @@
 }
 
 @layer components {
-	[data-tone="secondary"][data-theme="light"] {
+	[data-ui-tone="secondary"][data-ui-theme="light"] {
 		@apply tone-secondary-light;
 	}
 
-	[data-tone="secondary"][data-theme="dark"] {
+	[data-ui-tone="secondary"][data-ui-theme="dark"] {
 		@apply tone-secondary-dark;
 	}
 }

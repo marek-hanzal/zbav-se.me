@@ -111,6 +111,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 											size: "lg",
 										},
 									}}
+									feed={feed}
+									defaultOpen={false}
+									noDelete={true}
+									label={null}
 									ui={{
 										tone: "secondary",
 										size: undefined,
@@ -120,10 +124,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										snapTo: "top-right",
 										opacity: "subtle",
 									}}
-									feed={feed}
-									defaultOpen={false}
-									noDelete={true}
-									label={null}
 								>
 									<LinkTo
 										to={"/$locale/buyer/feed/$id/list"}

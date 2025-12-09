@@ -1,25 +1,25 @@
 @layer components {
-	[data-justify="start"] {
+	[data-ui-justify="start"] {
 		justify-content: flex-start;
 	}
 
-	[data-justify="center"] {
+	[data-ui-justify="center"] {
 		justify-content: center;
 	}
 
-	[data-justify="end"] {
+	[data-ui-justify="end"] {
 		justify-content: flex-end;
 	}
 
-	[data-justify="space-between"] {
+	[data-ui-justify="space-between"] {
 		justify-content: space-between;
 	}
 
-	[data-justify="space-around"] {
+	[data-ui-justify="space-around"] {
 		justify-content: space-around;
 	}
 
-	[data-justify="space-between"] {
+	[data-ui-justify="space-between"] {
 		justify-content: space-between;
 	}
 }

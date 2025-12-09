@@ -1,9 +1,9 @@
 @layer components {
-	[data-flow="vertical"] {
+	[data-ui-flow="vertical"] {
 		flex-direction: column;
 	}
 
-	[data-flow="horizontal"] {
+	[data-ui-flow="horizontal"] {
 		flex-direction: row;
 	}
 }

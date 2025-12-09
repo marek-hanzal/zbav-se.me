@@ -1,23 +1,25 @@
-[data-round="default"] {
-	border-radius: var(--radius-default);
-}
+@layer components {
+	[data-ui-round="default"] {
+		border-radius: var(--radius-default);
+	}
 
-[data-round="sm"] {
-	@apply rounded-sm;
-}
+	[data-ui-round="sm"] {
+		@apply rounded-sm;
+	}
 
-[data-round="md"] {
-	@apply rounded-md;
-}
+	[data-ui-round="md"] {
+		@apply rounded-md;
+	}
 
-[data-round="lg"] {
-	@apply rounded-lg;
-}
+	[data-ui-round="lg"] {
+		@apply rounded-lg;
+	}
 
-[data-round="xl"] {
-	@apply rounded-xl;
-}
+	[data-ui-round="xl"] {
+		@apply rounded-xl;
+	}
 
-[data-round="full"] {
-	@apply rounded-full;
+	[data-ui-round="full"] {
+		@apply rounded-full;
+	}
 }

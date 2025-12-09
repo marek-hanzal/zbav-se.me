@@ -1,37 +1,37 @@
 @layer components {
-	[data-square="default"] {
+	[data-ui-square="default"] {
 		@apply h-10 w-10;
 	}
 
-	[data-square="xs"] {
+	[data-ui-square="xs"] {
 		@apply h-4 w-4;
 	}
 
-	[data-square="sm"] {
+	[data-ui-square="sm"] {
 		@apply h-6 w-6;
 	}
 
-	[data-square="md"] {
+	[data-ui-square="md"] {
 		@apply h-10 w-10;
 	}
 
-	[data-square="lg"] {
+	[data-ui-square="lg"] {
 		@apply h-12 w-12;
 	}
 
-	[data-square="xl"] {
+	[data-ui-square="xl"] {
 		@apply h-16 w-16;
 	}
 
-	[data-square="2xl"] {
+	[data-ui-square="2xl"] {
 		@apply h-20 w-20;
 	}
 
-	[data-square="3xl"] {
+	[data-ui-square="3xl"] {
 		@apply h-24 w-24;
 	}
 
-	[data-square="4xl"] {
+	[data-ui-square="4xl"] {
 		@apply h-28 w-28;
 	}
 }

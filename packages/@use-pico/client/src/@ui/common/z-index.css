@@ -1,5 +1,5 @@
 @layer components {
-	[data-z-index="true"] {
+	[data-ui-z-index="true"] {
 		z-index: 5;
 	}
 }

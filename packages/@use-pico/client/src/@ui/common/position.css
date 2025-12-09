@@ -1,9 +1,9 @@
 @layer components {
-	[data-position="absolute"] {
+	[data-ui-position="absolute"] {
 		position: absolute;
 	}
 
-	[data-position="relative"] {
+	[data-ui-position="relative"] {
 		position: relative;
 	}
 }

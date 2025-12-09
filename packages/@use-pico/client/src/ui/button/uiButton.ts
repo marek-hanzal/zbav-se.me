@@ -23,6 +23,9 @@ export namespace uiButton {
 		items?: CoolUi.Items;
 		//
 		disabled?: boolean;
+		background?: boolean;
+		border?: boolean;
+		shadow?: boolean;
 		zIndex?: boolean;
 	}
 
@@ -39,6 +42,12 @@ export const uiButton = ({ ui, className }: uiButton.Props) => {
 		ui: {
 			theme: "light",
 			tone: "primary",
+			justify: "center",
+			items: "center",
+			round: "default",
+			background: true,
+			border: true,
+			shadow: true,
 			...ui,
 		},
 		className,

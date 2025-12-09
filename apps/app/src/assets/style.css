@@ -1,7 +1,9 @@
 @import "tailwindcss";
 @import "./fonts.css";
-@import "@use-pico/theme/theme.css";
+
+@import "@use-pico/client/ui.css";
 @import "@zbav-se.me/ui/style.css";
+
 @import "~/app/listing/ui/style.css";
 
 @plugin "@iconify/tailwind4";

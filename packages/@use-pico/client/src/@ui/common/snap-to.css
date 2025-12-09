@@ -1,47 +1,47 @@
 @layer components {
-	[data-snap-to="top-left"] {
+	[data-ui-snap-to="top-left"] {
 		position: absolute;
 		width: auto;
 		@apply top-2 left-2;
 	}
 
-	[data-snap-to="top-center"] {
+	[data-ui-snap-to="top-center"] {
 		position: absolute;
 		width: auto;
 		@apply top-2 left-1/2 -translate-x-1/2;
 	}
 
-	[data-snap-to="top-right"] {
+	[data-ui-snap-to="top-right"] {
 		position: absolute;
 		width: auto;
 		@apply top-2 right-2;
 	}
 
-	[data-snap-to="top"] {
+	[data-ui-snap-to="top"] {
 		position: absolute;
 		width: auto;
 		@apply top-2 left-2 right-2;
 	}
 
-	[data-snap-to="bottom-right"] {
+	[data-ui-snap-to="bottom-right"] {
 		position: absolute;
 		width: auto;
 		@apply bottom-2 right-2;
 	}
 
-	[data-snap-to="bottom"] {
+	[data-ui-snap-to="bottom"] {
 		position: absolute;
 		width: auto;
 		@apply bottom-2 left-2 right-2;
 	}
 
-	[data-snap-to="left-center"] {
+	[data-ui-snap-to="left-center"] {
 		position: absolute;
 		width: auto;
 		@apply left-2 right-2;
 	}
 
-	[data-snap-to="right-center"] {
+	[data-ui-snap-to="right-center"] {
 		position: absolute;
 		width: auto;
 		@apply right-2 left-2;

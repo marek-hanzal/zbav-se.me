@@ -38,13 +38,14 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 	return (
 		<>
 			<Button
+				data-ui={"FeedSetupButton"}
 				iconEnabled={SettingsIcon}
+				label={"Feed setup (button)"}
+				onClick={() => state.set((prev) => !prev)}
 				ui={{
 					size: "xl",
 					...ui,
 				}}
-				label={"Feed setup (button)"}
-				onClick={() => state.set((prev) => !prev)}
 				{...props}
 			/>
 

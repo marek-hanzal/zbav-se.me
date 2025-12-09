@@ -67,6 +67,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 							ui: {
 								justify: "start",
 								size: "xl",
+								width: "full",
 							},
 							className: [],
 						})}
@@ -91,6 +92,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 									tone: "secondary",
 									justify: "start",
 									size: "xl",
+									width: "full",
 								},
 								className: [],
 							})}
@@ -114,6 +116,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 									tone: "secondary",
 									justify: "start",
 									size: "xl",
+									width: "full",
 								},
 								className: [],
 							})}
@@ -137,6 +140,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 									tone: "secondary",
 									justify: "start",
 									size: "xl",
+									width: "full",
 								},
 								className: [],
 							})}
@@ -161,6 +165,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 								tone: "secondary",
 								justify: "start",
 								size: "xl",
+								width: "full",
 							},
 							className: [],
 						})}
@@ -185,6 +190,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 									tone: "secondary",
 									justify: "start",
 									size: "xl",
+									width: "full",
 								},
 								className: [],
 							})}
@@ -208,6 +214,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 									tone: "secondary",
 									justify: "start",
 									size: "xl",
+									width: "full",
 								},
 								className: [],
 							})}

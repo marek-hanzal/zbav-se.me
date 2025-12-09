@@ -1,41 +1,33 @@
 @layer components {
-	[data-size="xs"] {
+	[data-ui-size="xs"] {
 		@apply px-1 py-0.5;
 	}
 
-	[data-round="full"][data-size="xs"] {
-		@apply p-1;
-	}
-
-	[data-size="sm"] {
+	[data-ui-size="sm"] {
 		@apply px-2 py-1;
 	}
 
-	[data-round="full"][data-size="sm"] {
-		@apply p-2;
-	}
-
-	[data-size="md"] {
+	[data-ui-size="md"] {
 		@apply px-3 py-1.5;
 	}
 
-	[data-round="full"][data-size="md"] {
-		@apply p-3;
-	}
-
-	[data-size="lg"] {
+	[data-ui-size="lg"] {
 		@apply px-4 py-2;
 	}
 
-	[data-round="full"][data-size="lg"] {
-		@apply p-4;
-	}
-
-	[data-size="xl"] {
+	[data-ui-size="xl"] {
 		@apply px-5 py-4;
 	}
 
-	[data-round="full"][data-size="xl"] {
-		@apply p-5;
+	[data-ui-size="2xl"] {
+		@apply px-6 py-5;
+	}
+
+	[data-ui-size="3xl"] {
+		@apply px-8 py-6;
+	}
+
+	[data-ui-size="4xl"] {
+		@apply px-10 py-7;
 	}
 }
