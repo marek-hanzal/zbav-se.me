@@ -1,28 +1,15 @@
-@theme {
-	--color-secondary-50: var(--color-teal-50);
-	--color-secondary-100: var(--color-teal-100);
-	--color-secondary-200: var(--color-teal-200);
-	--color-secondary-300: var(--color-teal-300);
-	--color-secondary-400: var(--color-teal-400);
-	--color-secondary-500: var(--color-cyan-500);
-	--color-secondary-600: var(--color-teal-600);
-	--color-secondary-700: var(--color-teal-700);
-	--color-secondary-800: var(--color-teal-800);
-	--color-secondary-900: var(--color-teal-900);
-}
-
 @utility tone-secondary-light {
-	--color-text: var(--color-slate-900);
-	--color-background: color-mix(in srgb, var(--color-secondary-200) 50%, white);
-	--color-border: color-mix(in srgb, var(--color-secondary-200) 25%, transparent);
+	--color-text: var(--color-slate-700);
+	--color-background: color-mix(in srgb, var(--color-violet-100) 82%, white);
+	--color-border: color-mix(in srgb, var(--color-violet-300) 24%, transparent);
 
 	@apply shadow-black/10;
 }
 
 @utility tone-secondary-dark {
-	--color-text: var(--color-secondary-50);
-	--color-background: color-mix(in srgb, var(--color-secondary-800) 85%, black);
-	--color-border: color-mix(in srgb, var(--color-secondary-500) 55%, transparent);
+	--color-text: var(--color-violet-50);
+	--color-background: color-mix(in srgb, var(--color-violet-800) 75%, black);
+	--color-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
 
 	@apply shadow-black/10;
 }

@@ -1,1 +1,1 @@
-export const TransactionIcon = "icon-[tabler--message]";
+export const TransactionIcon = "icon-[mdi-light--message-text]";

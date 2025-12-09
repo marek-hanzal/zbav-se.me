@@ -1,1 +1,1 @@
-export const LockIcon = "icon-[icon-park-twotone--lock]";
+export const LockIcon = "icon-[mdi-light--lock]";

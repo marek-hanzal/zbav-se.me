@@ -1,1 +1,1 @@
-export const SellerIcon = "icon-[icon-park-twotone--shop]";
+export const SellerIcon = "icon-[lets-icons--shop-light]";
