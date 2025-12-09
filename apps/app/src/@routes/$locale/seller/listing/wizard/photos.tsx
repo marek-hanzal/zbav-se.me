@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { asButton } from "@use-pico/theme/button";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
@@ -29,9 +28,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 				textTitle={"Listing photos (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller"}
@@ -44,11 +47,17 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 					<ConfirmButton
 						iconEnabled={CloseIcon}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
@@ -70,9 +79,11 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 						disabled={!hasUploads || isUploading}
 					>
 						<Button
-							tone={"secondary"}
-							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
+							ui={{
+								tone: "secondary",
+								theme: "dark",
+							}}
 							iconPosition={"right"}
 							size={"xl"}
 							disabled={!hasUploads || isUploading}

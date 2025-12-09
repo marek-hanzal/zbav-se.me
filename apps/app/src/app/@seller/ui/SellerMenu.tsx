@@ -1,9 +1,9 @@
+import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
-import { asButton } from "@use-pico/theme/button";
 import { useRef } from "react";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
@@ -13,7 +13,7 @@ export namespace SellerMenu {
 	}
 }
 
-export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
+export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 	const spacing = tvc([
 		"w-full",
 		"flex",
@@ -26,7 +26,11 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 	return (
 		<Container
 			data-ui={"SellerMenu"}
-			position={"relative"}
+			ui={{
+				position: "relative",
+				...ui,
+			}}
+			{...props}
 		>
 			<Fade scrollableRef={containerRef} />
 
@@ -36,15 +40,17 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 				layout={"vertical-flex"}
 				scroll={"vertical"}
 				gap={"sm"}
-				{...props}
 			>
 				<LinkTo
-					{...asButton({
-						tone: "primary",
-						theme: "light",
-						justify: "start",
-						round: "default",
-						size: "xl",
+					{...uiButton({
+						ui: {
+							tone: "primary",
+							theme: "light",
+							justify: "start",
+							round: "default",
+							size: "xl",
+						},
+						className: [],
 					})}
 					to="/$locale/seller/listing/wizard/photos"
 					params={{
@@ -56,13 +62,15 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 
 				<div className={spacing}>
 					<LinkTo
-						{...asButton({
-							tone: "secondary",
-							theme: "light",
-							justify: "start",
-							round: "default",
-							size: "xl",
-							background: true,
+						{...uiButton({
+							ui: {
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+							},
+							className: [],
 						})}
 						to="/$locale/seller/listing/my"
 						params={{
@@ -73,13 +81,15 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 					</LinkTo>
 
 					<LinkTo
-						{...asButton({
-							tone: "secondary",
-							theme: "light",
-							justify: "start",
-							round: "default",
-							size: "xl",
-							background: true,
+						{...uiButton({
+							ui: {
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+							},
+							className: [],
 						})}
 						to="/$locale/seller/transaction/list"
 						params={{
@@ -91,13 +101,15 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 				</div>
 
 				<LinkTo
-					{...asButton({
-						tone: "secondary",
-						theme: "light",
-						justify: "start",
-						round: "default",
-						size: "xl",
-						background: true,
+					{...uiButton({
+						ui: {
+							tone: "secondary",
+							theme: "light",
+							justify: "start",
+							round: "default",
+							size: "xl",
+						},
+						className: [],
 					})}
 					to="/$locale/seller/shop"
 					params={{
@@ -109,13 +121,15 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 
 				<div className={spacing}>
 					<LinkTo
-						{...asButton({
-							tone: "secondary",
-							theme: "light",
-							justify: "start",
-							round: "default",
-							size: "xl",
-							background: true,
+						{...uiButton({
+							ui: {
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+							},
+							className: [],
 						})}
 						to="/$locale/buyer"
 						params={{
@@ -126,13 +140,15 @@ export const SellerMenu = ({ locale, ...props }: SellerMenu.Props) => {
 					</LinkTo>
 
 					<LinkTo
-						{...asButton({
-							tone: "secondary",
-							theme: "light",
-							justify: "start",
-							round: "default",
-							size: "xl",
-							background: true,
+						{...uiButton({
+							ui: {
+								tone: "secondary",
+								theme: "light",
+								justify: "start",
+								round: "default",
+								size: "xl",
+							},
+							className: [],
 						})}
 						to="/$locale/seller/user"
 						params={{

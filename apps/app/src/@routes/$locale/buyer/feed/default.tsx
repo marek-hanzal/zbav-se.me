@@ -1,9 +1,9 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { translator } from "@use-pico/common/translator";
-import { asButton } from "@use-pico/theme/button";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
@@ -65,9 +65,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 			<FlowContainer
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}

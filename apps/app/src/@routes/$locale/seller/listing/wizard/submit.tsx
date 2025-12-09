@@ -8,14 +8,13 @@ import {
 	SpinnerIcon,
 } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { VariantProvider } from "@use-pico/cls";
-import { asButton } from "@use-pico/theme/button";
 import { zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
@@ -39,9 +38,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/title"}
@@ -54,12 +57,18 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick() {
 								navigate({
 									to: "/$locale/seller",
@@ -99,9 +108,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							size: "md",
+						{...uiButton({
+							ui: {
+								round: "full",
+								size: "md",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/title"}
@@ -114,12 +127,18 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick() {
 								navigate({
 									to: "/$locale/seller",
@@ -134,22 +153,26 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						label={"Submit listing (button)"}
 						disabled={createListingMutation.isPending || !valid.success}
 						loading={createListingMutation.isPending}
-						tone={"primary"}
-						theme={"dark"}
-						size={"lg"}
 						onClick={() => {
 							valid.success && createListingMutation.mutate(valid.data);
+						}}
+						ui={{
+							tone: "primary",
+							theme: "dark",
+							size: "lg",
 						}}
 					/>
 				}
 			>
 				{valid.success ? (
 					<Container
-						layout={"vertical-flex"}
-						scroll={"vertical"}
-						gap={"md"}
-						height={"full"}
-						width={"full"}
+						ui={{
+							layout: "vertical-flex",
+							scroll: "vertical",
+							gap: "md",
+							height: "full",
+							width: "full",
+						}}
 					>
 						<VariantProvider
 							cls={ThemeCls}
@@ -171,7 +194,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 								/>
@@ -190,7 +215,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 								/>
@@ -216,7 +243,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 								/>
@@ -235,7 +264,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 									items={[
@@ -265,7 +296,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 									items={[
@@ -299,7 +332,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 								/>
@@ -319,7 +354,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 								/>
@@ -338,7 +375,9 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									action={
 										<Icon
 											icon={EditIcon}
-											size={"sm"}
+											ui={{
+												size: "sm",
+											}}
 										/>
 									}
 									items={[

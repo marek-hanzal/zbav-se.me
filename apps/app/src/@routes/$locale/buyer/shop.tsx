@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
 export const Route = createFileRoute("/$locale/buyer/shop")({
@@ -13,9 +13,13 @@ export const Route = createFileRoute("/$locale/buyer/shop")({
 				textTitle={"Buyer - shop (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}

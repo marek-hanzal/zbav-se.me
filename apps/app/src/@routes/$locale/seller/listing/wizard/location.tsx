@@ -1,8 +1,7 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
@@ -27,9 +26,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 				textTitle={"Location (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/price"}
@@ -42,12 +45,18 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
@@ -69,13 +78,15 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 						disabled={!locationId}
 					>
 						<Button
-							tone={"secondary"}
-							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							disabled={!locationId}
-							size={"xl"}
 							iconPosition={"right"}
 							label={"Next - expire (button)"}
+							ui={{
+								tone: "secondary",
+								theme: "dark",
+								size: "xl",
+							}}
 						/>
 					</LinkTo>
 				}

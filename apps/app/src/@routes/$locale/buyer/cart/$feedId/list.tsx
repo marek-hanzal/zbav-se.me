@@ -1,10 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, uiButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { asButton } from "@use-pico/theme/button";
 import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
@@ -20,9 +19,13 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 			<FlowContainer
 				left={
 					<LinkTo
-						{...asButton({
-							size: "md",
-							round: "full",
+						{...uiButton({
+							ui: {
+								size: "md",
+								round: "full",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer/cart/list"}
@@ -89,10 +92,12 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 															<Button
 																iconEnabled={ArrowRightIcon}
 																iconPosition={"right"}
-																tone={"primary"}
 																label={"Go to feed (link)"}
-																justify={"start"}
-																size={"xl"}
+																ui={{
+																	tone: "primary",
+																	justify: "start",
+																	size: "xl",
+																}}
 															/>
 														</LinkTo>
 
@@ -105,10 +110,12 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 															<Button
 																iconEnabled={ArrowRightIcon}
 																iconPosition={"right"}
-																tone={"primary"}
 																label={"Go to home (link)"}
-																justify={"start"}
-																size={"xl"}
+																ui={{
+																	tone: "primary",
+																	justify: "start",
+																	size: "xl",
+																}}
 															/>
 														</LinkTo>
 													</div>
@@ -130,9 +137,11 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 												>
 													<Button
 														iconEnabled={ArrowLeftIcon}
-														tone={"secondary"}
 														label={"Back to cart (link)"}
-														size={"xl"}
+														ui={{
+															tone: "secondary",
+															size: "xl",
+														}}
 													/>
 												</LinkTo>
 											}
@@ -176,9 +185,11 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 										<Button
 											iconEnabled={ArrowRightIcon}
 											iconPosition={"right"}
-											tone={"secondary"}
 											label={"Go to feed (link)"}
-											size={"xl"}
+											ui={{
+												tone: "secondary",
+												size: "xl",
+											}}
 										/>
 									</LinkTo>
 								</div>

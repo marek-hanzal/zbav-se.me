@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
-import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { useState } from "react";
@@ -37,9 +36,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/age"}
@@ -52,12 +55,18 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
@@ -82,11 +91,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 						disabled={!price}
 					>
 						<Button
-							tone={"secondary"}
-							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							disabled={!price}
-							size={"lg"}
+							ui={{
+								tone: "secondary",
+								theme: "dark",
+								size: "lg",
+							}}
 							iconPosition={"right"}
 							label={"Next - location (button)"}
 						/>

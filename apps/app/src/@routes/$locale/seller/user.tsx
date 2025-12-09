@@ -1,8 +1,8 @@
 import { createFileRoute, useLoaderData, useParams } from "@tanstack/react-router";
 import { ArrowLeftIcon, UserIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 
 export const Route = createFileRoute("/$locale/seller/user")({
@@ -17,13 +17,16 @@ export const Route = createFileRoute("/$locale/seller/user")({
 		return (
 			<TitleContainer
 				data-ui="User-root"
-				gap={"md"}
 				textTitle={"User profile (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller"}
@@ -32,6 +35,9 @@ export const Route = createFileRoute("/$locale/seller/user")({
 						}}
 					/>
 				}
+				ui={{
+					gap: "default",
+				}}
 			>
 				<Status
 					icon={UserIcon}

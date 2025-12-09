@@ -1,13 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import { asButton } from "@use-pico/theme/button";
 import { sListingCreate } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useState } from "react";
@@ -27,9 +26,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 				textTitle={"Listing title (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/expire-at"}
@@ -44,10 +47,14 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 						iconEnabled={CloseIcon}
 						tone={"secondary"}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
@@ -69,13 +76,15 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 						disabled={!title}
 					>
 						<Button
-							tone={"secondary"}
-							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
 							label={"Next - submit (button)"}
-							size={"lg"}
 							disabled={!title}
+							ui={{
+								tone: "secondary",
+								theme: "dark",
+								size: "lg",
+							}}
 						/>
 					</LinkTo>
 				}

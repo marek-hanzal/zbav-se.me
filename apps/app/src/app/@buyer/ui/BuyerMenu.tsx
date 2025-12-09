@@ -1,10 +1,10 @@
 import { UserIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
-import { asButton } from "@use-pico/theme/button";
 import {
 	CartIcon,
 	FeedIcon,
@@ -22,7 +22,7 @@ export namespace BuyerMenu {
 	}
 }
 
-export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
+export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 	const spacing = tvc([
 		"w-full",
 		"flex",
@@ -35,9 +35,12 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 	return (
 		<Container
 			data-ui={"BuyerMenu"}
-			position={"relative"}
-			height={"full"}
-			width={"full"}
+			ui={{
+				position: "relative",
+				height: "full",
+				width: "full",
+				...ui,
+			}}
 			{...props}
 		>
 			<Fade scrollableRef={containerRef} />
@@ -56,14 +59,18 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					items={"center"}
 				>
 					<LinkTo
-						{...asButton({
-							justify: "start",
-							size: "xl",
-							width: "full",
+						{...uiButton({
+							ui: {
+								justify: "start",
+								size: "xl",
+							},
+							className: [],
 						})}
 						icon={ListingIcon}
 						iconProps={{
-							size: "2xl",
+							ui: {
+								size: "2xl",
+							},
 						}}
 						to="/$locale/buyer/feed/default"
 						params={{
@@ -75,15 +82,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 
 					<div className={spacing}>
 						<LinkTo
-							{...asButton({
-								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+							{...uiButton({
+								ui: {
+									tone: "secondary",
+									justify: "start",
+									size: "xl",
+								},
+								className: [],
 							})}
 							icon={CartIcon}
 							iconProps={{
-								size: "2xl",
+								ui: {
+									size: "2xl",
+								},
 							}}
 							to="/$locale/buyer/cart/list"
 							params={{
@@ -94,15 +105,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						</LinkTo>
 
 						<LinkTo
-							{...asButton({
-								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+							{...uiButton({
+								ui: {
+									tone: "secondary",
+									justify: "start",
+									size: "xl",
+								},
+								className: [],
 							})}
 							icon={TransactionIcon}
 							iconProps={{
-								size: "2xl",
+								ui: {
+									size: "2xl",
+								},
 							}}
 							to="/$locale/buyer/transaction/list"
 							params={{
@@ -113,15 +128,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						</LinkTo>
 
 						<LinkTo
-							{...asButton({
-								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+							{...uiButton({
+								ui: {
+									tone: "secondary",
+									justify: "start",
+									size: "xl",
+								},
+								className: [],
 							})}
 							icon={FeedIcon}
 							iconProps={{
-								size: "2xl",
+								ui: {
+									size: "2xl",
+								},
 							}}
 							to="/$locale/buyer/feed/select"
 							params={{
@@ -133,15 +152,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					</div>
 
 					<LinkTo
-						{...asButton({
-							tone: "secondary",
-							justify: "start",
-							size: "xl",
-							width: "full",
+						{...uiButton({
+							ui: {
+								tone: "secondary",
+								justify: "start",
+								size: "xl",
+							},
+							className: [],
 						})}
 						icon={ShopIcon}
 						iconProps={{
-							size: "2xl",
+							ui: {
+								size: "2xl",
+							},
 						}}
 						to="/$locale/buyer/shop"
 						params={{
@@ -153,15 +176,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 
 					<div className={spacing}>
 						<LinkTo
-							{...asButton({
-								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+							{...uiButton({
+								ui: {
+									tone: "secondary",
+									justify: "start",
+									size: "xl",
+								},
+								className: [],
 							})}
 							icon={SellerIcon}
 							iconProps={{
-								size: "2xl",
+								ui: {
+									size: "2xl",
+								},
 							}}
 							to="/$locale/seller"
 							params={{
@@ -172,15 +199,19 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 						</LinkTo>
 
 						<LinkTo
-							{...asButton({
-								tone: "secondary",
-								justify: "start",
-								size: "xl",
-								width: "full",
+							{...uiButton({
+								ui: {
+									tone: "secondary",
+									justify: "start",
+									size: "xl",
+								},
+								className: [],
 							})}
 							icon={UserIcon}
 							iconProps={{
-								size: "2xl",
+								ui: {
+									size: "2xl",
+								},
 							}}
 							to="/$locale/buyer/user"
 							params={{

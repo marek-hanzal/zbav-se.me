@@ -1,11 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
@@ -34,9 +33,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				textTitle={"Listing category (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							size: "md",
+						{...uiButton({
+							ui: {
+								round: "full",
+								size: "md",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/photos"}
@@ -49,18 +52,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -79,13 +85,15 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 						disabled={!selection.hasAny}
 					>
 						<Button
-							tone={"secondary"}
-							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
 							label={"Next - condition (button)"}
 							disabled={!selection.hasAny}
-							size={"lg"}
+							ui={{
+								tone: "secondary",
+								theme: "dark",
+								size: "lg",
+							}}
 						/>
 					</LinkTo>
 				}

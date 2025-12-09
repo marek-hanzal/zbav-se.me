@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { asButton } from "@use-pico/theme/button";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { AgeContainer } from "~/app/age/ui/AgeContainer";
@@ -35,9 +34,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 				textTitle={"Age (title)"}
 				left={
 					<LinkTo
-						{...asButton({
-							round: "full",
-							square: "default",
+						{...uiButton({
+							ui: {
+								round: "full",
+								square: "default",
+								opacity: "subtle",
+							},
+							className: [],
 						})}
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller/listing/wizard/condition"}
@@ -50,12 +53,18 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						tone={"secondary"}
+						ui={{
+							tone: "secondary",
+						}}
 						iconProps={{
-							size: "md",
+							ui: {
+								size: "md",
+							},
 						}}
 						confirmProps={{
-							tone: "danger",
+							ui: {
+								tone: "danger",
+							},
 							onClick: () => {
 								navigate({
 									to: "/$locale/seller",
@@ -77,13 +86,15 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 						disabled={!selection.hasAny}
 					>
 						<Button
-							tone={"secondary"}
-							theme={"dark"}
 							iconEnabled={ArrowRightIcon}
-							size={"lg"}
 							iconPosition={"right"}
 							label={"Next - price (button)"}
 							disabled={!selection.hasAny}
+							ui={{
+								tone: "secondary",
+								theme: "dark",
+								size: "lg",
+							}}
 						/>
 					</LinkTo>
 				}
