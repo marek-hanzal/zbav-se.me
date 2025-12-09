@@ -5,7 +5,8 @@
 	},
 	"include": [
 		"src/**/*",
-		"src/**/*.json"
+		"src/**/*.json",
+		"../client/src/ui/Ui.ts"
 	],
 	"exclude": [
 		"node_modules"

@@ -63,7 +63,7 @@
 		"./ui/*": {
 			"import": "./src/ui/*/index.ts"
 		},
-		"./style.css": "./src/style.css",
+		"./ui.css": "./src/ui.css",
 		"./*": {
 			"import": "./src/*/index.ts"
 		}

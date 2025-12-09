@@ -1,4 +1,7 @@
-export namespace Theme {
+/**
+ * All available global UI attributes.
+ */
+export namespace Ui {
 	export type Tone =
 		| "primary"
 		| "secondary"
@@ -53,30 +56,4 @@ export namespace Theme {
 		| "subtle"
 		| "medium"
 		| "strong";
-
-	/**
-	 * All the values available in this theme.
-	 */
-	export interface Attrs {
-		tone?: Tone;
-		theme?: Theme;
-		size?: Size;
-		round?: Round;
-		justify?: Justify;
-		items?: Items;
-		opacity?: Opacity;
-		square?: Square;
-		inner?: Inner;
-		snapTo?: SnapTo;
-		gap?: Gap;
-		flow?: Flow;
-		position?: Position;
-		height?: Height;
-		width?: Width;
-		background?: boolean;
-		border?: boolean;
-		disabled?: boolean;
-		shadow?: boolean;
-		zIndex?: boolean;
-	}
 }

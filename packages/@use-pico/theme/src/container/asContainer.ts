@@ -1,5 +1,5 @@
-import { attr } from "../attr/attr";
-import type { Theme } from "../theme/Theme";
+import type { Theme } from "../../../client/src/ui/Ui";
+import { attr } from "../ui/attr";
 
 export namespace asContainer {
 	export type Layout =
@@ -19,7 +19,7 @@ export namespace asContainer {
 	export type Snap = "vertical" | "horizontal";
 	export type SnapAlign = "start" | "center" | "end";
 
-	export interface Attributes extends Theme.Attrs {
+	export interface Attributes extends Pick<Theme.Attrs, "theme" | "tone"> {
 		layout?: Layout;
 		scroll?: Scroll;
 		snap?: Snap;

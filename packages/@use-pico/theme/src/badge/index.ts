@@ -1,1 +1,0 @@
-export { asBadge } from "./asBadge";

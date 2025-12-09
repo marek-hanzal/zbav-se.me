@@ -13,7 +13,7 @@ export namespace attr {
 	export type Rest = object;
 
 	export type Data<TAttrs, T extends keyof TAttrs> = {
-		[K in T as `data-${KebabCase<K & string>}`]?: TAttrs[K];
+		[K in T as `data-ui-${KebabCase<K & string>}`]?: TAttrs[K];
 	};
 
 	export type Result<TAttrs> = Record<string, unknown> &
@@ -22,10 +22,7 @@ export namespace attr {
 			className?: string;
 		};
 
-	export type Component<TAttrs, TRest extends Rest> = Omit<TRest, "className"> &
-		Partial<TAttrs> & {
-			className?: tvc.ClassName;
-		};
+	export type Component<TAttrs, TRest extends Rest> = TRest & Partial<Data<TAttrs, keyof TAttrs>>;
 
 	export type Props<TAttrs> = Partial<TAttrs> & {
 		ui: string;
@@ -49,7 +46,7 @@ export const attr = <const TAttrs>({
 	for (const [key, value] of Object.entries(rest)) {
 		if (attrs.includes(key as keyof TAttrs)) {
 			data.push([
-				`data-${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`,
+				`data-ui-${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`,
 				value,
 			]);
 			continue;

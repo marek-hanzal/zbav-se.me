@@ -1,1 +1,1 @@
-export type { Theme } from "./Theme";
+export type { Theme } from "../../../client/src/ui/Ui";

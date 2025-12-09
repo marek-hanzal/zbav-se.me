@@ -1,5 +1,5 @@
-import { attr } from "../attr/attr";
-import type { Theme } from "../theme/Theme";
+import type { Theme } from "../../../client/src/ui/Ui";
+import { attr } from "../ui/attr";
 
 export namespace asBadge {
 	export interface Attributes extends Theme.Attrs {
