@@ -33,9 +33,11 @@ export const Route = createFileRoute("/$locale/landing")({
 				<SnapperNav
 					snapperNav={snapperNav}
 					iconProps={() => ({
-						size: "xs",
-						tone: "secondary",
-						theme: "light",
+						ui: {
+							size: "xs",
+							tone: "secondary",
+							theme: "light",
+						},
 					})}
 					limit={7}
 					subtle
@@ -44,10 +46,12 @@ export const Route = createFileRoute("/$locale/landing")({
 
 				<Container
 					ref={scrollerRef}
-					layout={"vertical-full"}
-					snap={"vertical"}
-					snapAlign={"center"}
-					gap={"md"}
+					ui={{
+						layout: "vertical-full",
+						snap: "vertical",
+						snapAlign: "center",
+						gap: "default",
+					}}
 				>
 					<HeroSheet locale={locale} />
 

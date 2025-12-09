@@ -56,8 +56,10 @@ export const Route = createRootRouteWithContext<{
 						{/** biome-ignore lint/correctness/useUniqueElementIds: I'm OK, bro */}
 						<Container
 							id="root"
-							height="viewport"
-							width="viewport"
+							ui={{
+								height: "viewport",
+								width: "viewport",
+							}}
 						>
 							<Outlet />
 						</Container>

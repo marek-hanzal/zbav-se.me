@@ -29,9 +29,11 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 				])}
 			>
 				<Container
-					layout={"horizontal"}
-					height={"auto"}
-					width={"full"}
+					ui={{
+						layout: "horizontal",
+						height: "auto",
+						width: "full",
+					}}
 				>
 					<Logo />
 				</Container>
@@ -50,12 +52,16 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 						<Button
 							iconEnabled={UnlockIcon}
 							iconProps={{
-								size: "sm",
+								ui: {
+									size: "sm",
+								},
 							}}
-							tone={"secondary"}
-							theme={"dark"}
-							size={"xl"}
 							label={"Login (hero)"}
+							ui={{
+								size: "xl",
+								tone: "secondary",
+								theme: "dark",
+							}}
 						/>
 					</LinkTo>
 
@@ -68,12 +74,16 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 						<Button
 							iconEnabled={UserIcon}
 							iconProps={{
-								size: "sm",
+								ui: {
+									size: "sm",
+								},
 							}}
-							tone={"primary"}
-							theme={"dark"}
-							size={"xl"}
 							label={"Register (hero)"}
+							ui={{
+								size: "xl",
+								tone: "primary",
+								theme: "dark",
+							}}
 						/>
 					</LinkTo>
 				</Status>

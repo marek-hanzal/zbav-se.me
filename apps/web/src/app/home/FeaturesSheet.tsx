@@ -10,7 +10,10 @@ import type { FC } from "react";
 export const FeaturesSheet: FC = () => {
 	return (
 		<Container
-			layout={"vertical-centered"}
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
 			className={[
 				"reveal",
 			]}

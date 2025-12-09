@@ -10,10 +10,13 @@ import type { FC } from "react";
 export const WhatSheet: FC = () => {
 	return (
 		<Container
-			layout={"vertical-centered"}
 			className={[
 				"reveal",
 			]}
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
 		>
 			<div className="flex flex-col justify-evenly h-dvh py-16">
 				<Status

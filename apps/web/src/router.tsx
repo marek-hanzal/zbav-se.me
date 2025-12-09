@@ -24,14 +24,24 @@ export function getRouter() {
 		defaultPreload: "render",
 		defaultNotFoundComponent() {
 			return (
-				<Container layout="vertical-centered">
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
+				>
 					<div>4😞4</div>
 				</Container>
 			);
 		},
 		defaultPendingComponent() {
 			return (
-				<Container layout={"vertical-centered"}>
+				<Container
+					ui={{
+						layout: "vertical-centered",
+						height: "full",
+					}}
+				>
 					<Logo />
 				</Container>
 			);

@@ -53,11 +53,17 @@ export const Route = createFileRoute("/$locale/register")({
 
 				<Container
 					ref={scrollerRef}
-					inner={"default"}
-					layout={"vertical"}
-					scroll={"vertical"}
+					ui={{
+						inner: "default",
+						layout: "vertical",
+						scroll: "vertical",
+					}}
 				>
-					<Container layout={"vertical-centered"}>
+					<Container
+						ui={{
+							layout: "vertical-centered",
+						}}
+					>
 						<Status
 							icon={<Logo />}
 							textTitle={"Register (title)"}
@@ -207,18 +213,24 @@ export const Route = createFileRoute("/$locale/register")({
 								</form.AppField>
 
 								<Container
-									layout={"vertical-flex"}
-									gap={"sm"}
+									ui={{
+										layout: "vertical-flex",
+										gap: "sm",
+									}}
 								>
 									<form.SubmitButton
 										iconEnabled={"icon-[eos-icons--system-re-registered]"}
 										iconProps={{
-											size: "sm",
+											ui: {
+												size: "sm",
+											},
 										}}
 										disabled={registerMutation.isPending}
-										tone={"primary"}
-										theme={"dark"}
-										size={"xl"}
+										ui={{
+											tone: "primary",
+											theme: "dark",
+											size: "xl",
+										}}
 									>
 										{registerMutation.isPending ? (
 											<Tx label={"Please wait..."} />

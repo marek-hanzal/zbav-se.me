@@ -7,7 +7,10 @@ export const ContactSheet: FC = () => {
 	return (
 		<Container
 			data-ui={"ContactSheet"}
-			layout={"vertical-centered"}
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
 			className={[
 				"reveal",
 			]}

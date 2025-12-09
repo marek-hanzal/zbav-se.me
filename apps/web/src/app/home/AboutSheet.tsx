@@ -18,8 +18,10 @@ export const AboutSheet: FC<AboutSheet.Props> = ({ markdown }) => {
 
 			<Container
 				ref={scrollerRef}
-				layout={"vertical-full"}
-				scroll={"vertical"}
+				ui={{
+					layout: "vertical-full",
+					scroll: "vertical",
+				}}
 			>
 				<div className={"reveal"}>
 					<Markdown>{markdown}</Markdown>

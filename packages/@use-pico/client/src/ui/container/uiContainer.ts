@@ -15,6 +15,8 @@ export namespace uiContainer {
 		| "horizontal-full"
 		| "horizontal-flex";
 	export type Scroll = "vertical" | "horizontal";
+	export type Snap = "vertical" | "horizontal";
+	export type SnapAlign = "start" | "center" | "end";
 
 	export interface Ui {
 		theme?: CoolUi.Theme;
@@ -26,6 +28,8 @@ export namespace uiContainer {
 		gap?: CoolUi.Gap;
 		inner?: CoolUi.Inner;
 		snapTo?: CoolUi.SnapTo;
+		snap?: Snap;
+		snapAlign?: SnapAlign;
 		//
 		position?: CoolUi.Position;
 		//

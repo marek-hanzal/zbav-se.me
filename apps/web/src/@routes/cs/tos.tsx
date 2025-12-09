@@ -5,9 +5,11 @@ export const Route = createFileRoute("/cs/tos")({
 	component() {
 		return (
 			<Container
-				layout={"vertical"}
-				scroll={"vertical"}
-				inner={"default"}
+				ui={{
+					layout: "vertical",
+					scroll: "vertical",
+					inner: "default",
+				}}
 			>
 				yep
 			</Container>

@@ -15,7 +15,10 @@ export namespace CtaSheet {
 export const CtaSheet: FC<CtaSheet.Props> = ({ locale }) => {
 	return (
 		<Container
-			layout={"vertical-centered"}
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
 			className={[
 				"reveal",
 			]}
@@ -42,13 +45,17 @@ export const CtaSheet: FC<CtaSheet.Props> = ({ locale }) => {
 						}}
 					>
 						<Button
-							tone={"primary"}
-							theme={"dark"}
 							iconEnabled={UserIcon}
 							iconProps={{
-								size: "md",
+								ui: {
+									size: "md",
+								},
 							}}
-							size={"xl"}
+							ui={{
+								tone: "primary",
+								theme: "dark",
+								size: "xl",
+							}}
 							label={"Register (cta)"}
 						/>
 					</LinkTo>

@@ -94,13 +94,19 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		return (
-			<Container position={"relative"}>
+			<Container
+				ui={{
+					position: "relative",
+				}}
+			>
 				<SnapperNav
 					snapperNav={snapperNav}
 					iconProps={() => ({
-						size: "xs",
-						tone: "secondary",
-						theme: "light",
+						ui: {
+							size: "xs",
+							tone: "secondary",
+							theme: "light",
+						},
 					})}
 					orientation={"vertical"}
 					subtle
@@ -110,13 +116,19 @@ export const Route = createFileRoute("/$locale/login")({
 
 				<Container
 					ref={rootRef}
-					layout={"vertical-full"}
-					snap={"vertical"}
-					snapAlign={"center"}
-					gap={"md"}
-					inner={"default"}
+					ui={{
+						layout: "vertical-full",
+						gap: "default",
+						snap: "vertical",
+						snapAlign: "center",
+						inner: "default",
+					}}
 				>
-					<Container layout={"vertical-centered"}>
+					<Container
+						ui={{
+							layout: "vertical-centered",
+						}}
+					>
 						<Status icon={<Logo />}>
 							<form
 								onSubmit={(e) => {
@@ -191,20 +203,26 @@ export const Route = createFileRoute("/$locale/login")({
 								)}
 
 								<Container
-									layout={"vertical-flex"}
-									gap={"sm"}
-									width={"full"}
+									ui={{
+										layout: "vertical-flex",
+										gap: "sm",
+										width: "full",
+									}}
 								>
 									<form.SubmitButton
 										iconEnabled={UnlockIcon}
 										iconDisabled={UnlockIcon}
 										iconProps={{
-											size: "sm",
+											ui: {
+												size: "sm",
+											},
 										}}
 										disabled={signInMutation.isPending}
-										tone={"primary"}
-										theme={"dark"}
-										size={"xl"}
+										ui={{
+											tone: "primary",
+											theme: "dark",
+											size: "xl",
+										}}
 									>
 										{signInMutation.isPending ? (
 											<Tx label={"Please wait..."} />
@@ -229,7 +247,11 @@ export const Route = createFileRoute("/$locale/login")({
 						</Status>
 					</Container>
 
-					<Container layout={"vertical-centered"}>
+					<Container
+						ui={{
+							layout: "vertical-centered",
+						}}
+					>
 						<Status
 							icon={PassKeyIcon}
 							textTitle={"Login with passkey (title)"}
@@ -239,22 +261,30 @@ export const Route = createFileRoute("/$locale/login")({
 									iconEnabled={UnlockIcon}
 									iconDisabled={UnlockIcon}
 									iconProps={{
-										size: "sm",
+										ui: {
+											size: "sm",
+										},
 									}}
 									onClick={() => {
 										passkeyMutation.mutate();
 									}}
 									disabled={passkeyMutation.isPending}
-									size={"xl"}
-									tone={"primary"}
-									theme={"dark"}
+									ui={{
+										size: "xl",
+										tone: "primary",
+										theme: "dark",
+									}}
 									label={"Login with passkey"}
 								/>
 							}
 						/>
 					</Container>
 
-					<Container layout={"vertical-centered"}>
+					<Container
+						ui={{
+							layout: "vertical-centered",
+						}}
+					>
 						<Status
 							icon={SocialIcon}
 							textTitle={"Login with social (title)"}
