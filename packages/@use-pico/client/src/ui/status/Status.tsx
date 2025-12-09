@@ -67,7 +67,6 @@ export const Status: FC<Status.Props> = ({
 					data-ui="Status-title"
 					label={textTitle}
 					ui={{
-						size: "xl",
 						font: "bold",
 						display: "block",
 						wrap: "wrap",

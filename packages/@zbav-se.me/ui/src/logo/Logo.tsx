@@ -11,7 +11,7 @@ export const Logo: FC = () => {
 					ui={{
 						tone: "primary",
 						theme: "light",
-						size: "xl",
+						text: "xl",
 						font: "bold",
 						display: "block",
 					}}
@@ -22,7 +22,7 @@ export const Logo: FC = () => {
 					ui={{
 						tone: "secondary",
 						theme: "light",
-						size: "xl",
+						text: "xl",
 						font: "bold",
 						display: "block",
 					}}
@@ -35,7 +35,7 @@ export const Logo: FC = () => {
 				ui={{
 					tone: "secondary",
 					theme: "light",
-					size: "xl",
+					text: "xl",
 					font: "bold",
 					display: "block",
 				}}

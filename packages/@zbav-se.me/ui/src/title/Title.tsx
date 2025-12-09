@@ -49,7 +49,7 @@ export const Title: FC<Title.Props> = ({
 						ui={{
 							tone: "primary",
 							theme: "light",
-							size: "xl",
+							text: "xl",
 							font: "bold",
 							display: "block",
 							truncate: true,
@@ -64,7 +64,7 @@ export const Title: FC<Title.Props> = ({
 						ui={{
 							tone: "secondary",
 							theme: "light",
-							size: "sm",
+							text: "sm",
 						}}
 					/>
 				) : null}

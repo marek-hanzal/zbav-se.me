@@ -12,6 +12,7 @@ export namespace Ui {
 		| "link";
 	export type Theme = "light" | "dark";
 	export type Size = "default" | "xs" | "sm" | "md" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
+	export type Text = Size;
 	export type Square = Size;
 	export type Inner = Size;
 	export type Gap = Size;

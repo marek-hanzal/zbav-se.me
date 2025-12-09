@@ -24,8 +24,6 @@ export const uiIcon = ({ ui, className }: uiIcon.Props) => {
 	return coolUi<uiIcon.Ui>({
 		name: "Icon",
 		ui: {
-			theme: "light",
-			tone: "primary",
 			...ui,
 		},
 		className,

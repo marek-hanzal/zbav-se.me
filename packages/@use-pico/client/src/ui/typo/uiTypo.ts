@@ -8,7 +8,7 @@ export namespace uiTypo {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
-		size?: CoolUi.Size;
+		text?: CoolUi.Text;
 		font?: CoolUi.Font;
 		italic?: boolean;
 		//
@@ -28,9 +28,7 @@ export const uiTypo = ({ ui, className }: uiTypo.Props) => {
 	return coolUi({
 		name: "Typo",
 		ui: {
-			tone: "primary",
-			theme: "dark",
-			size: "default",
+			text: "default",
 			display: "inline",
 			...ui,
 		},

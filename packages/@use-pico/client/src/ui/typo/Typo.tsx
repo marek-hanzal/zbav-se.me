@@ -4,16 +4,16 @@ import { uiTypo } from "./uiTypo";
 const presets: Record<Typo.Preset, uiTypo.Ui> = {
 	none: {},
 	label: {
-		size: "lg",
+		text: "lg",
 		font: "bold",
 	},
 	header: {
-		size: "3xl",
+		text: "3xl",
 		font: "bold",
 		display: "block",
 	},
 	subheader: {
-		size: "xl",
+		text: "xl",
 		font: "bold",
 		display: "block",
 	},

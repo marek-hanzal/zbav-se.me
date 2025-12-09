@@ -60,7 +60,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 						data-ui={"Dial-Typo-value"}
 						label={value}
 						ui={{
-							size: "xl",
+							text: "xl",
 							font: "bold",
 							display: "block",
 						}}
@@ -70,7 +70,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 						data-ui={"Dial-Typo-value-placeholder"}
 						label={"Price (placeholder)"}
 						ui={{
-							size: "xl",
+							text: "xl",
 							font: "bold",
 							display: "block",
 						}}

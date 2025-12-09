@@ -3,37 +3,6 @@
 		color: var(--color-text);
 	}
 
-	/** Sizes */
-
-	.Typo[data-ui-size="default"] {
-		@apply text-base;
-	}
-
-	.Typo[data-ui-size="xs"] {
-		@apply text-xs;
-	}
-	.Typo[data-ui-size="sm"] {
-		@apply text-sm;
-	}
-	.Typo[data-ui-size="md"] {
-		@apply text-base;
-	}
-	.Typo[data-ui-size="lg"] {
-		@apply text-lg;
-	}
-	.Typo[data-ui-size="xl"] {
-		@apply text-xl;
-	}
-	.Typo[data-ui-size="2xl"] {
-		@apply text-2xl;
-	}
-	.Typo[data-ui-size="3xl"] {
-		@apply text-3xl;
-	}
-	.Typo[data-ui-size="4xl"] {
-		@apply text-4xl;
-	}
-
 	/** Wrap */
 	.Typo[data-ui-wrap="wrap"] {
 		min-width: 0;

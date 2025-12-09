@@ -102,7 +102,7 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 									<Tx
 										label={textHint(value)}
 										ui={{
-											size: "lg",
+											text: "lg",
 											font: "bold",
 										}}
 									/>
