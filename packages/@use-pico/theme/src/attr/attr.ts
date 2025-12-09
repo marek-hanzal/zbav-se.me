@@ -1,24 +1,23 @@
 import { tvc } from "@use-pico/cls";
 
+/**
+ * @internal
+ */
 type KebabCase<S extends string> = S extends `${infer Head}${infer Tail}`
 	? Tail extends Uncapitalize<Tail>
 		? `${Lowercase<Head>}${KebabCase<Tail>}`
 		: `${Lowercase<Head>}-${KebabCase<Uncapitalize<Tail>>}`
 	: S;
 
-type Attrs<TAttrs, T extends keyof TAttrs> = {
-	[K in T as `data-${KebabCase<K & string>}`]?: TAttrs[K];
-};
-
-const toKey = (key: string) => {
-	return `data-${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`;
-};
-
 export namespace attr {
 	export type Rest = object;
 
+	export type Data<TAttrs, T extends keyof TAttrs> = {
+		[K in T as `data-${KebabCase<K & string>}`]?: TAttrs[K];
+	};
+
 	export type Result<TAttrs> = Record<string, unknown> &
-		Attrs<TAttrs, keyof TAttrs> & {
+		Data<TAttrs, keyof TAttrs> & {
 			"data-ui": string;
 			className?: string;
 		};
@@ -50,7 +49,7 @@ export const attr = <const TAttrs>({
 	for (const [key, value] of Object.entries(rest)) {
 		if (attrs.includes(key as keyof TAttrs)) {
 			data.push([
-				toKey(key),
+				`data-${key.replace(/[A-Z]/g, (m) => `-${m.toLowerCase()}`)}`,
 				value,
 			]);
 			continue;
@@ -61,7 +60,7 @@ export const attr = <const TAttrs>({
 
 	return {
 		"data-ui": ui,
-		...(Object.fromEntries(data) as Attrs<TAttrs, keyof TAttrs>),
+		...(Object.fromEntries(data) as attr.Data<TAttrs, keyof TAttrs>),
 		...props,
 		className: tvc(ui, className),
 	};
