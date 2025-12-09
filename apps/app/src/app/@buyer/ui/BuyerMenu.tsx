@@ -32,7 +32,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		size: "xl",
 		width: "full",
 		text: "xl",
-		font: "bold",
 		gap: "sm",
 	};
 
@@ -66,6 +65,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 				<LinkTo
 					{...uiButton({
 						ui: {
+                            font:'semibold',
 							...button,
 						},
 						className: [],

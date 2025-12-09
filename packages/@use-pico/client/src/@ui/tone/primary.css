@@ -1,36 +1,28 @@
 @theme {
-	/* PRIMARY = brand (violet) */
-	--color-primary-50: var(--color-violet-50);
-	--color-primary-100: var(--color-violet-100);
-	--color-primary-200: var(--color-violet-200);
-	--color-primary-300: var(--color-violet-300);
-	--color-primary-400: var(--color-violet-400);
-	--color-primary-500: var(--color-violet-500);
-	--color-primary-600: var(--color-violet-600);
-	--color-primary-700: var(--color-violet-700);
-	--color-primary-800: var(--color-violet-800);
-	--color-primary-900: var(--color-violet-900);
-
-	/* Semantic shortcuts for UI */
-	--color-primary-xs: var(--color-primary-50); /* soft bg */
-	--color-primary-sm: var(--color-primary-100); /* hover bg */
-	--color-primary-md: var(--color-primary-500); /* main accent */
-	--color-primary-lg: var(--color-primary-700); /* pressed/strong */
-	--color-primary-xl: var(--color-primary-900); /* text on light */
+	--color-primary-50: var(--color-fuchsia-50);
+	--color-primary-100: var(--color-fuchsia-100);
+	--color-primary-200: var(--color-fuchsia-200);
+	--color-primary-300: var(--color-fuchsia-300);
+	--color-primary-400: var(--color-fuchsia-400);
+	--color-primary-500: var(--color-fuchsia-500);
+	--color-primary-600: var(--color-fuchsia-600);
+	--color-primary-700: var(--color-fuchsia-700);
+	--color-primary-800: var(--color-fuchsia-800);
+	--color-primary-900: var(--color-fuchsia-900);
 }
 
 @utility tone-primary-light {
-	--color-text: var(--color-primary-800);
-	--color-background: color-mix(in srgb, var(--color-primary-50) 70%, white 30%);
-	--color-border: color-mix(in srgb, var(--color-primary-300) 45%, transparent);
+	--color-text: var(--color-slate-900);
+	--color-background: color-mix(in srgb, var(--color-primary-200) 50%, white);
+	--color-border: color-mix(in srgb, var(--color-primary-400) 45%, transparent);
 
 	@apply shadow-black/10;
 }
 
 @utility tone-primary-dark {
 	--color-text: var(--color-primary-50);
-	--color-background: color-mix(in srgb, var(--color-primary-800) 85%, black 15%);
-	--color-border: color-mix(in srgb, var(--color-primary-500) 60%, transparent);
+	--color-background: color-mix(in srgb, var(--color-primary-800) 80%, black);
+	--color-border: color-mix(in srgb, var(--color-primary-500) 70%, transparent);
 
 	@apply shadow-black/10;
 }

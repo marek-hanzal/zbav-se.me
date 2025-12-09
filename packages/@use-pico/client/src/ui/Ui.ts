@@ -57,6 +57,6 @@ export namespace Ui {
 		| "subtle"
 		| "medium"
 		| "strong";
-	export type Font = "light" | "normal" | "bold";
+	export type Font = "light" | "normal" | "semibold" | "bold";
 	export type Display = "block" | "inline";
 }
