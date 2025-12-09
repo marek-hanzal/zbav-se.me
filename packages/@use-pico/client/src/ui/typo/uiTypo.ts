@@ -11,6 +11,7 @@ export namespace uiTypo {
 		text?: CoolUi.Text;
 		font?: CoolUi.Font;
 		italic?: boolean;
+		lead?: boolean;
 		//
 		display?: CoolUi.Display;
 		truncate?: boolean;

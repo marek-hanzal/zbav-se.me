@@ -44,6 +44,10 @@ export namespace uiContainer {
 		//
 		disabled?: boolean;
 		background?: boolean;
+		text?: CoolUi.Text;
+		border?: boolean;
+		shadow?: boolean;
+		lead?: boolean;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

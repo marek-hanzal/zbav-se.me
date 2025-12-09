@@ -17,6 +17,16 @@ export namespace uiBadge {
 		snapTo?: CoolUi.SnapTo;
 		//
 		opacity?: CoolUi.Opacity;
+		//
+		text?: CoolUi.Text;
+		font?: CoolUi.Font;
+		italic?: boolean;
+		//
+		border?: boolean;
+		shadow?: boolean;
+		zIndex?: boolean;
+		//
+		lead?: boolean;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
