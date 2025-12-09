@@ -1,10 +1,5 @@
 @layer components {
 	.Button {
 		color: var(--color-text);
-
-		display: flex;
-		flex-direction: row;
-
-		@apply gap-4;
 	}
 }

@@ -33,6 +33,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		width: "full",
 		text: "xl",
 		font: "bold",
+		gap: "sm",
 	};
 
 	const containerRef = useRef<HTMLDivElement>(null);

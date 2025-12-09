@@ -10,6 +10,7 @@ export namespace uiButton {
 		//
 		size?: Size;
 		square?: CoolUi.Square;
+		gap?: CoolUi.Gap;
 		round?: CoolUi.Round;
 		snapTo?: CoolUi.SnapTo;
 		opacity?: CoolUi.Opacity;
@@ -47,7 +48,9 @@ export const uiButton = ({ ui, className }: uiButton.Props) => {
 			tone: "primary",
 			justify: "center",
 			items: "center",
+			flow: "horizontal",
 			round: "default",
+			gap: "sm",
 			background: true,
 			border: true,
 			shadow: true,
