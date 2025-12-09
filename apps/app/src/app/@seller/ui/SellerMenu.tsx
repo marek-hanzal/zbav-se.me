@@ -1,11 +1,11 @@
+import { ListIcon, UserIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { tvc } from "@use-pico/cls";
+import { BuyerIcon, ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import { useRef } from "react";
-import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
 export namespace SellerMenu {
 	export interface Props extends Container.Props {
@@ -14,13 +14,19 @@ export namespace SellerMenu {
 }
 
 export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
-	const spacing = tvc([
-		"w-full",
-		"flex",
-		"flex-col",
-		"gap-2",
-		"py-4",
-	]);
+	const spacing: uiContainer.Ui = {
+		layout: "vertical-flex",
+		width: "full",
+		gap: "md",
+	};
+	const button: uiButton.Ui = {
+		justify: "start",
+		size: "xl",
+		width: "full",
+		text: "xl",
+		gap: "sm",
+	};
+
 	const containerRef = useRef<HTMLDivElement>(null);
 
 	return (
@@ -28,6 +34,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 			data-ui={"SellerMenu"}
 			ui={{
 				position: "relative",
+				height: "full",
+				width: "full",
 				...ui,
 			}}
 			{...props}
@@ -35,25 +43,31 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 			<Fade scrollableRef={containerRef} />
 
 			<Container
+				data-ui={"SellerMenu-container"}
 				ref={containerRef}
-				data-ui="Seller-container"
 				ui={{
 					layout: "vertical-flex",
 					scroll: "vertical",
-					gap: "sm",
+					height: "full",
+					inner: "default",
+					items: "center",
+					gap: "lg",
 				}}
 			>
 				<LinkTo
 					{...uiButton({
 						ui: {
-							tone: "primary",
-							theme: "light",
-							justify: "start",
-							round: "default",
-							size: "xl",
+							font: "semibold",
+							...button,
 						},
 						className: [],
 					})}
+					icon={ListingIcon}
+					iconProps={{
+						ui: {
+							size: "2xl",
+						},
+					}}
 					to="/$locale/seller/listing/wizard/photos"
 					params={{
 						locale,
@@ -62,18 +76,21 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					<Tx label="Create listing (label)" />
 				</LinkTo>
 
-				<div className={spacing}>
+				<Container ui={spacing}>
 					<LinkTo
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								theme: "light",
-								justify: "start",
-								round: "default",
-								size: "xl",
+								...button,
 							},
 							className: [],
 						})}
+						icon={ListIcon}
+						iconProps={{
+							ui: {
+								size: "2xl",
+							},
+						}}
 						to="/$locale/seller/listing/my"
 						params={{
 							locale,
@@ -86,13 +103,16 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								theme: "light",
-								justify: "start",
-								round: "default",
-								size: "xl",
+								...button,
 							},
 							className: [],
 						})}
+						icon={TransactionIcon}
+						iconProps={{
+							ui: {
+								size: "2xl",
+							},
+						}}
 						to="/$locale/seller/transaction/list"
 						params={{
 							locale,
@@ -100,19 +120,22 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					>
 						<Tx label="Transactions (label)" />
 					</LinkTo>
-				</div>
+				</Container>
 
 				<LinkTo
 					{...uiButton({
 						ui: {
 							tone: "secondary",
-							theme: "light",
-							justify: "start",
-							round: "default",
-							size: "xl",
+							...button,
 						},
 						className: [],
 					})}
+					icon={ShopIcon}
+					iconProps={{
+						ui: {
+							size: "2xl",
+						},
+					}}
 					to="/$locale/seller/shop"
 					params={{
 						locale,
@@ -121,18 +144,21 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					<Tx label="Shop (label)" />
 				</LinkTo>
 
-				<div className={spacing}>
+				<Container ui={spacing}>
 					<LinkTo
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								theme: "light",
-								justify: "start",
-								round: "default",
-								size: "xl",
+								...button,
 							},
 							className: [],
 						})}
+						icon={BuyerIcon}
+						iconProps={{
+							ui: {
+								size: "2xl",
+							},
+						}}
 						to="/$locale/buyer"
 						params={{
 							locale,
@@ -145,13 +171,16 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						{...uiButton({
 							ui: {
 								tone: "secondary",
-								theme: "light",
-								justify: "start",
-								round: "default",
-								size: "xl",
+								...button,
 							},
 							className: [],
 						})}
+						icon={UserIcon}
+						iconProps={{
+							ui: {
+								size: "2xl",
+							},
+						}}
 						to="/$locale/seller/user"
 						params={{
 							locale,
@@ -159,9 +188,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					>
 						<Tx label="User profile (label)" />
 					</LinkTo>
-				</div>
-
-				<SignOutButton locale={locale} />
+				</Container>
 			</Container>
 		</Container>
 	);

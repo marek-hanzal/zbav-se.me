@@ -1,8 +1,8 @@
 @utility tone-primary-light {
 	--color-text: var(--color-slate-700);
-	--color-background: color-mix(in srgb, var(--color-pink-300) 65%, white);
+	--color-background: color-mix(in srgb, var(--color-pink-300) 70%, white);
 	--color-border: color-mix(in srgb, var(--color-pink-400) 30%, transparent);
-	--color-icon: color-mix(in srgb, var(--color-text) 75%, white);
+	--color-icon: color-mix(in srgb, var(--color-text) 85%, white);
 
 	@apply shadow-slate-800/20;
 }

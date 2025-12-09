@@ -1,1 +1,1 @@
-export const BuyerIcon = "icon-[solar--cart-4-bold-duotone]";
+export const BuyerIcon = "icon-[bi--basket]";
