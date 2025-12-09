@@ -8,7 +8,7 @@
 		will-change: opacity;
 		overflow: hidden;
 
-		@apply from-white/75 via-slate-700/20 to-black/40;
+		@apply from-white/0 via-slate-700/20 to-black/65;
 	}
 
 	.Fade-top {

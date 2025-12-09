@@ -53,11 +53,13 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 					layout={"vertical-flex"}
 					gap={"sm"}
 					inner={"default"}
+					items={"center"}
 				>
 					<LinkTo
 						{...asButton({
 							justify: "start",
 							size: "xl",
+							width: "full",
 						})}
 						icon={ListingIcon}
 						iconProps={{
@@ -77,6 +79,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								tone: "secondary",
 								justify: "start",
 								size: "xl",
+								width: "full",
 							})}
 							icon={CartIcon}
 							iconProps={{
@@ -95,6 +98,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								tone: "secondary",
 								justify: "start",
 								size: "xl",
+								width: "full",
 							})}
 							icon={TransactionIcon}
 							iconProps={{
@@ -113,6 +117,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								tone: "secondary",
 								justify: "start",
 								size: "xl",
+								width: "full",
 							})}
 							icon={FeedIcon}
 							iconProps={{
@@ -132,6 +137,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 							tone: "secondary",
 							justify: "start",
 							size: "xl",
+							width: "full",
 						})}
 						icon={ShopIcon}
 						iconProps={{
@@ -151,6 +157,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								tone: "secondary",
 								justify: "start",
 								size: "xl",
+								width: "full",
 							})}
 							icon={SellerIcon}
 							iconProps={{
@@ -169,6 +176,7 @@ export const BuyerMenu = ({ locale, ...props }: BuyerMenu.Props) => {
 								tone: "secondary",
 								justify: "start",
 								size: "xl",
+								width: "full",
 							})}
 							icon={UserIcon}
 							iconProps={{

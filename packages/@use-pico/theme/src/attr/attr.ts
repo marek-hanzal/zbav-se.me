@@ -20,7 +20,7 @@ const toKey = (key: string) => {
 };
 
 export namespace attr {
-	export type Rest = Record<string, any>;
+	export type Rest = object;
 
 	export type Tone =
 		| "primary"
@@ -184,19 +184,7 @@ export namespace attr {
 		zIndex?: boolean;
 	}
 
-	/**
-	 * Input type for attr() function.
-	 * Includes:
-	 * - ui, attrs, className
-	 * - any TProps (DOM properties)
-	 * - plus subset of Attributes determined by TPick
-	 */
-	export type Props<TPick extends keyof Attributes, TRest extends Rest> = {
-		ui: string;
-		attrs: TPick[];
-		className?: tvc.ClassName;
-	} & Omit<TRest, "className"> &
-		Pick<Attributes, TPick>;
+	export type DataAttributes = Attrs<keyof Attributes>;
 
 	/**
 	 * Output type from attr() function.
@@ -205,11 +193,8 @@ export namespace attr {
 	 * - data-xxx attributes for TPick
 	 * - all original TProps excluding TPick and className
 	 */
-	export type Result<TPick extends keyof Attributes, TRest extends Rest> = Omit<
-		TRest,
-		TPick | "className"
-	> &
-		Attrs<TPick> & {
+	export type Result = Record<string, unknown> &
+		DataAttributes & {
 			"data-ui": string;
 			className?: string;
 		};
@@ -220,13 +205,26 @@ export namespace attr {
 	 * - all DOM props from TProps (excluding className)
 	 * - plus subset of Attributes (TPick)
 	 */
-	export type Component<TPick extends keyof Attributes, TRest extends Rest> = Omit<
+	export type Component<TAttrs extends Attributes, TRest extends Rest> = Omit<
 		TRest,
 		"className"
 	> &
-		Partial<Pick<Attributes, TPick>> & {
+		Partial<TAttrs> & {
 			className?: tvc.ClassName;
 		};
+
+	/**
+	 * Input type for attr() function.
+	 * Includes:
+	 * - ui, attrs, className
+	 * - any TProps (DOM properties)
+	 * - plus subset of Attributes determined by TPick
+	 */
+	export type Props<TAttrs extends Attributes> = Partial<TAttrs> & {
+		ui: string;
+		attrs: readonly (keyof TAttrs)[];
+		className?: tvc.ClassName;
+	} & Record<string, unknown>;
 }
 
 /**
@@ -240,12 +238,12 @@ export namespace attr {
  * @param props.className - Optional className to merge with ui
  * @returns Object with data-ui, data-* attributes, remaining props, and merged className
  */
-export const attr = <const TPick extends keyof attr.Attributes, const TRest extends attr.Rest>({
+export const attr = <TAttrs extends attr.Attributes>({
 	ui,
 	attrs,
 	className,
 	...rest
-}: attr.Props<TPick, TRest>): attr.Result<TPick, TRest> => {
+}: attr.Props<TAttrs>): attr.Result => {
 	const data: [
 		string,
 		unknown,
@@ -253,7 +251,7 @@ export const attr = <const TPick extends keyof attr.Attributes, const TRest exte
 	const props: Record<string, unknown> = {};
 
 	for (const [key, value] of Object.entries(rest)) {
-		if ((attrs as readonly string[]).includes(key)) {
+		if (attrs.includes(key as keyof attr.Attributes)) {
 			data.push([
 				toKey(key),
 				value,
@@ -267,10 +265,10 @@ export const attr = <const TPick extends keyof attr.Attributes, const TRest exte
 	return {
 		"data-ui": ui,
 		// data-xxx attributes for TPick
-		...(Object.fromEntries(data) as Attrs<TPick>),
+		...(Object.fromEntries(data) as attr.DataAttributes),
 		// remaining original props excluding TPick and className
 		...props,
 		// className merged via tvc(ui, className)
 		className: tvc(ui, className),
-	} as attr.Result<TPick, TRest>;
+	} as attr.Result;
 };

@@ -1,28 +1,14 @@
 import { attr } from "../attr/attr";
 
-const attributes = [
-	"theme",
-	"tone",
-	"size",
-	"round",
-	"snapTo",
-	"disabled",
-	"flow",
-	"items",
-	"justify",
-	"background",
-	"border",
-	"opacity",
-	"shadow",
-] as const satisfies (keyof attr.Attributes)[];
-
-type Attributes = (typeof attributes)[number];
-
 export namespace asBadge {
+	export interface Attributes extends attr.Attributes {
+		//
+	}
+
 	export type Props<TRest extends attr.Rest> = attr.Component<Attributes, TRest>;
 }
 
-export const asBadge = <const TRest extends attr.Rest>({
+export const asBadge = <TRest extends attr.Rest>({
 	theme = "light",
 	tone = "primary",
 	size = "md",
@@ -35,9 +21,26 @@ export const asBadge = <const TRest extends attr.Rest>({
 	shadow = true,
 	...props
 }: asBadge.Props<TRest>) => {
-	return attr({
+	return attr<asBadge.Attributes>({
 		ui: "Badge",
-		attrs: attributes,
+		attrs: [
+			"theme",
+			"tone",
+			"size",
+			"round",
+			"snapTo",
+			"disabled",
+			"flow",
+			"items",
+			"justify",
+			"height",
+			"width",
+			"square",
+			"background",
+			"border",
+			"opacity",
+			"shadow",
+		] as const,
 		//
 		theme,
 		tone,
