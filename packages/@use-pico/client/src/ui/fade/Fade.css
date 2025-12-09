@@ -8,16 +8,16 @@
 		will-change: opacity;
 		overflow: hidden;
 
-		@apply from-white/0 via-slate-700/20 to-black/45;
+		@apply from-white/0 to-black/35;
 	}
 
-	.Fade[data-ui-top="true"] {
+	.Fade[data-ui="Fade-top"] {
 		top: -1px;
 
 		@apply bg-linear-to-t;
 	}
 
-	.Fade[data-ui-bottom="true"] {
+	.Fade[data-ui="Fade-bottom"] {
 		bottom: -1px;
 
 		@apply bg-linear-to-b;

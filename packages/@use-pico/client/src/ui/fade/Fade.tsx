@@ -12,7 +12,7 @@ export namespace Fade {
 }
 
 export const Fade: FC<Fade.Props> = ({
-	height = 8,
+	height = 16,
 	fade = height * 2,
 	scrollableRef,
 	//
@@ -105,11 +105,9 @@ export const Fade: FC<Fade.Props> = ({
 				aria-hidden
 				{...uiFade({
 					ui,
-					className: [
-						"Fade-top",
-						className,
-					],
+					className,
 				})}
+				data-ui="Fade-top"
 				style={{
 					height,
 				}}
@@ -120,11 +118,9 @@ export const Fade: FC<Fade.Props> = ({
 				aria-hidden
 				{...uiFade({
 					ui,
-					className: [
-						"Fade-bottom",
-						className,
-					],
+					className,
 				})}
+				data-ui="Fade-bottom"
 				style={{
 					height,
 				}}

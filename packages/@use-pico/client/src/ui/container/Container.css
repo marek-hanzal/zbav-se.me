@@ -1,8 +1,4 @@
 @layer components {
-	.Container {
-		contain: content;
-	}
-
 	/** Misc smaller utils */
 
 	.Container[data-ui-disabled="true"] {
