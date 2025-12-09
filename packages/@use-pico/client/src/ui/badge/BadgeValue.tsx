@@ -49,9 +49,13 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			<div data-ui="BadgeValue-label-wrapper">
 				<Tx
 					label={textLabel}
-					tone={"primary"}
 					preset={"label"}
-					size={"md"}
+					ui={{
+						tone: "primary",
+						size: "md",
+						font: "bold",
+						display: "block",
+					}}
 				/>
 
 				{action}
@@ -60,9 +64,13 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			{isString(textValue) ? (
 				<Tx
 					label={textValue}
-					truncate
-					tone={"secondary"}
-					size={"md"}
+					ui={{
+						tone: "secondary",
+						size: "md",
+						font: "bold",
+						display: "block",
+						truncate: true,
+					}}
 					{...textValueProps}
 				/>
 			) : (

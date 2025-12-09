@@ -125,8 +125,10 @@ export const Button: FC<Button.Props> = ({
 			{label ? (
 				<Tx
 					label={label}
-					display={"block"}
-					truncate={truncate}
+					ui={{
+						display: "block",
+						truncate,
+					}}
 				/>
 			) : null}
 

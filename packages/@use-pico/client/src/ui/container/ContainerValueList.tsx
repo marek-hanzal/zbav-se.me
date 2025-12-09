@@ -59,9 +59,11 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				}}
 			>
 				<Tx
-					tone={"primary"}
 					label={textTitle}
 					preset={"label"}
+					ui={{
+						tone: "primary",
+					}}
 				/>
 
 				{action}

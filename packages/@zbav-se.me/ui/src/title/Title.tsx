@@ -41,20 +41,25 @@ export const Title: FC<Title.Props> = ({
 
 					<Tx
 						label={textTitle}
-						font={"bold"}
-						size={"xl"}
-						tone={"primary"}
-						theme={"light"}
-						truncate
+						ui={{
+							tone: "primary",
+							theme: "light",
+							size: "xl",
+							font: "bold",
+							display: "block",
+							truncate: true,
+						}}
 					/>
 				</div>
 
 				{textSubtitle ? (
 					<Tx
 						label={textSubtitle}
-						tone={"secondary"}
-						theme={"light"}
-						size={"sm"}
+						ui={{
+							tone: "secondary",
+							theme: "light",
+							size: "sm",
+						}}
 					/>
 				) : null}
 			</div>

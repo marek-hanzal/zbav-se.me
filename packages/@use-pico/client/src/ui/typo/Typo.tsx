@@ -1,7 +1,7 @@
 import type { ComponentProps, FC, ReactNode } from "react";
-import { asTypo } from "./asTypo";
+import { uiTypo } from "./uiTypo";
 
-const presets: Record<Typo.Preset, Partial<Omit<Typo.Props, "className">>> = {
+const presets: Record<Typo.Preset, uiTypo.Ui> = {
 	none: {},
 	label: {
 		size: "lg",
@@ -26,7 +26,7 @@ export namespace Typo {
 
 	export type Preset = "none" | "header" | "subheader" | "label" | "paragraph" | "blockquote";
 
-	export interface Props extends asTypo.PropsEx<ComponentProps<"span">> {
+	export interface Props extends uiTypo.Component<ComponentProps<"span">> {
 		label: Value;
 		preset?: Preset;
 	}
@@ -37,34 +37,21 @@ export namespace Typo {
 export const Typo: FC<Typo.Props> = ({
 	label,
 	preset = "none",
-	truncate,
-	display,
-	wrap,
-	size,
-	font,
-	tone,
-	theme,
-	italic,
 	//
+	ui,
 	className,
 	...props
 }) => {
 	return (
 		<span
-			{...asTypo({
-				tone,
-				theme,
-				size,
-				font,
-				display,
-				wrap,
-				truncate,
-				italic,
+			{...uiTypo({
+				ui: {
+					...presets[preset],
+					...ui,
+				},
 				//
 				className,
 			})}
-			//
-			{...presets[preset]}
 			//
 			{...props}
 		>

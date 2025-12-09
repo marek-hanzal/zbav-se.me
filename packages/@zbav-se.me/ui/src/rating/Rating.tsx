@@ -101,8 +101,10 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 								>
 									<Tx
 										label={textHint(value)}
-										font={"bold"}
-										size={"lg"}
+										ui={{
+											size: "lg",
+											font: "bold",
+										}}
 									/>
 								</TypoIcon>
 							</Button>

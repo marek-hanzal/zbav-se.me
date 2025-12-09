@@ -83,9 +83,11 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 						{header?.title ? (
 							<Tx
 								label={header.title}
-								tone={"primary"}
-								theme={"light"}
 								preset={"subheader"}
+								ui={{
+									tone: "primary",
+									theme: "light",
+								}}
 							/>
 						) : null}
 					</Badge>

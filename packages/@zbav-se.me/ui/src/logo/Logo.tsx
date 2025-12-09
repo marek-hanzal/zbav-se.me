@@ -8,27 +8,37 @@ export const Logo: FC = () => {
 				<Tx
 					data-ui="Logo-title-primary"
 					label={"zbav-se.me"}
-					tone={"primary"}
-					theme={"light"}
-					display={"block"}
+					ui={{
+						tone: "primary",
+						theme: "light",
+						size: "xl",
+						font: "bold",
+						display: "block",
+					}}
 				/>
 				<Tx
 					data-ui="Logo-title-secondary"
 					label={"zbav-se.me"}
-					tone={"secondary"}
-					theme={"light"}
-					display={"block"}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						size: "xl",
+						font: "bold",
+						display: "block",
+					}}
 				/>
 			</div>
 
 			<Tx
 				data-ui="Logo-motto"
 				label="Logo motto (label)"
-				tone="secondary"
-				theme={"light"}
-				font={"bold"}
-				display={"block"}
-				size={"xl"}
+				ui={{
+					tone: "secondary",
+					theme: "light",
+					size: "xl",
+					font: "bold",
+					display: "block",
+				}}
 			/>
 		</div>
 	);

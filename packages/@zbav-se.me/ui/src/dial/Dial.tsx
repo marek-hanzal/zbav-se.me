@@ -59,17 +59,21 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 					<Typo
 						data-ui={"Dial-Typo-value"}
 						label={value}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
+						ui={{
+							size: "xl",
+							font: "bold",
+							display: "block",
+						}}
 					/>
 				) : (
 					<Tx
 						data-ui={"Dial-Typo-value-placeholder"}
 						label={"Price (placeholder)"}
-						size={"xl"}
-						font={"bold"}
-						display={"block"}
+						ui={{
+							size: "xl",
+							font: "bold",
+							display: "block",
+						}}
 					/>
 				)}
 

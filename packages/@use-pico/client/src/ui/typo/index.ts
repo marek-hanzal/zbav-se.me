@@ -1,2 +1,2 @@
-export { asTypo } from "./asTypo";
 export { Typo } from "./Typo";
+export { uiTypo } from "./uiTypo";

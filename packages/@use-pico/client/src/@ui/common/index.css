@@ -1,4 +1,6 @@
+@import "./display.css";
 @import "./flow.css";
+@import "./font.css";
 @import "./gap.css";
 @import "./height.css";
 @import "./inner.css";

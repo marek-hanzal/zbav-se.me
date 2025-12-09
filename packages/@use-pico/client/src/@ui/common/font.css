@@ -1,0 +1,15 @@
+@layer components {
+	[data-ui-font="light"] {
+		@apply font-light;
+	}
+	[data-ui-font="normal"] {
+		@apply font-normal;
+	}
+	[data-ui-font="bold"] {
+		@apply font-bold;
+	}
+
+	[data-ui-italic="true"] {
+		font-style: italic;
+	}
+}

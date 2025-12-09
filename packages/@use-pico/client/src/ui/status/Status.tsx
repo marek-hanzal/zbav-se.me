@@ -66,17 +66,21 @@ export const Status: FC<Status.Props> = ({
 				<Tx
 					data-ui="Status-title"
 					label={textTitle}
-					size="xl"
-					font="bold"
-					display="block"
-					wrap={"wrap"}
+					ui={{
+						size: "xl",
+						font: "bold",
+						display: "block",
+						wrap: "wrap",
+					}}
 					{...titleProps}
 				/>
 				<Tx
 					data-ui="Status-message"
 					label={textMessage}
-					display="block"
-					wrap={"wrap"}
+					ui={{
+						display: "block",
+						wrap: "wrap",
+					}}
 					{...messageProps}
 				/>
 			</div>
