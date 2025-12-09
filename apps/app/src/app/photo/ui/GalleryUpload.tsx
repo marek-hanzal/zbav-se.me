@@ -70,7 +70,6 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 					return (
 						<PhotoUpload
 							key={`${uploadRootId}-${slot + 1}`}
-							disabled={disabled}
 							value={state.value[slot]}
 							onChange={(uploadId) => {
 								state.set((prev) => {
@@ -83,6 +82,9 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 									return compact;
 								});
+							}}
+							ui={{
+								disabled,
 							}}
 						/>
 					);
