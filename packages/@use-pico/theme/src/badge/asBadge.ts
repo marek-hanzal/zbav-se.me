@@ -1,7 +1,8 @@
 import { attr } from "../attr/attr";
+import type { Theme } from "../theme/Theme";
 
 export namespace asBadge {
-	export interface Attributes extends attr.Attributes {
+	export interface Attributes extends Theme.Attrs {
 		//
 	}
 

@@ -8,5 +8,5 @@ export namespace Container {
 }
 
 export const Container: FC<Container.Props> = (props) => {
-    return <div {...asContainer(props)} />;
+	return <div {...asContainer(props)} />;
 };

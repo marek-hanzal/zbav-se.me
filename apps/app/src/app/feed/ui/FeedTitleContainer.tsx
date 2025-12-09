@@ -6,7 +6,7 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import type { FC } from "react";
 
 export namespace FeedTitleContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: string;
 		onChange(value: string): void;
 	}

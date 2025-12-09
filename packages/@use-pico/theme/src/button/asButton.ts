@@ -1,9 +1,10 @@
 import { attr } from "../attr/attr";
+import type { Theme } from "../theme/Theme";
 
 export namespace asButton {
-	export type Size = attr.Size;
+	export type Size = Theme.Size;
 
-	export interface Attributes extends attr.Attributes {
+	export interface Attributes extends Theme.Attrs {
 		//
 	}
 

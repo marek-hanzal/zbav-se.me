@@ -10,7 +10,7 @@ import { type FC, useId } from "react";
 import { match } from "ts-pattern";
 
 export namespace ExpireAtContainer {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		value: tListingExpireEnum | undefined;
 		onChange(value: tListingExpireEnum): void;
 	}

@@ -1,4 +1,5 @@
 import { attr } from "../attr/attr";
+import type { Theme } from "../theme/Theme";
 
 export namespace asContainer {
 	export type Layout =
@@ -18,7 +19,7 @@ export namespace asContainer {
 	export type Snap = "vertical" | "horizontal";
 	export type SnapAlign = "start" | "center" | "end";
 
-	export interface Attributes extends attr.Attributes {
+	export interface Attributes extends Theme.Attrs {
 		layout?: Layout;
 		scroll?: Scroll;
 		snap?: Snap;

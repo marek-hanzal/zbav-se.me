@@ -28,7 +28,8 @@ export namespace ChatInput {
 		}
 	}
 
-	export interface Props extends ChatInputCls.Props<Omit<Container.Props, "onSubmit">> {
+	export interface Props
+		extends ChatInputCls.Props<Omit<Container.Props, "onSubmit" | "onChange">> {
 		value: string;
 		onChange(value: string): void;
 		onSubmit(value: string): void;

@@ -1,6 +1,7 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { attr } from "@use-pico/theme/attr";
+import type { Theme } from "@use-pico/theme/theme";
 import { type ComponentProps, type FC, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
 
@@ -9,7 +10,7 @@ export namespace HeroImage {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
-		round?: attr.Round;
+		round?: Theme.Round;
 	}
 }
 
@@ -35,7 +36,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 		<>
 			{/** biome-ignore lint/a11y/useAltText: Should go from props */}
 			<img
-				{...attr({
+				{...attr<Theme.Attrs>({
 					ui: "HeroImage",
 					attrs: [
 						"round",

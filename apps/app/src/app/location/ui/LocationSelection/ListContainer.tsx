@@ -12,7 +12,7 @@ import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 
 export namespace ListContainer {
-	export interface Props extends Container.Props, MarkSuspense.Props {
+	export interface Props extends Omit<Container.Props, "onChange">, MarkSuspense.Props {
 		locale: string;
 		textHint?: string;
 		search: Fulltext.Value;

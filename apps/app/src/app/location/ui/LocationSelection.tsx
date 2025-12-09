@@ -5,7 +5,7 @@ import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "./LocationSelection/ListContainer";
 
 export namespace LocationSelection {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		locale: string;
 		value: string | undefined | null;
 		onChange(value: string): void;

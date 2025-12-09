@@ -7,7 +7,7 @@ import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/user";
 import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		withGeo: boolean | undefined;
 		value: tListingSort[];
 		onChange(sort: (prev: tListingSort[]) => tListingSort[]): void;
