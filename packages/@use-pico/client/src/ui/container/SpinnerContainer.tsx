@@ -16,7 +16,7 @@ export namespace SpinnerContainer {
 export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 	statusProps,
 	iconProps,
-	size = "2xl",
+	size = "4xl",
 	type = "status",
 	//
 	ui,
@@ -26,8 +26,12 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 	return (
 		<Container
 			ui={{
+				tone: "secondary",
+				theme: "light",
 				layout: "vertical-centered",
 				height: "full",
+				text: size,
+				color: "lead",
 				...ui,
 			}}
 			{...props}

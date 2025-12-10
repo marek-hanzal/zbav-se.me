@@ -18,7 +18,7 @@ export namespace FlowContainer {
 export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ui, ...props }) => {
 	return (
 		<Container
-			data-ui={"FlowContainer"}
+			data-ui={"FlowContainer[Container]"}
 			ui={{
 				position: "relative",
 				height: "full",
@@ -27,7 +27,17 @@ export const FlowContainer: FC<FlowContainer.Props> = ({ left, children, ui, ...
 			}}
 			{...props}
 		>
-			{left ? <div data-ui={"FlowContainer-left"}>{left}</div> : null}
+			{left ? (
+				<Container
+					data-ui={"FlowContainer-[Container.left]"}
+					ui={{
+						snapTo: "top-left",
+						zIndex: true,
+					}}
+				>
+					{left}
+				</Container>
+			) : null}
 
 			{children}
 		</Container>

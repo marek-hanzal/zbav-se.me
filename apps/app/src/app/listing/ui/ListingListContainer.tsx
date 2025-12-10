@@ -65,7 +65,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			renderEmptyFn()
 		) : (
 			<Status
-				data-ui={"ListingListContainer-Status-empty"}
+				data-ui={"ListingListContainer-[Status-empty]"}
 				key={`${listingIdPrefix}-no-listings`}
 				icon={"icon-[streamline--sad-face-remix]"}
 				textTitle={"No listings (title)"}
@@ -94,11 +94,12 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	return (
 		<Container
 			ref={mergedRef}
-			data-ui={"ListingListContainer"}
+			data-ui={"ListingListContainer[Container]"}
 			ui={{
 				layout: "vertical-full",
 				snap: "vertical",
 				snapAlign: "center",
+				height: "full",
 			}}
 			{...props}
 		>
