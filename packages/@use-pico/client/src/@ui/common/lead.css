@@ -1,5 +1,0 @@
-@layer components {
-	[data-ui-lead="true"] {
-		color: var(--color-lead);
-	}
-}

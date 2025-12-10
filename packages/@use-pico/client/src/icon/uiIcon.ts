@@ -11,6 +11,7 @@ export namespace uiIcon {
 		size?: Size;
 		//
 		disabled?: boolean;
+		color?: CoolUi.Color;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
@@ -24,6 +25,7 @@ export const uiIcon = ({ ui, className }: uiIcon.Props) => {
 	return coolUi<uiIcon.Ui>({
 		name: "Icon",
 		ui: {
+			color: "icon",
 			...ui,
 		},
 		className,

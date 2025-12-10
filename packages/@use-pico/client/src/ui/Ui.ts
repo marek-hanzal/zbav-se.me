@@ -59,4 +59,5 @@ export namespace Ui {
 		| "strong";
 	export type Font = "light" | "normal" | "semibold" | "bold";
 	export type Display = "block" | "inline";
+	export type Color = "text" | "lead" | "icon";
 }

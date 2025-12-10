@@ -16,6 +16,7 @@ export namespace uiTypo {
 		display?: CoolUi.Display;
 		truncate?: boolean;
 		wrap?: Wrap;
+		color?: CoolUi.Color;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
@@ -30,6 +31,7 @@ export const uiTypo = ({ ui, className }: uiTypo.Props) => {
 		name: "Typo",
 		ui: {
 			display: "inline",
+			color: "text",
 			...ui,
 		},
 		className,

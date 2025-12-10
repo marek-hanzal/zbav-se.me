@@ -1,0 +1,13 @@
+@layer components {
+	[data-ui-color="text"] {
+		color: var(--color-text);
+	}
+
+	[data-ui-color="lead"] {
+		color: var(--color-lead);
+	}
+
+	[data-ui-color="icon"] {
+		color: var(--color-icon);
+	}
+}
