@@ -13,6 +13,7 @@ import z from "zod";
 import { FeedSetupButton } from "~/app/feed/ui/button/FeedSetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({
@@ -68,12 +69,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 				data-ui={"FeedList"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
