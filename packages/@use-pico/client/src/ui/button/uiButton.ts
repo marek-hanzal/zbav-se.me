@@ -45,13 +45,12 @@ export const uiButton = ({ ui, className }: uiButton.Props) => {
 	return coolUi<uiButton.Ui>({
 		name: "Button",
 		ui: {
-			theme: "light",
-			tone: "primary",
-			justify: "center",
+			justify: "start",
 			items: "center",
 			flow: "horizontal",
 			round: "default",
 			gap: "sm",
+			color: "text",
 			background: true,
 			border: true,
 			shadow: true,

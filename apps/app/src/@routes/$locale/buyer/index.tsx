@@ -31,8 +31,8 @@ export const Route = createFileRoute("/$locale/buyer/")({
 				}
 				ui={{
 					layout: "vertical-header-content",
-					tone: "primary",
-					theme: "light",
+					// tone: "primary",
+					// theme: "light",
 				}}
 			>
 				<BuyerMenu locale={locale} />

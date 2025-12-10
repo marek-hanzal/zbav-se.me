@@ -17,12 +17,11 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 	const spacing: uiContainer.Ui = {
 		layout: "vertical-flex",
 		width: "full",
-		gap: "md",
+		gap: "default",
 	};
 	const button: uiButton.Ui = {
-		tone: "subtle",
+		tone: "neutral",
 		theme: "light",
-		justify: "start",
 		size: "xl",
 		width: "full",
 		text: "xl",
@@ -53,7 +52,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					height: "full",
 					inner: "default",
 					items: "center",
-					gap: "lg",
+					gap: "2xl",
 				}}
 			>
 				<LinkTo

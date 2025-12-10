@@ -12,7 +12,7 @@ export namespace Fade {
 }
 
 export const Fade: FC<Fade.Props> = ({
-	height = 16,
+	height = 10,
 	fade = height * 2,
 	scrollableRef,
 	//

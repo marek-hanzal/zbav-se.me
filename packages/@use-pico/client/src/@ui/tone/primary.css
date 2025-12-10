@@ -1,11 +1,11 @@
 @layer components {
 	[data-ui-tone="primary"][data-ui-theme="light"] {
-		--color-text: var(--color-slate-700);
-		--color-lead: var(--color-pink-700);
+		--color-text: color-mix(in srgb, var(--color-pink-900) 60%, black);
+		--color-lead: color-mix(in srgb, var(--color-pink-700) 70%, white);
 		--color-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
-		--color-border: color-mix(in srgb, var(--color-pink-400) 30%, transparent);
+		--color-border: color-mix(in srgb, var(--color-pink-400) 10%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
-		--tw-shadow-color: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
+		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 20%, transparent);
 	}
 
 	[data-ui-tone="primary"][data-ui-theme="dark"] {

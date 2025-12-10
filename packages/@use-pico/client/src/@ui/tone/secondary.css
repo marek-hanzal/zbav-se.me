@@ -1,16 +1,16 @@
 @layer components {
 	[data-ui-tone="secondary"][data-ui-theme="light"] {
-		--color-text: var(--color-slate-700);
-		--color-lead: var(--color-violet-700);
+		--color-text: color-mix(in srgb, var(--color-violet-900) 95%, transparent);
+		--color-lead: color-mix(in srgb, var(--color-violet-700) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-violet-200) 75%, white);
-		--color-border: color-mix(in srgb, var(--color-violet-300) 28%, transparent);
+		--color-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
-		--tw-shadow-color: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
+		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
 	}
 
 	[data-ui-tone="secondary"][data-ui-theme="dark"] {
-		--color-text: var(--color-violet-50);
-		--color-lead: var(--color-violet-200);
+		--color-text: color-mix(in srgb, var(--color-violet-50) 100%, transparent);
+		--color-lead: color-mix(in srgb, var(--color-violet-200) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-violet-800) 75%, black);
 		--color-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-violet-50) 80%, black);
