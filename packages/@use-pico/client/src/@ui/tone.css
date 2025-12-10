@@ -43,6 +43,7 @@
 		--color-text: color-mix(in srgb, var(--color-violet-900) 95%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-violet-700) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-violet-200) 75%, white);
+		--color-bg-alt: color-mix(in srgb, var(--color-violet-300) 65%, white);
 		--color-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
@@ -52,6 +53,7 @@
 		--color-text: color-mix(in srgb, var(--color-violet-50) 100%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-violet-200) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-violet-800) 75%, black);
+		--color-bg-alt: color-mix(in srgb, var(--color-violet-700) 75%, black);
 		--color-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-violet-50) 80%, black);
 		--tw-shadow-color: color-mix(in srgb, var(--color-violet-900) 40%, transparent);
@@ -61,6 +63,7 @@
 		--color-text: color-mix(in srgb, var(--color-violet-900) 75%, black);
 		--color-lead: color-mix(in srgb, var(--color-violet-700) 90%, white);
 		--color-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
+		--color-bg-alt: color-mix(in srgb, var(--color-violet-200) 25%, white);
 		--color-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
@@ -70,6 +73,7 @@
 		--color-text: color-mix(in srgb, var(--color-slate-100) 100%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-violet-200) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
+		--color-bg-alt: color-mix(in srgb, var(--color-violet-800) 65%, black);
 		--color-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-slate-100) 85%, black);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-100) 30%, black);
@@ -99,6 +103,7 @@
 		--color-text: color-mix(in srgb, var(--color-amber-700) 65%, black);
 		--color-lead: color-mix(in srgb, var(--color-amber-700) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-amber-100) 65%, white);
+		--color-bg-alt: color-mix(in srgb, var(--color-amber-200) 25%, transparent);
 		--color-border: color-mix(in srgb, var(--color-amber-400) 30%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-amber-700) 80%, white);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
@@ -108,6 +113,7 @@
 		--color-text: color-mix(in srgb, var(--color-amber-50) 100%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-amber-200) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-amber-900) 70%, black);
+		--color-bg-alt: color-mix(in srgb, var(--color-amber-800) 70%, black);
 		--color-border: color-mix(in srgb, var(--color-amber-500) 55%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-amber-50) 80%, black);
 		--tw-shadow-color: color-mix(in srgb, var(--color-amber-900) 45%, transparent);
@@ -117,6 +123,7 @@
 		--color-text: color-mix(in srgb, var(--color-rose-800) 95%, black);
 		--color-lead: color-mix(in srgb, var(--color-rose-700) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-rose-100) 70%, white);
+		--color-bg-alt: color-mix(in srgb, var(--color-rose-200) 60%, white);
 		--color-border: color-mix(in srgb, var(--color-rose-400) 30%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-rose-700) 85%, white);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
@@ -126,6 +133,7 @@
 		--color-text: color-mix(in srgb, var(--color-rose-50) 100%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-rose-200) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-rose-900) 70%, black);
+		--color-bg-alt: color-mix(in srgb, var(--color-rose-800) 70%, black);
 		--color-border: color-mix(in srgb, var(--color-rose-500) 60%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-rose-50) 80%, black);
 		--tw-shadow-color: color-mix(in srgb, var(--color-rose-900) 45%, transparent);
@@ -135,6 +143,7 @@
 		--color-text: color-mix(in srgb, var(--color-blue-700) 100%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-blue-800) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-blue-50) 75%, white);
+		--color-bg-alt: color-mix(in srgb, var(--color-blue-100) 70%, white);
 		--color-border: color-mix(in srgb, var(--color-blue-400) 10%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-blue-700) 85%, white);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);
@@ -144,6 +153,7 @@
 		--color-text: color-mix(in srgb, var(--color-blue-50) 100%, transparent);
 		--color-lead: color-mix(in srgb, var(--color-blue-200) 100%, transparent);
 		--color-bg: color-mix(in srgb, var(--color-blue-900) 70%, black);
+		--color-bg-alt: color-mix(in srgb, var(--color-blue-800) 70%, black);
 		--color-border: color-mix(in srgb, var(--color-blue-500) 55%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-blue-50) 80%, black);
 		--tw-shadow-color: color-mix(in srgb, var(--color-blue-900) 45%, transparent);

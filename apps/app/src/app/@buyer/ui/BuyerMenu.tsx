@@ -62,7 +62,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					height: "full",
 					inner: "lg",
 					items: "center",
-					gap: "xl",
+					gap: "2xl",
 				}}
 			>
 				<LinkTo

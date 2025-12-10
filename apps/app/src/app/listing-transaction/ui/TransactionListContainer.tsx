@@ -9,7 +9,7 @@ import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, type ReactNode, useEffect, useRef } from "react";
 import { TransactionItem } from "./TransactionItem";
 
-export namespace TransactionList {
+export namespace TransactionListContainer {
 	export interface Props extends Container.Props {
 		locale: string;
 		side: tUserSideEnum;
@@ -18,7 +18,7 @@ export namespace TransactionList {
 	}
 }
 
-export const TransactionList: FC<TransactionList.Props> = ({
+export const TransactionListContainer: FC<TransactionListContainer.Props> = ({
 	locale,
 	side,
 	renderEmptyFn,
@@ -32,7 +32,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 	return (
 		<Container
-			data-ui={"TransactionList"}
+			data-ui={"TransactionListContainer[Container]"}
 			ui={{
 				position: "relative",
 				...ui,
@@ -45,11 +45,12 @@ export const TransactionList: FC<TransactionList.Props> = ({
 
 			<Container
 				ref={containerRef}
-				data-ui={"TransactionList-Container"}
+				data-ui={"TransactionListContainer-[Container-scroll]"}
 				ui={{
 					layout: "vertical-flex",
-					gap: "default",
+					height: "full",
 					scroll: "vertical",
+					gap: "default",
 				}}
 				{...props}
 			>
@@ -103,6 +104,7 @@ export const TransactionList: FC<TransactionList.Props> = ({
 								data-ui={"TransactionList-Container-empty"}
 								ui={{
 									layout: "vertical-centered",
+									height: "full",
 								}}
 							>
 								{renderEmptyFn({

@@ -7,7 +7,7 @@ import {
 	useParams,
 } from "@tanstack/react-router";
 import { PicoCls } from "@use-pico/client/cls";
-import { Container } from "@use-pico/client/ui/container";
+import { uiContainer } from "@use-pico/client/ui/container";
 import { TokenProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { Toaster } from "sonner";
@@ -54,27 +54,24 @@ export const Route = createRootRouteWithContext<{
 					<HeadContent />
 				</head>
 
-				<body>
+				<body
+					{...uiContainer({
+						ui: {
+							height: "viewport",
+							width: "viewport",
+						},
+						className: [
+							"font-roboto",
+						],
+					})}
+				>
 					<TokenProvider cls={PicoCls.use(ThemeCls)}>
 						<Toaster
 							richColors
 							position={"top-center"}
 						/>
 
-						{/** biome-ignore lint/correctness/useUniqueElementIds: I'm OK, bro */}
-						<Container
-							id="root"
-							data-ui={"Root"}
-							ui={{
-								height: "viewport",
-								width: "viewport",
-							}}
-							className={[
-								"font-roboto",
-							]}
-						>
-							<Outlet />
-						</Container>
+						<Outlet />
 					</TokenProvider>
 
 					<Scripts />

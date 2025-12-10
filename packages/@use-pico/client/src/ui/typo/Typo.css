@@ -8,7 +8,7 @@
 		hyphens: auto;
 		-webkit-hyphens: auto;
 		text-wrap: wrap;
-		word-break: break-all;
+		word-break: keep-all;
 	}
 
 	.Typo[data-ui-wrap="nowrap"] {

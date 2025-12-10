@@ -8,6 +8,12 @@ export namespace uiStatus {
 		//
 		color?: CoolUi.Color;
 		text?: CoolUi.Text;
+		inner?: CoolUi.Inner;
+		background?: CoolUi.Background;
+		border?: CoolUi.Border;
+		shadow?: CoolUi.Shadow;
+		opacity?: CoolUi.Opacity;
+		round?: CoolUi.Round;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

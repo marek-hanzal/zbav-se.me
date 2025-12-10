@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Icon } from "@use-pico/client/icon";
+import { Container } from "@use-pico/client/ui/container";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SellerIcon } from "@zbav-se.me/ui/icon";
@@ -22,12 +23,23 @@ export const Route = createFileRoute("/$locale/seller/")({
 				data-ui="Seller-root"
 				textTitle={"Seller home (title)"}
 				left={
-					<Icon
-						icon={SellerIcon}
+					<Container
 						ui={{
+							layout: "horizontal-flex",
+							justify: "center",
+							items: "center",
+							round: "full",
+							square: "default",
+							opacity: "subtle",
+							background: "default",
+							border: true,
+							shadow: true,
+							color: "text",
 							text: "xl",
 						}}
-					/>
+					>
+						<Icon icon={SellerIcon} />
+					</Container>
 				}
 				ui={{
 					layout: "vertical-header-content",

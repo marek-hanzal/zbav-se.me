@@ -4,8 +4,9 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
-import { TransactionList } from "~/app/listing-transaction/ui/TransactionList";
+import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
 import { uiBackButton } from "~/app/ui/uiBackButton";
+import { uiWarningStatus } from "~/app/ui/uiWarningStatus";
 
 export const Route = createFileRoute("/$locale/seller/transaction/list")({
 	validateSearch: z.object({
@@ -18,13 +19,14 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 
 		return (
 			<TitleContainer
-				data-ui="TransactionList-root"
+				data-ui="/seller/transaction/list[TitleContainer]"
 				textTitle={"Transactions (title)"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
+						data-ui="/seller/transaction/list-[LinkTo.left]"
 						icon={ArrowLeftIcon}
 						to={"/$locale/seller"}
 						params={{
@@ -33,7 +35,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 					/>
 				}
 			>
-				<TransactionList
+				<TransactionListContainer
 					locale={locale}
 					side="seller"
 					renderEmptyFn={(props) => {
@@ -41,6 +43,10 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 							<Status
 								textTitle={"No transactions found - seller (title)"}
 								textMessage={"No transactions found - seller (message)"}
+								{...uiWarningStatus({
+									className: [],
+								})}
+								data-ui="/seller/transaction/list-[Status-empty]"
 								{...props}
 							/>
 						);

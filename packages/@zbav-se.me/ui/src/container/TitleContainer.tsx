@@ -30,7 +30,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui={"TitleContainer"}
+			data-ui={"TitleContainer[Container]"}
 			ui={{
 				layout: "vertical-header-content-footer",
 				height: "full",
@@ -41,7 +41,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 		>
 			{textTitle ? (
 				<Title
-					data-ui={"TitleContainer-Title"}
+					data-ui={"TitleContainer-[Title]"}
 					textTitle={textTitle}
 					textTitleProps={textTitleProps}
 					textSubtitle={textSubtitle}
@@ -56,7 +56,7 @@ export const TitleContainer: FC<TitleContainer.Props> = ({
 			{children}
 
 			{bottom ? (
-				<BottomContainer data-ui={"TitleContainer-BottomContainer"}>
+				<BottomContainer data-ui={"TitleContainer-[BottomContainer]"}>
 					{bottom}
 				</BottomContainer>
 			) : null}

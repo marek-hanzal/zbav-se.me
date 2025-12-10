@@ -1,0 +1,28 @@
+import { uiStatus } from "@use-pico/client/ui/status";
+import type { ui as coolUi } from "@use-pico/cls";
+
+export namespace uiWarningStatus {
+	export interface Ui extends uiStatus.Ui {
+		//
+	}
+
+	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
+
+	export interface Props extends coolUi.PropsEx<Ui> {
+		//
+	}
+}
+
+export const uiWarningStatus = ({ ui, className }: uiWarningStatus.Props) => {
+	return uiStatus({
+		ui: {
+			tone: "warning",
+			theme: "light",
+			color: "lead",
+			text: "4xl",
+			inner: "4xl",
+			...ui,
+		},
+		className,
+	});
+};
