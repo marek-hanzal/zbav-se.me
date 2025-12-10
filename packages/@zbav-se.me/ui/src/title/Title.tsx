@@ -32,9 +32,9 @@ export const Title: FC<Title.Props> = ({
 				inner: "xl",
 				width: "full",
 				color: "lead",
-				tone: "neutral",
+				tone: "brand",
 				theme: "light",
-				background: "default",
+				background: "alt",
 				shadow: true,
 				...ui,
 			}}

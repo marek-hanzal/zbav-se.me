@@ -1,4 +1,24 @@
 @layer components {
+	[data-ui-tone="brand"][data-ui-theme="light"] {
+		--color-text: color-mix(in srgb, var(--color-pink-900) 75%, black);
+		--color-lead: color-mix(in srgb, var(--color-pink-700) 85%, white);
+		--color-bg: color-mix(in srgb, var(--color-pink-50) 85%, white);
+		--color-bg-alt: color-mix(in srgb, var(--color-pink-100) 70%, white);
+		--color-border: color-mix(in srgb, var(--color-pink-300) 18%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-pink-600) 75%, white);
+		--tw-shadow-color: color-mix(in srgb, var(--color-pink-500) 14%, transparent);
+	}
+
+	[data-ui-tone="brand"][data-ui-theme="dark"] {
+		--color-text: color-mix(in srgb, var(--color-pink-50) 100%, transparent);
+		--color-lead: color-mix(in srgb, var(--color-pink-200) 100%, transparent);
+		--color-bg: color-mix(in srgb, var(--color-pink-900) 70%, black);
+		--color-bg-alt: color-mix(in srgb, var(--color-pink-800) 70%, black);
+		--color-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-pink-100) 80%, black);
+		--tw-shadow-color: color-mix(in srgb, var(--color-pink-900) 40%, transparent);
+	}
+
 	[data-ui-tone="primary"][data-ui-theme="light"] {
 		--color-text: color-mix(in srgb, var(--color-pink-900) 60%, black);
 		--color-lead: color-mix(in srgb, var(--color-pink-700) 70%, white);

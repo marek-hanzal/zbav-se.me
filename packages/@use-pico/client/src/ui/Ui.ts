@@ -3,6 +3,7 @@
  */
 export namespace Ui {
 	export type Tone =
+		| "brand"
 		| "primary"
 		| "secondary"
 		| "danger"

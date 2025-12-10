@@ -30,7 +30,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		text: "2xl",
 	};
 	const button: uiButton.Ui = {
-		tone: "neutral",
+		tone: "brand",
 		theme: "light",
 		inner: "sm",
 		width: "full",
