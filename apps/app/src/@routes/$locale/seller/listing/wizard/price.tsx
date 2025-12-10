@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
@@ -36,12 +37,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}

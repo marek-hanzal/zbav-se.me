@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 	component() {
@@ -17,12 +18,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 				textTitle={"New listing (title)"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}

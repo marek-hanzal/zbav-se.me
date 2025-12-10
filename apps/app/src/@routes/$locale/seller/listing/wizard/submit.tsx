@@ -8,7 +8,7 @@ import {
 	SpinnerIcon,
 } from "@use-pico/client/icon";
 import { BadgeValue } from "@use-pico/client/ui/badge";
-import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
@@ -23,6 +23,7 @@ import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
@@ -38,12 +39,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
@@ -108,12 +104,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 				textTitle={"Submit (title)"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								size: "md",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}

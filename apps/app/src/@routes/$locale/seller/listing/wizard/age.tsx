@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { AgeContainer } from "~/app/age/ui/AgeContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 	validateSearch: ListingWizardSchema,
@@ -34,12 +35,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 				textTitle={"Age (title)"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}

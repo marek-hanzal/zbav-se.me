@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button, uiButton } from "@use-pico/client/ui/button";
+import { Button } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -37,12 +37,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			<FlowContainer
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
@@ -73,11 +68,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						iconProps={{
-							ui: {
-								size: "lg",
-							},
-						}}
 						to={"/$locale/buyer"}
 						params={{
 							locale,

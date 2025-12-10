@@ -15,12 +15,13 @@ export namespace uiBackButton {
 export const uiBackButton = ({ ui, className }: uiBackButton.Props) => {
 	return uiButton({
 		ui: {
-			tone: "primary",
+			tone: "link",
 			theme: "light",
 			justify: "center",
 			round: "full",
 			square: "default",
 			opacity: "subtle",
+			text: "2xl",
 			...ui,
 		},
 		className,

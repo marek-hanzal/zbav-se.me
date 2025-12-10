@@ -96,7 +96,18 @@ export const Status: FC<Status.Props> = ({
 				/>
 			</Container>
 
-			{action && <div data-ui="Status-action">{action}</div>}
+			{action && (
+				<Container
+					ui={{
+						layout: "vertical-flex",
+						items: "center",
+						justify: "center",
+						gap: "default",
+					}}
+				>
+					{action}
+				</Container>
+			)}
 
 			{children ? <div data-ui="Status-body">{children}</div> : null}
 		</div>

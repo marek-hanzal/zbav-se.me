@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton, uiButton } from "@use-pico/client/ui/button";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import type { EntitySchema } from "@use-pico/common/schema";
@@ -9,6 +9,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Suspense } from "react";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/category")({
 	validateSearch: ListingWizardSchema,
@@ -33,12 +34,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				textTitle={"Listing category (title)"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								size: "md",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}

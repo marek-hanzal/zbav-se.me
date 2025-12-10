@@ -1,11 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button, uiButton } from "@use-pico/client/ui/button";
+import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { TransactionList } from "~/app/listing-transaction/ui/TransactionList";
+import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 	validateSearch: z.object({
@@ -21,12 +22,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 				textTitle={"Transactions (title)"}
 				left={
 					<LinkTo
-						{...uiButton({
-							ui: {
-								round: "full",
-								square: "default",
-								opacity: "subtle",
-							},
+						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
