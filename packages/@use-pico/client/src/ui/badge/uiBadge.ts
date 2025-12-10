@@ -26,7 +26,7 @@ export namespace uiBadge {
 		shadow?: boolean;
 		zIndex?: boolean;
 		//
-		lead?: boolean;
+		color?: CoolUi.Color;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

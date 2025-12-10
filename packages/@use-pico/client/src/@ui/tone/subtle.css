@@ -1,36 +1,39 @@
 @theme {
-	--color-subtle-50: var(--color-slate-50);
-	--color-subtle-100: var(--color-slate-100);
-	--color-subtle-200: var(--color-slate-200);
-	--color-subtle-300: var(--color-slate-300);
-	--color-subtle-400: var(--color-slate-400);
-	--color-subtle-500: var(--color-slate-500);
-	--color-subtle-600: var(--color-slate-600);
-	--color-subtle-700: var(--color-slate-700);
-	--color-subtle-800: var(--color-slate-800);
-	--color-subtle-900: var(--color-slate-900);
+	/* subtle / light */
+	--color-subtle-light-text: var(--color-slate-600);
+	--color-subtle-light-lead: var(--color-violet-700);
+	--color-subtle-light-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
+	--color-subtle-light-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
+	--color-subtle-light-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
+	--color-subtle-light-shadow: color-mix(in srgb, var(--color-slate-500) 10%, transparent);
 
-	--color-subtle-xs: var(--color-subtle-50);
-	--color-subtle-sm: var(--color-subtle-100);
-	--color-subtle-md: var(--color-subtle-500);
-	--color-subtle-lg: var(--color-subtle-700);
-	--color-subtle-xl: var(--color-subtle-900);
+	/* subtle / dark */
+	--color-subtle-dark-text: var(--color-slate-100);
+	--color-subtle-dark-lead: var(--color-violet-200);
+	--color-subtle-dark-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
+	--color-subtle-dark-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
+	--color-subtle-dark-icon: color-mix(in srgb, var(--color-subtle-dark-text) 80%, black);
+	--color-subtle-dark-shadow: color-mix(in srgb, var(--color-violet-950) 35%, transparent);
 }
 
 @utility tone-subtle-light {
-	--color-text: var(--color-subtle-xl);
-	--color-background: var(--color-subtle-xs);
-	--color-border: color-mix(in srgb, var(--color-subtle-md) 30%, transparent);
+	--color-text: var(--color-subtle-light-text);
+	--color-lead: var(--color-subtle-light-lead);
+	--color-bg: var(--color-subtle-light-bg);
+	--color-border: var(--color-subtle-light-border);
+	--color-icon: var(--color-subtle-light-icon);
 
-	@apply shadow-subtle-md/20;
+	@apply shadow-subtle-light-shadow;
 }
 
 @utility tone-subtle-dark {
-	--color-text: var(--color-subtle-xs);
-	--color-background: var(--color-subtle-xl);
-	--color-border: var(--color-subtle-md);
+	--color-text: var(--color-subtle-dark-text);
+	--color-lead: var(--color-subtle-dark-lead);
+	--color-bg: var(--color-subtle-dark-bg);
+	--color-border: var(--color-subtle-dark-border);
+	--color-icon: var(--color-subtle-dark-icon);
 
-	@apply shadow-subtle-md/20;
+	@apply shadow-subtle-dark-shadow;
 }
 
 @layer components {

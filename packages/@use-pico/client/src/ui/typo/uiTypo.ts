@@ -31,7 +31,6 @@ export const uiTypo = ({ ui, className }: uiTypo.Props) => {
 		name: "Typo",
 		ui: {
 			display: "inline",
-			color: "text",
 			...ui,
 		},
 		className,

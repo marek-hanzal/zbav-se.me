@@ -20,6 +20,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 		gap: "md",
 	};
 	const button: uiButton.Ui = {
+		tone: "subtle",
+		theme: "light",
 		justify: "start",
 		size: "xl",
 		width: "full",
@@ -57,7 +59,6 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 				<LinkTo
 					{...uiButton({
 						ui: {
-							font: "semibold",
 							...button,
 						},
 						className: [],
@@ -80,29 +81,6 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
-								...button,
-							},
-							className: [],
-						})}
-						icon={ListIcon}
-						iconProps={{
-							ui: {
-								size: "2xl",
-							},
-						}}
-						to="/$locale/seller/listing/my"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="My listings (label)" />
-					</LinkTo>
-
-					<LinkTo
-						{...uiButton({
-							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],
@@ -120,12 +98,32 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					>
 						<Tx label="Transactions (label)" />
 					</LinkTo>
+
+					<LinkTo
+						{...uiButton({
+							ui: {
+								...button,
+							},
+							className: [],
+						})}
+						icon={ListIcon}
+						iconProps={{
+							ui: {
+								size: "2xl",
+							},
+						}}
+						to="/$locale/seller/listing/my"
+						params={{
+							locale,
+						}}
+					>
+						<Tx label="My listings (label)" />
+					</LinkTo>
 				</Container>
 
 				<LinkTo
 					{...uiButton({
 						ui: {
-							tone: "secondary",
 							...button,
 						},
 						className: [],
@@ -148,7 +146,6 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],
@@ -170,7 +167,6 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],

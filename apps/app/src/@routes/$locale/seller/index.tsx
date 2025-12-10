@@ -30,6 +30,7 @@ export const Route = createFileRoute("/$locale/seller/")({
 					/>
 				}
 				ui={{
+					layout: "vertical-header-content",
 					tone: "secondary",
 					theme: "light",
 				}}

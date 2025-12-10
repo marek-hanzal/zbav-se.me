@@ -27,6 +27,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		gap: "md",
 	};
 	const button: uiButton.Ui = {
+		tone: "subtle",
 		justify: "start",
 		size: "xl",
 		width: "full",
@@ -64,7 +65,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 				<LinkTo
 					{...uiButton({
 						ui: {
-							font: "semibold",
 							...button,
 						},
 						className: [],
@@ -87,29 +87,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
-								...button,
-							},
-							className: [],
-						})}
-						icon={CartIcon}
-						iconProps={{
-							ui: {
-								size: "2xl",
-							},
-						}}
-						to="/$locale/buyer/cart/list"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="Cart (label)" />
-					</LinkTo>
-
-					<LinkTo
-						{...uiButton({
-							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],
@@ -131,7 +108,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],
@@ -149,12 +125,32 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					>
 						<Tx label="Feed (label)" />
 					</LinkTo>
+
+					<LinkTo
+						{...uiButton({
+							ui: {
+								...button,
+							},
+							className: [],
+						})}
+						icon={CartIcon}
+						iconProps={{
+							ui: {
+								size: "2xl",
+							},
+						}}
+						to="/$locale/buyer/cart/list"
+						params={{
+							locale,
+						}}
+					>
+						<Tx label="Cart (label)" />
+					</LinkTo>
 				</Container>
 
 				<LinkTo
 					{...uiButton({
 						ui: {
-							tone: "secondary",
 							...button,
 						},
 						className: [],
@@ -177,7 +173,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],
@@ -199,7 +194,6 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					<LinkTo
 						{...uiButton({
 							ui: {
-								tone: "secondary",
 								...button,
 							},
 							className: [],

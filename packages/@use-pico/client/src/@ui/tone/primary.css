@@ -1,17 +1,17 @@
 @theme {
 	--color-primary-light-text: var(--color-slate-700);
+	--color-primary-light-lead: var(--color-pink-700);
 	--color-primary-light-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
 	--color-primary-light-border: color-mix(in srgb, var(--color-pink-400) 30%, transparent);
 	--color-primary-light-icon: color-mix(in srgb, var(--color-primary-light-text) 85%, white);
-	--color-primary-light-shadow: color-mix(in srgb, var(--color-slate-800) 30%, transparent);
-	--color-primary-light-lead: var(--color-pink-700);
+	--color-primary-light-shadow: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
 
 	--color-primary-dark-text: var(--color-pink-50);
+	--color-primary-dark-lead: var(--color-pink-200);
 	--color-primary-dark-bg: color-mix(in srgb, var(--color-pink-800) 75%, black);
 	--color-primary-dark-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
 	--color-primary-dark-icon: color-mix(in srgb, var(--color-primary-dark-text) 80%, black);
 	--color-primary-dark-shadow: color-mix(in srgb, var(--color-pink-800) 40%, transparent);
-	--color-primary-dark-lead: var(--color-pink-200);
 }
 
 @utility tone-primary-light {

@@ -1,19 +1,19 @@
 @theme {
 	/* secondary / light */
 	--color-secondary-light-text: var(--color-slate-700);
+	--color-secondary-light-lead: var(--color-violet-700);
 	--color-secondary-light-bg: color-mix(in srgb, var(--color-violet-200) 75%, white);
 	--color-secondary-light-border: color-mix(in srgb, var(--color-violet-300) 28%, transparent);
 	--color-secondary-light-icon: color-mix(in srgb, var(--color-secondary-light-text) 85%, white);
-	--color-secondary-light-shadow: color-mix(in srgb, var(--color-slate-800) 25%, transparent);
-	--color-secondary-light-lead: var(--color-violet-700);
+	--color-secondary-light-shadow: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
 
 	/* secondary / dark */
 	--color-secondary-dark-text: var(--color-violet-50);
+	--color-secondary-dark-lead: var(--color-violet-200);
 	--color-secondary-dark-bg: color-mix(in srgb, var(--color-violet-800) 75%, black);
 	--color-secondary-dark-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
 	--color-secondary-dark-icon: color-mix(in srgb, var(--color-secondary-dark-text) 80%, black);
 	--color-secondary-dark-shadow: color-mix(in srgb, var(--color-violet-900) 40%, transparent);
-	--color-secondary-dark-lead: var(--color-violet-200);
 }
 
 @utility tone-secondary-light {

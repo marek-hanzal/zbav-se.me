@@ -31,7 +31,7 @@ export const Title: FC<Title.Props> = ({
 				justify: "space-between",
 				inner: "default",
 				width: "full",
-				lead: true,
+				color: "lead",
 				...ui,
 			}}
 			{...props}
