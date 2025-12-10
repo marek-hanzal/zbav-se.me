@@ -1,6 +1,6 @@
-import { Badge } from "@use-pico/client/ui/badge";
+import type { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Typo } from "@use-pico/client/ui/typo";
 import type { StateType } from "@use-pico/common/type";
 import type { tGalleryItem, tListingTransaction, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
@@ -32,10 +32,11 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 		...tGalleryItem[],
 	];
 
+	// TODO Reuse ListingOverlay
 	return (
 		<>
-			<Badge
-				data-ui={"TransactionItem"}
+			<Container
+				data-ui={"TransactionItem[Container]"}
 				data-id={listingTransaction.id}
 				// tweak={[
 				// 	tweak,
@@ -59,8 +60,8 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				// ]}
 				onClick={() => open.set(listingTransaction.id)}
 				ui={{
-					size: "xl",
 					round: "default",
+					position: "relative",
 					...ui,
 				}}
 				{...props}
@@ -74,6 +75,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				/>
 
 				<ListingPrice
+					data-ui={"TransactionItem-[ListingPrice]"}
 					price={listingTransaction.price}
 					locale={locale}
 					currency={listingTransaction.currency}
@@ -96,7 +98,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 						}}
 					/>
 				</ListingLocation>
-			</Badge>
+			</Container>
 
 			<BottomSheet
 				isOpen={open.value === listingTransaction.id}

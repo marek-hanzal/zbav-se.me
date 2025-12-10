@@ -2,16 +2,8 @@ import type { ComponentProps, FC } from "react";
 import { useMemo } from "react";
 import { Icon } from "../../icon/Icon";
 import { SpinnerIcon } from "../../icon/SpinnerIcon";
-import type { uiIcon } from "../../icon/uiIcon";
 import { Tx } from "../tx/Tx";
 import { uiButton } from "./uiButton";
-
-const ICON_SIZE_MAP: Partial<Record<uiButton.Size, uiIcon.Size>> = {
-	sm: "xs",
-	md: "xs",
-	lg: "xl",
-	xl: "2xl",
-} as const;
 
 export namespace Button {
 	export interface Props extends uiButton.Component<ComponentProps<"button">> {
@@ -74,24 +66,18 @@ export const Button: FC<Button.Props> = ({
 	//
 	...props
 }) => {
-	const iconSize = ICON_SIZE_MAP[ui?.size ?? "md"] ?? ui?.size;
-
 	const renderIcon = useMemo(
 		() =>
 			disabled ? (
 				<Icon
+					data-ui={"Button-[Icon]"}
 					icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
-					// ui={{
-					// 	text: iconSize,
-					// }}
 					{...iconProps}
 				/>
 			) : (
 				<Icon
+					data-ui={"Button-[Icon]"}
 					icon={loading === true ? iconLoading : iconEnabled}
-					// ui={{
-					// 	text: iconSize,
-					// }}
 					{...iconProps}
 				/>
 			),
@@ -124,6 +110,7 @@ export const Button: FC<Button.Props> = ({
 
 			{label ? (
 				<Tx
+					data-ui={"Button-[Tx.label]"}
 					label={label}
 					ui={{
 						display: "block",

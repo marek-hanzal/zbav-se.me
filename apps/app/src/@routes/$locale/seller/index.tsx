@@ -30,12 +30,12 @@ export const Route = createFileRoute("/$locale/seller/")({
 							items: "center",
 							round: "full",
 							square: "default",
-							opacity: "subtle",
 							background: "default",
 							border: true,
 							shadow: true,
 							color: "text",
 							text: "xl",
+							opacity: "low",
 						}}
 					>
 						<Icon icon={SellerIcon} />

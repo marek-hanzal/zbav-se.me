@@ -10,6 +10,7 @@ export namespace FeedListingOverlay {
 	}
 }
 
+// TODO This may be used elsewhere
 export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listing }) => {
 	return (
 		<>
@@ -19,7 +20,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 				currency={listing.currency}
 				ui={{
 					snapTo: "top-center",
-					opacity: "subtle",
+					opacity: "low",
 				}}
 			/>
 
@@ -27,7 +28,7 @@ export const FeedListingOverlay: FC<FeedListingOverlay.Props> = ({ locale, listi
 				location={listing.location.address}
 				ui={{
 					snapTo: "bottom",
-					opacity: "subtle",
+					opacity: "low",
 				}}
 			/>
 		</>

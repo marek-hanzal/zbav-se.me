@@ -20,25 +20,29 @@ export const Route = createFileRoute("/$locale/buyer/")({
 
 		return (
 			<TitleContainer
-				data-ui={"BuyerHome"}
+				data-ui={"/buyer/index[TitleContainer]"}
 				textTitle={"Buyer home (title)"}
 				left={
 					<Container
+						data-ui={"/buyer/index-[Container.left]"}
 						ui={{
 							layout: "horizontal-flex",
 							justify: "center",
 							items: "center",
 							round: "full",
 							square: "default",
-							opacity: "subtle",
 							background: "default",
 							border: true,
 							shadow: true,
 							color: "text",
 							text: "xl",
+							opacity: "low",
 						}}
 					>
-						<Icon icon={BuyerIcon} />
+						<Icon
+							data-ui={"/buyer/index-[Icon.left]"}
+							icon={BuyerIcon}
+						/>
 					</Container>
 				}
 				ui={{

@@ -103,7 +103,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										zIndex: true,
 										round: "full",
 										snapTo: "top-right",
-										opacity: "subtle",
+										opacity: "low",
 									}}
 								>
 									<LinkTo

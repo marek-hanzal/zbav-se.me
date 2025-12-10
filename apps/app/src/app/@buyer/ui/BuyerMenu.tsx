@@ -42,7 +42,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 
 	return (
 		<Container
-			data-ui={"BuyerMenu"}
+			data-ui={"BuyerMenu[Container]"}
 			ui={{
 				position: "relative",
 				height: "full",
@@ -54,7 +54,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 			<Fade scrollableRef={containerRef} />
 
 			<Container
-				data-ui={"BuyerMenu-container"}
+				data-ui={"BuyerMenu-[Container.scroll]"}
 				ref={containerRef}
 				ui={{
 					layout: "vertical-flex",

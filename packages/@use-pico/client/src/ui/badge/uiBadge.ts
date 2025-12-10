@@ -11,6 +11,7 @@ export namespace uiBadge {
 		//
 		height?: CoolUi.Height;
 		width?: CoolUi.Width;
+		inner?: CoolUi.Inner;
 		//
 		position?: CoolUi.Position;
 		//
@@ -27,6 +28,7 @@ export namespace uiBadge {
 		zIndex?: CoolUi.zIndex;
 		//
 		color?: CoolUi.Color;
+		background?: CoolUi.Background;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
@@ -42,6 +44,10 @@ export const uiBadge = ({ ui, className }: uiBadge.Props) => {
 		ui: {
 			theme: "light",
 			tone: "primary",
+			background: "default",
+			round: "default",
+			border: true,
+			shadow: true,
 			...ui,
 		},
 		className,
