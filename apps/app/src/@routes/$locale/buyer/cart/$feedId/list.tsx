@@ -8,7 +8,7 @@ import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
-import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 					withScore={false}
 					scrollToId={undefined}
 					overlay={({ listing }) => (
-						<FeedListingOverlay
+						<ListingOverlay
 							locale={locale}
 							listing={listing}
 						/>

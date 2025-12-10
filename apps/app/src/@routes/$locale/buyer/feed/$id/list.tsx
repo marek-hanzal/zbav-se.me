@@ -12,7 +12,7 @@ import { useRef, useState } from "react";
 import z from "zod";
 import { FeedSetupButton } from "~/app/feed/ui/button/FeedSetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
-import { FeedListingOverlay } from "~/app/listing/ui/overlay/FeedListingOverlay";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
@@ -164,7 +164,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										},
 									}}
 									overlay={({ listing }) => (
-										<FeedListingOverlay
+										<ListingOverlay
 											locale={locale}
 											listing={listing}
 										/>

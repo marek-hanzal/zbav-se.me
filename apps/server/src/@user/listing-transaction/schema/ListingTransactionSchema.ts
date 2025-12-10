@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { ListingTransactionDbSchema } from "~/app/listing-transaction/schema/ListingTransactionDbSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
@@ -18,9 +19,7 @@ export const ListingTransactionSchema = z
 		}),
 		currency: CurrencyListEnumSchema,
 		//
-		location: z.string().openapi({
-			description: "Location of the listing",
-		}),
+		location: LocationSchema,
 	})
 	.omit({
 		userId: true,

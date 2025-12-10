@@ -28,34 +28,6 @@ export const zCursor = z.object({
 export type zCursor = z.infer<typeof zCursor>;
 
 /**
- * Category data
- */
-export const zCategory = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    group: z.string().register(z.globalRegistry, {
-        description: 'Group/name of the category'
-    }),
-    category: z.string().register(z.globalRegistry, {
-        description: 'Category name within the group'
-    }),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'Slug of the category'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order (position) of the category'
-    }),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'Locale/language of the category'
-    })
-}).register(z.globalRegistry, {
-    description: 'Category data'
-});
-
-export type zCategory = z.infer<typeof zCategory>;
-
-/**
  * Location data
  */
 export const zLocation = z.object({
@@ -116,6 +88,34 @@ export const zLocation = z.object({
 });
 
 export type zLocation = z.infer<typeof zLocation>;
+
+/**
+ * Category data
+ */
+export const zCategory = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    group: z.string().register(z.globalRegistry, {
+        description: 'Group/name of the category'
+    }),
+    category: z.string().register(z.globalRegistry, {
+        description: 'Category name within the group'
+    }),
+    slug: z.string().register(z.globalRegistry, {
+        description: 'Slug of the category'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order (position) of the category'
+    }),
+    locale: z.string().register(z.globalRegistry, {
+        description: 'Locale/language of the category'
+    })
+}).register(z.globalRegistry, {
+    description: 'Category data'
+});
+
+export type zCategory = z.infer<typeof zCategory>;
 
 /**
  * Field for location sort

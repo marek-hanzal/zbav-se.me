@@ -17,12 +17,12 @@ export const ListingPrice: FC<ListingPrice.Props> = ({ price, locale, currency, 
 			data-ui={"ListingPrice[Badge]"}
 			className="max-w-1/2"
 			ui={{
-				tone: "brand",
+				tone: "secondary",
 				theme: "light",
-				inner: "md",
 				font: "bold",
-				size: "lg",
-				opacity: "low",
+				text: "lg",
+				size: "sm",
+				color: "lead",
 				...ui,
 			}}
 			{...props}

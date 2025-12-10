@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { LocationDbSchema } from "../../../app/location/schema/LocationDbSchema";
+import { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 
 export const LocationSchema = z
 	.object({

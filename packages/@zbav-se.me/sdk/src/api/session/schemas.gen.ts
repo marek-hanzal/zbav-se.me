@@ -27,38 +27,6 @@ export const sCursor = {
     ]
 } as const;
 
-export const sCategory = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        slug: {
-            type: 'string'
-        },
-        sort: {
-            type: 'number'
-        },
-        locale: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'group',
-        'category',
-        'slug',
-        'sort',
-        'locale'
-    ]
-} as const;
-
 export const sLocation = {
     type: 'object',
     properties: {
@@ -140,6 +108,38 @@ export const sLocation = {
         'hash',
         'lat',
         'lon'
+    ]
+} as const;
+
+export const sCategory = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        locale: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale'
     ]
 } as const;
 

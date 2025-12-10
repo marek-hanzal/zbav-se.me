@@ -1,9 +1,10 @@
 import { Badge } from "@use-pico/client/ui/badge";
+import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import type { FC } from "react";
 
 export namespace ListingLocation {
 	export interface Props extends Badge.Props {
-		location: string;
+		location: tLocation;
 	}
 }
 
@@ -24,12 +25,14 @@ export const ListingLocation: FC<ListingLocation.Props> = ({
 			ui={{
 				tone: "secondary",
 				theme: "light",
-				round: "default",
+				size: "md",
+				color: "lead",
+				font: "semibold",
 				...ui,
 			}}
 			{...props}
 		>
-			{location}
+			{location.address}
 
 			{children}
 		</Badge>

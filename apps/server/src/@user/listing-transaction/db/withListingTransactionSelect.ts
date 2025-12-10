@@ -1,7 +1,9 @@
+import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { withGallerySelect } from "~/@user/gallery/db/withGallerySelect";
 import type { ListingTransactionSortSchema } from "~/@user/listing-transaction/schema/ListingTransactionSortSchema";
+import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingTransactionSelect {
@@ -26,7 +28,7 @@ export const withListingTransactionSelect = ({
 			"l.title",
 			"l.price",
 			"l.currency",
-			"loc.address as location",
+			(eb) => sql<LocationDbSchema.Type>`to_jsonb(${eb.table("loc")}.*)`.as("location"),
 			(eb) =>
 				jsonObjectFrom(
 					withGallerySelect({

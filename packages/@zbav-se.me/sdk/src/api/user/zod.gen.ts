@@ -728,6 +728,68 @@ export const zListingTransactionQuery = z.object({
 export type zListingTransactionQuery = z.infer<typeof zListingTransactionQuery>;
 
 /**
+ * Location data
+ */
+export const zLocation = z.object({
+    id: z.string(),
+    query: z.string().register(z.globalRegistry, {
+        description: 'The query that was used to get the location'
+    }),
+    lang: z.string().register(z.globalRegistry, {
+        description: 'The language that was used to get the location'
+    }),
+    country: z.string().register(z.globalRegistry, {
+        description: 'The country that the location is in'
+    }),
+    code: z.string().register(z.globalRegistry, {
+        description: 'Country code'
+    }),
+    county: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    municipality: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    state: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    address: z.string().register(z.globalRegistry, {
+        description: 'Full address preview of a location'
+    }),
+    city: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    street: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    zip: z.optional(z.union([
+        z.string(),
+        z.null()
+    ])),
+    confidence: z.number().register(z.globalRegistry, {
+        description: 'Confidence score of the location (based on query)'
+    }),
+    hash: z.string().register(z.globalRegistry, {
+        description: 'Used to uniquely identify this location entry'
+    }),
+    lat: z.number().register(z.globalRegistry, {
+        description: 'Latitude of the location'
+    }),
+    lon: z.number().register(z.globalRegistry, {
+        description: 'Longitude of the location'
+    })
+}).register(z.globalRegistry, {
+    description: 'Location data'
+});
+
+export type zLocation = z.infer<typeof zLocation>;
+
+/**
  * List of available currencies
  */
 export const zCurrencyListEnum = z.enum([
@@ -771,9 +833,7 @@ export const zListingTransaction = z.object({
         description: 'Price of the listing'
     }),
     currency: zCurrencyListEnum,
-    location: z.string().register(z.globalRegistry, {
-        description: 'Location of the listing'
-    })
+    location: zLocation
 }).register(z.globalRegistry, {
     description: 'Listing transaction data'
 });
@@ -1906,68 +1966,6 @@ export const zCategory = z.object({
 });
 
 export type zCategory = z.infer<typeof zCategory>;
-
-/**
- * Location data
- */
-export const zLocation = z.object({
-    id: z.string(),
-    query: z.string().register(z.globalRegistry, {
-        description: 'The query that was used to get the location'
-    }),
-    lang: z.string().register(z.globalRegistry, {
-        description: 'The language that was used to get the location'
-    }),
-    country: z.string().register(z.globalRegistry, {
-        description: 'The country that the location is in'
-    }),
-    code: z.string().register(z.globalRegistry, {
-        description: 'Country code'
-    }),
-    county: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    municipality: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    state: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    address: z.string().register(z.globalRegistry, {
-        description: 'Full address preview of a location'
-    }),
-    city: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    street: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    zip: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
-    confidence: z.number().register(z.globalRegistry, {
-        description: 'Confidence score of the location (based on query)'
-    }),
-    hash: z.string().register(z.globalRegistry, {
-        description: 'Used to uniquely identify this location entry'
-    }),
-    lat: z.number().register(z.globalRegistry, {
-        description: 'Latitude of the location'
-    }),
-    lon: z.number().register(z.globalRegistry, {
-        description: 'Longitude of the location'
-    })
-}).register(z.globalRegistry, {
-    description: 'Location data'
-});
-
-export type zLocation = z.infer<typeof zLocation>;
 
 /**
  * Listing data

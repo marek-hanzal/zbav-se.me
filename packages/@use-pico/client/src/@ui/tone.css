@@ -3,7 +3,7 @@
 		--color-text: color-mix(in srgb, var(--color-pink-900) 75%, black);
 		--color-lead: color-mix(in srgb, var(--color-pink-700) 85%, white);
 		--color-bg: color-mix(in srgb, var(--color-pink-200) 25%, transparent);
-		--color-bg-alt: color-mix(in srgb, var(--color-pink-100) 70%, transparent);
+		--color-bg-alt: color-mix(in srgb, var(--color-pink-100) 70%, white);
 		--color-border: color-mix(in srgb, var(--color-pink-300) 30%, transparent);
 		--color-icon: color-mix(in srgb, var(--color-pink-600) 75%, white);
 		--tw-shadow-color: color-mix(in srgb, var(--color-slate-700) 10%, transparent);

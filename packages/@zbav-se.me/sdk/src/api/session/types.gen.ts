@@ -29,36 +29,6 @@ export type tCursor = {
 };
 
 /**
- * Category data
- */
-export type tCategory = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-};
-
-/**
  * Location data
  */
 export type tLocation = {
@@ -123,6 +93,36 @@ export type tLocation = {
      * Longitude of the location
      */
     lon: number;
+};
+
+/**
+ * Category data
+ */
+export type tCategory = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
 };
 
 /**

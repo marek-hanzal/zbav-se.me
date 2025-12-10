@@ -4,11 +4,9 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Tx } from "@use-pico/client/ui/tx";
-import { VariantProvider } from "@use-pico/cls";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
@@ -17,9 +15,8 @@ import { CartToggleButton } from "~/app/listing/ui/button/CartToggleButton";
 import { ListingFlagButton } from "~/app/listing/ui/button/ListingFlagButton";
 import { ListingIgnoreButton } from "~/app/listing/ui/button/ListingIgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { GallerySheet } from "~/app/photo/ui/GallerySheet";
-import { ListingLocation } from "./ListingLocation";
-import { ListingPrice } from "./ListingPrice";
 import { ScoreContainer } from "./ScoreContainer";
 
 export namespace ListingDetailContainer {
@@ -66,15 +63,9 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
-		<VariantProvider
-			cls={ThemeCls}
-			variant={{
-				tone: "unset",
-				theme: "unset",
-			}}
-		>
+		<>
 			<Container
-				data-ui={"ListingDetailContainer-root"}
+				data-ui={"ListingDetailContainer[Container]"}
 				ui={{
 					layout: "vertical-flex",
 					gap: "lg",
@@ -84,25 +75,15 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				{tools.includes("hero") ? (
 					<>
 						<Container
-							data-ui={"ListingDetailContainer-image"}
+							data-ui={"ListingDetailContainer-[Container.hero]"}
 							ui={{
 								position: "relative",
 							}}
 						>
-							<ListingPrice
-								price={listing.price}
+							<ListingOverlay
+								data-ui={"ListingDetailContainer-[ListingOverlay]"}
 								locale={locale}
-								currency={listing.currency}
-								ui={{
-									snapTo: "top-center",
-								}}
-							/>
-
-							<ListingLocation
-								location={listing.location.address}
-								ui={{
-									snapTo: "bottom",
-								}}
+								listing={listing}
 							/>
 
 							{feedId ? (
@@ -120,12 +101,14 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							) : null}
 
 							<HeroImage
+								data-ui={"ListingDetailContainer-[HeroImage]"}
 								src={hero.upload.url}
 								alt={`Hero image for listing ${listing.id}`}
 								onClick={() => setIsGalleryOpen((prev) => !prev)}
 							/>
 
 							<GallerySheet
+								data-ui={"ListingDetailContainer-[GallerySheet]"}
 								uploads={listing.gallery.items.map((item) => item.upload)}
 								isOpen={isGalleryOpen}
 								onClose={() => setIsGalleryOpen(false)}
@@ -133,6 +116,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						</Container>
 
 						<Container
+							data-ui={"ListingDetailContainer-[Container.info]"}
 							ui={{
 								layout: "vertical-flex",
 								gap: "sm",
@@ -148,7 +132,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				) : null}
 
 				<Container
-					data-ui={"ListingDetailContainer-info"}
+					data-ui={"ListingDetailContainer-[Container.info]"}
 					ui={{
 						layout: "vertical-flex",
 					}}
@@ -241,7 +225,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 							return (
 								<Container
-									data-ui="ListingDetailContainer-destructive"
+									data-ui="ListingDetailContainer-[Container.destructive]"
 									ui={{
 										layout: "vertical-flex",
 										gap: "sm",
@@ -258,6 +242,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			</Container>
 
 			<BottomSheet
+				data-ui={"ListingDetailContainer-[BottomSheet]"}
 				isOpen={isScore}
 				onClose={() => setIsScore(false)}
 				modalEffectRootId={parentSheetId}
@@ -269,6 +254,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					{({ data }) => {
 						return (
 							<ScoreContainer
+								data-ui={"ListingDetailContainer-[ScoreContainer]"}
 								locale={locale}
 								listingMetrics={data}
 							/>
@@ -276,6 +262,6 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					}}
 				</withListingMetricsFetchQuery.Suspense>
 			</BottomSheet>
-		</VariantProvider>
+		</>
 	);
 };

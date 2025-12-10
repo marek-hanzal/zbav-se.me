@@ -1,13 +1,11 @@
 import type { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Typo } from "@use-pico/client/ui/typo";
 import type { StateType } from "@use-pico/common/type";
 import type { tGalleryItem, tListingTransaction, tUserSideEnum } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, Suspense } from "react";
-import { ListingLocation } from "~/app/listing/ui/ListingLocation";
-import { ListingPrice } from "~/app/listing/ui/ListingPrice";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { TransactionLogList } from "~/app/listing-transaction-log/ui/TransactionLogList";
 
 export namespace TransactionItem {
@@ -32,75 +30,41 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 		...tGalleryItem[],
 	];
 
-	// TODO Reuse ListingOverlay
 	return (
 		<>
 			<Container
 				data-ui={"TransactionItem[Container]"}
 				data-id={listingTransaction.id}
-				// tweak={[
-				// 	tweak,
-				// 	{
-				// 		slot: {
-				// 			root: {
-				// 				class: [
-				// 					"flex",
-				// 					"flex-col",
-				// 					"gap-4",
-				// 					"h-72",
-				// 					"w-full",
-				// 					"items-start",
-				// 					"p-0",
-				// 					"relative",
-				// 					"border-none",
-				// 				],
-				// 			},
-				// 		},
-				// 	},
-				// ]}
 				onClick={() => open.set(listingTransaction.id)}
 				ui={{
 					round: "default",
 					position: "relative",
+					shadow: true,
+					border: true,
 					...ui,
 				}}
+				className={[
+					"h-72",
+				]}
 				{...props}
 			>
 				<HeroImage
-					data-ui={"TransactionItem-HeroImage"}
+					data-ui={"TransactionItem-[HeroImage]"}
 					src={hero.upload.url}
 					alt={`Hero image for listing transaction ${listingTransaction.id}`}
 					visible
 					round={"default"}
 				/>
 
-				<ListingPrice
-					data-ui={"TransactionItem-[ListingPrice]"}
-					price={listingTransaction.price}
+				<ListingOverlay
+					data-ui={"TransactionItem-[ListingOverlay]"}
 					locale={locale}
-					currency={listingTransaction.currency}
-					ui={{
-						snapTo: "top-center",
-					}}
+					listing={listingTransaction}
 				/>
-
-				<ListingLocation
-					location={listingTransaction.location}
-					ui={{
-						snapTo: "bottom",
-					}}
-				>
-					<Typo
-						label={listingTransaction.title}
-						ui={{
-							text: "sm",
-							truncate: true,
-						}}
-					/>
-				</ListingLocation>
 			</Container>
 
 			<BottomSheet
+				data-ui={"TransactionItem-[BottomSheet]"}
 				isOpen={open.value === listingTransaction.id}
 				onClose={() => open.set(undefined)}
 				detent={"full"}
@@ -115,6 +79,7 @@ export const TransactionItem: FC<TransactionItem.Props> = ({
 				<Suspense fallback={<SpinnerContainer />}>
 					<TransactionLogList
 						_suspense={"I know"}
+						data-ui={"TransactionItem-[TransactionLogList]"}
 						locale={locale}
 						side={side}
 						listingTransaction={listingTransaction}

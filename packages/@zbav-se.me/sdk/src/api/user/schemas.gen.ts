@@ -861,6 +861,90 @@ export const sListingTransactionCollection = {
     ]
 } as const;
 
+export const sLocation = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        query: {
+            type: 'string'
+        },
+        lang: {
+            type: 'string'
+        },
+        country: {
+            type: 'string'
+        },
+        code: {
+            type: 'string'
+        },
+        county: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        municipality: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        state: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        address: {
+            type: 'string'
+        },
+        city: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        street: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        zip: {
+            type: [
+                'string',
+                'null'
+            ]
+        },
+        confidence: {
+            type: 'number'
+        },
+        hash: {
+            type: 'string'
+        },
+        lat: {
+            type: 'number'
+        },
+        lon: {
+            type: 'number'
+        }
+    },
+    required: [
+        'id',
+        'query',
+        'lang',
+        'country',
+        'code',
+        'address',
+        'confidence',
+        'hash',
+        'lat',
+        'lon'
+    ]
+} as const;
+
 export const sCurrencyListEnum = {
     type: 'string',
     enum: [
@@ -905,7 +989,7 @@ export const sListingTransaction = {
             $ref: '#/components/schemas/CurrencyListEnum'
         },
         location: {
-            type: 'string'
+            $ref: '#/components/schemas/Location'
         }
     },
     required: [
@@ -2339,90 +2423,6 @@ export const sCategory = {
         'slug',
         'sort',
         'locale'
-    ]
-} as const;
-
-export const sLocation = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        query: {
-            type: 'string'
-        },
-        lang: {
-            type: 'string'
-        },
-        country: {
-            type: 'string'
-        },
-        code: {
-            type: 'string'
-        },
-        county: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        municipality: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        state: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        address: {
-            type: 'string'
-        },
-        city: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        street: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        zip: {
-            type: [
-                'string',
-                'null'
-            ]
-        },
-        confidence: {
-            type: 'number'
-        },
-        hash: {
-            type: 'string'
-        },
-        lat: {
-            type: 'number'
-        },
-        lon: {
-            type: 'number'
-        }
-    },
-    required: [
-        'id',
-        'query',
-        'lang',
-        'country',
-        'code',
-        'address',
-        'confidence',
-        'hash',
-        'lat',
-        'lon'
     ]
 } as const;
 
