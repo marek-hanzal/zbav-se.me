@@ -1,27 +1,19 @@
-@utility tone-subtle-light {
-	--color-text: var(--color-slate-600);
-	--color-lead: var(--color-violet-700);
-	--color-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
-	--color-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
-	--color-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
-	--tw-shadow-color: color-mix(in srgb, var(--color-slate-800) 15%, white);
-}
-
-@utility tone-subtle-dark {
-	--color-text: var(--color-slate-100);
-	--color-lead: var(--color-violet-200);
-	--color-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
-	--color-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
-	--color-icon: color-mix(in srgb, var(--color-subtle-dark-text) 80%, black);
-	--tw-shadow-color: color-mix(in srgb, var(--color-slate-100) 30%, black);
-}
-
 @layer components {
 	[data-ui-tone="subtle"][data-ui-theme="light"] {
-		@apply tone-subtle-light;
+		--color-text: var(--color-slate-600);
+		--color-lead: var(--color-violet-700);
+		--color-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
+		--color-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
+		--tw-shadow-color: color-mix(in srgb, var(--color-slate-800) 15%, white);
 	}
 
 	[data-ui-tone="subtle"][data-ui-theme="dark"] {
-		@apply tone-subtle-dark;
+		--color-text: var(--color-slate-100);
+		--color-lead: var(--color-violet-200);
+		--color-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
+		--color-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-subtle-dark-text) 80%, black);
+		--tw-shadow-color: color-mix(in srgb, var(--color-slate-100) 30%, black);
 	}
 }

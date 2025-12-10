@@ -1,27 +1,19 @@
-@utility tone-primary-light {
-	--color-text: var(--color-slate-700);
-	--color-lead: var(--color-pink-700);
-	--color-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
-	--color-border: color-mix(in srgb, var(--color-pink-400) 30%, transparent);
-	--color-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
-	--tw-shadow-color: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
-}
-
-@utility tone-primary-dark {
-	--color-text: var(--color-pink-50);
-	--color-lead: var(--color-pink-200);
-	--color-bg: color-mix(in srgb, var(--color-pink-800) 75%, black);
-	--color-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
-	--color-icon: color-mix(in srgb, var(--color-pink-50) 80%, black);
-	--tw-shadow-color: color-mix(in srgb, var(--color-pink-800) 40%, transparent);
-}
-
 @layer components {
 	[data-ui-tone="primary"][data-ui-theme="light"] {
-		@apply tone-primary-light;
+		--color-text: var(--color-slate-700);
+		--color-lead: var(--color-pink-700);
+		--color-bg: color-mix(in srgb, var(--color-pink-300) 70%, white);
+		--color-border: color-mix(in srgb, var(--color-pink-400) 30%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
+		--tw-shadow-color: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
 	}
 
 	[data-ui-tone="primary"][data-ui-theme="dark"] {
-		@apply tone-primary-dark;
+		--color-text: var(--color-pink-50);
+		--color-lead: var(--color-pink-200);
+		--color-bg: color-mix(in srgb, var(--color-pink-800) 75%, black);
+		--color-border: color-mix(in srgb, var(--color-pink-500) 50%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-pink-50) 80%, black);
+		--tw-shadow-color: color-mix(in srgb, var(--color-pink-800) 40%, transparent);
 	}
 }

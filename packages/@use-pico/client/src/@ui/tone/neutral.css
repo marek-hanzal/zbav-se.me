@@ -1,27 +1,19 @@
-@utility tone-neutral-light {
-	--color-text: var(--color-stone-900);
-	--color-lead: var(--color-stone-700);
-	--color-bg: var(--color-stone-50);
-	--color-border: color-mix(in srgb, var(--color-stone-500) 30%, transparent);
-	--color-icon: var(--color-stone-500);
-	--tw-shadow-color: color-mix(in srgb, var(--color-stone-500) 20%, transparent);
-}
-
-@utility tone-neutral-dark {
-	--color-text: var(--color-stone-50);
-	--color-lead: var(--color-stone-200);
-	--color-bg: var(--color-stone-900);
-	--color-border: var(--color-stone-500);
-	--color-icon: color-mix(in srgb, var(--color-text) 75%, black);
-	--tw-shadow-color: color-mix(in srgb, var(--color-stone-100) 25%, black);
-}
-
 @layer components {
 	[data-ui-tone="neutral"][data-ui-theme="light"] {
-		@apply tone-neutral-light;
+		--color-text: var(--color-stone-900);
+		--color-lead: var(--color-stone-700);
+		--color-bg: var(--color-stone-50);
+		--color-border: color-mix(in srgb, var(--color-stone-500) 30%, transparent);
+		--color-icon: var(--color-stone-500);
+		--tw-shadow-color: color-mix(in srgb, var(--color-stone-500) 20%, transparent);
 	}
 
 	[data-ui-tone="neutral"][data-ui-theme="dark"] {
-		@apply tone-neutral-dark;
+		--color-text: var(--color-stone-50);
+		--color-lead: var(--color-stone-200);
+		--color-bg: var(--color-stone-900);
+		--color-border: var(--color-stone-500);
+		--color-icon: color-mix(in srgb, var(--color-text) 75%, black);
+		--tw-shadow-color: color-mix(in srgb, var(--color-stone-100) 25%, black);
 	}
 }
