@@ -1,0 +1,19 @@
+@layer components {
+	[data-ui-tone="warning"][data-ui-theme="light"] {
+		--color-text: var(--color-amber-800);
+		--color-lead: var(--color-amber-700);
+		--color-bg: color-mix(in srgb, var(--color-amber-100) 65%, white);
+		--color-border: color-mix(in srgb, var(--color-amber-300) 40%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-amber-700) 80%, white);
+		--tw-shadow-color: color-mix(in srgb, var(--color-amber-500) 25%, transparent);
+	}
+
+	[data-ui-tone="warning"][data-ui-theme="dark"] {
+		--color-text: var(--color-amber-50);
+		--color-lead: var(--color-amber-200);
+		--color-bg: color-mix(in srgb, var(--color-amber-900) 70%, black);
+		--color-border: color-mix(in srgb, var(--color-amber-500) 55%, transparent);
+		--color-icon: color-mix(in srgb, var(--color-amber-50) 80%, black);
+		--tw-shadow-color: color-mix(in srgb, var(--color-amber-900) 45%, transparent);
+	}
+}

@@ -12,14 +12,14 @@
 	}
 
 	.Fade[data-ui="Fade-top"] {
-		top: -1px;
-
 		@apply bg-linear-to-t;
+
+		top: -1px;
 	}
 
 	.Fade[data-ui="Fade-bottom"] {
-		bottom: -1px;
-
 		@apply bg-linear-to-b;
+
+		bottom: -1px;
 	}
 }
