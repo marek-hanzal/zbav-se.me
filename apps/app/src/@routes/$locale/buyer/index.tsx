@@ -25,7 +25,7 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					<Icon
 						icon={BuyerIcon}
 						ui={{
-							size: "lg",
+							text: "xl",
 						}}
 					/>
 				}

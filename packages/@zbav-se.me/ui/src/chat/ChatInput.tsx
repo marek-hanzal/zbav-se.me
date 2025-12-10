@@ -191,11 +191,6 @@ export const ChatInput: FC<ChatInput.Props> = ({
 			<Button
 				data-ui={"ChatInput-Button-send"}
 				iconEnabled={SendMessageIcon}
-				iconProps={{
-					ui: {
-						size: "md",
-					},
-				}}
 				disabled={loading || value.length === 0}
 				loading={loading}
 				onClick={() => {

@@ -8,10 +8,9 @@ export namespace uiIcon {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
-		size?: Size;
-		//
 		disabled?: CoolUi.Disabled;
 		color?: CoolUi.Color;
+		text?: CoolUi.Text;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

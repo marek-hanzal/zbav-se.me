@@ -92,11 +92,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 										value: isFeedSettings1,
 										set: setIsFeedSettings1,
 									}}
-									iconProps={{
-										ui: {
-											size: "lg",
-										},
-									}}
 									feed={feed}
 									defaultOpen={false}
 									noDelete={true}

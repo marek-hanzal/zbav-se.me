@@ -57,30 +57,23 @@ export const Status: FC<Status.Props> = ({
 					layout: "vertical-flex",
 					items: "center",
 					width: "full",
+					gap: "lg",
 				}}
 			>
-				<Container
-					ui={{
-						inner: "xl",
-					}}
-				>
-					<Icon
-						data-ui="Status-icon"
-						icon={icon}
-						ui={{
-							size: "xl",
-						}}
-						{...iconProps}
-					/>
-				</Container>
+				<Icon
+					data-ui="Status-icon"
+					icon={icon}
+					{...iconProps}
+				/>
 
 				<Tx
 					data-ui="Status-title"
 					label={textTitle}
 					ui={{
-						font: "bold",
+						font: "semibold",
 						display: "block",
 						wrap: "wrap",
+						text: "lg",
 					}}
 					{...titleProps}
 				/>
@@ -91,6 +84,7 @@ export const Status: FC<Status.Props> = ({
 					ui={{
 						display: "block",
 						wrap: "wrap",
+						text: "md",
 					}}
 					{...messageProps}
 				/>

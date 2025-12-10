@@ -33,11 +33,6 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 			<SnapperNav
 				snapperNav={snapperNav}
 				orientation={"horizontal"}
-				iconProps={() => ({
-					ui: {
-						size: "sm",
-					},
-				})}
 				tweak={{
 					slot: {
 						root: {

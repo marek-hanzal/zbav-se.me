@@ -65,11 +65,6 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 							<Button
 								iconEnabled={ArrowLeftIcon}
 								onClick={props.onClose}
-								iconProps={{
-									ui: {
-										size: "sm",
-									},
-								}}
 								ui={{
 									round: "full",
 									tone: "secondary",

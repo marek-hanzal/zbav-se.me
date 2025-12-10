@@ -83,11 +83,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					>
 						<Status
 							icon={PhotoIcon}
-							iconProps={{
-								ui: {
-									size: "lg",
-								},
-							}}
 							textTitle={"Feed - Select hero image (label)"}
 							titleProps={{
 								ui: {

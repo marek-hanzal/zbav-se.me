@@ -52,11 +52,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 						ui={{
 							tone: "secondary",
 						}}
-						iconProps={{
-							ui: {
-								size: "md",
-							},
-						}}
 						confirmProps={{
 							ui: {
 								tone: "danger",

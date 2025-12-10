@@ -44,14 +44,7 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 				categoryIdIn={selection.optional.multiId()}
 				textTitle={"Feed category (label)"}
 				textEmpty={"Feed category not selected"}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							size: "sm",
-						}}
-					/>
-				}
+				action={<Icon icon={EditIcon} />}
 				onClick={() => setIsEdit(true)}
 			/>
 

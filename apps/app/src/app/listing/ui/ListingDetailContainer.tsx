@@ -203,28 +203,14 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 								}}
 							</withListingMetricsFetchQuery.Suspense>
 						}
-						action={
-							<Icon
-								icon={ShowIcon}
-								ui={{
-									size: "sm",
-								}}
-							/>
-						}
+						action={<Icon icon={ShowIcon} />}
 						onClick={() => setIsScore(true)}
 					/>
 
 					<BadgeValue
 						textLabel={"Listing seller hint (label)"}
 						textValue={"- skore + link -"}
-						action={
-							<Icon
-								icon={ShowIcon}
-								ui={{
-									size: "sm",
-								}}
-							/>
-						}
+						action={<Icon icon={ShowIcon} />}
 					/>
 
 					<BadgeValue

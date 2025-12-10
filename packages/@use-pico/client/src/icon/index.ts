@@ -49,4 +49,5 @@ export { UnCheckIcon } from "./UnCheckIcon";
 export { UndefinedIcon } from "./UndefinedIcon";
 export { UploadIcon } from "./UploadIcon";
 export { UserIcon } from "./UserIcon";
+export { uiIcon } from "./uiIcon";
 export { WarningIcon } from "./WarningIcon";

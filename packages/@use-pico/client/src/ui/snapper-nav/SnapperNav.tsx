@@ -151,7 +151,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					onTouchStart={firstDoubleTap.onTouchStart}
 					icon={leftIcon}
 					ui={{
-						size: "md",
+						text: "md",
 					}}
 					{...iconProps?.({
 						limit: true,
@@ -176,7 +176,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
 							ui={{
-								size: "md",
+								text: "md",
 							}}
 							{...iconProps?.({
 								limit: false,
@@ -199,7 +199,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					onTouchStart={lastDoubleTap.onTouchStart}
 					icon={rightIcon}
 					ui={{
-						size: "md",
+						text: "md",
 					}}
 					{...iconProps?.({
 						limit: true,
@@ -234,7 +234,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
 							ui={{
-								size: "md",
+								text: "md",
 							}}
 							//
 							data-active={isActive}

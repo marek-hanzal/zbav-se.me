@@ -1,4 +1,4 @@
-import { UserIcon } from "@use-pico/client/icon";
+import { UserIcon, type uiIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -26,12 +26,15 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		width: "full",
 		gap: "default",
 	};
+	const icon: uiIcon.Ui = {
+		text: "2xl",
+	};
 	const button: uiButton.Ui = {
 		tone: "neutral",
 		theme: "light",
-		size: "xl",
+		inner: "sm",
 		width: "full",
-		text: "xl",
+		text: "lg",
 		gap: "sm",
 	};
 
@@ -59,7 +62,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					height: "full",
 					inner: "default",
 					items: "center",
-					gap: "2xl",
+					gap: "xl",
 				}}
 			>
 				<LinkTo
@@ -72,7 +75,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					icon={ListingIcon}
 					iconProps={{
 						ui: {
-							size: "2xl",
+							...icon,
 						},
 					}}
 					to="/$locale/buyer/feed/default"
@@ -94,7 +97,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						icon={TransactionIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/buyer/transaction/list"
@@ -115,7 +118,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						icon={FeedIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/buyer/feed/select"
@@ -136,7 +139,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						icon={CartIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/buyer/cart/list"
@@ -158,7 +161,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					icon={ShopIcon}
 					iconProps={{
 						ui: {
-							size: "2xl",
+							...icon,
 						},
 					}}
 					to="/$locale/buyer/shop"
@@ -180,7 +183,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						icon={SellerIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/seller"
@@ -201,7 +204,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						icon={UserIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/buyer/user"

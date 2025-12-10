@@ -56,11 +56,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						ui={{
 							tone: "secondary",
 						}}
-						iconProps={{
-							ui: {
-								size: "md",
-							},
-						}}
 						confirmProps={{
 							ui: {
 								tone: "danger",
@@ -121,11 +116,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 						ui={{
 							tone: "secondary",
 						}}
-						iconProps={{
-							ui: {
-								size: "md",
-							},
-						}}
 						confirmProps={{
 							ui: {
 								tone: "danger",
@@ -182,14 +172,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								<BadgeValue
 									textLabel={"Listing title (label)"}
 									textValue={state.title}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 								/>
 							</LinkTo>
 
@@ -203,14 +186,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								<BadgeValue
 									textLabel={"Listing photos (label)"}
 									textValue={String(valid.data.uploadIds.length)}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 								/>
 							</LinkTo>
 
@@ -231,14 +207,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									}
 									textTitle={"Listing category (label)"}
 									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 								/>
 							</LinkTo>
 
@@ -252,14 +221,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								<ContainerValueList
 									textTitle={"Listing condition (label)"}
 									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 									items={[
 										{
 											id: "condition",
@@ -284,14 +246,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								<ContainerValueList
 									textTitle={"Listing age (label)"}
 									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 									items={[
 										{
 											id: "age",
@@ -320,14 +275,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 											currency={valid.data.currency}
 										/>
 									}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 								/>
 							</LinkTo>
 
@@ -342,14 +290,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 									locationId={state.locationId}
 									textLabel={"Listing location (label)"}
 									textValue={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 								/>
 							</LinkTo>
 
@@ -363,14 +304,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								<ContainerValueList
 									textTitle={"Listing expire at (label)"}
 									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												size: "sm",
-											}}
-										/>
-									}
+									action={<Icon icon={EditIcon} />}
 									items={[
 										{
 											id: "expiresAt",

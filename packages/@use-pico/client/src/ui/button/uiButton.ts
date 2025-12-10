@@ -9,6 +9,7 @@ export namespace uiButton {
 		tone?: CoolUi.Tone;
 		//
 		size?: Size;
+		inner?: CoolUi.Inner;
 		square?: CoolUi.Square;
 		gap?: CoolUi.Gap;
 		round?: CoolUi.Round;

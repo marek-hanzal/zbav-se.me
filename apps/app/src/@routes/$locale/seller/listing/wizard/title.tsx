@@ -41,11 +41,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
-						iconProps={{
-							ui: {
-								size: "md",
-							},
-						}}
 						ui={{
 							tone: "secondary",
 						}}

@@ -20,18 +20,18 @@
 	}
 
 	[data-ui-text="xl"] {
-		@apply text-xl;
-	}
-
-	[data-ui-text="2xl"] {
 		@apply text-2xl;
 	}
 
+	[data-ui-text="2xl"] {
+		@apply text-4xl;
+	}
+
 	[data-ui-text="3xl"] {
-		@apply text-3xl;
+		@apply text-5xl;
 	}
 
 	[data-ui-text="4xl"] {
-		@apply text-4xl;
+		@apply text-6xl;
 	}
 }

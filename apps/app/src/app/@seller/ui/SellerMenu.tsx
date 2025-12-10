@@ -1,4 +1,4 @@
-import { ListIcon, UserIcon } from "@use-pico/client/icon";
+import { ListIcon, UserIcon, type uiIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
@@ -18,6 +18,9 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 		layout: "vertical-flex",
 		width: "full",
 		gap: "default",
+	};
+	const icon: uiIcon.Ui = {
+		text: "2xl",
 	};
 	const button: uiButton.Ui = {
 		tone: "neutral",
@@ -65,7 +68,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					icon={ListingIcon}
 					iconProps={{
 						ui: {
-							size: "2xl",
+							...icon,
 						},
 					}}
 					to="/$locale/seller/listing/wizard/photos"
@@ -87,7 +90,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						icon={TransactionIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/seller/transaction/list"
@@ -108,7 +111,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						icon={ListIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/seller/listing/my"
@@ -130,7 +133,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					icon={ShopIcon}
 					iconProps={{
 						ui: {
-							size: "2xl",
+							...icon,
 						},
 					}}
 					to="/$locale/seller/shop"
@@ -152,7 +155,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						icon={BuyerIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/buyer"
@@ -173,7 +176,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						icon={UserIcon}
 						iconProps={{
 							ui: {
-								size: "2xl",
+								...icon,
 							},
 						}}
 						to="/$locale/seller/user"

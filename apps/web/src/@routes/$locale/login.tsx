@@ -212,11 +212,6 @@ export const Route = createFileRoute("/$locale/login")({
 									<form.SubmitButton
 										iconEnabled={UnlockIcon}
 										iconDisabled={UnlockIcon}
-										iconProps={{
-											ui: {
-												size: "sm",
-											},
-										}}
 										disabled={signInMutation.isPending}
 										ui={{
 											tone: "primary",
@@ -262,11 +257,6 @@ export const Route = createFileRoute("/$locale/login")({
 								<Button
 									iconEnabled={UnlockIcon}
 									iconDisabled={UnlockIcon}
-									iconProps={{
-										ui: {
-											size: "sm",
-										},
-									}}
 									onClick={() => {
 										passkeyMutation.mutate();
 									}}

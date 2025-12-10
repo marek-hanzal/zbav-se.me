@@ -30,11 +30,6 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ui, ...props })
 	return (
 		<Button
 			iconEnabled={LockIcon}
-			iconProps={{
-				ui: {
-					size: "md",
-				},
-			}}
 			onClick={() => signOutMutation.mutate({})}
 			disabled={signOutMutation.isPending}
 			loading={signOutMutation.isPending}

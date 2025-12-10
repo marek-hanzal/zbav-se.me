@@ -36,9 +36,6 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 				<Status
 					icon={SpinnerIcon}
 					iconProps={{
-						ui: {
-							size,
-						},
 						...iconProps,
 					}}
 					{...statusProps}
@@ -48,9 +45,6 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 			{type === "icon" ? (
 				<Icon
 					icon={SpinnerIcon}
-					ui={{
-						size,
-					}}
 					{...iconProps}
 				/>
 			) : null}

@@ -29,7 +29,7 @@ export const Title: FC<Title.Props> = ({
 				layout: "horizontal-flex",
 				items: "center",
 				justify: "space-between",
-				inner: "default",
+				inner: "xl",
 				width: "full",
 				color: "lead",
 				tone: "neutral",
@@ -62,7 +62,7 @@ export const Title: FC<Title.Props> = ({
 						label={textTitle}
 						{...textTitleProps}
 						ui={{
-							text: "xl",
+							text: "lg",
 							font: "bold",
 							display: "block",
 							truncate: true,
@@ -78,7 +78,7 @@ export const Title: FC<Title.Props> = ({
 						ui={{
 							tone: "secondary",
 							theme: "light",
-							text: "sm",
+							text: "md",
 						}}
 					/>
 				) : null}

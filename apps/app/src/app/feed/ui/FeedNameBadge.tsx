@@ -34,14 +34,7 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 			<BadgeValue
 				textLabel={"Feed name (label)"}
 				textValue={feed.name}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							size: "sm",
-						}}
-					/>
-				}
+				action={<Icon icon={EditIcon} />}
 				onClick={() => setIsEdit(true)}
 			/>
 

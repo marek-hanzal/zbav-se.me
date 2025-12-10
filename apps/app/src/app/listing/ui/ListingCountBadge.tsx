@@ -38,12 +38,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 			}}
 			{...props}
 		>
-			<Icon
-				icon={ListingIcon}
-				ui={{
-					size: "xs",
-				}}
-			/>
+			<Icon icon={ListingIcon} />
 
 			<Typo
 				label={
@@ -55,14 +50,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 					) : (
 						<withListingCountQuery.Suspense
 							data={query}
-							fallback={
-								<Icon
-									icon={SpinnerIcon}
-									ui={{
-										size: "xs",
-									}}
-								/>
-							}
+							fallback={<Icon icon={SpinnerIcon} />}
 						>
 							{({ data }) => {
 								return (

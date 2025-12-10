@@ -53,11 +53,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 						ui={{
 							tone: "secondary",
 						}}
-						iconProps={{
-							ui: {
-								size: "md",
-							},
-						}}
 						confirmProps={{
 							ui: {
 								tone: "danger",

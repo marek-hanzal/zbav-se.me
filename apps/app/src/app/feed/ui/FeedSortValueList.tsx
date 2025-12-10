@@ -46,14 +46,7 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 						}}
 					/>
 				)}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							size: "sm",
-						}}
-					/>
-				}
+				action={<Icon icon={EditIcon} />}
 				onClick={() => setIsEdit(true)}
 			/>
 

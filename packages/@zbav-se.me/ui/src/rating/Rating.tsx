@@ -83,11 +83,6 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 									onClick={() => {
 										selection.toggle(item);
 									}}
-									iconProps={{
-										ui: {
-											size: "md",
-										},
-									}}
 									tweak={{
 										slot: {
 											root: {

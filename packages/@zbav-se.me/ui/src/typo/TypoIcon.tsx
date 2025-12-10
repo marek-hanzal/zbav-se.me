@@ -36,9 +36,6 @@ export const TypoIcon: FC<TypoIcon.Props> = ({
 		>
 			<Icon
 				icon={icon}
-				ui={{
-					size: "sm",
-				}}
 				{...iconProps}
 			/>
 

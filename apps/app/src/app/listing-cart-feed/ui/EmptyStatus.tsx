@@ -25,6 +25,9 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 			<Status
 				icon={CartIcon}
 				textTitle={"No items in cart (title)"}
+				ui={{
+					text: "4xl",
+				}}
 				action={
 					<>
 						<LinkTo
@@ -35,6 +38,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 									size: "lg",
 									justify: "space-between",
 									width: "full",
+									text: "lg",
 								},
 								className: [],
 							})}
@@ -56,6 +60,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 									size: "lg",
 									justify: "space-between",
 									width: "full",
+									text: "lg",
 								},
 								className: [],
 							})}

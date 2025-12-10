@@ -33,8 +33,8 @@ export const TourButton: FC<TourButton.Props> = ({ isOpen, open }) => {
 			<Icon
 				icon={"icon-[akar-icons--question]"}
 				ui={{
-					size: "md",
 					tone: "secondary",
+					text: "md",
 				}}
 			/>
 		</div>

@@ -81,17 +81,17 @@ export const Button: FC<Button.Props> = ({
 			disabled ? (
 				<Icon
 					icon={loading === true ? iconLoading : (iconDisabled ?? iconEnabled)}
-					ui={{
-						size: iconSize,
-					}}
+					// ui={{
+					// 	text: iconSize,
+					// }}
 					{...iconProps}
 				/>
 			) : (
 				<Icon
 					icon={loading === true ? iconLoading : iconEnabled}
-					ui={{
-						size: iconSize,
-					}}
+					// ui={{
+					// 	text: iconSize,
+					// }}
 					{...iconProps}
 				/>
 			),
@@ -101,7 +101,7 @@ export const Button: FC<Button.Props> = ({
 			iconLoading,
 			iconDisabled,
 			iconEnabled,
-			iconSize,
+			// iconSize,
 			iconProps,
 		],
 	);

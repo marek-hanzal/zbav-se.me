@@ -220,11 +220,6 @@ export const Route = createFileRoute("/$locale/register")({
 								>
 									<form.SubmitButton
 										iconEnabled={"icon-[eos-icons--system-re-registered]"}
-										iconProps={{
-											ui: {
-												size: "sm",
-											},
-										}}
 										disabled={registerMutation.isPending}
 										ui={{
 											tone: "primary",

@@ -69,7 +69,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 				<Icon
 					icon={"icon-[material-symbols-light--search]"}
 					ui={{
-						size: "sm",
+						text: "sm",
 					}}
 				/>
 			</div>
@@ -118,7 +118,7 @@ export const Fulltext: FC<Fulltext.Props> = ({
 						}
 						ui={{
 							tone: "neutral",
-							size: "sm",
+							text: "sm",
 						}}
 					/>
 				</div>
@@ -135,8 +135,8 @@ export const Fulltext: FC<Fulltext.Props> = ({
 								set(undefined);
 							}}
 							ui={{
-								size: "sm",
 								tone: "secondary",
+								text: "sm",
 							}}
 						/>
 					</div>

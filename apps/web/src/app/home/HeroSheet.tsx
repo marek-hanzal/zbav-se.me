@@ -51,11 +51,6 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 					>
 						<Button
 							iconEnabled={UnlockIcon}
-							iconProps={{
-								ui: {
-									size: "sm",
-								},
-							}}
 							label={"Login (hero)"}
 							ui={{
 								size: "xl",
@@ -73,16 +68,11 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 					>
 						<Button
 							iconEnabled={UserIcon}
-							iconProps={{
-								ui: {
-									size: "sm",
-								},
-							}}
 							label={"Register (hero)"}
 							ui={{
-								size: "xl",
 								tone: "primary",
-								theme: "dark",
+								theme: "light",
+								size: "xl",
 							}}
 						/>
 					</LinkTo>

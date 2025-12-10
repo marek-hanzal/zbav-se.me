@@ -46,11 +46,6 @@ export const CtaSheet: FC<CtaSheet.Props> = ({ locale }) => {
 					>
 						<Button
 							iconEnabled={UserIcon}
-							iconProps={{
-								ui: {
-									size: "md",
-								},
-							}}
 							ui={{
 								tone: "primary",
 								theme: "dark",

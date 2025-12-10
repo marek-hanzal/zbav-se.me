@@ -7,6 +7,7 @@ export namespace uiStatus {
 		tone?: CoolUi.Tone;
 		//
 		color?: CoolUi.Color;
+		text?: CoolUi.Text;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
