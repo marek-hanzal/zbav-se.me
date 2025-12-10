@@ -20,11 +20,11 @@ export namespace uiBadge {
 		//
 		text?: CoolUi.Text;
 		font?: CoolUi.Font;
-		italic?: boolean;
+		italic?: CoolUi.Italic;
 		//
-		border?: boolean;
-		shadow?: boolean;
-		zIndex?: boolean;
+		border?: CoolUi.Border;
+		shadow?: CoolUi.Shadow;
+		zIndex?: CoolUi.zIndex;
 		//
 		color?: CoolUi.Color;
 	}

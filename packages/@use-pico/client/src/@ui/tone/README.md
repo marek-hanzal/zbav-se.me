@@ -1,3 +1,0 @@
-# Design System
-
-Contract:

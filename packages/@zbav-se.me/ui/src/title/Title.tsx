@@ -34,7 +34,8 @@ export const Title: FC<Title.Props> = ({
 				color: "lead",
 				tone: "neutral",
 				theme: "light",
-				background: true,
+				background: "default",
+				shadow: true,
 				...ui,
 			}}
 			{...props}

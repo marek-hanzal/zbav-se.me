@@ -23,11 +23,11 @@ export namespace uiButton {
 		justify?: CoolUi.Justify;
 		items?: CoolUi.Items;
 		//
-		disabled?: boolean;
-		background?: boolean;
-		border?: boolean;
-		shadow?: boolean;
-		zIndex?: boolean;
+		disabled?: CoolUi.Disabled;
+		background?: CoolUi.Background;
+		border?: CoolUi.Border;
+		shadow?: CoolUi.Shadow;
+		zIndex?: CoolUi.zIndex;
 		//
 		text?: CoolUi.Text;
 		font?: CoolUi.Font;
@@ -51,7 +51,7 @@ export const uiButton = ({ ui, className }: uiButton.Props) => {
 			round: "default",
 			gap: "sm",
 			color: "text",
-			background: true,
+			background: "default",
 			border: true,
 			shadow: true,
 			...ui,

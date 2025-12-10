@@ -1,11 +1,12 @@
 import type { ComponentProps, FC, ReactNode } from "react";
 import { Icon } from "../../icon/Icon";
+import { Container } from "../container/Container";
 import { Tx } from "../tx/Tx";
 import type { Typo } from "../typo/Typo";
-import { asStatus } from "./asStatus";
+import { uiStatus } from "./uiStatus";
 
 export namespace Status {
-	export interface Props extends asStatus.PropsEx<ComponentProps<"div">> {
+	export interface Props extends uiStatus.Component<ComponentProps<"div">> {
 		/**
 		 * Translation key for the title text.
 		 */
@@ -34,9 +35,7 @@ export const Status: FC<Status.Props> = ({
 	titleProps,
 	messageProps,
 	//
-	tone,
-	theme,
-	//
+	ui,
 	className,
 	//
 	children,
@@ -44,24 +43,36 @@ export const Status: FC<Status.Props> = ({
 }) => {
 	return (
 		<div
-			{...asStatus({
-				tone,
-				theme,
+			{...uiStatus({
+				ui,
 				//
 				className,
 			})}
 			//
 			{...props}
 		>
-			<div data-ui="Status-title-wrapper">
-				<Icon
-					data-ui="Status-icon"
-					icon={icon}
+			<Container
+				data-ui="Status-Wrapper"
+				ui={{
+					layout: "vertical-flex",
+					items: "center",
+					width: "full",
+				}}
+			>
+				<Container
 					ui={{
-						size: "xl",
+						inner: "xl",
 					}}
-					{...iconProps}
-				/>
+				>
+					<Icon
+						data-ui="Status-icon"
+						icon={icon}
+						ui={{
+							size: "xl",
+						}}
+						{...iconProps}
+					/>
+				</Container>
 
 				<Tx
 					data-ui="Status-title"
@@ -73,6 +84,7 @@ export const Status: FC<Status.Props> = ({
 					}}
 					{...titleProps}
 				/>
+
 				<Tx
 					data-ui="Status-message"
 					label={textMessage}
@@ -82,7 +94,7 @@ export const Status: FC<Status.Props> = ({
 					}}
 					{...messageProps}
 				/>
-			</div>
+			</Container>
 
 			{action && <div data-ui="Status-action">{action}</div>}
 

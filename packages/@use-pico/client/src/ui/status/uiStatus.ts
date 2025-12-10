@@ -1,16 +1,11 @@
 import { ui as coolUi } from "@use-pico/cls";
-import type { Ui as CoolUi } from "../ui/Ui";
+import type { Ui as CoolUi } from "../Ui";
 
-export namespace uiIcon {
-	export type Size = CoolUi.Size;
-
+export namespace uiStatus {
 	export interface Ui {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
-		size?: Size;
-		//
-		disabled?: CoolUi.Disabled;
 		color?: CoolUi.Color;
 	}
 
@@ -21,10 +16,11 @@ export namespace uiIcon {
 	}
 }
 
-export const uiIcon = ({ ui, className }: uiIcon.Props) => {
-	return coolUi<uiIcon.Ui>({
-		name: "Icon",
+export const uiStatus = ({ ui, className }: uiStatus.Props) => {
+	return coolUi<uiStatus.Ui>({
+		name: "Status",
 		ui: {
+			color: "text",
 			...ui,
 		},
 		className,

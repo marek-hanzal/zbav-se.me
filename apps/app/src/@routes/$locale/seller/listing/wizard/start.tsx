@@ -79,8 +79,10 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 					icon={ListingIcon}
 					textTitle={"Listing - start (title)"}
 					textMessage={"Listing - start (text)"}
-					tone={"primary"}
-					theme={"light"}
+					ui={{
+						tone: "primary",
+						theme: "light",
+					}}
 				/>
 			</TitleContainer>
 		);

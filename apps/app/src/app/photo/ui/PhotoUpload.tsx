@@ -128,8 +128,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					<Status
 						icon={SpinnerIcon}
 						textTitle={"Uploading photo (title)"}
-						tone={"primary"}
-						theme={"light"}
 						action={
 							<Progress
 								value={progress * 100}
@@ -138,6 +136,10 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 								theme={"dark"}
 							/>
 						}
+						ui={{
+							tone: "primary",
+							theme: "light",
+						}}
 					/>
 				) : null}
 

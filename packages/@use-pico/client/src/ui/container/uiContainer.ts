@@ -42,11 +42,12 @@ export namespace uiContainer {
 		//
 		round?: CoolUi.Round;
 		//
-		disabled?: boolean;
-		background?: boolean;
+		disabled?: CoolUi.Disabled;
+		background?: CoolUi.Background;
 		text?: CoolUi.Text;
-		border?: boolean;
-		shadow?: boolean;
+		border?: CoolUi.Border;
+		shadow?: CoolUi.Shadow;
+		zIndex?: CoolUi.zIndex;
 		color?: CoolUi.Color;
 	}
 

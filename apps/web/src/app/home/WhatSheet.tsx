@@ -21,8 +21,11 @@ export const WhatSheet: FC = () => {
 			<div className="flex flex-col justify-evenly h-dvh py-16">
 				<Status
 					icon={SellerIcon}
-					tone={"primary"}
 					textTitle={"What - sellers (title)"}
+					ui={{
+						tone: "primary",
+						theme: "light",
+					}}
 				>
 					<VariantProvider
 						cls={ThemeCls}
@@ -76,9 +79,11 @@ export const WhatSheet: FC = () => {
 
 				<Status
 					icon={BuyerIcon}
-					tone={"secondary"}
-					theme={"light"}
 					textTitle={"What - buyers (title)"}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+					}}
 				>
 					<VariantProvider
 						cls={ThemeCls}

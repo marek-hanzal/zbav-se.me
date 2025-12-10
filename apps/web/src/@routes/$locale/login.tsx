@@ -291,8 +291,10 @@ export const Route = createFileRoute("/$locale/login")({
 							icon={SocialIcon}
 							textTitle={"Login with social (title)"}
 							textMessage={"Login with social (message)"}
-							tone={"primary"}
-							theme={"light"}
+							ui={{
+								tone: "primary",
+								theme: "light",
+							}}
 						/>
 					</Container>
 				</Container>

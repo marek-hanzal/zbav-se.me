@@ -25,14 +25,12 @@ export const Route = createFileRoute("/$locale/buyer/")({
 					<Icon
 						icon={BuyerIcon}
 						ui={{
-							size: "xl",
+							size: "lg",
 						}}
 					/>
 				}
 				ui={{
 					layout: "vertical-header-content",
-					// tone: "primary",
-					// theme: "light",
 				}}
 			>
 				<BuyerMenu locale={locale} />

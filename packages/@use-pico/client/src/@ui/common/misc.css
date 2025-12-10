@@ -3,10 +3,6 @@
 		border: var(--border-default) solid var(--color-border);
 	}
 
-	[data-ui-background="true"] {
-		background-color: var(--color-bg);
-	}
-
 	[data-ui-shadow="true"] {
 		@apply shadow-md;
 	}

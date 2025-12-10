@@ -60,4 +60,10 @@ export namespace Ui {
 	export type Font = "light" | "normal" | "semibold" | "bold";
 	export type Display = "block" | "inline";
 	export type Color = "text" | "lead" | "icon";
+	export type Background = "default" | "alt";
+	export type Italic = boolean;
+	export type Border = boolean;
+	export type Shadow = boolean;
+	export type zIndex = boolean;
+	export type Disabled = boolean;
 }

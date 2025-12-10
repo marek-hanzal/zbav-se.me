@@ -20,7 +20,10 @@ export const FeaturesSheet: FC = () => {
 		>
 			<Status
 				textTitle={"Landing - Feature overview (title)"}
-				tone="secondary"
+				ui={{
+					tone: "secondary",
+					theme: "light",
+				}}
 			>
 				<VariantProvider
 					cls={ThemeCls}

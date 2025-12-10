@@ -51,8 +51,11 @@ export const ListContainer: FC<ListContainer.Props> = ({
 				}}
 			>
 				<Status
-					tone={"danger"}
 					icon={WarningIcon}
+					ui={{
+						tone: "danger",
+						theme: "light",
+					}}
 				>
 					<Mx
 						label={textHint ?? "Location security (hint)"}
