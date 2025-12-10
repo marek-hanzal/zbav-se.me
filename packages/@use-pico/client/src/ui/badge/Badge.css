@@ -1,9 +1,0 @@
-@layer components {
-	.Badge {
-		display: flex;
-		user-select: none;
-		contain: content;
-
-		@apply gap-2;
-	}
-}
