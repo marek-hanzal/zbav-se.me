@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { type FC, useEffect } from "react";
-import { FeedDetailContainer } from "../FeedDetailContainer";
+import { FeedDetailContainer } from "~/app/feed/ui/FeedDetailContainer";
 
 export namespace FeedSetupButton {
 	export interface Props extends Button.Props {
@@ -38,18 +38,18 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 	return (
 		<>
 			<Button
-				data-ui={"FeedSetupButton"}
+				data-ui={"FeedSetupButton[Button]"}
 				iconEnabled={SettingsIcon}
 				label={"Feed setup (button)"}
 				onClick={() => state.set((prev) => !prev)}
 				ui={{
-					size: "xl",
 					...ui,
 				}}
 				{...props}
 			/>
 
 			<BottomSheet
+				data-ui={"FeedSetupButton-[BottomSheet]"}
 				isOpen={state.value}
 				onClose={() => state.set(false)}
 				detent={"full"}
@@ -59,6 +59,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 				}}
 			>
 				<FeedDetailContainer
+					data-ui={"FeedSetupButton-[FeedDetailContainer]"}
 					locale={locale}
 					feed={feed}
 					noDelete={noDelete}

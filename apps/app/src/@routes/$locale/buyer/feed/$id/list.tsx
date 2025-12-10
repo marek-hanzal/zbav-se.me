@@ -61,12 +61,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 
 		return (
 			<FlowContainer
-				data-ui={"FeedList"}
+				data-ui={"/buyer/feed/$id/list[FlowContainer]"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
+						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
 						icon={ArrowLeftIcon}
 						to={"/$locale/buyer"}
 						params={{
@@ -87,6 +88,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 						return (
 							<>
 								<FeedSetupButton
+									data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
 									locale={locale}
 									state={{
 										value: isFeedSettings1,
@@ -98,15 +100,19 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									label={null}
 									ui={{
 										tone: "secondary",
-										size: undefined,
+										theme: "light",
+										justify: "center",
+										items: "center",
 										square: "default",
 										zIndex: true,
 										round: "full",
 										snapTo: "top-right",
+										text: "xl",
 										opacity: "low",
 									}}
 								>
 									<LinkTo
+										data-ui={"/buyer/feed/$id/list-[LinkTo.refresh]"}
 										to={"/$locale/buyer/feed/$id/list"}
 										params={{
 											locale,
@@ -133,6 +139,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 								</FeedSetupButton>
 
 								<ListingListContainer
+									data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
 									ref={containerRef}
 									locale={locale}
 									feedId={feed.id}
