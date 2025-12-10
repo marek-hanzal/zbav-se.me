@@ -25,9 +25,9 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 	const button: uiButton.Ui = {
 		tone: "neutral",
 		theme: "light",
-		size: "xl",
+		inner: "xl",
 		width: "full",
-		text: "xl",
+		text: "lg",
 		gap: "sm",
 	};
 

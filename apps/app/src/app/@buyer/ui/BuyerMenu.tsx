@@ -30,9 +30,9 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 		text: "2xl",
 	};
 	const button: uiButton.Ui = {
-		tone: "brand",
+		tone: "neutral",
 		theme: "light",
-		inner: "sm",
+		inner: "xl",
 		width: "full",
 		text: "lg",
 		gap: "sm",
@@ -60,7 +60,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					layout: "vertical-flex",
 					scroll: "vertical",
 					height: "full",
-					inner: "default",
+					inner: "lg",
 					items: "center",
 					gap: "xl",
 				}}
