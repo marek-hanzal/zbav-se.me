@@ -1,39 +1,19 @@
-@theme {
-	/* subtle / light */
-	--color-subtle-light-text: var(--color-slate-600);
-	--color-subtle-light-lead: var(--color-violet-700);
-	--color-subtle-light-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
-	--color-subtle-light-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
-	--color-subtle-light-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
-	--color-subtle-light-shadow: color-mix(in srgb, var(--color-slate-500) 10%, transparent);
-
-	/* subtle / dark */
-	--color-subtle-dark-text: var(--color-slate-100);
-	--color-subtle-dark-lead: var(--color-violet-200);
-	--color-subtle-dark-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
-	--color-subtle-dark-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
-	--color-subtle-dark-icon: color-mix(in srgb, var(--color-subtle-dark-text) 80%, black);
-	--color-subtle-dark-shadow: color-mix(in srgb, var(--color-violet-950) 35%, transparent);
-}
-
 @utility tone-subtle-light {
-	--color-text: var(--color-subtle-light-text);
-	--color-lead: var(--color-subtle-light-lead);
-	--color-bg: var(--color-subtle-light-bg);
-	--color-border: var(--color-subtle-light-border);
-	--color-icon: var(--color-subtle-light-icon);
-
-	@apply shadow-subtle-light-shadow;
+	--color-text: var(--color-slate-600);
+	--color-lead: var(--color-violet-700);
+	--color-bg: color-mix(in srgb, var(--color-violet-300) 15%, white);
+	--color-border: color-mix(in srgb, var(--color-violet-400) 10%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-slate-500) 75%, white);
+	--tw-shadow-color: color-mix(in srgb, var(--color-slate-800) 15%, white);
 }
 
 @utility tone-subtle-dark {
-	--color-text: var(--color-subtle-dark-text);
-	--color-lead: var(--color-subtle-dark-lead);
-	--color-bg: var(--color-subtle-dark-bg);
-	--color-border: var(--color-subtle-dark-border);
-	--color-icon: var(--color-subtle-dark-icon);
-
-	@apply shadow-subtle-dark-shadow;
+	--color-text: var(--color-slate-100);
+	--color-lead: var(--color-violet-200);
+	--color-bg: color-mix(in srgb, var(--color-violet-900) 65%, black);
+	--color-border: color-mix(in srgb, var(--color-violet-700) 35%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-subtle-dark-text) 80%, black);
+	--tw-shadow-color: color-mix(in srgb, var(--color-slate-100) 30%, black);
 }
 
 @layer components {

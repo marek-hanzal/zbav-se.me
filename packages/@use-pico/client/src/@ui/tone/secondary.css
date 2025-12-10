@@ -1,39 +1,19 @@
-@theme {
-	/* secondary / light */
-	--color-secondary-light-text: var(--color-slate-700);
-	--color-secondary-light-lead: var(--color-violet-700);
-	--color-secondary-light-bg: color-mix(in srgb, var(--color-violet-200) 75%, white);
-	--color-secondary-light-border: color-mix(in srgb, var(--color-violet-300) 28%, transparent);
-	--color-secondary-light-icon: color-mix(in srgb, var(--color-secondary-light-text) 85%, white);
-	--color-secondary-light-shadow: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
-
-	/* secondary / dark */
-	--color-secondary-dark-text: var(--color-violet-50);
-	--color-secondary-dark-lead: var(--color-violet-200);
-	--color-secondary-dark-bg: color-mix(in srgb, var(--color-violet-800) 75%, black);
-	--color-secondary-dark-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
-	--color-secondary-dark-icon: color-mix(in srgb, var(--color-secondary-dark-text) 80%, black);
-	--color-secondary-dark-shadow: color-mix(in srgb, var(--color-violet-900) 40%, transparent);
-}
-
 @utility tone-secondary-light {
-	--color-text: var(--color-secondary-light-text);
-	--color-lead: var(--color-secondary-light-lead);
-	--color-bg: var(--color-secondary-light-bg);
-	--color-border: var(--color-secondary-light-border);
-	--color-icon: var(--color-secondary-light-icon);
-
-	@apply shadow-secondary-light-shadow;
+	--color-text: var(--color-slate-700);
+	--color-lead: var(--color-violet-700);
+	--color-bg: color-mix(in srgb, var(--color-violet-200) 75%, white);
+	--color-border: color-mix(in srgb, var(--color-violet-300) 28%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-slate-700) 85%, white);
+	--tw-shadow-color: color-mix(in srgb, var(--color-slate-600) 25%, transparent);
 }
 
 @utility tone-secondary-dark {
-	--color-text: var(--color-secondary-dark-text);
-	--color-lead: var(--color-secondary-dark-lead);
-	--color-bg: var(--color-secondary-dark-bg);
-	--color-border: var(--color-secondary-dark-border);
-	--color-icon: var(--color-secondary-dark-icon);
-
-	@apply shadow-secondary-dark-shadow;
+	--color-text: var(--color-violet-50);
+	--color-lead: var(--color-violet-200);
+	--color-bg: color-mix(in srgb, var(--color-violet-800) 75%, black);
+	--color-border: color-mix(in srgb, var(--color-violet-500) 45%, transparent);
+	--color-icon: color-mix(in srgb, var(--color-violet-50) 80%, black);
+	--tw-shadow-color: color-mix(in srgb, var(--color-violet-900) 40%, transparent);
 }
 
 @layer components {
