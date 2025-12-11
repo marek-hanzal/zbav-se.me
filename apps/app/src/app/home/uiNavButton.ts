@@ -17,7 +17,7 @@ export const uiNavButton = ({ ui, className }: uiNavButton.Props) => {
 	return coolUi<uiNavButton.Ui>({
 		name: "NavButton",
 		ui: {
-			tone: "brand",
+			tone: "neutral",
 			theme: "light",
 			text: "2xl",
 			square: "xl",
@@ -26,6 +26,7 @@ export const uiNavButton = ({ ui, className }: uiNavButton.Props) => {
 			flow: "horizontal",
 			items: "center",
 			justify: "center",
+			background: "default",
 			backgroundActive: "default",
 			shadow: true,
 			shadowActive: true,

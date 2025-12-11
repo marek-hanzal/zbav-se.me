@@ -12,14 +12,15 @@ export namespace Nav {
 }
 
 export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
+	const activeUi: uiNavButton.Ui = {
+		tone: "brand",
+	};
+
 	return (
 		<Container
 			data-ui="Nav[Container]"
 			ui={{
 				layout: "horizontal-flex",
-				// tone: "neutral",
-				// theme: "light",
-				// background: "default",
 				inner: "default",
 				items: "center",
 				justify: "space-evenly",
@@ -31,6 +32,12 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 				to="/$locale/home"
 				activeOptions={{
 					exact: true,
+				}}
+				activeProps={{
+					...uiNavButton({
+						ui: activeUi,
+						className: [],
+					}),
 				}}
 				params={{
 					locale,
@@ -46,6 +53,12 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 				activeOptions={{
 					exact: true,
 				}}
+				activeProps={{
+					...uiNavButton({
+						ui: activeUi,
+						className: [],
+					}),
+				}}
 				params={{
 					locale,
 				}}
@@ -60,6 +73,12 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 				activeOptions={{
 					exact: true,
 				}}
+				activeProps={{
+					...uiNavButton({
+						ui: activeUi,
+						className: [],
+					}),
+				}}
 				params={{
 					locale,
 				}}
@@ -73,6 +92,12 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 				to="/$locale/home/user"
 				activeOptions={{
 					exact: true,
+				}}
+				activeProps={{
+					...uiNavButton({
+						ui: activeUi,
+						className: [],
+					}),
 				}}
 				params={{
 					locale,

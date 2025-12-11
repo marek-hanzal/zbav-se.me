@@ -4,6 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { tvc } from "@use-pico/cls";
 import { ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import { useRef } from "react";
 
@@ -24,12 +25,15 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 		theme: "light",
 		width: "full",
 		justify: "center",
-		background: undefined,
+		background: "default",
 		border: false,
 		color: "lead",
 		text: "lg",
 		size: "lg",
 	};
+	const className: tvc.ClassName = [
+		"tone-link-light-bg",
+	];
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -55,7 +59,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					height: "full",
 					inner: "lg",
 					items: "center",
-					gap: "2xl",
+					gap: "lg",
 				}}
 			>
 				<LinkTo
@@ -63,7 +67,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						ui: {
 							...button,
 						},
-						className: [],
+						className,
 					})}
 					icon={ListingIcon}
 					iconProps={{
@@ -84,7 +88,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						ui: {
 							...button,
 						},
-						className: [],
+						className,
 					})}
 					icon={TransactionIcon}
 					iconProps={{
@@ -105,7 +109,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						ui: {
 							...button,
 						},
-						className: [],
+						className,
 					})}
 					icon={ListIcon}
 					iconProps={{
@@ -126,7 +130,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 						ui: {
 							...button,
 						},
-						className: [],
+						className,
 					})}
 					icon={ShopIcon}
 					iconProps={{
