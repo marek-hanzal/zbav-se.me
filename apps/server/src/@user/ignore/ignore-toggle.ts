@@ -5,21 +5,21 @@ import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
 import type { Routes } from "../../hono/Routes";
 import { MessageSchema } from "../../schema/MessageSchema";
 import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
-import { listingIgnoreToggleFx } from "./fx/listingIgnoreToggleFx";
-import { ListingIgnoreToggleSchema } from "./schema/ListingIgnoreToggleSchema";
+import { ignoreToggleFx } from "./fx/ignoreToggleFx";
+import { IgnoreToggleSchema } from "./schema/IgnoreToggleSchema";
 
-export const withListingIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
+export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-ignore/toggle",
-			description: "Toggle listing ignore state (add or remove)",
-			operationId: "apiListingIgnoreToggle",
+			path: "/ignore/toggle",
+			description: "Toggle ignore state (add or remove)",
+			operationId: "apiIgnoreToggle",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingIgnoreToggleSchema,
+							schema: IgnoreToggleSchema,
 						},
 					},
 				},
@@ -54,13 +54,13 @@ export const withListingIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"listing-ignore",
+				"ignore",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingIgnoreToggleFx({
+				yield* ignoreToggleFx({
 					data: c.req.valid("json"),
 				});
 
