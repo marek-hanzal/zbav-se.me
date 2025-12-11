@@ -8,7 +8,7 @@ import { feedPatchFx } from "./fx/feedPatchFx";
 import { FeedPatchSchema } from "./schema/FeedPatchSchema";
 import { FeedSchema } from "./schema/FeedSchema";
 
-export const withFeedPatchApi: Routes.Fn = ({ userHono }) => {
+export const withPatchApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "patch",

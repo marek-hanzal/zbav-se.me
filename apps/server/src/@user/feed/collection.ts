@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { feedCollectionFx } from "./fx/feedCollectionFx";
 import { FeedSchema } from "./schema/FeedSchema";
 
-export const withFeedCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

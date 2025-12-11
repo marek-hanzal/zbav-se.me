@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { transactionCollectionFx } from "./fx/transactionCollectionFx";
 import { TransactionSchema } from "./schema/TransactionSchema";
 
-export const withTransactionCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

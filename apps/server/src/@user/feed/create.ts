@@ -8,7 +8,7 @@ import { feedCreateFx } from "./fx/feedCreateFx";
 import { FeedCreateSchema } from "./schema/FeedCreateSchema";
 import { FeedSchema } from "./schema/FeedSchema";
 
-export const withFeedCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

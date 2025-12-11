@@ -7,7 +7,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { uploadFetchFx } from "./fx/uploadFetchFx";
 import { UploadSchema } from "./schema/UploadSchema";
 
-export const withUploadFetchApi: Routes.Fn = ({ userHono }) => {
+export const withFetchApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

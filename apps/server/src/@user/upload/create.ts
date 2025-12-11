@@ -8,7 +8,7 @@ import { uploadCreateFx } from "./fx/uploadCreateFx";
 import { UploadCreateSchema } from "./schema/UploadCreateSchema";
 import { UploadSchema } from "./schema/UploadSchema";
 
-export const withUploadCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

@@ -8,7 +8,7 @@ import { ListingScoreContextProvider } from "./fx/ListingScoreContextFx";
 import { listingScoreCreateFx } from "./fx/listingScoreCreateFx";
 import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";
 
-export const withListingScoreCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

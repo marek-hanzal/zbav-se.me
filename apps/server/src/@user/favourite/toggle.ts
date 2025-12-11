@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { favouriteToggleFx } from "./fx/favouriteToggleFx";
 import { FavouriteToggleSchema } from "./schema/FavouriteToggleSchema";
 
-export const withFavouriteToggleApi: Routes.Fn = ({ userHono }) => {
+export const withToggleApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

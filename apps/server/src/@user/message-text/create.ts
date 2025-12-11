@@ -9,7 +9,7 @@ import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
 
-export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

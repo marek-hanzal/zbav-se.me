@@ -1,10 +1,10 @@
 import type { Routes } from "~/hono/Routes";
-import { withIgnoreCollectionApi } from "./collection";
-import { withIgnoreCountApi } from "./count";
-import { withIgnoreToggleApi } from "./toggle";
+import { withCollectionApi } from "./collection";
+import { withCountApi } from "./count";
+import { withToggleApi } from "./toggle";
 
 export const withIgnoreApi: Routes.Fn = (routes) => {
-	withIgnoreCollectionApi(routes);
-	withIgnoreCountApi(routes);
-	withIgnoreToggleApi(routes);
+	withCollectionApi(routes);
+	withCountApi(routes);
+	withToggleApi(routes);
 };

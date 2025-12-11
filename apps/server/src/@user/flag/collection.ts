@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { flagCollectionFx } from "./fx/flagCollectionFx";
 import { FlagSchema } from "./schema/FlagSchema";
 
-export const withFlagCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

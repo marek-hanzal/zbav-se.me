@@ -7,7 +7,7 @@ import { s3PreSignFx } from "./fx/s3PreSignFx";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
 
-export const withS3PresignApi: Routes.Fn = ({ userHono }) => {
+export const withPresignApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

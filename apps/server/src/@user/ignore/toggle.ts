@@ -8,7 +8,7 @@ import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreCon
 import { ignoreToggleFx } from "./fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "./schema/IgnoreToggleSchema";
 
-export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
+export const withToggleApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

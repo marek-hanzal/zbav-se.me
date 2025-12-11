@@ -9,7 +9,7 @@ import { TransactionContextProvider } from "./fx/TransactionContextFx";
 import { transactionCreateFx } from "./fx/transactionCreateFx";
 import { TransactionCreateSchema } from "./schema/TransactionCreateSchema";
 
-export const withTransactionCreateApi: Routes.Fn = ({ userHono }) => {
+export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

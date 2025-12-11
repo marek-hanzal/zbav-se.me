@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { flagToggleFx } from "./fx/flagToggleFx";
 import { FlagToggleSchema } from "./schema/FlagToggleSchema";
 
-export const withFlagToggleApi: Routes.Fn = ({ userHono }) => {
+export const withToggleApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { favouriteCollectionFx } from "./fx/favouriteCollectionFx";
 import { FavouriteSchema } from "./schema/FavouriteSchema";
 
-export const withFavouriteCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

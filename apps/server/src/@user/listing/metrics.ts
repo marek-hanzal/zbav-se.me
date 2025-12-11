@@ -16,7 +16,7 @@ const ListingMetricsPAramsSchema = z
 		description: "What we need to fetch listing score",
 	});
 
-export const withListingMetricsFetchApi: Routes.Fn = ({ userHono }) => {
+export const withMetricsApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "get",

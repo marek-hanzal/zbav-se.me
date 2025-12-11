@@ -9,7 +9,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { transactionStatusRejectFx } from "./fx/transactionStatusRejectFx";
 import { TransactionStatusRejectSchema } from "./schema/TransactionStatusRejectSchema";
 
-export const withTransactionStatusRejectApi: Routes.Fn = ({ userHono }) => {
+export const withRejectApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

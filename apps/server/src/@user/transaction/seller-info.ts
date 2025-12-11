@@ -9,7 +9,7 @@ import { transactionFetchFx } from "./fx/transactionFetchFx";
 import { transactionGetSellerInfoFx } from "./fx/transactionGetSellerInfoFx";
 import { TransactionSellerInfoSchema } from "./schema/TransactionSellerInfoSchema";
 
-export const withTransactionSellerInfoApi: Routes.Fn = ({ userHono }) => {
+export const withSellerInfoApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

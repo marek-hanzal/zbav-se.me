@@ -8,7 +8,7 @@ import { userExPatchFx } from "./fx/userExPatchFx";
 import { UserExPatchSchema } from "./schema/UserExPatchSchema";
 import { UserExSchema } from "./schema/UserExSchema";
 
-export const withUserExPatchApi: Routes.Fn = ({ userHono }) => {
+export const withPatchApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "patch",

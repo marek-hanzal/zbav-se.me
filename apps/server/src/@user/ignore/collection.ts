@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { ignoreCollectionFx } from "./fx/ignoreCollectionFx";
 import { IgnoreSchema } from "./schema/IgnoreSchema";
 
-export const withIgnoreCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

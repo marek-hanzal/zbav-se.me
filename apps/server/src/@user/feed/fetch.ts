@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { feedFetchFx } from "./fx/feedFetchFx";
 import { FeedSchema } from "./schema/FeedSchema";
 
-export const withFeedFetchApi: Routes.Fn = ({ userHono }) => {
+export const withFetchApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

@@ -1,10 +1,10 @@
 import type { Routes } from "~/hono/Routes";
-import { withFavouriteCollectionApi } from "./collection";
-import { withFavouriteCountApi } from "./count";
-import { withFavouriteToggleApi } from "./toggle";
+import { withCollectionApi } from "./collection";
+import { withCountApi } from "./count";
+import { withToggleApi } from "./toggle";
 
 export const withFavouriteApi: Routes.Fn = (routes) => {
-	withFavouriteCollectionApi(routes);
-	withFavouriteCountApi(routes);
-	withFavouriteToggleApi(routes);
+	withCollectionApi(routes);
+	withCountApi(routes);
+	withToggleApi(routes);
 };

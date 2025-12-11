@@ -8,7 +8,7 @@ import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { listingCountFx } from "./fx/listingCountFx";
 
-export const withListingCountApi: Routes.Fn = ({ userHono }) => {
+export const withCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

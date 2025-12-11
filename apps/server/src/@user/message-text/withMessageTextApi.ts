@@ -1,6 +1,6 @@
 import type { Routes } from "~/hono/Routes";
-import { withMessageTextCreateApi } from "./create";
+import { withCreateApi } from "./create";
 
 export const withMessageTextApi: Routes.Fn = (routes) => {
-	withMessageTextCreateApi(routes);
+	withCreateApi(routes);
 };

@@ -9,7 +9,7 @@ import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { listingScoreCollectionFx } from "./fx/listingScoreCollectionFx";
 import { ListingScoreSchema } from "./schema/ListingScoreSchema";
 
-export const withListingScoreCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",

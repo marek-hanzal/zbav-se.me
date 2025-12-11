@@ -8,7 +8,7 @@ import { NoticeSchema } from "~/schema/NoticeSchema";
 import { transactionFetchFx } from "./fx/transactionFetchFx";
 import { TransactionSchema } from "./schema/TransactionSchema";
 
-export const withTransactionFetchApi: Routes.Fn = ({ userHono }) => {
+export const withFetchApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
