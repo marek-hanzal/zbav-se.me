@@ -1,10 +1,10 @@
-import { ListIcon, UserIcon, type uiIcon } from "@use-pico/client/icon";
+import { ListIcon, type uiIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { BuyerIcon, ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
 import { useRef } from "react";
 
 export namespace SellerMenu {
@@ -143,50 +143,6 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 				>
 					<Tx label="Shop (label)" />
 				</LinkTo>
-
-				<Container ui={spacing}>
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={BuyerIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/buyer"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="To buyer (label)" />
-					</LinkTo>
-
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={UserIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/seller/user"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="User profile (label)" />
-					</LinkTo>
-				</Container>
 			</Container>
 		</Container>
 	);

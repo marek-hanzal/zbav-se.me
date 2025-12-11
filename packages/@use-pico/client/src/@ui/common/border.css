@@ -3,7 +3,7 @@
 		border: var(--border-default) solid var(--color-border);
 	}
 
-	[data-ui-shadow="true"] {
-		@apply shadow-md;
+	.active[data-ui-border-active="true"] {
+		border: var(--border-default) solid var(--color-border-active);
 	}
 }

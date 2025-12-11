@@ -1,4 +1,5 @@
 @import "./background.css";
+@import "./border.css";
 @import "./color.css";
 @import "./display.css";
 @import "./flow.css";
@@ -8,10 +9,10 @@
 @import "./inner.css";
 @import "./items.css";
 @import "./justify.css";
-@import "./misc.css";
 @import "./opacity.css";
 @import "./position.css";
 @import "./round.css";
+@import "./shadow.css";
 @import "./size.css";
 @import "./snap-to.css";
 @import "./square.css";

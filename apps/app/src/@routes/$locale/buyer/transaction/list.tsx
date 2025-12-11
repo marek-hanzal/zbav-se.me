@@ -26,7 +26,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer"}
+						to={"/$locale/home/buyer"}
 						params={{
 							locale,
 						}}

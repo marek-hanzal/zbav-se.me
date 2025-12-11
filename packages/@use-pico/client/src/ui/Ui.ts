@@ -62,9 +62,12 @@ export namespace Ui {
 	export type Display = "block" | "inline";
 	export type Color = "text" | "lead" | "icon";
 	export type Background = "default" | "alt";
+	export type BackgroundActive = Background;
 	export type Italic = boolean;
 	export type Border = boolean;
+	export type BorderActive = Border;
 	export type Shadow = boolean;
+	export type ShadowActive = Shadow;
 	export type zIndex = boolean;
 	export type Disabled = boolean;
 }

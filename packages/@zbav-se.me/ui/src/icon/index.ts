@@ -16,6 +16,7 @@ export { ExpireIcon } from "./ExpireIcon";
 export { FeedIcon } from "./FeedIcon";
 export { FlagIcon } from "./FlagIcon";
 export { GalleryIcon } from "./GalleryIcon";
+export { HomeIcon } from "./HomeIcon";
 export { LetterAIcon } from "./LetterAIcon";
 export { LetterBIcon } from "./LetterBIcon";
 export { LetterCIcon } from "./LetterCIcon";

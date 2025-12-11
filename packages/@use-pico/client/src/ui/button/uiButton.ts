@@ -26,8 +26,11 @@ export namespace uiButton {
 		//
 		disabled?: CoolUi.Disabled;
 		background?: CoolUi.Background;
+		backgroundActive?: CoolUi.BackgroundActive;
 		border?: CoolUi.Border;
+		borderActive?: CoolUi.BorderActive;
 		shadow?: CoolUi.Shadow;
+		shadowActive?: CoolUi.ShadowActive;
 		zIndex?: CoolUi.zIndex;
 		//
 		text?: CoolUi.Text;

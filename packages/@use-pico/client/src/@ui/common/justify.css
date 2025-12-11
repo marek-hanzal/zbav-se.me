@@ -19,7 +19,7 @@
 		justify-content: space-around;
 	}
 
-	[data-ui-justify="space-between"] {
-		justify-content: space-between;
+	[data-ui-justify="space-evenly"] {
+		justify-content: space-evenly;
 	}
 }

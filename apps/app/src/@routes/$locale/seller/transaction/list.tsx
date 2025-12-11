@@ -27,7 +27,7 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 						})}
 						data-ui="/seller/transaction/list-[LinkTo.left]"
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller"}
+						to={"/$locale/home/seller"}
 						params={{
 							locale,
 						}}
