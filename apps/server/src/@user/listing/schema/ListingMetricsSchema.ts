@@ -14,11 +14,11 @@ export const ListingMetricsSchema = z
 		viewsScore: z.coerce.number().nullable().openapi({
 			description: "Overall score gained from views",
 		}),
-		cart: z.coerce.number().nullable().openapi({
-			description: "Number of items added to the cart",
+		favourite: z.coerce.number().nullable().openapi({
+			description: "Number of items added to favourites",
 		}),
-		cartScore: z.coerce.number().nullable().openapi({
-			description: "Overall score gained from cart interactions",
+		favouriteScore: z.coerce.number().nullable().openapi({
+			description: "Overall score gained from favourite interactions",
 		}),
 		ignore: z.coerce.number().nullable().openapi({
 			description: "Number of items ignored",

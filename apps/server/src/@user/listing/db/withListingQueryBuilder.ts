@@ -109,10 +109,10 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		) as TSelect;
 	}
 
-	if (where.inCart === true) {
+	if (where.isFavourite === true) {
 		query = query.where(({ exists, selectFrom }) =>
 			exists(
-				selectFrom("favorite as f")
+				selectFrom("favourite as f")
 					.select("f.listingId")
 					.whereRef("f.listingId", "=", "l.id")
 					.where("f.userId", "=", userId),
@@ -124,7 +124,7 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		const feedId = where.feedId;
 		query = query.where(({ exists, selectFrom }) =>
 			exists(
-				selectFrom("favorite as f")
+				selectFrom("favourite as f")
 					.select("f.listingId")
 					.whereRef("f.listingId", "=", "l.id")
 					.where("f.userId", "=", userId)
@@ -137,7 +137,7 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		const feedIdIn = where.feedIdIn;
 		query = query.where(({ exists, selectFrom }) =>
 			exists(
-				selectFrom("favorite as f")
+				selectFrom("favourite as f")
 					.select("f.listingId")
 					.whereRef("f.listingId", "=", "l.id")
 					.where("f.userId", "=", userId)

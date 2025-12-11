@@ -12,8 +12,8 @@ export const ListingSchema = z
 		gallery: GallerySchema.openapi({
 			description: "Listing gallery images",
 		}),
-		isInCart: z.boolean().openapi({
-			description: "Whether the user has this listing in the cart",
+		isFavourite: z.boolean().openapi({
+			description: "Whether the user has this listing in favourites",
 		}),
 		isIgnored: z.boolean().openapi({
 			description: "Whether the user ignored this listing",

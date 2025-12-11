@@ -2,11 +2,11 @@ import { withListingTransactionStatusApi } from "~/@user/listing-transaction-sta
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
 import type { MessageSchema } from "~/schema/MessageSchema";
+import { withFavouriteApi } from "./favourite/withFavouriteApi";
+import { withFavouriteFeedApi } from "./favourite-feed/withFavouriteFeedApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withListingApi } from "./listing/withListingApi";
-import { withListingCartApi } from "./listing-cart/withListingCartApi";
-import { withListingCartFeedApi } from "./listing-cart-feed/withListingCartFeedApi";
 import { withListingFlagApi } from "./listing-flag/withListingFlagApi";
 import { withListingIgnoreApi } from "./listing-ignore/withListingIgnoreApi";
 import { withListingScoreApi } from "./listing-score/withListingScoreApi";
@@ -40,11 +40,11 @@ export const withUserApi: Routes.FnWithDeps<{
 		return next();
 	});
 
+	withFavouriteApi(routes);
+	withFavouriteFeedApi(routes);
 	withFeedApi(routes);
 	withGalleryApi(routes);
 	withListingApi(routes);
-	withListingCartApi(routes);
-	withListingCartFeedApi(routes);
 	withListingFlagApi(routes);
 	withListingIgnoreApi(routes);
 	withListingScoreApi(routes);

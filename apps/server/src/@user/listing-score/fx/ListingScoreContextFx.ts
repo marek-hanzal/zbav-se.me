@@ -1,7 +1,7 @@
 import { Context, Effect } from "effect";
-import { DefaultListingScoreContext } from "../config/DefaultListingScoreContext";
+import { DefaultListingScoreContext } from "~/@user/listing-score/config/DefaultListingScoreContext";
 
-export type ListingScoreType = "listing" | "ignore" | "view" | "cart" | "flag";
+export type ListingScoreType = "listing" | "ignore" | "view" | "favourite" | "flag";
 
 export type ListingScoreContext = Record<ListingScoreType, number>;
 

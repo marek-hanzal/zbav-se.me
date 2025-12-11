@@ -76,8 +76,8 @@ export const ListingFilterSchema = z
 		withIgnored: z.boolean().optional().openapi({
 			description: "Include ignored listings",
 		}),
-		inCart: z.boolean().optional().openapi({
-			description: "Show listing that are in the user's cart",
+		isFavourite: z.boolean().optional().openapi({
+			description: "Show listing that are in the user's favourites",
 		}),
 		feedId: z.string().min(1, "Feed ID is required").optional().openapi("FeedId", {
 			description: "ID of the feed",

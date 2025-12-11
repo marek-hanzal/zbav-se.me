@@ -1,16 +1,16 @@
 import type { Migration } from "kysely";
 
-export const FavoriteMigration: Migration = {
+export const FavouriteMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("favorite")
+			.createTable("favourite")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("feedId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
-				"favorite_[userId]_fk",
+				"favourite_[userId]_fk",
 				[
 					"userId",
 				],
@@ -21,7 +21,7 @@ export const FavoriteMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"favorite_[feedId]_fk",
+				"favourite_[feedId]_fk",
 				[
 					"feedId",
 				],
@@ -32,7 +32,7 @@ export const FavoriteMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"favorite_[listingId]_fk",
+				"favourite_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -42,7 +42,7 @@ export const FavoriteMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("favorite_[userId-feedId-listingId]_unique_idx", [
+			.addUniqueConstraint("favourite_[userId-feedId-listingId]_unique_idx", [
 				"userId",
 				"feedId",
 				"listingId",
@@ -50,26 +50,26 @@ export const FavoriteMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("favorite_[userId]_idx")
-			.on("favorite")
+			.createIndex("favourite_[userId]_idx")
+			.on("favourite")
 			.column("userId")
 			.execute();
 
 		await db.schema
-			.createIndex("favorite_[feedId]_idx")
-			.on("favorite")
+			.createIndex("favourite_[feedId]_idx")
+			.on("favourite")
 			.column("feedId")
 			.execute();
 
 		await db.schema
-			.createIndex("favorite_[listingId]_idx")
-			.on("favorite")
+			.createIndex("favourite_[listingId]_idx")
+			.on("favourite")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("favorite_[createdAt]_idx")
-			.on("favorite")
+			.createIndex("favourite_[createdAt]_idx")
+			.on("favourite")
 			.column("createdAt")
 			.execute();
 	},

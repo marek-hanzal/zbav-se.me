@@ -47,13 +47,13 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 			eb
 				.exists(
 					eb
-						.selectFrom("favorite as f")
+						.selectFrom("favourite as f")
 						.select(sql`1`.as("true"))
 						.whereRef("f.listingId", "=", "l.id")
 						.where("f.userId", "=", userId),
 				)
 				.$castTo<boolean>()
-				.as("isInCart"),
+				.as("isFavourite"),
 
 			eb
 				.exists(
