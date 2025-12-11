@@ -58,10 +58,10 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 			eb
 				.exists(
 					eb
-						.selectFrom("listing_ignore as li")
+						.selectFrom("ignore as i")
 						.select(sql`1`.as("true"))
-						.whereRef("li.listingId", "=", "l.id")
-						.where("li.userId", "=", userId),
+						.whereRef("i.listingId", "=", "l.id")
+						.where("i.userId", "=", userId),
 				)
 				.$castTo<boolean>()
 				.as("isIgnored"),
