@@ -1,15 +1,15 @@
 import type { Migration } from "kysely";
 
-export const ListingIgnoreMigration: Migration = {
+export const IgnoreMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("listing_ignore")
+			.createTable("ignore")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
-				"listing_ignore_[userId]_fk",
+				"ignore_[userId]_fk",
 				[
 					"userId",
 				],
@@ -20,7 +20,7 @@ export const ListingIgnoreMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_ignore_[listingId]_fk",
+				"ignore_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -30,27 +30,23 @@ export const ListingIgnoreMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("listing_ignore_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("ignore_[userId-listingId]_unique_idx", [
 				"userId",
 				"listingId",
 			])
 			.execute();
 
-		await db.schema
-			.createIndex("listing_ignore_[userId]_idx")
-			.on("listing_ignore")
-			.column("userId")
-			.execute();
+		await db.schema.createIndex("ignore_[userId]_idx").on("ignore").column("userId").execute();
 
 		await db.schema
-			.createIndex("listing_ignore_[listingId]_idx")
-			.on("listing_ignore")
+			.createIndex("ignore_[listingId]_idx")
+			.on("ignore")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_ignore_[createdAt]_idx")
-			.on("listing_ignore")
+			.createIndex("ignore_[createdAt]_idx")
+			.on("ignore")
 			.column("createdAt")
 			.execute();
 	},

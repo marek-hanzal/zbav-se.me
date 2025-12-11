@@ -13,7 +13,7 @@ import { UserExMigration } from "./0011-user-ex";
 import { FeedMigration } from "./0012-feed";
 import { FavouriteMigration } from "./0013-favourite";
 import { ListingScoreMigration } from "./0014-listing-score";
-import { ListingIgnoreMigration } from "./0015-listing-ignore";
+import { IgnoreMigration } from "./0015-ignore";
 import { ListingFlagMigration } from "./0016-listing-flag";
 import { UserScoreMigration } from "./0017-user-score";
 import { ListingTransactionMigration } from "./0018-listing-transaction";
@@ -38,7 +38,7 @@ export const migrations = {
 	"0012-feed": FeedMigration,
 	"0013-favourite": FavouriteMigration,
 	"0014-listing-score": ListingScoreMigration,
-	"0015-listing-ignore": ListingIgnoreMigration,
+	"0015-ignore": IgnoreMigration,
 	"0016-listing-flag": ListingFlagMigration,
 	"0017-user-score": UserScoreMigration,
 	"0018-listing-transaction": ListingTransactionMigration,

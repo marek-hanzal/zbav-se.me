@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const ListingIgnoreDbSchema = z.object({
+export const IgnoreDbSchema = z.object({
 	id: z.string().openapi({
 		description: "ID of the ignore entry",
 	}),
@@ -16,8 +16,8 @@ export const ListingIgnoreDbSchema = z.object({
 	}),
 });
 
-export type ListingIgnoreDbSchema = typeof ListingIgnoreDbSchema;
+export type IgnoreDbSchema = typeof IgnoreDbSchema;
 
-export namespace ListingIgnoreDbSchema {
-	export type Type = z.infer<ListingIgnoreDbSchema>;
+export namespace IgnoreDbSchema {
+	export type Type = z.infer<IgnoreDbSchema>;
 }
