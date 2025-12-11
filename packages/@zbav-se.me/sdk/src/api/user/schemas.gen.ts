@@ -1185,7 +1185,7 @@ export const sListingScore = {
     ]
 } as const;
 
-export const sListingFlagToggle = {
+export const sFlagToggle = {
     type: 'object',
     properties: {
         toggle: {
@@ -1201,19 +1201,19 @@ export const sListingFlagToggle = {
     ]
 } as const;
 
-export const sListingFlagCountQuery = {
+export const sFlagCountQuery = {
     type: 'object',
     properties: {
         filter: {
-            $ref: '#/components/schemas/ListingFlagFilter'
+            $ref: '#/components/schemas/FlagFilter'
         },
         where: {
-            $ref: '#/components/schemas/ListingFlagCountWhere'
+            $ref: '#/components/schemas/FlagCountWhere'
         }
     }
 } as const;
 
-export const sListingFlagCountWhere = {
+export const sFlagCountWhere = {
     type: 'object',
     properties: {
         id: {
@@ -1237,7 +1237,7 @@ export const sListingFlagCountWhere = {
     }
 } as const;
 
-export const sListingFlagFilter = {
+export const sFlagFilter = {
     type: 'object',
     properties: {
         id: {
@@ -1261,39 +1261,39 @@ export const sListingFlagFilter = {
     }
 } as const;
 
-export const sListingFlagQuery = {
+export const sFlagQuery = {
     type: 'object',
     properties: {
         cursor: {
             $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            $ref: '#/components/schemas/ListingFlagFilter'
+            $ref: '#/components/schemas/FlagFilter'
         },
         where: {
-            $ref: '#/components/schemas/ListingFlagWhere'
+            $ref: '#/components/schemas/FlagWhere'
         },
         sort: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingFlagSort'
+                $ref: '#/components/schemas/FlagSort'
             }
         }
     }
 } as const;
 
-export const sListingFlagSortField = {
+export const sFlagSortField = {
     type: 'string',
     enum: [
         'createdAt'
     ]
 } as const;
 
-export const sListingFlagSort = {
+export const sFlagSort = {
     type: 'object',
     properties: {
         field: {
-            $ref: '#/components/schemas/ListingFlagSortField'
+            $ref: '#/components/schemas/FlagSortField'
         },
         direction: {
             $ref: '#/components/schemas/OrderEnum'
@@ -1305,7 +1305,7 @@ export const sListingFlagSort = {
     ]
 } as const;
 
-export const sListingFlagWhere = {
+export const sFlagWhere = {
     type: 'object',
     properties: {
         id: {
@@ -1329,13 +1329,13 @@ export const sListingFlagWhere = {
     }
 } as const;
 
-export const sListingFlagCollection = {
+export const sFlagCollection = {
     type: 'object',
     properties: {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingFlag'
+                $ref: '#/components/schemas/Flag'
             }
         },
         more: {
@@ -1348,7 +1348,7 @@ export const sListingFlagCollection = {
     ]
 } as const;
 
-export const sListingFlag = {
+export const sFlag = {
     type: 'object',
     properties: {
         id: {

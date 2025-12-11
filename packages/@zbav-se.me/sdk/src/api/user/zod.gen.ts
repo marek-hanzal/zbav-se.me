@@ -1020,7 +1020,7 @@ export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
 /**
  * Data for toggling a flag on a listing
  */
-export const zListingFlagToggle = z.object({
+export const zFlagToggle = z.object({
     toggle: z.boolean().register(z.globalRegistry, {
         description: 'Whether to add (true) or remove (false) the flag on the listing'
     }),
@@ -1031,12 +1031,12 @@ export const zListingFlagToggle = z.object({
     description: 'Data for toggling a flag on a listing'
 });
 
-export type zListingFlagToggle = z.infer<typeof zListingFlagToggle>;
+export type zFlagToggle = z.infer<typeof zFlagToggle>;
 
 /**
  * App-based filters
  */
-export const zListingFlagCountWhere = z.object({
+export const zFlagCountWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -1056,12 +1056,12 @@ export const zListingFlagCountWhere = z.object({
     description: 'App-based filters'
 });
 
-export type zListingFlagCountWhere = z.infer<typeof zListingFlagCountWhere>;
+export type zFlagCountWhere = z.infer<typeof zFlagCountWhere>;
 
 /**
- * Filter object for listing flag collection
+ * Filter object for flag collection
  */
-export const zListingFlagFilter = z.object({
+export const zFlagFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -1078,48 +1078,48 @@ export const zListingFlagFilter = z.object({
         description: 'This filter matches the exact listingId'
     }))
 }).register(z.globalRegistry, {
-    description: 'Filter object for listing flag collection'
+    description: 'Filter object for flag collection'
 });
 
-export type zListingFlagFilter = z.infer<typeof zListingFlagFilter>;
+export type zFlagFilter = z.infer<typeof zFlagFilter>;
 
 /**
- * Query object for listing flag count
+ * Query object for flag count
  */
-export const zListingFlagCountQuery = z.object({
-    filter: z.optional(zListingFlagFilter),
-    where: z.optional(zListingFlagCountWhere)
+export const zFlagCountQuery = z.object({
+    filter: z.optional(zFlagFilter),
+    where: z.optional(zFlagCountWhere)
 }).register(z.globalRegistry, {
-    description: 'Query object for listing flag count'
+    description: 'Query object for flag count'
 });
 
-export type zListingFlagCountQuery = z.infer<typeof zListingFlagCountQuery>;
+export type zFlagCountQuery = z.infer<typeof zFlagCountQuery>;
 
 /**
- * Field of the listing flag sort
+ * Field of the flag sort
  */
-export const zListingFlagSortField = z.enum(['createdAt']).register(z.globalRegistry, {
-    description: 'Field of the listing flag sort'
+export const zFlagSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the flag sort'
 });
 
-export type zListingFlagSortField = z.infer<typeof zListingFlagSortField>;
+export type zFlagSortField = z.infer<typeof zFlagSortField>;
 
 /**
- * Sort object for listing flag collection
+ * Sort object for flag collection
  */
-export const zListingFlagSort = z.object({
-    field: zListingFlagSortField,
+export const zFlagSort = z.object({
+    field: zFlagSortField,
     direction: zOrderEnum
 }).register(z.globalRegistry, {
-    description: 'Sort object for listing flag collection'
+    description: 'Sort object for flag collection'
 });
 
-export type zListingFlagSort = z.infer<typeof zListingFlagSort>;
+export type zFlagSort = z.infer<typeof zFlagSort>;
 
 /**
  * App-based filters
  */
-export const zListingFlagWhere = z.object({
+export const zFlagWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -1139,26 +1139,26 @@ export const zListingFlagWhere = z.object({
     description: 'App-based filters'
 });
 
-export type zListingFlagWhere = z.infer<typeof zListingFlagWhere>;
+export type zFlagWhere = z.infer<typeof zFlagWhere>;
 
 /**
- * Query object for listing flag collection
+ * Query object for flag collection
  */
-export const zListingFlagQuery = z.object({
+export const zFlagQuery = z.object({
     cursor: z.optional(zCursor),
-    filter: z.optional(zListingFlagFilter),
-    where: z.optional(zListingFlagWhere),
-    sort: z.optional(z.array(zListingFlagSort))
+    filter: z.optional(zFlagFilter),
+    where: z.optional(zFlagWhere),
+    sort: z.optional(z.array(zFlagSort))
 }).register(z.globalRegistry, {
-    description: 'Query object for listing flag collection'
+    description: 'Query object for flag collection'
 });
 
-export type zListingFlagQuery = z.infer<typeof zListingFlagQuery>;
+export type zFlagQuery = z.infer<typeof zFlagQuery>;
 
 /**
- * Listing flag data
+ * Flag data
  */
-export const zListingFlag = z.object({
+export const zFlag = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the flag entry'
     }),
@@ -1166,24 +1166,24 @@ export const zListingFlag = z.object({
         description: 'ID of the listing'
     })
 }).register(z.globalRegistry, {
-    description: 'Listing flag data'
+    description: 'Flag data'
 });
 
-export type zListingFlag = z.infer<typeof zListingFlag>;
+export type zFlag = z.infer<typeof zFlag>;
 
 /**
- * Collection of listing flag items
+ * Collection of flag items
  */
-export const zListingFlagCollection = z.object({
-    data: z.array(zListingFlag),
+export const zFlagCollection = z.object({
+    data: z.array(zFlag),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
 }).register(z.globalRegistry, {
-    description: 'Collection of listing flag items'
+    description: 'Collection of flag items'
 });
 
-export type zListingFlagCollection = z.infer<typeof zListingFlagCollection>;
+export type zFlagCollection = z.infer<typeof zFlagCollection>;
 
 /**
  * Score data for the listing
@@ -2689,52 +2689,52 @@ export const zApiListingMetricsFetchResponse = zListingMetrics;
 
 export type zapiListingMetricsFetchResponse = z.infer<typeof zApiListingMetricsFetchResponse>;
 
-export const zApiListingFlagCollectionData = z.object({
-    body: z.optional(zListingFlagQuery),
+export const zApiFlagCollectionData = z.object({
+    body: z.optional(zFlagQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingFlagCollectionRequest = z.infer<typeof zApiListingFlagCollectionData>;
+export type zapiFlagCollectionRequest = z.infer<typeof zApiFlagCollectionData>;
 
 /**
- * Access collection of listing flag items based on provided query
+ * Access collection of flag items based on provided query
  */
-export const zApiListingFlagCollectionResponse = zListingFlagCollection;
+export const zApiFlagCollectionResponse = zFlagCollection;
 
-export type zapiListingFlagCollectionResponse = z.infer<typeof zApiListingFlagCollectionResponse>;
+export type zapiFlagCollectionResponse = z.infer<typeof zApiFlagCollectionResponse>;
 
-export const zApiListingFlagCountData = z.object({
-    body: z.optional(zListingFlagCountQuery),
+export const zApiFlagCountData = z.object({
+    body: z.optional(zFlagCountQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingFlagCountRequest = z.infer<typeof zApiListingFlagCountData>;
+export type zapiFlagCountRequest = z.infer<typeof zApiFlagCountData>;
 
 /**
  * Return counts based on provided query
  */
-export const zApiListingFlagCountResponse = zCount;
+export const zApiFlagCountResponse = zCount;
 
-export type zapiListingFlagCountResponse = z.infer<typeof zApiListingFlagCountResponse>;
+export type zapiFlagCountResponse = z.infer<typeof zApiFlagCountResponse>;
 
-export const zApiListingFlagToggleData = z.object({
-    body: z.optional(zListingFlagToggle),
+export const zApiFlagToggleData = z.object({
+    body: z.optional(zFlagToggle),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingFlagToggleRequest = z.infer<typeof zApiListingFlagToggleData>;
+export type zapiFlagToggleRequest = z.infer<typeof zApiFlagToggleData>;
 
 /**
  * Nothing to say, we're just happy
  */
-export const zApiListingFlagToggleResponse = z.void().register(z.globalRegistry, {
+export const zApiFlagToggleResponse = z.void().register(z.globalRegistry, {
     description: 'Nothing to say, we\'re just happy'
 });
 
-export type zapiListingFlagToggleResponse = z.infer<typeof zApiListingFlagToggleResponse>;
+export type zapiFlagToggleResponse = z.infer<typeof zApiFlagToggleResponse>;
 
 export const zApiListingScoreCollectionData = z.object({
     body: z.optional(zListingScoreQuery),

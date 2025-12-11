@@ -943,7 +943,7 @@ export type tListingScore = {
 /**
  * Data for toggling a flag on a listing
  */
-export type tListingFlagToggle = {
+export type tFlagToggle = {
     /**
      * Whether to add (true) or remove (false) the flag on the listing
      */
@@ -955,17 +955,17 @@ export type tListingFlagToggle = {
 };
 
 /**
- * Query object for listing flag count
+ * Query object for flag count
  */
-export type tListingFlagCountQuery = {
-    filter?: tListingFlagFilter;
-    where?: tListingFlagCountWhere;
+export type tFlagCountQuery = {
+    filter?: tFlagFilter;
+    where?: tFlagCountWhere;
 };
 
 /**
  * App-based filters
  */
-export type tListingFlagCountWhere = {
+export type tFlagCountWhere = {
     /**
      * This filter matches the exact id
      */
@@ -989,9 +989,9 @@ export type tListingFlagCountWhere = {
 };
 
 /**
- * Filter object for listing flag collection
+ * Filter object for flag collection
  */
-export type tListingFlagFilter = {
+export type tFlagFilter = {
     /**
      * This filter matches the exact id
      */
@@ -1015,37 +1015,37 @@ export type tListingFlagFilter = {
 };
 
 /**
- * Query object for listing flag collection
+ * Query object for flag collection
  */
-export type tListingFlagQuery = {
+export type tFlagQuery = {
     cursor?: tCursor;
-    filter?: tListingFlagFilter;
-    where?: tListingFlagWhere;
-    sort?: Array<tListingFlagSort>;
+    filter?: tFlagFilter;
+    where?: tFlagWhere;
+    sort?: Array<tFlagSort>;
 };
 
 /**
- * Field of the listing flag sort
+ * Field of the flag sort
  */
-export const tListingFlagSortField = { createdAt: 'createdAt' } as const;
+export const tFlagSortField = { createdAt: 'createdAt' } as const;
 
 /**
- * Field of the listing flag sort
+ * Field of the flag sort
  */
-export type tListingFlagSortField = typeof tListingFlagSortField[keyof typeof tListingFlagSortField];
+export type tFlagSortField = typeof tFlagSortField[keyof typeof tFlagSortField];
 
 /**
- * Sort object for listing flag collection
+ * Sort object for flag collection
  */
-export type tListingFlagSort = {
-    field: tListingFlagSortField;
+export type tFlagSort = {
+    field: tFlagSortField;
     direction: tOrderEnum;
 };
 
 /**
  * App-based filters
  */
-export type tListingFlagWhere = {
+export type tFlagWhere = {
     /**
      * This filter matches the exact id
      */
@@ -1069,10 +1069,10 @@ export type tListingFlagWhere = {
 };
 
 /**
- * Collection of listing flag items
+ * Collection of flag items
  */
-export type tListingFlagCollection = {
-    data: Array<tListingFlag>;
+export type tFlagCollection = {
+    data: Array<tFlag>;
     /**
      * Whether there are more items to fetch
      */
@@ -1080,9 +1080,9 @@ export type tListingFlagCollection = {
 };
 
 /**
- * Listing flag data
+ * Flag data
  */
-export type tListingFlag = {
+export type tFlag = {
     /**
      * ID of the flag entry
      */
@@ -2820,64 +2820,64 @@ export type tApiListingMetricsFetchResponse = {
 
 export type apiListingMetricsFetchResponse = tApiListingMetricsFetchResponse[keyof tApiListingMetricsFetchResponse];
 
-export type tApiListingFlagCollectionRequest = {
-    body?: tListingFlagQuery;
+export type tApiFlagCollectionRequest = {
+    body?: tFlagQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-flag/collection';
+    url: '/api/user/flag/collection';
 };
 
-export type apiListingFlagCollectionErrors = {
+export type apiFlagCollectionErrors = {
     /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingFlagCollectionError = apiListingFlagCollectionErrors[keyof apiListingFlagCollectionErrors];
+export type apiFlagCollectionError = apiFlagCollectionErrors[keyof apiFlagCollectionErrors];
 
-export type tApiListingFlagCollectionResponse = {
+export type tApiFlagCollectionResponse = {
     /**
-     * Access collection of listing flag items based on provided query
+     * Access collection of flag items based on provided query
      */
-    200: tListingFlagCollection;
+    200: tFlagCollection;
 };
 
-export type apiListingFlagCollectionResponse = tApiListingFlagCollectionResponse[keyof tApiListingFlagCollectionResponse];
+export type apiFlagCollectionResponse = tApiFlagCollectionResponse[keyof tApiFlagCollectionResponse];
 
-export type tApiListingFlagCountRequest = {
-    body?: tListingFlagCountQuery;
+export type tApiFlagCountRequest = {
+    body?: tFlagCountQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-flag/count';
+    url: '/api/user/flag/count';
 };
 
-export type apiListingFlagCountErrors = {
+export type apiFlagCountErrors = {
     /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingFlagCountError = apiListingFlagCountErrors[keyof apiListingFlagCountErrors];
+export type apiFlagCountError = apiFlagCountErrors[keyof apiFlagCountErrors];
 
-export type tApiListingFlagCountResponse = {
+export type tApiFlagCountResponse = {
     /**
      * Return counts based on provided query
      */
     200: tCount;
 };
 
-export type apiListingFlagCountResponse = tApiListingFlagCountResponse[keyof tApiListingFlagCountResponse];
+export type apiFlagCountResponse = tApiFlagCountResponse[keyof tApiFlagCountResponse];
 
-export type tApiListingFlagToggleRequest = {
-    body?: tListingFlagToggle;
+export type tApiFlagToggleRequest = {
+    body?: tFlagToggle;
     path?: never;
     query?: never;
-    url: '/api/user/listing-flag/toggle';
+    url: '/api/user/flag/toggle';
 };
 
-export type apiListingFlagToggleErrors = {
+export type apiFlagToggleErrors = {
     /**
      * Invalid request
      */
@@ -2892,16 +2892,16 @@ export type apiListingFlagToggleErrors = {
     500: tMessage;
 };
 
-export type apiListingFlagToggleError = apiListingFlagToggleErrors[keyof apiListingFlagToggleErrors];
+export type apiFlagToggleError = apiFlagToggleErrors[keyof apiFlagToggleErrors];
 
-export type tApiListingFlagToggleResponse = {
+export type tApiFlagToggleResponse = {
     /**
      * Nothing to say, we're just happy
      */
     204: void;
 };
 
-export type apiListingFlagToggleResponse = tApiListingFlagToggleResponse[keyof tApiListingFlagToggleResponse];
+export type apiFlagToggleResponse = tApiFlagToggleResponse[keyof tApiFlagToggleResponse];
 
 export type tApiListingScoreCollectionRequest = {
     body?: tListingScoreQuery;
