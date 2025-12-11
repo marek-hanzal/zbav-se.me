@@ -1,6 +1,7 @@
+import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { WithDatabase } from "~/database/WithDatabase";
 import type { MessageLocationSortSchema } from "~/app/message-location/schema/MessageLocationSortSchema";
+import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withMessageLocationSelect {
 	export interface Props {
@@ -12,7 +13,10 @@ export namespace withMessageLocationSelect {
 }
 
 export const withMessageLocationSelect = ({ database, sort }: withMessageLocationSelect.Props) => {
-	let query = database.selectFrom("message_location as ml").selectAll();
+	let query = database
+		.selectFrom("message_location as ml")
+		.selectAll()
+		.select(sql<"location">`'location'`.as("type"));
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
