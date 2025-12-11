@@ -6,8 +6,8 @@ import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 export const TransactionStatusFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
-		messageThreadId: z.string().optional().openapi({
-			description: "This filter matches the exact messageThreadId",
+		transactionId: z.string().optional().openapi({
+			description: "This filter matches the exact transactionId",
 		}),
 		status: TransactionStatusEnumSchema.optional(),
 		statusIn: TransactionStatusEnumSchema.array().optional(),

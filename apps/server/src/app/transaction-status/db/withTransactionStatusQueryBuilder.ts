@@ -28,8 +28,8 @@ export const withTransactionStatusQueryBuilder: withTransactionStatusQueryBuilde
 		query = query.where("lts.id", "in", where.idIn);
 	}
 
-	if (where.messageThreadId) {
-		query = query.where("lts.messageThreadId", "=", where.messageThreadId);
+	if (where.transactionId) {
+		query = query.where("lts.transactionId", "=", where.transactionId);
 	}
 
 	if (where.status) {

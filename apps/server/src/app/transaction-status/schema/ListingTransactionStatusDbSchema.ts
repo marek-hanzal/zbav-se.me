@@ -6,7 +6,7 @@ export const TransactionStatusDbSchema = z.object({
 	id: z.string().openapi({
 		description: "ID of the transaction status entry",
 	}),
-	messageThreadId: z.string().openapi({
+	transactionId: z.string().openapi({
 		description: "ID of the transaction referenced by the status",
 	}),
 	side: TransactionSideEnumSchema,

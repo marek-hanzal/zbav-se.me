@@ -77,28 +77,33 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 				.$castTo<boolean>()
 				.as("hasFlag"),
 
-			// eb
-			// 	.selectFrom("transaction as lt")
-			// 	.innerJoin("transaction_status as lts", "lts.messageThreadId", "lt.id")
-			// 	.select("lt.id as messageThreadId")
-			// 	.whereRef("lt.listingId", "=", "l.id")
-			// 	.where("lt.userId", "=", userId)
-			// 	.where("lts.status", "in", [
-			// 		"request",
-			// 		"accepted",
-			// 	])
-			// 	.where((eb) =>
-			// 		eb(
-			// 			"lts.id",
-			// 			"=",
-			// 			eb
-			// 				.selectFrom("transaction_status as lts2")
-			// 				.select("lts2.id")
-			// 				.whereRef("lts2.messageThreadId", "=", "lt.id")
-			// 				.orderBy("lts2.createdAt", "desc")
-			// 				.limit(1),
-			// 		),
-			// 	)
-			// 	.as("messageThreadId"),
+			eb
+				.selectFrom("transaction as lt")
+				.innerJoin("transaction_status as lts", (join) =>
+					join
+						.onRef("lts.transactionId", "=", "lt.id")
+						.on((eb) =>
+							eb(
+								"lts.id",
+								"=",
+								eb
+									.selectFrom("transaction_status as lts2")
+									.select("lts2.id")
+									.whereRef("lts2.transactionId", "=", "lt.id")
+									.orderBy("lts2.createdAt", "desc")
+									.limit(1),
+							),
+						),
+				)
+				.select("lt.id")
+				.whereRef("lt.listingId", "=", "l.id")
+				.where("lt.userId", "=", userId)
+				.where("lts.status", "in", [
+					"request",
+					"accepted",
+				])
+				.orderBy("lts.createdAt", "desc")
+				.limit(1)
+				.as("transactionId"),
 		]);
 };
