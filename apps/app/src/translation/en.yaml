@@ -19,9 +19,6 @@
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
-086fe4ed109fcbb4cc2332d5703ad5c27b8ba02d29bddfc997ab622b:
-  ref: Upload (title)
-  value: Upload (title)
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
   ref: Gallery (title)
   value: Gallery (title)
@@ -79,9 +76,6 @@
 20edb3c94a6d8d59aba301218e13ca8f48ffc6500657af104e4f25e3:
   ref: Buyer transaction request (buyer-buyer) (label)
   value: Buyer transaction request (buyer-buyer) (label)
-258a1ecbf8e264cd35df18a3b70940875586cb5db1d812c6cdc12853:
-  ref: To seller (label)
-  value: To seller (label)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
@@ -214,6 +208,9 @@
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
   ref: Buyer - shop (title)
   value: Buyer - shop (title)
+5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
+  ref: Loading... (button)
+  value: Loading... (button)
 567d286dd4f0b55d57e494895a562b4a3c8f5158446c68ab67a9bbe6:
   ref: Transaction requested (label)
   value: Transaction requested (label)
@@ -280,15 +277,9 @@
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
-6c388d147d0bda5b267c52bbf80482f6ba0eff93845084586bd1c058:
-  ref: No transactions found - seller (title)
-  value: No transactions found - seller (title)
 6cf1f312f04cf8aac969e1beb063b3fcbf6458d93e2707411b6e98dd:
   ref: Seller info (label)
   value: Seller info (label)
-6e223e908b8196e315e1fd5f9f2c18148229cfec61f0d9e6855c548a:
-  ref: User profile (label)
-  value: User profile (label)
 6e81113910fa39bd89e380fbc636cd616a6556dda635bb5dc4a928a9:
   ref: Transaction accepted (label)
   value: Transaction accepted (label)
@@ -358,18 +349,15 @@
 877f5f6106968c26486b30ccfd0af1e22ca05b4131099f99823b45f6:
   ref: With VAT
   value: With VAT
-89067b3abe095783c508064cf823fc4ea13ef49e2421774f1650aa2f:
-  ref: No transactions found - seller (message)
-  value: No transactions found - seller (message)
+886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
+  ref: Messages (label)
+  value: Messages (label)
 89ce43e549ae96ce623508874d063e27e0a12b2bcece4e86069598b3:
   ref: Feed - location security (hint)
   value: Feed - location security (hint)
 89dbab7e6f158a0076038c969fb2936c6746937d31c2a9963daa9bde:
   ref: stripIfInteger
   value: stripIfInteger
-89de35181dd621faa3b72a86db8eb42941a461217500624d1e96a885:
-  ref: Listing - upload photo (placeholder)
-  value: Listing - upload photo (placeholder)
 8c00fb88a09730194dd045f089bbea7de140bf5478b6e0626ba8b28d:
   ref: Transactions (label)
   value: Transactions (label)
@@ -391,6 +379,9 @@
 9835a78e390b045bfa153f4b6289fd0578f068909548d7c7ab30b0ea:
   ref: Feed created (toast)
   value: Feed created (toast)
+98cc44679a3e8e6dd7e486fb219a599a01fe05aabeebf65f8e53af66:
+  ref: No messages found - seller (message)
+  value: No messages found - seller (message)
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
@@ -418,9 +409,9 @@
 a012442134ffb92cd4a9b82e225dcf084a14efd16c7ad75c91f1b338:
   ref: human
   value: human
-a23ce2805827f8c89f8254b43ecc2a73d5974af2fb57a74ecd8839c5:
-  ref: Invalid data provided (message)
-  value: Invalid data provided (message)
+a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
+  ref: Messages (title)
+  value: Messages (title)
 a55387e66d56fc537f261c638ef5f30318fca9ffe61c9917ffa04684:
   ref: Accept transaction (label)
   value: Accept transaction (label)
@@ -460,9 +451,6 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
 b1c96705cee9f240b173e9c05e3be0b65342ac52bef05a2cc58e4d43:
   ref: Buyer transaction rejected (buyer) (label)
   value: Buyer transaction rejected (buyer) (label)
-b2a00524ce3a0620b582b540a0f5f1da7fd91db9b79dc3944233603c:
-  ref: Invalid data provided (title)
-  value: Invalid data provided (title)
 b2c5e1ab63bde746cb442d3c4bd5a84ae037df7adac301ea412f5316:
   ref: Next - category (button)
   value: Next - category (button)
@@ -522,9 +510,6 @@ c615edcd5fcc61a4a0f293d9aab6bfb092ff553a1ea8bea15b55d381:
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
-c7d618151613e564c1e8c2b9fce001e15ed60b9afd18b0cedb2aa5a5:
-  ref: To buyer (label)
-  value: To buyer (label)
 ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
   ref: Error creating feed (toast)
   value: Error creating feed (toast)
@@ -543,9 +528,6 @@ cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
 ccc9608f33bbd658f6abc07176e9cb33028027f216c81d70b4616401:
   ref: Transaction successful (label)
   value: Transaction successful (label)
-ccce7c94ffc14fc42763c764c15339498fad0da657e461f8eea47812:
-  ref: Upload - disabled (placeholder)
-  value: Upload - disabled (placeholder)
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)
@@ -606,6 +588,9 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
   ref: Shop (label)
   value: Shop (label)
+e528cd2ca5c4f80314cc47ce6ed700b04b9fb437b0d32c39313453d7:
+  ref: No messages found - seller (title)
+  value: No messages found - seller (title)
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
   ref: Listing score hint (label)
   value: Listing score hint (label)
