@@ -4,14 +4,14 @@ import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
 
-export const Route = createFileRoute("/$locale/home/user")({
+export const Route = createFileRoute("/$locale/ui/user")({
 	component() {
 		const { user } = useLoaderData({
 			from: "/$locale",
-		});
+		})
 		const { locale } = useParams({
 			from: "/$locale",
-		});
+		})
 
 		return (
 			<TitleContainer
@@ -28,6 +28,6 @@ export const Route = createFileRoute("/$locale/home/user")({
 					action={<SignOutButton locale={locale} />}
 				/>
 			</TitleContainer>
-		);
+		)
 	},
 });

@@ -2,31 +2,29 @@ import { createFileRoute } from "@tanstack/react-router";
 import { withUserExPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { useEffect } from "react";
-import { SellerMenu } from "~/app/@seller/ui/SellerMenu";
+import { BuyerMenu } from "~/app/@buyer/ui/BuyerMenu";
 
-export const Route = createFileRoute("/$locale/home/seller/")({
+export const Route = createFileRoute("/$locale/ui/buyer/")({
 	component() {
 		const { locale } = Route.useParams();
 		const mutation = withUserExPatchMutation.useMutation();
 
 		useEffect(() => {
 			mutation.mutate({
-				side: "seller",
-			});
+				side: "buyer",
+			})
 		}, []);
 
 		return (
 			<TitleContainer
-				data-ui="Seller-root"
-				textTitle={"Seller home (title)"}
+				data-ui={"/buyer/index[TitleContainer]"}
+				textTitle={"Buyer home (title)"}
 				ui={{
 					layout: "vertical-header-content",
-					tone: "secondary",
-					theme: "light",
 				}}
 			>
-				<SellerMenu locale={locale} />
+				<BuyerMenu locale={locale} />
 			</TitleContainer>
-		);
+		)
 	},
 });

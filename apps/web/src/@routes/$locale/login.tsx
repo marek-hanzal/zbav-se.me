@@ -44,7 +44,7 @@ export const Route = createFileRoute("/$locale/login")({
 				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/home",
+						href: "/:locale/ui/home",
 						query: {
 							locale,
 						},
@@ -59,7 +59,7 @@ export const Route = createFileRoute("/$locale/login")({
 				await navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/home",
+						href: "/:locale/ui/home",
 						query: {
 							locale,
 						},

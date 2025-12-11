@@ -29,10 +29,7 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 		>
 			<LinkTo
 				icon={HomeIcon}
-				to="/$locale/home"
-				activeOptions={{
-					exact: true,
-				}}
+				to="/$locale/ui/home"
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,
@@ -49,7 +46,7 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 
 			<LinkTo
 				icon={SellerIcon}
-				to="/$locale/home/seller"
+				to="/$locale/ui/seller"
 				activeOptions={{
 					exact: true,
 				}}
@@ -69,10 +66,7 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 
 			<LinkTo
 				icon={BuyerIcon}
-				to="/$locale/home/buyer"
-				activeOptions={{
-					exact: true,
-				}}
+				to="/$locale/ui/buyer"
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,
@@ -89,10 +83,7 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 
 			<LinkTo
 				icon={UserIcon}
-				to="/$locale/home/user"
-				activeOptions={{
-					exact: true,
-				}}
+				to="/$locale/ui/user"
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,

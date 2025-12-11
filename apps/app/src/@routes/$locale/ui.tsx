@@ -2,13 +2,13 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { Nav } from "~/app/home/Nav";
 
-export const Route = createFileRoute("/$locale/home")({
+export const Route = createFileRoute("/$locale/ui")({
 	component() {
 		const { locale } = Route.useParams();
 
 		return (
 			<Container
-				data-ui="/home[Container]"
+				data-ui="/ui[Container]"
 				ui={{
 					layout: "vertical-content-footer",
 					height: "full",

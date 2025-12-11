@@ -71,7 +71,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 				textTitle={"No listings (title)"}
 				action={
 					<LinkTo
-						to={"/$locale/buyer"}
+						to={"/$locale/home/buyer"}
 						params={{
 							locale,
 						}}
