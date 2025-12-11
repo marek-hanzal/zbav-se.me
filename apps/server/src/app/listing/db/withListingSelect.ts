@@ -1,8 +1,8 @@
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
+import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
-import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 
 export namespace withListingSelect {
@@ -77,28 +77,28 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 				.$castTo<boolean>()
 				.as("hasFlag"),
 
-			eb
-				.selectFrom("transaction as lt")
-				.innerJoin("transaction_status as lts", "lts.messageThreadId", "lt.id")
-				.select("lt.id as messageThreadId")
-				.whereRef("lt.listingId", "=", "l.id")
-				.where("lt.userId", "=", userId)
-				.where("lts.status", "in", [
-					"request",
-					"accepted",
-				])
-				.where((eb) =>
-					eb(
-						"lts.id",
-						"=",
-						eb
-							.selectFrom("transaction_status as lts2")
-							.select("lts2.id")
-							.whereRef("lts2.messageThreadId", "=", "lt.id")
-							.orderBy("lts2.createdAt", "desc")
-							.limit(1),
-					),
-				)
-				.as("messageThreadId"),
+			// eb
+			// 	.selectFrom("transaction as lt")
+			// 	.innerJoin("transaction_status as lts", "lts.messageThreadId", "lt.id")
+			// 	.select("lt.id as messageThreadId")
+			// 	.whereRef("lt.listingId", "=", "l.id")
+			// 	.where("lt.userId", "=", userId)
+			// 	.where("lts.status", "in", [
+			// 		"request",
+			// 		"accepted",
+			// 	])
+			// 	.where((eb) =>
+			// 		eb(
+			// 			"lts.id",
+			// 			"=",
+			// 			eb
+			// 				.selectFrom("transaction_status as lts2")
+			// 				.select("lts2.id")
+			// 				.whereRef("lts2.messageThreadId", "=", "lt.id")
+			// 				.orderBy("lts2.createdAt", "desc")
+			// 				.limit(1),
+			// 		),
+			// 	)
+			// 	.as("messageThreadId"),
 		]);
 };
