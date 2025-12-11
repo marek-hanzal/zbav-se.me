@@ -1,14 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
+import { ArrowRightIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import z from "zod";
 import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
 
-export const Route = createFileRoute("/$locale/buyer/transaction/list")({
+export const Route = createFileRoute("/$locale/ui/buyer/message/list")({
 	validateSearch: z.object({
 		open: z.string().optional(),
 	}),
@@ -18,21 +17,7 @@ export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 		const navigate = Route.useNavigate();
 
 		return (
-			<TitleContainer
-				textTitle={"Transactions (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/home/buyer"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
+			<TitleContainer textTitle={"Transactions (title)"}>
 				<TransactionListContainer
 					locale={locale}
 					side="buyer"

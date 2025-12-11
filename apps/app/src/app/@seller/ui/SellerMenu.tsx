@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { ListingIcon, MessageIcon, ShopIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
 
@@ -67,7 +67,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					{...uiMenuButton({
 						className: [],
 					})}
-					icon={TransactionIcon}
+					icon={MessageIcon}
 					iconProps={{
 						ui: {
 							...icon,
@@ -91,7 +91,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/seller/listing/my"
+					to="/$locale/ui/seller/listing/my"
 					params={{
 						locale,
 					}}

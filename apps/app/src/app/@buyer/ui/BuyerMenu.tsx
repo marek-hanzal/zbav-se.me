@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { CartIcon, FeedIcon, ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { CartIcon, FeedIcon, ListingIcon, MessageIcon, ShopIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
 
@@ -67,18 +67,18 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					{...uiMenuButton({
 						className: [],
 					})}
-					icon={TransactionIcon}
+					icon={MessageIcon}
 					iconProps={{
 						ui: {
 							...icon,
 						},
 					}}
-					to="/$locale/buyer/transaction/list"
+					to="/$locale/ui/buyer/message/list"
 					params={{
 						locale,
 					}}
 				>
-					<Tx label="Transactions (label)" />
+					<Tx label="Messages (label)" />
 				</LinkTo>
 
 				<LinkTo
