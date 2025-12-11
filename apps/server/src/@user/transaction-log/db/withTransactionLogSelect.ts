@@ -32,14 +32,14 @@ export const withTransactionLogSelect = ({ database, sort }: withTransactionLogS
 		sql<any>`null::json`.as("gallery"),
 	]);
 
-	const messageQuery = database.selectFrom("message as m").select([
+	const messageQuery = database.selectFrom("message_text as m").select([
 		"m.side",
 		"m.id",
 		"m.messageThreadId",
 		sql<TransactionEventEnumSchema.Type>`'message'`.as("event"),
 		"m.createdAt",
 		sql<TransactionStatusEnumSchema.Type>`'request'::transaction_status_enum`.as("status"),
-		"m.message",
+		"m.text as message",
 		sql<string>`'locationId'`.as("locationId"),
 		sql<Date>`now()`.as("time"),
 		sql<string>`'galleryId'`.as("galleryId"),

@@ -13,10 +13,6 @@ import type { ListingScoreDbSchema } from "~/app/listing-score/schema/ListingSco
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDbSchema } from "~/app/message/schema/MessageDbSchema";
 import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
-import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
-import type { TransactionGalleryDbSchema } from "~/app/transaction-gallery/schema/TransactionGalleryDbSchema";
-import type { TransactionLocationDbSchema } from "~/app/transaction-location/schema/TransactionLocationDbSchema";
-import type { TransactionStatusDbSchema } from "~/app/transaction-status/schema/TransactionStatusDbSchema";
 import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
 import type { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
 import type { auth } from "~/auth/auth";
@@ -35,12 +31,8 @@ export interface Database {
 	listing_score: ListingScoreDbSchema.Type;
 	listing: ListingDbSchema.Type;
 	location: LocationDbSchema.Type;
-	message: MessageDbSchema.Type;
+	message_text: MessageDbSchema.Type;
 	message_thread: MessageThreadDbSchema.Type;
-	transaction_gallery: TransactionGalleryDbSchema.Type;
-	transaction_location: TransactionLocationDbSchema.Type;
-	transaction_status: TransactionStatusDbSchema.Type;
-	transaction: TransactionDbSchema.Type;
 	upload: UploadDbSchema.Type;
 	user_ex: UserExDbSchema.Type;
 	user: typeof auth.$Infer.Session.user;

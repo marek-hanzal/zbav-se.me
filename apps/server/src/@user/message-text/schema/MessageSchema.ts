@@ -4,7 +4,13 @@ import type { TransactionEventEnumSchema } from "~/app/transaction/schema/Transa
 
 export const MessageSchema = z
 	.object({
-		...MessageDbSchema.shape,
+		id: MessageDbSchema.shape.id,
+		messageThreadId: MessageDbSchema.shape.messageThreadId,
+		side: MessageDbSchema.shape.side,
+		message: z.string().openapi({
+			description: "Message content",
+		}),
+		createdAt: MessageDbSchema.shape.createdAt,
 		event: z.literal("message" satisfies TransactionEventEnumSchema.Type).openapi({
 			description: "Event type",
 		}),

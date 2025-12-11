@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { MessageQuerySchema } from "~/@user/message/schema/MessageQuerySchema";
+import { MessageThreadQuerySchema } from "~/@user/message-thread/schema/MessageThreadQuerySchema";
 
 export const MessageThreadPatchSchema = z
 	.object({
-		query: MessageQuerySchema,
+		query: MessageThreadQuerySchema,
 	})
 	.openapi("MessageThreadPatch", {
 		description: "Data for updating an existing message thread",

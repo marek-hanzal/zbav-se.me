@@ -1,7 +1,7 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { messageCreateFx } from "~/@user/message/fx/messageCreateFx";
-import { MessageSchema } from "~/@user/message/schema/MessageSchema";
+import { messageTextCreateFx } from "~/@user/message-text/fx/messageCreateFx";
+import { MessageSchema } from "~/@user/message-text/schema/MessageSchema";
 import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
@@ -9,13 +9,14 @@ import type { Routes } from "~/hono/Routes";
 import type { MessageSchema as ErrorMessageSchema } from "~/schema/MessageSchema";
 import { MessageCreateSchema } from "./schema/MessageCreateSchema";
 
-export const withMessageCreateApi: Routes.Fn = ({ userHono }) => {
+export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/message/create",
-			description: "Create a message for a message thread. Requires access to the thread.",
-			operationId: "apiMessageCreate",
+			path: "/message-text/create",
+			description:
+				"Create a message text for a message thread. Requires access to the thread.",
+			operationId: "apiMessageTextCreate",
 			request: {
 				body: {
 					content: {
@@ -61,14 +62,14 @@ export const withMessageCreateApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"message",
+				"message-text",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<MessageSchema.Type, 200>(
-					yield* messageCreateFx(c.req.valid("json")),
+					yield* messageTextCreateFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

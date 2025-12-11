@@ -3,19 +3,25 @@ import { match } from "ts-pattern";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { MessageSortSchema } from "../schema/MessageSortSchema";
 
-export namespace withMessageSelect {
+export namespace withMessageTextSelect {
 	export interface Props {
 		database: WithDatabase;
 		sort: MessageSortSchema.Type[] | undefined;
 	}
 
-	export type Select = ReturnType<typeof withMessageSelect>;
+	export type Select = ReturnType<typeof withMessageTextSelect>;
 }
 
-export const withMessageSelect = ({ database, sort }: withMessageSelect.Props) => {
+export const withMessageTextSelect = ({ database, sort }: withMessageTextSelect.Props) => {
 	let query = database
-		.selectFrom("message as m")
-		.selectAll()
+		.selectFrom("message_text as m")
+		.select([
+			"m.id",
+			"m.messageThreadId",
+			"m.side",
+			"m.text as message",
+			"m.createdAt",
+		])
 		.select(sql<"message">`'message'`.as("event"));
 
 	for (const item of sort ?? []) {

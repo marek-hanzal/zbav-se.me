@@ -1,16 +1,19 @@
 import type { MessageFilterSchema } from "../schema/MessageFilterSchema";
-import type { withMessageSelect } from "./withMessageSelect";
+import type { withMessageTextSelect } from "./withMessageSelect";
 
-export namespace withMessageQueryBuilder {
+export namespace withMessageTextQueryBuilder {
 	export interface Props {
-		select: withMessageSelect.Select;
+		select: withMessageTextSelect.Select;
 		where?: MessageFilterSchema.Type;
 	}
 
-	export type Callback = (props: Props) => withMessageSelect.Select;
+	export type Callback = (props: Props) => withMessageTextSelect.Select;
 }
 
-export const withMessageQueryBuilder: withMessageQueryBuilder.Callback = ({ select, where }) => {
+export const withMessageTextQueryBuilder: withMessageTextQueryBuilder.Callback = ({
+	select,
+	where,
+}) => {
 	if (!where) {
 		return select;
 	}

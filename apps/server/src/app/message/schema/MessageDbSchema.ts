@@ -9,8 +9,8 @@ export const MessageDbSchema = z.object({
 		description: "ID of the message thread referenced by the message",
 	}),
 	side: TransactionSideEnumSchema,
-	message: z.string().openapi({
-		description: "Message content",
+	text: z.string().openapi({
+		description: "Message content (database column name)",
 	}),
 	createdAt: z.coerce.date().openapi({
 		description: "Creation timestamp",

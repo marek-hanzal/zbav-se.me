@@ -7,7 +7,7 @@ export const TransactionStatusMigration: Migration = {
 			//
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			//
-			.addColumn("messageThreadId", "text", (col) => col.notNull())
+			.addColumn("transactionId", "text", (col) => col.notNull())
 			.addColumn("side", sql`transaction_side_enum`, (col) => col.notNull())
 			//
 			.addColumn("status", sql`transaction_status_enum`, (col) => col.notNull())
@@ -15,9 +15,9 @@ export const TransactionStatusMigration: Migration = {
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			//
 			.addForeignKeyConstraint(
-				"transaction_status_[messageThreadId]_fk",
+				"transaction_status_[transactionId]_fk",
 				[
-					"messageThreadId",
+					"transactionId",
 				],
 				"transaction",
 				[
@@ -28,9 +28,21 @@ export const TransactionStatusMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("transaction_status_[messageThreadId]_idx")
+			.createIndex("transaction_status_[transactionId]_idx")
 			.on("transaction_status")
-			.column("messageThreadId")
+			.column("transactionId")
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_status_[side]_idx")
+			.on("transaction_status")
+			.column("side")
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_status_[status]_idx")
+			.on("transaction_status")
+			.column("status")
 			.execute();
 	},
 };

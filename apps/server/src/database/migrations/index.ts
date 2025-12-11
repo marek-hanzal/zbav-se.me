@@ -17,11 +17,11 @@ import { IgnoreMigration } from "./0015-ignore";
 import { FlagMigration } from "./0016-flag";
 import { UserScoreMigration } from "./0017-user-score";
 import { MessageThreadMigration } from "./0018-message-thread";
-import { MessageMigration } from "./0019-message";
-import { TransactionMigration } from "./0023-transaction";
-import { TransactionStatusMigration } from "./0024-transaction-status";
-import { TransactionGalleryMigration } from "./0026-transaction-gallery";
-import { TransactionLocationMigration } from "./0027-transaction-location";
+import { MessageTextMigration } from "./0019-message-text";
+import { MessageGalleryMigration } from "./0020-message-gallery";
+import { MessageLocationMigration } from "./0021-message-location";
+import { TransactionMigration } from "./0022-transaction";
+import { TransactionStatusMigration } from "./0023-transaction-status";
 
 export const migrations = {
 	"0000-postgres-extensions": PostgresExtensionsMigration,
@@ -43,9 +43,9 @@ export const migrations = {
 	"0016-flag": FlagMigration,
 	"0017-user-score": UserScoreMigration,
 	"0018-message-thread": MessageThreadMigration,
-	"0019-message": MessageMigration,
-	"0023-transaction": TransactionMigration,
-	"0024-transaction-status": TransactionStatusMigration,
-	"0026-transaction-gallery": TransactionGalleryMigration,
-	"0027-transaction-location": TransactionLocationMigration,
+	"0019-message-text": MessageTextMigration,
+	"0020-message-gallery": MessageGalleryMigration,
+	"0021-message-location": MessageLocationMigration,
+	"0022-transaction": TransactionMigration,
+	"0023-transaction-status": TransactionStatusMigration,
 } as const;

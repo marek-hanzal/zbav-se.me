@@ -2,18 +2,18 @@ import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { withMessageQueryBuilder } from "../db/withMessageQueryBuilder";
-import { withMessageSelect } from "../db/withMessageSelect";
+import { withMessageTextQueryBuilder } from "../db/withMessageQueryBuilder";
+import { withMessageTextSelect } from "../db/withMessageSelect";
 import type { MessageQuerySchema } from "../schema/MessageQuerySchema";
 import { MessageSchema } from "../schema/MessageSchema";
 
-export namespace messageFetchFx {
+export namespace messageTextFetchFx {
 	export interface Props {
 		query: Omit<MessageQuerySchema.Type, "cursor">;
 	}
 }
 
-export const messageFetchFx = ({ query }: messageFetchFx.Props) => {
+export const messageTextFetchFx = ({ query }: messageTextFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
@@ -21,22 +21,22 @@ export const messageFetchFx = ({ query }: messageFetchFx.Props) => {
 			const { filter, where, sort } = query;
 
 			return withFetch({
-				select: withMessageSelect({
+				select: withMessageTextSelect({
 					database,
 					sort,
 				}),
 				output: MessageSchema,
 				filter,
 				where,
-				query: withMessageQueryBuilder,
+				query: withMessageTextQueryBuilder,
 			});
 		});
 
 		if (!data) {
 			return yield* new NotFoundError({
-				resource: "message",
+				resource: "message-text",
 				resourceId: "(query)",
-				message: "Message not found",
+				message: "Message text not found",
 			});
 		}
 
@@ -44,4 +44,4 @@ export const messageFetchFx = ({ query }: messageFetchFx.Props) => {
 	});
 };
 
-export type messageFetchFx = ReturnType<typeof messageFetchFx>;
+export type messageTextFetchFx = ReturnType<typeof messageTextFetchFx>;

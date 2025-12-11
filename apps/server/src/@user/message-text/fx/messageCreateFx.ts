@@ -1,20 +1,20 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { messageFetchFx } from "~/@user/message/fx/messageFetchFx";
+import { messageTextFetchFx } from "~/@user/message-text/fx/messageFetchFx";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
-export namespace messageCreateFx {
+export namespace messageTextCreateFx {
 	export interface Props {
 		messageThreadId: string;
 		message: string;
 	}
 }
 
-export const messageCreateFx = ({ messageThreadId, message }: messageCreateFx.Props) => {
+export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -34,11 +34,11 @@ export const messageCreateFx = ({ messageThreadId, message }: messageCreateFx.Pr
 
 			yield* Effect.tryPromise(async () => {
 				return database
-					.insertInto("message")
+					.insertInto("message_text")
 					.values({
 						id,
 						messageThreadId,
-						message,
+						text: message,
 						side: transaction.side,
 						createdAt: new Date(),
 					})
@@ -50,7 +50,7 @@ export const messageCreateFx = ({ messageThreadId, message }: messageCreateFx.Pr
 				messageThreadId: transaction.messageThreadId,
 			});
 
-			return yield* messageFetchFx({
+			return yield* messageTextFetchFx({
 				query: {
 					where: {
 						id,
@@ -61,4 +61,4 @@ export const messageCreateFx = ({ messageThreadId, message }: messageCreateFx.Pr
 	);
 };
 
-export type messageCreateFx = ReturnType<typeof messageCreateFx>;
+export type messageTextCreateFx = ReturnType<typeof messageTextCreateFx>;

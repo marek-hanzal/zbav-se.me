@@ -3,16 +3,6 @@ import type { Migration } from "kysely";
 export const TransactionMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createType("transaction_event_enum")
-			.asEnum([
-				"status",
-				"message",
-				"gallery",
-				"location",
-			])
-			.execute();
-
-		await db.schema
 			.createType("transaction_status_enum")
 			.asEnum([
 				"request",
