@@ -34,6 +34,7 @@ export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCre
 					.values({
 						id,
 						messageThreadId,
+						userId: user.id,
 						text: message,
 						createdAt: new Date(),
 					})

@@ -15,12 +15,7 @@ export namespace withMessageTextSelect {
 export const withMessageTextSelect = ({ database, sort }: withMessageTextSelect.Props) => {
 	let query = database
 		.selectFrom("message_text as m")
-		.select([
-			"m.id",
-			"m.messageThreadId",
-			"m.text",
-			"m.createdAt",
-		])
+		.selectAll("m")
 		.select(sql<"text">`'text'`.as("type"));
 
 	for (const item of sort ?? []) {
