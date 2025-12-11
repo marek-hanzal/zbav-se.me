@@ -11,7 +11,7 @@ import { ListingGalleryMigration } from "./0009-listing-gallery";
 import { CategoryMissMigration } from "./0010-category-miss";
 import { UserExMigration } from "./0011-user-ex";
 import { FeedMigration } from "./0012-feed";
-import { ListingCartMigration } from "./0013-listing-cart";
+import { FavoriteMigration } from "./0013-favorite";
 import { ListingScoreMigration } from "./0014-listing-score";
 import { ListingIgnoreMigration } from "./0015-listing-ignore";
 import { ListingFlagMigration } from "./0016-listing-flag";
@@ -36,7 +36,7 @@ export const migrations = {
 	"0010-category-miss": CategoryMissMigration,
 	"0011-user-ex": UserExMigration,
 	"0012-feed": FeedMigration,
-	"0013-listing-cart": ListingCartMigration,
+	"0013-favorite": FavoriteMigration,
 	"0014-listing-score": ListingScoreMigration,
 	"0015-listing-ignore": ListingIgnoreMigration,
 	"0016-listing-flag": ListingFlagMigration,

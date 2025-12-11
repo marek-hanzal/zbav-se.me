@@ -1,6 +1,6 @@
 import type { Migration } from "kysely";
 
-export const ListingCartMigration: Migration = {
+export const FavoriteMigration: Migration = {
 	async up(db) {
 		await db.schema
 			.createTable("listing_cart")
