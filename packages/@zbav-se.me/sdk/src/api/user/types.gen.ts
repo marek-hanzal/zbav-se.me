@@ -810,7 +810,7 @@ export const tListingScoreTypeEnum = {
     ignore: 'ignore',
     flag: 'flag',
     view: 'view',
-    cart: 'cart'
+    favourite: 'favourite'
 } as const;
 
 /**
@@ -1221,14 +1221,62 @@ export type tListingFlag = {
 };
 
 /**
- * Collection of feed items from listing cart
+ * Score data for the listing
  */
-export type tListingCartFeedCollection = {
-    data: Array<tListingCartFeed>;
+export type tListingMetrics = {
     /**
-     * Whether there are more items to fetch
+     * Number of views from the feed (low attention score)
      */
-    more: boolean;
+    listing: number | null;
+    /**
+     * Overall score gained from listing interactions
+     */
+    listingScore: number | null;
+    /**
+     * Number of views from the listing
+     */
+    views: number | null;
+    /**
+     * Overall score gained from views
+     */
+    viewsScore: number | null;
+    /**
+     * Number of items added to favourites
+     */
+    favourite: number | null;
+    /**
+     * Overall score gained from favourite interactions
+     */
+    favouriteScore: number | null;
+    /**
+     * Number of items ignored
+     */
+    ignore: number | null;
+    /**
+     * Overall score gained from ignore interactions
+     */
+    ignoreScore: number | null;
+    /**
+     * Number of items flagged
+     */
+    flag: number | null;
+    /**
+     * Overall score gained from flag interactions
+     */
+    flagScore: number | null;
+    /**
+     * Raw score of the listing
+     */
+    score: number | null;
+};
+
+/**
+ * Query object for listing count
+ */
+export type tListingCountQuery = {
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    meta?: tListingMeta;
 };
 
 /**
@@ -1257,32 +1305,6 @@ export type tListingMeta = {
  * ID of the feed
  */
 export type tFeedId = string;
-
-/**
- * Field of the listing sort
- */
-export const tListingSortField = {
-    price: 'price',
-    condition: 'condition',
-    age: 'age',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    expiresAt: 'expiresAt',
-    geo: 'geo'
-} as const;
-
-/**
- * Field of the listing sort
- */
-export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
-
-/**
- * Sort object for listing collection
- */
-export type tListingSort = {
-    field: tListingSortField;
-    direction: tOrderEnum;
-};
 
 /**
  * App-based filters
@@ -1359,9 +1381,9 @@ export type tListingWhere = {
      */
     withIgnored?: boolean;
     /**
-     * Show listing that are in the user's cart
+     * Show listing that are in the user's favourites
      */
-    inCart?: boolean;
+    isFavourite?: boolean;
     feedId?: tFeedId;
     feedIdIn?: tFeedIdIn;
     /**
@@ -1475,255 +1497,15 @@ export type tListingFilter = {
      */
     withIgnored?: boolean;
     /**
-     * Show listing that are in the user's cart
+     * Show listing that are in the user's favourites
      */
-    inCart?: boolean;
+    isFavourite?: boolean;
     feedId?: tFeedId;
     feedIdIn?: tFeedIdIn;
     /**
      * Show listings that are in the user's transaction
      */
     transaction?: boolean;
-};
-
-/**
- * Query object for listing collection
- */
-export type tListingQuery = {
-    cursor?: tCursor;
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    sort?: Array<tListingSort>;
-    meta?: tListingMeta;
-};
-
-/**
- * Feed data from listing cart
- */
-export type tListingCartFeed = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId?: string | null;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId?: string | null;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: tUpload | null;
-    /**
-     * Number of items in cart for this feed
-     */
-    count: number;
-};
-
-/**
- * Data for toggling a listing in cart
- */
-export type tListingCartToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from cart
-     */
-    toggle: boolean;
-    /**
-     * Feed this listing belongs to
-     */
-    feedId: string;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for listing cart count
- */
-export type tListingCartCountQuery = {
-    filter?: tListingCartFilter;
-    where?: tListingCartWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingCartWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for listing cart collection
- */
-export type tListingCartFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for listing cart collection
- */
-export type tListingCartQuery = {
-    cursor?: tCursor;
-    filter?: tListingCartFilter;
-    where?: tListingCartWhere;
-    sort?: Array<tListingCartSort>;
-};
-
-/**
- * Field of the listing cart sort
- */
-export const tListingCartSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the listing cart sort
- */
-export type tListingCartSortField = typeof tListingCartSortField[keyof typeof tListingCartSortField];
-
-/**
- * Sort object for listing cart collection
- */
-export type tListingCartSort = {
-    field: tListingCartSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of listing cart items
- */
-export type tListingCartCollection = {
-    data: Array<tListingCart>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Listing cart data
- */
-export type tListingCart = {
-    /**
-     * ID of the cart item
-     */
-    id: string;
-    /**
-     * Feed this listing belongs to
-     */
-    feedId: string;
-    /**
-     * ID of the listing
-     */
-    listingId: string;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-};
-
-/**
- * Score data for the listing
- */
-export type tListingMetrics = {
-    /**
-     * Number of views from the feed (low attention score)
-     */
-    listing: number | null;
-    /**
-     * Overall score gained from listing interactions
-     */
-    listingScore: number | null;
-    /**
-     * Number of views from the listing
-     */
-    views: number | null;
-    /**
-     * Overall score gained from views
-     */
-    viewsScore: number | null;
-    /**
-     * Number of items added to the cart
-     */
-    cart: number | null;
-    /**
-     * Overall score gained from cart interactions
-     */
-    cartScore: number | null;
-    /**
-     * Number of items ignored
-     */
-    ignore: number | null;
-    /**
-     * Overall score gained from ignore interactions
-     */
-    ignoreScore: number | null;
-    /**
-     * Number of items flagged
-     */
-    flag: number | null;
-    /**
-     * Overall score gained from flag interactions
-     */
-    flagScore: number | null;
-    /**
-     * Raw score of the listing
-     */
-    score: number | null;
-};
-
-/**
- * Query object for listing count
- */
-export type tListingCountQuery = {
-    filter?: tListingFilter;
-    where?: tListingWhere;
-    meta?: tListingMeta;
 };
 
 /**
@@ -1846,9 +1628,9 @@ export type tListing = {
     category: tCategory;
     gallery: tGallery & unknown;
     /**
-     * Whether the user has this listing in the cart
+     * Whether the user has this listing in favourites
      */
-    isInCart: boolean;
+    isFavourite: boolean;
     /**
      * Whether the user ignored this listing
      */
@@ -2002,6 +1784,43 @@ export type tFeedCollection = {
 };
 
 /**
+ * Field of the listing sort
+ */
+export const tListingSortField = {
+    price: 'price',
+    condition: 'condition',
+    age: 'age',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    expiresAt: 'expiresAt',
+    geo: 'geo'
+} as const;
+
+/**
+ * Field of the listing sort
+ */
+export type tListingSortField = typeof tListingSortField[keyof typeof tListingSortField];
+
+/**
+ * Sort object for listing collection
+ */
+export type tListingSort = {
+    field: tListingSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Query object for listing collection
+ */
+export type tListingQuery = {
+    cursor?: tCursor;
+    filter?: tListingFilter;
+    where?: tListingWhere;
+    sort?: Array<tListingSort>;
+    meta?: tListingMeta;
+};
+
+/**
  * Feed data
  */
 export type tFeed = {
@@ -2026,6 +1845,44 @@ export type tFeed = {
      * Hero banner for this feed
      */
     upload: tUpload | null;
+};
+
+/**
+ * Data for updating an existing feed
+ */
+export type tFeedPatch = {
+    id: string;
+    /**
+     * Name of the feed
+     */
+    name?: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string | null;
+    /**
+     * ID of the upload associated with the feed
+     */
+    uploadId?: string | null;
+    /**
+     * Query configuration for the feed (listing)
+     */
+    query?: tListingQuery | null;
+};
+
+/**
+ * Data for creating a new feed
+ */
+export type tFeedCreate = {
+    /**
+     * Name of the feed
+     */
+    name: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId?: string | null;
+    query: tListingQuery;
 };
 
 /**
@@ -2101,41 +1958,184 @@ export type tFeedFilter = {
 };
 
 /**
- * Data for updating an existing feed
+ * Collection of feed items from favourites
  */
-export type tFeedPatch = {
-    id: string;
+export type tFavouriteFeedCollection = {
+    data: Array<tFavouriteFeed>;
     /**
-     * Name of the feed
+     * Whether there are more items to fetch
      */
-    name?: string;
+    more: boolean;
+};
+
+/**
+ * Feed data from favourites
+ */
+export type tFavouriteFeed = {
+    /**
+     * ID of the feed
+     */
+    id: string;
     /**
      * ID of the location associated with the feed
      */
     locationId?: string | null;
     /**
-     * ID of the upload associated with the feed
+     * Hero image for this feed (usually selected from the listings in the feed)
      */
     uploadId?: string | null;
-    /**
-     * Query configuration for the feed (listing)
-     */
-    query?: tListingQuery | null;
-};
-
-/**
- * Data for creating a new feed
- */
-export type tFeedCreate = {
     /**
      * Name of the feed
      */
     name: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId?: string | null;
     query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
+    /**
+     * Number of items in favourites for this feed
+     */
+    count: number;
+};
+
+/**
+ * Data for toggling a listing in favourites
+ */
+export type tFavouriteToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from favourites
+     */
+    toggle: boolean;
+    /**
+     * Feed this listing belongs to
+     */
+    feedId: string;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for favourite count
+ */
+export type tFavouriteCountQuery = {
+    filter?: tFavouriteFilter;
+    where?: tFavouriteWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tFavouriteWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for favourite collection
+ */
+export type tFavouriteFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for favourite collection
+ */
+export type tFavouriteQuery = {
+    cursor?: tCursor;
+    filter?: tFavouriteFilter;
+    where?: tFavouriteWhere;
+    sort?: Array<tFavouriteSort>;
+};
+
+/**
+ * Field of the favourite sort
+ */
+export const tFavouriteSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the favourite sort
+ */
+export type tFavouriteSortField = typeof tFavouriteSortField[keyof typeof tFavouriteSortField];
+
+/**
+ * Sort object for favourite collection
+ */
+export type tFavouriteSort = {
+    field: tFavouriteSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Collection of favourite items
+ */
+export type tFavouriteCollection = {
+    data: Array<tFavourite>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Favourite data
+ */
+export type tFavourite = {
+    /**
+     * ID of the favourite item
+     */
+    id: string;
+    /**
+     * Feed this listing belongs to
+     */
+    feedId: string;
+    /**
+     * ID of the listing
+     */
+    listingId: string;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
 };
 
 /**
@@ -2180,6 +2180,114 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+export type tApiFavouriteCollectionRequest = {
+    body?: tFavouriteQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/favourite/collection';
+};
+
+export type apiFavouriteCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFavouriteCollectionError = apiFavouriteCollectionErrors[keyof apiFavouriteCollectionErrors];
+
+export type tApiFavouriteCollectionResponse = {
+    /**
+     * Access collection of favourite items based on provided query
+     */
+    200: tFavouriteCollection;
+};
+
+export type apiFavouriteCollectionResponse = tApiFavouriteCollectionResponse[keyof tApiFavouriteCollectionResponse];
+
+export type tApiFavouriteCountRequest = {
+    body?: tFavouriteCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/favourite/count';
+};
+
+export type apiFavouriteCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFavouriteCountError = apiFavouriteCountErrors[keyof apiFavouriteCountErrors];
+
+export type tApiFavouriteCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiFavouriteCountResponse = tApiFavouriteCountResponse[keyof tApiFavouriteCountResponse];
+
+export type tApiFavouriteToggleRequest = {
+    body?: tFavouriteToggle;
+    path?: never;
+    query?: never;
+    url: '/api/user/favourite/toggle';
+};
+
+export type apiFavouriteToggleErrors = {
+    /**
+     * You cannot add your own listing to favourites
+     */
+    400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFavouriteToggleError = apiFavouriteToggleErrors[keyof apiFavouriteToggleErrors];
+
+export type tApiFavouriteToggleResponse = {
+    /**
+     * Nothing to say, we're just happy
+     */
+    204: void;
+};
+
+export type apiFavouriteToggleResponse = tApiFavouriteToggleResponse[keyof tApiFavouriteToggleResponse];
+
+export type tApiFavouriteFeedCollectionRequest = {
+    body?: tFeedQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/favourite-feed/collection';
+};
+
+export type apiFavouriteFeedCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiFavouriteFeedCollectionError = apiFavouriteFeedCollectionErrors[keyof apiFavouriteFeedCollectionErrors];
+
+export type tApiFavouriteFeedCollectionResponse = {
+    /**
+     * Access collection of feed items from favourites based on provided query
+     */
+    200: tFavouriteFeedCollection;
+};
+
+export type apiFavouriteFeedCollectionResponse = tApiFavouriteFeedCollectionResponse[keyof tApiFavouriteFeedCollectionResponse];
 
 export type tApiFeedCreateRequest = {
     /**
@@ -2628,114 +2736,6 @@ export type tApiListingMetricsFetchResponse = {
 };
 
 export type apiListingMetricsFetchResponse = tApiListingMetricsFetchResponse[keyof tApiListingMetricsFetchResponse];
-
-export type tApiListingCartCollectionRequest = {
-    body?: tListingCartQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-cart/collection';
-};
-
-export type apiListingCartCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingCartCollectionError = apiListingCartCollectionErrors[keyof apiListingCartCollectionErrors];
-
-export type tApiListingCartCollectionResponse = {
-    /**
-     * Access collection of listing cart items based on provided query
-     */
-    200: tListingCartCollection;
-};
-
-export type apiListingCartCollectionResponse = tApiListingCartCollectionResponse[keyof tApiListingCartCollectionResponse];
-
-export type tApiListingCartCountRequest = {
-    body?: tListingCartCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-cart/count';
-};
-
-export type apiListingCartCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingCartCountError = apiListingCartCountErrors[keyof apiListingCartCountErrors];
-
-export type tApiListingCartCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiListingCartCountResponse = tApiListingCartCountResponse[keyof tApiListingCartCountResponse];
-
-export type tApiListingCartToggleRequest = {
-    body?: tListingCartToggle;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-cart/toggle';
-};
-
-export type apiListingCartToggleErrors = {
-    /**
-     * You cannot add your own listing to cart
-     */
-    400: tMessage;
-    /**
-     * Listing not found
-     */
-    404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingCartToggleError = apiListingCartToggleErrors[keyof apiListingCartToggleErrors];
-
-export type tApiListingCartToggleResponse = {
-    /**
-     * Nothing to say, we're just happy
-     */
-    204: void;
-};
-
-export type apiListingCartToggleResponse = tApiListingCartToggleResponse[keyof tApiListingCartToggleResponse];
-
-export type tApiListingCartFeedCollectionRequest = {
-    body?: tFeedQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-cart-feed/collection';
-};
-
-export type apiListingCartFeedCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingCartFeedCollectionError = apiListingCartFeedCollectionErrors[keyof apiListingCartFeedCollectionErrors];
-
-export type tApiListingCartFeedCollectionResponse = {
-    /**
-     * Access collection of feed items from listing cart based on provided query
-     */
-    200: tListingCartFeedCollection;
-};
-
-export type apiListingCartFeedCollectionResponse = tApiListingCartFeedCollectionResponse[keyof tApiListingCartFeedCollectionResponse];
 
 export type tApiListingFlagCollectionRequest = {
     body?: tListingFlagQuery;
