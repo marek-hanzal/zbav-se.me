@@ -5,6 +5,10 @@ export const MessageThreadSchema = z
 	.object({
 		...MessageThreadDbSchema.shape,
 	})
+	.omit({
+		createdAt: true,
+		updatedAt: true,
+	})
 	.openapi("MessageThread", {
 		description: "Message thread entry",
 	});
