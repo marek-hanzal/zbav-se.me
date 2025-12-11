@@ -1,33 +1,33 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { withFavouriteFeedSelect } from "~/app/favourite-feed/db/withFavouriteFeedSelect";
-import { FavouriteFeedSchema } from "~/@user/favourite-feed/schema/FavouriteFeedSchema";
-import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import type { FeedQuerySchema } from "~/@user/feed/schema/FeedQuerySchema";
+import { withFeedFavouriteSelect } from "~/app/feed-favourite/db/withFeedFavouriteSelect";
+import { FeedFavouriteSchema } from "~/app/feed-favourite/schema/FeedFavouriteSchema";
+import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
-export namespace favouriteFeedCollectionFx {
+export namespace feedFavouriteCollectionFx {
 	export interface Props {
 		query: FeedQuerySchema.Type;
 	}
 }
 
-export const favouriteFeedCollectionFx = ({
+export const feedFavouriteCollectionFx = ({
 	query: { cursor, filter, where, sort },
-}: favouriteFeedCollectionFx.Props) => {
+}: feedFavouriteCollectionFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
-				select: withFavouriteFeedSelect({
+				select: withFeedFavouriteSelect({
 					database,
 					sort,
 					userId: user.id,
 				}),
-				output: FavouriteFeedSchema,
+				output: FeedFavouriteSchema,
 				cursor: cursor ?? {
 					page: 0,
 					size: 10,
@@ -43,4 +43,4 @@ export const favouriteFeedCollectionFx = ({
 	});
 };
 
-export type favouriteFeedCollectionFx = ReturnType<typeof favouriteFeedCollectionFx>;
+export type feedFavouriteCollectionFx = ReturnType<typeof feedFavouriteCollectionFx>;

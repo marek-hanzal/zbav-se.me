@@ -2,10 +2,10 @@ import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { withMessageTextQueryBuilder } from "~/app/message/db/withMessageQueryBuilder";
 import { withMessageTextSelect } from "~/app/message/db/withMessageSelect";
+import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
+import { MessageSchema } from "~/app/message/schema/MessageSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import type { MessageQuerySchema } from "../schema/MessageQuerySchema";
-import { MessageSchema } from "../schema/MessageSchema";
 
 export namespace messageTextFetchFx {
 	export interface Props {

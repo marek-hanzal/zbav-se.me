@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { galleryFetchFx } from "./fx/galleryFetchFx";
-import { GalleryQuerySchema } from "./schema/GalleryQuerySchema";
 import { GallerySchema } from "./schema/GallerySchema";
 
 export const withGalleryFetchApi: Routes.Fn = ({ userHono }) => {

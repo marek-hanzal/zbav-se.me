@@ -1,4 +1,4 @@
-import type { GalleryFilterSchema } from "~/@user/gallery/schema/GalleryFilterSchema";
+import type { GalleryFilterSchema } from "~/app/gallery/schema/GalleryFilterSchema";
 import type { withGallerySelect } from "./withGallerySelect";
 
 export namespace withGalleryQueryBuilder {

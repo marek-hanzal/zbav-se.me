@@ -1,4 +1,4 @@
-import type { FavouriteFilterSchema } from "~/@user/favourite/schema/FavouriteFilterSchema";
+import type { FavouriteFilterSchema } from "~/app/favourite/schema/FavouriteFilterSchema";
 import type { withFavouriteSelect } from "./withFavouriteSelect";
 
 export namespace withFavouriteQueryBuilder {

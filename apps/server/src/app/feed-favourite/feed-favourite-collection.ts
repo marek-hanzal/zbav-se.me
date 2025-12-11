@@ -1,21 +1,21 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { favouriteFeedCollectionFx } from "~/@user/favourite-feed/fx/favouriteFeedCollectionFx";
-import { FavouriteFeedSchema } from "~/@user/favourite-feed/schema/FavouriteFeedSchema";
 import { FeedQuerySchema } from "~/@user/feed/schema/FeedQuerySchema";
+import { feedFavouriteCollectionFx } from "~/app/feed-favourite/fx/feedFavouriteCollectionFx";
+import { FeedFavouriteSchema } from "~/app/feed-favourite/schema/FeedFavouriteSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 
-export const withFavouriteFeedCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withFeedFavouriteCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/favourite-feed/collection",
+			path: "/feed-favourite/collection",
 			description: "Returns feed items from favourites based on provided parameters",
-			operationId: "apiFavouriteFeedCollection",
+			operationId: "apiFeedFavouriteCollection",
 			request: {
 				body: {
 					content: {
@@ -30,8 +30,8 @@ export const withFavouriteFeedCollectionApi: Routes.Fn = ({ userHono }) => {
 					content: {
 						"application/json": {
 							schema: withCollectionSchema({
-								schema: FavouriteFeedSchema,
-								type: "FavouriteFeedCollection",
+								schema: FeedFavouriteSchema,
+								type: "FeedFavouriteCollection",
 								description: "Collection of feed items from favourites",
 							}),
 						},
@@ -49,14 +49,14 @@ export const withFavouriteFeedCollectionApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"favourite-feed",
+				"feed-favourite",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<withCollectionSchema.Type<FavouriteFeedSchema>, 200>(
-					yield* favouriteFeedCollectionFx({
+				return c.json<withCollectionSchema.Type<FeedFavouriteSchema>, 200>(
+					yield* feedFavouriteCollectionFx({
 						query: c.req.valid("json"),
 					}),
 					200,

@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { MessageSortSchema } from "~/@user/message-text/schema/MessageSortSchema";
+import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withMessageTextSelect {

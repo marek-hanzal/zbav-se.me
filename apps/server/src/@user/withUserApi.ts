@@ -1,16 +1,16 @@
 import { withTransactionStatusApi } from "~/@user/transaction-status/withTransactionStatusApi";
+import { withFeedFavouriteApi } from "~/app/feed-favourite/withFeedFavouriteApi";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
 import type { MessageSchema } from "~/schema/MessageSchema";
 import { withFavouriteApi } from "./favourite/withFavouriteApi";
-import { withFavouriteFeedApi } from "./favourite-feed/withFavouriteFeedApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withFlagApi } from "./flag/withFlagApi";
 import { withGalleryApi } from "./gallery/withGalleryApi";
 import { withIgnoreApi } from "./ignore/withIgnoreApi";
 import { withListingApi } from "./listing/withListingApi";
 import { withListingScoreApi } from "./listing-score/withListingScoreApi";
-import { withMessageTextApi } from "./message-text/withMessageTextApi";
+import { withMessageTextApi } from "./MessageText/withMessageTextApi";
 import { withS3Api } from "./s3/withS3Api";
 import { withTransactionApi } from "./transaction/withTransactionApi";
 import { withTransactionGalleryApi } from "./transaction-gallery/withTransactionGalleryApi";
@@ -41,7 +41,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	});
 
 	withFavouriteApi(routes);
-	withFavouriteFeedApi(routes);
+	withFeedFavouriteApi(routes);
 	withFeedApi(routes);
 	withGalleryApi(routes);
 	withIgnoreApi(routes);

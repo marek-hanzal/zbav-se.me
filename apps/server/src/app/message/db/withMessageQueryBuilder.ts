@@ -1,4 +1,4 @@
-import type { MessageFilterSchema } from "~/@user/message-text/schema/MessageFilterSchema";
+import type { MessageFilterSchema } from "~/app/message/schema/MessageFilterSchema";
 import type { withMessageTextSelect } from "./withMessageSelect";
 
 export namespace withMessageTextQueryBuilder {

@@ -1,22 +1,22 @@
-import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
 import type { FeedSortSchema } from "~/@user/feed/schema/FeedSortSchema";
+import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
 import type { WithDatabase } from "~/database/WithDatabase";
 
-export namespace withFavouriteFeedSelect {
+export namespace withFeedFavouriteSelect {
 	export interface Props {
 		database: WithDatabase;
 		sort: FeedSortSchema.Type[] | undefined;
 		userId: string;
 	}
 
-	export type Select = ReturnType<typeof withFavouriteFeedSelect>;
+	export type Select = ReturnType<typeof withFeedFavouriteSelect>;
 }
 
-export const withFavouriteFeedSelect = ({
+export const withFeedFavouriteSelect = ({
 	database,
 	sort,
 	userId,
-}: withFavouriteFeedSelect.Props) => {
+}: withFeedFavouriteSelect.Props) => {
 	return withFeedSelect({
 		database,
 		sort,

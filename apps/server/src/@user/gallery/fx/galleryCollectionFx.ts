@@ -1,10 +1,10 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withGalleryQueryBuilder } from "~/app/gallery/db/withGalleryQueryBuilder";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
-import type { GalleryQuerySchema } from "../schema/GalleryQuerySchema";
+import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { GallerySchema } from "../schema/GallerySchema";
 
 export namespace galleryCollectionFx {

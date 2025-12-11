@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { FavouriteSortSchema } from "~/@user/favourite/schema/FavouriteSortSchema";
+import type { FavouriteSortSchema } from "~/app/favourite/schema/FavouriteSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withFavouriteSelect {

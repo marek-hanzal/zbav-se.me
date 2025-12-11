@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { FeedSchema } from "~/@user/feed/schema/FeedSchema";
 
-export const FavouriteFeedSchema = z
+export const FeedFavouriteSchema = z
 	.object({
 		...FeedSchema.shape,
 		count: z.coerce.number().openapi({
@@ -9,12 +9,12 @@ export const FavouriteFeedSchema = z
 			type: "number",
 		}),
 	})
-	.openapi("FavouriteFeed", {
+	.openapi("FeedFavourite", {
 		description: "Feed data from favourites",
 	});
 
-export type FavouriteFeedSchema = typeof FavouriteFeedSchema;
+export type FeedFavouriteSchema = typeof FeedFavouriteSchema;
 
-export namespace FavouriteFeedSchema {
-	export type Type = z.infer<FavouriteFeedSchema>;
+export namespace FeedFavouriteSchema {
+	export type Type = z.infer<FeedFavouriteSchema>;
 }
