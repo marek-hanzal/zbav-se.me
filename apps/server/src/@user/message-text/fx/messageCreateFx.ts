@@ -1,9 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { messageTextFetchFx } from "~/@user/message-text/fx/messageFetchFx";
-import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
-import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
-import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
+import { messageUserCheckFx } from "~/@user/message-thread-user/fx/messageUserCheckFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -18,17 +17,14 @@ export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCre
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
+			const user = yield* UserContextFx;
 
-			const transaction = yield* transactionResolveFx({
+			yield* messageUserCheckFx({
+				userIds: [
+					user.id,
+				],
 				messageThreadId,
-				message: "You are not allowed to create a message for this listing transaction",
 			});
-
-			if (transaction.side === "seller" && transaction.status === "request") {
-				yield* transactionStatusAcceptFx({
-					messageThreadId: transaction.messageThreadId,
-				});
-			}
 
 			const id = genId();
 
@@ -39,15 +35,10 @@ export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCre
 						id,
 						messageThreadId,
 						text: message,
-						side: transaction.side,
 						createdAt: new Date(),
 					})
 					.returningAll()
 					.executeTakeFirstOrThrow();
-			});
-
-			yield* transactionPatchFx({
-				messageThreadId: transaction.messageThreadId,
 			});
 
 			return yield* messageTextFetchFx({

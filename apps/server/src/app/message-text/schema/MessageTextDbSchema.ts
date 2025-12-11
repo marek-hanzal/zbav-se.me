@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
 
 export const MessageTextDbSchema = z.object({
 	id: z.string().openapi({
@@ -8,7 +7,6 @@ export const MessageTextDbSchema = z.object({
 	messageThreadId: z.string().openapi({
 		description: "ID of the message thread referenced by the message",
 	}),
-	side: TransactionSideEnumSchema,
 	text: z.string().openapi({
 		description: "Message content (database column name)",
 	}),

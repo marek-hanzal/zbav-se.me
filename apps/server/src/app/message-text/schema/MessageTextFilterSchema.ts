@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
 import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
 
 export const MessageTextFilterSchema = z
@@ -8,7 +7,6 @@ export const MessageTextFilterSchema = z
 		messageThreadId: z.string().optional().openapi({
 			description: "This filter matches the exact messageThreadId",
 		}),
-		side: TransactionSideEnumSchema.optional(),
 	})
 	.openapi("MessageTextFilter", {
 		description: "Filter object for listing transaction message",

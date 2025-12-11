@@ -18,7 +18,6 @@ export const withMessageTextSelect = ({ database, sort }: withMessageTextSelect.
 		.select([
 			"m.id",
 			"m.messageThreadId",
-			"m.side",
 			"m.text as message",
 			"m.createdAt",
 		])

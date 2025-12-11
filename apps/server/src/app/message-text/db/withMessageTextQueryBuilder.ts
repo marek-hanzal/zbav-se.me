@@ -32,9 +32,5 @@ export const withMessageTextQueryBuilder: withMessageTextQueryBuilder.Callback =
 		query = query.where("m.messageThreadId", "=", where.messageThreadId);
 	}
 
-	if (where.side) {
-		query = query.where("m.side", "=", where.side);
-	}
-
 	return query;
 };
