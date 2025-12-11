@@ -1,6 +1,5 @@
 import { keepPreviousData } from "@tanstack/react-query";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Badge } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type {
@@ -17,9 +16,8 @@ import {
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useId, useLayoutEffect, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
-import { ListingLocation } from "~/app/listing/ui/ListingLocation";
-import { ListingPrice } from "~/app/listing/ui/ListingPrice";
+import { ListingDetail } from "~/app/listing/ui/ListingDetail";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { TransactionChat } from "./TransactionChat";
 import { TransactionLogItem } from "./TransactionLogItem";
 
@@ -127,7 +125,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 
 	return (
 		<Container
-			data-ui={"TransactionLogList-root"}
+			data-ui={"TransactionLogList[Container]"}
 			ui={{
 				layout: isClosed ? undefined : "vertical-content-footer",
 				height: "full",
@@ -138,13 +136,14 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 		>
 			<Container
 				ref={containerRef}
-				data-ui={"TransactionLogList-list"}
+				data-ui={"TransactionLogList-[Container.scroll]"}
 				ui={{
 					scroll: "vertical",
 					height: "full",
 				}}
 			>
 				<Container
+					data-ui={"TransactionLogList-[Container.content]"}
 					ref={contentRef}
 					ui={{
 						layout: "vertical-flex",
@@ -153,12 +152,23 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 					}}
 				>
 					{noHero ? null : (
-						<Badge
-							className="flex flex-col items-start gap-1 w-full h-64 p-0 rounded-md relative border-none"
+						<Container
+							data-ui={"TransactionLogList-[Container.hero]"}
+							className={[
+								"h-64",
+							]}
 							ui={{
+								layout: "vertical-flex",
 								tone: "secondary",
+								position: "relative",
 							}}
 						>
+							<ListingOverlay
+								data-ui={"TransactionLogList-[ListingOverlay]"}
+								locale={locale}
+								listing={listingTransaction}
+							/>
+
 							<HeroImage
 								data-ui={"ListingHero-image"}
 								src={hero.upload.url}
@@ -166,14 +176,6 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								visible
 								onClick={() => setDetail((prev) => !prev)}
 							/>
-
-							<ListingPrice
-								price={listingTransaction.price}
-								locale={locale}
-								currency={listingTransaction.currency}
-							/>
-
-							<ListingLocation location={listingTransaction.location} />
 
 							<BottomSheet
 								id={detailSheetId}
@@ -195,7 +197,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 								>
 									{({ data }) => {
 										return (
-											<ListingDetailContainer
+											<ListingDetail
 												locale={locale}
 												feedId={undefined}
 												listing={data}
@@ -207,7 +209,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 									}}
 								</withListingFetchQuery.Suspense>
 							</BottomSheet>
-						</Badge>
+						</Container>
 					)}
 
 					<Container

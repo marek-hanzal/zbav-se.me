@@ -2,8 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { ListingCartFeedList } from "~/app/listing-cart-feed/ui/ListingCartFeedList";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/cart/list")({
 	component() {

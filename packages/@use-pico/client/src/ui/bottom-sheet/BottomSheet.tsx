@@ -3,8 +3,8 @@ import { motion, useTransform } from "motion/react";
 import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
 import { ArrowLeftIcon } from "../../icon";
-import { Badge } from "../badge";
 import { Button } from "../button";
+import { Container } from "../container";
 import { Tx } from "../tx";
 
 export namespace BottomSheet {
@@ -41,7 +41,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	return (
 		<Sheet
 			ref={sheetRef}
-			data-root={"BottomSheet"}
+			data-ui={"BottomSheet[Sheet]"}
 			tweenConfig={{
 				ease: "easeOut",
 				duration: 0.15,
@@ -49,16 +49,19 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 			{...props}
 		>
 			<Sheet.Container
-				data-root={"BottomSheet-Container"}
+				data-ui={"BottomSheet-[SheetContainer]"}
 				{...containerProps}
 			>
-				{withHeader ? <Sheet.Header data-root={"BottomSheet-Header"} /> : null}
+				{withHeader ? <Sheet.Header data-ui={"BottomSheet-[SheetHeader]"} /> : null}
 
 				{header ? (
-					<Badge
-						data-root={"BottomSheet-Badge-header-wrapper"}
+					<Container
+						data-ui={"BottomSheet-[Container.header-wrapper]"}
 						ui={{
-							round: "md",
+							layout: "horizontal-flex",
+							items: "center",
+							justify: "center",
+							gap: "default",
 						}}
 					>
 						{header.close ? (
@@ -66,9 +69,13 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 								iconEnabled={ArrowLeftIcon}
 								onClick={props.onClose}
 								ui={{
-									round: "full",
-									tone: "secondary",
+									tone: "danger",
 									theme: "light",
+									round: "full",
+									square: "lg",
+									items: "center",
+									justify: "center",
+									text: "lg",
 								}}
 							/>
 						) : (
@@ -85,7 +92,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 								}}
 							/>
 						) : null}
-					</Badge>
+					</Container>
 				) : null}
 
 				<Sheet.Content

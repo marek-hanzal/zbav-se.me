@@ -5,7 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
-import { uiBackButton } from "~/app/ui/uiBackButton";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
 	component() {

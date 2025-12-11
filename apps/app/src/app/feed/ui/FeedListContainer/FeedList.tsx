@@ -5,7 +5,7 @@ import { Fade } from "@use-pico/client/ui/fade";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useEffect, useId, useRef } from "react";
-import { FeedItemBadge } from "../FeedItemBadge";
+import { FeedItem } from "../FeedItem";
 
 export namespace FeedList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
@@ -13,8 +13,8 @@ export namespace FeedList {
 		query: tFeedQuery;
 		defaultOpenId?: string;
 		scrollToId?: string;
-		tools: FeedItemBadge.Tools[];
-		linkTo: FeedItemBadge.LinkTo;
+		tools: FeedItem.Tools[];
+		linkTo: FeedItem.LinkTo;
 	}
 }
 
@@ -69,7 +69,7 @@ export const FeedList: FC<FeedList.Props> = ({
 			>
 				{feedCollectionQuery.data.data.map((feed) => {
 					return (
-						<FeedItemBadge
+						<FeedItem
 							key={`${feedRootId}-${feed.id}`}
 							feed={feed}
 							locale={locale}

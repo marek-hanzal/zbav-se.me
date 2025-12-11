@@ -5,9 +5,9 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")({
 	validateSearch: ListingWizardSchema,

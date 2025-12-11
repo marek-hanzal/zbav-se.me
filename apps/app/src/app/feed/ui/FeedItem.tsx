@@ -1,4 +1,5 @@
 import { Badge } from "@use-pico/client/ui/badge";
+import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
@@ -8,7 +9,7 @@ import { type FC, type PropsWithChildren, type ReactNode, useState } from "react
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
 import { FeedSetupButton } from "./button/FeedSetupButton";
 
-export namespace FeedItemBadge {
+export namespace FeedItem {
 	export type Tools = "setup";
 
 	export namespace LinkTo {
@@ -40,7 +41,7 @@ export namespace FeedItemBadge {
 	}
 }
 
-export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
+export const FeedItem: FC<FeedItem.Props> = ({
 	locale,
 	feed,
 	defaultOpen,
@@ -54,8 +55,8 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
 
 	return (
-		<Badge
-			data-ui={"FeedItemBadge"}
+		<Container
+			data-ui={"FeedItem[Badge]"}
 			data-id={feed.id}
 			className={tvc([
 				"h-48",
@@ -76,6 +77,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 				feedId: feed.id,
 				children: feed.upload ? (
 					<HeroImage
+						data-ui={"FeedItem-[HeroImage]"}
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
 						visible
@@ -105,6 +107,7 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 
 			{tools.includes("setup") ? (
 				<FeedSetupButton
+					data-ui={"FeedItem-[FeedSetupButton]"}
 					locale={locale}
 					state={{
 						value: isFeedSettings,
@@ -127,6 +130,6 @@ export const FeedItemBadge: FC<FeedItemBadge.Props> = ({
 				count={count}
 				query={feed.query}
 			/>
-		</Badge>
+		</Container>
 	);
 };

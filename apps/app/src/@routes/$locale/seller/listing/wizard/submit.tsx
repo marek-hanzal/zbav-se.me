@@ -20,10 +20,10 @@ import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({

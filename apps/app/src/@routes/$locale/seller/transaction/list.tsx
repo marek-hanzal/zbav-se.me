@@ -3,10 +3,9 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { uiBackButton, uiWarningStatus } from "@zbav-se.me/ui/ui";
 import z from "zod";
 import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
-import { uiBackButton } from "~/app/ui/uiBackButton";
-import { uiWarningStatus } from "~/app/ui/uiWarningStatus";
 
 export const Route = createFileRoute("/$locale/seller/transaction/list")({
 	validateSearch: z.object({

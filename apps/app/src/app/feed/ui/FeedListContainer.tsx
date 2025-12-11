@@ -7,7 +7,7 @@ import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import type { FeedItemBadge } from "~/app/feed/ui/FeedItemBadge";
+import type { FeedItem } from "~/app/feed/ui/FeedItem";
 import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
 import { FeedNameContainer } from "./FeedNameContainer";
@@ -18,8 +18,8 @@ export namespace FeedListContainer {
 		query: tFeedQuery;
 		limit?: number;
 		scrollToId: string | undefined;
-		tools: FeedItemBadge.Tools[];
-		linkTo: FeedItemBadge.LinkTo;
+		tools: FeedItem.Tools[];
+		linkTo: FeedItem.LinkTo;
 	}
 }
 

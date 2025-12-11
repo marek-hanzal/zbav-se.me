@@ -6,7 +6,7 @@ import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useId, useState } from "react";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
-import { ListingDetailContainer } from "~/app/listing/ui/ListingDetailContainer";
+import { ListingDetail } from "~/app/listing/ui/ListingDetail";
 
 export namespace ListingHeroContainer {
 	export namespace Overlay {
@@ -68,7 +68,7 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 		<>
 			<Container
 				data-id={listing.id}
-				data-ui={"ListingHeroContainer"}
+				data-ui={"ListingHeroContainer[Container]"}
 				ui={{
 					height: "full",
 					width: "full",
@@ -86,15 +86,21 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				})}
 
 				<HeroImage
-					data-ui={"ListingHero-image"}
+					data-ui={"ListingHeroContainer-[HeroImage]"}
 					src={hero.upload.url}
 					alt={`Hero image for listing ${listing.id}`}
 					visible={visible}
-					invisible={<SpinnerContainer data-ui={"ListingHero-spinner"} />}
+					invisible={
+						<SpinnerContainer
+							data-ui={"ListingHeroContainer-[SpinnerContainer.invisible]"}
+						/>
+					}
 				/>
 			</Container>
 
 			<BottomSheet
+				data-ui={"ListingHeroContainer-[BottomSheet]"}
+				data-id={listing.id}
 				id={detailSheetId}
 				isOpen={detail}
 				onClose={() => setDetail(false)}
@@ -104,7 +110,8 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 					title: listing.title,
 				}}
 			>
-				<ListingDetailContainer
+				<ListingDetail
+					data-ui={"ListingHeroContainer-[ListingDetailContainer]"}
 					parentSheetId={detailSheetId}
 					locale={locale}
 					listing={listing}

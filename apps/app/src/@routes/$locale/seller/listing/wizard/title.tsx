@@ -9,9 +9,9 @@ import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { sListingCreate } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 	validateSearch: ListingWizardSchema,

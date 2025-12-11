@@ -2,14 +2,14 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCartFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
-import { FeedItemBadge } from "~/app/feed/ui/FeedItemBadge";
+import { FeedItem } from "~/app/feed/ui/FeedItem";
 import { EmptyStatus } from "~/app/listing-cart-feed/ui/EmptyStatus";
 
 export namespace ListingCartFeedList {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
-		linkTo: FeedItemBadge.LinkTo;
+		linkTo: FeedItem.LinkTo;
 	}
 }
 
@@ -42,7 +42,7 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 							}}
 						>
 							{data.data.map((feed) => (
-								<FeedItemBadge
+								<FeedItem
 									key={feed.id}
 									locale={locale}
 									feed={feed}

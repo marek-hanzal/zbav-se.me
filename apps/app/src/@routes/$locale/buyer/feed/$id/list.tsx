@@ -8,12 +8,12 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useRef, useState } from "react";
 import z from "zod";
 import { FeedSetupButton } from "~/app/feed/ui/button/FeedSetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({

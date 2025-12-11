@@ -3,8 +3,8 @@ import { ArrowLeftIcon, UserIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { SignOutButton } from "~/app/auth/ui/SignOutButton";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/user")({
 	component() {

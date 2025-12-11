@@ -5,9 +5,9 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({

@@ -105,7 +105,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		>
 			<withListingCollectionQuery.Suspense
 				data={query}
-				fallback={<SpinnerContainer />}
+				fallback={<SpinnerContainer data-ui={"ListingListContainer-[SpinnerContainer]"} />}
 			>
 				{({ data }) => {
 					if (data.data.length === 0) {
@@ -115,14 +115,14 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					return data.data.map((listing) => (
 						<VisibleContainer
 							key={`${listingIdPrefix}-${listing.id}`}
-							data-ui="ListingListContainer-VisibleContainer"
+							data-ui="ListingListContainer-[VisibleContainer]"
 							scrollerRef={containerRef}
 							useProximity
 							overscan={4}
 							delayMs={200}
 							placeholder={(props) => (
 								<SpinnerContainer
-									data-ui={"ListingListContainer-SpinnerContainer"}
+									data-ui={"ListingListContainer-[SpinnerContainer.placeholder]"}
 									data-id={listing.id}
 									{...props}
 								/>
@@ -138,11 +138,18 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 										id: listing.id,
 									},
 								}}
-								fallback={<SpinnerContainer />}
+								fallback={
+									<SpinnerContainer
+										data-ui={
+											"ListingListContainer-[SpinnerContainer.listing-fetch]"
+										}
+									/>
+								}
 							>
 								{({ data: listing }) => {
 									return (
 										<ListingHeroContainer
+											data-ui={"ListingListContainer-[ListingHeroContainer]"}
 											locale={locale}
 											listing={listing}
 											overlay={overlay}

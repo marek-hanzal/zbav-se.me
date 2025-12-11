@@ -4,10 +4,10 @@ import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { GalleryUpload } from "~/app/photo/ui/GalleryUpload";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 	validateSearch: ListingWizardSchema,

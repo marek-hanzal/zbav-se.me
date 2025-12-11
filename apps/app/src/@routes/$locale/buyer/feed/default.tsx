@@ -6,7 +6,7 @@ import { translator } from "@use-pico/common/translator";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "~/app/ui/uiBackButton";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 
 export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**

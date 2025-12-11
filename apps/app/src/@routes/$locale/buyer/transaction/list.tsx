@@ -4,9 +4,9 @@ import { Button } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import z from "zod";
 import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
-import { uiBackButton } from "~/app/ui/uiBackButton";
 
 export const Route = createFileRoute("/$locale/buyer/transaction/list")({
 	validateSearch: z.object({

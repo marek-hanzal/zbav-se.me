@@ -19,7 +19,7 @@ import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { GallerySheet } from "~/app/photo/ui/GallerySheet";
 import { ScoreContainer } from "./ScoreContainer";
 
-export namespace ListingDetailContainer {
+export namespace ListingDetail {
 	export type Tools = "destructive" | "hero";
 
 	export interface Props extends Container.Props {
@@ -38,7 +38,7 @@ export namespace ListingDetailContainer {
 	}
 }
 
-export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
+export const ListingDetail: FC<ListingDetail.Props> = ({
 	locale,
 	feedId,
 	listing,
@@ -65,7 +65,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 	return (
 		<>
 			<Container
-				data-ui={"ListingDetailContainer[Container]"}
+				data-ui={"ListingDetail[Container]"}
 				ui={{
 					layout: "vertical-flex",
 					gap: "lg",
@@ -75,13 +75,13 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				{tools.includes("hero") ? (
 					<>
 						<Container
-							data-ui={"ListingDetailContainer-[Container.hero]"}
+							data-ui={"ListingDetail-[Container.hero]"}
 							ui={{
 								position: "relative",
 							}}
 						>
 							<ListingOverlay
-								data-ui={"ListingDetailContainer-[ListingOverlay]"}
+								data-ui={"ListingDetail-[ListingOverlay]"}
 								locale={locale}
 								listing={listing}
 							/>
@@ -101,14 +101,14 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 							) : null}
 
 							<HeroImage
-								data-ui={"ListingDetailContainer-[HeroImage]"}
+								data-ui={"ListingDetail-[HeroImage]"}
 								src={hero.upload.url}
 								alt={`Hero image for listing ${listing.id}`}
 								onClick={() => setIsGalleryOpen((prev) => !prev)}
 							/>
 
 							<GallerySheet
-								data-ui={"ListingDetailContainer-[GallerySheet]"}
+								data-ui={"ListingDetail-[GallerySheet]"}
 								uploads={listing.gallery.items.map((item) => item.upload)}
 								isOpen={isGalleryOpen}
 								onClose={() => setIsGalleryOpen(false)}
@@ -116,7 +116,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 						</Container>
 
 						<Container
-							data-ui={"ListingDetailContainer-[Container.info]"}
+							data-ui={"ListingDetail-[Container.info]"}
 							ui={{
 								layout: "vertical-flex",
 								gap: "sm",
@@ -132,7 +132,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 				) : null}
 
 				<Container
-					data-ui={"ListingDetailContainer-[Container.info]"}
+					data-ui={"ListingDetail-[Container.info]"}
 					ui={{
 						layout: "vertical-flex",
 					}}
@@ -225,7 +225,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 
 							return (
 								<Container
-									data-ui="ListingDetailContainer-[Container.destructive]"
+									data-ui="ListingDetail-[Container.destructive]"
 									ui={{
 										layout: "vertical-flex",
 										gap: "sm",
@@ -242,7 +242,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 			</Container>
 
 			<BottomSheet
-				data-ui={"ListingDetailContainer-[BottomSheet]"}
+				data-ui={"ListingDetail-[BottomSheet]"}
 				isOpen={isScore}
 				onClose={() => setIsScore(false)}
 				modalEffectRootId={parentSheetId}
@@ -254,7 +254,7 @@ export const ListingDetailContainer: FC<ListingDetailContainer.Props> = ({
 					{({ data }) => {
 						return (
 							<ScoreContainer
-								data-ui={"ListingDetailContainer-[ScoreContainer]"}
+								data-ui={"ListingDetail-[ScoreContainer]"}
 								locale={locale}
 								listingMetrics={data}
 							/>
