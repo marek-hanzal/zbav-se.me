@@ -1,7 +1,6 @@
 import { Effect } from "effect";
 import { feedFetchFx } from "~/@user/feed/fx/feedFetchFx";
 import type { FeedPatchSchema } from "~/@user/feed/schema/FeedPatchSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -13,7 +12,6 @@ export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
-			const user = yield* UserContextFx;
 
 			const feed = yield* feedFetchFx({
 				query,
@@ -28,7 +26,6 @@ export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
 						updatedAt: new Date(),
 					})
 					.where("id", "=", feed.id)
-					.where("userId", "=", user.id)
 					.executeTakeFirst();
 			});
 

@@ -1,20 +1,26 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
-import { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
+import { TransactionDbSchema } from "~/app/transaction/schema/ListingTransactionDbSchema";
+import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 
 export const TransactionPatchSchema = z
 	.object({
-		id: z.string().openapi({
-			description: "ID of the transaction to patch",
-		}),
-		status: TransactionStatusEnumSchema.optional(),
-		side: TransactionSideEnumSchema.optional(),
-	})
-	.refine((value) => Boolean(value.status ?? value.side), {
-		message: "Provide at least side or status to patch",
-		path: [
-			"status",
-		],
+		patch: z
+			.object({
+				...TransactionDbSchema.shape,
+			})
+			.omit({
+				id: true,
+				userId: true,
+				listingId: true,
+				createdAt: true,
+				updatedAt: true,
+				expiresAt: true,
+			})
+			.partial()
+			.openapi({
+				description: "Fields to update (all optional)",
+			}),
+		query: TransactionQuerySchema,
 	})
 	.openapi("TransactionPatch", {
 		description: "Payload for patching a transaction",

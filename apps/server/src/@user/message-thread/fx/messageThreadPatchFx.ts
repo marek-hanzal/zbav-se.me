@@ -3,13 +3,12 @@ import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFet
 import type { MessageThreadPatchSchema } from "~/@user/message-thread/schema/MessageThreadPatchSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace messageThreadPatchFx {
-	export interface Props extends MessageThreadPatchSchema.Type {}
+	export type Props = MessageThreadPatchSchema.Type;
 }
 
-export const messageThreadPatchFx = ({ query }: messageThreadPatchFx.Props) => {
+export const messageThreadPatchFx = ({ patch, query }: messageThreadPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -18,23 +17,15 @@ export const messageThreadPatchFx = ({ query }: messageThreadPatchFx.Props) => {
 				query,
 			});
 
-			if (!messageThread) {
-				return yield* new NotFoundError({
-					resource: "message-thread",
-					resourceId: "(query)",
-					message: "Message thread not found",
-				});
-			}
-
 			yield* Effect.tryPromise(async () => {
 				return database
 					.updateTable("message_thread")
 					.set({
+						...patch,
 						updatedAt: new Date(),
 					})
 					.where("id", "=", messageThread.id)
-					.returningAll()
-					.executeTakeFirstOrThrow();
+					.executeTakeFirst();
 			});
 
 			return yield* messageThreadFetchFx({
