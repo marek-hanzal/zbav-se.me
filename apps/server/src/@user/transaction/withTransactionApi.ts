@@ -1,9 +1,9 @@
 import type { Routes } from "~/hono/Routes";
-import { withTransactionBuyerInfoApi } from "./transaction-buyer-info";
-import { withTransactionCollectionApi } from "./transaction-collection";
-import { withTransactionCreateApi } from "./transaction-create";
-import { withTransactionFetchApi } from "./transaction-fetch";
-import { withTransactionSellerInfoApi } from "./transaction-seller-info";
+import { withTransactionBuyerInfoApi } from "./buyer-info";
+import { withTransactionCollectionApi } from "./collection";
+import { withTransactionCreateApi } from "./create";
+import { withTransactionFetchApi } from "./fetch";
+import { withTransactionSellerInfoApi } from "./seller-info";
 
 export const withTransactionApi: Routes.Fn = (routes) => {
 	withTransactionCollectionApi(routes);

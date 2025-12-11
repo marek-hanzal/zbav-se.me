@@ -1,9 +1,9 @@
 import type { Routes } from "~/hono/Routes";
-import { withListingCollectionApi } from "./listing-collection";
-import { withListingCountApi } from "./listing-count";
-import { withListingCreateApi } from "./listing-create";
-import { withListingFetchApi } from "./listing-fetch";
-import { withListingMetricsFetchApi } from "./listing-metrics";
+import { withListingCollectionApi } from "./collection";
+import { withListingCountApi } from "./count";
+import { withListingCreateApi } from "./create";
+import { withListingFetchApi } from "./fetch";
+import { withListingMetricsFetchApi } from "./metrics";
 
 export const withListingApi: Routes.Fn = (routes) => {
 	withListingCreateApi(routes);

@@ -1,7 +1,7 @@
 import type { Routes } from "~/hono/Routes";
-import { withGalleryCollectionApi } from "./gallery-collection";
-import { withGalleryCountApi } from "./gallery-count";
-import { withGalleryFetchApi } from "./gallery-fetch";
+import { withGalleryCollectionApi } from "./collection";
+import { withGalleryCountApi } from "./count";
+import { withGalleryFetchApi } from "./fetch";
 
 export const withGalleryApi: Routes.Fn = (routes) => {
 	withGalleryFetchApi(routes);

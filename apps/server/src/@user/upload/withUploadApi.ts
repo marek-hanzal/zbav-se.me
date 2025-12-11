@@ -1,8 +1,8 @@
 import type { Routes } from "~/hono/Routes";
-import { withUploadCollectionApi } from "./upload-collection";
-import { withUploadCountApi } from "./upload-count";
-import { withUploadCreateApi } from "./upload-create";
-import { withUploadFetchApi } from "./upload-fetch";
+import { withUploadCollectionApi } from "./collection";
+import { withUploadCountApi } from "./count";
+import { withUploadCreateApi } from "./create";
+import { withUploadFetchApi } from "./fetch";
 
 export const withUploadApi: Routes.Fn = (routes) => {
 	withUploadCreateApi(routes);
