@@ -23,15 +23,15 @@ export const withListingCartFeedSelect = ({
 	})
 		.select((eb) =>
 			eb
-				.selectFrom("listing_cart")
-				.select((eb) => eb.fn.count<number>("listing_cart.id").$notNull().as("count"))
-				.whereRef("listing_cart.feedId", "=", "f.id")
-				.where("listing_cart.userId", "=", userId)
+				.selectFrom("favorite")
+				.select((eb) => eb.fn.count<number>("favorite.id").$notNull().as("count"))
+				.whereRef("favorite.feedId", "=", "f.id")
+				.where("favorite.userId", "=", userId)
 				.$asScalar()
 				.$notNull()
 				.as("count"),
 		)
 		.where("f.id", "in", (eb) =>
-			eb.selectFrom("listing_cart").select("feedId").where("userId", "=", userId),
+			eb.selectFrom("favorite").select("feedId").where("userId", "=", userId),
 		);
 };

@@ -27,7 +27,7 @@ export const listingCartDeleteFx = ({ listingId }: listingCartDeleteFx.Props) =>
 
 			yield* Effect.tryPromise(async () => {
 				return database
-					.deleteFrom("listing_cart")
+					.deleteFrom("favorite")
 					.where("userId", "=", user.id)
 					.where("listingId", "=", listingId)
 					.execute();

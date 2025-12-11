@@ -24,19 +24,19 @@ export const withListingCartQueryBuilder: withListingCartQueryBuilder.Callback =
 	let query = select;
 
 	if (where.id) {
-		query = query.where("lc.id", "=", where.id);
+		query = query.where("f.id", "=", where.id);
 	}
 
 	if (where.idIn && where.idIn.length > 0) {
-		query = query.where("lc.id", "in", where.idIn);
+		query = query.where("f.id", "in", where.idIn);
 	}
 
 	if (where.userId) {
-		query = query.where("lc.userId", "=", where.userId);
+		query = query.where("f.userId", "=", where.userId);
 	}
 
 	if (where.listingId) {
-		query = query.where("lc.listingId", "=", where.listingId);
+		query = query.where("f.listingId", "=", where.listingId);
 	}
 
 	return query;

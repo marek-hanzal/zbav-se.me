@@ -12,16 +12,16 @@ export namespace withListingCartSelect {
 }
 
 export const withListingCartSelect = ({ database, sort }: withListingCartSelect.Props) => {
-	let query = database.selectFrom("listing_cart as lc").select([
-		"lc.id",
-		"lc.feedId",
-		"lc.listingId",
-		"lc.createdAt",
+	let query = database.selectFrom("favorite as f").select([
+		"f.id",
+		"f.feedId",
+		"f.listingId",
+		"f.createdAt",
 	]);
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
-			.with("createdAt", () => query.orderBy("lc.createdAt", item.direction))
+			.with("createdAt", () => query.orderBy("f.createdAt", item.direction))
 			.exhaustive();
 	}
 

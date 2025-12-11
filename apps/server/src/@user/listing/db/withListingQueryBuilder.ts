@@ -112,10 +112,10 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 	if (where.inCart === true) {
 		query = query.where(({ exists, selectFrom }) =>
 			exists(
-				selectFrom("listing_cart as lc")
-					.select("lc.listingId")
-					.whereRef("lc.listingId", "=", "l.id")
-					.where("lc.userId", "=", userId),
+				selectFrom("favorite as f")
+					.select("f.listingId")
+					.whereRef("f.listingId", "=", "l.id")
+					.where("f.userId", "=", userId),
 			),
 		) as TSelect;
 	}
@@ -124,11 +124,11 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		const feedId = where.feedId;
 		query = query.where(({ exists, selectFrom }) =>
 			exists(
-				selectFrom("listing_cart as lc")
-					.select("lc.listingId")
-					.whereRef("lc.listingId", "=", "l.id")
-					.where("lc.userId", "=", userId)
-					.where("lc.feedId", "=", feedId),
+				selectFrom("favorite as f")
+					.select("f.listingId")
+					.whereRef("f.listingId", "=", "l.id")
+					.where("f.userId", "=", userId)
+					.where("f.feedId", "=", feedId),
 			),
 		) as TSelect;
 	}
@@ -137,11 +137,11 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		const feedIdIn = where.feedIdIn;
 		query = query.where(({ exists, selectFrom }) =>
 			exists(
-				selectFrom("listing_cart as lc")
-					.select("lc.listingId")
-					.whereRef("lc.listingId", "=", "l.id")
-					.where("lc.userId", "=", userId)
-					.where("lc.feedId", "in", feedIdIn),
+				selectFrom("favorite as f")
+					.select("f.listingId")
+					.whereRef("f.listingId", "=", "l.id")
+					.where("f.userId", "=", userId)
+					.where("f.feedId", "in", feedIdIn),
 			),
 		) as TSelect;
 	}

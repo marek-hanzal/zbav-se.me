@@ -3,14 +3,14 @@ import type { Migration } from "kysely";
 export const FavoriteMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("listing_cart")
+			.createTable("favorite")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("feedId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
-				"listing_cart_[userId]_fk",
+				"favorite_[userId]_fk",
 				[
 					"userId",
 				],
@@ -21,7 +21,7 @@ export const FavoriteMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_cart_[feedId]_fk",
+				"favorite_[feedId]_fk",
 				[
 					"feedId",
 				],
@@ -32,7 +32,7 @@ export const FavoriteMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_cart_[listingId]_fk",
+				"favorite_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -42,7 +42,7 @@ export const FavoriteMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("listing_cart_[userId-feedId-listingId]_unique_idx", [
+			.addUniqueConstraint("favorite_[userId-feedId-listingId]_unique_idx", [
 				"userId",
 				"feedId",
 				"listingId",
@@ -50,26 +50,26 @@ export const FavoriteMigration: Migration = {
 			.execute();
 
 		await db.schema
-			.createIndex("listing_cart_[userId]_idx")
-			.on("listing_cart")
+			.createIndex("favorite_[userId]_idx")
+			.on("favorite")
 			.column("userId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_cart_[feedId]_idx")
-			.on("listing_cart")
+			.createIndex("favorite_[feedId]_idx")
+			.on("favorite")
 			.column("feedId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_cart_[listingId]_idx")
-			.on("listing_cart")
+			.createIndex("favorite_[listingId]_idx")
+			.on("favorite")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_cart_[createdAt]_idx")
-			.on("listing_cart")
+			.createIndex("favorite_[createdAt]_idx")
+			.on("favorite")
 			.column("createdAt")
 			.execute();
 	},

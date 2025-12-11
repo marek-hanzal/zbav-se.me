@@ -42,7 +42,7 @@ export const listingCartCreateFx = (props: listingCartCreateFx.Props) => {
 		return yield* Effect.tryPromise({
 			async try() {
 				return database
-					.insertInto("listing_cart")
+					.insertInto("favorite")
 					.values({
 						id,
 						userId: user.id,

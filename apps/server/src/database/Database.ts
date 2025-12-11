@@ -27,7 +27,7 @@ export interface Database {
 	feed: FeedDbSchema.Type;
 	gallery_item: GalleryItemDbSchema.Type;
 	gallery: GalleryDbSchema.Type;
-	listing_cart: ListingCartDbSchema.Type;
+	favorite: ListingCartDbSchema.Type;
 	listing_flag: ListingFlagDbSchema.Type;
 	listing_gallery: ListingGalleryDbSchema.Type;
 	listing_ignore: ListingIgnoreDbSchema.Type;
