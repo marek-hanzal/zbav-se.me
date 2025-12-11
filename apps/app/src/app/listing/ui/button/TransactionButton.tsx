@@ -2,11 +2,11 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
-import { withListingTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense, useState } from "react";
-import { ListingTransactionCreateButton } from "~/app/listing-transaction/ui/button/ListingTransactionCreateButton";
-import { TransactionLogList } from "~/app/listing-transaction-log/ui/TransactionLogList";
+import { TransactionCreateButton } from "~/app/transaction/ui/button/TransactionCreateButton";
+import { TransactionLogList } from "~/app/transaction-log/ui/TransactionLogList";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
@@ -56,7 +56,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 					}}
 				>
 					<Suspense fallback={<SpinnerContainer />}>
-						<withListingTransactionFetchQuery.Suspense
+						<withTransactionFetchQuery.Suspense
 							data={{
 								where: {
 									id: listing.transactionId,
@@ -71,10 +71,10 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 										noHero
 										locale={locale}
 										side="buyer"
-										listingTransaction={data}
+										transaction={data}
 										query={{
 											where: {
-												listingTransactionId: data.id,
+												transactionId: data.id,
 											},
 											sort: [
 												{
@@ -86,7 +86,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 									/>
 								);
 							}}
-						</withListingTransactionFetchQuery.Suspense>
+						</withTransactionFetchQuery.Suspense>
 					</Suspense>
 				</BottomSheet>
 			</>
@@ -94,7 +94,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 	}
 
 	return (
-		<ListingTransactionCreateButton
+		<TransactionCreateButton
 			listing={listing}
 			ui={{
 				tone: "primary",

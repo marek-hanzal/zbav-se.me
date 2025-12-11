@@ -5,7 +5,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
-import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
+import { TransactionListContainer } from "~/app/transaction/ui/TransactionListContainer";
 
 export const Route = createFileRoute("/$locale/ui/buyer/message/list")({
 	validateSearch: z.object({

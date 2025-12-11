@@ -245,34 +245,34 @@ export const sAllowedExtensionsEnum = {
     ]
 } as const;
 
-export const sListingTransactionStatusReject = {
+export const sTransactionStatusReject = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         }
     },
     required: [
-        'listingTransactionId'
+        'transactionId'
     ]
 } as const;
 
-export const sListingTransactionStatusAccept = {
+export const sTransactionStatusAccept = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         }
     },
     required: [
-        'listingTransactionId'
+        'transactionId'
     ]
 } as const;
 
-export const sListingTransactionMessageCreate = {
+export const sTransactionMessageCreate = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         message: {
@@ -280,44 +280,44 @@ export const sListingTransactionMessageCreate = {
         }
     },
     required: [
-        'listingTransactionId',
+        'transactionId',
         'message'
     ]
 } as const;
 
-export const sListingTransactionLogQuery = {
+export const sTransactionLogQuery = {
     type: 'object',
     properties: {
         cursor: {
             $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            $ref: '#/components/schemas/ListingTransactionLogFilter'
+            $ref: '#/components/schemas/TransactionLogFilter'
         },
         where: {
-            $ref: '#/components/schemas/ListingTransactionLogWhere'
+            $ref: '#/components/schemas/TransactionLogWhere'
         },
         sort: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionLogSort'
+                $ref: '#/components/schemas/TransactionLogSort'
             }
         }
     }
 } as const;
 
-export const sListingTransactionLogSortField = {
+export const sTransactionLogSortField = {
     type: 'string',
     enum: [
         'createdAt'
     ]
 } as const;
 
-export const sListingTransactionLogSort = {
+export const sTransactionLogSort = {
     type: 'object',
     properties: {
         field: {
-            $ref: '#/components/schemas/ListingTransactionLogSortField'
+            $ref: '#/components/schemas/TransactionLogSortField'
         },
         direction: {
             $ref: '#/components/schemas/OrderEnum'
@@ -329,7 +329,7 @@ export const sListingTransactionLogSort = {
     ]
 } as const;
 
-export const sListingTransactionLogWhere = {
+export const sTransactionLogWhere = {
     type: 'object',
     properties: {
         id: {
@@ -344,11 +344,11 @@ export const sListingTransactionLogWhere = {
         fulltext: {
             type: 'string'
         },
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
+            $ref: '#/components/schemas/TransactionSideEnum'
         },
         userId: {
             type: 'string'
@@ -356,7 +356,7 @@ export const sListingTransactionLogWhere = {
     }
 } as const;
 
-export const sListingTransactionSideEnum = {
+export const sTransactionSideEnum = {
     type: 'string',
     enum: [
         'seller',
@@ -367,7 +367,7 @@ export const sListingTransactionSideEnum = {
     ]
 } as const;
 
-export const sListingTransactionLogFilter = {
+export const sTransactionLogFilter = {
     type: 'object',
     properties: {
         id: {
@@ -382,11 +382,11 @@ export const sListingTransactionLogFilter = {
         fulltext: {
             type: 'string'
         },
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
+            $ref: '#/components/schemas/TransactionSideEnum'
         },
         userId: {
             type: 'string'
@@ -394,13 +394,13 @@ export const sListingTransactionLogFilter = {
     }
 } as const;
 
-export const sListingTransactionLogCollection = {
+export const sTransactionLogCollection = {
     type: 'object',
     properties: {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionLog'
+                $ref: '#/components/schemas/TransactionLog'
             }
         },
         more: {
@@ -460,17 +460,17 @@ export const sGallery = {
     ]
 } as const;
 
-export const sListingTransactionGallery = {
+export const sTransactionGallery = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
+            $ref: '#/components/schemas/TransactionSideEnum'
         },
         galleryId: {
             type: 'string'
@@ -490,7 +490,7 @@ export const sListingTransactionGallery = {
     },
     required: [
         'id',
-        'listingTransactionId',
+        'transactionId',
         'side',
         'galleryId',
         'createdAt',
@@ -499,17 +499,17 @@ export const sListingTransactionGallery = {
     ]
 } as const;
 
-export const sListingTransactionLocation = {
+export const sTransactionLocation = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
+            $ref: '#/components/schemas/TransactionSideEnum'
         },
         locationId: {
             type: 'string'
@@ -529,7 +529,7 @@ export const sListingTransactionLocation = {
     },
     required: [
         'id',
-        'listingTransactionId',
+        'transactionId',
         'side',
         'locationId',
         'time',
@@ -538,17 +538,17 @@ export const sListingTransactionLocation = {
     ]
 } as const;
 
-export const sListingTransactionMessage = {
+export const sTransactionMessage = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
+            $ref: '#/components/schemas/TransactionSideEnum'
         },
         message: {
             type: 'string'
@@ -565,7 +565,7 @@ export const sListingTransactionMessage = {
     },
     required: [
         'id',
-        'listingTransactionId',
+        'transactionId',
         'side',
         'message',
         'createdAt',
@@ -573,7 +573,7 @@ export const sListingTransactionMessage = {
     ]
 } as const;
 
-export const sListingTransactionStatusEnum = {
+export const sTransactionStatusEnum = {
     type: 'string',
     enum: [
         'request',
@@ -585,22 +585,22 @@ export const sListingTransactionStatusEnum = {
     ]
 } as const;
 
-export const sListingTransactionStatus = {
+export const sTransactionStatus = {
     type: 'object',
     properties: {
         id: {
             type: 'string'
         },
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         side: {
-            $ref: '#/components/schemas/ListingTransactionSideEnum'
+            $ref: '#/components/schemas/TransactionSideEnum'
         },
         status: {
             allOf: [
                 {
-                    $ref: '#/components/schemas/ListingTransactionStatusEnum'
+                    $ref: '#/components/schemas/TransactionStatusEnum'
                 },
                 {}
             ]
@@ -617,7 +617,7 @@ export const sListingTransactionStatus = {
     },
     required: [
         'id',
-        'listingTransactionId',
+        'transactionId',
         'side',
         'status',
         'createdAt',
@@ -625,27 +625,27 @@ export const sListingTransactionStatus = {
     ]
 } as const;
 
-export const sListingTransactionLog = {
+export const sTransactionLog = {
     anyOf: [
         {
-            $ref: '#/components/schemas/ListingTransactionStatus'
+            $ref: '#/components/schemas/TransactionStatus'
         },
         {
-            $ref: '#/components/schemas/ListingTransactionMessage'
+            $ref: '#/components/schemas/TransactionMessage'
         },
         {
-            $ref: '#/components/schemas/ListingTransactionLocation'
+            $ref: '#/components/schemas/TransactionLocation'
         },
         {
-            $ref: '#/components/schemas/ListingTransactionGallery'
+            $ref: '#/components/schemas/TransactionGallery'
         }
     ]
 } as const;
 
-export const sListingTransactionGalleryCreate = {
+export const sTransactionGalleryCreate = {
     type: 'object',
     properties: {
-        listingTransactionId: {
+        transactionId: {
             type: 'string'
         },
         uploadIds: {
@@ -657,12 +657,12 @@ export const sListingTransactionGalleryCreate = {
         }
     },
     required: [
-        'listingTransactionId',
+        'transactionId',
         'uploadIds'
     ]
 } as const;
 
-export const sListingTransactionBuyerInfo = {
+export const sTransactionBuyerInfo = {
     type: 'object',
     properties: {
         registered: {
@@ -679,7 +679,7 @@ export const sListingTransactionBuyerInfo = {
     ]
 } as const;
 
-export const sListingTransactionSellerInfo = {
+export const sTransactionSellerInfo = {
     type: 'object',
     properties: {
         registered: {
@@ -696,7 +696,7 @@ export const sListingTransactionSellerInfo = {
     ]
 } as const;
 
-export const sListingTransactionCreate = {
+export const sTransactionCreate = {
     type: 'object',
     properties: {
         listingId: {
@@ -708,31 +708,31 @@ export const sListingTransactionCreate = {
     ]
 } as const;
 
-export const sListingTransactionQuery = {
+export const sTransactionQuery = {
     type: 'object',
     properties: {
         cursor: {
             $ref: '#/components/schemas/Cursor'
         },
         filter: {
-            $ref: '#/components/schemas/ListingTransactionFilter'
+            $ref: '#/components/schemas/TransactionFilter'
         },
         where: {
-            $ref: '#/components/schemas/ListingTransactionWhere'
+            $ref: '#/components/schemas/TransactionWhere'
         },
         sort: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransactionSort'
+                $ref: '#/components/schemas/TransactionSort'
             }
         },
         meta: {
-            $ref: '#/components/schemas/ListingTransactionMeta'
+            $ref: '#/components/schemas/TransactionMeta'
         }
     }
 } as const;
 
-export const sListingTransactionMeta = {
+export const sTransactionMeta = {
     type: 'object',
     properties: {
         side: {
@@ -741,7 +741,7 @@ export const sListingTransactionMeta = {
     }
 } as const;
 
-export const sListingTransactionSortField = {
+export const sTransactionSortField = {
     type: 'string',
     enum: [
         'createdAt',
@@ -750,11 +750,11 @@ export const sListingTransactionSortField = {
     ]
 } as const;
 
-export const sListingTransactionSort = {
+export const sTransactionSort = {
     type: 'object',
     properties: {
         field: {
-            $ref: '#/components/schemas/ListingTransactionSortField'
+            $ref: '#/components/schemas/TransactionSortField'
         },
         direction: {
             $ref: '#/components/schemas/OrderEnum'
@@ -766,7 +766,7 @@ export const sListingTransactionSort = {
     ]
 } as const;
 
-export const sListingTransactionWhere = {
+export const sTransactionWhere = {
     type: 'object',
     properties: {
         id: {
@@ -788,14 +788,14 @@ export const sListingTransactionWhere = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+            $ref: '#/components/schemas/TransactionStatusEnum'
         },
         statusIn: {
             type: 'array',
             items: {
                 allOf: [
                     {
-                        $ref: '#/components/schemas/ListingTransactionStatusEnum'
+                        $ref: '#/components/schemas/TransactionStatusEnum'
                     },
                     {}
                 ]
@@ -804,7 +804,7 @@ export const sListingTransactionWhere = {
     }
 } as const;
 
-export const sListingTransactionFilter = {
+export const sTransactionFilter = {
     type: 'object',
     properties: {
         id: {
@@ -826,14 +826,14 @@ export const sListingTransactionFilter = {
             type: 'string'
         },
         status: {
-            $ref: '#/components/schemas/ListingTransactionStatusEnum'
+            $ref: '#/components/schemas/TransactionStatusEnum'
         },
         statusIn: {
             type: 'array',
             items: {
                 allOf: [
                     {
-                        $ref: '#/components/schemas/ListingTransactionStatusEnum'
+                        $ref: '#/components/schemas/TransactionStatusEnum'
                     },
                     {}
                 ]
@@ -842,13 +842,13 @@ export const sListingTransactionFilter = {
     }
 } as const;
 
-export const sListingTransactionCollection = {
+export const sTransactionCollection = {
     type: 'object',
     properties: {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/ListingTransaction'
+                $ref: '#/components/schemas/Transaction'
             }
         },
         more: {
@@ -958,7 +958,7 @@ export const sCurrencyListEnum = {
     ]
 } as const;
 
-export const sListingTransaction = {
+export const sTransaction = {
     type: 'object',
     properties: {
         id: {

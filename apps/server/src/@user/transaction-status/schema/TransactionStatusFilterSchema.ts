@@ -1,0 +1,24 @@
+import { z } from "@hono/zod-openapi";
+import { TransactionSideEnumSchema } from "~/app/transaction/schema/TransactionSideEnumSchema";
+import { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
+
+export const TransactionStatusFilterSchema = z
+	.object({
+		...DefaultFilterSchema.shape,
+		messageThreadId: z.string().optional().openapi({
+			description: "This filter matches the exact messageThreadId",
+		}),
+		status: TransactionStatusEnumSchema.optional(),
+		statusIn: TransactionStatusEnumSchema.array().optional(),
+		side: TransactionSideEnumSchema.optional(),
+	})
+	.openapi("TransactionStatusFilter", {
+		description: "Filter object for listing transaction status",
+	});
+
+export type TransactionStatusFilterSchema = typeof TransactionStatusFilterSchema;
+
+export namespace TransactionStatusFilterSchema {
+	export type Type = z.infer<TransactionStatusFilterSchema>;
+}

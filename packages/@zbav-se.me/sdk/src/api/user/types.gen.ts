@@ -201,31 +201,31 @@ export type tAllowedExtensionsEnum = typeof tAllowedExtensionsEnum[keyof typeof 
 /**
  * Request to reject a listing transaction
  */
-export type tListingTransactionStatusReject = {
+export type tTransactionStatusReject = {
     /**
      * The ID of the listing transaction to reject
      */
-    listingTransactionId: string;
+    transactionId: string;
 };
 
 /**
  * Request to accept a listing transaction
  */
-export type tListingTransactionStatusAccept = {
+export type tTransactionStatusAccept = {
     /**
      * The ID of the listing transaction to accept
      */
-    listingTransactionId: string;
+    transactionId: string;
 };
 
 /**
  * Request to create a listing transaction message
  */
-export type tListingTransactionMessageCreate = {
+export type tTransactionMessageCreate = {
     /**
      * The ID of the listing transaction to add a message to
      */
-    listingTransactionId: string;
+    transactionId: string;
     /**
      * The message content
      */
@@ -235,35 +235,35 @@ export type tListingTransactionMessageCreate = {
 /**
  * Query object for listing transaction log collection
  */
-export type tListingTransactionLogQuery = {
+export type tTransactionLogQuery = {
     cursor?: tCursor;
-    filter?: tListingTransactionLogFilter;
-    where?: tListingTransactionLogWhere;
-    sort?: Array<tListingTransactionLogSort>;
+    filter?: tTransactionLogFilter;
+    where?: tTransactionLogWhere;
+    sort?: Array<tTransactionLogSort>;
 };
 
 /**
  * Field of the listing transaction log sort
  */
-export const tListingTransactionLogSortField = { createdAt: 'createdAt' } as const;
+export const tTransactionLogSortField = { createdAt: 'createdAt' } as const;
 
 /**
  * Field of the listing transaction log sort
  */
-export type tListingTransactionLogSortField = typeof tListingTransactionLogSortField[keyof typeof tListingTransactionLogSortField];
+export type tTransactionLogSortField = typeof tTransactionLogSortField[keyof typeof tTransactionLogSortField];
 
 /**
  * Sort object for listing transaction log collection
  */
-export type tListingTransactionLogSort = {
-    field: tListingTransactionLogSortField;
+export type tTransactionLogSort = {
+    field: tTransactionLogSortField;
     direction: tOrderEnum;
 };
 
 /**
  * App-based filters
  */
-export type tListingTransactionLogWhere = {
+export type tTransactionLogWhere = {
     /**
      * This filter matches the exact id
      */
@@ -277,17 +277,17 @@ export type tListingTransactionLogWhere = {
      */
     fulltext?: string;
     /**
-     * This filter matches the exact listingTransactionId
+     * This filter matches the exact transactionId
      */
-    listingTransactionId?: string;
-    side?: tListingTransactionSideEnum;
+    transactionId?: string;
+    side?: tTransactionSideEnum;
     userId?: string;
 };
 
 /**
  * Who initiated or affected the transaction change
  */
-export const tListingTransactionSideEnum = {
+export const tTransactionSideEnum = {
     seller: 'seller',
     buyer: 'buyer',
     transaction: 'transaction',
@@ -298,12 +298,12 @@ export const tListingTransactionSideEnum = {
 /**
  * Who initiated or affected the transaction change
  */
-export type tListingTransactionSideEnum = typeof tListingTransactionSideEnum[keyof typeof tListingTransactionSideEnum];
+export type tTransactionSideEnum = typeof tTransactionSideEnum[keyof typeof tTransactionSideEnum];
 
 /**
  * Filter object for listing transaction log collection
  */
-export type tListingTransactionLogFilter = {
+export type tTransactionLogFilter = {
     /**
      * This filter matches the exact id
      */
@@ -317,18 +317,18 @@ export type tListingTransactionLogFilter = {
      */
     fulltext?: string;
     /**
-     * This filter matches the exact listingTransactionId
+     * This filter matches the exact transactionId
      */
-    listingTransactionId?: string;
-    side?: tListingTransactionSideEnum;
+    transactionId?: string;
+    side?: tTransactionSideEnum;
     userId?: string;
 };
 
 /**
  * Collection of listing transaction log entries
  */
-export type tListingTransactionLogCollection = {
-    data: Array<tListingTransactionLog>;
+export type tTransactionLogCollection = {
+    data: Array<tTransactionLog>;
     /**
      * Whether there are more items to fetch
      */
@@ -375,7 +375,7 @@ export type tGallery = {
 /**
  * Listing transaction gallery entry
  */
-export type tListingTransactionGallery = {
+export type tTransactionGallery = {
     /**
      * ID of the transaction gallery entry
      */
@@ -383,8 +383,8 @@ export type tListingTransactionGallery = {
     /**
      * ID of the transaction referenced by the gallery
      */
-    listingTransactionId: string;
-    side: tListingTransactionSideEnum;
+    transactionId: string;
+    side: tTransactionSideEnum;
     /**
      * ID of the gallery
      */
@@ -403,7 +403,7 @@ export type tListingTransactionGallery = {
 /**
  * Listing transaction location entry
  */
-export type tListingTransactionLocation = {
+export type tTransactionLocation = {
     /**
      * ID of the transaction location entry
      */
@@ -411,8 +411,8 @@ export type tListingTransactionLocation = {
     /**
      * ID of the transaction referenced by the location
      */
-    listingTransactionId: string;
-    side: tListingTransactionSideEnum;
+    transactionId: string;
+    side: tTransactionSideEnum;
     /**
      * ID of the location
      */
@@ -434,7 +434,7 @@ export type tListingTransactionLocation = {
 /**
  * Listing transaction message entry
  */
-export type tListingTransactionMessage = {
+export type tTransactionMessage = {
     /**
      * ID of the transaction message entry
      */
@@ -442,8 +442,8 @@ export type tListingTransactionMessage = {
     /**
      * ID of the transaction referenced by the message
      */
-    listingTransactionId: string;
-    side: tListingTransactionSideEnum;
+    transactionId: string;
+    side: tTransactionSideEnum;
     /**
      * Message content
      */
@@ -461,7 +461,7 @@ export type tListingTransactionMessage = {
 /**
  * This filter matches the current status of the listing transaction
  */
-export const tListingTransactionStatusEnum = {
+export const tTransactionStatusEnum = {
     request: 'request',
     accepted: 'accepted',
     rejected: 'rejected',
@@ -473,12 +473,12 @@ export const tListingTransactionStatusEnum = {
 /**
  * This filter matches the current status of the listing transaction
  */
-export type tListingTransactionStatusEnum = typeof tListingTransactionStatusEnum[keyof typeof tListingTransactionStatusEnum];
+export type tTransactionStatusEnum = typeof tTransactionStatusEnum[keyof typeof tTransactionStatusEnum];
 
 /**
  * Listing transaction status entry
  */
-export type tListingTransactionStatus = {
+export type tTransactionStatus = {
     /**
      * ID of the transaction status entry
      */
@@ -486,9 +486,9 @@ export type tListingTransactionStatus = {
     /**
      * ID of the transaction referenced by the status
      */
-    listingTransactionId: string;
-    side: tListingTransactionSideEnum;
-    status: tListingTransactionStatusEnum & unknown;
+    transactionId: string;
+    side: tTransactionSideEnum;
+    status: tTransactionStatusEnum & unknown;
     /**
      * Creation timestamp
      */
@@ -502,16 +502,16 @@ export type tListingTransactionStatus = {
 /**
  * Listing transaction log entry (unified view across all event types)
  */
-export type tListingTransactionLog = tListingTransactionStatus | tListingTransactionMessage | tListingTransactionLocation | tListingTransactionGallery;
+export type tTransactionLog = tTransactionStatus | tTransactionMessage | tTransactionLocation | tTransactionGallery;
 
 /**
  * Request to create a listing transaction gallery
  */
-export type tListingTransactionGalleryCreate = {
+export type tTransactionGalleryCreate = {
     /**
      * The ID of the listing transaction to add a gallery to
      */
-    listingTransactionId: string;
+    transactionId: string;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
@@ -521,7 +521,7 @@ export type tListingTransactionGalleryCreate = {
 /**
  * Buyer info for the listing transaction
  */
-export type tListingTransactionBuyerInfo = {
+export type tTransactionBuyerInfo = {
     /**
      * Registration date
      */
@@ -535,7 +535,7 @@ export type tListingTransactionBuyerInfo = {
 /**
  * Seller info for the listing transaction
  */
-export type tListingTransactionSellerInfo = {
+export type tTransactionSellerInfo = {
     /**
      * Registration date
      */
@@ -549,7 +549,7 @@ export type tListingTransactionSellerInfo = {
 /**
  * Data for creating a new listing transaction
  */
-export type tListingTransactionCreate = {
+export type tTransactionCreate = {
     /**
      * ID of the listing to start a transaction for
      */
@@ -559,25 +559,25 @@ export type tListingTransactionCreate = {
 /**
  * Query object for listing transaction collection
  */
-export type tListingTransactionQuery = {
+export type tTransactionQuery = {
     cursor?: tCursor;
-    filter?: tListingTransactionFilter;
-    where?: tListingTransactionWhere;
-    sort?: Array<tListingTransactionSort>;
-    meta?: tListingTransactionMeta;
+    filter?: tTransactionFilter;
+    where?: tTransactionWhere;
+    sort?: Array<tTransactionSort>;
+    meta?: tTransactionMeta;
 };
 
 /**
  * Meta data for listing transaction collection
  */
-export type tListingTransactionMeta = {
+export type tTransactionMeta = {
     side?: tUserSideEnum;
 };
 
 /**
  * Field of the listing transaction sort
  */
-export const tListingTransactionSortField = {
+export const tTransactionSortField = {
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     expiresAt: 'expiresAt'
@@ -586,20 +586,20 @@ export const tListingTransactionSortField = {
 /**
  * Field of the listing transaction sort
  */
-export type tListingTransactionSortField = typeof tListingTransactionSortField[keyof typeof tListingTransactionSortField];
+export type tTransactionSortField = typeof tTransactionSortField[keyof typeof tTransactionSortField];
 
 /**
  * Sort object for listing transaction collection
  */
-export type tListingTransactionSort = {
-    field: tListingTransactionSortField;
+export type tTransactionSort = {
+    field: tTransactionSortField;
     direction: tOrderEnum;
 };
 
 /**
  * App-based filters
  */
-export type tListingTransactionWhere = {
+export type tTransactionWhere = {
     /**
      * This filter matches the exact id
      */
@@ -620,17 +620,17 @@ export type tListingTransactionWhere = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tListingTransactionStatusEnum;
+    status?: tTransactionStatusEnum;
     /**
      * This filter matches any of the provided statuses for the current status of the listing transaction
      */
-    statusIn?: Array<tListingTransactionStatusEnum & unknown>;
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
 };
 
 /**
  * Filter object for listing transaction collection
  */
-export type tListingTransactionFilter = {
+export type tTransactionFilter = {
     /**
      * This filter matches the exact id
      */
@@ -651,18 +651,18 @@ export type tListingTransactionFilter = {
      * This filter matches the exact listingId
      */
     listingId?: string;
-    status?: tListingTransactionStatusEnum;
+    status?: tTransactionStatusEnum;
     /**
      * This filter matches any of the provided statuses for the current status of the listing transaction
      */
-    statusIn?: Array<tListingTransactionStatusEnum & unknown>;
+    statusIn?: Array<tTransactionStatusEnum & unknown>;
 };
 
 /**
  * Collection of listing transactions
  */
-export type tListingTransactionCollection = {
-    data: Array<tListingTransaction>;
+export type tTransactionCollection = {
+    data: Array<tTransaction>;
     /**
      * Whether there are more items to fetch
      */
@@ -757,7 +757,7 @@ export type tCurrencyListEnum = typeof tCurrencyListEnum[keyof typeof tCurrencyL
 /**
  * Listing transaction data
  */
-export type tListingTransaction = {
+export type tTransaction = {
     /**
      * ID of the transaction
      */
@@ -2991,42 +2991,42 @@ export type tApiListingScoreCreateResponse = {
     201: unknown;
 };
 
-export type tApiListingTransactionCollectionRequest = {
-    body?: tListingTransactionQuery;
+export type tApiTransactionCollectionRequest = {
+    body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/collection';
+    url: '/api/user/transaction/collection';
 };
 
-export type apiListingTransactionCollectionErrors = {
+export type apiTransactionCollectionErrors = {
     /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingTransactionCollectionError = apiListingTransactionCollectionErrors[keyof apiListingTransactionCollectionErrors];
+export type apiTransactionCollectionError = apiTransactionCollectionErrors[keyof apiTransactionCollectionErrors];
 
-export type tApiListingTransactionCollectionResponse = {
+export type tApiTransactionCollectionResponse = {
     /**
      * Access collection of listing transactions based on provided query
      */
-    200: tListingTransactionCollection;
+    200: tTransactionCollection;
 };
 
-export type apiListingTransactionCollectionResponse = tApiListingTransactionCollectionResponse[keyof tApiListingTransactionCollectionResponse];
+export type apiTransactionCollectionResponse = tApiTransactionCollectionResponse[keyof tApiTransactionCollectionResponse];
 
-export type tApiListingTransactionCreateRequest = {
+export type tApiTransactionCreateRequest = {
     /**
      * Data for creating a new listing transaction
      */
-    body?: tListingTransactionCreate;
+    body?: tTransactionCreate;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/create';
+    url: '/api/user/transaction/create';
 };
 
-export type apiListingTransactionCreateErrors = {
+export type apiTransactionCreateErrors = {
     /**
      * Access denied
      */
@@ -3041,28 +3041,28 @@ export type apiListingTransactionCreateErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionCreateError = apiListingTransactionCreateErrors[keyof apiListingTransactionCreateErrors];
+export type apiTransactionCreateError = apiTransactionCreateErrors[keyof apiTransactionCreateErrors];
 
-export type tApiListingTransactionCreateResponse = {
+export type tApiTransactionCreateResponse = {
     /**
      * The listing transaction was created
      */
-    201: tListingTransaction;
+    201: tTransaction;
 };
 
-export type apiListingTransactionCreateResponse = tApiListingTransactionCreateResponse[keyof tApiListingTransactionCreateResponse];
+export type apiTransactionCreateResponse = tApiTransactionCreateResponse[keyof tApiTransactionCreateResponse];
 
-export type tApiListingTransactionFetchRequest = {
+export type tApiTransactionFetchRequest = {
     /**
      * Query object for listing transaction fetch
      */
-    body?: tListingTransactionQuery;
+    body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/fetch';
+    url: '/api/user/transaction/fetch';
 };
 
-export type apiListingTransactionFetchErrors = {
+export type apiTransactionFetchErrors = {
     /**
      * Listing transaction not found
      */
@@ -3073,28 +3073,28 @@ export type apiListingTransactionFetchErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionFetchError = apiListingTransactionFetchErrors[keyof apiListingTransactionFetchErrors];
+export type apiTransactionFetchError = apiTransactionFetchErrors[keyof apiTransactionFetchErrors];
 
-export type tApiListingTransactionFetchResponse = {
+export type tApiTransactionFetchResponse = {
     /**
      * Listing transaction matching provided query
      */
-    200: tListingTransaction;
+    200: tTransaction;
 };
 
-export type apiListingTransactionFetchResponse = tApiListingTransactionFetchResponse[keyof tApiListingTransactionFetchResponse];
+export type apiTransactionFetchResponse = tApiTransactionFetchResponse[keyof tApiTransactionFetchResponse];
 
-export type tApiListingTransactionSellerInfoRequest = {
+export type tApiTransactionSellerInfoRequest = {
     /**
      * Query object for listing transaction access validation
      */
-    body?: tListingTransactionQuery;
+    body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/seller-info';
+    url: '/api/user/transaction/seller-info';
 };
 
-export type apiListingTransactionSellerInfoErrors = {
+export type apiTransactionSellerInfoErrors = {
     /**
      * Listing transaction not found or not accessible
      */
@@ -3105,28 +3105,28 @@ export type apiListingTransactionSellerInfoErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionSellerInfoError = apiListingTransactionSellerInfoErrors[keyof apiListingTransactionSellerInfoErrors];
+export type apiTransactionSellerInfoError = apiTransactionSellerInfoErrors[keyof apiTransactionSellerInfoErrors];
 
-export type tApiListingTransactionSellerInfoResponse = {
+export type tApiTransactionSellerInfoResponse = {
     /**
      * Seller info
      */
-    200: tListingTransactionSellerInfo;
+    200: tTransactionSellerInfo;
 };
 
-export type apiListingTransactionSellerInfoResponse = tApiListingTransactionSellerInfoResponse[keyof tApiListingTransactionSellerInfoResponse];
+export type apiTransactionSellerInfoResponse = tApiTransactionSellerInfoResponse[keyof tApiTransactionSellerInfoResponse];
 
-export type tApiListingTransactionBuyerInfoRequest = {
+export type tApiTransactionBuyerInfoRequest = {
     /**
      * Query object for listing transaction access validation
      */
-    body?: tListingTransactionQuery;
+    body?: tTransactionQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/buyer-info';
+    url: '/api/user/transaction/buyer-info';
 };
 
-export type apiListingTransactionBuyerInfoErrors = {
+export type apiTransactionBuyerInfoErrors = {
     /**
      * Listing transaction not found or not accessible
      */
@@ -3137,28 +3137,28 @@ export type apiListingTransactionBuyerInfoErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionBuyerInfoError = apiListingTransactionBuyerInfoErrors[keyof apiListingTransactionBuyerInfoErrors];
+export type apiTransactionBuyerInfoError = apiTransactionBuyerInfoErrors[keyof apiTransactionBuyerInfoErrors];
 
-export type tApiListingTransactionBuyerInfoResponse = {
+export type tApiTransactionBuyerInfoResponse = {
     /**
      * Buyer info
      */
-    200: tListingTransactionBuyerInfo;
+    200: tTransactionBuyerInfo;
 };
 
-export type apiListingTransactionBuyerInfoResponse = tApiListingTransactionBuyerInfoResponse[keyof tApiListingTransactionBuyerInfoResponse];
+export type apiTransactionBuyerInfoResponse = tApiTransactionBuyerInfoResponse[keyof tApiTransactionBuyerInfoResponse];
 
-export type tApiListingTransactionGalleryCreateRequest = {
+export type tApiTransactionGalleryCreateRequest = {
     /**
      * Query object for listing transaction gallery creation
      */
-    body?: tListingTransactionGalleryCreate;
+    body?: tTransactionGalleryCreate;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/gallery/create';
+    url: '/api/user/transaction/gallery/create';
 };
 
-export type apiListingTransactionGalleryCreateErrors = {
+export type apiTransactionGalleryCreateErrors = {
     /**
      * Invalid request
      */
@@ -3177,53 +3177,53 @@ export type apiListingTransactionGalleryCreateErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionGalleryCreateError = apiListingTransactionGalleryCreateErrors[keyof apiListingTransactionGalleryCreateErrors];
+export type apiTransactionGalleryCreateError = apiTransactionGalleryCreateErrors[keyof apiTransactionGalleryCreateErrors];
 
-export type tApiListingTransactionGalleryCreateResponse = {
+export type tApiTransactionGalleryCreateResponse = {
     /**
      * Gallery created
      */
-    200: tListingTransactionGallery;
+    200: tTransactionGallery;
 };
 
-export type apiListingTransactionGalleryCreateResponse = tApiListingTransactionGalleryCreateResponse[keyof tApiListingTransactionGalleryCreateResponse];
+export type apiTransactionGalleryCreateResponse = tApiTransactionGalleryCreateResponse[keyof tApiTransactionGalleryCreateResponse];
 
-export type tApiListingTransactionLogCollectionRequest = {
-    body?: tListingTransactionLogQuery;
+export type tApiTransactionLogCollectionRequest = {
+    body?: tTransactionLogQuery;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction-log/collection';
+    url: '/api/user/transaction-log/collection';
 };
 
-export type apiListingTransactionLogCollectionErrors = {
+export type apiTransactionLogCollectionErrors = {
     /**
      * Internal server error
      */
     500: tMessage;
 };
 
-export type apiListingTransactionLogCollectionError = apiListingTransactionLogCollectionErrors[keyof apiListingTransactionLogCollectionErrors];
+export type apiTransactionLogCollectionError = apiTransactionLogCollectionErrors[keyof apiTransactionLogCollectionErrors];
 
-export type tApiListingTransactionLogCollectionResponse = {
+export type tApiTransactionLogCollectionResponse = {
     /**
      * Access collection of listing transaction log entries based on provided query
      */
-    200: tListingTransactionLogCollection;
+    200: tTransactionLogCollection;
 };
 
-export type apiListingTransactionLogCollectionResponse = tApiListingTransactionLogCollectionResponse[keyof tApiListingTransactionLogCollectionResponse];
+export type apiTransactionLogCollectionResponse = tApiTransactionLogCollectionResponse[keyof tApiTransactionLogCollectionResponse];
 
-export type tApiListingTransactionMessageCreateRequest = {
+export type tApiTransactionMessageCreateRequest = {
     /**
      * Query object for listing transaction message creation
      */
-    body?: tListingTransactionMessageCreate;
+    body?: tTransactionMessageCreate;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/message/create';
+    url: '/api/user/transaction/message/create';
 };
 
-export type apiListingTransactionMessageCreateErrors = {
+export type apiTransactionMessageCreateErrors = {
     /**
      * Access denied
      */
@@ -3238,28 +3238,28 @@ export type apiListingTransactionMessageCreateErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionMessageCreateError = apiListingTransactionMessageCreateErrors[keyof apiListingTransactionMessageCreateErrors];
+export type apiTransactionMessageCreateError = apiTransactionMessageCreateErrors[keyof apiTransactionMessageCreateErrors];
 
-export type tApiListingTransactionMessageCreateResponse = {
+export type tApiTransactionMessageCreateResponse = {
     /**
      * Message created
      */
-    200: tListingTransactionMessage;
+    200: tTransactionMessage;
 };
 
-export type apiListingTransactionMessageCreateResponse = tApiListingTransactionMessageCreateResponse[keyof tApiListingTransactionMessageCreateResponse];
+export type apiTransactionMessageCreateResponse = tApiTransactionMessageCreateResponse[keyof tApiTransactionMessageCreateResponse];
 
-export type tApiListingTransactionStatusAcceptRequest = {
+export type tApiTransactionStatusAcceptRequest = {
     /**
      * Query object for listing transaction access validation
      */
-    body?: tListingTransactionStatusAccept;
+    body?: tTransactionStatusAccept;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/status/accept';
+    url: '/api/user/transaction/status/accept';
 };
 
-export type apiListingTransactionStatusAcceptErrors = {
+export type apiTransactionStatusAcceptErrors = {
     /**
      * Access denied
      */
@@ -3274,28 +3274,28 @@ export type apiListingTransactionStatusAcceptErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionStatusAcceptError = apiListingTransactionStatusAcceptErrors[keyof apiListingTransactionStatusAcceptErrors];
+export type apiTransactionStatusAcceptError = apiTransactionStatusAcceptErrors[keyof apiTransactionStatusAcceptErrors];
 
-export type tApiListingTransactionStatusAcceptResponse = {
+export type tApiTransactionStatusAcceptResponse = {
     /**
      * Accepted status created
      */
-    200: tListingTransactionStatus;
+    200: tTransactionStatus;
 };
 
-export type apiListingTransactionStatusAcceptResponse = tApiListingTransactionStatusAcceptResponse[keyof tApiListingTransactionStatusAcceptResponse];
+export type apiTransactionStatusAcceptResponse = tApiTransactionStatusAcceptResponse[keyof tApiTransactionStatusAcceptResponse];
 
-export type tApiListingTransactionStatusRejectRequest = {
+export type tApiTransactionStatusRejectRequest = {
     /**
      * Query object for listing transaction access validation
      */
-    body?: tListingTransactionStatusReject;
+    body?: tTransactionStatusReject;
     path?: never;
     query?: never;
-    url: '/api/user/listing-transaction/status/reject';
+    url: '/api/user/transaction/status/reject';
 };
 
-export type apiListingTransactionStatusRejectErrors = {
+export type apiTransactionStatusRejectErrors = {
     /**
      * Access denied
      */
@@ -3310,16 +3310,16 @@ export type apiListingTransactionStatusRejectErrors = {
     500: tMessage;
 };
 
-export type apiListingTransactionStatusRejectError = apiListingTransactionStatusRejectErrors[keyof apiListingTransactionStatusRejectErrors];
+export type apiTransactionStatusRejectError = apiTransactionStatusRejectErrors[keyof apiTransactionStatusRejectErrors];
 
-export type tApiListingTransactionStatusRejectResponse = {
+export type tApiTransactionStatusRejectResponse = {
     /**
      * Rejected status created
      */
-    200: tListingTransactionStatus;
+    200: tTransactionStatus;
 };
 
-export type apiListingTransactionStatusRejectResponse = tApiListingTransactionStatusRejectResponse[keyof tApiListingTransactionStatusRejectResponse];
+export type apiTransactionStatusRejectResponse = tApiTransactionStatusRejectResponse[keyof tApiTransactionStatusRejectResponse];
 
 export type tApiS3PresignRequest = {
     body: {

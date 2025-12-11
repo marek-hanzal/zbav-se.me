@@ -21,7 +21,7 @@ export const ListingSchema = z
 		hasFlag: z.boolean().openapi({
 			description: "Whether the user flagged this listing",
 		}),
-		transactionId: z
+		messageThreadId: z
 			.union([
 				z.string(),
 				z.null(),

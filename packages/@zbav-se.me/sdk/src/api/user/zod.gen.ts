@@ -227,34 +227,34 @@ export type zAllowedExtensionsEnum = z.infer<typeof zAllowedExtensionsEnum>;
 /**
  * Request to reject a listing transaction
  */
-export const zListingTransactionStatusReject = z.object({
-    listingTransactionId: z.string().register(z.globalRegistry, {
+export const zTransactionStatusReject = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'The ID of the listing transaction to reject'
     })
 }).register(z.globalRegistry, {
     description: 'Request to reject a listing transaction'
 });
 
-export type zListingTransactionStatusReject = z.infer<typeof zListingTransactionStatusReject>;
+export type zTransactionStatusReject = z.infer<typeof zTransactionStatusReject>;
 
 /**
  * Request to accept a listing transaction
  */
-export const zListingTransactionStatusAccept = z.object({
-    listingTransactionId: z.string().register(z.globalRegistry, {
+export const zTransactionStatusAccept = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'The ID of the listing transaction to accept'
     })
 }).register(z.globalRegistry, {
     description: 'Request to accept a listing transaction'
 });
 
-export type zListingTransactionStatusAccept = z.infer<typeof zListingTransactionStatusAccept>;
+export type zTransactionStatusAccept = z.infer<typeof zTransactionStatusAccept>;
 
 /**
  * Request to create a listing transaction message
  */
-export const zListingTransactionMessageCreate = z.object({
-    listingTransactionId: z.string().register(z.globalRegistry, {
+export const zTransactionMessageCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'The ID of the listing transaction to add a message to'
     }),
     message: z.string().register(z.globalRegistry, {
@@ -264,33 +264,33 @@ export const zListingTransactionMessageCreate = z.object({
     description: 'Request to create a listing transaction message'
 });
 
-export type zListingTransactionMessageCreate = z.infer<typeof zListingTransactionMessageCreate>;
+export type zTransactionMessageCreate = z.infer<typeof zTransactionMessageCreate>;
 
 /**
  * Field of the listing transaction log sort
  */
-export const zListingTransactionLogSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+export const zTransactionLogSortField = z.enum(['createdAt']).register(z.globalRegistry, {
     description: 'Field of the listing transaction log sort'
 });
 
-export type zListingTransactionLogSortField = z.infer<typeof zListingTransactionLogSortField>;
+export type zTransactionLogSortField = z.infer<typeof zTransactionLogSortField>;
 
 /**
  * Sort object for listing transaction log collection
  */
-export const zListingTransactionLogSort = z.object({
-    field: zListingTransactionLogSortField,
+export const zTransactionLogSort = z.object({
+    field: zTransactionLogSortField,
     direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing transaction log collection'
 });
 
-export type zListingTransactionLogSort = z.infer<typeof zListingTransactionLogSort>;
+export type zTransactionLogSort = z.infer<typeof zTransactionLogSort>;
 
 /**
  * Who initiated or affected the transaction change
  */
-export const zListingTransactionSideEnum = z.enum([
+export const zTransactionSideEnum = z.enum([
     'seller',
     'buyer',
     'transaction',
@@ -300,12 +300,12 @@ export const zListingTransactionSideEnum = z.enum([
     description: 'Who initiated or affected the transaction change'
 });
 
-export type zListingTransactionSideEnum = z.infer<typeof zListingTransactionSideEnum>;
+export type zTransactionSideEnum = z.infer<typeof zTransactionSideEnum>;
 
 /**
  * App-based filters
  */
-export const zListingTransactionLogWhere = z.object({
+export const zTransactionLogWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -315,21 +315,21 @@ export const zListingTransactionLogWhere = z.object({
     fulltext: z.optional(z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
     })),
-    listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingTransactionId'
+    transactionId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact transactionId'
     })),
-    side: z.optional(zListingTransactionSideEnum),
+    side: z.optional(zTransactionSideEnum),
     userId: z.optional(z.string())
 }).register(z.globalRegistry, {
     description: 'App-based filters'
 });
 
-export type zListingTransactionLogWhere = z.infer<typeof zListingTransactionLogWhere>;
+export type zTransactionLogWhere = z.infer<typeof zTransactionLogWhere>;
 
 /**
  * Filter object for listing transaction log collection
  */
-export const zListingTransactionLogFilter = z.object({
+export const zTransactionLogFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -339,30 +339,30 @@ export const zListingTransactionLogFilter = z.object({
     fulltext: z.optional(z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
     })),
-    listingTransactionId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingTransactionId'
+    transactionId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact transactionId'
     })),
-    side: z.optional(zListingTransactionSideEnum),
+    side: z.optional(zTransactionSideEnum),
     userId: z.optional(z.string())
 }).register(z.globalRegistry, {
     description: 'Filter object for listing transaction log collection'
 });
 
-export type zListingTransactionLogFilter = z.infer<typeof zListingTransactionLogFilter>;
+export type zTransactionLogFilter = z.infer<typeof zTransactionLogFilter>;
 
 /**
  * Query object for listing transaction log collection
  */
-export const zListingTransactionLogQuery = z.object({
+export const zTransactionLogQuery = z.object({
     cursor: z.optional(zCursor),
-    filter: z.optional(zListingTransactionLogFilter),
-    where: z.optional(zListingTransactionLogWhere),
-    sort: z.optional(z.array(zListingTransactionLogSort))
+    filter: z.optional(zTransactionLogFilter),
+    where: z.optional(zTransactionLogWhere),
+    sort: z.optional(z.array(zTransactionLogSort))
 }).register(z.globalRegistry, {
     description: 'Query object for listing transaction log collection'
 });
 
-export type zListingTransactionLogQuery = z.infer<typeof zListingTransactionLogQuery>;
+export type zTransactionLogQuery = z.infer<typeof zTransactionLogQuery>;
 
 /**
  * Gallery item data
@@ -406,14 +406,14 @@ export type zGallery = z.infer<typeof zGallery>;
 /**
  * Listing transaction gallery entry
  */
-export const zListingTransactionGallery = z.object({
+export const zTransactionGallery = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction gallery entry'
     }),
-    listingTransactionId: z.string().register(z.globalRegistry, {
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction referenced by the gallery'
     }),
-    side: zListingTransactionSideEnum,
+    side: zTransactionSideEnum,
     galleryId: z.string().register(z.globalRegistry, {
         description: 'ID of the gallery'
     }),
@@ -428,19 +428,19 @@ export const zListingTransactionGallery = z.object({
     description: 'Listing transaction gallery entry'
 });
 
-export type zListingTransactionGallery = z.infer<typeof zListingTransactionGallery>;
+export type zTransactionGallery = z.infer<typeof zTransactionGallery>;
 
 /**
  * Listing transaction location entry
  */
-export const zListingTransactionLocation = z.object({
+export const zTransactionLocation = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction location entry'
     }),
-    listingTransactionId: z.string().register(z.globalRegistry, {
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction referenced by the location'
     }),
-    side: zListingTransactionSideEnum,
+    side: zTransactionSideEnum,
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),
@@ -457,19 +457,19 @@ export const zListingTransactionLocation = z.object({
     description: 'Listing transaction location entry'
 });
 
-export type zListingTransactionLocation = z.infer<typeof zListingTransactionLocation>;
+export type zTransactionLocation = z.infer<typeof zTransactionLocation>;
 
 /**
  * Listing transaction message entry
  */
-export const zListingTransactionMessage = z.object({
+export const zTransactionMessage = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction message entry'
     }),
-    listingTransactionId: z.string().register(z.globalRegistry, {
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction referenced by the message'
     }),
-    side: zListingTransactionSideEnum,
+    side: zTransactionSideEnum,
     message: z.string().register(z.globalRegistry, {
         description: 'Message content'
     }),
@@ -483,12 +483,12 @@ export const zListingTransactionMessage = z.object({
     description: 'Listing transaction message entry'
 });
 
-export type zListingTransactionMessage = z.infer<typeof zListingTransactionMessage>;
+export type zTransactionMessage = z.infer<typeof zTransactionMessage>;
 
 /**
  * This filter matches the current status of the listing transaction
  */
-export const zListingTransactionStatusEnum = z.enum([
+export const zTransactionStatusEnum = z.enum([
     'request',
     'accepted',
     'rejected',
@@ -499,20 +499,20 @@ export const zListingTransactionStatusEnum = z.enum([
     description: 'This filter matches the current status of the listing transaction'
 });
 
-export type zListingTransactionStatusEnum = z.infer<typeof zListingTransactionStatusEnum>;
+export type zTransactionStatusEnum = z.infer<typeof zTransactionStatusEnum>;
 
 /**
  * Listing transaction status entry
  */
-export const zListingTransactionStatus = z.object({
+export const zTransactionStatus = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction status entry'
     }),
-    listingTransactionId: z.string().register(z.globalRegistry, {
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction referenced by the status'
     }),
-    side: zListingTransactionSideEnum,
-    status: zListingTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    side: zTransactionSideEnum,
+    status: zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Current status of the listing transaction'
     })),
     createdAt: z.string().register(z.globalRegistry, {
@@ -525,25 +525,25 @@ export const zListingTransactionStatus = z.object({
     description: 'Listing transaction status entry'
 });
 
-export type zListingTransactionStatus = z.infer<typeof zListingTransactionStatus>;
+export type zTransactionStatus = z.infer<typeof zTransactionStatus>;
 
 /**
  * Listing transaction log entry (unified view across all event types)
  */
-export const zListingTransactionLog = z.union([
-    zListingTransactionStatus,
-    zListingTransactionMessage,
-    zListingTransactionLocation,
-    zListingTransactionGallery
+export const zTransactionLog = z.union([
+    zTransactionStatus,
+    zTransactionMessage,
+    zTransactionLocation,
+    zTransactionGallery
 ]);
 
-export type zListingTransactionLog = z.infer<typeof zListingTransactionLog>;
+export type zTransactionLog = z.infer<typeof zTransactionLog>;
 
 /**
  * Collection of listing transaction log entries
  */
-export const zListingTransactionLogCollection = z.object({
-    data: z.array(zListingTransactionLog),
+export const zTransactionLogCollection = z.object({
+    data: z.array(zTransactionLog),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -551,13 +551,13 @@ export const zListingTransactionLogCollection = z.object({
     description: 'Collection of listing transaction log entries'
 });
 
-export type zListingTransactionLogCollection = z.infer<typeof zListingTransactionLogCollection>;
+export type zTransactionLogCollection = z.infer<typeof zTransactionLogCollection>;
 
 /**
  * Request to create a listing transaction gallery
  */
-export const zListingTransactionGalleryCreate = z.object({
-    listingTransactionId: z.string().register(z.globalRegistry, {
+export const zTransactionGalleryCreate = z.object({
+    transactionId: z.string().register(z.globalRegistry, {
         description: 'The ID of the listing transaction to add a gallery to'
     }),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
@@ -567,12 +567,12 @@ export const zListingTransactionGalleryCreate = z.object({
     description: 'Request to create a listing transaction gallery'
 });
 
-export type zListingTransactionGalleryCreate = z.infer<typeof zListingTransactionGalleryCreate>;
+export type zTransactionGalleryCreate = z.infer<typeof zTransactionGalleryCreate>;
 
 /**
  * Buyer info for the listing transaction
  */
-export const zListingTransactionBuyerInfo = z.object({
+export const zTransactionBuyerInfo = z.object({
     registered: z.string().register(z.globalRegistry, {
         description: 'Registration date'
     }),
@@ -583,12 +583,12 @@ export const zListingTransactionBuyerInfo = z.object({
     description: 'Buyer info for the listing transaction'
 });
 
-export type zListingTransactionBuyerInfo = z.infer<typeof zListingTransactionBuyerInfo>;
+export type zTransactionBuyerInfo = z.infer<typeof zTransactionBuyerInfo>;
 
 /**
  * Seller info for the listing transaction
  */
-export const zListingTransactionSellerInfo = z.object({
+export const zTransactionSellerInfo = z.object({
     registered: z.string().register(z.globalRegistry, {
         description: 'Registration date'
     }),
@@ -599,12 +599,12 @@ export const zListingTransactionSellerInfo = z.object({
     description: 'Seller info for the listing transaction'
 });
 
-export type zListingTransactionSellerInfo = z.infer<typeof zListingTransactionSellerInfo>;
+export type zTransactionSellerInfo = z.infer<typeof zTransactionSellerInfo>;
 
 /**
  * Data for creating a new listing transaction
  */
-export const zListingTransactionCreate = z.object({
+export const zTransactionCreate = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the listing to start a transaction for'
     })
@@ -612,23 +612,23 @@ export const zListingTransactionCreate = z.object({
     description: 'Data for creating a new listing transaction'
 });
 
-export type zListingTransactionCreate = z.infer<typeof zListingTransactionCreate>;
+export type zTransactionCreate = z.infer<typeof zTransactionCreate>;
 
 /**
  * Meta data for listing transaction collection
  */
-export const zListingTransactionMeta = z.object({
+export const zTransactionMeta = z.object({
     side: z.optional(zUserSideEnum)
 }).register(z.globalRegistry, {
     description: 'Meta data for listing transaction collection'
 });
 
-export type zListingTransactionMeta = z.infer<typeof zListingTransactionMeta>;
+export type zTransactionMeta = z.infer<typeof zTransactionMeta>;
 
 /**
  * Field of the listing transaction sort
  */
-export const zListingTransactionSortField = z.enum([
+export const zTransactionSortField = z.enum([
     'createdAt',
     'updatedAt',
     'expiresAt'
@@ -636,24 +636,24 @@ export const zListingTransactionSortField = z.enum([
     description: 'Field of the listing transaction sort'
 });
 
-export type zListingTransactionSortField = z.infer<typeof zListingTransactionSortField>;
+export type zTransactionSortField = z.infer<typeof zTransactionSortField>;
 
 /**
  * Sort object for listing transaction collection
  */
-export const zListingTransactionSort = z.object({
-    field: zListingTransactionSortField,
+export const zTransactionSort = z.object({
+    field: zTransactionSortField,
     direction: zOrderEnum
 }).register(z.globalRegistry, {
     description: 'Sort object for listing transaction collection'
 });
 
-export type zListingTransactionSort = z.infer<typeof zListingTransactionSort>;
+export type zTransactionSort = z.infer<typeof zTransactionSort>;
 
 /**
  * App-based filters
  */
-export const zListingTransactionWhere = z.object({
+export const zTransactionWhere = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -669,8 +669,8 @@ export const zListingTransactionWhere = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zListingTransactionStatusEnum),
-    statusIn: z.optional(z.array(zListingTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    status: z.optional(zTransactionStatusEnum),
+    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Current status of the listing transaction'
     }))).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the listing transaction'
@@ -679,12 +679,12 @@ export const zListingTransactionWhere = z.object({
     description: 'App-based filters'
 });
 
-export type zListingTransactionWhere = z.infer<typeof zListingTransactionWhere>;
+export type zTransactionWhere = z.infer<typeof zTransactionWhere>;
 
 /**
  * Filter object for listing transaction collection
  */
-export const zListingTransactionFilter = z.object({
+export const zTransactionFilter = z.object({
     id: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact id'
     })),
@@ -700,8 +700,8 @@ export const zListingTransactionFilter = z.object({
     listingId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches the exact listingId'
     })),
-    status: z.optional(zListingTransactionStatusEnum),
-    statusIn: z.optional(z.array(zListingTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
+    status: z.optional(zTransactionStatusEnum),
+    statusIn: z.optional(z.array(zTransactionStatusEnum.and(z.unknown().register(z.globalRegistry, {
         description: 'Current status of the listing transaction'
     }))).register(z.globalRegistry, {
         description: 'This filter matches any of the provided statuses for the current status of the listing transaction'
@@ -710,22 +710,22 @@ export const zListingTransactionFilter = z.object({
     description: 'Filter object for listing transaction collection'
 });
 
-export type zListingTransactionFilter = z.infer<typeof zListingTransactionFilter>;
+export type zTransactionFilter = z.infer<typeof zTransactionFilter>;
 
 /**
  * Query object for listing transaction collection
  */
-export const zListingTransactionQuery = z.object({
+export const zTransactionQuery = z.object({
     cursor: z.optional(zCursor),
-    filter: z.optional(zListingTransactionFilter),
-    where: z.optional(zListingTransactionWhere),
-    sort: z.optional(z.array(zListingTransactionSort)),
-    meta: z.optional(zListingTransactionMeta)
+    filter: z.optional(zTransactionFilter),
+    where: z.optional(zTransactionWhere),
+    sort: z.optional(z.array(zTransactionSort)),
+    meta: z.optional(zTransactionMeta)
 }).register(z.globalRegistry, {
     description: 'Query object for listing transaction collection'
 });
 
-export type zListingTransactionQuery = z.infer<typeof zListingTransactionQuery>;
+export type zTransactionQuery = z.infer<typeof zTransactionQuery>;
 
 /**
  * Location data
@@ -809,7 +809,7 @@ export type zCurrencyListEnum = z.infer<typeof zCurrencyListEnum>;
 /**
  * Listing transaction data
  */
-export const zListingTransaction = z.object({
+export const zTransaction = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the transaction'
     }),
@@ -838,13 +838,13 @@ export const zListingTransaction = z.object({
     description: 'Listing transaction data'
 });
 
-export type zListingTransaction = z.infer<typeof zListingTransaction>;
+export type zTransaction = z.infer<typeof zTransaction>;
 
 /**
  * Collection of listing transactions
  */
-export const zListingTransactionCollection = z.object({
-    data: z.array(zListingTransaction),
+export const zTransactionCollection = z.object({
+    data: z.array(zTransaction),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -852,7 +852,7 @@ export const zListingTransactionCollection = z.object({
     description: 'Collection of listing transactions'
 });
 
-export type zListingTransactionCollection = z.infer<typeof zListingTransactionCollection>;
+export type zTransactionCollection = z.infer<typeof zTransactionCollection>;
 
 /**
  * Type of listing score
@@ -2774,155 +2774,155 @@ export const zApiListingScoreCreateData = z.object({
 
 export type zapiListingScoreCreateRequest = z.infer<typeof zApiListingScoreCreateData>;
 
-export const zApiListingTransactionCollectionData = z.object({
-    body: z.optional(zListingTransactionQuery),
+export const zApiTransactionCollectionData = z.object({
+    body: z.optional(zTransactionQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionCollectionRequest = z.infer<typeof zApiListingTransactionCollectionData>;
+export type zapiTransactionCollectionRequest = z.infer<typeof zApiTransactionCollectionData>;
 
 /**
  * Access collection of listing transactions based on provided query
  */
-export const zApiListingTransactionCollectionResponse = zListingTransactionCollection;
+export const zApiTransactionCollectionResponse = zTransactionCollection;
 
-export type zapiListingTransactionCollectionResponse = z.infer<typeof zApiListingTransactionCollectionResponse>;
+export type zapiTransactionCollectionResponse = z.infer<typeof zApiTransactionCollectionResponse>;
 
-export const zApiListingTransactionCreateData = z.object({
-    body: z.optional(zListingTransactionCreate),
+export const zApiTransactionCreateData = z.object({
+    body: z.optional(zTransactionCreate),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionCreateRequest = z.infer<typeof zApiListingTransactionCreateData>;
+export type zapiTransactionCreateRequest = z.infer<typeof zApiTransactionCreateData>;
 
 /**
  * The listing transaction was created
  */
-export const zApiListingTransactionCreateResponse = zListingTransaction;
+export const zApiTransactionCreateResponse = zTransaction;
 
-export type zapiListingTransactionCreateResponse = z.infer<typeof zApiListingTransactionCreateResponse>;
+export type zapiTransactionCreateResponse = z.infer<typeof zApiTransactionCreateResponse>;
 
-export const zApiListingTransactionFetchData = z.object({
-    body: z.optional(zListingTransactionQuery),
+export const zApiTransactionFetchData = z.object({
+    body: z.optional(zTransactionQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionFetchRequest = z.infer<typeof zApiListingTransactionFetchData>;
+export type zapiTransactionFetchRequest = z.infer<typeof zApiTransactionFetchData>;
 
 /**
  * Listing transaction matching provided query
  */
-export const zApiListingTransactionFetchResponse = zListingTransaction;
+export const zApiTransactionFetchResponse = zTransaction;
 
-export type zapiListingTransactionFetchResponse = z.infer<typeof zApiListingTransactionFetchResponse>;
+export type zapiTransactionFetchResponse = z.infer<typeof zApiTransactionFetchResponse>;
 
-export const zApiListingTransactionSellerInfoData = z.object({
-    body: z.optional(zListingTransactionQuery),
+export const zApiTransactionSellerInfoData = z.object({
+    body: z.optional(zTransactionQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionSellerInfoRequest = z.infer<typeof zApiListingTransactionSellerInfoData>;
+export type zapiTransactionSellerInfoRequest = z.infer<typeof zApiTransactionSellerInfoData>;
 
 /**
  * Seller info
  */
-export const zApiListingTransactionSellerInfoResponse = zListingTransactionSellerInfo;
+export const zApiTransactionSellerInfoResponse = zTransactionSellerInfo;
 
-export type zapiListingTransactionSellerInfoResponse = z.infer<typeof zApiListingTransactionSellerInfoResponse>;
+export type zapiTransactionSellerInfoResponse = z.infer<typeof zApiTransactionSellerInfoResponse>;
 
-export const zApiListingTransactionBuyerInfoData = z.object({
-    body: z.optional(zListingTransactionQuery),
+export const zApiTransactionBuyerInfoData = z.object({
+    body: z.optional(zTransactionQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionBuyerInfoRequest = z.infer<typeof zApiListingTransactionBuyerInfoData>;
+export type zapiTransactionBuyerInfoRequest = z.infer<typeof zApiTransactionBuyerInfoData>;
 
 /**
  * Buyer info
  */
-export const zApiListingTransactionBuyerInfoResponse = zListingTransactionBuyerInfo;
+export const zApiTransactionBuyerInfoResponse = zTransactionBuyerInfo;
 
-export type zapiListingTransactionBuyerInfoResponse = z.infer<typeof zApiListingTransactionBuyerInfoResponse>;
+export type zapiTransactionBuyerInfoResponse = z.infer<typeof zApiTransactionBuyerInfoResponse>;
 
-export const zApiListingTransactionGalleryCreateData = z.object({
-    body: z.optional(zListingTransactionGalleryCreate),
+export const zApiTransactionGalleryCreateData = z.object({
+    body: z.optional(zTransactionGalleryCreate),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionGalleryCreateRequest = z.infer<typeof zApiListingTransactionGalleryCreateData>;
+export type zapiTransactionGalleryCreateRequest = z.infer<typeof zApiTransactionGalleryCreateData>;
 
 /**
  * Gallery created
  */
-export const zApiListingTransactionGalleryCreateResponse = zListingTransactionGallery;
+export const zApiTransactionGalleryCreateResponse = zTransactionGallery;
 
-export type zapiListingTransactionGalleryCreateResponse = z.infer<typeof zApiListingTransactionGalleryCreateResponse>;
+export type zapiTransactionGalleryCreateResponse = z.infer<typeof zApiTransactionGalleryCreateResponse>;
 
-export const zApiListingTransactionLogCollectionData = z.object({
-    body: z.optional(zListingTransactionLogQuery),
+export const zApiTransactionLogCollectionData = z.object({
+    body: z.optional(zTransactionLogQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionLogCollectionRequest = z.infer<typeof zApiListingTransactionLogCollectionData>;
+export type zapiTransactionLogCollectionRequest = z.infer<typeof zApiTransactionLogCollectionData>;
 
 /**
  * Access collection of listing transaction log entries based on provided query
  */
-export const zApiListingTransactionLogCollectionResponse = zListingTransactionLogCollection;
+export const zApiTransactionLogCollectionResponse = zTransactionLogCollection;
 
-export type zapiListingTransactionLogCollectionResponse = z.infer<typeof zApiListingTransactionLogCollectionResponse>;
+export type zapiTransactionLogCollectionResponse = z.infer<typeof zApiTransactionLogCollectionResponse>;
 
-export const zApiListingTransactionMessageCreateData = z.object({
-    body: z.optional(zListingTransactionMessageCreate),
+export const zApiTransactionMessageCreateData = z.object({
+    body: z.optional(zTransactionMessageCreate),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionMessageCreateRequest = z.infer<typeof zApiListingTransactionMessageCreateData>;
+export type zapiTransactionMessageCreateRequest = z.infer<typeof zApiTransactionMessageCreateData>;
 
 /**
  * Message created
  */
-export const zApiListingTransactionMessageCreateResponse = zListingTransactionMessage;
+export const zApiTransactionMessageCreateResponse = zTransactionMessage;
 
-export type zapiListingTransactionMessageCreateResponse = z.infer<typeof zApiListingTransactionMessageCreateResponse>;
+export type zapiTransactionMessageCreateResponse = z.infer<typeof zApiTransactionMessageCreateResponse>;
 
-export const zApiListingTransactionStatusAcceptData = z.object({
-    body: z.optional(zListingTransactionStatusAccept),
+export const zApiTransactionStatusAcceptData = z.object({
+    body: z.optional(zTransactionStatusAccept),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionStatusAcceptRequest = z.infer<typeof zApiListingTransactionStatusAcceptData>;
+export type zapiTransactionStatusAcceptRequest = z.infer<typeof zApiTransactionStatusAcceptData>;
 
 /**
  * Accepted status created
  */
-export const zApiListingTransactionStatusAcceptResponse = zListingTransactionStatus;
+export const zApiTransactionStatusAcceptResponse = zTransactionStatus;
 
-export type zapiListingTransactionStatusAcceptResponse = z.infer<typeof zApiListingTransactionStatusAcceptResponse>;
+export type zapiTransactionStatusAcceptResponse = z.infer<typeof zApiTransactionStatusAcceptResponse>;
 
-export const zApiListingTransactionStatusRejectData = z.object({
-    body: z.optional(zListingTransactionStatusReject),
+export const zApiTransactionStatusRejectData = z.object({
+    body: z.optional(zTransactionStatusReject),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });
 
-export type zapiListingTransactionStatusRejectRequest = z.infer<typeof zApiListingTransactionStatusRejectData>;
+export type zapiTransactionStatusRejectRequest = z.infer<typeof zApiTransactionStatusRejectData>;
 
 /**
  * Rejected status created
  */
-export const zApiListingTransactionStatusRejectResponse = zListingTransactionStatus;
+export const zApiTransactionStatusRejectResponse = zTransactionStatus;
 
-export type zapiListingTransactionStatusRejectResponse = z.infer<typeof zApiListingTransactionStatusRejectResponse>;
+export type zapiTransactionStatusRejectResponse = z.infer<typeof zApiTransactionStatusRejectResponse>;
 
 export const zApiS3PresignData = z.object({
     body: z.object({

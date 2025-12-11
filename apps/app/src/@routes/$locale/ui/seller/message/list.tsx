@@ -3,7 +3,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import z from "zod";
-import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
+import { TransactionListContainer } from "~/app/transaction/ui/TransactionListContainer";
 
 export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 	validateSearch: z.object({

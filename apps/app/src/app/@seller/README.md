@@ -12,8 +12,8 @@ The seller's side of the marketplace - posting items, managing listings, and han
 - **User** - profile settings
 
 **Components** (`app/@seller/`) - reusable UI pieces:
-- `listing-transaction/` - accept/reject buttons, buyer info, empty states
-- `listing-transaction-log/` - status events (request, accepted, rejected, success)
+- `transaction/` - accept/reject buttons, buyer info, empty states
+- `transaction-log/` - status events (request, accepted, rejected, success)
 - `ui/` - seller menu with navigation tiles
 
 ## How it works
