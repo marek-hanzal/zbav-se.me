@@ -1,4 +1,4 @@
-import type { ListingScoreFilterSchema } from "~/@user/listing-score/schema/ListingScoreFilterSchema";
+import type { ListingScoreFilterSchema } from "~/app/listing-score/schema/ListingScoreFilterSchema";
 import type { withListingScoreSelect } from "./withListingScoreSelect";
 
 export namespace withListingScoreQueryBuilder {

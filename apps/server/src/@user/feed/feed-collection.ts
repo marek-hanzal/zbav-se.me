@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { feedCollectionFx } from "./fx/feedCollectionFx";
-import { FeedQuerySchema } from "./schema/FeedQuerySchema";
 import { FeedSchema } from "./schema/FeedSchema";
 
 export const withFeedCollectionApi: Routes.Fn = ({ userHono }) => {

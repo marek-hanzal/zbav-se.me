@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { favouriteCountFx } from "./fx/favouriteCountFx";
-import { FavouriteCountQuerySchema } from "./schema/FavouriteCountQuerySchema";
+import { FavouriteCountQuerySchema } from "~/app/favourite/schema/FavouriteCountQuerySchema";
 
 export const withFavouriteCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

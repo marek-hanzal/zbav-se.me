@@ -1,4 +1,4 @@
-import type { MessageGalleryFilterSchema } from "~/@user/message-gallery/schema/MessageGalleryFilterSchema";
+import type { MessageGalleryFilterSchema } from "~/app/message-gallery/schema/MessageGalleryFilterSchema";
 import type { withMessageGallerySelect } from "./withMessageGallerySelect";
 
 export namespace withMessageGalleryQueryBuilder {

@@ -5,7 +5,7 @@ import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { listingFetchFx } from "./fx/listingFetchFx";
-import { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "./schema/ListingSchema";
 
 export const withListingFetchApi: Routes.Fn = ({ userHono }) => {

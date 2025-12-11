@@ -1,5 +1,5 @@
-import type { FeedSortSchema } from "~/@user/feed/schema/FeedSortSchema";
 import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
+import type { FeedSortSchema } from "~/app/feed/schema/FeedSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withFeedFavouriteSelect {

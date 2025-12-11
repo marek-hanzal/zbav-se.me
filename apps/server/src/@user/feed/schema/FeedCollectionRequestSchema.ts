@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingFilterSchema } from "~/@user/listing/schema/ListingFilterSchema";
+import { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import { CursorSchema } from "~/schema/CursorSchema";
 
 export const FeedCollectionRequestSchema = z.object({

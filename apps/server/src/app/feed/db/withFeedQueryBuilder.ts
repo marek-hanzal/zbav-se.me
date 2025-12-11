@@ -1,5 +1,5 @@
 import type { withFeedSelect } from "~/app/feed/db/withFeedSelect";
-import type { FeedFilterSchema } from "~/@user/feed/schema/FeedFilterSchema";
+import type { FeedFilterSchema } from "~/app/feed/schema/FeedFilterSchema";
 
 export namespace withFeedQueryBuilder {
 	export interface Props<TSelect extends withFeedSelect.Select = withFeedSelect.Select> {

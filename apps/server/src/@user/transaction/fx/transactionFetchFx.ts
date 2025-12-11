@@ -5,7 +5,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { withTransactionQueryBuilder } from "~/app/transaction/db/withTransactionQueryBuilder";
 import { withTransactionSelect } from "~/app/transaction/db/withTransactionSelect";
-import type { TransactionQuerySchema } from "../schema/TransactionQuerySchema";
+import type { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { TransactionSchema } from "../schema/TransactionSchema";
 
 export namespace transactionFetchFx {

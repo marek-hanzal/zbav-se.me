@@ -7,7 +7,7 @@ import { MessageSchema } from "~/schema/MessageSchema";
 import { transactionFetchFx } from "./fx/transactionFetchFx";
 import { transactionGetBuyerInfoFx } from "./fx/transactionGetBuyerInfoFx";
 import { TransactionBuyerInfoSchema } from "./schema/TransactionBuyerInfoSchema";
-import { TransactionQuerySchema } from "./schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 
 export const withTransactionBuyerInfoApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

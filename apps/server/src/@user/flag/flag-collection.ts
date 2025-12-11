@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { flagCollectionFx } from "./fx/flagCollectionFx";
-import { FlagQuerySchema } from "./schema/FlagQuerySchema";
+import { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
 import { FlagSchema } from "./schema/FlagSchema";
 
 export const withFlagCollectionApi: Routes.Fn = ({ userHono }) => {

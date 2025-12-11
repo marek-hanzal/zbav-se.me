@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 import type { WithDatabase } from "~/database/WithDatabase";
-import type { MessageGallerySortSchema } from "~/@user/message-gallery/schema/MessageGallerySortSchema";
+import type { MessageGallerySortSchema } from "~/app/message-gallery/schema/MessageGallerySortSchema";
 
 export namespace withMessageGallerySelect {
 	export interface Props {

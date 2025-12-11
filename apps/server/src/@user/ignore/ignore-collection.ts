@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { ignoreCollectionFx } from "./fx/ignoreCollectionFx";
-import { IgnoreQuerySchema } from "./schema/IgnoreQuerySchema";
+import { IgnoreQuerySchema } from "~/app/ignore/schema/IgnoreQuerySchema";
 import { IgnoreSchema } from "./schema/IgnoreSchema";
 
 export const withIgnoreCollectionApi: Routes.Fn = ({ userHono }) => {

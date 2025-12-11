@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { favouriteCollectionFx } from "./fx/favouriteCollectionFx";
-import { FavouriteQuerySchema } from "./schema/FavouriteQuerySchema";
+import { FavouriteQuerySchema } from "~/app/favourite/schema/FavouriteQuerySchema";
 import { FavouriteSchema } from "./schema/FavouriteSchema";
 
 export const withFavouriteCollectionApi: Routes.Fn = ({ userHono }) => {

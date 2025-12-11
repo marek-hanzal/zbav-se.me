@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { listingScoreCountFx } from "./fx/listingScoreCountFx";
-import { ListingScoreCountQuerySchema } from "./schema/ListingScoreCountQuerySchema";
+import { ListingScoreCountQuerySchema } from "~/app/listing-score/schema/ListingScoreCountQuerySchema";
 
 export const withListingScoreCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

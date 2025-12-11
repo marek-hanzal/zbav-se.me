@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { UploadSortSchema } from "~/@user/upload/schema/UploadSortSchema";
+import type { UploadSortSchema } from "~/app/upload/schema/UploadSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withUploadSelect {

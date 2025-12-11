@@ -1,4 +1,4 @@
-import type { TransactionLogFilterSchema } from "../schema/TransactionLogFilterSchema";
+import type { TransactionLogFilterSchema } from "~/app/transaction-log/schema/TransactionLogFilterSchema";
 import type { withTransactionLogSelect } from "./withTransactionLogSelect";
 
 export namespace withTransactionLogQueryBuilder {

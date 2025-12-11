@@ -1,4 +1,4 @@
-import type { MessageLocationFilterSchema } from "~/@user/message-location/schema/MessageLocationFilterSchema";
+import type { MessageLocationFilterSchema } from "~/app/message-location/schema/MessageLocationFilterSchema";
 import type { withMessageLocationSelect } from "./withMessageLocationSelect";
 
 export namespace withMessageLocationQueryBuilder {

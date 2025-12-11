@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { flagCountFx } from "./fx/flagCountFx";
-import { FlagCountQuerySchema } from "./schema/FlagCountQuerySchema";
+import { FlagCountQuerySchema } from "~/app/flag/schema/FlagCountQuerySchema";
 
 export const withFlagCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

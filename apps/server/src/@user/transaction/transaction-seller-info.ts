@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { transactionFetchFx } from "./fx/transactionFetchFx";
 import { transactionGetSellerInfoFx } from "./fx/transactionGetSellerInfoFx";
-import { TransactionQuerySchema } from "./schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { TransactionSellerInfoSchema } from "./schema/TransactionSellerInfoSchema";
 
 export const withTransactionSellerInfoApi: Routes.Fn = ({ userHono }) => {

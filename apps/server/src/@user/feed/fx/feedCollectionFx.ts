@@ -1,10 +1,10 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
-import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
 import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
-import type { FeedQuerySchema } from "../schema/FeedQuerySchema";
+import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { FeedSchema } from "../schema/FeedSchema";
 
 export namespace feedCollectionFx {

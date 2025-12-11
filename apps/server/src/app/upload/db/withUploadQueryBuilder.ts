@@ -1,4 +1,4 @@
-import type { UploadFilterSchema } from "~/@user/upload/schema/UploadFilterSchema";
+import type { UploadFilterSchema } from "~/app/upload/schema/UploadFilterSchema";
 import type { withUploadSelect } from "./withUploadSelect";
 
 export namespace withUploadQueryBuilder {

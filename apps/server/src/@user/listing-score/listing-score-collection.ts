@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { listingScoreCollectionFx } from "./fx/listingScoreCollectionFx";
-import { ListingScoreQuerySchema } from "./schema/ListingScoreQuerySchema";
+import { ListingScoreQuerySchema } from "~/app/listing-score/schema/ListingScoreQuerySchema";
 import { ListingScoreSchema } from "./schema/ListingScoreSchema";
 
 export const withListingScoreCollectionApi: Routes.Fn = ({ userHono }) => {

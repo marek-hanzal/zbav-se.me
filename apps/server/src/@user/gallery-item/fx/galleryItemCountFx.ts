@@ -4,7 +4,7 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
 import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
-import type { GalleryItemQuerySchema } from "../schema/GalleryItemQuerySchema";
+import type { GalleryItemQuerySchema } from "~/app/gallery-item/schema/GalleryItemQuerySchema";
 
 export namespace galleryItemCountFx {
 	export interface Props {

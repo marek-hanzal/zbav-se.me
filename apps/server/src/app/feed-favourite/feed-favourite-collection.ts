@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { FeedQuerySchema } from "~/@user/feed/schema/FeedQuerySchema";
+import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { feedFavouriteCollectionFx } from "~/app/feed-favourite/fx/feedFavouriteCollectionFx";
 import { FeedFavouriteSchema } from "~/app/feed-favourite/schema/FeedFavouriteSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";

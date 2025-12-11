@@ -5,7 +5,7 @@ import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { uploadCountFx } from "./fx/uploadCountFx";
-import { UploadQuerySchema } from "./schema/UploadQuerySchema";
+import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 
 export const withUploadCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

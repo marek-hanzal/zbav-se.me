@@ -4,7 +4,7 @@ import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { uploadFetchFx } from "./fx/uploadFetchFx";
-import { UploadQuerySchema } from "./schema/UploadQuerySchema";
+import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 import { UploadSchema } from "./schema/UploadSchema";
 
 export const withUploadFetchApi: Routes.Fn = ({ userHono }) => {

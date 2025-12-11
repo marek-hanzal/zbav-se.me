@@ -1,6 +1,6 @@
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import type { GalleryItemSortSchema } from "~/@user/gallery-item/schema/GalleryItemSortSchema";
+import type { GalleryItemSortSchema } from "~/app/gallery-item/schema/GalleryItemSortSchema";
 import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
 import type { WithDatabase } from "~/database/WithDatabase";
 

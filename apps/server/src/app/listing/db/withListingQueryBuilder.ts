@@ -1,4 +1,4 @@
-import type { ListingFilterSchema } from "~/@user/listing/schema/ListingFilterSchema";
+import type { ListingFilterSchema } from "~/app/listing/schema/ListingFilterSchema";
 import type { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
 import { withLikeEx } from "~/database/expression/withLikeEx";
 

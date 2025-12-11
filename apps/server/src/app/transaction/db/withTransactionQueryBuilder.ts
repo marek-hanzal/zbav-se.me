@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
-import type { TransactionFilterSchema } from "~/@user/transaction/schema/TransactionFilterSchema";
-import type { TransactionMetaSchema } from "~/@user/transaction/schema/TransactionMetaSchema";
+import type { TransactionFilterSchema } from "~/app/transaction/schema/TransactionFilterSchema";
+import type { TransactionMetaSchema } from "~/app/transaction/schema/TransactionMetaSchema";
 import type { withTransactionSelect } from "./withTransactionSelect";
 
 export namespace withTransactionQueryBuilder {

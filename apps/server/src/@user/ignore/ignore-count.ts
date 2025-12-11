@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { ignoreCountFx } from "./fx/ignoreCountFx";
-import { IgnoreCountQuerySchema } from "./schema/IgnoreCountQuerySchema";
+import { IgnoreCountQuerySchema } from "~/app/ignore/schema/IgnoreCountQuerySchema";
 
 export const withIgnoreCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

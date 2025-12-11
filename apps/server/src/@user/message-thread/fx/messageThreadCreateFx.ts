@@ -1,7 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFetchFx";
-import type { MessageThreadCreateSchema } from "~/@user/message-thread/schema/MessageThreadCreateSchema";
+import type { MessageThreadCreateSchema } from "~/app/message-thread/schema/MessageThreadCreateSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 

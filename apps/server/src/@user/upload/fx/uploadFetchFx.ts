@@ -4,7 +4,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
 import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
-import type { UploadQuerySchema } from "../schema/UploadQuerySchema";
+import type { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
 import { UploadSchema } from "../schema/UploadSchema";
 
 export namespace uploadFetchFx {

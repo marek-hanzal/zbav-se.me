@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { FlagSortSchema } from "~/@user/flag/schema/FlagSortSchema";
+import type { FlagSortSchema } from "~/app/flag/schema/FlagSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withFlagSelect {

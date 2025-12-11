@@ -1,7 +1,7 @@
 import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
-import type { FeedQuerySchema } from "~/@user/feed/schema/FeedQuerySchema";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
+import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { withFeedFavouriteSelect } from "~/app/feed-favourite/db/withFeedFavouriteSelect";
 import { FeedFavouriteSchema } from "~/app/feed-favourite/schema/FeedFavouriteSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";

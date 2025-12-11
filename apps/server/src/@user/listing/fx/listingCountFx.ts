@@ -4,7 +4,7 @@ import { withListingCollectionSelect } from "~/app/listing/db/withListingCollect
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
-import type { ListingCountQuerySchema } from "../schema/ListingCountQuerySchema";
+import type { ListingCountQuerySchema } from "~/app/listing/schema/ListingCountQuerySchema";
 
 export namespace listingCountFx {
 	export interface Props {

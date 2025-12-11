@@ -1,6 +1,6 @@
 import { Effect } from "effect";
 import { messageThreadFetchFx } from "~/@user/message-thread/fx/messageThreadFetchFx";
-import type { MessageThreadPatchSchema } from "~/@user/message-thread/schema/MessageThreadPatchSchema";
+import type { MessageThreadPatchSchema } from "~/app/message-thread/schema/MessageThreadPatchSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { NotFoundError } from "~/error/NotFoundError";

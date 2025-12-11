@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
 import type { WithDatabase } from "~/database/WithDatabase";
-import type { MessageLocationSortSchema } from "~/@user/message-location/schema/MessageLocationSortSchema";
+import type { MessageLocationSortSchema } from "~/app/message-location/schema/MessageLocationSortSchema";
 
 export namespace withMessageLocationSelect {
 	export interface Props {

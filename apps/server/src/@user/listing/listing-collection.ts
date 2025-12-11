@@ -7,7 +7,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { listingCollectionFx } from "./fx/listingCollectionFx";
-import { ListingQuerySchema } from "./schema/ListingQuerySchema";
+import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 
 export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(

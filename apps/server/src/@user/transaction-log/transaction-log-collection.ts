@@ -6,7 +6,7 @@ import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { transactionLogCollectionFx } from "./fx/transactionLogCollectionFx";
-import { TransactionLogQuerySchema } from "./schema/TransactionLogQuerySchema";
+import { TransactionLogQuerySchema } from "~/app/transaction-log/schema/TransactionLogQuerySchema";
 import { TransactionLogSchema } from "./schema/TransactionLogSchema";
 
 export const withTransactionLogCollectionApi: Routes.Fn = ({ userHono }) => {

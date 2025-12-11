@@ -1,4 +1,4 @@
-import type { TransactionStatusFilterSchema } from "~/@user/transaction-status/schema/TransactionStatusFilterSchema";
+import type { TransactionStatusFilterSchema } from "~/app/transaction-status/schema/TransactionStatusFilterSchema";
 import type { withTransactionStatusSelect } from "./withTransactionStatusSelect";
 
 export namespace withTransactionStatusQueryBuilder {

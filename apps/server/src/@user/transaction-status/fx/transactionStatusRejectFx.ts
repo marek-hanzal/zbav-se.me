@@ -2,7 +2,7 @@ import { Effect } from "effect";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
 import { transactionResolveFx } from "~/@user/transaction/fx/transactionResolveFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
-import type { TransactionStatusRejectSchema } from "~/@user/transaction-status/schema/TransactionStatusRejectSchema";
+import type { TransactionStatusRejectSchema } from "~/app/transaction-status/schema/TransactionStatusRejectSchema";
 
 export namespace transactionStatusRejectFx {
 	export type Props = TransactionStatusRejectSchema.Type;

@@ -1,4 +1,4 @@
-import type { MessageThreadFilterSchema } from "~/@user/message-thread/schema/MessageThreadFilterSchema";
+import type { MessageThreadFilterSchema } from "~/app/message-thread/schema/MessageThreadFilterSchema";
 import type { withMessageThreadSelect } from "./withMessageThreadSelect";
 
 export namespace withMessageThreadQueryBuilder {

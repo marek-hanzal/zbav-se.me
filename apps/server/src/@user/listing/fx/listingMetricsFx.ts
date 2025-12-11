@@ -1,5 +1,5 @@
 import { Effect } from "effect";
-import { ListingMetricsSchema } from "~/@user/listing/schema/ListingMetricsSchema";
+import { ListingMetricsSchema } from "~/app/listing/schema/ListingMetricsSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingMetricsFx {

@@ -5,7 +5,7 @@ import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { MessageSchema } from "~/schema/MessageSchema";
 import { transactionFetchFx } from "./fx/transactionFetchFx";
-import { TransactionQuerySchema } from "./schema/TransactionQuerySchema";
+import { TransactionQuerySchema } from "~/app/transaction/schema/TransactionQuerySchema";
 import { TransactionSchema } from "./schema/TransactionSchema";
 
 export const withTransactionFetchApi: Routes.Fn = ({ userHono }) => {

@@ -4,7 +4,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { withTransactionLogQueryBuilder } from "~/app/transaction-log/db/withTransactionLogQueryBuilder";
 import { withTransactionLogSelect } from "~/app/transaction-log/db/withTransactionLogSelect";
-import type { TransactionLogQuerySchema } from "../schema/TransactionLogQuerySchema";
+import type { TransactionLogQuerySchema } from "~/app/transaction-log/schema/TransactionLogQuerySchema";
 import { TransactionLogSchema } from "../schema/TransactionLogSchema";
 
 export namespace transactionLogFetchFx {

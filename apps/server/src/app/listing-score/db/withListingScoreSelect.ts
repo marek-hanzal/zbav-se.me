@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { ListingScoreSortSchema } from "~/@user/listing-score/schema/ListingScoreSortSchema";
+import type { ListingScoreSortSchema } from "~/app/listing-score/schema/ListingScoreSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withListingScoreSelect {

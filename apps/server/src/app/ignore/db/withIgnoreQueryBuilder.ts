@@ -1,4 +1,4 @@
-import type { IgnoreFilterSchema } from "~/@user/ignore/schema/IgnoreFilterSchema";
+import type { IgnoreFilterSchema } from "~/app/ignore/schema/IgnoreFilterSchema";
 import type { withIgnoreSelect } from "./withIgnoreSelect";
 
 export namespace withIgnoreQueryBuilder {

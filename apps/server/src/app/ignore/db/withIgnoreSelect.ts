@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { IgnoreSortSchema } from "~/@user/ignore/schema/IgnoreSortSchema";
+import type { IgnoreSortSchema } from "~/app/ignore/schema/IgnoreSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withIgnoreSelect {

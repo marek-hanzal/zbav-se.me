@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { TransactionStatusSortSchema } from "~/@user/transaction-status/schema/TransactionStatusSortSchema";
+import type { TransactionStatusSortSchema } from "~/app/transaction-status/schema/TransactionStatusSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withTransactionStatusSelect {

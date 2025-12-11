@@ -3,7 +3,7 @@ import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
 import { withListingCollectionSelect } from "~/app/listing/db/withListingCollectionSelect";
 import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
-import type { ListingQuerySchema } from "~/@user/listing/schema/ListingQuerySchema";
+import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 

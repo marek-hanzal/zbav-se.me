@@ -5,7 +5,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
 import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
-import type { GalleryItemQuerySchema } from "../schema/GalleryItemQuerySchema";
+import type { GalleryItemQuerySchema } from "~/app/gallery-item/schema/GalleryItemQuerySchema";
 import { GalleryItemSchema } from "../schema/GalleryItemSchema";
 
 export namespace galleryItemFetchFx {

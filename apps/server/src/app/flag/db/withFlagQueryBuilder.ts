@@ -1,4 +1,4 @@
-import type { FlagFilterSchema } from "~/@user/flag/schema/FlagFilterSchema";
+import type { FlagFilterSchema } from "~/app/flag/schema/FlagFilterSchema";
 import type { withFlagSelect } from "./withFlagSelect";
 
 export namespace withFlagQueryBuilder {

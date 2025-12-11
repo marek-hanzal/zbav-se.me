@@ -4,7 +4,7 @@ import { withMessageThreadQueryBuilder } from "~/app/message-thread/db/withMessa
 import { withMessageThreadSelect } from "~/app/message-thread/db/withMessageThreadSelect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import type { MessageThreadQuerySchema } from "../schema/MessageThreadQuerySchema";
+import type { MessageThreadQuerySchema } from "~/app/message-thread/schema/MessageThreadQuerySchema";
 import { MessageThreadSchema } from "../schema/MessageThreadSchema";
 
 export namespace messageThreadFetchFx {

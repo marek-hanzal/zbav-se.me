@@ -4,7 +4,7 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withFlagQueryBuilder } from "~/app/flag/db/withFlagQueryBuilder";
 import { withFlagSelect } from "~/app/flag/db/withFlagSelect";
-import type { FlagQuerySchema } from "../schema/FlagQuerySchema";
+import type { FlagQuerySchema } from "~/app/flag/schema/FlagQuerySchema";
 import { FlagSchema } from "../schema/FlagSchema";
 
 export namespace flagCollectionFx {
