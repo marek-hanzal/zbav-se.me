@@ -14,7 +14,16 @@ export const SubmitButton: FC<SubmitButton.Props> = ({ ui, ...props }) => {
 			ui={{
 				tone: "primary",
 				theme: "light",
+				size: "default",
+				text: "xl",
+				justify: "center",
+				width: "full",
 				...ui,
+			}}
+			iconProps={{
+				ui: {
+					text: "2xl",
+				},
 			}}
 			{...props}
 		/>

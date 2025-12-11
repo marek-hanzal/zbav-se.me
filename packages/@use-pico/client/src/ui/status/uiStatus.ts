@@ -6,6 +6,9 @@ export namespace uiStatus {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
+		width?: CoolUi.Width;
+		height?: CoolUi.Height;
+		//
 		color?: CoolUi.Color;
 		text?: CoolUi.Text;
 		inner?: CoolUi.Inner;

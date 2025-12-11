@@ -1,12 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
-import { useSnapperNav } from "@use-pico/client/hook";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { FormField } from "@use-pico/client/ui/form";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { linkTo } from "@use-pico/common/link-to";
@@ -87,34 +85,22 @@ export const Route = createFileRoute("/$locale/login")({
 		});
 
 		const rootRef = useRef<HTMLDivElement>(null);
-		const snapperNav = useSnapperNav({
-			containerRef: rootRef,
-			orientation: "vertical",
-			count: 3,
-		});
 
 		return (
 			<Container
+				data-ui="/login[Container]"
 				ui={{
+					tone: "brand",
+					theme: "light",
+					background: "alt",
 					position: "relative",
+					height: "full",
 				}}
 			>
-				<SnapperNav
-					snapperNav={snapperNav}
-					iconProps={() => ({
-						ui: {
-							size: "xs",
-							tone: "secondary",
-							theme: "light",
-						},
-					})}
-					orientation={"vertical"}
-					subtle
-				/>
-
 				<Fade scrollableRef={rootRef} />
 
 				<Container
+					data-ui="/login-[Container.scrollable]"
 					ref={rootRef}
 					ui={{
 						layout: "vertical-full",
@@ -122,14 +108,24 @@ export const Route = createFileRoute("/$locale/login")({
 						snap: "vertical",
 						snapAlign: "center",
 						inner: "default",
+						height: "full",
 					}}
 				>
 					<Container
+						data-ui="/login-[Container.content]"
 						ui={{
 							layout: "vertical-centered",
+							height: "full",
+							width: "full",
 						}}
 					>
-						<Status icon={<Logo />}>
+						<Status
+							icon={<Logo />}
+							ui={{
+								width: "full",
+								inner: "xl",
+							}}
+						>
 							<form
 								onSubmit={(e) => {
 									e.preventDefault();
@@ -205,19 +201,15 @@ export const Route = createFileRoute("/$locale/login")({
 								<Container
 									ui={{
 										layout: "vertical-flex",
-										gap: "sm",
 										width: "full",
+										items: "end",
+										gap: "lg",
 									}}
 								>
 									<form.SubmitButton
 										iconEnabled={UnlockIcon}
 										iconDisabled={UnlockIcon}
 										disabled={signInMutation.isPending}
-										ui={{
-											tone: "primary",
-											theme: "dark",
-											size: "xl",
-										}}
 									>
 										{signInMutation.isPending ? (
 											<Tx label={"Please wait..."} />
@@ -236,6 +228,9 @@ export const Route = createFileRoute("/$locale/login")({
 											label={"Register (link)"}
 											ui={{
 												tone: "link",
+												theme: "light",
+												text: "md",
+												color: "lead",
 											}}
 										/>
 									</LinkTo>
