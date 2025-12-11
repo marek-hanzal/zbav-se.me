@@ -1,25 +1,25 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "../../auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { CountSchema } from "../../schema/CountSchema";
-import { MessageSchema } from "../../schema/MessageSchema";
-import { listingFlagCountFx } from "./fx/listingFlagCountFx";
-import { ListingFlagCountQuerySchema } from "./schema/ListingFlagCountQuerySchema";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { CountSchema } from "~/schema/CountSchema";
+import { MessageSchema } from "~/schema/MessageSchema";
+import { flagCountFx } from "./fx/flagCountFx";
+import { FlagCountQuerySchema } from "./schema/FlagCountQuerySchema";
 
-export const withListingFlagCountApi: Routes.Fn = ({ userHono }) => {
+export const withFlagCountApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-flag/count",
-			description: "Returns count of listing flag items based on provided query",
-			operationId: "apiListingFlagCount",
+			path: "/flag/count",
+			description: "Returns count of flag items based on provided query",
+			operationId: "apiFlagCount",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingFlagCountQuerySchema,
+							schema: FlagCountQuerySchema,
 						},
 					},
 				},
@@ -43,14 +43,14 @@ export const withListingFlagCountApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"listing-flag",
+				"flag",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
-					yield* listingFlagCountFx({
+					yield* flagCountFx({
 						query: c.req.valid("json"),
 					}),
 					200,

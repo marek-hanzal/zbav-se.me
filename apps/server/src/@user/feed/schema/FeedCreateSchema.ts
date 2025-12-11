@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingQuerySchema } from "../../listing/schema/ListingQuerySchema";
+import { ListingQuerySchema } from "~/@user/listing/schema/ListingQuerySchema";
 
 export const FeedCreateSchema = z
 	.object({

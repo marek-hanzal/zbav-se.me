@@ -1,6 +1,6 @@
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import type { WithDatabase } from "~/database/WithDatabase";
 import type { FeedSortSchema } from "../schema/FeedSortSchema";
 
 export namespace withFeedSelect {

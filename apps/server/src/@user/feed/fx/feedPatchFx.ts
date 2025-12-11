@@ -1,7 +1,7 @@
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { FeedPatchSchema } from "../schema/FeedPatchSchema";
 import { feedFetchFx } from "./feedFetchFx";
 

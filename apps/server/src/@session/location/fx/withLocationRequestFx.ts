@@ -1,6 +1,6 @@
 import { linkTo } from "@use-pico/common/link-to";
 import { Effect } from "effect";
-import { AppEnv } from "../../../AppEnv";
+import { AppEnv } from "~/AppEnv";
 
 export namespace withLocationRequestFx {
 	/**

@@ -1,5 +1,5 @@
 import type { withListingCollectionSelect } from "~/@user/listing/db/withListingCollectionSelect";
-import { withLikeEx } from "../../../database/expression/withLikeEx";
+import { withLikeEx } from "~/database/expression/withLikeEx";
 import type { ListingFilterSchema } from "../schema/ListingFilterSchema";
 
 export namespace withListingQueryBuilder {

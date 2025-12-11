@@ -1,4 +1,4 @@
-import type { Routes } from "../../hono/Routes";
+import type { Routes } from "~/hono/Routes";
 import { withFeedCollectionApi } from "./feed-collection";
 import { withFeedCountApi } from "./feed-count";
 import { withFeedCreateApi } from "./feed-create";

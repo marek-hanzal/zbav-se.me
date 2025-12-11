@@ -1,9 +1,9 @@
 import { Effect } from "effect";
 import { DateTime } from "luxon";
-import type { ListingScoreTypeEnumSchema } from "../../../app/listing-score/schema/ListingScoreTypeEnumSchema";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { TooManyRequests } from "../../../error/TooManyRequests";
+import type { ListingScoreTypeEnumSchema } from "~/app/listing-score/schema/ListingScoreTypeEnumSchema";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { TooManyRequests } from "~/error/TooManyRequests";
 
 export namespace listingScoreRateLimitFx {
 	export interface Props {

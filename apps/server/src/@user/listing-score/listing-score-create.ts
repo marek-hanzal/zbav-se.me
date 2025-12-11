@@ -1,9 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "../../auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { MessageSchema } from "~/schema/MessageSchema";
 import { ListingScoreContextProvider } from "./fx/ListingScoreContextFx";
 import { listingScoreCreateFx } from "./fx/listingScoreCreateFx";
 import { ListingScoreCreateSchema } from "./schema/ListingScoreCreateSchema";

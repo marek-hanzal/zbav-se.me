@@ -1,5 +1,5 @@
 import { Scalar } from "@scalar/hono-api-reference";
-import type { Routes } from "../../hono/Routes";
+import type { Routes } from "~/hono/Routes";
 
 const docsUrl = "/v3/api-docs";
 

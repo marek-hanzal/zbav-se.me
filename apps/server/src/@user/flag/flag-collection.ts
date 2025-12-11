@@ -1,26 +1,26 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "../../auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
-import { withCollectionSchema } from "../../schema/withCollectionSchema";
-import { listingFlagCollectionFx } from "./fx/listingFlagCollectionFx";
-import { ListingFlagQuerySchema } from "./schema/ListingFlagQuerySchema";
-import { ListingFlagSchema } from "./schema/ListingFlagSchema";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { MessageSchema } from "~/schema/MessageSchema";
+import { withCollectionSchema } from "~/schema/withCollectionSchema";
+import { flagCollectionFx } from "./fx/flagCollectionFx";
+import { FlagQuerySchema } from "./schema/FlagQuerySchema";
+import { FlagSchema } from "./schema/FlagSchema";
 
-export const withListingFlagCollectionApi: Routes.Fn = ({ userHono }) => {
+export const withFlagCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-flag/collection",
-			description: "Returns listing flag items based on provided parameters",
-			operationId: "apiListingFlagCollection",
+			path: "/flag/collection",
+			description: "Returns flag items based on provided parameters",
+			operationId: "apiFlagCollection",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingFlagQuerySchema,
+							schema: FlagQuerySchema,
 						},
 					},
 				},
@@ -30,13 +30,13 @@ export const withListingFlagCollectionApi: Routes.Fn = ({ userHono }) => {
 					content: {
 						"application/json": {
 							schema: withCollectionSchema({
-								schema: ListingFlagSchema,
-								type: "ListingFlagCollection",
-								description: "Collection of listing flag items",
+								schema: FlagSchema,
+								type: "FlagCollection",
+								description: "Collection of flag items",
 							}),
 						},
 					},
-					description: "Access collection of listing flag items based on provided query",
+					description: "Access collection of flag items based on provided query",
 				},
 				500: {
 					content: {
@@ -48,14 +48,14 @@ export const withListingFlagCollectionApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"listing-flag",
+				"flag",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<withCollectionSchema.Type<ListingFlagSchema>, 200>(
-					yield* listingFlagCollectionFx({
+				return c.json<withCollectionSchema.Type<FlagSchema>, 200>(
+					yield* flagCollectionFx({
 						query: c.req.valid("json"),
 					}),
 					200,

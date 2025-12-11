@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "../../../schema/CursorSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 import { ListingTransactionFilterSchema } from "./ListingTransactionFilterSchema";
 import { ListingTransactionMetaSchema } from "./ListingTransactionMetaSchema";
 import { ListingTransactionSortSchema } from "./ListingTransactionSortSchema";

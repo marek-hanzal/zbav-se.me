@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 
-export const ListingFlagToggleSchema = z
+export const FlagToggleSchema = z
 	.object({
 		toggle: z.boolean().openapi({
 			description: "Whether to add (true) or remove (false) the flag on the listing",
@@ -9,12 +9,12 @@ export const ListingFlagToggleSchema = z
 			description: "ID of the listing to toggle",
 		}),
 	})
-	.openapi("ListingFlagToggle", {
+	.openapi("FlagToggle", {
 		description: "Data for toggling a flag on a listing",
 	});
 
-export type ListingFlagToggleSchema = typeof ListingFlagToggleSchema;
+export type FlagToggleSchema = typeof FlagToggleSchema;
 
-export namespace ListingFlagToggleSchema {
-	export type Type = z.infer<ListingFlagToggleSchema>;
+export namespace FlagToggleSchema {
+	export type Type = z.infer<FlagToggleSchema>;
 }

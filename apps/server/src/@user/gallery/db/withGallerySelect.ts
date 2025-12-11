@@ -1,7 +1,7 @@
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import type { WithDatabase } from "../../../database/WithDatabase";
-import { withGalleryItemSelect } from "../../gallery-item/db/withGalleryItemSelect";
+import { withGalleryItemSelect } from "~/@user/gallery-item/db/withGalleryItemSelect";
+import type { WithDatabase } from "~/database/WithDatabase";
 import type { GallerySortSchema } from "../schema/GallerySortSchema";
 
 export namespace withGallerySelect {

@@ -1,4 +1,4 @@
-import type { Routes } from "../../hono/Routes";
+import type { Routes } from "~/hono/Routes";
 import { withListingCollectionApi } from "./listing-collection";
 import { withListingCountApi } from "./listing-count";
 import { withListingCreateApi } from "./listing-create";

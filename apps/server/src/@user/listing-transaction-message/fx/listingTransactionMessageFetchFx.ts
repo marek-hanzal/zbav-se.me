@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { withListingTransactionMessageQueryBuilder } from "../db/withListingTransactionMessageQueryBuilder";
 import { withListingTransactionMessageSelect } from "../db/withListingTransactionMessageSelect";
 import type { ListingTransactionMessageQuerySchema } from "../schema/ListingTransactionMessageQuerySchema";

@@ -69,10 +69,10 @@ export const withListingSelect = ({ database, userId, sort, meta }: withListingS
 			eb
 				.exists(
 					eb
-						.selectFrom("listing_flag as lf")
+						.selectFrom("flag as f")
 						.select(sql`1`.as("true"))
-						.whereRef("lf.listingId", "=", "l.id")
-						.where("lf.userId", "=", userId),
+						.whereRef("f.listingId", "=", "l.id")
+						.where("f.userId", "=", userId),
 				)
 				.$castTo<boolean>()
 				.as("hasFlag"),

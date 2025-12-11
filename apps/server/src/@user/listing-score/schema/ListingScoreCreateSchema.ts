@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { ListingScoreTypeEnumSchema } from "../../../app/listing-score/schema/ListingScoreTypeEnumSchema";
+import { ListingScoreTypeEnumSchema } from "~/app/listing-score/schema/ListingScoreTypeEnumSchema";
 
 export const ListingScoreCreateSchema = z
 	.object({

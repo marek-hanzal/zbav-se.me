@@ -1,9 +1,9 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "../../auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { MessageSchema } from "~/schema/MessageSchema";
 import { feedPatchFx } from "./fx/feedPatchFx";
 import { FeedPatchSchema } from "./schema/FeedPatchSchema";
 import { FeedSchema } from "./schema/FeedSchema";

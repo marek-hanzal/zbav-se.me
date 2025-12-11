@@ -1,4 +1,4 @@
-import { withLikeEx } from "../../../database/expression/withLikeEx";
+import { withLikeEx } from "~/database/expression/withLikeEx";
 import type { LocationFilterSchema } from "../schema/LocationFilterSchema";
 import type { withLocationSelect } from "./withLocationSelect";
 

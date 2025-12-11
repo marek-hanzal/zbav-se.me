@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { withCategoryQueryBuilder } from "../db/withCategoryQueryBuilder";
 import { withCategorySelect } from "../db/withCategorySelect";
 import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";

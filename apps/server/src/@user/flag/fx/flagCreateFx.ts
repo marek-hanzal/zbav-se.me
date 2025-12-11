@@ -1,16 +1,16 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { InvalidRequestError } from "../../../error/InvalidRequestError";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 
-export namespace listingFlagCreateFx {
+export namespace flagCreateFx {
 	export interface Props {
 		listingId: string;
 	}
 }
 
-export const listingFlagCreateFx = ({ listingId }: listingFlagCreateFx.Props) => {
+export const flagCreateFx = ({ listingId }: flagCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -19,7 +19,7 @@ export const listingFlagCreateFx = ({ listingId }: listingFlagCreateFx.Props) =>
 		return yield* Effect.tryPromise({
 			async try() {
 				return database
-					.insertInto("listing_flag")
+					.insertInto("flag")
 					.values({
 						id,
 						userId: user.id,
@@ -38,4 +38,4 @@ export const listingFlagCreateFx = ({ listingId }: listingFlagCreateFx.Props) =>
 	});
 };
 
-export type listingFlagCreateFx = ReturnType<typeof listingFlagCreateFx>;
+export type flagCreateFx = ReturnType<typeof flagCreateFx>;

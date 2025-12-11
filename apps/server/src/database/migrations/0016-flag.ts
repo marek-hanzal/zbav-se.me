@@ -1,15 +1,15 @@
 import type { Migration } from "kysely";
 
-export const ListingFlagMigration: Migration = {
+export const FlagMigration: Migration = {
 	async up(db) {
 		await db.schema
-			.createTable("listing_flag")
+			.createTable("flag")
 			.addColumn("id", "text", (col) => col.primaryKey().notNull())
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addForeignKeyConstraint(
-				"listing_flag_[userId]_fk",
+				"flag_[userId]_fk",
 				[
 					"userId",
 				],
@@ -20,7 +20,7 @@ export const ListingFlagMigration: Migration = {
 				(c) => c.onDelete("cascade"),
 			)
 			.addForeignKeyConstraint(
-				"listing_flag_[listingId]_fk",
+				"flag_[listingId]_fk",
 				[
 					"listingId",
 				],
@@ -30,27 +30,23 @@ export const ListingFlagMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
-			.addUniqueConstraint("listing_flag_[userId-listingId]_unique_idx", [
+			.addUniqueConstraint("flag_[userId-listingId]_unique_idx", [
 				"userId",
 				"listingId",
 			])
 			.execute();
 
-		await db.schema
-			.createIndex("listing_flag_[userId]_idx")
-			.on("listing_flag")
-			.column("userId")
-			.execute();
+		await db.schema.createIndex("flag_[userId]_idx").on("flag").column("userId").execute();
 
 		await db.schema
-			.createIndex("listing_flag_[listingId]_idx")
-			.on("listing_flag")
+			.createIndex("flag_[listingId]_idx")
+			.on("flag")
 			.column("listingId")
 			.execute();
 
 		await db.schema
-			.createIndex("listing_flag_[createdAt]_idx")
-			.on("listing_flag")
+			.createIndex("flag_[createdAt]_idx")
+			.on("flag")
 			.column("createdAt")
 			.execute();
 	},

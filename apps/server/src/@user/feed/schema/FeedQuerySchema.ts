@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CursorSchema } from "../../../schema/CursorSchema";
+import { CursorSchema } from "~/schema/CursorSchema";
 import { FeedFilterSchema } from "./FeedFilterSchema";
 import { FeedSortSchema } from "./FeedSortSchema";
 

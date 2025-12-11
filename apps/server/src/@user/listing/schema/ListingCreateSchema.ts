@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListEnumSchema } from "../../../schema/CurrencyListEnumSchema";
+import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { ListingExpireEnumSchema } from "./ListingExpireEnumSchema";
 
 export const ListingCreateSchema = z

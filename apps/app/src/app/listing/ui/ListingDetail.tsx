@@ -12,8 +12,8 @@ import { type FC, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
 import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
+import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
-import { ListingFlagButton } from "~/app/listing/ui/button/ListingFlagButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { GallerySheet } from "~/app/photo/ui/GallerySheet";
@@ -233,7 +233,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 								>
 									<IgnoreButton listingId={listing.id} />
 
-									<ListingFlagButton listingId={listing.id} />
+									<FlagButton listingId={listing.id} />
 								</Container>
 							);
 						}}

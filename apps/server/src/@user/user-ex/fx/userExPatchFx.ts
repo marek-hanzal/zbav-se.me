@@ -1,8 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { UserContextFx } from "../../../auth/fx/UserContextFx";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { withTransactionFx } from "../../../database/fx/withTransactionFx";
+import { UserContextFx } from "~/auth/fx/UserContextFx";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import type { UserExPatchSchema } from "../schema/UserExPatchSchema";
 
 export namespace userExPatchFx {

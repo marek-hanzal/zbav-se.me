@@ -13,11 +13,11 @@ import {
 } from "@zbav-se.me/sdk/api/session";
 import {
 	apiFavouriteToggle,
+	apiFlagToggle,
 	apiIgnoreToggle,
 	apiListingCollection,
 	apiListingCount,
 	apiListingCreate,
-	apiListingFlagToggle,
 	tCurrencyListEnum,
 	tListingExpireEnum,
 	type tListingSort,
@@ -347,7 +347,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				for (const listing of await fetchRandomListings()) {
 					Math.random() < 0.07 &&
 						queue.add(async () => {
-							return apiListingFlagToggle({
+							return apiFlagToggle({
 								body: {
 									listingId: listing.id,
 									toggle: true,

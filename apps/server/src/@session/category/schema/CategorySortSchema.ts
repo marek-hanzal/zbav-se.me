@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { OrderEnumSchema } from "../../../schema/OrderEnumSchema";
+import { OrderEnumSchema } from "~/schema/OrderEnumSchema";
 
 export const CategorySortSchema = z
 	.object({

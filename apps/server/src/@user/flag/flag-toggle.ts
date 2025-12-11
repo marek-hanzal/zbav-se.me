@@ -1,25 +1,25 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UserContextProvider } from "../../auth/fx/UserContextFx";
-import { DatabaseContextProvider } from "../../database/fx/DatabaseContextFx";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
-import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
-import { listingFlagToggleFx } from "./fx/listingFlagToggleFx";
-import { ListingFlagToggleSchema } from "./schema/ListingFlagToggleSchema";
+import { ListingScoreContextProvider } from "~/@user/listing-score/fx/ListingScoreContextFx";
+import { UserContextProvider } from "~/auth/fx/UserContextFx";
+import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
+import type { Routes } from "~/hono/Routes";
+import { MessageSchema } from "~/schema/MessageSchema";
+import { flagToggleFx } from "./fx/flagToggleFx";
+import { FlagToggleSchema } from "./schema/FlagToggleSchema";
 
-export const withListingFlagToggleApi: Routes.Fn = ({ userHono }) => {
+export const withFlagToggleApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
 		createRoute({
 			method: "post",
-			path: "/listing-flag/toggle",
+			path: "/flag/toggle",
 			description: "Toggle flag state on listing (add or remove)",
-			operationId: "apiListingFlagToggle",
+			operationId: "apiFlagToggle",
 			request: {
 				body: {
 					content: {
 						"application/json": {
-							schema: ListingFlagToggleSchema,
+							schema: FlagToggleSchema,
 						},
 					},
 				},
@@ -54,13 +54,13 @@ export const withListingFlagToggleApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			tags: [
-				"listing-flag",
+				"flag",
 				"user",
 			],
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* listingFlagToggleFx({
+				yield* flagToggleFx({
 					data: c.req.valid("json"),
 				});
 

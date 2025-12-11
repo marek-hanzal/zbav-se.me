@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { withUploadQueryBuilder } from "../db/withUploadQueryBuilder";
 import { withUploadSelect } from "../db/withUploadSelect";
 import type { UploadQuerySchema } from "../schema/UploadQuerySchema";

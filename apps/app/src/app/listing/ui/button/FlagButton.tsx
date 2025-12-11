@@ -1,19 +1,19 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import { withListingFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 import { toast } from "sonner";
 
-export namespace ListingFlagButton {
+export namespace FlagButton {
 	export interface Props extends ConfirmButton.Props {
 		listingId: string;
 	}
 }
 
-export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
+export const FlagButton: FC<FlagButton.Props> = ({
 	listingId,
 	buttonProps,
 	confirmProps,
@@ -23,7 +23,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 	...props
 }) => {
 	const queryClient = useQueryClient();
-	const listingFlagToggleMutation = withListingFlagToggleMutation.useMutation({
+	const flagToggleMutation = withFlagToggleMutation.useMutation({
 		onSuccess() {
 			withListingFetchQuery.invalidate(queryClient, {
 				where: {
@@ -64,7 +64,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 				return (
 					<ConfirmButton
 						iconEnabled={FlagIcon}
-						loading={listingFlagToggleMutation.isPending}
+						loading={flagToggleMutation.isPending}
 						disabled={listing.isFavourite || listing.isIgnored || disabled}
 						label={
 							listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"
@@ -76,7 +76,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 									toast.info(
 										translator.text("Second tap to unflag listing (toast)"),
 										{
-											id: "listing-flag-button",
+											id: "flag-button",
 										},
 									);
 								}
@@ -85,7 +85,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 									toast.warning(
 										translator.text("Second tap to flag listing (toast)"),
 										{
-											id: "listing-flag-button",
+											id: "flag-button",
 										},
 									);
 								}
@@ -101,7 +101,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 							...confirmProps,
 							onClick(e) {
 								toast.promise(
-									listingFlagToggleMutation.mutateAsync({
+									flagToggleMutation.mutateAsync({
 										toggle: !listing.hasFlag,
 										listingId: listing.id,
 									}),
@@ -113,14 +113,14 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 												: "Listing flagged (toast)",
 										),
 										error: translator.text("Error flagging listing (toast)"),
-										id: "listing-flag-button",
+										id: "flag-button",
 									},
 								);
 								confirmProps?.onClick?.(e);
 							},
 						}}
 						onReset={() => {
-							toast.dismiss("listing-flag-button");
+							toast.dismiss("flag-button");
 							onReset?.();
 						}}
 						ui={{

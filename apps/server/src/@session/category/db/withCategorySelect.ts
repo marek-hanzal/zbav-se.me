@@ -1,5 +1,5 @@
 import { match } from "ts-pattern";
-import type { WithDatabase } from "../../../database/WithDatabase";
+import type { WithDatabase } from "~/database/WithDatabase";
 import type { CategorySortSchema } from "../schema/CategorySortSchema";
 
 export namespace withCategorySelect {

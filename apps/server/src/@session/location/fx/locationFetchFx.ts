@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { DatabaseContextFx } from "../../../database/fx/DatabaseContextFx";
-import { NotFoundError } from "../../../error/NotFoundError";
+import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
+import { NotFoundError } from "~/error/NotFoundError";
 import { withLocationQueryBuilder } from "../db/withLocationQueryBuilder";
 import { withLocationSelect } from "../db/withLocationSelect";
 import type { LocationQuerySchema } from "../schema/LocationQuerySchema";

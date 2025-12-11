@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListEnumSchema } from "../../../schema/CurrencyListEnumSchema";
-import { DefaultFilterSchema } from "../../../schema/DefaultFilterSchema";
-import { PriceSchema } from "../../../schema/PriceSchema";
+import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
+import { DefaultFilterSchema } from "~/schema/DefaultFilterSchema";
+import { PriceSchema } from "~/schema/PriceSchema";
 
 export const ListingFilterSchema = z
 	.object({

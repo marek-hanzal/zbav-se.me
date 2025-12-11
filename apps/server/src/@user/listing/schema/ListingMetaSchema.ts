@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { LatLonSchema } from "../../../schema/LatLonSchema";
+import { LatLonSchema } from "~/schema/LatLonSchema";
 
 export const ListingMetaSchema = z
 	.object({

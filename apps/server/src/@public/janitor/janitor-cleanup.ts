@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
-import type { Routes } from "../../hono/Routes";
-import { MessageSchema } from "../../schema/MessageSchema";
+import type { Routes } from "~/hono/Routes";
+import { MessageSchema } from "~/schema/MessageSchema";
 import { cleanup } from "./cleanup/cleanup";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
