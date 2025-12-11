@@ -1,27 +1,23 @@
 import { z } from "@hono/zod-openapi";
-import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
+import { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
+import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 
 export const FeedPatchSchema = z
 	.object({
-		id: z.string().min(1),
-		name: z.string().min(1).optional().openapi({
-			description: "Name of the feed",
-		}),
-		locationId: z.string().nullish().openapi({
-			description: "ID of the location associated with the feed",
-		}),
-		uploadId: z.string().nullish().openapi({
-			description: "ID of the upload associated with the feed",
-		}),
-		query: z
-			.union([
-				ListingQuerySchema,
-				z.null(),
-			])
-			.optional()
+		patch: z
+			.object({
+				...FeedDbSchema.shape,
+			})
+			.omit({
+				userId: true,
+				createdAt: true,
+				updatedAt: true,
+			})
+			.partial()
 			.openapi({
-				description: "Query configuration for the feed (listing)",
+				description: "Fields to update (all optional)",
 			}),
+		query: FeedQuerySchema,
 	})
 	.openapi("FeedPatch", {
 		description: "Data for updating an existing feed",
