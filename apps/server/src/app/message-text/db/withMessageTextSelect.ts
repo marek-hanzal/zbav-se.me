@@ -1,12 +1,12 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { MessageSortSchema } from "~/app/message/schema/MessageSortSchema";
+import type { MessageTextSortSchema } from "~/app/message-text/schema/MessageTextSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withMessageTextSelect {
 	export interface Props {
 		database: WithDatabase;
-		sort: MessageSortSchema.Type[] | undefined;
+		sort: MessageTextSortSchema.Type[] | undefined;
 	}
 
 	export type Select = ReturnType<typeof withMessageTextSelect>;

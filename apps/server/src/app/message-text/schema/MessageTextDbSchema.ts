@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
 
-export const MessageDbSchema = z.object({
+export const MessageTextDbSchema = z.object({
 	id: z.string().openapi({
 		description: "ID of the message entry",
 	}),
@@ -18,8 +18,8 @@ export const MessageDbSchema = z.object({
 	}),
 });
 
-export type MessageDbSchema = typeof MessageDbSchema;
+export type MessageTextDbSchema = typeof MessageTextDbSchema;
 
-export namespace MessageDbSchema {
-	export type Type = z.infer<MessageDbSchema>;
+export namespace MessageTextDbSchema {
+	export type Type = z.infer<MessageTextDbSchema>;
 }

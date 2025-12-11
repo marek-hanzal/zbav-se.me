@@ -2,8 +2,8 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { messageTextCreateFx } from "~/@user/message-text/fx/messageCreateFx";
 import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
-import { MessageCreateSchema } from "~/app/message/schema/MessageCreateSchema";
-import { MessageSchema } from "~/app/message/schema/MessageSchema";
+import { MessageTextCreateSchema } from "~/app/message-text/schema/MessageTextCreateSchema";
+import { MessageTextSchema } from "~/app/message-text/schema/MessageTextSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
@@ -21,7 +21,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: MessageCreateSchema,
+							schema: MessageTextCreateSchema,
 						},
 					},
 					description: "Query object for message creation",
@@ -31,7 +31,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 				200: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: MessageTextSchema,
 						},
 					},
 					description: "Message created",
@@ -39,7 +39,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 				403: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: MessageTextSchema,
 						},
 					},
 					description: "Access denied",
@@ -47,7 +47,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: MessageTextSchema,
 						},
 					},
 					description: "Message thread not found or not accessible",
@@ -55,7 +55,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: MessageTextSchema,
 						},
 					},
 					description: "Internal server error",
@@ -68,7 +68,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<MessageSchema.Type, 200>(
+				return c.json<MessageTextSchema.Type, 200>(
 					yield* messageTextCreateFx(c.req.valid("json")),
 					200,
 				);

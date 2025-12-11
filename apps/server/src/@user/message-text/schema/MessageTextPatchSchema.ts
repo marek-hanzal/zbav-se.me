@@ -1,9 +1,9 @@
 import { z } from "@hono/zod-openapi";
-import { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
+import { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
 
 export const MessageTextPatchSchema = z
 	.object({
-		query: MessageQuerySchema,
+		query: MessageTextQuerySchema,
 	})
 	.openapi("MessageTextPatch", {
 		description: "Data for updating an existing message text",

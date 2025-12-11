@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import type { MessageQuerySchema } from "~/app/message/schema/MessageQuerySchema";
-import { MessageSchema } from "~/app/message/schema/MessageSchema";
+import type { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
+import { MessageTextSchema } from "~/app/message-text/schema/MessageTextSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { withMessageTextQueryBuilder } from "../db/withMessageTextQueryBuilder";
@@ -9,7 +9,7 @@ import { withMessageTextSelect } from "../db/withMessageTextSelect";
 
 export namespace messageTextFetchFx {
 	export interface Props {
-		query: Omit<MessageQuerySchema.Type, "cursor">;
+		query: Omit<MessageTextQuerySchema.Type, "cursor">;
 	}
 }
 
@@ -25,7 +25,7 @@ export const messageTextFetchFx = ({ query }: messageTextFetchFx.Props) => {
 					database,
 					sort,
 				}),
-				output: MessageSchema,
+				output: MessageTextSchema,
 				filter,
 				where,
 				query: withMessageTextQueryBuilder,

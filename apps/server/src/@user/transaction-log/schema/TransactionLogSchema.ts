@@ -2,12 +2,12 @@ import { z } from "@hono/zod-openapi";
 import { TransactionGallerySchema } from "~/@user/transaction-gallery/schema/TransactionGallerySchema";
 import { TransactionLocationSchema } from "~/@user/transaction-location/schema/TransactionLocationSchema";
 import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
-import { MessageSchema } from "~/app/message/schema/MessageSchema";
+import { MessageTextSchema } from "~/app/message-text/schema/MessageTextSchema";
 
 export const TransactionLogSchema = z
 	.union([
 		TransactionStatusSchema,
-		MessageSchema,
+		MessageTextSchema,
 		TransactionLocationSchema,
 		TransactionGallerySchema,
 	])
