@@ -96,34 +96,6 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 							),
 							Match.when(
 								{
-									_tag: "AccessDeniedError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 403>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										403,
-									);
-								},
-							),
-							Match.when(
-								{
-									_tag: "RuntimeError",
-								},
-								() => {
-									return c.json<NoticeSchema.Type, 500>(
-										{
-											type: "error",
-											message: e.message,
-										},
-										500,
-									);
-								},
-							),
-							Match.when(
-								{
 									_tag: "UnknownException",
 								},
 								() => {
