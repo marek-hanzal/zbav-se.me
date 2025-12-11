@@ -11,7 +11,7 @@ import { ListingGalleryMigration } from "./0009-listing-gallery";
 import { CategoryMissMigration } from "./0010-category-miss";
 import { UserExMigration } from "./0011-user-ex";
 import { FeedMigration } from "./0012-feed";
-import { FavouriteMigration } from "./0013-favorite";
+import { FavouriteMigration } from "./0013-favourite";
 import { ListingScoreMigration } from "./0014-listing-score";
 import { ListingIgnoreMigration } from "./0015-listing-ignore";
 import { ListingFlagMigration } from "./0016-listing-flag";
