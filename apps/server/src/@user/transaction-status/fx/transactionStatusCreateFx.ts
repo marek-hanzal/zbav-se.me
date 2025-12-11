@@ -1,24 +1,15 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
-import type { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
-import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
+import type { TransactionStatusCreateSchema } from "~/app/transaction-status/schema/TransactionStatusCreateSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 
 export namespace transactionStatusCreateFx {
-	export interface Props {
-		transactionId: string;
-		status: TransactionStatusEnumSchema.Type;
-		side: TransactionSideEnumSchema.Type;
-	}
+	export type Props = TransactionStatusCreateSchema.Type;
 }
 
-export const transactionStatusCreateFx = ({
-	transactionId,
-	status,
-	side,
-}: transactionStatusCreateFx.Props) => {
+export const transactionStatusCreateFx = (create: transactionStatusCreateFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
@@ -29,9 +20,7 @@ export const transactionStatusCreateFx = ({
 				.insertInto("transaction_status")
 				.values({
 					id,
-					transactionId,
-					status,
-					side,
+					...create,
 					createdAt: new Date(),
 				})
 				.returningAll()
@@ -42,7 +31,7 @@ export const transactionStatusCreateFx = ({
 			patch: {},
 			query: {
 				where: {
-					id: transactionId,
+					id: create.transactionId,
 				},
 			},
 		});

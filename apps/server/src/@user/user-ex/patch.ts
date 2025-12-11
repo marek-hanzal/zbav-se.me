@@ -51,9 +51,7 @@ export const withPatchApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<UserExSchema.Type, 200>(
-					yield* userExPatchFx({
-						data: c.req.valid("json"),
-					}),
+					yield* userExPatchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(
