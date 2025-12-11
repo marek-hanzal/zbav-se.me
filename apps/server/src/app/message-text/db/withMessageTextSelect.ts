@@ -22,7 +22,7 @@ export const withMessageTextSelect = ({ database, sort }: withMessageTextSelect.
 			"m.text as message",
 			"m.createdAt",
 		])
-		.select(sql<"message">`'message'`.as("event"));
+		.select(sql<"text">`'text'`.as("type"));
 
 	for (const item of sort ?? []) {
 		query = match(item.field)
