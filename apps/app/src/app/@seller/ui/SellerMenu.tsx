@@ -1,6 +1,6 @@
 import { ListIcon, type uiIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
-import { Container, type uiContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -14,21 +14,21 @@ export namespace SellerMenu {
 }
 
 export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
-	const spacing: uiContainer.Ui = {
-		layout: "vertical-flex",
-		width: "full",
-		gap: "default",
-	};
 	const icon: uiIcon.Ui = {
 		text: "2xl",
 	};
 	const button: uiButton.Ui = {
-		tone: "neutral",
+		flow: "vertical",
+		items: "center",
+		tone: "primary",
 		theme: "light",
-		inner: "xl",
 		width: "full",
+		justify: "center",
+		background: undefined,
+		border: false,
+		color: "lead",
 		text: "lg",
-		gap: "sm",
+		size: "lg",
 	};
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -79,49 +79,47 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					<Tx label="Create listing (label)" />
 				</LinkTo>
 
-				<Container ui={spacing}>
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={TransactionIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/seller/transaction/list"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="Transactions (label)" />
-					</LinkTo>
+				<LinkTo
+					{...uiButton({
+						ui: {
+							...button,
+						},
+						className: [],
+					})}
+					icon={TransactionIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/seller/transaction/list"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="Transactions (label)" />
+				</LinkTo>
 
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={ListIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/seller/listing/my"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="My listings (label)" />
-					</LinkTo>
-				</Container>
+				<LinkTo
+					{...uiButton({
+						ui: {
+							...button,
+						},
+						className: [],
+					})}
+					icon={ListIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/seller/listing/my"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="My listings (label)" />
+				</LinkTo>
 
 				<LinkTo
 					{...uiButton({

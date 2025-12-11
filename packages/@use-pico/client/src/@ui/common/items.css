@@ -11,6 +11,10 @@
 		align-items: flex-end;
 	}
 
+	[data-ui-items="stretch"] {
+		align-items: stretch;
+	}
+
 	[data-ui-items="space-around"] {
 		align-items: space-around;
 	}

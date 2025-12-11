@@ -33,7 +33,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller"}
+						to={"/$locale/home/seller"}
 						params={{
 							locale,
 						}}
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 							},
 							onClick: () => {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/home/seller",
 								});
 							},
 						}}

@@ -25,7 +25,8 @@ export namespace Ui {
 		| "end"
 		| "space-around"
 		| "space-between"
-		| "space-evenly";
+		| "space-evenly"
+		| "stretch";
 	export type Justify =
 		| "start"
 		| "center"
