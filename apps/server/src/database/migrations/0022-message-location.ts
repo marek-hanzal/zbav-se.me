@@ -14,7 +14,6 @@ export const MessageLocationMigration: Migration = {
 			 */
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
-			.addColumn("time", "timestamp", (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			//

@@ -12,7 +12,10 @@ import type { ListingGalleryDbSchema } from "~/app/listing-gallery/schema/Listin
 import type { ListingScoreDbSchema } from "~/app/listing-score/schema/ListingScoreDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDbSchema } from "~/app/message/schema/MessageDbSchema";
+import type { MessageGalleryDbSchema } from "~/app/message-gallery/schema/MessageGalleryDbSchema";
+import type { MessageLocationDbSchema } from "~/app/message-location/schema/MessageLocationDbSchema";
 import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
+import type { MessageThreadUserDbSchema } from "~/app/message-thread-user/schema/MessageThreadUserDbSchema";
 import type { UploadDbSchema } from "~/app/upload/schema/UploadDbSchema";
 import type { UserExDbSchema } from "~/app/user-ex/schema/UserExDbSchema";
 import type { auth } from "~/auth/auth";
@@ -31,7 +34,10 @@ export interface Database {
 	listing_score: ListingScoreDbSchema.Type;
 	listing: ListingDbSchema.Type;
 	location: LocationDbSchema.Type;
+	message_gallery: MessageGalleryDbSchema.Type;
+	message_location: MessageLocationDbSchema.Type;
 	message_text: MessageDbSchema.Type;
+	message_thread_user: MessageThreadUserDbSchema.Type;
 	message_thread: MessageThreadDbSchema.Type;
 	upload: UploadDbSchema.Type;
 	user_ex: UserExDbSchema.Type;
