@@ -12,7 +12,7 @@ export const Route = createFileRoute("/$locale/ui/seller/")({
 		useEffect(() => {
 			mutation.mutate({
 				side: "seller",
-			})
+			});
 		}, []);
 
 		return (
@@ -27,6 +27,6 @@ export const Route = createFileRoute("/$locale/ui/seller/")({
 			>
 				<SellerMenu locale={locale} />
 			</TitleContainer>
-		)
+		);
 	},
 });

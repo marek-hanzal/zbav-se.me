@@ -109,7 +109,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/seller/shop"
+					to="/$locale/ui/shop"
 					params={{
 						locale,
 					}}

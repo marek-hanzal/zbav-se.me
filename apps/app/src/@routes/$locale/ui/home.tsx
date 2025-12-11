@@ -8,6 +8,6 @@ export const Route = createFileRoute("/$locale/ui/home")({
 			<TitleContainer textTitle={"zbav-se.me"}>
 				<Container>Kunda</Container>
 			</TitleContainer>
-		)
+		);
 	},
 });
