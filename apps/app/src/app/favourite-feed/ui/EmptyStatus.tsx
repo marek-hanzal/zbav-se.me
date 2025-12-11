@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
-import { CartIcon } from "@zbav-se.me/ui/icon";
+import { FavouriteIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
 export namespace EmptyStatus {
@@ -23,7 +23,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 			}}
 		>
 			<Status
-				icon={CartIcon}
+				icon={FavouriteIcon}
 				textTitle={"No items in favourites (title)"}
 				ui={{
 					text: "4xl",

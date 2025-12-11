@@ -5,7 +5,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { FavouriteFeedList } from "~/app/favourite-feed/ui/FavouriteFeedList";
 
-export const Route = createFileRoute("/$locale/buyer/cart/list")({
+export const Route = createFileRoute("/$locale/buyer/favourite/list")({
 	component() {
 		const { locale } = Route.useParams();
 
@@ -38,7 +38,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 					linkTo={{
 						header: ({ feedId, children }) => (
 							<LinkTo
-								to={"/$locale/buyer/cart/$feedId/list"}
+								to={"/$locale/buyer/favourite/$feedId/list"}
 								params={{
 									locale,
 									feedId,

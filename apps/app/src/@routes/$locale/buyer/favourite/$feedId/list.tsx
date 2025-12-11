@@ -11,7 +11,7 @@ import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
-export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
+export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 	component() {
 		const { locale } = Route.useParams();
 		const { feedId } = Route.useParams();
@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/cart/list"}
+						to={"/$locale/buyer/favourite/list"}
 						params={{
 							locale,
 						}}
@@ -128,7 +128,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 											textTitle={"Empty favourite category (title)"}
 											action={
 												<LinkTo
-													to={"/$locale/buyer/cart/list"}
+													to={"/$locale/buyer/favourite/list"}
 													params={{
 														locale,
 													}}
@@ -161,7 +161,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 									}
 								>
 									<LinkTo
-										to={"/$locale/buyer/cart/list"}
+										to={"/$locale/buyer/favourite/list"}
 										params={{
 											locale,
 										}}

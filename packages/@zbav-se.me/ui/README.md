@@ -41,7 +41,7 @@ Form utilities and hooks:
 
 ### 🎯 Icons (`icon/`)
 Comprehensive icon set for the application:
-- Navigation icons (Dashboard, Feed, Cart, etc.)
+- Navigation icons (Dashboard, Feed, Favourite, etc.)
 - Action icons (Check, Cancel, Clear, Submit, etc.)
 - Domain icons (Age, Condition, Category, Location, Price, etc.)
 - User role icons (Buyer, Seller, etc.)

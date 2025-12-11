@@ -71,7 +71,7 @@ This is a monorepo managed by Bun workspaces, containing:
 
 - **`buyer`** - Buyer domain package
   - Buyer-specific components and logic
-  - Listing transactions, shopping cart
+  - Listing transactions, favourites
 
 - **`seller`** - Seller domain package
   - Seller-specific components and logic

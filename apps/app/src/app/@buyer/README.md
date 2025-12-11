@@ -6,7 +6,7 @@ The buyer's side of the marketplace - finding stuff, saving searches, and buying
 
 **Routes** (`@routes/$locale/buyer/`) - buyer-facing pages:
 - **Feed** - custom search filters (location, category, condition, age, etc.) that refresh with new listings
-- **Cart** - categories you're watching, shows listing counts
+- **Favourites** - categories you're watching, shows listing counts
 - **Listings** - browse items, score them, view seller info
 - **Transactions** - your purchase history and active deals
 - **Shop** - (placeholder for now)
@@ -20,7 +20,7 @@ The buyer's side of the marketplace - finding stuff, saving searches, and buying
 
 ## How it works
 
-Buyers create **feeds** (saved searches) with specific filters. The app notifies them when new matching listings appear. They add interesting categories to their **cart**, browse listings, and start **transactions** with sellers.
+Buyers create **feeds** (saved searches) with specific filters. The app notifies them when new matching listings appear. They add interesting categories to their **favourites**, browse listings, and start **transactions** with sellers.
 
 Transaction flow (buyer side):
 1. Request → waiting for seller
