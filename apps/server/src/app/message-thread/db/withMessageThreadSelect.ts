@@ -1,6 +1,6 @@
 import { match } from "ts-pattern";
-import type { WithDatabase } from "~/database/WithDatabase";
 import type { MessageThreadSortSchema } from "~/app/message-thread/schema/MessageThreadSortSchema";
+import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withMessageThreadSelect {
 	export interface Props {

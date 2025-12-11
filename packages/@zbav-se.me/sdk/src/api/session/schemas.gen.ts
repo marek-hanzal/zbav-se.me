@@ -425,7 +425,7 @@ export const sCategoryFilter = {
     }
 } as const;
 
-export const sMessage = {
+export const sNotice = {
     type: 'object',
     properties: {
         message: {

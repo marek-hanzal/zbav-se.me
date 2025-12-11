@@ -389,18 +389,18 @@ export const zMessageTypeEnum = z.enum([
 export type zMessageTypeEnum = z.infer<typeof zMessageTypeEnum>;
 
 /**
- * Message data
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export const zMessage = z.object({
+export const zNotice = z.object({
     message: z.string().register(z.globalRegistry, {
         description: 'Message'
     }),
     type: zMessageTypeEnum
 }).register(z.globalRegistry, {
-    description: 'Message data'
+    description: 'Just a note sent from various reasons, usually when something is fucked up.'
 });
 
-export type zMessage = z.infer<typeof zMessage>;
+export type zNotice = z.infer<typeof zNotice>;
 
 export const zApiCategoryFetchData = z.object({
     body: z.optional(zCategoryQuery),

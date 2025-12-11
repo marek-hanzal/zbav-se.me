@@ -2,8 +2,8 @@ import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
-import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
+import type { TransactionSortSchema } from "~/app/transaction/schema/TransactionSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withTransactionSelect {

@@ -3,9 +3,9 @@ import { withTransactionGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/u
 import type { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
+import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 import { RejectButton } from "~/app/transaction/ui/button/RejectButton";
 import type { useSideSwitch } from "~/app/transaction/ui/useSideSwitch";
-import { GalleryUploadButton } from "~/app/photo/ui/GalleryUploadButton";
 
 export namespace GalleryMenu {
 	export interface Props {

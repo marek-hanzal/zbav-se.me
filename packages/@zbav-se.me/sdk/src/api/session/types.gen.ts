@@ -378,9 +378,9 @@ export type tCategoryFilter = {
 };
 
 /**
- * Message data
+ * Just a note sent from various reasons, usually when something is fucked up.
  */
-export type tMessage = {
+export type tNotice = {
     /**
      * Message
      */
@@ -416,11 +416,11 @@ export type apiCategoryFetchErrors = {
     /**
      * Category not found
      */
-    404: tMessage;
+    404: tNotice;
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiCategoryFetchError = apiCategoryFetchErrors[keyof apiCategoryFetchErrors];
@@ -445,7 +445,7 @@ export type apiCategoryCollectionErrors = {
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiCategoryCollectionError = apiCategoryCollectionErrors[keyof apiCategoryCollectionErrors];
@@ -470,7 +470,7 @@ export type apiCategoryCountErrors = {
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiCategoryCountError = apiCategoryCountErrors[keyof apiCategoryCountErrors];
@@ -498,11 +498,11 @@ export type apiLocationAutocompleteErrors = {
     /**
      * Text too short
      */
-    400: tMessage;
+    400: tNotice;
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiLocationAutocompleteError = apiLocationAutocompleteErrors[keyof apiLocationAutocompleteErrors];
@@ -534,11 +534,11 @@ export type apiLocationFetchErrors = {
     /**
      * Location not found
      */
-    404: tMessage;
+    404: tNotice;
     /**
      * Internal server error
      */
-    500: tMessage;
+    500: tNotice;
 };
 
 export type apiLocationFetchError = apiLocationFetchErrors[keyof apiLocationFetchErrors];
