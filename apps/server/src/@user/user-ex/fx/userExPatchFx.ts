@@ -42,6 +42,7 @@ export const userExPatchFx = ({ patch }: userExPatchFx.Props) => {
 					.updateTable("user_ex")
 					.set(patch)
 					.where("id", "=", userEx.id)
+					.returningAll()
 					.executeTakeFirstOrThrow();
 			});
 		}),
