@@ -46,7 +46,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/expire-at")
 							},
 							onClick: () => {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/ui/seller",
 								});
 							},
 						}}
