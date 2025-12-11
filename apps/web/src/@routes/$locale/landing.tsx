@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSnapperNav } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
-import { SnapperNav } from "@use-pico/client/ui/snapper-nav";
 import { VariantProvider } from "@use-pico/cls";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { useRef } from "react";
@@ -20,37 +18,25 @@ export const Route = createFileRoute("/$locale/landing")({
 
 		useEnterAnim(scrollerRef);
 
-		const snapperNav = useSnapperNav({
-			containerRef: scrollerRef,
-			orientation: "vertical",
-			count: 5,
-		});
-
 		return (
-			<Container>
+			<Container
+				data-ui="/landing[Container]"
+				ui={{
+					position: "relative",
+					height: "full",
+				}}
+			>
 				<Fade scrollableRef={scrollerRef} />
 
-				<SnapperNav
-					snapperNav={snapperNav}
-					iconProps={() => ({
-						ui: {
-							size: "xs",
-							tone: "secondary",
-							theme: "light",
-						},
-					})}
-					limit={7}
-					subtle
-					orientation={"vertical"}
-				/>
-
 				<Container
+					data-ui="/landing-[Container.content]"
 					ref={scrollerRef}
 					ui={{
 						layout: "vertical-full",
 						snap: "vertical",
 						snapAlign: "center",
 						gap: "default",
+						height: "full",
 					}}
 				>
 					<HeroSheet locale={locale} />

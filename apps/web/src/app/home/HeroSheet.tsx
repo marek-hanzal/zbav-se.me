@@ -1,9 +1,9 @@
 import { UserIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { tvc } from "@use-pico/cls";
+import { Tx } from "@use-pico/client/ui/tx";
 import { UnlockIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import type { FC } from "react";
@@ -16,68 +16,102 @@ export namespace HeroSheet {
 
 export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 	return (
-		<Container data-ui={"HeroSheet"}>
-			<div
-				data-ui={"HeroSheet-wrapper"}
-				className={tvc([
-					"flex",
-					"flex-col",
-					"justify-evenly",
-					"h-dvh",
-					"py-16",
-					"px-4",
-				])}
+		<Container
+			data-ui={"HeroSheet[Container]"}
+			ui={{
+				layout: "vertical-centered",
+				flow: "vertical",
+				height: "full",
+				tone: "brand",
+				theme: "light",
+				background: "alt",
+				inner: "xl",
+				gap: "xl",
+			}}
+		>
+			<Container
+				ui={{
+					layout: "horizontal",
+					height: "auto",
+					width: "full",
+				}}
+			>
+				<Logo />
+			</Container>
+
+			<Status
+				data-ui="HeroSheet-Status"
+				textTitle={"Landing - Hero (title)"}
+				textMessage={"Landing - Hero (subtitle)"}
+				messageProps={{
+					className: [
+						"text-center",
+					],
+				}}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					color: "lead",
+				}}
 			>
 				<Container
 					ui={{
-						layout: "horizontal",
-						height: "auto",
-						width: "full",
+						layout: "vertical-flex",
+						inner: "4xl",
+						gap: "xl",
 					}}
 				>
-					<Logo />
-				</Container>
-
-				<Status
-					data-ui="HeroSheet-Status"
-					textTitle={"Landing - Hero (title)"}
-					textMessage={"Landing - Hero (subtitle)"}
-				>
 					<LinkTo
+						{...uiButton({
+							ui: {
+								tone: "secondary",
+								theme: "light",
+								size: "default",
+								text: "xl",
+								justify: "center",
+							},
+							className: [],
+						})}
+						icon={UnlockIcon}
+						iconProps={{
+							ui: {
+								text: "2xl",
+							},
+						}}
 						to={"/$locale/login"}
 						params={{
 							locale,
 						}}
 					>
-						<Button
-							iconEnabled={UnlockIcon}
-							label={"Login (hero)"}
-							ui={{
-								size: "xl",
-								tone: "secondary",
-								theme: "dark",
-							}}
-						/>
+						<Tx label={"Login (hero)"} />
 					</LinkTo>
 
 					<LinkTo
+						{...uiButton({
+							ui: {
+								tone: "primary",
+								theme: "light",
+								size: "default",
+								text: "xl",
+								justify: "center",
+							},
+							className: [],
+						})}
+						icon={UserIcon}
+						iconProps={{
+							ui: {
+								text: "2xl",
+							},
+						}}
 						to={"/$locale/register"}
 						params={{
 							locale,
 						}}
 					>
-						<Button
-							iconEnabled={UserIcon}
-							label={"Register (hero)"}
-							ui={{
-								tone: "primary",
-								theme: "light",
-								size: "xl",
-							}}
-						/>
+						<Tx label={"Register (hero)"} />
 					</LinkTo>
-				</Status>
-			</div>
+				</Container>
+			</Status>
 		</Container>
 	);
 };

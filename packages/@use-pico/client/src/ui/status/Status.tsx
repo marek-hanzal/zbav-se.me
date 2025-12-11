@@ -104,9 +104,7 @@ export const Status: FC<Status.Props> = ({
 				</Container>
 			)}
 
-			{children ? (
-				<Container data-ui="Status-[Container-content]">{children}</Container>
-			) : null}
+			{children}
 		</div>
 	);
 };
