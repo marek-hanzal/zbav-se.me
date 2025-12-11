@@ -1,5 +1,5 @@
 import { z } from "@hono/zod-openapi";
-import { TransactionSideEnumSchema } from "~/app/transaction/schema/TransactionSideEnumSchema";
+import { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
 
 export const TransactionLocationDbSchema = z.object({
 	id: z.string().openapi({

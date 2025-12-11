@@ -9,10 +9,8 @@
 	},
 	"dependencies": {
 		"@better-auth/passkey": "1.4.6",
-		"@hono-rate-limiter/redis": "0.1.4",
 		"@hono/zod-openapi": "1.1.5",
 		"@scalar/hono-api-reference": "0.9.27",
-		"@upstash/redis": "1.35.7",
 		"@use-pico/common": "workspace:*",
 		"better-auth": "1.4.6",
 		"effect": "3.19.10",

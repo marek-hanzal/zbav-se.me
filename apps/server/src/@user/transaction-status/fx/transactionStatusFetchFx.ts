@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { withTransactionStatusQueryBuilder } from "~/app/transaction-status/db/withTransactionStatusQueryBuilder";
 import { withTransactionStatusSelect } from "~/app/transaction-status/db/withTransactionStatusSelect";
 import type { TransactionStatusQuerySchema } from "~/app/transaction-status/schema/TransactionStatusQuerySchema";
-import { TransactionStatusSchema } from "~/app/transaction-status/schema/TransactionStatusSchema";
+import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 

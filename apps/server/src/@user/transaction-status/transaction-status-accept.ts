@@ -2,7 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { TransactionContextProvider } from "~/@user/transaction/fx/TransactionContextFx";
 import { transactionStatusAcceptFx } from "~/@user/transaction-status/fx/transactionStatusAcceptFx";
-import { TransactionStatusSchema } from "~/app/transaction-status/schema/TransactionStatusSchema";
+import { TransactionStatusSchema } from "~/@user/transaction-status/schema/TransactionStatusSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";

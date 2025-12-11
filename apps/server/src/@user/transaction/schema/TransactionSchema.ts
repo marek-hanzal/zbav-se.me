@@ -1,7 +1,7 @@
 import { z } from "@hono/zod-openapi";
 import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
-import { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
+import { TransactionDbSchema } from "~/app/transaction/schema/ListingTransactionDbSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const TransactionSchema = z

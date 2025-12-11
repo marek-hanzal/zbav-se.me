@@ -1,6 +1,6 @@
 import { sql } from "kysely";
 import { match } from "ts-pattern";
-import type { ListingMetaSchema } from "~/app/listing/schema/ListingMetaSchema";
+import type { ListingMetaSchema } from "~/@user/listing/schema/ListingMetaSchema";
 import type { ListingSortSchema } from "~/app/listing/schema/ListingSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 

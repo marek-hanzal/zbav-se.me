@@ -1,8 +1,8 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { transactionPatchFx } from "~/@user/transaction/fx/transactionPatchFx";
-import type { TransactionSideEnumSchema } from "~/app/transaction/schema/TransactionSideEnumSchema";
-import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
+import type { TransactionSideEnumSchema } from "~/app/transaction/schema/ListingTransactionSideEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 

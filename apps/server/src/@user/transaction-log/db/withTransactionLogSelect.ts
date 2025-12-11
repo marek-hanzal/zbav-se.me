@@ -3,8 +3,8 @@ import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import type { TransactionLogSortSchema } from "~/app/transaction-log/schema/TransactionLogSortSchema";
-import type { TransactionEventEnumSchema } from "~/app/transaction/schema/TransactionEventEnumSchema";
-import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/TransactionStatusEnumSchema";
+import type { TransactionEventEnumSchema } from "~/app/transaction/schema/ListingTransactionEventEnumSchema";
+import type { TransactionStatusEnumSchema } from "~/app/transaction/schema/ListingTransactionStatusEnumSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 
 export namespace withTransactionLogSelect {

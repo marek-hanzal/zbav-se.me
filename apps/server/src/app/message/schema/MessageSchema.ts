@@ -1,6 +1,6 @@
 import { z } from "@hono/zod-openapi";
 import { MessageDbSchema } from "~/app/message/schema/MessageDbSchema";
-import type { TransactionEventEnumSchema } from "~/app/transaction/schema/TransactionEventEnumSchema";
+import type { TransactionEventEnumSchema } from "~/app/transaction/schema/ListingTransactionEventEnumSchema";
 
 export const MessageSchema = z
 	.object({

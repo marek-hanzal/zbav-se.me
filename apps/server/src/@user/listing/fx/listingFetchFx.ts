@@ -3,7 +3,7 @@ import { Effect } from "effect";
 import { withListingQueryBuilder } from "~/app/listing/db/withListingQueryBuilder";
 import { withListingSelect } from "~/app/listing/db/withListingSelect";
 import type { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
-import { ListingSchema } from "~/app/listing/schema/ListingSchema";
+import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
