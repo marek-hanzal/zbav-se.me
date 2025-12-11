@@ -7,7 +7,7 @@ import { MessageTextCreateSchema } from "~/app/message-text/schema/MessageTextCr
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import type { NoticeSchema } from "~/schema/NoticeSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
@@ -39,7 +39,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 				403: {
 					content: {
 						"application/json": {
-							schema: MessageTextSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Access denied",
@@ -47,7 +47,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: MessageTextSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Message thread not found or not accessible",
@@ -55,7 +55,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageTextSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
