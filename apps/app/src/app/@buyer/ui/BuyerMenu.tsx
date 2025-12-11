@@ -1,10 +1,10 @@
 import type { uiIcon } from "@use-pico/client/icon";
-import { uiButton } from "@use-pico/client/ui/button";
-import { Container, type uiContainer } from "@use-pico/client/ui/container";
+import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { CartIcon, FeedIcon, ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
 
 export namespace BuyerMenu {
@@ -14,21 +14,8 @@ export namespace BuyerMenu {
 }
 
 export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
-	const spacing: uiContainer.Ui = {
-		layout: "vertical-flex",
-		width: "full",
-		gap: "default",
-	};
 	const icon: uiIcon.Ui = {
-		text: "2xl",
-	};
-	const button: uiButton.Ui = {
-		tone: "neutral",
-		theme: "light",
-		inner: "xl",
-		width: "full",
-		text: "lg",
-		gap: "sm",
+		text: "3xl",
 	};
 
 	const containerRef = useRef<HTMLDivElement>(null);
@@ -55,14 +42,11 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					height: "full",
 					inner: "lg",
 					items: "center",
-					gap: "2xl",
+					gap: "lg",
 				}}
 			>
 				<LinkTo
-					{...uiButton({
-						ui: {
-							...button,
-						},
+					{...uiMenuButton({
 						className: [],
 					})}
 					icon={ListingIcon}
@@ -79,76 +63,62 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 					<Tx label="Listings (label)" />
 				</LinkTo>
 
-				<Container ui={spacing}>
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={TransactionIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/buyer/transaction/list"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="Transactions (label)" />
-					</LinkTo>
-
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={FeedIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/buyer/feed/select"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="Feed (label)" />
-					</LinkTo>
-
-					<LinkTo
-						{...uiButton({
-							ui: {
-								...button,
-							},
-							className: [],
-						})}
-						icon={CartIcon}
-						iconProps={{
-							ui: {
-								...icon,
-							},
-						}}
-						to="/$locale/buyer/cart/list"
-						params={{
-							locale,
-						}}
-					>
-						<Tx label="Cart (label)" />
-					</LinkTo>
-				</Container>
+				<LinkTo
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={TransactionIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/buyer/transaction/list"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="Transactions (label)" />
+				</LinkTo>
 
 				<LinkTo
-					{...uiButton({
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={FeedIcon}
+					iconProps={{
 						ui: {
-							...button,
+							...icon,
 						},
+					}}
+					to="/$locale/buyer/feed/select"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="Feed (label)" />
+				</LinkTo>
+
+				<LinkTo
+					{...uiMenuButton({
+						className: [],
+					})}
+					icon={CartIcon}
+					iconProps={{
+						ui: {
+							...icon,
+						},
+					}}
+					to="/$locale/buyer/cart/list"
+					params={{
+						locale,
+					}}
+				>
+					<Tx label="Cart (label)" />
+				</LinkTo>
+
+				<LinkTo
+					{...uiMenuButton({
 						className: [],
 					})}
 					icon={ShopIcon}

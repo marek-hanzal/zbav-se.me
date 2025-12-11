@@ -1,11 +1,10 @@
 import { ListIcon, type uiIcon } from "@use-pico/client/icon";
-import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tvc } from "@use-pico/cls";
 import { ListingIcon, ShopIcon, TransactionIcon } from "@zbav-se.me/ui/icon";
+import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
 
 export namespace SellerMenu {
@@ -16,24 +15,8 @@ export namespace SellerMenu {
 
 export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 	const icon: uiIcon.Ui = {
-		text: "2xl",
+		text: "3xl",
 	};
-	const button: uiButton.Ui = {
-		flow: "vertical",
-		items: "center",
-		tone: "primary",
-		theme: "light",
-		width: "full",
-		justify: "center",
-		background: "default",
-		border: false,
-		color: "lead",
-		text: "lg",
-		size: "lg",
-	};
-	const className: tvc.ClassName = [
-		"tone-link-light-bg",
-	];
 
 	const containerRef = useRef<HTMLDivElement>(null);
 
@@ -63,11 +46,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 				}}
 			>
 				<LinkTo
-					{...uiButton({
-						ui: {
-							...button,
-						},
-						className,
+					{...uiMenuButton({
+						className: [],
 					})}
 					icon={ListingIcon}
 					iconProps={{
@@ -84,11 +64,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 				</LinkTo>
 
 				<LinkTo
-					{...uiButton({
-						ui: {
-							...button,
-						},
-						className,
+					{...uiMenuButton({
+						className: [],
 					})}
 					icon={TransactionIcon}
 					iconProps={{
@@ -105,11 +82,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 				</LinkTo>
 
 				<LinkTo
-					{...uiButton({
-						ui: {
-							...button,
-						},
-						className,
+					{...uiMenuButton({
+						className: [],
 					})}
 					icon={ListIcon}
 					iconProps={{
@@ -126,11 +100,8 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 				</LinkTo>
 
 				<LinkTo
-					{...uiButton({
-						ui: {
-							...button,
-						},
-						className,
+					{...uiMenuButton({
+						className: [],
 					})}
 					icon={ShopIcon}
 					iconProps={{
