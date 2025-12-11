@@ -2,7 +2,7 @@ import { createRoute, z } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { listingMetricsFx } from "./fx/listingMetricsFx";
 import { ListingMetricsSchema } from "./schema/ListingMetricsSchema";
 
@@ -38,7 +38,7 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -68,7 +68,7 @@ export const withListingMetricsFetchApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

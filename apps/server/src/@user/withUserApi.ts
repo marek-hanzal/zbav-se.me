@@ -2,7 +2,7 @@ import { withTransactionStatusApi } from "~/@user/transaction-status/withTransac
 import { withFeedFavouriteApi } from "~/app/feed-favourite/withFeedFavouriteApi";
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
-import type { MessageSchema } from "~/schema/MessageSchema";
+import type { NoticeSchema } from "~/schema/NoticeSchema";
 import { withFavouriteApi } from "./favourite/withFavouriteApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withFlagApi } from "./flag/withFlagApi";
@@ -13,7 +13,6 @@ import { withListingScoreApi } from "./listing-score/withListingScoreApi";
 import { withMessageTextApi } from "./message-text/withMessageTextApi";
 import { withS3Api } from "./s3/withS3Api";
 import { withTransactionApi } from "./transaction/withTransactionApi";
-import { withTransactionLogApi } from "./transaction-log/withTransactionLogApi";
 import { withUploadApi } from "./upload/withUploadApi";
 import { withUserExApi } from "./user-ex/withUserExApi";
 
@@ -28,7 +27,7 @@ export const withUserApi: Routes.FnWithDeps<{
 	routes.root.use("/api/user/*", async (c, next) => {
 		const user = c.get("user");
 		if (!user) {
-			return c.json<MessageSchema.Type, 401>(
+			return c.json<NoticeSchema.Type, 401>(
 				{
 					type: "error",
 					message: "Shooooo! Shooo!",
@@ -40,18 +39,17 @@ export const withUserApi: Routes.FnWithDeps<{
 	});
 
 	withFavouriteApi(routes);
-	withFeedFavouriteApi(routes);
 	withFeedApi(routes);
+	withFeedFavouriteApi(routes);
+	withFlagApi(routes);
 	withGalleryApi(routes);
 	withIgnoreApi(routes);
 	withListingApi(routes);
-	withFlagApi(routes);
 	withListingScoreApi(routes);
-	withTransactionApi(routes);
-	withTransactionLogApi(routes);
 	withMessageTextApi(routes);
-	withTransactionStatusApi(routes);
 	withS3Api(routes);
+	withTransactionApi(routes);
+	withTransactionStatusApi(routes);
 	withUploadApi(routes);
 	withUserExApi(routes);
 

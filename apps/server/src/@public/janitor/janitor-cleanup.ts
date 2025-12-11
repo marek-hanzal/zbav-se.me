@@ -1,6 +1,6 @@
 import { createRoute, z } from "@hono/zod-openapi";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { cleanup } from "./cleanup/cleanup";
 import { CleanupSchema } from "./schema/CleanupSchema";
 
@@ -23,7 +23,7 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Error during cleanup",
@@ -41,7 +41,7 @@ export const withJanitorCleanupApi: Routes.Fn = ({ publicHono }) => {
 				);
 			} catch (e) {
 				console.error(e);
-				return c.json<MessageSchema.Type, 500>(
+				return c.json<NoticeSchema.Type, 500>(
 					{
 						type: "error",
 						message: "Cleanup failed",

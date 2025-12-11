@@ -1,13 +1,13 @@
 import { createRoute } from "@hono/zod-openapi";
 import { EntitySchema } from "@use-pico/common/schema";
 import { Effect, Match } from "effect";
+import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { listingCollectionFx } from "./fx/listingCollectionFx";
-import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 
 export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
@@ -41,7 +41,7 @@ export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -72,7 +72,7 @@ export const withListingCollectionApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

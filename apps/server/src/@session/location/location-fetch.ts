@@ -2,7 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { locationFetchFx } from "./fx/locationFetchFx";
 import { LocationQuerySchema } from "./schema/LocationQuerySchema";
 import { LocationSchema } from "./schema/LocationSchema";
@@ -36,7 +36,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Location not found",
@@ -44,7 +44,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -74,7 +74,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "NotFoundError",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 404>(
+									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
 											message: e.message,
@@ -88,7 +88,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

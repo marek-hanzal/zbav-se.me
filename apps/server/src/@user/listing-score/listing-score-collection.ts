@@ -1,12 +1,12 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { ListingScoreQuerySchema } from "~/app/listing-score/schema/ListingScoreQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { withCollectionSchema } from "~/schema/withCollectionSchema";
 import { listingScoreCollectionFx } from "./fx/listingScoreCollectionFx";
-import { ListingScoreQuerySchema } from "~/app/listing-score/schema/ListingScoreQuerySchema";
 import { ListingScoreSchema } from "./schema/ListingScoreSchema";
 
 export const withListingScoreCollectionApi: Routes.Fn = ({ userHono }) => {
@@ -41,7 +41,7 @@ export const withListingScoreCollectionApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -72,7 +72,7 @@ export const withListingScoreCollectionApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

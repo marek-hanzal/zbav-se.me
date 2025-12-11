@@ -1,11 +1,11 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { listingFetchFx } from "./fx/listingFetchFx";
-import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 import { ListingSchema } from "./schema/ListingSchema";
 
 export const withListingFetchApi: Routes.Fn = ({ userHono }) => {
@@ -37,7 +37,7 @@ export const withListingFetchApi: Routes.Fn = ({ userHono }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Listing not found",
@@ -45,7 +45,7 @@ export const withListingFetchApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -74,7 +74,7 @@ export const withListingFetchApi: Routes.Fn = ({ userHono }) => {
 									_tag: "NotFoundError",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 404>(
+									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
 											message: e.message,
@@ -88,7 +88,7 @@ export const withListingFetchApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

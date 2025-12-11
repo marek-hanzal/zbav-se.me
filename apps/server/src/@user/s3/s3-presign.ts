@@ -2,7 +2,7 @@ import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { s3PreSignFx } from "./fx/s3PreSignFx";
 import { S3PreSignRequestSchema } from "./schema/S3PreSignRequestSchema";
 import { S3PreSignResponseSchema } from "./schema/S3PreSignResponseSchema";
@@ -38,7 +38,7 @@ export const withS3PresignApi: Routes.Fn = ({ userHono }) => {
 					description: "Failed to generate pre-signed URL.",
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 				},
@@ -70,7 +70,7 @@ export const withS3PresignApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

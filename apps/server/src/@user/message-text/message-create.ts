@@ -7,7 +7,7 @@ import { MessageTextCreateSchema } from "~/app/message-text/schema/MessageTextCr
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import type { MessageSchema as ErrorMessageSchema } from "~/schema/MessageSchema";
+import type { NoticeSchema } from "~/schema/NoticeSchema";
 
 export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 	userHono.openapi(
@@ -85,7 +85,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 									_tag: "NotFoundError",
 								},
 								() => {
-									return c.json<ErrorMessageSchema.Type, 404>(
+									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
 											message: e.message,
@@ -99,7 +99,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 									_tag: "AccessDeniedError",
 								},
 								() => {
-									return c.json<ErrorMessageSchema.Type, 403>(
+									return c.json<NoticeSchema.Type, 403>(
 										{
 											type: "error",
 											message: e.message,
@@ -113,7 +113,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 									_tag: "RuntimeError",
 								},
 								() => {
-									return c.json<ErrorMessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,
@@ -127,7 +127,7 @@ export const withMessageTextCreateApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<ErrorMessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

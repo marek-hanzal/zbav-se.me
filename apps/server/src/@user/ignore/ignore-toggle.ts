@@ -3,7 +3,7 @@ import { Effect, Match } from "effect";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
-import { MessageSchema } from "~/schema/MessageSchema";
+import { NoticeSchema } from "~/schema/NoticeSchema";
 import { ListingScoreContextProvider } from "../listing-score/fx/ListingScoreContextFx";
 import { ignoreToggleFx } from "./fx/ignoreToggleFx";
 import { IgnoreToggleSchema } from "./schema/IgnoreToggleSchema";
@@ -31,7 +31,7 @@ export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 				400: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Invalid request",
@@ -39,7 +39,7 @@ export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 				404: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Listing not found",
@@ -47,7 +47,7 @@ export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 				500: {
 					content: {
 						"application/json": {
-							schema: MessageSchema,
+							schema: NoticeSchema,
 						},
 					},
 					description: "Internal server error",
@@ -78,7 +78,7 @@ export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 									_tag: "InvalidRequestError",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 400>(
+									return c.json<NoticeSchema.Type, 400>(
 										{
 											type: "error",
 											message: e.message,
@@ -92,7 +92,7 @@ export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 									_tag: "NotFoundError",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 404>(
+									return c.json<NoticeSchema.Type, 404>(
 										{
 											type: "error",
 											message: e.message,
@@ -106,7 +106,7 @@ export const withIgnoreToggleApi: Routes.Fn = ({ userHono }) => {
 									_tag: "UnknownException",
 								},
 								() => {
-									return c.json<MessageSchema.Type, 500>(
+									return c.json<NoticeSchema.Type, 500>(
 										{
 											type: "error",
 											message: e.message,

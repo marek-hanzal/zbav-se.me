@@ -12,7 +12,7 @@ import type { Routes } from "./hono/Routes";
 import { withHono } from "./hono/withHono";
 import { withSessionHono } from "./hono/withSessionHono";
 import { withUserHono } from "./hono/withUserHono";
-import type { MessageSchema } from "./schema/MessageSchema";
+import type { NoticeSchema } from "./schema/NoticeSchema";
 
 /**
  * Origin for CORS; uses replace hack from nitro.config.ts
@@ -57,7 +57,7 @@ app.use(
 );
 
 app.onError((err, c) => {
-	return c.json<MessageSchema.Type, 500>(
+	return c.json<NoticeSchema.Type, 500>(
 		{
 			type: "error",
 			message: err instanceof Error ? err.message : "Internal server error",
