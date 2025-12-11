@@ -17,37 +17,34 @@ export const withMessageSelect = ({ database, sort }: withMessageSelect.Props) =
 	const textQuery = database.selectFrom("message_text as mt").select([
 		"mt.id",
 		"mt.messageThreadId",
-		"mt.side",
-		"mt.text",
 		"mt.createdAt",
 		sql<MessageTypeEnumSchema.Type>`'text'`.as("type"),
+		"mt.userId",
+		"mt.text",
 		sql<string | null>`null`.as("galleryId"),
 		sql<string | null>`null`.as("locationId"),
-		sql<string | null>`null`.as("userId"),
 	]);
 
 	const galleryQuery = database.selectFrom("message_gallery as mg").select([
 		"mg.id",
 		"mg.messageThreadId",
-		sql<string | null>`null`.as("side"),
-		sql<string | null>`null`.as("text"),
 		"mg.createdAt",
 		sql<MessageTypeEnumSchema.Type>`'gallery'`.as("type"),
+		"mg.userId",
+		sql<string>`null`.as("text"),
 		"mg.galleryId",
 		sql<string | null>`null`.as("locationId"),
-		"mg.userId",
 	]);
 
 	const locationQuery = database.selectFrom("message_location as ml").select([
 		"ml.id",
 		"ml.messageThreadId",
-		sql<string | null>`null`.as("side"),
-		sql<string | null>`null`.as("text"),
 		"ml.createdAt",
 		sql<MessageTypeEnumSchema.Type>`'location'`.as("type"),
+		"ml.userId",
+		sql<string>`null`.as("text"),
 		sql<string | null>`null`.as("galleryId"),
 		"ml.locationId",
-		"ml.userId",
 	]);
 
 	const unionQuery = textQuery.unionAll(galleryQuery).unionAll(locationQuery);

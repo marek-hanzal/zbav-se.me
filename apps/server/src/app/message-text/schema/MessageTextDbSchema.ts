@@ -4,6 +4,9 @@ export const MessageTextDbSchema = z.object({
 	id: z.string().openapi({
 		description: "ID of the message entry",
 	}),
+	userId: z.string().openapi({
+		description: "ID of the user who sent the message",
+	}),
 	messageThreadId: z.string().openapi({
 		description: "ID of the message thread referenced by the message",
 	}),
