@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate, useParams } from "@tanstack/react-router";
+import { createFileRoute, useParams } from "@tanstack/react-router";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { FormField, onSubmit } from "@use-pico/client/ui/form";
@@ -18,14 +18,14 @@ export const Route = createFileRoute("/$locale/register")({
 		const { locale } = useParams({
 			from: "/$locale",
 		});
-		const navigate = useNavigate();
+		const navigate = Route.useNavigate();
 
 		const registerMutation = withRegisterMutation.useMutation({
 			async onPostMutation() {
 				return navigate({
 					href: linkTo({
 						base: import.meta.env.VITE_APP_ORIGIN,
-						href: "/:locale/buyer/feed/default",
+						href: "/:locale/welcome",
 						query: {
 							locale,
 						},

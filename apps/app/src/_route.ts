@@ -12,8 +12,10 @@ import { Route as rootRouteImport } from './@routes/__root'
 import { Route as LocaleRouteImport } from './@routes/$locale'
 import { Route as IndexRouteImport } from './@routes/index'
 import { Route as LocaleIndexRouteImport } from './@routes/$locale/index'
-import { Route as LocaleDashboardRouteImport } from './@routes/$locale/dashboard'
+import { Route as LocaleWelcomeRouteImport } from './@routes/$locale/welcome'
+import { Route as LocaleHomeRouteImport } from './@routes/$locale/home'
 import { Route as LocaleSellerIndexRouteImport } from './@routes/$locale/seller/index'
+import { Route as LocaleHomeIndexRouteImport } from './@routes/$locale/home/index'
 import { Route as LocaleBuyerIndexRouteImport } from './@routes/$locale/buyer/index'
 import { Route as LocaleSellerUserRouteImport } from './@routes/$locale/seller/user'
 import { Route as LocaleSellerShopRouteImport } from './@routes/$locale/seller/shop'
@@ -55,15 +57,25 @@ const LocaleIndexRoute = LocaleIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LocaleRoute,
 } as any)
-const LocaleDashboardRoute = LocaleDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
+const LocaleWelcomeRoute = LocaleWelcomeRouteImport.update({
+  id: '/welcome',
+  path: '/welcome',
+  getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleHomeRoute = LocaleHomeRouteImport.update({
+  id: '/home',
+  path: '/home',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleSellerIndexRoute = LocaleSellerIndexRouteImport.update({
   id: '/seller/',
   path: '/seller/',
   getParentRoute: () => LocaleRoute,
+} as any)
+const LocaleHomeIndexRoute = LocaleHomeIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => LocaleHomeRoute,
 } as any)
 const LocaleBuyerIndexRoute = LocaleBuyerIndexRouteImport.update({
   id: '/buyer/',
@@ -208,7 +220,8 @@ const LocaleBuyerCartFeedIdListRoute =
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/home': typeof LocaleHomeRouteWithChildren
+  '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
@@ -216,6 +229,7 @@ export interface FileRoutesByFullPath {
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
   '/$locale/seller/user': typeof LocaleSellerUserRoute
   '/$locale/buyer': typeof LocaleBuyerIndexRoute
+  '/$locale/home/': typeof LocaleHomeIndexRoute
   '/$locale/seller': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
@@ -239,7 +253,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
@@ -247,6 +261,7 @@ export interface FileRoutesByTo {
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
   '/$locale/seller/user': typeof LocaleSellerUserRoute
   '/$locale/buyer': typeof LocaleBuyerIndexRoute
+  '/$locale/home': typeof LocaleHomeIndexRoute
   '/$locale/seller': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
@@ -272,7 +287,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/$locale': typeof LocaleRouteWithChildren
-  '/$locale/dashboard': typeof LocaleDashboardRoute
+  '/$locale/home': typeof LocaleHomeRouteWithChildren
+  '/$locale/welcome': typeof LocaleWelcomeRoute
   '/$locale/': typeof LocaleIndexRoute
   '/$locale/buyer/shop': typeof LocaleBuyerShopRoute
   '/$locale/buyer/user': typeof LocaleBuyerUserRoute
@@ -280,6 +296,7 @@ export interface FileRoutesById {
   '/$locale/seller/shop': typeof LocaleSellerShopRoute
   '/$locale/seller/user': typeof LocaleSellerUserRoute
   '/$locale/buyer/': typeof LocaleBuyerIndexRoute
+  '/$locale/home/': typeof LocaleHomeIndexRoute
   '/$locale/seller/': typeof LocaleSellerIndexRoute
   '/$locale/buyer/cart/list': typeof LocaleBuyerCartListRoute
   '/$locale/buyer/feed/default': typeof LocaleBuyerFeedDefaultRoute
@@ -306,7 +323,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/$locale'
-    | '/$locale/dashboard'
+    | '/$locale/home'
+    | '/$locale/welcome'
     | '/$locale/'
     | '/$locale/buyer/shop'
     | '/$locale/buyer/user'
@@ -314,6 +332,7 @@ export interface FileRouteTypes {
     | '/$locale/seller/shop'
     | '/$locale/seller/user'
     | '/$locale/buyer'
+    | '/$locale/home/'
     | '/$locale/seller'
     | '/$locale/buyer/cart/list'
     | '/$locale/buyer/feed/default'
@@ -337,7 +356,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/$locale/dashboard'
+    | '/$locale/welcome'
     | '/$locale'
     | '/$locale/buyer/shop'
     | '/$locale/buyer/user'
@@ -345,6 +364,7 @@ export interface FileRouteTypes {
     | '/$locale/seller/shop'
     | '/$locale/seller/user'
     | '/$locale/buyer'
+    | '/$locale/home'
     | '/$locale/seller'
     | '/$locale/buyer/cart/list'
     | '/$locale/buyer/feed/default'
@@ -369,7 +389,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/$locale'
-    | '/$locale/dashboard'
+    | '/$locale/home'
+    | '/$locale/welcome'
     | '/$locale/'
     | '/$locale/buyer/shop'
     | '/$locale/buyer/user'
@@ -377,6 +398,7 @@ export interface FileRouteTypes {
     | '/$locale/seller/shop'
     | '/$locale/seller/user'
     | '/$locale/buyer/'
+    | '/$locale/home/'
     | '/$locale/seller/'
     | '/$locale/buyer/cart/list'
     | '/$locale/buyer/feed/default'
@@ -427,11 +449,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleIndexRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/dashboard': {
-      id: '/$locale/dashboard'
-      path: '/dashboard'
-      fullPath: '/$locale/dashboard'
-      preLoaderRoute: typeof LocaleDashboardRouteImport
+    '/$locale/welcome': {
+      id: '/$locale/welcome'
+      path: '/welcome'
+      fullPath: '/$locale/welcome'
+      preLoaderRoute: typeof LocaleWelcomeRouteImport
+      parentRoute: typeof LocaleRoute
+    }
+    '/$locale/home': {
+      id: '/$locale/home'
+      path: '/home'
+      fullPath: '/$locale/home'
+      preLoaderRoute: typeof LocaleHomeRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/seller/': {
@@ -440,6 +469,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/seller'
       preLoaderRoute: typeof LocaleSellerIndexRouteImport
       parentRoute: typeof LocaleRoute
+    }
+    '/$locale/home/': {
+      id: '/$locale/home/'
+      path: '/'
+      fullPath: '/$locale/home/'
+      preLoaderRoute: typeof LocaleHomeIndexRouteImport
+      parentRoute: typeof LocaleHomeRoute
     }
     '/$locale/buyer/': {
       id: '/$locale/buyer/'
@@ -619,8 +655,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface LocaleHomeRouteChildren {
+  LocaleHomeIndexRoute: typeof LocaleHomeIndexRoute
+}
+
+const LocaleHomeRouteChildren: LocaleHomeRouteChildren = {
+  LocaleHomeIndexRoute: LocaleHomeIndexRoute,
+}
+
+const LocaleHomeRouteWithChildren = LocaleHomeRoute._addFileChildren(
+  LocaleHomeRouteChildren,
+)
+
 interface LocaleRouteChildren {
-  LocaleDashboardRoute: typeof LocaleDashboardRoute
+  LocaleHomeRoute: typeof LocaleHomeRouteWithChildren
+  LocaleWelcomeRoute: typeof LocaleWelcomeRoute
   LocaleIndexRoute: typeof LocaleIndexRoute
   LocaleBuyerShopRoute: typeof LocaleBuyerShopRoute
   LocaleBuyerUserRoute: typeof LocaleBuyerUserRoute
@@ -651,7 +700,8 @@ interface LocaleRouteChildren {
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
-  LocaleDashboardRoute: LocaleDashboardRoute,
+  LocaleHomeRoute: LocaleHomeRouteWithChildren,
+  LocaleWelcomeRoute: LocaleWelcomeRoute,
   LocaleIndexRoute: LocaleIndexRoute,
   LocaleBuyerShopRoute: LocaleBuyerShopRoute,
   LocaleBuyerUserRoute: LocaleBuyerUserRoute,
