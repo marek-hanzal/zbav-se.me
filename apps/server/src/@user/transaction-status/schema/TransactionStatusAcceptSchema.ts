@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const TransactionStatusAcceptSchema = z
 	.object({
-		messageThreadId: z.string().openapi({
+		transactionId: z.string().openapi({
 			description: "The ID of the listing transaction to accept",
 		}),
 	})

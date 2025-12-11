@@ -8,14 +8,14 @@ import { transactionStatusFetchFx } from "./transactionStatusFetchFx";
 
 export namespace transactionStatusCreateFx {
 	export interface Props {
-		messageThreadId: string;
+		transactionId: string;
 		status: TransactionStatusEnumSchema.Type;
 		side: TransactionSideEnumSchema.Type;
 	}
 }
 
 export const transactionStatusCreateFx = ({
-	messageThreadId,
+	transactionId,
 	status,
 	side,
 }: transactionStatusCreateFx.Props) => {
@@ -29,7 +29,7 @@ export const transactionStatusCreateFx = ({
 				.insertInto("transaction_status")
 				.values({
 					id,
-					messageThreadId,
+					transactionId,
 					status,
 					side,
 					createdAt: new Date(),
@@ -39,7 +39,12 @@ export const transactionStatusCreateFx = ({
 		});
 
 		yield* transactionPatchFx({
-			messageThreadId,
+			patch: {},
+			query: {
+				where: {
+					id: transactionId,
+				},
+			},
 		});
 
 		return yield* transactionStatusFetchFx({

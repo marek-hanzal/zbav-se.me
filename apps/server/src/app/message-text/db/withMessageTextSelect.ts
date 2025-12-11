@@ -18,7 +18,7 @@ export const withMessageTextSelect = ({ database, sort }: withMessageTextSelect.
 		.select([
 			"m.id",
 			"m.messageThreadId",
-			"m.text as message",
+			"m.text",
 			"m.createdAt",
 		])
 		.select(sql<"text">`'text'`.as("type"));

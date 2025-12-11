@@ -8,19 +8,24 @@ export namespace transactionStatusRejectFx {
 	export type Props = TransactionStatusRejectSchema.Type;
 }
 
-export const transactionStatusRejectFx = ({ messageThreadId }: transactionStatusRejectFx.Props) => {
+export const transactionStatusRejectFx = ({ transactionId }: transactionStatusRejectFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
-			messageThreadId,
+			transactionId,
 			message: "You are not allowed to reject this listing transaction",
 		});
 
 		yield* transactionPatchFx({
-			messageThreadId: transaction.messageThreadId,
+			patch: {},
+			query: {
+				where: {
+					id: transaction.transactionId,
+				},
+			},
 		});
 
 		return yield* transactionStatusCreateFx({
-			messageThreadId: transaction.messageThreadId,
+			transactionId: transaction.transactionId,
 			status: "rejected",
 			side: transaction.side,
 		});

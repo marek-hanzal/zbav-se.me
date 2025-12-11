@@ -8,19 +8,24 @@ export namespace transactionStatusAcceptFx {
 	export type Props = TransactionStatusAcceptSchema.Type;
 }
 
-export const transactionStatusAcceptFx = ({ messageThreadId }: transactionStatusAcceptFx.Props) => {
+export const transactionStatusAcceptFx = ({ transactionId }: transactionStatusAcceptFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
-			messageThreadId,
+			transactionId,
 			message: "You are not allowed to accept this listing transaction",
 		});
 
 		yield* transactionPatchFx({
-			messageThreadId: transaction.messageThreadId,
+			patch: {},
+			query: {
+				where: {
+					id: transaction.transactionId,
+				},
+			},
 		});
 
 		return yield* transactionStatusCreateFx({
-			messageThreadId: transaction.messageThreadId,
+			transactionId: transaction.transactionId,
 			status: "accepted",
 			side: transaction.side,
 		});
