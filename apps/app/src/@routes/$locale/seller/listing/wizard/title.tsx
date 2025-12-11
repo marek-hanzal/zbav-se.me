@@ -47,7 +47,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 						confirmProps={{
 							onClick: () => {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/ui/seller",
 								});
 							},
 							ui: {

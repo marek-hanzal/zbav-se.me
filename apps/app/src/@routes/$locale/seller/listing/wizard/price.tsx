@@ -60,7 +60,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 							},
 							onClick: () => {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/ui/seller",
 									params: {
 										locale,
 									},
