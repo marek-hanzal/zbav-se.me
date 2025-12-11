@@ -59,7 +59,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 							},
 							onClick: () => {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/ui/seller",
 									params: {
 										locale,
 									},

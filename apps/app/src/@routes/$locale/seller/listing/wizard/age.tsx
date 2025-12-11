@@ -58,7 +58,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 							},
 							onClick: () => {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/ui/seller",
 								});
 							},
 						}}
