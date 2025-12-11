@@ -1,27 +1,27 @@
 import { withMutation } from "@use-pico/client/mutation";
 import { withApi } from "@use-pico/common/api";
-import { apiListingIgnoreToggle } from "../../api/user/sdk.gen";
+import { apiIgnoreToggle } from "../../api/user/sdk.gen";
 import type {
-	apiListingIgnoreToggleError,
-	tApiListingIgnoreToggleResponse,
-	tListingIgnoreToggle,
+	apiIgnoreToggleError,
+	tApiIgnoreToggleResponse,
+	tIgnoreToggle,
 } from "../../api/user/types.gen";
 
-export const withListingIgnoreToggleMutation = withMutation<
-	tListingIgnoreToggle,
-	tApiListingIgnoreToggleResponse[204],
-	apiListingIgnoreToggleError
+export const withIgnoreToggleMutation = withMutation<
+	tIgnoreToggle,
+	tApiIgnoreToggleResponse[204],
+	apiIgnoreToggleError
 >({
 	keys(variables) {
 		return [
-			"listing-ignore",
+			"ignore",
 			"toggle",
 			variables,
 		];
 	},
 	async mutationFn(body) {
 		return withApi(
-			apiListingIgnoreToggle({
+			apiIgnoreToggle({
 				body,
 			}),
 		);

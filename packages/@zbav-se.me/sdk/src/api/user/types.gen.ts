@@ -941,133 +941,6 @@ export type tListingScore = {
 };
 
 /**
- * Data for toggling a listing in ignore list
- */
-export type tListingIgnoreToggle = {
-    /**
-     * Whether to add (true) or remove (false) the listing from ignore list
-     */
-    toggle: boolean;
-    /**
-     * ID of the listing to toggle
-     */
-    listingId: string;
-};
-
-/**
- * Query object for listing ignore count
- */
-export type tListingIgnoreCountQuery = {
-    filter?: tListingIgnoreFilter;
-    where?: tListingIgnoreWhere;
-};
-
-/**
- * App-based filters
- */
-export type tListingIgnoreWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Filter object for listing ignore collection
- */
-export type tListingIgnoreFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * This filter matches the exact userId
-     */
-    userId?: string;
-    /**
-     * This filter matches the exact listingId
-     */
-    listingId?: string;
-};
-
-/**
- * Query object for listing ignore collection
- */
-export type tListingIgnoreQuery = {
-    cursor?: tCursor;
-    filter?: tListingIgnoreFilter;
-    where?: tListingIgnoreWhere;
-    sort?: Array<tListingIgnoreSort>;
-};
-
-/**
- * Field of the listing ignore sort
- */
-export const tListingIgnoreSortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the listing ignore sort
- */
-export type tListingIgnoreSortField = typeof tListingIgnoreSortField[keyof typeof tListingIgnoreSortField];
-
-/**
- * Sort object for listing ignore collection
- */
-export type tListingIgnoreSort = {
-    field: tListingIgnoreSortField;
-    direction: tOrderEnum;
-};
-
-/**
- * Collection of listing ignore items
- */
-export type tListingIgnoreCollection = {
-    data: Array<tListingIgnore>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Listing ignore data
- */
-export type tListingIgnore = {
-    /**
-     * ID of the ignore entry
-     */
-    id: string;
-    /**
-     * ID of the listing that was ignored
-     */
-    listingId: string;
-};
-
-/**
  * Data for toggling a flag on a listing
  */
 export type tListingFlagToggle = {
@@ -1673,6 +1546,133 @@ export type tCategory = {
      * Locale/language of the category
      */
     locale: string;
+};
+
+/**
+ * Data for toggling a listing in ignore list
+ */
+export type tIgnoreToggle = {
+    /**
+     * Whether to add (true) or remove (false) the listing from ignore list
+     */
+    toggle: boolean;
+    /**
+     * ID of the listing to toggle
+     */
+    listingId: string;
+};
+
+/**
+ * Query object for ignore count
+ */
+export type tIgnoreCountQuery = {
+    filter?: tIgnoreFilter;
+    where?: tIgnoreWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tIgnoreWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Filter object for ignore collection
+ */
+export type tIgnoreFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches the exact userId
+     */
+    userId?: string;
+    /**
+     * This filter matches the exact listingId
+     */
+    listingId?: string;
+};
+
+/**
+ * Query object for ignore collection
+ */
+export type tIgnoreQuery = {
+    cursor?: tCursor;
+    filter?: tIgnoreFilter;
+    where?: tIgnoreWhere;
+    sort?: Array<tIgnoreSort>;
+};
+
+/**
+ * Field of the ignore sort
+ */
+export const tIgnoreSortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the ignore sort
+ */
+export type tIgnoreSortField = typeof tIgnoreSortField[keyof typeof tIgnoreSortField];
+
+/**
+ * Sort object for ignore collection
+ */
+export type tIgnoreSort = {
+    field: tIgnoreSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * Collection of ignore items
+ */
+export type tIgnoreCollection = {
+    data: Array<tIgnore>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Ignore data
+ */
+export type tIgnore = {
+    /**
+     * ID of the ignore entry
+     */
+    id: string;
+    /**
+     * ID of the listing that was ignored
+     */
+    listingId: string;
 };
 
 /**
@@ -2589,6 +2589,89 @@ export type tApiGalleryCountResponse = {
 
 export type apiGalleryCountResponse = tApiGalleryCountResponse[keyof tApiGalleryCountResponse];
 
+export type tApiIgnoreCollectionRequest = {
+    body?: tIgnoreQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/ignore/collection';
+};
+
+export type apiIgnoreCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiIgnoreCollectionError = apiIgnoreCollectionErrors[keyof apiIgnoreCollectionErrors];
+
+export type tApiIgnoreCollectionResponse = {
+    /**
+     * Access collection of ignore items based on provided query
+     */
+    200: tIgnoreCollection;
+};
+
+export type apiIgnoreCollectionResponse = tApiIgnoreCollectionResponse[keyof tApiIgnoreCollectionResponse];
+
+export type tApiIgnoreCountRequest = {
+    body?: tIgnoreCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/ignore/count';
+};
+
+export type apiIgnoreCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiIgnoreCountError = apiIgnoreCountErrors[keyof apiIgnoreCountErrors];
+
+export type tApiIgnoreCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiIgnoreCountResponse = tApiIgnoreCountResponse[keyof tApiIgnoreCountResponse];
+
+export type tApiIgnoreToggleRequest = {
+    body?: tIgnoreToggle;
+    path?: never;
+    query?: never;
+    url: '/api/user/ignore/toggle';
+};
+
+export type apiIgnoreToggleErrors = {
+    /**
+     * Invalid request
+     */
+    400: tMessage;
+    /**
+     * Listing not found
+     */
+    404: tMessage;
+    /**
+     * Internal server error
+     */
+    500: tMessage;
+};
+
+export type apiIgnoreToggleError = apiIgnoreToggleErrors[keyof apiIgnoreToggleErrors];
+
+export type tApiIgnoreToggleResponse = {
+    /**
+     * Nothing to say, we're just happy
+     */
+    204: void;
+};
+
+export type apiIgnoreToggleResponse = tApiIgnoreToggleResponse[keyof tApiIgnoreToggleResponse];
+
 export type tApiListingCreateRequest = {
     /**
      * Data for creating a new listing
@@ -2819,89 +2902,6 @@ export type tApiListingFlagToggleResponse = {
 };
 
 export type apiListingFlagToggleResponse = tApiListingFlagToggleResponse[keyof tApiListingFlagToggleResponse];
-
-export type tApiListingIgnoreCollectionRequest = {
-    body?: tListingIgnoreQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-ignore/collection';
-};
-
-export type apiListingIgnoreCollectionErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingIgnoreCollectionError = apiListingIgnoreCollectionErrors[keyof apiListingIgnoreCollectionErrors];
-
-export type tApiListingIgnoreCollectionResponse = {
-    /**
-     * Access collection of listing ignore items based on provided query
-     */
-    200: tListingIgnoreCollection;
-};
-
-export type apiListingIgnoreCollectionResponse = tApiListingIgnoreCollectionResponse[keyof tApiListingIgnoreCollectionResponse];
-
-export type tApiListingIgnoreCountRequest = {
-    body?: tListingIgnoreCountQuery;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-ignore/count';
-};
-
-export type apiListingIgnoreCountErrors = {
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingIgnoreCountError = apiListingIgnoreCountErrors[keyof apiListingIgnoreCountErrors];
-
-export type tApiListingIgnoreCountResponse = {
-    /**
-     * Return counts based on provided query
-     */
-    200: tCount;
-};
-
-export type apiListingIgnoreCountResponse = tApiListingIgnoreCountResponse[keyof tApiListingIgnoreCountResponse];
-
-export type tApiListingIgnoreToggleRequest = {
-    body?: tListingIgnoreToggle;
-    path?: never;
-    query?: never;
-    url: '/api/user/listing-ignore/toggle';
-};
-
-export type apiListingIgnoreToggleErrors = {
-    /**
-     * Invalid request
-     */
-    400: tMessage;
-    /**
-     * Listing not found
-     */
-    404: tMessage;
-    /**
-     * Internal server error
-     */
-    500: tMessage;
-};
-
-export type apiListingIgnoreToggleError = apiListingIgnoreToggleErrors[keyof apiListingIgnoreToggleErrors];
-
-export type tApiListingIgnoreToggleResponse = {
-    /**
-     * Nothing to say, we're just happy
-     */
-    204: void;
-};
-
-export type apiListingIgnoreToggleResponse = tApiListingIgnoreToggleResponse[keyof tApiListingIgnoreToggleResponse];
 
 export type tApiListingScoreCollectionRequest = {
     body?: tListingScoreQuery;

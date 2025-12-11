@@ -1018,149 +1018,6 @@ export const zListingScoreCollection = z.object({
 export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
 
 /**
- * Data for toggling a listing in ignore list
- */
-export const zListingIgnoreToggle = z.object({
-    toggle: z.boolean().register(z.globalRegistry, {
-        description: 'Whether to add (true) or remove (false) the listing from ignore list'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing to toggle'
-    })
-}).register(z.globalRegistry, {
-    description: 'Data for toggling a listing in ignore list'
-});
-
-export type zListingIgnoreToggle = z.infer<typeof zListingIgnoreToggle>;
-
-/**
- * App-based filters
- */
-export const zListingIgnoreWhere = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }))
-}).register(z.globalRegistry, {
-    description: 'App-based filters'
-});
-
-export type zListingIgnoreWhere = z.infer<typeof zListingIgnoreWhere>;
-
-/**
- * Filter object for listing ignore collection
- */
-export const zListingIgnoreFilter = z.object({
-    id: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact id'
-    })),
-    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'This filter matches the ids'
-    })),
-    fulltext: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Runs fulltext on the collection/query.'
-    })),
-    userId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact userId'
-    })),
-    listingId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'This filter matches the exact listingId'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Filter object for listing ignore collection'
-});
-
-export type zListingIgnoreFilter = z.infer<typeof zListingIgnoreFilter>;
-
-/**
- * Query object for listing ignore count
- */
-export const zListingIgnoreCountQuery = z.object({
-    filter: z.optional(zListingIgnoreFilter),
-    where: z.optional(zListingIgnoreWhere)
-}).register(z.globalRegistry, {
-    description: 'Query object for listing ignore count'
-});
-
-export type zListingIgnoreCountQuery = z.infer<typeof zListingIgnoreCountQuery>;
-
-/**
- * Field of the listing ignore sort
- */
-export const zListingIgnoreSortField = z.enum(['createdAt']).register(z.globalRegistry, {
-    description: 'Field of the listing ignore sort'
-});
-
-export type zListingIgnoreSortField = z.infer<typeof zListingIgnoreSortField>;
-
-/**
- * Sort object for listing ignore collection
- */
-export const zListingIgnoreSort = z.object({
-    field: zListingIgnoreSortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for listing ignore collection'
-});
-
-export type zListingIgnoreSort = z.infer<typeof zListingIgnoreSort>;
-
-/**
- * Query object for listing ignore collection
- */
-export const zListingIgnoreQuery = z.object({
-    cursor: z.optional(zCursor),
-    filter: z.optional(zListingIgnoreFilter),
-    where: z.optional(zListingIgnoreWhere),
-    sort: z.optional(z.array(zListingIgnoreSort))
-}).register(z.globalRegistry, {
-    description: 'Query object for listing ignore collection'
-});
-
-export type zListingIgnoreQuery = z.infer<typeof zListingIgnoreQuery>;
-
-/**
- * Listing ignore data
- */
-export const zListingIgnore = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the ignore entry'
-    }),
-    listingId: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing that was ignored'
-    })
-}).register(z.globalRegistry, {
-    description: 'Listing ignore data'
-});
-
-export type zListingIgnore = z.infer<typeof zListingIgnore>;
-
-/**
- * Collection of listing ignore items
- */
-export const zListingIgnoreCollection = z.object({
-    data: z.array(zListingIgnore),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of listing ignore items'
-});
-
-export type zListingIgnoreCollection = z.infer<typeof zListingIgnoreCollection>;
-
-/**
  * Data for toggling a flag on a listing
  */
 export const zListingFlagToggle = z.object({
@@ -1787,6 +1644,149 @@ export const zListing = z.object({
 });
 
 export type zListing = z.infer<typeof zListing>;
+
+/**
+ * Data for toggling a listing in ignore list
+ */
+export const zIgnoreToggle = z.object({
+    toggle: z.boolean().register(z.globalRegistry, {
+        description: 'Whether to add (true) or remove (false) the listing from ignore list'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing to toggle'
+    })
+}).register(z.globalRegistry, {
+    description: 'Data for toggling a listing in ignore list'
+});
+
+export type zIgnoreToggle = z.infer<typeof zIgnoreToggle>;
+
+/**
+ * App-based filters
+ */
+export const zIgnoreWhere = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'App-based filters'
+});
+
+export type zIgnoreWhere = z.infer<typeof zIgnoreWhere>;
+
+/**
+ * Filter object for ignore collection
+ */
+export const zIgnoreFilter = z.object({
+    id: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact id'
+    })),
+    idIn: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'This filter matches the ids'
+    })),
+    fulltext: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact userId'
+    })),
+    listingId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches the exact listingId'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Filter object for ignore collection'
+});
+
+export type zIgnoreFilter = z.infer<typeof zIgnoreFilter>;
+
+/**
+ * Query object for ignore count
+ */
+export const zIgnoreCountQuery = z.object({
+    filter: z.optional(zIgnoreFilter),
+    where: z.optional(zIgnoreWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for ignore count'
+});
+
+export type zIgnoreCountQuery = z.infer<typeof zIgnoreCountQuery>;
+
+/**
+ * Field of the ignore sort
+ */
+export const zIgnoreSortField = z.enum(['createdAt']).register(z.globalRegistry, {
+    description: 'Field of the ignore sort'
+});
+
+export type zIgnoreSortField = z.infer<typeof zIgnoreSortField>;
+
+/**
+ * Sort object for ignore collection
+ */
+export const zIgnoreSort = z.object({
+    field: zIgnoreSortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for ignore collection'
+});
+
+export type zIgnoreSort = z.infer<typeof zIgnoreSort>;
+
+/**
+ * Query object for ignore collection
+ */
+export const zIgnoreQuery = z.object({
+    cursor: z.optional(zCursor),
+    filter: z.optional(zIgnoreFilter),
+    where: z.optional(zIgnoreWhere),
+    sort: z.optional(z.array(zIgnoreSort))
+}).register(z.globalRegistry, {
+    description: 'Query object for ignore collection'
+});
+
+export type zIgnoreQuery = z.infer<typeof zIgnoreQuery>;
+
+/**
+ * Ignore data
+ */
+export const zIgnore = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the ignore entry'
+    }),
+    listingId: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing that was ignored'
+    })
+}).register(z.globalRegistry, {
+    description: 'Ignore data'
+});
+
+export type zIgnore = z.infer<typeof zIgnore>;
+
+/**
+ * Collection of ignore items
+ */
+export const zIgnoreCollection = z.object({
+    data: z.array(zIgnore),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of ignore items'
+});
+
+export type zIgnoreCollection = z.infer<typeof zIgnoreCollection>;
 
 /**
  * Collection of galleries
@@ -2563,6 +2563,53 @@ export const zApiGalleryCountResponse = zCount;
 
 export type zapiGalleryCountResponse = z.infer<typeof zApiGalleryCountResponse>;
 
+export const zApiIgnoreCollectionData = z.object({
+    body: z.optional(zIgnoreQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiIgnoreCollectionRequest = z.infer<typeof zApiIgnoreCollectionData>;
+
+/**
+ * Access collection of ignore items based on provided query
+ */
+export const zApiIgnoreCollectionResponse = zIgnoreCollection;
+
+export type zapiIgnoreCollectionResponse = z.infer<typeof zApiIgnoreCollectionResponse>;
+
+export const zApiIgnoreCountData = z.object({
+    body: z.optional(zIgnoreCountQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiIgnoreCountRequest = z.infer<typeof zApiIgnoreCountData>;
+
+/**
+ * Return counts based on provided query
+ */
+export const zApiIgnoreCountResponse = zCount;
+
+export type zapiIgnoreCountResponse = z.infer<typeof zApiIgnoreCountResponse>;
+
+export const zApiIgnoreToggleData = z.object({
+    body: z.optional(zIgnoreToggle),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiIgnoreToggleRequest = z.infer<typeof zApiIgnoreToggleData>;
+
+/**
+ * Nothing to say, we're just happy
+ */
+export const zApiIgnoreToggleResponse = z.void().register(z.globalRegistry, {
+    description: 'Nothing to say, we\'re just happy'
+});
+
+export type zapiIgnoreToggleResponse = z.infer<typeof zApiIgnoreToggleResponse>;
+
 export const zApiListingCreateData = z.object({
     body: z.optional(zListingCreate),
     path: z.optional(z.never()),
@@ -2688,53 +2735,6 @@ export const zApiListingFlagToggleResponse = z.void().register(z.globalRegistry,
 });
 
 export type zapiListingFlagToggleResponse = z.infer<typeof zApiListingFlagToggleResponse>;
-
-export const zApiListingIgnoreCollectionData = z.object({
-    body: z.optional(zListingIgnoreQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingIgnoreCollectionRequest = z.infer<typeof zApiListingIgnoreCollectionData>;
-
-/**
- * Access collection of listing ignore items based on provided query
- */
-export const zApiListingIgnoreCollectionResponse = zListingIgnoreCollection;
-
-export type zapiListingIgnoreCollectionResponse = z.infer<typeof zApiListingIgnoreCollectionResponse>;
-
-export const zApiListingIgnoreCountData = z.object({
-    body: z.optional(zListingIgnoreCountQuery),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingIgnoreCountRequest = z.infer<typeof zApiListingIgnoreCountData>;
-
-/**
- * Return counts based on provided query
- */
-export const zApiListingIgnoreCountResponse = zCount;
-
-export type zapiListingIgnoreCountResponse = z.infer<typeof zApiListingIgnoreCountResponse>;
-
-export const zApiListingIgnoreToggleData = z.object({
-    body: z.optional(zListingIgnoreToggle),
-    path: z.optional(z.never()),
-    query: z.optional(z.never())
-});
-
-export type zapiListingIgnoreToggleRequest = z.infer<typeof zApiListingIgnoreToggleData>;
-
-/**
- * Nothing to say, we're just happy
- */
-export const zApiListingIgnoreToggleResponse = z.void().register(z.globalRegistry, {
-    description: 'Nothing to say, we\'re just happy'
-});
-
-export type zapiListingIgnoreToggleResponse = z.infer<typeof zApiListingIgnoreToggleResponse>;
 
 export const zApiListingScoreCollectionData = z.object({
     body: z.optional(zListingScoreQuery),

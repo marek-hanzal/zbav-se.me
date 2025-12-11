@@ -2,18 +2,18 @@ import { useQueryClient } from "@tanstack/react-query";
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { translator } from "@use-pico/common/translator";
-import { withListingIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withIgnoreToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { toast } from "sonner";
 
-export namespace ListingIgnoreButton {
+export namespace IgnoreButton {
 	export interface Props extends ConfirmButton.Props {
 		listingId: string;
 	}
 }
 
-export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
+export const IgnoreButton: FC<IgnoreButton.Props> = ({
 	listingId,
 	confirmProps,
 	buttonProps,
@@ -23,7 +23,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 	...props
 }) => {
 	const queryClient = useQueryClient();
-	const listingIgnoreToggleMutation = withListingIgnoreToggleMutation.useMutation({
+	const ignoreToggleMutation = withIgnoreToggleMutation.useMutation({
 		onSuccess() {
 			withListingFetchQuery.invalidate(queryClient, {
 				where: {
@@ -56,7 +56,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 				return (
 					<ConfirmButton
 						iconEnabled={TrashIcon}
-						loading={listingIgnoreToggleMutation.isPending}
+						loading={ignoreToggleMutation.isPending}
 						disabled={listing.isFavourite || disabled}
 						label={
 							listing.isIgnored
@@ -70,7 +70,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 									toast.info(
 										translator.text("Second tap to unignore listing (toast)"),
 										{
-											id: "listing-ignore-button",
+											id: "ignore-button",
 										},
 									);
 								}
@@ -79,7 +79,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 									toast.info(
 										translator.text("Second tap to ignore listing (toast)"),
 										{
-											id: "listing-ignore-button",
+											id: "ignore-button",
 										},
 									);
 								}
@@ -95,7 +95,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 							...confirmProps,
 							onClick(e) {
 								toast.promise(
-									listingIgnoreToggleMutation.mutateAsync({
+									ignoreToggleMutation.mutateAsync({
 										toggle: !listing.isIgnored,
 										listingId: listing.id,
 									}),
@@ -107,14 +107,14 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 												: "Listing ignored (toast)",
 										),
 										error: translator.text("Error ignoring listing (toast)"),
-										id: "listing-ignore-button",
+										id: "ignore-button",
 									},
 								);
 								confirmProps?.onClick?.(e);
 							},
 						}}
 						onReset={() => {
-							toast.dismiss("listing-ignore-button");
+							toast.dismiss("ignore-button");
 							onReset?.();
 						}}
 						ui={{

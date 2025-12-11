@@ -1185,161 +1185,6 @@ export const sListingScore = {
     ]
 } as const;
 
-export const sListingIgnoreToggle = {
-    type: 'object',
-    properties: {
-        toggle: {
-            type: 'boolean'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'toggle',
-        'listingId'
-    ]
-} as const;
-
-export const sListingIgnoreCountQuery = {
-    type: 'object',
-    properties: {
-        filter: {
-            $ref: '#/components/schemas/ListingIgnoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingIgnoreWhere'
-        }
-    }
-} as const;
-
-export const sListingIgnoreWhere = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingIgnoreFilter = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        idIn: {
-            type: 'array',
-            items: {
-                type: 'string'
-            }
-        },
-        fulltext: {
-            type: 'string'
-        },
-        userId: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    }
-} as const;
-
-export const sListingIgnoreQuery = {
-    type: 'object',
-    properties: {
-        cursor: {
-            $ref: '#/components/schemas/Cursor'
-        },
-        filter: {
-            $ref: '#/components/schemas/ListingIgnoreFilter'
-        },
-        where: {
-            $ref: '#/components/schemas/ListingIgnoreWhere'
-        },
-        sort: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingIgnoreSort'
-            }
-        }
-    }
-} as const;
-
-export const sListingIgnoreSortField = {
-    type: 'string',
-    enum: [
-        'createdAt'
-    ]
-} as const;
-
-export const sListingIgnoreSort = {
-    type: 'object',
-    properties: {
-        field: {
-            $ref: '#/components/schemas/ListingIgnoreSortField'
-        },
-        direction: {
-            $ref: '#/components/schemas/OrderEnum'
-        }
-    },
-    required: [
-        'field',
-        'direction'
-    ]
-} as const;
-
-export const sListingIgnoreCollection = {
-    type: 'object',
-    properties: {
-        data: {
-            type: 'array',
-            items: {
-                $ref: '#/components/schemas/ListingIgnore'
-            }
-        },
-        more: {
-            type: 'boolean'
-        }
-    },
-    required: [
-        'data',
-        'more'
-    ]
-} as const;
-
-export const sListingIgnore = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        listingId: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'listingId'
-    ]
-} as const;
-
 export const sListingFlagToggle = {
     type: 'object',
     properties: {
@@ -2134,6 +1979,161 @@ export const sCategory = {
         'slug',
         'sort',
         'locale'
+    ]
+} as const;
+
+export const sIgnoreToggle = {
+    type: 'object',
+    properties: {
+        toggle: {
+            type: 'boolean'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'toggle',
+        'listingId'
+    ]
+} as const;
+
+export const sIgnoreCountQuery = {
+    type: 'object',
+    properties: {
+        filter: {
+            $ref: '#/components/schemas/IgnoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/IgnoreWhere'
+        }
+    }
+} as const;
+
+export const sIgnoreWhere = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sIgnoreFilter = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        idIn: {
+            type: 'array',
+            items: {
+                type: 'string'
+            }
+        },
+        fulltext: {
+            type: 'string'
+        },
+        userId: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    }
+} as const;
+
+export const sIgnoreQuery = {
+    type: 'object',
+    properties: {
+        cursor: {
+            $ref: '#/components/schemas/Cursor'
+        },
+        filter: {
+            $ref: '#/components/schemas/IgnoreFilter'
+        },
+        where: {
+            $ref: '#/components/schemas/IgnoreWhere'
+        },
+        sort: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/IgnoreSort'
+            }
+        }
+    }
+} as const;
+
+export const sIgnoreSortField = {
+    type: 'string',
+    enum: [
+        'createdAt'
+    ]
+} as const;
+
+export const sIgnoreSort = {
+    type: 'object',
+    properties: {
+        field: {
+            $ref: '#/components/schemas/IgnoreSortField'
+        },
+        direction: {
+            $ref: '#/components/schemas/OrderEnum'
+        }
+    },
+    required: [
+        'field',
+        'direction'
+    ]
+} as const;
+
+export const sIgnoreCollection = {
+    type: 'object',
+    properties: {
+        data: {
+            type: 'array',
+            items: {
+                $ref: '#/components/schemas/Ignore'
+            }
+        },
+        more: {
+            type: 'boolean'
+        }
+    },
+    required: [
+        'data',
+        'more'
+    ]
+} as const;
+
+export const sIgnore = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        listingId: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'listingId'
     ]
 } as const;
 
