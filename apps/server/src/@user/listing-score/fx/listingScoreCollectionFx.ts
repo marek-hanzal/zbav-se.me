@@ -2,8 +2,8 @@ import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withListingScoreQueryBuilder } from "../db/withListingScoreQueryBuilder";
-import { withListingScoreSelect } from "../db/withListingScoreSelect";
+import { withListingScoreQueryBuilder } from "~/app/listing-score/db/withListingScoreQueryBuilder";
+import { withListingScoreSelect } from "~/app/listing-score/db/withListingScoreSelect";
 import type { ListingScoreQuerySchema } from "../schema/ListingScoreQuerySchema";
 import { ListingScoreSchema } from "../schema/ListingScoreSchema";
 

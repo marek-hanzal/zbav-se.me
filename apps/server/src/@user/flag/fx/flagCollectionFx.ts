@@ -2,8 +2,8 @@ import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withFlagQueryBuilder } from "../db/withFlagQueryBuilder";
-import { withFlagSelect } from "../db/withFlagSelect";
+import { withFlagQueryBuilder } from "~/app/flag/db/withFlagQueryBuilder";
+import { withFlagSelect } from "~/app/flag/db/withFlagSelect";
 import type { FlagQuerySchema } from "../schema/FlagQuerySchema";
 import { FlagSchema } from "../schema/FlagSchema";
 

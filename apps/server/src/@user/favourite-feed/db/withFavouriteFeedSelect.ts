@@ -1,4 +1,4 @@
-import { withFeedSelect } from "~/@user/feed/db/withFeedSelect";
+import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
 import type { FeedSortSchema } from "~/@user/feed/schema/FeedSortSchema";
 import type { WithDatabase } from "~/database/WithDatabase";
 

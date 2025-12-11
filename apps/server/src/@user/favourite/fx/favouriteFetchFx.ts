@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
-import { withFavouriteQueryBuilder } from "~/@user/favourite/db/withFavouriteQueryBuilder";
-import { withFavouriteSelect } from "~/@user/favourite/db/withFavouriteSelect";
+import { withFavouriteQueryBuilder } from "~/app/favourite/db/withFavouriteQueryBuilder";
+import { withFavouriteSelect } from "~/app/favourite/db/withFavouriteSelect";
 import type { FavouriteQuerySchema } from "~/@user/favourite/schema/FavouriteQuerySchema";
 import { FavouriteSchema } from "~/@user/favourite/schema/FavouriteSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";

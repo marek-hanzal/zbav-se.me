@@ -1,8 +1,8 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withUploadQueryBuilder } from "../db/withUploadQueryBuilder";
-import { withUploadSelect } from "../db/withUploadSelect";
+import { withUploadQueryBuilder } from "~/app/upload/db/withUploadQueryBuilder";
+import { withUploadSelect } from "~/app/upload/db/withUploadSelect";
 import type { UploadQuerySchema } from "../schema/UploadQuerySchema";
 
 export namespace uploadCountFx {

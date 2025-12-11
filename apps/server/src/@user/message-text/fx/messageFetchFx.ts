@@ -1,9 +1,9 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withMessageTextQueryBuilder } from "~/app/message/db/withMessageQueryBuilder";
+import { withMessageTextSelect } from "~/app/message/db/withMessageSelect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { withMessageTextQueryBuilder } from "../db/withMessageQueryBuilder";
-import { withMessageTextSelect } from "../db/withMessageSelect";
 import type { MessageQuerySchema } from "../schema/MessageQuerySchema";
 import { MessageSchema } from "../schema/MessageSchema";
 

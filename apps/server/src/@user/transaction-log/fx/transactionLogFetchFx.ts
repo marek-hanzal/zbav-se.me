@@ -2,8 +2,8 @@ import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { withTransactionLogQueryBuilder } from "../db/withTransactionLogQueryBuilder";
-import { withTransactionLogSelect } from "../db/withTransactionLogSelect";
+import { withTransactionLogQueryBuilder } from "~/app/transaction-log/db/withTransactionLogQueryBuilder";
+import { withTransactionLogSelect } from "~/app/transaction-log/db/withTransactionLogSelect";
 import type { TransactionLogQuerySchema } from "../schema/TransactionLogQuerySchema";
 import { TransactionLogSchema } from "../schema/TransactionLogSchema";
 

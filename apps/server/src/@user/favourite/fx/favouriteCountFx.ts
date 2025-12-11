@@ -1,7 +1,7 @@
 import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
-import { withFavouriteQueryBuilder } from "~/@user/favourite/db/withFavouriteQueryBuilder";
-import { withFavouriteSelect } from "~/@user/favourite/db/withFavouriteSelect";
+import { withFavouriteQueryBuilder } from "~/app/favourite/db/withFavouriteQueryBuilder";
+import { withFavouriteSelect } from "~/app/favourite/db/withFavouriteSelect";
 import type { FavouriteCountQuerySchema } from "~/@user/favourite/schema/FavouriteCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";

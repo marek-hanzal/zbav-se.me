@@ -2,8 +2,8 @@ import { withCollection } from "@use-pico/common/collection";
 import { Effect } from "effect";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { withGalleryItemQueryBuilder } from "../db/withGalleryItemQueryBuilder";
-import { withGalleryItemSelect } from "../db/withGalleryItemSelect";
+import { withGalleryItemQueryBuilder } from "~/app/gallery-item/db/withGalleryItemQueryBuilder";
+import { withGalleryItemSelect } from "~/app/gallery-item/db/withGalleryItemSelect";
 import type { GalleryItemQuerySchema } from "../schema/GalleryItemQuerySchema";
 import { GalleryItemSchema } from "../schema/GalleryItemSchema";
 
