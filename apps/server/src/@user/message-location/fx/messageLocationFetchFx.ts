@@ -1,10 +1,10 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withMessageLocationQueryBuilder } from "~/app/message-location/db/withMessageLocationQueryBuilder";
+import { withMessageLocationSelect } from "~/app/message-location/db/withMessageLocationSelect";
 import type { MessageLocationQuerySchema } from "~/app/message-location/schema/MessageLocationQuerySchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { withMessageLocationQueryBuilder } from "../db/withMessageLocationQueryBuilder";
-import { withMessageLocationSelect } from "../db/withMessageLocationSelect";
 import { MessageLocationSchema } from "../schema/MessageLocationSchema";
 
 export namespace messageLocationFetchFx {

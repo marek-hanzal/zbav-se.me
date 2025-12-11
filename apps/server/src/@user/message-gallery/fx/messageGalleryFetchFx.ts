@@ -1,10 +1,10 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withMessageGalleryQueryBuilder } from "~/app/message-gallery/db/withMessageGalleryQueryBuilder";
+import { withMessageGallerySelect } from "~/app/message-gallery/db/withMessageGallerySelect";
 import type { MessageGalleryQuerySchema } from "~/app/message-gallery/schema/MessageGalleryQuerySchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { withMessageGalleryQueryBuilder } from "../db/withMessageGalleryQueryBuilder";
-import { withMessageGallerySelect } from "../db/withMessageGallerySelect";
 import { MessageGallerySchema } from "../schema/MessageGallerySchema";
 
 export namespace messageGalleryFetchFx {
