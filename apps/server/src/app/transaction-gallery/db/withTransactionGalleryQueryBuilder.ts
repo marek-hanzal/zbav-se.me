@@ -1,4 +1,4 @@
-import type { TransactionGalleryFilterSchema } from "~/@user/transaction-gallery/schema/TransactionGalleryFilterSchema";
+import type { TransactionGalleryFilterSchema } from "../schema/TransactionGalleryFilterSchema";
 import type { withTransactionGallerySelect } from "./withTransactionGallerySelect";
 
 export namespace withTransactionGalleryQueryBuilder {

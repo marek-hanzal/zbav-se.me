@@ -14,9 +14,7 @@ export namespace transactionPatchFx {
 	}
 }
 
-export const transactionPatchFx = ({
-	transactionId,
-}: transactionPatchFx.Props) => {
+export const transactionPatchFx = ({ transactionId }: transactionPatchFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;

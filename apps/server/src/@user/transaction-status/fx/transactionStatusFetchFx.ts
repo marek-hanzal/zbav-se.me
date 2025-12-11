@@ -13,9 +13,7 @@ export namespace transactionStatusFetchFx {
 	}
 }
 
-export const transactionStatusFetchFx = ({
-	query,
-}: transactionStatusFetchFx.Props) => {
+export const transactionStatusFetchFx = ({ query }: transactionStatusFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

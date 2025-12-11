@@ -9,9 +9,7 @@ export namespace transactionGetBuyerInfoFx {
 	}
 }
 
-export const transactionGetBuyerInfoFx = ({
-	transactionId,
-}: transactionGetBuyerInfoFx.Props) => {
+export const transactionGetBuyerInfoFx = ({ transactionId }: transactionGetBuyerInfoFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

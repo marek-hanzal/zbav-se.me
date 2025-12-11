@@ -1,7 +1,7 @@
 import { sql } from "kysely";
 import { jsonObjectFrom } from "kysely/helpers/postgres";
 import { match } from "ts-pattern";
-import type { TransactionGallerySortSchema } from "~/@user/transaction-gallery/schema/TransactionGallerySortSchema";
+import type { TransactionGallerySortSchema } from "../schema/TransactionGallerySortSchema";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
 import type { WithDatabase } from "~/database/WithDatabase";
 

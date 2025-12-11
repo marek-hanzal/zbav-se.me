@@ -9,9 +9,7 @@ export namespace transactionGetSellerInfoFx {
 	}
 }
 
-export const transactionGetSellerInfoFx = ({
-	transactionId,
-}: transactionGetSellerInfoFx.Props) => {
+export const transactionGetSellerInfoFx = ({ transactionId }: transactionGetSellerInfoFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;
@@ -47,6 +45,4 @@ export const transactionGetSellerInfoFx = ({
 	});
 };
 
-export type transactionGetSellerInfoFx = ReturnType<
-	typeof transactionGetSellerInfoFx
->;
+export type transactionGetSellerInfoFx = ReturnType<typeof transactionGetSellerInfoFx>;

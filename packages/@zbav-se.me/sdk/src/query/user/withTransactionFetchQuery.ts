@@ -1,9 +1,6 @@
 import { withQuery } from "@use-pico/client/query";
 import { apiTransactionFetch } from "../../api/user/sdk.gen";
-import type {
-	tApiTransactionFetchResponse,
-	tTransactionQuery,
-} from "../../api/user/types.gen";
+import type { tApiTransactionFetchResponse, tTransactionQuery } from "../../api/user/types.gen";
 
 export const withTransactionFetchQuery = withQuery<
 	tTransactionQuery,

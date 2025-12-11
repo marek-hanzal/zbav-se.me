@@ -8,9 +8,7 @@ export namespace transactionStatusRejectFx {
 	export type Props = TransactionStatusRejectSchema.Type;
 }
 
-export const transactionStatusRejectFx = ({
-	messageThreadId,
-}: transactionStatusRejectFx.Props) => {
+export const transactionStatusRejectFx = ({ messageThreadId }: transactionStatusRejectFx.Props) => {
 	return Effect.gen(function* () {
 		const transaction = yield* transactionResolveFx({
 			messageThreadId,

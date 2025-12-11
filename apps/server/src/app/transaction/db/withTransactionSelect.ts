@@ -15,10 +15,7 @@ export namespace withTransactionSelect {
 	export type Select = ReturnType<typeof withTransactionSelect>;
 }
 
-export const withTransactionSelect = ({
-	database,
-	sort,
-}: withTransactionSelect.Props) => {
+export const withTransactionSelect = ({ database, sort }: withTransactionSelect.Props) => {
 	let query = database
 		.selectFrom("transaction as lt")
 		.innerJoin("listing as l", "lt.listingId", "l.id")

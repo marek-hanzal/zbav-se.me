@@ -15,11 +15,7 @@ export namespace GalleryMenu {
 	}
 }
 
-export const GalleryMenu: FC<GalleryMenu.Props> = ({
-	type,
-	transactionGallery,
-	menuState,
-}) => {
+export const GalleryMenu: FC<GalleryMenu.Props> = ({ type, transactionGallery, menuState }) => {
 	const [, setMenuState] = menuState;
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 

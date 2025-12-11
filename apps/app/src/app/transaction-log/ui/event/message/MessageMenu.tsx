@@ -15,11 +15,7 @@ export namespace MessageMenu {
 	}
 }
 
-export const MessageMenu: FC<MessageMenu.Props> = ({
-	type,
-	transactionMessage,
-	menuState,
-}) => {
+export const MessageMenu: FC<MessageMenu.Props> = ({ type, transactionMessage, menuState }) => {
 	const [, setMenuState] = menuState;
 	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 

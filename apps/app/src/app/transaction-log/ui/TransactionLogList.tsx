@@ -51,23 +51,22 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
-	const transactionLogCollectionQuery =
-		withTransactionLogCollectionQuery.useSuspenseQuery(
-			{
-				...query,
-				cursor: {
-					page: 0,
-					/**
-					 * Maximum of 256 events should be enough
-					 */
-					size: 256,
-				},
+	const transactionLogCollectionQuery = withTransactionLogCollectionQuery.useSuspenseQuery(
+		{
+			...query,
+			cursor: {
+				page: 0,
+				/**
+				 * Maximum of 256 events should be enough
+				 */
+				size: 256,
 			},
-			{
-				refetchInterval: 5_000,
-				placeholderData: keepPreviousData,
-			},
-		);
+		},
+		{
+			refetchInterval: 5_000,
+			placeholderData: keepPreviousData,
+		},
+	);
 
 	const data = transactionLogCollectionQuery.data;
 

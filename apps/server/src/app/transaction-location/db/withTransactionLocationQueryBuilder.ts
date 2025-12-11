@@ -1,4 +1,4 @@
-import type { TransactionLocationFilterSchema } from "~/@user/transaction-location/schema/TransactionLocationFilterSchema";
+import type { TransactionLocationFilterSchema } from "../schema/TransactionLocationFilterSchema";
 import type { withTransactionLocationSelect } from "./withTransactionLocationSelect";
 
 export namespace withTransactionLocationQueryBuilder {
