@@ -8,10 +8,6 @@ export const MessageLocationCreateSchema = z
 		locationId: z.string().openapi({
 			description: "The ID of the location",
 		}),
-		time: z.coerce.date().openapi({
-			description: "Time for the location",
-			type: "string",
-		}),
 	})
 	.openapi("MessageLocationCreate", {
 		description: "Request to create a message location",
