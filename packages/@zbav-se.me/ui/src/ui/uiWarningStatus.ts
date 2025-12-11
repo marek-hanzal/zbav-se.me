@@ -16,7 +16,7 @@ export namespace uiWarningStatus {
 export const uiWarningStatus = ({ ui, className }: uiWarningStatus.Props) => {
 	return uiStatus({
 		ui: {
-			tone: "warning",
+			tone: "brand",
 			theme: "light",
 			color: "lead",
 			text: "4xl",

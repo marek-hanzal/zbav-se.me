@@ -26,7 +26,7 @@ export const SpinnerContainer: FC<SpinnerContainer.Props> = ({
 	return (
 		<Container
 			ui={{
-				tone: "secondary",
+				tone: "brand",
 				theme: "light",
 				layout: "vertical-centered",
 				height: "full",

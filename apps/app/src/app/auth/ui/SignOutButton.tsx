@@ -39,6 +39,7 @@ export const SignOutButton: FC<SignOutButton.Props> = ({ locale, ui, ...props })
 				theme: "light",
 				size: "md",
 				width: "content",
+				text: "md",
 				...ui,
 			}}
 			{...props}

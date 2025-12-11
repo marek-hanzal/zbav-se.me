@@ -73,12 +73,12 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/seller/transaction/list"
+					to="/$locale/ui/seller/message/list"
 					params={{
 						locale,
 					}}
 				>
-					<Tx label="Transactions (label)" />
+					<Tx label="Messages (label)" />
 				</LinkTo>
 
 				<LinkTo

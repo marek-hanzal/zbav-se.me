@@ -47,9 +47,6 @@ export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
 			<LinkTo
 				icon={SellerIcon}
 				to="/$locale/ui/seller"
-				activeOptions={{
-					exact: true,
-				}}
 				activeProps={{
 					...uiNavButton({
 						ui: activeUi,

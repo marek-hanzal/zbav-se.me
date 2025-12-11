@@ -1,13 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
-import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton, uiWarningStatus } from "@zbav-se.me/ui/ui";
+import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import z from "zod";
 import { TransactionListContainer } from "~/app/listing-transaction/ui/TransactionListContainer";
 
-export const Route = createFileRoute("/$locale/seller/transaction/list")({
+export const Route = createFileRoute("/$locale/ui/seller/message/list")({
 	validateSearch: z.object({
 		open: z.string().optional(),
 	}),
@@ -18,21 +16,8 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 
 		return (
 			<TitleContainer
-				data-ui="/seller/transaction/list[TitleContainer]"
-				textTitle={"Transactions (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						data-ui="/seller/transaction/list-[LinkTo.left]"
-						icon={ArrowLeftIcon}
-						to={"/$locale/home/seller"}
-						params={{
-							locale,
-						}}
-					/>
-				}
+				data-ui="/seller/message/list[TitleContainer]"
+				textTitle={"Messages (title)"}
 			>
 				<TransactionListContainer
 					locale={locale}
@@ -40,12 +25,12 @@ export const Route = createFileRoute("/$locale/seller/transaction/list")({
 					renderEmptyFn={(props) => {
 						return (
 							<Status
-								textTitle={"No transactions found - seller (title)"}
-								textMessage={"No transactions found - seller (message)"}
+								textTitle={"No messages found - seller (title)"}
+								textMessage={"No messages found - seller (message)"}
 								{...uiWarningStatus({
 									className: [],
 								})}
-								data-ui="/seller/transaction/list-[Status-empty]"
+								data-ui="/seller/message/list-[Status.empty]"
 								{...props}
 							/>
 						);
