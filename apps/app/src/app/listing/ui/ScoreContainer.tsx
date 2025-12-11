@@ -80,22 +80,22 @@ export const ScoreContainer: FC<ScoreContainer.Props> = ({ locale, listingMetric
 			)}
 
 			{/*
-                Cart interactions
+                Favourite interactions
             */}
 
-			{listingMetrics.cart ? (
+			{listingMetrics.favourite ? (
 				<BadgeValue
-					textLabel={"Listing Score - Cart (label)"}
+					textLabel={"Listing Score - Favourite (label)"}
 					textValue={toLocaleNumber({
 						locale,
-						number: listingMetrics.cart,
+						number: listingMetrics.favourite,
 					})}
 				/>
 			) : null}
 
-			{listingMetrics.cart ? null : (
+			{listingMetrics.favourite ? null : (
 				<BadgeValue
-					textLabel={"Listing Score - Cart (label)"}
+					textLabel={"Listing Score - Favourite (label)"}
 					textValue={0}
 				/>
 			)}

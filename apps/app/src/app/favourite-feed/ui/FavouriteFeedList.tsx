@@ -1,11 +1,11 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
-import { withListingCartFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withFavouriteFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
+import { EmptyStatus } from "~/app/favourite-feed/ui/EmptyStatus";
 import { FeedItem } from "~/app/feed/ui/FeedItem";
-import { EmptyStatus } from "~/app/listing-cart-feed/ui/EmptyStatus";
 
-export namespace ListingCartFeedList {
+export namespace FavouriteFeedList {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
@@ -13,7 +13,7 @@ export namespace ListingCartFeedList {
 	}
 }
 
-export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
+export const FavouriteFeedList: FC<FavouriteFeedList.Props> = ({
 	locale,
 	query,
 	linkTo,
@@ -21,10 +21,10 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui={"ListingCartFeedList"}
+			data-ui={"FavouriteFeedList"}
 			{...props}
 		>
-			<withListingCartFeedCollectionQuery.Suspense
+			<withFavouriteFeedCollectionQuery.Suspense
 				data={query}
 				fallback={<SpinnerContainer />}
 			>
@@ -35,7 +35,7 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 
 					return (
 						<Container
-							data-ui={"ListingCartFeedList-content"}
+							data-ui={"FavouriteFeedList-content"}
 							ui={{
 								layout: "vertical-flex",
 								gap: "default",
@@ -55,7 +55,7 @@ export const ListingCartFeedList: FC<ListingCartFeedList.Props> = ({
 						</Container>
 					);
 				}}
-			</withListingCartFeedCollectionQuery.Suspense>
+			</withFavouriteFeedCollectionQuery.Suspense>
 		</Container>
 	);
 };

@@ -65,7 +65,7 @@ export const ListingFlagButton: FC<ListingFlagButton.Props> = ({
 					<ConfirmButton
 						iconEnabled={FlagIcon}
 						loading={listingFlagToggleMutation.isPending}
-						disabled={listing.isInCart || listing.isIgnored || disabled}
+						disabled={listing.isFavourite || listing.isIgnored || disabled}
 						label={
 							listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"
 						}

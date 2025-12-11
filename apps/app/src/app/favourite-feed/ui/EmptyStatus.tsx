@@ -16,7 +16,7 @@ export namespace EmptyStatus {
 export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 	return (
 		<Container
-			data-ui={"FeedCartList-EmptyStatus"}
+			data-ui={"EmptyStatus[Container]"}
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
@@ -24,7 +24,7 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 		>
 			<Status
 				icon={CartIcon}
-				textTitle={"No items in cart (title)"}
+				textTitle={"No items in favourites (title)"}
 				ui={{
 					text: "4xl",
 				}}

@@ -57,7 +57,7 @@ export const ListingIgnoreButton: FC<ListingIgnoreButton.Props> = ({
 					<ConfirmButton
 						iconEnabled={TrashIcon}
 						loading={listingIgnoreToggleMutation.isPending}
-						disabled={listing.isInCart || disabled}
+						disabled={listing.isFavourite || disabled}
 						label={
 							listing.isIgnored
 								? "Unignore listing (button)"

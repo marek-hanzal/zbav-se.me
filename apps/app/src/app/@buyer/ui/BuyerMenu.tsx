@@ -114,7 +114,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 						locale,
 					}}
 				>
-					<Tx label="Cart (label)" />
+					<Tx label="Favourite (label)" />
 				</LinkTo>
 
 				<LinkTo
@@ -127,7 +127,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/buyer/shop"
+					to="/$locale/ui/shop"
 					params={{
 						locale,
 					}}

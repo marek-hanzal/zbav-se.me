@@ -11,7 +11,7 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
-import { CartToggleButton } from "~/app/listing/ui/button/CartToggleButton";
+import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleButton";
 import { ListingFlagButton } from "~/app/listing/ui/button/ListingFlagButton";
 import { ListingIgnoreButton } from "~/app/listing/ui/button/ListingIgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
@@ -87,7 +87,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 							/>
 
 							{feedId ? (
-								<CartToggleButton
+								<FavouriteToggleButton
 									feedId={feedId}
 									listingId={listing.id}
 									label={null}
@@ -219,7 +219,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						fallback={null}
 					>
 						{({ data: listing }) => {
-							if (listing.isInCart) {
+							if (listing.isFavourite) {
 								return null;
 							}
 

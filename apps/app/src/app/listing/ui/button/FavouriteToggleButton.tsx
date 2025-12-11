@@ -1,29 +1,29 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
-import { withListingCartToggleMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
-	withListingCartFeedCollectionQuery,
+	withFavouriteFeedCollectionQuery,
 	withListingFetchQuery,
 	withListingMetricsFetchQuery,
 } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 
-export namespace CartToggleButton {
+export namespace FavouriteToggleButton {
 	export interface Props extends Button.Props {
 		feedId: string;
 		listingId: string;
 	}
 }
 
-export const CartToggleButton: FC<CartToggleButton.Props> = ({
+export const FavouriteToggleButton: FC<FavouriteToggleButton.Props> = ({
 	feedId,
 	listingId,
 	ui,
 	...props
 }) => {
 	const queryClient = useQueryClient();
-	const listingCartToggle = withListingCartToggleMutation.useMutation({
+	const favouriteToggle = withFavouriteToggleMutation.useMutation({
 		onSuccess() {
 			withListingFetchQuery.invalidate(queryClient, {
 				where: {
@@ -31,7 +31,7 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({
 				},
 			});
 			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
-			withListingCartFeedCollectionQuery.invalidate(queryClient);
+			withFavouriteFeedCollectionQuery.invalidate(queryClient);
 		},
 		meta: {
 			mutationId: listingId,
@@ -65,16 +65,18 @@ export const CartToggleButton: FC<CartToggleButton.Props> = ({
 				return (
 					<Button
 						label={
-							listing.isInCart ? "Remove from cart (button)" : "Add to cart (button)"
+							listing.isFavourite
+								? "Remove from favourite (button)"
+								: "Add to favourite (button)"
 						}
-						iconEnabled={listing.isInCart ? FavouriteIcon : FavouriteOffIcon}
-						disabled={listingCartToggle.isPending}
-						loading={listingCartToggle.isPending}
+						iconEnabled={listing.isFavourite ? FavouriteIcon : FavouriteOffIcon}
+						disabled={favouriteToggle.isPending}
+						loading={favouriteToggle.isPending}
 						onClick={() =>
-							listingCartToggle.mutate({
+							favouriteToggle.mutate({
 								feedId,
 								listingId: listing.id,
-								toggle: !listing.isInCart,
+								toggle: !listing.isFavourite,
 							})
 						}
 						ui={{

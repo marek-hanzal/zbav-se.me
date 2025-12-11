@@ -26,7 +26,7 @@
     ref: First feed (title)
     value: Název seznamu
 0c9fd2c1be3e9357f6ce010004cc93f4e2859ef4e62274ab72a0c42f:
-    ref: Cart (label)
+    ref: Favourite (label)
     value: Oblíbené
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
@@ -42,7 +42,7 @@
     ref: Listings (label)
     value: Inzeráty
 0f25aecf3dc16ad45bb4abf1dd685e545d61829586dc5b143ff86248:
-    ref: Empty cart category (title)
+    ref: Empty favourite category (title)
     value: Tady ti už nic nezbylo
 0f7b72d63c9509f02f16f4ec88b26001fd0e301da50f8abdd1d55711:
     ref: Start transaction (button)
@@ -166,7 +166,7 @@
     ref: Without VAT
     value: Without VAT
 40e303be86527f9bd9a2ff0c64ae95d0376262257c76a19e4c60121f:
-    ref: Listing Score - Cart (label)
+    ref: Listing Score - Favourite (label)
     value: Počet přidání do košíku (celkem)
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
     ref: Cancel (button)
@@ -256,7 +256,7 @@
     ref: Really delete feed (button)
     value: Opravdu?
 5fa006f1c7ffd0d4762ce60de46e8e4cd93835200eba2aaf0c6ba6ef:
-    ref: That's all for now - cart (title)
+    ref: That's all for now - favourite (title)
     value: A to je vše
 60e1a755731eceba9aa1ed1d495b897bac04a5a5f2b167b45b064c8a:
     ref: Transaction closed - seller (label)
@@ -304,7 +304,7 @@
     ref: Feed sorting not selected
     value: Výchozí řazení
 717f3c4d260f248fadc7650d90fd53fbb1a0722fb4d164f401d1a8cf:
-    ref: Empty cart - category and cart (title)
+    ref: Empty favourite - category and favourite (title)
     value: V košíku už ti nic nezbylo
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
     ref: Listing unflagged (toast)
@@ -337,7 +337,7 @@
     ref: icon
     value: icon
 7e472530689c600917abb98ada2c43213c4477f22ac6cde0c7acfa8e:
-    ref: Add to cart (button)
+    ref: Add to favourite (button)
     value: Přidat do oblíbených
 7fcc9795b740a367fd80ebd80dbc412e537b7f72d99ac64c3b737b52:
     ref: Transaction rejected - seller (label)
@@ -525,7 +525,7 @@ a94cbdf1ed6b5ec42ce7ff1be916aadee3ad91ba6871b9a7f84fc0d5:
     ref: Buyer transaction request (buyer-seller) (label)
     value: Mám zájem!
 a9854719f220ab853c3bb0b9997957d6b40b4ad29236939d57899b49:
-    ref: Your cart (title)
+    ref: Your favourites (title)
     value: Oblíbené
 aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
     ref: Listing flagged (toast)
@@ -579,10 +579,10 @@ babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
     ref: Location search (placeholder)
     value: Napiš město, kraj, co tě napadne
 bb46aa5ec07c4cd1fda5e8be0c3e56316471353ee71693e1681a7b77:
-    ref: No items in cart (title)
+    ref: No items in favourites (title)
     value: Nemáš žádné oblíbené inzeráty
 bd4c51483b9569475fa4f392deecd1f59492bf9e37050db9a96a80b4:
-    ref: Back to cart (link)
+    ref: Back to favourites (link)
     value: Zpět do oblíbených
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     ref:
@@ -591,7 +591,7 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
 bf14eea343ed184a8fe9160210305d3bbacfce9413efb44d366635dd:
-    ref: Remove from cart (button)
+    ref: Remove from favourite (button)
     value: Odebrat z oblíbených
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
@@ -742,7 +742,7 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Popis inzerátu
 ff197626edbd1fc74cd98027a66223dbad02ff75c217da7af38d83a1:
-    ref: No more listings to show - cart (message)
+    ref: No more listings to show - favourite (message)
     value: |
         V této kategorii nemáš další inzeráty.
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:

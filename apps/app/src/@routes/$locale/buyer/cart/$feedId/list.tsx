@@ -4,7 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
-import { withListingCartCountQuery } from "@zbav-se.me/sdk/query/user";
+import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 					locale={locale}
 					feedId={feedId}
 					/**
-					 * Don't count score for listings in cart
+					 * Don't count score for listings in favourites
 					 */
 					withScore={false}
 					scrollToId={undefined}
@@ -48,7 +48,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 					query={{
 						where: {
 							feedId,
-							inCart: true,
+							isFavourite: true,
 							withIgnored: false,
 						},
 						/**
@@ -67,7 +67,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 					}}
 					renderEmptyFn={() => {
 						return (
-							<withListingCartCountQuery.Suspense
+							<withFavouriteCountQuery.Suspense
 								data={{}}
 								fallback={<SpinnerContainer />}
 							>
@@ -76,7 +76,9 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 										return (
 											<Status
 												icon={DeadEndIcon}
-												textTitle={"Empty cart - category and cart (title)"}
+												textTitle={
+													"Empty favourite - category and favourite (title)"
+												}
 												action={
 													<div className="flex flex-col gap-2 items-center justify-center w-full">
 														<LinkTo
@@ -98,7 +100,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 														</LinkTo>
 
 														<LinkTo
-															to={"/$locale/home"}
+															to={"/$locale/ui/home"}
 															params={{
 																locale,
 															}}
@@ -123,7 +125,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 									return (
 										<Status
 											icon={"icon-[streamline--sad-face-remix]"}
-											textTitle={"Empty cart category (title)"}
+											textTitle={"Empty favourite category (title)"}
 											action={
 												<LinkTo
 													to={"/$locale/buyer/cart/list"}
@@ -133,7 +135,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 												>
 													<Button
 														iconEnabled={ArrowLeftIcon}
-														label={"Back to cart (link)"}
+														label={"Back to favourites (link)"}
 														ui={{
 															tone: "secondary",
 															size: "xl",
@@ -144,14 +146,14 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 										/>
 									);
 								}}
-							</withListingCartCountQuery.Suspense>
+							</withFavouriteCountQuery.Suspense>
 						);
 					}}
 					appendix={
 						<Status
 							icon={DeadEndIcon}
-							textTitle={"That's all for now - cart (title)"}
-							textMessage={"No more listings to show - cart (message)"}
+							textTitle={"That's all for now - favourite (title)"}
+							textMessage={"No more listings to show - favourite (message)"}
 							action={
 								<div
 									className={
@@ -166,7 +168,7 @@ export const Route = createFileRoute("/$locale/buyer/cart/$feedId/list")({
 									>
 										<Button
 											iconEnabled={ArrowLeftIcon}
-											label={"Back to cart (link)"}
+											label={"Back to favourites (link)"}
 											ui={{
 												tone: "secondary",
 												size: "xl",

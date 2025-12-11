@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { ListingCartFeedList } from "~/app/listing-cart-feed/ui/ListingCartFeedList";
+import { FavouriteFeedList } from "~/app/favourite-feed/ui/FavouriteFeedList";
 
 export const Route = createFileRoute("/$locale/buyer/cart/list")({
 	component() {
@@ -11,21 +11,21 @@ export const Route = createFileRoute("/$locale/buyer/cart/list")({
 
 		return (
 			<TitleContainer
-				textTitle={"Your cart (title)"}
+				textTitle={"Your favourites (title)"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer"}
+						to={"/$locale/ui/buyer"}
 						params={{
 							locale,
 						}}
 					/>
 				}
 			>
-				<ListingCartFeedList
+				<FavouriteFeedList
 					locale={locale}
 					query={{
 						sort: [

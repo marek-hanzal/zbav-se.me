@@ -12,7 +12,7 @@ import {
 	type tCategory,
 } from "@zbav-se.me/sdk/api/session";
 import {
-	apiListingCartToggle,
+	apiFavouriteToggle,
 	apiListingCollection,
 	apiListingCount,
 	apiListingCreate,
@@ -321,7 +321,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 						queue.add(async () => {
 							return listingScoreMutation.mutateAsync({
 								listingId: listing.id,
-								score: "cart",
+								score: "favourite",
 							});
 						});
 
@@ -338,7 +338,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 			},
 		});
 
-		const seedCartFlagIgnoreMutation = useMutation({
+		const seedFavouriteFlagIgnoreMutation = useMutation({
 			async mutationFn() {
 				const queue = new PQueue({
 					concurrency: 12,
@@ -357,7 +357,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 
 					Math.random() < 0.175 &&
 						queue.add(async () => {
-							return apiListingCartToggle({
+							return apiFavouriteToggle({
 								body: {
 									feedId: feed.id,
 									listingId: listing.id,
@@ -449,16 +449,16 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					</Button>
 
 					<Button
-						onClick={() => seedCartFlagIgnoreMutation.mutate()}
-						disabled={seedCartFlagIgnoreMutation.isPending}
-						loading={seedCartFlagIgnoreMutation.isPending}
+						onClick={() => seedFavouriteFlagIgnoreMutation.mutate()}
+						disabled={seedFavouriteFlagIgnoreMutation.isPending}
+						loading={seedFavouriteFlagIgnoreMutation.isPending}
 						ui={{
 							tone: "secondary",
 							theme: "dark",
 							size: "xl",
 						}}
 					>
-						Seed cart/flag/ignore
+						Seed favourite/flag/ignore
 					</Button>
 				</div>
 			</Container>
