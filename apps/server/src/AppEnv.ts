@@ -28,7 +28,6 @@ const AppEnvSchema = z.object({
 	SERVER_GEOAPIFY_TOKEN: z.string().min(1, "Geoapify API key is required"),
 	//
 	...ServerOriginSchema.shape,
-	...ServerOriginSchema.shape,
 	...ServerDatabaseSchema.shape,
 	...ServerS3Schema.shape,
 });
