@@ -1,4 +1,4 @@
-import { type uiIcon } from "@use-pico/client/icon";
+import type { uiIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container, type uiContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
