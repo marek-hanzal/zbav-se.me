@@ -12,6 +12,7 @@ import type { ListingGalleryDbSchema } from "~/app/listing-gallery/schema/Listin
 import type { ListingScoreDbSchema } from "~/app/listing-score/schema/ListingScoreDbSchema";
 import type { LocationDbSchema } from "~/app/location/schema/LocationDbSchema";
 import type { MessageDbSchema } from "~/app/message/schema/MessageDbSchema";
+import type { MessageThreadDbSchema } from "~/app/message-thread/schema/MessageThreadDbSchema";
 import type { TransactionDbSchema } from "~/app/transaction/schema/TransactionDbSchema";
 import type { TransactionGalleryDbSchema } from "~/app/transaction-gallery/schema/TransactionGalleryDbSchema";
 import type { TransactionLocationDbSchema } from "~/app/transaction-location/schema/TransactionLocationDbSchema";
@@ -35,6 +36,7 @@ export interface Database {
 	listing: ListingDbSchema.Type;
 	location: LocationDbSchema.Type;
 	message: MessageDbSchema.Type;
+	message_thread: MessageThreadDbSchema.Type;
 	transaction_gallery: TransactionGalleryDbSchema.Type;
 	transaction_location: TransactionLocationDbSchema.Type;
 	transaction_status: TransactionStatusDbSchema.Type;
