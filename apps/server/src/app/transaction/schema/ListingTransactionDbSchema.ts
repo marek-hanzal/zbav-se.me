@@ -10,6 +10,9 @@ export const TransactionDbSchema = z.object({
 	listingId: z.string().openapi({
 		description: "ID of the related listing",
 	}),
+	messageThreadId: z.string().nullish().openapi({
+		description: "ID of the message thread associated with the transaction",
+	}),
 	createdAt: z.coerce.date().openapi({
 		description: "Creation timestamp",
 		type: "string",

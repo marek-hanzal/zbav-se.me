@@ -1,7 +1,7 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { MessageTextSchema } from "~/@user/message-text/schema/MessageTextSchema";
 import type { MessageTextQuerySchema } from "~/app/message-text/schema/MessageTextQuerySchema";
-import { MessageTextSchema } from "~/app/message-text/schema/MessageTextSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 import { withMessageTextQueryBuilder } from "../db/withMessageTextQueryBuilder";

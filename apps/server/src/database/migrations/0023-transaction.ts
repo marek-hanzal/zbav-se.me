@@ -32,6 +32,7 @@ export const TransactionMigration: Migration = {
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
+			.addColumn("messageThreadId", "text")
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
@@ -59,6 +60,17 @@ export const TransactionMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addForeignKeyConstraint(
+				"transaction_[messageThreadId]_fk",
+				[
+					"messageThreadId",
+				],
+				"message_thread",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		await db.schema
@@ -71,6 +83,12 @@ export const TransactionMigration: Migration = {
 			.createIndex("transaction_[listingId]_idx")
 			.on("transaction")
 			.column("listingId")
+			.execute();
+
+		await db.schema
+			.createIndex("transaction_[messageThreadId]_idx")
+			.on("transaction")
+			.column("messageThreadId")
 			.execute();
 
 		await db.schema
