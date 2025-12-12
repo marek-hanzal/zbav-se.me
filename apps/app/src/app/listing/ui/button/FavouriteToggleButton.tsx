@@ -3,7 +3,7 @@ import { FavouriteIcon, FavouriteOffIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { withFavouriteToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import {
-	withFavouriteFeedCollectionQuery,
+	withFeedFavouriteCollectionQuery,
 	withListingFetchQuery,
 	withListingMetricsFetchQuery,
 } from "@zbav-se.me/sdk/query/user";
@@ -31,7 +31,7 @@ export const FavouriteToggleButton: FC<FavouriteToggleButton.Props> = ({
 				},
 			});
 			withListingMetricsFetchQuery.invalidate(queryClient, listingId);
-			withFavouriteFeedCollectionQuery.invalidate(queryClient);
+			withFeedFavouriteCollectionQuery.invalidate(queryClient);
 		},
 		meta: {
 			mutationId: listingId,

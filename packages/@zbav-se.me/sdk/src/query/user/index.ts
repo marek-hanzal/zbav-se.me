@@ -1,7 +1,7 @@
 export { withFavouriteCountQuery } from "./withFavouriteCountQuery";
-export { withFavouriteFeedCollectionQuery } from "./withFavouriteFeedCollectionQuery";
 export { withFeedCollectionQuery } from "./withFeedCollectionQuery";
 export { withFeedCountQuery } from "./withFeedCountQuery";
+export { withFeedFavouriteCollectionQuery } from "./withFeedFavouriteCollectionQuery";
 export { withFeedFetchQuery } from "./withFeedFetchQuery";
 export { withGalleryCollectionQuery } from "./withGalleryCollectionQuery";
 export { withGalleryCountQuery } from "./withGalleryCountQuery";
@@ -13,6 +13,5 @@ export { withListingMetricsFetchQuery } from "./withListingMetricsFetchQuery";
 export { withTransactionBuyerInfoQuery } from "./withTransactionBuyerInfoQuery";
 export { withTransactionCollectionQuery } from "./withTransactionCollectionQuery";
 export { withTransactionFetchQuery } from "./withTransactionFetchQuery";
-export { withTransactionLogCollectionQuery } from "./withTransactionLogCollectionQuery";
 export { withTransactionSellerInfoQuery } from "./withTransactionSellerInfoQuery";
 export { withUploadFetchQuery } from "./withUploadFetchQuery";

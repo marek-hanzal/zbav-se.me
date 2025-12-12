@@ -1,6 +1,6 @@
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
-import { withFavouriteFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
 import { EmptyStatus } from "~/app/favourite-feed/ui/EmptyStatus";
 import { FeedItem } from "~/app/feed/ui/FeedItem";
@@ -24,7 +24,7 @@ export const FavouriteFeedList: FC<FavouriteFeedList.Props> = ({
 			data-ui={"FavouriteFeedList"}
 			{...props}
 		>
-			<withFavouriteFeedCollectionQuery.Suspense
+			<withFeedFavouriteCollectionQuery.Suspense
 				data={query}
 				fallback={<SpinnerContainer />}
 			>
@@ -55,7 +55,7 @@ export const FavouriteFeedList: FC<FavouriteFeedList.Props> = ({
 						</Container>
 					);
 				}}
-			</withFavouriteFeedCollectionQuery.Suspense>
+			</withFeedFavouriteCollectionQuery.Suspense>
 		</Container>
 	);
 };

@@ -6,9 +6,7 @@ import type {
 	tApiTransactionStatusRejectResponse,
 	tTransactionStatusReject,
 } from "../../api/user/types.gen";
-import { withTransactionCollectionQuery } from "../../query/user/withTransactionCollectionQuery";
 import { withTransactionFetchQuery } from "../../query/user/withTransactionFetchQuery";
-import { withTransactionLogCollectionQuery } from "../../query/user/withTransactionLogCollectionQuery";
 
 export const withTransactionStatusRejectMutation = withMutation<
 	tTransactionStatusReject,
@@ -31,8 +29,6 @@ export const withTransactionStatusRejectMutation = withMutation<
 		);
 	},
 	invalidate: [
-		withTransactionLogCollectionQuery,
 		withTransactionFetchQuery,
-		withTransactionCollectionQuery,
 	],
 });

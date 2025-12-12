@@ -5,14 +5,11 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type {
 	tGalleryItem,
 	tTransaction,
-	tTransactionLogQuery,
+	tTransactionQuery,
 	tTransactionStatusEnum,
 	tUserSideEnum,
 } from "@zbav-se.me/sdk/api/user";
-import {
-	withListingFetchQuery,
-	withTransactionLogCollectionQuery,
-} from "@zbav-se.me/sdk/query/user";
+import { withListingFetchQuery, withTransactionCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useId, useLayoutEffect, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
@@ -25,7 +22,7 @@ export namespace TransactionLogList {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		side: tUserSideEnum;
-		query: tTransactionLogQuery;
+		query: tTransactionQuery;
 		transaction: tTransaction;
 		noHero?: boolean;
 	}
@@ -51,7 +48,7 @@ export const TransactionLogList: FC<TransactionLogList.Props> = ({
 	const containerRef = useRef<HTMLDivElement>(null);
 	const contentRef = useRef<HTMLDivElement>(null);
 
-	const transactionLogCollectionQuery = withTransactionLogCollectionQuery.useSuspenseQuery(
+	const transactionLogCollectionQuery = withTransactionCollectionQuery.useSuspenseQuery(
 		{
 			...query,
 			cursor: {

@@ -6,7 +6,7 @@ import {
 	zTransactionMessage,
 	zTransactionStatus,
 } from "@zbav-se.me/sdk/api/user";
-import { withTransactionMessageCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withMessageTextCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ChatInput } from "@zbav-se.me/ui/chat";
 import { type FC, useState } from "react";
 import { match } from "ts-pattern";
@@ -37,7 +37,7 @@ export const TransactionChat: FC<TransactionChat.Props> = ({
 		actor: transactionLog.side,
 	});
 
-	const messageCreateMutation = withTransactionMessageCreateMutation.useMutation();
+	const messageCreateMutation = withMessageTextCreateMutation.useMutation();
 
 	return (
 		<ChatInput

@@ -6,9 +6,6 @@ import type {
 	tApiTransactionStatusAcceptResponse,
 	tTransactionStatusAccept,
 } from "../../api/user/types.gen";
-import { withTransactionCollectionQuery } from "../../query/user/withTransactionCollectionQuery";
-import { withTransactionFetchQuery } from "../../query/user/withTransactionFetchQuery";
-import { withTransactionLogCollectionQuery } from "../../query/user/withTransactionLogCollectionQuery";
 
 export const withTransactionStatusAcceptMutation = withMutation<
 	tTransactionStatusAccept,
@@ -30,9 +27,5 @@ export const withTransactionStatusAcceptMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withTransactionLogCollectionQuery,
-		withTransactionFetchQuery,
-		withTransactionCollectionQuery,
-	],
+	invalidate: [],
 });
