@@ -98,40 +98,58 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 									textTitle: translator.text("First feed (title)"),
 								}}
 							>
-								<Tx
-									data-ui="FeedListContainer-first-feed-hint"
-									label={"First feed (hint)"}
+								<Container
 									ui={{
-										text: "sm",
-										tone: "subtle",
+										width: "full",
+										height: "full",
+										flow: "vertical",
+										items: "center",
+										justify: "center",
+										gap: "default",
 									}}
-								/>
-							</FeedName>
+								>
+									<Tx
+										data-ui="FeedListContainer-first-feed-hint"
+										label={"First feed (hint)"}
+										ui={{
+											text: "sm",
+											tone: "subtle",
+										}}
+									/>
 
-							<Button
-								label={"Feed - save (button)"}
-								loading={feedCreateMutation.isPending}
-								disabled={!change || !name || feedCreateMutation.isPending}
-								onClick={() => {
-									toast.promise(
-										feedCreateMutation.mutateAsync({
-											name,
-											query: {
-												where: {
-													withOwn: false,
+									<Button
+										label={"Feed - save (button)"}
+										loading={feedCreateMutation.isPending}
+										disabled={!change || !name || feedCreateMutation.isPending}
+										onClick={() => {
+											toast.promise(
+												feedCreateMutation.mutateAsync({
+													name,
+													query: {
+														where: {
+															withOwn: false,
+														},
+													},
+												}),
+												{
+													loading: translator.text("Loading... (toast)"),
+													success: translator.text(
+														"First feed created (toast)",
+													),
+													error: translator.text(
+														"Error creating first feed (toast)",
+													),
 												},
-											},
-										}),
-										{
-											loading: translator.text("Loading... (toast)"),
-											success: translator.text("First feed created (toast)"),
-											error: translator.text(
-												"Error creating first feed (toast)",
-											),
-										},
-									);
-								}}
-							/>
+											);
+										}}
+										ui={{
+											text: "md",
+											width: "content",
+											size: "lg",
+										}}
+									/>
+								</Container>
+							</FeedName>
 						</Container>
 					);
 				}

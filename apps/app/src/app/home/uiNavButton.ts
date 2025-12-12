@@ -19,8 +19,8 @@ export const uiNavButton = ({ ui, className }: uiNavButton.Props) => {
 		ui: {
 			tone: "neutral",
 			theme: "light",
-			text: "2xl",
-			square: "xl",
+			text: "xl",
+			square: "lg",
 			color: "lead",
 			round: "xl",
 			flow: "horizontal",
