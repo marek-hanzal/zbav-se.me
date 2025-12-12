@@ -2,7 +2,6 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import { transactionFetchFx } from "~/@user/transaction/fx/transactionFetchFx";
 import type { TransactionPatchSchema } from "~/@user/transaction/schema/TransactionPatchSchema";
-import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 import { TransactionContextFx } from "./TransactionContextFx";

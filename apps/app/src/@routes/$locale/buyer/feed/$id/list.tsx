@@ -27,7 +27,12 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 		 * This will force update "updatedAt" field, so we'll mark "this" feed as the "last visited" one.
 		 */
 		await withFeedPatchMutation.mutate(queryClient, {
-			id,
+			patch: {},
+			query: {
+				where: {
+					id,
+				},
+			},
 		});
 	},
 	pendingComponent() {
