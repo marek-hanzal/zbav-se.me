@@ -91,7 +91,7 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/buyer/feed/select"
+					to="/$locale/ui/buyer/feed/select"
 					params={{
 						locale,
 					}}

@@ -4,7 +4,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { FeedListContainer } from "~/app/feed/ui/FeedListContainer";
 
-export const Route = createFileRoute("/$locale/buyer/feed/select")({
+export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 	validateSearch: z.object({
 		scrollToId: z.string().optional(),
 	}),
@@ -23,6 +23,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 				}}
 			>
 				<FeedListContainer
+					data-ui={"/buyer/feed/select[FeedListContainer]"}
 					locale={locale}
 					query={{
 						cursor: {
@@ -44,6 +45,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 					linkTo={{
 						header: ({ feedId, children }) => (
 							<LinkTo
+								data-ui={"/buyer/feed/select-[FeedListContainer]-[LinkTo.header]"}
 								to={"/$locale/buyer/feed/$id/list"}
 								params={{
 									locale,
