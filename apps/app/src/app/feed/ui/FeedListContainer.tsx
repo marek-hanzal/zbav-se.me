@@ -10,7 +10,7 @@ import { toast } from "sonner";
 import type { FeedItem } from "~/app/feed/ui/FeedItem";
 import { FeedCreateButton } from "./FeedCreateButton";
 import { FeedList } from "./FeedListContainer/FeedList";
-import { FeedNameContainer } from "./FeedNameContainer";
+import { FeedName } from "./FeedName";
 
 export namespace FeedListContainer {
 	export interface Props extends Container.Props {
@@ -66,7 +66,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 								gap: "default",
 							}}
 						>
-							<FeedNameContainer
+							<FeedName
 								value={name}
 								ui={{
 									height: "full",
@@ -106,7 +106,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 										tone: "subtle",
 									}}
 								/>
-							</FeedNameContainer>
+							</FeedName>
 
 							<Button
 								label={"Feed - save (button)"}

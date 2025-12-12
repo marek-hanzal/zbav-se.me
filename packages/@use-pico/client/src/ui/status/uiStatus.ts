@@ -32,9 +32,11 @@ export const uiStatus = ({ ui, className }: uiStatus.Props) => {
 	return coolUi<uiStatus.Ui>({
 		name: "Status",
 		ui: {
-            flow:'vertical',
-			color: "text",
-            gap:'default',
+			flow: "vertical",
+			color: "lead",
+			gap: "default",
+			text: "3xl",
+			width: "full",
 			...ui,
 		},
 		className,

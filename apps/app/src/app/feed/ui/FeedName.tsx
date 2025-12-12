@@ -5,7 +5,7 @@ import { TextInput } from "@use-pico/client/ui/text-input";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import type { FC } from "react";
 
-export namespace FeedNameContainer {
+export namespace FeedName {
 	export interface Props extends Omit<Container.Props, "onSubmit" | "onChange"> {
 		value: string;
 		onChange(value: string): void;
@@ -14,7 +14,7 @@ export namespace FeedNameContainer {
 	}
 }
 
-export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
+export const FeedName: FC<FeedName.Props> = ({
 	value,
 	onChange,
 	onSubmit,
@@ -25,15 +25,17 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui={"FeedNameContainer"}
+			data-ui={"FeedName[Container]"}
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
+				width: "full",
 				...ui,
 			}}
 			{...props}
 		>
 			<Status
+				data-ui={"FeedName[Status]"}
 				icon={FeedIcon}
 				textTitle={"Feed name (title)"}
 				action={
@@ -55,6 +57,11 @@ export const FeedNameContainer: FC<FeedNameContainer.Props> = ({
 						)}
 					</FormField>
 				}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					inner: "4xl",
+				}}
 				{...statusProps}
 			>
 				{children}

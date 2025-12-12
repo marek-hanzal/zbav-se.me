@@ -8,7 +8,7 @@ import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import { FeedNameContainer } from "./FeedNameContainer";
+import { FeedName } from "./FeedName";
 
 export namespace FeedNameBadge {
 	export interface Props {
@@ -61,7 +61,7 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 						gap: "default",
 					}}
 				>
-					<FeedNameContainer
+					<FeedName
 						value={patch.patch.name ?? ""}
 						ui={{
 							height: "full",

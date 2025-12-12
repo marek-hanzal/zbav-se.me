@@ -7,7 +7,7 @@ import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import { FeedNameContainer } from "./FeedNameContainer";
+import { FeedName } from "./FeedName";
 
 export namespace FeedCreateButton {
 	export interface Props extends Button.Props {
@@ -62,7 +62,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ui, ...
 						gap: "default",
 					}}
 				>
-					<FeedNameContainer
+					<FeedName
 						value={name}
 						onChange={(value) => {
 							setChange(true);
