@@ -13,6 +13,15 @@ export namespace FeedFavouriteList {
 	}
 }
 
+/**
+ * Renders a list of feed items based on favourite items a user has.
+ *
+ * This component fetches the user's favourite feed items using the provided query
+ * and displays them as a list of {@link FeedItem} components. If no favourites
+ * are found, it displays an empty state.
+ *
+ * @see {@link FeedItem} - The component used to render individual feed items
+ */
 export const FeedFavouriteList: FC<FeedFavouriteList.Props> = ({
 	locale,
 	query,
@@ -43,6 +52,7 @@ export const FeedFavouriteList: FC<FeedFavouriteList.Props> = ({
 						>
 							{data.data.map((feed) => (
 								<FeedItem
+									data-ui={"FeedFavouriteList-[FeedItem]"}
 									key={feed.id}
 									locale={locale}
 									feed={feed}

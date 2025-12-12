@@ -24,7 +24,7 @@ export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer/favourite/list"}
+						to={"/$locale/ui/buyer/favourite/list"}
 						params={{
 							locale,
 						}}
@@ -128,7 +128,7 @@ export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 											textTitle={"Empty favourite category (title)"}
 											action={
 												<LinkTo
-													to={"/$locale/buyer/favourite/list"}
+													to={"/$locale/ui/buyer/favourite/list"}
 													params={{
 														locale,
 													}}
@@ -161,7 +161,7 @@ export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 									}
 								>
 									<LinkTo
-										to={"/$locale/buyer/favourite/list"}
+										to={"/$locale/ui/buyer/favourite/list"}
 										params={{
 											locale,
 										}}

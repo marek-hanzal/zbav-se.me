@@ -109,12 +109,12 @@ export const BuyerMenu = ({ locale, ui, ...props }: BuyerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/buyer/favourite/list"
+					to="/$locale/ui/buyer/favourite/list"
 					params={{
 						locale,
 					}}
 				>
-					<Tx label="Favourite (label)" />
+					<Tx label="Favourites (label)" />
 				</LinkTo>
 
 				<LinkTo

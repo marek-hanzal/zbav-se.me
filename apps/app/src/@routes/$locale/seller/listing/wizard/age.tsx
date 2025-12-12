@@ -6,7 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { AgeContainer } from "~/app/age/ui/AgeContainer";
+import { AgeSelection } from "~/app/age/ui/AgeSelection";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
@@ -90,7 +90,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 					</LinkTo>
 				}
 			>
-				<AgeContainer selection={selection} />
+				<AgeSelection selection={selection} />
 			</TitleContainer>
 		);
 	},

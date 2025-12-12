@@ -8,7 +8,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
-import { AgeContainer } from "~/app/age/ui/AgeContainer";
+import { AgeSelection } from "~/app/age/ui/AgeSelection";
 
 export namespace FeedAgeValueList {
 	export interface Props {
@@ -74,7 +74,7 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 						gap: "default",
 					}}
 				>
-					<AgeContainer selection={selection} />
+					<AgeSelection selection={selection} />
 
 					<Button
 						label={"Feed - save (button)"}

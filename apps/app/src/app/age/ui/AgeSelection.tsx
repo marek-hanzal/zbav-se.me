@@ -3,16 +3,16 @@ import { Container } from "@use-pico/client/ui/container";
 import { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 
-export namespace AgeContainer {
+export namespace AgeSelection {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<Rating.RatingItem>;
 	}
 }
 
-export const AgeContainer: FC<AgeContainer.Props> = ({ selection, ui, ...props }) => {
+export const AgeSelection: FC<AgeSelection.Props> = ({ selection, ui, ...props }) => {
 	return (
 		<Container
-			data-ui="AgeContainer-root"
+			data-ui="AgeSelection[Container]"
 			ui={{
 				scroll: "vertical",
 				height: "full",

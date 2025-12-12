@@ -6,8 +6,10 @@ export namespace uiStatus {
 		theme?: CoolUi.Theme;
 		tone?: CoolUi.Tone;
 		//
+		flow?: CoolUi.Flow;
 		width?: CoolUi.Width;
 		height?: CoolUi.Height;
+		gap?: CoolUi.Gap;
 		//
 		color?: CoolUi.Color;
 		text?: CoolUi.Text;
@@ -30,7 +32,9 @@ export const uiStatus = ({ ui, className }: uiStatus.Props) => {
 	return coolUi<uiStatus.Ui>({
 		name: "Status",
 		ui: {
+            flow:'vertical',
 			color: "text",
+            gap:'default',
 			...ui,
 		},
 		className,

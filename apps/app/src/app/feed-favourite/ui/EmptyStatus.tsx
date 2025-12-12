@@ -23,57 +23,42 @@ export const EmptyStatus: FC<EmptyStatus.Props> = ({ locale, ...props }) => {
 			}}
 		>
 			<Status
+				data-ui={"EmptyStatus-[Status]"}
 				icon={FavouriteIcon}
 				textTitle={"No items in favourites (title)"}
+				textMessage={"No items in favourites (message)"}
 				ui={{
+					tone: "brand",
+					theme: "light",
+					color: "lead",
 					text: "4xl",
+					inner: "4xl",
 				}}
+				className={[
+					"text-center",
+				]}
 				action={
-					<>
-						<LinkTo
-							{...uiButton({
-								ui: {
-									tone: "link",
-									theme: "light",
-									size: "lg",
-									justify: "space-between",
-									width: "full",
-									text: "lg",
-								},
-								className: [],
-							})}
-							icon={ArrowRightIcon}
-							iconPosition={"right"}
-							to={"/$locale/buyer/feed/default"}
-							params={{
-								locale,
-							}}
-						>
-							<Tx label={"Go to listings (button)"} />
-						</LinkTo>
-
-						<LinkTo
-							{...uiButton({
-								ui: {
-									tone: "link",
-									theme: "light",
-									size: "lg",
-									justify: "space-between",
-									width: "full",
-									text: "lg",
-								},
-								className: [],
-							})}
-							icon={ArrowRightIcon}
-							iconPosition={"right"}
-							to={"/$locale/buyer/feed/select"}
-							params={{
-								locale,
-							}}
-						>
-							<Tx label={"Go home (button)"} />
-						</LinkTo>
-					</>
+					<LinkTo
+						{...uiButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+								size: "lg",
+								justify: "space-between",
+								width: "full",
+								text: "lg",
+							},
+							className: [],
+						})}
+						icon={ArrowRightIcon}
+						iconPosition={"right"}
+						to={"/$locale/buyer/feed/default"}
+						params={{
+							locale,
+						}}
+					>
+						<Tx label={"Go to listings (button)"} />
+					</LinkTo>
 				}
 				{...props}
 			/>

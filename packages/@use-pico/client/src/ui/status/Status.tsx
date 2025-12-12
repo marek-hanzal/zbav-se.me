@@ -52,7 +52,7 @@ export const Status: FC<Status.Props> = ({
 			{...props}
 		>
 			<Container
-				data-ui="Status-[Container-wrapper]"
+				data-ui="Status-[Container.wrapper]"
 				ui={{
 					layout: "vertical-flex",
 					items: "center",
@@ -66,33 +66,42 @@ export const Status: FC<Status.Props> = ({
 					{...iconProps}
 				/>
 
-				<Tx
-					data-ui="Status-[Tx-title]"
-					label={textTitle}
+				<Container
+					data-ui="Status-[Container.title-wrapper]"
 					ui={{
-						font: "semibold",
-						display: "block",
-						wrap: "wrap",
-						text: "lg",
+						layout: "vertical-flex",
+						items: "center",
+						width: "full",
 					}}
-					{...titleProps}
-				/>
+				>
+					<Tx
+						data-ui="Status-[Tx-title]"
+						label={textTitle}
+						ui={{
+							font: "semibold",
+							display: "block",
+							wrap: "wrap",
+							text: "lg",
+						}}
+						{...titleProps}
+					/>
 
-				<Tx
-					data-ui="Status-[Tx-message]"
-					label={textMessage}
-					ui={{
-						display: "block",
-						wrap: "wrap",
-						text: "md",
-					}}
-					{...messageProps}
-				/>
+					<Tx
+						data-ui="Status-[Tx-message]"
+						label={textMessage}
+						ui={{
+							display: "block",
+							wrap: "wrap",
+							text: "md",
+						}}
+						{...messageProps}
+					/>
+				</Container>
 			</Container>
 
 			{action && (
 				<Container
-					data-ui="Status-[Container-action]"
+					data-ui="Status-[Container.action]"
 					ui={{
 						layout: "vertical-flex",
 						items: "center",

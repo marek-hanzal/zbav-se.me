@@ -1,31 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { FeedFavouriteList } from "~/app/feed-favourite/ui/FeedFavouriteList";
 
-export const Route = createFileRoute("/$locale/buyer/favourite/list")({
+export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 	component() {
 		const { locale } = Route.useParams();
 
 		return (
-			<TitleContainer
-				textTitle={"Your favourites (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/ui/buyer"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
+			<TitleContainer textTitle={"Your favourites (title)"}>
 				<FeedFavouriteList
+					data-ui={"/buyer/favourite/list[FeedFavouriteList]"}
 					locale={locale}
 					query={{
 						sort: [
@@ -38,6 +23,9 @@ export const Route = createFileRoute("/$locale/buyer/favourite/list")({
 					linkTo={{
 						header: ({ feedId, children }) => (
 							<LinkTo
+								data-ui={
+									"/buyer/favourite/list-[FeedFavouriteList]-[LinkTo.header]"
+								}
 								to={"/$locale/buyer/favourite/$feedId/list"}
 								params={{
 									locale,
