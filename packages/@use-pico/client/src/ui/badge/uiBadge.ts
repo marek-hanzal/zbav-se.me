@@ -13,6 +13,11 @@ export namespace uiBadge {
 		width?: CoolUi.Width;
 		inner?: CoolUi.Inner;
 		//
+		flow?: CoolUi.Flow;
+		items?: CoolUi.Items;
+		justify?: CoolUi.Justify;
+		gap?: CoolUi.Gap;
+		//
 		position?: CoolUi.Position;
 		//
 		snapTo?: CoolUi.SnapTo;

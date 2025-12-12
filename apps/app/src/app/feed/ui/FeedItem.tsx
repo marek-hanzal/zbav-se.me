@@ -56,7 +56,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 
 	return (
 		<Container
-			data-ui={"FeedItem[Badge]"}
+			data-ui={"FeedItem[Container]"}
 			data-id={feed.id}
 			className={tvc([
 				"h-48",
@@ -85,7 +85,15 @@ export const FeedItem: FC<FeedItem.Props> = ({
 						className="w-full"
 					/>
 				) : (
-					<div className="w-full h-48" />
+					<Container
+						ui={{
+							tone: "subtle",
+							theme: "light",
+							width: "full",
+							background: "default",
+						}}
+						className={"h-48"}
+					/>
 				),
 			})}
 
@@ -94,6 +102,9 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				ui={{
 					round: "md",
 					tone: "secondary",
+					width: "content",
+					inner: "default",
+					snapTo: "top-center",
 				}}
 			>
 				<Tx
@@ -129,6 +140,9 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				locale={locale}
 				count={count}
 				query={feed.query}
+				ui={{
+					snapTo: "bottom-right",
+				}}
 			/>
 		</Container>
 	);

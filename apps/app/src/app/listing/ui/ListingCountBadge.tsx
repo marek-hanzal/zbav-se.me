@@ -25,20 +25,25 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 }) => {
 	return (
 		<Badge
-			className={[
-				"shrink-0 border-none flex-row items-center gap-1",
-				className,
-			]}
 			ui={{
+				flow: "horizontal",
+				items: "center",
+				justify: "center",
 				size: "md",
 				round: "default",
 				tone: "secondary",
 				theme: "light",
+				gap: "default",
 				...ui,
 			}}
 			{...props}
 		>
-			<Icon icon={ListingIcon} />
+			<Icon
+				icon={ListingIcon}
+				ui={{
+					text: "xl",
+				}}
+			/>
 
 			<Typo
 				label={
@@ -53,17 +58,10 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 							fallback={<Icon icon={SpinnerIcon} />}
 						>
 							{({ data }) => {
-								return (
-									<Typo
-										label={toLocaleNumber({
-											locale,
-											number: data.filter,
-										})}
-										ui={{
-											font: "bold",
-										}}
-									/>
-								);
+								return `${toLocaleNumber({
+									locale,
+									number: data.filter,
+								})}x`;
 							}}
 						</withListingCountQuery.Suspense>
 					)

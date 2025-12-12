@@ -31,6 +31,9 @@ export const FeedList: FC<FeedList.Props> = ({
 	const feedRootId = useId();
 	const scrollableRef = useRef<HTMLDivElement>(null);
 
+	/**
+	 * This is intentional to trigger parent suspense
+	 */
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
 	const scrollTo = useScrollTo(scrollableRef);
 
@@ -49,21 +52,22 @@ export const FeedList: FC<FeedList.Props> = ({
 
 	return (
 		<Container
-			data-ui="FeedListContainer-FeedList"
+			data-ui="FeedList[Container]"
 			ui={{
 				position: "relative",
+				height: "full",
 			}}
 		>
 			<Fade scrollableRef={scrollableRef} />
 
 			<Container
-				data-ui="FeedListContainer-FeedList-content"
+				data-ui="FeedList-[Container.content]"
 				ref={scrollableRef}
 				ui={{
 					layout: "vertical-flex",
 					scroll: "vertical",
 					gap: "default",
-					position: "relative",
+					height: "full",
 				}}
 				{...props}
 			>
