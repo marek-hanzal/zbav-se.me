@@ -2,11 +2,10 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { translator } from "@use-pico/common/translator";
-import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
+import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
 
 export const Route = createFileRoute("/$locale/buyer/feed/default")({
 	/**
@@ -36,35 +35,8 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 		 * No default? Ok, let's create default one
 		 */
 		if (!feed) {
-			feed = await withFeedCreateMutation.mutate(queryClient, {
-				/**
-				 * Translated feed name
-				 */
-				name: translator.text("Feed name (default)"),
-				query: {
-					where: {
-						withOwn: false,
-						withIgnored: false,
-					},
-					sort: [
-						{
-							field: "createdAt",
-							direction: "desc",
-						},
-						{
-							field: "price",
-							direction: "asc",
-						},
-						{
-							field: "condition",
-							direction: "desc",
-						},
-						{
-							field: "age",
-							direction: "desc",
-						},
-					],
-				},
+			feed = await feedCreateDefault({
+				queryClient,
 			});
 		}
 
