@@ -82,14 +82,21 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
 							feedPatchMutation.mutate({
-								...feed,
+								patch: {
+									...feed,
+									query: {
+										...feed.query,
+										filter: {
+											...feed.query?.filter,
+											ageIn: selection.optional
+												.multiId()
+												.map((id) => Number.parseInt(id, 10)),
+										},
+									},
+								},
 								query: {
-									...feed.query,
-									filter: {
-										...feed.query?.filter,
-										ageIn: selection.optional
-											.multiId()
-											.map((id) => Number.parseInt(id, 10)),
+									where: {
+										id: feed.id,
 									},
 								},
 							});

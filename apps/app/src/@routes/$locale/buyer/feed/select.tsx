@@ -1,8 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import z from "zod";
 import { FeedListContainer } from "~/app/feed/ui/FeedListContainer";
 
@@ -20,18 +18,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/select")({
 			<TitleContainer
 				data-ui={"FeedSelect"}
 				textTitle={"Feed select (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/buyer"}
-						params={{
-							locale,
-						}}
-					/>
-				}
 				ui={{
 					layout: "vertical-header-content",
 				}}

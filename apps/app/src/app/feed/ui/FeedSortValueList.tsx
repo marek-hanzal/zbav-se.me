@@ -81,10 +81,17 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
 							feedPatchMutation.mutate({
-								...feed,
+								patch: {
+									...feed,
+									query: {
+										...feed.query,
+										sort,
+									},
+								},
 								query: {
-									...feed.query,
-									sort,
+									where: {
+										id: feed.id,
+									},
 								},
 							});
 						}}

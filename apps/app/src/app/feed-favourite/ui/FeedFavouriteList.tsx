@@ -2,10 +2,10 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedFavouriteCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import type { FC } from "react";
-import { EmptyStatus } from "~/app/favourite-feed/ui/EmptyStatus";
 import { FeedItem } from "~/app/feed/ui/FeedItem";
+import { EmptyStatus } from "~/app/feed-favourite/ui/EmptyStatus";
 
-export namespace FavouriteFeedList {
+export namespace FeedFavouriteList {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
@@ -13,7 +13,7 @@ export namespace FavouriteFeedList {
 	}
 }
 
-export const FavouriteFeedList: FC<FavouriteFeedList.Props> = ({
+export const FeedFavouriteList: FC<FeedFavouriteList.Props> = ({
 	locale,
 	query,
 	linkTo,
@@ -21,7 +21,7 @@ export const FavouriteFeedList: FC<FavouriteFeedList.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui={"FavouriteFeedList"}
+			data-ui={"FeedFavouriteList[Container]"}
 			{...props}
 		>
 			<withFeedFavouriteCollectionQuery.Suspense
@@ -35,7 +35,7 @@ export const FavouriteFeedList: FC<FavouriteFeedList.Props> = ({
 
 					return (
 						<Container
-							data-ui={"FavouriteFeedList-content"}
+							data-ui={"FeedFavouriteList-[Container.content]"}
 							ui={{
 								layout: "vertical-flex",
 								gap: "default",

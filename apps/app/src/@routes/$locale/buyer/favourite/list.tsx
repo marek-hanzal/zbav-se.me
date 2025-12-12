@@ -3,7 +3,7 @@ import { ArrowLeftIcon } from "@use-pico/client/icon";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { FavouriteFeedList } from "~/app/favourite-feed/ui/FavouriteFeedList";
+import { FeedFavouriteList } from "~/app/feed-favourite/ui/FeedFavouriteList";
 
 export const Route = createFileRoute("/$locale/buyer/favourite/list")({
 	component() {
@@ -25,7 +25,7 @@ export const Route = createFileRoute("/$locale/buyer/favourite/list")({
 					/>
 				}
 			>
-				<FavouriteFeedList
+				<FeedFavouriteList
 					locale={locale}
 					query={{
 						sort: [

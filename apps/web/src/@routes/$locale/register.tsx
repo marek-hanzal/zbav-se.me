@@ -227,6 +227,8 @@ export const Route = createFileRoute("/$locale/register")({
 											size: "xl",
 										}}
 									>
+										[Heslo neprodávám, nesdílím, nečtu. Mám svých problémů
+										dost.]
 										{registerMutation.isPending ? (
 											<Tx label={"Please wait..."} />
 										) : (
