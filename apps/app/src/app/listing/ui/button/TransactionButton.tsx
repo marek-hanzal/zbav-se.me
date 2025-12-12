@@ -5,8 +5,6 @@ import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense, useState } from "react";
-import { TransactionCreateButton } from "~/app/transaction/ui/button/TransactionCreateButton";
-import { TransactionLogList } from "~/app/transaction-log/ui/TransactionLogList";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
@@ -65,26 +63,7 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 							fallback={<SpinnerContainer />}
 						>
 							{({ data }) => {
-								return (
-									<TransactionLogList
-										_suspense={"I know"}
-										noHero
-										locale={locale}
-										side="buyer"
-										transaction={data}
-										query={{
-											where: {
-												transactionId: data.id,
-											},
-											sort: [
-												{
-													field: "createdAt",
-													direction: "asc",
-												},
-											],
-										}}
-									/>
-								);
+								return "messages here";
 							}}
 						</withTransactionFetchQuery.Suspense>
 					</Suspense>
@@ -93,14 +72,5 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 		);
 	}
 
-	return (
-		<TransactionCreateButton
-			listing={listing}
-			ui={{
-				tone: "primary",
-				...ui,
-			}}
-			{...props}
-		/>
-	);
+	return "TransactionCreateButton";
 };

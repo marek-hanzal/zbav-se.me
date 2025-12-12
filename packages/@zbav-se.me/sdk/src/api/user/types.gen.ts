@@ -1760,9 +1760,7 @@ export type tFeedPatch = {
          * Name of the feed
          */
         name?: string;
-        query?: {
-            [key: string]: unknown;
-        };
+        query?: tListingQuery;
     };
     query: tFeedQuery;
 };

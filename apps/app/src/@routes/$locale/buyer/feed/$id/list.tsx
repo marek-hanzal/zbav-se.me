@@ -74,7 +74,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 						})}
 						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
 						icon={ArrowLeftIcon}
-						to={"/$locale/buyer"}
+						to={"/$locale/ui/buyer"}
 						params={{
 							locale,
 						}}
@@ -237,7 +237,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 														</FeedSetupButton>
 
 														<LinkTo
-															to={"/$locale/buyer"}
+															to={"/$locale/ui/buyer"}
 															params={{
 																locale,
 															}}

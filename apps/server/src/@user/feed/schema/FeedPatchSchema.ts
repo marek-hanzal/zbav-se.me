@@ -1,12 +1,14 @@
 import { z } from "@hono/zod-openapi";
 import { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
 import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { ListingQuerySchema } from "~/app/listing/schema/ListingQuerySchema";
 
 export const FeedPatchSchema = z
 	.object({
 		patch: z
 			.object({
 				...FeedDbSchema.shape,
+				query: ListingQuerySchema,
 			})
 			.omit({
 				userId: true,

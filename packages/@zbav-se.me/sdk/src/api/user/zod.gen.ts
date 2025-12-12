@@ -1957,7 +1957,7 @@ export const zFeedPatch = z.object({
         name: z.optional(z.string().register(z.globalRegistry, {
             description: 'Name of the feed'
         })),
-        query: z.optional(z.record(z.string(), z.unknown()))
+        query: z.optional(zListingQuery)
     }).register(z.globalRegistry, {
         description: 'Fields to update (all optional)'
     }),

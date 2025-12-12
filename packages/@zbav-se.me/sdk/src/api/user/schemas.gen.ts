@@ -2256,9 +2256,7 @@ export const sFeedPatch = {
                     type: 'string'
                 },
                 query: {
-                    type: 'object',
-                    properties: {},
-                    additionalProperties: {}
+                    $ref: '#/components/schemas/ListingQuery'
                 }
             }
         },

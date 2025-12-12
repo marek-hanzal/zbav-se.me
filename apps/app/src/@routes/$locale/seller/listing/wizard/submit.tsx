@@ -122,7 +122,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 							},
 							onClick() {
 								navigate({
-									to: "/$locale/seller",
+									to: "/$locale/ui/seller",
 								});
 							},
 						}}

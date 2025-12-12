@@ -19,7 +19,14 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
-	const [patch, setPatch] = useState<tFeedPatch>(feed);
+	const [patch, setPatch] = useState<tFeedPatch>({
+		patch: feed,
+		query: {
+			where: {
+				id: feed.id,
+			},
+		},
+	});
 
 	const feedPatchMutation = withFeedPatchMutation.useMutation({
 		onSettled() {
@@ -31,7 +38,7 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 	return (
 		<>
 			<LocationBadgeValue
-				locationId={patch.locationId}
+				locationId={patch.patch.locationId}
 				textLabel={"Feed location (label)"}
 				textValue={"Feed location not selected"}
 				action={<Icon icon={EditIcon} />}
@@ -60,7 +67,7 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 				>
 					<LocationSelection
 						locale={locale}
-						value={patch.locationId}
+						value={patch.patch.locationId}
 						onChange={(value) => {
 							setChange(true);
 							setPatch((prev) => ({
@@ -71,14 +78,21 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 						onLocation={({ lon, lat }) => {
 							setChange(true);
 							setPatch((prev) => ({
-								...prev,
-								query: {
-									...prev.query,
-									meta: {
-										latLon: {
-											lon,
-											lat,
+								patch: {
+									...prev.patch,
+									query: {
+										...prev.patch.query,
+										meta: {
+											latLon: {
+												lon,
+												lat,
+											},
 										},
+									},
+								},
+								query: {
+									where: {
+										id: feed.id,
 									},
 								},
 							}));

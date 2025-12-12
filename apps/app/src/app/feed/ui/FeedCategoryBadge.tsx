@@ -79,12 +79,19 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
 							feedPatchMutation.mutate({
-								...feed,
+								patch: {
+									...feed,
+									query: {
+										...feed.query,
+										filter: {
+											...feed.query?.filter,
+											categoryIdIn: selection.optional.multiId(),
+										},
+									},
+								},
 								query: {
-									...feed.query,
-									filter: {
-										...feed.query?.filter,
-										categoryIdIn: selection.optional.multiId(),
+									where: {
+										id: feed.id,
 									},
 								},
 							});

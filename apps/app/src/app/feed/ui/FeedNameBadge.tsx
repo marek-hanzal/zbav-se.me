@@ -20,7 +20,14 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
-	const [patch, setPatch] = useState<tFeedPatch>(feed);
+	const [patch, setPatch] = useState<tFeedPatch>({
+		patch: feed,
+		query: {
+			where: {
+				id: feed.id,
+			},
+		},
+	});
 
 	const feedPatchMutation = withFeedPatchMutation.useMutation({
 		onSettled() {
@@ -55,7 +62,7 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 					}}
 				>
 					<FeedNameContainer
-						value={patch.name ?? ""}
+						value={patch.patch.name ?? ""}
 						ui={{
 							height: "full",
 						}}

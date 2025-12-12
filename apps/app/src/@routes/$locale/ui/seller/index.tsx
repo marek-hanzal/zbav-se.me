@@ -11,7 +11,9 @@ export const Route = createFileRoute("/$locale/ui/seller/")({
 
 		useEffect(() => {
 			mutation.mutate({
-				side: "seller",
+				patch: {
+					side: "seller",
+				},
 			});
 		}, []);
 
