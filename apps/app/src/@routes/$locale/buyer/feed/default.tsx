@@ -46,6 +46,24 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 						withOwn: false,
 						withIgnored: false,
 					},
+					sort: [
+						{
+							field: "createdAt",
+							direction: "desc",
+						},
+						{
+							field: "price",
+							direction: "asc",
+						},
+						{
+							field: "condition",
+							direction: "desc",
+						},
+						{
+							field: "age",
+							direction: "desc",
+						},
+					],
 				},
 			});
 		}
