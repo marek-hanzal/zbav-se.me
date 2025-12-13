@@ -11,7 +11,7 @@ import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useRef, useState } from "react";
 import z from "zod";
-import { FeedSetupButton } from "~/app/feed/ui/button/SetupButton";
+import { SetupButton } from "~/app/feed/ui/button/SetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
@@ -92,7 +92,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 					{({ data: feed }) => {
 						return (
 							<>
-								<FeedSetupButton
+								<SetupButton
 									data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
 									locale={locale}
 									state={{
@@ -141,7 +141,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 											}}
 										/>
 									</LinkTo>
-								</FeedSetupButton>
+								</SetupButton>
 
 								<ListingListContainer
 									data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
@@ -194,7 +194,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 												textTitle={"That's all for now (title)"}
 												action={
 													<>
-														<FeedSetupButton
+														<SetupButton
 															locale={locale}
 															feed={feed}
 															defaultOpen={false}
@@ -234,7 +234,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 																	}}
 																/>
 															</LinkTo>
-														</FeedSetupButton>
+														</SetupButton>
 
 														<LinkTo
 															to={"/$locale/ui/buyer"}

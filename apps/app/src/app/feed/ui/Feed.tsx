@@ -1,6 +1,6 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, type LabelValue } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
@@ -21,6 +21,10 @@ import { NameValue } from "./value/NameValue";
 import { SortValue } from "./value/SortValue";
 
 export namespace Feed {
+	export interface Value {
+		name?: LabelValue.PropsEx;
+	}
+
 	/**
 	 * Props for the Feed detail container component.
 	 *
@@ -36,6 +40,7 @@ export namespace Feed {
 		 * Feed data to display and edit
 		 */
 		feed: tFeed;
+		values?: Feed.Value;
 		/**
 		 * If true, hides the delete button
 		 */
@@ -64,6 +69,7 @@ export namespace Feed {
 export const Feed: FC<Feed.Props> = ({
 	locale,
 	feed,
+	values,
 	noDelete = false,
 	children,
 	ui,
@@ -155,7 +161,10 @@ export const Feed: FC<Feed.Props> = ({
 				onCancel={() => {}}
 			/>
 
-			<NameValue feed={feed} />
+			<NameValue
+				feed={feed}
+				{...values?.name}
+			/>
 
 			<CategoryValue
 				locale={locale}

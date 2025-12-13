@@ -1,13 +1,23 @@
 import { SettingsIcon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import { SheetView } from "@use-pico/client/ui/sheet-view";
+import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import { type FC, useEffect } from "react";
+import { type FC, useEffect, useState } from "react";
 import { Feed } from "~/app/feed/ui/Feed";
+import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 
-export namespace FeedSetupButton {
+export namespace SetupButton {
+	export type Views = "detail" | "name";
+	// | "sort"
+	// | "category"
+	// | "condition"
+	// | "location"
+	// | "age"
+	// | "gallery";
+
 	export interface Props extends Button.Props {
 		locale: string;
 		feed: tFeed;
@@ -17,7 +27,7 @@ export namespace FeedSetupButton {
 	}
 }
 
-export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
+export const SetupButton: FC<SetupButton.Props> = ({
 	locale,
 	feed,
 	defaultOpen,
@@ -27,6 +37,8 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 	ui,
 	...props
 }) => {
+	const [view, setView] = useState<SetupButton.Views>("detail");
+
 	useEffect(() => {
 		setTimeout(() => {
 			state.set(defaultOpen);
@@ -49,28 +61,54 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 				{...props}
 			/>
 
-			<BottomSheet
+			<SheetView<SetupButton.Views>
 				data-ui={"FeedSetupButton-[BottomSheet]"}
 				isOpen={state.value}
 				onClose={() => state.set(false)}
 				detent={"full"}
-				header={({ close }) => ({
-					title: feed.name,
-					right: <CloseButton onClick={close} />,
-				})}
-			>
-				<Feed
-					data-ui={"FeedSetupButton-[FeedDetailContainer]"}
-					locale={locale}
-					feed={feed}
-					noDelete={noDelete}
-					ui={{
-						inner: "default",
-					}}
-				>
-					{children}
-				</Feed>
-			</BottomSheet>
+				state={{
+					value: view,
+					set: setView,
+				}}
+				views={{
+					detail: {
+						children: (
+							<Feed
+								data-ui={"FeedSetupButton-[FeedDetailContainer]"}
+								locale={locale}
+								feed={feed}
+								noDelete={noDelete}
+								ui={{
+									inner: "default",
+								}}
+								values={{
+									name: {
+										onClick: () => setView("name"),
+									},
+								}}
+							>
+								{children}
+							</Feed>
+						),
+						header: ({ close }) => ({
+							title: feed.name,
+							right: <CloseButton onClick={close} />,
+						}),
+					},
+					name: {
+						children: (
+							<NamePatch
+								feed={feed}
+								onSettled={() => setView("detail")}
+							/>
+						),
+						header: () => ({
+							title: translator.text("Feed setup - name (title)"),
+							right: <CloseButton onClick={() => setView("detail")} />,
+						}),
+					},
+				}}
+			/>
 		</>
 	);
 };

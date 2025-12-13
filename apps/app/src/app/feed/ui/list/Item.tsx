@@ -7,7 +7,7 @@ import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
-import { FeedSetupButton } from "../button/SetupButton";
+import { SetupButton } from "../button/SetupButton";
 
 export namespace Item {
 	export type Tools = "setup";
@@ -136,7 +136,7 @@ export const Item: FC<Item.Props> = ({
 			</Badge>
 
 			{tools.includes("setup") ? (
-				<FeedSetupButton
+				<SetupButton
 					data-ui={"Item-[FeedSetupButton]"}
 					locale={locale}
 					iconProps={{
