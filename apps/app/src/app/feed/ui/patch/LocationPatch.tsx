@@ -5,7 +5,7 @@ import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import { LocationSelection } from "~/app/location/ui/LocationSelection";
+import { LocationSelect } from "~/app/location/ui/LocationSelect";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
@@ -41,10 +41,11 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ locale, feed, onSettled
 				layout: "vertical-content-footer",
 				height: "full",
 				gap: "default",
+				inner: "default",
 			}}
 			{...props}
 		>
-			<LocationSelection
+			<LocationSelect
 				locale={locale}
 				value={patch.patch.locationId}
 				onChange={(value) => {

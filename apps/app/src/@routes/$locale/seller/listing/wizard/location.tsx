@@ -6,7 +6,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { LocationSelection } from "~/app/location/ui/LocationSelection";
+import { LocationSelect } from "~/app/location/ui/LocationSelect";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/location")({
 	validateSearch: ListingWizardSchema,
@@ -82,7 +82,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/location")(
 					</LinkTo>
 				}
 			>
-				<LocationSelection
+				<LocationSelect
 					locale={locale}
 					value={locationId}
 					onChange={setLocationId}

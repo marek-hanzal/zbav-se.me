@@ -9,6 +9,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
+import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace ListContainer {
@@ -52,24 +53,29 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			>
 				<Status
 					icon={WarningIcon}
-					ui={{
-						tone: "danger",
-						theme: "light",
-					}}
+					{...uiWarningStatus({
+						className: [],
+					})}
 				>
-					<Mx
-						label={textHint ?? "Location security (hint)"}
-						tone={"secondary"}
-						tweak={{
-							slot: {
-								p: {
-									class: [
-										"px-2",
-									],
-								},
-							},
+					<Container
+						ui={{
+							text: "default",
 						}}
-					/>
+					>
+						<Mx
+							label={textHint ?? "Location security (hint)"}
+							tone={"secondary"}
+							tweak={{
+								slot: {
+									p: {
+										class: [
+											"px-2",
+										],
+									},
+								},
+							}}
+						/>
+					</Container>
 				</Status>
 			</Container>
 		);

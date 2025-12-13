@@ -22,12 +22,9 @@ export const uiSaveButton = ({ ui, className }: uiSaveButton.Props) => {
 			text: "lg",
 			justify: "center",
 			items: "center",
-			width: "content",
+			width: "full",
 			...ui,
 		},
-		className: [
-			"mx-auto",
-			className,
-		],
+		className,
 	});
 };

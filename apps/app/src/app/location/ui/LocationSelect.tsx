@@ -2,9 +2,9 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { type FC, Suspense, useState } from "react";
-import { ListContainer } from "./LocationSelection/ListContainer";
+import { ListContainer } from "./location-select/ListContainer";
 
-export namespace LocationSelection {
+export namespace LocationSelect {
 	export interface Props extends Omit<Container.Props, "onChange"> {
 		locale: string;
 		value: string | undefined | null;
@@ -14,7 +14,7 @@ export namespace LocationSelection {
 	}
 }
 
-export const LocationSelection: FC<LocationSelection.Props> = ({
+export const LocationSelect: FC<LocationSelect.Props> = ({
 	locale,
 	value,
 	onChange,
@@ -26,7 +26,7 @@ export const LocationSelection: FC<LocationSelection.Props> = ({
 
 	return (
 		<Container
-			data-ui="LocationSelection-root"
+			data-ui="LocationSelect[Container]"
 			ui={{
 				layout: "vertical-header-content",
 				height: "full",
