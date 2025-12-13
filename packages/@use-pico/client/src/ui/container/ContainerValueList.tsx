@@ -126,7 +126,12 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 							theme: "light",
 						}}
 					>
-						<Tx label={textEmpty} />
+						<Tx
+							label={textEmpty}
+							ui={{
+								opacity: "medium",
+							}}
+						/>
 					</Container>
 				)}
 			</Container>
