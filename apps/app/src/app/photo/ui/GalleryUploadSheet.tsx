@@ -1,11 +1,7 @@
 import type { withMutation } from "@use-pico/client/mutation";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { tvc } from "@use-pico/cls";
 import type { StateType } from "@use-pico/common/type";
-import { useState } from "react";
-import { GalleryUpload } from "./GalleryUpload";
+import { GalleryUploadControl } from "./GalleryUploadControl";
 
 export namespace GalleryUploadSheet {
 	export interface Uploads {
@@ -32,15 +28,6 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 	state,
 	...props
 }: GalleryUploadSheet.Props<TData>) => {
-	const [uploadIds, setUploadIds] = useState<string[]>([]);
-	const mutation = withMutation.useMutation({
-		async onPostMutation() {
-			state.set(false);
-			setUploadIds([]);
-			onSuccess();
-		},
-	});
-
 	return (
 		<BottomSheet
 			detent={"full"}
@@ -48,65 +35,12 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 			onClose={() => state.set(false)}
 			{...props}
 		>
-			<Container
-				ui={{
-					layout: "vertical-content-footer",
-					gap: "default",
-				}}
-			>
-				<GalleryUpload
-					state={{
-						value: uploadIds,
-						set: setUploadIds,
-					}}
-					limit={1}
-				/>
-
-				<div
-					className={tvc([
-						"flex",
-						"flex-row",
-						"gap-2",
-						"items-center",
-						"justify-center",
-					])}
-				>
-					<ConfirmButton
-						label={"Cancel (button)"}
-						confirmProps={{
-							ui: {
-								tone: "danger",
-								theme: "dark",
-							},
-							onClick() {
-								state.set(false);
-								setUploadIds([]);
-								onCancel();
-							},
-						}}
-						disabled={mutation.isPending}
-						ui={{
-							tone: "primary",
-							theme: "light",
-							size: "xl",
-						}}
-					/>
-
-					<Button
-						label={"Upload gallery (button)"}
-						disabled={mutation.isPending || uploadIds.length === 0}
-						loading={mutation.isPending}
-						onClick={() => {
-							mutation.mutate(toMutation(uploadIds));
-						}}
-						ui={{
-							size: "xl",
-							tone: "secondary",
-							theme: "light",
-						}}
-					/>
-				</div>
-			</Container>
+			<GalleryUploadControl
+				withMutation={withMutation}
+				toMutation={toMutation}
+				onCancel={onCancel}
+				onSuccess={onSuccess}
+			/>
 		</BottomSheet>
 	);
 };

@@ -4,6 +4,7 @@ import { Progress } from "@use-pico/client/ui/progress";
 import { Status } from "@use-pico/client/ui/status";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import {
 	type ChangeEvent,
 	type FC,
@@ -33,7 +34,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 }) => {
 	const [current, setCurrent] = useState<string | undefined>(value);
 	const inputRef = useRef<HTMLInputElement>(null);
-	const containerRef = useRef<HTMLDivElement>(null);
 	const [progress, setProgress] = useState(0);
 
 	const setUpload = withUploadFetchQuery.useSet();
@@ -97,13 +97,20 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 
 	return (
 		<Container
-			ref={containerRef}
-			data-ui={"PhotoUpload"}
+			data-ui={"PhotoUpload[Container]"}
 			ui={{
+				tone: "neutral",
+				theme: "light",
+				round: "default",
+				background: "default",
+				border: true,
+				shadow: true,
 				position: "relative",
 				disabled: (ui?.disabled || uploadMutation.isPending) ?? undefined,
+				height: "full",
 				...ui,
 			}}
+			{...props}
 		>
 			<input
 				data-ui="PhotoUpload-Input"
@@ -116,31 +123,67 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 			/>
 
 			<Container
-				data-ui={"PhotoUpload-Sheet"}
+				data-ui={"PhotoUpload-[Container.sheet]"}
 				onClick={pick}
 				onKeyDown={onKeyDown}
 				ui={{
 					position: "relative",
+					height: "full",
 				}}
-				{...props}
 			>
 				{uploadMutation.isPending ? (
-					<Status
-						icon={SpinnerIcon}
-						textTitle={"Uploading photo (title)"}
-						action={
-							<Progress
-								value={progress * 100}
-								size={"lg"}
-								tone={"primary"}
-								theme={"dark"}
-							/>
-						}
+					<Container
+						data-ui={"PhotoUpload-[Container.spinner]"}
 						ui={{
-							tone: "primary",
-							theme: "light",
+							flow: "vertical",
+							height: "full",
+							items: "center",
+							justify: "center",
 						}}
-					/>
+					>
+						<Status
+							data-ui={"PhotoUpload-[Status.spinner]"}
+							icon={SpinnerIcon}
+							textTitle={"Uploading photo (title)"}
+							action={
+								<Progress
+									value={progress * 100}
+									size={"lg"}
+									tone={"primary"}
+									theme={"dark"}
+								/>
+							}
+							ui={{
+								tone: "primary",
+								theme: "light",
+							}}
+						/>
+					</Container>
+				) : null}
+
+				{!current && !uploadMutation.isPending ? (
+					<Container
+						data-ui={"PhotoUpload-[Container.placeholder]"}
+						ui={{
+							flow: "vertical",
+							height: "full",
+							items: "center",
+							justify: "center",
+						}}
+					>
+						<Status
+							data-ui={"PhotoUpload-[Status.placeholder]"}
+							icon={PhotoIcon}
+							textTitle={"Photo upload placeholder (title)"}
+							textMessage={"Photo upload placeholder (message)"}
+							ui={{
+								tone: "primary",
+								theme: "light",
+								inner: "4xl",
+							}}
+							className={"text-center"}
+						/>
+					</Container>
 				) : null}
 
 				{current && !uploadMutation.isPending ? (

@@ -4,6 +4,7 @@ import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useEffect, useState } from "react";
 import { Feed } from "~/app/feed/ui/Feed";
@@ -14,6 +15,7 @@ import { LocationPatch } from "~/app/feed/ui/patch/LocationPatch";
 import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 import { SortPatch } from "~/app/feed/ui/patch/SortPatch";
 import { TitlePatch } from "~/app/feed/ui/patch/TitlePatch";
+import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";
 
 export namespace SetupButton {
 	export type Views =
@@ -24,6 +26,7 @@ export namespace SetupButton {
 		| "sort"
 		| "condition"
 		| "age"
+		| "gallery"
 		| "title";
 
 	export interface Props extends Button.Props {
@@ -90,6 +93,9 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									inner: "default",
 								}}
 								values={{
+									hero: {
+										onClick: () => setView("gallery"),
+									},
 									name: {
 										onClick: () => setView("name"),
 									},
@@ -119,6 +125,31 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						header: ({ close }) => ({
 							title: feed.name,
 							right: <CloseButton onClick={close} />,
+						}),
+					},
+					gallery: {
+						children: (
+							<GalleryUploadControl
+								data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
+								withMutation={withFeedGalleryCreateMutation}
+								toMutation={(uploadIds) => ({
+									feedId: feed.id,
+									uploadIds,
+								})}
+								onSuccess={() => {
+									setView("detail");
+								}}
+								onCancel={() => {
+									setView("detail");
+								}}
+								ui={{
+									inner: "default",
+								}}
+							/>
+						),
+						header: () => ({
+							title: translator.text("Feed gallery (title)"),
+							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					name: {

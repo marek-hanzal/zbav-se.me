@@ -103,6 +103,9 @@
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
   ref: Without VAT
   value: Without VAT
+4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
+  ref: Photo upload placeholder (message)
+  value: Photo upload placeholder (message)
 41f6e19a2afae8c9d345c87db58338d8de807964f7e7669d9e3a8db7:
   ref: Feed condition updated (toast)
   value: Feed condition updated (toast)
@@ -346,6 +349,9 @@ a7a95d03a84a9282e129c3a27bf77f9f0e8b749d22e277260b64c4b4:
 aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
   ref: Listing flagged (toast)
   value: Listing flagged (toast)
+aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
+  ref: Photo upload placeholder (title)
+  value: Photo upload placeholder (title)
 acd269fe49abe48ed9c3e43a66c796f7114afa4123c863a3cba2ae7e:
   ref: Listing transactions (title)
   value: Listing transactions (title)
@@ -399,6 +405,9 @@ c615edcd5fcc61a4a0f293d9aab6bfb092ff553a1ea8bea15b55d381:
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
+c68690759b1f3a6cf13d49b52c69b6e23d6283ab1edc17681d363407:
+  ref: Feed gallery (title)
+  value: Feed gallery (title)
 ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
   ref: Error creating feed (toast)
   value: Error creating feed (toast)

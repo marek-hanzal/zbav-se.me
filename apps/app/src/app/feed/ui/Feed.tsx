@@ -3,18 +3,15 @@ import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, type LabelValue } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
+import type { CommonProps } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import {
-	withFeedDeleteMutation,
-	withFeedGalleryCreateMutation,
-} from "@zbav-se.me/sdk/mutation/user";
+import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { CategoryValue } from "~/app/category/ui/CategoryValue";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { LocationValue } from "~/app/location/ui/LocationValue";
-import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
 import { AgeValue } from "./value/AgeValue";
 import { ConditionValue } from "./value/ConditionValue";
 import { NameValue } from "./value/NameValue";
@@ -22,6 +19,7 @@ import { SortValue } from "./value/SortValue";
 
 export namespace Feed {
 	export interface Value {
+		hero?: Partial<CommonProps<Container.Props, HeroImage.Props>>;
 		name?: Partial<LabelValue.PropsEx>;
 		category?: Partial<CategoryValue.Props>;
 		location?: Partial<LabelValue.PropsEx>;
@@ -82,7 +80,6 @@ export const Feed: FC<Feed.Props> = ({
 	...props
 }) => {
 	const feedDeleteMutation = withFeedDeleteMutation.useMutation();
-	const [isGalleryOpen, setIsGalleryOpen] = useState(false);
 
 	return (
 		<Container
@@ -104,16 +101,15 @@ export const Feed: FC<Feed.Props> = ({
 					alt={`Hero image for feed ${feed.id}`}
 					visible
 					round={"default"}
-					onClick={() => setIsGalleryOpen((prev) => !prev)}
 					ui={{
 						width: "full",
 					}}
 					className="h-42"
+					{...values?.hero}
 				/>
 			) : (
 				<Container
 					data-ui={"FeedDetailContainer-[Container.placeholder]"}
-					onClick={() => setIsGalleryOpen((prev) => !prev)}
 					ui={{
 						tone: "neutral",
 						theme: "light",
@@ -127,6 +123,7 @@ export const Feed: FC<Feed.Props> = ({
 						border: true,
 					}}
 					className="h-42"
+					{...values?.hero}
 				>
 					<Status
 						data-ui={"FeedDetailContainer-[Status.photo-hint]"}
@@ -151,21 +148,6 @@ export const Feed: FC<Feed.Props> = ({
 					/>
 				</Container>
 			)}
-
-			<GalleryUploadSheet
-				data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
-				withMutation={withFeedGalleryCreateMutation}
-				toMutation={(uploadIds) => ({
-					feedId: feed.id,
-					uploadIds,
-				})}
-				state={{
-					value: isGalleryOpen,
-					set: setIsGalleryOpen,
-				}}
-				onSuccess={() => {}}
-				onCancel={() => {}}
-			/>
 
 			<NameValue
 				feed={feed}

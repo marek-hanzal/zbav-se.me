@@ -24,13 +24,15 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 
 	return (
 		<Container
-			data-ui={"GalleryUpload"}
+			data-ui={"GalleryUpload-[Container]"}
 			ui={{
 				position: "relative",
+				height: "full",
 			}}
 			{...props}
 		>
 			<SnapperNav
+				data-ui={"GalleryUpload-[SnapperNav]"}
 				snapperNav={snapperNav}
 				orientation={"horizontal"}
 				tweak={{
@@ -48,13 +50,14 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 			/>
 
 			<Container
-				data-ui={"GalleryUpload-Container"}
+				data-ui={"GalleryUpload-[Container.photos]"}
 				ref={snapperRef}
 				ui={{
 					layout: "horizontal-full",
 					snap: "horizontal",
 					snapAlign: "center",
 					gap: "default",
+					height: "full",
 				}}
 			>
 				{Array.from({
