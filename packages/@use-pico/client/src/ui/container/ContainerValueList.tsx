@@ -1,6 +1,5 @@
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { ReactNode } from "react";
-import { Badge } from "../badge/Badge";
 import { Tx } from "../tx/Tx";
 import { Container } from "./Container";
 import { SpinnerContainer } from "./SpinnerContainer";
@@ -120,14 +119,15 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				)}
 
 				{!loading && items.length === 0 && (
-					<Badge
-						data-ui="ContainerValueList-Badge-empty"
+					<Container
+						data-ui="ContainerValueList-[Container.empty]"
 						ui={{
 							tone: "neutral",
+							theme: "light",
 						}}
 					>
 						<Tx label={textEmpty} />
-					</Badge>
+					</Container>
 				)}
 			</Container>
 		</Container>

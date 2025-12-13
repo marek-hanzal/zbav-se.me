@@ -40,7 +40,14 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 			<BadgeValue
 				textLabel={"Feed title (label)"}
 				textValue={feed.query?.filter?.title || "Feed title not filled"}
-				action={<Icon icon={EditIcon} />}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				onClick={() => setIsEdit(true)}
 			/>
 
