@@ -148,6 +148,14 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					buttonProps={{
 						ui: {
 							tone: "danger",
+							theme: "light",
+							size: "xl",
+							text: "lg",
+						},
+						iconProps: {
+							ui: {
+								text: "xl",
+							},
 						},
 						label: translator.text("Delete feed (button)"),
 					}}
@@ -155,7 +163,6 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 						iconEnabled: TrashIcon,
 						ui: {
 							tone: "danger",
-							theme: "dark",
 						},
 						label: translator.text("Really delete feed (button)"),
 						onClick() {

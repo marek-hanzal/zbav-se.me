@@ -79,7 +79,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 					label={textValue}
 					ui={{
 						tone: "secondary",
-						font: "bold",
+						font: "semibold",
 						display: "block",
 						truncate: true,
 					}}
