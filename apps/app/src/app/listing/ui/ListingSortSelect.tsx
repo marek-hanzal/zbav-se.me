@@ -1,10 +1,10 @@
 import { TrashIcon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { StateType } from "@use-pico/common/type";
 import type { tListingSort, tListingSortField } from "@zbav-se.me/sdk/api/user";
+import { uiSelectButton } from "@zbav-se.me/ui/ui";
 import { type FC, useId } from "react";
 
 export namespace ListingSortSelect {
@@ -48,16 +48,6 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 				return (
 					<Button
 						key={`${sortKeyId}-${sortValue}`}
-						className={[
-							"justify-start",
-							"text-left",
-							"py-2",
-							"px-3",
-							"h-18",
-						]}
-						ui={{
-							size: "xl",
-						}}
 						onClick={() => {
 							const idx = state.value.findIndex((s) => s.field === sortValue);
 
@@ -92,8 +82,23 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 
 							state.set(state.value.filter((_, i) => i !== idx));
 						}}
+						{...uiSelectButton({
+							isSelected: Boolean(current?.direction),
+							ui: {
+								size: "default",
+							},
+							className: [],
+						})}
 					>
-						<div className="flex gap-2 items-center justify-between w-full">
+						<Container
+							ui={{
+								flow: "horizontal",
+								justify: "space-between",
+								items: "center",
+								gap: "sm",
+								width: "full",
+							}}
+						>
 							<Tx
 								label={`Listing common sort value ${sortValue} - ${current?.direction ?? "unused"}`}
 								ui={{
@@ -101,18 +106,8 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 								}}
 							/>
 
-							{position ? (
-								<Badge
-									ui={{
-										tone: "primary",
-										theme: "dark",
-										size: "sm",
-									}}
-								>
-									{position}
-								</Badge>
-							) : null}
-						</div>
+							{position}
+						</Container>
 					</Button>
 				);
 			})}
@@ -124,8 +119,9 @@ export const ListingSortSelect: FC<ListingSortSelect.Props> = ({ withGeo, state,
 					state.set([]);
 				}}
 				ui={{
-					size: "xl",
-					tone: "danger",
+					tone: "warning",
+					theme: "light",
+					size: "default",
 				}}
 			/>
 		</Container>

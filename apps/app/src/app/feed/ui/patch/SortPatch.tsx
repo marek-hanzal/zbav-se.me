@@ -1,8 +1,10 @@
+import { SaveIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
 import { ListingSortSelect } from "~/app/listing/ui/ListingSortSelect";
@@ -14,7 +16,7 @@ export namespace SortPatch {
 	}
 }
 
-export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ...props }) => {
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ui, ...props }) => {
 	const [change, setChange] = useState(false);
 
 	const [patch, setPatch] = useState<tFeedPatch>({
@@ -42,6 +44,8 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ...props }) =>
 				layout: "vertical-content-footer",
 				height: "full",
 				gap: "default",
+				inner: "default",
+				...ui,
 			}}
 			{...props}
 		>
@@ -69,6 +73,12 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ...props }) =>
 				label={"Feed - save (button)"}
 				loading={mutation.isPending}
 				disabled={!change || mutation.isPending}
+				iconEnabled={SaveIcon}
+				iconProps={{
+					ui: {
+						text: "2xl",
+					},
+				}}
 				onClick={() => {
 					toast.promise(mutation.mutateAsync(patch), {
 						loading: translator.text("Loading... (toast)"),
@@ -76,11 +86,9 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ...props }) =>
 						error: translator.text("Error updating feed sorting (toast)"),
 					});
 				}}
-				ui={{
-					tone: "secondary",
-					theme: "dark",
-					size: "xl",
-				}}
+				{...uiSaveButton({
+					className: [],
+				})}
 			/>
 		</Container>
 	);
