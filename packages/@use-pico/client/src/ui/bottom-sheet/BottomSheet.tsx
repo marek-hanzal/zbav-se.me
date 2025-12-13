@@ -80,6 +80,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 							justify: "space-between",
 							gap: "default",
 							inner: "default",
+							shadow: true,
 						}}
 					>
 						{$header.title ? (
