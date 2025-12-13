@@ -1,14 +1,6 @@
 import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
-import {
-	Activity,
-	type ReactNode,
-	useCallback,
-	useEffect,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-} from "react";
+import { Activity, type ReactNode, useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import { BottomSheet } from "../bottom-sheet";
 
 export namespace SheetView {
@@ -32,29 +24,13 @@ export const SheetView = <TView extends string>({
 
 	const scrollElementRef = useRef<HTMLDivElement | null>(null);
 	const scrollPositionsRef = useRef(new Map<TView, number>());
-	const currentViewRef = useRef(state.value);
-	const attachedElementsRef = useRef<Set<HTMLElement>>(new Set());
+	const attachedListenersRef = useRef<Set<HTMLElement>>(new Set());
 	const rafIdRef = useRef<number | null>(null);
+	const currentViewRef = useRef(state.value);
 
 	currentViewRef.current = state.value;
 
-	// Create scroll handler once
-	const scrollHandlerRef = useRef<((e: Event) => void) | null>(null);
-	if (!scrollHandlerRef.current) {
-		scrollHandlerRef.current = () => {
-			const element = scrollElementRef.current;
-			if (!element) return;
-
-			if (rafIdRef.current !== null) return;
-
-			rafIdRef.current = requestAnimationFrame(() => {
-				rafIdRef.current = null;
-				scrollPositionsRef.current.set(currentViewRef.current, element.scrollTop);
-			});
-		};
-	}
-
-	// Find scrollable element (element itself or a child)
+	// Find scrollable element (element itself or a scrollable child)
 	const findScrollableElement = useCallback((element: HTMLElement): HTMLElement | null => {
 		const style = window.getComputedStyle(element);
 		const isScrollable =
@@ -73,45 +49,76 @@ export const SheetView = <TView extends string>({
 		return null;
 	}, []);
 
-	// Attach scroll listener to element and its scrollable children
-	const attachScrollListeners = useCallback((element: HTMLDivElement | null) => {
-		const handler = scrollHandlerRef.current;
-		if (!handler) return;
+	// Attach scroll listeners to element and scrollable children
+	const attachListeners = useCallback(
+		(element: HTMLDivElement | null) => {
+			// Scroll handler: save position for current view
+			const handler = () => {
+				const el = scrollElementRef.current;
+				if (!el || rafIdRef.current !== null) return;
 
-		// Remove all previously attached listeners
-		for (const el of attachedElementsRef.current) {
-			el.removeEventListener("scroll", handler);
-		}
-		attachedElementsRef.current.clear();
+				rafIdRef.current = requestAnimationFrame(() => {
+					rafIdRef.current = null;
+					scrollPositionsRef.current.set(currentViewRef.current, el.scrollTop);
+				});
+			};
 
-		if (!element) return;
+			// Remove all existing listeners
+			for (const el of attachedListenersRef.current) {
+				el.removeEventListener("scroll", handler);
+			}
+			attachedListenersRef.current.clear();
 
-		// Attach to element itself
-		element.addEventListener("scroll", handler, {
-			passive: true,
-		});
-		attachedElementsRef.current.add(element);
+			if (!element) return;
 
-		// Find and attach to scrollable children
-		const scrollableChildren = Array.from(element.querySelectorAll("*")).filter((el) => {
-			const htmlEl = el as HTMLElement;
-			return (
-				htmlEl.scrollHeight > htmlEl.clientHeight &&
-				(window.getComputedStyle(htmlEl).overflowY === "auto" ||
-					window.getComputedStyle(htmlEl).overflowY === "scroll")
-			);
-		});
-		for (const child of scrollableChildren) {
-			(child as HTMLElement).addEventListener("scroll", handler, {
+			// Attach to element itself
+			element.addEventListener("scroll", handler, {
 				passive: true,
 			});
-			attachedElementsRef.current.add(child as HTMLElement);
-		}
-	}, []);
+			attachedListenersRef.current.add(element);
 
-	// Restore scroll position helper
-	const restoreScroll = useCallback((element: HTMLDivElement, view: TView) => {
-		const savedPosition = scrollPositionsRef.current.get(view) ?? 0;
+			// Find and attach to scrollable children
+			const scrollableChildren = Array.from(element.querySelectorAll("*")).filter((el) => {
+				const htmlEl = el as HTMLElement;
+				const style = window.getComputedStyle(htmlEl);
+				return (
+					htmlEl.scrollHeight > htmlEl.clientHeight &&
+					(style.overflowY === "auto" || style.overflowY === "scroll")
+				);
+			});
+			for (const child of scrollableChildren) {
+				(child as HTMLElement).addEventListener("scroll", handler, {
+					passive: true,
+				});
+				attachedListenersRef.current.add(child as HTMLElement);
+			}
+
+			// Wait for DOM to settle, then find actual scrollable element
+			setTimeout(() => {
+				const scrollable = findScrollableElement(element);
+				if (
+					scrollable &&
+					scrollable !== element &&
+					!attachedListenersRef.current.has(scrollable)
+				) {
+					scrollable.addEventListener("scroll", handler, {
+						passive: true,
+					});
+					attachedListenersRef.current.add(scrollable);
+				}
+			}, 200);
+		},
+		[
+			findScrollableElement,
+		],
+	);
+
+	// Restore scroll when view changes
+	useLayoutEffect(() => {
+		const element = scrollElementRef.current;
+		if (!element) return;
+
+		const savedPosition = scrollPositionsRef.current.get(state.value) ?? 0;
 		requestAnimationFrame(() => {
 			requestAnimationFrame(() => {
 				if (scrollElementRef.current === element) {
@@ -119,60 +126,21 @@ export const SheetView = <TView extends string>({
 				}
 			});
 		});
-	}, []);
-
-	// Watch for scrollRef changes and find actual scrollable element
-	const prevScrollElementRef = useRef<HTMLDivElement | null>(null);
-	useEffect(() => {
-		const element = scrollElementRef.current;
-		if (element === prevScrollElementRef.current) return;
-		prevScrollElementRef.current = element;
-
-		if (!element) return;
-
-		attachScrollListeners(element);
-
-		// Wait for DOM to settle, then find and attach to actual scrollable element
-		const handler = scrollHandlerRef.current;
-		const timeoutId = setTimeout(() => {
-			const scrollable = findScrollableElement(element);
-			if (scrollable && scrollable !== element && handler) {
-				scrollable.addEventListener("scroll", handler, {
-					passive: true,
-				});
-				attachedElementsRef.current.add(scrollable);
-			}
-		}, 200);
-
-		return () => {
-			clearTimeout(timeoutId);
-		};
-	}, [
-		attachScrollListeners,
-		findScrollableElement,
-	]);
-
-	// Restore scroll position when view changes
-	useLayoutEffect(() => {
-		const element = scrollElementRef.current;
-		if (!element) return;
-		restoreScroll(element, state.value);
 	}, [
 		state.value,
-		restoreScroll,
 	]);
 
 	// Cleanup on unmount
 	useLayoutEffect(() => {
 		return () => {
-			attachScrollListeners(null);
+			attachListeners(null);
 			if (rafIdRef.current !== null) {
 				cancelAnimationFrame(rafIdRef.current);
 				rafIdRef.current = null;
 			}
 		};
 	}, [
-		attachScrollListeners,
+		attachListeners,
 	]);
 
 	// Proxy RefObject for react-modal-sheet library
@@ -183,15 +151,22 @@ export const SheetView = <TView extends string>({
 			},
 			set current(node: HTMLDivElement | null) {
 				scrollElementRef.current = node;
-				attachScrollListeners(node);
+				attachListeners(node);
 				if (node) {
-					restoreScroll(node, currentViewRef.current);
+					const savedPosition =
+						scrollPositionsRef.current.get(currentViewRef.current) ?? 0;
+					requestAnimationFrame(() => {
+						requestAnimationFrame(() => {
+							if (scrollElementRef.current === node) {
+								node.scrollTop = savedPosition;
+							}
+						});
+					});
 				}
 			},
 		} as React.RefObject<HTMLDivElement>;
 	}, [
-		attachScrollListeners,
-		restoreScroll,
+		attachListeners,
 	]);
 
 	return (
