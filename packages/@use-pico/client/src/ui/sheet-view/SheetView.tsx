@@ -40,6 +40,25 @@ export const SheetView = <TView extends string>({
 
 	currentViewRef.current = state.value;
 
+	// Restore scroll position when view changes
+	useLayoutEffect(() => {
+		const element = scrollElementRef.current;
+		if (!element) {
+			return;
+		}
+
+		const position = scrollPositionsRef.current.get(state.value) ?? 0;
+		requestAnimationFrame(() => {
+			requestAnimationFrame(() => {
+				if (scrollElementRef.current === element) {
+					element.scrollTop = position;
+				}
+			});
+		});
+	}, [
+		state.value,
+	]);
+
 	// Proxy RefObject for react-modal-sheet library
 	const scrollRef = useMemo(() => {
 		let attachedElement: HTMLDivElement | null = null;
@@ -61,6 +80,15 @@ export const SheetView = <TView extends string>({
 				if (node) {
 					node.addEventListener("scroll", scrollHandlerRef.current, {
 						passive: true,
+					});
+
+					const position = scrollPositionsRef.current.get(currentViewRef.current) ?? 0;
+					requestAnimationFrame(() => {
+						requestAnimationFrame(() => {
+							if (scrollElementRef.current === node) {
+								node.scrollTop = position;
+							}
+						});
 					});
 				}
 			},
