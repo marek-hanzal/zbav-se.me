@@ -1,7 +1,7 @@
 import { isString } from "@use-pico/common/is-string";
 import type { FC, ReactNode } from "react";
+import { Container } from "../container";
 import { Tx } from "../tx/Tx";
-import { Badge } from "./Badge";
 
 /**
  * Badge component with label and value display.
@@ -9,7 +9,7 @@ import { Badge } from "./Badge";
  * @group ui
  */
 export namespace BadgeValue {
-	export interface Props extends Badge.Props {
+	export interface Props extends Container.Props {
 		/**
 		 * Translation label for the badge label text.
 		 */
@@ -21,6 +21,8 @@ export namespace BadgeValue {
 		textValueProps?: Tx.PropsEx;
 		action?: ReactNode;
 	}
+
+	export type PropsEx = Omit<Props, "textValue">;
 }
 
 export const BadgeValue: FC<BadgeValue.Props> = ({
@@ -30,35 +32,47 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 	action,
 	//
 	ui,
-	className,
 	...props
 }) => {
 	return (
-		<Badge
-			data-ui={"BadgeValue"}
+		<Container
+			data-ui={"BadgeValue[Container]"}
 			ui={{
 				tone: "neutral",
+				theme: "light",
+				inner: "default",
+				round: "default",
+				background: "default",
+				border: true,
+				shadow: true,
 				...ui,
 			}}
-			className={[
-				"BadgeValue",
-				className,
-			]}
 			{...props}
 		>
-			<div data-ui="BadgeValue-label-wrapper">
+			<Container
+				data-ui={"BadgeValue-[Container.label-wrapper]"}
+				ui={{
+					tone: "primary",
+					theme: "light",
+					flow: "horizontal",
+					items: "center",
+					justify: "space-between",
+					gap: "default",
+					color: "lead",
+				}}
+			>
 				<Tx
 					label={textLabel}
 					preset={"label"}
 					ui={{
-						tone: "primary",
-						font: "bold",
+						font: "normal",
 						display: "block",
+						color: "lead",
 					}}
 				/>
 
 				{action}
-			</div>
+			</Container>
 
 			{isString(textValue) ? (
 				<Tx
@@ -74,6 +88,6 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			) : (
 				textValue
 			)}
-		</Badge>
+		</Container>
 	);
 };

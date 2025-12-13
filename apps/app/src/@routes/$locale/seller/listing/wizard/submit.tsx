@@ -205,9 +205,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 												]
 											: undefined
 									}
-									textTitle={"Listing category (label)"}
+									textLabel={"Listing category (label)"}
 									textEmpty={"no"}
-									action={<Icon icon={EditIcon} />}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 								/>
 							</LinkTo>
 
@@ -219,9 +226,16 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								search={state}
 							>
 								<ContainerValueList
-									textTitle={"Listing condition (label)"}
+									textLabel={"Listing condition (label)"}
 									textEmpty={"no"}
-									action={<Icon icon={EditIcon} />}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									items={[
 										{
 											id: "condition",
@@ -244,14 +258,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								search={state}
 							>
 								<ContainerValueList
-									textTitle={"Listing age (label)"}
+									textLabel={"Listing age (label)"}
 									textEmpty={"no"}
-									action={<Icon icon={EditIcon} />}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									items={[
 										{
 											id: "age",
 											value: valid.data.age,
-										} as const,
+										},
 									]}
 									renderFn={(age) => (
 										<Tx label={`Condition - Age [${age.value}] (hint)`} />
@@ -302,14 +323,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								search={state}
 							>
 								<ContainerValueList
-									textTitle={"Listing expire at (label)"}
+									textLabel={"Listing expire at (label)"}
 									textEmpty={"no"}
-									action={<Icon icon={EditIcon} />}
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
 									items={[
 										{
 											id: "expiresAt",
 											value: state.expiresAt,
-										} as const,
+										},
 									]}
 									renderFn={(expiresAt) => (
 										<Tx label={`Expire in ${expiresAt.value}`} />

@@ -42,7 +42,14 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 				locationId={patch.patch.locationId}
 				textLabel={"Feed location (label)"}
 				textValue={"Feed location not selected"}
-				action={<Icon icon={EditIcon} />}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				onClick={() => setIsEdit(true)}
 			/>
 
@@ -59,7 +66,7 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 				})}
 			>
 				<Container
-					data-ui="FeedLocationBadge-BottomSheet"
+					data-ui="FeedLocationBadge-[Container.bottom-sheet]"
 					ui={{
 						layout: "vertical-content-footer",
 						gap: "default",

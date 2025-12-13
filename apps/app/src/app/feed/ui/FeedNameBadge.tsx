@@ -12,12 +12,12 @@ import { toast } from "sonner";
 import { FeedName } from "./FeedName";
 
 export namespace FeedNameBadge {
-	export interface Props {
+	export interface Props extends BadgeValue.PropsEx {
 		feed: tFeed;
 	}
 }
 
-export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
+export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed, ...props }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
@@ -42,8 +42,16 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 			<BadgeValue
 				textLabel={"Feed name (label)"}
 				textValue={feed.name}
-				action={<Icon icon={EditIcon} />}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				onClick={() => setIsEdit(true)}
+				{...props}
 			/>
 
 			<BottomSheet

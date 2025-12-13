@@ -41,7 +41,7 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 	return (
 		<>
 			<ContainerValueList
-				textTitle={"Feed age (label)"}
+				textLabel={"Feed age (label)"}
 				textEmpty={"Feed age not selected"}
 				items={selection.optional.multiId().map((id) => ({
 					id,
@@ -55,7 +55,14 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 						}}
 					/>
 				)}
-				action={<Icon icon={EditIcon} />}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				onClick={() => setIsEdit(true)}
 			/>
 

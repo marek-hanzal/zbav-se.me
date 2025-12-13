@@ -64,6 +64,9 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 					locale={locale}
 					feed={feed}
 					noDelete={noDelete}
+					ui={{
+						inner: "default",
+					}}
 				>
 					{children}
 				</FeedDetailContainer>

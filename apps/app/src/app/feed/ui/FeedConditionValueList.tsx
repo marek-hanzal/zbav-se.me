@@ -41,7 +41,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 	return (
 		<>
 			<ContainerValueList
-				textTitle={"Feed condition (label)"}
+				textLabel={"Feed condition (label)"}
 				textEmpty={"Feed condition not selected"}
 				items={conditionSelection.optional.multiId().map((id) => ({
 					id,
@@ -55,7 +55,14 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 						}}
 					/>
 				)}
-				action={<Icon icon={EditIcon} />}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				onClick={() => setIsEdit(true)}
 			/>
 

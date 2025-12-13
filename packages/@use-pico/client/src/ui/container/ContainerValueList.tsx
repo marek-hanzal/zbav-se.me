@@ -6,11 +6,11 @@ import { Container } from "./Container";
 import { SpinnerContainer } from "./SpinnerContainer";
 
 export namespace ContainerValueList {
-	export interface Props<TItem extends EntitySchema.Type> extends Omit<Container.Props, "items"> {
+	export interface Props<TItem extends EntitySchema.Type> extends Container.Props {
 		/**
 		 * Translation label for the list title.
 		 */
-		textTitle: string;
+		textLabel: string;
 		/**
 		 * Translation label for the empty state.
 		 */
@@ -32,7 +32,7 @@ export namespace ContainerValueList {
 }
 
 export const ContainerValueList = <TItem extends EntitySchema.Type>({
-	textTitle,
+	textLabel,
 	textEmpty,
 	items,
 	renderFn,
@@ -43,35 +43,49 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 }: ContainerValueList.Props<TItem>) => {
 	return (
 		<Container
-			data-root="ContainerValueList"
+			data-root="ContainerValueList[Container]"
 			ui={{
-				layout: "vertical-flex",
-				gap: "xs",
-				height: "auto",
+				tone: "neutral",
+				theme: "light",
+				inner: "default",
+				round: "default",
+				background: "default",
+				border: true,
+				shadow: true,
 				...ui,
 			}}
 			{...props}
 		>
-			<Badge
-				data-ui="ContainerValueList-Badge-title-wrapper"
+			<Container
+				data-ui={"ContainerValueList-[Container.label-wrapper]"}
 				ui={{
-					tone: "neutral",
+					tone: "primary",
+					theme: "light",
+					flow: "horizontal",
+					items: "center",
+					justify: "space-between",
+					gap: "default",
+					color: "lead",
 				}}
 			>
 				<Tx
-					label={textTitle}
+					label={textLabel}
 					preset={"label"}
 					ui={{
-						tone: "primary",
+						font: "normal",
+						display: "block",
+						color: "lead",
 					}}
 				/>
 
 				{action}
-			</Badge>
+			</Container>
 
 			<Container
-				data-ui="ContainerValueList-Container-content"
+				data-ui="ContainerValueList-[Container.content]"
 				ui={{
+					tone: undefined,
+					theme: undefined,
 					layout: "vertical-flex",
 					gap: "xs",
 					height: "auto",
@@ -80,15 +94,20 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 				{loading
 					? null
 					: items.map((item) => (
-							<Badge
-								data-ui="ContainerValueList-Badge-item"
+							<Container
 								key={item.id}
+								data-ui="ContainerValueList-[Container.item]"
 								ui={{
-									tone: "neutral",
+									tone: "subtle",
+									theme: "light",
+									background: "default",
+									border: true,
+									round: "default",
+									inner: "default",
 								}}
 							>
 								{renderFn(item)}
-							</Badge>
+							</Container>
 						))}
 
 				{loading && (

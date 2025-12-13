@@ -1,5 +1,4 @@
 import { TrashIcon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
@@ -60,35 +59,52 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 					alt={`Hero image for feed ${feed.id}`}
 					visible
 					round={"default"}
-					className="w-full h-42"
 					onClick={() => setIsGalleryOpen((prev) => !prev)}
+					ui={{
+						width: "full",
+					}}
+					className="h-42"
 				/>
 			) : (
-				<Badge
-					data-ui={"FeedDetailContainer-[Badge.placeholder]"}
-					className="w-full h-42 p-0"
+				<Container
+					data-ui={"FeedDetailContainer-[Container.placeholder]"}
 					onClick={() => setIsGalleryOpen((prev) => !prev)}
 					ui={{
 						tone: "neutral",
 						theme: "light",
 						round: "md",
+						width: "full",
+						flow: "horizontal",
+						items: "center",
+						justify: "center",
+						background: "default",
+						shadow: true,
+						border: true,
 					}}
+					className="h-42"
 				>
 					<Status
 						data-ui={"FeedDetailContainer-[Status.photo-hint]"}
 						icon={PhotoIcon}
+						iconProps={{
+							ui: {
+								text: "3xl",
+							},
+						}}
 						textTitle={"Feed - Select hero image (label)"}
 						titleProps={{
 							ui: {
 								font: "normal",
+								text: "lg",
 							},
 						}}
 						ui={{
 							tone: "primary",
 							theme: "light",
+							text: "default",
 						}}
 					/>
-				</Badge>
+				</Container>
 			)}
 
 			<GalleryUploadSheet

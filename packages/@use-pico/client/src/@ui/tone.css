@@ -276,7 +276,7 @@
 }
 
 @utility tone-neutral-light-bg {
-	--color-bg: color-mix(in srgb, var(--color-slate-50) 100%, transparent);
+	--color-bg: color-mix(in srgb, var(--color-slate-100) 75%, transparent);
 }
 
 @utility tone-neutral-light-bg-alt {

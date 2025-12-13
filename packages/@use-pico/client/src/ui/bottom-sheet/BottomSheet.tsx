@@ -73,10 +73,13 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 					<Container
 						data-ui={"BottomSheet-[Container.header-wrapper]"}
 						ui={{
+							tone: "neutral",
+							theme: "light",
 							layout: "horizontal-flex",
 							items: "center",
 							justify: "space-between",
 							gap: "default",
+							inner: "default",
 						}}
 					>
 						{$header.title ? (
@@ -86,6 +89,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 								ui={{
 									tone: "primary",
 									theme: "light",
+									text: "lg",
 								}}
 							/>
 						) : null}
