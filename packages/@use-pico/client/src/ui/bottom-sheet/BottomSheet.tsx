@@ -91,6 +91,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 									tone: "primary",
 									theme: "light",
 									text: "lg",
+									color: "lead",
 								}}
 							/>
 						) : null}
