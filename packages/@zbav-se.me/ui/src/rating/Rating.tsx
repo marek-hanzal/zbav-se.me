@@ -1,13 +1,11 @@
 import type { useSelection } from "@use-pico/client/hook";
+import { Icon, TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import { useCls, VariantProvider } from "@use-pico/cls";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { ThemeCls } from "@zbav-se.me/ui/cls";
-import { TypoIcon } from "@zbav-se.me/ui/typo";
-import { type FC, type Ref, useId, useMemo } from "react";
-import { RatingCls } from "./RatingCls";
+import { type FC, useId, useMemo } from "react";
+import { uiSelectButton } from "../ui";
 import { RatingToIcon } from "./RatingToIcon";
 
 function withRatingItems(limit = 6): Rating.RatingItem[] {
@@ -27,16 +25,14 @@ function withRatingItems(limit = 6): Rating.RatingItem[] {
 export namespace Rating {
 	export interface RatingItem extends EntitySchema.Type {}
 
-	export interface Props extends RatingCls.Props {
-		ref?: Ref<HTMLDivElement>;
+	export interface Props extends Container.Props {
 		textHint(value: number): string;
 		selection: useSelection.Selection<RatingItem>;
 	}
 }
 
-export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = RatingCls, tweak }) => {
+export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) => {
 	const limit = 6;
-	const { slots } = useCls(cls, tweak);
 
 	const itemId = useId();
 
@@ -48,65 +44,68 @@ export const Rating: FC<Rating.Props> = ({ ref, textHint, selection, cls = Ratin
 			ui={{
 				scroll: "vertical",
 				height: "auto",
+				flow: "vertical",
+				gap: "default",
+				...ui,
 			}}
+			{...props}
 		>
-			<div
-				data-ui={"Rating-items"}
-				ref={ref}
-				className={slots.root()}
-			>
-				{ratingItems.map((item) => {
-					const value = Number.parseInt(item.id, 10);
-					const icon = RatingToIcon[value as RatingToIcon.Value];
-					const selected = selection.isSelected(item.id);
+			{ratingItems.map((item) => {
+				const value = Number.parseInt(item.id, 10);
+				const icon = RatingToIcon[value as RatingToIcon.Value];
+				const selected = selection.isSelected(item.id);
 
-					if (!icon) {
-						return null;
-					}
+				if (!icon) {
+					return null;
+				}
 
-					return (
-						<VariantProvider
-							key={`rating-${itemId}-${value}`}
-							cls={ThemeCls}
-							variant={{
-								tone: "primary",
-								theme: selected ? "dark" : "light",
+				return (
+					<Button
+						key={`rating-${itemId}-${value}`}
+						onClick={() => {
+							selection.toggle(item);
+						}}
+						{...uiSelectButton({
+							isSelected: selected,
+							ui: {
+								flow: "horizontal",
+								justify: "start",
+								items: "center",
+								gap: "sm",
+								size: "default",
+							},
+							className: [],
+						})}
+					>
+						<Icon
+							icon={icon}
+							ui={{
+								text: "xl",
 							}}
-						>
-							<Button
-								ui={{
-									size: "xl",
-								}}
-							>
-								<TypoIcon
-									icon={icon}
-									onClick={() => {
-										selection.toggle(item);
-									}}
-									tweak={{
-										slot: {
-											root: {
-												class: [
-													"justify-start",
-													"w-full",
-												],
-											},
-										},
-									}}
-								>
-									<Tx
-										label={textHint(value)}
-										ui={{
-											text: "lg",
-											font: "bold",
-										}}
-									/>
-								</TypoIcon>
-							</Button>
-						</VariantProvider>
-					);
-				})}
-			</div>
+						/>
+
+						<Tx
+							label={textHint(value)}
+							ui={{
+								text: "lg",
+							}}
+						/>
+					</Button>
+				);
+			})}
+
+			<Button
+				iconEnabled={TrashIcon}
+				label={"Clear all (button)"}
+				onClick={() => {
+					selection.clear();
+				}}
+				ui={{
+					tone: "warning",
+					theme: "light",
+					size: "default",
+				}}
+			/>
 		</Container>
 	);
 };
