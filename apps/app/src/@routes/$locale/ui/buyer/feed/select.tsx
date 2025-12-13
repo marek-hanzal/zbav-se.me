@@ -4,7 +4,7 @@ import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import z from "zod";
 import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
-import { FeedListContainer } from "~/app/feed/ui/FeedListContainer";
+import { List } from "~/app/feed/ui/List";
 
 export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 	validateSearch: z.object({
@@ -35,7 +35,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 					layout: "vertical-header-content",
 				}}
 			>
-				<FeedListContainer
+				<List
 					data-ui={"/buyer/feed/select[FeedListContainer]"}
 					locale={locale}
 					query={{

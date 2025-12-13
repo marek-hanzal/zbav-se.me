@@ -5,20 +5,20 @@ import { Fade } from "@use-pico/client/ui/fade";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useEffect, useId, useRef } from "react";
-import { FeedItem } from "../FeedItem";
+import { Item } from "./Item";
 
-export namespace FeedList {
+export namespace Content {
 	export interface Props extends Container.Props, MarkSuspense.Props {
 		locale: string;
 		query: tFeedQuery;
 		defaultOpenId?: string;
 		scrollToId?: string;
-		tools: FeedItem.Tools[];
-		linkTo: FeedItem.LinkTo;
+		tools: Item.Tools[];
+		linkTo: Item.LinkTo;
 	}
 }
 
-export const FeedList: FC<FeedList.Props> = ({
+export const Content: FC<Content.Props> = ({
 	_suspense,
 	locale,
 	query,
@@ -73,7 +73,7 @@ export const FeedList: FC<FeedList.Props> = ({
 			>
 				{feedCollectionQuery.data.data.map((feed) => {
 					return (
-						<FeedItem
+						<Item
 							key={`${feedRootId}-${feed.id}`}
 							feed={feed}
 							locale={locale}

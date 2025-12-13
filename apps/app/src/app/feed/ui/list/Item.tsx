@@ -7,9 +7,9 @@ import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
-import { FeedSetupButton } from "./button/FeedSetupButton";
+import { FeedSetupButton } from "../button/SetupButton";
 
-export namespace FeedItem {
+export namespace Item {
 	export type Tools = "setup";
 
 	export namespace LinkTo {
@@ -41,7 +41,7 @@ export namespace FeedItem {
 	}
 }
 
-export const FeedItem: FC<FeedItem.Props> = ({
+export const Item: FC<Item.Props> = ({
 	locale,
 	feed,
 	defaultOpen,
@@ -56,7 +56,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 
 	return (
 		<Container
-			data-ui={"FeedItem[Container]"}
+			data-ui={"Item[Container]"}
 			data-id={feed.id}
 			className={tvc([
 				"h-48",
@@ -78,7 +78,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				feedId: feed.id,
 				children: feed.upload ? (
 					<HeroImage
-						data-ui={"FeedItem-[HeroImage]"}
+						data-ui={"Item-[HeroImage]"}
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
 						visible
@@ -137,7 +137,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 
 			{tools.includes("setup") ? (
 				<FeedSetupButton
-					data-ui={"FeedItem-[FeedSetupButton]"}
+					data-ui={"Item-[FeedSetupButton]"}
 					locale={locale}
 					iconProps={{
 						ui: {

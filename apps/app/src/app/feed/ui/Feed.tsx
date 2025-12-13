@@ -20,15 +20,48 @@ import { LocationValue } from "./value/LocationValue";
 import { NameValue } from "./value/NameValue";
 import { SortValue } from "./value/SortValue";
 
-export namespace FeedDetailContainer {
+export namespace Feed {
+	/**
+	 * Props for the Feed detail container component.
+	 *
+	 * This component displays feed details and allows editing individual fields
+	 * through inline editable value components.
+	 */
 	export interface Props extends Container.Props {
+		/**
+		 * Locale string for internationalized content
+		 */
 		locale: string;
+		/**
+		 * Feed data to display and edit
+		 */
 		feed: tFeed;
+		/**
+		 * If true, hides the delete button
+		 */
 		noDelete: boolean | undefined;
 	}
 }
 
-export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
+/**
+ * Feed detail container component.
+ *
+ * Displays a feed's details including hero image, name, category, location,
+ * sort preferences, condition, age, and title. Each field can be edited inline
+ * through dedicated value components. Also provides functionality to:
+ * - Upload/manage hero images via gallery upload sheet
+ * - Delete the feed (unless `noDelete` is true)
+ *
+ * @example
+ * ```tsx
+ * <Feed
+ *   locale="en"
+ *   feed={feedData}
+ *   noDelete={false}
+ * />
+ * ```
+ */
+export const Feed: FC<Feed.Props> = ({
 	locale,
 	feed,
 	noDelete = false,

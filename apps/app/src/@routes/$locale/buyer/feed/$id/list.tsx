@@ -11,7 +11,7 @@ import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useRef, useState } from "react";
 import z from "zod";
-import { FeedSetupButton } from "~/app/feed/ui/button/FeedSetupButton";
+import { FeedSetupButton } from "~/app/feed/ui/button/SetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 

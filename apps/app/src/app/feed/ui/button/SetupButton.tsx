@@ -5,7 +5,7 @@ import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useEffect } from "react";
-import { FeedDetailContainer } from "~/app/feed/ui/FeedDetailContainer";
+import { Feed } from "~/app/feed/ui/Feed";
 
 export namespace FeedSetupButton {
 	export interface Props extends Button.Props {
@@ -59,7 +59,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 					right: <CloseButton onClick={close} />,
 				})}
 			>
-				<FeedDetailContainer
+				<Feed
 					data-ui={"FeedSetupButton-[FeedDetailContainer]"}
 					locale={locale}
 					feed={feed}
@@ -69,7 +69,7 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 					}}
 				>
 					{children}
-				</FeedDetailContainer>
+				</Feed>
 			</BottomSheet>
 		</>
 	);

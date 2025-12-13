@@ -8,20 +8,15 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import { NameInput } from "./input/NameInput";
+import { NameInput } from "../input/NameInput";
 
-export namespace FeedCreateButton {
+export namespace CreateButton {
 	export interface Props extends Button.Props {
 		onCreate?(feed: tFeed): void;
 	}
 }
 
-export const FeedCreateButton: FC<FeedCreateButton.Props> = ({
-	onCreate,
-	ui,
-	className,
-	...props
-}) => {
+export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [change, setChange] = useState(false);
@@ -40,6 +35,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({
 	return (
 		<>
 			<Button
+				data-ui={"CreateButton[Button]"}
 				iconEnabled={FeedIcon}
 				iconProps={{
 					ui: {

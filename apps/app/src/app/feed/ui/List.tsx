@@ -2,22 +2,22 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCountQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useState } from "react";
-import type { FeedItem } from "~/app/feed/ui/FeedItem";
-import { FeedCreateButton } from "./FeedCreateButton";
-import { FeedList } from "./FeedListContainer/FeedList";
+import type { Item } from "~/app/feed/ui/list/Item";
+import { CreateButton } from "./button/CreateButton";
+import { Content } from "./list/Content";
 
-export namespace FeedListContainer {
+export namespace List {
 	export interface Props extends Container.Props {
 		locale: string;
 		query: tFeedQuery;
 		limit?: number;
 		scrollToId: string | undefined;
-		tools: FeedItem.Tools[];
-		linkTo: FeedItem.LinkTo;
+		tools: Item.Tools[];
+		linkTo: Item.LinkTo;
 	}
 }
 
-export const FeedListContainer: FC<FeedListContainer.Props> = ({
+export const List: FC<List.Props> = ({
 	locale,
 	query,
 	limit = 10,
@@ -49,7 +49,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						}}
 						{...props}
 					>
-						<FeedList
+						<Content
 							_suspense={"I know"}
 							locale={locale}
 							query={query}
@@ -60,7 +60,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						/>
 
 						{data.filter > 0 ? (
-							<FeedCreateButton
+							<CreateButton
 								disabled={isLimitReached}
 								onCreate={(data) => {
 									setDefaultOpenId(data.id);

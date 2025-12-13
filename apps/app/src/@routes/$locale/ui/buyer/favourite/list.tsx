@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { FeedFavouriteList } from "~/app/feed-favourite/ui/FeedFavouriteList";
+import { List } from "~/app/feed-favourite/ui/List";
 
 export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 	component() {
@@ -9,7 +9,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 
 		return (
 			<TitleContainer textTitle={"Your favourites (title)"}>
-				<FeedFavouriteList
+				<List
 					data-ui={"/buyer/favourite/list[FeedFavouriteList]"}
 					locale={locale}
 					query={{
