@@ -123,7 +123,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							</Feed>
 						),
 						header: ({ close }) => ({
-							title: feed.name,
+							title: translator.text("Feed setup (title)"),
 							right: <CloseButton onClick={close} />,
 						}),
 					},

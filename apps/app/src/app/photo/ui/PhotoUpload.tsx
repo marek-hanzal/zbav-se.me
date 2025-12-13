@@ -5,6 +5,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withUploadFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import {
 	type ChangeEvent,
 	type FC,
@@ -32,7 +33,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 	ui,
 	...props
 }) => {
-	const [current, setCurrent] = useState<string | undefined>(value);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [progress, setProgress] = useState(0);
 
@@ -59,7 +59,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				},
 				{
 					where: {
-						id: current,
+						id: value,
 					},
 				},
 			);
@@ -70,7 +70,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					id: result.id,
 				},
 			});
-			setCurrent(result.id);
 			onChange(result.id);
 		},
 	});
@@ -102,7 +101,6 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				tone: "neutral",
 				theme: "light",
 				round: "default",
-				background: "default",
 				border: true,
 				shadow: true,
 				position: "relative",
@@ -129,6 +127,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				ui={{
 					position: "relative",
 					height: "full",
+					round: "default",
 				}}
 			>
 				{uploadMutation.isPending ? (
@@ -161,7 +160,7 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					</Container>
 				) : null}
 
-				{!current && !uploadMutation.isPending ? (
+				{!value && !uploadMutation.isPending ? (
 					<Container
 						data-ui={"PhotoUpload-[Container.placeholder]"}
 						ui={{
@@ -186,21 +185,24 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 					</Container>
 				) : null}
 
-				{current && !uploadMutation.isPending ? (
+				{value && !uploadMutation.isPending ? (
 					<withUploadFetchQuery.Suspense
 						data={{
 							where: {
-								id: current,
+								id: value,
 							},
 						}}
 						fallback={<SpinnerContainer />}
 					>
 						{({ data }) => {
 							return (
-								<img
+								<HeroImage
 									src={data.url}
 									alt={data.id}
-									className="absolute inset-0 h-full w-full object-cover object-center"
+									visible
+									ui={{
+										round: "default",
+									}}
 								/>
 							);
 						}}

@@ -26,15 +26,15 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 	return (
 		<Badge
 			ui={{
+				tone: "secondary",
+				theme: "light",
 				flow: "horizontal",
 				items: "center",
 				justify: "center",
 				size: "md",
 				round: "default",
-				tone: "secondary",
-				theme: "light",
 				gap: "default",
-				opacity: count && count > 0 ? "low" : "high",
+				inner: "default",
 				...ui,
 			}}
 			{...props}

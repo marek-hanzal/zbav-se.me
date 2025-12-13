@@ -46,7 +46,8 @@ export namespace Ui {
 		| "left"
 		| "left-center"
 		| "right-center"
-		| "right";
+		| "right"
+		| "middle";
 	export type Position = "absolute" | "relative";
 	export type Height = "full" | "auto" | "content" | "viewport";
 	export type Width = "full" | "auto" | "content" | "viewport";

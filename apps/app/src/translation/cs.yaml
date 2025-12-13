@@ -58,6 +58,9 @@
 19be7c986ac14c2bf115207f1c2292064ecaad2932ed3e1edecc40e2:
     ref: Clear all sorts (button)
     value: Odstranit všechna řazení
+1ab95d6fcbacebf206a0388ee4204fbc371b89b1ab3d74df245149fa:
+    ref: Feed setup (title)
+    value: Nastavení seznamu
 1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
     ref: Listing Score - Flag (label)
     value: Listing Score - Flag (label)
@@ -637,6 +640,9 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Listing title (label)
+fdf12da2c20a3773d63d2a05055c386437e8a2eebccbcdfd3da5b51a:
+    ref: No listings (badge)
+    value: Uprav si nastavení seznamu
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav

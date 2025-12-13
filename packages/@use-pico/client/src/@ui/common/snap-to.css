@@ -72,4 +72,10 @@
 		position: absolute;
 		width: auto;
 	}
+
+	[data-ui-snap-to="middle"] {
+		@apply top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+		position: absolute;
+		width: auto;
+	}
 }
