@@ -1,11 +1,19 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 
 export namespace SortValue {
-	export interface Props {
+	export interface Props
+		extends Omit<
+			ValueList.PropsEx<
+				tListingSort & {
+					id: string;
+				}
+			>,
+			"items" | "renderFn"
+		> {
 		feed: tFeed;
 	}
 }
