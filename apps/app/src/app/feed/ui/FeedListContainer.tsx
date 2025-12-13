@@ -45,6 +45,7 @@ export const FeedListContainer: FC<FeedListContainer.Props> = ({
 						ui={{
 							layout: isLimitReached ? "vertical" : "vertical-content-footer",
 							gap: "md",
+							inner: "default",
 						}}
 						{...props}
 					>

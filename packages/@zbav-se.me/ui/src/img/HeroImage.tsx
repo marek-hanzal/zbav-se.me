@@ -5,7 +5,7 @@ import { type ComponentProps, type FC, type ReactNode, useState } from "react";
 import { match } from "ts-pattern";
 
 export namespace HeroImage {
-	export interface Props extends ComponentProps<"img"> {
+	export interface Props extends uiContainer.Component<ComponentProps<"img">> {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
@@ -21,6 +21,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	onError,
 	//
 	round,
+	ui,
 	className,
 	//
 	...props
@@ -40,6 +41,7 @@ export const HeroImage: FC<HeroImage.Props> = ({
 						round,
 						height: "full",
 						width: "full",
+						...ui,
 					},
 					className: [
 						"object-cover",

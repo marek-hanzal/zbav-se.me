@@ -15,7 +15,12 @@ export namespace FeedCreateButton {
 	}
 }
 
-export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ui, ...props }) => {
+export const FeedCreateButton: FC<FeedCreateButton.Props> = ({
+	onCreate,
+	ui,
+	className,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [change, setChange] = useState(false);
@@ -35,14 +40,26 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({ onCreate, ui, ...
 		<>
 			<Button
 				iconEnabled={FeedIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				onClick={() => setIsOpen(true)}
 				label={"Create new feed (title)"}
 				ui={{
-					tone: "primary",
+					tone: "secondary",
 					theme: "light",
-					size: "xl",
+					justify: "center",
+					text: "default",
+					size: "lg",
+					width: "content",
 					...ui,
 				}}
+				className={[
+					"mx-auto",
+					className,
+				]}
 				{...props}
 			/>
 

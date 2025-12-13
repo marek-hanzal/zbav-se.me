@@ -11,6 +11,8 @@ export namespace uiIcon {
 		disabled?: CoolUi.Disabled;
 		color?: CoolUi.Color;
 		text?: CoolUi.Text;
+		//
+		opacity?: CoolUi.Opacity;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;

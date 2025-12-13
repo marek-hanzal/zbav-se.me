@@ -1,3 +1,4 @@
+import { ArrowRightIcon, Icon } from "@use-pico/client/icon";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -63,11 +64,12 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				className,
 			])}
 			ui={{
-				tone: "primary",
-				round: "md",
+				tone: "secondary",
 				position: "relative",
+				round: "lg",
 				width: "full",
 				size: undefined,
+				shadow: true,
 				...ui,
 			}}
 			{...props}
@@ -81,30 +83,45 @@ export const FeedItem: FC<FeedItem.Props> = ({
 						src={feed.upload.url}
 						alt={`Hero image for feed ${feed.id}`}
 						visible
-						round={"default"}
-						className="w-full"
+						ui={{
+							round: "lg",
+							width: "full",
+						}}
 					/>
 				) : (
 					<Container
 						ui={{
-							tone: "subtle",
+							tone: "secondary",
 							theme: "light",
 							width: "full",
+							height: "full",
+							round: "lg",
+							flow: "horizontal",
+							items: "center",
+							justify: "center",
 							background: "default",
 						}}
-						className={"h-48"}
-					/>
+					>
+						<Icon
+							icon={ArrowRightIcon}
+							ui={{
+								text: "3xl",
+								color: "text",
+								opacity: "high",
+							}}
+						/>
+					</Container>
 				),
 			})}
 
 			<Badge
 				className={"h-fit"}
 				ui={{
-					round: "md",
-					tone: "secondary",
+					tone: "neutral",
 					width: "content",
 					inner: "default",
 					snapTo: "top-center",
+					round: "md",
 				}}
 			>
 				<Tx
@@ -130,8 +147,9 @@ export const FeedItem: FC<FeedItem.Props> = ({
 					noDelete={false}
 					ui={{
 						tone: "secondary",
-						size: "md",
+						size: "sm",
 						snapTo: "bottom-left",
+						color: "icon",
 					}}
 				/>
 			) : null}
@@ -141,6 +159,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				count={count}
 				query={feed.query}
 				ui={{
+					size: "sm",
 					snapTo: "bottom-right",
 				}}
 			/>
