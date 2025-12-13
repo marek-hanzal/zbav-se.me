@@ -4,7 +4,6 @@ import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
@@ -91,7 +90,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				) : (
 					<Container
 						ui={{
-							tone: "secondary",
+							tone: "subtle",
 							theme: "light",
 							width: "full",
 							height: "full",
@@ -100,6 +99,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 							items: "center",
 							justify: "center",
 							background: "default",
+							position: "relative",
 						}}
 					>
 						<Icon
@@ -107,7 +107,8 @@ export const FeedItem: FC<FeedItem.Props> = ({
 							ui={{
 								text: "3xl",
 								color: "text",
-								opacity: "high",
+								opacity: "medium",
+								snapTo: "bottom-right",
 							}}
 						/>
 					</Container>
@@ -122,6 +123,7 @@ export const FeedItem: FC<FeedItem.Props> = ({
 					inner: "default",
 					snapTo: "top-center",
 					round: "md",
+					opacity: "low",
 				}}
 			>
 				<Tx
@@ -137,19 +139,30 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				<FeedSetupButton
 					data-ui={"FeedItem-[FeedSetupButton]"}
 					locale={locale}
+					iconProps={{
+						ui: {
+							text: "2xl",
+						},
+					}}
 					state={{
 						value: isFeedSettings,
 						set: setIsFeedSettings,
 					}}
-					iconEnabled={FeedIcon}
+					// iconEnabled={FeedIcon}
 					feed={feed}
 					defaultOpen={defaultOpen}
 					noDelete={false}
+					label={null}
 					ui={{
 						tone: "secondary",
 						size: "sm",
-						snapTo: "bottom-left",
+						snapTo: "top-right",
+						items: "center",
+						justify: "center",
 						color: "icon",
+						round: "full",
+						square: "default",
+						opacity: "low",
 					}}
 				/>
 			) : null}
@@ -159,8 +172,9 @@ export const FeedItem: FC<FeedItem.Props> = ({
 				count={count}
 				query={feed.query}
 				ui={{
-					size: "sm",
-					snapTo: "bottom-right",
+					snapTo: "top-left",
+					background: undefined,
+					border: false,
 				}}
 			/>
 		</Container>

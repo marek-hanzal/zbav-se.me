@@ -34,7 +34,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 				tone: "secondary",
 				theme: "light",
 				gap: "default",
-				opacity: count && count > 0 ? undefined : "high",
+				opacity: count && count > 0 ? "low" : "high",
 				...ui,
 			}}
 			{...props}

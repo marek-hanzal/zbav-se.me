@@ -13,6 +13,8 @@ export namespace uiIcon {
 		text?: CoolUi.Text;
 		//
 		opacity?: CoolUi.Opacity;
+		//
+		snapTo?: CoolUi.SnapTo;
 	}
 
 	export type Component<TRest extends object> = coolUi.Component<Ui, TRest>;
