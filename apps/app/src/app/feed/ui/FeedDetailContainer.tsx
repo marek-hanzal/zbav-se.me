@@ -17,7 +17,7 @@ import { FeedCategoryBadge } from "./FeedCategoryBadge";
 import { FeedConditionValueList } from "./FeedConditionValueList";
 import { FeedLocationBadge } from "./FeedLocationBadge";
 import { FeedNameBadge } from "./FeedNameBadge";
-import { FeedSortValueList } from "./FeedSortValueList";
+import { FeedSortValue } from "./FeedSortValue";
 import { FeedTitleBadge } from "./FeedTitleBadge";
 
 export namespace FeedDetailContainer {
@@ -134,7 +134,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				feed={feed}
 			/>
 
-			<FeedSortValueList feed={feed} />
+			<FeedSortValue feed={feed} />
 
 			<FeedConditionValueList feed={feed} />
 

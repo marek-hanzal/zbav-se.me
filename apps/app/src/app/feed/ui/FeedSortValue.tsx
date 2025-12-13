@@ -9,13 +9,13 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { ListingSortSelect } from "~/app/listing/ui/ListingSortSelect";
 
-export namespace FeedSortValueList {
+export namespace FeedSortValue {
 	export interface Props {
 		feed: tFeed;
 	}
 }
 
-export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
+export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
