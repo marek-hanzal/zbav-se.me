@@ -46,7 +46,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				layout: "vertical-flex",
 				height: "content",
 				width: "full",
-				gap: "default",
+				gap: "lg",
 				disabled: feedDeleteMutation.isPending,
 				...ui,
 			}}
