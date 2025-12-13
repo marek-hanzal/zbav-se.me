@@ -6,15 +6,15 @@ import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
-import { FeedTitleContainer } from "./FeedTitleContainer";
+import { TitleInput } from "../input/TitleInput";
 
-export namespace FeedTitleValue {
+export namespace TitleValue {
 	export interface Props extends LabelValue.PropsEx {
 		feed: tFeed;
 	}
 }
 
-export const FeedTitleValue: FC<FeedTitleValue.Props> = ({ feed, ...props }) => {
+export const TitleValue: FC<TitleValue.Props> = ({ feed, ...props }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
@@ -37,6 +37,7 @@ export const FeedTitleValue: FC<FeedTitleValue.Props> = ({ feed, ...props }) => 
 	return (
 		<>
 			<LabelValue
+				data-ui={"TitleValue[LabelValue]"}
 				textLabel={"Feed title (label)"}
 				textValue={feed.query?.filter?.title || "Feed title not filled"}
 				action={
@@ -52,6 +53,7 @@ export const FeedTitleValue: FC<FeedTitleValue.Props> = ({ feed, ...props }) => 
 			/>
 
 			<BottomSheet
+				data-ui={"TitleValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
@@ -67,7 +69,7 @@ export const FeedTitleValue: FC<FeedTitleValue.Props> = ({ feed, ...props }) => 
 						gap: "default",
 					}}
 				>
-					<FeedTitleContainer
+					<TitleInput
 						value={patch.patch.query?.filter?.title ?? ""}
 						onChange={(title) => {
 							setChange(true);

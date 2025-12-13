@@ -55,6 +55,7 @@ export const LocationValue: FC<LocationValue.Props> = ({ locale, feed }) => {
 			/>
 
 			<BottomSheet
+				data-ui={"LocationValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}

@@ -68,6 +68,7 @@ export const ConditionValue: FC<ConditionValue.Props> = ({ feed }) => {
 			/>
 
 			<BottomSheet
+				data-ui={"ConditionValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}

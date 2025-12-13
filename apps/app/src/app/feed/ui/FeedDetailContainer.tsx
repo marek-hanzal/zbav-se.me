@@ -11,12 +11,12 @@ import {
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
-import { FeedTitleValue } from "~/app/feed/ui/FeedTitleValue";
+import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
-import { LocationValue } from "./value/LocationValue";
 import { AgeValue } from "./value/AgeValue";
 import { CategoryValue } from "./value/CategoryValue";
 import { ConditionValue } from "./value/ConditionValue";
+import { LocationValue } from "./value/LocationValue";
 import { NameValue } from "./value/NameValue";
 import { SortValue } from "./value/SortValue";
 
@@ -140,7 +140,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 			<AgeValue feed={feed} />
 
-			<FeedTitleValue feed={feed} />
+			<TitleValue feed={feed} />
 
 			{noDelete ? null : (
 				<ConfirmButton

@@ -58,6 +58,7 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ locale, feed }) => {
 			/>
 
 			<BottomSheet
+				data-ui={"CategoryValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}

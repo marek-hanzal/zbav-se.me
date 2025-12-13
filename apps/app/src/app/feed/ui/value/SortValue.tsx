@@ -60,6 +60,7 @@ export const SortValue: FC<SortValue.Props> = ({ feed }) => {
 			/>
 
 			<BottomSheet
+				data-ui={"SortValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}

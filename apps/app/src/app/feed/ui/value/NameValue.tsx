@@ -55,6 +55,7 @@ export const NameValue: FC<NameValue.Props> = ({ feed, ...props }) => {
 			/>
 
 			<BottomSheet
+				data-ui={"NameValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}

@@ -68,6 +68,7 @@ export const AgeValue: FC<AgeValue.Props> = ({ feed }) => {
 			/>
 
 			<BottomSheet
+				data-ui={"AgeValue-[BottomSheet]"}
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
