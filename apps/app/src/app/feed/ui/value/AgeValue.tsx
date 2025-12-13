@@ -9,21 +9,21 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import { AgeSelection } from "~/app/age/ui/AgeSelection";
 
-export namespace FeedConditionValueList {
+export namespace AgeValue {
 	export interface Props {
 		feed: tFeed;
 	}
 }
 
-export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed }) => {
+export const AgeValue: FC<AgeValue.Props> = ({ feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
-	const conditionSelection = useSelection<Rating.RatingItem>({
+	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
-		initial: feed.query?.filter?.conditionIn?.map((item) => ({
+		initial: feed.query?.filter?.ageIn?.map((item) => ({
 			id: String(item),
 		})),
 		onMulti() {
@@ -41,15 +41,16 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 	return (
 		<>
 			<ValueList
-				textLabel={"Feed condition (label)"}
-				textEmpty={"Feed condition not selected"}
-				items={conditionSelection.optional.multiId().map((id) => ({
+				data-ui={"AgeValue[ValueList]"}
+				textLabel={"Feed age (label)"}
+				textEmpty={"Feed age not selected"}
+				items={selection.optional.multiId().map((id) => ({
 					id,
-					condition: id,
+					age: id,
 				}))}
 				renderFn={(item) => (
 					<Tx
-						label={`Condition - Overall [${item.condition}] (hint)`}
+						label={`Condition - Age [${item.age}] (hint)`}
 						ui={{
 							tone: "secondary",
 						}}
@@ -71,7 +72,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
 				header={({ close }) => ({
-					title: "Feed condition (title)",
+					title: "Feed age (title)",
 					right: <CloseButton onClick={close} />,
 				})}
 			>
@@ -82,7 +83,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 						gap: "default",
 					}}
 				>
-					<ConditionContainer selection={conditionSelection} />
+					<AgeSelection selection={selection} />
 
 					<Button
 						label={"Feed - save (button)"}
@@ -96,7 +97,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 										...feed.query,
 										filter: {
 											...feed.query?.filter,
-											conditionIn: conditionSelection.optional
+											ageIn: selection.optional
 												.multiId()
 												.map((id) => Number.parseInt(id, 10)),
 										},

@@ -13,12 +13,12 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { FeedTitleValue } from "~/app/feed/ui/FeedTitleValue";
 import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
-import { FeedAgeValueList } from "./FeedAgeValueList";
-import { FeedCategoryBadge } from "./FeedCategoryBadge";
-import { FeedConditionValueList } from "./FeedConditionValueList";
-import { FeedLocationBadge } from "./FeedLocationBadge";
-import { FeedNameValue } from "./FeedNameValue";
-import { FeedSortValue } from "./FeedSortValue";
+import { LocationValue } from "./value/LocationValue";
+import { AgeValue } from "./value/AgeValue";
+import { CategoryValue } from "./value/CategoryValue";
+import { ConditionValue } from "./value/ConditionValue";
+import { NameValue } from "./value/NameValue";
+import { SortValue } from "./value/SortValue";
 
 export namespace FeedDetailContainer {
 	export interface Props extends Container.Props {
@@ -122,23 +122,23 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				onCancel={() => {}}
 			/>
 
-			<FeedNameValue feed={feed} />
+			<NameValue feed={feed} />
 
-			<FeedCategoryBadge
+			<CategoryValue
 				locale={locale}
 				feed={feed}
 			/>
 
-			<FeedLocationBadge
+			<LocationValue
 				locale={locale}
 				feed={feed}
 			/>
 
-			<FeedSortValue feed={feed} />
+			<SortValue feed={feed} />
 
-			<FeedConditionValueList feed={feed} />
+			<ConditionValue feed={feed} />
 
-			<FeedAgeValueList feed={feed} />
+			<AgeValue feed={feed} />
 
 			<FeedTitleValue feed={feed} />
 

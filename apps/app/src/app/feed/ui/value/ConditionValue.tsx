@@ -1,25 +1,35 @@
+import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
-import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
+import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
-import { ListingSortSelect } from "~/app/listing/ui/ListingSortSelect";
+import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
 
-export namespace FeedSortValue {
+export namespace ConditionValue {
 	export interface Props {
 		feed: tFeed;
 	}
 }
 
-export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
+export const ConditionValue: FC<ConditionValue.Props> = ({ feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
-	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
+	const conditionSelection = useSelection<Rating.RatingItem>({
+		mode: "multi",
+		initial: feed.query?.filter?.conditionIn?.map((item) => ({
+			id: String(item),
+		})),
+		onMulti() {
+			setChange(true);
+		},
+	});
 
 	const feedPatchMutation = withFeedPatchMutation.useMutation({
 		onSettled() {
@@ -28,20 +38,19 @@ export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
 		},
 	});
 
-	const withGeo = !!feed.query?.meta?.latLon;
-
 	return (
 		<>
 			<ValueList
-				textLabel={"Feed sorting (label)"}
-				textEmpty={"Feed sorting not selected"}
-				items={sort.map((sortItem, index) => ({
-					id: `${sortItem.field}-${index}`,
-					...sortItem,
+				data-ui={"ConditionValue[ValueList]"}
+				textLabel={"Feed condition (label)"}
+				textEmpty={"Feed condition not selected"}
+				items={conditionSelection.optional.multiId().map((id) => ({
+					id,
+					condition: id,
 				}))}
-				renderFn={(sortItem) => (
+				renderFn={(item) => (
 					<Tx
-						label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
+						label={`Condition - Overall [${item.condition}] (hint)`}
 						ui={{
 							tone: "secondary",
 						}}
@@ -63,7 +72,7 @@ export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
 				header={({ close }) => ({
-					title: "Feed sorting (title)",
+					title: "Feed condition (title)",
 					right: <CloseButton onClick={close} />,
 				})}
 			>
@@ -74,14 +83,7 @@ export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
 						gap: "default",
 					}}
 				>
-					<ListingSortSelect
-						withGeo={withGeo}
-						value={sort}
-						onChange={(sort) => {
-							setChange(true);
-							setSort(sort);
-						}}
-					/>
+					<ConditionContainer selection={conditionSelection} />
 
 					<Button
 						label={"Feed - save (button)"}
@@ -93,7 +95,12 @@ export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
 									...feed,
 									query: {
 										...feed.query,
-										sort,
+										filter: {
+											...feed.query?.filter,
+											conditionIn: conditionSelection.optional
+												.multiId()
+												.map((id) => Number.parseInt(id, 10)),
+										},
 									},
 								},
 								query: {

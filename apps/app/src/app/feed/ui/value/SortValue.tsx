@@ -1,36 +1,25 @@
-import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import type { EntitySchema } from "@use-pico/common/schema";
-import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { Container, ValueList } from "@use-pico/client/ui/container";
+import { Tx } from "@use-pico/client/ui/tx";
+import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
-import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
-import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
+import { ListingSortSelect } from "~/app/listing/ui/ListingSortSelect";
 
-export namespace FeedCategoryBadge {
+export namespace SortValue {
 	export interface Props {
-		locale: string;
 		feed: tFeed;
 	}
 }
 
-export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed }) => {
+export const SortValue: FC<SortValue.Props> = ({ feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
-	const selection = useSelection<EntitySchema.Type>({
-		mode: "multi",
-		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
-			id,
-		})),
-		onMulti() {
-			setChange(true);
-		},
-	});
+	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
 
 	const feedPatchMutation = withFeedPatchMutation.useMutation({
 		onSettled() {
@@ -39,12 +28,26 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 		},
 	});
 
+	const withGeo = !!feed.query?.meta?.latLon;
+
 	return (
 		<>
-			<CategoryValueList
-				categoryIdIn={selection.optional.multiId()}
-				textLabel={"Feed category (label)"}
-				textEmpty={"Feed category not selected"}
+			<ValueList
+				data-ui={"SortValue[ValueList]"}
+				textLabel={"Feed sorting (label)"}
+				textEmpty={"Feed sorting not selected"}
+				items={sort.map((sortItem, index) => ({
+					id: `${sortItem.field}-${index}`,
+					...sortItem,
+				}))}
+				renderFn={(sortItem) => (
+					<Tx
+						label={`Listing common sort value ${sortItem.field} - ${sortItem.direction}`}
+						ui={{
+							tone: "secondary",
+						}}
+					/>
+				)}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -60,11 +63,8 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
-				contentProps={{
-					disableScroll: true,
-				}}
 				header={({ close }) => ({
-					title: "Feed category (title)",
+					title: "Feed sorting (title)",
 					right: <CloseButton onClick={close} />,
 				})}
 			>
@@ -75,10 +75,13 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 						gap: "default",
 					}}
 				>
-					<CategorySelectionContainer
-						locale={locale}
-						selection={selection}
-						categoryId={selection.optional.singleId()}
+					<ListingSortSelect
+						withGeo={withGeo}
+						value={sort}
+						onChange={(sort) => {
+							setChange(true);
+							setSort(sort);
+						}}
 					/>
 
 					<Button
@@ -91,10 +94,7 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 									...feed,
 									query: {
 										...feed.query,
-										filter: {
-											...feed.query?.filter,
-											categoryIdIn: selection.optional.multiId(),
-										},
+										sort,
 									},
 								},
 								query: {

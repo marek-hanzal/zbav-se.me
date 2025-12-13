@@ -2,29 +2,30 @@ import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container, ValueList } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Container } from "@use-pico/client/ui/container";
+import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
-import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
-import { AgeSelection } from "~/app/age/ui/AgeSelection";
+import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
+import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
 
-export namespace FeedAgeValueList {
+export namespace CategoryValue {
 	export interface Props {
+		locale: string;
 		feed: tFeed;
 	}
 }
 
-export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
+export const CategoryValue: FC<CategoryValue.Props> = ({ locale, feed }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
-	const selection = useSelection<Rating.RatingItem>({
+	const selection = useSelection<EntitySchema.Type>({
 		mode: "multi",
-		initial: feed.query?.filter?.ageIn?.map((item) => ({
-			id: String(item),
+		initial: feed.query?.filter?.categoryIdIn?.map((id) => ({
+			id,
 		})),
 		onMulti() {
 			setChange(true);
@@ -40,21 +41,11 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 
 	return (
 		<>
-			<ValueList
-				textLabel={"Feed age (label)"}
-				textEmpty={"Feed age not selected"}
-				items={selection.optional.multiId().map((id) => ({
-					id,
-					age: id,
-				}))}
-				renderFn={(item) => (
-					<Tx
-						label={`Condition - Age [${item.age}] (hint)`}
-						ui={{
-							tone: "secondary",
-						}}
-					/>
-				)}
+			<CategoryValueList
+				data-ui={"CategoryValue[CategoryValueList]"}
+				categoryIdIn={selection.optional.multiId()}
+				textLabel={"Feed category (label)"}
+				textEmpty={"Feed category not selected"}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -70,8 +61,11 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
+				contentProps={{
+					disableScroll: true,
+				}}
 				header={({ close }) => ({
-					title: "Feed age (title)",
+					title: "Feed category (title)",
 					right: <CloseButton onClick={close} />,
 				})}
 			>
@@ -82,7 +76,11 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 						gap: "default",
 					}}
 				>
-					<AgeSelection selection={selection} />
+					<CategorySelectionContainer
+						locale={locale}
+						selection={selection}
+						categoryId={selection.optional.singleId()}
+					/>
 
 					<Button
 						label={"Feed - save (button)"}
@@ -96,9 +94,7 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 										...feed.query,
 										filter: {
 											...feed.query?.filter,
-											ageIn: selection.optional
-												.multiId()
-												.map((id) => Number.parseInt(id, 10)),
+											categoryIdIn: selection.optional.multiId(),
 										},
 									},
 								},

@@ -8,7 +8,7 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import { FeedName } from "./FeedName";
+import { NameInput } from "./input/NameInput";
 
 export namespace FeedCreateButton {
 	export interface Props extends Button.Props {
@@ -80,7 +80,7 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({
 						gap: "default",
 					}}
 				>
-					<FeedName
+					<NameInput
 						value={name}
 						onChange={(value) => {
 							setChange(true);

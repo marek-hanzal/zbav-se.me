@@ -1,22 +1,22 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, LabelValue } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
-import { LocationSelection } from "~/app/location/ui/LocationSelection";
-import { LocationValue } from "~/app/location/ui/LocationValue";
+import { toast } from "sonner";
+import { NameInput } from "../input/NameInput";
 
-export namespace FeedLocationBadge {
-	export interface Props {
-		locale: string;
+export namespace NameValue {
+	export interface Props extends LabelValue.PropsEx {
 		feed: tFeed;
 	}
 }
 
-export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed }) => {
+export const NameValue: FC<NameValue.Props> = ({ feed, ...props }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
@@ -38,10 +38,10 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 
 	return (
 		<>
-			<LocationValue
-				locationId={patch.patch.locationId}
-				textLabel={"Feed location (label)"}
-				textValue={"Feed location not selected"}
+			<LabelValue
+				data-ui={"NameValue[LabelValue]"}
+				textLabel={"Feed name (label)"}
+				textValue={feed.name}
 				action={
 					<Icon
 						icon={EditIcon}
@@ -51,61 +51,44 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 					/>
 				}
 				onClick={() => setIsEdit(true)}
+				{...props}
 			/>
 
 			<BottomSheet
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
-				contentProps={{
-					disableScroll: true,
-				}}
 				header={({ close }) => ({
-					title: "Feed location (title)",
+					title: "Feed name (title)",
 					right: <CloseButton onClick={close} />,
 				})}
 			>
 				<Container
-					data-ui="FeedLocationBadge-[Container.bottom-sheet]"
 					ui={{
 						layout: "vertical-content-footer",
-						gap: "default",
 						height: "full",
+						gap: "default",
 					}}
 				>
-					<LocationSelection
-						locale={locale}
-						value={patch.patch.locationId}
-						onChange={(value) => {
+					<NameInput
+						value={patch.patch.name ?? ""}
+						ui={{
+							height: "full",
+						}}
+						onChange={(name) => {
 							setChange(true);
 							setPatch((prev) => ({
 								...prev,
-								locationId: value,
+								name,
 							}));
 						}}
-						onLocation={({ lon, lat }) => {
-							setChange(true);
-							setPatch((prev) => ({
-								patch: {
-									...prev.patch,
-									query: {
-										...prev.patch.query,
-										meta: {
-											latLon: {
-												lon,
-												lat,
-											},
-										},
-									},
-								},
-								query: {
-									where: {
-										id: feed.id,
-									},
-								},
-							}));
+						onSubmit={() => {
+							toast.promise(feedPatchMutation.mutateAsync(patch), {
+								loading: translator.text("Loading... (toast)"),
+								success: translator.text("Feed name updated (toast)"),
+								error: translator.text("Error updating feed name (toast)"),
+							});
 						}}
-						textHint={"Feed - location security (hint)"}
 					/>
 
 					<Button
@@ -113,7 +96,11 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 						loading={feedPatchMutation.isPending}
 						disabled={!change || feedPatchMutation.isPending}
 						onClick={() => {
-							feedPatchMutation.mutate(patch);
+							toast.promise(feedPatchMutation.mutateAsync(patch), {
+								loading: translator.text("Loading... (toast)"),
+								success: translator.text("Feed name updated (toast)"),
+								error: translator.text("Error updating feed name (toast)"),
+							});
 						}}
 						ui={{
 							tone: "secondary",
