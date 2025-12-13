@@ -10,13 +10,10 @@ import { Feed } from "~/app/feed/ui/Feed";
 import { CategoryPatch } from "~/app/feed/ui/patch/CategoryPatch";
 import { LocationPatch } from "~/app/feed/ui/patch/LocationPatch";
 import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
+import { SortPatch } from "~/app/feed/ui/patch/SortPatch";
 
 export namespace SetupButton {
-	export type Views = "detail" | "name" | "category" | "location";
-	// | "sort"
-	// | "condition"
-	// | "age"
-	// | "gallery";
+	export type Views = "detail" | "name" | "category" | "location" | "sort";
 
 	export interface Props extends Button.Props {
 		locale: string;
@@ -91,6 +88,9 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									location: {
 										onClick: () => setView("location"),
 									},
+									sort: {
+										onClick: () => setView("sort"),
+									},
 								}}
 							>
 								{children}
@@ -136,6 +136,18 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed location (title)"),
+							right: <CloseButton onClick={() => setView("detail")} />,
+						}),
+					},
+					sort: {
+						children: (
+							<SortPatch
+								feed={feed}
+								onSettled={() => setView("detail")}
+							/>
+						),
+						header: () => ({
+							title: translator.text("Feed sorting (title)"),
 							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},

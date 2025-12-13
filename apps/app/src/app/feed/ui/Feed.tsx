@@ -25,6 +25,7 @@ export namespace Feed {
 		name?: Partial<LabelValue.PropsEx>;
 		category?: Partial<CategoryValue.Props>;
 		location?: Partial<LabelValue.PropsEx>;
+		sort?: Partial<SortValue.Props>;
 	}
 
 	/**
@@ -189,7 +190,10 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.location}
 			/>
 
-			<SortValue feed={feed} />
+			<SortValue
+				feed={feed}
+				{...values?.sort}
+			/>
 
 			<ConditionValue feed={feed} />
 
