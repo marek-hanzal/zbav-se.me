@@ -28,6 +28,11 @@ export namespace ValueList {
 		action?: ReactNode;
 		loading?: boolean;
 	}
+
+	export type PropsEx<TItem extends EntitySchema.Type> = Omit<
+		Props<TItem>,
+		"textLabel" | "textEmpty"
+	>;
 }
 
 export const ValueList = <TItem extends EntitySchema.Type>({

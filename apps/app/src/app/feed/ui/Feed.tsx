@@ -22,8 +22,9 @@ import { SortValue } from "./value/SortValue";
 
 export namespace Feed {
 	export interface Value {
-		name?: LabelValue.PropsEx;
-		location?: LabelValue.PropsEx;
+		name?: Partial<LabelValue.PropsEx>;
+		category?: Partial<CategoryValue.Props>;
+		location?: Partial<LabelValue.PropsEx>;
 	}
 
 	/**
@@ -168,8 +169,8 @@ export const Feed: FC<Feed.Props> = ({
 			/>
 
 			<CategoryValue
-				locale={locale}
 				feed={feed}
+				{...values?.category}
 			/>
 
 			<LocationValue

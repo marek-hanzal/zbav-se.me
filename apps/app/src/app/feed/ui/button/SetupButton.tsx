@@ -7,13 +7,13 @@ import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useEffect, useState } from "react";
 import { Feed } from "~/app/feed/ui/Feed";
+import { CategoryPatch } from "~/app/feed/ui/patch/CategoryPatch";
 import { LocationPatch } from "~/app/feed/ui/patch/LocationPatch";
 import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 
 export namespace SetupButton {
-	export type Views = "detail" | "name" | "location";
+	export type Views = "detail" | "name" | "category" | "location";
 	// | "sort"
-	// | "category"
 	// | "condition"
 	// | "age"
 	// | "gallery";
@@ -85,6 +85,9 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									name: {
 										onClick: () => setView("name"),
 									},
+									category: {
+										onClick: () => setView("category"),
+									},
 									location: {
 										onClick: () => setView("location"),
 									},
@@ -107,6 +110,19 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed setup - name (title)"),
+							right: <CloseButton onClick={() => setView("detail")} />,
+						}),
+					},
+					category: {
+						children: (
+							<CategoryPatch
+								locale={locale}
+								feed={feed}
+								onSettled={() => setView("detail")}
+							/>
+						),
+						header: () => ({
+							title: translator.text("Feed category (title)"),
 							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
