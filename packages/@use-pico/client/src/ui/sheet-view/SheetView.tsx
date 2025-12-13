@@ -25,20 +25,22 @@ export const SheetView = <TView extends string>({
 	const scrollElementRef = useRef<HTMLDivElement | null>(null);
 	const scrollPositionsRef = useRef(new Map<TView, number>());
 	const currentViewRef = useRef(state.value);
+	currentViewRef.current = state.value;
 	const rafIdRef = useRef<number | undefined>(undefined);
-	const scrollHandlerRef = useRef(() => {
-		const element = scrollElementRef.current;
+	const scrollHandlerRef = useRef((e: Event) => {
+		const element = e.currentTarget as HTMLDivElement | null;
 		if (!element || rafIdRef.current !== undefined) {
 			return;
 		}
 
+		const top = element.scrollTop;
+		const view = currentViewRef.current;
+
 		rafIdRef.current = requestAnimationFrame(() => {
 			rafIdRef.current = undefined;
-			scrollPositionsRef.current.set(currentViewRef.current, element.scrollTop);
+			scrollPositionsRef.current.set(view, top);
 		});
 	});
-
-	currentViewRef.current = state.value;
 
 	// Restore scroll position helper
 	const restoreScroll = useCallback((element: HTMLDivElement, view: TView) => {
