@@ -5,7 +5,7 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense, useState } from "react";
 import { ListContainer } from "./CategorySelectionContainer/ListContainer";
 
-export namespace CategorySelectionContainer {
+export namespace CategorySelect {
 	export interface Props extends Container.Props {
 		locale: string;
 		selection: useSelection.Selection<EntitySchema.Type>;
@@ -13,7 +13,7 @@ export namespace CategorySelectionContainer {
 	}
 }
 
-export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = ({
+export const CategorySelect: FC<CategorySelect.Props> = ({
 	locale,
 	selection,
 	categoryId,
@@ -27,9 +27,9 @@ export const CategorySelectionContainer: FC<CategorySelectionContainer.Props> = 
 			data-ui={"CategorySelectionContainer"}
 			ui={{
 				layout: "vertical-header-content",
-				gap: "default",
 				height: "full",
 				scroll: "vertical",
+				gap: "default",
 				...ui,
 			}}
 			{...props}

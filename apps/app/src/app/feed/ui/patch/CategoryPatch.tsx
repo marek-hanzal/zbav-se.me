@@ -9,7 +9,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
-import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
+import { CategorySelect } from "~/app/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
 	export interface Props extends Container.Props {
@@ -50,7 +50,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ locale, feed, onSettled
 			}}
 			{...props}
 		>
-			<CategorySelectionContainer
+			<CategorySelect
 				locale={locale}
 				selection={selection}
 				categoryId={selection.optional.singleId()}

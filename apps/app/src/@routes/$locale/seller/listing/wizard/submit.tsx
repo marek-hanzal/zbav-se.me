@@ -20,7 +20,7 @@ import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
+import { CategoryValue } from "~/app/category/ui/CategoryValue";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 import { countryToCurrency } from "~/locales";
@@ -196,7 +196,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<CategoryValueList
+								<CategoryValue
 									categoryIdIn={
 										state.categoryId
 											? [

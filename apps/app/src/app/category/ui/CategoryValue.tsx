@@ -4,13 +4,13 @@ import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 import { CategoryInline } from "./CategoryInline";
 
-export namespace CategoryValueList {
+export namespace CategoryValue {
 	export interface Props extends Omit<ValueList.Props<tCategory>, "items" | "renderFn"> {
 		categoryIdIn: string[] | undefined | null;
 	}
 }
 
-export const CategoryValueList: FC<CategoryValueList.Props> = ({ categoryIdIn, ...props }) => {
+export const CategoryValue: FC<CategoryValue.Props> = ({ categoryIdIn, ...props }) => {
 	if (!categoryIdIn || categoryIdIn.length === 0) {
 		return (
 			<ValueList

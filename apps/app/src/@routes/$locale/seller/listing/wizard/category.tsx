@@ -8,7 +8,7 @@ import type { EntitySchema } from "@use-pico/common/schema";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { Suspense } from "react";
-import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
+import { CategorySelect } from "~/app/category/ui/CategorySelect";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/category")({
@@ -90,7 +90,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				}
 			>
 				<Suspense fallback={<SpinnerContainer />}>
-					<CategorySelectionContainer
+					<CategorySelect
 						locale={locale}
 						selection={selection}
 						categoryId={state.categoryId}
