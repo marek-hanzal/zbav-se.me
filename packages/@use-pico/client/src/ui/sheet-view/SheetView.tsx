@@ -1,6 +1,6 @@
 import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
-import { Activity, type ReactNode, useLayoutEffect, useMemo, useRef } from "react";
+import { Activity, type ReactNode, useCallback, useLayoutEffect, useMemo, useRef } from "react";
 import { BottomSheet } from "../bottom-sheet";
 
 export namespace SheetView {
@@ -40,21 +40,25 @@ export const SheetView = <TView extends string>({
 
 	currentViewRef.current = state.value;
 
-	// Restore scroll position when view changes
-	useLayoutEffect(() => {
-		const element = scrollElementRef.current;
-		if (!element) {
-			return;
-		}
-
-		const position = scrollPositionsRef.current.get(state.value) ?? 0;
+	// Restore scroll position helper
+	const restoreScroll = useCallback((element: HTMLDivElement, view: TView) => {
+		const position = scrollPositionsRef.current.get(view) ?? 0;
 		requestAnimationFrame(() => {
 			if (scrollElementRef.current === element) {
 				element.scrollTop = position;
 			}
 		});
+	}, []);
+
+	// Restore scroll position when view changes
+	useLayoutEffect(() => {
+		const element = scrollElementRef.current;
+		if (element) {
+			restoreScroll(element, state.value);
+		}
 	}, [
 		state.value,
+		restoreScroll,
 	]);
 
 	// Proxy RefObject for react-modal-sheet library
@@ -74,22 +78,18 @@ export const SheetView = <TView extends string>({
 				scrollElementRef.current = node;
 				attachedElement = node;
 
-				// Attach listener to new element
+				// Attach listener and restore scroll for new element
 				if (node) {
 					node.addEventListener("scroll", scrollHandlerRef.current, {
 						passive: true,
 					});
-
-					const position = scrollPositionsRef.current.get(currentViewRef.current) ?? 0;
-					requestAnimationFrame(() => {
-						if (scrollElementRef.current === node) {
-							node.scrollTop = position;
-						}
-					});
+					restoreScroll(node, currentViewRef.current);
 				}
 			},
 		} as React.RefObject<HTMLDivElement>;
-	}, []);
+	}, [
+		restoreScroll,
+	]);
 
 	// Cleanup on unmount
 	useLayoutEffect(() => {
