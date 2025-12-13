@@ -49,11 +49,9 @@ export const SheetView = <TView extends string>({
 
 		const position = scrollPositionsRef.current.get(state.value) ?? 0;
 		requestAnimationFrame(() => {
-			requestAnimationFrame(() => {
-				if (scrollElementRef.current === element) {
-					element.scrollTop = position;
-				}
-			});
+			if (scrollElementRef.current === element) {
+				element.scrollTop = position;
+			}
 		});
 	}, [
 		state.value,
@@ -84,11 +82,9 @@ export const SheetView = <TView extends string>({
 
 					const position = scrollPositionsRef.current.get(currentViewRef.current) ?? 0;
 					requestAnimationFrame(() => {
-						requestAnimationFrame(() => {
-							if (scrollElementRef.current === node) {
-								node.scrollTop = position;
-							}
-						});
+						if (scrollElementRef.current === node) {
+							node.scrollTop = position;
+						}
 					});
 				}
 			},
