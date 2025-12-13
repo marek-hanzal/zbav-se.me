@@ -1,3 +1,4 @@
+import { SaveIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
@@ -40,19 +41,23 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) =>
 				layout: "vertical-content-footer",
 				height: "full",
 				gap: "default",
+				inner: "4xl",
 			}}
 			{...props}
 		>
 			<NameInput
-				value={patch.patch.name ?? ""}
 				ui={{
 					height: "full",
 				}}
+				value={patch.patch.name ?? ""}
 				onChange={(name) => {
 					setChange(true);
 					setPatch((prev) => ({
 						...prev,
-						name,
+						patch: {
+							...prev.patch,
+							name,
+						},
 					}));
 				}}
 				onSubmit={() => {
@@ -68,6 +73,12 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) =>
 				label={"Feed - save (button)"}
 				loading={mutation.isPending}
 				disabled={!change || mutation.isPending}
+				iconEnabled={SaveIcon}
+				iconProps={{
+					ui: {
+						text: "2xl",
+					},
+				}}
 				onClick={() => {
 					toast.promise(mutation.mutateAsync(patch), {
 						loading: translator.text("Loading... (toast)"),
@@ -77,9 +88,14 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) =>
 				}}
 				ui={{
 					tone: "secondary",
-					theme: "dark",
-					size: "xl",
+					theme: "light",
+					size: "lg",
+					text: "xl",
+					justify: "center",
+					items: "center",
+					width: "content",
 				}}
+				className="mx-auto"
 			/>
 		</Container>
 	);

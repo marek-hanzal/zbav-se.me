@@ -63,10 +63,22 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 		};
 	}, []);
 
+	// Merge ui props properly: base props.ui, then conditional props.ui
+	const conditionalProps = isConfirm ? confirmProps : buttonProps;
+	const mergedUi = {
+		...props.ui,
+		...conditionalProps?.ui,
+	};
+
+	// Extract ui from props to avoid passing it twice
+	const { ui: _ui, ...restProps } = props;
+	const { ui: _conditionalUi, ...restConditionalProps } = conditionalProps || {};
+
 	return (
 		<Button
-			{...props}
-			{...(isConfirm ? confirmProps : buttonProps)}
+			{...restProps}
+			{...restConditionalProps}
+			ui={mergedUi}
 			onClick={handleClick}
 		/>
 	);
