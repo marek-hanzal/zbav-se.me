@@ -20,6 +20,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 	onChange,
 	onLocation,
 	textHint,
+	ui,
 	...props
 }) => {
 	const [search, setSearch] = useState<Fulltext.Value>();
@@ -31,6 +32,7 @@ export const LocationSelect: FC<LocationSelect.Props> = ({
 				layout: "vertical-header-content",
 				height: "full",
 				gap: "default",
+				...ui,
 			}}
 			{...props}
 		>

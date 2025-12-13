@@ -1,8 +1,10 @@
+import { SaveIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
 import { LocationSelect } from "~/app/location/ui/LocationSelect";
@@ -90,6 +92,12 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ locale, feed, onSettled
 				label={"Feed - save (button)"}
 				loading={mutation.isPending}
 				disabled={!change || mutation.isPending}
+				iconEnabled={SaveIcon}
+				iconProps={{
+					ui: {
+						text: "2xl",
+					},
+				}}
 				onClick={() => {
 					toast.promise(mutation.mutateAsync(patch), {
 						loading: translator.text("Loading... (toast)"),
@@ -97,11 +105,9 @@ export const LocationPatch: FC<LocationPatch.Props> = ({ locale, feed, onSettled
 						error: translator.text("Error updating feed location (toast)"),
 					});
 				}}
-				ui={{
-					tone: "secondary",
-					theme: "dark",
-					size: "xl",
-				}}
+				{...uiSaveButton({
+					className: [],
+				})}
 			/>
 		</Container>
 	);

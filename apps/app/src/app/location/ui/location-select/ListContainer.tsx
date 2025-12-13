@@ -9,7 +9,7 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tLocation } from "@zbav-se.me/sdk/api/session";
 import { withLocationAutocompleteQuery } from "@zbav-se.me/sdk/query/session";
-import { uiWarningStatus } from "@zbav-se.me/ui/ui";
+import { uiSelectButton, uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace ListContainer {
@@ -44,6 +44,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	if (text.length < 3) {
 		return (
 			<Container
+				data-ui="ListContainer[Container.default]"
 				ui={{
 					layout: "vertical-centered",
 					scroll: "vertical",
@@ -84,6 +85,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	if (locationAutocompleteQuery.data.length === 0) {
 		return (
 			<Container
+				data-ui="ListContainer[Container.empty]"
 				ui={{
 					layout: "vertical-centered",
 					height: "full",
@@ -106,7 +108,7 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	return (
 		<Container
-			data-ui="LocationSelectionList-content"
+			data-ui="ListContainer[Container.content]"
 			ui={{
 				layout: "vertical-flex",
 				scroll: "vertical",
@@ -119,28 +121,19 @@ export const ListContainer: FC<ListContainer.Props> = ({
 			{locationAutocompleteQuery.data.map((item) => {
 				return (
 					<Button
-						data-ui="LocationItem-root"
 						key={item.id}
 						onClick={() => {
 							onChange(item.id);
 							onLocation?.(item);
 						}}
 						truncate
-						className={[
-							"justify-center",
-							"items-start",
-							"text-left",
-							"flex",
-							"flex-col",
-							"gap-1",
-							"w-full",
-						]}
 						label={item.address}
-						ui={{
-							tone: "primary",
-							theme: value === item.id ? "dark" : "light",
-							size: "xl",
-						}}
+						{...uiSelectButton({
+							isSelected: value === item.id,
+							ui,
+							className: [],
+						})}
+						data-ui="ListContainer-[Button]"
 					/>
 				);
 			})}
