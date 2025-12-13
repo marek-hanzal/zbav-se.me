@@ -15,6 +15,10 @@ export namespace ValueList {
 		 */
 		textEmpty: string;
 		/**
+		 * Translation label for the hint text.
+		 */
+		textHint?: string;
+		/**
 		 * Array of items to display.
 		 */
 		items: TItem[];
@@ -38,6 +42,7 @@ export namespace ValueList {
 export const ValueList = <TItem extends EntitySchema.Type>({
 	textLabel,
 	textEmpty,
+	textHint,
 	items,
 	renderFn,
 	action,
@@ -56,6 +61,8 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 				background: "default",
 				border: true,
 				shadow: true,
+				flow: "vertical",
+				gap: "xs",
 				...ui,
 			}}
 			{...props}
@@ -84,6 +91,19 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 
 				{action}
 			</Container>
+
+			{textHint ? (
+				<Tx
+					label={textHint}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						text: "xs",
+						color: "icon",
+						italic: true,
+					}}
+				/>
+			) : null}
 
 			<Container
 				data-ui="ValueList-[Container.content]"

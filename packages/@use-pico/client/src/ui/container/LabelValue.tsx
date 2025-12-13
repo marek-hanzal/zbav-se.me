@@ -82,6 +82,19 @@ export const LabelValue: FC<LabelValue.Props> = ({
 				{action}
 			</Container>
 
+			{textHint ? (
+				<Tx
+					label={textHint}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						text: "xs",
+						color: "icon",
+						italic: true,
+					}}
+				/>
+			) : null}
+
 			{isString(textValue) ? (
 				<Tx
 					label={textValue}
@@ -104,19 +117,6 @@ export const LabelValue: FC<LabelValue.Props> = ({
 						tone: "neutral",
 						theme: "light",
 						opacity: "medium",
-					}}
-				/>
-			) : null}
-
-			{textHint ? (
-				<Tx
-					label={textHint}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						text: "xs",
-						color: "icon",
-						italic: true,
 					}}
 				/>
 			) : null}
