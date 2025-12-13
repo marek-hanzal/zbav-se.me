@@ -13,9 +13,18 @@ import { ConditionPatch } from "~/app/feed/ui/patch/ConditionPatch";
 import { LocationPatch } from "~/app/feed/ui/patch/LocationPatch";
 import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 import { SortPatch } from "~/app/feed/ui/patch/SortPatch";
+import { TitlePatch } from "~/app/feed/ui/patch/TitlePatch";
 
 export namespace SetupButton {
-	export type Views = "detail" | "name" | "category" | "location" | "sort" | "condition" | "age";
+	export type Views =
+		| "detail"
+		| "name"
+		| "category"
+		| "location"
+		| "sort"
+		| "condition"
+		| "age"
+		| "title";
 
 	export interface Props extends Button.Props {
 		locale: string;
@@ -99,6 +108,9 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									age: {
 										onClick: () => setView("age"),
 									},
+									title: {
+										onClick: () => setView("title"),
+									},
 								}}
 							>
 								{children}
@@ -180,6 +192,18 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed age (title)"),
+							right: <CloseButton onClick={() => setView("detail")} />,
+						}),
+					},
+					title: {
+						children: (
+							<TitlePatch
+								feed={feed}
+								onSettled={() => setView("detail")}
+							/>
+						),
+						header: () => ({
+							title: translator.text("Feed title (title)"),
 							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},

@@ -277,6 +277,9 @@
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
   ref: No items in favourites (message)
   value: No items in favourites (message)
+8ad39860649daeaa240849b5f8b11601c75b062f71eb258cc4557169:
+  ref: Feed sorting (hint)
+  value: Feed sorting (hint)
 8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
   ref: Feed location (hint)
   value: Feed location (hint)
@@ -349,6 +352,9 @@ aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
 acd269fe49abe48ed9c3e43a66c796f7114afa4123c863a3cba2ae7e:
   ref: Listing transactions (title)
   value: Listing transactions (title)
+ad787b724c9b3deff8b842e736cd5138f8c96b8917789eeb227d2512:
+  ref: Error updating feed title (toast)
+  value: Error updating feed title (toast)
 ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
   ref: Listing ignored (toast)
   value: Listing ignored (toast)
@@ -381,6 +387,9 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
     message than this :(
   value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
     better message than this :(
+c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
+  ref: Feed title not filled
+  value: Feed title not filled
 c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
   ref: That's all for now (title)
   value: That's all for now (title)
@@ -408,6 +417,9 @@ cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
 cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
   ref: Feed - save (button)
   value: Feed - save (button)
+cdea08fbf7283f1cf2439be6a907f655ff67fcec8da29b5a5a78b5f1:
+  ref: Feed title updated (toast)
+  value: Feed title updated (toast)
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)

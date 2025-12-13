@@ -27,6 +27,7 @@ export const SortValue: FC<SortValue.Props> = ({ feed, ...props }) => {
 			data-ui={"SortValue[ValueList]"}
 			textLabel={translator.text("Feed sorting (label)")}
 			textEmpty={translator.text("Feed sorting not selected")}
+			textHint={translator.text("Feed sorting (hint)")}
 			items={sort.map((sortItem, index) => ({
 				id: `${sortItem.field}-${index}`,
 				...sortItem,

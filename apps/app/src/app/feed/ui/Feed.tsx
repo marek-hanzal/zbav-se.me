@@ -28,6 +28,7 @@ export namespace Feed {
 		sort?: Partial<SortValue.Props>;
 		condition?: Partial<ConditionValue.Props>;
 		age?: Partial<AgeValue.Props>;
+		title?: Partial<TitleValue.Props>;
 	}
 
 	/**
@@ -207,7 +208,10 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.age}
 			/>
 
-			<TitleValue feed={feed} />
+			<TitleValue
+				feed={feed}
+				{...values?.title}
+			/>
 
 			{noDelete ? null : (
 				<ConfirmButton
