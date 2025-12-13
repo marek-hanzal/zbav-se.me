@@ -1,4 +1,4 @@
-import { TrashIcon } from "@use-pico/client/icon";
+import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, type LabelValue } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
@@ -12,17 +12,18 @@ import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
+import { LocationValue } from "~/app/location/ui/LocationValue";
 import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
 import { AgeValue } from "./value/AgeValue";
 import { CategoryValue } from "./value/CategoryValue";
 import { ConditionValue } from "./value/ConditionValue";
-import { LocationValue } from "./value/LocationValue";
 import { NameValue } from "./value/NameValue";
 import { SortValue } from "./value/SortValue";
 
 export namespace Feed {
 	export interface Value {
 		name?: LabelValue.PropsEx;
+		location?: LabelValue.PropsEx;
 	}
 
 	/**
@@ -172,8 +173,19 @@ export const Feed: FC<Feed.Props> = ({
 			/>
 
 			<LocationValue
-				locale={locale}
-				feed={feed}
+				locationId={feed.locationId}
+				textLabel={translator.text("Feed location (label)")}
+				textEmpty={translator.text("Feed location not selected")}
+				textHint={translator.text("Feed location (hint)")}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
+				{...values?.location}
 			/>
 
 			<SortValue feed={feed} />

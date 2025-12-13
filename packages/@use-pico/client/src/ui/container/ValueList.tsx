@@ -119,20 +119,14 @@ export const ValueList = <TItem extends EntitySchema.Type>({
 				)}
 
 				{!loading && items.length === 0 && (
-					<Container
-						data-ui="ValueList-[Container.empty]"
+					<Tx
+						label={textEmpty}
 						ui={{
 							tone: "neutral",
 							theme: "light",
+							opacity: "medium",
 						}}
-					>
-						<Tx
-							label={textEmpty}
-							ui={{
-								opacity: "medium",
-							}}
-						/>
-					</Container>
+					/>
 				)}
 			</Container>
 		</Container>

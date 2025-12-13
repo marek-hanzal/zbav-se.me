@@ -14,11 +14,13 @@ export namespace LabelValue {
 		 * Translation label for the badge label text.
 		 */
 		textLabel?: string;
+		textLabelProps?: Tx.PropsEx;
 		/**
 		 * Value text to display in the badge.
 		 */
-		textValue: ReactNode;
+		textValue: ReactNode | null;
 		textValueProps?: Tx.PropsEx;
+		textEmpty?: string;
 		textHint?: string;
 		action?: ReactNode;
 	}
@@ -28,8 +30,10 @@ export namespace LabelValue {
 
 export const LabelValue: FC<LabelValue.Props> = ({
 	textLabel,
+	textLabelProps,
 	textValue,
 	textValueProps,
+	textEmpty,
 	textHint,
 	action,
 	//
@@ -70,9 +74,9 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					preset={"label"}
 					ui={{
 						font: "normal",
-						display: "block",
 						color: "lead",
 					}}
+					{...textLabelProps}
 				/>
 
 				{action}
@@ -83,6 +87,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					label={textValue}
 					ui={{
 						tone: "secondary",
+						theme: "light",
 						text: "default",
 						truncate: true,
 					}}
@@ -91,6 +96,17 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			) : (
 				textValue
 			)}
+
+			{textValue === null ? (
+				<Tx
+					label={textEmpty}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						opacity: "medium",
+					}}
+				/>
+			) : null}
 
 			{textHint ? (
 				<Tx

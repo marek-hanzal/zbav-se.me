@@ -39,7 +39,8 @@ export const TitleValue: FC<TitleValue.Props> = ({ feed, ...props }) => {
 			<LabelValue
 				data-ui={"TitleValue[LabelValue]"}
 				textLabel={"Feed title (label)"}
-				textValue={feed.query?.filter?.title || "Feed title not filled"}
+				textValue={feed.query?.filter?.title ?? null}
+				textEmpty={"Feed title not filled"}
 				action={
 					<Icon
 						icon={EditIcon}

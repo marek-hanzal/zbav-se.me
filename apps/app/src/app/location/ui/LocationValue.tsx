@@ -3,14 +3,20 @@ import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 
 export namespace LocationValue {
-	export interface Props extends LabelValue.Props {
+	export interface Props extends Omit<LabelValue.Props, "textValue"> {
 		locationId: string | undefined | null;
 	}
 }
 
 export const LocationValue: FC<LocationValue.Props> = ({ locationId, ...props }) => {
 	if (!locationId) {
-		return <LabelValue {...props} />;
+		return (
+			<LabelValue
+				data-ui={"LocationValue[LabelValue.empty]"}
+				{...props}
+				textValue={null}
+			/>
+		);
 	}
 
 	return (
