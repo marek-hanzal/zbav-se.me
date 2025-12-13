@@ -8,6 +8,7 @@ import {
 	useRef,
 } from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
+import { useMergeRefs } from "../../hook/useMergeRefs";
 import { Container } from "../container";
 import { Tx } from "../tx";
 
@@ -35,6 +36,7 @@ export namespace BottomSheet {
 }
 
 export const BottomSheet: FC<BottomSheet.Props> = ({
+	ref,
 	containerProps,
 	contentProps,
 	withHeader = false,
@@ -43,6 +45,10 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 	...props
 }) => {
 	const sheetRef = useRef<SheetRef>(null);
+	const mergedRef = useMergeRefs([
+		sheetRef,
+		ref,
+	]);
 	const fade = useTransform(() => {
 		const y = sheetRef.current?.y.get() ?? 0;
 		const height = sheetRef.current?.height ?? 1;
@@ -55,7 +61,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 
 	return (
 		<Sheet
-			ref={sheetRef}
+			ref={mergedRef}
 			data-ui={"BottomSheet[Sheet]"}
 			tweenConfig={{
 				ease: "easeOut",
