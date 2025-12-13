@@ -28,7 +28,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item, ui, ...p
 				flow: "vertical",
 				items: "start",
 				justify: "center",
-				size: "xl",
+				size: "default",
 				width: "full",
 				...ui,
 			}}
@@ -45,7 +45,7 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item, ui, ...p
 				label={item.category}
 				ui={{
 					text: "lg",
-					font: "bold",
+					font: isSelected ? "bold" : "normal",
 				}}
 			/>
 		</Button>
