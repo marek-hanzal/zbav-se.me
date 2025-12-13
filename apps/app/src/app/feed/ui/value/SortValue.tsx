@@ -1,6 +1,7 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import type { FC } from "react";
 
@@ -24,8 +25,8 @@ export const SortValue: FC<SortValue.Props> = ({ feed, ...props }) => {
 	return (
 		<ValueList
 			data-ui={"SortValue[ValueList]"}
-			textLabel={"Feed sorting (label)"}
-			textEmpty={"Feed sorting not selected"}
+			textLabel={translator.text("Feed sorting (label)")}
+			textEmpty={translator.text("Feed sorting not selected")}
 			items={sort.map((sortItem, index) => ({
 				id: `${sortItem.field}-${index}`,
 				...sortItem,

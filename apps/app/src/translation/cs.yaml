@@ -10,6 +10,15 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
     value: Kategorie
+06268c12358f0028c4a8df7326f74496a7b4c2fc868969cf451ac616:
+    ref: Error updating feed sorting (toast)
+    value: Error updating feed sorting (toast)
+065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
+    ref: Feed sorting (label)
+    value: Řazení inzerátů
+08a30cb868ee08615360f361e1db8eda5231a7e184e6f4a16b000673:
+    ref: Error updating feed location (toast)
+    value: Error updating feed location (toast)
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
     ref: Gallery (title)
     value: Galerie
@@ -31,7 +40,7 @@
     value: Stav
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
     ref: Feed condition not selected
-    value: Feed condition not selected
+    value: Cokoliv
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
     ref: Listing photos (label)
     value: Listing photos (label)
@@ -165,6 +174,9 @@
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
     ref: Feed category (label)
     value: Kategorie, co tě zajímají
+5ca6c21881789106d894442d50b82148e4cb44c345ea5a3d5ade843f:
+    ref: Feed category updated (toast)
+    value: Kategorie uložena
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Listing age (label)
@@ -177,6 +189,9 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
+612dfa41caaa5f3b1b6368481049e8c1ef65936090a6f7a1c8db0bad:
+    ref: Error updating feed category (toast)
+    value: Error updating feed category (toast)
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Zprávy
@@ -206,7 +221,7 @@
     value: Stáří
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
-    value: Feed sorting not selected
+    value: Výchozí řazení
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
     ref: Listing unflagged (toast)
     value: Úspěšně jsi zrušil nahlášení inzerátu.
@@ -268,7 +283,9 @@
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
 8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
     ref: Feed location (hint)
-    value: Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle vzdálenosti.
+    value:
+        Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle
+        vzdálenosti.
 8c91adfb877cb388a51f813326810fc71d05ca63282c35066b8570ef:
     ref: No more listings to show - favourite (message)
     value: No more listings to show - favourite (message)
@@ -287,9 +304,15 @@
 96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
     ref: Invalid/missing fields
     value: Invalid/missing fields
+9725a4c0c500e5b114a7e7bd06cad0efa420e0d74bd5f3fd05bbbbd6:
+    ref: Feed location updated (toast)
+    value: Feed location updated (toast)
 9835a78e390b045bfa153f4b6289fd0578f068909548d7c7ab30b0ea:
     ref: Feed created (toast)
     value: Seznam byl úspěšně vytvořený!
+9874fd956ae1d1763f5d3f77d94ec3c4dfc1508330e9dd66de8587e9:
+    ref: Feed sorting updated (toast)
+    value: Feed sorting updated (toast)
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
     value: Nový inzerát
@@ -446,9 +469,6 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         message than this :(
     value: Missing identity for an Entity (id). I'm sorry, but I cannot provide
         better message than this :(
-c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
-    ref: Feed title not filled
-    value: Feed title not filled
 c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
     ref: That's all for now (title)
     value: To je prozatím vše!
