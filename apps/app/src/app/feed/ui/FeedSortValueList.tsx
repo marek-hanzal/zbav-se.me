@@ -33,7 +33,7 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 	return (
 		<>
 			<ContainerValueList
-				textTitle={"Feed sorting (label)"}
+				textLabel={"Feed sorting (label)"}
 				textEmpty={"Feed sorting not selected"}
 				items={sort.map((sortItem, index) => ({
 					id: `${sortItem.field}-${index}`,
@@ -47,7 +47,14 @@ export const FeedSortValueList: FC<FeedSortValueList.Props> = ({ feed }) => {
 						}}
 					/>
 				)}
-				action={<Icon icon={EditIcon} />}
+				action={
+					<Icon
+						icon={EditIcon}
+						ui={{
+							text: "xl",
+						}}
+					/>
+				}
 				onClick={() => setIsEdit(true)}
 			/>
 
