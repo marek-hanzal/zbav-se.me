@@ -4,6 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
 import { NameInput } from "~/app/feed/ui/input/NameInput";
@@ -86,16 +87,9 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) =>
 						error: translator.text("Error updating feed name (toast)"),
 					});
 				}}
-				ui={{
-					tone: "secondary",
-					theme: "light",
-					size: "lg",
-					text: "xl",
-					justify: "center",
-					items: "center",
-					width: "content",
-				}}
-				className="mx-auto"
+				{...uiSaveButton({
+					className: [],
+				})}
 			/>
 		</Container>
 	);
