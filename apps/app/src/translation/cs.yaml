@@ -10,15 +10,9 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
     value: Kategorie
-065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
-    ref: Feed sorting (label)
-    value: Řazení
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
     ref: Gallery (title)
     value: Galerie
-0ae38241dad8e253dd2770d4b3ad826257f505b7345634f052961672:
-    ref: First feed (title)
-    value: Název seznamu
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
     value: |
@@ -37,10 +31,10 @@
     value: Stav
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
     ref: Feed condition not selected
-    value: Jakýkoli stav
+    value: Feed condition not selected
 1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
     ref: Listing photos (label)
-    value: Počet fotek
+    value: Listing photos (label)
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
     ref: Upload photos (button)
     value: Nahraj fotky
@@ -49,7 +43,7 @@
     value: Odstranit všechna řazení
 1ad37c567b9ce5b4ef84ca20ca1ed9252f82e215fe2c985df08a404b:
     ref: Listing Score - Flag (label)
-    value: Počet nahlášení
+    value: Listing Score - Flag (label)
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
     ref: Logo motto (label)
     value: Prostě to pošli dál
@@ -68,9 +62,6 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
-2c42c14799ffc5fc727a41adfa059bfa417aea517c104b17ec402486:
-    ref: First feed (hint)
-    value: Název můžeš později upravit
 2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
     ref: Next - title (button)
     value: Titulek
@@ -95,13 +86,10 @@
     value: Nastavení seznamu
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
     ref: Listing Score - Feed views (label)
-    value: Počet zobrazení v nabídkách
-37f71ccaada9d3b7570f1389bfb7dcc587f4af8ba96d5718a260f55a:
-    ref: content
-    value: content
+    value: Listing Score - Feed views (label)
 3b25f85d532657d509b12da1d687a994f0da387a55ede88e53ffc704:
     ref: Listing price (label)
-    value: Cena
+    value: Listing price (label)
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
     ref: Price (placeholder)
     value: Cena
@@ -116,7 +104,7 @@
     value: Zrušit
 42aa1874f3af8785eb64edf4e4d73e3d25f3c7afec890830b1654ab0:
     ref: Listing category (label)
-    value: Kategorie
+    value: Listing category (label)
 4363f4fb6f819cf057645cd3a62c4560949f8c20bae08b9619b2518e:
     ref: Your favourites (title)
     value: Oblíbené
@@ -128,7 +116,7 @@
     value: Nastav si úvodní obrázek
 45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
     ref: Listing Score - Views (label)
-    value: Počet zobrazení v inzerátu (detail)
+    value: Listing Score - Views (label)
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
     ref: Ignore listing (button)
     value: Ignorovat inzerát
@@ -137,7 +125,7 @@
     value: Zdarma
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
     ref: Listing Score - Raw score (label)
-    value: Hrubé skóre
+    value: Listing Score - Raw score (label)
 4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
     ref: Second tap to unignore listing (toast)
     value: Druhým kliknutím zruš ignoraci inzerátu
@@ -153,9 +141,6 @@
 51682d9521080245ad818c184b06929926372bbf7b8e14889655233a:
     ref: Empty favourite category (title)
     value: Empty favourite category (title)
-5568cb09b7ca549979ce1793149f2bb8e8453eb271721effca13fff0:
-    ref: Error creating first feed (toast)
-    value: Seznam se nepodařilo vytvořit!
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
     ref: Buyer - shop (title)
     value: Obchod pro kupující
@@ -170,7 +155,7 @@
     value: Kategorie
 591b812973b8193e4ba322d124037a7e66dfb4eedbbd74a82a527d6a:
     ref: Feed name (label)
-    value: Jméno
+    value: Název seznamu
 59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
     ref: Go to feed (link)
     value: Přejít k nabídkám
@@ -179,10 +164,10 @@
     value: Field errors (title)
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
     ref: Feed category (label)
-    value: Kategorie
+    value: Kategorie, co tě zajímají
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
-    value: Stáří
+    value: Listing age (label)
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
     value: Např. nářadí
@@ -221,22 +206,19 @@
     value: Stáří
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
-    value: Výchozí řazení
+    value: Feed sorting not selected
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
     ref: Listing unflagged (toast)
     value: Úspěšně jsi zrušil nahlášení inzerátu.
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
-    value: Umístění
+    value: Listing location (label)
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
     ref: Create new feed (title)
     value: Nový seznam inzerátů
 79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
     ref: Next - submit (button)
     value: Kontrola
-7a154bd14c6e908e0e95dbcd7e454206c4970f402f6b8879420e383b:
-    ref: First feed created (toast)
-    value: Tvůj první seznam byl úspěšně vytvořený!
 7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
     ref: Open gallery (button)
     value: Otevřít galerii
@@ -284,12 +266,15 @@
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
     ref: No items in favourites (message)
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!
+8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
+    ref: Feed location (hint)
+    value: Poloha je jenom pro tebe - slouží pro řazení a filtrování inzerátů podle vzdálenosti.
 8c91adfb877cb388a51f813326810fc71d05ca63282c35066b8570ef:
     ref: No more listings to show - favourite (message)
     value: No more listings to show - favourite (message)
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
     ref: Feed location (label)
-    value: Tvoje umístění
+    value: Poloha
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
     value: Moje seznamy
@@ -434,9 +419,6 @@ acd269fe49abe48ed9c3e43a66c796f7114afa4123c863a3cba2ae7e:
 ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
     ref: Listing ignored (toast)
     value: Inzerát úspěšně ignorován - až se příště vrátíš, už tu nebude.
-ae6b3aca80fc7a717ece2aab6cecd445055e479acf6aa376655e6575:
-    ref: Listing expire at (label)
-    value: Automatické ukončení
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
@@ -449,12 +431,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
     ref: "- skore + link -"
     value: "- skore + link -"
-b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
-    ref: Feed age (label)
-    value: Stáří
 b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
     ref: Listing Score - Ignore (label)
-    value: Počet ignorací inzerátu
+    value: Listing Score - Ignore (label)
 ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
     ref: My listings (label)
     value: Moje inzeráty
@@ -469,7 +448,7 @@ bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
         better message than this :(
 c364089f3cda17c5de86ee47a7fc163c03d351fbc0f33427cb2ecb2b:
     ref: Feed title not filled
-    value: Všechno
+    value: Feed title not filled
 c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
     ref: That's all for now (title)
     value: To je prozatím vše!
@@ -508,10 +487,10 @@ d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
     value: Automatické uzavření
 d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
     ref: Feed title (label)
-    value: Co tě zajímá
+    value: Feed title (label)
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
-    value: Stav
+    value: Listing condition (label)
 d8190ee61cdb545062afa1147049c037ffaa5fe47502185c21cacb54:
     ref: Feed name updated (toast)
     value: Název seznamu byl úspěšně upravený!
@@ -558,13 +537,16 @@ e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
     value: Bonusy
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
     ref: Listing score hint (label)
-    value: Hodnocení inzerátu
+    value: Listing score hint (label)
 e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
     ref: Seller home (title)
     value: Chci prodávat
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
     ref: Feed location not selected
-    value: Svoje umístění nemáš vybrané
+    value: Nemáš uvedenou
+efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
+    ref: Feed setup - name (title)
+    value: Nastav si název
 f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
     ref: Submit listing (button)
     value: Odeslat
@@ -582,13 +564,10 @@ f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
     value: Druhým kliknutím zruš nahlášení inzerátu
 f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
     ref: Listing seller hint (label)
-    value: Informace o prodejci
+    value: Listing seller hint (label)
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
     ref: Feed age not selected
-    value: Jakékoli
-fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
-    ref: Feed condition (label)
-    value: Stavy
+    value: Feed age not selected
 facd0a879d16c3a70cca1e0454dadf75ea57307c5476c066805b5542:
     ref: Second tap to flag listing (toast)
     value:
@@ -599,7 +578,7 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     value: Zpět domů
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
-    value: Popis inzerátu
+    value: Listing title (label)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav

@@ -19,6 +19,7 @@ export namespace LabelValue {
 		 */
 		textValue: ReactNode;
 		textValueProps?: Tx.PropsEx;
+		textHint?: string;
 		action?: ReactNode;
 	}
 
@@ -29,6 +30,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 	textLabel,
 	textValue,
 	textValueProps,
+	textHint,
 	action,
 	//
 	ui,
@@ -43,6 +45,8 @@ export const LabelValue: FC<LabelValue.Props> = ({
 				inner: "default",
 				round: "default",
 				background: "default",
+				flow: "vertical",
+				gap: "xs",
 				border: true,
 				shadow: true,
 				...ui,
@@ -87,6 +91,19 @@ export const LabelValue: FC<LabelValue.Props> = ({
 			) : (
 				textValue
 			)}
+
+			{textHint ? (
+				<Tx
+					label={textHint}
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						text: "xs",
+						color: "icon",
+						italic: true,
+					}}
+				/>
+			) : null}
 		</Container>
 	);
 };

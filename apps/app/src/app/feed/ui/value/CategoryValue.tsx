@@ -4,6 +4,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
@@ -44,8 +45,8 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ locale, feed }) => {
 			<CategoryValueList
 				data-ui={"CategoryValue[CategoryValueList]"}
 				categoryIdIn={selection.optional.multiId()}
-				textLabel={"Feed category (label)"}
-				textEmpty={"Feed category not selected"}
+				textLabel={translator.text("Feed category (label)")}
+				textEmpty={translator.text("Feed category not selected")}
 				action={
 					<Icon
 						icon={EditIcon}

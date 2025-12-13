@@ -13,11 +13,6 @@ tx({
 		jsx: [
 			...TranslationSources.jsx,
 			{
-				name: "Tile",
-				attr: "label",
-			},
-			//
-			{
 				name: "Title",
 				attr: "textTitle",
 			},
@@ -51,58 +46,44 @@ tx({
 			},
 			//
 			{
-				name: "BadgeValue",
+				name: "LabelValue",
 				attr: "textLabel",
 			},
 			{
-				name: "BadgeValue",
+				name: "LabelValue",
 				attr: "textValue",
 			},
 			//
 			{
-				name: "ContainerValueList",
+				name: "ValueList",
 				attr: "textTitle",
 			},
 			{
-				name: "ContainerValueList",
+				name: "ValueList",
 				attr: "textEmpty",
 			},
 			//
 			{
-				name: "LocationBadgeValue",
+				name: "LocationValue",
 				attr: "textLabel",
 			},
 			{
-				name: "LocationBadgeValue",
+				name: "LocationValue",
 				attr: "textValue",
 			},
 			//
 			{
-				name: "CategoryValueList",
+				name: "CategoryValue",
 				attr: "textTitle",
 			},
 			{
-				name: "CategoryValueList",
-				attr: "textEmpty",
-			},
-			//
-			{
-				name: "ContainerValueList",
-				attr: "textTitle",
-			},
-			{
-				name: "ContainerValueList",
+				name: "CategoryValue",
 				attr: "textEmpty",
 			},
 			//
 			{
 				name: "ModalContainer",
 				attr: "textTitle",
-			},
-			//
-			{
-				name: "ListingDetailButton",
-				attr: "label",
 			},
 			//
 			{

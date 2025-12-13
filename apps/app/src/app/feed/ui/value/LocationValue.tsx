@@ -2,6 +2,7 @@ import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
@@ -41,8 +42,9 @@ export const LocationValue: FC<LocationValue.Props> = ({ locale, feed }) => {
 			<CoolLocationValue
 				data-ui={"LocationValue[LocationValue]"}
 				locationId={patch.patch.locationId}
-				textLabel={"Feed location (label)"}
-				textValue={"Feed location not selected"}
+				textLabel={translator.text("Feed location (label)")}
+				textValue={translator.text("Feed location not selected")}
+				textHint={translator.text("Feed location (hint)")}
 				action={
 					<Icon
 						icon={EditIcon}
