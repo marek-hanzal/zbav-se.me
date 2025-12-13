@@ -1,124 +1,53 @@
-import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
-import { Container, ValueList } from "@use-pico/client/ui/container";
+import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { CloseButton } from "@zbav-se.me/ui/button";
-import type { Rating } from "@zbav-se.me/ui/rating";
-import { type FC, useState } from "react";
-import { AgeSelection } from "~/app/age/ui/AgeSelection";
+import type { FC } from "react";
 
 export namespace AgeValue {
-	export interface Props {
+	export interface Props
+		extends Omit<
+			ValueList.PropsEx<{
+				id: string;
+				age: string;
+			}>,
+			"items" | "renderFn"
+		> {
 		feed: tFeed;
 	}
 }
 
-export const AgeValue: FC<AgeValue.Props> = ({ feed }) => {
-	const [isEdit, setIsEdit] = useState(false);
-	const [change, setChange] = useState(false);
-
-	const selection = useSelection<Rating.RatingItem>({
-		mode: "multi",
-		initial: feed.query?.filter?.ageIn?.map((item) => ({
-			id: String(item),
-		})),
-		onMulti() {
-			setChange(true);
-		},
-	});
-
-	const feedPatchMutation = withFeedPatchMutation.useMutation({
-		onSettled() {
-			setChange(false);
-			setIsEdit(false);
-		},
-	});
+export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
+	const ageIn = feed.query?.filter?.ageIn;
 
 	return (
-		<>
-			<ValueList
-				data-ui={"AgeValue[ValueList]"}
-				textLabel={"Feed age (label)"}
-				textEmpty={"Feed age not selected"}
-				items={selection.optional.multiId().map((id) => ({
-					id,
-					age: id,
-				}))}
-				renderFn={(item) => (
-					<Tx
-						label={`Condition - Age [${item.age}] (hint)`}
-						ui={{
-							tone: "secondary",
-						}}
-					/>
-				)}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				onClick={() => setIsEdit(true)}
-			/>
-
-			<BottomSheet
-				data-ui={"AgeValue-[BottomSheet]"}
-				isOpen={isEdit}
-				onClose={() => setIsEdit(false)}
-				detent={"full"}
-				header={({ close }) => ({
-					title: "Feed age (title)",
-					right: <CloseButton onClick={close} />,
-				})}
-			>
-				<Container
+		<ValueList
+			data-ui={"AgeValue[ValueList]"}
+			textLabel={translator.text("Feed age (label)")}
+			textEmpty={translator.text("Feed age not selected")}
+            textHint={translator.text("Feed age (hint)")}
+			items={(ageIn ?? []).map((item) => ({
+				id: String(item),
+				age: String(item),
+			}))}
+			renderFn={(item) => (
+				<Tx
+					label={`Condition - Age [${item.age}] (hint)`}
 					ui={{
-						layout: "vertical-content-footer",
-						height: "full",
-						gap: "default",
+						tone: "secondary",
 					}}
-				>
-					<AgeSelection selection={selection} />
-
-					<Button
-						label={"Feed - save (button)"}
-						loading={feedPatchMutation.isPending}
-						disabled={!change || feedPatchMutation.isPending}
-						onClick={() => {
-							feedPatchMutation.mutate({
-								patch: {
-									...feed,
-									query: {
-										...feed.query,
-										filter: {
-											...feed.query?.filter,
-											ageIn: selection.optional
-												.multiId()
-												.map((id) => Number.parseInt(id, 10)),
-										},
-									},
-								},
-								query: {
-									where: {
-										id: feed.id,
-									},
-								},
-							});
-						}}
-						ui={{
-							tone: "secondary",
-							theme: "dark",
-							size: "xl",
-						}}
-					/>
-				</Container>
-			</BottomSheet>
-		</>
+				/>
+			)}
+			action={
+				<Icon
+					icon={EditIcon}
+					ui={{
+						text: "xl",
+					}}
+				/>
+			}
+			{...props}
+		/>
 	);
 };

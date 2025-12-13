@@ -222,6 +222,9 @@
 6f0c381fe28fafb75e2b708bfeefe7fefab6fb361cec10afd13b2374:
     ref: Next - age (button)
     value: Stáří
+6fd100bc83ef07630fd36fc30e2abade63c4080ef7fbcdfec19853f7:
+    ref: Feed age updated (toast)
+    value: Feed age updated (toast)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
@@ -457,6 +460,9 @@ b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
 b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
     ref: "- skore + link -"
     value: "- skore + link -"
+b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
+    ref: Feed age (label)
+    value: Stáří
 b70f97dbf4be95b0c508538e1bc69c56771f4a6e2fc8e03f6bcea25d:
     ref: Listing Score - Ignore (label)
     value: Listing Score - Ignore (label)
@@ -585,6 +591,9 @@ f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
     ref: My listings (title)
     value: Moje inzeráty
+f69630635d31c101711f5561b225c4020b647d2025b263b05d1afc64:
+    ref: Error updating feed age (toast)
+    value: Error updating feed age (toast)
 f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
     ref: Second tap to unflag listing (toast)
     value: Druhým kliknutím zruš nahlášení inzerátu
