@@ -1,14 +1,14 @@
 import { isString } from "@use-pico/common/is-string";
 import type { FC, ReactNode } from "react";
-import { Container } from "../container";
 import { Tx } from "../tx/Tx";
+import { Container } from "./Container";
 
 /**
  * Badge component with label and value display.
  *
  * @group ui
  */
-export namespace BadgeValue {
+export namespace LabelValue {
 	export interface Props extends Container.Props {
 		/**
 		 * Translation label for the badge label text.
@@ -25,7 +25,7 @@ export namespace BadgeValue {
 	export type PropsEx = Omit<Props, "textValue">;
 }
 
-export const BadgeValue: FC<BadgeValue.Props> = ({
+export const LabelValue: FC<LabelValue.Props> = ({
 	textLabel,
 	textValue,
 	textValueProps,
@@ -36,7 +36,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 }) => {
 	return (
 		<Container
-			data-ui={"BadgeValue[Container]"}
+			data-ui={"LabelValue[Container]"}
 			ui={{
 				tone: "neutral",
 				theme: "light",
@@ -50,7 +50,7 @@ export const BadgeValue: FC<BadgeValue.Props> = ({
 			{...props}
 		>
 			<Container
-				data-ui={"BadgeValue-[Container.label-wrapper]"}
+				data-ui={"LabelValue-[Container.label-wrapper]"}
 				ui={{
 					tone: "primary",
 					theme: "light",

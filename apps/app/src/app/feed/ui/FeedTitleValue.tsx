@@ -1,21 +1,20 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, LabelValue } from "@use-pico/client/ui/container";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { FeedTitleContainer } from "./FeedTitleContainer";
 
-export namespace FeedTitleBadge {
-	export interface Props {
+export namespace FeedTitleValue {
+	export interface Props extends LabelValue.PropsEx {
 		feed: tFeed;
 	}
 }
 
-export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
+export const FeedTitleValue: FC<FeedTitleValue.Props> = ({ feed, ...props }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
@@ -37,7 +36,7 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 
 	return (
 		<>
-			<BadgeValue
+			<LabelValue
 				textLabel={"Feed title (label)"}
 				textValue={feed.query?.filter?.title || "Feed title not filled"}
 				action={
@@ -49,6 +48,7 @@ export const FeedTitleBadge: FC<FeedTitleBadge.Props> = ({ feed }) => {
 					/>
 				}
 				onClick={() => setIsEdit(true)}
+				{...props}
 			/>
 
 			<BottomSheet

@@ -6,8 +6,8 @@ import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
-import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
 import { LocationSelection } from "~/app/location/ui/LocationSelection";
+import { LocationValue } from "~/app/location/ui/LocationValue";
 
 export namespace FeedLocationBadge {
 	export interface Props {
@@ -38,7 +38,7 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 
 	return (
 		<>
-			<LocationBadgeValue
+			<LocationValue
 				locationId={patch.patch.locationId}
 				textLabel={"Feed location (label)"}
 				textValue={"Feed location not selected"}

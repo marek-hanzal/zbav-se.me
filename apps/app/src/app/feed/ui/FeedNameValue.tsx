@@ -1,8 +1,7 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -11,13 +10,13 @@ import { type FC, useState } from "react";
 import { toast } from "sonner";
 import { FeedName } from "./FeedName";
 
-export namespace FeedNameBadge {
-	export interface Props extends BadgeValue.PropsEx {
+export namespace FeedNameValue {
+	export interface Props extends LabelValue.PropsEx {
 		feed: tFeed;
 	}
 }
 
-export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed, ...props }) => {
+export const FeedNameValue: FC<FeedNameValue.Props> = ({ feed, ...props }) => {
 	const [isEdit, setIsEdit] = useState(false);
 	const [change, setChange] = useState(false);
 
@@ -39,7 +38,7 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed, ...props }) => {
 
 	return (
 		<>
-			<BadgeValue
+			<LabelValue
 				textLabel={"Feed name (label)"}
 				textValue={feed.name}
 				action={

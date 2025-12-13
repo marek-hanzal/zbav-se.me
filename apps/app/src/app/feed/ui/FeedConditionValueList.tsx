@@ -2,7 +2,7 @@ import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container, ContainerValueList } from "@use-pico/client/ui/container";
+import { Container, ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -40,7 +40,7 @@ export const FeedConditionValueList: FC<FeedConditionValueList.Props> = ({ feed 
 
 	return (
 		<>
-			<ContainerValueList
+			<ValueList
 				textLabel={"Feed condition (label)"}
 				textEmpty={"Feed condition not selected"}
 				items={conditionSelection.optional.multiId().map((id) => ({

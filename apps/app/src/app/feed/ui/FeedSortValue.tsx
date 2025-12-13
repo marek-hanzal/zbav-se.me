@@ -1,7 +1,7 @@
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container, ContainerValueList } from "@use-pico/client/ui/container";
+import { Container, ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -32,7 +32,7 @@ export const FeedSortValue: FC<FeedSortValue.Props> = ({ feed }) => {
 
 	return (
 		<>
-			<ContainerValueList
+			<ValueList
 				textLabel={"Feed sorting (label)"}
 				textEmpty={"Feed sorting not selected"}
 				items={sort.map((sortItem, index) => ({

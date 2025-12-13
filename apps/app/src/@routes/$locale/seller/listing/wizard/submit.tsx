@@ -7,9 +7,8 @@ import {
 	Icon,
 	SpinnerIcon,
 } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container, ContainerValueList } from "@use-pico/client/ui/container";
+import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
@@ -23,7 +22,7 @@ import { SendPackageIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
+import { LocationValue } from "~/app/location/ui/LocationValue";
 import { countryToCurrency } from "~/locales";
 
 export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
@@ -169,7 +168,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<BadgeValue
+								<LabelValue
 									textLabel={"Listing title (label)"}
 									textValue={state.title}
 									action={<Icon icon={EditIcon} />}
@@ -183,7 +182,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<BadgeValue
+								<LabelValue
 									textLabel={"Listing photos (label)"}
 									textValue={String(valid.data.uploadIds.length)}
 									action={<Icon icon={EditIcon} />}
@@ -225,7 +224,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<ContainerValueList
+								<ValueList
 									textLabel={"Listing condition (label)"}
 									textEmpty={"no"}
 									action={
@@ -257,7 +256,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<ContainerValueList
+								<ValueList
 									textLabel={"Listing age (label)"}
 									textEmpty={"no"}
 									action={
@@ -287,7 +286,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<BadgeValue
+								<LabelValue
 									textLabel={"Listing price (label)"}
 									textValue={
 										<PriceInline
@@ -307,7 +306,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<LocationBadgeValue
+								<LocationValue
 									locationId={state.locationId}
 									textLabel={"Listing location (label)"}
 									textValue={"no"}
@@ -322,7 +321,7 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								}}
 								search={state}
 							>
-								<ContainerValueList
+								<ValueList
 									textLabel={"Listing expire at (label)"}
 									textEmpty={"no"}
 									action={

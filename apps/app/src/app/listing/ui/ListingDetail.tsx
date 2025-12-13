@@ -1,9 +1,6 @@
 import { Icon, ShowIcon, SpinnerIcon } from "@use-pico/client/icon";
-import { BadgeValue } from "@use-pico/client/ui/badge";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { PriceInline } from "@use-pico/client/ui/price-inline";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Container, LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
@@ -15,6 +12,7 @@ import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleBu
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
+import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 import { GallerySheet } from "~/app/photo/ui/GallerySheet";
 import { ScoreContainer } from "./ScoreContainer";
@@ -139,39 +137,30 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 				>
 					{tools.includes("hero") ? null : (
 						<>
-							<BadgeValue
-								textLabel={"Listing price (label)"}
-								textValue={
-									listing.price > 0 ? (
-										<PriceInline
-											price={listing.price}
-											locale={locale}
-											currency={listing.currency}
-										/>
-									) : (
-										<Tx label={"Price - free"} />
-									)
-								}
+							<ListingPrice
+								price={listing.price}
+								locale={locale}
+								currency={listing.currency}
 							/>
 
-							<BadgeValue
+							<LabelValue
 								textLabel={"Listing location (label)"}
 								textValue={listing.location.address}
 							/>
 						</>
 					)}
 
-					<BadgeValue
+					<LabelValue
 						textLabel={"Listing condition (label)"}
 						textValue={`Condition - Overall [${listing.condition}] (hint)`}
 					/>
 
-					<BadgeValue
+					<LabelValue
 						textLabel={"Listing age (label)"}
 						textValue={`Condition - Age [${listing.age}] (hint)`}
 					/>
 
-					<BadgeValue
+					<LabelValue
 						textLabel={"Listing score hint (label)"}
 						textValue={
 							<withListingMetricsFetchQuery.Suspense
@@ -191,13 +180,13 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						onClick={() => setIsScore(true)}
 					/>
 
-					<BadgeValue
+					<LabelValue
 						textLabel={"Listing seller hint (label)"}
 						textValue={"- skore + link -"}
 						action={<Icon icon={ShowIcon} />}
 					/>
 
-					<BadgeValue
+					<LabelValue
 						textLabel={"Listing category (label)"}
 						textValue={
 							<CategoryInline

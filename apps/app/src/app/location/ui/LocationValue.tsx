@@ -1,17 +1,16 @@
-import { BadgeValue } from "@use-pico/client/ui/badge";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { LabelValue, SpinnerContainer } from "@use-pico/client/ui/container";
 import { withLocationFetchQuery } from "@zbav-se.me/sdk/query/session";
 import type { FC } from "react";
 
-export namespace LocationBadgeValue {
-	export interface Props extends BadgeValue.Props {
+export namespace LocationValue {
+	export interface Props extends LabelValue.Props {
 		locationId: string | undefined | null;
 	}
 }
 
-export const LocationBadgeValue: FC<LocationBadgeValue.Props> = ({ locationId, ...props }) => {
+export const LocationValue: FC<LocationValue.Props> = ({ locationId, ...props }) => {
 	if (!locationId) {
-		return <BadgeValue {...props} />;
+		return <LabelValue {...props} />;
 	}
 
 	return (
@@ -22,7 +21,7 @@ export const LocationBadgeValue: FC<LocationBadgeValue.Props> = ({ locationId, .
 				},
 			}}
 			fallback={
-				<BadgeValue
+				<LabelValue
 					{...props}
 					textValue={
 						<SpinnerContainer
@@ -35,7 +34,7 @@ export const LocationBadgeValue: FC<LocationBadgeValue.Props> = ({ locationId, .
 		>
 			{({ data }) => {
 				return (
-					<BadgeValue
+					<LabelValue
 						{...props}
 						textValue={data.address}
 					/>

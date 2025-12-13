@@ -4,7 +4,7 @@ import { Tx } from "../tx/Tx";
 import { Container } from "./Container";
 import { SpinnerContainer } from "./SpinnerContainer";
 
-export namespace ContainerValueList {
+export namespace ValueList {
 	export interface Props<TItem extends EntitySchema.Type> extends Container.Props {
 		/**
 		 * Translation label for the list title.
@@ -30,7 +30,7 @@ export namespace ContainerValueList {
 	}
 }
 
-export const ContainerValueList = <TItem extends EntitySchema.Type>({
+export const ValueList = <TItem extends EntitySchema.Type>({
 	textLabel,
 	textEmpty,
 	items,
@@ -39,10 +39,10 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 	loading,
 	ui,
 	...props
-}: ContainerValueList.Props<TItem>) => {
+}: ValueList.Props<TItem>) => {
 	return (
 		<Container
-			data-root="ContainerValueList[Container]"
+			data-root="ValueList[Container]"
 			ui={{
 				tone: "neutral",
 				theme: "light",
@@ -56,7 +56,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			{...props}
 		>
 			<Container
-				data-ui={"ContainerValueList-[Container.label-wrapper]"}
+				data-ui={"ValueList-[Container.label-wrapper]"}
 				ui={{
 					tone: "primary",
 					theme: "light",
@@ -81,7 +81,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 			</Container>
 
 			<Container
-				data-ui="ContainerValueList-[Container.content]"
+				data-ui="ValueList-[Container.content]"
 				ui={{
 					tone: undefined,
 					theme: undefined,
@@ -95,7 +95,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 					: items.map((item) => (
 							<Container
 								key={item.id}
-								data-ui="ContainerValueList-[Container.item]"
+								data-ui="ValueList-[Container.item]"
 								ui={{
 									tone: "subtle",
 									theme: "light",
@@ -120,7 +120,7 @@ export const ContainerValueList = <TItem extends EntitySchema.Type>({
 
 				{!loading && items.length === 0 && (
 					<Container
-						data-ui="ContainerValueList-[Container.empty]"
+						data-ui="ValueList-[Container.empty]"
 						ui={{
 							tone: "neutral",
 							theme: "light",

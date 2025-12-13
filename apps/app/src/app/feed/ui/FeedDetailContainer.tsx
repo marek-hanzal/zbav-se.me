@@ -11,14 +11,14 @@ import {
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
+import { FeedTitleValue } from "~/app/feed/ui/FeedTitleValue";
 import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
 import { FeedAgeValueList } from "./FeedAgeValueList";
 import { FeedCategoryBadge } from "./FeedCategoryBadge";
 import { FeedConditionValueList } from "./FeedConditionValueList";
 import { FeedLocationBadge } from "./FeedLocationBadge";
-import { FeedNameBadge } from "./FeedNameBadge";
+import { FeedNameValue } from "./FeedNameValue";
 import { FeedSortValue } from "./FeedSortValue";
-import { FeedTitleBadge } from "./FeedTitleBadge";
 
 export namespace FeedDetailContainer {
 	export interface Props extends Container.Props {
@@ -122,7 +122,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 				onCancel={() => {}}
 			/>
 
-			<FeedNameBadge feed={feed} />
+			<FeedNameValue feed={feed} />
 
 			<FeedCategoryBadge
 				locale={locale}
@@ -140,7 +140,7 @@ export const FeedDetailContainer: FC<FeedDetailContainer.Props> = ({
 
 			<FeedAgeValueList feed={feed} />
 
-			<FeedTitleBadge feed={feed} />
+			<FeedTitleValue feed={feed} />
 
 			{noDelete ? null : (
 				<ConfirmButton
