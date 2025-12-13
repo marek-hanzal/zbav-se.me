@@ -11,11 +11,11 @@ import {
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useState } from "react";
+import { CategoryValue } from "~/app/category/ui/CategoryValue";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 import { GalleryUploadSheet } from "~/app/photo/ui/GalleryUploadSheet";
 import { AgeValue } from "./value/AgeValue";
-import { CategoryValue } from "./value/CategoryValue";
 import { ConditionValue } from "./value/ConditionValue";
 import { NameValue } from "./value/NameValue";
 import { SortValue } from "./value/SortValue";
@@ -173,7 +173,9 @@ export const Feed: FC<Feed.Props> = ({
 			/>
 
 			<CategoryValue
-				feed={feed}
+				categoryIdIn={feed.query?.filter?.categoryIdIn}
+				textLabel={translator.text("Feed category (label)")}
+				textEmpty={translator.text("Feed category not selected")}
 				{...values?.category}
 			/>
 

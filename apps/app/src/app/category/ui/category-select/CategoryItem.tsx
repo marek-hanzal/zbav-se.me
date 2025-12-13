@@ -17,14 +17,14 @@ export const CategoryItem: FC<CategoryItem.Props> = ({ selection, item, ui, ...p
 
 	return (
 		<Button
-			data-ui="CategoryItem"
+			data-ui="CategoryItem[Button]"
 			data-id={item.id}
 			onClick={() => {
 				selection.toggle(item);
 			}}
 			ui={{
-				tone: "primary",
-				theme: isSelected ? "dark" : "light",
+				tone: isSelected ? "secondary" : "neutral",
+				theme: "light",
 				flow: "vertical",
 				items: "start",
 				justify: "center",

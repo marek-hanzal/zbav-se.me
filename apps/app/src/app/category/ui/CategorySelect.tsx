@@ -3,7 +3,7 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fulltext } from "@use-pico/client/ui/fulltext";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, Suspense, useState } from "react";
-import { ListContainer } from "./CategorySelectionContainer/ListContainer";
+import { ListContainer } from "./category-select/ListContainer";
 
 export namespace CategorySelect {
 	export interface Props extends Container.Props {

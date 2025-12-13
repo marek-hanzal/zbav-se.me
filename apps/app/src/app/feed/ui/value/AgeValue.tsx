@@ -26,7 +26,7 @@ export const AgeValue: FC<AgeValue.Props> = ({ feed, ...props }) => {
 			data-ui={"AgeValue[ValueList]"}
 			textLabel={translator.text("Feed age (label)")}
 			textEmpty={translator.text("Feed age not selected")}
-            textHint={translator.text("Feed age (hint)")}
+			textHint={translator.text("Feed age (hint)")}
 			items={(ageIn ?? []).map((item) => ({
 				id: String(item),
 				age: String(item),

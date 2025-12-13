@@ -309,7 +309,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
 								<LocationValue
 									locationId={state.locationId}
 									textLabel={"Listing location (label)"}
-									textValue={"no"}
 									action={<Icon icon={EditIcon} />}
 								/>
 							</LinkTo>
