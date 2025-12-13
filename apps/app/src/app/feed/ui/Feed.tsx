@@ -248,7 +248,8 @@ export const Feed: FC<Feed.Props> = ({
 					ui={{
 						tone: "danger",
 						size: "xl",
-						justify: "start",
+						justify: "center",
+						items: "center",
 					}}
 				/>
 			)}
