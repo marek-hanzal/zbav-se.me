@@ -1,124 +1,52 @@
-import { useSelection } from "@use-pico/client/hook";
 import { EditIcon, Icon } from "@use-pico/client/icon";
-import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
-import { Button } from "@use-pico/client/ui/button";
-import { Container, ValueList } from "@use-pico/client/ui/container";
+import { ValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
-import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { CloseButton } from "@zbav-se.me/ui/button";
-import type { Rating } from "@zbav-se.me/ui/rating";
-import { type FC, useState } from "react";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import type { FC } from "react";
 
 export namespace ConditionValue {
-	export interface Props {
+	export interface Props
+		extends Omit<
+			ValueList.PropsEx<{
+				id: string;
+				condition: string;
+			}>,
+			"items" | "renderFn"
+		> {
 		feed: tFeed;
 	}
 }
 
-export const ConditionValue: FC<ConditionValue.Props> = ({ feed }) => {
-	const [isEdit, setIsEdit] = useState(false);
-	const [change, setChange] = useState(false);
-
-	const conditionSelection = useSelection<Rating.RatingItem>({
-		mode: "multi",
-		initial: feed.query?.filter?.conditionIn?.map((item) => ({
-			id: String(item),
-		})),
-		onMulti() {
-			setChange(true);
-		},
-	});
-
-	const feedPatchMutation = withFeedPatchMutation.useMutation({
-		onSettled() {
-			setChange(false);
-			setIsEdit(false);
-		},
-	});
+export const ConditionValue: FC<ConditionValue.Props> = ({ feed, ...props }) => {
+	const conditionIn = feed.query?.filter?.conditionIn;
 
 	return (
-		<>
-			<ValueList
-				data-ui={"ConditionValue[ValueList]"}
-				textLabel={"Feed condition (label)"}
-				textEmpty={"Feed condition not selected"}
-				items={conditionSelection.optional.multiId().map((id) => ({
-					id,
-					condition: id,
-				}))}
-				renderFn={(item) => (
-					<Tx
-						label={`Condition - Overall [${item.condition}] (hint)`}
-						ui={{
-							tone: "secondary",
-						}}
-					/>
-				)}
-				action={
-					<Icon
-						icon={EditIcon}
-						ui={{
-							text: "xl",
-						}}
-					/>
-				}
-				onClick={() => setIsEdit(true)}
-			/>
-
-			<BottomSheet
-				data-ui={"ConditionValue-[BottomSheet]"}
-				isOpen={isEdit}
-				onClose={() => setIsEdit(false)}
-				detent={"full"}
-				header={({ close }) => ({
-					title: "Feed condition (title)",
-					right: <CloseButton onClick={close} />,
-				})}
-			>
-				<Container
+		<ValueList
+			data-ui={"ConditionValue[ValueList]"}
+			textLabel={translator.text("Feed condition (label)")}
+			textEmpty={translator.text("Feed condition not selected")}
+			items={(conditionIn ?? []).map((item) => ({
+				id: String(item),
+				condition: String(item),
+			}))}
+			renderFn={(item) => (
+				<Tx
+					label={`Condition - Overall [${item.condition}] (hint)`}
 					ui={{
-						layout: "vertical-content-footer",
-						height: "full",
-						gap: "default",
+						tone: "secondary",
 					}}
-				>
-					<ConditionContainer selection={conditionSelection} />
-
-					<Button
-						label={"Feed - save (button)"}
-						loading={feedPatchMutation.isPending}
-						disabled={!change || feedPatchMutation.isPending}
-						onClick={() => {
-							feedPatchMutation.mutate({
-								patch: {
-									...feed,
-									query: {
-										...feed.query,
-										filter: {
-											...feed.query?.filter,
-											conditionIn: conditionSelection.optional
-												.multiId()
-												.map((id) => Number.parseInt(id, 10)),
-										},
-									},
-								},
-								query: {
-									where: {
-										id: feed.id,
-									},
-								},
-							});
-						}}
-						ui={{
-							tone: "secondary",
-							theme: "dark",
-							size: "xl",
-						}}
-					/>
-				</Container>
-			</BottomSheet>
-		</>
+				/>
+			)}
+			action={
+				<Icon
+					icon={EditIcon}
+					ui={{
+						text: "xl",
+					}}
+				/>
+			}
+			{...props}
+		/>
 	);
 };

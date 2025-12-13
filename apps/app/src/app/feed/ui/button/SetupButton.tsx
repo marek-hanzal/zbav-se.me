@@ -8,12 +8,13 @@ import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useEffect, useState } from "react";
 import { Feed } from "~/app/feed/ui/Feed";
 import { CategoryPatch } from "~/app/feed/ui/patch/CategoryPatch";
+import { ConditionPatch } from "~/app/feed/ui/patch/ConditionPatch";
 import { LocationPatch } from "~/app/feed/ui/patch/LocationPatch";
 import { NamePatch } from "~/app/feed/ui/patch/NamePatch";
 import { SortPatch } from "~/app/feed/ui/patch/SortPatch";
 
 export namespace SetupButton {
-	export type Views = "detail" | "name" | "category" | "location" | "sort";
+	export type Views = "detail" | "name" | "category" | "location" | "sort" | "condition";
 
 	export interface Props extends Button.Props {
 		locale: string;
@@ -91,6 +92,9 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									sort: {
 										onClick: () => setView("sort"),
 									},
+									condition: {
+										onClick: () => setView("condition"),
+									},
 								}}
 							>
 								{children}
@@ -148,6 +152,18 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed sorting (title)"),
+							right: <CloseButton onClick={() => setView("detail")} />,
+						}),
+					},
+					condition: {
+						children: (
+							<ConditionPatch
+								feed={feed}
+								onSettled={() => setView("detail")}
+							/>
+						),
+						header: () => ({
+							title: translator.text("Feed condition (title)"),
 							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},

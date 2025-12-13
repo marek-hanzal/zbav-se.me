@@ -108,6 +108,9 @@
 3fa727133217f67d7ba23ebb7aea03e50418be8190006ec675f298d0:
     ref: Without VAT
     value: Without VAT
+41f6e19a2afae8c9d345c87db58338d8de807964f7e7669d9e3a8db7:
+    ref: Feed condition updated (toast)
+    value: Feed condition updated (toast)
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
     ref: Cancel (button)
     value: Zrušit
@@ -535,6 +538,9 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 dc94036d98327a4965255fa6f5996fa3e1d2ade02e6d494ae1d96695:
     ref: Listing Score - Favourite (label)
     value: Listing Score - Favourite (label)
+de3ccca250a5ea4ee88cec137d458370860e5e46d338bc6a2fe0b72f:
+    ref: Error updating feed condition (toast)
+    value: Error updating feed condition (toast)
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
     ref: "0"
     value: "0"
@@ -587,7 +593,10 @@ f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
     value: Listing seller hint (label)
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
     ref: Feed age not selected
-    value: Feed age not selected
+    value: Jakékoli
+fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
+    ref: Feed condition (label)
+    value: Vybrané stavy
 facd0a879d16c3a70cca1e0454dadf75ea57307c5476c066805b5542:
     ref: Second tap to flag listing (toast)
     value:
