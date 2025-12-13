@@ -148,7 +148,6 @@ export const FeedItem: FC<FeedItem.Props> = ({
 						value: isFeedSettings,
 						set: setIsFeedSettings,
 					}}
-					// iconEnabled={FeedIcon}
 					feed={feed}
 					defaultOpen={defaultOpen}
 					noDelete={false}

@@ -2,6 +2,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import type { tUpload } from "@zbav-se.me/sdk/api/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, useRef } from "react";
 
@@ -18,10 +19,10 @@ export const GallerySheet: FC<GallerySheet.Props> = ({ uploads, ...props }) => {
 		<BottomSheet
 			data-ui={"GalleryButton-BottomSheet"}
 			detent={"full"}
-			header={{
-				close: true,
+			header={({ close }) => ({
 				title: "Gallery (title)",
-			}}
+				right: <CloseButton onClick={close} />,
+			})}
 			contentProps={{
 				disableScroll: true,
 			}}

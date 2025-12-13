@@ -1,22 +1,34 @@
 import { tvc } from "@use-pico/cls";
 import { motion, useTransform } from "motion/react";
-import { type ComponentProps, type FC, type PropsWithChildren, useRef } from "react";
+import {
+	type ComponentProps,
+	type FC,
+	type PropsWithChildren,
+	type ReactNode,
+	useRef,
+} from "react";
 import { Sheet, type SheetRef } from "react-modal-sheet";
-import { ArrowLeftIcon } from "../../icon";
-import { Button } from "../button";
 import { Container } from "../container";
 import { Tx } from "../tx";
 
 export namespace BottomSheet {
+	export namespace Header {
+		export interface Props {
+			close(): void;
+		}
+
+		export type RenderFn = (props: Props) => {
+			title?: string;
+			right?: ReactNode;
+		};
+	}
+
 	export interface Props
 		extends PropsWithChildren<Omit<ComponentProps<typeof Sheet>, "children">> {
 		containerProps?: ComponentProps<typeof Sheet.Container>;
 		contentProps?: ComponentProps<typeof Sheet.Content>;
 		withHeader?: boolean;
-		header?: {
-			close?: boolean;
-			title?: string;
-		};
+		header?: BottomSheet.Header.RenderFn;
 	}
 
 	export type PropsEx = Omit<Props, "isOpen" | "onClose">;
@@ -37,6 +49,9 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 
 		return 1 - Math.min(Math.max(y / height, 0), 1);
 	});
+	const $header = header?.({
+		close: props.onClose,
+	});
 
 	return (
 		<Sheet
@@ -54,37 +69,19 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 			>
 				{withHeader ? <Sheet.Header data-ui={"BottomSheet-[SheetHeader]"} /> : null}
 
-				{header ? (
+				{$header ? (
 					<Container
 						data-ui={"BottomSheet-[Container.header-wrapper]"}
 						ui={{
 							layout: "horizontal-flex",
 							items: "center",
-							justify: "center",
+							justify: "space-between",
 							gap: "default",
 						}}
 					>
-						{header.close ? (
-							<Button
-								iconEnabled={ArrowLeftIcon}
-								onClick={props.onClose}
-								ui={{
-									tone: "danger",
-									theme: "light",
-									round: "full",
-									square: "lg",
-									items: "center",
-									justify: "center",
-									text: "lg",
-								}}
-							/>
-						) : (
-							<div />
-						)}
-
-						{header?.title ? (
+						{$header.title ? (
 							<Tx
-								label={header.title}
+								label={$header.title}
 								preset={"subheader"}
 								ui={{
 									tone: "primary",
@@ -92,6 +89,8 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 								}}
 							/>
 						) : null}
+
+						{$header.right ?? <div />}
 					</Container>
 				) : null}
 

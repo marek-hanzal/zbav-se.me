@@ -4,6 +4,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { LocationBadgeValue } from "~/app/location/ui/LocationBadgeValue";
 import { LocationSelection } from "~/app/location/ui/LocationSelection";
@@ -52,10 +53,10 @@ export const FeedLocationBadge: FC<FeedLocationBadge.Props> = ({ locale, feed })
 				contentProps={{
 					disableScroll: true,
 				}}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: "Feed location (title)",
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<Container
 					data-ui="FeedLocationBadge-BottomSheet"

@@ -4,6 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
@@ -67,10 +68,10 @@ export const FeedCreateButton: FC<FeedCreateButton.Props> = ({
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				detent={"full"}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: "Create new feed (title)",
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<Container
 					data-ui={"FeedCreateButton-Container"}

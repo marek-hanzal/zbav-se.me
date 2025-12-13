@@ -3,6 +3,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useEffect } from "react";
 import { FeedDetailContainer } from "~/app/feed/ui/FeedDetailContainer";
 
@@ -53,10 +54,10 @@ export const FeedSetupButton: FC<FeedSetupButton.Props> = ({
 				isOpen={state.value}
 				onClose={() => state.set(false)}
 				detent={"full"}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: feed.name,
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<FeedDetailContainer
 					data-ui={"FeedSetupButton-[FeedDetailContainer]"}

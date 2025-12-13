@@ -3,6 +3,7 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useId, useState } from "react";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
@@ -105,10 +106,10 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 				isOpen={detail}
 				onClose={() => setDetail(false)}
 				detent={"full"}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: listing.title,
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<ListingDetail
 					data-ui={"ListingHeroContainer-[ListingDetailContainer]"}

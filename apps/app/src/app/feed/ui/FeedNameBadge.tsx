@@ -6,6 +6,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { toast } from "sonner";
 import { FeedName } from "./FeedName";
@@ -49,10 +50,10 @@ export const FeedNameBadge: FC<FeedNameBadge.Props> = ({ feed }) => {
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: "Feed name (title)",
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<Container
 					ui={{

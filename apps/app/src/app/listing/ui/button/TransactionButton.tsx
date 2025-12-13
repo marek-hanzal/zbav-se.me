@@ -3,6 +3,7 @@ import { Button } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import type { tListing } from "@zbav-se.me/sdk/api/user";
 import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense, useState } from "react";
 
@@ -48,10 +49,10 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 						disableScroll: true,
 					}}
 					modalEffectRootId={parentSheetId}
-					header={{
-						close: true,
+					header={({ close }) => ({
 						title: "Listing transactions (title)",
-					}}
+						right: <CloseButton onClick={close} />,
+					})}
 				>
 					<Suspense fallback={<SpinnerContainer />}>
 						<withTransactionFetchQuery.Suspense

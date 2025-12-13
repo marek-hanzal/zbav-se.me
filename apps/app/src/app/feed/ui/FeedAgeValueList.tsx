@@ -6,6 +6,7 @@ import { Container, ContainerValueList } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { type FC, useState } from "react";
 import { AgeSelection } from "~/app/age/ui/AgeSelection";
@@ -62,10 +63,10 @@ export const FeedAgeValueList: FC<FeedAgeValueList.Props> = ({ feed }) => {
 				isOpen={isEdit}
 				onClose={() => setIsEdit(false)}
 				detent={"full"}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: "Feed age (title)",
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<Container
 					ui={{

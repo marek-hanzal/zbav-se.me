@@ -6,6 +6,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useState } from "react";
 import { CategorySelectionContainer } from "~/app/category/ui/CategorySelectionContainer";
 import { CategoryValueList } from "~/app/category/ui/CategoryValueList";
@@ -55,10 +56,10 @@ export const FeedCategoryBadge: FC<FeedCategoryBadge.Props> = ({ locale, feed })
 				contentProps={{
 					disableScroll: true,
 				}}
-				header={{
-					close: true,
+				header={({ close }) => ({
 					title: "Feed category (title)",
-				}}
+					right: <CloseButton onClick={close} />,
+				})}
 			>
 				<Container
 					ui={{
