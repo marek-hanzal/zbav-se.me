@@ -23,6 +23,9 @@ export const uiWarningStatus = ({ ui, className }: uiWarningStatus.Props) => {
 			inner: "4xl",
 			...ui,
 		},
-		className,
+		className: [
+			"text-center",
+			className,
+		],
 	});
 };

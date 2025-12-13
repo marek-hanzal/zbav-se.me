@@ -6,6 +6,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { withCategoryCollectionQuery } from "@zbav-se.me/sdk/query/session";
 import { SearchIcon } from "@zbav-se.me/ui/icon";
+import { uiWarningStatus } from "@zbav-se.me/ui/ui";
 import { type FC, useEffect, useRef } from "react";
 import { CategoryItem } from "./CategoryItem";
 
@@ -66,17 +67,29 @@ export const ListContainer: FC<ListContainer.Props> = ({
 
 	if (categoryQuery.data.data.length === 0) {
 		return (
-			<Status
-				icon={SearchIcon}
-				textTitle={"No categories found (title)"}
-				textMessage={"No categories found (message)"}
-			/>
+			<Container
+				data-ui="ListContainer[Container.empty]"
+				ui={{
+					layout: "vertical-centered",
+					height: "full",
+				}}
+			>
+				<Status
+					icon={SearchIcon}
+					textTitle={"No categories found (title)"}
+					textMessage={"No categories found (message)"}
+					{...uiWarningStatus({
+						className: [],
+					})}
+					data-ui="ListContainer-[Status.empty]"
+				/>
+			</Container>
 		);
 	}
 
 	return categoryQuery.data.data.length > 0 ? (
 		<Container
-			data-ui="CategorySelectionContainer-ListContainer"
+			data-ui="ListContainer[Container.content]"
 			ref={mergedRef}
 			ui={{
 				layout: "vertical-flex",
