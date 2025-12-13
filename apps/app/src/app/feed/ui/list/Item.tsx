@@ -53,6 +53,7 @@ export const Item: FC<Item.Props> = ({
 	...props
 }) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
+	const hasListings = count && count > 0;
 
 	return (
 		<Container
@@ -135,7 +136,7 @@ export const Item: FC<Item.Props> = ({
 				/>
 			</Badge>
 
-			{tools.includes("setup") ? (
+			{tools.includes("setup") && hasListings ? (
 				<SetupButton
 					data-ui={"Item-[FeedSetupButton]"}
 					locale={locale}
@@ -166,16 +167,52 @@ export const Item: FC<Item.Props> = ({
 				/>
 			) : null}
 
-			<ListingCountBadge
-				locale={locale}
-				count={count}
-				query={feed.query}
-				ui={{
-					snapTo: "top-left",
-					background: undefined,
-					border: false,
-				}}
-			/>
+			{hasListings ? (
+				<ListingCountBadge
+					locale={locale}
+					count={count}
+					query={feed.query}
+					ui={{
+						snapTo: "top-left",
+						background: undefined,
+						border: false,
+						shadow: false,
+					}}
+				/>
+			) : null}
+
+			{hasListings ? null : (
+				<SetupButton
+					data-ui={"Item-[FeedSetupButton]"}
+					locale={locale}
+					iconProps={{
+						ui: {
+							text: "xl",
+						},
+					}}
+					state={{
+						value: isFeedSettings,
+						set: setIsFeedSettings,
+					}}
+					feed={feed}
+					defaultOpen={defaultOpen}
+					noDelete={false}
+					label={"No listings (badge)"}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+						snapTo: "bottom",
+						color: "lead",
+						opacity: "low",
+						inner: "default",
+						items: "center",
+						justify: "center",
+						gap: "default",
+						font: "bold",
+						shadow: true,
+					}}
+				/>
+			)}
 		</Container>
 	);
 };
