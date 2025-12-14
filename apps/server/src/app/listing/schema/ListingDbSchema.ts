@@ -32,6 +32,17 @@ export const ListingDbSchema = z
 		categoryId: z.string().openapi({
 			description: "ID of the category",
 		}),
+		galleryId: z.string().openapi({
+			description: "ID of the gallery",
+		}),
+		draftId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "ID of the draft this listing was created from",
+			}),
 		expiresAt: z.coerce.date().openapi({
 			description: "Expiration timestamp",
 			type: "string",

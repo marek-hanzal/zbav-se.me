@@ -63,6 +63,9 @@ export const DraftDbSchema = z
 			.openapi({
 				description: "ID of the category",
 			}),
+		galleryId: z.string().openapi({
+			description: "ID of the gallery",
+		}),
 		expiresAt: z
 			.union([
 				z.null(),
