@@ -58,9 +58,7 @@ export const withFetchApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<UploadSchema.Type, 200>(
-					yield* uploadFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* uploadFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

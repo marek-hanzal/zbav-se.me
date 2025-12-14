@@ -17,11 +17,9 @@ export const ignoreDeleteFx = ({ listingId }: ignoreDeleteFx.Props) => {
 			const user = yield* UserContextFx;
 
 			const ignore = yield* ignoreFetchFx({
-				query: {
-					where: {
-						listingId,
-						userId: user.id,
-					},
+				where: {
+					listingId,
+					userId: user.id,
 				},
 			});
 

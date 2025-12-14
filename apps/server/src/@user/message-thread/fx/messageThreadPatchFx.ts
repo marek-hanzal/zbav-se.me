@@ -13,9 +13,7 @@ export const messageThreadPatchFx = ({ patch, query }: messageThreadPatchFx.Prop
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
-			const messageThread = yield* messageThreadFetchFx({
-				query,
-			});
+			const messageThread = yield* messageThreadFetchFx(query);
 
 			yield* Effect.tryPromise(async () => {
 				return database
@@ -29,10 +27,8 @@ export const messageThreadPatchFx = ({ patch, query }: messageThreadPatchFx.Prop
 			});
 
 			return yield* messageThreadFetchFx({
-				query: {
-					where: {
-						id: messageThread.id,
-					},
+				where: {
+					id: messageThread.id,
 				},
 			});
 		}),

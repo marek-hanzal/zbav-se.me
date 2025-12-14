@@ -43,10 +43,8 @@ export const messageTextCreateFx = ({ messageThreadId, message }: messageTextCre
 			});
 
 			return yield* messageTextFetchFx({
-				query: {
-					where: {
-						id,
-					},
+				where: {
+					id,
 				},
 			});
 		}),

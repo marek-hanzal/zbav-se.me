@@ -58,9 +58,7 @@ export const withLocationFetchApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<LocationSchema.Type, 200>(
-					yield* locationFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* locationFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

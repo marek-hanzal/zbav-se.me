@@ -59,9 +59,7 @@ export const withFetchApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<GallerySchema.Type, 200>(
-					yield* galleryFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* galleryFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

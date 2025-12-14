@@ -40,10 +40,8 @@ export const uploadCreateFx = ({ data: { url } }: uploadCreateFx.Props) => {
 		});
 
 		return yield* uploadFetchFx({
-			query: {
-				where: {
-					id,
-				},
+			where: {
+				id,
 			},
 		});
 	});

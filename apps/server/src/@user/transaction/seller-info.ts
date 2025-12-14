@@ -60,9 +60,7 @@ export const withSellerInfoApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				const transaction = yield* transactionFetchFx({
-					query: c.req.valid("json"),
-				});
+				const transaction = yield* transactionFetchFx(c.req.valid("json"));
 
 				return c.json<TransactionSellerInfoSchema.Type, 200>(
 					yield* transactionGetSellerInfoFx({

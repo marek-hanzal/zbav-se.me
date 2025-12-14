@@ -58,12 +58,7 @@ export const withFetchApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<FeedSchema.Type, 200>(
-					yield* feedFetchFx({
-						query: c.req.valid("json"),
-					}),
-					200,
-				);
+				return c.json<FeedSchema.Type, 200>(yield* feedFetchFx(c.req.valid("json")), 200);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

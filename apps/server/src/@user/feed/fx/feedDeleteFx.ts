@@ -17,9 +17,7 @@ export const feedDeleteFx = ({ query }: feedDeleteFx.Props) => {
 			const database = yield* DatabaseContextFx;
 			const user = yield* UserContextFx;
 
-			const feed = yield* feedFetchFx({
-				query,
-			});
+			const feed = yield* feedFetchFx(query);
 
 			yield* Effect.tryPromise(async () => {
 				return database

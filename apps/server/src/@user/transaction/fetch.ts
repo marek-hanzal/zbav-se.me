@@ -59,9 +59,7 @@ export const withFetchApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<TransactionSchema.Type, 200>(
-					yield* transactionFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* transactionFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

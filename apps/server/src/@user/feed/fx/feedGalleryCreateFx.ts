@@ -58,10 +58,8 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			}
 
 			const gallery = yield* galleryFetchFx({
-				query: {
-					where: {
-						id: feed.id,
-					},
+				where: {
+					id: feed.id,
 				},
 			});
 
@@ -102,10 +100,8 @@ export const feedGalleryCreateFx = ({ feedId, uploadIds }: feedGalleryCreateFx.P
 			});
 
 			return yield* galleryFetchFx({
-				query: {
-					where: {
-						id: gallery.id,
-					},
+				where: {
+					id: gallery.id,
 				},
 			});
 		}),

@@ -68,10 +68,8 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 			});
 
 			return yield* transactionFetchFx({
-				query: {
-					where: {
-						id,
-					},
+				where: {
+					id,
 				},
 			});
 		}),

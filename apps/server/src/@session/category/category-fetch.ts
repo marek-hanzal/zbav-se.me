@@ -58,9 +58,7 @@ export const withCategoryFetchApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CategorySchema.Type, 200>(
-					yield* categoryFetchFx({
-						query: c.req.valid("json"),
-					}),
+					yield* categoryFetchFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

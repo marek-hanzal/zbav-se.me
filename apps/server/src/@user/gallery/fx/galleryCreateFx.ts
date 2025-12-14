@@ -23,10 +23,8 @@ export const galleryCreateFx = () => {
 		});
 
 		return yield* galleryFetchFx({
-			query: {
-				where: {
-					id,
-				},
+			where: {
+				id,
 			},
 		});
 	});

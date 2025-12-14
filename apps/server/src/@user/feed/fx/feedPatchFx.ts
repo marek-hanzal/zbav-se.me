@@ -13,9 +13,7 @@ export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
 
-			const feed = yield* feedFetchFx({
-				query,
-			});
+			const feed = yield* feedFetchFx(query);
 
 			yield* Effect.tryPromise(async () => {
 				return database
@@ -30,10 +28,8 @@ export const feedPatchFx = ({ patch, query }: feedPatchFx.Props) => {
 			});
 
 			return yield* feedFetchFx({
-				query: {
-					where: {
-						id: feed.id,
-					},
+				where: {
+					id: feed.id,
 				},
 			});
 		}),

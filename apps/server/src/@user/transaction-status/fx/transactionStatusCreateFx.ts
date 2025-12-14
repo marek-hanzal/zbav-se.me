@@ -37,10 +37,8 @@ export const transactionStatusCreateFx = (create: transactionStatusCreateFx.Prop
 		});
 
 		return yield* transactionStatusFetchFx({
-			query: {
-				where: {
-					id,
-				},
+			where: {
+				id,
 			},
 		});
 	});

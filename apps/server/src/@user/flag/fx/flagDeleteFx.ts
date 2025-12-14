@@ -17,11 +17,9 @@ export const flagDeleteFx = ({ listingId }: flagDeleteFx.Props) => {
 			const user = yield* UserContextFx;
 
 			const flag = yield* flagFetchFx({
-				query: {
-					where: {
-						listingId,
-						userId: user.id,
-					},
+				where: {
+					listingId,
+					userId: user.id,
 				},
 			});
 

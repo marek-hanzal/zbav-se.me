@@ -29,10 +29,8 @@ export const messageThreadCreateFx = (_: messageThreadCreateFx.Props) => {
 			});
 
 			return yield* messageThreadFetchFx({
-				query: {
-					where: {
-						id,
-					},
+				where: {
+					id,
 				},
 			});
 		}),

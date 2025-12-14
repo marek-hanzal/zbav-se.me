@@ -17,11 +17,9 @@ export const favouriteDeleteFx = ({ listingId }: favouriteDeleteFx.Props) => {
 			const user = yield* UserContextFx;
 
 			const favourite = yield* favouriteFetchFx({
-				query: {
-					where: {
-						listingId,
-						userId: user.id,
-					},
+				where: {
+					listingId,
+					userId: user.id,
 				},
 			});
 

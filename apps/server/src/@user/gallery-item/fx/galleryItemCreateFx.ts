@@ -23,11 +23,9 @@ export const galleryItemCreateFx = ({ galleryId, uploadId, sort }: galleryItemCr
 		const id = genId();
 
 		const gallery = yield* galleryFetchFx({
-			query: {
-				where: {
-					id: galleryId,
-					userId: user.id,
-				},
+			where: {
+				id: galleryId,
+				userId: user.id,
 			},
 		});
 
@@ -53,10 +51,8 @@ export const galleryItemCreateFx = ({ galleryId, uploadId, sort }: galleryItemCr
 		});
 
 		return yield* galleryItemFetchFx({
-			query: {
-				where: {
-					id,
-				},
+			where: {
+				id,
 			},
 		});
 	});

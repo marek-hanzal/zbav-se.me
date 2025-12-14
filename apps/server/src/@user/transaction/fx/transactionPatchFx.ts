@@ -16,9 +16,7 @@ export const transactionPatchFx = ({ patch, query }: transactionPatchFx.Props) =
 			const database = yield* DatabaseContextFx;
 			const config = yield* TransactionContextFx;
 
-			const transaction = yield* transactionFetchFx({
-				query,
-			});
+			const transaction = yield* transactionFetchFx(query);
 
 			const now = DateTime.now();
 
@@ -39,10 +37,8 @@ export const transactionPatchFx = ({ patch, query }: transactionPatchFx.Props) =
 			});
 
 			return yield* transactionFetchFx({
-				query: {
-					where: {
-						id: transaction.id,
-					},
+				where: {
+					id: transaction.id,
 				},
 			});
 		}),
