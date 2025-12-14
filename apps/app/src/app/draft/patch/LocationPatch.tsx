@@ -7,7 +7,6 @@ export namespace LocationPatch {
 	export interface Props extends TitleContainer.Props {
 		locale: string;
 		draft: tDraft;
-		value: string | undefined | null;
 		onCancel(): void;
 		onSave(locationId: string | null): void;
 		loading: boolean;
@@ -17,7 +16,6 @@ export namespace LocationPatch {
 export const LocationPatch: FC<LocationPatch.Props> = ({
 	locale,
 	draft,
-	value,
 	onCancel,
 	onSave,
 	loading,
@@ -36,7 +34,7 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 					onSave(locationId);
 				}}
 				loading={loading}
-				value={value}
+				value={draft.locationId}
 				ui={{
 					inner: "default",
 				}}

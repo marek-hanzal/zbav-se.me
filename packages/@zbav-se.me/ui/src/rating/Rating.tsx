@@ -45,7 +45,7 @@ export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) 
 				scroll: "vertical",
 				height: "auto",
 				flow: "vertical",
-				gap: "default",
+				gap: "lg",
 				...ui,
 			}}
 			{...props}

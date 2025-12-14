@@ -1,5 +1,4 @@
 import { Icon } from "@use-pico/client/icon";
-import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { Typo } from "@use-pico/client/ui/typo";
@@ -49,10 +48,19 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 			}}
 			{...props}
 		>
-			<Badge
+			<Container
 				data-ui={"Dial-Badge-value-wrapper"}
 				ui={{
-					size: "xl",
+					tone: "neutral",
+					theme: "light",
+					flow: "horizontal",
+					justify: "space-between",
+					items: "center",
+					inner: "lg",
+					background: "default",
+					shadow: true,
+					border: true,
+					round: "default",
 				}}
 			>
 				{value ? (
@@ -73,6 +81,7 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 							text: "xl",
 							font: "bold",
 							display: "block",
+							color: "icon",
 						}}
 					/>
 				)}
@@ -85,10 +94,12 @@ export const Dial: FC<Dial.Props> = ({ value, onChange, ui, ...props }) => {
 					}}
 					ui={{
 						tone: "secondary",
+						theme: "light",
 						disabled: !value,
+						text: "2xl",
 					}}
 				/>
-			</Badge>
+			</Container>
 
 			<div
 				data-ui={"Dial-grid"}

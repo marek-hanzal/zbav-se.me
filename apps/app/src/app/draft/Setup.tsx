@@ -1,16 +1,15 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { CloseIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { View } from "@use-pico/client/ui/view";
-import { type tDraft, type tListing, zListingCreate } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation, withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import type { tDraft, tListing } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { ListingIcon } from "@zbav-se.me/ui/icon";
-import { uiBackButton, uiSaveButton } from "@zbav-se.me/ui/ui";
+import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
+import { CreateListingButton } from "~/app/draft/button/CreateListingButton";
 import { DeleteButton } from "~/app/draft/button/DeleteButton";
 import { AgePatch } from "~/app/draft/patch/AgePatch";
 import { CategoryPatch } from "~/app/draft/patch/CategoryPatch";
@@ -61,15 +60,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 			});
 			setView("default");
 		},
-	});
-	const listingCreateMutation = withListingCreateMutation.useMutation({
-		onSuccess: onListing,
-	});
-
-	const listing = zListingCreate.safeParse({
-		...draft,
-		uploadIds: draft.gallery.items.map((item) => item.uploadId),
-		draftId: draft.id,
 	});
 
 	return (
@@ -160,24 +150,9 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 									}}
 								/>
 
-								<Button
-									iconEnabled={ListingIcon}
-									iconProps={{
-										ui: {
-											text: "2xl",
-										},
-									}}
-									label={"Submit listing (button)"}
-									disabled={!listing.success || listingCreateMutation.isPending}
-									loading={listingCreateMutation.isPending}
-									onClick={() => {
-										if (listing.success) {
-											listingCreateMutation.mutate(listing.data);
-										}
-									}}
-									{...uiSaveButton({
-										className: [],
-									})}
+								<CreateListingButton
+									draft={draft}
+									onListing={onListing}
 								/>
 
 								<DeleteButton
@@ -215,7 +190,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 							loading={mutation.isPending}
 							locale={locale}
 							draft={draft}
-							value={draft.locationId}
 							onCancel={() => setView("default")}
 							onSave={(locationId) => {
 								mutation.mutate({

@@ -2,8 +2,4 @@
 	.ToolbarContainer[data-ui-flip="true"] {
 		flex-direction: row-reverse;
 	}
-
-	.ToolbarContainer[data-ui-horizontal="true"] {
-		flex-direction: row;
-	}
 }

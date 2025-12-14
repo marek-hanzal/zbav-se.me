@@ -1,6 +1,4 @@
 import { Container } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
@@ -38,32 +36,14 @@ export const PricePatch: FC<PricePatch.Props> = ({
 					layout: "vertical-content-footer",
 					height: "full",
 					width: "full",
+					inner: "default",
+					gap: "default",
 				}}
 			>
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						textTitle={"Price (title)"}
-						action={
-							<Dial
-								value={price}
-								onChange={setPrice}
-							/>
-						}
-					>
-						<Mx
-							label={"Price (required)"}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
-					</Status>
-				</Container>
+				<Dial
+					value={price}
+					onChange={setPrice}
+				/>
 
 				<SaveControl
 					onCancel={onCancel}
