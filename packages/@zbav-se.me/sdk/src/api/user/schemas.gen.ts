@@ -2644,7 +2644,6 @@ export const sFeedCreate = {
     },
     required: [
         'name',
-        'locationId',
         'query'
     ]
 } as const;

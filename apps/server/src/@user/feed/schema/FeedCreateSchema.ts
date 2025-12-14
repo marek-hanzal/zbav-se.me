@@ -11,6 +11,7 @@ export const FeedCreateSchema = z
 				z.string(),
 				z.null(),
 			])
+			.optional()
 			.openapi({
 				description: "ID of the location associated with the feed",
 			}),

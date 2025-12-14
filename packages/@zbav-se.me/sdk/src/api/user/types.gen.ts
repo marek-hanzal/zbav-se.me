@@ -1872,7 +1872,7 @@ export type tFeedCreate = {
     /**
      * ID of the location associated with the feed
      */
-    locationId: string | null;
+    locationId?: string | null;
     query: tListingQuery;
 };
 

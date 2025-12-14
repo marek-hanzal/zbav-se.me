@@ -1,6 +1,7 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -40,6 +41,8 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 				});
 			}
 
+			const messageThread = yield* messageThreadCreateFx({});
+
 			const id = genId();
 
 			yield* Effect.tryPromise(async () => {
@@ -49,6 +52,7 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 						id,
 						userId: user.id,
 						listingId,
+						messageThreadId: messageThread.id,
 						createdAt: DateTime.now().toJSDate(),
 						updatedAt: DateTime.now().toJSDate(),
 						expiresAt: DateTime.now()

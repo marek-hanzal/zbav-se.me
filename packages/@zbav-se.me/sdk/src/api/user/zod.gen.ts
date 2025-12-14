@@ -2043,10 +2043,10 @@ export const zFeedCreate = z.object({
     name: z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
-    locationId: z.union([
+    locationId: z.optional(z.union([
         z.string(),
         z.null()
-    ]),
+    ])),
     query: zListingQuery
 }).register(z.globalRegistry, {
     description: 'Data for creating a new feed'
