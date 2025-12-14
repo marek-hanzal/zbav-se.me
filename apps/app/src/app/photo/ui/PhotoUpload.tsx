@@ -110,6 +110,8 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				height: "full",
 				...ui,
 			}}
+			onClick={pick}
+			onKeyDown={onKeyDown}
 			{...props}
 		>
 			<input
