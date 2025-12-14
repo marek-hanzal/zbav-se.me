@@ -4,11 +4,13 @@ import { Effect } from "effect";
 import { DateTime } from "luxon";
 import pgvector from "pgvector";
 import { match } from "ts-pattern";
+import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
+import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import type { ListingCreateSchema } from "~/@user/listing/schema/ListingCreateSchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import { galleryCreateFx } from "./galleryCreateFx";
+import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { listingFetchFx } from "./listingFetchFx";
 
 export namespace listingCreateFx {
@@ -26,12 +28,31 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 			const id = genId();
 			const now = new Date();
 
+			if (data.uploadIds.length === 0) {
+				return yield* new InvalidRequestError({
+					message: "At least one upload is required",
+				});
+			}
+
+			const gallery = yield* coolGalleryCreateFx();
+
+			let sort = 0;
+			for (const uploadId of data.uploadIds) {
+				yield* galleryItemCreateFx({
+					galleryId: gallery.id,
+					uploadId,
+					sort,
+				});
+				sort++;
+			}
+
 			yield* Effect.tryPromise(async () => {
 				return database
 					.insertInto("listing")
 					.values({
 						id,
 						userId: user.id,
+						galleryId: gallery.id,
 						createdAt: now,
 						updatedAt: now,
 						currency: "CZK",
@@ -66,11 +87,6 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 							.exhaustive(),
 					})
 					.execute();
-			});
-
-			yield* galleryCreateFx({
-				listingId: id,
-				uploadIds: data.uploadIds,
 			});
 
 			return yield* listingFetchFx({

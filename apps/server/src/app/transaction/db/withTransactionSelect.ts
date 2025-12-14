@@ -32,16 +32,7 @@ export const withTransactionSelect = ({ database, sort }: withTransactionSelect.
 						database,
 						sort: undefined,
 					})
-						.where(
-							"gal.id",
-							"in",
-							eb
-								.selectFrom("listing_gallery as lg")
-								.select("lg.galleryId")
-								.whereRef("lg.listingId", "=", "l.id")
-								.orderBy("lg.createdAt", "desc")
-								.limit(1),
-						)
+						.where("gal.id", "=", eb.ref("l.galleryId"))
 						.limit(1),
 				)
 					.$notNull()

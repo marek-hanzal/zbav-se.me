@@ -1,7 +1,6 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import type { DraftCreateSchema } from "~/@user/draft/schema/DraftCreateSchema";
-import { draftGalleryCreateFx } from "~/@user/draft-gallery/fx/draftGalleryCreateFx";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
 import { galleryItemCreateFx } from "~/@user/gallery-item/fx/galleryItemCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
@@ -22,23 +21,10 @@ export const draftCreateFx = (data: draftCreateFx.Props) => {
 			const id = genId();
 			const now = new Date();
 
-			yield* Effect.tryPromise(async () => {
-				return database
-					.insertInto("draft")
-					.values({
-						id,
-						userId: user.id,
-						createdAt: now,
-						updatedAt: now,
-						currency: "CZK",
-						...data,
-					})
-					.execute();
-			});
+			const gallery = yield* coolGalleryCreateFx();
 
+			// Add gallery items if provided
 			if (data.uploadIds && data.uploadIds.length > 0) {
-				const gallery = yield* coolGalleryCreateFx();
-
 				let sort = 0;
 				for (const uploadId of data.uploadIds) {
 					yield* galleryItemCreateFx({
@@ -48,12 +34,23 @@ export const draftCreateFx = (data: draftCreateFx.Props) => {
 					});
 					sort++;
 				}
-
-				yield* draftGalleryCreateFx({
-					draftId: id,
-					galleryId: gallery.id,
-				});
 			}
+
+			// Create draft with galleryId
+			yield* Effect.tryPromise(async () => {
+				return database
+					.insertInto("draft")
+					.values({
+						id,
+						userId: user.id,
+						galleryId: gallery.id,
+						createdAt: now,
+						updatedAt: now,
+						currency: "CZK",
+						...data,
+					})
+					.execute();
+			});
 
 			return yield* draftFetchFx({
 				where: {

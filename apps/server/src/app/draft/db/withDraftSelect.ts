@@ -26,16 +26,7 @@ export const withDraftSelect = ({ database, sort }: withDraftSelect.Props) => {
 					database,
 					sort: undefined,
 				})
-					.where(
-						"gal.id",
-						"in",
-						eb
-							.selectFrom("draft_gallery as dg")
-							.select("dg.galleryId")
-							.whereRef("dg.draftId", "=", "d.id")
-							.orderBy("dg.createdAt", "desc")
-							.limit(1),
-					)
+					.where("gal.id", "=", eb.ref("d.galleryId"))
 					.limit(1),
 			).as("gallery"),
 		]);

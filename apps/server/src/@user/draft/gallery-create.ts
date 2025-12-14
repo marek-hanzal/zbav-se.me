@@ -13,8 +13,7 @@ export const withGalleryCreateApi: Routes.Fn = ({ userHono }) => {
 		createRoute({
 			method: "post",
 			path: "/draft/gallery/create",
-			description:
-				"Create or update a gallery for a draft. If gallery doesn't exist, creates it and attaches uploads.",
+			description: "Update a draft gallery. Gallery is always created with the draft.",
 			operationId: "apiDraftGalleryCreate",
 			request: {
 				body: {
