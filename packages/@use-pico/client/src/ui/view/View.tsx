@@ -1,7 +1,6 @@
 import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
 import {
-	Activity,
 	type PropsWithChildren,
 	type ReactNode,
 	type RefObject,
@@ -132,13 +131,19 @@ export const View = <TView extends string, TProps>({
 			}
 		},
 		scrollRef,
-		content: entriesOf(views).map(([view, { children }]) => (
-			<Activity
-				key={`${activityRootId}-${view}`}
-				mode={state.value === view ? "visible" : "hidden"}
-			>
-				{children}
-			</Activity>
-		)),
+		content: entriesOf(views).map(([view, { children }]) => {
+			if (state.value === view) {
+				return (
+					<div
+						key={`${activityRootId}-${view}`}
+						className={"w-full h-full"}
+					>
+						{children}
+					</div>
+				);
+			}
+
+			return null;
+		}),
 	});
 };

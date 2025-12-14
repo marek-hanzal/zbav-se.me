@@ -495,6 +495,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSuccess={() => setView("default")}
+							defaultUploadIds={draft.gallery.items.map((item) => item.uploadId)}
 						/>
 					),
 				},

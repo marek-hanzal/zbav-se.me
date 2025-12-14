@@ -9,6 +9,7 @@ export namespace GalleryPatch {
 		draft: tDraft;
 		onCancel(): void;
 		onSuccess(): void;
+		defaultUploadIds: string[];
 	}
 }
 
@@ -17,6 +18,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	onCancel,
 	onSuccess,
 	ui,
+	defaultUploadIds,
 	...props
 }) => {
 	return (
@@ -35,6 +37,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 					draftId: draft.id,
 					uploadIds,
 				})}
+				defaultUploadIds={defaultUploadIds}
 				onCancel={onCancel}
 				onSuccess={onSuccess}
 				limit={10}

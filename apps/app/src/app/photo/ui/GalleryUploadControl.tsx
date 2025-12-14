@@ -12,6 +12,7 @@ export namespace GalleryUploadControl {
 	export interface Props<TData extends Uploads> extends Container.Props {
 		withMutation: withMutation.Api<TData, any, any>;
 		toMutation(uploadIds: string[]): TData;
+		defaultUploadIds: string[];
 		//
 		onCancel(): void;
 		onSuccess(): void;
@@ -22,13 +23,14 @@ export namespace GalleryUploadControl {
 export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>({
 	withMutation,
 	toMutation,
+	defaultUploadIds = [],
 	onCancel,
 	onSuccess,
 	ui,
 	limit = 1,
 	...props
 }: GalleryUploadControl.Props<TData>) => {
-	const [uploadIds, setUploadIds] = useState<string[]>([]);
+	const [uploadIds, setUploadIds] = useState<string[]>(defaultUploadIds);
 	const mutation = withMutation.useMutation({
 		async onPostMutation() {
 			setUploadIds([]);
