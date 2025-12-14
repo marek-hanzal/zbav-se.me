@@ -1,25 +1,19 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { CloseIcon, EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { Container, LabelValue } from "@use-pico/client/ui/container";
+import { CloseIcon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
-import { translator } from "@use-pico/common/translator";
 import { type tDraft, type tListing, zListingCreate } from "@zbav-se.me/sdk/api/user";
-import {
-	withDraftDeleteMutation,
-	withDraftPatchMutation,
-	withListingCreateMutation,
-} from "@zbav-se.me/sdk/mutation/user";
+import { withDraftPatchMutation, withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon, PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { uiBackButton, uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
-import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { DeleteButton } from "~/app/draft/button/DeleteButton";
 import { AgePatch } from "~/app/draft/patch/AgePatch";
 import { CategoryPatch } from "~/app/draft/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/draft/patch/ConditionPatch";
@@ -28,7 +22,13 @@ import { GalleryPatch } from "~/app/draft/patch/GalleryPatch";
 import { LocationPatch } from "~/app/draft/patch/LocationPatch";
 import { PricePatch } from "~/app/draft/patch/PricePatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
-import { LocationValue } from "~/app/location/ui/LocationValue";
+import { AgeValue } from "~/app/draft/value/AgeValue";
+import { CategoryValue } from "~/app/draft/value/CategoryValue";
+import { ConditionValue } from "~/app/draft/value/ConditionValue";
+import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
+import { LocationValue } from "~/app/draft/value/LocationValue";
+import { PriceValue } from "~/app/draft/value/PriceValue";
+import { TitleValue } from "~/app/draft/value/TitleValue";
 
 export namespace Setup {
 	export type View =
@@ -62,9 +62,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 			});
 			setView("default");
 		},
-	});
-	const deleteMutation = withDraftDeleteMutation.useMutation({
-		onSuccess: onDelete,
 	});
 	const listingCreateMutation = withListingCreateMutation.useMutation({
 		onSuccess: onListing,
@@ -164,191 +161,51 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 									)}
 								</Container>
 
-								<LabelValue
-									wrapperProps={{
-										ui: {
-											tone: draft.title ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Listing title (label)")}
-									textValue={draft.title ?? null}
-									textEmpty={translator.text("Listing title not filled")}
+								<TitleValue
+									draft={draft}
 									onClick={() => {
 										setView("title");
 									}}
 								/>
 
-								<LabelValue
-									wrapperProps={{
-										ui: {
-											tone: draft.category ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Listing category (label)")}
-									textValue={
-										draft.category ? (
-											<CategoryInline
-												category={draft.category}
-												tone="secondary"
-												theme="light"
-											/>
-										) : null
-									}
-									textEmpty={translator.text("Listing category not selected")}
+								<CategoryValue
+									draft={draft}
 									onClick={() => {
 										setView("category");
 									}}
 								/>
 
 								<LocationValue
-									wrapperProps={{
-										ui: {
-											tone: draft.locationId ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Listing location (label)")}
-									textEmpty={translator.text("Listing location not selected")}
-									textHint={translator.text("Listing location (hint)")}
-									locationId={draft.locationId}
+									draft={draft}
 									onClick={() => {
 										setView("location");
 									}}
 								/>
 
-								<LabelValue
-									wrapperProps={{
-										ui: {
-											tone:
-												draft.price && draft.currency
-													? "neutral"
-													: "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Price (title)")}
-									textValue={
-										draft.price && draft.currency ? (
-											<PriceInline
-												price={draft.price}
-												locale={locale}
-												currency={draft.currency}
-											/>
-										) : null
-									}
-									textEmpty={translator.text("Price not set")}
+								<PriceValue
+									draft={draft}
+									locale={locale}
 									onClick={() => {
 										setView("price");
 									}}
 								/>
 
-								<LabelValue
-									wrapperProps={{
-										ui: {
-											tone: draft.condition ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Listing condition (label)")}
-									textValue={
-										draft.condition
-											? translator.text(
-													`Condition - Overall [${draft.condition}] (hint)`,
-												)
-											: null
-									}
-									textEmpty={translator.text("Condition not selected")}
+								<ConditionValue
+									draft={draft}
 									onClick={() => {
 										setView("condition");
 									}}
 								/>
 
-								<LabelValue
-									wrapperProps={{
-										ui: {
-											tone: draft.age ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Listing age (label)")}
-									textValue={
-										draft.age
-											? translator.text(
-													`Condition - Age [${draft.age}] (hint)`,
-												)
-											: null
-									}
-									textEmpty={translator.text("Age not selected")}
-									textHint={translator.text("Listing age (hint)")}
+								<AgeValue
+									draft={draft}
 									onClick={() => {
 										setView("age");
 									}}
 								/>
 
-								<LabelValue
-									wrapperProps={{
-										ui: {
-											tone: draft.expiresAt ? "neutral" : "primary",
-										},
-									}}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Expire (title)")}
-									textValue={
-										draft.expiresAt ? `Expire in ${draft.expiresAt}` : null
-									}
-									textEmpty={translator.text("Expiration date not set")}
-									textHint={translator.text("Draft expire (hint)")}
+								<ExpireAtValue
+									draft={draft}
 									onClick={() => {
 										setView("expireAt");
 									}}
@@ -374,35 +231,9 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 									})}
 								/>
 
-								<ConfirmButton
-									iconEnabled={TrashIcon}
-									iconProps={{
-										ui: {
-											text: "2xl",
-										},
-									}}
-									label={"Delete draft (button)"}
-									disabled={deleteMutation.isPending}
-									loading={deleteMutation.isPending}
-									confirmProps={{
-										ui: {
-											tone: "danger",
-											theme: "light",
-										},
-										onClick() {
-											deleteMutation.mutate({
-												where: {
-													id: draft.id,
-												},
-											});
-										},
-									}}
-									{...uiSaveButton({
-										ui: {
-											tone: "warning",
-										},
-										className: [],
-									})}
+								<DeleteButton
+									draft={draft}
+									onDelete={onDelete}
 								/>
 							</Container>
 						</TitleContainer>
