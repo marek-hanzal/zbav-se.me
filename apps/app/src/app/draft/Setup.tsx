@@ -3,14 +3,12 @@ import { CloseIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
 import { type tDraft, type tListing, zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation, withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { ListingIcon, PhotoIcon } from "@zbav-se.me/ui/icon";
-import { HeroImage } from "@zbav-se.me/ui/img";
+import { ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton, uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { DeleteButton } from "~/app/draft/button/DeleteButton";
@@ -26,6 +24,7 @@ import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
 import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
+import { GalleryValue } from "~/app/draft/value/GalleryValue";
 import { LocationValue } from "~/app/draft/value/LocationValue";
 import { PriceValue } from "~/app/draft/value/PriceValue";
 import { TitleValue } from "~/app/draft/value/TitleValue";
@@ -106,60 +105,10 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 									gap: "lg",
 								}}
 							>
-								<Container
-									data-ui={"Setup-[Container.placeholder]"}
-									ui={{
-										tone: "neutral",
-										theme: "light",
-										round: "md",
-										width: "full",
-										flow: "horizontal",
-										items: "center",
-										justify: "center",
-										background: "default",
-										shadow: true,
-										border: true,
-									}}
-									className="h-42"
+								<GalleryValue
+									draft={draft}
 									onClick={() => setView("gallery")}
-								>
-									{draft.gallery.items.length > 0 &&
-									draft.gallery.items[0]?.upload ? (
-										<HeroImage
-											src={draft.gallery.items[0]?.upload.url}
-											ui={{
-												round: "default",
-											}}
-										/>
-									) : null}
-
-									{draft.gallery.items.length > 0 ? null : (
-										<Status
-											data-ui={"Setup-[Status.photo-hint]"}
-											icon={PhotoIcon}
-											iconProps={{
-												ui: {
-													text: "3xl",
-												},
-											}}
-											textTitle={"Listing photo gallery (label)"}
-											titleProps={{
-												ui: {
-													font: "normal",
-													text: "lg",
-												},
-											}}
-											ui={{
-												tone:
-													(draft.gallery?.items.length ?? 0) > 0
-														? "neutral"
-														: "primary",
-												theme: "light",
-												text: "default",
-											}}
-										/>
-									)}
-								</Container>
+								/>
 
 								<TitleValue
 									draft={draft}
