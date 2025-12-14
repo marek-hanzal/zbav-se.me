@@ -1,6 +1,14 @@
 import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
-import { Activity, type ReactNode, useCallback, useLayoutEffect, useMemo, useRef } from "react";
+import {
+	Activity,
+	type ReactNode,
+	useCallback,
+	useEffect,
+	useLayoutEffect,
+	useMemo,
+	useRef,
+} from "react";
 import { BottomSheet } from "../bottom-sheet";
 
 export namespace SheetView {
@@ -106,6 +114,19 @@ export const SheetView = <TView extends string>({
 			}
 		};
 	}, []);
+
+	useEffect(() => {
+		if (props.isOpen) {
+			return;
+		}
+
+		for (const view of Object.keys(views) as TView[]) {
+			scrollPositionsRef.current.set(view, 0);
+		}
+	}, [
+		props.isOpen,
+		views,
+	]);
 
 	return (
 		<BottomSheet
