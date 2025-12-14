@@ -53,6 +53,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 				gap: "xs",
 				border: true,
 				shadow: true,
+				width: "full",
 				...ui,
 			}}
 			{...props}
@@ -67,6 +68,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					justify: "space-between",
 					gap: "default",
 					color: "lead",
+					width: "full",
 				}}
 			>
 				<Tx

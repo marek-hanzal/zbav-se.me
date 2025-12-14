@@ -16,6 +16,12 @@
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
     ref: Gallery (title)
     value: Galerie
+0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
+    ref: Draft edit (title)
+    value: Nový inzerát
+0c9894c76e29f55765dff10ff581829edf7d20f6150d95e2a199347e:
+    ref: Listing location (title)
+    value: Umístění inzerátu
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
     ref: Location security (hint)
     value: |
@@ -32,6 +38,12 @@
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
     ref: Listings (label)
     value: Inzeráty
+1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
+    ref: Listing title not filled
+    value: Čeká na vyplnění
+1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
+    ref: Save (button)
+    value: Uložit
 14663fea507627f6c98c1360a9aa3c6d275ed885e44051e7d88af28a:
     ref: Feed age (hint)
     value: >
@@ -203,6 +215,9 @@
 5f89ec425f9a625c897a3bcc1d45953bef4ace5e5b7cfacf258790c5:
     ref: Upload gallery (button)
     value: Odeslat
+5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
+    ref: Listing photo gallery (label)
+    value: Galerie inzerátu
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
     ref: Really delete feed (button)
     value: Opravdu?
@@ -241,7 +256,7 @@
     value: Úspěšně jsi zrušil nahlášení inzerátu.
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
-    value: Listing location (label)
+    value: Umístění
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
     ref: Create new feed (title)
     value: Nový seznam inzerátů
@@ -607,9 +622,15 @@ f807d8f885d618d3ba330d91e5719faba4383e66108e44f61570ab43:
 f8e11e40da643ca8591082d562def7e52fe18e6922da04ac3e53b8ef:
     ref: Feed age not selected
     value: Jakékoli
+f9cf1337b7ea576370fd65ccd16343099c3d316564ea46381241d7a1:
+    ref: Listing location not selected
+    value: Polohu nemáš vyplněnou
 fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
     ref: Feed condition (label)
     value: Vybrané stavy
+fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
+    ref: Listing location (hint)
+    value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
 facd0a879d16c3a70cca1e0454dadf75ea57307c5476c066805b5542:
     ref: Second tap to flag listing (toast)
     value:
@@ -620,7 +641,7 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     value: Zpět domů
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
-    value: Listing title (label)
+    value: Titulek inzerátu
 fdf12da2c20a3773d63d2a05055c386437e8a2eebccbcdfd3da5b51a:
     ref: No listings (badge)
     value: Čeká na správné inzeráty

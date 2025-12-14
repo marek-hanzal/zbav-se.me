@@ -1,8 +1,7 @@
 import { WarningIcon } from "@use-pico/client/icon";
-import type { MarkSuspense } from "@use-pico/client/type";
 import { Badge } from "@use-pico/client/ui/badge";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import type { Fulltext } from "@use-pico/client/ui/fulltext";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
@@ -13,7 +12,7 @@ import { uiSelectButton, uiWarningStatus } from "@zbav-se.me/ui/ui";
 import type { FC } from "react";
 
 export namespace ListContainer {
-	export interface Props extends Omit<Container.Props, "onChange">, MarkSuspense.Props {
+	export interface Props extends Omit<Container.Props, "onChange"> {
 		locale: string;
 		textHint?: string;
 		search: Fulltext.Value;
@@ -24,7 +23,6 @@ export namespace ListContainer {
 }
 
 export const ListContainer: FC<ListContainer.Props> = ({
-	_suspense,
 	locale,
 	textHint,
 	search,
@@ -35,11 +33,6 @@ export const ListContainer: FC<ListContainer.Props> = ({
 	...props
 }) => {
 	const text = search ?? value ?? "";
-
-	const locationAutocompleteQuery = withLocationAutocompleteQuery.useSuspenseQuery({
-		lang: locale,
-		text,
-	});
 
 	if (text.length < 3) {
 		return (
@@ -76,61 +69,73 @@ export const ListContainer: FC<ListContainer.Props> = ({
 		);
 	}
 
-	if (locationAutocompleteQuery.data.length === 0) {
-		return (
-			<Container
-				data-ui="ListContainer[Container.empty]"
-				ui={{
-					layout: "vertical-centered",
-					height: "full",
-					...ui,
-				}}
-			>
-				<Badge
-					className="text-center mx-auto"
-					ui={{
-						size: "lg",
-						tone: "danger",
-						theme: "light",
-					}}
-				>
-					<Tx label={"Location not found (badge)"} />
-				</Badge>
-			</Container>
-		);
-	}
-
 	return (
-		<Container
-			data-ui="ListContainer[Container.content]"
-			ui={{
-				layout: "vertical-flex",
-				scroll: "vertical",
-				height: "full",
-				gap: "default",
-				...ui,
+		<withLocationAutocompleteQuery.Suspense
+			data={{
+				lang: locale,
+				text,
 			}}
-			{...props}
+			fallback={<SpinnerContainer />}
 		>
-			{locationAutocompleteQuery.data.map((item) => {
+			{({ data }) => {
+				if (data.length === 0) {
+					return (
+						<Container
+							data-ui="ListContainer[Container.empty]"
+							ui={{
+								layout: "vertical-centered",
+								height: "full",
+								...ui,
+							}}
+						>
+							<Badge
+								className="text-center mx-auto"
+								ui={{
+									size: "lg",
+									tone: "danger",
+									theme: "light",
+								}}
+							>
+								<Tx label={"Location not found (badge)"} />
+							</Badge>
+						</Container>
+					);
+				}
+
 				return (
-					<Button
-						key={item.id}
-						onClick={() => {
-							onChange(item.id);
-							onLocation?.(item);
+					<Container
+						data-ui="ListContainer[Container.content]"
+						ui={{
+							layout: "vertical-flex",
+							scroll: "vertical",
+							height: "full",
+							gap: "default",
+							...ui,
 						}}
-						truncate
-						label={item.address}
-						{...uiSelectButton({
-							isSelected: value === item.id,
-							ui,
-							className: [],
+						{...props}
+					>
+						{data.map((item) => {
+							return (
+								<Button
+									key={item.id}
+									onClick={() => {
+										onChange(item.id);
+										onLocation?.(item);
+									}}
+									truncate
+									label={item.address}
+									{...uiSelectButton({
+										isSelected: value === item.id,
+										ui,
+										className: [],
+									})}
+									data-ui="ListContainer-[Button]"
+								/>
+							);
 						})}
-						data-ui="ListContainer-[Button]"
-					/>
+					</Container>
 				);
-			})}
-		</Container>
+			}}
+		</withLocationAutocompleteQuery.Suspense>
 	);
 };
