@@ -23,9 +23,15 @@ export const ListingCreateSchema = z
 		title: z.string().min(5).max(72).openapi({
 			description: "Title of the item",
 		}),
-		description: z.string().max(2048).optional().openapi({
-			description: "Description of the item",
-		}),
+		description: z
+			.union([
+				z.string().max(2048),
+				z.null(),
+			])
+			.optional()
+			.openapi({
+				description: "Description of the item",
+			}),
 		uploadIds: z.array(z.string()).min(1, "At least one upload is required").openapi({
 			description: "IDs of the uploads; order of uploads defines order in the gallery",
 		}),

@@ -1248,9 +1248,10 @@ export const zListingCreate = z.object({
     title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
     }),
-    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
-        description: 'Description of the item'
-    })),
+    description: z.optional(z.union([
+        z.string().max(2048),
+        z.null()
+    ])),
     uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
         description: 'IDs of the uploads; order of uploads defines order in the gallery'
     })

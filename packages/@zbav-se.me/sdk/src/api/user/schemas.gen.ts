@@ -1604,8 +1604,18 @@ export const sListingCreate = {
             maxLength: 72
         },
         description: {
-            type: 'string',
-            maxLength: 2048
+            anyOf: [
+                {
+                    type: 'string',
+                    maxLength: 2048
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         uploadIds: {
             type: 'array',

@@ -57,7 +57,10 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 		},
 	});
 
-	const isValid = zListingCreate.safeParse(draft).success;
+	const isValid = zListingCreate.safeParse({
+		...draft,
+		uploadIds: draft.gallery.items.map((item) => item.uploadId),
+	}).success;
 
 	return (
 		<View<Setup.View, TitleContainer.Props>
@@ -367,6 +370,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 							loading={mutation.isPending}
 							locale={locale}
 							draft={draft}
+							value={draft.locationId}
 							onCancel={() => setView("default")}
 							onSave={(locationId) => {
 								mutation.mutate({

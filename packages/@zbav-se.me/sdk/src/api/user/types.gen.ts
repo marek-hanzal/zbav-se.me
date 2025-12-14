@@ -1128,7 +1128,7 @@ export type tListingCreate = {
     /**
      * Description of the item
      */
-    description?: string;
+    description?: string | null;
     /**
      * IDs of the uploads; order of uploads defines order in the gallery
      */
