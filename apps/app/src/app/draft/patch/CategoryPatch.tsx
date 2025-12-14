@@ -1,11 +1,9 @@
 import { useSelection } from "@use-pico/client/hook";
-import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
+import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { type FC, Suspense } from "react";
+import type { FC } from "react";
 import { CategorySelect } from "~/app/category/ui/CategorySelect";
 import { SaveControl } from "~/app/control/SaveControl";
 
@@ -51,35 +49,15 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 					layout: "vertical-content-footer",
 					height: "full",
 					width: "full",
+					gap: "default",
+					inner: "default",
 				}}
 			>
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						textTitle={"Listing category (title)"}
-						action={
-							<Suspense fallback={<SpinnerContainer />}>
-								<CategorySelect
-									locale={locale}
-									selection={selection}
-									categoryId={categoryId ?? undefined}
-								/>
-							</Suspense>
-						}
-					>
-						<Mx
-							label={"Listing category (required)"}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
-					</Status>
-				</Container>
+				<CategorySelect
+					locale={locale}
+					selection={selection}
+					categoryId={categoryId ?? undefined}
+				/>
 
 				<SaveControl
 					onCancel={onCancel}

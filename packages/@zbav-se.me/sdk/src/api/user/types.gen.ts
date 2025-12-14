@@ -2137,7 +2137,7 @@ export type tDraftPatchData = {
     /**
      * Expiration timestamp
      */
-    expiresAt?: string;
+    expiresAt?: null | tListingExpireEnum;
     /**
      * Title of the item
      */
@@ -2222,7 +2222,7 @@ export type tDraft = {
     /**
      * Expiration timestamp
      */
-    expiresAt: string;
+    expiresAt: null | tListingExpireEnum;
     /**
      * Title of the item
      */

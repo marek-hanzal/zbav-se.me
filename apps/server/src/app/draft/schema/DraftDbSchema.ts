@@ -1,4 +1,5 @@
 import { z } from "@hono/zod-openapi";
+import { ListingExpireEnumSchema } from "~/@user/listing/schema/ListingExpireEnumSchema";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 
 export const DraftDbSchema = z
@@ -64,12 +65,11 @@ export const DraftDbSchema = z
 			}),
 		expiresAt: z
 			.union([
-				z.coerce.date(),
 				z.null(),
+				ListingExpireEnumSchema,
 			])
 			.openapi({
 				description: "Expiration timestamp",
-				type: "string",
 			}),
 		//
 		title: z

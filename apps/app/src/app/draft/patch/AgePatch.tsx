@@ -1,7 +1,5 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
@@ -44,27 +42,10 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 					layout: "vertical-content-footer",
 					height: "full",
 					width: "full",
+					inner: "default",
 				}}
 			>
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						textTitle={"Age (title)"}
-						action={<AgeSelection selection={selection} />}
-					>
-						<Mx
-							label={"Age (required)"}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
-					</Status>
-				</Container>
+				<AgeSelection selection={selection} />
 
 				<SaveControl
 					onCancel={onCancel}

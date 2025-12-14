@@ -2323,9 +2323,10 @@ export const zDraftPatchData = z.object({
         z.string(),
         z.null()
     ])),
-    expiresAt: z.optional(z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    })),
+    expiresAt: z.optional(z.union([
+        z.null(),
+        zListingExpireEnum
+    ])),
     title: z.optional(z.union([
         z.string(),
         z.null()
@@ -2421,9 +2422,10 @@ export const zDraft = z.object({
         z.string(),
         z.null()
     ]),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
+    expiresAt: z.union([
+        z.null(),
+        zListingExpireEnum
+    ]),
     title: z.union([
         z.string(),
         z.null()

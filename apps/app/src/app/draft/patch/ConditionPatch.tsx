@@ -1,12 +1,10 @@
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
-import { Mx } from "@use-pico/client/ui/mx";
-import { Status } from "@use-pico/client/ui/status";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import { ConditionSelect } from "~/app/condition/ui/ConditionSelect";
 import { SaveControl } from "~/app/control/SaveControl";
 
 export namespace ConditionPatch {
@@ -51,27 +49,10 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 					layout: "vertical-content-footer",
 					height: "full",
 					width: "full",
+					inner: "default",
 				}}
 			>
-				<Container
-					ui={{
-						layout: "vertical-centered",
-						height: "full",
-					}}
-				>
-					<Status
-						textTitle={"Condition (title)"}
-						action={<ConditionContainer selection={selection} />}
-					>
-						<Mx
-							label={"Condition (required)"}
-							ui={{
-								tone: "secondary",
-								theme: "light",
-							}}
-						/>
-					</Status>
-				</Container>
+				<ConditionSelect selection={selection} />
 
 				<SaveControl
 					onCancel={onCancel}

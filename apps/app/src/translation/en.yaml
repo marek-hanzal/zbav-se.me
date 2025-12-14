@@ -1,6 +1,9 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
   ref: Feed title (placeholder)
   value: Feed title (placeholder)
+00ad3224fedae56a9d4808165d54a99bd91a001d99feb66dfd7b9fac:
+  ref: Condition (required)
+  value: Condition (required)
 01b47fb4a4df0bd1d39599b06eefe5b2c4961d5eac0ad2e9630ec980:
   ref: Listing unignored (toast)
   value: Listing unignored (toast)
@@ -10,6 +13,12 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
+04bc1b2fa2ac293d198b6121fafed48ee92fdcba6f89ce1aae6ba6ec:
+  ref: Listing category (required)
+  value: Listing category (required)
+050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
+  ref: Listing category not selected
+  value: Listing category not selected
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
@@ -19,9 +28,6 @@
 0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
   ref: Draft edit (title)
   value: Draft edit (title)
-0c9894c76e29f55765dff10ff581829edf7d20f6150d95e2a199347e:
-  ref: Listing location (title)
-  value: Listing location (title)
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -46,9 +52,6 @@
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
   ref: Feed condition not selected
   value: Feed condition not selected
-1907f4c181c655efa86233ddac2fa7379a9093b203c9056dbc00b2bd:
-  ref: Listing photos (label)
-  value: Listing photos (label)
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
   ref: Upload photos (button)
   value: Upload photos (button)
@@ -64,27 +67,21 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
-1e0c3a3d49e8cb69ce1b0a8daf6040daa77412b4a5e8f0ce21af283a:
-  ref: Price (subtitle)
-  value: Price (subtitle)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
 26a562bfcfee8d3595e7d3f87dd79a4174db90edc3b52f5bdc5dc683:
   ref: First listing (title)
   value: First listing (title)
-29f070d40b220deb96e6c0c19b11d4ad07de6cd9e55e4933e2f03f80:
-  ref: no
-  value: no
+29b5698dbd428037dfdf3d01534751de7b9bbdce4a6eeb4df2655548:
+  ref: Price not set
+  value: Price not set
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
   ref: zbav-se.me
   value: zbav-se.me
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
   ref: Go to home (link)
   value: Go to home (link)
-2eb6f3b5dcbeec83b0c47b3b2ac3377c33bfd5e15df81635e53cd833:
-  ref: Next - title (button)
-  value: Next - title (button)
 2edb606e2d60f98c857354944c5b5b054d0ae6b6a9ec09327651a944:
   ref: Error ignoring listing (toast)
   value: Error ignoring listing (toast)
@@ -94,9 +91,6 @@
 32b4ec288db7ebabe1391515dbe208c78531723f5c2c4660baf9fd7b:
   ref: Refresh listings (button)
   value: Refresh listings (button)
-3462ccc81c58e39c5ad3d6b3cc2a5d6cde81ab00375906508aa30a7b:
-  ref: Listing - start (text)
-  value: Listing - start (text)
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
   ref: Go to listings (button)
   value: Go to listings (button)
@@ -106,9 +100,6 @@
 37e1cb2b4f78786fb70f260332ccd707e7a0ad66fdf52bf3a4f4239c:
   ref: Listing Score - Feed views (label)
   value: Listing Score - Feed views (label)
-3b25f85d532657d509b12da1d687a994f0da387a55ede88e53ffc704:
-  ref: Listing price (label)
-  value: Listing price (label)
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
   ref: Price (placeholder)
   value: Price (placeholder)
@@ -142,9 +133,6 @@
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
   ref: Ignore listing (button)
   value: Ignore listing (button)
-48cfaf6022be0c688ec81557d23d33eac1693811decbab10e23523cc:
-  ref: Price - free (title)
-  value: Price - free (title)
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
@@ -157,12 +145,6 @@
 4ef6b46bcbfc54a9f2aa64abf2856c01cded2d9bf090cbaec1bbd32d:
   ref: Create first listing (button)
   value: Create first listing (button)
-4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
-  ref: Next - price (button)
-  value: Next - price (button)
-4fb2a48e621c5bda7e6481c96c42c22661e62b11ea3bd3d21ec9b3c1:
-  ref: currency
-  value: currency
 51682d9521080245ad818c184b06929926372bbf7b8e14889655233a:
   ref: Empty favourite category (title)
   value: Empty favourite category (title)
@@ -175,9 +157,6 @@
 5611e161fc48366fdb56f2529712795617513c1b346552e32a53ff19:
   ref: Loading... (button)
   value: Loading... (button)
-5873430f823db9c02cb340a259e9cb52314fb683091459f5b8d01e4f:
-  ref: Listing photos (title)
-  value: Listing photos (title)
 58a92c1f41bf1041dacdc744234255b7bcbfda299f147f7ddbf60fe2:
   ref: Feed category (title)
   value: Feed category (title)
@@ -220,21 +199,12 @@
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
   ref: Empty favourite - category and favourite (title)
   value: Empty favourite - category and favourite (title)
-6970895fee104309ad55fbd48566209a5afacadfc46938c310e9f4c6:
-  ref: Listing - start (button)
-  value: Listing - start (button)
 6986d09f4aa2bbe69df817149dd90758babe79f2f510910b43cfe310:
   ref: secondary
   value: secondary
 69b8258820206f2dc2cded5a9cf7c8b51708a5a81d8de92c0ef3450f:
   ref: Feed category not selected
   value: Feed category not selected
-6ebda19c4bb7b7ce06704892a9a18c9d655f820d4d1c6807d2abb8d3:
-  ref: Next - location (button)
-  value: Next - location (button)
-6f0c381fe28fafb75e2b708bfeefe7fefab6fb361cec10afd13b2374:
-  ref: Next - age (button)
-  value: Next - age (button)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
@@ -247,9 +217,6 @@
 79a7862454115c39814f1654d4e06bde698323ab23a0214e8df7111c:
   ref: Create new feed (title)
   value: Create new feed (title)
-79e849c3e46e4759d6301a75089055c54f42b7117009157456d0c0d3:
-  ref: Next - submit (button)
-  value: Next - submit (button)
 7a2ff42f7d0739100696527fd6cd76b05a231a3251e56fe2566d0810:
   ref: Open gallery (button)
   value: Open gallery (button)
@@ -283,9 +250,6 @@
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
   ref: Messages (label)
   value: Messages (label)
-89dbab7e6f158a0076038c969fb2936c6746937d31c2a9963daa9bde:
-  ref: stripIfInteger
-  value: stripIfInteger
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
   ref: No items in favourites (message)
   value: No items in favourites (message)
@@ -310,9 +274,6 @@
 93e4f0b9a0dc4d17c33a08d475281a1a736fff83763a516958a1f693:
   ref: Feed title (title)
   value: Feed title (title)
-96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
-  ref: Invalid/missing fields
-  value: Invalid/missing fields
 9835a78e390b045bfa153f4b6289fd0578f068909548d7c7ab30b0ea:
   ref: Feed created (toast)
   value: Feed created (toast)
@@ -322,9 +283,6 @@
 99a01d47de05fca49beed74c16c785a68dec6e729694b5a3e7076e1c:
   ref: No items in favourites (title)
   value: No items in favourites (title)
-9afd8517cd5878e70135311e8e9a0768e139f8c2ed195bc80118770d:
-  ref: Submit (title)
-  value: Submit (title)
 9b7458c481fd08b7afd860d8537e178cc9c6b202e12918923906e59c:
   ref: Buyer home (title)
   value: Buyer home (title)
@@ -349,6 +307,15 @@ a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
 a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
   ref: Messages (title)
   value: Messages (title)
+a0d84573022ca7dad319540056ceece26432e0bda4a1345b44042e08:
+  ref: Expire (required)
+  value: Expire (required)
+a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
+  ref: Age not selected
+  value: Age not selected
+a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
+  ref: Listing age (hint)
+  value: Listing age (hint)
 a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
   ref: Remove from favourite (button)
   value: Remove from favourite (button)
@@ -370,9 +337,6 @@ ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
   ref: Expire (title)
   value: Expire (title)
-b2c5e1ab63bde746cb442d3c4bd5a84ae037df7adac301ea412f5316:
-  ref: Next - category (button)
-  value: Next - category (button)
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
   ref: Sign out
   value: Sign out
@@ -391,6 +355,9 @@ ba621d317de5f415d79481304297c59e0cc59a2401cfc2a3d26f0ac9:
 babfa4e44e1bfec72b68911b6f14efafc2d1def462152c4392f5cd61:
   ref: Location search (placeholder)
   value: Location search (placeholder)
+bda14ae9f8cb30b7b7440f39407eb24b991ad4b512e8118780fac091:
+  ref: Expiration date not set
+  value: Expiration date not set
 bdd75351832162f493f67d1b22571c3b03676329dcb0195933448eca:
   ref: Missing identity for an Entity (id). I'm sorry, but I cannot provide better
     message than this :(
@@ -405,9 +372,6 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
   ref: Price (title)
   value: Price (title)
-c615edcd5fcc61a4a0f293d9aab6bfb092ff553a1ea8bea15b55d381:
-  ref: New listing (title)
-  value: New listing (title)
 c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
   ref: Error flagging listing (toast)
   value: Error flagging listing (toast)
@@ -420,9 +384,6 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
 ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
   ref: Error creating feed (toast)
   value: Error creating feed (toast)
-ca33feea33ff2ffa8595751f246191c95de3c2d4fe9b88a743783d8c:
-  ref: Listing - start (title)
-  value: Listing - start (title)
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
   ref: Feed location (title)
   value: Feed location (title)
@@ -438,9 +399,6 @@ ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
 d23c8b151ddf6f4eaf6a6fde7cff150ae7ce6671543f43f712b88545:
   ref: Location not found (badge)
   value: Location not found (badge)
-d2916cf91cb68674cefb42a82236c18106898e912cbb9bfac28b8cc9:
-  ref: Next - expire (button)
-  value: Next - expire (button)
 d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
   ref: Feed title (label)
   value: Feed title (label)
@@ -486,18 +444,21 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected
+ec9bb8dbe799241436690496cc98420a414180ded4856409603dd8f2:
+  ref: Price (required)
+  value: Price (required)
 efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
   ref: Feed setup - name (title)
   value: Feed setup - name (title)
-f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
-  ref: Submit listing (button)
-  value: Submit listing (button)
 f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
   ref: Listing title (placeholder)
   value: Listing title (placeholder)
 f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
   ref: Favourites (label)
   value: Favourites (label)
+f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
+  ref: Condition not selected
+  value: Condition not selected
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)
@@ -534,9 +495,6 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 fdf12da2c20a3773d63d2a05055c386437e8a2eebccbcdfd3da5b51a:
   ref: No listings (badge)
   value: No listings (badge)
-ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
-  ref: Next - condition (button)
-  value: Next - condition (button)
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
   ref: No categories found (title)
   value: No categories found (title)

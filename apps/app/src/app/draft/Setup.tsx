@@ -236,6 +236,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 											: null
 									}
 									textEmpty={translator.text("Age not selected")}
+									textHint={translator.text("Listing age (hint)")}
 									onClick={() => {
 										setView("age");
 									}}
@@ -255,6 +256,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 										draft.expiresAt ? `Expire in ${draft.expiresAt}` : null
 									}
 									textEmpty={translator.text("Expiration date not set")}
+                                    textHint={translator.text("Draft expire (hint)")}
 									onClick={() => {
 										setView("expireAt");
 									}}

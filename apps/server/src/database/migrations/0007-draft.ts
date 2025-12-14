@@ -20,7 +20,7 @@ export const DraftMigration: Migration = {
 			.addColumn("title", "text")
 			//
 			.addColumn("description", "text")
-			.addColumn("expiresAt", "timestamp")
+			.addColumn("expiresAt", "text")
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))

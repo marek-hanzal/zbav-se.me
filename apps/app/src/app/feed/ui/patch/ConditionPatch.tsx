@@ -7,7 +7,7 @@ import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import { ConditionSelect } from "~/app/condition/ui/ConditionSelect";
 
 export namespace ConditionPatch {
 	export interface Props extends Container.Props {
@@ -48,7 +48,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({ feed, onSettled, ui, 
 			}}
 			{...props}
 		>
-			<ConditionContainer selection={selection} />
+			<ConditionSelect selection={selection} />
 
 			<Button
 				label={"Feed - save (button)"}

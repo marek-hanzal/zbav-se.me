@@ -3,17 +3,17 @@ import type { Container } from "@use-pico/client/ui/container";
 import { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
 
-export namespace AgeSelection {
+export namespace ConditionSelect {
 	export interface Props extends Container.Props {
 		selection: useSelection.Selection<Rating.RatingItem>;
 	}
 }
 
-export const AgeSelection: FC<AgeSelection.Props> = ({ selection, ui, ...props }) => {
+export const ConditionSelect: FC<ConditionSelect.Props> = ({ selection, ui, ...props }) => {
 	return (
 		<Rating
-			data-ui="AgeSelection[Rating]"
-			textHint={(value) => `Condition - Age [${value}] (hint)`}
+			data-ui="ConditionSelect[Rating]"
+			textHint={(value) => `Condition - Overall [${value}] (hint)`}
 			selection={selection}
 			ui={{
 				...ui,

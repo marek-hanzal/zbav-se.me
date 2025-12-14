@@ -2998,7 +2998,17 @@ export const sDraftPatchData = {
             ]
         },
         expiresAt: {
-            type: 'string'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/ListingExpireEnum'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         title: {
             anyOf: [
@@ -3156,7 +3166,17 @@ export const sDraft = {
             ]
         },
         expiresAt: {
-            type: 'string'
+            anyOf: [
+                {
+                    type: 'null'
+                },
+                {
+                    $ref: '#/components/schemas/ListingExpireEnum'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         title: {
             anyOf: [

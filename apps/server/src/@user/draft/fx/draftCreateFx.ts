@@ -1,7 +1,5 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
-import { DateTime } from "luxon";
-import { match } from "ts-pattern";
 import type { DraftCreateSchema } from "~/@user/draft/schema/DraftCreateSchema";
 import { draftGalleryCreateFx } from "~/@user/draft-gallery/fx/draftGalleryCreateFx";
 import { galleryCreateFx as coolGalleryCreateFx } from "~/@user/gallery/fx/galleryCreateFx";
@@ -34,30 +32,6 @@ export const draftCreateFx = (data: draftCreateFx.Props) => {
 						updatedAt: now,
 						currency: "CZK",
 						...data,
-						expiresAt: match(data.expiresAt)
-							.with("7-days", () =>
-								DateTime.now()
-									.plus({
-										days: 7,
-									})
-									.toJSDate(),
-							)
-							.with("14-days", () =>
-								DateTime.now()
-									.plus({
-										days: 14,
-									})
-									.toJSDate(),
-							)
-							.with("1-month", () =>
-								DateTime.now()
-									.plus({
-										months: 1,
-									})
-									.toJSDate(),
-							)
-							.with(undefined, () => null)
-							.exhaustive(),
 					})
 					.execute();
 			});
