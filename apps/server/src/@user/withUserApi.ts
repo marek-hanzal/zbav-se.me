@@ -3,6 +3,7 @@ import { withFeedFavouriteApi } from "~/app/feed-favourite/withFeedFavouriteApi"
 import type { WithDatabase } from "~/database/WithDatabase";
 import type { Routes } from "~/hono/Routes";
 import type { NoticeSchema } from "~/schema/NoticeSchema";
+import { withDraftApi } from "./draft/withDraftApi";
 import { withFavouriteApi } from "./favourite/withFavouriteApi";
 import { withFeedApi } from "./feed/withFeedApi";
 import { withFlagApi } from "./flag/withFlagApi";
@@ -38,6 +39,7 @@ export const withUserApi: Routes.FnWithDeps<{
 		return next();
 	});
 
+	withDraftApi(routes);
 	withFavouriteApi(routes);
 	withFeedApi(routes);
 	withFeedFavouriteApi(routes);

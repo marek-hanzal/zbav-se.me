@@ -23,3 +23,7 @@ export const DraftSchema = z
 	});
 
 export type DraftSchema = typeof DraftSchema;
+
+export namespace DraftSchema {
+	export type Type = z.infer<DraftSchema>;
+}
