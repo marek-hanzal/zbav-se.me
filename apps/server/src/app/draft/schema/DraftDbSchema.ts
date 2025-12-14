@@ -18,13 +18,16 @@ export const DraftDbSchema = z
 			])
 			.openapi({
 				description: "Price of the draft",
-				type: "number",
 			}),
 		//
-		currency: z.union([
-			CurrencyListEnumSchema,
-			z.null(),
-		]),
+		currency: z
+			.union([
+				CurrencyListEnumSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Currency of the draft",
+			}),
 		//
 		condition: z
 			.union([

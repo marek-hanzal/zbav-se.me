@@ -7,14 +7,22 @@ import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 export const DraftSchema = z
 	.looseObject({
 		...DraftDbSchema.shape,
-		location: z.union([
-			LocationSchema,
-			z.null(),
-		]),
-		category: z.union([
-			CategorySchema,
-			z.null(),
-		]),
+		location: z
+			.union([
+				LocationSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Location data",
+			}),
+		category: z
+			.union([
+				CategorySchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Category data",
+			}),
 		gallery: z
 			.union([
 				GallerySchema,
