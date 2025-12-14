@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
@@ -35,6 +36,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 			},
 		});
 	},
+	/**
+	 * We've loader, so we also need pending component.
+	 */
 	pendingComponent() {
 		const { locale } = Route.useParams();
 
@@ -117,8 +121,13 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									}}
 								>
 									<LinkTo
-										data-ui={"/buyer/feed/$id/list-[LinkTo.refresh]"}
 										to={"/$locale/buyer/feed/$id/list"}
+										icon={ListingIcon}
+										iconProps={{
+											ui: {
+												text: "xl",
+											},
+										}}
 										params={{
 											locale,
 											id: feed.id,
@@ -131,15 +140,18 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 												behavior: "instant",
 											});
 										}}
+										{...uiButton({
+											ui: {
+												tone: "secondary",
+												theme: "light",
+												size: "default",
+												text: "lg",
+											},
+											className: [],
+										})}
+										data-ui={"/buyer/feed/$id/list-[LinkTo.refresh]"}
 									>
-										<Button
-											iconEnabled={ListingIcon}
-											label={"Refresh listings (button)"}
-											ui={{
-												size: "xl",
-												justify: "start",
-											}}
-										/>
+										<Tx label="Refresh listings (button)" />
 									</LinkTo>
 								</SetupButton>
 
