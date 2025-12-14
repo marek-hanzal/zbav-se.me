@@ -40,7 +40,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					layout: "vertical-flex",
 					scroll: "vertical",
 					height: "full",
-					inner: "lg",
+					inner: "default",
 					items: "center",
 					gap: "lg",
 				}}
