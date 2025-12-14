@@ -1,6 +1,8 @@
 import type { CategoryDbSchema } from "~/app/category/schema/CategoryDbSchema";
 import type { CategorySpotlightDbSchema } from "~/app/category/schema/CategorySpotlightDbSchema";
 import type { CategoryMissDbSchema } from "~/app/category-miss/schema/CategoryMissDbSchema";
+import type { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
+import type { DraftGalleryDbSchema } from "~/app/draft-gallery/schema/DraftGalleryDbSchema";
 import type { FavouriteDbSchema } from "~/app/favourite/schema/FavouriteDbSchema";
 import type { FeedDbSchema } from "~/app/feed/schema/FeedDbSchema";
 import type { FlagDbSchema } from "~/app/flag/schema/FlagDbSchema";
@@ -26,6 +28,8 @@ export interface Database {
 	category_miss: CategoryMissDbSchema.Type;
 	category_spotlight: CategorySpotlightDbSchema.Type;
 	category: CategoryDbSchema.Type;
+	draft_gallery: DraftGalleryDbSchema.Type;
+	draft: DraftDbSchema.Type;
 	favourite: FavouriteDbSchema.Type;
 	feed: FeedDbSchema.Type;
 	flag: FlagDbSchema.Type;
