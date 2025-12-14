@@ -11,6 +11,7 @@ export const DraftPatchSchema = z
 			.omit({
 				id: true,
 				userId: true,
+				currency: true,
 				createdAt: true,
 				updatedAt: true,
 			})

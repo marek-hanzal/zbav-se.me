@@ -1590,9 +1590,6 @@ export const sListingCreate = {
         categoryId: {
             type: 'string'
         },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
         expiresAt: {
             $ref: '#/components/schemas/ListingExpireEnum'
         },
@@ -1619,7 +1616,6 @@ export const sListingCreate = {
         'age',
         'locationId',
         'categoryId',
-        'currency',
         'expiresAt',
         'title',
         'uploadIds'
@@ -2949,19 +2945,6 @@ export const sDraftPatchData = {
                 }
             ]
         },
-        currency: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
         condition: {
             anyOf: [
                 {
@@ -3063,9 +3046,6 @@ export const sDraftCreate = {
         },
         categoryId: {
             type: 'string'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
         },
         expiresAt: {
             $ref: '#/components/schemas/ListingExpireEnum'

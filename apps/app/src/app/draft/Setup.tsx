@@ -10,12 +10,27 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
+import { CategoryInline } from "~/app/category/ui/CategoryInline";
+import { AgePatch } from "~/app/draft/patch/AgePatch";
+import { CategoryPatch } from "~/app/draft/patch/CategoryPatch";
+import { ConditionPatch } from "~/app/draft/patch/ConditionPatch";
+import { ExpireAtPatch } from "~/app/draft/patch/ExpireAtPatch";
 import { LocationPatch } from "~/app/draft/patch/LocationPatch";
+import { PricePatch } from "~/app/draft/patch/PricePatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
+import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 
 export namespace Setup {
-	export type View = "default" | "title" | "location";
+	export type View =
+		| "default"
+		| "title"
+		| "location"
+		| "price"
+		| "category"
+		| "condition"
+		| "age"
+		| "expireAt";
 
 	export interface Props {
 		locale: string;
@@ -129,6 +144,121 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 										setView("location");
 									}}
 								/>
+
+								<LabelValue
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									textLabel={translator.text("Price (title)")}
+									textValue={
+										draft.price && draft.currency ? (
+											<ListingPrice
+												price={draft.price}
+												locale={locale}
+												currency={draft.currency}
+											/>
+										) : null
+									}
+									textEmpty={translator.text("Price not set")}
+									onClick={() => {
+										setView("price");
+									}}
+								/>
+
+								<LabelValue
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									textLabel={translator.text("Listing category (label)")}
+									textValue={
+										draft.category ? (
+											<CategoryInline
+												category={draft.category}
+												tone="secondary"
+												theme="light"
+											/>
+										) : null
+									}
+									textEmpty={translator.text("Listing category not selected")}
+									onClick={() => {
+										setView("category");
+									}}
+								/>
+
+								<LabelValue
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									textLabel={translator.text("Listing condition (label)")}
+									textValue={
+										draft.condition
+											? translator.text(
+													`Condition - Overall [${draft.condition}] (hint)`,
+												)
+											: null
+									}
+									textEmpty={translator.text("Condition not selected")}
+									onClick={() => {
+										setView("condition");
+									}}
+								/>
+
+								<LabelValue
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									textLabel={translator.text("Listing age (label)")}
+									textValue={
+										draft.age
+											? translator.text(
+													`Condition - Age [${draft.age}] (hint)`,
+												)
+											: null
+									}
+									textEmpty={translator.text("Age not selected")}
+									onClick={() => {
+										setView("age");
+									}}
+								/>
+
+								<LabelValue
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									textLabel={translator.text("Expire (title)")}
+									textValue={
+										draft.expiresAt ? `Expire in ${draft.expiresAt}` : null
+									}
+									textEmpty={translator.text("Expiration date not set")}
+									onClick={() => {
+										setView("expireAt");
+									}}
+								/>
 							</Container>
 						</TitleContainer>
 					),
@@ -165,6 +295,112 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								mutation.mutate({
 									patch: {
 										locationId,
+									},
+									query: {
+										where: {
+											id: draft.id,
+										},
+									},
+								});
+							}}
+						/>
+					),
+				},
+				price: {
+					children: (
+						<PricePatch
+							loading={mutation.isPending}
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(price) => {
+								mutation.mutate({
+									patch: {
+										price,
+									},
+									query: {
+										where: {
+											id: draft.id,
+										},
+									},
+								});
+							}}
+						/>
+					),
+				},
+				category: {
+					children: (
+						<CategoryPatch
+							loading={mutation.isPending}
+							locale={locale}
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(categoryId) => {
+								mutation.mutate({
+									patch: {
+										categoryId,
+									},
+									query: {
+										where: {
+											id: draft.id,
+										},
+									},
+								});
+							}}
+						/>
+					),
+				},
+				condition: {
+					children: (
+						<ConditionPatch
+							loading={mutation.isPending}
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(condition) => {
+								mutation.mutate({
+									patch: {
+										condition,
+									},
+									query: {
+										where: {
+											id: draft.id,
+										},
+									},
+								});
+							}}
+						/>
+					),
+				},
+				age: {
+					children: (
+						<AgePatch
+							loading={mutation.isPending}
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(age) => {
+								mutation.mutate({
+									patch: {
+										age,
+									},
+									query: {
+										where: {
+											id: draft.id,
+										},
+									},
+								});
+							}}
+						/>
+					),
+				},
+				expireAt: {
+					children: (
+						<ExpireAtPatch
+							loading={mutation.isPending}
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(expiresAt) => {
+								mutation.mutate({
+									patch: {
+										expiresAt,
 									},
 									query: {
 										where: {

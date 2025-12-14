@@ -1120,7 +1120,6 @@ export type tListingCreate = {
      * ID of the category
      */
     categoryId: string;
-    currency: tCurrencyListEnum;
     expiresAt: tListingExpireEnum;
     /**
      * Title of the item
@@ -2120,10 +2119,6 @@ export type tDraftPatchData = {
      */
     price?: number | null | null;
     /**
-     * Currency of the draft
-     */
-    currency?: tCurrencyListEnum | null;
-    /**
      * Condition of the item (0-based index)
      */
     condition?: number | null;
@@ -2177,7 +2172,6 @@ export type tDraftCreate = {
      * ID of the category
      */
     categoryId?: string;
-    currency?: tCurrencyListEnum;
     expiresAt?: tListingExpireEnum;
     /**
      * Title of the item

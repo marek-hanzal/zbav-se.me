@@ -1,12 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import {
-	ArrowLeftIcon,
-	CloseIcon,
-	EditIcon,
-	ErrorIcon,
-	Icon,
-	SpinnerIcon,
-} from "@use-pico/client/icon";
+import { CloseIcon, EditIcon, ErrorIcon, Icon, SpinnerIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, LabelValue, ValueList } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -19,7 +12,6 @@ import { withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { ThemeCls } from "@zbav-se.me/ui/cls";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { SendPackageIcon } from "@zbav-se.me/ui/icon";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { CategoryValue } from "~/app/category/ui/CategoryValue";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { LocationValue } from "~/app/location/ui/LocationValue";
@@ -36,19 +28,6 @@ export const Route = createFileRoute("/$locale/seller/listing/no-wizard/submit")
 			<TitleContainer
 				data-ui={"Submit"}
 				textTitle={"Submit (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/title"}
-						search={state}
-						params={{
-							locale,
-						}}
-					/>
-				}
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
@@ -96,19 +75,6 @@ export const Route = createFileRoute("/$locale/seller/listing/no-wizard/submit")
 		return (
 			<TitleContainer
 				textTitle={"Submit (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/title"}
-						search={state}
-						params={{
-							locale,
-						}}
-					/>
-				}
 				right={
 					<ConfirmButton
 						iconEnabled={CloseIcon}
@@ -161,157 +127,8 @@ export const Route = createFileRoute("/$locale/seller/listing/no-wizard/submit")
 								theme: "light",
 							}}
 						>
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/title"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<LabelValue
-									textLabel={"Listing title (label)"}
-									textValue={state.title}
-									action={<Icon icon={EditIcon} />}
-								/>
-							</LinkTo>
-
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/photos"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<LabelValue
-									textLabel={"Listing photos (label)"}
-									textValue={String(valid.data.uploadIds.length)}
-									action={<Icon icon={EditIcon} />}
-								/>
-							</LinkTo>
-
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/category"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<CategoryValue
-									categoryIdIn={
-										state.categoryId
-											? [
-													state.categoryId,
-												]
-											: undefined
-									}
-									textLabel={"Listing category (label)"}
-									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-								/>
-							</LinkTo>
-
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/condition"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<ValueList
-									textLabel={"Listing condition (label)"}
-									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									items={[
-										{
-											id: "condition",
-											value: valid.data.condition,
-										} as const,
-									]}
-									renderFn={(condition) => (
-										<Tx
-											label={`Condition - Overall [${condition.value}] (hint)`}
-										/>
-									)}
-								/>
-							</LinkTo>
-
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/age"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<ValueList
-									textLabel={"Listing age (label)"}
-									textEmpty={"no"}
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									items={[
-										{
-											id: "age",
-											value: valid.data.age,
-										},
-									]}
-									renderFn={(age) => (
-										<Tx label={`Condition - Age [${age.value}] (hint)`} />
-									)}
-								/>
-							</LinkTo>
-
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/price"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<LabelValue
-									textLabel={"Listing price (label)"}
-									textValue={
-										<PriceInline
-											locale={locale}
-											price={valid.data.price}
-											currency={valid.data.currency}
-										/>
-									}
-									action={<Icon icon={EditIcon} />}
-								/>
-							</LinkTo>
-
-							<LinkTo
-								to={"/$locale/seller/listing/wizard/location"}
-								params={{
-									locale,
-								}}
-								search={state}
-							>
-								<LocationValue
-									locationId={state.locationId}
-									textLabel={"Listing location (label)"}
-									action={<Icon icon={EditIcon} />}
-								/>
-							</LinkTo>
+							
+						
 
 							<LinkTo
 								to={"/$locale/seller/listing/wizard/expire-at"}

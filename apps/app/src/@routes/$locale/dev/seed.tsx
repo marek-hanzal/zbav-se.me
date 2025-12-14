@@ -18,7 +18,6 @@ import {
 	apiListingCollection,
 	apiListingCount,
 	apiListingCreate,
-	tCurrencyListEnum,
 	tListingExpireEnum,
 	type tListingSort,
 } from "@zbav-se.me/sdk/api/user";
@@ -65,7 +64,6 @@ export namespace seedListings {
 }
 
 const seedListings = async ({ categories, locationIds, uploadIds }: seedListings.Props) => {
-	const currencies = Object.values(tCurrencyListEnum);
 	const category = list(categories);
 	const title = titles[category.slug as keyof typeof titles] ?? [
 		"Random Title",
@@ -78,7 +76,6 @@ const seedListings = async ({ categories, locationIds, uploadIds }: seedListings
 			condition: rangedom(1, 6),
 			categoryId: category.id,
 			price: rangedom(0, 99_999),
-			currency: list(currencies),
 			title: list(title),
 			expiresAt: object(tListingExpireEnum),
 			locationId: list(locationIds),

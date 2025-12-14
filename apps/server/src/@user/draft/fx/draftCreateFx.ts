@@ -30,41 +30,34 @@ export const draftCreateFx = (data: draftCreateFx.Props) => {
 					.values({
 						id,
 						userId: user.id,
-						price: data.price ?? null,
-						condition: data.condition ?? null,
-						age: data.age ?? null,
-						locationId: data.locationId ?? null,
-						categoryId: data.categoryId ?? null,
 						createdAt: now,
 						updatedAt: now,
-						currency: data.currency ?? null,
-						title: data.title ?? null,
-						description: data.description ?? null,
-						expiresAt: data.expiresAt
-							? match(data.expiresAt)
-									.with("7-days", () =>
-										DateTime.now()
-											.plus({
-												days: 7,
-											})
-											.toJSDate(),
-									)
-									.with("14-days", () =>
-										DateTime.now()
-											.plus({
-												days: 14,
-											})
-											.toJSDate(),
-									)
-									.with("1-month", () =>
-										DateTime.now()
-											.plus({
-												months: 1,
-											})
-											.toJSDate(),
-									)
-									.exhaustive()
-							: null,
+						currency: "CZK",
+						...data,
+						expiresAt: match(data.expiresAt)
+							.with("7-days", () =>
+								DateTime.now()
+									.plus({
+										days: 7,
+									})
+									.toJSDate(),
+							)
+							.with("14-days", () =>
+								DateTime.now()
+									.plus({
+										days: 14,
+									})
+									.toJSDate(),
+							)
+							.with("1-month", () =>
+								DateTime.now()
+									.plus({
+										months: 1,
+									})
+									.toJSDate(),
+							)
+							.with(undefined, () => null)
+							.exhaustive(),
 					})
 					.execute();
 			});

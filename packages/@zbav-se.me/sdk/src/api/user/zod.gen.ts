@@ -1242,7 +1242,6 @@ export const zListingCreate = z.object({
     categoryId: z.string().register(z.globalRegistry, {
         description: 'ID of the category'
     }),
-    currency: zCurrencyListEnum,
     expiresAt: zListingExpireEnum,
     title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
@@ -2308,10 +2307,6 @@ export const zDraftPatchData = z.object({
         ]),
         z.null()
     ])),
-    currency: z.optional(z.union([
-        zCurrencyListEnum,
-        z.null()
-    ])),
     condition: z.optional(z.union([
         z.number(),
         z.null()
@@ -2376,7 +2371,6 @@ export const zDraftCreate = z.object({
     categoryId: z.optional(z.string().register(z.globalRegistry, {
         description: 'ID of the category'
     })),
-    currency: z.optional(zCurrencyListEnum),
     expiresAt: z.optional(zListingExpireEnum),
     title: z.optional(z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'

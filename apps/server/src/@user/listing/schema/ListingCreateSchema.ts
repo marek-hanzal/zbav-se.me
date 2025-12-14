@@ -1,5 +1,4 @@
 import { z } from "@hono/zod-openapi";
-import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
 import { ListingExpireEnumSchema } from "./ListingExpireEnumSchema";
 
 export const ListingCreateSchema = z
@@ -20,7 +19,6 @@ export const ListingCreateSchema = z
 		categoryId: z.string().openapi({
 			description: "ID of the category",
 		}),
-		currency: CurrencyListEnumSchema,
 		expiresAt: ListingExpireEnumSchema,
 		title: z.string().min(5).max(72).openapi({
 			description: "Title of the item",

@@ -32,21 +32,15 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 					.values({
 						id,
 						userId: user.id,
-						price: data.price,
-						condition: data.condition,
-						age: data.age,
-						locationId: data.locationId,
-						categoryId: data.categoryId,
 						createdAt: now,
 						updatedAt: now,
-						currency: data.currency,
-						title: data.title,
+						currency: "CZK",
+						...data,
 						titleVec: pgvector.toSql(
 							embedMinHash({
 								value: data.title,
 							}),
 						),
-						description: data.description,
 						expiresAt: match(data.expiresAt)
 							.with("7-days", () =>
 								DateTime.now()
