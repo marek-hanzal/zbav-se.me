@@ -9,7 +9,7 @@ export namespace GalleryUploadButton {
 				GalleryUploadSheet.Props<TData>,
 				"withMutation" | "toMutation" | "onSuccess" | "onCancel" | "state"
 			> {
-		//
+		defaultUploadIds: string[];
 	}
 }
 
@@ -19,6 +19,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 	onSuccess,
 	onCancel,
 	state,
+	defaultUploadIds,
 	ui,
 	...props
 }: GalleryUploadButton.Props<TData>) => {
@@ -44,6 +45,7 @@ export const GalleryUploadButton = <TData extends GalleryUploadSheet.Uploads>({
 				onSuccess={onSuccess}
 				onCancel={onCancel}
 				state={state}
+				defaultUploadIds={defaultUploadIds}
 			/>
 		</>
 	);
