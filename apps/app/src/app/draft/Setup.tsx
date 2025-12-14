@@ -2,6 +2,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
+import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
@@ -20,7 +21,6 @@ import { ExpireAtPatch } from "~/app/draft/patch/ExpireAtPatch";
 import { LocationPatch } from "~/app/draft/patch/LocationPatch";
 import { PricePatch } from "~/app/draft/patch/PricePatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
-import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 
 export namespace Setup {
@@ -184,7 +184,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									textLabel={translator.text("Price (title)")}
 									textValue={
 										draft.price && draft.currency ? (
-											<ListingPrice
+											<PriceInline
 												price={draft.price}
 												locale={locale}
 												currency={draft.currency}
@@ -245,6 +245,11 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								/>
 
 								<LabelValue
+									wrapperProps={{
+										ui: {
+											tone: draft.expiresAt ? "neutral" : undefined,
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}

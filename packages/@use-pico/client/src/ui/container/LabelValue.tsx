@@ -23,6 +23,7 @@ export namespace LabelValue {
 		textEmpty?: string;
 		textHint?: string;
 		action?: ReactNode;
+		wrapperProps?: Container.Props;
 	}
 
 	export type PropsEx = Omit<Props, "textValue">;
@@ -36,6 +37,7 @@ export const LabelValue: FC<LabelValue.Props> = ({
 	textEmpty,
 	textHint,
 	action,
+	wrapperProps: { ui: wrapperUi, ...wrapperPropsRest } = {},
 	//
 	ui,
 	...props
@@ -69,7 +71,9 @@ export const LabelValue: FC<LabelValue.Props> = ({
 					gap: "default",
 					color: "lead",
 					width: "full",
+					...wrapperUi,
 				}}
+				{...wrapperPropsRest}
 			>
 				<Tx
 					label={textLabel}
