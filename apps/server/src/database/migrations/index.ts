@@ -8,8 +8,6 @@ import { ListingMigration } from "./0006-listing";
 import { DraftMigration } from "./0007-draft";
 import { GalleryMigration } from "./0008-gallery";
 import { GalleryItemMigration } from "./0009-gallery-item";
-import { ListingGalleryMigration } from "./0010-listing-gallery";
-import { DraftGalleryMigration } from "./0011-draft-gallery";
 import { CategoryMissMigration } from "./0012-category-miss";
 import { FeedMigration } from "./0013-feed";
 import { UserExMigration } from "./0014-user-ex";
@@ -37,8 +35,6 @@ export const migrations = {
 	"0007-draft": DraftMigration,
 	"0008-gallery": GalleryMigration,
 	"0009-gallery-item": GalleryItemMigration,
-	"0010-listing-gallery": ListingGalleryMigration,
-	"0011-draft-gallery": DraftGalleryMigration,
 	"0012-category-miss": CategoryMissMigration,
 	"0013-feed": FeedMigration,
 	"0014-user-ex": UserExMigration,

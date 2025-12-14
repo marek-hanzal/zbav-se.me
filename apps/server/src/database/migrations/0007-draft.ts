@@ -16,6 +16,7 @@ export const DraftMigration: Migration = {
 			.addColumn("age", "integer")
 			.addColumn("locationId", "text")
 			.addColumn("categoryId", "text")
+			.addColumn("galleryId", "text", (col) => col.notNull())
 			//
 			.addColumn("title", "text")
 			//
@@ -57,9 +58,26 @@ export const DraftMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addForeignKeyConstraint(
+				"draft_[galleryId]_fk",
+				[
+					"galleryId",
+				],
+				"gallery",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		await db.schema.createIndex("draft_[userId]_idx").on("draft").column("userId").execute();
+
+		await db.schema
+			.createIndex("draft_[galleryId]_idx")
+			.on("draft")
+			.column("galleryId")
+			.execute();
 
 		await db.schema
 			.createIndex("draft_[createdAt]_idx")

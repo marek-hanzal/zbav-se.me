@@ -16,6 +16,7 @@ export const ListingMigration: Migration = {
 			.addColumn("age", "integer", (col) => col.notNull())
 			.addColumn("locationId", "text", (col) => col.notNull())
 			.addColumn("categoryId", "text", (col) => col.notNull())
+			.addColumn("galleryId", "text", (col) => col.notNull())
 			//
 			.addColumn("title", "text", (col) => col.notNull())
 			.addColumn("titleVec", sql`vector(64)`)
@@ -58,6 +59,17 @@ export const ListingMigration: Migration = {
 				],
 				(c) => c.onDelete("cascade"),
 			)
+			.addForeignKeyConstraint(
+				"listing_[galleryId]_fk",
+				[
+					"galleryId",
+				],
+				"gallery",
+				[
+					"id",
+				],
+				(c) => c.onDelete("cascade"),
+			)
 			.execute();
 
 		await db.schema
@@ -76,6 +88,12 @@ export const ListingMigration: Migration = {
 			.createIndex("listing_[categoryId]_idx")
 			.on("listing")
 			.column("categoryId")
+			.execute();
+
+		await db.schema
+			.createIndex("listing_[galleryId]_idx")
+			.on("listing")
+			.column("galleryId")
 			.execute();
 
 		await db.schema
