@@ -1,11 +1,11 @@
 import { withFetch } from "@use-pico/common/fetch";
 import { Effect } from "effect";
+import { withLocationQueryBuilder } from "~/@session/location/db/withLocationQueryBuilder";
+import { withLocationSelect } from "~/@session/location/db/withLocationSelect";
+import type { LocationQuerySchema } from "~/@session/location/schema/LocationQuerySchema";
+import { LocationSchema } from "~/@session/location/schema/LocationSchema";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
-import { withLocationQueryBuilder } from "../db/withLocationQueryBuilder";
-import { withLocationSelect } from "../db/withLocationSelect";
-import type { LocationQuerySchema } from "../schema/LocationQuerySchema";
-import { LocationSchema } from "../schema/LocationSchema";
 
 export namespace locationFetchFx {
 	export type Props = LocationQuerySchema.Type;
