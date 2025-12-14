@@ -43,6 +43,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 					height: "full",
 					width: "full",
 					inner: "default",
+					gap: "default",
 				}}
 			>
 				<AgeSelection selection={selection} />

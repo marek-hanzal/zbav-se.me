@@ -50,6 +50,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 					height: "full",
 					width: "full",
 					inner: "default",
+					gap: "default",
 				}}
 			>
 				<ConditionSelect selection={selection} />
