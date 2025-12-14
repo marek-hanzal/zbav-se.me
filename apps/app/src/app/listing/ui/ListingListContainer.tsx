@@ -7,7 +7,7 @@ import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
-import { ListingHeroContainer } from "~/app/listing/ui/ListingHeroContainer";
+import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -19,7 +19,7 @@ export namespace ListingListContainer {
 		scrollToId: string | undefined;
 		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
-		overlay: ListingHeroContainer.Overlay.Render;
+		// overlay: ListingHeroContainer.Overlay.Render;
 		feedId: string;
 		withScore: boolean;
 	}
@@ -32,7 +32,7 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToId,
 	renderEmptyFn,
 	appendix,
-	overlay,
+	// overlay,
 	feedId,
 	withScore,
 	...props
@@ -148,11 +148,11 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 							>
 								{({ data: listing }) => {
 									return (
-										<ListingHeroContainer
+										<Hero
 											data-ui={"ListingListContainer-[ListingHeroContainer]"}
 											locale={locale}
 											listing={listing}
-											overlay={overlay}
+											// overlay={overlay}
 											feedId={feedId}
 											withScore={withScore}
 										/>

@@ -14,7 +14,6 @@ import { useRef, useState } from "react";
 import z from "zod";
 import { SetupButton } from "~/app/feed/ui/button/SetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({
@@ -187,12 +186,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 											size: 256,
 										},
 									}}
-									overlay={({ listing }) => (
-										<ListingOverlay
-											locale={locale}
-											listing={listing}
-										/>
-									)}
 									scrollToId={scrollToId}
 									appendix={
 										<Container

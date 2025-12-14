@@ -8,8 +8,9 @@ import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type ReactNode, useId, useState } from "react";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";
+import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
-export namespace ListingHeroContainer {
+export namespace Hero {
 	export namespace Overlay {
 		export interface Props {
 			listing: tListing;
@@ -27,7 +28,7 @@ export namespace ListingHeroContainer {
 		 * Listing entity shown inside the hero preview.
 		 */
 		listing: tListing;
-		overlay: Overlay.Render;
+		// overlay: Overlay.Render;
 		feedId: string;
 		withScore: boolean;
 	}
@@ -38,12 +39,12 @@ export namespace ListingHeroContainer {
  *
  * @param props Component props extending `Container.Props`.
  */
-export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
+export const Hero: FC<Hero.Props> = ({
 	locale,
 	ref,
 	listing,
 	feedId,
-	overlay,
+	// overlay,
 	withScore,
 	...props
 }) => {
@@ -82,9 +83,11 @@ export const ListingHeroContainer: FC<ListingHeroContainer.Props> = ({
 			>
 				{listing.isIgnored ? <Overlay type={"subtle"} /> : null}
 
-				{overlay({
-					listing,
-				})}
+				<ListingOverlay
+					data-ui={"ListingHeroContainer-[ListingOverlay]"}
+					locale={locale}
+					listing={listing}
+				/>
 
 				<HeroImage
 					data-ui={"ListingHeroContainer-[HeroImage]"}

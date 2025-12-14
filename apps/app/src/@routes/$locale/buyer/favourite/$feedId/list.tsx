@@ -9,7 +9,6 @@ import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
-import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 	component() {
@@ -39,12 +38,6 @@ export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 					 */
 					withScore={false}
 					scrollToId={undefined}
-					overlay={({ listing }) => (
-						<ListingOverlay
-							locale={locale}
-							listing={listing}
-						/>
-					)}
 					query={{
 						where: {
 							feedId,
