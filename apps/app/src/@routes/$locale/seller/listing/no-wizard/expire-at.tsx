@@ -1,44 +1,33 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import type { EntitySchema } from "@use-pico/common/schema";
+import type { tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { Suspense } from "react";
-import { CategorySelect } from "~/app/category/ui/CategorySelect";
+import { useState } from "react";
+import { ExpireAtContainer } from "~/app/expire-at/ui/ExpireAtContainer";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/category")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/expire-at")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const selection = useSelection<EntitySchema.Type>({
-			mode: "single",
-			initial: state.categoryId
-				? [
-						{
-							id: state.categoryId,
-						},
-					]
-				: undefined,
-		});
+		const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(state.expiresAt);
 
 		return (
 			<TitleContainer
-				data-ui="Category-root"
-				textTitle={"Listing category (title)"}
+				data-ui="ExpireAt-root"
+				textTitle={"Expire (title)"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/photos"}
+						to={"/$locale/seller/listing/wizard/location"}
 						search={state}
 						params={{
 							locale,
@@ -65,21 +54,21 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/condition"}
+						to={"/$locale/seller/listing/wizard/title"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							categoryId: selection.optional.singleId(),
+							expiresAt,
 						}}
-						disabled={!selection.hasAny}
+						disabled={!expiresAt}
 					>
 						<Button
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							label={"Next - condition (button)"}
-							disabled={!selection.hasAny}
+							label={"Next - title (button)"}
+							disabled={!expiresAt}
 							ui={{
 								tone: "secondary",
 								theme: "dark",
@@ -89,13 +78,10 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/category")(
 					</LinkTo>
 				}
 			>
-				<Suspense fallback={<SpinnerContainer />}>
-					<CategorySelect
-						locale={locale}
-						selection={selection}
-						categoryId={state.categoryId}
-					/>
-				</Suspense>
+				<ExpireAtContainer
+					value={expiresAt}
+					onChange={setExpiresAt}
+				/>
 			</TitleContainer>
 		);
 	},

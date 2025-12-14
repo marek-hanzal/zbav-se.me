@@ -2210,6 +2210,12 @@ export const zDraftWhere = z.object({
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with the exact userId'
+    })),
+    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
+    })),
+    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
     }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -2232,6 +2238,12 @@ export const zDraftFilter = z.object({
     })),
     userId: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with the exact userId'
+    })),
+    updatedAtGte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt greater than or equal to the provided date'
+    })),
+    updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
+        description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
     }))
 }).register(z.globalRegistry, {
     description: 'User-land filters'

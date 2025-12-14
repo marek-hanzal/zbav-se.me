@@ -1,39 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
+import type { Rating } from "@zbav-se.me/ui/rating";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { useState } from "react";
+import { AgeSelection } from "~/app/age/ui/AgeSelection";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { GalleryUpload } from "~/app/photo/ui/GalleryUpload";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/age")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [uploadIds, setUploadIds] = useState<string[]>(state.uploadIds ?? []);
 
-		// TODO Resolve photo limit from the user's tokens/plan/whatever
-		const photoCountLimit = 10;
+		const selection = useSelection<Rating.RatingItem>({
+			mode: "single",
+			initial: state.age
+				? [
+						{
+							id: String(state.age),
+						},
+					]
+				: [],
+		});
 
-		const hasUploads = uploadIds.length > 0;
-		const isUploading = withUploadMutation.useIsMutating();
+		const itemId = selection.optional.singleId();
+		const age = itemId ? Number.parseInt(itemId, 10) : undefined;
 
 		return (
 			<TitleContainer
-				data-ui={"ListingWizard-Photos"}
-				textTitle={"Listing photos (title)"}
+				textTitle={"Age (title)"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/ui/seller"}
+						to={"/$locale/seller/listing/wizard/condition"}
+						search={state}
 						params={{
 							locale,
 						}}
@@ -59,37 +66,31 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/photos")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/category"}
+						to={"/$locale/seller/listing/wizard/price"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							uploadIds,
+							age,
 						}}
-						disabled={!hasUploads || isUploading}
+						disabled={!selection.hasAny}
 					>
 						<Button
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							disabled={!hasUploads || isUploading}
-							label={"Next - category (button)"}
+							label={"Next - price (button)"}
+							disabled={!selection.hasAny}
 							ui={{
 								tone: "secondary",
 								theme: "dark",
-								size: "xl",
+								size: "lg",
 							}}
 						/>
 					</LinkTo>
 				}
 			>
-				<GalleryUpload
-					state={{
-						value: uploadIds,
-						set: setUploadIds,
-					}}
-					limit={photoCountLimit}
-				/>
+				<AgeSelection selection={selection} />
 			</TitleContainer>
 		);
 	},

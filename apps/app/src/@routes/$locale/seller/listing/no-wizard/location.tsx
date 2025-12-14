@@ -8,7 +8,7 @@ import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { LocationSelect } from "~/app/location/ui/LocationSelect";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/location")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/location")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { user } = useLoaderData({

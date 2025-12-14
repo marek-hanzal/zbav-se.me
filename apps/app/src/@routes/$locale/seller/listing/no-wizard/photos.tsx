@@ -2,47 +2,38 @@ import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
-import { toLocaleNumber } from "@use-pico/common/to-locale-number";
+import { withUploadMutation } from "@zbav-se.me/sdk/mutation/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { Dial } from "@zbav-se.me/ui/dial";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
-import { countryToCurrency } from "~/locales";
+import { GalleryUpload } from "~/app/photo/ui/GalleryUpload";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/photos")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-		const [price, setPrice] = useState(state.price);
+		const [uploadIds, setUploadIds] = useState<string[]>(state.uploadIds ?? []);
+
+		// TODO Resolve photo limit from the user's tokens/plan/whatever
+		const photoCountLimit = 10;
+
+		const hasUploads = uploadIds.length > 0;
+		const isUploading = withUploadMutation.useIsMutating();
 
 		return (
 			<TitleContainer
-				data-ui="Price-root"
-				textTitle={"Price (title)"}
-				textSubtitle={
-					price
-						? price === "0"
-							? "Price - free (title)"
-							: toLocaleNumber({
-									number: parseFloat(price),
-									locale,
-									currency: countryToCurrency[locale as countryToCurrency.Key],
-									style: "currency",
-									trailingZeroDisplay: "stripIfInteger",
-								})
-						: "Price (subtitle)"
-				}
+				data-ui={"ListingWizard-Photos"}
+				textTitle={"Listing photos (title)"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/age"}
-						search={state}
+						to={"/$locale/ui/seller"}
 						params={{
 							locale,
 						}}
@@ -61,9 +52,6 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 							onClick: () => {
 								navigate({
 									to: "/$locale/ui/seller",
-									params: {
-										locale,
-									},
 								});
 							},
 						}}
@@ -71,33 +59,36 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/price")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/location"}
+						to={"/$locale/seller/listing/wizard/category"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							price,
+							uploadIds,
 						}}
-						disabled={!price}
+						disabled={!hasUploads || isUploading}
 					>
 						<Button
 							iconEnabled={ArrowRightIcon}
-							disabled={!price}
+							iconPosition={"right"}
+							disabled={!hasUploads || isUploading}
+							label={"Next - category (button)"}
 							ui={{
 								tone: "secondary",
 								theme: "dark",
-								size: "lg",
+								size: "xl",
 							}}
-							iconPosition={"right"}
-							label={"Next - location (button)"}
 						/>
 					</LinkTo>
 				}
 			>
-				<Dial
-					value={price}
-					onChange={setPrice}
+				<GalleryUpload
+					state={{
+						value: uploadIds,
+						set: setUploadIds,
+					}}
+					limit={photoCountLimit}
 				/>
 			</TitleContainer>
 		);

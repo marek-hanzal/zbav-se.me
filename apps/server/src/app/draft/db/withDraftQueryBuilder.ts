@@ -39,5 +39,13 @@ export const withDraftQueryBuilder: withDraftQueryBuilder.Callback = <
 		query = query.where("d.userId", "=", where.userId) as TSelect;
 	}
 
+	if (where?.updatedAtGte !== undefined) {
+		query = query.where("d.updatedAt", ">=", where.updatedAtGte) as TSelect;
+	}
+
+	if (where?.updatedAtLte !== undefined) {
+		query = query.where("d.updatedAt", "<=", where.updatedAtLte) as TSelect;
+	}
+
 	return query;
 };

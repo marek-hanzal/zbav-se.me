@@ -7,7 +7,7 @@ import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/start")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/start")({
 	component() {
 		const { locale } = Route.useParams();
 		const navigate = Route.useNavigate();

@@ -2,44 +2,43 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
+import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import type { EntitySchema } from "@use-pico/common/schema";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { Rating } from "@zbav-se.me/ui/rating";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { AgeSelection } from "~/app/age/ui/AgeSelection";
+import { Suspense } from "react";
+import { CategorySelect } from "~/app/category/ui/CategorySelect";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/category")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-
-		const selection = useSelection<Rating.RatingItem>({
+		const selection = useSelection<EntitySchema.Type>({
 			mode: "single",
-			initial: state.age
+			initial: state.categoryId
 				? [
 						{
-							id: String(state.age),
+							id: state.categoryId,
 						},
 					]
-				: [],
+				: undefined,
 		});
-
-		const itemId = selection.optional.singleId();
-		const age = itemId ? Number.parseInt(itemId, 10) : undefined;
 
 		return (
 			<TitleContainer
-				textTitle={"Age (title)"}
+				data-ui="Category-root"
+				textTitle={"Listing category (title)"}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/condition"}
+						to={"/$locale/seller/listing/wizard/photos"}
 						search={state}
 						params={{
 							locale,
@@ -66,20 +65,20 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/price"}
+						to={"/$locale/seller/listing/wizard/condition"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							age,
+							categoryId: selection.optional.singleId(),
 						}}
 						disabled={!selection.hasAny}
 					>
 						<Button
 							iconEnabled={ArrowRightIcon}
 							iconPosition={"right"}
-							label={"Next - price (button)"}
+							label={"Next - condition (button)"}
 							disabled={!selection.hasAny}
 							ui={{
 								tone: "secondary",
@@ -90,7 +89,13 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/age")({
 					</LinkTo>
 				}
 			>
-				<AgeSelection selection={selection} />
+				<Suspense fallback={<SpinnerContainer />}>
+					<CategorySelect
+						locale={locale}
+						selection={selection}
+						categoryId={state.categoryId}
+					/>
+				</Suspense>
 			</TitleContainer>
 		);
 	},

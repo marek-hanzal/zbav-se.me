@@ -2738,6 +2738,12 @@ export const sDraftWhere = {
         },
         userId: {
             type: 'string'
+        },
+        updatedAtGte: {
+            type: 'string'
+        },
+        updatedAtLte: {
+            type: 'string'
         }
     }
 } as const;
@@ -2758,6 +2764,12 @@ export const sDraftFilter = {
             type: 'string'
         },
         userId: {
+            type: 'string'
+        },
+        updatedAtGte: {
+            type: 'string'
+        },
+        updatedAtLte: {
             type: 'string'
         }
     }

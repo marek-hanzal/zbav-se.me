@@ -25,7 +25,7 @@ import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 import { countryToCurrency } from "~/locales";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/submit")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/submit")({
 	validateSearch: ListingWizardSchema,
 	pendingComponent() {
 		const { locale } = Route.useParams();

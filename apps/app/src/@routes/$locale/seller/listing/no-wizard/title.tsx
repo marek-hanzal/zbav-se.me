@@ -13,7 +13,7 @@ import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/title")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();

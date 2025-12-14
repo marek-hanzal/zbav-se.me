@@ -55,7 +55,7 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 							...icon,
 						},
 					}}
-					to="/$locale/seller/listing/wizard/photos"
+					to="/$locale/ui/seller/draft/resolve"
 					params={{
 						locale,
 					}}

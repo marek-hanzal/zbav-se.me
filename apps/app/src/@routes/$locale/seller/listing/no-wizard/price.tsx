@@ -1,46 +1,47 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useSelection } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, CloseIcon } from "@use-pico/client/icon";
 import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { toLocaleNumber } from "@use-pico/common/to-locale-number";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { Rating } from "@zbav-se.me/ui/rating";
+import { Dial } from "@zbav-se.me/ui/dial";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { ConditionContainer } from "~/app/condition/ui/ConditionContainer";
+import { useState } from "react";
 import { ListingWizardSchema } from "~/app/listing/schema/ListingWizardSchema";
+import { countryToCurrency } from "~/locales";
 
-export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")({
+export const Route = createFileRoute("/$locale/seller/listing/no-wizard/price")({
 	validateSearch: ListingWizardSchema,
 	component() {
 		const { locale } = Route.useParams();
 		const state = Route.useSearch();
 		const navigate = Route.useNavigate();
-
-		const selection = useSelection<Rating.RatingItem>({
-			mode: "single",
-			initial: state.condition
-				? [
-						{
-							id: String(state.condition),
-						},
-					]
-				: [],
-		});
-
-		const itemId = selection.optional.singleId();
-		const condition = itemId ? Number.parseInt(itemId, 10) : undefined;
+		const [price, setPrice] = useState(state.price);
 
 		return (
 			<TitleContainer
-				data-ui={"Condition"}
-				textTitle={"Condition (title)"}
+				data-ui="Price-root"
+				textTitle={"Price (title)"}
+				textSubtitle={
+					price
+						? price === "0"
+							? "Price - free (title)"
+							: toLocaleNumber({
+									number: parseFloat(price),
+									locale,
+									currency: countryToCurrency[locale as countryToCurrency.Key],
+									style: "currency",
+									trailingZeroDisplay: "stripIfInteger",
+								})
+						: "Price (subtitle)"
+				}
 				left={
 					<LinkTo
 						{...uiBackButton({
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/category"}
+						to={"/$locale/seller/listing/wizard/age"}
 						search={state}
 						params={{
 							locale,
@@ -70,31 +71,34 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/condition")
 				}
 				bottom={
 					<LinkTo
-						to={"/$locale/seller/listing/wizard/age"}
+						to={"/$locale/seller/listing/wizard/location"}
 						params={{
 							locale,
 						}}
 						search={{
 							...state,
-							condition,
+							price,
 						}}
-						disabled={!selection.hasAny}
+						disabled={!price}
 					>
 						<Button
 							iconEnabled={ArrowRightIcon}
-							iconPosition={"right"}
-							label={"Next - age (button)"}
-							disabled={!selection.hasAny}
+							disabled={!price}
 							ui={{
 								tone: "secondary",
 								theme: "dark",
 								size: "lg",
 							}}
+							iconPosition={"right"}
+							label={"Next - location (button)"}
 						/>
 					</LinkTo>
 				}
 			>
-				<ConditionContainer selection={selection} />
+				<Dial
+					value={price}
+					onChange={setPrice}
+				/>
 			</TitleContainer>
 		);
 	},

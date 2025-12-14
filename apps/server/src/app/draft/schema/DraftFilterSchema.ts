@@ -7,6 +7,16 @@ export const DraftFilterSchema = z
 		userId: z.string().optional().openapi({
 			description: "This filter matches drafts with the exact userId",
 		}),
+		updatedAtGte: z.coerce.date().optional().openapi({
+			description:
+				"This filter matches drafts with updatedAt greater than or equal to the provided date",
+			type: "string",
+		}),
+		updatedAtLte: z.coerce.date().optional().openapi({
+			description:
+				"This filter matches drafts with updatedAt less than or equal to the provided date",
+			type: "string",
+		}),
 	})
 	.openapi("DraftFilter", {
 		description: "User-land filters",

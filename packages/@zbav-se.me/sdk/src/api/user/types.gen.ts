@@ -2102,6 +2102,14 @@ export type tDraftWhere = {
      * This filter matches drafts with the exact userId
      */
     userId?: string;
+    /**
+     * This filter matches drafts with updatedAt greater than or equal to the provided date
+     */
+    updatedAtGte?: string;
+    /**
+     * This filter matches drafts with updatedAt less than or equal to the provided date
+     */
+    updatedAtLte?: string;
 };
 
 /**
@@ -2124,6 +2132,14 @@ export type tDraftFilter = {
      * This filter matches drafts with the exact userId
      */
     userId?: string;
+    /**
+     * This filter matches drafts with updatedAt greater than or equal to the provided date
+     */
+    updatedAtGte?: string;
+    /**
+     * This filter matches drafts with updatedAt less than or equal to the provided date
+     */
+    updatedAtLte?: string;
 };
 
 /**
