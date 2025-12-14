@@ -2,17 +2,16 @@ import { withCount } from "@use-pico/common/count";
 import { Effect } from "effect";
 import { withGalleryQueryBuilder } from "~/app/gallery/db/withGalleryQueryBuilder";
 import { withGallerySelect } from "~/app/gallery/db/withGallerySelect";
-import type { GalleryQuerySchema } from "~/app/gallery/schema/GalleryQuerySchema";
+import type { GalleryCountQuerySchema } from "~/app/gallery/schema/GalleryCountQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace galleryCountFx {
-	export interface Props {
-		query: Omit<GalleryQuerySchema.Type, "cursor" | "sort">;
-	}
+	export type Props = GalleryCountQuerySchema.Type;
 }
 
-export const galleryCountFx = ({ query: { filter, where } }: galleryCountFx.Props) => {
+export const galleryCountFx = (query: galleryCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

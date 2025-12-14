@@ -8,14 +8,11 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace favouriteCollectionFx {
-	export interface Props {
-		query: FavouriteQuerySchema.Type;
-	}
+	export type Props = FavouriteQuerySchema.Type;
 }
 
-export const favouriteCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: favouriteCollectionFx.Props) => {
+export const favouriteCollectionFx = (query: favouriteCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
+import { FeedCountQuerySchema } from "~/app/feed/schema/FeedCountQuerySchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
@@ -19,7 +19,7 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: FeedQuerySchema,
+							schema: FeedCountQuerySchema,
 						},
 					},
 				},
@@ -49,12 +49,7 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<CountSchema.Type, 200>(
-					yield* feedCountFx({
-						query: c.req.valid("json"),
-					}),
-					200,
-				);
+				return c.json<CountSchema.Type, 200>(yield* feedCountFx(c.req.valid("json")), 200);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

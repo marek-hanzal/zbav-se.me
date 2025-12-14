@@ -54,9 +54,7 @@ export const withCategoryCollectionApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<CategorySchema>, 200>(
-					yield* categoryCollectionFx({
-						query: c.req.valid("json"),
-					}),
+					yield* categoryCollectionFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

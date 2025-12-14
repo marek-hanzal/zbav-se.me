@@ -49,12 +49,7 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				return c.json<CountSchema.Type, 200>(
-					yield* draftCountFx({
-						query: c.req.valid("json"),
-					}),
-					200,
-				);
+				return c.json<CountSchema.Type, 200>(yield* draftCountFx(c.req.valid("json")), 200);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

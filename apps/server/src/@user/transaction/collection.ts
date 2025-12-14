@@ -55,9 +55,7 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<TransactionSchema>, 200>(
-					yield* transactionCollectionFx({
-						query: c.req.valid("json"),
-					}),
+					yield* transactionCollectionFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

@@ -7,12 +7,10 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace draftCountFx {
-	export interface Props {
-		query: DraftCountQuerySchema.Type;
-	}
+	export type Props = DraftCountQuerySchema.Type;
 }
 
-export const draftCountFx = ({ query }: draftCountFx.Props) => {
+export const draftCountFx = (query: draftCountFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

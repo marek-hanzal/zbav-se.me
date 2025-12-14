@@ -7,12 +7,10 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingCountFx {
-	export interface Props {
-		query: ListingCountQuerySchema.Type;
-	}
+	export type Props = ListingCountQuerySchema.Type;
 }
 
-export const listingCountFx = ({ query }: listingCountFx.Props) => {
+export const listingCountFx = (query: listingCountFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

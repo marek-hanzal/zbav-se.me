@@ -55,9 +55,7 @@ export const withCollectionApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<withCollectionSchema.Type<FavouriteSchema>, 200>(
-					yield* favouriteCollectionFx({
-						query: c.req.valid("json"),
-					}),
+					yield* favouriteCollectionFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

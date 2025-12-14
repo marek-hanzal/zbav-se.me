@@ -7,12 +7,11 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace favouriteCountFx {
-	export interface Props {
-		query: FavouriteCountQuerySchema.Type;
-	}
+	export type Props = FavouriteCountQuerySchema.Type;
 }
 
-export const favouriteCountFx = ({ query: { filter, where } }: favouriteCountFx.Props) => {
+export const favouriteCountFx = (query: favouriteCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

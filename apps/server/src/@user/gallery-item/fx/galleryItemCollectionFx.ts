@@ -8,14 +8,11 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { GalleryItemSchema } from "../schema/GalleryItemSchema";
 
 export namespace galleryItemCollectionFx {
-	export interface Props {
-		query: GalleryItemQuerySchema.Type;
-	}
+	export type Props = GalleryItemQuerySchema.Type;
 }
 
-export const galleryItemCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: galleryItemCollectionFx.Props) => {
+export const galleryItemCollectionFx = (query: galleryItemCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

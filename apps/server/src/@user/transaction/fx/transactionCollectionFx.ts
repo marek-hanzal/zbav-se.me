@@ -8,14 +8,11 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { TransactionSchema } from "../schema/TransactionSchema";
 
 export namespace transactionCollectionFx {
-	export interface Props {
-		query: TransactionQuerySchema.Type;
-	}
+	export type Props = TransactionQuerySchema.Type;
 }
 
-export const transactionCollectionFx = ({
-	query: { filter, where, cursor, sort, meta },
-}: transactionCollectionFx.Props) => {
+export const transactionCollectionFx = (query: transactionCollectionFx.Props) => {
+	const { filter, where, cursor, sort, meta } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

@@ -8,14 +8,11 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { FlagSchema } from "../schema/FlagSchema";
 
 export namespace flagCollectionFx {
-	export interface Props {
-		query: FlagQuerySchema.Type;
-	}
+	export type Props = FlagQuerySchema.Type;
 }
 
-export const flagCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: flagCollectionFx.Props) => {
+export const flagCollectionFx = (query: flagCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

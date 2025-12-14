@@ -7,12 +7,11 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace listingScoreCountFx {
-	export interface Props {
-		query: ListingScoreCountQuerySchema.Type;
-	}
+	export type Props = ListingScoreCountQuerySchema.Type;
 }
 
-export const listingScoreCountFx = ({ query: { filter, where } }: listingScoreCountFx.Props) => {
+export const listingScoreCountFx = (query: listingScoreCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

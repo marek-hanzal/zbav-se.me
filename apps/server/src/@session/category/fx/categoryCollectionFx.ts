@@ -8,14 +8,11 @@ import type { CategoryQuerySchema } from "../schema/CategoryQuerySchema";
 import { CategorySchema } from "../schema/CategorySchema";
 
 export namespace categoryCollectionFx {
-	export interface Props {
-		query: CategoryQuerySchema.Type;
-	}
+	export type Props = CategoryQuerySchema.Type;
 }
 
-export const categoryCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: categoryCollectionFx.Props) => {
+export const categoryCollectionFx = (query: categoryCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

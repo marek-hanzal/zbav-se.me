@@ -8,14 +8,11 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace feedFavouriteCollectionFx {
-	export interface Props {
-		query: FeedQuerySchema.Type;
-	}
+	export type Props = FeedQuerySchema.Type;
 }
 
-export const feedFavouriteCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: feedFavouriteCollectionFx.Props) => {
+export const feedFavouriteCollectionFx = (query: feedFavouriteCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

@@ -1,6 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
-import { UploadQuerySchema } from "~/app/upload/schema/UploadQuerySchema";
+import { UploadCountQuerySchema } from "~/app/upload/schema/UploadCountQuerySchema";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
@@ -18,7 +18,7 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: UploadQuerySchema,
+							schema: UploadCountQuerySchema,
 						},
 					},
 				},
@@ -49,9 +49,7 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
-					yield* uploadCountFx({
-						query: c.req.valid("json"),
-					}),
+					yield* uploadCountFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

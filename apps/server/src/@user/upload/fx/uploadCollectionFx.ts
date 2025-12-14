@@ -7,14 +7,11 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { UploadSchema } from "../schema/UploadSchema";
 
 export namespace uploadCollectionFx {
-	export interface Props {
-		query: UploadQuerySchema.Type;
-	}
+	export type Props = UploadQuerySchema.Type;
 }
 
-export const uploadCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: uploadCollectionFx.Props) => {
+export const uploadCollectionFx = (query: uploadCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

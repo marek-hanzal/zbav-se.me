@@ -7,12 +7,11 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace ignoreCountFx {
-	export interface Props {
-		query: IgnoreCountQuerySchema.Type;
-	}
+	export type Props = IgnoreCountQuerySchema.Type;
 }
 
-export const ignoreCountFx = ({ query: { filter, where } }: ignoreCountFx.Props) => {
+export const ignoreCountFx = (query: ignoreCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

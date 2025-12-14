@@ -8,14 +8,11 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { ListingScoreSchema } from "../schema/ListingScoreSchema";
 
 export namespace listingScoreCollectionFx {
-	export interface Props {
-		query: ListingScoreQuerySchema.Type;
-	}
+	export type Props = ListingScoreQuerySchema.Type;
 }
 
-export const listingScoreCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: listingScoreCollectionFx.Props) => {
+export const listingScoreCollectionFx = (query: listingScoreCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

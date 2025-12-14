@@ -8,14 +8,11 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { IgnoreSchema } from "../schema/IgnoreSchema";
 
 export namespace ignoreCollectionFx {
-	export interface Props {
-		query: IgnoreQuerySchema.Type;
-	}
+	export type Props = IgnoreQuerySchema.Type;
 }
 
-export const ignoreCollectionFx = ({
-	query: { cursor, filter, where, sort },
-}: ignoreCollectionFx.Props) => {
+export const ignoreCollectionFx = (query: ignoreCollectionFx.Props) => {
+	const { cursor, filter, where, sort } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

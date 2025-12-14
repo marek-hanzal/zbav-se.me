@@ -50,9 +50,7 @@ export const withCountApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
-					yield* listingScoreCountFx({
-						query: c.req.valid("json"),
-					}),
+					yield* listingScoreCountFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(

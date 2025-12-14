@@ -7,12 +7,11 @@ import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 
 export namespace flagCountFx {
-	export interface Props {
-		query: FlagCountQuerySchema.Type;
-	}
+	export type Props = FlagCountQuerySchema.Type;
 }
 
-export const flagCountFx = ({ query: { filter, where } }: flagCountFx.Props) => {
+export const flagCountFx = (query: flagCountFx.Props) => {
+	const { filter, where } = query;
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

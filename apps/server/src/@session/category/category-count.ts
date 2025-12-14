@@ -5,7 +5,7 @@ import type { Routes } from "~/hono/Routes";
 import { CountSchema } from "~/schema/CountSchema";
 import { NoticeSchema } from "~/schema/NoticeSchema";
 import { categoryCountFx } from "./fx/categoryCountFx";
-import { CategoryQuerySchema } from "./schema/CategoryQuerySchema";
+import { CategoryCountQuerySchema } from "./schema/CategoryCountQuerySchema";
 
 export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 	sessionHono.openapi(
@@ -18,7 +18,7 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 				body: {
 					content: {
 						"application/json": {
-							schema: CategoryQuerySchema,
+							schema: CategoryCountQuerySchema,
 						},
 					},
 				},
@@ -49,9 +49,7 @@ export const withCategoryCountApi: Routes.Fn = ({ sessionHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<CountSchema.Type, 200>(
-					yield* categoryCountFx({
-						query: c.req.valid("json"),
-					}),
+					yield* categoryCountFx(c.req.valid("json")),
 					200,
 				);
 			}).pipe(
