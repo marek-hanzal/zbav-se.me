@@ -554,6 +554,9 @@ ec9bb8dbe799241436690496cc98420a414180ded4856409603dd8f2:
 efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
     ref: Feed setup - name (title)
     value: Nastav si název
+f0ede4df4be932f406adf9d24538d655c2ef27987f207fe2ec9aabed:
+    ref: Submit listing (button)
+    value: Zveřejnit inzerát
 f17512f4ea86964511c8c06419c3e45fb8a04a38bbe1ebdc8750b0de:
     ref: Listing title (placeholder)
     value: Např. "iPhone 14 Pro Max, 256GB, černá"

@@ -1,5 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { EditIcon, Icon } from "@use-pico/client/icon";
+import { Button } from "@use-pico/client/ui/button";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
@@ -8,7 +9,8 @@ import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { PhotoIcon } from "@zbav-se.me/ui/icon";
+import { ListingIcon, PhotoIcon } from "@zbav-se.me/ui/icon";
+import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
 import { AgePatch } from "~/app/draft/patch/AgePatch";
@@ -127,6 +129,31 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									}}
 								/>
 
+								<LabelValue
+									action={
+										<Icon
+											icon={EditIcon}
+											ui={{
+												text: "xl",
+											}}
+										/>
+									}
+									textLabel={translator.text("Listing category (label)")}
+									textValue={
+										draft.category ? (
+											<CategoryInline
+												category={draft.category}
+												tone="secondary"
+												theme="light"
+											/>
+										) : null
+									}
+									textEmpty={translator.text("Listing category not selected")}
+									onClick={() => {
+										setView("category");
+									}}
+								/>
+
 								<LocationValue
 									action={
 										<Icon
@@ -167,31 +194,6 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									textEmpty={translator.text("Price not set")}
 									onClick={() => {
 										setView("price");
-									}}
-								/>
-
-								<LabelValue
-									action={
-										<Icon
-											icon={EditIcon}
-											ui={{
-												text: "xl",
-											}}
-										/>
-									}
-									textLabel={translator.text("Listing category (label)")}
-									textValue={
-										draft.category ? (
-											<CategoryInline
-												category={draft.category}
-												tone="secondary"
-												theme="light"
-											/>
-										) : null
-									}
-									textEmpty={translator.text("Listing category not selected")}
-									onClick={() => {
-										setView("category");
 									}}
 								/>
 
@@ -256,10 +258,23 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 										draft.expiresAt ? `Expire in ${draft.expiresAt}` : null
 									}
 									textEmpty={translator.text("Expiration date not set")}
-                                    textHint={translator.text("Draft expire (hint)")}
+									textHint={translator.text("Draft expire (hint)")}
 									onClick={() => {
 										setView("expireAt");
 									}}
+								/>
+
+								<Button
+									iconEnabled={ListingIcon}
+									iconProps={{
+										ui: {
+											text: "2xl",
+										},
+									}}
+									label={"Submit listing (button)"}
+									{...uiSaveButton({
+										className: [],
+									})}
 								/>
 							</Container>
 						</TitleContainer>
