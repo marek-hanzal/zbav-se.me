@@ -3,7 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
-import { ListingIcon, MessageIcon, ShopIcon } from "@zbav-se.me/ui/icon";
+import { ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
 
@@ -97,24 +97,6 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					}}
 				>
 					<Tx label="My listings (label)" />
-				</LinkTo>
-
-				<LinkTo
-					{...uiMenuButton({
-						className: [],
-					})}
-					icon={ShopIcon}
-					iconProps={{
-						ui: {
-							...icon,
-						},
-					}}
-					to="/$locale/ui/shop"
-					params={{
-						locale,
-					}}
-				>
-					<Tx label="Shop (label)" />
 				</LinkTo>
 			</Container>
 		</Container>

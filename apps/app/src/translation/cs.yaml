@@ -98,10 +98,6 @@
     ref: Listing - start (text)
     value: Tento průvodce ti pomůže s tvorbou nového inzerátu s několika
         jednoduchých krocích.
-34f457d0919272ce083887bb547fcb8fbd314e8750dfbd3ff49c9dd8:
-    ref: Welcome (message)
-    value: |
-        Klikej, zkoumej, poznávej - nemáš se tu čeho bát!
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
     ref: Go to listings (button)
     value: Přejít k inzerátům
@@ -594,9 +590,6 @@ e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
 
 
         _Smyslem je popsat, co prodáváš._
-e43f69c8bd217486558a2a6f713bc8392d2764082dc97d30f93d7b38:
-    ref: Shop (label)
-    value: Bonusy
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
     ref: Listing score hint (label)
     value: Listing score hint (label)
@@ -650,6 +643,9 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Listing title (label)
+fdf12da2c20a3773d63d2a05055c386437e8a2eebccbcdfd3da5b51a:
+    ref: No listings (badge)
+    value: Čeká na správné inzeráty
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
     ref: Next - condition (button)
     value: Stav

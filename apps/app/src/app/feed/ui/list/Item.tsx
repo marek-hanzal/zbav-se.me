@@ -3,6 +3,7 @@ import { Badge } from "@use-pico/client/ui/badge";
 import { Container } from "@use-pico/client/ui/container";
 import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
@@ -197,7 +198,7 @@ export const Item: FC<Item.Props> = ({
 					feed={feed}
 					defaultOpen={defaultOpen}
 					noDelete={false}
-					label={"No listings (badge)"}
+					label={translator.text("No listings (badge)")}
 					ui={{
 						tone: "secondary",
 						theme: "light",
