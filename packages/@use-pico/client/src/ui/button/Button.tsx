@@ -97,6 +97,7 @@ export const Button: FC<Button.Props> = ({
 			type={"button"}
 			disabled={disabled}
 			//
+			{...props}
 			{...uiButton({
 				ui: {
 					disabled,
@@ -104,7 +105,6 @@ export const Button: FC<Button.Props> = ({
 				},
 				className,
 			})}
-			{...props}
 		>
 			{iconPosition === "left" && renderIcon}
 
