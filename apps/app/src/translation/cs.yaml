@@ -1,9 +1,6 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
     ref: Feed title (placeholder)
     value: Např. "iPhone" nebo "Bosh"
-00ad3224fedae56a9d4808165d54a99bd91a001d99feb66dfd7b9fac:
-    ref: Condition (required)
-    value: Condition (required)
 01b47fb4a4df0bd1d39599b06eefe5b2c4961d5eac0ad2e9630ec980:
     ref: Listing unignored (toast)
     value: Ignorace inzerátu byla úspěšně zrušena.
@@ -13,9 +10,6 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
     ref: Listing category (title)
     value: Kategorie
-04bc1b2fa2ac293d198b6121fafed48ee92fdcba6f89ce1aae6ba6ec:
-    ref: Listing category (required)
-    value: Listing category (required)
 050d325dc0ab4741ff8dd2e315e563bf0a746ea997e21d31bc54f8dd:
     ref: Listing category not selected
     value: Kategorii nemáš vybranou
@@ -406,9 +400,6 @@ a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
 a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
     ref: Messages (title)
     value: Zprávy
-a0d84573022ca7dad319540056ceece26432e0bda4a1345b44042e08:
-    ref: Expire (required)
-    value: Expire (required)
 a1afd40fa760408a3d789acdbaf42d52d40d45f34dcc9af5fccedffc:
     ref: Age not selected
     value: Stáří nemáš vybrané
@@ -440,6 +431,10 @@ b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
 b353f966af889bff3baf3b3122cd2b94401bc7985a1c0772cf0639d9:
     ref: Sign out
     value: Odhlásit se
+b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
+    ref: Draft expire (hint)
+    value: |
+        Nemusíš se bát, čas se spustí až po zveřejnění inzerátu.
 b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
     ref: "- skore + link -"
     value: "- skore + link -"
