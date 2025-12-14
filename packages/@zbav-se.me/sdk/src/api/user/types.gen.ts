@@ -46,6 +46,50 @@ export type tUserEx = {
 };
 
 /**
+ * Query object for upload count
+ */
+export type tUploadCountQuery = {
+    filter?: tUploadFilter;
+    where?: tUploadWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tUploadWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+};
+
+/**
+ * Data for uploading a file
+ */
+export type tUploadFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+};
+
+/**
  * Collection of upload items
  */
 export type tUploadCollection = {
@@ -106,42 +150,6 @@ export type tUploadSortField = typeof tUploadSortField[keyof typeof tUploadSortF
 export type tUploadSort = {
     field: tUploadSortField;
     direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tUploadWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-};
-
-/**
- * Data for uploading a file
- */
-export type tUploadFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
 };
 
 /**
@@ -555,7 +563,7 @@ export type tTransaction = {
      * Price of the listing
      */
     price: number;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyListEnum & string;
     location: tLocation;
 };
 
@@ -917,7 +925,7 @@ export type tListingWhere = {
     ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyListEnum & string;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -967,7 +975,7 @@ export type tFeedIdIn = Array<string>;
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export type tCurrencyIn = Array<tCurrencyListEnum>;
+export type tCurrencyIn = Array<tCurrencyListEnum & string>;
 
 /**
  * Filter listings based on the provided category IDs
@@ -1033,7 +1041,7 @@ export type tListingFilter = {
     ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyListEnum & string;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -1112,7 +1120,7 @@ export type tListingCreate = {
      * ID of the category
      */
     categoryId: string;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyListEnum & string;
     expiresAt: tListingExpireEnum;
     /**
      * Title of the item
@@ -1154,7 +1162,7 @@ export type tListing = {
      * Price of the listing
      */
     price: number;
-    currency: tCurrencyListEnum;
+    currency: tCurrencyListEnum & string;
     /**
      * Condition of the item (0-based index)
      */
@@ -1370,42 +1378,11 @@ export type tIgnore = {
 };
 
 /**
- * Collection of galleries
+ * Query object for gallery count
  */
-export type tGalleryCollection = {
-    data: Array<tGallery>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Query object for gallery collection
- */
-export type tGalleryQuery = {
-    cursor?: tCursor;
+export type tGalleryCountQuery = {
     filter?: tGalleryFilter;
     where?: tGalleryWhere;
-    sort?: Array<tGallerySort>;
-};
-
-/**
- * Field of the gallery sort
- */
-export const tGallerySortField = { createdAt: 'createdAt' } as const;
-
-/**
- * Field of the gallery sort
- */
-export type tGallerySortField = typeof tGallerySortField[keyof typeof tGallerySortField];
-
-/**
- * Sort object for gallery collection
- */
-export type tGallerySort = {
-    field: tGallerySortField;
-    direction: tOrderEnum;
 };
 
 /**
@@ -1450,6 +1427,45 @@ export type tGalleryFilter = {
      * Exact user id
      */
     userId?: string;
+};
+
+/**
+ * Collection of galleries
+ */
+export type tGalleryCollection = {
+    data: Array<tGallery>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Query object for gallery collection
+ */
+export type tGalleryQuery = {
+    cursor?: tCursor;
+    filter?: tGalleryFilter;
+    where?: tGalleryWhere;
+    sort?: Array<tGallerySort>;
+};
+
+/**
+ * Field of the gallery sort
+ */
+export const tGallerySortField = { createdAt: 'createdAt' } as const;
+
+/**
+ * Field of the gallery sort
+ */
+export type tGallerySortField = typeof tGallerySortField[keyof typeof tGallerySortField];
+
+/**
+ * Sort object for gallery collection
+ */
+export type tGallerySort = {
+    field: tGallerySortField;
+    direction: tOrderEnum;
 };
 
 /**
@@ -1699,6 +1715,58 @@ export type tFeedGalleryCreate = {
 };
 
 /**
+ * Query object for feed count
+ */
+export type tFeedCountQuery = {
+    filter?: tFeedFilter;
+    where?: tFeedWhere;
+};
+
+/**
+ * App-based filters
+ */
+export type tFeedWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Exact user id
+     */
+    userId?: string;
+};
+
+/**
+ * Filter object for feed collection
+ */
+export type tFeedFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * Exact user id
+     */
+    userId?: string;
+};
+
+/**
  * Collection of feed items
  */
 export type tFeedCollection = {
@@ -1781,50 +1849,6 @@ export type tFeedSortField = typeof tFeedSortField[keyof typeof tFeedSortField];
 export type tFeedSort = {
     field: tFeedSortField;
     direction: tOrderEnum;
-};
-
-/**
- * App-based filters
- */
-export type tFeedWhere = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
-};
-
-/**
- * Filter object for feed collection
- */
-export type tFeedFilter = {
-    /**
-     * This filter matches the exact id
-     */
-    id?: string;
-    /**
-     * This filter matches the ids
-     */
-    idIn?: Array<string>;
-    /**
-     * Runs fulltext on the collection/query.
-     */
-    fulltext?: string;
-    /**
-     * Exact user id
-     */
-    userId?: string;
 };
 
 /**
@@ -1992,6 +2016,258 @@ export type tFavourite = {
 };
 
 /**
+ * Data for updating an existing draft
+ */
+export type tDraftPatch = {
+    /**
+     * Fields to update (all optional)
+     */
+    patch: {
+        /**
+         * Price of the draft
+         */
+        price?: number;
+        currency?: tCurrencyListEnum;
+        /**
+         * Condition of the item (0-based index)
+         */
+        condition?: number | null;
+        /**
+         * Age of the item (0-based index)
+         */
+        age?: number | null;
+        /**
+         * ID of the location
+         */
+        locationId?: string | null;
+        /**
+         * ID of the category
+         */
+        categoryId?: string | null;
+        /**
+         * Expiration timestamp
+         */
+        expiresAt?: string;
+        /**
+         * Title of the item
+         */
+        title?: string | null;
+        /**
+         * Embedding vector for title similarity search
+         */
+        titleVec?: Array<number>;
+        /**
+         * Description of the item
+         */
+        description?: string | null;
+    };
+    query: tDraftQuery;
+};
+
+/**
+ * Field of the draft sort
+ */
+export const tDraftSortField = { createdAt: 'createdAt', updatedAt: 'updatedAt' } as const;
+
+/**
+ * Field of the draft sort
+ */
+export type tDraftSortField = typeof tDraftSortField[keyof typeof tDraftSortField];
+
+/**
+ * Sort object for draft collection
+ */
+export type tDraftSort = {
+    field: tDraftSortField;
+    direction: tOrderEnum;
+};
+
+/**
+ * App-based filters
+ */
+export type tDraftWhere = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches drafts with the exact userId
+     */
+    userId?: string;
+};
+
+/**
+ * User-land filters
+ */
+export type tDraftFilter = {
+    /**
+     * This filter matches the exact id
+     */
+    id?: string;
+    /**
+     * This filter matches the ids
+     */
+    idIn?: Array<string>;
+    /**
+     * Runs fulltext on the collection/query.
+     */
+    fulltext?: string;
+    /**
+     * This filter matches drafts with the exact userId
+     */
+    userId?: string;
+};
+
+/**
+ * Query object for draft collection
+ */
+export type tDraftQuery = {
+    cursor?: tCursor;
+    filter?: tDraftFilter;
+    where?: tDraftWhere;
+    sort?: Array<tDraftSort>;
+};
+
+/**
+ * Data for creating a new draft
+ */
+export type tDraftCreate = {
+    /**
+     * Price of the draft
+     */
+    price?: number;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition?: number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age?: number;
+    /**
+     * ID of the location
+     */
+    locationId?: string;
+    /**
+     * ID of the category
+     */
+    categoryId?: string;
+    currency?: tCurrencyListEnum & string;
+    expiresAt?: tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title?: string;
+    /**
+     * Description of the item
+     */
+    description?: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds?: Array<string>;
+};
+
+/**
+ * Draft data
+ */
+export type tDraft = {
+    /**
+     * ID of the draft
+     */
+    id: string;
+    /**
+     * Price of the draft
+     */
+    price?: number;
+    currency?: tCurrencyListEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition?: number | null;
+    /**
+     * Age of the item (0-based index)
+     */
+    age?: number | null;
+    /**
+     * ID of the location
+     */
+    locationId?: string | null;
+    /**
+     * ID of the category
+     */
+    categoryId?: string | null;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt?: string;
+    /**
+     * Title of the item
+     */
+    title?: string | null;
+    /**
+     * Description of the item
+     */
+    description?: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    location?: tLocation & ({
+        [key: string]: unknown;
+    } | null);
+    category?: tCategory & ({
+        [key: string]: unknown;
+    } | null);
+    /**
+     * Draft gallery images
+     */
+    gallery?: {
+        /**
+         * ID of the gallery
+         */
+        id: string;
+        /**
+         * Gallery items sorted by sort order
+         */
+        items: Array<tGalleryItem>;
+    } | null;
+};
+
+/**
+ * Query object for draft count
+ */
+export type tDraftCountQuery = {
+    filter?: tDraftFilter;
+    where?: tDraftWhere;
+};
+
+/**
+ * Collection of drafts
+ */
+export type tDraftCollection = {
+    data: Array<{
+        id: string;
+    }>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
  * Count data
  */
 export type tCount = {
@@ -2033,6 +2309,160 @@ export const tMessageTypeEnum = {
  * Type of message
  */
 export type tMessageTypeEnum = typeof tMessageTypeEnum[keyof typeof tMessageTypeEnum];
+
+export type tApiDraftCollectionRequest = {
+    body?: tDraftQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/collection';
+};
+
+export type apiDraftCollectionErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftCollectionError = apiDraftCollectionErrors[keyof apiDraftCollectionErrors];
+
+export type tApiDraftCollectionResponse = {
+    /**
+     * Access collection of drafts based on provided query
+     */
+    200: tDraftCollection;
+};
+
+export type apiDraftCollectionResponse = tApiDraftCollectionResponse[keyof tApiDraftCollectionResponse];
+
+export type tApiDraftCountRequest = {
+    body?: tDraftCountQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/count';
+};
+
+export type apiDraftCountErrors = {
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftCountError = apiDraftCountErrors[keyof apiDraftCountErrors];
+
+export type tApiDraftCountResponse = {
+    /**
+     * Return counts based on provided query
+     */
+    200: tCount;
+};
+
+export type apiDraftCountResponse = tApiDraftCountResponse[keyof tApiDraftCountResponse];
+
+export type tApiDraftCreateRequest = {
+    /**
+     * Data for creating a new draft
+     */
+    body?: tDraftCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/create';
+};
+
+export type apiDraftCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Draft not found after creation
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftCreateError = apiDraftCreateErrors[keyof apiDraftCreateErrors];
+
+export type tApiDraftCreateResponse = {
+    /**
+     * The created draft
+     */
+    201: tDraft;
+};
+
+export type apiDraftCreateResponse = tApiDraftCreateResponse[keyof tApiDraftCreateResponse];
+
+export type tApiDraftFetchRequest = {
+    /**
+     * Query object for draft fetch
+     */
+    body?: tDraftQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/fetch';
+};
+
+export type apiDraftFetchErrors = {
+    /**
+     * Draft not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftFetchError = apiDraftFetchErrors[keyof apiDraftFetchErrors];
+
+export type tApiDraftFetchResponse = {
+    /**
+     * Return a draft based on the provided query
+     */
+    200: tDraft;
+};
+
+export type apiDraftFetchResponse = tApiDraftFetchResponse[keyof tApiDraftFetchResponse];
+
+export type tApiDraftPatchRequest = {
+    /**
+     * Data for updating an existing draft
+     */
+    body?: tDraftPatch;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/patch';
+};
+
+export type apiDraftPatchErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Draft not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftPatchError = apiDraftPatchErrors[keyof apiDraftPatchErrors];
+
+export type tApiDraftPatchResponse = {
+    /**
+     * The updated draft
+     */
+    200: tDraft;
+};
+
+export type apiDraftPatchResponse = tApiDraftPatchResponse[keyof tApiDraftPatchResponse];
 
 export type tApiFavouriteCollectionRequest = {
     body?: tFavouriteQuery;
@@ -2239,7 +2669,7 @@ export type tApiFeedCollectionResponse = {
 export type apiFeedCollectionResponse = tApiFeedCollectionResponse[keyof tApiFeedCollectionResponse];
 
 export type tApiFeedCountRequest = {
-    body?: tFeedQuery;
+    body?: tFeedCountQuery;
     path?: never;
     query?: never;
     url: '/api/user/feed/count';
@@ -2501,7 +2931,7 @@ export type tApiGalleryCollectionResponse = {
 export type apiGalleryCollectionResponse = tApiGalleryCollectionResponse[keyof tApiGalleryCollectionResponse];
 
 export type tApiGalleryCountRequest = {
-    body?: tGalleryQuery;
+    body?: tGalleryCountQuery;
     path?: never;
     query?: never;
     url: '/api/user/gallery/count';
@@ -3241,7 +3671,7 @@ export type tApiUploadCollectionResponse = {
 export type apiUploadCollectionResponse = tApiUploadCollectionResponse[keyof tApiUploadCollectionResponse];
 
 export type tApiUploadCountRequest = {
-    body?: tUploadQuery;
+    body?: tUploadCountQuery;
     path?: never;
     query?: never;
     url: '/api/user/upload/count';

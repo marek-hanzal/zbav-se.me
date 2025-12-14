@@ -242,64 +242,6 @@ export const zLocationAutocomplete = z.object({
 export type zLocationAutocomplete = z.infer<typeof zLocationAutocomplete>;
 
 /**
- * Count data
- */
-export const zCount = z.object({
-    where: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided where query.'
-    }),
-    filter: z.number().register(z.globalRegistry, {
-        description: 'Count of items based on provided filter query.'
-    }),
-    total: z.number().register(z.globalRegistry, {
-        description: 'Total count of items (no filters applied).'
-    })
-}).register(z.globalRegistry, {
-    description: 'Count data'
-});
-
-export type zCount = z.infer<typeof zCount>;
-
-/**
- * Collection of categories
- */
-export const zCategoryCollection = z.object({
-    data: z.array(zCategory),
-    more: z.boolean().register(z.globalRegistry, {
-        description: 'Whether there are more items to fetch'
-    })
-}).register(z.globalRegistry, {
-    description: 'Collection of categories'
-});
-
-export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
-
-/**
- * Field of the category sort
- */
-export const zCategorySortField = z.enum([
-    'group',
-    'category',
-    'sort'
-]).register(z.globalRegistry, {
-    description: 'Field of the category sort'
-});
-
-export type zCategorySortField = z.infer<typeof zCategorySortField>;
-
-/**
- * Sort object for category collection
- */
-export const zCategorySort = z.object({
-    field: zCategorySortField,
-    direction: zOrderEnum
-}).register(z.globalRegistry, {
-    description: 'Sort object for category collection'
-});
-
-export type zCategorySort = z.infer<typeof zCategorySort>;
-
-/**
  * App-based filters
  */
 export const zCategoryWhere = z.object({
@@ -360,6 +302,76 @@ export const zCategoryFilter = z.object({
 });
 
 export type zCategoryFilter = z.infer<typeof zCategoryFilter>;
+
+/**
+ * Query object for category count
+ */
+export const zCategoryCountQuery = z.object({
+    filter: z.optional(zCategoryFilter),
+    where: z.optional(zCategoryWhere)
+}).register(z.globalRegistry, {
+    description: 'Query object for category count'
+});
+
+export type zCategoryCountQuery = z.infer<typeof zCategoryCountQuery>;
+
+/**
+ * Count data
+ */
+export const zCount = z.object({
+    where: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided where query.'
+    }),
+    filter: z.number().register(z.globalRegistry, {
+        description: 'Count of items based on provided filter query.'
+    }),
+    total: z.number().register(z.globalRegistry, {
+        description: 'Total count of items (no filters applied).'
+    })
+}).register(z.globalRegistry, {
+    description: 'Count data'
+});
+
+export type zCount = z.infer<typeof zCount>;
+
+/**
+ * Collection of categories
+ */
+export const zCategoryCollection = z.object({
+    data: z.array(zCategory),
+    more: z.boolean().register(z.globalRegistry, {
+        description: 'Whether there are more items to fetch'
+    })
+}).register(z.globalRegistry, {
+    description: 'Collection of categories'
+});
+
+export type zCategoryCollection = z.infer<typeof zCategoryCollection>;
+
+/**
+ * Field of the category sort
+ */
+export const zCategorySortField = z.enum([
+    'group',
+    'category',
+    'sort'
+]).register(z.globalRegistry, {
+    description: 'Field of the category sort'
+});
+
+export type zCategorySortField = z.infer<typeof zCategorySortField>;
+
+/**
+ * Sort object for category collection
+ */
+export const zCategorySort = z.object({
+    field: zCategorySortField,
+    direction: zOrderEnum
+}).register(z.globalRegistry, {
+    description: 'Sort object for category collection'
+});
+
+export type zCategorySort = z.infer<typeof zCategorySort>;
 
 /**
  * Category query parameters
@@ -433,7 +445,7 @@ export const zApiCategoryCollectionResponse = zCategoryCollection;
 export type zapiCategoryCollectionResponse = z.infer<typeof zApiCategoryCollectionResponse>;
 
 export const zApiCategoryCountData = z.object({
-    body: z.optional(zCategoryQuery),
+    body: z.optional(zCategoryCountQuery),
     path: z.optional(z.never()),
     query: z.optional(z.never())
 });

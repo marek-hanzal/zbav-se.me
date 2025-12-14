@@ -249,64 +249,11 @@ export type tLocationAutocomplete = {
 };
 
 /**
- * Count data
+ * Query object for category count
  */
-export type tCount = {
-    /**
-     * Count of items based on provided where query.
-     */
-    where: number;
-    /**
-     * Count of items based on provided filter query.
-     */
-    filter: number;
-    /**
-     * Total count of items (no filters applied).
-     */
-    total: number;
-};
-
-/**
- * Collection of categories
- */
-export type tCategoryCollection = {
-    data: Array<tCategory>;
-    /**
-     * Whether there are more items to fetch
-     */
-    more: boolean;
-};
-
-/**
- * Category query parameters
- */
-export type tCategoryQuery = {
-    cursor?: tCursor;
+export type tCategoryCountQuery = {
     filter?: tCategoryFilter;
     where?: tCategoryWhere;
-    sort?: Array<tCategorySort>;
-};
-
-/**
- * Field of the category sort
- */
-export const tCategorySortField = {
-    group: 'group',
-    category: 'category',
-    sort: 'sort'
-} as const;
-
-/**
- * Field of the category sort
- */
-export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
-
-/**
- * Sort object for category collection
- */
-export type tCategorySort = {
-    field: tCategorySortField;
-    direction: tOrderEnum;
 };
 
 /**
@@ -375,6 +322,67 @@ export type tCategoryFilter = {
      * This filter matches categories with locales in the provided array
      */
     localeIn?: Array<string>;
+};
+
+/**
+ * Count data
+ */
+export type tCount = {
+    /**
+     * Count of items based on provided where query.
+     */
+    where: number;
+    /**
+     * Count of items based on provided filter query.
+     */
+    filter: number;
+    /**
+     * Total count of items (no filters applied).
+     */
+    total: number;
+};
+
+/**
+ * Collection of categories
+ */
+export type tCategoryCollection = {
+    data: Array<tCategory>;
+    /**
+     * Whether there are more items to fetch
+     */
+    more: boolean;
+};
+
+/**
+ * Category query parameters
+ */
+export type tCategoryQuery = {
+    cursor?: tCursor;
+    filter?: tCategoryFilter;
+    where?: tCategoryWhere;
+    sort?: Array<tCategorySort>;
+};
+
+/**
+ * Field of the category sort
+ */
+export const tCategorySortField = {
+    group: 'group',
+    category: 'category',
+    sort: 'sort'
+} as const;
+
+/**
+ * Field of the category sort
+ */
+export type tCategorySortField = typeof tCategorySortField[keyof typeof tCategorySortField];
+
+/**
+ * Sort object for category collection
+ */
+export type tCategorySort = {
+    field: tCategorySortField;
+    direction: tOrderEnum;
 };
 
 /**
@@ -460,7 +468,7 @@ export type tApiCategoryCollectionResponse = {
 export type apiCategoryCollectionResponse = tApiCategoryCollectionResponse[keyof tApiCategoryCollectionResponse];
 
 export type tApiCategoryCountRequest = {
-    body?: tCategoryQuery;
+    body?: tCategoryCountQuery;
     path?: never;
     query?: never;
     url: '/api/session/category/count';

@@ -1,4 +1,5 @@
 import { Scalar } from "@scalar/hono-api-reference";
+import { AppEnv } from "~/AppEnv";
 import type { Routes } from "~/hono/Routes";
 
 const docsUrl = "/v3/api-docs";
@@ -28,5 +29,10 @@ export const withOpenApiEndpoint: Routes.Fn = (routes) => {
 			version: "0.5.0",
 			title: "zbav.se.me API",
 		},
+		servers: [
+			{
+				url: AppEnv.VITE_SERVER_API,
+			},
+		],
 	});
 };
