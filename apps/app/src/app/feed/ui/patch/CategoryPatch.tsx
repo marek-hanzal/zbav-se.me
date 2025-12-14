@@ -3,12 +3,10 @@ import { SaveIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
-import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
-import { toast } from "sonner";
 import { CategorySelect } from "~/app/category/ui/CategorySelect";
 
 export namespace CategoryPatch {
@@ -67,30 +65,23 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ locale, feed, onSettled
 					},
 				}}
 				onClick={() => {
-					toast.promise(
-						mutation.mutateAsync({
-							patch: {
-								...feed,
-								query: {
-									...feed.query,
-									filter: {
-										...feed.query?.filter,
-										categoryIdIn: selection.optional.multiId(),
-									},
-								},
-							},
+					mutation.mutate({
+						patch: {
+							...feed,
 							query: {
-								where: {
-									id: feed.id,
+								...feed.query,
+								filter: {
+									...feed.query?.filter,
+									categoryIdIn: selection.optional.multiId(),
 								},
 							},
-						}),
-						{
-							loading: translator.text("Loading... (toast)"),
-							success: translator.text("Feed category updated (toast)"),
-							error: translator.text("Error updating feed category (toast)"),
 						},
-					);
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+					});
 				}}
 				{...uiSaveButton({
 					className: [],

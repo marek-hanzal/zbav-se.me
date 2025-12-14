@@ -81,11 +81,7 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) =>
 					},
 				}}
 				onClick={() => {
-					toast.promise(mutation.mutateAsync(patch), {
-						loading: translator.text("Loading... (toast)"),
-						success: translator.text("Feed name updated (toast)"),
-						error: translator.text("Error updating feed name (toast)"),
-					});
+					mutation.mutate(patch);
 				}}
 				{...uiSaveButton({
 					className: [],

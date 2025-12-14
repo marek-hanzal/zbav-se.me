@@ -39,6 +39,10 @@ export const TitleInput: FC<TitleInput.Props> = ({ value, onChange, ui, ...props
 						)}
 					</FormField>
 				}
+				ui={{
+					text: "md",
+					inner: "4xl",
+				}}
 			>
 				<Mx
 					label={"Feed title (hint)"}

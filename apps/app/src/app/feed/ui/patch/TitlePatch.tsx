@@ -1,10 +1,8 @@
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { translator } from "@use-pico/common/translator";
 import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { type FC, useState } from "react";
-import { toast } from "sonner";
 import { TitleInput } from "~/app/feed/ui/input/TitleInput";
 
 export namespace TitlePatch {
@@ -40,6 +38,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, ...props }) 
 				layout: "vertical-content-footer",
 				height: "full",
 				gap: "default",
+				inner: "default",
 			}}
 			{...props}
 		>
@@ -71,11 +70,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, ...props }) 
 				loading={mutation.isPending}
 				disabled={!change || mutation.isPending}
 				onClick={() => {
-					toast.promise(mutation.mutateAsync(patch), {
-						loading: translator.text("Loading... (toast)"),
-						success: translator.text("Feed title updated (toast)"),
-						error: translator.text("Error updating feed title (toast)"),
-					});
+					mutation.mutate(patch);
 				}}
 				ui={{
 					tone: "secondary",
