@@ -52,6 +52,11 @@
 			"security": {
 				"noDangerouslySetInnerHtml": "off"
 			},
+			"lint": {
+				"style": {
+					"useComponentExportOnlyModules": "off"
+				}
+			},
 			"complexity": {
 				"noBannedTypes": "off"
 			}

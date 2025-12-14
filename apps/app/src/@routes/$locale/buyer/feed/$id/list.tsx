@@ -5,15 +5,153 @@ import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
-import { useRef, useState } from "react";
+import { type FC, type RefObject, useRef, useState } from "react";
 import z from "zod";
-import { SetupButton } from "~/app/feed/ui/button/SetupButton";
+import { SetupButton as CoolSetupButton } from "~/app/feed/ui/button/SetupButton";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
+
+export namespace SetupButton {
+	export interface Props extends Partial<CoolSetupButton.Props> {
+		locale: string;
+		feed: tFeed;
+		containerRef: RefObject<HTMLDivElement | null>;
+	}
+}
+
+export const SetupButton: FC<SetupButton.Props> = ({
+	locale,
+	feed,
+	containerRef,
+	ui,
+	...props
+}) => {
+	const [isOpen, setIsOpen] = useState(false);
+
+	return (
+		<CoolSetupButton
+			data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
+			locale={locale}
+			state={{
+				value: isOpen,
+				set: setIsOpen,
+			}}
+			feed={feed}
+			defaultOpen={false}
+			noDelete={true}
+			label={null}
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				justify: "center",
+				items: "center",
+				square: "default",
+				zIndex: true,
+				round: "full",
+				snapTo: "top-right",
+				text: "xl",
+				opacity: "low",
+				...ui,
+			}}
+			{...props}
+		>
+			<LinkTo
+				to={"/$locale/buyer/feed/$id/list"}
+				icon={ListingIcon}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
+				params={{
+					locale,
+					id: feed.id,
+				}}
+				resetScroll
+				onClick={() => {
+					setIsOpen(false);
+					containerRef.current?.scrollTo({
+						top: 0,
+						behavior: "instant",
+					});
+				}}
+				{...uiButton({
+					ui: {
+						tone: "secondary",
+						theme: "light",
+						size: "default",
+						text: "lg",
+					},
+					className: [],
+				})}
+				data-ui={"/buyer/feed/$id/list-[LinkTo.refresh]"}
+			>
+				<Tx label="Refresh listings (button)" />
+			</LinkTo>
+		</CoolSetupButton>
+	);
+};
+
+export namespace Appendix {
+	export interface Props {
+		locale: string;
+		feed: tFeed;
+		containerRef: RefObject<HTMLDivElement | null>;
+	}
+}
+
+export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef }) => {
+	return (
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
+		>
+			<Status
+				icon={DeadEndIcon}
+				textTitle={"That's all for now (title)"}
+				action={
+					<>
+						<SetupButton
+							locale={locale}
+							feed={feed}
+							containerRef={containerRef}
+							label={"ddd"}
+							ui={{
+								snapTo: undefined,
+								round: "default",
+								width: "content",
+							}}
+						/>
+
+						<LinkTo
+							to={"/$locale/ui/buyer"}
+							params={{
+								locale,
+							}}
+						>
+							<Button
+								iconEnabled={ArrowRightIcon}
+								iconPosition={"right"}
+								label={"Back to home (link)"}
+								ui={{
+									size: "xl",
+									justify: "start",
+								}}
+							/>
+						</LinkTo>
+					</>
+				}
+			/>
+		</Container>
+	);
+};
 
 export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	validateSearch: z.object({
@@ -63,8 +201,6 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 	component() {
 		const { id, locale } = Route.useParams();
 		const { scrollToId } = Route.useSearch();
-		const [isFeedSettings1, setIsFeedSettings1] = useState(false);
-		const [isFeedSettings2, setIsFeedSettings2] = useState(false);
 		const containerRef = useRef<HTMLDivElement>(null);
 
 		return (
@@ -96,63 +232,10 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 						return (
 							<>
 								<SetupButton
-									data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
 									locale={locale}
-									state={{
-										value: isFeedSettings1,
-										set: setIsFeedSettings1,
-									}}
 									feed={feed}
-									defaultOpen={false}
-									noDelete={true}
-									label={null}
-									ui={{
-										tone: "secondary",
-										theme: "light",
-										justify: "center",
-										items: "center",
-										square: "default",
-										zIndex: true,
-										round: "full",
-										snapTo: "top-right",
-										text: "xl",
-										opacity: "low",
-									}}
-								>
-									<LinkTo
-										to={"/$locale/buyer/feed/$id/list"}
-										icon={ListingIcon}
-										iconProps={{
-											ui: {
-												text: "xl",
-											},
-										}}
-										params={{
-											locale,
-											id: feed.id,
-										}}
-										resetScroll
-										onClick={() => {
-											setIsFeedSettings1(false);
-											containerRef.current?.scrollTo({
-												top: 0,
-												behavior: "instant",
-											});
-										}}
-										{...uiButton({
-											ui: {
-												tone: "secondary",
-												theme: "light",
-												size: "default",
-												text: "lg",
-											},
-											className: [],
-										})}
-										data-ui={"/buyer/feed/$id/list-[LinkTo.refresh]"}
-									>
-										<Tx label="Refresh listings (button)" />
-									</LinkTo>
-								</SetupButton>
+									containerRef={containerRef}
+								/>
 
 								<ListingListContainer
 									data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
@@ -188,79 +271,11 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 									}}
 									scrollToId={scrollToId}
 									appendix={
-										<Container
-											ui={{
-												layout: "vertical-centered",
-												height: "full",
-											}}
-										>
-											<Status
-												icon={DeadEndIcon}
-												textTitle={"That's all for now (title)"}
-												action={
-													<>
-														<SetupButton
-															locale={locale}
-															feed={feed}
-															defaultOpen={false}
-															noDelete
-															state={{
-																value: isFeedSettings2,
-																set: setIsFeedSettings2,
-															}}
-															ui={{
-																size: "xl",
-																justify: "start",
-															}}
-														>
-															<LinkTo
-																to={"/$locale/buyer/feed/$id/list"}
-																params={{
-																	locale,
-																	id: feed.id,
-																}}
-																resetScroll
-																onClick={() => {
-																	setIsFeedSettings2(false);
-																	containerRef.current?.scrollTo({
-																		top: 0,
-																		behavior: "instant",
-																	});
-																}}
-															>
-																<Button
-																	iconEnabled={ListingIcon}
-																	label={
-																		"Refresh listings (button)"
-																	}
-																	ui={{
-																		size: "xl",
-																		justify: "start",
-																	}}
-																/>
-															</LinkTo>
-														</SetupButton>
-
-														<LinkTo
-															to={"/$locale/ui/buyer"}
-															params={{
-																locale,
-															}}
-														>
-															<Button
-																iconEnabled={ArrowRightIcon}
-																iconPosition={"right"}
-																label={"Back to home (link)"}
-																ui={{
-																	size: "xl",
-																	justify: "start",
-																}}
-															/>
-														</LinkTo>
-													</>
-												}
-											/>
-										</Container>
+										<Appendix
+											locale={locale}
+											feed={feed}
+											containerRef={containerRef}
+										/>
 									}
 								/>
 							</>
