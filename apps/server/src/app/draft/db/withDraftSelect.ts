@@ -28,6 +28,8 @@ export const withDraftSelect = ({ database, sort }: withDraftSelect.Props) => {
 				})
 					.where("gal.id", "=", eb.ref("d.galleryId"))
 					.limit(1),
-			).as("gallery"),
+			)
+				.$notNull()
+				.as("gallery"),
 		]);
 };

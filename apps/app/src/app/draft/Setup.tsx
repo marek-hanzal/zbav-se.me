@@ -11,6 +11,7 @@ import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon, PhotoIcon } from "@zbav-se.me/ui/icon";
+import { HeroImage } from "@zbav-se.me/ui/img";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { CategoryInline } from "~/app/category/ui/CategoryInline";
@@ -94,30 +95,42 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									className="h-42"
 									onClick={() => setView("gallery")}
 								>
-									<Status
-										data-ui={"Setup-[Status.photo-hint]"}
-										icon={PhotoIcon}
-										iconProps={{
-											ui: {
-												text: "3xl",
-											},
-										}}
-										textTitle={"Listing photo gallery (label)"}
-										titleProps={{
-											ui: {
-												font: "normal",
-												text: "lg",
-											},
-										}}
-										ui={{
-											tone:
-												(draft.gallery?.items.length ?? 0) > 0
-													? "neutral"
-													: "primary",
-											theme: "light",
-											text: "default",
-										}}
-									/>
+									{draft.gallery.items.length > 0 &&
+									draft.gallery.items[0]?.upload ? (
+										<HeroImage
+											src={draft.gallery.items[0]?.upload.url}
+											ui={{
+												round: "default",
+											}}
+										/>
+									) : null}
+
+									{draft.gallery.items.length > 0 ? null : (
+										<Status
+											data-ui={"Setup-[Status.photo-hint]"}
+											icon={PhotoIcon}
+											iconProps={{
+												ui: {
+													text: "3xl",
+												},
+											}}
+											textTitle={"Listing photo gallery (label)"}
+											titleProps={{
+												ui: {
+													font: "normal",
+													text: "lg",
+												},
+											}}
+											ui={{
+												tone:
+													(draft.gallery?.items.length ?? 0) > 0
+														? "neutral"
+														: "primary",
+												theme: "light",
+												text: "default",
+											}}
+										/>
+									)}
 								</Container>
 
 								<LabelValue

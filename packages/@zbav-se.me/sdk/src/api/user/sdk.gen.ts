@@ -80,7 +80,7 @@ export const apiDraftFetch = <ThrowOnError extends boolean = false>(options?: Op
 });
 
 /**
- * Create or update a gallery for a draft. If gallery doesn't exist, creates it and attaches uploads.
+ * Update a draft gallery. Gallery is always created with the draft.
  */
 export const apiDraftGalleryCreate = <ThrowOnError extends boolean = false>(options?: Options<tApiDraftGalleryCreateRequest, ThrowOnError>) => (options?.client ?? client).post<tApiDraftGalleryCreateResponse, apiDraftGalleryCreateErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiDraftGalleryCreateData.parseAsync(data),

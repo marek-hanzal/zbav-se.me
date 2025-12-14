@@ -513,7 +513,7 @@ export type tGalleryItem = {
 };
 
 /**
- * Gallery data with items
+ * Draft gallery images
  */
 export type tGallery = {
     /**
@@ -558,7 +558,7 @@ export type tTransaction = {
      * Transaction title
      */
     title: string;
-    gallery: tGallery;
+    gallery: tGallery & unknown;
     /**
      * Price of the listing
      */
@@ -1179,6 +1179,14 @@ export type tListing = {
      */
     categoryId: string;
     /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * ID of the draft this listing was created from
+     */
+    draftId: string | null;
+    /**
      * Expiration timestamp
      */
     expiresAt: string;
@@ -1432,7 +1440,7 @@ export type tGalleryFilter = {
  * Collection of galleries
  */
 export type tGalleryCollection = {
-    data: Array<tGallery>;
+    data: Array<tGallery & unknown>;
     /**
      * Whether there are more items to fetch
      */
@@ -2135,6 +2143,10 @@ export type tDraftPatchData = {
      */
     categoryId?: string | null;
     /**
+     * ID of the gallery
+     */
+    galleryId?: string;
+    /**
      * Expiration timestamp
      */
     expiresAt?: null | tListingExpireEnum;
@@ -2234,6 +2246,10 @@ export type tDraft = {
      */
     categoryId: string | null;
     /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
      * Expiration timestamp
      */
     expiresAt: null | tListingExpireEnum;
@@ -2261,10 +2277,7 @@ export type tDraft = {
      * Category data
      */
     category: tCategory | null;
-    /**
-     * Draft gallery images
-     */
-    gallery: tGallery | null;
+    gallery: tGallery;
 };
 
 /**
@@ -2484,7 +2497,7 @@ export type tApiDraftGalleryCreateResponse = {
     /**
      * Gallery created or updated
      */
-    200: tGallery;
+    200: tGallery & unknown;
 };
 
 export type apiDraftGalleryCreateResponse = tApiDraftGalleryCreateResponse[keyof tApiDraftGalleryCreateResponse];
@@ -2821,7 +2834,7 @@ export type tApiFeedGalleryCreateResponse = {
     /**
      * Gallery created or updated
      */
-    200: tGallery;
+    200: tGallery & unknown;
 };
 
 export type apiFeedGalleryCreateResponse = tApiFeedGalleryCreateResponse[keyof tApiFeedGalleryCreateResponse];
@@ -2961,7 +2974,7 @@ export type tApiGalleryFetchResponse = {
     /**
      * Return a gallery based on the provided query
      */
-    200: tGallery;
+    200: tGallery & unknown;
 };
 
 export type apiGalleryFetchResponse = tApiGalleryFetchResponse[keyof tApiGalleryFetchResponse];

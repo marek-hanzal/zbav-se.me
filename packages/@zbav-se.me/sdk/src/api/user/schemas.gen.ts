@@ -758,7 +758,12 @@ export const sTransaction = {
             type: 'string'
         },
         gallery: {
-            $ref: '#/components/schemas/Gallery'
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
         },
         price: {
             type: 'number'
@@ -1655,6 +1660,22 @@ export const sListing = {
         categoryId: {
             type: 'string'
         },
+        galleryId: {
+            type: 'string'
+        },
+        draftId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
         expiresAt: {
             type: 'string'
         },
@@ -1725,6 +1746,8 @@ export const sListing = {
         'age',
         'locationId',
         'categoryId',
+        'galleryId',
+        'draftId',
         'expiresAt',
         'title',
         'description',
@@ -1987,7 +2010,12 @@ export const sGalleryCollection = {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/Gallery'
+                allOf: [
+                    {
+                        $ref: '#/components/schemas/Gallery'
+                    },
+                    {}
+                ]
             }
         },
         more: {
@@ -2997,6 +3025,9 @@ export const sDraftPatchData = {
                 }
             ]
         },
+        galleryId: {
+            type: 'string'
+        },
         expiresAt: {
             anyOf: [
                 {
@@ -3185,6 +3216,9 @@ export const sDraft = {
                 }
             ]
         },
+        galleryId: {
+            type: 'string'
+        },
         expiresAt: {
             anyOf: [
                 {
@@ -3257,17 +3291,7 @@ export const sDraft = {
             ]
         },
         gallery: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
+            $ref: '#/components/schemas/Gallery'
         }
     },
     required: [
@@ -3278,6 +3302,7 @@ export const sDraft = {
         'age',
         'locationId',
         'categoryId',
+        'galleryId',
         'expiresAt',
         'title',
         'description',

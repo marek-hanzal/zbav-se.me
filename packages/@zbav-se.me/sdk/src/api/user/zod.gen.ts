@@ -551,7 +551,7 @@ export const zGalleryItem = z.object({
 export type zGalleryItem = z.infer<typeof zGalleryItem>;
 
 /**
- * Gallery data with items
+ * Draft gallery images
  */
 export const zGallery = z.object({
     id: z.string().register(z.globalRegistry, {
@@ -561,7 +561,7 @@ export const zGallery = z.object({
         description: 'Gallery items sorted by sort order'
     })
 }).register(z.globalRegistry, {
-    description: 'Gallery data with items'
+    description: 'Draft gallery images'
 });
 
 export type zGallery = z.infer<typeof zGallery>;
@@ -591,7 +591,9 @@ export const zTransaction = z.object({
     title: z.string().register(z.globalRegistry, {
         description: 'Transaction title'
     }),
-    gallery: zGallery,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    })),
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
@@ -1309,6 +1311,13 @@ export const zListing = z.object({
     categoryId: z.string().register(z.globalRegistry, {
         description: 'ID of the category'
     }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    draftId: z.union([
+        z.string(),
+        z.null()
+    ]),
     expiresAt: z.string().register(z.globalRegistry, {
         description: 'Expiration timestamp'
     }),
@@ -1552,7 +1561,9 @@ export type zGalleryCountQuery = z.infer<typeof zGalleryCountQuery>;
  * Collection of galleries
  */
 export const zGalleryCollection = z.object({
-    data: z.array(zGallery),
+    data: z.array(zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Gallery data with items'
+    }))),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -2323,6 +2334,9 @@ export const zDraftPatchData = z.object({
         z.string(),
         z.null()
     ])),
+    galleryId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    })),
     expiresAt: z.optional(z.union([
         z.null(),
         zListingExpireEnum
@@ -2438,6 +2452,9 @@ export const zDraft = z.object({
         z.string(),
         z.null()
     ]),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
     expiresAt: z.union([
         z.null(),
         zListingExpireEnum
@@ -2464,10 +2481,7 @@ export const zDraft = z.object({
         zCategory,
         z.null()
     ]),
-    gallery: z.union([
-        zGallery,
-        z.null()
-    ])
+    gallery: zGallery
 }).register(z.globalRegistry, {
     description: 'Draft data'
 });
@@ -2619,7 +2633,9 @@ export type zapiDraftGalleryCreateRequest = z.infer<typeof zApiDraftGalleryCreat
 /**
  * Gallery created or updated
  */
-export const zApiDraftGalleryCreateResponse = zGallery;
+export const zApiDraftGalleryCreateResponse = zGallery.and(z.unknown().register(z.globalRegistry, {
+    description: 'Gallery data with items'
+}));
 
 export type zapiDraftGalleryCreateResponse = z.infer<typeof zApiDraftGalleryCreateResponse>;
 
@@ -2786,7 +2802,9 @@ export type zapiFeedGalleryCreateRequest = z.infer<typeof zApiFeedGalleryCreateD
 /**
  * Gallery created or updated
  */
-export const zApiFeedGalleryCreateResponse = zGallery;
+export const zApiFeedGalleryCreateResponse = zGallery.and(z.unknown().register(z.globalRegistry, {
+    description: 'Gallery data with items'
+}));
 
 export type zapiFeedGalleryCreateResponse = z.infer<typeof zApiFeedGalleryCreateResponse>;
 
@@ -2863,7 +2881,9 @@ export type zapiGalleryFetchRequest = z.infer<typeof zApiGalleryFetchData>;
 /**
  * Return a gallery based on the provided query
  */
-export const zApiGalleryFetchResponse = zGallery;
+export const zApiGalleryFetchResponse = zGallery.and(z.unknown().register(z.globalRegistry, {
+    description: 'Gallery data with items'
+}));
 
 export type zapiGalleryFetchResponse = z.infer<typeof zApiGalleryFetchResponse>;
 

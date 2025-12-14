@@ -23,14 +23,9 @@ export const DraftSchema = z
 			.openapi({
 				description: "Category data",
 			}),
-		gallery: z
-			.union([
-				GallerySchema,
-				z.null(),
-			])
-			.openapi({
-				description: "Draft gallery images",
-			}),
+		gallery: GallerySchema.openapi({
+			description: "Draft gallery images",
+		}),
 	})
 	.omit({
 		userId: true,
