@@ -9,7 +9,7 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace listingFetchFx {
-	export type Props = Omit<ListingQuerySchema.Type, "cursor">;
+	export type Props = ListingQuerySchema.Type;
 }
 
 export const listingFetchFx = (query: listingFetchFx.Props) => {

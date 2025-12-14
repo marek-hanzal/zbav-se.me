@@ -8,12 +8,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { UploadSchema } from "../schema/UploadSchema";
 
 export namespace uploadFetchFx {
-	export interface Props {
-		query: Omit<UploadQuerySchema.Type, "cursor">;
-	}
+	export type Props = UploadQuerySchema.Type;
 }
 
-export const uploadFetchFx = ({ query }: uploadFetchFx.Props) => {
+export const uploadFetchFx = (query: uploadFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

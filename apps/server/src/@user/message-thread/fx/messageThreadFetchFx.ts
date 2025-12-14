@@ -8,12 +8,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { MessageThreadSchema } from "../schema/MessageThreadSchema";
 
 export namespace messageThreadFetchFx {
-	export interface Props {
-		query: Omit<MessageThreadQuerySchema.Type, "cursor">;
-	}
+	export type Props = MessageThreadQuerySchema.Type;
 }
 
-export const messageThreadFetchFx = ({ query }: messageThreadFetchFx.Props) => {
+export const messageThreadFetchFx = (query: messageThreadFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

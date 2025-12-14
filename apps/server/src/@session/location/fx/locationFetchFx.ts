@@ -8,12 +8,10 @@ import type { LocationQuerySchema } from "../schema/LocationQuerySchema";
 import { LocationSchema } from "../schema/LocationSchema";
 
 export namespace locationFetchFx {
-	export interface Props {
-		query: LocationQuerySchema.Type;
-	}
+	export type Props = LocationQuerySchema.Type;
 }
 
-export const locationFetchFx = ({ query }: locationFetchFx.Props) => {
+export const locationFetchFx = (query: locationFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

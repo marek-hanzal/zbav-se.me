@@ -8,12 +8,10 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace messageTextFetchFx {
-	export interface Props {
-		query: Omit<MessageTextQuerySchema.Type, "cursor">;
-	}
+	export type Props = MessageTextQuerySchema.Type;
 }
 
-export const messageTextFetchFx = ({ query }: messageTextFetchFx.Props) => {
+export const messageTextFetchFx = (query: messageTextFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

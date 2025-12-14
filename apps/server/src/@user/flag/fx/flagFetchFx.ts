@@ -9,12 +9,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { FlagSchema } from "../schema/FlagSchema";
 
 export namespace flagFetchFx {
-	export interface Props {
-		query: Omit<FlagQuerySchema.Type, "cursor">;
-	}
+	export type Props = FlagQuerySchema.Type;
 }
 
-export const flagFetchFx = ({ query }: flagFetchFx.Props) => {
+export const flagFetchFx = (query: flagFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

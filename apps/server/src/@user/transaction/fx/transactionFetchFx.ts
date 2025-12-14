@@ -9,12 +9,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { TransactionSchema } from "../schema/TransactionSchema";
 
 export namespace transactionFetchFx {
-	export interface Props {
-		query: Omit<TransactionQuerySchema.Type, "cursor">;
-	}
+	export type Props = TransactionQuerySchema.Type;
 }
 
-export const transactionFetchFx = ({ query }: transactionFetchFx.Props) => {
+export const transactionFetchFx = (query: transactionFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

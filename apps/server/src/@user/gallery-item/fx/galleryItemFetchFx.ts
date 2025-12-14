@@ -9,12 +9,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { GalleryItemSchema } from "../schema/GalleryItemSchema";
 
 export namespace galleryItemFetchFx {
-	export interface Props {
-		query: Omit<GalleryItemQuerySchema.Type, "cursor">;
-	}
+	export type Props = GalleryItemQuerySchema.Type;
 }
 
-export const galleryItemFetchFx = ({ query }: galleryItemFetchFx.Props) => {
+export const galleryItemFetchFx = (query: galleryItemFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

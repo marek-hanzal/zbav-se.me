@@ -9,12 +9,10 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace favouriteFetchFx {
-	export interface Props {
-		query: Omit<FavouriteQuerySchema.Type, "cursor">;
-	}
+	export type Props = FavouriteQuerySchema.Type;
 }
 
-export const favouriteFetchFx = ({ query }: favouriteFetchFx.Props) => {
+export const favouriteFetchFx = (query: favouriteFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

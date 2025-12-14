@@ -9,12 +9,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { IgnoreSchema } from "../schema/IgnoreSchema";
 
 export namespace ignoreFetchFx {
-	export interface Props {
-		query: Omit<IgnoreQuerySchema.Type, "cursor">;
-	}
+	export type Props = IgnoreQuerySchema.Type;
 }
 
-export const ignoreFetchFx = ({ query }: ignoreFetchFx.Props) => {
+export const ignoreFetchFx = (query: ignoreFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 		const user = yield* UserContextFx;

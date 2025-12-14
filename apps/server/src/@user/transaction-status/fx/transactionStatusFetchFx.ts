@@ -8,12 +8,10 @@ import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
 import { NotFoundError } from "~/error/NotFoundError";
 
 export namespace transactionStatusFetchFx {
-	export interface Props {
-		query: Omit<TransactionStatusQuerySchema.Type, "cursor">;
-	}
+	export type Props = TransactionStatusQuerySchema.Type;
 }
 
-export const transactionStatusFetchFx = ({ query }: transactionStatusFetchFx.Props) => {
+export const transactionStatusFetchFx = (query: transactionStatusFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

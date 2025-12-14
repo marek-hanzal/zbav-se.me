@@ -8,12 +8,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { MessageGallerySchema } from "../schema/MessageGallerySchema";
 
 export namespace messageGalleryFetchFx {
-	export interface Props {
-		query: Omit<MessageGalleryQuerySchema.Type, "cursor">;
-	}
+	export type Props = MessageGalleryQuerySchema.Type;
 }
 
-export const messageGalleryFetchFx = ({ query }: messageGalleryFetchFx.Props) => {
+export const messageGalleryFetchFx = (query: messageGalleryFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 

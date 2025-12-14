@@ -8,12 +8,10 @@ import { NotFoundError } from "~/error/NotFoundError";
 import { MessageLocationSchema } from "../schema/MessageLocationSchema";
 
 export namespace messageLocationFetchFx {
-	export interface Props {
-		query: Omit<MessageLocationQuerySchema.Type, "cursor">;
-	}
+	export type Props = MessageLocationQuerySchema.Type;
 }
 
-export const messageLocationFetchFx = ({ query }: messageLocationFetchFx.Props) => {
+export const messageLocationFetchFx = (query: messageLocationFetchFx.Props) => {
 	return Effect.gen(function* () {
 		const database = yield* DatabaseContextFx;
 
