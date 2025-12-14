@@ -4,12 +4,24 @@ import { CategoryMissFilterSchema } from "./CategoryMissFilterSchema";
 import { CategoryMissSortSchema } from "./CategoryMissSortSchema";
 
 export const CategoryMissQuerySchema = z.object({
-	cursor: CursorSchema.nullish(),
-	filter: CategoryMissFilterSchema.nullish(),
-	where: CategoryMissFilterSchema.openapi("CategoryMissWhere", {
-		description: "App-based filters for category miss tracking",
-	}).nullish(),
-	sort: CategoryMissSortSchema.array().nullish(),
+	cursor: z.union([
+		CursorSchema,
+		z.null(),
+	]),
+	filter: z.union([
+		CategoryMissFilterSchema,
+		z.null(),
+	]),
+	where: z.union([
+		CategoryMissFilterSchema.openapi("CategoryMissWhere", {
+			description: "App-based filters for category miss tracking",
+		}),
+		z.null(),
+	]),
+	sort: z.union([
+		CategoryMissSortSchema.array(),
+		z.null(),
+	]),
 });
 
 export type CategoryMissQuerySchema = typeof CategoryMissQuerySchema;

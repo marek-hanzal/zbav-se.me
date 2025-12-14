@@ -44,9 +44,14 @@ export const ListingDbSchema = z
 			description: "Embedding vector for title similarity search",
 		}),
 		//
-		description: z.string().nullish().openapi({
-			description: "Description of the item",
-		}),
+		description: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "Description of the item",
+			}),
 		//
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",

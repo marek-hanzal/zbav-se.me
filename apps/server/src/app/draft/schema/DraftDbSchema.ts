@@ -11,42 +11,90 @@ export const DraftDbSchema = z
 			description: "ID of the user who created the draft",
 		}),
 		//
-		price: z.coerce.number().nullish().openapi({
-			description: "Price of the draft",
-			type: "number",
-		}),
+		price: z
+			.union([
+				z.coerce.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Price of the draft",
+				type: "number",
+			}),
 		//
-		currency: CurrencyListEnumSchema.nullish(),
+		currency: z.union([
+			CurrencyListEnumSchema,
+			z.null(),
+		]),
 		//
-		condition: z.number().nullish().openapi({
-			description: "Condition of the item (0-based index)",
-		}),
+		condition: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Condition of the item (0-based index)",
+			}),
 		//
-		age: z.number().nullish().openapi({
-			description: "Age of the item (0-based index)",
-		}),
+		age: z
+			.union([
+				z.number(),
+				z.null(),
+			])
+			.openapi({
+				description: "Age of the item (0-based index)",
+			}),
 		//
-		locationId: z.string().nullish().openapi({
-			description: "ID of the location",
-		}),
-		categoryId: z.string().nullish().openapi({
-			description: "ID of the category",
-		}),
-		expiresAt: z.coerce.date().nullish().openapi({
-			description: "Expiration timestamp",
-			type: "string",
-		}),
+		locationId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "ID of the location",
+			}),
+		categoryId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "ID of the category",
+			}),
+		expiresAt: z
+			.union([
+				z.coerce.date(),
+				z.null(),
+			])
+			.openapi({
+				description: "Expiration timestamp",
+				type: "string",
+			}),
 		//
-		title: z.string().nullish().openapi({
-			description: "Title of the item",
-		}),
-		titleVec: VectorSchema.nullish().openapi({
-			description: "Embedding vector for title similarity search",
-		}),
+		title: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "Title of the item",
+			}),
+		titleVec: z
+			.union([
+				VectorSchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Embedding vector for title similarity search",
+			}),
 		//
-		description: z.string().nullish().openapi({
-			description: "Description of the item",
-		}),
+		description: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "Description of the item",
+			}),
 		//
 		createdAt: z.coerce.date().openapi({
 			description: "Creation timestamp",

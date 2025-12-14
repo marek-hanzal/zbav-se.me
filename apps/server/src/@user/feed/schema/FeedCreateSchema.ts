@@ -6,9 +6,14 @@ export const FeedCreateSchema = z
 		name: z.string().min(1).openapi({
 			description: "Name of the feed",
 		}),
-		locationId: z.string().nullish().openapi({
-			description: "ID of the location associated with the feed",
-		}),
+		locationId: z
+			.union([
+				z.string(),
+				z.null(),
+			])
+			.openapi({
+				description: "ID of the location associated with the feed",
+			}),
 		query: ListingQuerySchema,
 	})
 	.openapi("FeedCreate", {

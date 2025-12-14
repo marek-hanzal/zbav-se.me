@@ -7,11 +7,22 @@ import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 export const DraftSchema = z
 	.looseObject({
 		...DraftDbSchema.shape,
-		location: LocationSchema.nullish(),
-		category: CategorySchema.nullish(),
-		gallery: GallerySchema.nullish().openapi({
-			description: "Draft gallery images",
-		}),
+		location: z.union([
+			LocationSchema,
+			z.null(),
+		]),
+		category: z.union([
+			CategorySchema,
+			z.null(),
+		]),
+		gallery: z
+			.union([
+				GallerySchema,
+				z.null(),
+			])
+			.openapi({
+				description: "Draft gallery images",
+			}),
 	})
 	.omit({
 		userId: true,

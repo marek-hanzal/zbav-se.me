@@ -32,7 +32,7 @@ export const TransactionMigration: Migration = {
 			//
 			.addColumn("userId", "text", (col) => col.notNull())
 			.addColumn("listingId", "text", (col) => col.notNull())
-			.addColumn("messageThreadId", "text")
+			.addColumn("messageThreadId", "text", (col) => col.notNull())
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
