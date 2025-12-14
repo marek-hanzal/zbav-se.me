@@ -105,7 +105,10 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 											},
 										}}
 										ui={{
-											tone: "primary",
+											tone:
+												(draft.gallery?.items.length ?? 0) > 0
+													? "neutral"
+													: "primary",
 											theme: "light",
 											text: "default",
 										}}
@@ -113,6 +116,11 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								</Container>
 
 								<LabelValue
+									wrapperProps={{
+										ui: {
+											tone: draft.title ? "neutral" : "primary",
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -130,6 +138,11 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								/>
 
 								<LabelValue
+									wrapperProps={{
+										ui: {
+											tone: draft.category ? "neutral" : "primary",
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -155,6 +168,11 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								/>
 
 								<LocationValue
+									wrapperProps={{
+										ui: {
+											tone: draft.locationId ? "neutral" : "primary",
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -173,6 +191,14 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								/>
 
 								<LabelValue
+									wrapperProps={{
+										ui: {
+											tone:
+												draft.price && draft.currency
+													? "neutral"
+													: "primary",
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -198,6 +224,11 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								/>
 
 								<LabelValue
+									wrapperProps={{
+										ui: {
+											tone: draft.condition ? "neutral" : "primary",
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -221,6 +252,11 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								/>
 
 								<LabelValue
+									wrapperProps={{
+										ui: {
+											tone: draft.age ? "neutral" : "primary",
+										},
+									}}
 									action={
 										<Icon
 											icon={EditIcon}
@@ -247,7 +283,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								<LabelValue
 									wrapperProps={{
 										ui: {
-											tone: draft.expiresAt ? "neutral" : undefined,
+											tone: draft.expiresAt ? "neutral" : "primary",
 										},
 									}}
 									action={
