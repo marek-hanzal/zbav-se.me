@@ -12,10 +12,21 @@ export namespace GalleryPatch {
 	}
 }
 
-export const GalleryPatch: FC<GalleryPatch.Props> = ({ draft, onCancel, onSuccess, ...props }) => {
+export const GalleryPatch: FC<GalleryPatch.Props> = ({
+	draft,
+	onCancel,
+	onSuccess,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			data-ui={"GalleryPatch-[Container]"}
+			ui={{
+				height: "full",
+				inner: "default",
+				...ui,
+			}}
 			{...props}
 		>
 			<GalleryUploadControl
@@ -26,6 +37,7 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({ draft, onCancel, onSucces
 				})}
 				onCancel={onCancel}
 				onSuccess={onSuccess}
+				limit={10}
 			/>
 		</Container>
 	);

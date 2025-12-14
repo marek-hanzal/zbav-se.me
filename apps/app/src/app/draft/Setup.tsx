@@ -18,6 +18,7 @@ import { AgePatch } from "~/app/draft/patch/AgePatch";
 import { CategoryPatch } from "~/app/draft/patch/CategoryPatch";
 import { ConditionPatch } from "~/app/draft/patch/ConditionPatch";
 import { ExpireAtPatch } from "~/app/draft/patch/ExpireAtPatch";
+import { GalleryPatch } from "~/app/draft/patch/GalleryPatch";
 import { LocationPatch } from "~/app/draft/patch/LocationPatch";
 import { PricePatch } from "~/app/draft/patch/PricePatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
@@ -32,6 +33,7 @@ export namespace Setup {
 		| "category"
 		| "condition"
 		| "age"
+		| "gallery"
 		| "expireAt";
 
 	export interface Props {
@@ -90,6 +92,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 										border: true,
 									}}
 									className="h-42"
+									onClick={() => setView("gallery")}
 								>
 									<Status
 										data-ui={"Setup-[Status.photo-hint]"}
@@ -470,6 +473,15 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									},
 								});
 							}}
+						/>
+					),
+				},
+				gallery: {
+					children: (
+						<GalleryPatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSuccess={() => setView("default")}
 						/>
 					),
 				},

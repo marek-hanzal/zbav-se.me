@@ -53,6 +53,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 						onSave(age);
 					}}
 					loading={loading}
+					disabled={!age}
 				/>
 			</Container>
 		</TitleContainer>

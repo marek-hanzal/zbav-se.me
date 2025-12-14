@@ -54,6 +54,7 @@ export const LocationControl: FC<LocationControl.Props> = ({
 					});
 				}}
 				loading={loading}
+				disabled={!locationId || !location}
 			/>
 		</Container>
 	);

@@ -1,7 +1,7 @@
 import type { withMutation } from "@use-pico/client/mutation";
-import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { useState } from "react";
+import { SaveControl } from "~/app/control/SaveControl";
 import { GalleryUpload } from "./GalleryUpload";
 
 export namespace GalleryUploadControl {
@@ -15,6 +15,7 @@ export namespace GalleryUploadControl {
 		//
 		onCancel(): void;
 		onSuccess(): void;
+		limit?: number;
 	}
 }
 
@@ -24,6 +25,7 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 	onCancel,
 	onSuccess,
 	ui,
+	limit = 1,
 	...props
 }: GalleryUploadControl.Props<TData>) => {
 	const [uploadIds, setUploadIds] = useState<string[]>([]);
@@ -50,52 +52,20 @@ export const GalleryUploadControl = <TData extends GalleryUploadControl.Uploads>
 					value: uploadIds,
 					set: setUploadIds,
 				}}
-				limit={1}
+				limit={limit}
 			/>
 
-			<Container
-				data-ui={"GalleryUploadControl-[Container.buttons]"}
-				ui={{
-					flow: "horizontal",
-					justify: "space-evenly",
-					items: "center",
-					gap: "default",
+			<SaveControl
+				onCancel={() => {
+					setUploadIds([]);
+					onCancel();
 				}}
-			>
-				<ConfirmButton
-					label={"Cancel (button)"}
-					confirmProps={{
-						ui: {
-							tone: "danger",
-							theme: "light",
-						},
-						onClick() {
-							setUploadIds([]);
-							onCancel();
-						},
-					}}
-					disabled={mutation.isPending}
-					ui={{
-						tone: "warning",
-						theme: "light",
-						size: "xl",
-					}}
-				/>
-
-				<Button
-					label={"Upload gallery (button)"}
-					disabled={mutation.isPending || uploadIds.length === 0}
-					loading={mutation.isPending}
-					onClick={() => {
-						mutation.mutate(toMutation(uploadIds));
-					}}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						size: "xl",
-					}}
-				/>
-			</Container>
+				onSave={() => {
+					mutation.mutate(toMutation(uploadIds));
+				}}
+				loading={mutation.isPending}
+				disabled={uploadIds.length === 0}
+			/>
 		</Container>
 	);
 };

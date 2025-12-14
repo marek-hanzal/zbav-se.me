@@ -58,6 +58,7 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 					snapAlign: "center",
 					gap: "default",
 					height: "full",
+					round: "default",
 				}}
 			>
 				{Array.from({

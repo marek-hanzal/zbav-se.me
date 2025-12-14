@@ -82,6 +82,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({
 						onSave(title);
 					}}
 					loading={loading}
+					disabled={!title}
 				/>
 			</Container>
 		</TitleContainer>

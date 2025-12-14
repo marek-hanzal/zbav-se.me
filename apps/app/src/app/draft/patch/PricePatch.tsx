@@ -71,6 +71,7 @@ export const PricePatch: FC<PricePatch.Props> = ({
 						onSave(price ? parseFloat(price) : null);
 					}}
 					loading={loading}
+					disabled={!price}
 				/>
 			</Container>
 		</TitleContainer>

@@ -60,6 +60,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 						onSave(condition);
 					}}
 					loading={loading}
+					disabled={!condition}
 				/>
 			</Container>
 		</TitleContainer>

@@ -101,10 +101,12 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				tone: "neutral",
 				theme: "light",
 				round: "default",
+				background: "default",
 				border: true,
 				shadow: true,
 				position: "relative",
 				disabled: (ui?.disabled || uploadMutation.isPending) ?? undefined,
+				width: "full",
 				height: "full",
 				...ui,
 			}}
@@ -120,95 +122,85 @@ export const PhotoUpload: FC<PhotoUpload.Props> = ({
 				onChange={onUpload}
 			/>
 
-			<Container
-				data-ui={"PhotoUpload-[Container.sheet]"}
-				onClick={pick}
-				onKeyDown={onKeyDown}
-				ui={{
-					position: "relative",
-					height: "full",
-					round: "default",
-				}}
-			>
-				{uploadMutation.isPending ? (
-					<Container
-						data-ui={"PhotoUpload-[Container.spinner]"}
+			{uploadMutation.isPending ? (
+				<Container
+					data-ui={"PhotoUpload-[Container.spinner]"}
+					ui={{
+						flow: "vertical",
+						height: "full",
+						items: "center",
+						justify: "center",
+					}}
+				>
+					<Status
+						data-ui={"PhotoUpload-[Status.spinner]"}
+						icon={SpinnerIcon}
+						textTitle={"Uploading photo (title)"}
+						action={
+							<Progress
+								value={progress * 100}
+								size={"lg"}
+								tone={"primary"}
+								theme={"dark"}
+							/>
+						}
 						ui={{
-							flow: "vertical",
-							height: "full",
-							items: "center",
-							justify: "center",
+							tone: "primary",
+							theme: "light",
 						}}
-					>
-						<Status
-							data-ui={"PhotoUpload-[Status.spinner]"}
-							icon={SpinnerIcon}
-							textTitle={"Uploading photo (title)"}
-							action={
-								<Progress
-									value={progress * 100}
-									size={"lg"}
-									tone={"primary"}
-									theme={"dark"}
-								/>
-							}
-							ui={{
-								tone: "primary",
-								theme: "light",
-							}}
-						/>
-					</Container>
-				) : null}
+					/>
+				</Container>
+			) : null}
 
-				{!value && !uploadMutation.isPending ? (
-					<Container
-						data-ui={"PhotoUpload-[Container.placeholder]"}
+			{!value && !uploadMutation.isPending ? (
+				<Container
+					data-ui={"PhotoUpload-[Container.placeholder]"}
+					ui={{
+						flow: "vertical",
+						height: "full",
+						items: "center",
+						justify: "center",
+						round: "default",
+					}}
+				>
+					<Status
+						data-ui={"PhotoUpload-[Status.placeholder]"}
+						icon={PhotoIcon}
+						textTitle={"Photo upload placeholder (title)"}
+						textMessage={"Photo upload placeholder (message)"}
 						ui={{
-							flow: "vertical",
-							height: "full",
-							items: "center",
-							justify: "center",
+							tone: ui?.disabled ? "neutral" : "primary",
+							theme: "light",
+							inner: "4xl",
 						}}
-					>
-						<Status
-							data-ui={"PhotoUpload-[Status.placeholder]"}
-							icon={PhotoIcon}
-							textTitle={"Photo upload placeholder (title)"}
-							textMessage={"Photo upload placeholder (message)"}
-							ui={{
-								tone: "primary",
-								theme: "light",
-								inner: "4xl",
-							}}
-							className={"text-center"}
-						/>
-					</Container>
-				) : null}
+						className={"text-center"}
+					/>
+				</Container>
+			) : null}
 
-				{value && !uploadMutation.isPending ? (
-					<withUploadFetchQuery.Suspense
-						data={{
-							where: {
-								id: value,
-							},
-						}}
-						fallback={<SpinnerContainer />}
-					>
-						{({ data }) => {
-							return (
-								<HeroImage
-									src={data.url}
-									alt={data.id}
-									visible
-									ui={{
-										round: "default",
-									}}
-								/>
-							);
-						}}
-					</withUploadFetchQuery.Suspense>
-				) : null}
-			</Container>
+			{value && !uploadMutation.isPending ? (
+				<withUploadFetchQuery.Suspense
+					data={{
+						where: {
+							id: value,
+						},
+					}}
+					fallback={<SpinnerContainer />}
+				>
+					{({ data }) => {
+						return (
+							<HeroImage
+								src={data.url}
+								alt={data.id}
+								visible
+								ui={{
+									round: "default",
+								}}
+							/>
+						);
+					}}
+				</withUploadFetchQuery.Suspense>
+			) : null}
 		</Container>
 	);
 };

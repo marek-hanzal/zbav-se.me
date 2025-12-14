@@ -9,10 +9,18 @@ export namespace SaveControl {
 		onCancel(): void;
 		onSave(): void;
 		loading: boolean;
+		disabled: boolean;
 	}
 }
 
-export const SaveControl: FC<SaveControl.Props> = ({ onCancel, onSave, loading, ui, ...props }) => {
+export const SaveControl: FC<SaveControl.Props> = ({
+	onCancel,
+	onSave,
+	loading,
+	disabled,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			ui={{
@@ -36,7 +44,7 @@ export const SaveControl: FC<SaveControl.Props> = ({ onCancel, onSave, loading, 
 
 			<Button
 				onClick={onSave}
-				disabled={loading}
+				disabled={loading || disabled}
 				loading={loading}
 				{...uiSaveButton({
 					className: [],

@@ -65,6 +65,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 						onSave(categoryId);
 					}}
 					loading={loading}
+					disabled={!categoryId}
 				/>
 			</Container>
 		</TitleContainer>

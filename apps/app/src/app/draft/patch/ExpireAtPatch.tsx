@@ -50,6 +50,7 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 						}
 					}}
 					loading={loading}
+					disabled={!expiresAt}
 				/>
 			</Container>
 		</TitleContainer>

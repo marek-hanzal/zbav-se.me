@@ -19,6 +19,7 @@
 		grid-template-rows: 100%;
 		grid-template-columns: 1fr;
 		grid-auto-rows: 100%;
+		grid-auto-flow: row;
 	}
 
 	.Container[data-ui-layout="vertical-header-content-footer"] {
@@ -70,6 +71,7 @@
 		grid-template-rows: 1fr;
 		grid-template-columns: 100%;
 		grid-auto-columns: 100%;
+		grid-auto-flow: column;
 	}
 
 	.Container[data-ui-layout="horizontal-flex"] {
