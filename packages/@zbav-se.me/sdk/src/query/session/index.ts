@@ -1,5 +1,2 @@
-export { withCategoryCollectionQuery } from "./withCategoryCollectionQuery";
-export { withCategoryCountQuery } from "./withCategoryCountQuery";
-export { withCategoryFetchQuery } from "./withCategoryFetchQuery";
-export { withLocationAutocompleteQuery } from "./withLocationAutocompleteQuery";
-export { withLocationFetchQuery } from "./withLocationFetchQuery";
+export * from "./category";
+export * from "./location";

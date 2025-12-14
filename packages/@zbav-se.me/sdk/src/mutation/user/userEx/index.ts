@@ -1,0 +1,1 @@
+export { withUserExPatchMutation } from "./withUserExPatchMutation";
