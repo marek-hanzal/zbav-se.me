@@ -5,7 +5,7 @@ import { GallerySchema } from "~/@user/gallery/schema/GallerySchema";
 import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 
 export const DraftSchema = z
-	.looseObject({
+	.object({
 		...DraftDbSchema.shape,
 		location: z
 			.union([
@@ -34,7 +34,6 @@ export const DraftSchema = z
 	})
 	.omit({
 		userId: true,
-		titleVec: true,
 	})
 	.strip()
 	.openapi("Draft", {

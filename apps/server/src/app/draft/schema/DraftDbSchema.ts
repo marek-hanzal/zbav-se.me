@@ -1,9 +1,8 @@
 import { z } from "@hono/zod-openapi";
 import { CurrencyListEnumSchema } from "~/schema/CurrencyListEnumSchema";
-import { VectorSchema } from "~/schema/VectorSchema";
 
 export const DraftDbSchema = z
-	.looseObject({
+	.object({
 		id: z.string().openapi({
 			description: "ID of the draft",
 		}),
@@ -80,14 +79,6 @@ export const DraftDbSchema = z
 			])
 			.openapi({
 				description: "Title of the item",
-			}),
-		titleVec: z
-			.union([
-				VectorSchema,
-				z.null(),
-			])
-			.openapi({
-				description: "Embedding vector for title similarity search",
 			}),
 		//
 		description: z
