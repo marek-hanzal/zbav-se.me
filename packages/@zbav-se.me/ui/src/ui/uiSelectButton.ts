@@ -21,7 +21,7 @@ export const uiSelectButton = ({ isSelected, ui, className }: uiSelectButton.Pro
 			flow: "vertical",
 			items: "start",
 			justify: "center",
-			size: "default",
+			size: "lg",
 			font: isSelected ? "bold" : "normal",
 			width: "full",
 			...ui,
