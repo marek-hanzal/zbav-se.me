@@ -27,7 +27,6 @@ import { Route as LocaleUiSellerDraftResolveRouteImport } from './@routes/$local
 import { Route as LocaleUiBuyerMessageListRouteImport } from './@routes/$locale/ui/buyer/message/list'
 import { Route as LocaleUiBuyerFeedSelectRouteImport } from './@routes/$locale/ui/buyer/feed/select'
 import { Route as LocaleUiBuyerFavouriteListRouteImport } from './@routes/$locale/ui/buyer/favourite/list'
-import { Route as LocaleSellerListingNoWizardTitleRouteImport } from './@routes/$locale/seller/listing/no-wizard/title'
 import { Route as LocaleSellerListingNoWizardSubmitRouteImport } from './@routes/$locale/seller/listing/no-wizard/submit'
 import { Route as LocaleSellerListingNoWizardStartRouteImport } from './@routes/$locale/seller/listing/no-wizard/start'
 import { Route as LocaleSellerListingNoWizardPriceRouteImport } from './@routes/$locale/seller/listing/no-wizard/price'
@@ -136,12 +135,6 @@ const LocaleUiBuyerFavouriteListRoute =
     path: '/buyer/favourite/list',
     getParentRoute: () => LocaleUiRoute,
   } as any)
-const LocaleSellerListingNoWizardTitleRoute =
-  LocaleSellerListingNoWizardTitleRouteImport.update({
-    id: '/seller/listing/no-wizard/title',
-    path: '/seller/listing/no-wizard/title',
-    getParentRoute: () => LocaleRoute,
-  } as any)
 const LocaleSellerListingNoWizardSubmitRoute =
   LocaleSellerListingNoWizardSubmitRouteImport.update({
     id: '/seller/listing/no-wizard/submit',
@@ -245,7 +238,6 @@ export interface FileRoutesByFullPath {
   '/$locale/seller/listing/no-wizard/price': typeof LocaleSellerListingNoWizardPriceRoute
   '/$locale/seller/listing/no-wizard/start': typeof LocaleSellerListingNoWizardStartRoute
   '/$locale/seller/listing/no-wizard/submit': typeof LocaleSellerListingNoWizardSubmitRoute
-  '/$locale/seller/listing/no-wizard/title': typeof LocaleSellerListingNoWizardTitleRoute
   '/$locale/ui/buyer/favourite/list': typeof LocaleUiBuyerFavouriteListRoute
   '/$locale/ui/buyer/feed/select': typeof LocaleUiBuyerFeedSelectRoute
   '/$locale/ui/buyer/message/list': typeof LocaleUiBuyerMessageListRoute
@@ -278,7 +270,6 @@ export interface FileRoutesByTo {
   '/$locale/seller/listing/no-wizard/price': typeof LocaleSellerListingNoWizardPriceRoute
   '/$locale/seller/listing/no-wizard/start': typeof LocaleSellerListingNoWizardStartRoute
   '/$locale/seller/listing/no-wizard/submit': typeof LocaleSellerListingNoWizardSubmitRoute
-  '/$locale/seller/listing/no-wizard/title': typeof LocaleSellerListingNoWizardTitleRoute
   '/$locale/ui/buyer/favourite/list': typeof LocaleUiBuyerFavouriteListRoute
   '/$locale/ui/buyer/feed/select': typeof LocaleUiBuyerFeedSelectRoute
   '/$locale/ui/buyer/message/list': typeof LocaleUiBuyerMessageListRoute
@@ -313,7 +304,6 @@ export interface FileRoutesById {
   '/$locale/seller/listing/no-wizard/price': typeof LocaleSellerListingNoWizardPriceRoute
   '/$locale/seller/listing/no-wizard/start': typeof LocaleSellerListingNoWizardStartRoute
   '/$locale/seller/listing/no-wizard/submit': typeof LocaleSellerListingNoWizardSubmitRoute
-  '/$locale/seller/listing/no-wizard/title': typeof LocaleSellerListingNoWizardTitleRoute
   '/$locale/ui/buyer/favourite/list': typeof LocaleUiBuyerFavouriteListRoute
   '/$locale/ui/buyer/feed/select': typeof LocaleUiBuyerFeedSelectRoute
   '/$locale/ui/buyer/message/list': typeof LocaleUiBuyerMessageListRoute
@@ -349,7 +339,6 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/no-wizard/price'
     | '/$locale/seller/listing/no-wizard/start'
     | '/$locale/seller/listing/no-wizard/submit'
-    | '/$locale/seller/listing/no-wizard/title'
     | '/$locale/ui/buyer/favourite/list'
     | '/$locale/ui/buyer/feed/select'
     | '/$locale/ui/buyer/message/list'
@@ -382,7 +371,6 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/no-wizard/price'
     | '/$locale/seller/listing/no-wizard/start'
     | '/$locale/seller/listing/no-wizard/submit'
-    | '/$locale/seller/listing/no-wizard/title'
     | '/$locale/ui/buyer/favourite/list'
     | '/$locale/ui/buyer/feed/select'
     | '/$locale/ui/buyer/message/list'
@@ -416,7 +404,6 @@ export interface FileRouteTypes {
     | '/$locale/seller/listing/no-wizard/price'
     | '/$locale/seller/listing/no-wizard/start'
     | '/$locale/seller/listing/no-wizard/submit'
-    | '/$locale/seller/listing/no-wizard/title'
     | '/$locale/ui/buyer/favourite/list'
     | '/$locale/ui/buyer/feed/select'
     | '/$locale/ui/buyer/message/list'
@@ -558,13 +545,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/$locale/ui/buyer/favourite/list'
       preLoaderRoute: typeof LocaleUiBuyerFavouriteListRouteImport
       parentRoute: typeof LocaleUiRoute
-    }
-    '/$locale/seller/listing/no-wizard/title': {
-      id: '/$locale/seller/listing/no-wizard/title'
-      path: '/seller/listing/no-wizard/title'
-      fullPath: '/$locale/seller/listing/no-wizard/title'
-      preLoaderRoute: typeof LocaleSellerListingNoWizardTitleRouteImport
-      parentRoute: typeof LocaleRoute
     }
     '/$locale/seller/listing/no-wizard/submit': {
       id: '/$locale/seller/listing/no-wizard/submit'
@@ -712,7 +692,6 @@ interface LocaleRouteChildren {
   LocaleSellerListingNoWizardPriceRoute: typeof LocaleSellerListingNoWizardPriceRoute
   LocaleSellerListingNoWizardStartRoute: typeof LocaleSellerListingNoWizardStartRoute
   LocaleSellerListingNoWizardSubmitRoute: typeof LocaleSellerListingNoWizardSubmitRoute
-  LocaleSellerListingNoWizardTitleRoute: typeof LocaleSellerListingNoWizardTitleRoute
 }
 
 const LocaleRouteChildren: LocaleRouteChildren = {
@@ -739,7 +718,6 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleSellerListingNoWizardStartRoute: LocaleSellerListingNoWizardStartRoute,
   LocaleSellerListingNoWizardSubmitRoute:
     LocaleSellerListingNoWizardSubmitRoute,
-  LocaleSellerListingNoWizardTitleRoute: LocaleSellerListingNoWizardTitleRoute,
 }
 
 const LocaleRouteWithChildren =
