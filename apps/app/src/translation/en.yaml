@@ -7,6 +7,9 @@
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
   ref: Feed age (title)
   value: Feed age (title)
+03dd4711e2aaba77a79e582ae21f6acf1aaa8b9bcd089b1b8e2de80e:
+  ref: Close draft (button)
+  value: Close draft (button)
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
@@ -22,6 +25,9 @@
 0bfcff0fd8397bbe2de9284b3fe89a16ac4fbf192d890b04a396258b:
   ref: Draft edit (title)
   value: Draft edit (title)
+0c0a4ce653f7b616d85e4445a31bdafdb550d7239869be85731a82a4:
+  ref: Delete draft - confirm (button)
+  value: Delete draft - confirm (button)
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
@@ -438,9 +444,9 @@ e79bd033edf07c91892ba33ba7bad917579963aa49e2477fbfea126f:
 e8721b37bc30ca545caf12e28974798e7221e2d51d587920bad8f4a6:
   ref: Feed location not selected
   value: Feed location not selected
-ec9bb8dbe799241436690496cc98420a414180ded4856409603dd8f2:
-  ref: Price (required)
-  value: Price (required)
+ebff4121130dcb1e32bc8706a7005ec0c78e811db18e0ae28a6abb4c:
+  ref: Close draft (hint)
+  value: Close draft (hint)
 efad125c4eaaacfc95cadc0edaef1e9a5220f1c5a643e9b2c7364f50:
   ref: Feed setup - name (title)
   value: Feed setup - name (title)

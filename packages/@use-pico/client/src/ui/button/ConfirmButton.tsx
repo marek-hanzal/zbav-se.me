@@ -1,5 +1,6 @@
 import React, { type FC, useEffect, useRef, useState } from "react";
 import { Button } from "./Button";
+import { uiButton } from "./uiButton";
 
 export namespace ConfirmButton {
 	export interface Props extends Button.Props {
@@ -70,10 +71,13 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 		<Button
 			{...props}
 			{...conditionalProps}
-			ui={{
-				...ui,
-				...conditionalProps?.ui,
-			}}
+			{...uiButton({
+				ui: {
+					...ui,
+					...conditionalProps?.ui,
+				},
+				className: [],
+			})}
 			onClick={handleClick}
 		/>
 	);

@@ -1,5 +1,6 @@
 import { TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
 import { uiSaveButton } from "@zbav-se.me/ui/ui";
@@ -28,11 +29,20 @@ export const DeleteButton: FC<DeleteButton.Props> = ({ draft, onDelete }) => {
 			label={"Delete draft (button)"}
 			disabled={deleteMutation.isPending}
 			loading={deleteMutation.isPending}
+			buttonProps={{
+				ui: {
+					justify: "start",
+					items: "center",
+				},
+			}}
 			confirmProps={{
 				ui: {
 					tone: "danger",
 					theme: "light",
+					justify: "start",
+					items: "center",
 				},
+				label: translator.text("Delete draft - confirm (button)"),
 				onClick() {
 					deleteMutation.mutate({
 						where: {
@@ -43,7 +53,7 @@ export const DeleteButton: FC<DeleteButton.Props> = ({ draft, onDelete }) => {
 			}}
 			{...uiSaveButton({
 				ui: {
-					tone: "warning",
+					tone: "neutral",
 				},
 				className: [],
 			})}

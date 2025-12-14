@@ -25,7 +25,7 @@ export const ExpireAtSelect: FC<ExpireAtSelect.Props> = ({ value, onChange, ui, 
 				layout: "vertical-flex",
 				height: "auto",
 				width: "full",
-				gap: "default",
+				gap: "lg",
 				...ui,
 			}}
 			{...props}

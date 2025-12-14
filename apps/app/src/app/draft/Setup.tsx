@@ -1,7 +1,9 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { CloseIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Tx } from "@use-pico/client/ui/tx";
 import { View } from "@use-pico/client/ui/view";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -154,6 +156,43 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 									draft={draft}
 									onListing={onListing}
 								/>
+
+								<LinkTo
+									to={"/$locale/ui/seller"}
+									params={{
+										locale,
+									}}
+									icon={CloseIcon}
+									iconProps={{
+										ui: {
+											text: "2xl",
+										},
+									}}
+									{...uiButton({
+										ui: {
+											inner: "md",
+											text: "lg",
+										},
+										className: [],
+									})}
+								>
+									<Container
+										ui={{
+											flow: "vertical",
+											height: "full",
+										}}
+									>
+										<Tx label="Close draft (button)" />
+
+										<Tx
+											label="Close draft (hint)"
+											ui={{
+												text: "xs",
+												color: "icon",
+											}}
+										/>
+									</Container>
+								</LinkTo>
 
 								<DeleteButton
 									draft={draft}

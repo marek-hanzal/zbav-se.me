@@ -87,7 +87,6 @@ export const Button: FC<Button.Props> = ({
 			iconLoading,
 			iconDisabled,
 			iconEnabled,
-			// iconSize,
 			iconProps,
 		],
 	);

@@ -7,7 +7,7 @@ import type { FC } from "react";
 
 export namespace PriceValue {
 	export interface Props extends Omit<LabelValue.Props, "textValue"> {
-        draft: tDraft;
+		draft: tDraft;
 		locale: string;
 	}
 }

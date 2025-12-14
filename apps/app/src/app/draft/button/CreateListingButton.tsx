@@ -41,6 +41,9 @@ export const CreateListingButton: FC<CreateListingButton.Props> = ({ draft, onLi
 				}
 			}}
 			{...uiSaveButton({
+				ui: {
+					justify: "start",
+				},
 				className: [],
 			})}
 		/>
