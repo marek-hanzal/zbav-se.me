@@ -6,8 +6,8 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
-import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { type tDraft, type tListing, zListingCreate } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation, withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon, PhotoIcon } from "@zbav-se.me/ui/icon";
@@ -40,10 +40,11 @@ export namespace Setup {
 	export interface Props {
 		locale: string;
 		draft: tDraft;
+		onListing(listing: tListing): Promise<any>;
 	}
 }
 
-export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
+export const Setup: FC<Setup.Props> = ({ locale, draft, onListing }) => {
 	const queryClient = useQueryClient();
 	const [view, setView] = useState<Setup.View>("default");
 	const mutation = withDraftPatchMutation.useMutation({
@@ -56,11 +57,15 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 			setView("default");
 		},
 	});
+	const listingCreateMutation = withListingCreateMutation.useMutation({
+		onSuccess: onListing,
+	});
 
-	const isValid = zListingCreate.safeParse({
+	const listing = zListingCreate.safeParse({
 		...draft,
 		uploadIds: draft.gallery.items.map((item) => item.uploadId),
-	}).success;
+		draftId: draft.id,
+	});
 
 	return (
 		<View<Setup.View, TitleContainer.Props>
@@ -334,7 +339,13 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 										},
 									}}
 									label={"Submit listing (button)"}
-									disabled={!isValid}
+									disabled={!listing.success || listingCreateMutation.isPending}
+									loading={listingCreateMutation.isPending}
+									onClick={() => {
+										if (listing.success) {
+											listingCreateMutation.mutate(listing.data);
+										}
+									}}
 									{...uiSaveButton({
 										className: [],
 									})}

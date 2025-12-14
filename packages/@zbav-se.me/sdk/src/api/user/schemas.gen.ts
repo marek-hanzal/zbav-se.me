@@ -1589,6 +1589,9 @@ export const sListingCreate = {
         age: {
             type: 'number'
         },
+        draftId: {
+            type: 'string'
+        },
         locationId: {
             type: 'string'
         },

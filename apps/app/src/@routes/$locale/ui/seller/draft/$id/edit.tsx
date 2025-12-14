@@ -7,6 +7,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 	component() {
 		const { id } = Route.useParams();
 		const { locale } = Route.useParams();
+		const navigate = Route.useNavigate();
 
 		return (
 			<withDraftFetchQuery.Suspense
@@ -21,6 +22,14 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 					<Setup
 						locale={locale}
 						draft={data}
+						onListing={async () => {
+							await navigate({
+								to: "/$locale/ui/seller/listing/my",
+								params: {
+									locale,
+								},
+							});
+						}}
 					/>
 				)}
 			</withDraftFetchQuery.Suspense>

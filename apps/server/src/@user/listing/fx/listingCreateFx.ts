@@ -14,12 +14,10 @@ import { InvalidRequestError } from "~/error/InvalidRequestError";
 import { listingFetchFx } from "./listingFetchFx";
 
 export namespace listingCreateFx {
-	export interface Props {
-		data: ListingCreateSchema.Type;
-	}
+	export type Props = ListingCreateSchema.Type;
 }
 
-export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
+export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			const database = yield* DatabaseContextFx;
@@ -28,7 +26,7 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 			const id = genId();
 			const now = new Date();
 
-			if (data.uploadIds.length === 0) {
+			if (uploadIds.length === 0) {
 				return yield* new InvalidRequestError({
 					message: "At least one upload is required",
 				});
@@ -37,7 +35,7 @@ export const listingCreateFx = ({ data }: listingCreateFx.Props) => {
 			const gallery = yield* coolGalleryCreateFx();
 
 			let sort = 0;
-			for (const uploadId of data.uploadIds) {
+			for (const uploadId of uploadIds) {
 				yield* galleryItemCreateFx({
 					galleryId: gallery.id,
 					uploadId,

@@ -1113,6 +1113,10 @@ export type tListingCreate = {
      */
     age: number;
     /**
+     * ID of the draft
+     */
+    draftId?: string;
+    /**
      * ID of the location
      */
     locationId: string;

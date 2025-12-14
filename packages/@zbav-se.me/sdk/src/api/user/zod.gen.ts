@@ -1238,6 +1238,9 @@ export const zListingCreate = z.object({
     age: z.number().register(z.globalRegistry, {
         description: 'Age of the item (0-based index)'
     }),
+    draftId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the draft'
+    })),
     locationId: z.string().register(z.globalRegistry, {
         description: 'ID of the location'
     }),

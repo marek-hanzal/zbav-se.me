@@ -67,9 +67,7 @@ export const withCreateApi: Routes.Fn = ({ userHono }) => {
 		async (c) => {
 			return Effect.gen(function* () {
 				return c.json<ListingSchema.Type, 201>(
-					yield* listingCreateFx({
-						data: c.req.valid("json"),
-					}),
+					yield* listingCreateFx(c.req.valid("json")),
 					201,
 				);
 			}).pipe(

@@ -13,6 +13,9 @@ export const ListingCreateSchema = z
 		age: z.number().openapi({
 			description: "Age of the item (0-based index)",
 		}),
+		draftId: z.string().optional().openapi({
+			description: "ID of the draft",
+		}),
 		locationId: z.string().openapi({
 			description: "ID of the location",
 		}),
