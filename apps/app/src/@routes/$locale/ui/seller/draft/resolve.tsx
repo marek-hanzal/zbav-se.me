@@ -5,17 +5,17 @@ import { DateTime } from "luxon";
 
 export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 	async loader({ context: { queryClient }, params: { locale } }) {
-		const current = await withDraftFetchQuery.query({
-			where: {
-				updatedAtGte: DateTime.now()
-					.minus({
-						days: 3,
-					})
-					.toISO(),
-			},
-		});
-
-		console.log(current);
+		const current = await withDraftFetchQuery
+			.query({
+				where: {
+					updatedAtGte: DateTime.now()
+						.minus({
+							days: 3,
+						})
+						.toISO(),
+				},
+			})
+			.catch(() => undefined);
 
 		if (current) {
 			throw redirect({
