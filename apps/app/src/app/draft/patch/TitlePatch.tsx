@@ -13,10 +13,17 @@ export namespace TitlePatch {
 		draft: tDraft;
 		onCancel(): void;
 		onSave(title: string): void;
+		loading: boolean;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSave, ...props }) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({
+	draft,
+	onCancel,
+	onSave,
+	loading,
+	...props
+}) => {
 	const [title, setTitle] = useState(draft.title ?? "");
 
 	return (
@@ -30,6 +37,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSave, ...p
 					layout: "vertical-content-footer",
 					height: "full",
 					width: "full",
+					inner: "default",
 				}}
 			>
 				<Container
@@ -73,6 +81,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSave, ...p
 					onSave={() => {
 						onSave(title);
 					}}
+					loading={loading}
 				/>
 			</Container>
 		</TitleContainer>

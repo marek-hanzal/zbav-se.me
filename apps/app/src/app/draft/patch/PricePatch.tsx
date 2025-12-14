@@ -1,42 +1,36 @@
-import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import type { Rating } from "@zbav-se.me/ui/rating";
-import type { FC } from "react";
-import { AgeSelection } from "~/app/age/ui/AgeSelection";
+import { Dial } from "@zbav-se.me/ui/dial";
+import { type FC, useState } from "react";
 import { SaveControl } from "~/app/control/SaveControl";
 
-export namespace AgePatch {
+export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSave(age: number | null): void;
+		onSave(price: number | null): void;
 		loading: boolean;
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading, ...props }) => {
-	const selection = useSelection<Rating.RatingItem>({
-		mode: "single",
-		initial: draft.age
-			? [
-					{
-						id: String(draft.age),
-					},
-				]
-			: [],
-	});
-
-	const itemId = selection.optional.singleId();
-	const age = itemId ? Number.parseInt(itemId, 10) : null;
+export const PricePatch: FC<PricePatch.Props> = ({
+	draft,
+	onCancel,
+	onSave,
+	loading,
+	...props
+}) => {
+	const [price, setPrice] = useState<string | undefined>(
+		draft.price ? String(draft.price) : undefined,
+	);
 
 	return (
 		<TitleContainer
-			data-ui={"Setup-[TitleContainer.age]"}
-			textTitle={"Age (title)"}
+			data-ui={"Setup-[TitleContainer.price]"}
+			textTitle={"Price (title)"}
 			{...props}
 		>
 			<Container
@@ -53,11 +47,16 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 					}}
 				>
 					<Status
-						textTitle={"Age (title)"}
-						action={<AgeSelection selection={selection} />}
+						textTitle={"Price (title)"}
+						action={
+							<Dial
+								value={price}
+								onChange={setPrice}
+							/>
+						}
 					>
 						<Mx
-							label={"Age (required)"}
+							label={"Price (required)"}
 							ui={{
 								tone: "secondary",
 								theme: "light",
@@ -69,7 +68,7 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 				<SaveControl
 					onCancel={onCancel}
 					onSave={() => {
-						onSave(age);
+						onSave(price ? parseFloat(price) : null);
 					}}
 					loading={loading}
 				/>

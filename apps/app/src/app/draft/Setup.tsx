@@ -10,8 +10,8 @@ import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
+import { LocationPatch } from "~/app/draft/patch/LocationPatch";
 import { TitlePatch } from "~/app/draft/patch/TitlePatch";
-import { LocationControl } from "~/app/location/ui/LocationControl";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 
 export namespace Setup {
@@ -136,6 +136,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 				title: {
 					children: (
 						<TitlePatch
+							loading={mutation.isPending}
 							draft={draft}
 							onCancel={() => setView("default")}
 							onSave={(title) => {
@@ -150,35 +151,29 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									},
 								});
 							}}
-							ui={{
-								inner: "default",
-							}}
 						/>
 					),
 				},
 				location: {
 					children: (
-						<TitleContainer textTitle={"Listing location (title)"}>
-							<LocationControl
-								locale={locale}
-								onCancel={() => setView("default")}
-								onSave={({ locationId }) => {
-									mutation.mutate({
-										patch: {
-											locationId,
+						<LocationPatch
+							loading={mutation.isPending}
+							locale={locale}
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(locationId) => {
+								mutation.mutate({
+									patch: {
+										locationId,
+									},
+									query: {
+										where: {
+											id: draft.id,
 										},
-										query: {
-											where: {
-												id: draft.id,
-											},
-										},
-									});
-								}}
-								ui={{
-									inner: "default",
-								}}
-							/>
-						</TitleContainer>
+									},
+								});
+							}}
+						/>
 					),
 				},
 			}}
