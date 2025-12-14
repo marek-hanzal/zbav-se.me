@@ -1,3 +1,5 @@
+export { withDraftCreateMutation } from "./withDraftCreateMutation";
+export { withDraftPatchMutation } from "./withDraftPatchMutation";
 export { withFavouriteToggleMutation } from "./withFavouriteToggleMutation";
 export { withFeedCreateMutation } from "./withFeedCreateMutation";
 export { withFeedDeleteMutation } from "./withFeedDeleteMutation";
