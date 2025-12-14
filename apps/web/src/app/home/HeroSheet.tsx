@@ -44,9 +44,7 @@ export const HeroSheet: FC<HeroSheet.Props> = ({ locale }) => {
 				textTitle={"Landing - Hero (title)"}
 				textMessage={"Landing - Hero (subtitle)"}
 				messageProps={{
-					className: [
-						"text-center",
-					],
+					className: "text-center",
 				}}
 				ui={{
 					tone: "primary",

@@ -35,7 +35,6 @@ namespace Sleeper {
 	}
 }
 
-// biome-ignore lint/style/useComponentExportOnlyModules: Ssst
 const Sleeper = <TData, TResult>({
 	data,
 	options,

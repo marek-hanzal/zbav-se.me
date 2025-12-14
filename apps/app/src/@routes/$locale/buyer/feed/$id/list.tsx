@@ -316,6 +316,9 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 							}}
 							textTitle={"First listing (title)"}
 							textMessage={"First listing (message)"}
+							messageProps={{
+								className: "text-center",
+							}}
 							action={
 								<>
 									<LinkTo
@@ -331,6 +334,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 												theme: "light",
 												text: "lg",
 												size: "default",
+												font: "bold",
 											},
 											className: [],
 										})}

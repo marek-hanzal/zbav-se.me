@@ -46,7 +46,10 @@ export const TitleInput: FC<TitleInput.Props> = ({ value, onChange, ui, ...props
 			>
 				<Mx
 					label={"Feed title (hint)"}
-					tone={"secondary"}
+					ui={{
+						tone: "secondary",
+						theme: "light",
+					}}
 				/>
 			</Status>
 		</Container>

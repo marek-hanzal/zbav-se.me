@@ -110,7 +110,10 @@ export const Route = createFileRoute("/$locale/seller/listing/wizard/title")({
 					>
 						<Mx
 							label={"Listing title (required)"}
-							tone={"secondary"}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+							}}
 						/>
 					</Status>
 				</Container>

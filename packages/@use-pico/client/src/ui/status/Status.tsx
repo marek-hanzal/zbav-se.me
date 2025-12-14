@@ -1,6 +1,7 @@
 import type { ComponentProps, FC, ReactNode } from "react";
 import { Icon } from "../../icon/Icon";
 import { Container } from "../container/Container";
+import { Mx } from "../mx";
 import { Tx } from "../tx/Tx";
 import type { Typo } from "../typo/Typo";
 import { uiStatus } from "./uiStatus";
@@ -22,7 +23,7 @@ export namespace Status {
 		icon?: Icon.Type;
 		iconProps?: Icon.PropsEx;
 		titleProps?: Typo.PropsEx;
-		messageProps?: Typo.PropsEx;
+		messageProps?: Mx.PropsEx;
 	}
 }
 
@@ -86,14 +87,9 @@ export const Status: FC<Status.Props> = ({
 						{...titleProps}
 					/>
 
-					<Tx
+					<Mx
 						data-ui="Status-[Tx-message]"
 						label={textMessage}
-						ui={{
-							display: "block",
-							wrap: "wrap",
-							text: "md",
-						}}
 						{...messageProps}
 					/>
 				</Container>

@@ -10,21 +10,18 @@
 0486f4d74790451ea29d5079202aeab5bfe5039aeaee79499694bd93:
   ref: Listing category (title)
   value: Listing category (title)
-06268c12358f0028c4a8df7326f74496a7b4c2fc868969cf451ac616:
-  ref: Error updating feed sorting (toast)
-  value: Error updating feed sorting (toast)
 065d90dd69a514382210796119a244615affeef496284f86ceeb388d:
   ref: Feed sorting (label)
   value: Feed sorting (label)
-08a30cb868ee08615360f361e1db8eda5231a7e184e6f4a16b000673:
-  ref: Error updating feed location (toast)
-  value: Error updating feed location (toast)
 08f72ffcbaab104481353781fb5142ff29a99fb6dff9f34a65d0c991:
   ref: Gallery (title)
   value: Gallery (title)
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
+0e1e457dd548460d3511979a215ab49d00f3ff2b73150c6d0c23f0d6:
+  ref: First listing - go home (button)
+  value: First listing - go home (button)
 0e2d6ae59d756678e034197ebd80f4723aecad41dc953699684a443e:
   ref: Listings (label)
   value: Listings (label)
@@ -61,6 +58,9 @@
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
+26a562bfcfee8d3595e7d3f87dd79a4174db90edc3b52f5bdc5dc683:
+  ref: First listing (title)
+  value: First listing (title)
 29f070d40b220deb96e6c0c19b11d4ad07de6cd9e55e4933e2f03f80:
   ref: no
   value: no
@@ -109,9 +109,6 @@
 4034c9134481a06e13f39b3d2b927ade85886fc9bbfb379d51f01153:
   ref: Photo upload placeholder (message)
   value: Photo upload placeholder (message)
-41f6e19a2afae8c9d345c87db58338d8de807964f7e7669d9e3a8db7:
-  ref: Feed condition updated (toast)
-  value: Feed condition updated (toast)
 420f1e10ac45101f5905b3b0d51d995d7c42e7c38f4dc034c898dca5:
   ref: Cancel (button)
   value: Cancel (button)
@@ -145,6 +142,9 @@
 4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
   ref: light
   value: light
+4ef6b46bcbfc54a9f2aa64abf2856c01cded2d9bf090cbaec1bbd32d:
+  ref: Create first listing (button)
+  value: Create first listing (button)
 4f32b9b29402d281b51f8e9a9f47a94da1c06782f817fb95f758049a:
   ref: Next - price (button)
   value: Next - price (button)
@@ -181,9 +181,6 @@
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
   ref: Feed category (label)
   value: Feed category (label)
-5ca6c21881789106d894442d50b82148e4cb44c345ea5a3d5ade843f:
-  ref: Feed category updated (toast)
-  value: Feed category updated (toast)
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
   ref: Listing age (label)
   value: Listing age (label)
@@ -196,9 +193,6 @@
 5f94aff6f2aecc6b16afe253e9edb460cf643a8270222d33e654f824:
   ref: Really delete feed (button)
   value: Really delete feed (button)
-612dfa41caaa5f3b1b6368481049e8c1ef65936090a6f7a1c8db0bad:
-  ref: Error updating feed category (toast)
-  value: Error updating feed category (toast)
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
   ref: View transactions (button)
   value: View transactions (button)
@@ -226,9 +220,6 @@
 6f0c381fe28fafb75e2b708bfeefe7fefab6fb361cec10afd13b2374:
   ref: Next - age (button)
   value: Next - age (button)
-6fd100bc83ef07630fd36fc30e2abade63c4080ef7fbcdfec19853f7:
-  ref: Feed age updated (toast)
-  value: Feed age updated (toast)
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
   ref: Feed sorting not selected
   value: Feed sorting not selected
@@ -307,15 +298,9 @@
 96c1cc30ebda0875e2e9dd5d139906ab459609078d8b510f08056ccd:
   ref: Invalid/missing fields
   value: Invalid/missing fields
-9725a4c0c500e5b114a7e7bd06cad0efa420e0d74bd5f3fd05bbbbd6:
-  ref: Feed location updated (toast)
-  value: Feed location updated (toast)
 9835a78e390b045bfa153f4b6289fd0578f068909548d7c7ab30b0ea:
   ref: Feed created (toast)
   value: Feed created (toast)
-9874fd956ae1d1763f5d3f77d94ec3c4dfc1508330e9dd66de8587e9:
-  ref: Feed sorting updated (toast)
-  value: Feed sorting updated (toast)
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
   ref: Create listing (label)
   value: Create listing (label)
@@ -364,9 +349,6 @@ aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
 acd269fe49abe48ed9c3e43a66c796f7114afa4123c863a3cba2ae7e:
   ref: Listing transactions (title)
   value: Listing transactions (title)
-ad787b724c9b3deff8b842e736cd5138f8c96b8917789eeb227d2512:
-  ref: Error updating feed title (toast)
-  value: Error updating feed title (toast)
 ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
   ref: Listing ignored (toast)
   value: Listing ignored (toast)
@@ -417,6 +399,9 @@ c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
 c68690759b1f3a6cf13d49b52c69b6e23d6283ab1edc17681d363407:
   ref: Feed gallery (title)
   value: Feed gallery (title)
+c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
+  ref: First listing (message)
+  value: First listing (message)
 ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
   ref: Error creating feed (toast)
   value: Error creating feed (toast)
@@ -432,9 +417,6 @@ cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
 cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
   ref: Feed - save (button)
   value: Feed - save (button)
-cdea08fbf7283f1cf2439be6a907f655ff67fcec8da29b5a5a78b5f1:
-  ref: Feed title updated (toast)
-  value: Feed title updated (toast)
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
   ref: Unflag listing (button)
   value: Unflag listing (button)
@@ -468,9 +450,6 @@ dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
 dc94036d98327a4965255fa6f5996fa3e1d2ade02e6d494ae1d96695:
   ref: Listing Score - Favourite (label)
   value: Listing Score - Favourite (label)
-de3ccca250a5ea4ee88cec137d458370860e5e46d338bc6a2fe0b72f:
-  ref: Error updating feed condition (toast)
-  value: Error updating feed condition (toast)
 dfd5f9139a820075df69d7895015360b76d0360f3d4b77a845689614:
   ref: "0"
   value: "0"
@@ -507,9 +486,6 @@ f2a9bcc0bb7a0f3ad780dd42bc9a00c5a6335c480e3cb14512d5934c:
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
   ref: My listings (title)
   value: My listings (title)
-f69630635d31c101711f5561b225c4020b647d2025b263b05d1afc64:
-  ref: Error updating feed age (toast)
-  value: Error updating feed age (toast)
 f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
   ref: Second tap to unflag listing (toast)
   value: Second tap to unflag listing (toast)

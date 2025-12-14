@@ -65,15 +65,9 @@ export const ListContainer: FC<ListContainer.Props> = ({
 					>
 						<Mx
 							label={textHint ?? "Location security (hint)"}
-							tone={"secondary"}
-							tweak={{
-								slot: {
-									p: {
-										class: [
-											"px-2",
-										],
-									},
-								},
+							ui={{
+								tone: "secondary",
+								theme: "light",
 							}}
 						/>
 					</Container>
