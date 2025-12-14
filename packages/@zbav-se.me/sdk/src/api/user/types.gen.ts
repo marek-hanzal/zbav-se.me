@@ -2149,6 +2149,20 @@ export type tDraftPatchData = {
 };
 
 /**
+ * Request to create or update a draft gallery
+ */
+export type tDraftGalleryCreate = {
+    /**
+     * The ID of the draft to add a gallery to
+     */
+    draftId: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds: Array<string>;
+};
+
+/**
  * Data for creating a new draft
  */
 export type tDraftCreate = {
@@ -2434,6 +2448,46 @@ export type tApiDraftFetchResponse = {
 };
 
 export type apiDraftFetchResponse = tApiDraftFetchResponse[keyof tApiDraftFetchResponse];
+
+export type tApiDraftGalleryCreateRequest = {
+    /**
+     * Query object for draft gallery creation
+     */
+    body?: tDraftGalleryCreate;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/gallery/create';
+};
+
+export type apiDraftGalleryCreateErrors = {
+    /**
+     * Invalid request
+     */
+    400: tNotice;
+    /**
+     * Access denied
+     */
+    403: tNotice;
+    /**
+     * Draft not found or not accessible
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftGalleryCreateError = apiDraftGalleryCreateErrors[keyof apiDraftGalleryCreateErrors];
+
+export type tApiDraftGalleryCreateResponse = {
+    /**
+     * Gallery created or updated
+     */
+    200: tGallery;
+};
+
+export type apiDraftGalleryCreateResponse = tApiDraftGalleryCreateResponse[keyof tApiDraftGalleryCreateResponse];
 
 export type tApiDraftPatchRequest = {
     /**

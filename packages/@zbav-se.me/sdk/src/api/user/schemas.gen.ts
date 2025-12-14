@@ -3039,6 +3039,26 @@ export const sDraftPatchData = {
     }
 } as const;
 
+export const sDraftGalleryCreate = {
+    type: 'object',
+    properties: {
+        draftId: {
+            type: 'string'
+        },
+        uploadIds: {
+            type: 'array',
+            items: {
+                type: 'string'
+            },
+            minItems: 1
+        }
+    },
+    required: [
+        'draftId',
+        'uploadIds'
+    ]
+} as const;
+
 export const sDraftCreate = {
     type: 'object',
     properties: {

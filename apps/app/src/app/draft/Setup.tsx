@@ -6,7 +6,7 @@ import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { type tDraft, zListingCreate } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
@@ -54,6 +54,8 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 		},
 	});
 
+	const isValid = zListingCreate.safeParse(draft).success;
+
 	return (
 		<View<Setup.View, TitleContainer.Props>
 			state={{
@@ -68,9 +70,9 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								data-ui={"Setup-[Container.content]"}
 								ui={{
 									flow: "vertical",
-									gap: "default",
 									inner: "default",
 									width: "full",
+									gap: "lg",
 								}}
 							>
 								<Container
@@ -313,6 +315,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 										},
 									}}
 									label={"Submit listing (button)"}
+									disabled={!isValid}
 									{...uiSaveButton({
 										className: [],
 									})}

@@ -2354,6 +2354,22 @@ export const zDraftPatch = z.object({
 export type zDraftPatch = z.infer<typeof zDraftPatch>;
 
 /**
+ * Request to create or update a draft gallery
+ */
+export const zDraftGalleryCreate = z.object({
+    draftId: z.string().register(z.globalRegistry, {
+        description: 'The ID of the draft to add a gallery to'
+    }),
+    uploadIds: z.array(z.string()).min(1).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
+    })
+}).register(z.globalRegistry, {
+    description: 'Request to create or update a draft gallery'
+});
+
+export type zDraftGalleryCreate = z.infer<typeof zDraftGalleryCreate>;
+
+/**
  * Data for creating a new draft
  */
 export const zDraftCreate = z.object({
@@ -2591,6 +2607,21 @@ export type zapiDraftFetchRequest = z.infer<typeof zApiDraftFetchData>;
 export const zApiDraftFetchResponse = zDraft;
 
 export type zapiDraftFetchResponse = z.infer<typeof zApiDraftFetchResponse>;
+
+export const zApiDraftGalleryCreateData = z.object({
+    body: z.optional(zDraftGalleryCreate),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiDraftGalleryCreateRequest = z.infer<typeof zApiDraftGalleryCreateData>;
+
+/**
+ * Gallery created or updated
+ */
+export const zApiDraftGalleryCreateResponse = zGallery;
+
+export type zapiDraftGalleryCreateResponse = z.infer<typeof zApiDraftGalleryCreateResponse>;
 
 export const zApiDraftPatchData = z.object({
     body: z.optional(zDraftPatch),

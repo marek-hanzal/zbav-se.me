@@ -3,6 +3,7 @@ import { withCollectionApi } from "./collection";
 import { withCountApi } from "./count";
 import { withCreateApi } from "./create";
 import { withFetchApi } from "./fetch";
+import { withGalleryCreateApi } from "./gallery-create";
 import { withPatchApi } from "./patch";
 
 export const withDraftApi: Routes.Fn = (routes) => {
@@ -10,5 +11,6 @@ export const withDraftApi: Routes.Fn = (routes) => {
 	withCountApi(routes);
 	withCreateApi(routes);
 	withFetchApi(routes);
+	withGalleryCreateApi(routes);
 	withPatchApi(routes);
 };
