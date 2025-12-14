@@ -25,62 +25,6 @@ export const Route = createFileRoute("/$locale/seller/listing/no-wizard/title")(
 			<TitleContainer
 				data-ui={"Title"}
 				textTitle={"Listing title (title)"}
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/seller/listing/wizard/expire-at"}
-						search={state}
-						params={{
-							locale,
-						}}
-					/>
-				}
-				right={
-					<ConfirmButton
-						iconEnabled={CloseIcon}
-						ui={{
-							tone: "secondary",
-						}}
-						confirmProps={{
-							onClick: () => {
-								navigate({
-									to: "/$locale/ui/seller",
-								});
-							},
-							ui: {
-								tone: "danger",
-							},
-						}}
-					/>
-				}
-				bottom={
-					<LinkTo
-						to={"/$locale/seller/listing/wizard/submit"}
-						params={{
-							locale,
-						}}
-						search={{
-							...state,
-							title,
-						}}
-						disabled={!title}
-					>
-						<Button
-							iconEnabled={ArrowRightIcon}
-							iconPosition={"right"}
-							label={"Next - submit (button)"}
-							disabled={!title}
-							ui={{
-								tone: "secondary",
-								theme: "dark",
-								size: "lg",
-							}}
-						/>
-					</LinkTo>
-				}
 			>
 				<Container
 					ui={{

@@ -6,8 +6,6 @@ import type {
 	tApiDraftPatchResponse,
 	tDraftPatch,
 } from "../../../api/user/types.gen";
-import { withDraftCollectionQuery } from "../../../query/user/draft/withDraftCollectionQuery";
-import { withDraftFetchQuery } from "../../../query/user/draft/withDraftFetchQuery";
 
 export const withDraftPatchMutation = withMutation<
 	tDraftPatch,
@@ -28,8 +26,5 @@ export const withDraftPatchMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withDraftCollectionQuery,
-		withDraftFetchQuery,
-	],
+	invalidate: [],
 });

@@ -1,17 +1,21 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { EditIcon, Icon } from "@use-pico/client/icon";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
-import type { tDraft, tDraftPatch } from "@zbav-se.me/sdk/api/user";
+import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
+import { TitlePatch } from "~/app/draft/patch/TitlePatch";
 import { LocationControl } from "~/app/location/ui/LocationControl";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 
 export namespace Setup {
-	export type View = "default" | "location";
+	export type View = "default" | "title" | "location";
 
 	export interface Props {
 		locale: string;
@@ -20,13 +24,16 @@ export namespace Setup {
 }
 
 export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
+	const queryClient = useQueryClient();
 	const [view, setView] = useState<Setup.View>("default");
-	const [patch, setPatch] = useState<tDraftPatch>({
-		patch: draft,
-		query: {
-			where: {
-				id: draft.id,
-			},
+	const mutation = withDraftPatchMutation.useMutation({
+		async onSuccess() {
+			await withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+			setView("default");
 		},
 	});
 
@@ -100,6 +107,9 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									textLabel={translator.text("Listing title (label)")}
 									textValue={draft.title ?? null}
 									textEmpty={translator.text("Listing title not filled")}
+									onClick={() => {
+										setView("title");
+									}}
 								/>
 
 								<LocationValue
@@ -114,13 +124,36 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 									textLabel={translator.text("Listing location (label)")}
 									textEmpty={translator.text("Listing location not selected")}
 									textHint={translator.text("Listing location (hint)")}
-									locationId={patch.patch.locationId}
+									locationId={draft.locationId}
 									onClick={() => {
 										setView("location");
 									}}
 								/>
 							</Container>
 						</TitleContainer>
+					),
+				},
+				title: {
+					children: (
+						<TitlePatch
+							draft={draft}
+							onCancel={() => setView("default")}
+							onSave={(title) => {
+								mutation.mutate({
+									patch: {
+										title,
+									},
+									query: {
+										where: {
+											id: draft.id,
+										},
+									},
+								});
+							}}
+							ui={{
+								inner: "default",
+							}}
+						/>
 					),
 				},
 				location: {
@@ -130,14 +163,16 @@ export const Setup: FC<Setup.Props> = ({ locale, draft }) => {
 								locale={locale}
 								onCancel={() => setView("default")}
 								onSave={({ locationId }) => {
-									setPatch((prev) => ({
-										...prev,
+									mutation.mutate({
 										patch: {
-											...prev.patch,
 											locationId,
 										},
-									}));
-									setView("default");
+										query: {
+											where: {
+												id: draft.id,
+											},
+										},
+									});
 								}}
 								ui={{
 									inner: "default",
