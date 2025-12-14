@@ -7,9 +7,9 @@ import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedFetchQuery, withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import { DeadEndIcon, ListingIcon } from "@zbav-se.me/ui/icon";
+import { DeadEndIcon, FirstIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, type RefObject, useRef, useState } from "react";
 import z from "zod";
@@ -203,6 +203,18 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 		const { scrollToId } = Route.useSearch();
 		const containerRef = useRef<HTMLDivElement>(null);
 
+		/**
+		 * The trick - fetch _any_ listing, so we know, if the app is empty.
+		 *
+		 * Using collection, because "fetch" throws error on 4o4.
+		 */
+		const listing = withListingCollectionQuery.useSuspenseQuery({
+			cursor: {
+				page: 0,
+				size: 1,
+			},
+		});
+
 		return (
 			<FlowContainer
 				data-ui={"/buyer/feed/$id/list[FlowContainer]"}
@@ -220,68 +232,139 @@ export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
 					/>
 				}
 			>
-				<withFeedFetchQuery.Suspense
-					data={{
-						where: {
-							id,
-						},
-					}}
-					fallback={<SpinnerContainer />}
-				>
-					{({ data: feed }) => {
-						return (
-							<>
-								<SetupButton
-									locale={locale}
-									feed={feed}
-									containerRef={containerRef}
-								/>
+				{listing.data.data.length > 0 ? (
+					<withFeedFetchQuery.Suspense
+						data={{
+							where: {
+								id,
+							},
+						}}
+						fallback={<SpinnerContainer />}
+					>
+						{({ data: feed }) => {
+							return (
+								<>
+									<SetupButton
+										locale={locale}
+										feed={feed}
+										containerRef={containerRef}
+									/>
 
-								<ListingListContainer
-									data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
-									ref={containerRef}
-									locale={locale}
-									feedId={feed.id}
-									/**
-									 * Listings in feed should be scored
-									 */
-									withScore
-									query={{
-										...feed.query,
-										sort: feed.query.sort?.length
-											? feed.query.sort
-											: [
-													{
-														field: "createdAt",
-														direction: "desc",
-													},
-												],
-										meta: {
-											feedId: feed.id,
-											...feed.query.meta,
-										},
+									<ListingListContainer
+										data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
+										ref={containerRef}
+										locale={locale}
+										feedId={feed.id}
 										/**
-										 * Hardcoded cursor to fetch the first page; we're assuming an user won't go through
-										 * thousands of listings, so we can do hard cap here.
+										 * Listings in feed should be scored
 										 */
-										cursor: {
-											page: 0,
-											size: 256,
-										},
-									}}
-									scrollToId={scrollToId}
-									appendix={
-										<Appendix
-											locale={locale}
-											feed={feed}
-											containerRef={containerRef}
-										/>
-									}
-								/>
-							</>
-						);
-					}}
-				</withFeedFetchQuery.Suspense>
+										withScore
+										query={{
+											...feed.query,
+											sort: feed.query.sort?.length
+												? feed.query.sort
+												: [
+														{
+															field: "createdAt",
+															direction: "desc",
+														},
+													],
+											meta: {
+												feedId: feed.id,
+												...feed.query.meta,
+											},
+											/**
+											 * Hardcoded cursor to fetch the first page; we're assuming an user won't go through
+											 * thousands of listings, so we can do hard cap here.
+											 */
+											cursor: {
+												page: 0,
+												size: 256,
+											},
+										}}
+										scrollToId={scrollToId}
+										appendix={
+											<Appendix
+												locale={locale}
+												feed={feed}
+												containerRef={containerRef}
+											/>
+										}
+									/>
+								</>
+							);
+						}}
+					</withFeedFetchQuery.Suspense>
+				) : null}
+
+				{listing.data.data.length > 0 ? null : (
+					<Container
+						ui={{
+							layout: "vertical-centered",
+							height: "full",
+							tone: "brand",
+							theme: "light",
+							inner: "4xl",
+						}}
+					>
+						<Status
+							icon={FirstIcon}
+							iconProps={{
+								ui: {
+									text: "4xl",
+								},
+							}}
+							textTitle={"First listing (title)"}
+							textMessage={"First listing (message)"}
+							action={
+								<>
+									<LinkTo
+										icon={ArrowRightIcon}
+										iconPosition={"right"}
+										to={"/$locale/seller/listing/wizard/start"}
+										params={{
+											locale,
+										}}
+										{...uiButton({
+											ui: {
+												tone: "brand",
+												theme: "light",
+												text: "lg",
+												size: "default",
+											},
+											className: [],
+										})}
+									>
+										<Tx label="Create first listing (button)" />
+									</LinkTo>
+
+									<LinkTo
+										icon={ArrowRightIcon}
+										iconPosition={"right"}
+										to={"/$locale/ui/home"}
+										params={{
+											locale,
+										}}
+										{...uiButton({
+											ui: {
+												tone: "link",
+												theme: "light",
+												text: "sm",
+												size: "sm",
+												background: undefined,
+												border: false,
+												shadow: false,
+											},
+											className: [],
+										})}
+									>
+										<Tx label="First listing - go home (button)" />
+									</LinkTo>
+								</>
+							}
+						/>
+					</Container>
+				)}
 			</FlowContainer>
 		);
 	},

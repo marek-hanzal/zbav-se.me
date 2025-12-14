@@ -14,6 +14,7 @@ export { EmailIcon } from "./EmailIcon";
 export { ExpireIcon } from "./ExpireIcon";
 export { FavouriteIcon } from "./FavouriteIcon";
 export { FeedIcon } from "./FeedIcon";
+export { FirstIcon } from "./FirstIcon";
 export { FlagIcon } from "./FlagIcon";
 export { GalleryIcon } from "./GalleryIcon";
 export { HomeIcon } from "./HomeIcon";
