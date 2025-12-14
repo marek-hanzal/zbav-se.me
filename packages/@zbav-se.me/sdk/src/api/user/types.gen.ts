@@ -41,7 +41,7 @@ export type tUserEx = {
     /**
      * Default location for the user - user for listings & listing sorting
      */
-    locationId?: string | null;
+    locationId: string | null;
     side?: tUserSideEnum | null;
 };
 
@@ -428,15 +428,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county?: string | null;
+    county: string | null;
     /**
      * The municipality that the location is in
      */
-    municipality?: string | null;
+    municipality: string | null;
     /**
      * The state that the location is in
      */
-    state?: string | null;
+    state: string | null;
     /**
      * Full address preview of a location
      */
@@ -444,15 +444,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city?: string | null;
+    city: string | null;
     /**
      * The street that the location is on
      */
-    street?: string | null;
+    street: string | null;
     /**
      * The postal/zip code of the location
      */
-    zip?: string | null;
+    zip: string | null;
     /**
      * Confidence score of the location (based on query)
      */
@@ -541,7 +541,7 @@ export type tTransaction = {
     /**
      * ID of the message thread associated with the transaction
      */
-    messageThreadId?: string | null;
+    messageThreadId: string;
     /**
      * Creation timestamp
      */
@@ -563,7 +563,7 @@ export type tTransaction = {
      * Price of the listing
      */
     price: number;
-    currency: tCurrencyListEnum & string;
+    currency: tCurrencyListEnum;
     location: tLocation;
 };
 
@@ -802,47 +802,47 @@ export type tListingMetrics = {
     /**
      * Number of views from the feed (low attention score)
      */
-    listing: number | null;
+    listing: number | null | null;
     /**
      * Overall score gained from listing interactions
      */
-    listingScore: number | null;
+    listingScore: number | null | null;
     /**
      * Number of views from the listing
      */
-    views: number | null;
+    views: number | null | null;
     /**
      * Overall score gained from views
      */
-    viewsScore: number | null;
+    viewsScore: number | null | null;
     /**
      * Number of items added to favourites
      */
-    favourite: number | null;
+    favourite: number | null | null;
     /**
      * Overall score gained from favourite interactions
      */
-    favouriteScore: number | null;
+    favouriteScore: number | null | null;
     /**
      * Number of items ignored
      */
-    ignore: number | null;
+    ignore: number | null | null;
     /**
      * Overall score gained from ignore interactions
      */
-    ignoreScore: number | null;
+    ignoreScore: number | null | null;
     /**
      * Number of items flagged
      */
-    flag: number | null;
+    flag: number | null | null;
     /**
      * Overall score gained from flag interactions
      */
-    flagScore: number | null;
+    flagScore: number | null | null;
     /**
      * Raw score of the listing
      */
-    score: number | null;
+    score: number | null | null;
 };
 
 /**
@@ -925,7 +925,7 @@ export type tListingWhere = {
     ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum & string;
+    currency?: tCurrencyListEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -975,7 +975,7 @@ export type tFeedIdIn = Array<string>;
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export type tCurrencyIn = Array<tCurrencyListEnum & string>;
+export type tCurrencyIn = Array<tCurrencyListEnum>;
 
 /**
  * Filter listings based on the provided category IDs
@@ -1041,7 +1041,7 @@ export type tListingFilter = {
     ageIn?: Array<number>;
     categoryId?: tCategoryId;
     categoryIdIn?: tCategoryIdIn;
-    currency?: tCurrencyListEnum & string;
+    currency?: tCurrencyListEnum;
     currencyIn?: tCurrencyIn;
     /**
      * This filter matches listings that expire before the provided date
@@ -1120,7 +1120,7 @@ export type tListingCreate = {
      * ID of the category
      */
     categoryId: string;
-    currency: tCurrencyListEnum & string;
+    currency: tCurrencyListEnum;
     expiresAt: tListingExpireEnum;
     /**
      * Title of the item
@@ -1162,7 +1162,7 @@ export type tListing = {
      * Price of the listing
      */
     price: number;
-    currency: tCurrencyListEnum & string;
+    currency: tCurrencyListEnum;
     /**
      * Condition of the item (0-based index)
      */
@@ -1190,7 +1190,7 @@ export type tListing = {
     /**
      * Description of the item
      */
-    description?: string | null;
+    description: string | null;
     /**
      * Creation timestamp
      */
@@ -1680,11 +1680,11 @@ export type tFeedFavourite = {
     /**
      * ID of the location associated with the feed
      */
-    locationId?: string | null;
+    locationId: string | null;
     /**
      * Hero image for this feed (usually selected from the listings in the feed)
      */
-    uploadId?: string | null;
+    uploadId: string | null;
     /**
      * Name of the feed
      */
@@ -1788,11 +1788,11 @@ export type tFeed = {
     /**
      * ID of the location associated with the feed
      */
-    locationId?: string | null;
+    locationId: string | null;
     /**
      * Hero image for this feed (usually selected from the listings in the feed)
      */
-    uploadId?: string | null;
+    uploadId: string | null;
     /**
      * Name of the feed
      */
@@ -1872,7 +1872,7 @@ export type tFeedCreate = {
     /**
      * ID of the location associated with the feed
      */
-    locationId?: string | null;
+    locationId: string | null;
     query: tListingQuery;
 };
 
@@ -2019,48 +2019,7 @@ export type tFavourite = {
  * Data for updating an existing draft
  */
 export type tDraftPatch = {
-    /**
-     * Fields to update (all optional)
-     */
-    patch: {
-        /**
-         * Price of the draft
-         */
-        price?: number;
-        currency?: tCurrencyListEnum;
-        /**
-         * Condition of the item (0-based index)
-         */
-        condition?: number | null;
-        /**
-         * Age of the item (0-based index)
-         */
-        age?: number | null;
-        /**
-         * ID of the location
-         */
-        locationId?: string | null;
-        /**
-         * ID of the category
-         */
-        categoryId?: string | null;
-        /**
-         * Expiration timestamp
-         */
-        expiresAt?: string;
-        /**
-         * Title of the item
-         */
-        title?: string | null;
-        /**
-         * Embedding vector for title similarity search
-         */
-        titleVec?: Array<number>;
-        /**
-         * Description of the item
-         */
-        description?: string | null;
-    };
+    patch: tDraftPatchData;
     query: tDraftQuery;
 };
 
@@ -2153,58 +2112,17 @@ export type tDraftQuery = {
 };
 
 /**
- * Data for creating a new draft
+ * Fields to update (all optional)
  */
-export type tDraftCreate = {
+export type tDraftPatchData = {
     /**
      * Price of the draft
      */
-    price?: number;
+    price?: number | null | null;
     /**
-     * Condition of the item (0-based index)
+     * Currency of the draft
      */
-    condition?: number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age?: number;
-    /**
-     * ID of the location
-     */
-    locationId?: string;
-    /**
-     * ID of the category
-     */
-    categoryId?: string;
-    currency?: tCurrencyListEnum & string;
-    expiresAt?: tListingExpireEnum;
-    /**
-     * Title of the item
-     */
-    title?: string;
-    /**
-     * Description of the item
-     */
-    description?: string;
-    /**
-     * IDs of the uploads; order of uploads defines order in the gallery
-     */
-    uploadIds?: Array<string>;
-};
-
-/**
- * Draft data
- */
-export type tDraft = {
-    /**
-     * ID of the draft
-     */
-    id: string;
-    /**
-     * Price of the draft
-     */
-    price?: number;
-    currency?: tCurrencyListEnum;
+    currency?: tCurrencyListEnum | null;
     /**
      * Condition of the item (0-based index)
      */
@@ -2233,6 +2151,92 @@ export type tDraft = {
      * Description of the item
      */
     description?: string | null;
+};
+
+/**
+ * Data for creating a new draft
+ */
+export type tDraftCreate = {
+    /**
+     * Price of the draft
+     */
+    price?: number;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition?: number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age?: number;
+    /**
+     * ID of the location
+     */
+    locationId?: string;
+    /**
+     * ID of the category
+     */
+    categoryId?: string;
+    currency?: tCurrencyListEnum;
+    expiresAt?: tListingExpireEnum;
+    /**
+     * Title of the item
+     */
+    title?: string;
+    /**
+     * Description of the item
+     */
+    description?: string;
+    /**
+     * IDs of the uploads; order of uploads defines order in the gallery
+     */
+    uploadIds?: Array<string>;
+};
+
+/**
+ * Draft data
+ */
+export type tDraft = {
+    /**
+     * ID of the draft
+     */
+    id: string;
+    /**
+     * Price of the draft
+     */
+    price: number | null | null;
+    /**
+     * Currency of the draft
+     */
+    currency: tCurrencyListEnum | null;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: number | null;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: number | null;
+    /**
+     * ID of the location
+     */
+    locationId: string | null;
+    /**
+     * ID of the category
+     */
+    categoryId: string | null;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Title of the item
+     */
+    title: string | null;
+    /**
+     * Description of the item
+     */
+    description: string | null;
     /**
      * Creation timestamp
      */
@@ -2241,25 +2245,18 @@ export type tDraft = {
      * Last update timestamp
      */
     updatedAt: string;
-    location?: tLocation & ({
-        [key: string]: unknown;
-    } | null);
-    category?: tCategory & ({
-        [key: string]: unknown;
-    } | null);
+    /**
+     * Location data
+     */
+    location: tLocation | null;
+    /**
+     * Category data
+     */
+    category: tCategory | null;
     /**
      * Draft gallery images
      */
-    gallery?: {
-        /**
-         * ID of the gallery
-         */
-        id: string;
-        /**
-         * Gallery items sorted by sort order
-         */
-        items: Array<tGalleryItem>;
-    } | null;
+    gallery: tGallery | null;
 };
 
 /**

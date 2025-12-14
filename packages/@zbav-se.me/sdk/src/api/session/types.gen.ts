@@ -52,15 +52,15 @@ export type tLocation = {
     /**
      * The county that the location is in
      */
-    county?: string | null;
+    county: string | null;
     /**
      * The municipality that the location is in
      */
-    municipality?: string | null;
+    municipality: string | null;
     /**
      * The state that the location is in
      */
-    state?: string | null;
+    state: string | null;
     /**
      * Full address preview of a location
      */
@@ -68,15 +68,15 @@ export type tLocation = {
     /**
      * The city that the location is in
      */
-    city?: string | null;
+    city: string | null;
     /**
      * The street that the location is on
      */
-    street?: string | null;
+    street: string | null;
     /**
      * The postal/zip code of the location
      */
-    zip?: string | null;
+    zip: string | null;
     /**
      * Confidence score of the location (based on query)
      */

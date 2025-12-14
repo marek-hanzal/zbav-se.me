@@ -7,9 +7,16 @@ export const sUserExPatch = {
             type: 'object',
             properties: {
                 locationId: {
-                    type: [
-                        'string',
-                        'null'
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
                     ]
                 },
                 side: {
@@ -48,9 +55,16 @@ export const sUserEx = {
             type: 'string'
         },
         locationId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         side: {
@@ -68,7 +82,8 @@ export const sUserEx = {
         }
     },
     required: [
-        'id'
+        'id',
+        'locationId'
     ]
 } as const;
 
@@ -545,42 +560,84 @@ export const sLocation = {
             type: 'string'
         },
         county: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         municipality: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         state: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         address: {
             type: 'string'
         },
         city: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         street: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         zip: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         confidence: {
@@ -602,7 +659,13 @@ export const sLocation = {
         'lang',
         'country',
         'code',
+        'county',
+        'municipality',
+        'state',
         'address',
+        'city',
+        'street',
+        'zip',
         'confidence',
         'hash',
         'lat',
@@ -611,10 +674,7 @@ export const sLocation = {
 } as const;
 
 export const sCurrencyListEnum = {
-    type: [
-        'string',
-        'null'
-    ],
+    type: 'string',
     enum: [
         'CZK',
         'EUR',
@@ -683,10 +743,7 @@ export const sTransaction = {
             type: 'string'
         },
         messageThreadId: {
-            type: [
-                'string',
-                'null'
-            ]
+            type: 'string'
         },
         createdAt: {
             type: 'string'
@@ -707,14 +764,7 @@ export const sTransaction = {
             type: 'number'
         },
         currency: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'string'
-                }
-            ]
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         location: {
             $ref: '#/components/schemas/Location'
@@ -723,6 +773,7 @@ export const sTransaction = {
     required: [
         'id',
         'listingId',
+        'messageThreadId',
         'createdAt',
         'updatedAt',
         'expiresAt',
@@ -993,69 +1044,179 @@ export const sListingMetrics = {
     type: 'object',
     properties: {
         listing: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         listingScore: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         views: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         viewsScore: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         favourite: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         favouriteScore: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         ignore: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         ignoreScore: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         flag: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         flagScore: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         score: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         }
     },
@@ -1195,14 +1356,7 @@ export const sListingWhere = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'string'
-                }
-            ]
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -1256,14 +1410,7 @@ export const sFeedIdIn = {
 export const sCurrencyIn = {
     type: 'array',
     items: {
-        allOf: [
-            {
-                $ref: '#/components/schemas/CurrencyListEnum'
-            },
-            {
-                type: 'string'
-            }
-        ]
+        $ref: '#/components/schemas/CurrencyListEnum'
     }
 } as const;
 
@@ -1354,14 +1501,7 @@ export const sListingFilter = {
             $ref: '#/components/schemas/CategoryIdIn'
         },
         currency: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'string'
-                }
-            ]
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         currencyIn: {
             $ref: '#/components/schemas/CurrencyIn'
@@ -1451,14 +1591,7 @@ export const sListingCreate = {
             type: 'string'
         },
         currency: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'string'
-                }
-            ]
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         expiresAt: {
             $ref: '#/components/schemas/ListingExpireEnum'
@@ -1512,14 +1645,7 @@ export const sListing = {
             type: 'number'
         },
         currency: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'string'
-                }
-            ]
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         condition: {
             type: 'number'
@@ -1540,9 +1666,16 @@ export const sListing = {
             type: 'string'
         },
         description: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         createdAt: {
@@ -1598,6 +1731,7 @@ export const sListing = {
         'categoryId',
         'expiresAt',
         'title',
+        'description',
         'createdAt',
         'updatedAt',
         'location',
@@ -2172,15 +2306,29 @@ export const sFeedFavourite = {
             type: 'string'
         },
         locationId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         uploadId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         name: {
@@ -2208,6 +2356,8 @@ export const sFeedFavourite = {
     },
     required: [
         'id',
+        'locationId',
+        'uploadId',
         'name',
         'query',
         'upload',
@@ -2315,15 +2465,29 @@ export const sFeed = {
             type: 'string'
         },
         locationId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         uploadId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         name: {
@@ -2348,6 +2512,8 @@ export const sFeed = {
     },
     required: [
         'id',
+        'locationId',
+        'uploadId',
         'name',
         'query',
         'upload'
@@ -2364,15 +2530,29 @@ export const sFeedPatch = {
                     type: 'string'
                 },
                 locationId: {
-                    type: [
-                        'string',
-                        'null'
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
                     ]
                 },
                 uploadId: {
-                    type: [
-                        'string',
-                        'null'
+                    anyOf: [
+                        {
+                            type: 'string'
+                        },
+                        {
+                            type: 'null'
+                        },
+                        {
+                            type: 'null'
+                        }
                     ]
                 },
                 name: {
@@ -2446,9 +2626,16 @@ export const sFeedCreate = {
             minLength: 1
         },
         locationId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         query: {
@@ -2457,6 +2644,7 @@ export const sFeedCreate = {
     },
     required: [
         'name',
+        'locationId',
         'query'
     ]
 } as const;
@@ -2632,60 +2820,7 @@ export const sDraftPatch = {
     type: 'object',
     properties: {
         patch: {
-            type: 'object',
-            properties: {
-                price: {
-                    type: 'number'
-                },
-                currency: {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                condition: {
-                    type: [
-                        'number',
-                        'null'
-                    ]
-                },
-                age: {
-                    type: [
-                        'number',
-                        'null'
-                    ]
-                },
-                locationId: {
-                    type: [
-                        'string',
-                        'null'
-                    ]
-                },
-                categoryId: {
-                    type: [
-                        'string',
-                        'null'
-                    ]
-                },
-                expiresAt: {
-                    type: 'string'
-                },
-                title: {
-                    type: [
-                        'string',
-                        'null'
-                    ]
-                },
-                titleVec: {
-                    type: 'array',
-                    items: {
-                        type: 'number'
-                    }
-                },
-                description: {
-                    type: [
-                        'string',
-                        'null'
-                    ]
-                }
-            }
+            $ref: '#/components/schemas/DraftPatchData'
         },
         query: {
             $ref: '#/components/schemas/DraftQuery'
@@ -2796,6 +2931,122 @@ export const sDraftQuery = {
     }
 } as const;
 
+export const sDraftPatchData = {
+    type: 'object',
+    properties: {
+        price: {
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        currency: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/CurrencyListEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        condition: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        age: {
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        categoryId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    }
+} as const;
+
 export const sDraftCreate = {
     type: 'object',
     properties: {
@@ -2815,14 +3066,7 @@ export const sDraftCreate = {
             type: 'string'
         },
         currency: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/CurrencyListEnum'
-                },
-                {
-                    type: 'string'
-                }
-            ]
+            $ref: '#/components/schemas/CurrencyListEnum'
         },
         expiresAt: {
             $ref: '#/components/schemas/ListingExpireEnum'
@@ -2852,48 +3096,113 @@ export const sDraft = {
             type: 'string'
         },
         price: {
-            type: 'number'
+            anyOf: [
+                {
+                    type: [
+                        'number',
+                        'null'
+                    ]
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/CurrencyListEnum'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
         },
         condition: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         age: {
-            type: [
-                'number',
-                'null'
+            anyOf: [
+                {
+                    type: 'number'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         locationId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         categoryId: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         expiresAt: {
             type: 'string'
         },
         title: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         description: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         createdAt: {
@@ -2903,57 +3212,61 @@ export const sDraft = {
             type: 'string'
         },
         location: {
-            allOf: [
+            anyOf: [
                 {
                     $ref: '#/components/schemas/Location'
                 },
                 {
-                    type: [
-                        'object',
-                        'null'
-                    ]
+                    type: 'null'
+                },
+                {
+                    type: 'null'
                 }
             ]
         },
         category: {
-            allOf: [
+            anyOf: [
                 {
                     $ref: '#/components/schemas/Category'
                 },
                 {
-                    type: [
-                        'object',
-                        'null'
-                    ]
+                    type: 'null'
+                },
+                {
+                    type: 'null'
                 }
             ]
         },
         gallery: {
-            type: [
-                'object',
-                'null'
-            ],
-            properties: {
-                id: {
-                    type: 'string'
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
                 },
-                items: {
-                    type: 'array',
-                    items: {
-                        $ref: '#/components/schemas/GalleryItem'
-                    }
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
                 }
-            },
-            required: [
-                'id',
-                'items'
             ]
         }
     },
     required: [
         'id',
+        'price',
+        'currency',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'expiresAt',
+        'title',
+        'description',
         'createdAt',
-        'updatedAt'
+        'updatedAt',
+        'location',
+        'category',
+        'gallery'
     ]
 } as const;
 

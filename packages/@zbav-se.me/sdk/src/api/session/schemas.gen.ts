@@ -46,42 +46,84 @@ export const sLocation = {
             type: 'string'
         },
         county: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         municipality: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         state: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         address: {
             type: 'string'
         },
         city: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         street: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         zip: {
-            type: [
-                'string',
-                'null'
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
             ]
         },
         confidence: {
@@ -103,7 +145,13 @@ export const sLocation = {
         'lang',
         'country',
         'code',
+        'county',
+        'municipality',
+        'state',
         'address',
+        'city',
+        'street',
+        'zip',
         'confidence',
         'hash',
         'lat',

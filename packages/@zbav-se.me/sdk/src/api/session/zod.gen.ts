@@ -44,33 +44,33 @@ export const zLocation = z.object({
     code: z.string().register(z.globalRegistry, {
         description: 'Country code'
     }),
-    county: z.optional(z.union([
+    county: z.union([
         z.string(),
         z.null()
-    ])),
-    municipality: z.optional(z.union([
+    ]),
+    municipality: z.union([
         z.string(),
         z.null()
-    ])),
-    state: z.optional(z.union([
+    ]),
+    state: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
-    city: z.optional(z.union([
+    city: z.union([
         z.string(),
         z.null()
-    ])),
-    street: z.optional(z.union([
+    ]),
+    street: z.union([
         z.string(),
         z.null()
-    ])),
-    zip: z.optional(z.union([
+    ]),
+    zip: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
     }),

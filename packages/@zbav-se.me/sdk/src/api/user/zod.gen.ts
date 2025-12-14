@@ -40,10 +40,10 @@ export const zUserEx = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the user_ex record'
     }),
-    locationId: z.optional(z.union([
+    locationId: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     side: z.optional(z.union([
         zUserSideEnum,
         z.null()
@@ -465,33 +465,33 @@ export const zLocation = z.object({
     code: z.string().register(z.globalRegistry, {
         description: 'Country code'
     }),
-    county: z.optional(z.union([
+    county: z.union([
         z.string(),
         z.null()
-    ])),
-    municipality: z.optional(z.union([
+    ]),
+    municipality: z.union([
         z.string(),
         z.null()
-    ])),
-    state: z.optional(z.union([
+    ]),
+    state: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     address: z.string().register(z.globalRegistry, {
         description: 'Full address preview of a location'
     }),
-    city: z.optional(z.union([
+    city: z.union([
         z.string(),
         z.null()
-    ])),
-    street: z.optional(z.union([
+    ]),
+    street: z.union([
         z.string(),
         z.null()
-    ])),
-    zip: z.optional(z.union([
+    ]),
+    zip: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     confidence: z.number().register(z.globalRegistry, {
         description: 'Confidence score of the location (based on query)'
     }),
@@ -576,10 +576,9 @@ export const zTransaction = z.object({
     listingId: z.string().register(z.globalRegistry, {
         description: 'ID of the related listing'
     }),
-    messageThreadId: z.optional(z.union([
-        z.string(),
-        z.null()
-    ])),
+    messageThreadId: z.string().register(z.globalRegistry, {
+        description: 'ID of the message thread associated with the transaction'
+    }),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
@@ -596,7 +595,7 @@ export const zTransaction = z.object({
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
-    currency: zCurrencyListEnum.and(z.string()),
+    currency: zCurrencyListEnum,
     location: zLocation
 }).register(z.globalRegistry, {
     description: 'Transaction data'
@@ -863,47 +862,80 @@ export type zListingScoreCollection = z.infer<typeof zListingScoreCollection>;
  */
 export const zListingMetrics = z.object({
     listing: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     listingScore: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     views: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     viewsScore: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     favourite: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     favouriteScore: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     ignore: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     ignoreScore: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     flag: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     flagScore: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ]),
     score: z.union([
-        z.number(),
+        z.union([
+            z.number(),
+            z.null()
+        ]),
         z.null()
     ])
 }).register(z.globalRegistry, {
@@ -963,7 +995,7 @@ export type zFeedIdIn = z.infer<typeof zFeedIdIn>;
 /**
  * This filter matches listings with currency codes in the provided array
  */
-export const zCurrencyIn = z.array(zCurrencyListEnum.and(z.string())).register(z.globalRegistry, {
+export const zCurrencyIn = z.array(zCurrencyListEnum).register(z.globalRegistry, {
     description: 'This filter matches listings with currency codes in the provided array'
 });
 
@@ -1040,7 +1072,7 @@ export const zListingWhere = z.object({
     })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
-    currency: z.optional(zCurrencyListEnum.and(z.string())),
+    currency: z.optional(zCurrencyListEnum),
     currencyIn: z.optional(zCurrencyIn),
     expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings that expire before the provided date'
@@ -1112,7 +1144,7 @@ export const zListingFilter = z.object({
     })),
     categoryId: z.optional(zCategoryId),
     categoryIdIn: z.optional(zCategoryIdIn),
-    currency: z.optional(zCurrencyListEnum.and(z.string())),
+    currency: z.optional(zCurrencyListEnum),
     currencyIn: z.optional(zCurrencyIn),
     expiresAtBefore: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches listings that expire before the provided date'
@@ -1210,7 +1242,7 @@ export const zListingCreate = z.object({
     categoryId: z.string().register(z.globalRegistry, {
         description: 'ID of the category'
     }),
-    currency: zCurrencyListEnum.and(z.string()),
+    currency: zCurrencyListEnum,
     expiresAt: zListingExpireEnum,
     title: z.string().min(5).max(72).register(z.globalRegistry, {
         description: 'Title of the item'
@@ -1265,7 +1297,7 @@ export const zListing = z.object({
     price: z.number().register(z.globalRegistry, {
         description: 'Price of the listing'
     }),
-    currency: zCurrencyListEnum.and(z.string()),
+    currency: zCurrencyListEnum,
     condition: z.number().register(z.globalRegistry, {
         description: 'Condition of the item (0-based index)'
     }),
@@ -1284,10 +1316,10 @@ export const zListing = z.object({
     title: z.string().register(z.globalRegistry, {
         description: 'Title of the item'
     }),
-    description: z.optional(z.union([
+    description: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
@@ -1785,14 +1817,14 @@ export const zFeedFavourite = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the feed'
     }),
-    locationId: z.optional(z.union([
+    locationId: z.union([
         z.string(),
         z.null()
-    ])),
-    uploadId: z.optional(z.union([
+    ]),
+    uploadId: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -1903,14 +1935,14 @@ export const zFeed = z.object({
     id: z.string().register(z.globalRegistry, {
         description: 'ID of the feed'
     }),
-    locationId: z.optional(z.union([
+    locationId: z.union([
         z.string(),
         z.null()
-    ])),
-    uploadId: z.optional(z.union([
+    ]),
+    uploadId: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     name: z.string().register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
@@ -2011,10 +2043,10 @@ export const zFeedCreate = z.object({
     name: z.string().min(1).register(z.globalRegistry, {
         description: 'Name of the feed'
     }),
-    locationId: z.optional(z.union([
+    locationId: z.union([
         z.string(),
         z.null()
-    ])),
+    ]),
     query: zListingQuery
 }).register(z.globalRegistry, {
     description: 'Data for creating a new feed'
@@ -2266,101 +2298,20 @@ export const zDraftQuery = z.object({
 export type zDraftQuery = z.infer<typeof zDraftQuery>;
 
 /**
- * Data for updating an existing draft
+ * Fields to update (all optional)
  */
-export const zDraftPatch = z.object({
-    patch: z.object({
-        price: z.optional(z.number().register(z.globalRegistry, {
-            description: 'Price of the draft'
-        })),
-        currency: z.optional(zCurrencyListEnum),
-        condition: z.optional(z.union([
+export const zDraftPatchData = z.object({
+    price: z.optional(z.union([
+        z.union([
             z.number(),
             z.null()
-        ])),
-        age: z.optional(z.union([
-            z.number(),
-            z.null()
-        ])),
-        locationId: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        categoryId: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        expiresAt: z.optional(z.string().register(z.globalRegistry, {
-            description: 'Expiration timestamp'
-        })),
-        title: z.optional(z.union([
-            z.string(),
-            z.null()
-        ])),
-        titleVec: z.optional(z.array(z.number()).register(z.globalRegistry, {
-            description: 'Embedding vector for title similarity search'
-        })),
-        description: z.optional(z.union([
-            z.string(),
-            z.null()
-        ]))
-    }).register(z.globalRegistry, {
-        description: 'Fields to update (all optional)'
-    }),
-    query: zDraftQuery
-}).register(z.globalRegistry, {
-    description: 'Data for updating an existing draft'
-});
-
-export type zDraftPatch = z.infer<typeof zDraftPatch>;
-
-/**
- * Data for creating a new draft
- */
-export const zDraftCreate = z.object({
-    price: z.optional(z.number().register(z.globalRegistry, {
-        description: 'Price of the draft'
-    })),
-    condition: z.optional(z.number().register(z.globalRegistry, {
-        description: 'Condition of the item (0-based index)'
-    })),
-    age: z.optional(z.number().register(z.globalRegistry, {
-        description: 'Age of the item (0-based index)'
-    })),
-    locationId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    })),
-    categoryId: z.optional(z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    })),
-    currency: z.optional(zCurrencyListEnum.and(z.string())),
-    expiresAt: z.optional(zListingExpireEnum),
-    title: z.optional(z.string().min(5).max(72).register(z.globalRegistry, {
-        description: 'Title of the item'
-    })),
-    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
-        description: 'Description of the item'
-    })),
-    uploadIds: z.optional(z.array(z.string()).register(z.globalRegistry, {
-        description: 'IDs of the uploads; order of uploads defines order in the gallery'
-    }))
-}).register(z.globalRegistry, {
-    description: 'Data for creating a new draft'
-});
-
-export type zDraftCreate = z.infer<typeof zDraftCreate>;
-
-/**
- * Draft data
- */
-export const zDraft = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the draft'
-    }),
-    price: z.optional(z.number().register(z.globalRegistry, {
-        description: 'Price of the draft'
-    })),
-    currency: z.optional(zCurrencyListEnum),
+        ]),
+        z.null()
+    ])),
+    currency: z.optional(z.union([
+        zCurrencyListEnum,
+        z.null()
+    ])),
     condition: z.optional(z.union([
         z.number(),
         z.null()
@@ -2387,32 +2338,124 @@ export const zDraft = z.object({
     description: z.optional(z.union([
         z.string(),
         z.null()
-    ])),
+    ]))
+}).register(z.globalRegistry, {
+    description: 'Fields to update (all optional)'
+});
+
+export type zDraftPatchData = z.infer<typeof zDraftPatchData>;
+
+/**
+ * Data for updating an existing draft
+ */
+export const zDraftPatch = z.object({
+    patch: zDraftPatchData,
+    query: zDraftQuery
+}).register(z.globalRegistry, {
+    description: 'Data for updating an existing draft'
+});
+
+export type zDraftPatch = z.infer<typeof zDraftPatch>;
+
+/**
+ * Data for creating a new draft
+ */
+export const zDraftCreate = z.object({
+    price: z.optional(z.number().register(z.globalRegistry, {
+        description: 'Price of the draft'
+    })),
+    condition: z.optional(z.number().register(z.globalRegistry, {
+        description: 'Condition of the item (0-based index)'
+    })),
+    age: z.optional(z.number().register(z.globalRegistry, {
+        description: 'Age of the item (0-based index)'
+    })),
+    locationId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    })),
+    categoryId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    })),
+    currency: z.optional(zCurrencyListEnum),
+    expiresAt: z.optional(zListingExpireEnum),
+    title: z.optional(z.string().min(5).max(72).register(z.globalRegistry, {
+        description: 'Title of the item'
+    })),
+    description: z.optional(z.string().max(2048).register(z.globalRegistry, {
+        description: 'Description of the item'
+    })),
+    uploadIds: z.optional(z.array(z.string()).register(z.globalRegistry, {
+        description: 'IDs of the uploads; order of uploads defines order in the gallery'
+    }))
+}).register(z.globalRegistry, {
+    description: 'Data for creating a new draft'
+});
+
+export type zDraftCreate = z.infer<typeof zDraftCreate>;
+
+/**
+ * Draft data
+ */
+export const zDraft = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the draft'
+    }),
+    price: z.union([
+        z.union([
+            z.number(),
+            z.null()
+        ]),
+        z.null()
+    ]),
+    currency: z.union([
+        zCurrencyListEnum,
+        z.null()
+    ]),
+    condition: z.union([
+        z.number(),
+        z.null()
+    ]),
+    age: z.union([
+        z.number(),
+        z.null()
+    ]),
+    locationId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    categoryId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.union([
+        z.string(),
+        z.null()
+    ]),
+    description: z.union([
+        z.string(),
+        z.null()
+    ]),
     createdAt: z.string().register(z.globalRegistry, {
         description: 'Creation timestamp'
     }),
     updatedAt: z.string().register(z.globalRegistry, {
         description: 'Last update timestamp'
     }),
-    location: z.optional(zLocation.and(z.union([
-        z.record(z.string(), z.unknown()),
+    location: z.union([
+        zLocation,
         z.null()
-    ]))),
-    category: z.optional(zCategory.and(z.union([
-        z.record(z.string(), z.unknown()),
+    ]),
+    category: z.union([
+        zCategory,
         z.null()
-    ]))),
-    gallery: z.optional(z.union([
-        z.object({
-            id: z.string().register(z.globalRegistry, {
-                description: 'ID of the gallery'
-            }),
-            items: z.array(zGalleryItem).register(z.globalRegistry, {
-                description: 'Gallery items sorted by sort order'
-            })
-        }),
+    ]),
+    gallery: z.union([
+        zGallery,
         z.null()
-    ]))
+    ])
 }).register(z.globalRegistry, {
     description: 'Draft data'
 });
