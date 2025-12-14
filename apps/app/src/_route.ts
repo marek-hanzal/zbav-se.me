@@ -37,7 +37,7 @@ import { Route as LocaleSellerListingWizardConditionRouteImport } from './@route
 import { Route as LocaleSellerListingWizardCategoryRouteImport } from './@routes/$locale/seller/listing/wizard/category'
 import { Route as LocaleSellerListingWizardAgeRouteImport } from './@routes/$locale/seller/listing/wizard/age'
 import { Route as LocaleSellerListingIdViewRouteImport } from './@routes/$locale/seller/listing/$id/view'
-import { Route as LocaleBuyerFeedIdListRouteImport } from './@routes/$locale/buyer/feed/$id/list'
+import { Route as LocaleFlowBuyerIdListRouteImport } from './@routes/$locale/flow/buyer/$id/list'
 import { Route as LocaleBuyerFavouriteFeedIdListRouteImport } from './@routes/$locale/buyer/favourite/$feedId/list'
 
 const LocaleRoute = LocaleRouteImport.update({
@@ -194,9 +194,9 @@ const LocaleSellerListingIdViewRoute =
     path: '/seller/listing/$id/view',
     getParentRoute: () => LocaleRoute,
   } as any)
-const LocaleBuyerFeedIdListRoute = LocaleBuyerFeedIdListRouteImport.update({
-  id: '/buyer/feed/$id/list',
-  path: '/buyer/feed/$id/list',
+const LocaleFlowBuyerIdListRoute = LocaleFlowBuyerIdListRouteImport.update({
+  id: '/flow/buyer/$id/list',
+  path: '/flow/buyer/$id/list',
   getParentRoute: () => LocaleRoute,
 } as any)
 const LocaleBuyerFavouriteFeedIdListRoute =
@@ -220,7 +220,7 @@ export interface FileRoutesByFullPath {
   '/$locale/ui/buyer': typeof LocaleUiBuyerIndexRoute
   '/$locale/ui/seller': typeof LocaleUiSellerIndexRoute
   '/$locale/buyer/favourite/$feedId/list': typeof LocaleBuyerFavouriteFeedIdListRoute
-  '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
+  '/$locale/flow/buyer/$id/list': typeof LocaleFlowBuyerIdListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -251,7 +251,7 @@ export interface FileRoutesByTo {
   '/$locale/ui/buyer': typeof LocaleUiBuyerIndexRoute
   '/$locale/ui/seller': typeof LocaleUiSellerIndexRoute
   '/$locale/buyer/favourite/$feedId/list': typeof LocaleBuyerFavouriteFeedIdListRoute
-  '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
+  '/$locale/flow/buyer/$id/list': typeof LocaleFlowBuyerIdListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -284,7 +284,7 @@ export interface FileRoutesById {
   '/$locale/ui/buyer/': typeof LocaleUiBuyerIndexRoute
   '/$locale/ui/seller/': typeof LocaleUiSellerIndexRoute
   '/$locale/buyer/favourite/$feedId/list': typeof LocaleBuyerFavouriteFeedIdListRoute
-  '/$locale/buyer/feed/$id/list': typeof LocaleBuyerFeedIdListRoute
+  '/$locale/flow/buyer/$id/list': typeof LocaleFlowBuyerIdListRoute
   '/$locale/seller/listing/$id/view': typeof LocaleSellerListingIdViewRoute
   '/$locale/seller/listing/wizard/age': typeof LocaleSellerListingWizardAgeRoute
   '/$locale/seller/listing/wizard/category': typeof LocaleSellerListingWizardCategoryRoute
@@ -318,7 +318,7 @@ export interface FileRouteTypes {
     | '/$locale/ui/buyer'
     | '/$locale/ui/seller'
     | '/$locale/buyer/favourite/$feedId/list'
-    | '/$locale/buyer/feed/$id/list'
+    | '/$locale/flow/buyer/$id/list'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -349,7 +349,7 @@ export interface FileRouteTypes {
     | '/$locale/ui/buyer'
     | '/$locale/ui/seller'
     | '/$locale/buyer/favourite/$feedId/list'
-    | '/$locale/buyer/feed/$id/list'
+    | '/$locale/flow/buyer/$id/list'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -381,7 +381,7 @@ export interface FileRouteTypes {
     | '/$locale/ui/buyer/'
     | '/$locale/ui/seller/'
     | '/$locale/buyer/favourite/$feedId/list'
-    | '/$locale/buyer/feed/$id/list'
+    | '/$locale/flow/buyer/$id/list'
     | '/$locale/seller/listing/$id/view'
     | '/$locale/seller/listing/wizard/age'
     | '/$locale/seller/listing/wizard/category'
@@ -603,11 +603,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LocaleSellerListingIdViewRouteImport
       parentRoute: typeof LocaleRoute
     }
-    '/$locale/buyer/feed/$id/list': {
-      id: '/$locale/buyer/feed/$id/list'
-      path: '/buyer/feed/$id/list'
-      fullPath: '/$locale/buyer/feed/$id/list'
-      preLoaderRoute: typeof LocaleBuyerFeedIdListRouteImport
+    '/$locale/flow/buyer/$id/list': {
+      id: '/$locale/flow/buyer/$id/list'
+      path: '/flow/buyer/$id/list'
+      fullPath: '/$locale/flow/buyer/$id/list'
+      preLoaderRoute: typeof LocaleFlowBuyerIdListRouteImport
       parentRoute: typeof LocaleRoute
     }
     '/$locale/buyer/favourite/$feedId/list': {
@@ -657,7 +657,7 @@ interface LocaleRouteChildren {
   LocaleDevSeedRoute: typeof LocaleDevSeedRoute
   LocaleBuyerFeedDefaultRoute: typeof LocaleBuyerFeedDefaultRoute
   LocaleBuyerFavouriteFeedIdListRoute: typeof LocaleBuyerFavouriteFeedIdListRoute
-  LocaleBuyerFeedIdListRoute: typeof LocaleBuyerFeedIdListRoute
+  LocaleFlowBuyerIdListRoute: typeof LocaleFlowBuyerIdListRoute
   LocaleSellerListingIdViewRoute: typeof LocaleSellerListingIdViewRoute
   LocaleSellerListingWizardAgeRoute: typeof LocaleSellerListingWizardAgeRoute
   LocaleSellerListingWizardCategoryRoute: typeof LocaleSellerListingWizardCategoryRoute
@@ -678,7 +678,7 @@ const LocaleRouteChildren: LocaleRouteChildren = {
   LocaleDevSeedRoute: LocaleDevSeedRoute,
   LocaleBuyerFeedDefaultRoute: LocaleBuyerFeedDefaultRoute,
   LocaleBuyerFavouriteFeedIdListRoute: LocaleBuyerFavouriteFeedIdListRoute,
-  LocaleBuyerFeedIdListRoute: LocaleBuyerFeedIdListRoute,
+  LocaleFlowBuyerIdListRoute: LocaleFlowBuyerIdListRoute,
   LocaleSellerListingIdViewRoute: LocaleSellerListingIdViewRoute,
   LocaleSellerListingWizardAgeRoute: LocaleSellerListingWizardAgeRoute,
   LocaleSellerListingWizardCategoryRoute:

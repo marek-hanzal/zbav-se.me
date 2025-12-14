@@ -61,7 +61,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 			{...props}
 		>
 			<LinkTo
-				to={"/$locale/buyer/feed/$id/list"}
+				to={"/$locale/flow/buyer/$id/list"}
 				icon={ListingIcon}
 				iconProps={{
 					ui: {
@@ -153,7 +153,7 @@ export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef }) => 
 	);
 };
 
-export const Route = createFileRoute("/$locale/buyer/feed/$id/list")({
+export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 	validateSearch: z.object({
 		/**
 		 * If needed, we can restore scroll position to a particular listing

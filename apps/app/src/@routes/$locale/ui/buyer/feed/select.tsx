@@ -59,7 +59,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 						header: ({ feedId, children }) => (
 							<LinkTo
 								data-ui={"/buyer/feed/select-[FeedListContainer]-[LinkTo.header]"}
-								to={"/$locale/buyer/feed/$id/list"}
+								to={"/$locale/flow/buyer/$id/list"}
 								params={{
 									locale,
 									id: feedId,
