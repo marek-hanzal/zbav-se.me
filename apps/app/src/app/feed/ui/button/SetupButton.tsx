@@ -132,6 +132,13 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							<GalleryUploadControl
 								data-ui={"FeedDetailContainer-[GalleryUploadSheet]"}
 								withMutation={withFeedGalleryCreateMutation}
+								defaultUploadIds={
+									feed.uploadId
+										? [
+												feed.uploadId,
+											]
+										: []
+								}
 								toMutation={(uploadIds) => ({
 									feedId: feed.id,
 									uploadIds,

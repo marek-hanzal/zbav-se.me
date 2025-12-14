@@ -12,6 +12,7 @@ export namespace GalleryUploadSheet {
 		extends Omit<BottomSheet.Props, "isOpen" | "onClose"> {
 		withMutation: withMutation.Api<TData, any, any>;
 		toMutation(uploadIds: string[]): TData;
+		defaultUploadIds: string[];
 		//
 		state: StateType.State<boolean>;
 		//
@@ -26,6 +27,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 	onSuccess,
 	onCancel,
 	state,
+	defaultUploadIds,
 	...props
 }: GalleryUploadSheet.Props<TData>) => {
 	return (
@@ -40,6 +42,7 @@ export const GalleryUploadSheet = <TData extends GalleryUploadSheet.Uploads>({
 				toMutation={toMutation}
 				onCancel={onCancel}
 				onSuccess={onSuccess}
+				defaultUploadIds={defaultUploadIds}
 			/>
 		</BottomSheet>
 	);
