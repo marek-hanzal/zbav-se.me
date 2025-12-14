@@ -16,7 +16,6 @@ export const CategoryValue: FC<CategoryValue.Props> = ({ categoryIdIn, ...props 
 			<ValueList
 				renderFn={() => null}
 				items={[]}
-				loading={true}
 				{...props}
 			/>
 		);
