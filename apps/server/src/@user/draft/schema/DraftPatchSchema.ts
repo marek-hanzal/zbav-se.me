@@ -15,7 +15,7 @@ export const DraftPatchSchema = z
 				updatedAt: true,
 			})
 			.partial()
-			.openapi({
+			.openapi("DraftPatchData", {
 				description: "Fields to update (all optional)",
 			}),
 		query: DraftQuerySchema,
