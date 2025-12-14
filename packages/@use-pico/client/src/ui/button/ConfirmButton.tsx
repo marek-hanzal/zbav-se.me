@@ -30,6 +30,7 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 	confirmProps,
 	confirmTimeout = 3000,
 	onReset,
+	ui,
 	...props
 }) => {
 	const [isConfirm, setIsConfirm] = useState(false);
@@ -63,22 +64,16 @@ export const ConfirmButton: FC<ConfirmButton.Props> = ({
 		};
 	}, []);
 
-	// Merge ui props properly: base props.ui, then conditional props.ui
 	const conditionalProps = isConfirm ? confirmProps : buttonProps;
-	const mergedUi = {
-		...props.ui,
-		...conditionalProps?.ui,
-	};
-
-	// Extract ui from props to avoid passing it twice
-	const { ui: _ui, ...restProps } = props;
-	const { ui: _conditionalUi, ...restConditionalProps } = conditionalProps || {};
 
 	return (
 		<Button
-			{...restProps}
-			{...restConditionalProps}
-			ui={mergedUi}
+			{...props}
+			{...conditionalProps}
+			ui={{
+				...ui,
+				...conditionalProps?.ui,
+			}}
 			onClick={handleClick}
 		/>
 	);

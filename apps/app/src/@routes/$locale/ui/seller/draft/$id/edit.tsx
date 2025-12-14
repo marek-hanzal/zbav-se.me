@@ -30,6 +30,14 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/$id/edit")({
 								},
 							});
 						}}
+						onDelete={async () => {
+							await navigate({
+								to: "/$locale/ui/seller",
+								params: {
+									locale,
+								},
+							});
+						}}
 					/>
 				)}
 			</withDraftFetchQuery.Suspense>

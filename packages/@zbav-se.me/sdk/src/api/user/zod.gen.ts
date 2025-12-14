@@ -2611,6 +2611,21 @@ export const zApiDraftCreateResponse = zDraft;
 
 export type zapiDraftCreateResponse = z.infer<typeof zApiDraftCreateResponse>;
 
+export const zApiDraftDeleteData = z.object({
+    body: z.optional(zDraftQuery),
+    path: z.optional(z.never()),
+    query: z.optional(z.never())
+});
+
+export type zapiDraftDeleteRequest = z.infer<typeof zApiDraftDeleteData>;
+
+/**
+ * The deleted draft
+ */
+export const zApiDraftDeleteResponse = zDraft;
+
+export type zapiDraftDeleteResponse = z.infer<typeof zApiDraftDeleteResponse>;
+
 export const zApiDraftFetchData = z.object({
     body: z.optional(zDraftQuery),
     path: z.optional(z.never()),

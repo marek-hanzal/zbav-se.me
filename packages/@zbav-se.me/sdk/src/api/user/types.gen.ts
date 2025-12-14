@@ -2434,6 +2434,38 @@ export type tApiDraftCreateResponse = {
 
 export type apiDraftCreateResponse = tApiDraftCreateResponse[keyof tApiDraftCreateResponse];
 
+export type tApiDraftDeleteRequest = {
+    /**
+     * Query object for draft deletion
+     */
+    body?: tDraftQuery;
+    path?: never;
+    query?: never;
+    url: '/api/user/draft/delete';
+};
+
+export type apiDraftDeleteErrors = {
+    /**
+     * Draft not found
+     */
+    404: tNotice;
+    /**
+     * Internal server error
+     */
+    500: tNotice;
+};
+
+export type apiDraftDeleteError = apiDraftDeleteErrors[keyof apiDraftDeleteErrors];
+
+export type tApiDraftDeleteResponse = {
+    /**
+     * The deleted draft
+     */
+    200: tDraft;
+};
+
+export type apiDraftDeleteResponse = tApiDraftDeleteResponse[keyof tApiDraftDeleteResponse];
+
 export type tApiDraftFetchRequest = {
     /**
      * Query object for draft fetch

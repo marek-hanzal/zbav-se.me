@@ -184,9 +184,6 @@
 5ed9b024fb2638630326495ab7b573814766a680c0bdc1a02eba157e:
     ref: Feed name (placeholder)
     value: Např. nářadí
-5f89ec425f9a625c897a3bcc1d45953bef4ace5e5b7cfacf258790c5:
-    ref: Upload gallery (button)
-    value: Odeslat
 5f8d3eb16bf7b5c857416890f7e4c3ff3d02dfa73a7d621f9a603e9f:
     ref: Listing photo gallery (label)
     value: Galerie inzerátu
@@ -277,6 +274,9 @@
 8d4b90ebcfd3094d7e1cc54a3b0f2ab386999004814da7e15f2bc533:
     ref: Feed (label)
     value: Moje seznamy
+8d5224a1dcfa23a630c6e76f7921d15195a42e649e050d26a7b5c8f8:
+    ref: Delete draft (button)
+    value: Smazat
 93766f804027b28f5ce55c85ccb887c09c3d8e78a84074aed256ca9a:
     ref: Listing title (title)
     value: Co prodáváš?

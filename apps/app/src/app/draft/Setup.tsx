@@ -1,13 +1,17 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { EditIcon, Icon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
+import { Button, ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, LabelValue } from "@use-pico/client/ui/container";
 import { PriceInline } from "@use-pico/client/ui/price-inline";
 import { Status } from "@use-pico/client/ui/status";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
 import { type tDraft, type tListing, zListingCreate } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation, withListingCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import {
+	withDraftDeleteMutation,
+	withDraftPatchMutation,
+	withListingCreateMutation,
+} from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { ListingIcon, PhotoIcon } from "@zbav-se.me/ui/icon";
@@ -41,10 +45,11 @@ export namespace Setup {
 		locale: string;
 		draft: tDraft;
 		onListing(listing: tListing): Promise<any>;
+		onDelete(): Promise<any>;
 	}
 }
 
-export const Setup: FC<Setup.Props> = ({ locale, draft, onListing }) => {
+export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) => {
 	const queryClient = useQueryClient();
 	const [view, setView] = useState<Setup.View>("default");
 	const mutation = withDraftPatchMutation.useMutation({
@@ -56,6 +61,9 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing }) => {
 			});
 			setView("default");
 		},
+	});
+	const deleteMutation = withDraftDeleteMutation.useMutation({
+		onSuccess: onDelete,
 	});
 	const listingCreateMutation = withListingCreateMutation.useMutation({
 		onSuccess: onListing,
@@ -347,6 +355,37 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing }) => {
 										}
 									}}
 									{...uiSaveButton({
+										className: [],
+									})}
+								/>
+
+								<ConfirmButton
+									iconEnabled={TrashIcon}
+									iconProps={{
+										ui: {
+											text: "2xl",
+										},
+									}}
+									label={"Delete draft (button)"}
+									disabled={deleteMutation.isPending}
+									loading={deleteMutation.isPending}
+									confirmProps={{
+										ui: {
+											tone: "danger",
+											theme: "light",
+										},
+										onClick() {
+											deleteMutation.mutate({
+												where: {
+													id: draft.id,
+												},
+											});
+										},
+									}}
+									{...uiSaveButton({
+										ui: {
+											tone: "warning",
+										},
 										className: [],
 									})}
 								/>
