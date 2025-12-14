@@ -25,3 +25,7 @@ export const DraftPatchSchema = z
 	});
 
 export type DraftPatchSchema = typeof DraftPatchSchema;
+
+export namespace DraftPatchSchema {
+	export type Type = z.infer<DraftPatchSchema>;
+}

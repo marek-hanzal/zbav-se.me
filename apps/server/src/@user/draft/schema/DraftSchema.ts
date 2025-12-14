@@ -7,9 +7,9 @@ import { DraftDbSchema } from "~/app/draft/schema/DraftDbSchema";
 export const DraftSchema = z
 	.looseObject({
 		...DraftDbSchema.shape,
-		location: LocationSchema.optional(),
-		category: CategorySchema.optional(),
-		gallery: GallerySchema.optional().openapi({
+		location: LocationSchema.nullish(),
+		category: CategorySchema.nullish(),
+		gallery: GallerySchema.nullish().openapi({
 			description: "Draft gallery images",
 		}),
 	})

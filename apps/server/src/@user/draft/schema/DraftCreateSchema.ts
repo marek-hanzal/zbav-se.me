@@ -37,3 +37,7 @@ export const DraftCreateSchema = z
 	});
 
 export type DraftCreateSchema = typeof DraftCreateSchema;
+
+export namespace DraftCreateSchema {
+	export type Type = z.infer<DraftCreateSchema>;
+}
