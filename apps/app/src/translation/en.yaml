@@ -85,6 +85,9 @@
 3462ccc81c58e39c5ad3d6b3cc2a5d6cde81ab00375906508aa30a7b:
   ref: Listing - start (text)
   value: Listing - start (text)
+34f457d0919272ce083887bb547fcb8fbd314e8750dfbd3ff49c9dd8:
+  ref: Welcome (message)
+  value: Welcome (message)
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
   ref: Go to listings (button)
   value: Go to listings (button)
@@ -154,6 +157,9 @@
 51682d9521080245ad818c184b06929926372bbf7b8e14889655233a:
   ref: Empty favourite category (title)
   value: Empty favourite category (title)
+5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
+  ref: Go home (welcome)
+  value: Go home (welcome)
 56093b0ee9cd3eadf7db4a59a8ec98132bacd22fa07691fdac66874a:
   ref: Buyer - shop (title)
   value: Buyer - shop (title)
@@ -340,6 +346,9 @@
 9f3ea85808a44a993024995453b438851943f2aba42cad77b727d127:
   ref: Fulltext (placeholder)
   value: Fulltext (placeholder)
+a038a4da09ca1bfcd3d73f545e72575a33516d5e7ef37b09b4f5b397:
+  ref: Welcome (title)
+  value: Welcome (title)
 a0d2788aec3760e59aa4f698966708ab8ece9b28608ff2bef10db62d:
   ref: Messages (title)
   value: Messages (title)
@@ -531,9 +540,6 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
   ref: Listing title (label)
   value: Listing title (label)
-fdf12da2c20a3773d63d2a05055c386437e8a2eebccbcdfd3da5b51a:
-  ref: No listings (badge)
-  value: No listings (badge)
 ff3aec3b377dd4a35aeaa6258aeabacca8acd19393e3fffa35148a67:
   ref: Next - condition (button)
   value: Next - condition (button)

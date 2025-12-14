@@ -1,22 +1,62 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowRightIcon } from "@use-pico/client/icon";
+import { uiButton } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
+import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
+import { Logo } from "@zbav-se.me/ui/logo";
 
 export const Route = createFileRoute("/$locale/welcome")({
 	component() {
 		const { locale } = Route.useParams();
 
 		return (
-			<div>
-				"onboarding or something"
-				<LinkTo
-					to={"/$locale/ui/home"}
-					params={{
-						locale,
+			<Container
+				ui={{
+					layout: "vertical-centered",
+					height: "full",
+				}}
+			>
+				<Status
+					icon={<Logo />}
+					textTitle={"Welcome (title)"}
+					titleProps={{
+						ui: {
+							text: "md",
+						},
 					}}
-				>
-					home
-				</LinkTo>
-			</div>
+					action={
+						<LinkTo
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							to={"/$locale/ui/home"}
+							params={{
+								locale,
+							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									text: "md",
+									size: "lg",
+								},
+								className: [],
+							})}
+						>
+							<Tx label={"Go home (welcome)"} />
+						</LinkTo>
+					}
+					ui={{
+						tone: "brand",
+						theme: "light",
+						inner: "4xl",
+					}}
+					className={[
+						"text-center",
+					]}
+				/>
+			</Container>
 		);
 	},
 });
