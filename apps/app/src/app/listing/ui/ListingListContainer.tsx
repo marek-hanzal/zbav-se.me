@@ -19,7 +19,6 @@ export namespace ListingListContainer {
 		scrollToId: string | undefined;
 		renderEmptyFn?(): ReactNode;
 		appendix?: ReactNode;
-		// overlay: ListingHeroContainer.Overlay.Render;
 		feedId: string;
 		withScore: boolean;
 	}
@@ -32,7 +31,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	scrollToId,
 	renderEmptyFn,
 	appendix,
-	// overlay,
 	feedId,
 	withScore,
 	...props
@@ -112,59 +110,67 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 						return emptySlot;
 					}
 
-					return data.data.map((listing) => (
-						<VisibleContainer
-							key={`${listingIdPrefix}-${listing.id}`}
-							data-ui="ListingListContainer-[VisibleContainer]"
-							scrollerRef={containerRef}
-							useProximity
-							overscan={4}
-							delayMs={200}
-							placeholder={(props) => (
-								<SpinnerContainer
-									data-ui={"ListingListContainer-[SpinnerContainer.placeholder]"}
-									data-id={listing.id}
-									{...props}
-								/>
-							)}
-							ui={{
-								height: "full",
-								width: "full",
-							}}
-						>
-							<withListingFetchQuery.Suspense
-								data={{
-									where: {
-										id: listing.id,
-									},
-								}}
-								fallback={
-									<SpinnerContainer
-										data-ui={
-											"ListingListContainer-[SpinnerContainer.listing-fetch]"
-										}
-									/>
-								}
-							>
-								{({ data: listing }) => {
-									return (
-										<Hero
-											data-ui={"ListingListContainer-[ListingHeroContainer]"}
-											locale={locale}
-											listing={listing}
-											// overlay={overlay}
-											feedId={feedId}
-											withScore={withScore}
+					return (
+						<>
+							{data.data.map((listing) => (
+								<VisibleContainer
+									key={`${listingIdPrefix}-${listing.id}`}
+									data-ui="ListingListContainer-[VisibleContainer]"
+									scrollerRef={containerRef}
+									useProximity
+									overscan={4}
+									delayMs={200}
+									placeholder={(props) => (
+										<SpinnerContainer
+											data-ui={
+												"ListingListContainer-[SpinnerContainer.placeholder]"
+											}
+											data-id={listing.id}
+											{...props}
 										/>
-									);
-								}}
-							</withListingFetchQuery.Suspense>
-						</VisibleContainer>
-					));
+									)}
+									ui={{
+										height: "full",
+										width: "full",
+									}}
+								>
+									<withListingFetchQuery.Suspense
+										data={{
+											where: {
+												id: listing.id,
+											},
+										}}
+										fallback={
+											<SpinnerContainer
+												data-ui={
+													"ListingListContainer-[SpinnerContainer.listing-fetch]"
+												}
+											/>
+										}
+									>
+										{({ data: listing }) => {
+											return (
+												<Hero
+													data-ui={
+														"ListingListContainer-[ListingHeroContainer]"
+													}
+													locale={locale}
+													listing={listing}
+													// overlay={overlay}
+													feedId={feedId}
+													withScore={withScore}
+												/>
+											);
+										}}
+									</withListingFetchQuery.Suspense>
+								</VisibleContainer>
+							))}
+
+							{appendix}
+						</>
+					);
 				}}
 			</withListingCollectionQuery.Suspense>
-
-			{appendix}
 		</Container>
 	);
 };

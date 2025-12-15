@@ -9,7 +9,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withFeedFetchQuery, withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedFetchQuery, withListingCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, FirstIcon, ListingIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
@@ -190,6 +190,97 @@ export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef }) => 
 	);
 };
 
+export namespace FeedEmpty {
+	export interface Props {
+		locale: string;
+		feed: tFeed;
+		containerRef: RefObject<HTMLDivElement | null>;
+	}
+}
+
+export const FeedEmpty: FC<FeedEmpty.Props> = ({ locale, feed, containerRef }) => {
+	return (
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
+		>
+			<Status
+				icon={DeadEndIcon}
+				textTitle={"No listings in feed (title)"}
+				textMessage={"No listings in feed (message)"}
+				action={
+					<>
+						<SetupButton
+							locale={locale}
+							feed={feed}
+							containerRef={containerRef}
+							label={translator.text("Adjust feed (button)")}
+							iconProps={{
+								ui: {
+									text: "xl",
+								},
+							}}
+							ui={{
+								tone: "secondary",
+								theme: "light",
+								snapTo: undefined,
+								justify: "center",
+								round: "default",
+								text: "default",
+								size: "default",
+								width: "full",
+								font: "semibold",
+								square: undefined,
+							}}
+						/>
+
+						<LinkTo
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							iconProps={{
+								ui: {
+									text: "xl",
+								},
+							}}
+							to={"/$locale/ui/buyer"}
+							params={{
+								locale,
+							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									text: "default",
+									size: "default",
+									justify: "center",
+									width: "full",
+									background: undefined,
+									border: false,
+									shadow: false,
+								},
+								className: [],
+							})}
+						>
+							<Tx label="Back to home (link)" />
+						</LinkTo>
+					</>
+				}
+				ui={{
+					tone: "brand",
+					theme: "light",
+					color: "lead",
+					inner: "4xl",
+				}}
+				className={[
+					"text-center",
+				]}
+			/>
+		</Container>
+	);
+};
+
 export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 	validateSearch: z.object({
 		/**
@@ -225,21 +316,21 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 		const { scrollToId } = Route.useSearch();
 		const containerRef = useRef<HTMLDivElement>(null);
 
+		const { data: feed } = withFeedFetchQuery.useSuspenseQuery({
+			where: {
+				id,
+			},
+		});
 		/**
 		 * The trick - fetch _any_ listing, so we know, if the app is empty.
 		 *
 		 * Using collection, because "fetch" throws error on 4o4.
 		 */
-		const listing = withListingCollectionQuery.useSuspenseQuery({
-			cursor: {
-				page: 0,
-				size: 1,
-			},
-		});
+		const { data: count } = withListingCountQuery.useSuspenseQuery(feed.query);
 
 		const snapperNav = useSnapperNav({
 			containerRef,
-			count: listing.data.data.length + 1,
+			count: count.filter + 1,
 			orientation: "vertical",
 		});
 
@@ -264,76 +355,70 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 					/>
 				}
 			>
-				{listing.data.data.length > 0 ? (
-					<withFeedFetchQuery.Suspense
-						data={{
-							where: {
-								id,
-							},
-						}}
-						fallback={<SpinnerContainer />}
-					>
-						{({ data: feed }) => {
-							return (
-								<>
-									<SetupButton
-										locale={locale}
-										feed={feed}
-										containerRef={containerRef}
-										ui={{
-											opacity: snapperNav.state.isLast ? "full" : "low",
-										}}
-										className={"transition-all"}
-									/>
+				{count.total > 0 ? (
+					<>
+						<SetupButton
+							locale={locale}
+							feed={feed}
+							containerRef={containerRef}
+							ui={{
+								opacity: snapperNav.state.isLast ? "full" : "low",
+							}}
+							className={"transition-all"}
+						/>
 
-									<ListingListContainer
-										data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
-										ref={containerRef}
-										locale={locale}
-										feedId={feed.id}
-										/**
-										 * Listings in feed should be scored
-										 */
-										withScore
-										query={{
-											...feed.query,
-											sort: feed.query.sort?.length
-												? feed.query.sort
-												: [
-														{
-															field: "createdAt",
-															direction: "desc",
-														},
-													],
-											meta: {
-												feedId: feed.id,
-												...feed.query.meta,
+						<ListingListContainer
+							data-ui={"/buyer/feed/$id/list-[ListingListContainer]"}
+							ref={containerRef}
+							locale={locale}
+							feedId={feed.id}
+							/**
+							 * Listings in feed should be scored
+							 */
+							withScore
+							query={{
+								...feed.query,
+								sort: feed.query.sort?.length
+									? feed.query.sort
+									: [
+											{
+												field: "createdAt",
+												direction: "desc",
 											},
-											/**
-											 * Hardcoded cursor to fetch the first page; we're assuming an user won't go through
-											 * thousands of listings, so we can do hard cap here.
-											 */
-											cursor: {
-												page: 0,
-												size: 256,
-											},
-										}}
-										scrollToId={scrollToId}
-										appendix={
-											<Appendix
-												locale={locale}
-												feed={feed}
-												containerRef={containerRef}
-											/>
-										}
-									/>
-								</>
-							);
-						}}
-					</withFeedFetchQuery.Suspense>
+										],
+								meta: {
+									feedId: feed.id,
+									...feed.query.meta,
+								},
+								/**
+								 * Hardcoded cursor to fetch the first page; we're assuming an user won't go through
+								 * thousands of listings, so we can do hard cap here.
+								 */
+								cursor: {
+									page: 0,
+									size: 256,
+								},
+							}}
+							scrollToId={scrollToId}
+							renderEmptyFn={() => (
+								<FeedEmpty
+									locale={locale}
+									feed={feed}
+									containerRef={containerRef}
+								/>
+							)}
+							appendix={
+								<Appendix
+									locale={locale}
+									feed={feed}
+									containerRef={containerRef}
+								/>
+							}
+						/>
+					</>
 				) : null}
 
-				{listing.data.data.length > 0 ? null : (
+				{count.total > 0 ? null : (
 					<Container
 						ui={{
 							layout: "vertical-centered",

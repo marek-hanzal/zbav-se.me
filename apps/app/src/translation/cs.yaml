@@ -82,6 +82,10 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
     ref: Logo motto (label)
     value: Chytré tržiště pro všechny
+1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
+    ref: No listings in feed (message)
+    value: |
+        ...bohužel jsem nenašel žádné pro tvůj seznam. **Ale určitě se nějaké objeví**!
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
     ref: Location (title)
     value: Lokalita inzerátu
@@ -156,7 +160,7 @@
     value: Listing Score - Raw score (label)
 4a3927203489e82672dc24ffdae6d9ee72b4b486e2562f0debce4b59:
     ref: That's all for now (message)
-    value: >
+    value: |
         Zatím jsi na konci, ale časem se určitě něco objeví!
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
     ref: Feed name (required)
@@ -235,6 +239,9 @@
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
     ref: Listing unflagged (toast)
     value: Úspěšně jsi zrušil nahlášení inzerátu.
+7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
+    ref: No listings in feed (title)
+    value: Inzeráty jsou, ale...
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
     ref: Listing location (label)
     value: Umístění

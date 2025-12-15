@@ -5,20 +5,12 @@ import { Overlay } from "@use-pico/client/ui/overlay";
 import type { tGalleryItem, tListing } from "@zbav-se.me/sdk/api/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { HeroImage } from "@zbav-se.me/ui/img";
-import { type FC, type ReactNode, useId, useState } from "react";
+import { type FC, useId, useState } from "react";
 import { useListingScore } from "~/app/listing/hook/useListingScore";
 import { ListingDetail } from "~/app/listing/ui/ListingDetail";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace Hero {
-	export namespace Overlay {
-		export interface Props {
-			listing: tListing;
-		}
-
-		export type Render = (props: Props) => ReactNode;
-	}
-
 	/**
 	 * Props for `ListingHeroContainer`.
 	 */
@@ -28,7 +20,6 @@ export namespace Hero {
 		 * Listing entity shown inside the hero preview.
 		 */
 		listing: tListing;
-		// overlay: Overlay.Render;
 		feedId: string;
 		withScore: boolean;
 	}
@@ -39,15 +30,7 @@ export namespace Hero {
  *
  * @param props Component props extending `Container.Props`.
  */
-export const Hero: FC<Hero.Props> = ({
-	locale,
-	ref,
-	listing,
-	feedId,
-	// overlay,
-	withScore,
-	...props
-}) => {
+export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, ...props }) => {
 	const [hero] = listing.gallery.items as [
 		tGalleryItem,
 		...tGalleryItem[],

@@ -11,7 +11,7 @@ export namespace Nav {
 	}
 }
 
-export const Nav: FC<Nav.Props> = ({ locale, ...props }) => {
+export const Nav: FC<Nav.Props> = ({ locale, className, ...props }) => {
 	const activeUi: uiNavButton.Ui = {
 		tone: "brand",
 	};

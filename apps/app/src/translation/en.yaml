@@ -70,6 +70,9 @@
 1b2f63dad0a59127c719c92424917ab45f0be0f48e494174d2e36b69:
   ref: Logo motto (label)
   value: Logo motto (label)
+1bbdc9dc7f6591dc1499c568c88587d61a1993247ea04942fc818c14:
+  ref: No listings in feed (message)
+  value: No listings in feed (message)
 25efb0d3c4c35394e5308216ef28ab71bfb45be8e75bc45bb43e674d:
   ref: Location (title)
   value: Location (title)
@@ -220,6 +223,9 @@
 72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
   ref: Listing unflagged (toast)
   value: Listing unflagged (toast)
+7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
+  ref: No listings in feed (title)
+  value: No listings in feed (title)
 770257bc4f07a9506478fcb754aff7000769d339c2f925e5ea571ea6:
   ref: Listing location (label)
   value: Listing location (label)
