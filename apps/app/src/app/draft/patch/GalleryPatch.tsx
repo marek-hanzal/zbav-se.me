@@ -1,6 +1,7 @@
-import { Container } from "@use-pico/client/ui/container";
+import type { Container } from "@use-pico/client/ui/container";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
+import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { GalleryUploadControl } from "~/app/photo/ui/GalleryUploadControl";
 
@@ -22,11 +23,12 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 	...props
 }) => {
 	return (
-		<Container
-			data-ui={"GalleryPatch-[Container]"}
+		<TitleContainer
+			data-ui={"GalleryPatch-[TitleContainer]"}
+			textTitle={"Listing gallery (title)"}
 			ui={{
+				layout: "vertical-header-content",
 				height: "full",
-				inner: "default",
 				...ui,
 			}}
 			{...props}
@@ -41,7 +43,10 @@ export const GalleryPatch: FC<GalleryPatch.Props> = ({
 				onCancel={onCancel}
 				onSuccess={onSuccess}
 				limit={10}
+				ui={{
+					inner: "default",
+				}}
 			/>
-		</Container>
+		</TitleContainer>
 	);
 };

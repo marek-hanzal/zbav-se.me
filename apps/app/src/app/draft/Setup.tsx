@@ -1,5 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
-import { CloseIcon } from "@use-pico/client/icon";
+import { SaveIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
@@ -9,7 +9,6 @@ import type { tDraft, tListing } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
 import { CreateListingButton } from "~/app/draft/button/CreateListingButton";
 import { DeleteButton } from "~/app/draft/button/DeleteButton";
@@ -73,21 +72,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 			views={{
 				default: {
 					children: (
-						<TitleContainer
-							textTitle={"Draft edit (title)"}
-							right={
-								<LinkTo
-									icon={CloseIcon}
-									to={"/$locale/ui/seller"}
-									params={{
-										locale,
-									}}
-									{...uiBackButton({
-										className: [],
-									})}
-								/>
-							}
-						>
+						<TitleContainer textTitle={"Draft edit (title)"}>
 							<Container
 								data-ui={"Setup-[Container.content]"}
 								ui={{
@@ -162,7 +147,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 									params={{
 										locale,
 									}}
-									icon={CloseIcon}
+									icon={SaveIcon}
 									iconProps={{
 										ui: {
 											text: "2xl",
