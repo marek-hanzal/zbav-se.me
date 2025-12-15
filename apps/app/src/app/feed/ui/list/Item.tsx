@@ -6,6 +6,7 @@ import { tvc } from "@use-pico/cls";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
+import { SetupSheet } from "~/app/feed/ui/SetupSheet";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
 import { SetupButton } from "../button/SetupButton";
 
@@ -136,34 +137,44 @@ export const Item: FC<Item.Props> = ({
 			</Badge>
 
 			{tools.includes("setup") ? (
-				<SetupButton
-					data-ui={"Item-[FeedSetupButton]"}
-					locale={locale}
-					iconProps={{
-						ui: {
-							text: "2xl",
-						},
-					}}
-					state={{
-						value: isFeedSettings,
-						set: setIsFeedSettings,
-					}}
-					feed={feed}
-					defaultOpen={defaultOpen}
-					noDelete={false}
-					label={null}
-					ui={{
-						tone: "secondary",
-						size: "sm",
-						snapTo: "top-right",
-						items: "center",
-						justify: "center",
-						color: "icon",
-						round: "full",
-						square: "default",
-						opacity: "low",
-					}}
-				/>
+				<>
+					<SetupButton
+						data-ui={"Item-[FeedSetupButton]"}
+						iconProps={{
+							ui: {
+								text: "2xl",
+							},
+						}}
+						state={{
+							value: isFeedSettings,
+							set: setIsFeedSettings,
+						}}
+						feed={feed}
+						defaultOpen={defaultOpen}
+						label={null}
+						ui={{
+							tone: "secondary",
+							size: "sm",
+							snapTo: "top-right",
+							items: "center",
+							justify: "center",
+							color: "icon",
+							round: "full",
+							square: "default",
+							opacity: "low",
+						}}
+					/>
+
+					<SetupSheet
+						data-ui={"Item-[FeedSetupSheet]"}
+						locale={locale}
+						feed={feed}
+						state={{
+							value: isFeedSettings,
+							set: setIsFeedSettings,
+						}}
+					/>
+				</>
 			) : null}
 
 			<ListingCountBadge

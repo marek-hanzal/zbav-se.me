@@ -7,15 +7,17 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
+import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery, withListingCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
-import { DeadEndIcon, FirstIcon, ListingIcon } from "@zbav-se.me/ui/icon";
+import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { type FC, type RefObject, useRef, useState } from "react";
 import z from "zod";
 import { SetupButton as CoolSetupButton } from "~/app/feed/ui/button/SetupButton";
+import { SetupSheet } from "~/app/feed/ui/SetupSheet";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 
 export namespace SetupButton {
@@ -23,6 +25,7 @@ export namespace SetupButton {
 		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
+		state: StateType.State<boolean>;
 	}
 }
 
@@ -30,22 +33,16 @@ export const SetupButton: FC<SetupButton.Props> = ({
 	locale,
 	feed,
 	containerRef,
+	state,
 	ui,
 	...props
 }) => {
-	const [isOpen, setIsOpen] = useState(false);
-
 	return (
 		<CoolSetupButton
 			data-ui={"/buyer/feed/$id/list-[FeedSetupButton]"}
-			locale={locale}
-			state={{
-				value: isOpen,
-				set: setIsOpen,
-			}}
+			state={state}
 			feed={feed}
 			defaultOpen={false}
-			noDelete={true}
 			label={null}
 			ui={{
 				tone: "secondary",
@@ -61,41 +58,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 				...ui,
 			}}
 			{...props}
-		>
-			<LinkTo
-				to={"/$locale/flow/buyer/$id/list"}
-				icon={ListingIcon}
-				iconProps={{
-					ui: {
-						text: "xl",
-					},
-				}}
-				params={{
-					locale,
-					id: feed.id,
-				}}
-				resetScroll
-				onClick={() => {
-					setIsOpen(false);
-					containerRef.current?.scrollTo({
-						top: 0,
-						behavior: "instant",
-					});
-				}}
-				{...uiButton({
-					ui: {
-						tone: "secondary",
-						theme: "light",
-						size: "default",
-						text: "lg",
-					},
-					className: [],
-				})}
-				data-ui={"/buyer/feed/$id/list-[LinkTo.refresh]"}
-			>
-				<Tx label="Refresh listings (button)" />
-			</LinkTo>
-		</CoolSetupButton>
+		/>
 	);
 };
 
@@ -104,10 +67,11 @@ export namespace Appendix {
 		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
+		state: StateType.State<boolean>;
 	}
 }
 
-export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef }) => {
+export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef, state }) => {
 	return (
 		<Container
 			ui={{
@@ -125,6 +89,7 @@ export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef }) => 
 							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
+							state={state}
 							label={translator.text("Adjust feed (button)")}
 							iconProps={{
 								ui: {
@@ -195,10 +160,11 @@ export namespace FeedEmpty {
 		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
+		state: StateType.State<boolean>;
 	}
 }
 
-export const FeedEmpty: FC<FeedEmpty.Props> = ({ locale, feed, containerRef }) => {
+export const FeedEmpty: FC<FeedEmpty.Props> = ({ locale, feed, containerRef, state }) => {
 	return (
 		<Container
 			ui={{
@@ -216,6 +182,7 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({ locale, feed, containerRef }) =
 							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
+							state={state}
 							label={translator.text("Adjust feed (button)")}
 							iconProps={{
 								ui: {
@@ -315,6 +282,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 		const { id, locale } = Route.useParams();
 		const { scrollToId } = Route.useSearch();
 		const containerRef = useRef<HTMLDivElement>(null);
+		const [isFeedSettings, setIsFeedSettings] = useState(false);
 
 		const { data: feed } = withFeedFetchQuery.useSuspenseQuery({
 			where: {
@@ -361,6 +329,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
+							state={{
+								value: isFeedSettings,
+								set: setIsFeedSettings,
+							}}
 							ui={{
 								opacity: snapperNav.state.isLast ? "full" : "low",
 							}}
@@ -405,6 +377,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 									locale={locale}
 									feed={feed}
 									containerRef={containerRef}
+									state={{
+										value: isFeedSettings,
+										set: setIsFeedSettings,
+									}}
 								/>
 							)}
 							appendix={
@@ -412,6 +388,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 									locale={locale}
 									feed={feed}
 									containerRef={containerRef}
+									state={{
+										value: isFeedSettings,
+										set: setIsFeedSettings,
+									}}
 								/>
 							}
 						/>
@@ -490,6 +470,16 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 						/>
 					</Container>
 				)}
+
+				<SetupSheet
+					data-ui={"/buyer/feed/$id/list-[FeedSetupSheet]"}
+					locale={locale}
+					feed={feed}
+					state={{
+						value: isFeedSettings,
+						set: setIsFeedSettings,
+					}}
+				/>
 			</FlowContainer>
 		);
 	},
