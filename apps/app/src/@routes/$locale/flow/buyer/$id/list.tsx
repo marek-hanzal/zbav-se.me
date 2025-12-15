@@ -494,7 +494,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 								<Button
 									onClick={() => {
 										setIsFeedSettings(false);
-										setTimeout(() => router.invalidate(), 0);
+										setTimeout(() => router.invalidate(), 200);
 									}}
 									iconEnabled={RefreshIcon}
 									iconProps={{
