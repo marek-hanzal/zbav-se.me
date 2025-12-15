@@ -11,21 +11,12 @@ export namespace List {
 		locale: string;
 		query: tFeedQuery;
 		limit?: number;
-		scrollToId: string | undefined;
 		tools: Item.Tools[];
 		linkTo: Item.LinkTo;
 	}
 }
 
-export const List: FC<List.Props> = ({
-	locale,
-	query,
-	limit = 10,
-	scrollToId,
-	tools,
-	linkTo,
-	...props
-}) => {
+export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo, ...props }) => {
 	/**
 	 * We're keeping locale state just for "after creation" open state
 	 */
@@ -43,32 +34,34 @@ export const List: FC<List.Props> = ({
 					<Container
 						data-ui={"FeedListContainer[Container]"}
 						ui={{
-							layout: isLimitReached ? "vertical" : "vertical-content-footer",
+							layout: "vertical-flex",
 							scroll: "vertical",
-							height: "full",
 							gap: "default",
 							inner: "default",
 						}}
 						{...props}
 					>
-						<Content
-							_suspense={"I know"}
-							locale={locale}
-							query={query}
-							defaultOpenId={defaultOpenId}
-							scrollToId={scrollToId}
-							tools={tools}
-							linkTo={linkTo}
-						/>
+						<Container
+							ui={{
+								height: "content",
+							}}
+						>
+							<Content
+								_suspense={"I know"}
+								locale={locale}
+								query={query}
+								defaultOpenId={defaultOpenId}
+								tools={tools}
+								linkTo={linkTo}
+							/>
 
-						{data.filter > 0 ? (
 							<CreateButton
 								disabled={isLimitReached}
 								onCreate={(data) => {
 									setDefaultOpenId(data.id);
 								}}
 							/>
-						) : null}
+						</Container>
 					</Container>
 				);
 			}}

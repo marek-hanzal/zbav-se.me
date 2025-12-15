@@ -1,10 +1,8 @@
-import { useScrollTo } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
-import { Fade } from "@use-pico/client/ui/fade";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
 import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, useEffect, useId, useRef } from "react";
+import { type FC, useId } from "react";
 import { Item } from "./Item";
 
 export namespace Content {
@@ -12,7 +10,6 @@ export namespace Content {
 		locale: string;
 		query: tFeedQuery;
 		defaultOpenId?: string;
-		scrollToId?: string;
 		tools: Item.Tools[];
 		linkTo: Item.LinkTo;
 	}
@@ -23,28 +20,16 @@ export const Content: FC<Content.Props> = ({
 	locale,
 	query,
 	defaultOpenId,
-	scrollToId,
 	tools,
 	linkTo,
 	...props
 }) => {
 	const feedRootId = useId();
-	const scrollableRef = useRef<HTMLDivElement>(null);
 
 	/**
 	 * This is intentional to trigger parent suspense
 	 */
 	const feedCollectionQuery = withFeedCollectionQuery.useSuspenseQuery(query);
-	const scrollTo = useScrollTo(scrollableRef);
-
-	useEffect(() => {
-		if (scrollToId) {
-			scrollTo(`[data-id="${scrollToId}"]`);
-		}
-	}, [
-		scrollToId,
-		scrollTo,
-	]);
 
 	if (feedCollectionQuery.data.data.length === 0) {
 		return null;
@@ -52,55 +37,41 @@ export const Content: FC<Content.Props> = ({
 
 	return (
 		<Container
-			data-ui="FeedList[Container]"
+			data-ui="FeedList-[Container.content]"
 			ui={{
-				position: "relative",
+				layout: "vertical-flex",
+				gap: "default",
 				height: "full",
 			}}
+			{...props}
 		>
-			<Fade scrollableRef={scrollableRef} />
-
-			<Container
-				data-ui="FeedList-[Container.content]"
-				ref={scrollableRef}
-				ui={{
-					layout: "vertical-flex",
-					scroll: "vertical",
-					gap: "default",
-					height: "full",
-				}}
-				{...props}
-			>
-				{feedCollectionQuery.data.data.map(({ id: feedId }) => {
-					return (
-						<withFeedFetchQuery.Suspense
-							key={`${feedRootId}-${feedId}`}
-							data={{
-								where: {
-									id: feedId,
-								},
-							}}
-							fallback={
-								<SpinnerContainer
-									data-ui={"FeedList-[SpinnerContainer.feed-fetch]"}
+			{feedCollectionQuery.data.data.map(({ id: feedId }) => {
+				return (
+					<withFeedFetchQuery.Suspense
+						key={`${feedRootId}-${feedId}`}
+						data={{
+							where: {
+								id: feedId,
+							},
+						}}
+						fallback={
+							<SpinnerContainer data-ui={"FeedList-[SpinnerContainer.feed-fetch]"} />
+						}
+					>
+						{({ data: feedData }) => {
+							return (
+								<Item
+									feed={feedData}
+									locale={locale}
+									defaultOpen={defaultOpenId === feedId}
+									tools={tools}
+									linkTo={linkTo}
 								/>
-							}
-						>
-							{({ data: feedData }) => {
-								return (
-									<Item
-										feed={feedData}
-										locale={locale}
-										defaultOpen={defaultOpenId === feedId}
-										tools={tools}
-										linkTo={linkTo}
-									/>
-								);
-							}}
-						</withFeedFetchQuery.Suspense>
-					);
-				})}
-			</Container>
+							);
+						}}
+					</withFeedFetchQuery.Suspense>
+				);
+			})}
 		</Container>
 	);
 };
