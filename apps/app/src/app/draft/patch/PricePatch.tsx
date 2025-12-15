@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -17,14 +16,14 @@ export namespace PricePatch {
 }
 
 export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const queryClient = useQueryClient();
+	const patch = withDraftFetchQuery.useSet();
 	const [price, setPrice] = useState<string | undefined>(
 		draft.price ? String(draft.price) : undefined,
 	);
 
 	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess() {
-			withDraftFetchQuery.invalidate(queryClient, {
+		onSuccess(draft) {
+			patch(() => draft, {
 				where: {
 					id: draft.id,
 				},

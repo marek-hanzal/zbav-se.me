@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
@@ -22,10 +21,10 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const queryClient = useQueryClient();
+	const patch = withDraftFetchQuery.useSet();
 	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess() {
-			withDraftFetchQuery.invalidate(queryClient, {
+		onSuccess(draft) {
+			patch(() => draft, {
 				where: {
 					id: draft.id,
 				},

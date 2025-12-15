@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
@@ -22,14 +21,14 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const queryClient = useQueryClient();
+	const patch = withDraftFetchQuery.useSet();
 	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(
 		draft.expiresAt as tListingExpireEnum,
 	);
 
 	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess() {
-			withDraftFetchQuery.invalidate(queryClient, {
+		onSuccess(draft) {
+			patch(() => draft, {
 				where: {
 					id: draft.id,
 				},

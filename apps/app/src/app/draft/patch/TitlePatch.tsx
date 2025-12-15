@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
@@ -20,12 +19,12 @@ export namespace TitlePatch {
 }
 
 export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const queryClient = useQueryClient();
+	const patch = withDraftFetchQuery.useSet();
 	const [title, setTitle] = useState(draft.title ?? "");
 
 	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess() {
-			withDraftFetchQuery.invalidate(queryClient, {
+		onSuccess(draft) {
+			patch(() => draft, {
 				where: {
 					id: draft.id,
 				},

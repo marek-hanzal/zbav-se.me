@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
@@ -19,7 +18,7 @@ export namespace AgePatch {
 }
 
 export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
-	const queryClient = useQueryClient();
+	const patch = withDraftFetchQuery.useSet();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "single",
 		initial: draft.age
@@ -35,8 +34,8 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...pr
 	const age = itemId ? Number.parseInt(itemId, 10) : null;
 
 	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess() {
-			withDraftFetchQuery.invalidate(queryClient, {
+		onSuccess(draft) {
+			patch(() => draft, {
 				where: {
 					id: draft.id,
 				},

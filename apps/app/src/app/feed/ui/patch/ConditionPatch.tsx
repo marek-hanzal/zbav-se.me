@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
@@ -24,7 +23,7 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	ui,
 	...props
 }) => {
-	const queryClient = useQueryClient();
+	const patch = withFeedFetchQuery.useSet();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "multi",
 		initial: feed.query?.filter?.conditionIn?.map((item) => ({
@@ -33,8 +32,8 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	});
 
 	const mutation = withFeedPatchMutation.useMutation({
-		onSuccess() {
-			withFeedFetchQuery.invalidate(queryClient, {
+		onSuccess(feed) {
+			patch(() => feed, {
 				where: {
 					id: feed.id,
 				},

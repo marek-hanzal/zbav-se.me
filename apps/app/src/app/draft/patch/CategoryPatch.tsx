@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
@@ -26,7 +25,7 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	onSettled,
 	...props
 }) => {
-	const queryClient = useQueryClient();
+	const patch = withDraftFetchQuery.useSet();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.categoryId
@@ -41,8 +40,8 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	const categoryId = selection.optional.singleId() ?? null;
 
 	const mutation = withDraftPatchMutation.useMutation({
-		onSuccess() {
-			withDraftFetchQuery.invalidate(queryClient, {
+		onSuccess(draft) {
+			patch(() => draft, {
 				where: {
 					id: draft.id,
 				},
