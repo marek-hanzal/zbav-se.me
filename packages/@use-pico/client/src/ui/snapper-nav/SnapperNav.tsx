@@ -1,4 +1,3 @@
-import type { Cls } from "@use-pico/cls";
 import { type FC, useCallback, useId, useMemo } from "react";
 import { useDoubleTap } from "../../hook/useDoubleTap";
 import type { useSnapperNav } from "../../hook/useSnapperNav";
@@ -6,7 +5,6 @@ import { DotIcon } from "../../icon/DotIcon";
 import { Icon } from "../../icon/Icon";
 import type { uiIcon } from "../../icon/uiIcon";
 import { Container } from "../container/Container";
-import type { SnapperNavCls } from "./SnapperNavCls";
 
 export namespace SnapperNav {
 	export namespace IconProps {
@@ -38,9 +36,6 @@ export namespace SnapperNav {
 	export interface Props extends Container.Props {
 		snapperNav: useSnapperNav.Result;
 		pages?: Page[] | Count;
-		subtle?: boolean;
-		orientation: Cls.VariantOf<SnapperNavCls, "orientation">;
-		align?: Cls.VariantOf<SnapperNavCls, "align">;
 		iconProps?: IconProps.IconPropsFn;
 		limit?: number;
 	}
@@ -49,10 +44,6 @@ export namespace SnapperNav {
 export const SnapperNav: FC<SnapperNav.Props> = ({
 	snapperNav,
 	pages,
-	//
-	subtle,
-	orientation,
-	align,
 	//
 	iconProps,
 	limit = 5,
@@ -128,14 +119,16 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	};
 
 	const renderLimiter = useCallback(() => {
-		const leftIcon: Icon.Type =
-			orientation === "vertical"
-				? "icon-[rivet-icons--chevron-up]"
-				: "icon-[rivet-icons--chevron-left]";
-		const rightIcon: Icon.Type =
-			orientation === "vertical"
-				? "icon-[rivet-icons--chevron-down]"
-				: "icon-[rivet-icons--chevron-right]";
+		// const leftIcon: Icon.Type =
+		// 	orientation === "vertical"
+		// 		? "icon-[rivet-icons--chevron-up]"
+		// 		: "icon-[rivet-icons--chevron-left]";
+		// const rightIcon: Icon.Type =
+		// 	orientation === "vertical"
+		// 		? "icon-[rivet-icons--chevron-down]"
+		// 		: "icon-[rivet-icons--chevron-right]";
+		const leftIcon: Icon.Type = "icon-[rivet-icons--chevron-left]";
+		const rightIcon: Icon.Type = "icon-[rivet-icons--chevron-right]";
 
 		return (
 			<>
@@ -213,7 +206,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	}, [
 		firstId,
 		lastId,
-		orientation,
 		iconProps,
 		$pages,
 		snapperNav,
@@ -265,9 +257,8 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		<Container
 			data-ui="SnapperNav[Container]"
 			ui={{
-				tone: "secondary",
+				tone: "primary",
 				theme: "light",
-				background: "default",
 				border: true,
 				shadow: true,
 				round: "xl",
@@ -277,12 +268,13 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 				items: "center",
 				justify: "center",
 				gap: "default",
+				background: "default",
 				zIndex: true,
 				color: "lead",
 				opacity: "2xl",
 				...ui,
 			}}
-			className={"transition-all"}
+			className={"transition-all tone-neutral-light-bg"}
 			{...props}
 		>
 			{limit && $pages.length > limit ? renderLimiter() : renderPages()}

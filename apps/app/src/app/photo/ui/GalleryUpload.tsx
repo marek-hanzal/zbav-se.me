@@ -34,19 +34,6 @@ export const GalleryUpload: FC<GalleryUpload.Props> = ({ state, limit, ...props 
 			<SnapperNav
 				data-ui={"GalleryUpload-[SnapperNav]"}
 				snapperNav={snapperNav}
-				orientation={"horizontal"}
-				tweak={{
-					slot: {
-						root: {
-							class: [
-								"bottom-1",
-								"transition-opacity",
-								state.value.length > 0 ? "opacity-60" : "opacity-0",
-							],
-						},
-					},
-				}}
-				subtle={false}
 			/>
 
 			<Container
