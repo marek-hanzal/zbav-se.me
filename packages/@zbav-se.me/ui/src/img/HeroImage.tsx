@@ -1,4 +1,3 @@
-import type { Ui } from "@use-pico/client/ui/";
 import { Container, SpinnerContainer, uiContainer } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
 import { type ComponentProps, type FC, type ReactNode, useState } from "react";
@@ -9,7 +8,6 @@ export namespace HeroImage {
 		visible?: boolean;
 		errorStatusProps?: Status.Props;
 		invisible?: ReactNode;
-		round?: Ui.Round;
 	}
 }
 
@@ -20,7 +18,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 	onLoad,
 	onError,
 	//
-	round,
 	ui,
 	className,
 	//
@@ -38,7 +35,6 @@ export const HeroImage: FC<HeroImage.Props> = ({
 			<img
 				{...uiContainer({
 					ui: {
-						round,
 						height: "full",
 						width: "full",
 						...ui,

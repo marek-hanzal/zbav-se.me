@@ -91,10 +91,20 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 									feedId={feedId}
 									listingId={listing.id}
 									label={null}
+									iconProps={{
+										ui: {
+											text: "xl",
+										},
+									}}
 									ui={{
 										tone: "secondary",
+										theme: "light",
 										round: "full",
-										size: "lg",
+										square: "md",
+										justify: "center",
+										items: "center",
+										size: undefined,
+										inner: undefined,
 										snapTo: "top-right",
 									}}
 								/>
