@@ -34,6 +34,10 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ locale, ...props }) =
 							locale,
 						}}
 						{...uiButton({
+							ui: {
+								width: "full",
+								justify: "center",
+							},
 							className: [],
 						})}
 					>
@@ -51,6 +55,8 @@ export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ locale, ...props }) =
 							ui: {
 								tone: "link",
 								theme: "light",
+								width: "full",
+								justify: "center",
 							},
 							className: [],
 						})}
