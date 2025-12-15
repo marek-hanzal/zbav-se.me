@@ -1,6 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
-import { Tx } from "@use-pico/client/ui/tx";
+import { Mx } from "@use-pico/client/ui/mx";
 import { translator } from "@use-pico/common/translator";
 import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
@@ -114,7 +114,7 @@ export const FlagButton: FC<FlagButton.Props> = ({
 							{...props}
 						/>
 						{listing.hasFlag ? null : (
-							<Tx
+							<Mx
 								label={"Listing ignore (hint)"}
 								ui={
 									isConfirm
@@ -126,7 +126,6 @@ export const FlagButton: FC<FlagButton.Props> = ({
 											}
 										: {
 												text: "sm",
-												opacity: "medium",
 											}
 								}
 							/>

@@ -49,6 +49,8 @@
     value: |
         Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat zákon nebo podmínky
         používání.
+
+        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu (např. omezení účtu).**_
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
     ref: Save (button)
     value: Uložit
@@ -199,7 +201,7 @@
     value: Kategorie, co tě zajímají
 5b876ebf0baeb9151587119a072df35bfc9ca2d5569b4ff537ae0305:
     ref: Flag listing - confirm (button)
-    value: Tohle není sranda - opravdu?
+    value: Závažná akce - opravdu?
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Stáří
