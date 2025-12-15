@@ -21,9 +21,10 @@ export const IgnoreButton: FC<IgnoreButton.Props> = ({
 	...props
 }) => {
 	const queryClient = useQueryClient();
+	const patch = withListingFetchQuery.useSet();
 	const ignoreToggleMutation = withIgnoreToggleMutation.useMutation({
-		onSuccess() {
-			withListingFetchQuery.invalidate(queryClient, {
+		onSuccess(listing) {
+			patch(() => listing, {
 				where: {
 					id: listingId,
 				},

@@ -23,9 +23,10 @@ export const FlagButton: FC<FlagButton.Props> = ({
 	...props
 }) => {
 	const queryClient = useQueryClient();
+	const patch = withListingFetchQuery.useSet();
 	const flagToggleMutation = withFlagToggleMutation.useMutation({
-		onSuccess() {
-			withListingFetchQuery.invalidate(queryClient, {
+		onSuccess(listing) {
+			patch(() => listing, {
 				where: {
 					id: listingId,
 				},
