@@ -67,7 +67,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 				data-ui={"ListingDetail[Container]"}
 				ui={{
 					layout: "vertical-flex",
-					gap: "default",
+					gap: "xl",
 					...ui,
 				}}
 				{...props}

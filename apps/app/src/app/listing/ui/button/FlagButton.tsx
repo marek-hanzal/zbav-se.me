@@ -1,11 +1,11 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { ConfirmButton } from "@use-pico/client/ui/button";
+import { Tx } from "@use-pico/client/ui/tx";
 import { translator } from "@use-pico/common/translator";
 import { withFlagToggleMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withListingFetchQuery, withListingMetricsFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { FlagIcon } from "@zbav-se.me/ui/icon";
-import type { FC } from "react";
-import { toast } from "sonner";
+import { type FC, useState } from "react";
 
 export namespace FlagButton {
 	export interface Props extends ConfirmButton.Props {
@@ -36,6 +36,7 @@ export const FlagButton: FC<FlagButton.Props> = ({
 			mutationId: listingId,
 		},
 	});
+	const [isConfirm, setIsConfirm] = useState(false);
 
 	return (
 		<withListingFetchQuery.Suspense
@@ -62,76 +63,75 @@ export const FlagButton: FC<FlagButton.Props> = ({
 		>
 			{({ data: listing }) => {
 				return (
-					<ConfirmButton
-						iconEnabled={FlagIcon}
-						loading={flagToggleMutation.isPending}
-						disabled={listing.isFavourite || listing.isIgnored || disabled}
-						label={
-							listing.hasFlag ? "Unflag listing (button)" : "Flag listing (button)"
-						}
-						buttonProps={{
-							...buttonProps,
-							onClick(event) {
-								if (listing.hasFlag) {
-									toast.info(
-										translator.text("Second tap to unflag listing (toast)"),
-										{
-											id: "flag-button",
-										},
-									);
-								}
-
-								if (!listing.hasFlag) {
-									toast.warning(
-										translator.text("Second tap to flag listing (toast)"),
-										{
-											id: "flag-button",
-										},
-									);
-								}
-
-								buttonProps?.onClick?.(event);
-							},
-						}}
-						confirmProps={{
-							ui: {
-								tone: "secondary",
-								theme: "dark",
-							},
-							...confirmProps,
-							onClick(e) {
-								toast.promise(
-									flagToggleMutation.mutateAsync({
+					<>
+						<ConfirmButton
+							iconEnabled={FlagIcon}
+							iconProps={{
+								ui: {
+									text: "xl",
+								},
+							}}
+							loading={flagToggleMutation.isPending}
+							disabled={listing.isFavourite || listing.isIgnored || disabled}
+							label={
+								listing.hasFlag
+									? "Unflag listing (button)"
+									: "Flag listing (button)"
+							}
+							buttonProps={{
+								onClick(event) {
+									setIsConfirm(true);
+									buttonProps?.onClick?.(event);
+								},
+								...buttonProps,
+							}}
+							confirmProps={{
+								ui: {
+									tone: "danger",
+									theme: "light",
+								},
+								label: translator.text("Flag listing - confirm (button)"),
+								...confirmProps,
+								onClick(e) {
+									flagToggleMutation.mutate({
 										toggle: !listing.hasFlag,
 										listingId: listing.id,
-									}),
-									{
-										loading: translator.text("Loading... (toast)"),
-										success: translator.text(
-											listing.hasFlag
-												? "Listing unflagged (toast)"
-												: "Listing flagged (toast)",
-										),
-										error: translator.text("Error flagging listing (toast)"),
-										id: "flag-button",
-									},
-								);
-								confirmProps?.onClick?.(e);
-							},
-						}}
-						onReset={() => {
-							toast.dismiss("flag-button");
-							onReset?.();
-						}}
-						ui={{
-							tone: "primary",
-							theme: listing.hasFlag ? "dark" : "light",
-							size: "xl",
-							justify: "start",
-							...ui,
-						}}
-						{...props}
-					/>
+									});
+									confirmProps?.onClick?.(e);
+								},
+							}}
+							onReset={() => {
+								setIsConfirm(false);
+								onReset?.();
+							}}
+							ui={{
+								tone: listing.hasFlag ? "primary" : "neutral",
+								theme: "light",
+								size: "default",
+								justify: "start",
+								...ui,
+							}}
+							{...props}
+						/>
+						{listing.hasFlag ? null : (
+							<Tx
+								label={"Listing ignore (hint)"}
+								ui={
+									isConfirm
+										? {
+												tone: "brand",
+												theme: "light",
+												color: "lead",
+												text: "sm",
+											}
+										: {
+												text: "sm",
+												opacity: "medium",
+											}
+								}
+							/>
+						)}
+					</>
 				);
 			}}
 		</withListingFetchQuery.Suspense>

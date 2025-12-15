@@ -1,9 +1,6 @@
 004c2d8c48721c30d51a0ac1fee6dd63e3ef793ceb45c8dc20cba5ed:
     ref: Feed title (placeholder)
     value: Např. "iPhone" nebo "Bosh"
-01b47fb4a4df0bd1d39599b06eefe5b2c4961d5eac0ad2e9630ec980:
-    ref: Listing unignored (toast)
-    value: Ignorace inzerátu byla úspěšně zrušena.
 02d821a7f6c8c860ddf14a10fa006f1668bf485d4832ffa830cf1a82:
     ref: Feed age (title)
     value: Věk, co tě zajímá
@@ -47,6 +44,11 @@
 1033ff575b4fcc2a5f68f0546b255961c4cf9514267255fbd76e2920:
     ref: Listing title not filled
     value: Čeká na vyplnění
+1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
+    ref: Listing ignore (hint)
+    value: |
+        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat zákon nebo podmínky
+        používání.
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
     ref: Save (button)
     value: Uložit
@@ -105,9 +107,6 @@
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
-2edb606e2d60f98c857354944c5b5b054d0ae6b6a9ec09327651a944:
-    ref: Error ignoring listing (toast)
-    value: Error ignoring listing (toast)
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
     ref: Age (title)
     value: Stáří
@@ -165,9 +164,6 @@
     value: >
         Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
         pneu).
-4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
-    ref: Second tap to unignore listing (toast)
-    value: Druhým kliknutím zruš ignoraci inzerátu
 4eb3d56cc03fa74ef6b354ce77013a361c781ed09a840f269a732617:
     ref: light
     value: light
@@ -201,6 +197,9 @@
 5b65a4cf7255c3e4465c81b9bc1b31317d2f4aa306b4c038a4a5b00c:
     ref: Feed category (label)
     value: Kategorie, co tě zajímají
+5b876ebf0baeb9151587119a072df35bfc9ca2d5569b4ff537ae0305:
+    ref: Flag listing - confirm (button)
+    value: Tohle není sranda - opravdu?
 5ea06f13c41ba5fad5bb74264bb1c9ba3372ffdb230c42791334ce7c:
     ref: Listing age (label)
     value: Stáří
@@ -234,9 +233,6 @@
 7105d31df05471018a7a5b3231a54de983e5124c48d7bf34648bbaf6:
     ref: Feed sorting not selected
     value: Výchozí řazení
-72ad9776fc50ade9fbb76b0c56a2dd768e26cb8c521e31956aa28f9f:
-    ref: Listing unflagged (toast)
-    value: Úspěšně jsi zrušil nahlášení inzerátu.
 7375db8ba1d4534eb55b16f42a2aa4350c5bb0ed60dfba9f45bc8e3c:
     ref: No listings in feed (title)
     value: Inzeráty jsou, ale...
@@ -289,6 +285,9 @@
     ref: Feed sorting (hint)
     value: |
         Tvoje vlastní řazení, nicméně zvýrazněné inzeráty můžou řazení přeskočit.
+8c6d2bdeb456deef3c09b5cf942ad58c1aae654bebec45a62cd2599c:
+    ref: Ignore listing - confirm (button)
+    value: Opravdu?
 8c6d637b17a817c8335245b499c9f7a36a9a82cc52d4c64693fa5839:
     ref: Feed location (hint)
     value:
@@ -442,21 +441,12 @@ a46be85abba5f0371038aa633d7378f4fd8376be6b7e7a9b7b22ec05:
 a5fecc06a3719ab30505196a44d06c91c2c7e8497978d8572efb9e30:
     ref: Remove from favourite (button)
     value: Remove from favourite (button)
-a7a95d03a84a9282e129c3a27bf77f9f0e8b749d22e277260b64c4b4:
-    ref: Second tap to ignore listing (toast)
-    value: Druhým kliknutím ignoruj inzerát
-aa53082be54b9ce8b7e6602f9d05cc8b7001956a8ba2c48edfb8f488:
-    ref: Listing flagged (toast)
-    value: Inzerát byl úspěšně nahlášen a bude zkontrolován.
 aaf7de490ecf11f8fb68e6653c240794fa79d1655b735ff3dd7f57cd:
     ref: Photo upload placeholder (title)
     value: Nahraj obrázek
 acd269fe49abe48ed9c3e43a66c796f7114afa4123c863a3cba2ae7e:
     ref: Listing transactions (title)
     value: Zprávy
-ad7d2d2170ceb95aa862f7eab3cac0fd0ec9fb1b78beb5334ca15603:
-    ref: Listing ignored (toast)
-    value: Inzerát úspěšně ignorován - až se příště vrátíš, už tu nebude.
 b1be588f61de0c637f38fc45770ea7c2bd3a567b86d56f03945e8ea2:
     ref: Expire (title)
     value: Automatické ukončení
@@ -500,9 +490,6 @@ c3cfe2aa73f2129c42c9fc884e58bbbbceff97836e48baabfa7675af:
 c4dd20aa623d44265ff4b1bb0eeed3de3b32b7029b030917f4cf490d:
     ref: Price (title)
     value: Nastav cenu
-c66cb7e46e6d6f8d41531b45e1b240c9b7de63929cb0949ccc56cc52:
-    ref: Error flagging listing (toast)
-    value: Error flagging listing (toast)
 c68690759b1f3a6cf13d49b52c69b6e23d6283ab1edc17681d363407:
     ref: Feed gallery (title)
     value: Nastav si obrázek
@@ -542,9 +529,6 @@ da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
 db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
     ref: Adjust feed (button)
     value: Uprav si seznam
-dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
-    ref: Loading... (toast)
-    value: ...rozjímám, momentík prosím...
 dc94036d98327a4965255fa6f5996fa3e1d2ade02e6d494ae1d96695:
     ref: Listing Score - Favourite (label)
     value: Listing Score - Favourite (label)
@@ -598,9 +582,6 @@ f3f9c0a66a107af2911fa0f9019dc4526940d1afe4a957e1445e3447:
 f542390407cec6e7359028bb4c89623a355be9cb790e086164c3c4c2:
     ref: My listings (title)
     value: Moje inzeráty
-f6ef58130705a58384f39c011640aae630a9c2826fbbb3f56ab9b652:
-    ref: Second tap to unflag listing (toast)
-    value: Druhým kliknutím zruš nahlášení inzerátu
 f7656349927879425de1f295c96260d551349336336a22ada2d9ff70:
     ref: Clear all (button)
     value: Vyčistit vše
@@ -619,11 +600,6 @@ fa63377825c49df914fc1d623eb59635e2231e9e465f139741710d37:
 fa8d4af882062a1148f43f806622a6851ff29ff80f66467624617d7a:
     ref: Listing location (hint)
     value: Pozor, umístění je veřejný údaj, ale můžeš napsat třeba název obce.
-facd0a879d16c3a70cca1e0454dadf75ea57307c5476c066805b5542:
-    ref: Second tap to flag listing (toast)
-    value:
-        Druhým kliknutím nahlas inzerát, pokud obsahuje nevhodný obsah nebo je
-        jinak závadný.
 fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
     ref: Back to home (link)
     value: Zpět domů
