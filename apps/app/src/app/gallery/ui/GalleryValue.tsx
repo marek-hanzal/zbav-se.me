@@ -8,11 +8,12 @@ import type { FC } from "react";
 export namespace GalleryValue {
 	export interface Props extends Container.Props {
 		uploads: tUpload[];
+		label: string;
 		statusProps?: Status.Props;
 	}
 }
 
-export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, statusProps, ...props }) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, label, statusProps, ...props }) => {
 	return (
 		<Container
 			data-ui={"GalleryValue[Container]"}
@@ -49,7 +50,7 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, statusProps, ...
 							text: "3xl",
 						},
 					}}
-					textTitle={"Listing photo gallery (label)"}
+					textTitle={label}
 					titleProps={{
 						ui: {
 							font: "normal",

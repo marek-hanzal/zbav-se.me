@@ -91,6 +91,9 @@
 2a78710504a9af9d66b9fa9e2c9afb55d6612509f413ea535758007a:
     ref: zbav-se.me
     value: zbav-se.me
+2ac60df8de3be5a28fe6e27ec9ca9926b0f06b399189491de2a4480f:
+    ref: Listing gallery (title)
+    value: Listing gallery (title)
 2bad77ac9199d19ca4cf85d780cf6f7f747cc6520bc1899bb6717029:
     ref: Go to home (link)
     value: Zpět domů
@@ -139,9 +142,6 @@
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
-455ec82e7163626162cff48a8f9dcba9ee39925f8570fc0c6fd63b6e:
-    ref: Feed - Select hero image (label)
-    value: Nastav si úvodní obrázek
 45d5b7e42785af91d8a1ad14ee4c704a800423052577851a641b746b:
     ref: Listing Score - Views (label)
     value: Listing Score - Views (label)
@@ -151,6 +151,10 @@
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
     ref: Listing Score - Raw score (label)
     value: Listing Score - Raw score (label)
+4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
+    ref: Feed name (required)
+    value: |
+        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní pneu).
 4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
     ref: Second tap to unignore listing (toast)
     value: Druhým kliknutím zruš ignoraci inzerátu
@@ -205,9 +209,6 @@
 6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
     ref: Feed name (default)
     value: Můj seznam
-675e9e5040b254589598079b8eb117d96354c925d2958af3b3234864:
-    ref: Error updating feed name (toast)
-    value: Název seznamu se nepovedlo upravit.
 679eb0f6d4d2b7cf7359439e3b87d205ff8b061c3f6f33bfe8052367:
     ref: Empty favourite - category and favourite (title)
     value: Empty favourite - category and favourite (title)
@@ -292,9 +293,6 @@
 93e4f0b9a0dc4d17c33a08d475281a1a736fff83763a516958a1f693:
     ref: Feed title (title)
     value: Co hledáš?
-9835a78e390b045bfa153f4b6289fd0578f068909548d7c7ab30b0ea:
-    ref: Feed created (toast)
-    value: Seznam byl úspěšně vytvořený!
 98e7660c324e5129c8814115281f511915805497dd1b86683ff1401a:
     ref: Create listing (label)
     value: Nový inzerát
@@ -488,18 +486,12 @@ c7011d532414a06429fe3823d5c970b1de99d6e19fd0f06ea309c7c3:
     value: |
         Přidej první inzerát a získej unikátní odznak - je to rychlé
         a jednoduché!
-ca0ac410fa2759d4353647e406111e5c5a2cda6877eeef8f7c57dbb0:
-    ref: Error creating feed (toast)
-    value: Seznam se nepodařilo vytvořit!
 cb8c6bb348b937ffa8d1caf9789deeba0ad9997b963f584fa58a535d:
     ref: Feed location (title)
     value: Tvoje lokalita
 cbac5f835956010c5b45bed61ee098674baef1e75ef17acc19462ac1:
     ref: Flag listing (button)
     value: Nahlásit inzerát
-cca87d10d45d17d5abf7f6366823f833deef8dd14464f7bbdcf1e4f6:
-    ref: Feed - save (button)
-    value: Uložit
 ceeb32aea866f45126224f7ff0fc5a65a8fa268c581d023ffe309e03:
     ref: Unflag listing (button)
     value: Zrušit nahlášení
@@ -512,9 +504,6 @@ d30ca5022499ee9c8ab4d9d4a2bb4f65292849e295cbb63503707671:
 d5a36eec6ff72d0abba993eb8ce733deca52c664b35ac76f98d400d8:
     ref: Listing condition (label)
     value: Stav
-d8190ee61cdb545062afa1147049c037ffaa5fe47502185c21cacb54:
-    ref: Feed name updated (toast)
-    value: Název seznamu byl úspěšně upravený!
 d8c65bf80693c4fe6e631c6bfbba4b40086c7df73796277991f1b835:
     ref: Feed title (hint)
     value: >

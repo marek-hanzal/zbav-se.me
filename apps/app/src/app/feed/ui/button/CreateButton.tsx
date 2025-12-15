@@ -2,7 +2,6 @@ import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { NameInput } from "../input/NameInput";
@@ -38,7 +37,7 @@ export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, 
 				onClick={() => setIsOpen(true)}
 				label={"Create new feed (title)"}
 				ui={{
-					tone: "secondary",
+					tone: "neutral",
 					theme: "light",
 					justify: "center",
 					text: "default",
@@ -57,9 +56,8 @@ export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, 
 				isOpen={isOpen}
 				onClose={() => setIsOpen(false)}
 				detent={"full"}
-				header={({ close }) => ({
+				header={() => ({
 					title: "Create new feed (title)",
-					right: <CloseButton onClick={close} />,
 				})}
 			>
 				<NameInput
@@ -69,8 +67,26 @@ export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, 
 								name,
 								query: {
 									where: {
-										withOwn: false,
+										withIgnored: false,
 									},
+									sort: [
+										{
+											field: "createdAt",
+											direction: "desc",
+										},
+										{
+											field: "price",
+											direction: "asc",
+										},
+										{
+											field: "condition",
+											direction: "desc",
+										},
+										{
+											field: "age",
+											direction: "desc",
+										},
+									],
 								},
 							});
 						}

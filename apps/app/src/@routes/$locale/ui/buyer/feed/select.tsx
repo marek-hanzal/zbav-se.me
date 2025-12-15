@@ -25,7 +25,7 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 		const { locale } = Route.useParams();
 		const { scrollToId } = Route.useSearch();
 
-		const feedCountLimit = 10;
+		const feedCountLimit = 3;
 
 		return (
 			<TitleContainer

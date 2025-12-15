@@ -44,7 +44,9 @@ export const List: FC<List.Props> = ({
 						data-ui={"FeedListContainer[Container]"}
 						ui={{
 							layout: isLimitReached ? "vertical" : "vertical-content-footer",
-							gap: "md",
+							scroll: "vertical",
+							height: "full",
+							gap: "default",
 							inner: "default",
 						}}
 						{...props}

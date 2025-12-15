@@ -27,7 +27,6 @@ export const feedCreateDefault = async ({ queryClient }: feedCreateDefault.Props
 		name: translator.text("Feed name (default)"),
 		query: {
 			where: {
-				withOwn: false,
 				withIgnored: false,
 			},
 			sort: [

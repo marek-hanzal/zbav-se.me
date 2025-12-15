@@ -5,6 +5,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
 import { View } from "@use-pico/client/ui/view";
+import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/user";
 import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
@@ -84,6 +85,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 							>
 								<GalleryValue
 									uploads={draft.gallery.items.map((item) => item.upload)}
+									label={translator.text("Listing photo gallery (label)")}
 									onClick={() => setView("gallery")}
 								/>
 

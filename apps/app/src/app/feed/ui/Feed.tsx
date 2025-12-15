@@ -92,6 +92,7 @@ export const Feed: FC<Feed.Props> = ({
 			{...props}
 		>
 			<GalleryValue
+				label={translator.text("Feed photo gallery (label)")}
 				uploads={
 					feed.upload
 						? [

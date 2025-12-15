@@ -39,13 +39,6 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 			}}
 			{...props}
 		>
-			<Icon
-				icon={ListingIcon}
-				ui={{
-					text: "xl",
-				}}
-			/>
-
 			<Typo
 				label={
 					count ? (
@@ -62,13 +55,20 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 								return `${toLocaleNumber({
 									locale,
 									number: data.filter,
-								})}x`;
+								})}`;
 							}}
 						</withListingCountQuery.Suspense>
 					)
 				}
 				ui={{
 					font: "bold",
+				}}
+			/>
+
+			<Icon
+				icon={ListingIcon}
+				ui={{
+					text: "xl",
 				}}
 			/>
 		</Badge>
