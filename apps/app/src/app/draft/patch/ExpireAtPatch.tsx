@@ -21,7 +21,9 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	loading,
 	...props
 }) => {
-	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(undefined);
+	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(
+		draft.expiresAt as tListingExpireEnum,
+	);
 
 	return (
 		<TitleContainer
