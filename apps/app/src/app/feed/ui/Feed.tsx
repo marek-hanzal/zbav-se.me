@@ -151,6 +151,8 @@ export const Feed: FC<Feed.Props> = ({
 				{...values?.title}
 			/>
 
+			{children}
+
 			{noDelete ? null : (
 				<ConfirmButton
 					iconEnabled={TrashIcon}
@@ -181,8 +183,8 @@ export const Feed: FC<Feed.Props> = ({
 					ui={{
 						tone: "neutral",
 						theme: "light",
-						size: "xl",
-						justify: "center",
+						size: "default",
+						justify: "start",
 						items: "center",
 						background: "default",
 						shadow: true,
@@ -190,8 +192,6 @@ export const Feed: FC<Feed.Props> = ({
 					}}
 				/>
 			)}
-
-			{children}
 		</Container>
 	);
 };

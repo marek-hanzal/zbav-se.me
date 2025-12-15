@@ -171,10 +171,10 @@ export const Item: FC<Item.Props> = ({
 				query={feed.query}
 				count={count}
 				ui={{
+					tone: "neutral",
 					snapTo: "top-left",
-					background: undefined,
-					border: false,
-					shadow: false,
+					inner: "default",
+					size: undefined,
 				}}
 			/>
 		</Container>

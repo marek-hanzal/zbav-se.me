@@ -64,6 +64,9 @@
 16e1f53d97e50b6ca414cf36d052667d99adcf92c2076887e7567d01:
     ref: Feed condition not selected
     value: Cokoliv
+1811df87a53f79aa1a04eecb5ca04f535da2826613b2ca23a131e2ba:
+    ref: Close (button)
+    value: Zavřít
 1943b1ef0623fcc6116ef391b30cce37b7fd75dcde851410b1d5f9d6:
     ref: Upload photos (button)
     value: Nahraj fotky
@@ -369,12 +372,6 @@ Expire in 14-days:
 Expire in 7-days:
     static: true
     value: Za týden
-Listing common sort value createdAt - asc:
-    static: true
-    value: Nejstarší inzerát
-Listing common sort value createdAt - desc:
-    static: true
-    value: Nejnovější inzerát
 Listing common sort value age - asc:
     static: true
     value: Od nejstaršího
@@ -393,6 +390,12 @@ Listing common sort value condition - desc:
 Listing common sort value condition - unused:
     static: true
     value: Stav (bez řazení)
+Listing common sort value createdAt - asc:
+    static: true
+    value: Nejstarší inzerát
+Listing common sort value createdAt - desc:
+    static: true
+    value: Nejnovější inzerát
 Listing common sort value geo - asc:
     static: true
     value: Od nejbližšího

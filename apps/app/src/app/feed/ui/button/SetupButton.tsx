@@ -1,4 +1,4 @@
-import { SettingsIcon } from "@use-pico/client/icon";
+import { CloseIcon, SettingsIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { SheetView } from "@use-pico/client/ui/sheet-view";
 import { translator } from "@use-pico/common/translator";
@@ -118,6 +118,27 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									},
 								}}
 							>
+								<Button
+									label={"Close (button)"}
+									onClick={() => state.set(false)}
+									iconEnabled={CloseIcon}
+									iconProps={{
+										ui: {
+											text: "xl",
+										},
+									}}
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										size: "default",
+										justify: "start",
+										items: "center",
+										background: "default",
+										shadow: true,
+										border: true,
+									}}
+								/>
+
 								{children}
 							</Feed>
 						),
