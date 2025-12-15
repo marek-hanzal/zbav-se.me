@@ -1,1 +1,1 @@
-export const ListingIcon = "icon-[system-uicons--newspaper]";
+export const ListingIcon = "icon-[arcticons--emoji-newspaper]";
