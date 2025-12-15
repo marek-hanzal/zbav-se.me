@@ -1312,6 +1312,9 @@ export const sListingWhere = {
         fulltext: {
             type: 'string'
         },
+        userId: {
+            type: 'string'
+        },
         priceMin: {
             $ref: '#/components/schemas/PriceMin'
         },
@@ -1455,6 +1458,9 @@ export const sListingFilter = {
             }
         },
         fulltext: {
+            type: 'string'
+        },
+        userId: {
             type: 'string'
         },
         priceMin: {
@@ -2482,7 +2488,16 @@ export const sFeedCollection = {
         data: {
             type: 'array',
             items: {
-                $ref: '#/components/schemas/Feed'
+                type: 'object',
+                properties: {
+                    id: {
+                        type: 'string',
+                        minLength: 1
+                    }
+                },
+                required: [
+                    'id'
+                ]
             }
         },
         more: {
@@ -2492,68 +2507,6 @@ export const sFeedCollection = {
     required: [
         'data',
         'more'
-    ]
-} as const;
-
-export const sFeed = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        locationId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        uploadId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        name: {
-            type: 'string'
-        },
-        query: {
-            $ref: '#/components/schemas/ListingQuery'
-        },
-        upload: {
-            anyOf: [
-                {
-                    $ref: '#/components/schemas/Upload'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        }
-    },
-    required: [
-        'id',
-        'locationId',
-        'uploadId',
-        'name',
-        'query',
-        'upload'
     ]
 } as const;
 
@@ -2682,6 +2635,68 @@ export const sFeedCreate = {
     required: [
         'name',
         'query'
+    ]
+} as const;
+
+export const sFeed = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        locationId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        uploadId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        name: {
+            type: 'string'
+        },
+        query: {
+            $ref: '#/components/schemas/ListingQuery'
+        },
+        upload: {
+            anyOf: [
+                {
+                    $ref: '#/components/schemas/Upload'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    required: [
+        'id',
+        'locationId',
+        'uploadId',
+        'name',
+        'query',
+        'upload'
     ]
 } as const;
 

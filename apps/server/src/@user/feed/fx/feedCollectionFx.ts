@@ -1,11 +1,11 @@
 import { withCollection } from "@use-pico/common/collection";
+import { EntitySchema } from "@use-pico/common/schema";
 import { Effect } from "effect";
+import { withFeedCollectionSelect } from "~/app/feed/db/withFeedCollectionSelect";
 import { withFeedQueryBuilder } from "~/app/feed/db/withFeedQueryBuilder";
-import { withFeedSelect } from "~/app/feed/db/withFeedSelect";
 import type { FeedQuerySchema } from "~/app/feed/schema/FeedQuerySchema";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
-import { FeedSchema } from "../schema/FeedSchema";
 
 export namespace feedCollectionFx {
 	export type Props = FeedQuerySchema.Type;
@@ -19,11 +19,11 @@ export const feedCollectionFx = (query: feedCollectionFx.Props) => {
 
 		return yield* Effect.tryPromise(async () => {
 			return withCollection({
-				select: withFeedSelect({
+				select: withFeedCollectionSelect({
 					database,
 					sort,
 				}),
-				output: FeedSchema,
+				output: EntitySchema,
 				cursor: cursor ?? {
 					page: 0,
 					size: 10,

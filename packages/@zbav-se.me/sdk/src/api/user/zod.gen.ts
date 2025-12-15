@@ -1052,6 +1052,9 @@ export const zListingWhere = z.object({
     fulltext: z.optional(z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
     })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the user; does not have an effect on API endpoints'
+    })),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
     conditionMin: z.optional(z.number().gte(0).lte(6).register(z.globalRegistry, {
@@ -1123,6 +1126,9 @@ export const zListingFilter = z.object({
     })),
     fulltext: z.optional(z.string().register(z.globalRegistry, {
         description: 'Runs fulltext on the collection/query.'
+    })),
+    userId: z.optional(z.string().register(z.globalRegistry, {
+        description: 'ID of the user; does not have an effect on API endpoints'
     })),
     priceMin: z.optional(zPriceMin),
     priceMax: z.optional(zPriceMax),
@@ -1943,39 +1949,12 @@ export const zFeedCountQuery = z.object({
 export type zFeedCountQuery = z.infer<typeof zFeedCountQuery>;
 
 /**
- * Feed data
- */
-export const zFeed = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the feed'
-    }),
-    locationId: z.union([
-        z.string(),
-        z.null()
-    ]),
-    uploadId: z.union([
-        z.string(),
-        z.null()
-    ]),
-    name: z.string().register(z.globalRegistry, {
-        description: 'Name of the feed'
-    }),
-    query: zListingQuery,
-    upload: z.union([
-        zUpload,
-        z.null()
-    ])
-}).register(z.globalRegistry, {
-    description: 'Feed data'
-});
-
-export type zFeed = z.infer<typeof zFeed>;
-
-/**
  * Collection of feed items
  */
 export const zFeedCollection = z.object({
-    data: z.array(zFeed),
+    data: z.array(z.object({
+        id: z.string().min(1)
+    })),
     more: z.boolean().register(z.globalRegistry, {
         description: 'Whether there are more items to fetch'
     })
@@ -2067,6 +2046,35 @@ export const zFeedCreate = z.object({
 });
 
 export type zFeedCreate = z.infer<typeof zFeedCreate>;
+
+/**
+ * Feed data
+ */
+export const zFeed = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the feed'
+    }),
+    locationId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    uploadId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    name: z.string().register(z.globalRegistry, {
+        description: 'Name of the feed'
+    }),
+    query: zListingQuery,
+    upload: z.union([
+        zUpload,
+        z.null()
+    ])
+}).register(z.globalRegistry, {
+    description: 'Feed data'
+});
+
+export type zFeed = z.infer<typeof zFeed>;
 
 /**
  * Data for toggling a listing in favourites

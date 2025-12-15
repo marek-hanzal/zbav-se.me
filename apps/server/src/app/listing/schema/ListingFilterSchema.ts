@@ -6,6 +6,9 @@ import { PriceSchema } from "~/schema/PriceSchema";
 export const ListingFilterSchema = z
 	.object({
 		...DefaultFilterSchema.shape,
+		userId: z.string().optional().openapi({
+			description: "ID of the user; does not have an effect on API endpoints",
+		}),
 		priceMin: PriceSchema({
 			type: "PriceMin",
 			description: "Sets the minimum price for the listings",

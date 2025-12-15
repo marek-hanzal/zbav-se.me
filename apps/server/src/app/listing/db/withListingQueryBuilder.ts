@@ -48,6 +48,10 @@ export const withListingQueryBuilder = <TSelect extends withListingCollectionSel
 		) as TSelect;
 	}
 
+	if (where.userId) {
+		query = query.where("l.userId", "=", where.userId) as TSelect;
+	}
+
 	if (where.priceMin !== undefined) {
 		query = query.where("l.price", ">=", where.priceMin) as TSelect;
 	}

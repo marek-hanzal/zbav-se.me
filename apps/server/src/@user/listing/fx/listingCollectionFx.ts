@@ -30,13 +30,11 @@ export const listingCollectionFx = (query: listingCollectionFx.Props) => {
 					size: 10,
 				},
 				filter,
-				where,
-				query(query) {
-					return withListingQueryBuilder({
-						...query,
-						userId: user.id,
-					});
+				where: {
+					...where,
+					userId: user.id,
 				},
+				query: withListingQueryBuilder,
 			});
 		});
 	});

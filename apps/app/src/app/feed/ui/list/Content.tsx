@@ -1,9 +1,9 @@
 import { useScrollTo } from "@use-pico/client/hook";
 import type { MarkSuspense } from "@use-pico/client/type";
-import { Container } from "@use-pico/client/ui/container";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import type { tFeedQuery } from "@zbav-se.me/sdk/api/user";
-import { withFeedCollectionQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedCollectionQuery, withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { type FC, useEffect, useId, useRef } from "react";
 import { Item } from "./Item";
 
@@ -71,16 +71,33 @@ export const Content: FC<Content.Props> = ({
 				}}
 				{...props}
 			>
-				{feedCollectionQuery.data.data.map((feed) => {
+				{feedCollectionQuery.data.data.map(({ id: feedId }) => {
 					return (
-						<Item
-							key={`${feedRootId}-${feed.id}`}
-							feed={feed}
-							locale={locale}
-							defaultOpen={defaultOpenId === feed.id}
-							tools={tools}
-							linkTo={linkTo}
-						/>
+						<withFeedFetchQuery.Suspense
+							key={`${feedRootId}-${feedId}`}
+							data={{
+								where: {
+									id: feedId,
+								},
+							}}
+							fallback={
+								<SpinnerContainer
+									data-ui={"FeedList-[SpinnerContainer.feed-fetch]"}
+								/>
+							}
+						>
+							{({ data: feedData }) => {
+								return (
+									<Item
+										feed={feedData}
+										locale={locale}
+										defaultOpen={defaultOpenId === feedId}
+										tools={tools}
+										linkTo={linkTo}
+									/>
+								);
+							}}
+						</withFeedFetchQuery.Suspense>
 					);
 				})}
 			</Container>

@@ -38,6 +38,7 @@ export namespace Item {
 		feed: tFeed;
 		defaultOpen: boolean;
 		tools: Tools[];
+		count?: number;
 		linkTo: LinkTo;
 	}
 }
@@ -47,6 +48,7 @@ export const Item: FC<Item.Props> = ({
 	feed,
 	defaultOpen,
 	tools,
+	count,
 	linkTo,
 	ui,
 	className,
@@ -177,6 +179,7 @@ export const Item: FC<Item.Props> = ({
 								<ListingCountBadge
 									locale={locale}
 									query={feed.query}
+									count={count}
 									ui={{
 										snapTo: "top-left",
 										background: undefined,

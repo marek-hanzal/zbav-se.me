@@ -897,6 +897,10 @@ export type tListingWhere = {
      * Runs fulltext on the collection/query.
      */
     fulltext?: string;
+    /**
+     * ID of the user; does not have an effect on API endpoints
+     */
+    userId?: string;
     priceMin?: tPriceMin;
     priceMax?: tPriceMax;
     /**
@@ -1013,6 +1017,10 @@ export type tListingFilter = {
      * Runs fulltext on the collection/query.
      */
     fulltext?: string;
+    /**
+     * ID of the user; does not have an effect on API endpoints
+     */
+    userId?: string;
     priceMin?: tPriceMin;
     priceMax?: tPriceMax;
     /**
@@ -1781,38 +1789,13 @@ export type tFeedFilter = {
  * Collection of feed items
  */
 export type tFeedCollection = {
-    data: Array<tFeed>;
+    data: Array<{
+        id: string;
+    }>;
     /**
      * Whether there are more items to fetch
      */
     more: boolean;
-};
-
-/**
- * Feed data
- */
-export type tFeed = {
-    /**
-     * ID of the feed
-     */
-    id: string;
-    /**
-     * ID of the location associated with the feed
-     */
-    locationId: string | null;
-    /**
-     * Hero image for this feed (usually selected from the listings in the feed)
-     */
-    uploadId: string | null;
-    /**
-     * Name of the feed
-     */
-    name: string;
-    query: tListingQuery;
-    /**
-     * Hero banner for this feed
-     */
-    upload: tUpload | null;
 };
 
 /**
@@ -1885,6 +1868,33 @@ export type tFeedCreate = {
      */
     locationId?: string | null;
     query: tListingQuery;
+};
+
+/**
+ * Feed data
+ */
+export type tFeed = {
+    /**
+     * ID of the feed
+     */
+    id: string;
+    /**
+     * ID of the location associated with the feed
+     */
+    locationId: string | null;
+    /**
+     * Hero image for this feed (usually selected from the listings in the feed)
+     */
+    uploadId: string | null;
+    /**
+     * Name of the feed
+     */
+    name: string;
+    query: tListingQuery;
+    /**
+     * Hero banner for this feed
+     */
+    upload: tUpload | null;
 };
 
 /**
