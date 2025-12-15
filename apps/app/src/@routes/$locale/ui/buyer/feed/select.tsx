@@ -2,14 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
-import z from "zod";
 import { feedCreateDefault } from "~/app/feed/service/feedCreateDefault";
 import { List } from "~/app/feed/ui/List";
 
 export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
-	validateSearch: z.object({
-		scrollToId: z.string().optional(),
-	}),
 	async loader({ context: { queryClient } }) {
 		/**
 		 * Dummy catch is intentional - we don't care about results here (not found throws an error).
@@ -23,7 +19,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 	},
 	component() {
 		const { locale } = Route.useParams();
-		const { scrollToId } = Route.useSearch();
 
 		const feedCountLimit = 3;
 
@@ -51,7 +46,6 @@ export const Route = createFileRoute("/$locale/ui/buyer/feed/select")({
 						],
 					}}
 					limit={feedCountLimit}
-					scrollToId={scrollToId}
 					tools={[
 						"setup",
 					]}

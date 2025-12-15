@@ -142,6 +142,9 @@
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)
+4a3927203489e82672dc24ffdae6d9ee72b4b486e2562f0debce4b59:
+  ref: That's all for now (message)
+  value: That's all for now (message)
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
   ref: Feed name (required)
   value: Feed name (required)
@@ -417,6 +420,9 @@ d93ae180759797f0ad3bc741552efefb4290ee7b7d2c19108209fd2b:
 da423f4df8bd8f8cda8585d98568b03fcbcf5c289a3a17eb28db0335:
   ref: Feed sorting (title)
   value: Feed sorting (title)
+db19de463c98378f66569f482fa6839883350859bf1fe5f4d577fd96:
+  ref: Adjust feed (button)
+  value: Adjust feed (button)
 dc408471ab7060a83f7ded6167a5ce1c79ea02a9b5d44f40c4530ee2:
   ref: Loading... (toast)
   value: Loading... (toast)

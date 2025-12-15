@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSnapperNav } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button, uiButton } from "@use-pico/client/ui/button";
+import { uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
+import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
 import { withFeedFetchQuery, withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
@@ -116,38 +118,73 @@ export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef }) => 
 			<Status
 				icon={DeadEndIcon}
 				textTitle={"That's all for now (title)"}
+				textMessage={"That's all for now (message)"}
 				action={
 					<>
 						<SetupButton
 							locale={locale}
 							feed={feed}
 							containerRef={containerRef}
-							label={"ddd"}
+							label={translator.text("Adjust feed (button)")}
+							iconProps={{
+								ui: {
+									text: "xl",
+								},
+							}}
 							ui={{
+								tone: "secondary",
+								theme: "light",
 								snapTo: undefined,
+								justify: "center",
 								round: "default",
-								width: "content",
+								text: "default",
+								size: "default",
+								width: "full",
+								font: "semibold",
+								square: undefined,
 							}}
 						/>
 
 						<LinkTo
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							iconProps={{
+								ui: {
+									text: "xl",
+								},
+							}}
 							to={"/$locale/ui/buyer"}
 							params={{
 								locale,
 							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									text: "default",
+									size: "default",
+									justify: "center",
+									width: "full",
+									background: undefined,
+									border: false,
+									shadow: false,
+								},
+								className: [],
+							})}
 						>
-							<Button
-								iconEnabled={ArrowRightIcon}
-								iconPosition={"right"}
-								label={"Back to home (link)"}
-								ui={{
-									size: "xl",
-									justify: "start",
-								}}
-							/>
+							<Tx label="Back to home (link)" />
 						</LinkTo>
 					</>
 				}
+				ui={{
+					tone: "brand",
+					theme: "light",
+					color: "lead",
+					inner: "4xl",
+				}}
+				className={[
+					"text-center",
+				]}
 			/>
 		</Container>
 	);
@@ -177,23 +214,8 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 	 * We've loader, so we also need pending component.
 	 */
 	pendingComponent() {
-		const { locale } = Route.useParams();
-
 		return (
-			<FlowContainer
-				left={
-					<LinkTo
-						{...uiBackButton({
-							className: [],
-						})}
-						icon={ArrowLeftIcon}
-						to={"/$locale/ui/buyer"}
-						params={{
-							locale,
-						}}
-					/>
-				}
-			>
+			<FlowContainer>
 				<SpinnerContainer />
 			</FlowContainer>
 		);
@@ -215,12 +237,21 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 			},
 		});
 
+		const snapperNav = useSnapperNav({
+			containerRef,
+			count: listing.data.data.length + 1,
+			orientation: "vertical",
+		});
+
 		return (
 			<FlowContainer
 				data-ui={"/buyer/feed/$id/list[FlowContainer]"}
 				left={
 					<LinkTo
 						{...uiBackButton({
+							ui: {
+								opacity: snapperNav.state.isLast ? "full" : "low",
+							},
 							className: [],
 						})}
 						data-ui={"/buyer/feed/$id/list-[LinkTo.left]"}
@@ -229,6 +260,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 						params={{
 							locale,
 						}}
+						className={"transition-all"}
 					/>
 				}
 			>
@@ -248,6 +280,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 										locale={locale}
 										feed={feed}
 										containerRef={containerRef}
+										ui={{
+											opacity: snapperNav.state.isLast ? "full" : "low",
+										}}
+										className={"transition-all"}
 									/>
 
 									<ListingListContainer

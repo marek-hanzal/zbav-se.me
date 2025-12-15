@@ -33,4 +33,12 @@
 	[data-ui-opacity="4xl"] {
 		opacity: 0.85;
 	}
+
+	[data-ui-opacity="full"] {
+		opacity: 0;
+	}
+
+	[data-ui-opacity="none"] {
+		opacity: 0;
+	}
 }
