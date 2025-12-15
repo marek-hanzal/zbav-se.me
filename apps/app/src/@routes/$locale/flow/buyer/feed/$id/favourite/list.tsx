@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button, uiButton } from "@use-pico/client/ui/button";
-import { SpinnerContainer } from "@use-pico/client/ui/container";
+import { uiButton } from "@use-pico/client/ui/button";
+import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import { Tx } from "@use-pico/client/ui/tx";
@@ -9,18 +10,252 @@ import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
+import { type FC, useRef } from "react";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
+
+export namespace EmptyFavourite {
+	export interface Props extends Status.Props {
+		locale: string;
+	}
+}
+
+export const EmptyFavourite: FC<EmptyFavourite.Props> = ({ locale, ...props }) => {
+	return (
+		<Status
+			icon={DeadEndIcon}
+			textTitle={"Empty favourite - category and favourite (title)"}
+			action={
+				<>
+					<LinkTo
+						to={"/$locale/buyer/feed/default"}
+						icon={ArrowRightIcon}
+						iconPosition={"right"}
+						params={{
+							locale,
+						}}
+						{...uiButton({
+							className: [],
+						})}
+					>
+						<Tx label={"Go to feed (link)"} />
+					</LinkTo>
+
+					<LinkTo
+						icon={ArrowRightIcon}
+						iconPosition={"right"}
+						to={"/$locale/ui/home"}
+						params={{
+							locale,
+						}}
+						{...uiButton({
+							ui: {
+								tone: "link",
+								theme: "light",
+							},
+							className: [],
+						})}
+					>
+						<Tx label={"Go to home (link)"} />
+					</LinkTo>
+				</>
+			}
+			ui={{
+				tone: "brand",
+				theme: "light",
+			}}
+			{...props}
+		/>
+	);
+};
+
+export namespace EmptyFeed {
+	export interface Props extends Container.Props {
+		locale: string;
+	}
+}
+
+export const EmptyFeed: FC<EmptyFeed.Props> = ({ locale, ...props }) => {
+	return (
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
+			{...props}
+		>
+			<Status
+				icon={DeadEndIcon}
+				textTitle={"Empty favourite feed (title)"}
+				textMessage={"Empty favourite feed (message)"}
+				action={
+					<Container
+						ui={{
+							flow: "vertical",
+							height: "full",
+							width: "full",
+							gap: "xl",
+						}}
+					>
+						<LinkTo
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							to={"/$locale/buyer/feed/default"}
+							params={{
+								locale,
+							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									text: "xl",
+									width: "full",
+									size: "lg",
+									justify: "center",
+								},
+								className: [],
+							})}
+						>
+							<Tx label={"Go to feed (link)"} />
+						</LinkTo>
+
+						<LinkTo
+							icon={ArrowLeftIcon}
+							to={"/$locale/ui/buyer/favourite/list"}
+							params={{
+								locale,
+							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									width: "full",
+									background: undefined,
+									border: false,
+									shadow: false,
+									text: "default",
+									justify: "center",
+								},
+								className: [],
+							})}
+						>
+							<Tx label={"Back to favourites (link)"} />
+						</LinkTo>
+					</Container>
+				}
+				ui={{
+					tone: "brand",
+					theme: "light",
+					inner: "4xl",
+				}}
+				className={"text-center"}
+			/>
+		</Container>
+	);
+};
+
+export namespace Appendix {
+	export interface Props extends Container.Props {
+		locale: string;
+	}
+}
+
+export const Appendix: FC<Appendix.Props> = ({ locale, ...props }) => {
+	return (
+		<Container
+			ui={{
+				layout: "vertical-centered",
+				height: "full",
+			}}
+			{...props}
+		>
+			<Status
+				icon={DeadEndIcon}
+				textTitle={"That's all for now - favourite (title)"}
+				textMessage={"No more listings to show - favourite (message)"}
+				action={
+					<Container
+						ui={{
+							flow: "vertical",
+							height: "full",
+							width: "full",
+							gap: "xl",
+						}}
+					>
+						<LinkTo
+							icon={ArrowRightIcon}
+							iconPosition={"right"}
+							to={"/$locale/buyer/feed/default"}
+							params={{
+								locale,
+							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									text: "xl",
+									width: "full",
+									size: "lg",
+									justify: "center",
+								},
+								className: [],
+							})}
+						>
+							<Tx label={"Go to feed (link)"} />
+						</LinkTo>
+
+						<LinkTo
+							icon={ArrowLeftIcon}
+							to={"/$locale/ui/buyer/favourite/list"}
+							params={{
+								locale,
+							}}
+							{...uiButton({
+								ui: {
+									tone: "link",
+									theme: "light",
+									width: "full",
+									background: undefined,
+									border: false,
+									shadow: false,
+									text: "default",
+									justify: "center",
+								},
+								className: [],
+							})}
+						>
+							<Tx label={"Back to favourites (link)"} />
+						</LinkTo>
+					</Container>
+				}
+				ui={{
+					tone: "brand",
+					theme: "light",
+					inner: "4xl",
+				}}
+				className={"text-center"}
+			/>
+		</Container>
+	);
+};
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {
 		const { locale } = Route.useParams();
 		const { id } = Route.useParams();
+		const containerRef = useRef<HTMLDivElement>(null);
+		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
+			containerRef,
+			threshold: 0.25,
+		});
 
 		return (
 			<FlowContainer
 				left={
 					<LinkTo
 						{...uiBackButton({
+							ui: {
+								opacity: isLast ? "full" : "low",
+							},
 							className: [],
 						})}
 						icon={ArrowLeftIcon}
@@ -28,10 +263,12 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 						params={{
 							locale,
 						}}
+						className={"transition-all"}
 					/>
 				}
 			>
 				<ListingListContainer
+					ref={containerRef}
 					locale={locale}
 					feedId={id}
 					/**
@@ -68,75 +305,17 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 								{({ data }) => {
 									if (data.filter === 0) {
 										return (
-											<Status
-												icon={DeadEndIcon}
-												textTitle={
-													"Empty favourite - category and favourite (title)"
-												}
-												action={
-													<>
-														<LinkTo
-															to={"/$locale/buyer/feed/default"}
-															icon={ArrowRightIcon}
-															iconPosition={"right"}
-															params={{
-																locale,
-															}}
-															{...uiButton({
-																className: [],
-															})}
-														>
-															<Tx label={"Go to feed (link)"} />
-														</LinkTo>
-
-														<LinkTo
-															icon={ArrowRightIcon}
-															iconPosition={"right"}
-															to={"/$locale/ui/home"}
-															params={{
-																locale,
-															}}
-															{...uiButton({
-																ui: {
-																	tone: "link",
-																	theme: "light",
-																},
-																className: [],
-															})}
-														>
-															<Tx label={"Go to home (link)"} />
-														</LinkTo>
-													</>
-												}
-												ui={{
-													tone: "brand",
-													theme: "light",
-												}}
+											<EmptyFavourite
+												ref={sentinelRef}
+												locale={locale}
 											/>
 										);
 									}
 
 									return (
-										<Status
-											icon={"icon-[streamline--sad-face-remix]"}
-											textTitle={"Empty favourite category (title)"}
-											action={
-												<LinkTo
-													to={"/$locale/ui/buyer/favourite/list"}
-													params={{
-														locale,
-													}}
-												>
-													<Button
-														iconEnabled={ArrowLeftIcon}
-														label={"Back to favourites (link)"}
-														ui={{
-															tone: "secondary",
-															size: "xl",
-														}}
-													/>
-												</LinkTo>
-											}
+										<EmptyFeed
+											ref={sentinelRef}
+											locale={locale}
 										/>
 									);
 								}}
@@ -144,50 +323,9 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 						);
 					}}
 					appendix={
-						<Status
-							icon={DeadEndIcon}
-							textTitle={"That's all for now - favourite (title)"}
-							textMessage={"No more listings to show - favourite (message)"}
-							action={
-								<div
-									className={
-										"flex flex-col gap-2 items-center justify-center w-full"
-									}
-								>
-									<LinkTo
-										to={"/$locale/ui/buyer/favourite/list"}
-										params={{
-											locale,
-										}}
-									>
-										<Button
-											iconEnabled={ArrowLeftIcon}
-											label={"Back to favourites (link)"}
-											ui={{
-												tone: "secondary",
-												size: "xl",
-											}}
-										/>
-									</LinkTo>
-
-									<LinkTo
-										to={"/$locale/buyer/feed/default"}
-										params={{
-											locale,
-										}}
-									>
-										<Button
-											iconEnabled={ArrowRightIcon}
-											iconPosition={"right"}
-											label={"Go to feed (link)"}
-											ui={{
-												tone: "secondary",
-												size: "xl",
-											}}
-										/>
-									</LinkTo>
-								</div>
-							}
+						<Appendix
+							ref={sentinelRef}
+							locale={locale}
 						/>
 					}
 				/>

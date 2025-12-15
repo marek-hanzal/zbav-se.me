@@ -46,11 +46,15 @@
     value: Čeká na vyplnění
 1088c3fcabd70b4e385443272326be10f59a63b577e719b5ac8c5821:
     ref: Listing ignore (hint)
-    value: |
-        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat zákon nebo podmínky
+    value: >
+        Pokud vidíš něco nezákonného, nahlas to. Inzerát musí vysloveně porušovat
+        zákon nebo podmínky
+
         používání.
 
-        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu (např. omezení účtu).**_
+
+        _**Hlášení jsou kontrolována na obou stranách - zneužití může vést k postihu
+        (např. omezení účtu).**_
 1127abe5ce9696ad1b6477d3c6557314bacdf45155e4e890091f1d3e:
     ref: Save (button)
     value: Uložit
@@ -124,6 +128,10 @@
 3b4fd03c4c12038446bff0974864ea2d1732333f653e990a2b18b42d:
     ref: Price (placeholder)
     value: Cena
+3c0d23d8d2fcf80e677c141686af773dc5dd3e140c8e9e4459a35ac9:
+    ref: Empty favourite feed (message)
+    value: |
+        Tady už sice nic víc není, ale stéle je co objevovat!
 3ca78530a9e9985ed4678eeb359e23a9c8e913ec6de9f637c0f53e46:
     ref: Price - free
     value: Zdarma
@@ -172,9 +180,6 @@
 4ef6b46bcbfc54a9f2aa64abf2856c01cded2d9bf090cbaec1bbd32d:
     ref: Create first listing (button)
     value: Chci být první
-51682d9521080245ad818c184b06929926372bbf7b8e14889655233a:
-    ref: Empty favourite category (title)
-    value: Empty favourite category (title)
 5216a97ce804ea83d2142778cf1659ad70adc72c670ea7365e396fcb:
     ref: Go home (welcome)
     value: Jdeme na to!
@@ -192,7 +197,7 @@
     value: Název seznamu
 59934a1f13d42118882c0a0a64cf3f270c5ad2f54185826385cb2abf:
     ref: Go to feed (link)
-    value: Přejít k nabídkám
+    value: Inzeráty
 5a4f8fb7d1a8dbc0ef181287934460601e95e5780e89245a21f4160f:
     ref: Field errors (title)
     value: Field errors (title)
@@ -273,7 +278,7 @@
     value: With VAT
 87cb8c1046c61d317f72daec59ac4f94b3e54de9c4fca5792aa73784:
     ref: That's all for now - favourite (title)
-    value: That's all for now - favourite (title)
+    value: Čas hledat dál
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
     ref: Messages (label)
     value: Zprávy
@@ -297,7 +302,8 @@
         vzdálenosti.
 8c91adfb877cb388a51f813326810fc71d05ca63282c35066b8570ef:
     ref: No more listings to show - favourite (message)
-    value: No more listings to show - favourite (message)
+    value: |
+        Víc v oblíbených už nemáš, ale to se dá snadno napravit.
 8d47c2c64d234b088c046d1b9327decc0b007667bc9cec30ea49fced:
     ref: Feed location (label)
     value: Poloha
@@ -462,6 +468,9 @@ b46060e6e02e9a672bd27f869c2d7206d0c7a0584e298065557d7954:
 b49bad57cdc02b972afcf4abfd99fdc6a5528e28c68f76e0e1997d59:
     ref: "- skore + link -"
     value: "- skore + link -"
+b4ffae5235999f10f6bbff965753e7d17285ec1f06ba0d8035409f7f:
+    ref: Empty favourite feed (title)
+    value: Čisto a jasno
 b6c76a2cd866bcc2fc175c7fb66093264226f4695f2dfe3c41d7056f:
     ref: Feed age (label)
     value: Stáří
@@ -542,7 +551,7 @@ dfec30446df33c9964dde3bb9c8be06978e570503cd029ffd4447dde:
     value: md
 e14a7b455d617b56b9ff6118784b59871a8191a5b9db34d76e02d9fa:
     ref: Back to favourites (link)
-    value: Back to favourites (link)
+    value: Oblíbené
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
     ref: Listing title (required)
     value: |
