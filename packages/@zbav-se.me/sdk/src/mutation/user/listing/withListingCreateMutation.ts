@@ -6,6 +6,8 @@ import type {
 	tApiListingCreateResponse,
 	tListingCreate,
 } from "../../../api/user/types.gen";
+import { withListingCollectionQuery } from "../../../query/user/listing/withListingCollectionQuery";
+import { withListingCountQuery } from "../../../query/user/listing/withListingCountQuery";
 
 export const withListingCreateMutation = withMutation<
 	tListingCreate,
@@ -25,4 +27,8 @@ export const withListingCreateMutation = withMutation<
 			}),
 		);
 	},
+	invalidate: [
+		withListingCollectionQuery,
+		withListingCountQuery,
+	],
 });
