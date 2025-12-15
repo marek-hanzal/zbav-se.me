@@ -31,6 +31,9 @@
 0d364d269d6a678d68fe57de851f00b1bf4cc596a3f0b41f1a953d6f:
   ref: Location security (hint)
   value: Location security (hint)
+0d6645ee2594f5987e94f46346a8d602e9c9c13c672dc7cd5be483be:
+  ref: Draft - continue (label)
+  value: Draft - continue (label)
 0e1e457dd548460d3511979a215ab49d00f3ff2b73150c6d0c23f0d6:
   ref: First listing - go home (button)
   value: First listing - go home (button)
@@ -133,6 +136,9 @@
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
   ref: Ignore listing (button)
   value: Ignore listing (button)
+489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
+  ref: Loading... (label)
+  value: Loading... (label)
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
   ref: Listing Score - Raw score (label)
   value: Listing Score - Raw score (label)

@@ -3,6 +3,7 @@ import { Container } from "@use-pico/client/ui/container";
 import { Fade } from "@use-pico/client/ui/fade";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Tx } from "@use-pico/client/ui/tx";
+import { withDraftCollectionQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { ListingIcon, MessageIcon } from "@zbav-se.me/ui/icon";
 import { uiMenuButton } from "@zbav-se.me/ui/ui";
 import { useRef } from "react";
@@ -45,23 +46,61 @@ export const SellerMenu = ({ locale, ui, ...props }: SellerMenu.Props) => {
 					gap: "lg",
 				}}
 			>
-				<LinkTo
-					{...uiMenuButton({
-						className: [],
-					})}
-					icon={ListingIcon}
-					iconProps={{
-						ui: {
-							...icon,
+				<withDraftCollectionQuery.Suspense
+					data={{
+						cursor: {
+							page: 0,
+							size: 1,
 						},
 					}}
-					to="/$locale/ui/seller/draft/resolve"
-					params={{
-						locale,
-					}}
+					fallback={
+						<LinkTo
+							{...uiMenuButton({
+								className: [],
+							})}
+							icon={ListingIcon}
+							iconProps={{
+								ui: {
+									...icon,
+								},
+							}}
+							to="/$locale/ui/seller/draft/resolve"
+							params={{
+								locale,
+							}}
+						>
+							<Tx label="Loading... (label)" />
+						</LinkTo>
+					}
 				>
-					<Tx label="Create listing (label)" />
-				</LinkTo>
+					{({ data }) => {
+						return (
+							<LinkTo
+								{...uiMenuButton({
+									className: [],
+								})}
+								icon={ListingIcon}
+								iconProps={{
+									ui: {
+										...icon,
+									},
+								}}
+								to="/$locale/ui/seller/draft/resolve"
+								params={{
+									locale,
+								}}
+							>
+								<Tx
+									label={
+										data.data.length > 0
+											? "Draft - continue (label)"
+											: "Create listing (label)"
+									}
+								/>
+							</LinkTo>
+						);
+					}}
+				</withDraftCollectionQuery.Suspense>
 
 				<LinkTo
 					{...uiMenuButton({
