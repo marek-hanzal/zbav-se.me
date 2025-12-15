@@ -1,6 +1,9 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
@@ -11,18 +14,17 @@ export namespace ConditionPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSave(condition: number | null): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
 export const ConditionPatch: FC<ConditionPatch.Props> = ({
 	draft,
 	onCancel,
-	onSave,
-	loading,
+	onSettled,
 	...props
 }) => {
+	const queryClient = useQueryClient();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "single",
 		initial:
@@ -37,6 +39,19 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 
 	const itemId = selection.optional.singleId();
 	const condition = itemId ? Number.parseInt(itemId, 10) : null;
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -58,9 +73,18 @@ export const ConditionPatch: FC<ConditionPatch.Props> = ({
 				<SaveControl
 					onCancel={onCancel}
 					onSave={() => {
-						onSave(condition);
+						mutation.mutate({
+							patch: {
+								condition,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
 					}}
-					loading={loading}
+					loading={mutation.isPending}
 					disabled={!condition}
 				/>
 			</Container>

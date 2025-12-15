@@ -1,7 +1,10 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { CategorySelect } from "~/app/category/ui/CategorySelect";
@@ -12,8 +15,7 @@ export namespace CategoryPatch {
 		locale: string;
 		draft: tDraft;
 		onCancel(): void;
-		onSave(categoryId: string | null): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
@@ -21,10 +23,10 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	locale,
 	draft,
 	onCancel,
-	onSave,
-	loading,
+	onSettled,
 	...props
 }) => {
+	const queryClient = useQueryClient();
 	const selection = useSelection<EntitySchema.Type>({
 		mode: "single",
 		initial: draft.categoryId
@@ -37,6 +39,19 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 	});
 
 	const categoryId = selection.optional.singleId() ?? null;
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -62,9 +77,18 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 				<SaveControl
 					onCancel={onCancel}
 					onSave={() => {
-						onSave(categoryId);
+						mutation.mutate({
+							patch: {
+								categoryId,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
 					}}
-					loading={loading}
+					loading={mutation.isPending}
 					disabled={!categoryId}
 				/>
 			</Container>

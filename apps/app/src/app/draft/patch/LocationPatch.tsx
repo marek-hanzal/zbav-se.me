@@ -1,4 +1,7 @@
+import { useQueryClient } from "@tanstack/react-query";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { FC } from "react";
 import { LocationControl } from "~/app/location/ui/LocationControl";
@@ -8,8 +11,7 @@ export namespace LocationPatch {
 		locale: string;
 		draft: tDraft;
 		onCancel(): void;
-		onSave(locationId: string | null): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
@@ -17,10 +19,23 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 	locale,
 	draft,
 	onCancel,
-	onSave,
-	loading,
+	onSettled,
 	...props
 }) => {
+	const queryClient = useQueryClient();
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
+
 	return (
 		<TitleContainer
 			data-ui={"Setup-[TitleContainer.location]"}
@@ -31,9 +46,18 @@ export const LocationPatch: FC<LocationPatch.Props> = ({
 				locale={locale}
 				onCancel={onCancel}
 				onSave={({ locationId }) => {
-					onSave(locationId);
+					mutation.mutate({
+						patch: {
+							locationId,
+						},
+						query: {
+							where: {
+								id: draft.id,
+							},
+						},
+					});
 				}}
-				loading={loading}
+				loading={mutation.isPending}
 				value={draft.locationId}
 				ui={{
 					inner: "default",

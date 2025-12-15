@@ -1,5 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { Dial } from "@zbav-se.me/ui/dial";
 import { type FC, useState } from "react";
@@ -9,21 +12,28 @@ export namespace PricePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSave(price: number | null): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
-export const PricePatch: FC<PricePatch.Props> = ({
-	draft,
-	onCancel,
-	onSave,
-	loading,
-	...props
-}) => {
+export const PricePatch: FC<PricePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+	const queryClient = useQueryClient();
 	const [price, setPrice] = useState<string | undefined>(
 		draft.price ? String(draft.price) : undefined,
 	);
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -48,9 +58,18 @@ export const PricePatch: FC<PricePatch.Props> = ({
 				<SaveControl
 					onCancel={onCancel}
 					onSave={() => {
-						onSave(price ? parseFloat(price) : null);
+						mutation.mutate({
+							patch: {
+								price: price ? parseFloat(price) : null,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
 					}}
-					loading={loading}
+					loading={mutation.isPending}
 					disabled={!price}
 				/>
 			</Container>

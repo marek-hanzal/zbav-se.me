@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { SaveIcon } from "@use-pico/client/icon";
 import { uiButton } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
@@ -7,8 +6,6 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { View } from "@use-pico/client/ui/view";
 import { translator } from "@use-pico/common/translator";
 import type { tDraft, tListing } from "@zbav-se.me/sdk/api/user";
-import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { CreateListingButton } from "~/app/draft/button/CreateListingButton";
@@ -51,18 +48,7 @@ export namespace Setup {
 }
 
 export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) => {
-	const queryClient = useQueryClient();
 	const [view, setView] = useState<Setup.View>("default");
-	const mutation = withDraftPatchMutation.useMutation({
-		async onSuccess() {
-			await withDraftFetchQuery.invalidate(queryClient, {
-				where: {
-					id: draft.id,
-				},
-			});
-			setView("default");
-		},
-	});
 
 	return (
 		<View<Setup.View, TitleContainer.Props>
@@ -192,149 +178,65 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 				title: {
 					children: (
 						<TitlePatch
-							loading={mutation.isPending}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(title) => {
-								mutation.mutate({
-									patch: {
-										title,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},
 				location: {
 					children: (
 						<LocationPatch
-							loading={mutation.isPending}
 							locale={locale}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(locationId) => {
-								mutation.mutate({
-									patch: {
-										locationId,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},
 				price: {
 					children: (
 						<PricePatch
-							loading={mutation.isPending}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(price) => {
-								mutation.mutate({
-									patch: {
-										price,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},
 				category: {
 					children: (
 						<CategoryPatch
-							loading={mutation.isPending}
 							locale={locale}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(categoryId) => {
-								mutation.mutate({
-									patch: {
-										categoryId,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},
 				condition: {
 					children: (
 						<ConditionPatch
-							loading={mutation.isPending}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(condition) => {
-								mutation.mutate({
-									patch: {
-										condition,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},
 				age: {
 					children: (
 						<AgePatch
-							loading={mutation.isPending}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(age) => {
-								mutation.mutate({
-									patch: {
-										age,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},
 				expireAt: {
 					children: (
 						<ExpireAtPatch
-							loading={mutation.isPending}
 							draft={draft}
 							onCancel={() => setView("default")}
-							onSave={(expiresAt) => {
-								mutation.mutate({
-									patch: {
-										expiresAt,
-									},
-									query: {
-										where: {
-											id: draft.id,
-										},
-									},
-								});
-							}}
+							onSettled={() => setView("default")}
 						/>
 					),
 				},

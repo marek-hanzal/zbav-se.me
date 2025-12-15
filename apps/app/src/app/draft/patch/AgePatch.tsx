@@ -1,6 +1,9 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useSelection } from "@use-pico/client/hook";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import type { Rating } from "@zbav-se.me/ui/rating";
 import type { FC } from "react";
@@ -11,12 +14,12 @@ export namespace AgePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSave(age: number | null): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
-export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading, ...props }) => {
+export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+	const queryClient = useQueryClient();
 	const selection = useSelection<Rating.RatingItem>({
 		mode: "single",
 		initial: draft.age
@@ -30,6 +33,19 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 
 	const itemId = selection.optional.singleId();
 	const age = itemId ? Number.parseInt(itemId, 10) : null;
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -51,9 +67,18 @@ export const AgePatch: FC<AgePatch.Props> = ({ draft, onCancel, onSave, loading,
 				<SaveControl
 					onCancel={onCancel}
 					onSave={() => {
-						onSave(age);
+						mutation.mutate({
+							patch: {
+								age,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
 					}}
-					loading={loading}
+					loading={mutation.isPending}
 					disabled={!age}
 				/>
 			</Container>

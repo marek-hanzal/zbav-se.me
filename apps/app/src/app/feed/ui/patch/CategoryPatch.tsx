@@ -4,7 +4,7 @@ import { Container } from "@use-pico/client/ui/container";
 import type { EntitySchema } from "@use-pico/common/schema";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedFetchQuery } from "@zbav-se.me/sdk/query/user/feed";
 import type { FC } from "react";
 import { CategorySelect } from "~/app/category/ui/CategorySelect";
 import { SaveControl } from "~/app/control/SaveControl";

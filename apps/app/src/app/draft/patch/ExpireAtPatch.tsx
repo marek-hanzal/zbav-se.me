@@ -1,5 +1,8 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import type { tDraft, tListingExpireEnum } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveControl } from "~/app/control/SaveControl";
@@ -9,21 +12,33 @@ export namespace ExpireAtPatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSave(expiresAt: tListingExpireEnum): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
 export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 	draft,
 	onCancel,
-	onSave,
-	loading,
+	onSettled,
 	...props
 }) => {
+	const queryClient = useQueryClient();
 	const [expiresAt, setExpiresAt] = useState<tListingExpireEnum | undefined>(
 		draft.expiresAt as tListingExpireEnum,
 	);
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -48,10 +63,19 @@ export const ExpireAtPatch: FC<ExpireAtPatch.Props> = ({
 					onCancel={onCancel}
 					onSave={() => {
 						if (expiresAt) {
-							onSave(expiresAt);
+							mutation.mutate({
+								patch: {
+									expiresAt,
+								},
+								query: {
+									where: {
+										id: draft.id,
+									},
+								},
+							});
 						}
 					}}
-					loading={loading}
+					loading={mutation.isPending}
 					disabled={!expiresAt}
 				/>
 			</Container>

@@ -1,9 +1,12 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { Container } from "@use-pico/client/ui/container";
 import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
 import { sListingCreate, type tDraft } from "@zbav-se.me/sdk/api/user";
+import { withDraftPatchMutation } from "@zbav-se.me/sdk/mutation/user";
+import { withDraftFetchQuery } from "@zbav-se.me/sdk/query/user/draft";
 import { TitleContainer } from "@zbav-se.me/ui/container";
 import { type FC, useState } from "react";
 import { SaveControl } from "~/app/control/SaveControl";
@@ -12,19 +15,26 @@ export namespace TitlePatch {
 	export interface Props extends TitleContainer.Props {
 		draft: tDraft;
 		onCancel(): void;
-		onSave(title: string): void;
-		loading: boolean;
+		onSettled?(): void;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({
-	draft,
-	onCancel,
-	onSave,
-	loading,
-	...props
-}) => {
+export const TitlePatch: FC<TitlePatch.Props> = ({ draft, onCancel, onSettled, ...props }) => {
+	const queryClient = useQueryClient();
 	const [title, setTitle] = useState(draft.title ?? "");
+
+	const mutation = withDraftPatchMutation.useMutation({
+		onSuccess() {
+			withDraftFetchQuery.invalidate(queryClient, {
+				where: {
+					id: draft.id,
+				},
+			});
+		},
+		onSettled() {
+			onSettled?.();
+		},
+	});
 
 	return (
 		<TitleContainer
@@ -79,9 +89,18 @@ export const TitlePatch: FC<TitlePatch.Props> = ({
 				<SaveControl
 					onCancel={onCancel}
 					onSave={() => {
-						onSave(title);
+						mutation.mutate({
+							patch: {
+								title,
+							},
+							query: {
+								where: {
+									id: draft.id,
+								},
+							},
+						});
 					}}
-					loading={loading}
+					loading={mutation.isPending}
 					disabled={!title}
 				/>
 			</Container>
