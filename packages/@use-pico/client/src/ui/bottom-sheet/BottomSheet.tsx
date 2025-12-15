@@ -98,6 +98,7 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 									theme: "light",
 									text: "lg",
 									color: "lead",
+									truncate: true,
 								}}
 							/>
 						) : null}

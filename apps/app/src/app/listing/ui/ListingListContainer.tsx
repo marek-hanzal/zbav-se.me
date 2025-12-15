@@ -149,7 +149,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 													}
 													locale={locale}
 													listing={listing}
-													// overlay={overlay}
 													feedId={feedId}
 													withScore={withScore}
 												/>

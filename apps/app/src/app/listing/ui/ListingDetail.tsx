@@ -103,6 +103,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 								src={hero.upload.url}
 								alt={`Hero image for listing ${listing.id}`}
 								onClick={() => setIsGalleryOpen((prev) => !prev)}
+								className={"h-64"}
 							/>
 
 							<GallerySheet
