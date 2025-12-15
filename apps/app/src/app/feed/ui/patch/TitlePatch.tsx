@@ -1,89 +1,47 @@
-import { SaveIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
+import type { Container } from "@use-pico/client/ui/container";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { uiSaveButton } from "@zbav-se.me/ui/ui";
-import { type FC, useState } from "react";
+import type { FC } from "react";
 import { TitleInput } from "~/app/feed/ui/input/TitleInput";
 
 export namespace TitlePatch {
 	export interface Props extends Container.Props {
 		feed: tFeed;
 		onSettled?(): void;
+		onCancel(): void;
 	}
 }
 
-export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, ...props }) => {
-	const [change, setChange] = useState(false);
-
-	const [patch, setPatch] = useState<tFeedPatch>({
-		patch: feed,
-		query: {
-			where: {
-				id: feed.id,
-			},
-		},
-	});
-
+export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const mutation = withFeedPatchMutation.useMutation({
 		onSettled() {
-			setChange(false);
 			onSettled?.();
 		},
 	});
 
 	return (
-		<Container
-			data-ui={"TitlePatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "default",
-				inner: "default",
-			}}
-			{...props}
-		>
-			<TitleInput
-				value={patch.patch.query?.filter?.title ?? ""}
-				ui={{
-					height: "full",
-				}}
-				onChange={(title) => {
-					setChange(true);
-					setPatch((prev) => ({
-						...prev,
-						patch: {
-							...prev.patch,
-							query: {
-								...prev.patch.query,
-								filter: {
-									...prev.patch.query?.filter,
-									title,
-								},
+		<TitleInput
+			defaultValue={feed.query?.filter?.title ?? ""}
+			onCancel={onCancel}
+			loading={mutation.isPending}
+			onSave={(title) => {
+				mutation.mutate({
+					patch: {
+						query: {
+							...feed.query,
+							filter: {
+								...feed.query?.filter,
+								title,
 							},
 						},
-					}));
-				}}
-			/>
-
-			<Button
-				label={"Feed - save (button)"}
-				loading={mutation.isPending}
-				disabled={!change || mutation.isPending}
-				iconEnabled={SaveIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
 					},
-				}}
-				onClick={() => {
-					mutation.mutate(patch);
-				}}
-				{...uiSaveButton({
-					className: [],
-				})}
-			/>
-		</Container>
+					query: {
+						where: {
+							id: feed.id,
+						},
+					},
+				});
+			}}
+		/>
 	);
 };

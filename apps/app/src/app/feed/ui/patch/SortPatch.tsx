@@ -1,36 +1,25 @@
-import { SaveIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
+import type { tFeed, tListingSort } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { uiSaveButton } from "@zbav-se.me/ui/ui";
 import { type FC, useState } from "react";
+import { SaveControl } from "~/app/control/SaveControl";
 import { ListingSortSelect } from "~/app/listing/ui/ListingSortSelect";
 
 export namespace SortPatch {
 	export interface Props extends Container.Props {
 		feed: tFeed;
 		onSettled?(): void;
+		onCancel(): void;
 	}
 }
 
-export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ui, ...props }) => {
-	const [change, setChange] = useState(false);
-
-	const [patch, setPatch] = useState<tFeedPatch>({
-		patch: feed,
-		query: {
-			where: {
-				id: feed.id,
-			},
-		},
-	});
+export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, onCancel, ui, ...props }) => {
+	const [sort, setSort] = useState<tListingSort[]>(feed.query?.sort ?? []);
 
 	const withGeo = !!feed.query?.meta?.latLon;
 
 	const mutation = withFeedPatchMutation.useMutation({
 		onSettled() {
-			setChange(false);
 			onSettled?.();
 		},
 	});
@@ -50,39 +39,30 @@ export const SortPatch: FC<SortPatch.Props> = ({ feed, onSettled, ui, ...props }
 			<ListingSortSelect
 				withGeo={withGeo}
 				state={{
-					value: patch.patch.query?.sort ?? [],
-					set(value) {
-						setChange(true);
-						setPatch((prev) => ({
-							...prev,
-							patch: {
-								...prev.patch,
-								query: {
-									...prev.patch.query,
-									sort: value,
-								},
-							},
-						}));
-					},
+					value: sort,
+					set: setSort,
 				}}
 			/>
 
-			<Button
-				label={"Feed - save (button)"}
+			<SaveControl
+				onCancel={onCancel}
+				onSave={() => {
+					mutation.mutate({
+						patch: {
+							query: {
+								...feed.query,
+								sort: sort,
+							},
+						},
+						query: {
+							where: {
+								id: feed.id,
+							},
+						},
+					});
+				}}
 				loading={mutation.isPending}
-				disabled={!change || mutation.isPending}
-				iconEnabled={SaveIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
-					},
-				}}
-				onClick={() => {
-					mutation.mutate(patch);
-				}}
-				{...uiSaveButton({
-					className: [],
-				})}
+				disabled={false}
 			/>
 		</Container>
 	);

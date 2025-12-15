@@ -61,7 +61,6 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({
 				onSave={() => {
 					mutation.mutate({
 						patch: {
-							...feed,
 							query: {
 								...feed.query,
 								filter: {

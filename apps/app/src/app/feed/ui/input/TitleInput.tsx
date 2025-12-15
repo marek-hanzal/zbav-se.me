@@ -3,55 +3,84 @@ import { FormField } from "@use-pico/client/ui/form";
 import { Mx } from "@use-pico/client/ui/mx";
 import { Status } from "@use-pico/client/ui/status";
 import { TextInput } from "@use-pico/client/ui/text-input";
-import type { FC } from "react";
+import { type FC, useState } from "react";
+import { SaveControl } from "~/app/control/SaveControl";
 
 export namespace TitleInput {
 	export interface Props extends Omit<Container.Props, "onChange"> {
-		value: string;
-		onChange(value: string): void;
+		defaultValue: string;
+		onSave(value: string): void;
+		onCancel(): void;
+		loading: boolean;
 	}
 }
 
-export const TitleInput: FC<TitleInput.Props> = ({ value, onChange, ui, ...props }) => {
+export const TitleInput: FC<TitleInput.Props> = ({
+	defaultValue,
+	onSave,
+	onCancel,
+	loading,
+	ui,
+	...props
+}) => {
+	const [title, setTitle] = useState(defaultValue);
+
 	return (
 		<Container
+			data-ui={"TitleInput[Container]"}
 			ui={{
-				layout: "vertical-centered",
-				gap: "md",
-				height: "auto",
+				layout: "vertical-content-footer",
+				height: "full",
 				width: "full",
+				inner: "default",
 				...ui,
 			}}
 			{...props}
 		>
-			<Status
-				textTitle={"Feed title (title)"}
-				action={
-					<FormField full>
-						{(props) => (
-							<TextInput
-								value={value}
-								onChange={(e) => onChange(e.target.value)}
-								placeholder={"Feed title (placeholder)"}
-								autoFocus={!value}
-								{...props}
-							/>
-						)}
-					</FormField>
-				}
+			<Container
 				ui={{
-					text: "md",
-					inner: "4xl",
+					layout: "vertical-centered",
+					height: "full",
 				}}
 			>
-				<Mx
-					label={"Feed title (hint)"}
+				<Status
+					textTitle={"Feed title (title)"}
+					action={
+						<FormField full>
+							{(props) => (
+								<TextInput
+									value={title}
+									onChange={(e) => setTitle(e.target.value)}
+									placeholder={"Feed title (placeholder)"}
+									autoFocus
+									{...props}
+								/>
+							)}
+						</FormField>
+					}
 					ui={{
-						tone: "secondary",
-						theme: "light",
+						text: "md",
+						inner: "4xl",
 					}}
-				/>
-			</Status>
+				>
+					<Mx
+						label={"Feed title (hint)"}
+						ui={{
+							tone: "secondary",
+							theme: "light",
+						}}
+					/>
+				</Status>
+			</Container>
+
+			<SaveControl
+				onCancel={onCancel}
+				onSave={() => {
+					onSave(title);
+				}}
+				loading={loading}
+				disabled={false}
+			/>
 		</Container>
 	);
 };

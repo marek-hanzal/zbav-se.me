@@ -15,7 +15,7 @@ export const TitleValue: FC<TitleValue.Props> = ({ feed, ...props }) => {
 		<LabelValue
 			data-ui={"TitleValue[LabelValue]"}
 			textLabel={translator.text("Feed title (label)")}
-			textValue={feed.query?.filter?.title ?? null}
+			textValue={feed.query?.filter?.title || null}
 			textEmpty={translator.text("Feed title not filled")}
 			textHint={translator.text("Feed title (hint)")}
 			action={

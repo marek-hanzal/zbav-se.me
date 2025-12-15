@@ -156,7 +156,6 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed gallery (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					name: {
@@ -169,7 +168,6 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed setup - name (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					category: {
@@ -183,7 +181,6 @@ export const SetupButton: FC<SetupButton.Props> = ({
 						),
 						header: () => ({
 							title: translator.text("Feed category (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					location: {
@@ -192,11 +189,11 @@ export const SetupButton: FC<SetupButton.Props> = ({
 								locale={locale}
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({
 							title: translator.text("Feed location (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					sort: {
@@ -204,11 +201,11 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							<SortPatch
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({
 							title: translator.text("Feed sorting (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					condition: {
@@ -216,11 +213,11 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							<ConditionPatch
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({
 							title: translator.text("Feed condition (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					age: {
@@ -228,11 +225,11 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							<AgePatch
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({
 							title: translator.text("Feed age (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 					title: {
@@ -240,11 +237,11 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							<TitlePatch
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({
 							title: translator.text("Feed title (title)"),
-							right: <CloseButton onClick={() => setView("detail")} />,
 						}),
 					},
 				}}

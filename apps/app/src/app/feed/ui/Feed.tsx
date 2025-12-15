@@ -153,24 +153,19 @@ export const Feed: FC<Feed.Props> = ({
 			{noDelete ? null : (
 				<ConfirmButton
 					iconEnabled={TrashIcon}
-					buttonProps={{
+					iconProps={{
 						ui: {
-							tone: "danger",
-							theme: "light",
-							size: "xl",
-							text: "lg",
+							text: "xl",
 						},
-						iconProps: {
-							ui: {
-								text: "xl",
-							},
-						},
+					}}
+					buttonProps={{
 						label: translator.text("Delete feed (button)"),
 					}}
 					confirmProps={{
 						iconEnabled: TrashIcon,
 						ui: {
 							tone: "danger",
+							theme: "light",
 						},
 						label: translator.text("Really delete feed (button)"),
 						onClick() {
@@ -183,10 +178,14 @@ export const Feed: FC<Feed.Props> = ({
 					}}
 					loading={feedDeleteMutation.isPending}
 					ui={{
-						tone: "danger",
+						tone: "neutral",
+						theme: "light",
 						size: "xl",
 						justify: "center",
 						items: "center",
+						background: "default",
+						shadow: true,
+						border: true,
 					}}
 				/>
 			)}

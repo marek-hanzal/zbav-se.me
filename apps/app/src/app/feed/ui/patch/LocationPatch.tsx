@@ -1,108 +1,60 @@
-import { SaveIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
+import type { Container } from "@use-pico/client/ui/container";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { uiSaveButton } from "@zbav-se.me/ui/ui";
-import { type FC, useState } from "react";
-import { LocationSelect } from "~/app/location/ui/LocationSelect";
+import type { FC } from "react";
+import { LocationControl } from "~/app/location/ui/LocationControl";
 
 export namespace LocationPatch {
 	export interface Props extends Container.Props {
 		locale: string;
 		feed: tFeed;
 		onSettled?(): void;
+		onCancel(): void;
 	}
 }
 
-export const LocationPatch: FC<LocationPatch.Props> = ({ locale, feed, onSettled, ...props }) => {
-	const [change, setChange] = useState(false);
-
-	const [patch, setPatch] = useState<tFeedPatch>({
-		patch: feed,
-		query: {
-			where: {
-				id: feed.id,
-			},
-		},
-	});
-
+export const LocationPatch: FC<LocationPatch.Props> = ({
+	locale,
+	feed,
+	onSettled,
+	onCancel,
+	...props
+}) => {
 	const mutation = withFeedPatchMutation.useMutation({
 		onSettled() {
-			setChange(false);
 			onSettled?.();
 		},
 	});
 
 	return (
-		<Container
-			data-ui={"LocationPatch[Container]"}
+		<LocationControl
+			locale={locale}
+			onCancel={onCancel}
+			onSave={({ locationId, location }) => {
+				mutation.mutate({
+					patch: {
+						locationId,
+						query: {
+							...feed.query,
+							meta: {
+								...feed.query?.meta,
+								latLon: location,
+							},
+						},
+					},
+					query: {
+						where: {
+							id: feed.id,
+						},
+					},
+				});
+			}}
+			loading={mutation.isPending}
+			value={feed.locationId}
 			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "default",
 				inner: "default",
 			}}
 			{...props}
-		>
-			<LocationSelect
-				locale={locale}
-				value={patch.patch.locationId}
-				onChange={(value) => {
-					setChange(true);
-					setPatch((prev) => ({
-						...prev,
-						patch: {
-							...prev.patch,
-							locationId: value,
-						},
-					}));
-				}}
-				onLocation={({ lon, lat }) => {
-					setChange(true);
-					setPatch((prev) => ({
-						patch: {
-							...prev.patch,
-							query: {
-								...prev.patch.query,
-								meta: {
-									latLon: {
-										lon,
-										lat,
-									},
-								},
-							},
-						},
-						query: {
-							where: {
-								id: feed.id,
-							},
-						},
-					}));
-				}}
-				textHint={"Feed - location security (hint)"}
-				ui={{
-					height: "full",
-				}}
-			/>
-
-			<Button
-				label={"Feed - save (button)"}
-				loading={mutation.isPending}
-				disabled={!change || mutation.isPending}
-				iconEnabled={SaveIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
-					},
-				}}
-				onClick={() => {
-					mutation.mutate(patch);
-				}}
-				{...uiSaveButton({
-					className: [],
-				})}
-			/>
-		</Container>
+		/>
 	);
 };

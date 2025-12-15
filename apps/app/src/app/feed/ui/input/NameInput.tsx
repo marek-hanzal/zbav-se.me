@@ -65,6 +65,10 @@ export const NameInput: FC<NameInput.Props> = ({
 							)}
 						</FormField>
 					}
+					ui={{
+						text: "md",
+						inner: "4xl",
+					}}
 				>
 					<Mx
 						label={"Feed name (required)"}
