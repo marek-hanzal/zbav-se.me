@@ -1,5 +1,6 @@
 import { createRoute } from "@hono/zod-openapi";
 import { Effect, Match } from "effect";
+import { ListingSchema } from "~/@user/listing/schema/ListingSchema";
 import { UserContextProvider } from "~/auth/fx/UserContextFx";
 import { DatabaseContextProvider } from "~/database/fx/DatabaseContextFx";
 import type { Routes } from "~/hono/Routes";
@@ -25,7 +26,12 @@ export const withToggleApi: Routes.Fn = ({ userHono }) => {
 				},
 			},
 			responses: {
-				204: {
+				200: {
+					content: {
+						"application/json": {
+							schema: ListingSchema,
+						},
+					},
 					description: "Nothing to say, we're just happy",
 				},
 				400: {
@@ -60,11 +66,10 @@ export const withToggleApi: Routes.Fn = ({ userHono }) => {
 		}),
 		async (c) => {
 			return Effect.gen(function* () {
-				yield* ignoreToggleFx({
-					data: c.req.valid("json"),
-				});
-
-				return c.body(null, 204);
+				return c.json<ListingSchema.Type, 200>(
+					yield* ignoreToggleFx(c.req.valid("json")),
+					200,
+				);
 			}).pipe(
 				DatabaseContextProvider(c.get("database")),
 				UserContextProvider(c.get("user")),

@@ -9,7 +9,7 @@ import type {
 
 export const withIgnoreToggleMutation = withMutation<
 	tIgnoreToggle,
-	tApiIgnoreToggleResponse[204],
+	tApiIgnoreToggleResponse[200],
 	apiIgnoreToggleError
 >({
 	keys(variables) {

@@ -2993,9 +2993,7 @@ export type zapiIgnoreToggleRequest = z.infer<typeof zApiIgnoreToggleData>;
 /**
  * Nothing to say, we're just happy
  */
-export const zApiIgnoreToggleResponse = z.void().register(z.globalRegistry, {
-    description: 'Nothing to say, we\'re just happy'
-});
+export const zApiIgnoreToggleResponse = zListing;
 
 export type zapiIgnoreToggleResponse = z.infer<typeof zApiIgnoreToggleResponse>;
 

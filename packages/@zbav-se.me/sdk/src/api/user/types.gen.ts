@@ -3169,7 +3169,7 @@ export type tApiIgnoreToggleResponse = {
     /**
      * Nothing to say, we're just happy
      */
-    204: void;
+    200: tListing;
 };
 
 export type apiIgnoreToggleResponse = tApiIgnoreToggleResponse[keyof tApiIgnoreToggleResponse];

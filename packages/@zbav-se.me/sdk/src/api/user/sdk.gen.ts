@@ -414,6 +414,7 @@ export const apiIgnoreCount = <ThrowOnError extends boolean = false>(options?: O
  */
 export const apiIgnoreToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiIgnoreToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiIgnoreToggleResponse, apiIgnoreToggleErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiIgnoreToggleData.parseAsync(data),
+    responseType: 'json',
     responseValidator: async (data) => await zApiIgnoreToggleResponse.parseAsync(data),
     url: '/api/user/ignore/toggle',
     ...options,
