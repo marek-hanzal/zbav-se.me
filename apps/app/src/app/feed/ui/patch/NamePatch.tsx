@@ -42,7 +42,7 @@ export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) =>
 				layout: "vertical-content-footer",
 				height: "full",
 				gap: "default",
-				inner: "4xl",
+				inner: "default",
 			}}
 			{...props}
 		>

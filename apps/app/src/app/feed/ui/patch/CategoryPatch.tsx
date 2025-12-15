@@ -90,3 +90,4 @@ export const CategoryPatch: FC<CategoryPatch.Props> = ({ locale, feed, onSettled
 		</Container>
 	);
 };
+

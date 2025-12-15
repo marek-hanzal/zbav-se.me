@@ -49,7 +49,7 @@ export async function getRouter() {
 						height: "full",
 					}}
 				>
-					<Logo />
+					<Logo logo />
 				</Container>
 			);
 		},
