@@ -1,13 +1,10 @@
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
-import { toast } from "sonner";
 import { NameInput } from "../input/NameInput";
 
 export namespace CreateButton {
@@ -18,17 +15,13 @@ export namespace CreateButton {
 
 export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, ...props }) => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [name, setName] = useState("");
-	const [change, setChange] = useState(false);
 
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
 		onSuccess(data) {
 			onCreate?.(data);
 		},
 		onSettled() {
-			setChange(false);
 			setIsOpen(false);
-			setName("");
 		},
 	});
 
@@ -69,71 +62,25 @@ export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, 
 					right: <CloseButton onClick={close} />,
 				})}
 			>
-				<Container
-					data-ui={"FeedCreateButton-Container"}
-					ui={{
-						layout: "vertical-content-footer",
-						gap: "default",
-					}}
-				>
-					<NameInput
-						value={name}
-						onChange={(value) => {
-							setChange(true);
-							setName(value);
-						}}
-						onSubmit={(name) => {
-							if (change && name && !feedCreateMutation.isPending) {
-								toast.promise(
-									feedCreateMutation.mutateAsync({
-										name,
-										query: {
-											where: {
-												withOwn: false,
-											},
-										},
-									}),
-									{
-										loading: translator.text("Loading... (toast)"),
-										success: translator.text("Feed created (toast)"),
-										error: translator.text("Error creating feed (toast)"),
+				<NameInput
+					onSave={(name) => {
+						if (!feedCreateMutation.isPending) {
+							feedCreateMutation.mutate({
+								name,
+								query: {
+									where: {
+										withOwn: false,
 									},
-								);
-							}
-						}}
-						ui={{
-							height: "content",
-						}}
-					/>
-
-					<Button
-						label={"Feed - save (button)"}
-						loading={feedCreateMutation.isPending}
-						disabled={!change || !name || feedCreateMutation.isPending}
-						onClick={() => {
-							toast.promise(
-								feedCreateMutation.mutateAsync({
-									name,
-									query: {
-										where: {
-											withOwn: false,
-										},
-									},
-								}),
-								{
-									loading: translator.text("Loading... (toast)"),
-									success: translator.text("Feed created (toast)"),
-									error: translator.text("Error creating feed (toast)"),
 								},
-							);
-						}}
-						ui={{
-							tone: "secondary",
-							theme: "dark",
-							size: "xl",
-						}}
-					/>
-				</Container>
+							});
+						}
+					}}
+					defaultValue={""}
+					onCancel={() => {
+						setIsOpen(false);
+					}}
+					loading={feedCreateMutation.isPending}
+				/>
 			</BottomSheet>
 		</>
 	);

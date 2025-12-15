@@ -164,6 +164,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 							<NamePatch
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({
@@ -177,6 +178,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 								locale={locale}
 								feed={feed}
 								onSettled={() => setView("detail")}
+								onCancel={() => setView("detail")}
 							/>
 						),
 						header: () => ({

@@ -1,92 +1,42 @@
-import { SaveIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
-import { Container } from "@use-pico/client/ui/container";
-import { translator } from "@use-pico/common/translator";
-import type { tFeed, tFeedPatch } from "@zbav-se.me/sdk/api/user";
+import type { Container } from "@use-pico/client/ui/container";
+import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { uiSaveButton } from "@zbav-se.me/ui/ui";
-import { type FC, useState } from "react";
-import { toast } from "sonner";
+import type { FC } from "react";
 import { NameInput } from "~/app/feed/ui/input/NameInput";
 
 export namespace NamePatch {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "defaultValue"> {
 		feed: tFeed;
 		onSettled?(): void;
+		onCancel(): void;
 	}
 }
 
-export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, ...props }) => {
-	const [change, setChange] = useState(false);
-
-	const [patch, setPatch] = useState<tFeedPatch>({
-		patch: feed,
-		query: {
-			where: {
-				id: feed.id,
-			},
-		},
-	});
-
+export const NamePatch: FC<NamePatch.Props> = ({ feed, onSettled, onCancel, ...props }) => {
 	const mutation = withFeedPatchMutation.useMutation({
 		onSettled() {
-			setChange(false);
 			onSettled?.();
 		},
 	});
 
 	return (
-		<Container
-			data-ui={"NamePatch[Container]"}
-			ui={{
-				layout: "vertical-content-footer",
-				height: "full",
-				gap: "default",
-				inner: "default",
-			}}
-			{...props}
-		>
-			<NameInput
-				ui={{
-					height: "full",
-				}}
-				value={patch.patch.name ?? ""}
-				onChange={(name) => {
-					setChange(true);
-					setPatch((prev) => ({
-						...prev,
-						patch: {
-							...prev.patch,
-							name,
-						},
-					}));
-				}}
-				onSubmit={() => {
-					toast.promise(mutation.mutateAsync(patch), {
-						loading: translator.text("Loading... (toast)"),
-						success: translator.text("Feed name updated (toast)"),
-						error: translator.text("Error updating feed name (toast)"),
-					});
-				}}
-			/>
-
-			<Button
-				label={"Feed - save (button)"}
-				loading={mutation.isPending}
-				disabled={!change || mutation.isPending}
-				iconEnabled={SaveIcon}
-				iconProps={{
-					ui: {
-						text: "2xl",
+		<NameInput
+			onSave={(name) => {
+				mutation.mutate({
+					patch: {
+						name,
 					},
-				}}
-				onClick={() => {
-					mutation.mutate(patch);
-				}}
-				{...uiSaveButton({
-					className: [],
-				})}
-			/>
-		</Container>
+					query: {
+						where: {
+							id: feed.id,
+						},
+					},
+				});
+			}}
+			onCancel={onCancel}
+			defaultValue={feed.name ?? ""}
+			loading={mutation.isPending}
+			{...props}
+		/>
 	);
 };
