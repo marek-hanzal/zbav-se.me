@@ -43,7 +43,9 @@ export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo,
 					>
 						<Container
 							ui={{
+								flow: "vertical",
 								height: "content",
+								gap: "default",
 							}}
 						>
 							<Content
@@ -60,6 +62,7 @@ export const List: FC<List.Props> = ({ locale, query, limit = 10, tools, linkTo,
 								onCreate={(data) => {
 									setDefaultOpenId(data.id);
 								}}
+								isLimitReached={isLimitReached}
 							/>
 						</Container>
 					</Container>

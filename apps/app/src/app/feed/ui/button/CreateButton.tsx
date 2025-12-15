@@ -1,18 +1,27 @@
+import { CloseIcon, PlusIcon } from "@use-pico/client/icon";
 import { BottomSheet } from "@use-pico/client/ui/bottom-sheet";
 import { Button } from "@use-pico/client/ui/button";
+import { Container } from "@use-pico/client/ui/container";
+import { Status } from "@use-pico/client/ui/status";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { FeedIcon } from "@zbav-se.me/ui/icon";
 import { type FC, useState } from "react";
 import { NameInput } from "../input/NameInput";
 
 export namespace CreateButton {
 	export interface Props extends Button.Props {
+		isLimitReached: boolean;
 		onCreate?(feed: tFeed): void;
 	}
 }
 
-export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, ...props }) => {
+export const CreateButton: FC<CreateButton.Props> = ({
+	isLimitReached,
+	onCreate,
+	ui,
+	className,
+	...props
+}) => {
 	const [isOpen, setIsOpen] = useState(false);
 
 	const feedCreateMutation = withFeedCreateMutation.useMutation({
@@ -28,29 +37,45 @@ export const CreateButton: FC<CreateButton.Props> = ({ onCreate, ui, className, 
 		<>
 			<Button
 				data-ui={"CreateButton[Button]"}
-				iconEnabled={FeedIcon}
-				iconProps={{
-					ui: {
-						text: "xl",
-					},
-				}}
 				onClick={() => setIsOpen(true)}
-				label={"Create new feed (title)"}
 				ui={{
 					tone: "neutral",
 					theme: "light",
-					justify: "center",
-					text: "default",
-					size: "lg",
-					width: "content",
+					round: "lg",
+					width: "full",
+					size: undefined,
+					shadow: true,
 					...ui,
 				}}
 				className={[
-					"mx-auto",
+					"h-48",
 					className,
 				]}
 				{...props}
-			/>
+			>
+				<Container
+					ui={{
+						tone: "neutral",
+						theme: "light",
+						width: "full",
+						height: "full",
+						round: "lg",
+						flow: "horizontal",
+						items: "center",
+						justify: "center",
+						background: "default",
+						position: "relative",
+						opacity: "medium",
+					}}
+				>
+					<Status
+						icon={isLimitReached ? CloseIcon : PlusIcon}
+						textTitle={
+							isLimitReached ? "Limit reached (title)" : "Create new feed (title)"
+						}
+					/>
+				</Container>
+			</Button>
 
 			<BottomSheet
 				isOpen={isOpen}

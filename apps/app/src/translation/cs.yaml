@@ -270,6 +270,9 @@
 886e7f1206862942937e7dc0ca0620af2e9bf5d3055337548bdba3d9:
     ref: Messages (label)
     value: Zprávy
+8934b7cd7560e4ff51988a56a295f330a17e5109dbdc4cb542b1f6cb:
+    ref: Limit reached (title)
+    value: Víc seznamů bohužel nejde.
 8a1aa12fd03400172454828dba4c0e3bf755d16c69c73449f540cbb7:
     ref: No items in favourites (message)
     value: ...ale můžeš se podívat na inzeráty a nějaké si sem přidat!

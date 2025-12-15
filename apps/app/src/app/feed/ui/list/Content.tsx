@@ -41,7 +41,6 @@ export const Content: FC<Content.Props> = ({
 			ui={{
 				layout: "vertical-flex",
 				gap: "default",
-				height: "full",
 			}}
 			{...props}
 		>
