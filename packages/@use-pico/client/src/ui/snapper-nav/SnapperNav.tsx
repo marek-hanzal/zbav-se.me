@@ -1,10 +1,12 @@
-import { type Cls, useCls } from "@use-pico/cls";
-import { type ComponentProps, type FC, useCallback, useId, useMemo } from "react";
+import type { Cls } from "@use-pico/cls";
+import { type FC, useCallback, useId, useMemo } from "react";
 import { useDoubleTap } from "../../hook/useDoubleTap";
 import type { useSnapperNav } from "../../hook/useSnapperNav";
 import { DotIcon } from "../../icon/DotIcon";
 import { Icon } from "../../icon/Icon";
-import { SnapperNavCls } from "./SnapperNavCls";
+import type { uiIcon } from "../../icon/uiIcon";
+import { Container } from "../container/Container";
+import type { SnapperNavCls } from "./SnapperNavCls";
 
 export namespace SnapperNav {
 	export namespace IconProps {
@@ -33,7 +35,7 @@ export namespace SnapperNav {
 		icon?: Icon.Type;
 	}
 
-	export interface Props extends SnapperNavCls.Props<ComponentProps<"div">> {
+	export interface Props extends Container.Props {
 		snapperNav: useSnapperNav.Result;
 		pages?: Page[] | Count;
 		subtle?: boolean;
@@ -55,8 +57,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	iconProps,
 	limit = 5,
 	//
-	cls = SnapperNavCls,
-	tweak,
+	ui,
 	//
 	...props
 }) => {
@@ -82,16 +83,6 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					icon: DotIcon,
 				}),
 			);
-
-	const { slots } = useCls(cls, tweak, {
-		variant: {
-			orientation,
-			align,
-			subtle,
-			first: snapperNav.state.isFirst,
-			last: snapperNav.state.isLast,
-		},
-	});
 
 	const firstDoubleTap = useDoubleTap({
 		onDoubleTap: snapperNav.api.start,
@@ -131,6 +122,11 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		snapperNav.state.current,
 	]);
 
+	const activeIconUi: uiIcon.Ui = {
+		text: "lg",
+		color: "lead",
+	};
+
 	const renderLimiter = useCallback(() => {
 		const leftIcon: Icon.Type =
 			orientation === "vertical"
@@ -144,7 +140,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 		return (
 			<>
 				<Icon
-					data-ui="SnapperNav-first"
+					data-ui="SnapperNav[Icon.first]"
 					key={firstId}
 					onDoubleClick={snapperNav.api.start}
 					onClick={snapperNav.api.prev}
@@ -175,9 +171,14 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
-							ui={{
-								text: "md",
-							}}
+							ui={
+								isActive
+									? activeIconUi
+									: {
+											text: "md",
+											color: "icon",
+										}
+							}
 							{...iconProps?.({
 								limit: false,
 								active: isActive,
@@ -192,7 +193,7 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 					);
 				})}
 				<Icon
-					data-ui="SnapperNav-last"
+					data-ui="SnapperNav[Icon.last]"
 					key={lastId}
 					onClick={snapperNav.api.next}
 					onDoubleClick={snapperNav.api.end}
@@ -229,13 +230,17 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 
 					return (
 						<Icon
-							data-ui="SnapperNav-item"
+							data-ui="SnapperNav[Icon.item]"
 							key={page.id}
 							onClick={() => snapperNav.api.snapTo(i)}
 							icon={page.icon}
-							ui={{
-								text: "md",
-							}}
+							ui={
+								isActive
+									? activeIconUi
+									: {
+											text: "md",
+										}
+							}
 							//
 							data-active={isActive}
 							//
@@ -257,17 +262,30 @@ export const SnapperNav: FC<SnapperNav.Props> = ({
 	);
 
 	return snapperNav.state.count > 1 ? (
-		<div
-			data-root="SnapperNav"
-			className={slots.root()}
+		<Container
+			data-ui="SnapperNav[Container]"
+			ui={{
+				tone: "secondary",
+				theme: "light",
+				background: "default",
+				border: true,
+				shadow: true,
+				round: "xl",
+				inner: "default",
+				snapTo: "bottom-center",
+				flow: "horizontal",
+				items: "center",
+				justify: "center",
+				gap: "default",
+				zIndex: true,
+				color: "lead",
+				opacity: "2xl",
+				...ui,
+			}}
+			className={"transition-all"}
 			{...props}
 		>
-			<div
-				data-ui="SnapperNav-items"
-				className={slots.items()}
-			>
-				{limit && $pages.length > limit ? renderLimiter() : renderPages()}
-			</div>
-		</div>
+			{limit && $pages.length > limit ? renderLimiter() : renderPages()}
+		</Container>
 	) : null;
 };
