@@ -1,8 +1,7 @@
 import type { useSelection } from "@use-pico/client/hook";
-import { Icon, TrashIcon } from "@use-pico/client/icon";
+import { TrashIcon } from "@use-pico/client/icon";
 import { Button } from "@use-pico/client/ui/button";
 import { Container } from "@use-pico/client/ui/container";
-import { Tx } from "@use-pico/client/ui/tx";
 import type { EntitySchema } from "@use-pico/common/schema";
 import { type FC, useId, useMemo } from "react";
 import { uiSelectButton } from "../ui";
@@ -65,6 +64,13 @@ export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) 
 						onClick={() => {
 							selection.toggle(item);
 						}}
+						iconEnabled={icon}
+						iconProps={{
+							ui: {
+								text: "xl",
+							},
+						}}
+						label={textHint(value)}
 						{...uiSelectButton({
 							isSelected: selected,
 							ui: {
@@ -73,30 +79,22 @@ export const Rating: FC<Rating.Props> = ({ textHint, selection, ui, ...props }) 
 								items: "center",
 								gap: "sm",
 								size: "default",
+								text: "lg",
 							},
 							className: [],
 						})}
-					>
-						<Icon
-							icon={icon}
-							ui={{
-								text: "xl",
-							}}
-						/>
-
-						<Tx
-							label={textHint(value)}
-							ui={{
-								text: "lg",
-							}}
-						/>
-					</Button>
+					/>
 				);
 			})}
 
 			<Button
 				iconEnabled={TrashIcon}
 				label={"Clear all (button)"}
+				iconProps={{
+					ui: {
+						text: "xl",
+					},
+				}}
 				onClick={() => {
 					selection.clear();
 				}}
