@@ -384,17 +384,24 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 				ui={{
 					layout: "vertical-centered",
 					gap: "default",
+					height: "full",
 				}}
 			>
-				<div className={"space-y-2"}>
+				<Container
+					ui={{
+						layout: "vertical-flex",
+						gap: "default",
+						inner: "4xl",
+					}}
+				>
 					<Button
 						loading={registerUsersMutation.isPending}
 						onClick={() => {
 							registerUsersMutation.mutate();
 						}}
 						ui={{
-							tone: "secondary",
-							theme: "dark",
+							tone: "brand",
+							theme: "light",
 						}}
 					>
 						Prepare users
@@ -457,7 +464,7 @@ export const Route = createFileRoute("/$locale/dev/seed")({
 					>
 						Seed favourite/flag/ignore
 					</Button>
-				</div>
+				</Container>
 			</Container>
 		);
 	},

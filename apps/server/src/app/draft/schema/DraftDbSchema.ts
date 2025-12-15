@@ -101,6 +101,15 @@ export const DraftDbSchema = z
 			description: "Last update timestamp",
 			type: "string",
 		}),
+		usedAt: z
+			.union([
+				z.coerce.date(),
+				z.null(),
+			])
+			.openapi({
+				description: "Timestamp when the draft was used to create a listing",
+				type: "string",
+			}),
 	})
 	.strip();
 

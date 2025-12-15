@@ -47,5 +47,13 @@ export const withDraftQueryBuilder: withDraftQueryBuilder.Callback = <
 		query = query.where("d.updatedAt", "<=", where.updatedAtLte) as TSelect;
 	}
 
+	if (where?.usedAtIsNull !== undefined) {
+		if (where.usedAtIsNull) {
+			query = query.where("d.usedAt", "is", null) as TSelect;
+		} else {
+			query = query.where("d.usedAt", "is not", null) as TSelect;
+		}
+	}
+
 	return query;
 };

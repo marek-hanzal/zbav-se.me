@@ -2270,6 +2270,9 @@ export const zDraftWhere = z.object({
     })),
     updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
+    })),
+    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
     }))
 }).register(z.globalRegistry, {
     description: 'App-based filters'
@@ -2298,6 +2301,9 @@ export const zDraftFilter = z.object({
     })),
     updatedAtLte: z.optional(z.string().register(z.globalRegistry, {
         description: 'This filter matches drafts with updatedAt less than or equal to the provided date'
+    })),
+    usedAtIsNull: z.optional(z.boolean().register(z.globalRegistry, {
+        description: 'This filter matches drafts where usedAt is null (true) or not null (false)'
     }))
 }).register(z.globalRegistry, {
     description: 'User-land filters'
@@ -2360,7 +2366,10 @@ export const zDraftPatchData = z.object({
     description: z.optional(z.union([
         z.string(),
         z.null()
-    ]))
+    ])),
+    usedAt: z.optional(z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the draft was used to create a listing'
+    }))
 }).register(z.globalRegistry, {
     description: 'Fields to update (all optional)'
 });
@@ -2484,6 +2493,9 @@ export const zDraft = z.object({
     }),
     updatedAt: z.string().register(z.globalRegistry, {
         description: 'Last update timestamp'
+    }),
+    usedAt: z.string().register(z.globalRegistry, {
+        description: 'Timestamp when the draft was used to create a listing'
     }),
     location: z.union([
         zLocation,

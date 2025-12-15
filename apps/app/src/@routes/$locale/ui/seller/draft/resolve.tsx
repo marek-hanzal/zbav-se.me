@@ -14,6 +14,7 @@ export const Route = createFileRoute("/$locale/ui/seller/draft/resolve")({
 							days: 3,
 						})
 						.toISO(),
+					usedAtIsNull: true,
 				},
 			})
 			.catch(() => undefined);

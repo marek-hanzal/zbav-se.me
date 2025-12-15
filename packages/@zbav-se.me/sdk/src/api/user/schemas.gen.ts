@@ -2930,6 +2930,9 @@ export const sDraftWhere = {
         },
         updatedAtLte: {
             type: 'string'
+        },
+        usedAtIsNull: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -2957,6 +2960,9 @@ export const sDraftFilter = {
         },
         updatedAtLte: {
             type: 'string'
+        },
+        usedAtIsNull: {
+            type: 'boolean'
         }
     }
 } as const;
@@ -3094,6 +3100,9 @@ export const sDraftPatchData = {
                     type: 'null'
                 }
             ]
+        },
+        usedAt: {
+            type: 'string'
         }
     }
 } as const;
@@ -3292,6 +3301,9 @@ export const sDraft = {
         updatedAt: {
             type: 'string'
         },
+        usedAt: {
+            type: 'string'
+        },
         location: {
             anyOf: [
                 {
@@ -3336,6 +3348,7 @@ export const sDraft = {
         'description',
         'createdAt',
         'updatedAt',
+        'usedAt',
         'location',
         'category',
         'gallery'

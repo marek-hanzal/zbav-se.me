@@ -25,6 +25,7 @@ export const DraftMigration: Migration = {
 			//
 			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
 			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("usedAt", "timestamp")
 			.addForeignKeyConstraint(
 				"draft_[userId]_fk",
 				[
@@ -96,5 +97,7 @@ export const DraftMigration: Migration = {
 			.on("draft")
 			.column("expiresAt")
 			.execute();
+
+		await db.schema.createIndex("draft_[usedAt]_idx").on("draft").column("usedAt").execute();
 	},
 };

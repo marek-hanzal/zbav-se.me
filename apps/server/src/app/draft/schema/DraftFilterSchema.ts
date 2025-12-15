@@ -17,6 +17,10 @@ export const DraftFilterSchema = z
 				"This filter matches drafts with updatedAt less than or equal to the provided date",
 			type: "string",
 		}),
+		usedAtIsNull: z.boolean().optional().openapi({
+			description:
+				"This filter matches drafts where usedAt is null (true) or not null (false)",
+		}),
 	})
 	.openapi("DraftFilter", {
 		description: "User-land filters",

@@ -2090,6 +2090,10 @@ export type tDraftWhere = {
      * This filter matches drafts with updatedAt less than or equal to the provided date
      */
     updatedAtLte?: string;
+    /**
+     * This filter matches drafts where usedAt is null (true) or not null (false)
+     */
+    usedAtIsNull?: boolean;
 };
 
 /**
@@ -2120,6 +2124,10 @@ export type tDraftFilter = {
      * This filter matches drafts with updatedAt less than or equal to the provided date
      */
     updatedAtLte?: string;
+    /**
+     * This filter matches drafts where usedAt is null (true) or not null (false)
+     */
+    usedAtIsNull?: boolean;
 };
 
 /**
@@ -2172,6 +2180,10 @@ export type tDraftPatchData = {
      * Description of the item
      */
     description?: string | null;
+    /**
+     * Timestamp when the draft was used to create a listing
+     */
+    usedAt?: string;
 };
 
 /**
@@ -2283,6 +2295,10 @@ export type tDraft = {
      * Last update timestamp
      */
     updatedAt: string;
+    /**
+     * Timestamp when the draft was used to create a listing
+     */
+    usedAt: string;
     /**
      * Location data
      */

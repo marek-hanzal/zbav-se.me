@@ -87,6 +87,21 @@ export const listingCreateFx = ({ uploadIds, ...data }: listingCreateFx.Props) =
 					.execute();
 			});
 
+			if (data.draftId) {
+				const draftId = data.draftId;
+				yield* Effect.tryPromise(async () => {
+					return database
+						.updateTable("draft")
+						.set({
+							usedAt: now,
+							updatedAt: now,
+						})
+						.where("id", "=", draftId)
+						.where("userId", "=", user.id)
+						.execute();
+				});
+			}
+
 			return yield* listingFetchFx({
 				where: {
 					id,
