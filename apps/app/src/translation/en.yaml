@@ -97,9 +97,6 @@
 2ffd83ff760df3b01dbae9a68e779315897a6cee3e88870b9a1f8105:
   ref: Age (title)
   value: Age (title)
-32b4ec288db7ebabe1391515dbe208c78531723f5c2c4660baf9fd7b:
-  ref: Refresh listings (button)
-  value: Refresh listings (button)
 356d8a83f26af88932bbce72d41eafdda319a008f3675379a1fc57d0:
   ref: Go to listings (button)
   value: Go to listings (button)
@@ -447,6 +444,9 @@ e14a7b455d617b56b9ff6118784b59871a8191a5b9db34d76e02d9fa:
 e3c1207676a818bc198388d6783d99bfa89ba7cf2fe2b07a983609cd:
   ref: Listing title (required)
   value: Listing title (required)
+e4889b76006e4faf6c6b72d87f7711888de501f0e58936e7053832d6:
+  ref: Refresh feed (button)
+  value: Refresh feed (button)
 e7211199110cc54c79f5341946a86c6828b5a6d84d69bf5123f9b4a0:
   ref: Listing score hint (label)
   value: Listing score hint (label)

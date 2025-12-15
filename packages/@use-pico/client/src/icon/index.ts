@@ -34,6 +34,7 @@ export { LogoutIcon } from "./LogoutIcon";
 export { LteIcon } from "./LteIcon";
 export { MenuIcon } from "./MenuIcon";
 export { PlusIcon } from "./PlusIcon";
+export { RefreshIcon } from "./RefreshIcon";
 export { SaveIcon } from "./SaveIcon";
 export { SelectionAnyIcon } from "./SelectionAnyIcon";
 export { SelectionFilterIcon } from "./SelectionFilterIcon";

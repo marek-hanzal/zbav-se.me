@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useSnapperNav } from "@use-pico/client/hook";
-import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { uiButton } from "@use-pico/client/ui/button";
+import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@use-pico/client/icon";
+import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
@@ -259,7 +259,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 		/**
 		 * This will force update "updatedAt" field, so we'll mark "this" feed as the "last visited" one.
 		 */
-		await withFeedPatchMutation.mutate(queryClient, {
+		const feed = await withFeedPatchMutation.mutate(queryClient, {
 			patch: {},
 			query: {
 				where: {
@@ -267,6 +267,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 				},
 			},
 		});
+
+		return {
+			feed,
+		};
 	},
 	/**
 	 * We've loader, so we also need pending component.
@@ -279,16 +283,13 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 		);
 	},
 	component() {
-		const { id, locale } = Route.useParams();
+		const { locale } = Route.useParams();
+		const router = useRouter();
 		const { scrollToId } = Route.useSearch();
 		const containerRef = useRef<HTMLDivElement>(null);
 		const [isFeedSettings, setIsFeedSettings] = useState(false);
+		const { feed } = Route.useLoaderData();
 
-		const { data: feed } = withFeedFetchQuery.useSuspenseQuery({
-			where: {
-				id,
-			},
-		});
 		/**
 		 * The trick - fetch _any_ listing, so we know, if the app is empty.
 		 *
@@ -471,15 +472,52 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 					</Container>
 				)}
 
-				<SetupSheet
-					data-ui={"/buyer/feed/$id/list-[FeedSetupSheet]"}
-					locale={locale}
-					feed={feed}
-					state={{
-						value: isFeedSettings,
-						set: setIsFeedSettings,
+				<withFeedFetchQuery.Suspense
+					data={{
+						where: {
+							id: feed.id,
+						},
 					}}
-				/>
+					fallback={null}
+				>
+					{({ data: feed }) => {
+						return (
+							<SetupSheet
+								data-ui={"/buyer/feed/$id/list-[FeedSetupSheet]"}
+								locale={locale}
+								feed={feed}
+								state={{
+									value: isFeedSettings,
+									set: setIsFeedSettings,
+								}}
+							>
+								<Button
+									onClick={() => {
+										setIsFeedSettings(false);
+										setTimeout(() => router.invalidate(), 0);
+									}}
+									iconEnabled={RefreshIcon}
+									iconProps={{
+										ui: {
+											text: "xl",
+										},
+									}}
+									label={"Refresh feed (button)"}
+									ui={{
+										tone: "neutral",
+										theme: "light",
+										size: "default",
+										justify: "start",
+										items: "center",
+										background: "default",
+										shadow: true,
+										border: true,
+									}}
+								/>
+							</SetupSheet>
+						);
+					}}
+				</withFeedFetchQuery.Suspense>
 			</FlowContainer>
 		);
 	},

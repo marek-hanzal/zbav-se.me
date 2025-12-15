@@ -17,7 +17,7 @@ export const SheetView = <TView extends string>({
 }: SheetView.Props<TView>) => {
 	const { children: _, ...current } = views[state.value];
 
-	const { onClose, ...rest } = {
+	const rest = {
 		...props,
 		...current,
 	};
@@ -30,8 +30,7 @@ export const SheetView = <TView extends string>({
 			{({ reset, scrollRef, content }) => (
 				<BottomSheet
 					{...rest}
-					onClose={() => {
-						onClose?.();
+					onCloseEnd={() => {
 						reset();
 					}}
 					contentProps={{
