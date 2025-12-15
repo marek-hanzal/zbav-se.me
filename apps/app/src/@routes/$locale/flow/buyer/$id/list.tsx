@@ -322,6 +322,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 
 		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 			containerRef,
+			threshold: 0.25,
 		});
 
 		return (
