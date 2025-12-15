@@ -10,10 +10,10 @@ import { DeadEndIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
 import { ListingListContainer } from "~/app/listing/ui/ListingListContainer";
 
-export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
+export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/list")({
 	component() {
 		const { locale } = Route.useParams();
-		const { feedId } = Route.useParams();
+		const { id } = Route.useParams();
 
 		return (
 			<FlowContainer
@@ -32,7 +32,7 @@ export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 			>
 				<ListingListContainer
 					locale={locale}
-					feedId={feedId}
+					feedId={id}
 					/**
 					 * Don't count score for listings in favourites
 					 */
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/$locale/buyer/favourite/$feedId/list")({
 					scrollToId={undefined}
 					query={{
 						where: {
-							feedId,
+							feedId: id,
 							isFavourite: true,
 							withIgnored: false,
 						},

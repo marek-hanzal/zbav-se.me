@@ -26,15 +26,18 @@ export const Route = createFileRoute("/$locale/ui/buyer/favourite/list")({
 								data-ui={
 									"/buyer/favourite/list-[FeedFavouriteList]-[LinkTo.header]"
 								}
-								to={"/$locale/buyer/favourite/$feedId/list"}
+								to={"/$locale/flow/buyer/feed/$id/favourite/list"}
 								params={{
 									locale,
-									feedId,
+									id: feedId,
 								}}
 							>
 								{children}
 							</LinkTo>
 						),
+					}}
+					ui={{
+						inner: "default",
 					}}
 				/>
 			</TitleContainer>
