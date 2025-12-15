@@ -38,9 +38,6 @@
 
 
         _Později si budeš moci v rámci transakce adresu upřesnit, když budeš chtít._
-0d6645ee2594f5987e94f46346a8d602e9c9c13c672dc7cd5be483be:
-    ref: Draft - continue (label)
-    value: Pokračovat
 0e1e457dd548460d3511979a215ab49d00f3ff2b73150c6d0c23f0d6:
     ref: First listing - go home (button)
     value: Přejít domů
@@ -136,6 +133,9 @@
 4363f4fb6f819cf057645cd3a62c4560949f8c20bae08b9619b2518e:
     ref: Your favourites (title)
     value: Oblíbené
+43c97e37d539928f112ef93039df9510299f8c68dc170da7c864a3ba:
+    ref: Draft list (label)
+    value: Šablony
 45524733af6f29b4788a785028913a3d590b79c64d36767abaf91294:
     ref: Uploading photo (title)
     value: Nahrávám fotku, momentík...
@@ -148,9 +148,6 @@
 46fc4830636405387727b8b88545e0e351e9227eaeac0426eafdb244:
     ref: Ignore listing (button)
     value: Ignorovat inzerát
-489d00517dfd05ee3a0d97637b9717d03aa5ae79bab228d5eed3e1e4:
-    ref: Loading... (label)
-    value: ...rozjímám...
 4a01f1f05544dfa1dd97924fcc80908007db6fe0310e8039fc078b4a:
     ref: Listing Score - Raw score (label)
     value: Listing Score - Raw score (label)

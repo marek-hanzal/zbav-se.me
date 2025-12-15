@@ -1,1 +1,1 @@
-export const ListingIcon = "icon-[ph--certificate-thin]";
+export const ListingIcon = "icon-[system-uicons--newspaper]";
