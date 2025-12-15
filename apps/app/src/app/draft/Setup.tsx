@@ -24,10 +24,10 @@ import { AgeValue } from "~/app/draft/value/AgeValue";
 import { CategoryValue } from "~/app/draft/value/CategoryValue";
 import { ConditionValue } from "~/app/draft/value/ConditionValue";
 import { ExpireAtValue } from "~/app/draft/value/ExpireAtValue";
-import { GalleryValue } from "~/app/draft/value/GalleryValue";
 import { LocationValue } from "~/app/draft/value/LocationValue";
 import { PriceValue } from "~/app/draft/value/PriceValue";
 import { TitleValue } from "~/app/draft/value/TitleValue";
+import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 
 export namespace Setup {
 	export type View =
@@ -83,7 +83,7 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 								}}
 							>
 								<GalleryValue
-									draft={draft}
+									uploads={draft.gallery.items.map((item) => item.upload)}
 									onClick={() => setView("gallery")}
 								/>
 

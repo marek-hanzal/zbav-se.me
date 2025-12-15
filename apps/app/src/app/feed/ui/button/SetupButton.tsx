@@ -93,7 +93,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 									inner: "default",
 								}}
 								values={{
-									hero: {
+									gallery: {
 										onClick: () => setView("gallery"),
 									},
 									name: {

@@ -1,16 +1,13 @@
 import { EditIcon, Icon, TrashIcon } from "@use-pico/client/icon";
 import { ConfirmButton } from "@use-pico/client/ui/button";
 import { Container, type LabelValue } from "@use-pico/client/ui/container";
-import { Status } from "@use-pico/client/ui/status";
 import { translator } from "@use-pico/common/translator";
-import type { CommonProps } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedDeleteMutation } from "@zbav-se.me/sdk/mutation/user";
-import { PhotoIcon } from "@zbav-se.me/ui/icon";
-import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 import { CategoryValue } from "~/app/category/ui/CategoryValue";
 import { TitleValue } from "~/app/feed/ui/value/TitleValue";
+import { GalleryValue } from "~/app/gallery/ui/GalleryValue";
 import { LocationValue } from "~/app/location/ui/LocationValue";
 import { AgeValue } from "./value/AgeValue";
 import { ConditionValue } from "./value/ConditionValue";
@@ -19,7 +16,7 @@ import { SortValue } from "./value/SortValue";
 
 export namespace Feed {
 	export interface Value {
-		hero?: Partial<CommonProps<Container.Props, HeroImage.Props>>;
+		gallery?: Partial<GalleryValue.Props>;
 		name?: Partial<LabelValue.PropsEx>;
 		category?: Partial<CategoryValue.Props>;
 		location?: Partial<LabelValue.PropsEx>;
@@ -94,60 +91,16 @@ export const Feed: FC<Feed.Props> = ({
 			}}
 			{...props}
 		>
-			{feed.upload ? (
-				<HeroImage
-					data-ui={"FeedDetailContainer-[HeroImage]"}
-					src={feed.upload.url}
-					alt={`Hero image for feed ${feed.id}`}
-					visible
-					round={"default"}
-					ui={{
-						width: "full",
-					}}
-					className="h-42"
-					{...values?.hero}
-				/>
-			) : (
-				<Container
-					data-ui={"FeedDetailContainer-[Container.placeholder]"}
-					ui={{
-						tone: "neutral",
-						theme: "light",
-						round: "md",
-						width: "full",
-						flow: "horizontal",
-						items: "center",
-						justify: "center",
-						background: "default",
-						shadow: true,
-						border: true,
-					}}
-					className="h-42"
-					{...values?.hero}
-				>
-					<Status
-						data-ui={"FeedDetailContainer-[Status.photo-hint]"}
-						icon={PhotoIcon}
-						iconProps={{
-							ui: {
-								text: "3xl",
-							},
-						}}
-						textTitle={"Feed - Select hero image (label)"}
-						titleProps={{
-							ui: {
-								font: "normal",
-								text: "lg",
-							},
-						}}
-						ui={{
-							tone: "primary",
-							theme: "light",
-							text: "default",
-						}}
-					/>
-				</Container>
-			)}
+			<GalleryValue
+				uploads={
+					feed.upload
+						? [
+								feed.upload,
+							]
+						: []
+				}
+				{...values?.gallery}
+			/>
 
 			<NameValue
 				feed={feed}

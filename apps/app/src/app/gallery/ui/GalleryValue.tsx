@@ -1,17 +1,18 @@
 import { Container } from "@use-pico/client/ui/container";
 import { Status } from "@use-pico/client/ui/status";
-import type { tDraft } from "@zbav-se.me/sdk/api/user";
+import type { tUpload } from "@zbav-se.me/sdk/api/user";
 import { PhotoIcon } from "@zbav-se.me/ui/icon";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import type { FC } from "react";
 
 export namespace GalleryValue {
 	export interface Props extends Container.Props {
-		draft: tDraft;
+		uploads: tUpload[];
+		statusProps?: Status.Props;
 	}
 }
 
-export const GalleryValue: FC<GalleryValue.Props> = ({ draft, ...props }) => {
+export const GalleryValue: FC<GalleryValue.Props> = ({ uploads, statusProps, ...props }) => {
 	return (
 		<Container
 			data-ui={"GalleryValue[Container]"}
@@ -30,16 +31,16 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ draft, ...props }) => {
 			className="h-42"
 			{...props}
 		>
-			{draft.gallery.items.length > 0 && draft.gallery.items[0]?.upload ? (
+			{uploads.length > 0 && uploads[0] ? (
 				<HeroImage
-					src={draft.gallery.items[0]?.upload.url}
+					src={uploads[0].url}
 					ui={{
 						round: "default",
 					}}
 				/>
 			) : null}
 
-			{draft.gallery.items.length > 0 ? null : (
+			{uploads.length > 0 ? null : (
 				<Status
 					data-ui={"GalleryValue-[Status.photo-hint]"}
 					icon={PhotoIcon}
@@ -56,10 +57,11 @@ export const GalleryValue: FC<GalleryValue.Props> = ({ draft, ...props }) => {
 						},
 					}}
 					ui={{
-						tone: (draft.gallery?.items.length ?? 0) > 0 ? "neutral" : "primary",
+						tone: uploads.length > 0 ? "neutral" : "primary",
 						theme: "light",
 						text: "default",
 					}}
+					{...statusProps}
 				/>
 			)}
 		</Container>
