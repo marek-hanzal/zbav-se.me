@@ -19,7 +19,7 @@ export const uiBackButton = ({ ui, className }: uiBackButton.Props) => {
 			theme: "light",
 			justify: "center",
 			round: "full",
-			square: "sm",
+			square: "md",
 			text: "xl",
 			opacity: "low",
 			...ui,

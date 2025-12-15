@@ -6,8 +6,6 @@ import type {
 	tApiFeedPatchResponse,
 	tFeedPatch,
 } from "../../../api/user/types.gen";
-import { withFeedCollectionQuery } from "../../../query/user/feed/withFeedCollectionQuery";
-import { withFeedFetchQuery } from "../../../query/user/feed/withFeedFetchQuery";
 
 export const withFeedPatchMutation = withMutation<
 	tFeedPatch,
@@ -28,8 +26,5 @@ export const withFeedPatchMutation = withMutation<
 			}),
 		);
 	},
-	invalidate: [
-		withFeedCollectionQuery,
-		withFeedFetchQuery,
-	],
+	invalidate: [],
 });

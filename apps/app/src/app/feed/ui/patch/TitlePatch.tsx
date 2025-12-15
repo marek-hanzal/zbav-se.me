@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { TitleInput } from "~/app/feed/ui/input/TitleInput";
 
 export namespace TitlePatch {
-	export interface Props extends Container.Props {
+	export interface Props extends Omit<Container.Props, "defaultValue"> {
 		feed: tFeed;
 		onSettled?(): void;
 		onCancel(): void;
@@ -42,6 +42,7 @@ export const TitlePatch: FC<TitlePatch.Props> = ({ feed, onSettled, onCancel, ..
 					},
 				});
 			}}
+			{...props}
 		/>
 	);
 };

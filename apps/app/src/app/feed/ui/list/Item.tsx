@@ -5,6 +5,7 @@ import { Tx } from "@use-pico/client/ui/tx";
 import { tvc } from "@use-pico/cls";
 import { translator } from "@use-pico/common/translator";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
+import { withListingCollectionQuery } from "@zbav-se.me/sdk/query/user/listing";
 import { HeroImage } from "@zbav-se.me/ui/img";
 import { type FC, type PropsWithChildren, type ReactNode, useState } from "react";
 import { ListingCountBadge } from "~/app/listing/ui/ListingCountBadge";
@@ -37,7 +38,6 @@ export namespace Item {
 		feed: tFeed;
 		defaultOpen: boolean;
 		tools: Tools[];
-		count?: number;
 		linkTo: LinkTo;
 	}
 }
@@ -47,14 +47,12 @@ export const Item: FC<Item.Props> = ({
 	feed,
 	defaultOpen,
 	tools,
-	count,
 	linkTo,
 	ui,
 	className,
 	...props
 }) => {
 	const [isFeedSettings, setIsFeedSettings] = useState(false);
-	const hasListings = count && count > 0;
 
 	return (
 		<Container
@@ -137,83 +135,93 @@ export const Item: FC<Item.Props> = ({
 				/>
 			</Badge>
 
-			{tools.includes("setup") && hasListings ? (
-				<SetupButton
-					data-ui={"Item-[FeedSetupButton]"}
-					locale={locale}
-					iconProps={{
-						ui: {
-							text: "2xl",
-						},
-					}}
-					state={{
-						value: isFeedSettings,
-						set: setIsFeedSettings,
-					}}
-					feed={feed}
-					defaultOpen={defaultOpen}
-					noDelete={false}
-					label={null}
-					ui={{
-						tone: "secondary",
-						size: "sm",
-						snapTo: "top-right",
-						items: "center",
-						justify: "center",
-						color: "icon",
-						round: "full",
-						square: "default",
-						opacity: "low",
-					}}
-				/>
-			) : null}
+			<withListingCollectionQuery.Suspense
+				data={feed.query}
+				fallback={null}
+			>
+				{({ data }) => {
+					return (
+						<>
+							{tools.includes("setup") && data.data.length > 0 ? (
+								<SetupButton
+									data-ui={"Item-[FeedSetupButton]"}
+									locale={locale}
+									iconProps={{
+										ui: {
+											text: "2xl",
+										},
+									}}
+									state={{
+										value: isFeedSettings,
+										set: setIsFeedSettings,
+									}}
+									feed={feed}
+									defaultOpen={defaultOpen}
+									noDelete={false}
+									label={null}
+									ui={{
+										tone: "secondary",
+										size: "sm",
+										snapTo: "top-right",
+										items: "center",
+										justify: "center",
+										color: "icon",
+										round: "full",
+										square: "default",
+										opacity: "low",
+									}}
+								/>
+							) : null}
 
-			{hasListings ? (
-				<ListingCountBadge
-					locale={locale}
-					count={count}
-					query={feed.query}
-					ui={{
-						snapTo: "top-left",
-						background: undefined,
-						border: false,
-						shadow: false,
-					}}
-				/>
-			) : null}
+							{data.data.length > 0 ? (
+								<ListingCountBadge
+									locale={locale}
+									query={feed.query}
+									ui={{
+										snapTo: "top-left",
+										background: undefined,
+										border: false,
+										shadow: false,
+									}}
+								/>
+							) : null}
 
-			{hasListings ? null : (
-				<SetupButton
-					data-ui={"Item-[FeedSetupButton]"}
-					locale={locale}
-					iconProps={{
-						ui: {
-							text: "xl",
-						},
-					}}
-					state={{
-						value: isFeedSettings,
-						set: setIsFeedSettings,
-					}}
-					feed={feed}
-					defaultOpen={defaultOpen}
-					noDelete={false}
-					label={translator.text("No listings (badge)")}
-					ui={{
-						tone: "secondary",
-						theme: "light",
-						snapTo: "bottom",
-						color: "lead",
-						opacity: "low",
-						inner: "default",
-						items: "center",
-						justify: "center",
-						gap: "default",
-						font: "bold",
-						shadow: true,
-					}}
-				/>
-			)}
+							{data.data.length > 0 ? null : (
+								<SetupButton
+									data-ui={"Item-[FeedSetupButton]"}
+									locale={locale}
+									iconProps={{
+										ui: {
+											text: "xl",
+										},
+									}}
+									state={{
+										value: isFeedSettings,
+										set: setIsFeedSettings,
+									}}
+									feed={feed}
+									defaultOpen={defaultOpen}
+									noDelete={false}
+									label={translator.text("No listings (badge)")}
+									ui={{
+										tone: "secondary",
+										theme: "light",
+										snapTo: "bottom",
+										color: "lead",
+										opacity: "low",
+										inner: "default",
+										items: "center",
+										justify: "center",
+										gap: "default",
+										font: "bold",
+										shadow: true,
+									}}
+								/>
+							)}
+						</>
+					);
+				}}
+			</withListingCollectionQuery.Suspense>
 		</Container>
 	);
 };
