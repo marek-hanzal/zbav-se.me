@@ -153,8 +153,9 @@
     value: Listing Score - Raw score (label)
 4a6d672731040044ea10a6210d1d72de8ce2a49c57e6eab1ba45eb66:
     ref: Feed name (required)
-    value: |
-        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní pneu).
+    value: >
+        Nastav si svůj název seznamu, abys poznal, co v něm očekáváš (např. zimní
+        pneu).
 4e588492045bceaec27da5e5d4339c20bd6a24b23eb0600e3d54e24c:
     ref: Second tap to unignore listing (toast)
     value: Druhým kliknutím zruš ignoraci inzerátu
@@ -206,6 +207,9 @@
 6311813e1e6c15a1177e1bf2fcc765faef3e9c9aea1851a72163366a:
     ref: View transactions (button)
     value: Zprávy
+63420be8140a114dea070923e4838659e1d7a62fb9748d2550303791:
+    ref: Feed photo gallery (label)
+    value: Obrázek seznamu
 6404e218d58affb344a49493074e2a22a0bef1cc9743c426c995b49b:
     ref: Feed name (default)
     value: Můj seznam
@@ -365,6 +369,12 @@ Expire in 14-days:
 Expire in 7-days:
     static: true
     value: Za týden
+Listing common sort value createdAt - asc:
+    static: true
+    value: Nejstarší inzerát
+Listing common sort value createdAt - desc:
+    static: true
+    value: Nejnovější inzerát
 Listing common sort value age - asc:
     static: true
     value: Od nejstaršího
@@ -599,9 +609,6 @@ fc4b9bdda64f2d7772ab323229a3027069f5a96f6d10f75d7cfbca79:
 fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
     ref: Listing title (label)
     value: Titulek inzerátu
-fdf12da2c20a3773d63d2a05055c386437e8a2eebccbcdfd3da5b51a:
-    ref: No listings (badge)
-    value: Čeká na správné inzeráty
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
