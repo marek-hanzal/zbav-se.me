@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeftIcon, ArrowRightIcon } from "@use-pico/client/icon";
-import { Button } from "@use-pico/client/ui/button";
+import { Button, uiButton } from "@use-pico/client/ui/button";
 import { SpinnerContainer } from "@use-pico/client/ui/container";
 import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
+import { Tx } from "@use-pico/client/ui/tx";
 import { withFavouriteCountQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon } from "@zbav-se.me/ui/icon";
@@ -73,44 +74,44 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/favourite/lis
 													"Empty favourite - category and favourite (title)"
 												}
 												action={
-													<div className="flex flex-col gap-2 items-center justify-center w-full">
+													<>
 														<LinkTo
 															to={"/$locale/buyer/feed/default"}
+															icon={ArrowRightIcon}
+															iconPosition={"right"}
 															params={{
 																locale,
 															}}
+															{...uiButton({
+																className: [],
+															})}
 														>
-															<Button
-																iconEnabled={ArrowRightIcon}
-																iconPosition={"right"}
-																label={"Go to feed (link)"}
-																ui={{
-																	tone: "primary",
-																	justify: "start",
-																	size: "xl",
-																}}
-															/>
+															<Tx label={"Go to feed (link)"} />
 														</LinkTo>
 
 														<LinkTo
+															icon={ArrowRightIcon}
+															iconPosition={"right"}
 															to={"/$locale/ui/home"}
 															params={{
 																locale,
 															}}
+															{...uiButton({
+																ui: {
+																	tone: "link",
+																	theme: "light",
+																},
+																className: [],
+															})}
 														>
-															<Button
-																iconEnabled={ArrowRightIcon}
-																iconPosition={"right"}
-																label={"Go to home (link)"}
-																ui={{
-																	tone: "primary",
-																	justify: "start",
-																	size: "xl",
-																}}
-															/>
+															<Tx label={"Go to home (link)"} />
 														</LinkTo>
-													</div>
+													</>
 												}
+												ui={{
+													tone: "brand",
+													theme: "light",
+												}}
 											/>
 										);
 									}
