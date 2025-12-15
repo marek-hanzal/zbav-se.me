@@ -41,7 +41,7 @@ export const Route = createFileRoute("/$locale/buyer/feed/default")({
 		}
 
 		throw redirect({
-			to: "/$locale/flow/buyer/$id/list",
+			to: "/$locale/flow/buyer/feed/$id/list",
 			params: {
 				locale,
 				id: feed.id,

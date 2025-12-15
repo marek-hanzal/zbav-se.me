@@ -1271,104 +1271,6 @@ export const zListingCreate = z.object({
 export type zListingCreate = z.infer<typeof zListingCreate>;
 
 /**
- * Category data
- */
-export const zCategory = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    group: z.string().register(z.globalRegistry, {
-        description: 'Group/name of the category'
-    }),
-    category: z.string().register(z.globalRegistry, {
-        description: 'Category name within the group'
-    }),
-    slug: z.string().register(z.globalRegistry, {
-        description: 'Slug of the category'
-    }),
-    sort: z.number().register(z.globalRegistry, {
-        description: 'Sort order (position) of the category'
-    }),
-    locale: z.string().register(z.globalRegistry, {
-        description: 'Locale/language of the category'
-    })
-}).register(z.globalRegistry, {
-    description: 'Category data'
-});
-
-export type zCategory = z.infer<typeof zCategory>;
-
-/**
- * Listing data
- */
-export const zListing = z.object({
-    id: z.string().register(z.globalRegistry, {
-        description: 'ID of the listing'
-    }),
-    price: z.number().register(z.globalRegistry, {
-        description: 'Price of the listing'
-    }),
-    currency: zCurrencyListEnum,
-    condition: z.number().register(z.globalRegistry, {
-        description: 'Condition of the item (0-based index)'
-    }),
-    age: z.number().register(z.globalRegistry, {
-        description: 'Age of the item (0-based index)'
-    }),
-    locationId: z.string().register(z.globalRegistry, {
-        description: 'ID of the location'
-    }),
-    categoryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the category'
-    }),
-    galleryId: z.string().register(z.globalRegistry, {
-        description: 'ID of the gallery'
-    }),
-    draftId: z.union([
-        z.string(),
-        z.null()
-    ]),
-    expiresAt: z.string().register(z.globalRegistry, {
-        description: 'Expiration timestamp'
-    }),
-    title: z.string().register(z.globalRegistry, {
-        description: 'Title of the item'
-    }),
-    description: z.union([
-        z.string(),
-        z.null()
-    ]),
-    createdAt: z.string().register(z.globalRegistry, {
-        description: 'Creation timestamp'
-    }),
-    updatedAt: z.string().register(z.globalRegistry, {
-        description: 'Last update timestamp'
-    }),
-    location: zLocation,
-    category: zCategory,
-    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
-        description: 'Listing gallery images'
-    })),
-    isFavourite: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user has this listing in favourites'
-    }),
-    isIgnored: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user ignored this listing'
-    }),
-    hasFlag: z.boolean().register(z.globalRegistry, {
-        description: 'Whether the user flagged this listing'
-    }),
-    transactionId: z.union([
-        z.string(),
-        z.null()
-    ])
-}).register(z.globalRegistry, {
-    description: 'Listing data'
-});
-
-export type zListing = z.infer<typeof zListing>;
-
-/**
  * Data for toggling a listing in ignore list
  */
 export const zIgnoreToggle = z.object({
@@ -2096,6 +1998,104 @@ export const zFavouriteToggle = z.object({
 export type zFavouriteToggle = z.infer<typeof zFavouriteToggle>;
 
 /**
+ * Category data
+ */
+export const zCategory = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    group: z.string().register(z.globalRegistry, {
+        description: 'Group/name of the category'
+    }),
+    category: z.string().register(z.globalRegistry, {
+        description: 'Category name within the group'
+    }),
+    slug: z.string().register(z.globalRegistry, {
+        description: 'Slug of the category'
+    }),
+    sort: z.number().register(z.globalRegistry, {
+        description: 'Sort order (position) of the category'
+    }),
+    locale: z.string().register(z.globalRegistry, {
+        description: 'Locale/language of the category'
+    })
+}).register(z.globalRegistry, {
+    description: 'Category data'
+});
+
+export type zCategory = z.infer<typeof zCategory>;
+
+/**
+ * Listing data
+ */
+export const zListing = z.object({
+    id: z.string().register(z.globalRegistry, {
+        description: 'ID of the listing'
+    }),
+    price: z.number().register(z.globalRegistry, {
+        description: 'Price of the listing'
+    }),
+    currency: zCurrencyListEnum,
+    condition: z.number().register(z.globalRegistry, {
+        description: 'Condition of the item (0-based index)'
+    }),
+    age: z.number().register(z.globalRegistry, {
+        description: 'Age of the item (0-based index)'
+    }),
+    locationId: z.string().register(z.globalRegistry, {
+        description: 'ID of the location'
+    }),
+    categoryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the category'
+    }),
+    galleryId: z.string().register(z.globalRegistry, {
+        description: 'ID of the gallery'
+    }),
+    draftId: z.union([
+        z.string(),
+        z.null()
+    ]),
+    expiresAt: z.string().register(z.globalRegistry, {
+        description: 'Expiration timestamp'
+    }),
+    title: z.string().register(z.globalRegistry, {
+        description: 'Title of the item'
+    }),
+    description: z.union([
+        z.string(),
+        z.null()
+    ]),
+    createdAt: z.string().register(z.globalRegistry, {
+        description: 'Creation timestamp'
+    }),
+    updatedAt: z.string().register(z.globalRegistry, {
+        description: 'Last update timestamp'
+    }),
+    location: zLocation,
+    category: zCategory,
+    gallery: zGallery.and(z.unknown().register(z.globalRegistry, {
+        description: 'Listing gallery images'
+    })),
+    isFavourite: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user has this listing in favourites'
+    }),
+    isIgnored: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user ignored this listing'
+    }),
+    hasFlag: z.boolean().register(z.globalRegistry, {
+        description: 'Whether the user flagged this listing'
+    }),
+    transactionId: z.union([
+        z.string(),
+        z.null()
+    ])
+}).register(z.globalRegistry, {
+    description: 'Listing data'
+});
+
+export type zListing = z.infer<typeof zListing>;
+
+/**
  * App-based filters
  */
 export const zFavouriteWhere = z.object({
@@ -2734,9 +2734,7 @@ export type zapiFavouriteToggleRequest = z.infer<typeof zApiFavouriteToggleData>
 /**
  * Nothing to say, we're just happy
  */
-export const zApiFavouriteToggleResponse = z.void().register(z.globalRegistry, {
-    description: 'Nothing to say, we\'re just happy'
-});
+export const zApiFavouriteToggleResponse = zListing;
 
 export type zapiFavouriteToggleResponse = z.infer<typeof zApiFavouriteToggleResponse>;
 
@@ -2903,9 +2901,7 @@ export type zapiFlagToggleRequest = z.infer<typeof zApiFlagToggleData>;
 /**
  * Nothing to say, we're just happy
  */
-export const zApiFlagToggleResponse = z.void().register(z.globalRegistry, {
-    description: 'Nothing to say, we\'re just happy'
-});
+export const zApiFlagToggleResponse = zListing;
 
 export type zapiFlagToggleResponse = z.infer<typeof zApiFlagToggleResponse>;
 

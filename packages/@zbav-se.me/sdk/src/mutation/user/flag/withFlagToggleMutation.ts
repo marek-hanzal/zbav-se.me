@@ -9,7 +9,7 @@ import type {
 
 export const withFlagToggleMutation = withMutation<
 	tFlagToggle,
-	tApiFlagToggleResponse[204],
+	tApiFlagToggleResponse[200],
 	apiFlagToggleError
 >({
 	keys(variables) {

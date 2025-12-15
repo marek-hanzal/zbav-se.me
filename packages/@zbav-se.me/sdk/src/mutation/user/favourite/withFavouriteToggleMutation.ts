@@ -9,7 +9,7 @@ import type {
 
 export const withFavouriteToggleMutation = withMutation<
 	tFavouriteToggle,
-	tApiFavouriteToggleResponse[204],
+	tApiFavouriteToggleResponse[200],
 	apiFavouriteToggleError
 >({
 	keys(variables) {

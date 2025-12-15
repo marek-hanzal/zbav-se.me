@@ -1162,114 +1162,6 @@ export const tListingExpireEnum = {
 export type tListingExpireEnum = typeof tListingExpireEnum[keyof typeof tListingExpireEnum];
 
 /**
- * Listing data
- */
-export type tListing = {
-    /**
-     * ID of the listing
-     */
-    id: string;
-    /**
-     * Price of the listing
-     */
-    price: number;
-    currency: tCurrencyListEnum;
-    /**
-     * Condition of the item (0-based index)
-     */
-    condition: number;
-    /**
-     * Age of the item (0-based index)
-     */
-    age: number;
-    /**
-     * ID of the location
-     */
-    locationId: string;
-    /**
-     * ID of the category
-     */
-    categoryId: string;
-    /**
-     * ID of the gallery
-     */
-    galleryId: string;
-    /**
-     * ID of the draft this listing was created from
-     */
-    draftId: string | null;
-    /**
-     * Expiration timestamp
-     */
-    expiresAt: string;
-    /**
-     * Title of the item
-     */
-    title: string;
-    /**
-     * Description of the item
-     */
-    description: string | null;
-    /**
-     * Creation timestamp
-     */
-    createdAt: string;
-    /**
-     * Last update timestamp
-     */
-    updatedAt: string;
-    location: tLocation;
-    category: tCategory;
-    gallery: tGallery & unknown;
-    /**
-     * Whether the user has this listing in favourites
-     */
-    isFavourite: boolean;
-    /**
-     * Whether the user ignored this listing
-     */
-    isIgnored: boolean;
-    /**
-     * Whether the user flagged this listing
-     */
-    hasFlag: boolean;
-    /**
-     * Whether the user has a transaction with this listing
-     */
-    transactionId: string | null;
-};
-
-/**
- * Category data
- */
-export type tCategory = {
-    /**
-     * ID of the category
-     */
-    id: string;
-    /**
-     * Group/name of the category
-     */
-    group: string;
-    /**
-     * Category name within the group
-     */
-    category: string;
-    /**
-     * Slug of the category
-     */
-    slug: string;
-    /**
-     * Sort order (position) of the category
-     */
-    sort: number;
-    /**
-     * Locale/language of the category
-     */
-    locale: string;
-};
-
-/**
  * Data for toggling a listing in ignore list
  */
 export type tIgnoreToggle = {
@@ -1913,6 +1805,114 @@ export type tFavouriteToggle = {
      * ID of the listing to toggle
      */
     listingId: string;
+};
+
+/**
+ * Listing data
+ */
+export type tListing = {
+    /**
+     * ID of the listing
+     */
+    id: string;
+    /**
+     * Price of the listing
+     */
+    price: number;
+    currency: tCurrencyListEnum;
+    /**
+     * Condition of the item (0-based index)
+     */
+    condition: number;
+    /**
+     * Age of the item (0-based index)
+     */
+    age: number;
+    /**
+     * ID of the location
+     */
+    locationId: string;
+    /**
+     * ID of the category
+     */
+    categoryId: string;
+    /**
+     * ID of the gallery
+     */
+    galleryId: string;
+    /**
+     * ID of the draft this listing was created from
+     */
+    draftId: string | null;
+    /**
+     * Expiration timestamp
+     */
+    expiresAt: string;
+    /**
+     * Title of the item
+     */
+    title: string;
+    /**
+     * Description of the item
+     */
+    description: string | null;
+    /**
+     * Creation timestamp
+     */
+    createdAt: string;
+    /**
+     * Last update timestamp
+     */
+    updatedAt: string;
+    location: tLocation;
+    category: tCategory;
+    gallery: tGallery & unknown;
+    /**
+     * Whether the user has this listing in favourites
+     */
+    isFavourite: boolean;
+    /**
+     * Whether the user ignored this listing
+     */
+    isIgnored: boolean;
+    /**
+     * Whether the user flagged this listing
+     */
+    hasFlag: boolean;
+    /**
+     * Whether the user has a transaction with this listing
+     */
+    transactionId: string | null;
+};
+
+/**
+ * Category data
+ */
+export type tCategory = {
+    /**
+     * ID of the category
+     */
+    id: string;
+    /**
+     * Group/name of the category
+     */
+    group: string;
+    /**
+     * Category name within the group
+     */
+    category: string;
+    /**
+     * Slug of the category
+     */
+    slug: string;
+    /**
+     * Sort order (position) of the category
+     */
+    sort: number;
+    /**
+     * Locale/language of the category
+     */
+    locale: string;
 };
 
 /**
@@ -2678,7 +2678,7 @@ export type tApiFavouriteToggleResponse = {
     /**
      * Nothing to say, we're just happy
      */
-    204: void;
+    200: tListing;
 };
 
 export type apiFavouriteToggleResponse = tApiFavouriteToggleResponse[keyof tApiFavouriteToggleResponse];
@@ -3004,7 +3004,7 @@ export type tApiFlagToggleResponse = {
     /**
      * Nothing to say, we're just happy
      */
-    204: void;
+    200: tListing;
 };
 
 export type apiFlagToggleResponse = tApiFlagToggleResponse[keyof tApiFlagToggleResponse];

@@ -59,7 +59,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 			}}
 			{...props}
 		/>
-	)
+	);
 };
 
 export namespace Appendix {
@@ -161,7 +161,7 @@ export const Appendix: FC<Appendix.Props> = ({
 				]}
 			/>
 		</Container>
-	)
+	);
 };
 
 export namespace FeedEmpty {
@@ -263,7 +263,7 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({
 				]}
 			/>
 		</Container>
-	)
+	);
 };
 
 export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
@@ -284,11 +284,11 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 					id,
 				},
 			},
-		})
+		});
 
 		return {
 			feed,
-		}
+		};
 	},
 	/**
 	 * We've loader, so we also need pending component.
@@ -298,7 +298,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 			<FlowContainer>
 				<SpinnerContainer />
 			</FlowContainer>
-		)
+		);
 	},
 	component() {
 		const { locale } = Route.useParams();
@@ -318,12 +318,12 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 				page: 0,
 				size: 1,
 			},
-		})
+		});
 
 		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 			containerRef,
 			threshold: 0.25,
-		})
+		});
 
 		return (
 			<FlowContainer
@@ -517,7 +517,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 							>
 								<Button
 									onClick={() => {
-										setIsFeedSettings(false)
+										setIsFeedSettings(false);
 										setTimeout(() => router.invalidate(), 200);
 									}}
 									iconEnabled={RefreshIcon}
@@ -539,10 +539,10 @@ export const Route = createFileRoute("/$locale/flow/buyer/feed/$id/list")({
 									}}
 								/>
 							</SetupSheet>
-						)
+						);
 					}}
 				</withFeedFetchQuery.Suspense>
 			</FlowContainer>
-		)
+		);
 	},
 });

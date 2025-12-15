@@ -3,6 +3,7 @@ import { favouriteCreateFx } from "~/@user/favourite/fx/favouriteCreateFx";
 import { favouriteDeleteFx } from "~/@user/favourite/fx/favouriteDeleteFx";
 import type { FavouriteToggleSchema } from "~/@user/favourite/schema/FavouriteToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
+import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
 import { listingScoreCreateFx } from "~/@user/listing-score/fx/listingScoreCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
 
@@ -18,7 +19,7 @@ export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggle
 				message: "You cannot add your own listing to favourites",
 			});
 
-			yield* Effect.if(toggle, {
+			return yield* Effect.if(toggle, {
 				onTrue() {
 					return Effect.gen(function* () {
 						yield* favouriteCreateFx({
@@ -31,7 +32,11 @@ export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggle
 							score: "favourite",
 						}).pipe(Effect.ignore);
 
-						return yield* Effect.void;
+						return yield* listingFetchFx({
+							where: {
+								id: listingId,
+							},
+						});
 					});
 				},
 				onFalse() {
@@ -40,7 +45,11 @@ export const favouriteToggleFx = ({ feedId, listingId, toggle }: favouriteToggle
 							listingId,
 						});
 
-						return yield* Effect.void;
+						return yield* listingFetchFx({
+							where: {
+								id: listingId,
+							},
+						});
 					});
 				},
 			});

@@ -159,6 +159,7 @@ export const apiFavouriteCount = <ThrowOnError extends boolean = false>(options?
  */
 export const apiFavouriteToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiFavouriteToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFavouriteToggleResponse, apiFavouriteToggleErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFavouriteToggleData.parseAsync(data),
+    responseType: 'json',
     responseValidator: async (data) => await zApiFavouriteToggleResponse.parseAsync(data),
     url: '/api/user/favourite/toggle',
     ...options,
@@ -323,6 +324,7 @@ export const apiFlagCount = <ThrowOnError extends boolean = false>(options?: Opt
  */
 export const apiFlagToggle = <ThrowOnError extends boolean = false>(options?: Options<tApiFlagToggleRequest, ThrowOnError>) => (options?.client ?? client).post<tApiFlagToggleResponse, apiFlagToggleErrors, ThrowOnError>({
     requestValidator: async (data) => await zApiFlagToggleData.parseAsync(data),
+    responseType: 'json',
     responseValidator: async (data) => await zApiFlagToggleResponse.parseAsync(data),
     url: '/api/user/flag/toggle',
     ...options,

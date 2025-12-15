@@ -1655,165 +1655,6 @@ export const sListingExpireEnum = {
     ]
 } as const;
 
-export const sListing = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        price: {
-            type: 'number'
-        },
-        currency: {
-            $ref: '#/components/schemas/CurrencyListEnum'
-        },
-        condition: {
-            type: 'number'
-        },
-        age: {
-            type: 'number'
-        },
-        locationId: {
-            type: 'string'
-        },
-        categoryId: {
-            type: 'string'
-        },
-        galleryId: {
-            type: 'string'
-        },
-        draftId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        expiresAt: {
-            type: 'string'
-        },
-        title: {
-            type: 'string'
-        },
-        description: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        },
-        createdAt: {
-            type: 'string'
-        },
-        updatedAt: {
-            type: 'string'
-        },
-        location: {
-            $ref: '#/components/schemas/Location'
-        },
-        category: {
-            $ref: '#/components/schemas/Category'
-        },
-        gallery: {
-            allOf: [
-                {
-                    $ref: '#/components/schemas/Gallery'
-                },
-                {}
-            ]
-        },
-        isFavourite: {
-            type: 'boolean'
-        },
-        isIgnored: {
-            type: 'boolean'
-        },
-        hasFlag: {
-            type: 'boolean'
-        },
-        transactionId: {
-            anyOf: [
-                {
-                    type: 'string'
-                },
-                {
-                    type: 'null'
-                },
-                {
-                    type: 'null'
-                }
-            ]
-        }
-    },
-    required: [
-        'id',
-        'price',
-        'currency',
-        'condition',
-        'age',
-        'locationId',
-        'categoryId',
-        'galleryId',
-        'draftId',
-        'expiresAt',
-        'title',
-        'description',
-        'createdAt',
-        'updatedAt',
-        'location',
-        'category',
-        'gallery',
-        'isFavourite',
-        'isIgnored',
-        'hasFlag',
-        'transactionId'
-    ]
-} as const;
-
-export const sCategory = {
-    type: 'object',
-    properties: {
-        id: {
-            type: 'string'
-        },
-        group: {
-            type: 'string'
-        },
-        category: {
-            type: 'string'
-        },
-        slug: {
-            type: 'string'
-        },
-        sort: {
-            type: 'number'
-        },
-        locale: {
-            type: 'string'
-        }
-    },
-    required: [
-        'id',
-        'group',
-        'category',
-        'slug',
-        'sort',
-        'locale'
-    ]
-} as const;
-
 export const sIgnoreToggle = {
     type: 'object',
     properties: {
@@ -2717,6 +2558,165 @@ export const sFavouriteToggle = {
         'toggle',
         'feedId',
         'listingId'
+    ]
+} as const;
+
+export const sListing = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        price: {
+            type: 'number'
+        },
+        currency: {
+            $ref: '#/components/schemas/CurrencyListEnum'
+        },
+        condition: {
+            type: 'number'
+        },
+        age: {
+            type: 'number'
+        },
+        locationId: {
+            type: 'string'
+        },
+        categoryId: {
+            type: 'string'
+        },
+        galleryId: {
+            type: 'string'
+        },
+        draftId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        expiresAt: {
+            type: 'string'
+        },
+        title: {
+            type: 'string'
+        },
+        description: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        },
+        createdAt: {
+            type: 'string'
+        },
+        updatedAt: {
+            type: 'string'
+        },
+        location: {
+            $ref: '#/components/schemas/Location'
+        },
+        category: {
+            $ref: '#/components/schemas/Category'
+        },
+        gallery: {
+            allOf: [
+                {
+                    $ref: '#/components/schemas/Gallery'
+                },
+                {}
+            ]
+        },
+        isFavourite: {
+            type: 'boolean'
+        },
+        isIgnored: {
+            type: 'boolean'
+        },
+        hasFlag: {
+            type: 'boolean'
+        },
+        transactionId: {
+            anyOf: [
+                {
+                    type: 'string'
+                },
+                {
+                    type: 'null'
+                },
+                {
+                    type: 'null'
+                }
+            ]
+        }
+    },
+    required: [
+        'id',
+        'price',
+        'currency',
+        'condition',
+        'age',
+        'locationId',
+        'categoryId',
+        'galleryId',
+        'draftId',
+        'expiresAt',
+        'title',
+        'description',
+        'createdAt',
+        'updatedAt',
+        'location',
+        'category',
+        'gallery',
+        'isFavourite',
+        'isIgnored',
+        'hasFlag',
+        'transactionId'
+    ]
+} as const;
+
+export const sCategory = {
+    type: 'object',
+    properties: {
+        id: {
+            type: 'string'
+        },
+        group: {
+            type: 'string'
+        },
+        category: {
+            type: 'string'
+        },
+        slug: {
+            type: 'string'
+        },
+        sort: {
+            type: 'number'
+        },
+        locale: {
+            type: 'string'
+        }
+    },
+    required: [
+        'id',
+        'group',
+        'category',
+        'slug',
+        'sort',
+        'locale'
     ]
 } as const;
 

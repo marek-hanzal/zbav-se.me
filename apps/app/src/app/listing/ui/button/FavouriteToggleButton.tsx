@@ -23,9 +23,10 @@ export const FavouriteToggleButton: FC<FavouriteToggleButton.Props> = ({
 	...props
 }) => {
 	const queryClient = useQueryClient();
+	const patch = withListingFetchQuery.useSet();
 	const favouriteToggle = withFavouriteToggleMutation.useMutation({
-		onSuccess() {
-			withListingFetchQuery.invalidate(queryClient, {
+		onSuccess(listing) {
+			patch(() => listing, {
 				where: {
 					id: listingId,
 				},

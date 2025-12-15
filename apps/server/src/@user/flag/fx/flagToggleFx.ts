@@ -1,18 +1,17 @@
 import { Effect } from "effect";
+import { flagCreateFx } from "~/@user/flag/fx/flagCreateFx";
+import { flagDeleteFx } from "~/@user/flag/fx/flagDeleteFx";
+import type { FlagToggleSchema } from "~/@user/flag/schema/FlagToggleSchema";
 import { listingCheckIfOwnFx } from "~/@user/listing/fx/listingCheckIfOwnFx";
+import { listingFetchFx } from "~/@user/listing/fx/listingFetchFx";
 import { listingScoreCreateFx } from "~/@user/listing-score/fx/listingScoreCreateFx";
 import { withTransactionFx } from "~/database/fx/withTransactionFx";
-import type { FlagToggleSchema } from "../schema/FlagToggleSchema";
-import { flagCreateFx } from "./flagCreateFx";
-import { flagDeleteFx } from "./flagDeleteFx";
 
 export namespace flagToggleFx {
-	export interface Props {
-		data: FlagToggleSchema.Type;
-	}
+	export type Props = FlagToggleSchema.Type;
 }
 
-export const flagToggleFx = ({ data: { toggle, listingId } }: flagToggleFx.Props) => {
+export const flagToggleFx = ({ toggle, listingId }: flagToggleFx.Props) => {
 	return withTransactionFx(
 		Effect.gen(function* () {
 			yield* listingCheckIfOwnFx({
@@ -20,7 +19,7 @@ export const flagToggleFx = ({ data: { toggle, listingId } }: flagToggleFx.Props
 				message: "You cannot flag your own listing",
 			});
 
-			yield* Effect.if(toggle, {
+			return yield* Effect.if(toggle, {
 				onTrue() {
 					return Effect.gen(function* () {
 						yield* flagCreateFx({
@@ -32,7 +31,11 @@ export const flagToggleFx = ({ data: { toggle, listingId } }: flagToggleFx.Props
 							score: "flag",
 						}).pipe(Effect.ignore);
 
-						return yield* Effect.void;
+						return yield* listingFetchFx({
+							where: {
+								id: listingId,
+							},
+						});
 					});
 				},
 				onFalse() {
@@ -41,7 +44,11 @@ export const flagToggleFx = ({ data: { toggle, listingId } }: flagToggleFx.Props
 							listingId,
 						});
 
-						return yield* Effect.void;
+						return yield* listingFetchFx({
+							where: {
+								id: listingId,
+							},
+						});
 					});
 				},
 			});
