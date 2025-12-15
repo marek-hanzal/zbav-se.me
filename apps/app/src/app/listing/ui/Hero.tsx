@@ -108,6 +108,9 @@ export const Hero: FC<Hero.Props> = ({ locale, ref, listing, feedId, withScore, 
 						"destructive",
 						"hero",
 					]}
+					ui={{
+						inner: "default",
+					}}
 				/>
 			</BottomSheet>
 		</>

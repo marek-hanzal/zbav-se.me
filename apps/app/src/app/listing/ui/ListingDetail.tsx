@@ -43,6 +43,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 	withScore,
 	parentSheetId,
 	tools,
+	ui,
 	...props
 }) => {
 	const [hero] = listing.gallery.items as [
@@ -66,7 +67,8 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 				data-ui={"ListingDetail[Container]"}
 				ui={{
 					layout: "vertical-flex",
-					gap: "lg",
+					gap: "default",
+					...ui,
 				}}
 				{...props}
 			>
@@ -103,6 +105,9 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 								src={hero.upload.url}
 								alt={`Hero image for listing ${listing.id}`}
 								onClick={() => setIsGalleryOpen((prev) => !prev)}
+								ui={{
+									round: "default",
+								}}
 								className={"h-64"}
 							/>
 
@@ -134,6 +139,7 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					data-ui={"ListingDetail-[Container.info]"}
 					ui={{
 						layout: "vertical-flex",
+						gap: "default",
 					}}
 				>
 					{tools.includes("hero") ? null : (
