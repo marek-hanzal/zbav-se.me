@@ -109,7 +109,7 @@ export const Item: FC<Item.Props> = ({
 								text: "3xl",
 								color: "text",
 								opacity: "medium",
-								snapTo: "bottom-right",
+								snapTo: "right-center",
 							}}
 						/>
 					</Container>
@@ -117,19 +117,21 @@ export const Item: FC<Item.Props> = ({
 			})}
 
 			<Badge
-				className={"h-fit"}
 				ui={{
 					tone: "neutral",
-					width: "content",
+					theme: "light",
 					inner: "default",
-					snapTo: "top-center",
+					snapTo: "bottom",
 					round: "md",
-					opacity: "low",
 				}}
+				className={"h-fit text-center"}
 			>
 				<Tx
 					label={feed.name}
 					ui={{
+						tone: "brand",
+						theme: "light",
+						color: "lead",
 						font: "bold",
 						truncate: true,
 					}}
@@ -187,6 +189,7 @@ export const Item: FC<Item.Props> = ({
 					inner: "default",
 					size: undefined,
 				}}
+				className={"max-w-1/3"}
 			/>
 		</Container>
 	);

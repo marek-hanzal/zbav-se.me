@@ -62,13 +62,13 @@
 	}
 
 	[data-ui-snap-to="left-center"] {
-		@apply left-2 right-2;
+		@apply left-2;
 		position: absolute;
 		width: auto;
 	}
 
 	[data-ui-snap-to="right-center"] {
-		@apply right-2 left-2;
+		@apply right-2;
 		position: absolute;
 		width: auto;
 	}

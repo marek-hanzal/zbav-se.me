@@ -1,5 +1,5 @@
 import { createFileRoute, useRouter } from "@tanstack/react-router";
-import { useSnapperNav } from "@use-pico/client/hook";
+import { useSentinel } from "@use-pico/client/hook";
 import { ArrowLeftIcon, ArrowRightIcon, RefreshIcon } from "@use-pico/client/icon";
 import { Button, uiButton } from "@use-pico/client/ui/button";
 import { Container, SpinnerContainer } from "@use-pico/client/ui/container";
@@ -10,7 +10,7 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedPatchMutation } from "@zbav-se.me/sdk/mutation/user";
-import { withFeedFetchQuery, withListingCountQuery } from "@zbav-se.me/sdk/query/user";
+import { withFeedFetchQuery, withListingCollectionQuery } from "@zbav-se.me/sdk/query/user";
 import { FlowContainer } from "@zbav-se.me/ui/container";
 import { DeadEndIcon, FirstIcon } from "@zbav-se.me/ui/icon";
 import { uiBackButton } from "@zbav-se.me/ui/ui";
@@ -63,7 +63,7 @@ export const SetupButton: FC<SetupButton.Props> = ({
 };
 
 export namespace Appendix {
-	export interface Props {
+	export interface Props extends Container.Props {
 		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
@@ -71,13 +71,22 @@ export namespace Appendix {
 	}
 }
 
-export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef, state }) => {
+export const Appendix: FC<Appendix.Props> = ({
+	locale,
+	feed,
+	containerRef,
+	state,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
+				...ui,
 			}}
+			{...props}
 		>
 			<Status
 				icon={DeadEndIcon}
@@ -156,7 +165,7 @@ export const Appendix: FC<Appendix.Props> = ({ locale, feed, containerRef, state
 };
 
 export namespace FeedEmpty {
-	export interface Props {
+	export interface Props extends Container.Props {
 		locale: string;
 		feed: tFeed;
 		containerRef: RefObject<HTMLDivElement | null>;
@@ -164,13 +173,22 @@ export namespace FeedEmpty {
 	}
 }
 
-export const FeedEmpty: FC<FeedEmpty.Props> = ({ locale, feed, containerRef, state }) => {
+export const FeedEmpty: FC<FeedEmpty.Props> = ({
+	locale,
+	feed,
+	containerRef,
+	state,
+	ui,
+	...props
+}) => {
 	return (
 		<Container
 			ui={{
 				layout: "vertical-centered",
 				height: "full",
+				...ui,
 			}}
+			{...props}
 		>
 			<Status
 				icon={DeadEndIcon}
@@ -295,12 +313,15 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 		 *
 		 * Using collection, because "fetch" throws error on 4o4.
 		 */
-		const { data: count } = withListingCountQuery.useSuspenseQuery(feed.query);
+		const { data: listing } = withListingCollectionQuery.useSuspenseQuery({
+			cursor: {
+				page: 0,
+				size: 1,
+			},
+		});
 
-		const snapperNav = useSnapperNav({
+		const { sentinelRef, inView: isLast } = useSentinel<HTMLDivElement>({
 			containerRef,
-			count: count.filter + 1,
-			orientation: "vertical",
 		});
 
 		return (
@@ -310,7 +331,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 					<LinkTo
 						{...uiBackButton({
 							ui: {
-								opacity: snapperNav.state.isLast ? "full" : "low",
+								opacity: isLast ? "full" : "low",
 							},
 							className: [],
 						})}
@@ -324,7 +345,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 					/>
 				}
 			>
-				{count.total > 0 ? (
+				{listing.data.length > 0 ? (
 					<>
 						<SetupButton
 							locale={locale}
@@ -335,7 +356,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 								set: setIsFeedSettings,
 							}}
 							ui={{
-								opacity: snapperNav.state.isLast ? "full" : "low",
+								opacity: isLast ? "full" : "low",
 							}}
 							className={"transition-all"}
 						/>
@@ -375,6 +396,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 							scrollToId={scrollToId}
 							renderEmptyFn={() => (
 								<FeedEmpty
+									ref={sentinelRef}
 									locale={locale}
 									feed={feed}
 									containerRef={containerRef}
@@ -386,6 +408,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 							)}
 							appendix={
 								<Appendix
+									ref={sentinelRef}
 									locale={locale}
 									feed={feed}
 									containerRef={containerRef}
@@ -399,7 +422,7 @@ export const Route = createFileRoute("/$locale/flow/buyer/$id/list")({
 					</>
 				) : null}
 
-				{count.total > 0 ? null : (
+				{listing.data.length > 0 ? null : (
 					<Container
 						ui={{
 							layout: "vertical-centered",

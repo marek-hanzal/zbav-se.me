@@ -20,7 +20,6 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 	count,
 	query,
 	ui,
-	className,
 	...props
 }) => {
 	return (
@@ -30,7 +29,7 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 				theme: "light",
 				flow: "horizontal",
 				items: "center",
-				justify: "center",
+				justify: "space-between",
 				size: "md",
 				round: "default",
 				gap: "default",
@@ -39,6 +38,13 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 			}}
 			{...props}
 		>
+			<Icon
+				icon={ListingIcon}
+				ui={{
+					text: "xl",
+				}}
+			/>
+
 			<Typo
 				label={
 					count ? (
@@ -62,13 +68,6 @@ export const ListingCountBadge: FC<ListingCountBadge.Props> = ({
 				}
 				ui={{
 					font: "bold",
-				}}
-			/>
-
-			<Icon
-				icon={ListingIcon}
-				ui={{
-					text: "xl",
 				}}
 			/>
 		</Badge>

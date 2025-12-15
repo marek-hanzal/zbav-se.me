@@ -6,7 +6,7 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, type ReactNode, useEffect, useId, useMemo, useRef } from "react";
+import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
 import { Hero } from "~/app/listing/ui/Hero";
 
 export namespace ListingListContainer {
@@ -57,38 +57,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 		scrollTo,
 	]);
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: We don't care about changing "empty" props
-	const emptySlot = useMemo(() => {
-		return renderEmptyFn ? (
-			renderEmptyFn()
-		) : (
-			<Status
-				data-ui={"ListingListContainer-[Status-empty]"}
-				key={`${listingIdPrefix}-no-listings`}
-				icon={"icon-[streamline--sad-face-remix]"}
-				textTitle={"No listings (title)"}
-				action={
-					<LinkTo
-						to={"/$locale/ui/buyer"}
-						params={{
-							locale,
-						}}
-					>
-						<Button
-							iconEnabled={ArrowLeftIcon}
-							label={"Back to home (link)"}
-							ui={{
-								tone: "secondary",
-							}}
-						/>
-					</LinkTo>
-				}
-			/>
-		);
-	}, [
-		locale,
-	]);
-
 	return (
 		<Container
 			ref={mergedRef}
@@ -107,7 +75,32 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 			>
 				{({ data }) => {
 					if (data.data.length === 0) {
-						return emptySlot;
+						return renderEmptyFn ? (
+							renderEmptyFn()
+						) : (
+							<Status
+								data-ui={"ListingListContainer-[Status-empty]"}
+								key={`${listingIdPrefix}-no-listings`}
+								icon={"icon-[streamline--sad-face-remix]"}
+								textTitle={"No listings (title)"}
+								action={
+									<LinkTo
+										to={"/$locale/ui/buyer"}
+										params={{
+											locale,
+										}}
+									>
+										<Button
+											iconEnabled={ArrowLeftIcon}
+											label={"Back to home (link)"}
+											ui={{
+												tone: "secondary",
+											}}
+										/>
+									</LinkTo>
+								}
+							/>
+						);
 					}
 
 					return (
