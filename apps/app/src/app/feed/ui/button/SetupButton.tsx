@@ -5,7 +5,6 @@ import { translator } from "@use-pico/common/translator";
 import type { StateType } from "@use-pico/common/type";
 import type { tFeed } from "@zbav-se.me/sdk/api/user";
 import { withFeedGalleryCreateMutation } from "@zbav-se.me/sdk/mutation/user";
-import { CloseButton } from "@zbav-se.me/ui/button";
 import { type FC, useEffect, useState } from "react";
 import { Feed } from "~/app/feed/ui/Feed";
 import { AgePatch } from "~/app/feed/ui/patch/AgePatch";
@@ -122,9 +121,8 @@ export const SetupButton: FC<SetupButton.Props> = ({
 								{children}
 							</Feed>
 						),
-						header: ({ close }) => ({
+						header: () => ({
 							title: translator.text("Feed setup (title)"),
-							right: <CloseButton onClick={close} />,
 						}),
 					},
 					gallery: {
