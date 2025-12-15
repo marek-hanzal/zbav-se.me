@@ -12,15 +12,15 @@
 		"@use-pico/common": "workspace:*",
 		"@use-pico/server": "workspace:*",
 		"axios": "1.13.2",
-		"zod": "4.1.13"
+		"zod": "4.2.0"
 	},
 	"devDependencies": {
-		"@hey-api/openapi-ts": "0.88.1",
-		"@types/node": "24.10.2",
+		"@hey-api/openapi-ts": "0.89.0",
+		"@types/node": "25.0.2",
 		"@typescript/native-preview": "7.0.0-dev.20251208.1",
 		"@use-pico/tsconfig": "5.0.0",
 		"typescript": "5.9.3",
-		"vite": "7.2.7"
+		"vite": "7.3.0"
 	},
 	"exports": {
 		"./api/*": {
