@@ -6,6 +6,7 @@ import { withTransactionFetchQuery } from "@zbav-se.me/sdk/query/user";
 import { CloseButton } from "@zbav-se.me/ui/button";
 import { TransactionIcon } from "@zbav-se.me/ui/icon";
 import { type FC, Suspense, useState } from "react";
+import { CreateButton } from "~/app/transaction/ui/CreateButton";
 
 export namespace TransactionButton {
 	export interface Props extends Button.Props {
@@ -73,5 +74,11 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 		);
 	}
 
-	return "TransactionCreateButton";
+	return (
+		<CreateButton
+			listingId={listing.id}
+			ui={ui}
+			{...props}
+		/>
+	);
 };
