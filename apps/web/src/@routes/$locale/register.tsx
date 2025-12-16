@@ -10,8 +10,36 @@ import { translator } from "@use-pico/common/translator";
 import { CheckIcon } from "@zbav-se.me/ui/icon";
 import { Logo } from "@zbav-se.me/ui/logo";
 import { useRef } from "react";
+import { z } from "zod";
 import { withRegisterMutation } from "~/app/auth/withRegisterMutation";
 import { useAppForm } from "~/app/form/useAppForm";
+
+const RegisterSchema = z
+	.object({
+		email: z.email({
+			error() {
+				return translator.text("Invalid email address");
+			},
+		}),
+		password: z.string().min(8, {
+			error() {
+				return translator.text("Password must be at least 8 characters");
+			},
+		}),
+		confirmPassword: z.string().min(1, {
+			error() {
+				return translator.text("Password confirmation is required");
+			},
+		}),
+	})
+	.refine((data) => data.password === data.confirmPassword, {
+		message: translator.text("Passwords do not match"),
+		path: [
+			"confirmPassword",
+		],
+	});
+
+type RegisterSchema = typeof RegisterSchema;
 
 export const Route = createFileRoute("/$locale/register")({
 	component() {
@@ -39,6 +67,9 @@ export const Route = createFileRoute("/$locale/register")({
 				email: "",
 				password: "",
 				confirmPassword: "",
+			} satisfies z.infer<RegisterSchema>,
+			validators: {
+				onSubmit: RegisterSchema,
 			},
 			onSubmit: onSubmit({
 				mutation: registerMutation,
@@ -95,28 +126,7 @@ export const Route = createFileRoute("/$locale/register")({
 							}}
 							className={"space-y-2"}
 						>
-							<form.AppField
-								name={"email"}
-								validators={{
-									onBlur({ value, fieldApi }) {
-										if (!fieldApi.state.meta.isDirty) {
-											return undefined;
-										}
-
-										if (!value) {
-											return {
-												message: translator.text("Email is required"),
-											};
-										}
-										if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-											return {
-												message: translator.text("Invalid email address"),
-											};
-										}
-										return undefined;
-									},
-								}}
-							>
+							<form.AppField name={"email"}>
 								{(field) => (
 									<FormField
 										id={field.name}
@@ -127,10 +137,11 @@ export const Route = createFileRoute("/$locale/register")({
 										{(props) => (
 											<field.TextInput
 												type={"email"}
-												value={field.state.value}
-												onChange={(e) => field.handleChange(e.target.value)}
-												onBlur={field.handleBlur}
+												autoComplete={"email"}
 												placeholder={translator.text("Enter your email")}
+												value={field.state.value ?? ""}
+												onBlur={field.handleBlur}
+												onChange={(e) => field.handleChange(e.target.value)}
 												{...props}
 											/>
 										)}
@@ -138,34 +149,19 @@ export const Route = createFileRoute("/$locale/register")({
 								)}
 							</form.AppField>
 
-							<form.AppField
-								name={"password"}
-								validators={{
-									onBlur({ value, fieldApi }) {
-										if (!fieldApi.state.meta.isDirty) {
-											return undefined;
-										}
-
-										if (!value || value.length < 8) {
-											return {
-												message: translator.text(
-													"Password must be at least 8 characters",
-												),
-											};
-										}
-										return undefined;
-									},
-								}}
-							>
+							<form.AppField name={"password"}>
 								{(field) => (
 									<FormField
+										id={field.name}
+										name={field.name}
 										label={<Tx label={"Password"} />}
 										meta={field.state.meta}
 									>
 										{(props) => (
 											<field.TextInput
 												type={"password"}
-												value={field.state.value}
+												autoComplete={"new-password"}
+												value={field.state.value ?? ""}
 												onChange={(e) => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
 												placeholder={translator.text("Enter your password")}
@@ -176,25 +172,7 @@ export const Route = createFileRoute("/$locale/register")({
 								)}
 							</form.AppField>
 
-							<form.AppField
-								name={"confirmPassword"}
-								validators={{
-									onChangeListenTo: [
-										"password",
-									],
-									onBlur({ value, fieldApi }) {
-										const password = fieldApi.form.getFieldValue("password");
-
-										if (value !== password) {
-											return {
-												message: translator.text("Passwords do not match"),
-											};
-										}
-
-										return undefined;
-									},
-								}}
-							>
+							<form.AppField name={"confirmPassword"}>
 								{(field) => (
 									<FormField
 										id={field.name}
@@ -205,7 +183,8 @@ export const Route = createFileRoute("/$locale/register")({
 										{(props) => (
 											<field.TextInput
 												type={"password"}
-												value={field.state.value}
+												autoComplete={"new-password"}
+												value={field.state.value ?? ""}
 												onChange={(e) => field.handleChange(e.target.value)}
 												onBlur={field.handleBlur}
 												placeholder={translator.text(
@@ -217,6 +196,16 @@ export const Route = createFileRoute("/$locale/register")({
 									</FormField>
 								)}
 							</form.AppField>
+
+							{registerMutation.isError && (
+								<div className={"rounded-md bg-red-50 p-3 text-red-700"}>
+									{registerMutation.error instanceof Error ? (
+										registerMutation.error.message
+									) : (
+										<Tx label={"Registration failed"} />
+									)}
+								</div>
+							)}
 
 							<Container
 								ui={{
