@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"preview": "NITRO_PRESET=node_server NODE_ENV=production PORT=3030 vite build --mode production && node .output/server/index.mjs",
+		"preview": "NITRO_PRESET=node_server vite build --mode production && PORT=3030 node .output/server/index.mjs",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit"
 	},
