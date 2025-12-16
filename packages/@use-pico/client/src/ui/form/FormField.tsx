@@ -74,6 +74,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 				items: "start",
 				justify: "center",
 				gap: "xs",
+				width: "full",
 				...ui,
 			}}
 			{...rest}
@@ -121,6 +122,7 @@ export const FormField: FC<FormField.Props> = (props) => {
 				ui: {
 					tone,
 					theme,
+					width: "full",
 				},
 				className: [],
 			})}
