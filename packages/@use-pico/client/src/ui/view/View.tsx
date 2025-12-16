@@ -73,9 +73,7 @@ export const View = <TView extends string, TProps>({
 	useLayoutEffect(() => {
 		const element = scrollElementRef.current;
 		if (element) {
-			requestAnimationFrame(() => {
-				restoreScroll(element, state.value);
-			});
+			restoreScroll(element, state.value);
 		}
 	}, [
 		state.value,
