@@ -31,12 +31,16 @@ export const TransactionButton: FC<TransactionButton.Props> = ({
 				<Button
 					label={"View transactions (button)"}
 					iconEnabled={TransactionIcon}
+					iconProps={{
+						ui: {
+							text: "xl",
+						},
+					}}
 					onClick={() => setIsTransaction((prev) => !prev)}
 					ui={{
-						tone: "primary",
+						tone: "neutral",
 						theme: "light",
-						size: "xl",
-						justify: "start",
+						size: "default",
 						...ui,
 					}}
 					{...props}
