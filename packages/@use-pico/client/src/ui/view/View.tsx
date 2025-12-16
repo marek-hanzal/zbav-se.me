@@ -86,6 +86,10 @@ export const View = <TView extends string, TProps>({
 				return scrollElementRef.current;
 			},
 			set current(node: HTMLDivElement | null) {
+				if (attachedElement === node) {
+					return;
+				}
+
 				if (attachedElement) {
 					attachedElement.removeEventListener("scroll", scrollHandlerRef.current);
 				}
