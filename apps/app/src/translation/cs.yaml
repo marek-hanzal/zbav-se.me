@@ -623,3 +623,6 @@ fc5c51a4313f5fa59c7aaf83a85df56b37fe6941fecdb4f937ac7b26:
 ff47ddfde1c50de5c6407349f2ee53551b017b9a6bad4630731873b2:
     ref: No categories found (title)
     value: Ajajaj, nic jsme nenašli!
+"Buyer: Transaction request created (message)":
+    value: Mám zájem!
+    static: true

@@ -1,7 +1,9 @@
 import { genId } from "@use-pico/common/gen-id";
 import { Effect } from "effect";
 import { DateTime } from "luxon";
+import { messageTextCreateFx } from "~/@user/message-text/fx/messageCreateFx";
 import { messageThreadCreateFx } from "~/@user/message-thread/fx/messageThreadCreateFx";
+import { messageUserCreateFx } from "~/@user/message-thread-user/fx/messageUserCreateFx";
 import { transactionStatusCreateFx } from "~/@user/transaction-status/fx/transactionStatusCreateFx";
 import { UserContextFx } from "~/auth/fx/UserContextFx";
 import { DatabaseContextFx } from "~/database/fx/DatabaseContextFx";
@@ -28,6 +30,7 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 					.selectFrom("listing")
 					.select([
 						"id",
+						"userId",
 					])
 					.where("id", "=", listingId)
 					.executeTakeFirst();
@@ -42,6 +45,20 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 			}
 
 			const messageThread = yield* messageThreadCreateFx({});
+
+			yield* messageUserCreateFx({
+				messageThreadId: messageThread.id,
+				userIds: [
+					/**
+					 * Allow current user executing transaction request
+					 */
+					user.id,
+					/**
+					 * Allow seller to participate in this thread too.
+					 */
+					listing.userId,
+				],
+			});
 
 			const id = genId();
 
@@ -69,6 +86,11 @@ export const transactionCreateFx = ({ listingId }: transactionCreateFx.Props) =>
 				transactionId: id,
 				side: "buyer",
 				status: "request",
+			});
+
+			yield* messageTextCreateFx({
+				messageThreadId: messageThread.id,
+				message: "Buyer: Transaction request created (message)",
 			});
 
 			return yield* transactionFetchFx({
