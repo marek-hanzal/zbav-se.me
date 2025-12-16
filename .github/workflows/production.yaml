@@ -239,7 +239,6 @@ jobs:
             - name: Build
               run: bun run build
 
-            # --- místo upload-artifact uložíme výstupy do cache (klíč na run_id) ---
             - name: Cache save (web prebuilt)
               uses: actions/cache/save@v4
               with:
