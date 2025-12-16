@@ -1,1 +1,1 @@
-export const ClearFilterIcon = "icon-[lets-icons--close-fill]";
+export const ClearFilterIcon = "icon-[ix--no-filter]";

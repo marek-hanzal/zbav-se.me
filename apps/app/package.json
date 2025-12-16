@@ -6,7 +6,7 @@
 	"scripts": {
 		"build": "vite build",
 		"dev": "vite",
-		"preview": "vite build && PORT=3031 node .output/server/index.mjs",
+		"preview": "NODE_ENV=production vite build --mode production && PORT=3031 node .output/server/index.mjs",
 		"translations": "bun ./cli/translations.ts",
 		"typecheck": "tsc --noEmit",
 		"knip": "knip"
