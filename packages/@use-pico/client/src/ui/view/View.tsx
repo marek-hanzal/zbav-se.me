@@ -1,23 +1,19 @@
+import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
-import {
-	type PropsWithChildren,
-	type ReactNode,
-	type RefObject,
-	useCallback,
-	useLayoutEffect,
-	useMemo,
-	useRef,
-} from "react";
+import { type PropsWithChildren, type ReactNode, useId } from "react";
+import { Container } from "../container";
 
 export namespace View {
-	export type View<TProps> = PropsWithChildren<TProps>;
+	export type View<TProps> = PropsWithChildren<
+		TProps & {
+			scroller?: "vertical" | "horizontal" | false;
+		}
+	>;
 
 	export type Views<TView extends string, TProps> = Record<TView, View<TProps>>;
 
 	export namespace Children {
 		export interface Props {
-			reset(): void;
-			scrollRef: RefObject<HTMLDivElement>;
 			content: ReactNode;
 		}
 
@@ -36,110 +32,23 @@ export const View = <TView extends string, TProps>({
 	views,
 	children,
 }: View.Props<TView, TProps>) => {
-	const scrollElementRef = useRef<HTMLDivElement | null>(null);
-	const scrollPositionsRef = useRef(new Map<TView, number>());
-	const currentViewRef = useRef(state.value);
-	currentViewRef.current = state.value;
-	const rafIdRef = useRef<number | undefined>(undefined);
-	const scrollHandlerRef = useRef((e: Event) => {
-		const element = e.currentTarget as HTMLDivElement | null;
-		if (!element || rafIdRef.current !== undefined) {
-			return;
-		}
-
-		const top = element.scrollTop;
-		const view = currentViewRef.current;
-
-		rafIdRef.current = requestAnimationFrame(() => {
-			rafIdRef.current = undefined;
-			scrollPositionsRef.current.set(view, top);
-		});
-	});
-
-	// Restore scroll position helper
-	const restoreScroll = useCallback((element: HTMLDivElement, view: TView) => {
-		const position = scrollPositionsRef.current.get(view) ?? 0;
-		if (scrollElementRef.current !== element) {
-			return;
-		}
-
-		// Ensure restoring scroll doesn't animate (e.g. scroll-behavior: smooth).
-		const prevScrollBehavior = element.style.scrollBehavior;
-		element.style.scrollBehavior = "auto";
-		element.scrollTop = position;
-		requestAnimationFrame(() => {
-			if (scrollElementRef.current === element) {
-				element.style.scrollBehavior = prevScrollBehavior;
-			}
-		});
-	}, []);
-
-	// Restore scroll position when view changes
-	useLayoutEffect(() => {
-		const element = scrollElementRef.current;
-		if (element) {
-			restoreScroll(element, state.value);
-		}
-	}, [
-		state.value,
-		restoreScroll,
-	]);
-
-	// Proxy RefObject for react-modal-sheet library
-	const scrollRef = useMemo(() => {
-		let attachedElement: HTMLDivElement | null = null;
-
-		return {
-			get current() {
-				return scrollElementRef.current;
-			},
-			set current(node: HTMLDivElement | null) {
-				if (attachedElement === node) {
-					return;
-				}
-
-				if (attachedElement) {
-					attachedElement.removeEventListener("scroll", scrollHandlerRef.current);
-				}
-
-				scrollElementRef.current = node;
-				attachedElement = node;
-
-				if (node) {
-					node.addEventListener("scroll", scrollHandlerRef.current, {
-						passive: true,
-					});
-					restoreScroll(node, currentViewRef.current);
-				}
-			},
-		} as React.RefObject<HTMLDivElement>;
-	}, [
-		restoreScroll,
-	]);
-
-	// Cleanup on unmount
-	useLayoutEffect(() => {
-		return () => {
-			const element = scrollElementRef.current;
-			if (element) {
-				element.removeEventListener("scroll", scrollHandlerRef.current);
-			}
-			if (rafIdRef.current !== undefined) {
-				cancelAnimationFrame(rafIdRef.current);
-				rafIdRef.current = undefined;
-			}
-		};
-	}, []);
-
-	const current = views[state.value];
+	const viewId = useId();
 
 	return children({
-		reset() {
-			for (const view of Object.keys(views) as TView[]) {
-				scrollPositionsRef.current.set(view, 0);
-			}
-		},
-		scrollRef,
-		content: current.children,
+		content: entriesOf(views).map(([key, { scroller = "vertical", children }]) => {
+			return (
+				<Container
+					key={`${viewId}-${key}`}
+					ui={{
+						scroll: scroller === false ? undefined : scroller,
+						height: "full",
+						width: "full",
+					}}
+					className={state.value === key ? undefined : "hidden"}
+				>
+					{children}
+				</Container>
+			);
+		}),
 	});
 };

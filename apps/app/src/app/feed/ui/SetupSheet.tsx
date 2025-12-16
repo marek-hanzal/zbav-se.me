@@ -51,7 +51,10 @@ export const SetupSheet: FC<SetupSheet.Props> = ({
 		<SheetView<SetupSheet.Views>
 			data-ui={"FeedSetupSheet[SheetView]"}
 			isOpen={state.value}
-			onClose={() => state.set(false)}
+			onClose={() => {
+				state.set(false);
+				setView("detail");
+			}}
 			detent={"full"}
 			state={{
 				value: view,

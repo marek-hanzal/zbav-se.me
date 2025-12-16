@@ -34,7 +34,10 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 	return (
 		<SheetView<ListingSheet.View>
 			isOpen={state.value}
-			onClose={() => state.set(false)}
+			onClose={() => {
+				state.set(false);
+				setView("detail");
+			}}
 			state={{
 				value: view,
 				set: setView,
@@ -81,6 +84,7 @@ export const ListingSheet: FC<ListingSheet.Props> = ({
 					contentProps: {
 						disableScroll: true,
 					},
+					scroller: false,
 				},
 				metrics: {
 					children: (

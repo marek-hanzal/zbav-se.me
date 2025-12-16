@@ -252,19 +252,8 @@ export const Setup: FC<Setup.Props> = ({ locale, draft, onListing, onDelete }) =
 				},
 			}}
 		>
-			{({ scrollRef, content }) => {
-				return (
-					<Container
-						data-ui={"Setup[Container]"}
-						ref={scrollRef}
-						ui={{
-							scroll: "vertical",
-							height: "full",
-						}}
-					>
-						{content}
-					</Container>
-				);
+			{({ content }) => {
+				return content;
 			}}
 		</View>
 	);

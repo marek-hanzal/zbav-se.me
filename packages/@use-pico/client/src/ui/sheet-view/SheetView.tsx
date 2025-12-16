@@ -30,19 +30,15 @@ export const SheetView = <TView extends string>({
 			state={state}
 			views={views}
 		>
-			{({ reset, scrollRef, content }) => {
+			{({ content }) => {
 				return (
 					<BottomSheet
 						key={sheetId}
 						{...rest}
-						onCloseEnd={() => {
-							console.log("onCloseEnd");
-							reset();
-						}}
 						contentProps={{
 							...contentProps,
 							...current.contentProps,
-							scrollRef,
+							disableScroll: true,
 						}}
 					>
 						{content}
