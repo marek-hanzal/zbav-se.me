@@ -11,7 +11,6 @@ import { FavouriteToggleButton } from "~/app/listing/ui/button/FavouriteToggleBu
 import { FlagButton } from "~/app/listing/ui/button/FlagButton";
 import { IgnoreButton } from "~/app/listing/ui/button/IgnoreButton";
 import { TransactionButton } from "~/app/listing/ui/button/TransactionButton";
-import { ListingPrice } from "~/app/listing/ui/ListingPrice";
 import { ListingOverlay } from "~/app/listing/ui/overlay/ListingOverlay";
 
 export namespace ListingDetail {
@@ -118,19 +117,11 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 						/>
 					</Container>
 
-					<Container
-						data-ui={"ListingDetail-[Container.info]"}
-						ui={{
-							layout: "vertical-flex",
-							gap: "sm",
-						}}
-					>
-						<TransactionButton
-							locale={locale}
-							listing={listing}
-							onTransaction={hooks.onTransaction}
-						/>
-					</Container>
+					<TransactionButton
+						locale={locale}
+						listing={listing}
+						onTransaction={hooks.onTransaction}
+					/>
 				</>
 			) : null}
 
@@ -141,21 +132,6 @@ export const ListingDetail: FC<ListingDetail.Props> = ({
 					gap: "default",
 				}}
 			>
-				{tools.includes("hero") ? null : (
-					<>
-						<ListingPrice
-							price={listing.price}
-							locale={locale}
-							currency={listing.currency}
-						/>
-
-						<LabelValue
-							textLabel={"Listing location (label)"}
-							textValue={listing.location.address}
-						/>
-					</>
-				)}
-
 				<LabelValue
 					textLabel={"Listing condition (label)"}
 					textValue={`Condition - Overall [${listing.condition}] (hint)`}

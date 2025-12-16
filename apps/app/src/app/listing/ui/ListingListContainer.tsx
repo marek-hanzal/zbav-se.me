@@ -6,9 +6,8 @@ import { LinkTo } from "@use-pico/client/ui/link-to";
 import { Status } from "@use-pico/client/ui/status";
 import type { tListingQuery } from "@zbav-se.me/sdk/api/user";
 import { withListingCollectionQuery, withListingFetchQuery } from "@zbav-se.me/sdk/query/user";
-import { type FC, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { type FC, type ReactNode, useEffect, useId, useRef } from "react";
 import { Hero } from "~/app/listing/ui/Hero";
-import { ListingSheet } from "~/app/listing/ui/ListingSheet";
 
 export namespace ListingListContainer {
 	export interface Props extends Container.Props {
@@ -45,8 +44,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 	]);
 
 	const scrollTo = useScrollTo(containerRef);
-
-	const [detailId, setDetailId] = useState<string | undefined>(undefined);
 
 	useEffect(() => {
 		if (!scrollToId || !containerRef.current) {
@@ -154,7 +151,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 													listing={listing}
 													feedId={feedId}
 													withScore={withScore}
-													onClick={() => setDetailId(listing.id)}
 												/>
 											);
 										}}
@@ -167,36 +163,6 @@ export const ListingListContainer: FC<ListingListContainer.Props> = ({
 					);
 				}}
 			</withListingCollectionQuery.Suspense>
-
-			<withListingFetchQuery.Suspense
-				data={{
-					where: {
-						id: detailId,
-					},
-				}}
-				fallback={null}
-			>
-				{({ data: listing }) => {
-					return (
-						<ListingSheet
-							locale={locale}
-							listing={listing}
-							state={{
-								value: Boolean(detailId),
-								set(value) {
-									if (value) {
-										return;
-									}
-
-									setDetailId(undefined);
-								},
-							}}
-							withScore={withScore}
-							feedId={feedId}
-						/>
-					);
-				}}
-			</withListingFetchQuery.Suspense>
 		</Container>
 	);
 };
