@@ -1,8 +1,5 @@
-import type { FC, ReactNode } from "react";
-import { ErrorIcon } from "../../icon/ErrorIcon";
+import { type FC, type ReactNode, useId } from "react";
 import { Badge } from "../badge/Badge";
-import { More } from "../more/More";
-import { Mx } from "../mx/Mx";
 import { Tx } from "../tx/Tx";
 
 export namespace FormError {
@@ -27,88 +24,43 @@ export namespace FormError {
 }
 
 export const FormError: FC<FormError.Props> = ({ meta }) => {
+	const errorId = useId();
+	const [error] = meta.errors ?? [];
 	const isError = meta.isTouched && meta.errors && meta.errors.length > 0;
 
-	return isError ? (
-		<More
-			limit={1}
-			items={
-				meta.errors?.map((item, i) => ({
-					id: `${i}`,
-					...item,
-				})) ?? []
-			}
-			textTitle={<Tx label={"Field errors (title)"} />}
-			renderInline={({ entity }) => {
-				if ("component" in entity) {
-					return (
-						<Badge
-							key={`${entity.id}`}
-							ui={{
-								tone: "danger",
-								theme: "light",
-								size: "xs",
-							}}
-						>
-							{entity.component}
-						</Badge>
-					);
-				}
+	if (!isError || !error) {
+		return null;
+	}
 
-				if ("message" in entity) {
-					return (
-						<Badge
-							key={`${entity.id}`}
-							ui={{
-								tone: "danger",
-								theme: "light",
-								size: "xs",
-							}}
-						>
-							<Tx label={entity.message} />
-						</Badge>
-					);
-				}
-			}}
-			renderItem={({ entity }) => {
-				if ("component" in entity) {
-					return (
-						<Badge
-							key={`${entity.id}`}
-							ui={{
-								tone: "danger",
-								theme: "light",
-							}}
-						>
-							{entity.component}
-						</Badge>
-					);
-				}
-
-				if ("message" in entity) {
-					return (
-						<Badge
-							key={`${entity.id}`}
-							ui={{
-								tone: "danger",
-								theme: "light",
-							}}
-						>
-							<Mx label={entity.message} />
-						</Badge>
-					);
-				}
-			}}
-			actionProps={{
-				iconEnabled: ErrorIcon,
-				ui: {
+	if ("component" in error) {
+		return (
+			<Badge
+				key={errorId}
+				ui={{
 					tone: "danger",
 					theme: "light",
-				},
-			}}
-			modalProps={{
-				size: "sm",
-			}}
-		/>
-	) : null;
+					size: "xs",
+				}}
+			>
+				{error.component}
+			</Badge>
+		);
+	}
+
+	if ("message" in error) {
+		return (
+			<Badge
+				key={errorId}
+				ui={{
+					tone: "danger",
+					theme: "light",
+					size: "xs",
+				}}
+			>
+				<Tx label={error.message} />
+			</Badge>
+		);
+	}
+
+	return null;
 };
