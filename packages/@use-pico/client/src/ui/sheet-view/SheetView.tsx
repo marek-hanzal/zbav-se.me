@@ -1,7 +1,7 @@
 import type { StateType } from "@use-pico/common/type";
+import { useId } from "react";
 import { BottomSheet } from "../bottom-sheet";
 import { View } from "../view";
-import { useId } from "react";
 
 export namespace SheetView {
 	export interface Props<TView extends string> extends Omit<BottomSheet.Props, "children"> {
