@@ -73,38 +73,41 @@ export const BottomSheet: FC<BottomSheet.Props> = ({
 				data-ui={"BottomSheet-[SheetContainer]"}
 				{...containerProps}
 			>
-				{withHeader ? <Sheet.Header data-ui={"BottomSheet-[SheetHeader]"} /> : null}
-
 				{$header ? (
-					<Container
-						data-ui={"BottomSheet-[Container.header-wrapper]"}
-						ui={{
-							tone: "neutral",
-							theme: "light",
-							layout: "horizontal-flex",
-							items: "center",
-							justify: "space-between",
-							gap: "default",
-							inner: "default",
-							shadow: true,
-						}}
+					<Sheet.Header
+						data-ui={"BottomSheet-[SheetHeader]"}
+						unstyled
 					>
-						{$header.title ? (
-							<Tx
-								label={$header.title}
-								preset={"subheader"}
-								ui={{
-									tone: "primary",
-									theme: "light",
-									text: "lg",
-									color: "lead",
-									truncate: true,
-								}}
-							/>
-						) : null}
+						<Container
+							data-ui={"BottomSheet-[Container.header-wrapper]"}
+							ui={{
+								tone: "neutral",
+								theme: "light",
+								layout: "horizontal-flex",
+								items: "center",
+								justify: "space-between",
+								gap: "default",
+								inner: "default",
+								shadow: true,
+							}}
+						>
+							{$header.title ? (
+								<Tx
+									label={$header.title}
+									preset={"subheader"}
+									ui={{
+										tone: "primary",
+										theme: "light",
+										text: "lg",
+										color: "lead",
+										truncate: true,
+									}}
+								/>
+							) : null}
 
-						{$header.right ?? <div />}
-					</Container>
+							{$header.right ?? <div />}
+						</Container>
+					</Sheet.Header>
 				) : null}
 
 				<Sheet.Content
