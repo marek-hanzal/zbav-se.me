@@ -197,7 +197,9 @@ export const Route = createFileRoute("/$locale/register")({
 							<Container
 								ui={{
 									layout: "vertical-flex",
-									gap: "sm",
+									width: "full",
+									items: "end",
+									gap: "lg",
 								}}
 							>
 								<form.SubmitButton
@@ -216,15 +218,14 @@ export const Route = createFileRoute("/$locale/register")({
 									params={{
 										locale,
 									}}
-									ui={{
-										size: "default",
-									}}
-									className={"text-right w-full block"}
 								>
 									<Tx
 										label={"Login (link)"}
 										ui={{
 											tone: "link",
+											theme: "light",
+											text: "md",
+											color: "lead",
 										}}
 									/>
 								</LinkTo>
