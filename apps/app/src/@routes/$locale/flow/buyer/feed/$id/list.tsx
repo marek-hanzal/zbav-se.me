@@ -222,8 +222,8 @@ export const FeedEmpty: FC<FeedEmpty.Props> = ({
 						/>
 
 						<LinkTo
-							icon={ArrowRightIcon}
-							iconPosition={"right"}
+							icon={ArrowLeftIcon}
+							iconPosition={"left"}
 							iconProps={{
 								ui: {
 									text: "xl",
