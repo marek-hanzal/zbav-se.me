@@ -1,4 +1,3 @@
-import { entriesOf } from "@use-pico/common/entries-of";
 import type { StateType } from "@use-pico/common/type";
 import {
 	type PropsWithChildren,
@@ -124,6 +123,8 @@ export const View = <TView extends string, TProps>({
 		};
 	}, []);
 
+	const current = views[state.value];
+
 	return children({
 		reset() {
 			for (const view of Object.keys(views) as TView[]) {
@@ -131,19 +132,6 @@ export const View = <TView extends string, TProps>({
 			}
 		},
 		scrollRef,
-		content: entriesOf(views).map(([view, { children }]) => {
-			if (state.value === view) {
-				return (
-					<div
-						key={`${activityRootId}-${view}`}
-						className={"w-full h-full"}
-					>
-						{children}
-					</div>
-				);
-			}
-
-			return null;
-		}),
+		content: current.children,
 	});
 };
