@@ -124,7 +124,7 @@ export const Route = createFileRoute("/$locale/register")({
 								e.stopPropagation();
 								form.handleSubmit();
 							}}
-							className={"space-y-2"}
+							className={"space-y-4"}
 						>
 							<form.AppField name={"email"}>
 								{(field) => (

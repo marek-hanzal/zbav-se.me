@@ -70,6 +70,10 @@ export const FormField: FC<FormField.Props> = (props) => {
 			ui={{
 				tone,
 				theme,
+				layout: "vertical-flex",
+				items: "start",
+				justify: "center",
+				gap: "xs",
 				...ui,
 			}}
 			{...rest}
