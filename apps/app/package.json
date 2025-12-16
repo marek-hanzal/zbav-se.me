@@ -48,7 +48,7 @@
 		"@types/luxon": "3.7.1",
 		"@types/react": "19.2.7",
 		"@types/react-dom": "19.2.3",
-		"@typescript/native-preview": "7.0.0-dev.20251208.1",
+		"@typescript/native-preview": "7.0.0-dev.20251216.1",
 		"@use-pico/vite-asset-size": "1.0.4",
 		"@vitejs/plugin-react": "5.1.2",
 		"google-fonts-helper": "3.7.3",

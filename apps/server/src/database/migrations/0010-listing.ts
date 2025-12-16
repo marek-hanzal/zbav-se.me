@@ -25,8 +25,8 @@ export const ListingMigration: Migration = {
 			.addColumn("description", "text")
 			.addColumn("expiresAt", "timestamp", (col) => col.notNull())
 			//
-			.addColumn("createdAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
-			.addColumn("updatedAt", "timestamp", (col) => col.notNull().defaultTo("now()"))
+			.addColumn("createdAt", "timestamp", (col) => col.notNull())
+			.addColumn("updatedAt", "timestamp", (col) => col.notNull())
 			.addForeignKeyConstraint(
 				"listing_[userId]_fk",
 				[
