@@ -48,253 +48,255 @@ export const Route = createFileRoute("/$locale/register")({
 		const scrollerRef = useRef<HTMLDivElement>(null);
 
 		return (
-			<Container>
+			<Container
+				data-ui="/register[Container]"
+				ui={{
+					layout: "vertical-centered",
+					tone: "brand",
+					theme: "light",
+					background: "alt",
+					position: "relative",
+					height: "full",
+					width: "full",
+				}}
+			>
 				<Fade scrollableRef={scrollerRef} />
 
 				<Container
 					ref={scrollerRef}
 					ui={{
-						inner: "default",
-						layout: "vertical",
+						layout: "vertical-centered",
 						scroll: "vertical",
+						width: "full",
+						height: "full",
 					}}
 				>
-					<Container
+					<Status
+						icon={
+							<LinkTo
+								to={"/$locale/landing"}
+								params={{
+									locale,
+								}}
+							>
+								<Logo />
+							</LinkTo>
+						}
+						textTitle={"Register (title)"}
 						ui={{
-							layout: "vertical-centered",
+							inner: "xl",
 						}}
 					>
-						<Status
-							icon={<Logo />}
-							textTitle={"Register (title)"}
+						<form
+							onSubmit={(e) => {
+								e.preventDefault();
+								e.stopPropagation();
+								form.handleSubmit();
+							}}
+							className={"space-y-2"}
 						>
-							<form
-								onSubmit={(e) => {
-									e.preventDefault();
-									e.stopPropagation();
-									form.handleSubmit();
+							<form.AppField
+								name={"email"}
+								validators={{
+									onBlur({ value, fieldApi }) {
+										if (!fieldApi.state.meta.isDirty) {
+											return undefined;
+										}
+
+										if (!value) {
+											return {
+												message: translator.text("Email is required"),
+											};
+										}
+										if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+											return {
+												message: translator.text("Invalid email address"),
+											};
+										}
+										return undefined;
+									},
 								}}
-								className={"space-y-2"}
 							>
-								<form.AppField
-									name={"email"}
-									validators={{
-										onBlur({ value, fieldApi }) {
-											if (!fieldApi.state.meta.isDirty) {
-												return undefined;
-											}
-
-											if (!value) {
-												return {
-													message: translator.text("Email is required"),
-												};
-											}
-											if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-												return {
-													message:
-														translator.text("Invalid email address"),
-												};
-											}
-											return undefined;
-										},
-									}}
-								>
-									{(field) => (
-										<FormField
-											id={field.name}
-											name={field.name}
-											label={<Tx label={"Email"} />}
-											meta={field.state.meta}
-										>
-											{(props) => (
-												<field.TextInput
-													type={"email"}
-													value={field.state.value}
-													onChange={(e) =>
-														field.handleChange(e.target.value)
-													}
-													onBlur={field.handleBlur}
-													placeholder={translator.text(
-														"Enter your email",
-													)}
-													{...props}
-												/>
-											)}
-										</FormField>
-									)}
-								</form.AppField>
-
-								<form.AppField
-									name={"password"}
-									validators={{
-										onBlur({ value, fieldApi }) {
-											if (!fieldApi.state.meta.isDirty) {
-												return undefined;
-											}
-
-											if (!value || value.length < 8) {
-												return {
-													message: translator.text(
-														"Password must be at least 8 characters",
-													),
-												};
-											}
-											return undefined;
-										},
-									}}
-								>
-									{(field) => (
-										<FormField
-											label={<Tx label={"Password"} />}
-											meta={field.state.meta}
-										>
-											{(props) => (
-												<field.TextInput
-													type={"password"}
-													value={field.state.value}
-													onChange={(e) =>
-														field.handleChange(e.target.value)
-													}
-													onBlur={field.handleBlur}
-													placeholder={translator.text(
-														"Enter your password",
-													)}
-													{...props}
-												/>
-											)}
-										</FormField>
-									)}
-								</form.AppField>
-
-								<form.AppField
-									name={"confirmPassword"}
-									validators={{
-										onChangeListenTo: [
-											"password",
-										],
-										onBlur({ value, fieldApi }) {
-											const password =
-												fieldApi.form.getFieldValue("password");
-
-											if (value !== password) {
-												return {
-													message:
-														translator.text("Passwords do not match"),
-												};
-											}
-
-											return undefined;
-										},
-									}}
-								>
-									{(field) => (
-										<FormField
-											id={field.name}
-											name={field.name}
-											label={<Tx label={"Confirm Password"} />}
-											meta={field.state.meta}
-										>
-											{(props) => (
-												<field.TextInput
-													type={"password"}
-													value={field.state.value}
-													onChange={(e) =>
-														field.handleChange(e.target.value)
-													}
-													onBlur={field.handleBlur}
-													placeholder={translator.text(
-														"Confirm your password",
-													)}
-													{...props}
-												/>
-											)}
-										</FormField>
-									)}
-								</form.AppField>
-
-								<Container
-									ui={{
-										layout: "vertical-flex",
-										gap: "sm",
-									}}
-								>
-									<form.SubmitButton
-										iconEnabled={"icon-[eos-icons--system-re-registered]"}
-										disabled={registerMutation.isPending}
-										ui={{
-											tone: "primary",
-											theme: "dark",
-											size: "xl",
-										}}
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										label={<Tx label={"Email"} />}
+										meta={field.state.meta}
 									>
-										[Heslo neprodávám, nesdílím, nečtu. Mám svých problémů
-										dost.]
-										{registerMutation.isPending ? (
-											<Tx label={"Please wait..."} />
-										) : (
-											<Tx label={"Register"} />
+										{(props) => (
+											<field.TextInput
+												type={"email"}
+												value={field.state.value}
+												onChange={(e) => field.handleChange(e.target.value)}
+												onBlur={field.handleBlur}
+												placeholder={translator.text("Enter your email")}
+												{...props}
+											/>
 										)}
-									</form.SubmitButton>
+									</FormField>
+								)}
+							</form.AppField>
 
-									<LinkTo
-										to={"/$locale/login"}
-										params={{
-											locale,
-										}}
+							<form.AppField
+								name={"password"}
+								validators={{
+									onBlur({ value, fieldApi }) {
+										if (!fieldApi.state.meta.isDirty) {
+											return undefined;
+										}
+
+										if (!value || value.length < 8) {
+											return {
+												message: translator.text(
+													"Password must be at least 8 characters",
+												),
+											};
+										}
+										return undefined;
+									},
+								}}
+							>
+								{(field) => (
+									<FormField
+										label={<Tx label={"Password"} />}
+										meta={field.state.meta}
 									>
-										<Tx
-											label={"Login (link)"}
-											ui={{
-												tone: "link",
-											}}
-										/>
-									</LinkTo>
-								</Container>
+										{(props) => (
+											<field.TextInput
+												type={"password"}
+												value={field.state.value}
+												onChange={(e) => field.handleChange(e.target.value)}
+												onBlur={field.handleBlur}
+												placeholder={translator.text("Enter your password")}
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
 
-								<div className={"flex flex-col gap-2 w-full"}>
+							<form.AppField
+								name={"confirmPassword"}
+								validators={{
+									onChangeListenTo: [
+										"password",
+									],
+									onBlur({ value, fieldApi }) {
+										const password = fieldApi.form.getFieldValue("password");
+
+										if (value !== password) {
+											return {
+												message: translator.text("Passwords do not match"),
+											};
+										}
+
+										return undefined;
+									},
+								}}
+							>
+								{(field) => (
+									<FormField
+										id={field.name}
+										name={field.name}
+										label={<Tx label={"Confirm Password"} />}
+										meta={field.state.meta}
+									>
+										{(props) => (
+											<field.TextInput
+												type={"password"}
+												value={field.state.value}
+												onChange={(e) => field.handleChange(e.target.value)}
+												onBlur={field.handleBlur}
+												placeholder={translator.text(
+													"Confirm your password",
+												)}
+												{...props}
+											/>
+										)}
+									</FormField>
+								)}
+							</form.AppField>
+
+							<Container
+								ui={{
+									layout: "vertical-flex",
+									gap: "sm",
+								}}
+							>
+								<form.SubmitButton
+									iconEnabled={"icon-[eos-icons--system-re-registered]"}
+									disabled={registerMutation.isPending}
+								>
+									{registerMutation.isPending ? (
+										<Tx label={"Please wait..."} />
+									) : (
+										<Tx label={"Register"} />
+									)}
+								</form.SubmitButton>
+
+								<LinkTo
+									to={"/$locale/login"}
+									params={{
+										locale,
+									}}
+									ui={{
+										size: "default",
+									}}
+									className={"text-right w-full block"}
+								>
 									<Tx
-										label={"Agreement with (label)"}
+										label={"Login (link)"}
 										ui={{
-											text: "sm",
-											font: "bold",
+											tone: "link",
 										}}
 									/>
+								</LinkTo>
+							</Container>
 
-									<LinkTo
-										icon={CheckIcon}
-										to={"/$locale/tos"}
-										params={{
-											locale,
-										}}
-									>
-										<Tx
-											label={"ToS agreement (label)"}
-											ui={{
-												tone: "link",
-												text: "lg",
-											}}
-										/>
-									</LinkTo>
+							<div className={"flex flex-col gap-2 w-full"}>
+								<Tx
+									label={"Agreement with (label)"}
+									ui={{
+										text: "sm",
+										font: "bold",
+									}}
+								/>
 
-									<LinkTo
-										icon={CheckIcon}
-										to={"/$locale/privacy"}
-										params={{
-											locale,
+								<LinkTo
+									icon={CheckIcon}
+									to={"/$locale/tos"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx
+										label={"ToS agreement (label)"}
+										ui={{
+											tone: "link",
+											text: "lg",
 										}}
-									>
-										<Tx
-											label={"Privacy policy (label)"}
-											ui={{
-												tone: "link",
-												text: "lg",
-											}}
-										/>
-									</LinkTo>
-								</div>
-							</form>
-						</Status>
-					</Container>
+									/>
+								</LinkTo>
+
+								<LinkTo
+									icon={CheckIcon}
+									to={"/$locale/privacy"}
+									params={{
+										locale,
+									}}
+								>
+									<Tx
+										label={"Privacy policy (label)"}
+										ui={{
+											tone: "link",
+											text: "lg",
+										}}
+									/>
+								</LinkTo>
+							</div>
+						</form>
+					</Status>
 				</Container>
 			</Container>
 		);

@@ -1,10 +1,9 @@
 import { createLink, type LinkComponent } from "@tanstack/react-router";
-import type { Cls } from "@use-pico/cls";
 import type { ComponentProps, FC } from "react";
 import { Icon } from "../../icon/Icon";
-import type { LinkToCls } from "./LinkToCls";
+import { uiLinkTo } from "./uiLinkTo";
 
-interface BaseLinkToProps extends ComponentProps<"a"> {
+interface BaseLinkToProps extends uiLinkTo.Component<ComponentProps<"a">> {
 	/**
 	 * Icon to display in the link.
 	 */
@@ -17,7 +16,7 @@ interface BaseLinkToProps extends ComponentProps<"a"> {
 	 * Position of the icon relative to the content.
 	 * @default "left"
 	 */
-	iconPosition?: Cls.VariantOf<LinkToCls, "icon-position">;
+	iconPosition?: "left" | "right";
 }
 
 const BaseLinkTo: FC<BaseLinkToProps> = ({
@@ -25,11 +24,17 @@ const BaseLinkTo: FC<BaseLinkToProps> = ({
 	iconProps,
 	iconPosition = "left",
 	children,
+	ui,
+	className,
 	...props
 }) => {
 	return (
 		<a
 			data-root={"LinkTo"}
+			{...uiLinkTo({
+				ui,
+				className,
+			})}
 			{...props}
 		>
 			{iconPosition === "left" && (

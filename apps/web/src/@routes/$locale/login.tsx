@@ -108,7 +108,6 @@ export const Route = createFileRoute("/$locale/login")({
 						gap: "default",
 						snap: "vertical",
 						snapAlign: "center",
-						inner: "default",
 						height: "full",
 					}}
 				>
@@ -121,7 +120,16 @@ export const Route = createFileRoute("/$locale/login")({
 						}}
 					>
 						<Status
-							icon={<Logo />}
+							icon={
+								<LinkTo
+									to={"/$locale/landing"}
+									params={{
+										locale,
+									}}
+								>
+									<Logo />
+								</LinkTo>
+							}
 							ui={{
 								width: "full",
 								inner: "xl",
