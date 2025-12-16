@@ -53,7 +53,9 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 							{entity.component}
 						</Badge>
 					);
-				} else if ("message" in entity) {
+				}
+
+				if ("message" in entity) {
 					return (
 						<Badge
 							key={`${entity.id}`}
@@ -81,7 +83,9 @@ export const FormError: FC<FormError.Props> = ({ meta }) => {
 							{entity.component}
 						</Badge>
 					);
-				} else if ("message" in entity) {
+				}
+
+				if ("message" in entity) {
 					return (
 						<Badge
 							key={`${entity.id}`}
